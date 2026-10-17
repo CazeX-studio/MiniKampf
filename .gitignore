@@ -1,0 +1,12 @@
+# Godot-Cache (wird beim Öffnen automatisch neu erzeugt)
+.godot/
+
+# Exportierte Spiele
+/builds/
+*.exe
+*.pck
+
+# Betriebssystem
+Thumbs.db
+desktop.ini
+.DS_Store

@@ -1,0 +1,9 @@
+# Einheitliche Zeilenenden für Textdateien
+* text=auto eol=lf
+
+# Binärdateien nie verändern
+*.png binary
+*.jpg binary
+*.ogg binary
+*.wav binary
+*.ttf binary
