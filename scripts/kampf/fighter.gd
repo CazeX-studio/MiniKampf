@@ -78,6 +78,8 @@ var charged := false
 var blades := 0
 var dance: Array[String] = []
 var fire_turns := 0
+## Sternentanz: so viele eigene Züge treffen die Klingen mit Sternenkraft
+var star_turns := 0
 
 # Zwielicht-Wandler: -5 (Schatten) bis +5 (Licht), letzte Seite für das Überqueren der Mitte
 var balance := 0

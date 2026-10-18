@@ -511,6 +511,8 @@ func _archer(f: Fighter, id: String, target: Fighter) -> void:
 
 func _blade(f: Fighter, id: String, target: Fighter) -> void:
 	var element := "Feuer" if f.fire_turns > 0 else ""
+	if f.star_turns > 0:
+		element = "Sternenkraft"
 	match id:
 		"step":
 			var mult := _dance_step(f, id)
@@ -980,11 +982,13 @@ func _execute_duet(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 		"sternentanz":
 			var singer := c.hero("singer")
 			var blade := c.hero("blade")
+			# Die Sängerin singt, die Klingen leuchten im Takt und treffen eine Runde lang mit Sternenkraft
 			_add_resonance(singer, true)
 			_add_resonance(singer, false)
 			_add_blades(blade, 2)
-			for a in c.allies():
-				c.heal(f, a, 14)
+			blade.star_turns = 2
+			c.burst(blade, Elements.color("Sternenkraft"), 120.0)
+			c.add_log("Sternentanz! Zaras Klingen leuchten wie Sterne: Bis nach ihrem nächsten Zug treffen sie mit Sternenkraft.")
 
 
 # --- Zugbeginn, Reaktionen, Schaden -------------------------------------------
@@ -1019,6 +1023,7 @@ func begin_turn(f: Fighter) -> void:
 				c.apply_damage(f, roundi(f.max_hp * OVERLOAD_RECOIL))
 		"blade":
 			f.fire_turns = maxi(f.fire_turns - 1, 0)
+			f.star_turns = maxi(f.star_turns - 1, 0)
 		"robot":
 			# Passive "Wartung": Solange der Mechaniker lebt, repariert sich der Roboter etwas.
 			if f.owner.is_alive() and f.hp < f.max_hp:

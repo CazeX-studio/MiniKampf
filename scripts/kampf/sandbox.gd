@@ -113,7 +113,7 @@ const DUETS: Array[Dictionary] = [
 	{id = "zwielicht_barriere", name = "Zwielicht-Barriere", a = "tank", b = "twilight", target = "none",
 		info = "Alle Schild 20, 10 Licht an alle"},
 	{id = "sternentanz", name = "Sternentanz", a = "singer", b = "blade", target = "none",
-		info = "Resonanz, +2 Klingen, alle +14 LP"},
+		info = "Klingen treffen 1 Runde mit Sternenkraft, +2 Klingen"},
 ]
 const DUET_CD := 4
 

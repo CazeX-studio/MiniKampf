@@ -343,7 +343,9 @@ func _draw_hero_details(font: Font, x0: float, y: float, w: float) -> void:
 		"blade":
 			_draw_pips(Vector2(x0, line_y), fighter.blades, Fighter.MAX_BLADES, COL_BLADE)
 			status_x = x0 + 54
-			if fighter.fire_turns > 0:
+			if fighter.star_turns > 0:
+				status.push_front("Sternenkraft")
+			elif fighter.fire_turns > 0:
 				status.push_front("Feuer")
 		"smith":
 			_draw_pips(Vector2(x0, line_y), fighter.hard, Fighter.MAX_HARD, COL_HARD)
