@@ -1,9 +1,16 @@
 # Mini-Kampf
 
-Lernprojekt von CazeX Studio: ein kleiner rundenbasierter Kampf mit dem
-**Holy-Trinity-System** – erster Schritt Richtung 2D-Story-MMO.
+Lernprojekt von CazeX Studio: ein rundenbasierter **Kampf-Prototyp** nach dem
+Kampfsystem aus `design.md` (Abschnitt 4 und 5), erster Schritt Richtung 2D-Story-MMO.
 
-## Starten
+## Im Handy-Browser spielen
+
+**https://cazex-studio.github.io/MiniKampf/**
+
+Handy quer halten. Jeder Push auf `main` baut die Web-Version automatisch neu
+(GitHub → Reiter **Actions** → „Web-Export“; nach ca. 2–3 Minuten ist sie online).
+
+## Am PC starten
 
 1. Godot 4.7 öffnen (`C:\GameDev\Godot\Godot_v4.7.2-stable_win64.exe`)
 2. **Importieren** → `C:\GameDev\MiniKampf\project.godot` wählen
@@ -11,27 +18,37 @@ Lernprojekt von CazeX Studio: ein kleiner rundenbasierter Kampf mit dem
 
 ## Spielprinzip
 
-Drei Helden kämpfen gegen einen Höhlentroll. Jede Runde wählt jeder lebende
-Held eine Fähigkeit, danach schlägt der Troll zu.
+Vier Helden gegen Grubenwolf, Schleimling und den Boss Steinwächter.
 
-| Held | Rolle | Fähigkeiten |
-|------|-------|-------------|
-| Brom | Tank | Hieb (doppelte Bedrohung), Spott, Schildblock |
-| Lira | Heiler | Heilen, Gruppenheilung, Heiliges Licht |
-| Kael | Schaden | Feuerball, Verblassen (Bedrohung halbieren) |
+- **Zugleiste oben:** Wer schneller ist (Tempo), ist öfter dran. Die Leiste zeigt die nächsten 9 Züge.
+- **Zwei Reihen:** Hinten bekommt und macht man nur 60 % Nahkampf-Schaden.
+  Fernkampf und Magie ignorieren die Reihe. „Nach vorne“/„Nach hinten“ kostet den Zug.
+- **Perfekte Reaktion:** Greift ein Gegner an, schließt sich ein goldener Ring.
+  Genau dann tippen (oder Leertaste), wenn er den weißen Kreis erreicht:
+  Magier-Tank pariert (+15 Mana), Bogenschütze und Sternensängerin weichen aus.
+  Der Ritualist hat keine Reaktion.
+- **Ult-Leiste:** lädt nur durch die klassentypische Aktion.
 
-- **Bedrohung (Aggro):** Der Troll greift immer den Helden mit der höchsten
-  Bedrohung an. Schaden und Heilung erzeugen Bedrohung – der Tank muss sie halten.
-- **Erdstampfer:** Jede 4. Runde trifft der Troll alle Helden (eine Runde vorher gewarnt).
-- **Wut:** Unter 25 % LP macht der Troll 30 % mehr Schaden.
+| Held | Klasse | Besonderheit | Ult lädt durch … |
+|------|--------|--------------|------------------|
+| Arkon | Magier-Tank (vorne) | Umwandlung: halber Schaden geht auf Mana | Schaden, den er mit Mana auffängt |
+| Wren | Bogenschütze (hinten) | Bogen spannen → nächster Schuss ×2,5; Treffer unterbricht. Hinten öfter kritisch | Aufgeladene Schüsse, kritische Treffer |
+| Vesna | Ritualist (hinten) | Heilen kostet Blutvorrat, dann Leben. Biss füllt den Vorrat | Für andere geopfertes Leben |
+| Lyra | Sternensängerin (hinten) | Zwei Sternbilder (orange = Angriff, blau = Schutz), Verblassen, Sternenglanz | Durch Lieder verbrauchte Resonanz |
+
+**Boss Steinwächter:** Steinfaust → kündigt **Felsregen auf die hintere Reihe** an →
+Felsregen → **Kettenzug** (reißt jemanden von hinten nach vorne). Unter 30 % LP wird er wütend.
 
 ## Werte anpassen
 
-Alle Zahlen für den Boss stehen oben in `scripts/battle.gd` (Konstanten),
-die LP der Helden in `_start_battle()`.
+Die meisten Zahlen stehen oben in `scripts/kampf/combat.gd` (Konstanten),
+die Werte der Teilnehmer in `_create_fighters()`, die Fähigkeiten in `_abilities()`.
 
 ## Aufbau
 
-- `scenes/main.tscn` – Hauptszene (nur ein Knoten, die Oberfläche baut das Skript)
-- `scripts/battle.gd` – Kampfablauf, Fähigkeiten und Oberfläche
-- `scripts/combatant.gd` – ein Kampfteilnehmer (LP, Bedrohung, Rolle)
+- `scenes/kampf.tscn` – Kampf-Prototyp (Startszene)
+- `scripts/kampf/combat.gd` – Kampfablauf, Fähigkeiten, Gegner, Oberfläche
+- `scripts/kampf/fighter.gd` – ein Kampfteilnehmer mit allen Werten
+- `scripts/kampf/fighter_view.gd` – Platzhalter-Grafik eines Teilnehmers
+- `export_presets.cfg` + `.github/workflows/web-export.yml` – Web-Export und Veröffentlichung
+- `scenes/main.tscn` + `scripts/battle.gd` – der erste Mini-Kampf (Holy Trinity, Bedrohung)

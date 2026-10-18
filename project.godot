@@ -11,12 +11,23 @@ config_version=5
 [application]
 
 config/name="Mini-Kampf"
-config/description="Lernprojekt: rundenbasierter Kampf mit Holy-Trinity (Tank, Heiler, DPS)."
-run/main_scene="res://scenes/main.tscn"
+config/description="Lernprojekt: rundenbasierter Kampf-Prototyp (Zugleiste, zwei Reihen, perfekte Reaktion, Ult-Leisten)."
+run/main_scene="res://scenes/kampf.tscn"
 config/features=PackedStringArray("4.7")
 
 [display]
 
-window/size/viewport_width=1152
-window/size/viewport_height=648
+window/size/viewport_width=1280
+window/size/viewport_height=720
 window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+window/handheld/orientation=4
+
+[input_devices]
+
+pointing/emulate_mouse_from_touch=true
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
