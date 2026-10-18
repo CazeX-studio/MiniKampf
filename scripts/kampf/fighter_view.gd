@@ -35,6 +35,17 @@ const LOOKS := {
 	"funkenwicht": {sprite = "skelet", scale = 5.0, tint = Color(1.0, 0.95, 0.5)},
 	"schattenhexe": {sprite = "necromancer", scale = 4.5, tint = Color(0.75, 0.65, 0.95)},
 	"boss": {sprite = "ogre", scale = 5.0, tint = Color(0.88, 0.86, 1.0)},
+	# Pilzhöhle
+	"leuchtmotte": {sprite = "wogol", scale = 4.5, tint = Color(1.0, 1.0, 0.75)},
+	"wurzelkriecher": {sprite = "muddy", scale = 5.0},
+	"sporenwolf": {sprite = "zombie", scale = 4.5, tint = Color(0.85, 1.0, 0.8)},
+	"glimmerkaefer": {sprite = "tiny_zombie", scale = 5.0, tint = Color(1.0, 1.0, 0.55)},
+	"sporenkoenigin": {sprite = "big_demon", scale = 4.0, tint = Color(0.75, 1.0, 0.75)},
+	"sporenling": {sprite = "swampy", scale = 4.5, tint = Color(1.0, 0.8, 1.0)},
+	"wurzelmutter": {sprite = "big_zombie", scale = 4.5, tint = Color(0.8, 0.65, 0.5)},
+	"knoten_vorne": {sprite = "ice_zombie", scale = 4.0, tint = Color(1.0, 0.95, 0.7)},
+	"knoten_hinten": {sprite = "ice_zombie", scale = 4.0, tint = Color(1.0, 0.95, 0.7)},
+	"vorbote": {sprite = "necromancer", scale = 6.5, tint = Color(0.45, 0.38, 0.65)},
 }
 const ANIM_FPS := {"idle": 6.0, "run": 12.0, "hit": 8.0}
 
@@ -109,7 +120,7 @@ func setup(p_fighter: Fighter) -> void:
 	body.self_modulate = look.get("tint", Color.WHITE)
 	add_child(body)
 
-	if fighter.klass == "boss":
+	if fighter.big:
 		_plate = Rect2(Vector2(0, sprite_size.y + 8), BOSS_PLATE_SIZE)
 		size = _plate.end
 	elif fighter.owner != null:
@@ -261,7 +272,7 @@ func _draw() -> void:
 			points = PackedVector2Array([tip, tip + Vector2(-16, -12), tip + Vector2(-16, 12)])
 		else:
 			var tip := Vector2(_home.x, _home.y - sprite_size.y - 4.0 + bob)
-			if fighter.klass == "boss":
+			if fighter.big:
 				tip.y += 20.0
 			points = PackedVector2Array([tip, tip + Vector2(-12, -16), tip + Vector2(12, -16)])
 		draw_colored_polygon(points, COL_ULT)
@@ -296,8 +307,10 @@ func _draw_plate() -> void:
 	if not fighter.is_hero:
 		tag = fighter.element if fighter.element != "" else fighter.class_title
 		tag_color = Elements.color(fighter.element)
-		if fighter.klass == "boss":
+		if fighter.big:
 			tag = "BOSS · " + fighter.element
+		elif fighter.passive:
+			tag = "Splitter"
 	draw_string(font, Vector2(x0, y + 16), tag, HORIZONTAL_ALIGNMENT_RIGHT, w, 11, tag_color)
 
 	var hp_ratio := float(fighter.hp) / fighter.max_hp
@@ -383,6 +396,12 @@ func _status() -> Array[String]:
 		status.append("Abw+")
 	if fighter.vuln_turns > 0:
 		status.append("Verwundbar")
+	if fighter.blind_turns > 0:
+		status.append("Geblendet")
+	if fighter.light:
+		status.append("SPLITTERLICHT")
+	if fighter.charge > 0:
+		status.append("Ladung %d" % fighter.charge)
 	if fighter.protecting != null and fighter.protecting.is_alive():
 		status.append("schützt " + fighter.protecting.display_name)
 	return status

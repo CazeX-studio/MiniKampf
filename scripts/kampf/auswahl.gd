@@ -57,13 +57,16 @@ func _build() -> void:
 	add_child(_team_label)
 
 	_add_heading("Gegner", Vector2(28, 458))
-	var encounters := HBoxContainer.new()
+	var encounters := GridContainer.new()
+	encounters.columns = 3
 	encounters.position = Vector2(28, 484)
-	encounters.add_theme_constant_override("separation", 8)
+	encounters.add_theme_constant_override("h_separation", 8)
+	encounters.add_theme_constant_override("v_separation", 6)
 	add_child(encounters)
 	for id in Sandbox.ENCOUNTER_ORDER:
 		var data: Dictionary = Sandbox.ENCOUNTERS[id]
-		var button := _toggle("%s\n%s" % [data.name, data.info], Vector2(200, 80))
+		var button := _toggle("%s\n%s" % [data.name, data.info], Vector2(200, 48))
+		button.add_theme_font_size_override("font_size", 11)
 		button.pressed.connect(func() -> void:
 			Sandbox.encounter = id
 			_update())

@@ -62,6 +62,8 @@ var battle_over := false
 ## Zeitpunkt des aktuellen Zuges auf der Zugleiste
 var now := 0.0
 var skills: Skills
+## Dungeon-Regeln (Pilzhöhle), sonst null
+var dungeon: Pilzhoehle
 
 var _views := {}
 var _pending := {}
@@ -92,6 +94,7 @@ var _log: RichTextLabel
 var _rotate_hint: Label
 var _react_dim: ColorRect
 var _flash_rect: ColorRect
+var _dark_rect: ColorRect
 
 
 func _ready() -> void:
@@ -102,6 +105,8 @@ func _ready() -> void:
 	_build_ui()
 	_create_heroes()
 	_waves = Sandbox.ENCOUNTERS[Sandbox.encounter].waves
+	if Sandbox.ENCOUNTERS[Sandbox.encounter].get("dungeon", "") == "pilzhoehle":
+		dungeon = Pilzhoehle.new(self)
 	_spawn_wave(0)
 	add_log("Tippe eine Fähigkeit an, dann das Ziel.")
 	add_log("Bei Gegner-Angriffen: tippen, wenn sich der [color=#f2c14e]Ring[/color] schließt!")
@@ -155,31 +160,63 @@ func remove_companion(f: Fighter) -> void:
 
 func _spawn_wave(index: int) -> void:
 	_wave = index
+	var ids: Array = _waves[index]
+	spawn_enemies(ids)
+	if _waves.size() > 1:
+		add_log("\n[b]Welle %d von %d[/b]" % [index + 1, _waves.size()])
+	if dungeon != null:
+		dungeon.on_wave(index)
+	elif "boss" in ids:
+		add_log("[b]Ein Steinwächter (Erde) und seine Begleiter greifen an![/b]")
+	else:
+		add_log("[b]Monster mit vier Elementen greifen an![/b] Auf die Farbe am Namen achten.")
+
+
+## Ersetzt alle Gegner durch neue (Kennungen aus Sandbox.ENEMIES).
+## Ist ein großer Gegner dabei, steht er links groß, die anderen davor.
+func spawn_enemies(ids: Array) -> void:
 	for e in enemies:
 		if _views.has(e):
 			_views[e].queue_free()
 			_views.erase(e)
 	enemies.clear()
-	var ids: Array = _waves[index]
 	var hp_scale: float = Sandbox.HP_SCALE[heroes.size() - 1]
-	var slots := BOSS_SLOTS if "boss" in ids else WAVE_SLOTS
+	var has_big := false
+	for id: String in ids:
+		has_big = has_big or Sandbox.ENEMIES[id].get("big", false)
+	var slots := BOSS_SLOTS if has_big else WAVE_SLOTS
 	for i in ids.size():
 		var id: String = ids[i]
 		var data: Dictionary = Sandbox.ENEMIES[id]
-		var title: String = "BOSS" if id == "boss" else data.element
-		var e := Fighter.new(data.name, id, title, false, roundi(data.hp * hp_scale), data.tempo, Elements.color(data.element))
+		var e := Fighter.new(data.name, id, data.element, false, roundi(data.hp * hp_scale), data.tempo, Elements.color(data.element))
 		e.element = data.element
 		e.resist = data.get("resist", 1.0)
+		e.big = data.get("big", false)
+		e.passive = data.get("passive", false)
+		if data.has("title"):
+			e.display_name = data.title
 		enemies.append(e)
 		e.intent = skills.enemy_intent(e)
 		_add_view(e, slots[i])
 		e.next_time = now + e.turn_delay() * randf_range(0.2, 1.0)
-	if _waves.size() > 1:
-		add_log("\n[b]Welle %d von %d[/b]" % [index + 1, _waves.size()])
-	if "boss" in ids:
-		add_log("[b]Ein Steinwächter (Erde) und seine Begleiter greifen an![/b]")
-	else:
-		add_log("[b]Monster mit vier Elementen greifen an![/b] Auf die Farbe am Namen achten.")
+
+
+## Wipe-Mechanik: Die ganze Gruppe stirbt.
+func wipe(reason: String) -> void:
+	add_log("[color=red][b]%s Die ganze Gruppe ist besiegt.[/b][/color]" % reason)
+	screen_flash(Color("200030"))
+	for f in allies():
+		f.hp = 0
+	refresh()
+
+
+## Dunkelheit über dem Kampffeld (0 = hell, 1 = schwarz).
+func set_darkness(amount: float) -> void:
+	create_tween().tween_property(_dark_rect, "color:a", clampf(amount, 0.0, 0.92), 0.5)
+
+
+func set_order_visible(on: bool) -> void:
+	_order_box.visible = on
 
 
 ## Legt die Grafik eines Teilnehmers an. "feet" ist der Punkt, auf dem die Figur steht.
@@ -246,7 +283,8 @@ func _earliest(times: Dictionary) -> Fighter:
 func peek_order(count: int) -> Array[Fighter]:
 	var times := {}
 	for f in alive(all_fighters()):
-		times[f] = f.next_time
+		if not f.passive:
+			times[f] = f.next_time
 	var result: Array[Fighter] = []
 	while result.size() < count and not times.is_empty():
 		var f := _earliest(times)
@@ -277,7 +315,8 @@ func _battle_loop() -> void:
 	while not battle_over:
 		var times := {}
 		for f in alive(all_fighters()):
-			times[f] = f.next_time
+			if not f.passive:
+				times[f] = f.next_time
 		var f := _earliest(times)
 		current = f
 		now = f.next_time
@@ -305,6 +344,7 @@ func _begin_turn(f: Fighter) -> void:
 	f.atk_buff_turns = maxi(f.atk_buff_turns - 1, 0)
 	f.def_buff_turns = maxi(f.def_buff_turns - 1, 0)
 	f.vuln_turns = maxi(f.vuln_turns - 1, 0)
+	f.blind_turns = maxi(f.blind_turns - 1, 0)
 	if f.max_mana > 0:
 		f.mana = mini(f.mana + MANA_REGEN, f.max_mana)
 	await skills.begin_turn(f)
@@ -315,6 +355,8 @@ func _begin_turn(f: Fighter) -> void:
 func _check_end() -> bool:
 	if battle_over:
 		return true
+	if dungeon != null:
+		await dungeon.check_phase()
 	var lost := alive(heroes).is_empty()
 	var won := alive(enemies).is_empty()
 	if won and not lost and _wave < _waves.size() - 1:
@@ -358,7 +400,10 @@ func _player_turn(f: Fighter) -> void:
 func _show_actions(f: Fighter) -> void:
 	_clear_actions()
 	_turn_label.text = "%s (%s) ist am Zug" % [f.display_name, f.class_title]
-	for ab in skills.abilities(f):
+	var list := skills.abilities(f)
+	# Mehr als 8 Knöpfe (z. B. mit Dungeon-Aktionen): kleiner, damit 3 Reihen passen
+	var compact := list.size() > 8
+	for ab in list:
 		var reason := skills.blocked_reason(f, ab)
 		var title: String = ab.name
 		if ab.id == "ult":
@@ -367,10 +412,15 @@ func _show_actions(f: Fighter) -> void:
 			title = "DUETT: " + title
 		var button := _action_button("%s\n%s" % [title, reason if reason != "" else ab.info])
 		button.disabled = reason != ""
+		if compact:
+			button.custom_minimum_size.y = 38
+			button.add_theme_font_size_override("font_size", 11)
 		if reason == "" and ab.id == "ult":
 			button.add_theme_color_override("font_color", Color("f2c14e"))
 		elif reason == "" and ab.has("duet"):
 			button.add_theme_color_override("font_color", Color("ffa8e0"))
+		elif reason == "" and ab.has("dungeon"):
+			button.add_theme_color_override("font_color", Color("9fe8ff"))
 		button.pressed.connect(_on_ability_pressed.bind(f, ab))
 		_grid.add_child(button)
 
@@ -491,7 +541,9 @@ func _execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 func _enemy_turn(e: Fighter) -> void:
 	_turn_label.text = "%s ist am Zug …" % e.display_name
 	await wait(0.5)
-	if e.klass == "boss":
+	if dungeon != null and dungeon.handles(e):
+		await dungeon.enemy_turn(e)
+	elif e.klass == "boss":
 		await _boss_turn(e)
 	else:
 		var data: Dictionary = Sandbox.ENEMIES[e.klass]
@@ -758,6 +810,8 @@ func calc_damage(attacker: Fighter, target: Fighter, base: float, kind: String, 
 			dmg *= BACK_ROW_MELEE
 	if target.def_buff_turns > 0 and not star:
 		dmg *= DEF_BUFF
+	if attacker.blind_turns > 0:
+		dmg *= 0.7
 	if attacker.enraged:
 		dmg *= BOSS_RAGE_MULT
 	if target.vuln_turns > 0:
@@ -783,7 +837,10 @@ func hit(attacker: Fighter, target: Fighter, base: float, kind: String, element 
 	if not target.is_alive():
 		return 0
 	var dmg := calc_damage(attacker, target, base, kind, element)
-	return apply_damage(target, dmg, attacker, kind)
+	var lost := apply_damage(target, dmg, attacker, kind)
+	if dungeon != null:
+		dungeon.on_hit(attacker, target, element, lost)
+	return lost
 
 
 ## Zieht Leben ab (Festung, Rüstung, Schilde und Umwandlung eingerechnet).
@@ -794,6 +851,8 @@ func apply_damage(target: Fighter, amount: int, source: Fighter = null, kind := 
 	_last_crit = false
 	_last_eff = 1.0
 	if not target.is_alive():
+		return 0
+	if dungeon != null and dungeon.absorbs(target, amount, source):
 		return 0
 	if crit:
 		crits += 1
@@ -1025,6 +1084,13 @@ func _build_ui() -> void:
 	_field.size = SCREEN
 	_field.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_field)
+
+	# Dunkelheit (Vorbote in der Pilzhöhle)
+	_dark_rect = ColorRect.new()
+	_dark_rect.color = Color(0.01, 0.0, 0.04, 0.0)
+	_dark_rect.size = Vector2(SCREEN.x, FIELD_BOTTOM)
+	_dark_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_dark_rect)
 
 	# Leichte Abdunklung auch über den Figuren, damit das Bild einen "Rahmen" bekommt
 	add_child(_vignette(0.35))

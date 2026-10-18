@@ -55,6 +55,24 @@ Duette: Treibjagd (Bogenschütze + Zähmer), Blutsiegel (Kunoichi + Ritualist), 
 Quartiermeister), Glühende Klingen (Rüstungsschmied + Klingentänzerin), Zwielicht-Barriere
 (Magier-Tank + Zwielicht-Wandler), Sternentanz (Sternensängerin + Klingentänzerin).
 
+### Test-Dungeon Pilzhöhle
+
+Auf dem Auswahl-Bildschirm unter „Gegner“: **Pilzhöhle** (ganzer Dungeon, 4 Wellen) oder
+**Pilzhöhle: nur Bosse** (zum schnellen Testen). Die Regeln stehen im Kampf-Log.
+
+- **Eigene Monster:** Leuchtmotte (Licht, blendet), Wurzelkriecher (Erde, hält fest),
+  Sporenwolf (Pflanze, stärker im Rudel), Glimmerkäfer (Blitz, lädt sich auf und entlädt sich auf alle).
+- **Zwischenboss Sporenkönigin:** Sporenlinge heilen sie. Pro Kampf zufällig eine Mechanik:
+  *Sporenblüte* (Feuer erzeugt Giftwolken, bei 5 Wolken stirbt die Gruppe; Wind und „Giftwolke vertreiben“
+  helfen) oder *Sporen-Zwillinge* (beide Sporenlinge vor dem nächsten Zug des Überlebenden besiegen).
+- **Endboss Phase 1 – Wurzelmutter:** Treffer auf die Rinde heilen sie. Knoten vorne und hinten
+  vor ihrem nächsten Zug zerstören (sonst wachsen sie nach); jedes Knotenpaar kostet sie ein Viertel ihres Lebens.
+  *Verschlingen*: Kommt in 3 ihrer Züge kein Knotenpaar kaputt, stirbt die Gruppe. Wurzelzug zieht nach vorne.
+- **Endboss Phase 2 – Vorbote:** Das Feld wird dunkler, die Zugleiste verschwindet. Bei völliger Dunkelheit
+  (*Lichtfraß*) stirbt die Gruppe. Jeder kann „Laterne entzünden“, Licht-Treffer helfen zusätzlich.
+  *Das letzte Licht*: Wer das Splitterlicht hält, wird vom Vorboten nicht angegriffen, brennt aber
+  immer stärker. „Licht weiterreichen“ gibt es an einen anderen Helden.
+
 **Boss Steinwächter (Erde):** Steinfaust → kündigt **Felsregen auf die hintere Reihe** an (Magie) →
 Felsregen → **Kettenzug** (reißt jemanden von hinten nach vorne). Unter 30 % LP wird er wütend.
 

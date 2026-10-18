@@ -146,7 +146,18 @@ const ENEMIES := {
 			{name = "Kettenblitz", base = 7, kind = "magic", all = true}]},
 	"schattenhexe": {name = "Schattenhexe", element = "Schatten", hp = 80, tempo = 11,
 		attacks = [{name = "Schattenpfeil", base = 14, kind = "magic"}, {name = "Dunkler Fluch", base = 6, kind = "magic", all = true}]},
-	"boss": {name = "Steinwächter", element = "Erde", hp = 400, tempo = 9, resist = 0.85},
+	"boss": {name = "Steinwächter", element = "Erde", hp = 400, tempo = 9, resist = 0.85, big = true},
+	# Pilzhöhle (Abläufe in pilzhoehle.gd)
+	"leuchtmotte": {name = "Leuchtmotte", element = "Licht", hp = 48, tempo = 14},
+	"wurzelkriecher": {name = "Wurzelkriecher", element = "Erde", hp = 72, tempo = 8},
+	"sporenwolf": {name = "Sporenwolf", element = "Pflanze", hp = 56, tempo = 13},
+	"glimmerkaefer": {name = "Glimmerkäfer", element = "Blitz", hp = 52, tempo = 12},
+	"sporenkoenigin": {name = "Sporenkönigin", element = "Pflanze", hp = 260, tempo = 9, big = true},
+	"sporenling": {name = "Sporenling", element = "Pflanze", hp = 42, tempo = 10},
+	"wurzelmutter": {name = "Wurzelmutter", element = "Pflanze", hp = 300, tempo = 8, big = true},
+	"knoten_vorne": {name = "Knoten vorne", element = "Sternenkraft", hp = 40, tempo = 1, passive = true},
+	"knoten_hinten": {name = "Knoten hinten", element = "Sternenkraft", hp = 40, tempo = 1, passive = true},
+	"vorbote": {name = "Der Vorbote", element = "Schatten", hp = 240, tempo = 10, big = true},
 }
 
 ## Kämpfe zur Auswahl. Jede Welle ist eine Liste von Gegnern.
@@ -157,8 +168,13 @@ const ENCOUNTERS := {
 		waves = [["boss", "funkenwicht", "schattenhexe"]]},
 	"beides": {name = "Beides", info = "Erst die Monster, dann der Boss",
 		waves = [["glutkobold", "sumpfschleim", "dornling", "sturmkobold"], ["boss", "funkenwicht", "schattenhexe"]]},
+	"pilzhoehle": {name = "Pilzhöhle", info = "Ganzer Dungeon: Monster, Sporenkönigin, Wurzelmutter", dungeon = "pilzhoehle",
+		waves = [["sporenwolf", "sporenwolf", "leuchtmotte", "wurzelkriecher"], ["sporenkoenigin", "sporenling", "sporenling"],
+			["glimmerkaefer", "glimmerkaefer", "leuchtmotte", "sporenwolf"], ["wurzelmutter", "knoten_vorne", "knoten_hinten"]]},
+	"pilzbosse": {name = "Pilzhöhle: nur Bosse", info = "Sporenkönigin, dann Wurzelmutter und Vorbote", dungeon = "pilzhoehle",
+		waves = [["sporenkoenigin", "sporenling", "sporenling"], ["wurzelmutter", "knoten_vorne", "knoten_hinten"]]},
 }
-const ENCOUNTER_ORDER: Array[String] = ["monster", "boss", "beides"]
+const ENCOUNTER_ORDER: Array[String] = ["monster", "boss", "beides", "pilzhoehle", "pilzbosse"]
 
 ## Gegner-Leben je nach Teamgröße (1 bis 4 Klassen)
 const HP_SCALE: Array[float] = [0.5, 0.68, 0.85, 1.0]

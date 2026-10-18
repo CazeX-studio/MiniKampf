@@ -107,6 +107,17 @@ var def_idle := 0
 
 # Gegner
 var resist := 1.0
+## Großer Gegner (Boss): größeres Namensschild unter der Figur
+var big := false
+## Hat keinen eigenen Zug (z. B. Splitter-Knoten der Wurzelmutter)
+var passive := false
+## Geblendet: macht weniger Schaden
+var blind_turns := 0
+## Aufgeladener Splitterstaub (Glimmerkäfer)
+var charge := 0
+## Hält das Splitterlicht (Vorbote, Zusammenspiel „Das letzte Licht“) und wie lange schon
+var light := false
+var light_turns := 0
 var seals: Array[String] = []
 var step := 0
 var intent := ""

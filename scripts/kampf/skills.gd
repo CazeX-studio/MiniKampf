@@ -223,6 +223,8 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 			if f.klass == duet.a or f.klass == duet.b:
 				var partner: String = duet.b if f.klass == duet.a else duet.a
 				list.append({id = duet.id, name = duet.name, info = duet.info, target = duet.target, duet = true, partner = partner})
+		if c.dungeon != null:
+			list.append_array(c.dungeon.extra_abilities(f))
 		var row_name := "Nach vorne" if f.back_row else "Nach hinten"
 		list.append({id = "row", name = row_name, info = "Reihe wechseln (kostet den Zug)", target = "none"})
 	return list
@@ -325,6 +327,10 @@ func valid_targets(f: Fighter, ab: Dictionary) -> Array[Fighter]:
 			var others := c.allies()
 			others.erase(f)
 			return others
+		"ally_hero_other":
+			var others := c.alive(c.heroes)
+			others.erase(f)
+			return others
 	return []
 
 
@@ -339,6 +345,9 @@ func _monster(tamer: Fighter, id: String) -> Fighter:
 
 func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 	var id: String = ab.id
+	if ab.has("dungeon"):
+		await c.dungeon.execute(f, ab, target)
+		return
 	if ab.has("gold"):
 		_spend_gold(f, ab.gold)
 	if ab.has("duet"):
@@ -1154,6 +1163,8 @@ func _bench_has(tamer: Fighter, id: String) -> bool:
 
 ## Was ein Gegner als Nächstes vorhat (steht auf seinem Namensschild).
 func enemy_intent(e: Fighter) -> String:
+	if c.dungeon != null and c.dungeon.handles(e):
+		return c.dungeon.intent(e)
 	if e.klass == "boss":
 		match e.step % 4:
 			0, 1:
