@@ -92,7 +92,7 @@ func _create_fighters() -> void:
 	archer.back_row = true
 	var ritualist := Fighter.new("Vesna", "ritualist", "Ritualist", true, 110, 10, Color("c2304f"), Fighter.Shape.DIAMOND)
 	ritualist.back_row = true
-	var singer := Fighter.new("Lyra", "singer", "Sternensängerin", true, 95, 11, Color("ffd34d"), Fighter.Shape.STAR)
+	var singer := Fighter.new("Xavina", "singer", "Sternensängerin", true, 95, 11, Color("ffd34d"), Fighter.Shape.STAR)
 	singer.max_mana = 90
 	singer.mana = 90
 	singer.reaction = "dodge"
