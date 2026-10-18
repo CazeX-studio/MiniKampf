@@ -1,6 +1,6 @@
 class_name Fighter
 extends RefCounted
-## Ein Teilnehmer im Kampf-Prototyp (Held oder Gegner) mit allen Werten,
+## Ein Teilnehmer im Kampf (Held, Begleiter oder Gegner) mit allen Werten,
 ## die die Klassen-Mechaniken aus design.md brauchen.
 
 ## So lange "dauert" ein Zug. Geteilt durch Tempo ergibt das den Abstand bis zum nächsten Zug.
@@ -8,13 +8,20 @@ const TURN_COST := 100.0
 const MAX_ULT := 100.0
 const MAX_BLOOD := 40
 const MAX_RES := 5
+const MAX_BLADES := 5
+const MAX_HARD := 5
+const MAX_BALANCE := 5
+const MAX_SEALS := 2
 
 var display_name: String
-## Klassen-Kennung: tank, archer, ritualist, singer, kobold, slime, boss
+## Kennung: Klasse (tank, archer …), Begleiter (robot, moosling …) oder Gegner-Art (glutkobold, boss …)
 var klass: String
 var class_title: String
 var is_hero: bool
+## Begleiter (Roboter, Monster) kämpfen für einen Helden ("owner").
+var owner: Fighter
 var color: Color
+var element := ""
 var max_hp: int
 var hp: int
 var max_mana := 0
@@ -30,21 +37,65 @@ var reaction := ""
 var ult := 0.0
 ## Abklingzeiten: Fähigkeits-Kennung -> verbleibende eigene Züge.
 var cooldowns := {}
-var shield := 0
+## Schilde: wer den Schild gegeben hat -> verbleibende Stärke (für die Auswertung).
+var shields := {}
 var atk_buff_turns := 0
 var def_buff_turns := 0
+## Verwundbar: bekommt mehr Schaden (Wertgutachten, Bohrer, Treibjagd).
+var vuln_turns := 0
+## Rauch / Schleier: so viele Angriffe verfehlen noch.
+var smoke := 0
+var smoke_source: Fighter
+## Bedrohung: so viele Einzelangriffe müssen noch auf diese Figur gehen.
+var taunt := 0
+## Gegner kann nicht als Ziel gewählt werden (nur für Bank-Monster).
+var on_bench := false
+
+# Auswertung (für Begleiter zählt alles beim Besitzer)
+var stat_damage := 0
+var stat_heal := 0
+var stat_blocked := 0
+var stat_taken := 0
+var stat_perfect := 0
+var stat_ults := 0
 
 # Magier-Tank
-## Bann-Zeichen: so viele Einzelangriffe müssen noch auf den Tank gehen.
-var taunt := 0
 var fortress := false
 var fortress_absorbed := 0
+
+# Mechaniker: Roboter; Roboter: wen er beschützt
+var robot: Fighter
+var protecting: Fighter
+
+# Rüstungsschmied: aktuelle Rüstung (melee / magic / ranged) und Härte
+var armor := "melee"
+var hard := 0
 
 # Bogenschütze
 var charged := false
 
+# Klingentänzerin: Klingen, letzte Tanzschritte, Züge mit Feuer-Klingen
+var blades := 0
+var dance: Array[String] = []
+var fire_turns := 0
+
+# Zwielicht-Wandler: -5 (Schatten) bis +5 (Licht), letzte Seite für das Überqueren der Mitte
+var balance := 0
+var last_side := 0
+
+# Monster-Zähmer: alle Monster und das kämpfende
+var monsters: Array[Fighter] = []
+var active_monster: Fighter
+
 # Ritualist
 var blood := 0
+
+# Quartiermeister
+var gold := 0
+var gold_spent := 0
+var cart_hp := 0
+var cart_max := 0
+var wares := {}
 
 # Sternensängerin: zwei Sternbilder und wie viele eigene Züge sie nicht gefüllt wurden
 var res_off := 0
@@ -52,8 +103,10 @@ var res_def := 0
 var off_idle := 0
 var def_idle := 0
 
-# Boss
-var boss_step := 0
+# Gegner
+var resist := 1.0
+var seals: Array[String] = []
+var step := 0
 var intent := ""
 var enraged := false
 
@@ -71,6 +124,16 @@ func _init(p_name: String, p_klass: String, p_title: String, p_hero: bool, p_hp:
 
 func is_alive() -> bool:
 	return hp > 0
+
+
+## Steht auf der Seite der Helden (Held oder Begleiter).
+func is_ally() -> bool:
+	return is_hero or owner != null
+
+
+## Wem die Werte für die Auswertung gutgeschrieben werden.
+func credit() -> Fighter:
+	return owner if owner != null else self
 
 
 ## Abstand bis zum nächsten Zug auf der Zugleiste.
@@ -97,6 +160,17 @@ func ult_ready() -> bool:
 
 func cooldown(id: String) -> int:
 	return cooldowns.get(id, 0)
+
+
+func shield_total() -> int:
+	var total := 0
+	for amount: int in shields.values():
+		total += amount
+	return total
+
+
+func add_shield(source: Fighter, amount: int) -> void:
+	shields[source] = shields.get(source, 0) + amount
 
 
 func row_name() -> String:

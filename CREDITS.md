@@ -12,17 +12,23 @@ Downloads blockiert, stammen die Dateien aus einer unveränderten Kopie der Einz
 im öffentlichen Repository https://github.com/benc-uk/super-dungeon-delve
 (Ordner `etc/0x72_DungeonTilesetII_v1.3/frames`).
 
-**Welche Figur ist wer (Platzhalter):**
+**Welche Figur ist wer (Platzhalter, teils eingefärbt):**
 
 | Im Spiel | Bild aus dem Paket |
 |----------|--------------------|
-| Arkon (Magier-Tank) | knight_m |
-| Wren (Bogenschütze) | elf_m |
-| Vesna (Ritualist) | wizzard_f (leicht rötlich eingefärbt) |
-| Lyra (Sternensängerin) | elf_f |
-| Grubenkobold | goblin |
-| Schleimling | swampy |
-| Steinwächter (Boss) | ogre (leicht steingrau eingefärbt) |
+| Magier-Tank, Mechaniker | knight_m |
+| Rüstungsschmied | knight_f |
+| Bogenschütze | elf_m |
+| Sternensängerin, Kunoichi | elf_f |
+| Ritualist | wizzard_f |
+| Zwielicht-Wandler, Quartiermeister | wizzard_m |
+| Klingentänzerin | lizard_f |
+| Monster-Zähmer | lizard_m |
+| Roboter Zahnrad | big_zombie |
+| Moosling / Glutwelpe / Bachotter | swampy / imp / wogol |
+| Glutkobold / Sumpfschleim / Dornling | chort / swampy / orc_shaman |
+| Sturmkobold / Funkenwicht / Schattenhexe | ice_zombie / skelet / necromancer |
+| Steinwächter (Boss) | ogre |
 
 Selbst gemacht (im Code gezeichnet): Fackeln, Licht- und Leuchteffekte, Staub,
 Randabdunklung, Reaktions-Ring und Zeitleiste.

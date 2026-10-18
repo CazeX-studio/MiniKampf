@@ -12,19 +12,37 @@ const FIGHTER_SHADER := preload("res://shaders/fighter.gdshader")
 ## Welche Pixel-Figur zu welcher Klasse gehört (Platzhalter aus dem 0x72-Paket).
 const LOOKS := {
 	"tank": {sprite = "knight_m", scale = 4.0},
+	"mechanic": {sprite = "knight_m", scale = 4.0, tint = Color(1.0, 0.82, 0.55)},
+	"smith": {sprite = "knight_f", scale = 4.0, tint = Color(1.0, 0.86, 0.76)},
 	"archer": {sprite = "elf_m", scale = 4.0},
+	"blade": {sprite = "lizard_f", scale = 4.0, tint = Color(1.0, 0.82, 0.65)},
+	"twilight": {sprite = "wizzard_m", scale = 4.0, tint = Color(0.82, 0.72, 1.0)},
+	"tamer": {sprite = "lizard_m", scale = 4.0, tint = Color(0.85, 1.0, 0.75)},
 	"ritualist": {sprite = "wizzard_f", scale = 4.0, tint = Color(1.0, 0.8, 0.85)},
+	"quartermaster": {sprite = "wizzard_m", scale = 4.0, tint = Color(1.0, 0.9, 0.6)},
+	"kunoichi": {sprite = "elf_f", scale = 4.0, tint = Color(1.0, 0.75, 0.88)},
 	"singer": {sprite = "elf_f", scale = 4.0},
-	"kobold": {sprite = "goblin", scale = 5.0},
-	"slime": {sprite = "swampy", scale = 5.0},
+	# Begleiter
+	"robot": {sprite = "big_zombie", scale = 2.5, tint = Color(0.72, 0.82, 1.0)},
+	"moosling": {sprite = "swampy", scale = 3.5, tint = Color(0.75, 1.0, 0.65)},
+	"glutwelpe": {sprite = "imp", scale = 3.5, tint = Color(1.0, 0.8, 0.6)},
+	"bachotter": {sprite = "wogol", scale = 3.5, tint = Color(0.6, 0.85, 1.0)},
+	# Gegner
+	"glutkobold": {sprite = "chort", scale = 4.0},
+	"sumpfschleim": {sprite = "swampy", scale = 5.0, tint = Color(0.55, 0.75, 1.0)},
+	"dornling": {sprite = "orc_shaman", scale = 4.5, tint = Color(0.8, 1.0, 0.7)},
+	"sturmkobold": {sprite = "ice_zombie", scale = 5.0, tint = Color(0.9, 1.0, 0.95)},
+	"funkenwicht": {sprite = "skelet", scale = 5.0, tint = Color(1.0, 0.95, 0.5)},
+	"schattenhexe": {sprite = "necromancer", scale = 4.5, tint = Color(0.75, 0.65, 0.95)},
 	"boss": {sprite = "ogre", scale = 5.0, tint = Color(0.88, 0.86, 1.0)},
 }
 const ANIM_FPS := {"idle": 6.0, "run": 12.0, "hit": 8.0}
 
 const PLATE_W := 168.0
 const PLATE_H_HERO := 74.0
-const PLATE_H_ENEMY := 50.0
-const BOSS_PLATE_SIZE := Vector2(250, 86)
+const PLATE_H_ENEMY := 64.0
+const BOSS_PLATE_SIZE := Vector2(250, 92)
+const COMPANION_PLATE_SIZE := Vector2(150, 44)
 
 const COL_PLATE := Color(0.04, 0.04, 0.09, 0.82)
 const COL_HP := Color("4cc46a")
@@ -34,6 +52,9 @@ const COL_BLOOD := Color("a8243a")
 const COL_ULT := Color("f2c14e")
 const COL_RES_OFF := Color("ff8a3d")
 const COL_RES_DEF := Color("6fe0ff")
+const COL_GOLD := Color("f2c14e")
+const COL_BLADE := Color("ffb07a")
+const COL_HARD := Color("ff9a5c")
 const COL_TARGET := Color(0.4, 1.0, 1.0)
 
 var fighter: Fighter
@@ -82,7 +103,7 @@ func setup(p_fighter: Fighter) -> void:
 	body.scale = Vector2(pixel_scale, pixel_scale)
 	body.offset = Vector2(0, -texture.get_height() * 0.5)
 	body.position = _home
-	body.flip_h = fighter.is_hero
+	body.flip_h = fighter.is_ally()
 	body.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	body.material = _shader
 	body.self_modulate = look.get("tint", Color.WHITE)
@@ -91,6 +112,9 @@ func setup(p_fighter: Fighter) -> void:
 	if fighter.klass == "boss":
 		_plate = Rect2(Vector2(0, sprite_size.y + 8), BOSS_PLATE_SIZE)
 		size = _plate.end
+	elif fighter.owner != null:
+		_plate = Rect2(Vector2(0, sprite_size.y + 4), COMPANION_PLATE_SIZE)
+		size = Vector2(maxf(_plate.end.x, sprite_size.x + 16.0), _plate.end.y)
 	else:
 		var plate_h := PLATE_H_HERO if fighter.is_hero else PLATE_H_ENEMY
 		_plate = Rect2(sprite_size.x + 22.0, sprite_size.y - plate_h, PLATE_W, plate_h)
@@ -122,6 +146,15 @@ func _process(delta: float) -> void:
 	_shader.set_shader_parameter("outline_color", outline)
 	_shader.set_shader_parameter("flash", _flash)
 	queue_redraw()
+
+
+## Erstes Standbild einer Figur (für Zugleiste und Auswahl-Bildschirm).
+static func portrait(klass: String) -> Texture2D:
+	return load(SPRITE_PATH % [LOOKS[klass].sprite, "idle", 0])
+
+
+static func tint(klass: String) -> Color:
+	return LOOKS[klass].get("tint", Color.WHITE)
 
 
 ## Antippbar sind nur die Figur selbst und ihr Namensschild
@@ -166,7 +199,7 @@ func home_feet() -> Vector2:
 ## Weißes Aufblitzen und kurzes Zurückweichen, wenn die Figur getroffen wird.
 func hit_react() -> void:
 	play("hit", 0.35)
-	var away := 1.0 if fighter.is_hero else -1.0
+	var away := 1.0 if fighter.is_ally() else -1.0
 	var tween := create_tween()
 	tween.tween_method(func(v: float) -> void: _flash = v, 1.0, 0.0, 0.25)
 	var knock := create_tween()
@@ -223,7 +256,7 @@ func _draw() -> void:
 	if active:
 		var bob := roundf(sin(_time * 5.0) * 2.0) * 2.0
 		var points: PackedVector2Array
-		if fighter.is_hero:
+		if fighter.is_ally():
 			var tip := Vector2(_home.x - sprite_size.x * 0.5 - 6.0 + bob, _home.y - sprite_size.y * 0.4)
 			points = PackedVector2Array([tip, tip + Vector2(-16, -12), tip + Vector2(-16, 12)])
 		else:
@@ -258,26 +291,38 @@ func _draw_plate() -> void:
 	var w := _plate.size.x - 14.0
 	var y := _plate.position.y
 	draw_string(font, Vector2(x0, y + 16), fighter.display_name, HORIZONTAL_ALIGNMENT_LEFT, w, 14, Color.WHITE)
-	var tag := fighter.row_name() if fighter.is_hero else fighter.class_title
-	draw_string(font, Vector2(x0, y + 16), tag, HORIZONTAL_ALIGNMENT_RIGHT, w, 10, Color(1, 1, 1, 0.5))
+	var tag := fighter.row_name()
+	var tag_color := Color(1, 1, 1, 0.5)
+	if not fighter.is_hero:
+		tag = fighter.element if fighter.element != "" else fighter.class_title
+		tag_color = Elements.color(fighter.element)
+		if fighter.klass == "boss":
+			tag = "BOSS · " + fighter.element
+	draw_string(font, Vector2(x0, y + 16), tag, HORIZONTAL_ALIGNMENT_RIGHT, w, 11, tag_color)
 
 	var hp_ratio := float(fighter.hp) / fighter.max_hp
 	_draw_bar(Rect2(x0, y + 21, w, 13), hp_ratio, COL_HP if hp_ratio > 0.3 else COL_HP_LOW, "%d / %d" % [fighter.hp, fighter.max_hp])
 
 	if not fighter.is_alive():
-		draw_string(font, Vector2(x0, y + 50), "besiegt", HORIZONTAL_ALIGNMENT_LEFT, w, 13, Color(1, 1, 1, 0.7))
+		var text := "kaputt" if fighter.klass == "robot" else ("kampfunfähig" if fighter.owner != null else "besiegt")
+		draw_string(font, Vector2(x0, y + 47), text, HORIZONTAL_ALIGNMENT_LEFT, w, 12, Color(1, 1, 1, 0.7))
 		return
-	if fighter.is_hero:
+	if fighter.owner != null:
+		draw_string(font, Vector2(x0, y + 40), " ".join(_status()), HORIZONTAL_ALIGNMENT_LEFT, w, 10, Color("ffe08a"))
+	elif fighter.is_hero:
 		_draw_hero_details(font, x0, y, w)
 	else:
 		_draw_enemy_details(font, x0, y, w)
 
 
 func _draw_hero_details(font: Font, x0: float, y: float, w: float) -> void:
-	if fighter.klass == "ritualist":
-		_draw_bar(Rect2(x0, y + 37, w, 11), float(fighter.blood) / Fighter.MAX_BLOOD, COL_BLOOD, "Blut %d" % fighter.blood)
-	else:
-		_draw_bar(Rect2(x0, y + 37, w, 11), float(fighter.mana) / fighter.max_mana, COL_MANA, "Mana %d" % fighter.mana)
+	match fighter.klass:
+		"ritualist":
+			_draw_bar(Rect2(x0, y + 37, w, 11), float(fighter.blood) / Fighter.MAX_BLOOD, COL_BLOOD, "Blut %d" % fighter.blood)
+		"quartermaster":
+			_draw_bar(Rect2(x0, y + 37, w, 11), float(fighter.gold) / Skills.START_GOLD, COL_GOLD, "Gold %d" % fighter.gold)
+		_:
+			_draw_bar(Rect2(x0, y + 37, w, 11), float(fighter.mana) / fighter.max_mana, COL_MANA, "Mana %d" % fighter.mana)
 
 	# Ult-Leiste
 	var ult_color := COL_ULT
@@ -286,35 +331,91 @@ func _draw_hero_details(font: Font, x0: float, y: float, w: float) -> void:
 	var ult_text := "ULT bereit!" if fighter.ult_ready() else "ULT %d %%" % int(fighter.ult)
 	_draw_bar(Rect2(x0, y + 51, w, 10), fighter.ult / Fighter.MAX_ULT, ult_color, ult_text)
 
-	# Letzte Zeile: Sternbilder der Sternensängerin und Zustände
+	# Letzte Zeile: besondere Mechanik der Klasse, danach Zustände
+	var status := _status()
+	var status_x := x0
+	var line_y := y + 67
+	match fighter.klass:
+		"singer":
+			_draw_pips(Vector2(x0, line_y), fighter.res_off, Fighter.MAX_RES, COL_RES_OFF)
+			_draw_pips(Vector2(x0 + 52, line_y), fighter.res_def, Fighter.MAX_RES, COL_RES_DEF)
+			status_x = x0 + 106
+		"blade":
+			_draw_pips(Vector2(x0, line_y), fighter.blades, Fighter.MAX_BLADES, COL_BLADE)
+			status_x = x0 + 54
+			if fighter.fire_turns > 0:
+				status.push_front("Feuer")
+		"smith":
+			_draw_pips(Vector2(x0, line_y), fighter.hard, Fighter.MAX_HARD, COL_HARD)
+			status_x = x0 + 54
+			status.push_front(Skills.ARMORS[fighter.armor].name.substr(0, 6))
+		"twilight":
+			_draw_balance(Rect2(x0, line_y - 4, 70, 8))
+			status_x = x0 + 76
+		"quartermaster":
+			var count := 0
+			for n: int in fighter.wares.values():
+				count += n
+			status.push_front("Karren %d · %d Waren" % [fighter.cart_hp, count] if fighter.cart_hp > 0 else "Karren kaputt")
+		"tamer":
+			status.push_front(fighter.active_monster.display_name)
+	draw_string(font, Vector2(status_x, y + 71), " ".join(status), HORIZONTAL_ALIGNMENT_LEFT, x0 + w - status_x, 10, Color("ffe08a"))
+
+
+## Kurze Zustands-Texte (Schild, Bedrohung, Stärkungen …).
+func _status() -> Array[String]:
 	var status: Array[String] = []
-	if fighter.shield > 0:
-		status.append("Schild %d" % fighter.shield)
+	if fighter.shield_total() > 0:
+		status.append("Schild %d" % fighter.shield_total())
 	if fighter.taunt > 0:
-		status.append("Bann %d" % fighter.taunt)
+		status.append("Bedr. %d" % fighter.taunt)
 	if fighter.fortress:
 		status.append("FESTUNG")
 	if fighter.charged:
 		status.append("GESPANNT")
+	if fighter.smoke > 0:
+		status.append("Rauch")
 	if fighter.atk_buff_turns > 0:
 		status.append("Angr+")
 	if fighter.def_buff_turns > 0:
 		status.append("Abw+")
-	var status_x := x0
-	if fighter.klass == "singer":
-		_draw_pips(Vector2(x0, y + 67), fighter.res_off, COL_RES_OFF)
-		_draw_pips(Vector2(x0 + 52, y + 67), fighter.res_def, COL_RES_DEF)
-		status_x = x0 + 106
-	draw_string(font, Vector2(status_x, y + 71), " ".join(status), HORIZONTAL_ALIGNMENT_LEFT, x0 + w - status_x, 10, Color("ffe08a"))
+	if fighter.vuln_turns > 0:
+		status.append("Verwundbar")
+	if fighter.protecting != null and fighter.protecting.is_alive():
+		status.append("schützt " + fighter.protecting.display_name)
+	return status
+
+
+## Leiste des Zwielicht-Wandlers: links Schatten, rechts Licht.
+func _draw_balance(rect: Rect2) -> void:
+	draw_rect(rect.grow(1), Color(0, 0, 0, 0.7))
+	draw_rect(Rect2(rect.position, Vector2(rect.size.x * 0.5, rect.size.y)), Color(Elements.color("Schatten"), 0.25))
+	draw_rect(Rect2(rect.position + Vector2(rect.size.x * 0.5, 0), Vector2(rect.size.x * 0.5, rect.size.y)), Color(Elements.color("Licht"), 0.25))
+	var mid := rect.position.x + rect.size.x * 0.5
+	var fill := rect.size.x * 0.5 * float(fighter.balance) / Fighter.MAX_BALANCE
+	var color := Elements.color("Licht") if fighter.balance > 0 else Elements.color("Schatten")
+	if absi(fighter.balance) >= Fighter.MAX_BALANCE:
+		color = color.lerp(Color.WHITE, 0.5 + 0.5 * sin(_time * 10.0))
+	draw_rect(Rect2(minf(mid, mid + fill), rect.position.y, absf(fill), rect.size.y), color)
+	draw_rect(Rect2(mid - 1, rect.position.y - 2, 2, rect.size.y + 4), Color.WHITE)
 
 
 func _draw_enemy_details(font: Font, x0: float, y: float, w: float) -> void:
-	var line_y := y + 47
+	# Siegel der Kunoichi und Zustände
+	var sx := x0
+	for el: String in fighter.seals:
+		draw_circle(Vector2(sx + 6, y + 41), 5, Elements.color(el))
+		draw_string(font, Vector2(sx + 2, y + 45), el.substr(0, 1), HORIZONTAL_ALIGNMENT_LEFT, 12, 9, Color.BLACK)
+		sx += 14
+	var status := _status()
+	if not status.is_empty():
+		draw_string(font, Vector2(sx + 2, y + 45), " ".join(status), HORIZONTAL_ALIGNMENT_LEFT, x0 + w - sx, 10, Color("ffe08a"))
+	var line_y := y + 47 if fighter.seals.is_empty() and status.is_empty() else y + 59
 	if fighter.enraged:
 		draw_string(font, Vector2(x0, line_y), "WUT!", HORIZONTAL_ALIGNMENT_LEFT, w, 12, COL_HP_LOW)
 		line_y += 14
 	if fighter.intent != "":
-		draw_multiline_string(font, Vector2(x0, line_y), fighter.intent, HORIZONTAL_ALIGNMENT_LEFT, w, 12, -1, Color("ffd36b"))
+		draw_multiline_string(font, Vector2(x0, line_y), fighter.intent, HORIZONTAL_ALIGNMENT_LEFT, w, 11, -1, Color("ffd36b"))
 
 
 func _draw_bar(rect: Rect2, ratio: float, color: Color, text: String) -> void:
@@ -328,9 +429,9 @@ func _draw_bar(rect: Rect2, ratio: float, color: Color, text: String) -> void:
 		draw_string(ThemeDB.fallback_font, rect.position + Vector2(4, rect.size.y - 1.5), text, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 6, font_size, Color.WHITE)
 
 
-## Fünf Punkte für ein Sternbild der Sternensängerin.
-func _draw_pips(origin: Vector2, filled: int, color: Color) -> void:
-	for i in Fighter.MAX_RES:
+## Punkte für Stapel (Sternbild, Klingen, Härte).
+func _draw_pips(origin: Vector2, filled: int, count: int, color: Color) -> void:
+	for i in count:
 		var c := origin + Vector2(5 + i * 10, 0)
 		if i < filled:
 			draw_circle(c, 4, color)

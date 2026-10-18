@@ -10,9 +10,9 @@ config_version=5
 
 [application]
 
-config/name="Mini-Kampf"
-config/description="Lernprojekt: rundenbasierter Kampf-Prototyp (Zugleiste, zwei Reihen, perfekte Reaktion, Ult-Leisten)."
-run/main_scene="res://scenes/kampf.tscn"
+config/name="Mini-Kampf: Kampf-Sandbox"
+config/description="Lernprojekt: Kampf-Sandbox mit allen 11 Startklassen, Element-Sechseck, Begleitern, Duetten und Kampfauswertung."
+run/main_scene="res://scenes/auswahl.tscn"
 config/features=PackedStringArray("4.7")
 
 [display]

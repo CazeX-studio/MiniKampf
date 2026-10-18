@@ -16,40 +16,62 @@ Handy quer halten. Jeder Push auf `main` baut die Web-Version automatisch neu
 2. **Importieren** → `C:\GameDev\MiniKampf\project.godot` wählen
 3. **F5** startet das Spiel
 
-## Spielprinzip
+## Kampf-Sandbox (Lernprojekt 2)
 
-Vier Helden gegen Grubenkobold, Schleimling und den Boss Steinwächter.
-Kampfbildschirm seitlich wie Final Fantasy 6: Gegner links, Helden rechts (vorne/hinten).
+Alle 11 Startklassen aus `design.md` zum Ausprobieren und Vergleichen.
 
-- **Zugleiste oben:** Wer schneller ist (Tempo), ist öfter dran. Die Leiste zeigt die nächsten 9 Züge.
-- **Zwei Reihen:** Hinten bekommt und macht man nur 60 % Nahkampf-Schaden.
-  Fernkampf und Magie ignorieren die Reihe. „Nach vorne“/„Nach hinten“ kostet den Zug.
-- **Perfekte Reaktion:** Greift ein Gegner an, schließt sich ein goldener Ring.
-  Genau dann tippen (oder Leertaste), wenn er den weißen Kreis erreicht
-  (oben zeigt zusätzlich eine Zeitleiste den Moment: Der Strich muss im grünen Feld sein):
-  Magier-Tank pariert (+15 Mana), Bogenschütze und Sternensängerin weichen aus.
-  Der Ritualist hat keine Reaktion.
-- **Ult-Leiste:** lädt nur durch die klassentypische Aktion.
+1. **Auswahl-Bildschirm:** bis zu 4 Klassen antippen (oder „Zufallsteam“),
+   Gegner wählen (Monstergruppe, Boss oder beides nacheinander),
+   beim Monster-Zähmer das Start-Monster wählen. Dann „Kampf starten!“.
+2. **Kampf:** Fähigkeit antippen, dann das Ziel. Bei Gegner-Angriffen tippen, wenn sich der Ring schließt.
+3. **Auswertung am Ende:** Schaden, Heilung, abgewehrter und erlittener Schaden, perfekte Reaktionen
+   und Ults pro Klasse. „Nochmal“ spielt mit demselben Team, „Team ändern“ geht zurück zur Auswahl.
+   Oben rechts im Kampf führt „Auswahl“ jederzeit zurück.
 
-| Held | Klasse | Besonderheit | Ult lädt durch … |
-|------|--------|--------------|------------------|
-| Arkon | Magier-Tank (vorne) | Umwandlung: halber Schaden geht auf Mana | Schaden, den er mit Mana auffängt |
-| Wren | Bogenschütze (hinten) | Bogen spannen → nächster Schuss ×2,5; Treffer unterbricht. Hinten öfter kritisch | Aufgeladene Schüsse, kritische Treffer |
-| Vesna | Ritualist (hinten) | Heilen kostet Blutvorrat, dann Leben. Biss füllt den Vorrat | Für andere geopfertes Leben |
-| Lyra | Sternensängerin (hinten) | Zwei Sternbilder (orange = Angriff, blau = Schutz), Verblassen, Sternenglanz | Durch Lieder verbrauchte Resonanz |
+### Grundregeln
 
-**Boss Steinwächter:** Steinfaust → kündigt **Felsregen auf die hintere Reihe** an →
+- **Zugleiste oben:** Wer schneller ist (Tempo), ist öfter dran.
+- **Zwei Reihen:** Hinten bekommt und macht man nur 60 % Nahkampf-Schaden. Reihe wechseln kostet den Zug.
+- **Perfekte Reaktion:** Parieren / Ausweichen wehrt den Treffer ab und löst die Klassen-Reaktion aus.
+- **Element-Sechseck:** stark = 1,5× Schaden, schwach = 0,5×. Die Farbe am Gegner-Namen zeigt sein Element.
+  Licht und Schatten sind gegenseitig stark. Sternenkraft (Ult der Sternensängerin) ignoriert Resistenzen.
+- **Duette:** Stehen beide Partner im Team, hat jeder einen rosa „DUETT“-Knopf.
+
+| Klasse | Besondere Mechanik im Prototyp |
+|--------|--------------------------------|
+| Magier-Tank | Halber Schaden geht auf Mana. Ult Arkane Festung |
+| Mechaniker | Roboter Zahnrad mit eigenem Zug (Bohrer, Schutzmodus), beschützt einen Verbündeten, explodiert beim Tod |
+| Rüstungsschmied | Drei Rüstungen (Nahkampf/Magie/Fernkampf), passende Treffer geben „Gehärtet“ (bis 5) |
+| Bogenschütze | Bogen spannen → ×2,5, hinten öfter kritisch |
+| Klingentänzerin | Bis 5 Klingen, Schritt + Wirbel + Ausfall = Tanzfolge |
+| Zwielicht-Wandler | Leiste Licht/Schatten, am Rand überladen (×1,6, Rückstoß), Mitte überqueren lädt die Ult |
+| Monster-Zähmer | Moosling, Glutwelpe, Bachotter; eines kämpft mit eigenem Zug, Wechsel per Fähigkeit |
+| Ritualist | Heilen kostet Blut, dann Leben |
+| Quartiermeister | Gold und Karren mit Waren (Heiltrank, Manatrank, Bombe, Kraftkraut) |
+| Kunoichi | Element-Siegel kleben und lösen, zwei Siegel = Kombination |
+| Sternensängerin | Zwei Sternbilder, Verblassen, Sternenglanz |
+
+Duette: Treibjagd (Bogenschütze + Zähmer), Blutsiegel (Kunoichi + Ritualist), Nachschub (Mechaniker +
+Quartiermeister), Glühende Klingen (Rüstungsschmied + Klingentänzerin), Zwielicht-Barriere
+(Magier-Tank + Zwielicht-Wandler), Sternentanz (Sternensängerin + Klingentänzerin).
+
+**Boss Steinwächter (Erde):** Steinfaust → kündigt **Felsregen auf die hintere Reihe** an (Magie) →
 Felsregen → **Kettenzug** (reißt jemanden von hinten nach vorne). Unter 30 % LP wird er wütend.
 
 ## Werte anpassen
 
-Die meisten Zahlen stehen oben in `scripts/kampf/combat.gd` (Konstanten),
-die Werte der Teilnehmer in `_create_fighters()`, die Fähigkeiten in `_abilities()`.
+- Leben, Mana, Tempo der Klassen, Gegner und Kämpfe: `scripts/kampf/sandbox.gd`
+- Fähigkeiten, Passiven, Reaktionen und Duette: `scripts/kampf/skills.gd`
+- Allgemeine Regeln (Reihen, Krit, Stärkungen, Boss): Konstanten oben in `scripts/kampf/combat.gd`
+- Element-Tabelle: `scripts/kampf/elements.gd`
 
 ## Aufbau
 
-- `scenes/kampf.tscn` – Kampf-Prototyp (Startszene)
-- `scripts/kampf/combat.gd` – Kampfablauf, Fähigkeiten, Gegner, Oberfläche
+- `scenes/auswahl.tscn` + `scripts/kampf/auswahl.gd` – Auswahl-Bildschirm (Startszene)
+- `scenes/kampf.tscn` + `scripts/kampf/combat.gd` – Kampfablauf, Gegner, Oberfläche, Auswertung
+- `scripts/kampf/skills.gd` – Fähigkeiten aller Klassen, Begleiter und Duette
+- `scripts/kampf/sandbox.gd` – Daten: Klassen, Duette, Monster, Gegner, Kämpfe
+- `scripts/kampf/elements.gd` – Element-Sechseck, Licht/Schatten, Sternenkraft
 - `scripts/kampf/fighter.gd` – ein Kampfteilnehmer mit allen Werten
 - `scripts/kampf/fighter_view.gd` – Pixel-Figur eines Teilnehmers mit Animationen und Namensschild
 - `scripts/kampf/backdrop.gd` – Hintergrund (Gewölbe, Fackeln, Licht, Staub)

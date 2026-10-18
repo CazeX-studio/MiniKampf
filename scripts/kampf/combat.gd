@@ -1,10 +1,14 @@
+class_name Combat
 extends Control
-## Kampf-Prototyp nach design.md (Abschnitt 4 und 5):
+## Kampf-Sandbox nach design.md (Abschnitt 4 und 5):
 ## - Zugreihenfolge nach Tempo, Leiste oben zeigt die nächsten Züge
 ## - Zwei Reihen: Hinten macht und bekommt man weniger Nahkampf-Schaden
 ## - Perfekte Reaktion: Ring schließt sich, im richtigen Moment tippen = Parieren / Ausweichen
 ## - Ult-Leiste je Klasse, lädt nur durch die klassentypische Aktion
-## Die Oberfläche wird komplett im Code gebaut, damit alles an einer Stelle steht.
+## - Element-Sechseck, Licht/Schatten, Sternenkraft
+## - Begleiter (Roboter, Monster des Zähmers) mit eigenem Zug
+## - Auswertung am Ende: Schaden, Heilung, abgewehrter Schaden pro Klasse
+## Die Fähigkeiten der Klassen stehen in skills.gd, die Werte in sandbox.gd.
 
 signal _turn_done
 
@@ -14,8 +18,16 @@ const FRONT_X := 740.0
 const BACK_X := 1000.0
 ## Fußpunkte der Helden (von oben nach unten).
 const HERO_FEET_Y: Array[float] = [258.0, 334.0, 410.0, 486.0]
+## Begleiter stehen vor den Helden, Roboter oben, Monster unten.
+const COMPANION_X := 590.0
+const ROBOT_FEET_Y := 330.0
+const MONSTER_FEET_Y := 478.0
 const FIELD_BOTTOM := 528.0
 const VIGNETTE_SHADER := preload("res://shaders/vignette.gdshader")
+
+## Fußpunkte der Gegner: Welle mit 4 Monstern bzw. Boss-Welle (Boss zuerst)
+const WAVE_SLOTS: Array[Vector2] = [Vector2(30, 300), Vector2(30, 476), Vector2(318, 300), Vector2(318, 476)]
+const BOSS_SLOTS: Array[Vector2] = [Vector2(40, 400), Vector2(330, 290), Vector2(330, 462)]
 
 ## Nahkampf-Schaden wird so stark verringert, wenn Angreifer oder Ziel hinten stehen.
 const BACK_ROW_MELEE := 0.6
@@ -30,22 +42,33 @@ const MANA_REGEN := 6
 const BUFF_TURNS := 2
 const ATK_BUFF := 1.4
 const DEF_BUFF := 0.7
+const VULN_MULT := 1.3
+## Zwischen zwei Wellen heilen sich die Helden um diesen Anteil.
+const WAVE_HEAL := 0.25
 
 ## Boss-Werte
 const BOSS_FIST := 23
-const BOSS_ROCKFALL := 32
+const BOSS_ROCKFALL := 30
 const BOSS_CHAIN := 10
 const BOSS_RAGE_AT := 0.3
 const BOSS_RAGE_MULT := 1.3
 
 var heroes: Array[Fighter] = []
+## Begleiter auf dem Feld (Roboter, kämpfendes Monster)
+var companions: Array[Fighter] = []
 var enemies: Array[Fighter] = []
 var current: Fighter
 var battle_over := false
+## Zeitpunkt des aktuellen Zuges auf der Zugleiste
+var now := 0.0
+var skills: Skills
 
 var _views := {}
 var _pending := {}
 var _pending_user: Fighter
+var _waves: Array = []
+var _wave := 0
+var _turns := 0
 
 var _reacting := false
 var _react_start := 0
@@ -56,8 +79,9 @@ var _react_feedback := ""
 ## Ob das Aufblitzen zu Beginn des Zeitfensters schon gezeigt wurde.
 var _react_glint := false
 var _last_crit := false
+var _last_eff := 1.0
 ## Kritische Treffer der laufenden Aktion (lädt die Ult des Bogenschützen).
-var _crits := 0
+var crits := 0
 
 var _field: Control
 var _ring_layer: Control
@@ -72,11 +96,15 @@ var _flash_rect: ColorRect
 
 func _ready() -> void:
 	randomize()
+	skills = Skills.new(self)
+	if Sandbox.team.is_empty():
+		Sandbox.team = ["tank", "archer", "ritualist", "singer"]
 	_build_ui()
-	_create_fighters()
-	_add_log("[b]Ein Steinwächter und seine Begleiter greifen an![/b]")
-	_add_log("Tippe eine Fähigkeit an, dann das Ziel.")
-	_add_log("Bei Gegner-Angriffen: tippen, wenn sich der [color=#f2c14e]Ring[/color] schließt!")
+	_create_heroes()
+	_waves = Sandbox.ENCOUNTERS[Sandbox.encounter].waves
+	_spawn_wave(0)
+	add_log("Tippe eine Fähigkeit an, dann das Ziel.")
+	add_log("Bei Gegner-Angriffen: tippen, wenn sich der [color=#f2c14e]Ring[/color] schließt!")
 	_battle_loop()
 
 
@@ -88,61 +116,91 @@ func _process(_delta: float) -> void:
 
 # --- Teilnehmer ---------------------------------------------------------------
 
-func _create_fighters() -> void:
-	var tank := Fighter.new("Arkon", "tank", "Magier-Tank", true, 150, 9, Color("4a7cff"))
-	tank.max_mana = 80
-	tank.mana = 60
-	tank.reaction = "parry"
-	var archer := Fighter.new("Wren", "archer", "Bogenschütze", true, 95, 13, Color("5fd35f"))
-	archer.max_mana = 50
-	archer.mana = 50
-	archer.reaction = "dodge"
-	archer.back_row = true
-	var ritualist := Fighter.new("Vesna", "ritualist", "Ritualist", true, 110, 10, Color("c2304f"))
-	ritualist.back_row = true
-	var singer := Fighter.new("Lyra", "singer", "Sternensängerin", true, 95, 11, Color("ffd34d"))
-	singer.max_mana = 90
-	singer.mana = 90
-	singer.reaction = "dodge"
-	singer.back_row = true
-	heroes = [tank, archer, ritualist, singer]
-
-	var kobold := Fighter.new("Grubenkobold", "kobold", "Monster", false, 55, 14, Color("9aa3b5"))
-	var slime := Fighter.new("Schleimling", "slime", "Monster", false, 65, 7, Color("7ad66b"))
-	var boss := Fighter.new("Steinwächter", "boss", "BOSS", false, 380, 9, Color("9b5cd6"))
-	boss.intent = "Schlägt mit der Steinfaust zu."
-	enemies = [kobold, slime, boss]
-
-	# Gegner links: Boss hinten groß, die beiden Monster davor
-	_add_view(boss, Vector2(40, 400))
-	_add_view(kobold, Vector2(330, 290))
-	_add_view(slime, Vector2(330, 450))
-	for i in heroes.size():
-		var hero := heroes[i]
+func _create_heroes() -> void:
+	for i in Sandbox.team.size():
+		var id: String = Sandbox.team[i]
+		var data: Dictionary = Sandbox.CLASSES[id]
+		var hero := Fighter.new(data.hero, id, data.title, true, data.hp, data.tempo, data.color)
+		hero.max_mana = data.mana
+		hero.mana = data.get("start_mana", data.mana)
+		hero.reaction = data.reaction
+		hero.back_row = data.back
+		heroes.append(hero)
+		skills.setup_hero(hero)
 		_add_view(hero, Vector2(BACK_X if hero.back_row else FRONT_X, HERO_FEET_Y[i]))
+		hero.next_time = hero.turn_delay() * randf_range(0.2, 1.0)
 
-	for f in _all():
-		f.next_time = f.turn_delay() * randf_range(0.2, 1.0)
+	var mechanic := hero("mechanic")
+	if mechanic != null:
+		add_companion(mechanic.robot, Vector2(COMPANION_X, ROBOT_FEET_Y))
+	var tamer := hero("tamer")
+	if tamer != null:
+		add_companion(tamer.active_monster, Vector2(COMPANION_X, MONSTER_FEET_Y))
+
+
+func add_companion(f: Fighter, feet: Vector2) -> void:
+	companions.append(f)
+	f.on_bench = false
+	_add_view(f, feet)
+	f.next_time = now + f.turn_delay() * randf_range(0.3, 1.0)
+
+
+func remove_companion(f: Fighter) -> void:
+	companions.erase(f)
+	f.on_bench = true
+	if _views.has(f):
+		_views[f].queue_free()
+		_views.erase(f)
+
+
+func _spawn_wave(index: int) -> void:
+	_wave = index
+	for e in enemies:
+		if _views.has(e):
+			_views[e].queue_free()
+			_views.erase(e)
+	enemies.clear()
+	var ids: Array = _waves[index]
+	var hp_scale: float = Sandbox.HP_SCALE[heroes.size() - 1]
+	var slots := BOSS_SLOTS if "boss" in ids else WAVE_SLOTS
+	for i in ids.size():
+		var id: String = ids[i]
+		var data: Dictionary = Sandbox.ENEMIES[id]
+		var title: String = "BOSS" if id == "boss" else data.element
+		var e := Fighter.new(data.name, id, title, false, roundi(data.hp * hp_scale), data.tempo, Elements.color(data.element))
+		e.element = data.element
+		e.resist = data.get("resist", 1.0)
+		enemies.append(e)
+		e.intent = skills.enemy_intent(e)
+		_add_view(e, slots[i])
+		e.next_time = now + e.turn_delay() * randf_range(0.2, 1.0)
+	if _waves.size() > 1:
+		add_log("\n[b]Welle %d von %d[/b]" % [index + 1, _waves.size()])
+	if "boss" in ids:
+		add_log("[b]Ein Steinwächter (Erde) und seine Begleiter greifen an![/b]")
+	else:
+		add_log("[b]Monster mit vier Elementen greifen an![/b] Auf die Farbe am Namen achten.")
 
 
 ## Legt die Grafik eines Teilnehmers an. "feet" ist der Punkt, auf dem die Figur steht.
 func _add_view(f: Fighter, feet: Vector2) -> void:
-	var view := FighterView.new()
-	view.setup(f)
-	view.position = Vector2(feet.x, feet.y - view.sprite_size.y)
-	view.tapped.connect(_on_fighter_tapped)
-	_field.add_child(view)
-	_views[f] = view
+	var v := FighterView.new()
+	v.setup(f)
+	v.position = Vector2(feet.x, feet.y - v.sprite_size.y)
+	v.tapped.connect(_on_fighter_tapped)
+	_field.add_child(v)
+	_views[f] = v
 
 
-func _all() -> Array[Fighter]:
+func all_fighters() -> Array[Fighter]:
 	var result: Array[Fighter] = []
 	result.append_array(heroes)
+	result.append_array(companions)
 	result.append_array(enemies)
 	return result
 
 
-func _alive(group: Array[Fighter]) -> Array[Fighter]:
+func alive(group: Array[Fighter]) -> Array[Fighter]:
 	var result: Array[Fighter] = []
 	for f in group:
 		if f.is_alive():
@@ -150,14 +208,25 @@ func _alive(group: Array[Fighter]) -> Array[Fighter]:
 	return result
 
 
-func _view(f: Fighter) -> FighterView:
+## Lebende Helden und Begleiter auf dem Feld.
+func allies() -> Array[Fighter]:
+	var result := alive(heroes)
+	result.append_array(alive(companions))
+	return result
+
+
+func has_view(f: Fighter) -> bool:
+	return _views.has(f)
+
+
+func view(f: Fighter) -> FighterView:
 	return _views[f]
 
 
-func _hero(klass: String) -> Fighter:
-	for hero in heroes:
-		if hero.klass == klass:
-			return hero
+func hero(klass: String) -> Fighter:
+	for h in heroes:
+		if h.klass == klass:
+			return h
 	return null
 
 
@@ -168,15 +237,15 @@ func _earliest(times: Dictionary) -> Fighter:
 	var best: Fighter = null
 	for f: Fighter in times:
 		if best == null or times[f] < times[best] - 0.001 \
-				or (absf(times[f] - times[best]) <= 0.001 and f.is_hero and not best.is_hero):
+				or (absf(times[f] - times[best]) <= 0.001 and f.is_ally() and not best.is_ally()):
 			best = f
 	return best
 
 
 ## Simuliert die nächsten Züge für die Leiste oben.
-func _peek_order(count: int) -> Array[Fighter]:
+func peek_order(count: int) -> Array[Fighter]:
 	var times := {}
-	for f in _alive(_all()):
+	for f in alive(all_fighters()):
 		times[f] = f.next_time
 	var result: Array[Fighter] = []
 	while result.size() < count and not times.is_empty():
@@ -186,25 +255,46 @@ func _peek_order(count: int) -> Array[Fighter]:
 	return result
 
 
+## Der nächste Gegner auf der Zugleiste (für den gut getimten Monster-Wechsel).
+func next_enemy() -> Fighter:
+	for f in peek_order(12):
+		if not f.is_ally():
+			return f
+	return null
+
+
+## Schiebt ein Ziel auf der Zugleiste nach hinten (Anteil eines Zuges).
+func delay(target: Fighter, fraction: float) -> void:
+	target.next_time += target.turn_delay() * fraction
+
+
+## Holt ein Ziel auf der Zugleiste nach vorne (Anteil eines Zuges).
+func hasten(target: Fighter, fraction: float) -> void:
+	target.next_time = maxf(now + 0.01, target.next_time - target.turn_delay() * fraction)
+
+
 func _battle_loop() -> void:
 	while not battle_over:
 		var times := {}
-		for f in _alive(_all()):
+		for f in alive(all_fighters()):
 			times[f] = f.next_time
 		var f := _earliest(times)
 		current = f
-		_refresh()
+		now = f.next_time
+		refresh()
 		await _begin_turn(f)
-		if _check_end():
+		if await _check_end():
 			return
-		if f.is_hero:
-			await _player_turn(f)
-		else:
-			await _enemy_turn(f)
+		if f.is_alive():
+			_turns += 1
+			if f.is_ally():
+				await _player_turn(f)
+			else:
+				await _enemy_turn(f)
 		f.next_time += f.turn_delay()
 		current = null
-		_refresh()
-		if _check_end():
+		refresh()
+		if await _check_end():
 			return
 
 
@@ -214,53 +304,48 @@ func _begin_turn(f: Fighter) -> void:
 		f.cooldowns[id] = maxi(f.cooldowns[id] - 1, 0)
 	f.atk_buff_turns = maxi(f.atk_buff_turns - 1, 0)
 	f.def_buff_turns = maxi(f.def_buff_turns - 1, 0)
+	f.vuln_turns = maxi(f.vuln_turns - 1, 0)
 	if f.max_mana > 0:
 		f.mana = mini(f.mana + MANA_REGEN, f.max_mana)
-
-	if f.klass == "tank" and f.fortress:
-		f.fortress = false
-		var power := maxi(20, f.fortress_absorbed)
-		_add_log("[color=#4a8cf0][b]Die Arkane Festung explodiert![/b][/color] (%d aufgefangener Schaden)" % f.fortress_absorbed)
-		_view(f).glow(Color("6fa8ff"), 1.0)
-		Fx.spawn(_field, Fx.Kind.GLOW, _view(f).center(), Color("4a8cf0"), 260.0, 0.9)
-		Fx.spawn(_field, Fx.Kind.RING, _view(f).center(), Color("9cc4ff"), 420.0, 0.7)
-		_screen_flash(Color("4a8cf0"))
-		await _wait(0.4)
-		for enemy in _alive(enemies):
-			_apply_damage(enemy, power)
-		await _wait(0.6)
-
-	if f.klass == "singer":
-		# Verblassen: Ein Sternbild, das 2 Züge nicht gefüllt wurde, verliert jeden Zug 1 Resonanz.
-		if f.off_idle >= 2 and f.res_off > 0:
-			f.res_off -= 1
-			_float(f, "Verblassen", Color("ff8a3d"))
-		if f.def_idle >= 2 and f.res_def > 0:
-			f.res_def -= 1
-			_float(f, "Verblassen", Color("6fe0ff"))
-		f.off_idle += 1
-		f.def_idle += 1
-	_refresh()
+	await skills.begin_turn(f)
+	refresh()
 
 
+## Prüft Sieg und Niederlage. Nach einer gewonnenen Welle kommt die nächste.
 func _check_end() -> bool:
 	if battle_over:
 		return true
-	var won := _alive(enemies).is_empty()
-	var lost := _alive(heroes).is_empty()
+	var lost := alive(heroes).is_empty()
+	var won := alive(enemies).is_empty()
+	if won and not lost and _wave < _waves.size() - 1:
+		await _next_wave()
+		return false
 	if not won and not lost:
 		return false
 	battle_over = true
 	_clear_actions()
 	current = null
-	_refresh()
+	refresh()
 	_turn_label.text = "Sieg!" if won else "Niederlage …"
 	if won:
-		_add_log("\n[color=green][b]Der Steinwächter ist besiegt![/b][/color]")
+		add_log("\n[color=green][b]Alle Gegner sind besiegt![/b][/color]")
 	else:
-		_add_log("\n[color=red][b]Alle Helden sind gefallen.[/b][/color]")
+		add_log("\n[color=red][b]Alle Helden sind gefallen.[/b][/color]")
+	await wait(1.0)
 	_show_end_screen(won)
 	return true
+
+
+func _next_wave() -> void:
+	_clear_actions()
+	_turn_label.text = "Welle geschafft!"
+	await wait(0.8)
+	_banner("Welle %d" % (_wave + 2))
+	for h in alive(heroes):
+		heal(null, h, roundi(h.max_hp * WAVE_HEAL))
+	_spawn_wave(_wave + 1)
+	refresh()
+	await wait(1.0)
 
 
 # --- Spieler-Zug --------------------------------------------------------------
@@ -270,105 +355,39 @@ func _player_turn(f: Fighter) -> void:
 	await _turn_done
 
 
-## Alle Fähigkeiten einer Klasse (vereinfacht nach design.md).
-## target: enemy, ally, ally_other oder none
-func _abilities(f: Fighter) -> Array[Dictionary]:
-	var list: Array[Dictionary] = []
-	match f.klass:
-		"tank":
-			list = [
-				{id = "arcane_strike", name = "Arkaner Stoß", info = "16 Magie-Schaden", target = "enemy"},
-				{id = "ban", name = "Bann-Zeichen", info = "Nächste 3 Angriffe auf dich · 10 Mana", target = "none", mana = 10, cd = 3},
-				{id = "barrier", name = "Barriere", info = "Schild 25 für Verbündeten · 15 Mana", target = "ally", mana = 15, cd = 2},
-				{id = "condense", name = "Rüstung verdichten", info = "+25 Mana, Abwehr+ für 2 Züge", target = "none", cd = 3},
-				{id = "ult", name = "Arkane Festung", info = "Fängt Schaden der Gruppe ab, explodiert im nächsten Zug", target = "none"},
-			]
-		"archer":
-			var shot_name := "Aufgeladener Schuss" if f.charged else "Schneller Schuss"
-			var shot_info := "32 Fernkampf-Schaden" if f.charged else "12 Fernkampf-Schaden"
-			list = [
-				{id = "shot", name = shot_name, info = shot_info, target = "enemy"},
-				{id = "charge", name = "Bogen spannen", info = "Nächster Schuss ×2,5 (Treffer unterbricht)", target = "none"},
-				{id = "volley", name = "Pfeilhagel", info = "9 Schaden an alle · 15 Mana", target = "none", mana = 15, cd = 2},
-				{id = "net", name = "Netzpfeil", info = "6 Schaden, Ziel rutscht auf der Leiste zurück · 10 Mana", target = "enemy", mana = 10, cd = 3},
-				{id = "ult", name = "Jägerpfeil", info = "70 Fernkampf-Schaden", target = "enemy"},
-			]
-		"ritualist":
-			list = [
-				{id = "bite", name = "Biss", info = "14 Nahkampf, heilt dich, füllt Blutvorrat", target = "enemy"},
-				{id = "gift", name = "Blutgabe", info = "Heilt 32 · kostet 14 Blut/Leben", target = "ally_other", blood = 14},
-				{id = "circle", name = "Blutkreis", info = "Heilt alle 16 · kostet 22 Blut/Leben", target = "none", blood = 22, cd = 2},
-				{id = "pact", name = "Blutpakt", info = "Angriff+ für Verbündeten · kostet 10", target = "ally_other", blood = 10, cd = 2},
-				{id = "ult", name = "Großes Opfer", info = "Kostet halbe LP: heilt alle 60, belebt Gefallene", target = "none"},
-			]
-		"singer":
-			var lullaby_info := "Heilt 24, +1 Schutz-Sternbild · 8 Mana"
-			if f.res_def >= Fighter.MAX_RES:
-				lullaby_info = "Sternenglanz: heilt die GANZE Gruppe 24 · 8 Mana"
-			var comet_info := "Verbraucht Angriffs-Resonanz: 8 + 8 je Punkt · 10 Mana"
-			if f.res_off >= Fighter.MAX_RES:
-				comet_info = "Sternenglanz: trifft ALLE Gegner mit 48 · 10 Mana"
-			list = [
-				{id = "spark", name = "Sternenfunke", info = "11 Magie, +1 Angriffs-Sternbild", target = "enemy"},
-				{id = "lullaby", name = "Mondwiegenlied", info = lullaby_info, target = "ally", mana = 8},
-				{id = "comet", name = "Kometenlied", info = comet_info, target = "enemy", mana = 10},
-				{id = "meteor", name = "Sternschnuppenregen", info = "Verbraucht Schutz-Resonanz: heilt alle 7 je Punkt · 10 Mana", target = "none", mana = 10},
-				{id = "ult", name = "Himmelszelt", info = "Heilt alle 35, Angriff+ und Abwehr+", target = "none"},
-			]
-	var row_name := "Nach vorne" if f.back_row else "Nach hinten"
-	list.append({id = "row", name = row_name, info = "Reihe wechseln (kostet den Zug)", target = "none"})
-	return list
-
-
-## Kann die Fähigkeit gerade benutzt werden? Gibt "" zurück oder den Grund, warum nicht.
-func _blocked_reason(f: Fighter, ab: Dictionary) -> String:
-	var id: String = ab.id
-	if id == "ult":
-		if not f.ult_ready():
-			return "Ult %d %%" % int(f.ult)
-		if f.klass == "ritualist" and f.hp - maxi(f.max_hp / 2 - f.blood, 0) < 10:
-			return "Zu wenig Leben"
-		return ""
-	if f.cooldown(id) > 0:
-		return "Bereit in %d" % f.cooldown(id)
-	if ab.get("mana", 0) > f.mana:
-		return "Zu wenig Mana"
-	if ab.has("blood") and f.hp + f.blood - int(ab.blood) < 1:
-		return "Zu wenig Leben"
-	match id:
-		"charge":
-			if f.charged:
-				return "Schon gespannt"
-		"comet":
-			if f.res_off == 0:
-				return "Keine Resonanz"
-		"meteor":
-			if f.res_def == 0:
-				return "Keine Resonanz"
-	return ""
-
-
 func _show_actions(f: Fighter) -> void:
 	_clear_actions()
 	_turn_label.text = "%s (%s) ist am Zug" % [f.display_name, f.class_title]
-	for ab in _abilities(f):
-		var reason := _blocked_reason(f, ab)
-		var button := Button.new()
+	for ab in skills.abilities(f):
+		var reason := skills.blocked_reason(f, ab)
 		var title: String = ab.name
 		if ab.id == "ult":
 			title = "ULT: " + title
-		button.text = "%s\n%s" % [title, reason if reason != "" else ab.info]
+		elif ab.has("duet"):
+			title = "DUETT: " + title
+		var button := _action_button("%s\n%s" % [title, reason if reason != "" else ab.info])
 		button.disabled = reason != ""
-		button.custom_minimum_size = Vector2(266, 72)
-		button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		button.add_theme_font_size_override("font_size", 15)
-		if ab.id == "ult" and reason == "":
+		if reason == "" and ab.id == "ult":
 			button.add_theme_color_override("font_color", Color("f2c14e"))
+		elif reason == "" and ab.has("duet"):
+			button.add_theme_color_override("font_color", Color("ffa8e0"))
 		button.pressed.connect(_on_ability_pressed.bind(f, ab))
 		_grid.add_child(button)
 
 
+func _action_button(text: String) -> Button:
+	var button := Button.new()
+	button.text = text
+	button.custom_minimum_size = Vector2(198, 60)
+	button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	button.add_theme_font_size_override("font_size", 13)
+	return button
+
+
 func _on_ability_pressed(f: Fighter, ab: Dictionary) -> void:
+	if ab.target == "choice":
+		_show_choices(f, ab)
+		return
 	if ab.target == "none":
 		_clear_actions()
 		await _execute(f, ab, null)
@@ -379,11 +398,29 @@ func _on_ability_pressed(f: Fighter, ab: Dictionary) -> void:
 	_pending_user = f
 	_clear_actions()
 	_turn_label.text = "%s: Ziel antippen" % ab.name
-	for target in _valid_targets(f, ab):
-		_view(target).targetable = true
-	var back := Button.new()
-	back.text = "Zurück"
-	back.custom_minimum_size = Vector2(266, 72)
+	for target in skills.valid_targets(f, ab):
+		view(target).targetable = true
+	_add_back_button(f)
+
+
+## Zweiter Schritt einer Fähigkeit mit Auswahl (Rüstung, Ware, Siegel, Monster).
+func _show_choices(f: Fighter, ab: Dictionary) -> void:
+	_clear_actions()
+	_turn_label.text = "%s: auswählen" % ab.name
+	for choice: Dictionary in ab.choices:
+		var reason := skills.choice_blocked(f, ab, choice)
+		var button := _action_button("%s\n%s" % [choice.name, reason if reason != "" else choice.info])
+		button.disabled = reason != ""
+		var picked := ab.duplicate()
+		picked.choice = choice.id
+		picked.target = choice.get("then", ab.get("then", "none"))
+		button.pressed.connect(_on_ability_pressed.bind(f, picked))
+		_grid.add_child(button)
+	_add_back_button(f)
+
+
+func _add_back_button(f: Fighter) -> void:
+	var back := _action_button("Zurück")
 	back.add_theme_font_size_override("font_size", 18)
 	back.pressed.connect(_on_back_pressed.bind(f))
 	_grid.add_child(back)
@@ -394,28 +431,15 @@ func _on_back_pressed(f: Fighter) -> void:
 	_show_actions(f)
 
 
-func _valid_targets(f: Fighter, ab: Dictionary) -> Array[Fighter]:
-	match ab.target:
-		"enemy":
-			return _alive(enemies)
-		"ally":
-			return _alive(heroes)
-		"ally_other":
-			var others := _alive(heroes)
-			others.erase(f)
-			return others
-	return []
-
-
 func _cancel_targeting() -> void:
 	_pending = {}
 	_pending_user = null
-	for view: FighterView in _views.values():
-		view.targetable = false
+	for v: FighterView in _views.values():
+		v.targetable = false
 
 
 func _on_fighter_tapped(target: Fighter) -> void:
-	if _pending.is_empty() or not _view(target).targetable:
+	if _pending.is_empty() or not view(target).targetable:
 		return
 	var ab := _pending
 	var f := _pending_user
@@ -429,315 +453,166 @@ func _on_fighter_tapped(target: Fighter) -> void:
 func _execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 	var id: String = ab.id
 	_turn_label.text = "%s: %s" % [f.display_name, ab.name]
-	_crits = 0
+	crits = 0
 	f.mana -= ab.get("mana", 0)
 	if ab.has("cd"):
 		f.cooldowns[id] = ab.cd + 1
 
 	if id == "row":
 		f.back_row = not f.back_row
-		_add_log("%s wechselt nach %s." % [f.display_name, f.row_name()])
-		await _move_to_row(f)
+		add_log("%s wechselt nach %s." % [f.display_name, f.row_name()])
+		await move_to_row(f)
 		return
 	# Glühen beim Wirken einer Fähigkeit (Ult: goldener Lichtblitz über den ganzen Bildschirm)
-	var view := _view(f)
-	view.cast_hop()
+	var v := view(f)
+	v.cast_hop()
 	if id == "ult":
 		f.ult = 0.0
-		_add_log("[color=#f2c14e][b]%s entfesselt %s![/b][/color]" % [f.display_name, ab.name])
-		view.glow(Color("ffe08a"), 1.2)
-		Fx.spawn(_field, Fx.Kind.GLOW, view.center(), Color("f2c14e"), 220.0, 1.0)
-		Fx.spawn(_field, Fx.Kind.RING, view.center(), Color("ffe08a"), 260.0, 0.8)
-		_screen_flash(Color("f2c14e"))
-		await _wait(0.35)
+		f.credit().stat_ults += 1
+		add_log("[color=#f2c14e][b]%s entfesselt %s![/b][/color]" % [f.display_name, ab.name])
+		v.glow(Color("ffe08a"), 1.2)
+		Fx.spawn(_field, Fx.Kind.GLOW, v.center(), Color("f2c14e"), 220.0, 1.0)
+		Fx.spawn(_field, Fx.Kind.RING, v.center(), Color("ffe08a"), 260.0, 0.8)
+		screen_flash(Color("f2c14e"))
+		await wait(0.35)
 	else:
-		view.glow(_glow_color(f))
-		Fx.spawn(_field, Fx.Kind.GLOW, view.center(), _glow_color(f), 110.0, 0.6)
+		v.glow(f.color.lightened(0.35))
+		Fx.spawn(_field, Fx.Kind.GLOW, v.center(), f.color.lightened(0.35), 110.0, 0.6)
+		if ab.has("duet"):
+			add_log("[color=#ffa8e0][b]Duett: %s![/b][/color]" % ab.name)
 
-	match f.klass:
-		"tank":
-			await _execute_tank(f, id, target)
-		"archer":
-			await _execute_archer(f, id, target)
-		"ritualist":
-			await _execute_ritualist(f, id, target, int(ab.get("blood", 0)))
-		"singer":
-			await _execute_singer(f, id, target)
-	_refresh()
-	await _wait(0.35)
-
-
-func _execute_tank(f: Fighter, id: String, target: Fighter) -> void:
-	match id:
-		"arcane_strike":
-			await _projectile(f, target, Color("4a8cf0"))
-			_apply_damage(target, _calc_damage(f, target, 16, "magic"))
-		"ban":
-			f.taunt = 3
-			_add_log("%s zeichnet ein Bann-Zeichen: Gegner müssen ihn angreifen." % f.display_name)
-			_float(f, "Bann!", Color("6fa8ff"))
-		"barrier":
-			target.shield += 25
-			_float(target, "Schild +25", Color("6fa8ff"))
-			_add_log("%s schützt %s mit einer Barriere." % [f.display_name, target.display_name])
-		"condense":
-			f.mana = mini(f.mana + 25, f.max_mana)
-			f.def_buff_turns = BUFF_TURNS + 1
-			_float(f, "+25 Mana", Color("6fa8ff"))
-			_add_log("%s verdichtet seine Rüstung." % f.display_name)
-		"ult":
-			f.fortress = true
-			f.fortress_absorbed = 0
-			_add_log("Bis zu seinem nächsten Zug fängt Arkon den Schaden der Gruppe zur Hälfte ab.")
-
-
-func _execute_archer(f: Fighter, id: String, target: Fighter) -> void:
-	match id:
-		"shot":
-			var base := 12.0
-			if f.charged:
-				base = 30.0
-				f.charged = false
-				f.add_ult(30)
-			await _projectile(f, target, Color("b8ff8a"))
-			_apply_damage(target, _calc_damage(f, target, base, "ranged"))
-		"charge":
-			f.charged = true
-			_float(f, "Gespannt", Color("b8ff8a"))
-			_add_log("%s spannt den Bogen." % f.display_name)
-		"volley":
-			for enemy in _alive(enemies):
-				_projectile(f, enemy, Color("b8ff8a"))
-			await _wait(0.3)
-			for enemy in _alive(enemies):
-				_apply_damage(enemy, _calc_damage(f, enemy, 9, "ranged"))
-		"net":
-			await _projectile(f, target, Color.WHITE)
-			_apply_damage(target, _calc_damage(f, target, 6, "ranged"))
-			target.next_time += target.turn_delay() * 0.7
-			_float(target, "Gefesselt", Color.WHITE, 30)
-			_add_log("%s rutscht auf der Zugleiste nach hinten." % target.display_name)
-		"ult":
-			await _projectile(f, target, Color("f2c14e"))
-			_apply_damage(target, _calc_damage(f, target, 70, "ranged"))
-	f.add_ult(20 * _crits)
-
-
-func _execute_ritualist(f: Fighter, id: String, target: Fighter, cost: int) -> void:
-	match id:
-		"bite":
-			await _lunge(f, target, 0.25)
-			var dealt := _apply_damage(target, _calc_damage(f, target, 14, "melee"))
-			var healed := f.heal(ceili(dealt * 0.5))
-			f.blood = mini(f.blood + ceili(dealt * 0.5), Fighter.MAX_BLOOD)
-			if healed > 0:
-				_float(f, "+%d" % healed, Color("6dff8a"))
-		"gift":
-			_pay_blood(f, cost)
-			_heal(target, 32)
-		"circle":
-			_pay_blood(f, cost)
-			for hero in _alive(heroes):
-				_heal(hero, 16)
-		"pact":
-			_pay_blood(f, cost)
-			target.atk_buff_turns = BUFF_TURNS + 1
-			_float(target, "Angriff+", Color("ff8080"))
-			_add_log("%s schließt einen Blutpakt mit %s." % [f.display_name, target.display_name])
-		"ult":
-			var price := f.max_hp / 2
-			var from_blood := mini(f.blood, price)
-			f.blood -= from_blood
-			f.hp -= price - from_blood
-			_float(f, "-%d" % (price - from_blood), Color("ff6060"))
-			for hero in heroes:
-				if hero == f:
-					continue
-				if not hero.is_alive():
-					hero.hp = 1
-					hero.next_time = current.next_time + hero.turn_delay()
-					_add_log("%s wird wiederbelebt!" % hero.display_name)
-				_heal(hero, 60)
-	await _wait(0.1)
-
-
-## Ritualist bezahlt mit Blutvorrat, der Rest kommt aus dem eigenen Leben.
-## Für andere geopfertes Leben lädt die Ult.
-func _pay_blood(f: Fighter, cost: int) -> void:
-	var from_blood := mini(f.blood, cost)
-	f.blood -= from_blood
-	var from_hp := cost - from_blood
-	f.hp = maxi(f.hp - from_hp, 1)
-	if from_hp > 0:
-		_float(f, "-%d" % from_hp, Color("ff6060"))
-	f.add_ult(cost * 1.2)
-
-
-func _execute_singer(f: Fighter, id: String, target: Fighter) -> void:
-	match id:
-		"spark":
-			await _projectile(f, target, Color("ffe680"))
-			_apply_damage(target, _calc_damage(f, target, 11, "magic"))
-			_add_resonance(f, true)
-		"lullaby":
-			if f.res_def >= Fighter.MAX_RES:
-				_add_log("[color=#6fe0ff]Sternenglanz![/color] Das Wiegenlied klingt für die ganze Gruppe.")
-				for hero in _alive(heroes):
-					_heal(hero, 24)
-			else:
-				_heal(target, 24)
-			_add_resonance(f, false)
-		"comet":
-			var used := f.res_off
-			f.res_off = 0
-			f.add_ult(used * 12)
-			var dmg := 8.0 + 8.0 * used
-			var targets: Array[Fighter] = [target]
-			if used >= Fighter.MAX_RES:
-				_add_log("[color=#ff8a3d]Sternenglanz![/color] Der Komet trifft alle Gegner.")
-				targets = _alive(enemies)
-			for enemy in targets:
-				_projectile(f, enemy, Color("ff8a3d"))
-			await _wait(0.3)
-			for enemy in targets:
-				_apply_damage(enemy, _calc_damage(f, enemy, dmg, "magic"))
-		"meteor":
-			var used := f.res_def
-			f.res_def = 0
-			f.add_ult(used * 12)
-			for hero in _alive(heroes):
-				_heal(hero, 7 * used)
-		"ult":
-			for hero in _alive(heroes):
-				_heal(hero, 35)
-				hero.atk_buff_turns = BUFF_TURNS + 1
-				hero.def_buff_turns = BUFF_TURNS + 1
-	await _wait(0.1)
-
-
-func _add_resonance(f: Fighter, offensive: bool) -> void:
-	if offensive:
-		f.res_off = mini(f.res_off + 1, Fighter.MAX_RES)
-		f.off_idle = 0
-	else:
-		f.res_def = mini(f.res_def + 1, Fighter.MAX_RES)
-		f.def_idle = 0
+	await skills.execute(f, ab, target)
+	refresh()
+	await wait(0.35)
 
 
 # --- Gegner-Zug ---------------------------------------------------------------
 
 func _enemy_turn(e: Fighter) -> void:
 	_turn_label.text = "%s ist am Zug …" % e.display_name
-	await _wait(0.5)
-	match e.klass:
-		"kobold":
-			await _enemy_attack(e, [_pick_target()], 13, "melee", "Dolchstich")
-		"slime":
-			await _enemy_attack(e, [_pick_target()], 15, "melee", "Schleimschlag")
-		"boss":
-			await _boss_turn(e)
+	await wait(0.5)
+	if e.klass == "boss":
+		await _boss_turn(e)
+	else:
+		var data: Dictionary = Sandbox.ENEMIES[e.klass]
+		var attack: Dictionary = data.attacks[e.step % data.attacks.size()]
+		var targets: Array[Fighter] = []
+		if attack.get("all", false):
+			targets = allies()
+		elif attack.kind == "melee":
+			targets = [pick_target()]
+		else:
+			targets = [pick_target(attack.get("back", false), true)]
+		await enemy_attack(e, targets, attack.base, attack.kind, attack.name)
+		e.step += 1
+	e.intent = skills.enemy_intent(e)
 
 
 func _boss_turn(boss: Fighter) -> void:
 	if not boss.enraged and boss.hp <= boss.max_hp * BOSS_RAGE_AT:
 		boss.enraged = true
-		_add_log("[color=red][b]Der Steinwächter wird wütend![/b] Er schlägt härter zu.[/color]")
-	match boss.boss_step % 4:
+		add_log("[color=red][b]Der Steinwächter wird wütend![/b] Er schlägt härter zu.[/color]")
+	match boss.step % 4:
 		0:
-			await _enemy_attack(boss, [_pick_target()], BOSS_FIST, "melee", "Steinfaust")
-			boss.intent = "Sammelt Kraft …"
+			await enemy_attack(boss, [pick_target()], BOSS_FIST, "melee", "Steinfaust")
 		1:
-			await _enemy_attack(boss, [_pick_target()], BOSS_FIST - 6, "melee", "Steinfaust")
-			boss.intent = "NÄCHSTER ZUG: Felsregen auf die HINTERE Reihe!"
-			_add_log("[color=yellow]Der Steinwächter hebt die Arme: Gleich regnet es Felsen auf die hintere Reihe![/color]")
+			await enemy_attack(boss, [pick_target()], BOSS_FIST - 6, "melee", "Steinfaust")
+			add_log("[color=yellow]Der Steinwächter hebt die Arme: Gleich regnet es Felsen auf die hintere Reihe! (Magie)[/color]")
 		2:
-			var targets := _alive(heroes).filter(func(h: Fighter) -> bool: return h.back_row)
+			var targets := allies().filter(func(h: Fighter) -> bool: return h.back_row)
 			if targets.is_empty():
-				_add_log("Felsregen! Aber hinten steht niemand mehr.")
-				_float(boss, "Verfehlt!", Color.WHITE)
+				add_log("Felsregen! Aber hinten steht niemand mehr.")
+				float_text(boss, "Verfehlt!", Color.WHITE)
 			else:
 				var typed: Array[Fighter] = []
 				typed.assign(targets)
-				await _enemy_attack(boss, typed, BOSS_ROCKFALL, "magic", "Felsregen")
-			boss.intent = "Wirft seine Kette nach hinten."
+				await enemy_attack(boss, typed, BOSS_ROCKFALL, "magic", "Felsregen")
 		3:
-			var back := _alive(heroes).filter(func(h: Fighter) -> bool: return h.back_row)
-			var target: Fighter = back.pick_random() if not back.is_empty() else _pick_target()
+			var back := allies().filter(func(h: Fighter) -> bool: return h.back_row)
+			var target: Fighter = back.pick_random() if not back.is_empty() else pick_target()
 			if target.back_row:
 				target.back_row = false
-				_add_log("[color=yellow]Kettenzug! %s wird nach vorne gerissen.[/color]" % target.display_name)
-				await _move_to_row(target)
-			await _enemy_attack(boss, [target], BOSS_CHAIN, "melee", "Kettenzug")
-			boss.intent = "Schlägt mit der Steinfaust zu."
-	boss.boss_step += 1
+				add_log("[color=yellow]Kettenzug! %s wird nach vorne gerissen.[/color]" % target.display_name)
+				await move_to_row(target)
+			await enemy_attack(boss, [target], BOSS_CHAIN, "melee", "Kettenzug")
+	boss.step += 1
 
 
-## Nahkämpfer zielen meist auf die vordere Reihe. Ein Bann-Zeichen zwingt sie zum Tank.
-func _pick_target() -> Fighter:
-	var tank := _hero("tank")
-	if tank.is_alive() and tank.taunt > 0:
-		tank.taunt -= 1
-		return tank
-	var alive := _alive(heroes)
-	var front := alive.filter(func(h: Fighter) -> bool: return not h.back_row)
-	var back := alive.filter(func(h: Fighter) -> bool: return h.back_row)
+## Wen ein Gegner angreift. Bedrohung (Bann-Zeichen, Amboss, Moosschild, Magnet-Haken) zwingt zum Ziel.
+## Nahkämpfer zielen meist auf die vordere Reihe, Fernkämpfer und Magier auf irgendwen.
+func pick_target(prefer_back := false, anyone := false) -> Fighter:
+	var candidates := allies()
+	var taunting := candidates.filter(func(h: Fighter) -> bool: return h.taunt > 0)
+	if not taunting.is_empty():
+		taunting.sort_custom(func(a: Fighter, b: Fighter) -> bool: return a.taunt > b.taunt)
+		var forced: Fighter = taunting[0]
+		forced.taunt -= 1
+		return forced
+	var front := candidates.filter(func(h: Fighter) -> bool: return not h.back_row)
+	var back := candidates.filter(func(h: Fighter) -> bool: return h.back_row)
+	if prefer_back and not back.is_empty():
+		return back.pick_random()
+	if anyone:
+		return candidates.pick_random()
 	if not front.is_empty() and (back.is_empty() or randf() < 0.7):
 		return front.pick_random()
 	return back.pick_random()
 
 
 ## Ein Gegner-Angriff mit Chance auf perfekte Reaktion.
-func _enemy_attack(e: Fighter, targets: Array[Fighter], base: int, kind: String, attack_name: String) -> void:
+func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String, attack_name: String) -> void:
+	# Der Roboter fängt Angriffe auf den Verbündeten ab, den er beschützt
+	var targets: Array[Fighter] = []
+	var mechanic := hero("mechanic")
+	for t in p_targets:
+		var actual := t
+		if mechanic != null and mechanic.robot.is_alive() and mechanic.robot.protecting == t \
+				and t != mechanic.robot and p_targets.size() == 1:
+			float_text(t, "Roboter schützt!", Color("d9a441"), 26)
+			actual = mechanic.robot
+		if not actual in targets:
+			targets.append(actual)
 	var names: Array[String] = []
 	for t in targets:
 		names.append(t.display_name)
-	_add_log("%s: [b]%s[/b] auf %s" % [e.display_name, attack_name, ", ".join(names)])
+	add_log("%s: [b]%s[/b] (%s) auf %s" % [e.display_name, attack_name, e.element, ", ".join(names)])
 	_turn_label.text = "%s: %s!" % [e.display_name, attack_name]
 
-	var reactors := targets.filter(func(h: Fighter) -> bool: return h.reaction != "")
+	var reactors := targets.filter(func(h: Fighter) -> bool: return h.reaction != "" and h.smoke == 0)
 	var focus: Fighter = reactors[0] if not reactors.is_empty() else targets[0]
 	var duration := randf_range(0.75, 1.15)
 	if kind == "melee":
-		_lunge(e, focus, duration)
+		lunge(e, focus, duration)
 	else:
 		for t in targets:
-			_projectile(e, t, Color("b98cff"), duration)
+			projectile(e, t, Elements.color(e.element), duration)
 
 	var success := false
 	if reactors.is_empty():
-		await _wait(duration)
+		await wait(duration)
 	else:
 		success = await _reaction_window(e, focus, duration)
 
 	for t in targets:
 		if not t.is_alive():
 			continue
+		if t.smoke > 0:
+			t.smoke -= 1
+			var saved := calc_damage(e, t, base, kind, e.element)
+			if t.smoke_source != null:
+				t.smoke_source.credit().stat_blocked += saved
+			float_text(t, "Verfehlt!", Color("d8d8e8"))
+			continue
 		if success and t.reaction != "":
-			_on_perfect_reaction(t)
+			t.credit().stat_perfect += 1
+			t.stat_blocked += calc_damage(e, t, base, kind, e.element)
+			_last_crit = false
+			_last_eff = 1.0
+			await skills.on_perfect_reaction(t, e)
 		else:
-			_apply_damage(t, _calc_damage(e, t, base, kind))
-	_refresh()
-	await _wait(0.45)
-
-
-func _on_perfect_reaction(h: Fighter) -> void:
-	var view := _view(h)
-	match h.klass:
-		"tank":
-			h.mana = mini(h.mana + 15, h.max_mana)
-			_float(h, "PARIERT! +15 Mana", Color("6fa8ff"))
-			view.glow(Color("9cc4ff"), 0.8)
-			Fx.spawn(_field, Fx.Kind.SPARKS, view.center(), Color("cfe2ff"), 90.0, 0.5)
-		"singer":
-			_add_resonance(h, true)
-			_add_resonance(h, false)
-			_float(h, "AUSGEWICHEN! +1 Resonanz", Color("ffe680"))
-			view.cast_hop()
-			view.glow(Color("ffe680"), 0.8)
-		_:
-			_float(h, "AUSGEWICHEN!", Color("b8ff8a"))
-			view.cast_hop()
-	_add_log("[color=#8affc1]%s reagiert perfekt![/color]" % h.display_name)
+			hit(e, t, base, kind, e.element)
+	refresh()
+	await wait(0.45)
 
 
 # --- Perfekte Reaktion --------------------------------------------------------
@@ -753,16 +628,17 @@ func _reaction_window(attacker: Fighter, target: Fighter, duration: float) -> bo
 	_react_start = Time.get_ticks_usec()
 	_reacting = true
 	# Alles außer Angreifer und Ziel wird abgedunkelt, damit man sich auf den Moment konzentriert
-	var raised: Array[FighterView] = [_view(attacker), _view(target)]
-	for view in raised:
-		view.z_index = 16
+	var raised: Array[FighterView] = [view(attacker), view(target)]
+	for v in raised:
+		v.z_index = 16
 	create_tween().tween_property(_react_dim, "color:a", 0.55, 0.15)
-	await _wait(duration + REACT_LATE)
+	await wait(duration + REACT_LATE)
 	_reacting = false
 	_ring_layer.queue_redraw()
 	create_tween().tween_property(_react_dim, "color:a", 0.0, 0.25)
-	for view in raised:
-		view.z_index = 0
+	for v in raised:
+		if is_instance_valid(v):
+			v.z_index = 0
 	return _react_press >= 0.0 and _is_perfect(_react_press)
 
 
@@ -791,7 +667,7 @@ func _input(event: InputEvent) -> void:
 	_react_press = _react_time()
 	if _is_perfect(_react_press):
 		_react_feedback = "PERFEKT!"
-		var c := _view(_react_target).center()
+		var c := view(_react_target).center()
 		Fx.spawn(_field, Fx.Kind.RING, c, Color("6dff8a"), 150.0, 0.45)
 		Fx.spawn(_field, Fx.Kind.GLOW, c, Color("6dff8a"), 120.0, 0.4)
 	elif _react_press < _react_duration:
@@ -806,13 +682,13 @@ func _update_glint() -> void:
 		return
 	_react_glint = true
 	if _react_press < 0.0:
-		Fx.spawn(_field, Fx.Kind.GLOW, _view(_react_target).center(), Color.WHITE, 90.0, 0.22)
+		Fx.spawn(_field, Fx.Kind.GLOW, view(_react_target).center(), Color.WHITE, 90.0, 0.22)
 
 
 func _draw_ring() -> void:
 	if not _reacting:
 		return
-	var c := _view(_react_target).center()
+	var c := view(_react_target).center()
 	var t := _react_time()
 	var progress := clampf(t / _react_duration, 0.0, 1.0)
 	var radius := lerpf(RING_START, RING_TARGET, progress)
@@ -867,8 +743,11 @@ func _draw_ring() -> void:
 
 # --- Schaden und Heilung ------------------------------------------------------
 
-func _calc_damage(attacker: Fighter, target: Fighter, base: float, kind: String) -> int:
+## Berechnet den Schaden eines Angriffs (ohne Schilde und Rüstungen des Ziels).
+## kind: melee (Nahkampf), ranged (Fernkampf) oder magic (Magie)
+func calc_damage(attacker: Fighter, target: Fighter, base: float, kind: String, element := "") -> int:
 	var dmg := base * randf_range(0.9, 1.1)
+	var star := element == "Sternenkraft"
 	_last_crit = false
 	if attacker.atk_buff_turns > 0:
 		dmg *= ATK_BUFF
@@ -877,11 +756,18 @@ func _calc_damage(attacker: Fighter, target: Fighter, base: float, kind: String)
 			dmg *= BACK_ROW_MELEE
 		if target.back_row:
 			dmg *= BACK_ROW_MELEE
-	if target.def_buff_turns > 0:
+	if target.def_buff_turns > 0 and not star:
 		dmg *= DEF_BUFF
 	if attacker.enraged:
 		dmg *= BOSS_RAGE_MULT
-	if attacker.is_hero:
+	if target.vuln_turns > 0:
+		dmg *= VULN_MULT
+	if not star:
+		dmg *= target.resist
+	_last_eff = Elements.multiplier(element, target.element)
+	dmg *= _last_eff
+	dmg *= skills.damage_bonus(attacker)
+	if attacker.is_ally():
 		# Passive "Ruhige Hand": Der Bogenschütze trifft aus der hinteren Reihe öfter kritisch.
 		var chance := CRIT_CHANCE
 		if attacker.klass == "archer" and attacker.back_row:
@@ -892,90 +778,132 @@ func _calc_damage(attacker: Fighter, target: Fighter, base: float, kind: String)
 	return maxi(1, roundi(dmg))
 
 
-## Zieht Leben ab (Schild, Festung und Umwandlung des Magier-Tanks eingerechnet).
+## Angriff: Schaden berechnen und zufügen. Gibt die verlorenen LP zurück.
+func hit(attacker: Fighter, target: Fighter, base: float, kind: String, element := "") -> int:
+	if not target.is_alive():
+		return 0
+	var dmg := calc_damage(attacker, target, base, kind, element)
+	return apply_damage(target, dmg, attacker, kind)
+
+
+## Zieht Leben ab (Festung, Rüstung, Schilde und Umwandlung eingerechnet).
 ## Gibt den tatsächlich verlorenen Lebensbetrag zurück.
-func _apply_damage(target: Fighter, amount: int) -> int:
+func apply_damage(target: Fighter, amount: int, source: Fighter = null, kind := "") -> int:
 	var crit := _last_crit
+	var eff := _last_eff
 	_last_crit = false
+	_last_eff = 1.0
+	if not target.is_alive():
+		return 0
 	if crit:
-		_crits += 1
-	var tank := _hero("tank")
-	if target.is_hero and target != tank and tank.fortress and tank.is_alive():
-		_float(target, "Festung!", Color("6fa8ff"))
+		crits += 1
+	var tank := hero("tank")
+	if target.is_ally() and tank != null and target != tank and tank.fortress and tank.is_alive():
+		float_text(target, "Festung!", Color("6fa8ff"))
+		var halved := roundi(amount * 0.5)
+		tank.stat_blocked += amount - halved
 		target = tank
-		amount = roundi(amount * 0.5)
-	if target == tank and tank.fortress:
+		amount = halved
+	if tank != null and target == tank and tank.fortress:
 		tank.fortress_absorbed += amount
 
-	if target.shield > 0:
-		var blocked := mini(target.shield, amount)
-		target.shield -= blocked
-		amount -= blocked
-		if blocked > 0:
-			_float(target, "Schild -%d" % blocked, Color("6fa8ff"), 24)
+	amount = skills.mitigate(target, amount, kind)
+
+	if target.shield_total() > 0 and amount > 0:
+		var blocked_total := 0
+		for giver: Fighter in target.shields.keys():
+			var used := mini(target.shields[giver], amount)
+			target.shields[giver] -= used
+			amount -= used
+			blocked_total += used
+			giver.credit().stat_blocked += used
+			if target.shields[giver] <= 0:
+				target.shields.erase(giver)
+		if blocked_total > 0:
+			float_text(target, "Schild -%d" % blocked_total, Color("6fa8ff"), 24)
 
 	# Umwandlung: Der Magier-Tank fängt die Hälfte mit Mana ab. Das lädt seine Ult.
 	if target.klass == "tank" and amount > 0:
 		var to_mana := mini(target.mana, amount / 2)
 		target.mana -= to_mana
 		amount -= to_mana
+		target.stat_blocked += to_mana
 		target.add_ult(to_mana * 1.5)
 		if to_mana > 0:
-			_float(target, "-%d Mana" % to_mana, Color("6fa8ff"), 24)
+			float_text(target, "-%d Mana" % to_mana, Color("6fa8ff"), 24)
 
-	target.hp = maxi(target.hp - amount, 0)
+	var lost := mini(amount, target.hp)
+	target.hp -= lost
+	if source != null and source.is_ally() and not target.is_ally():
+		source.credit().stat_damage += lost
+	# Was der Roboter einsteckt, kommt bei niemand anderem an: zählt beim Mechaniker als abgewehrt
+	if target.klass == "robot":
+		target.credit().stat_blocked += lost
+	elif target.is_ally():
+		target.credit().stat_taken += lost
+
 	if crit:
-		_float(target, "KRITISCH -%d" % amount, Color("ffd34d"))
+		float_text(target, "KRITISCH -%d" % amount, Color("ffd34d"))
 	else:
-		_float(target, "-%d" % amount, Color("ff6b6b"))
-	var target_view := _view(target)
-	target_view.hit_react()
-	Fx.spawn(_field, Fx.Kind.SPARKS, target_view.center(), Color("ffd9a0") if not crit else Color("ffe14d"), 70.0 if not crit else 110.0, 0.4)
+		float_text(target, "-%d" % amount, Color("ff6b6b"))
+	if eff > 1.0:
+		float_text(target, "Sehr effektiv!", Color("ffe14d"), 52)
+	elif eff < 1.0:
+		float_text(target, "Wenig effektiv …", Color(0.75, 0.75, 0.8), 52)
+	if has_view(target):
+		var target_view := view(target)
+		target_view.hit_react()
+		Fx.spawn(_field, Fx.Kind.SPARKS, target_view.center(), Color("ffd9a0") if not crit else Color("ffe14d"), 70.0 if not crit else 110.0, 0.4)
 
-	if target.charged and amount > 0:
-		target.charged = false
-		_add_log("%s wird getroffen, das Spannen bricht ab." % target.display_name)
+	skills.after_damage(target, lost)
 	if not target.is_alive():
-		_add_log("[color=red]%s ist besiegt![/color]" % target.display_name)
-		if target.klass == "tank":
-			target.fortress = false
-			target.taunt = 0
-	_refresh()
-	return amount
+		add_log("[color=red]%s ist besiegt![/color]" % target.display_name)
+		skills.on_death(target)
+	refresh()
+	return lost
 
 
-func _heal(target: Fighter, amount: int) -> void:
+## Heilt ein Ziel. "source" bekommt die Heilung in der Auswertung gutgeschrieben.
+func heal(source: Fighter, target: Fighter, amount: int) -> int:
 	var healed := target.heal(amount)
-	_float(target, "+%d" % healed, Color("6dff8a"))
-	var view := _view(target)
-	view.glow(Color("8affa0"), 0.6)
-	Fx.spawn(_field, Fx.Kind.GLOW, view.center(), Color("4cff7a"), 90.0, 0.6)
-	Fx.spawn(_field, Fx.Kind.SPARKS, view.center(), Color("b6ffc8"), 60.0, 0.6)
+	if source != null:
+		source.credit().stat_heal += healed
+	if has_view(target):
+		float_text(target, "+%d" % healed, Color("6dff8a"))
+		var v := view(target)
+		v.glow(Color("8affa0"), 0.6)
+		Fx.spawn(_field, Fx.Kind.GLOW, v.center(), Color("4cff7a"), 90.0, 0.6)
+		Fx.spawn(_field, Fx.Kind.SPARKS, v.center(), Color("b6ffc8"), 60.0, 0.6)
+	return healed
+
+
+func give_shield(source: Fighter, target: Fighter, amount: int) -> void:
+	target.add_shield(source, amount)
+	float_text(target, "Schild +%d" % amount, Color("6fa8ff"))
 
 
 # --- Animationen --------------------------------------------------------------
 
-func _wait(seconds: float) -> void:
+func wait(seconds: float) -> void:
 	await get_tree().create_timer(seconds).timeout
-
-
-## Leuchtfarbe einer Figur für Fähigkeiten.
-func _glow_color(f: Fighter) -> Color:
-	return f.color.lightened(0.35)
 
 
 ## Figur holt aus, stürmt auf das Ziel zu und kehrt zurück.
 ## Der Aufprall ist genau nach "duration" Sekunden, dort erscheint ein Hieb.
-func _lunge(f: Fighter, target: Fighter, duration: float) -> void:
-	var target_view := _view(target)
-	await _view(f).lunge(target_view.home_feet(), duration)
-	Fx.spawn(_field, Fx.Kind.SLASH, target_view.center(), Color("fff4d6"), 46.0, 0.25)
+func lunge(f: Fighter, target: Fighter, duration: float) -> void:
+	var target_view := view(target)
+	await view(f).lunge(target_view.home_feet(), duration)
+	if is_instance_valid(target_view):
+		Fx.spawn(_field, Fx.Kind.SLASH, target_view.center(), Color("fff4d6"), 46.0, 0.25)
 
 
 ## Ein leuchtendes Geschoss mit Lichtschweif fliegt vom Angreifer zum Ziel.
-func _projectile(from: Fighter, to: Fighter, color: Color, duration := 0.3) -> void:
+func projectile(from: Fighter, to: Fighter, color: Color, duration := 0.3) -> void:
+	if not has_view(from) or not has_view(to):
+		await wait(duration)
+		return
 	var orb := Node2D.new()
-	orb.position = _view(from).center()
+	orb.position = view(from).center()
 	orb.z_index = 7
 	orb.material = Fx.add_material()
 	orb.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
@@ -1007,31 +935,43 @@ func _projectile(from: Fighter, to: Fighter, color: Color, duration := 0.3) -> v
 	orb.add_child(trail)
 	_field.add_child(orb)
 
-	var target_view := _view(to)
+	var end := view(to).center()
 	var tween := create_tween()
-	tween.tween_property(orb, "position", target_view.center(), duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tween.tween_property(orb, "position", end, duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	await tween.finished
-	Fx.spawn(_field, Fx.Kind.GLOW, target_view.center(), color, 90.0, 0.35)
+	Fx.spawn(_field, Fx.Kind.GLOW, end, color, 90.0, 0.35)
 	orb.queue_free()
 
 
+## Leuchten an einer Figur (z. B. bei Siegeln oder Explosionen).
+func burst(f: Fighter, color: Color, radius := 160.0) -> void:
+	if not has_view(f):
+		return
+	var v := view(f)
+	v.glow(color, 0.8)
+	Fx.spawn(_field, Fx.Kind.GLOW, v.center(), color, radius, 0.7)
+	Fx.spawn(_field, Fx.Kind.RING, v.center(), color.lightened(0.3), radius * 1.4, 0.6)
+
+
 ## Kurzer farbiger Lichtblitz über das ganze Bild (Ult, Festung).
-func _screen_flash(color: Color) -> void:
+func screen_flash(color: Color) -> void:
 	_flash_rect.color = Color(color, 0.35)
 	create_tween().tween_property(_flash_rect, "color:a", 0.0, 0.5)
 
 
-func _move_to_row(f: Fighter) -> void:
-	var view := _view(f)
+func move_to_row(f: Fighter) -> void:
+	var v := view(f)
 	var x := BACK_X if f.back_row else FRONT_X
-	view.play("run", 0.4)
+	v.play("run", 0.4)
 	var tween := create_tween()
-	tween.tween_property(view, "position:x", x, 0.4).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(v, "position:x", x, 0.4).set_trans(Tween.TRANS_QUAD)
 	await tween.finished
 
 
 ## Schwebender Text über einer Figur (Schaden, Heilung, Hinweise).
-func _float(f: Fighter, text: String, color: Color, offset := 0.0) -> void:
+func float_text(f: Fighter, text: String, color: Color, offset := 0.0) -> void:
+	if not has_view(f):
+		return
 	var label := Label.new()
 	label.text = text
 	label.add_theme_font_size_override("font_size", 22)
@@ -1042,8 +982,8 @@ func _float(f: Fighter, text: String, color: Color, offset := 0.0) -> void:
 	label.size = Vector2(300, 30)
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	label.z_index = 10
-	var view := _view(f)
-	label.position = Vector2(view.center().x - 150, view.position.y + 10 + offset)
+	var v := view(f)
+	label.position = Vector2(v.center().x - 150, v.position.y + 10 + offset)
 	_field.add_child(label)
 	var tween := create_tween()
 	tween.set_parallel()
@@ -1052,10 +992,30 @@ func _float(f: Fighter, text: String, color: Color, offset := 0.0) -> void:
 	tween.chain().tween_callback(label.queue_free)
 
 
+## Großer Schriftzug in der Bildmitte (z. B. "Welle 2").
+func _banner(text: String) -> void:
+	var label := Label.new()
+	label.text = text
+	label.add_theme_font_size_override("font_size", 64)
+	label.add_theme_color_override("font_color", Color("f2c14e"))
+	label.add_theme_color_override("font_outline_color", Color.BLACK)
+	label.add_theme_constant_override("outline_size", 10)
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.size = Vector2(SCREEN.x, 90)
+	label.position = Vector2(0, 200)
+	label.z_index = 22
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(label)
+	var tween := create_tween()
+	tween.tween_interval(1.0)
+	tween.tween_property(label, "modulate:a", 0.0, 0.6)
+	tween.tween_callback(label.queue_free)
+
+
 # --- Oberfläche ---------------------------------------------------------------
 
 func _build_ui() -> void:
-	theme = _make_theme()
+	theme = make_theme()
 
 	# Hintergrund: Gewölbe mit Fackeln und Lava-Brunnen, zum Rand hin abgedunkelt
 	add_child(Backdrop.new())
@@ -1099,6 +1059,14 @@ func _build_ui() -> void:
 	_order_box.add_theme_constant_override("separation", 6)
 	add_child(_order_box)
 
+	var menu := Button.new()
+	menu.text = "Auswahl"
+	menu.position = Vector2(1170, 16)
+	menu.size = Vector2(96, 44)
+	menu.add_theme_font_size_override("font_size", 16)
+	menu.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/auswahl.tscn"))
+	add_child(menu)
+
 	# Untere Leiste: Kampf-Log links, Fähigkeiten rechts
 	var bottom := Panel.new()
 	var bottom_style := StyleBoxFlat.new()
@@ -1128,7 +1096,7 @@ func _build_ui() -> void:
 	add_child(_turn_label)
 
 	_grid = GridContainer.new()
-	_grid.columns = 3
+	_grid.columns = 4
 	_grid.position = Vector2(444, 562)
 	_grid.add_theme_constant_override("h_separation", 8)
 	_grid.add_theme_constant_override("v_separation", 8)
@@ -1173,7 +1141,7 @@ func _vignette(strength: float) -> ColorRect:
 
 
 ## Menü-Optik im Stil von Octopath: dunkelblaue Felder mit feinem goldenen Rand.
-func _make_theme() -> Theme:
+static func make_theme() -> Theme:
 	var t := Theme.new()
 	var states := {
 		"normal": [Color(0.06, 0.07, 0.15, 0.95), Color(0.85, 0.72, 0.45, 0.55)],
@@ -1213,13 +1181,13 @@ func _clear_actions() -> void:
 		child.queue_free()
 
 
-func _refresh() -> void:
+func refresh() -> void:
 	for f: Fighter in _views:
-		_view(f).active = f == current
+		view(f).active = f == current
 
 	for child in _order_box.get_children():
 		child.queue_free()
-	var order := _peek_order(9)
+	var order := peek_order(8)
 	for i in order.size():
 		var f := order[i]
 		var chip := PanelContainer.new()
@@ -1237,12 +1205,13 @@ func _refresh() -> void:
 		chip.add_child(row)
 		# Kleines Bild der Figur
 		var portrait := TextureRect.new()
-		portrait.texture = _portrait(f)
+		portrait.texture = FighterView.portrait(f.klass)
 		portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		portrait.custom_minimum_size = Vector2(24, 48)
 		portrait.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		portrait.flip_h = f.is_hero
+		portrait.flip_h = f.is_ally()
+		portrait.self_modulate = FighterView.tint(f.klass)
 		row.add_child(portrait)
 		var label := Label.new()
 		label.text = ("JETZT\n" if i == 0 else "") + f.display_name
@@ -1255,34 +1224,95 @@ func _refresh() -> void:
 		_order_box.add_child(chip)
 
 
-## Erstes Standbild einer Figur (für die Zugleiste).
-func _portrait(f: Fighter) -> Texture2D:
-	var look: Dictionary = FighterView.LOOKS[f.klass]
-	return load(FighterView.SPRITE_PATH % [look.sprite, "idle", 0])
-
-
-func _add_log(text: String) -> void:
+func add_log(text: String) -> void:
 	_log.append_text(text + "\n")
 
 
+# --- Auswertung ---------------------------------------------------------------
+
 func _show_end_screen(won: bool) -> void:
 	var shade := ColorRect.new()
-	shade.color = Color(0, 0, 0, 0.6)
+	shade.color = Color(0, 0, 0, 0.82)
 	shade.size = SCREEN
 	shade.z_index = 30
 	add_child(shade)
 	var title := Label.new()
 	title.text = "SIEG!" if won else "NIEDERLAGE"
-	title.add_theme_font_size_override("font_size", 64)
+	title.add_theme_font_size_override("font_size", 52)
 	title.add_theme_color_override("font_color", Color("6dff8a") if won else Color("ff6b6b"))
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.size = Vector2(1280, 90)
-	title.position = Vector2(0, 230)
+	title.size = Vector2(SCREEN.x, 70)
+	title.position = Vector2(0, 40)
 	shade.add_child(title)
+
+	var sub := Label.new()
+	sub.text = "Kampfauswertung · %d Züge · Welle %d von %d · %s" % [_turns, _wave + 1, _waves.size(), Sandbox.ENCOUNTERS[Sandbox.encounter].name]
+	sub.add_theme_font_size_override("font_size", 18)
+	sub.add_theme_color_override("font_color", Color("f2c14e"))
+	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	sub.size = Vector2(SCREEN.x, 30)
+	sub.position = Vector2(0, 112)
+	shade.add_child(sub)
+
+	# Tabelle: eine Zeile pro Klasse (Begleiter zählen beim Besitzer mit)
+	var grid := GridContainer.new()
+	grid.columns = 8
+	grid.position = Vector2(110, 160)
+	grid.add_theme_constant_override("h_separation", 26)
+	grid.add_theme_constant_override("v_separation", 10)
+	shade.add_child(grid)
+	var headers := ["Klasse", "Rolle", "Schaden", "Heilung", "Abgewehrt", "Erlitten", "Perfekt", "Ults"]
+	for text: String in headers:
+		grid.add_child(_cell(text, Color("f2c14e"), 18))
+	var best := {}
+	for key in ["dmg", "heal", "blocked"]:
+		best[key] = 0
+	for h in heroes:
+		best.dmg = maxi(best.dmg, h.stat_damage)
+		best.heal = maxi(best.heal, h.stat_heal)
+		best.blocked = maxi(best.blocked, h.stat_blocked)
+	for h in heroes:
+		var data: Dictionary = Sandbox.CLASSES[h.klass]
+		var name_text := "%s (%s)" % [h.class_title, h.display_name]
+		if not h.is_alive():
+			name_text += " †"
+		grid.add_child(_cell(name_text, h.color.lightened(0.2), 18))
+		grid.add_child(_cell(data.role, Sandbox.ROLE_COLORS[data.role], 18))
+		grid.add_child(_cell(str(h.stat_damage), Color("ffe14d") if h.stat_damage == best.dmg and best.dmg > 0 else Color.WHITE, 20))
+		grid.add_child(_cell(str(h.stat_heal), Color("6dff8a") if h.stat_heal == best.heal and best.heal > 0 else Color.WHITE, 20))
+		grid.add_child(_cell(str(h.stat_blocked), Color("6fa8ff") if h.stat_blocked == best.blocked and best.blocked > 0 else Color.WHITE, 20))
+		grid.add_child(_cell(str(h.stat_taken), Color.WHITE, 20))
+		grid.add_child(_cell(str(h.stat_perfect), Color.WHITE, 20))
+		grid.add_child(_cell(str(h.stat_ults), Color.WHITE, 20))
+
+	var hint := Label.new()
+	hint.text = "Abgewehrt = Schaden, der durch Schilde, Rüstung, Mana, Parieren, Ausweichen oder Rauch nicht angekommen ist.\nRoboter und Monster zählen bei Mechaniker und Zähmer mit (was der Roboter einsteckt, zählt als abgewehrt)."
+	hint.add_theme_font_size_override("font_size", 14)
+	hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.6))
+	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	hint.size = Vector2(SCREEN.x, 50)
+	hint.position = Vector2(0, 470)
+	shade.add_child(hint)
+
 	var again := Button.new()
-	again.text = "Nochmal kämpfen"
-	again.add_theme_font_size_override("font_size", 26)
-	again.size = Vector2(320, 80)
-	again.position = Vector2(480, 360)
+	again.text = "Nochmal (gleiches Team)"
+	again.add_theme_font_size_override("font_size", 22)
+	again.size = Vector2(330, 72)
+	again.position = Vector2(290, 560)
 	again.pressed.connect(func() -> void: get_tree().reload_current_scene())
 	shade.add_child(again)
+	var change := Button.new()
+	change.text = "Team ändern"
+	change.add_theme_font_size_override("font_size", 22)
+	change.size = Vector2(330, 72)
+	change.position = Vector2(660, 560)
+	change.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/auswahl.tscn"))
+	shade.add_child(change)
+
+
+func _cell(text: String, color: Color, font_size: int) -> Label:
+	var label := Label.new()
+	label.text = text
+	label.add_theme_font_size_override("font_size", font_size)
+	label.add_theme_color_override("font_color", color)
+	return label
