@@ -18,13 +18,15 @@ Handy quer halten. Jeder Push auf `main` baut die Web-Version automatisch neu
 
 ## Spielprinzip
 
-Vier Helden gegen Grubenwolf, Schleimling und den Boss Steinwächter.
+Vier Helden gegen Grubenkobold, Schleimling und den Boss Steinwächter.
+Kampfbildschirm seitlich wie Final Fantasy 6: Gegner links, Helden rechts (vorne/hinten).
 
 - **Zugleiste oben:** Wer schneller ist (Tempo), ist öfter dran. Die Leiste zeigt die nächsten 9 Züge.
 - **Zwei Reihen:** Hinten bekommt und macht man nur 60 % Nahkampf-Schaden.
   Fernkampf und Magie ignorieren die Reihe. „Nach vorne“/„Nach hinten“ kostet den Zug.
 - **Perfekte Reaktion:** Greift ein Gegner an, schließt sich ein goldener Ring.
-  Genau dann tippen (oder Leertaste), wenn er den weißen Kreis erreicht:
+  Genau dann tippen (oder Leertaste), wenn er den weißen Kreis erreicht
+  (oben zeigt zusätzlich eine Zeitleiste den Moment: Der Strich muss im grünen Feld sein):
   Magier-Tank pariert (+15 Mana), Bogenschütze und Sternensängerin weichen aus.
   Der Ritualist hat keine Reaktion.
 - **Ult-Leiste:** lädt nur durch die klassentypische Aktion.
@@ -49,6 +51,10 @@ die Werte der Teilnehmer in `_create_fighters()`, die Fähigkeiten in `_abilitie
 - `scenes/kampf.tscn` – Kampf-Prototyp (Startszene)
 - `scripts/kampf/combat.gd` – Kampfablauf, Fähigkeiten, Gegner, Oberfläche
 - `scripts/kampf/fighter.gd` – ein Kampfteilnehmer mit allen Werten
-- `scripts/kampf/fighter_view.gd` – Platzhalter-Grafik eines Teilnehmers
+- `scripts/kampf/fighter_view.gd` – Pixel-Figur eines Teilnehmers mit Animationen und Namensschild
+- `scripts/kampf/backdrop.gd` – Hintergrund (Gewölbe, Fackeln, Licht, Staub)
+- `scripts/kampf/fx.gd` – Leuchteffekte (Glühen, Hieb, Funken, Ring)
+- `shaders/` – Treffer-Blitz, leuchtender Umriss, Randabdunklung
+- `assets/` – Pixel-Art (Quellen und Lizenzen in `CREDITS.md`)
 - `export_presets.cfg` + `.github/workflows/web-export.yml` – Web-Export und Veröffentlichung
 - `scenes/main.tscn` + `scripts/battle.gd` – der erste Mini-Kampf (Holy Trinity, Bedrohung)

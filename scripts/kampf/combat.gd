@@ -9,10 +9,13 @@ extends Control
 signal _turn_done
 
 const SCREEN := Vector2(1280, 720)
-const HERO_SIZE := Vector2(250, 100)
-const BACK_X := 20.0
-const FRONT_X := 290.0
-const HERO_Y: Array[float] = [100.0, 207.0, 314.0, 421.0]
+## Kampfbildschirm wie Final Fantasy 6: Gegner links, Helden rechts in zwei Reihen.
+const FRONT_X := 740.0
+const BACK_X := 1000.0
+## Fußpunkte der Helden (von oben nach unten).
+const HERO_FEET_Y: Array[float] = [258.0, 334.0, 410.0, 486.0]
+const FIELD_BOTTOM := 528.0
+const VIGNETTE_SHADER := preload("res://shaders/vignette.gdshader")
 
 ## Nahkampf-Schaden wird so stark verringert, wenn Angreifer oder Ziel hinten stehen.
 const BACK_ROW_MELEE := 0.6
@@ -50,6 +53,8 @@ var _react_duration := 1.0
 var _react_press := -1.0
 var _react_target: Fighter
 var _react_feedback := ""
+## Ob das Aufblitzen zu Beginn des Zeitfensters schon gezeigt wurde.
+var _react_glint := false
 var _last_crit := false
 ## Kritische Treffer der laufenden Aktion (lädt die Ult des Bogenschützen).
 var _crits := 0
@@ -61,6 +66,8 @@ var _turn_label: Label
 var _grid: GridContainer
 var _log: RichTextLabel
 var _rotate_hint: Label
+var _react_dim: ColorRect
+var _flash_rect: ColorRect
 
 
 func _ready() -> void:
@@ -75,52 +82,54 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if _reacting:
+		_update_glint()
 		_ring_layer.queue_redraw()
 
 
 # --- Teilnehmer ---------------------------------------------------------------
 
 func _create_fighters() -> void:
-	var tank := Fighter.new("Arkon", "tank", "Magier-Tank", true, 150, 9, Color("4a7cff"), Fighter.Shape.SQUARE)
+	var tank := Fighter.new("Arkon", "tank", "Magier-Tank", true, 150, 9, Color("4a7cff"))
 	tank.max_mana = 80
 	tank.mana = 60
 	tank.reaction = "parry"
-	var archer := Fighter.new("Wren", "archer", "Bogenschütze", true, 95, 13, Color("5fd35f"), Fighter.Shape.TRIANGLE)
+	var archer := Fighter.new("Wren", "archer", "Bogenschütze", true, 95, 13, Color("5fd35f"))
 	archer.max_mana = 50
 	archer.mana = 50
 	archer.reaction = "dodge"
 	archer.back_row = true
-	var ritualist := Fighter.new("Vesna", "ritualist", "Ritualist", true, 110, 10, Color("c2304f"), Fighter.Shape.DIAMOND)
+	var ritualist := Fighter.new("Vesna", "ritualist", "Ritualist", true, 110, 10, Color("c2304f"))
 	ritualist.back_row = true
-	var singer := Fighter.new("Xavina", "singer", "Sternensängerin", true, 95, 11, Color("ffd34d"), Fighter.Shape.STAR)
+	var singer := Fighter.new("Xavina", "singer", "Sternensängerin", true, 95, 11, Color("ffd34d"))
 	singer.max_mana = 90
 	singer.mana = 90
 	singer.reaction = "dodge"
 	singer.back_row = true
 	heroes = [tank, archer, ritualist, singer]
 
-	var wolf := Fighter.new("Grubenwolf", "wolf", "Monster", false, 55, 14, Color("9aa3b5"), Fighter.Shape.FANG)
-	var slime := Fighter.new("Schleimling", "slime", "Monster", false, 65, 7, Color("7ad66b"), Fighter.Shape.CIRCLE)
-	var boss := Fighter.new("Steinwächter", "boss", "BOSS", false, 380, 9, Color("9b5cd6"), Fighter.Shape.HEXAGON)
+	var kobold := Fighter.new("Grubenkobold", "kobold", "Monster", false, 55, 14, Color("9aa3b5"))
+	var slime := Fighter.new("Schleimling", "slime", "Monster", false, 65, 7, Color("7ad66b"))
+	var boss := Fighter.new("Steinwächter", "boss", "BOSS", false, 380, 9, Color("9b5cd6"))
 	boss.intent = "Schlägt mit der Steinfaust zu."
-	enemies = [wolf, slime, boss]
+	enemies = [kobold, slime, boss]
 
+	# Gegner links: Boss hinten groß, die beiden Monster davor
+	_add_view(boss, Vector2(40, 400))
+	_add_view(kobold, Vector2(330, 290))
+	_add_view(slime, Vector2(330, 450))
 	for i in heroes.size():
 		var hero := heroes[i]
-		var x := BACK_X if hero.back_row else FRONT_X
-		_add_view(hero, Vector2(x, HERO_Y[i]), HERO_SIZE)
-	_add_view(wolf, Vector2(790, 110), Vector2(230, 100))
-	_add_view(slime, Vector2(790, 330), Vector2(230, 100))
-	_add_view(boss, Vector2(1035, 190), Vector2(235, 190))
+		_add_view(hero, Vector2(BACK_X if hero.back_row else FRONT_X, HERO_FEET_Y[i]))
 
 	for f in _all():
 		f.next_time = f.turn_delay() * randf_range(0.2, 1.0)
 
 
-func _add_view(f: Fighter, pos: Vector2, view_size: Vector2) -> void:
+## Legt die Grafik eines Teilnehmers an. "feet" ist der Punkt, auf dem die Figur steht.
+func _add_view(f: Fighter, feet: Vector2) -> void:
 	var view := FighterView.new()
-	view.setup(f, view_size)
-	view.position = pos
+	view.setup(f)
+	view.position = Vector2(feet.x, feet.y - view.sprite_size.y)
 	view.tapped.connect(_on_fighter_tapped)
 	_field.add_child(view)
 	_views[f] = view
@@ -212,7 +221,10 @@ func _begin_turn(f: Fighter) -> void:
 		f.fortress = false
 		var power := maxi(20, f.fortress_absorbed)
 		_add_log("[color=#4a8cf0][b]Die Arkane Festung explodiert![/b][/color] (%d aufgefangener Schaden)" % f.fortress_absorbed)
-		_shake(_view(f))
+		_view(f).glow(Color("6fa8ff"), 1.0)
+		Fx.spawn(_field, Fx.Kind.GLOW, _view(f).center(), Color("4a8cf0"), 260.0, 0.9)
+		Fx.spawn(_field, Fx.Kind.RING, _view(f).center(), Color("9cc4ff"), 420.0, 0.7)
+		_screen_flash(Color("4a8cf0"))
 		await _wait(0.4)
 		for enemy in _alive(enemies):
 			_apply_damage(enemy, power)
@@ -427,10 +439,20 @@ func _execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 		_add_log("%s wechselt nach %s." % [f.display_name, f.row_name()])
 		await _move_to_row(f)
 		return
+	# Glühen beim Wirken einer Fähigkeit (Ult: goldener Lichtblitz über den ganzen Bildschirm)
+	var view := _view(f)
+	view.cast_hop()
 	if id == "ult":
 		f.ult = 0.0
 		_add_log("[color=#f2c14e][b]%s entfesselt %s![/b][/color]" % [f.display_name, ab.name])
-		_shake(_view(f))
+		view.glow(Color("ffe08a"), 1.2)
+		Fx.spawn(_field, Fx.Kind.GLOW, view.center(), Color("f2c14e"), 220.0, 1.0)
+		Fx.spawn(_field, Fx.Kind.RING, view.center(), Color("ffe08a"), 260.0, 0.8)
+		_screen_flash(Color("f2c14e"))
+		await _wait(0.35)
+	else:
+		view.glow(_glow_color(f))
+		Fx.spawn(_field, Fx.Kind.GLOW, view.center(), _glow_color(f), 110.0, 0.6)
 
 	match f.klass:
 		"tank":
@@ -608,8 +630,8 @@ func _enemy_turn(e: Fighter) -> void:
 	_turn_label.text = "%s ist am Zug …" % e.display_name
 	await _wait(0.5)
 	match e.klass:
-		"wolf":
-			await _enemy_attack(e, [_pick_target()], 13, "melee", "Biss")
+		"kobold":
+			await _enemy_attack(e, [_pick_target()], 13, "melee", "Dolchstich")
 		"slime":
 			await _enemy_attack(e, [_pick_target()], 15, "melee", "Schleimschlag")
 		"boss":
@@ -685,7 +707,7 @@ func _enemy_attack(e: Fighter, targets: Array[Fighter], base: int, kind: String,
 	if reactors.is_empty():
 		await _wait(duration)
 	else:
-		success = await _reaction_window(focus, duration)
+		success = await _reaction_window(e, focus, duration)
 
 	for t in targets:
 		if not t.is_alive():
@@ -699,32 +721,48 @@ func _enemy_attack(e: Fighter, targets: Array[Fighter], base: int, kind: String,
 
 
 func _on_perfect_reaction(h: Fighter) -> void:
+	var view := _view(h)
 	match h.klass:
 		"tank":
 			h.mana = mini(h.mana + 15, h.max_mana)
 			_float(h, "PARIERT! +15 Mana", Color("6fa8ff"))
+			view.glow(Color("9cc4ff"), 0.8)
+			Fx.spawn(_field, Fx.Kind.SPARKS, view.center(), Color("cfe2ff"), 90.0, 0.5)
 		"singer":
 			_add_resonance(h, true)
 			_add_resonance(h, false)
 			_float(h, "AUSGEWICHEN! +1 Resonanz", Color("ffe680"))
+			view.cast_hop()
+			view.glow(Color("ffe680"), 0.8)
 		_:
 			_float(h, "AUSGEWICHEN!", Color("b8ff8a"))
+			view.cast_hop()
 	_add_log("[color=#8affc1]%s reagiert perfekt![/color]" % h.display_name)
 
 
 # --- Perfekte Reaktion --------------------------------------------------------
 
-## Zeigt den schrumpfenden Ring. Gibt true zurück, wenn im richtigen Moment getippt wurde.
-func _reaction_window(target: Fighter, duration: float) -> bool:
+## Zeigt den schrumpfenden Ring und die Zeitleiste. Gibt true zurück,
+## wenn im richtigen Moment getippt wurde.
+func _reaction_window(attacker: Fighter, target: Fighter, duration: float) -> bool:
 	_react_target = target
 	_react_duration = duration
 	_react_press = -1.0
 	_react_feedback = ""
+	_react_glint = false
 	_react_start = Time.get_ticks_usec()
 	_reacting = true
+	# Alles außer Angreifer und Ziel wird abgedunkelt, damit man sich auf den Moment konzentriert
+	var raised: Array[FighterView] = [_view(attacker), _view(target)]
+	for view in raised:
+		view.z_index = 16
+	create_tween().tween_property(_react_dim, "color:a", 0.55, 0.15)
 	await _wait(duration + REACT_LATE)
 	_reacting = false
 	_ring_layer.queue_redraw()
+	create_tween().tween_property(_react_dim, "color:a", 0.0, 0.25)
+	for view in raised:
+		view.z_index = 0
 	return _react_press >= 0.0 and _is_perfect(_react_press)
 
 
@@ -753,10 +791,22 @@ func _input(event: InputEvent) -> void:
 	_react_press = _react_time()
 	if _is_perfect(_react_press):
 		_react_feedback = "PERFEKT!"
+		var c := _view(_react_target).center()
+		Fx.spawn(_field, Fx.Kind.RING, c, Color("6dff8a"), 150.0, 0.45)
+		Fx.spawn(_field, Fx.Kind.GLOW, c, Color("6dff8a"), 120.0, 0.4)
 	elif _react_press < _react_duration:
 		_react_feedback = "Zu früh!"
 	else:
 		_react_feedback = "Zu spät!"
+
+
+## Kurzes Aufblitzen im Zielkreis, genau wenn das Zeitfenster aufgeht.
+func _update_glint() -> void:
+	if _react_glint or _react_time() < _react_duration - REACT_EARLY:
+		return
+	_react_glint = true
+	if _react_press < 0.0:
+		Fx.spawn(_field, Fx.Kind.GLOW, _view(_react_target).center(), Color.WHITE, 90.0, 0.22)
 
 
 func _draw_ring() -> void:
@@ -767,21 +817,52 @@ func _draw_ring() -> void:
 	var progress := clampf(t / _react_duration, 0.0, 1.0)
 	var radius := lerpf(RING_START, RING_TARGET, progress)
 	var in_window := _is_perfect(t)
-	var font := ThemeDB.fallback_font
-	_ring_layer.draw_circle(c, RING_TARGET, Color(1, 1, 1, 0.12))
-	_ring_layer.draw_arc(c, RING_TARGET, 0, TAU, 48, Color(1, 1, 1, 0.9), 3)
-	var ring_color := Color("6dff8a") if in_window else Color("f2c14e")
+	var green := Color("6dff8a")
+	var gold := Color("f2c14e")
+	var ring_color := green if in_window else gold
+
+	# Zielkreis: Wenn der Ring ihn erreicht, ist der richtige Moment
+	var pulse := 0.5 + 0.5 * sin(t * 30.0)
+	_ring_layer.draw_circle(c, RING_TARGET, Color(green, 0.25 + 0.2 * pulse) if in_window else Color(1, 1, 1, 0.12))
+	_ring_layer.draw_arc(c, RING_TARGET, 0, TAU, 48, Color.WHITE, 4)
+
+	# Schrumpfender Ring mit Leucht-Saum und vier Pfeilen, die nach innen zeigen
 	if _react_press < 0.0:
-		_ring_layer.draw_arc(c, radius, 0, TAU, 64, ring_color, 6)
-	var verb := "PARIEREN" if _react_target.reaction == "parry" else "AUSWEICHEN"
-	var text := _react_feedback if _react_feedback != "" else "Tippen zum " + verb.capitalize() + "!"
-	var color := Color("6dff8a") if _react_feedback == "PERFEKT!" else Color.WHITE
-	if _react_feedback != "" and _react_feedback != "PERFEKT!":
+		_ring_layer.draw_arc(c, radius, 0, TAU, 64, Color(ring_color, 0.15), 22)
+		_ring_layer.draw_arc(c, radius, 0, TAU, 64, Color(ring_color, 0.35), 12)
+		_ring_layer.draw_arc(c, radius, 0, TAU, 64, ring_color, 5)
+		for i in 4:
+			var dir := Vector2.RIGHT.rotated(TAU * i / 4.0 + t * 1.5)
+			var tip := c + dir * (radius - 10.0)
+			var side := dir.orthogonal() * 9.0
+			var back := c + dir * (radius + 12.0)
+			_ring_layer.draw_colored_polygon(PackedVector2Array([tip, back + side, back - side]), ring_color)
+
+	# Zeitleiste oben: Der Strich muss im grünen Feld sein
+	var bar := Rect2(440, 104, 400, 18)
+	var total := _react_duration + REACT_LATE
+	var zone_from := bar.position.x + bar.size.x * (_react_duration - REACT_EARLY) / total
+	var zone_to := bar.end.x
+	_ring_layer.draw_rect(bar.grow(3), Color(0, 0, 0, 0.75))
+	_ring_layer.draw_rect(bar, Color(1, 1, 1, 0.12))
+	_ring_layer.draw_rect(Rect2(zone_from, bar.position.y, zone_to - zone_from, bar.size.y), Color(green, 0.55 + 0.35 * pulse if in_window else 0.55))
+	var marker_t := _react_press if _react_press >= 0.0 else t
+	var marker_x := bar.position.x + bar.size.x * clampf(marker_t / total, 0.0, 1.0)
+	_ring_layer.draw_rect(Rect2(marker_x - 3, bar.position.y - 6, 6, bar.size.y + 12), Color.WHITE)
+
+	var verb := "Parieren" if _react_target.reaction == "parry" else "Ausweichen"
+	var text := _react_feedback if _react_feedback != "" else "%s: Tippen zum %s!" % [_react_target.display_name, verb]
+	var color := Color.WHITE
+	if _react_feedback == "PERFEKT!":
+		color = green
+	elif _react_feedback != "":
 		color = Color("ff6b6b")
-	var text_y := c.y - RING_START - 12
-	if text_y < 30:
-		text_y = c.y + RING_START + 30
-	_ring_layer.draw_string(font, Vector2(c.x - 150, text_y), text, HORIZONTAL_ALIGNMENT_CENTER, 300, 22, color)
+	elif in_window:
+		text = "JETZT!"
+		color = green
+	var font := ThemeDB.fallback_font
+	_ring_layer.draw_string_outline(font, Vector2(340, 94), text, HORIZONTAL_ALIGNMENT_CENTER, 600, 26, 8, Color.BLACK)
+	_ring_layer.draw_string(font, Vector2(340, 94), text, HORIZONTAL_ALIGNMENT_CENTER, 600, 26, color)
 
 
 # --- Schaden und Heilung ------------------------------------------------------
@@ -847,7 +928,9 @@ func _apply_damage(target: Fighter, amount: int) -> int:
 		_float(target, "KRITISCH -%d" % amount, Color("ffd34d"))
 	else:
 		_float(target, "-%d" % amount, Color("ff6b6b"))
-	_shake(_view(target))
+	var target_view := _view(target)
+	target_view.hit_react()
+	Fx.spawn(_field, Fx.Kind.SPARKS, target_view.center(), Color("ffd9a0") if not crit else Color("ffe14d"), 70.0 if not crit else 110.0, 0.4)
 
 	if target.charged and amount > 0:
 		target.charged = false
@@ -864,6 +947,10 @@ func _apply_damage(target: Fighter, amount: int) -> int:
 func _heal(target: Fighter, amount: int) -> void:
 	var healed := target.heal(amount)
 	_float(target, "+%d" % healed, Color("6dff8a"))
+	var view := _view(target)
+	view.glow(Color("8affa0"), 0.6)
+	Fx.spawn(_field, Fx.Kind.GLOW, view.center(), Color("4cff7a"), 90.0, 0.6)
+	Fx.spawn(_field, Fx.Kind.SPARKS, view.center(), Color("b6ffc8"), 60.0, 0.6)
 
 
 # --- Animationen --------------------------------------------------------------
@@ -872,50 +959,74 @@ func _wait(seconds: float) -> void:
 	await get_tree().create_timer(seconds).timeout
 
 
-## Figur stürmt auf das Ziel zu und kehrt zurück. Der Aufprall ist nach "duration" Sekunden.
+## Leuchtfarbe einer Figur für Fähigkeiten.
+func _glow_color(f: Fighter) -> Color:
+	return f.color.lightened(0.35)
+
+
+## Figur holt aus, stürmt auf das Ziel zu und kehrt zurück.
+## Der Aufprall ist genau nach "duration" Sekunden, dort erscheint ein Hieb.
 func _lunge(f: Fighter, target: Fighter, duration: float) -> void:
-	var view := _view(f)
-	var home := view.position
-	var to := _view(target).center() - view.size * 0.5
-	var hit_pos := home.lerp(to, 0.8)
-	view.z_index = 5
-	var tween := create_tween()
-	tween.tween_property(view, "position", hit_pos, duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	tween.tween_property(view, "position", home, 0.25).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	await get_tree().create_timer(duration).timeout
-	view.z_index = 0
+	var target_view := _view(target)
+	await _view(f).lunge(target_view.home_feet(), duration)
+	Fx.spawn(_field, Fx.Kind.SLASH, target_view.center(), Color("fff4d6"), 46.0, 0.25)
 
 
-## Ein Geschoss fliegt vom Angreifer zum Ziel.
+## Ein leuchtendes Geschoss mit Lichtschweif fliegt vom Angreifer zum Ziel.
 func _projectile(from: Fighter, to: Fighter, color: Color, duration := 0.3) -> void:
-	var ball := Panel.new()
-	var style := StyleBoxFlat.new()
-	style.bg_color = color
-	style.set_corner_radius_all(9)
-	ball.add_theme_stylebox_override("panel", style)
-	ball.size = Vector2(18, 18)
-	ball.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	ball.position = _view(from).center() - ball.size * 0.5
-	ball.z_index = 6
-	_field.add_child(ball)
+	var orb := Node2D.new()
+	orb.position = _view(from).center()
+	orb.z_index = 7
+	orb.material = Fx.add_material()
+	orb.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	var halo := Sprite2D.new()
+	halo.texture = Fx.glow_texture()
+	halo.scale = Vector2(0.75, 0.75)
+	halo.modulate = Color(color, 0.9)
+	halo.use_parent_material = true
+	orb.add_child(halo)
+	var core := Sprite2D.new()
+	core.texture = Fx.glow_texture()
+	core.scale = Vector2(0.22, 0.22)
+	core.use_parent_material = true
+	orb.add_child(core)
+	var trail := CPUParticles2D.new()
+	trail.use_parent_material = true
+	trail.local_coords = false
+	trail.amount = 24
+	trail.lifetime = 0.35
+	trail.gravity = Vector2.ZERO
+	trail.initial_velocity_max = 20.0
+	trail.spread = 180.0
+	trail.scale_amount_min = 3.0
+	trail.scale_amount_max = 5.0
+	var ramp := Gradient.new()
+	ramp.set_color(0, Color(color, 0.9))
+	ramp.set_color(1, Color(color, 0.0))
+	trail.color_ramp = ramp
+	orb.add_child(trail)
+	_field.add_child(orb)
+
+	var target_view := _view(to)
 	var tween := create_tween()
-	tween.tween_property(ball, "position", _view(to).center() - ball.size * 0.5, duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	tween.tween_callback(ball.queue_free)
+	tween.tween_property(orb, "position", target_view.center(), duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	await tween.finished
+	Fx.spawn(_field, Fx.Kind.GLOW, target_view.center(), color, 90.0, 0.35)
+	orb.queue_free()
 
 
-func _shake(view: FighterView) -> void:
-	var tween := create_tween()
-	for i in 3:
-		tween.tween_property(view, "rotation", 0.04 * (1 if i % 2 == 0 else -1), 0.04)
-	tween.tween_property(view, "rotation", 0.0, 0.04)
+## Kurzer farbiger Lichtblitz über das ganze Bild (Ult, Festung).
+func _screen_flash(color: Color) -> void:
+	_flash_rect.color = Color(color, 0.35)
+	create_tween().tween_property(_flash_rect, "color:a", 0.0, 0.5)
 
 
 func _move_to_row(f: Fighter) -> void:
 	var view := _view(f)
 	var x := BACK_X if f.back_row else FRONT_X
+	view.play("run", 0.4)
 	var tween := create_tween()
-	tween.tween_property(view, "position:x", x, 0.35).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(view, "position:x", x, 0.4).set_trans(Tween.TRANS_QUAD)
 	await tween.finished
 
 
@@ -944,39 +1055,60 @@ func _float(f: Fighter, text: String, color: Color, offset := 0.0) -> void:
 # --- Oberfläche ---------------------------------------------------------------
 
 func _build_ui() -> void:
-	var background := ColorRect.new()
-	background.color = Color("161827")
-	background.size = SCREEN
-	add_child(background)
+	theme = _make_theme()
 
-	# Zugleiste oben
-	var order_title := Label.new()
-	order_title.text = "Nächste\nZüge"
-	order_title.position = Vector2(14, 12)
-	order_title.add_theme_font_size_override("font_size", 14)
-	add_child(order_title)
-	_order_box = HBoxContainer.new()
-	_order_box.position = Vector2(80, 10)
-	_order_box.add_theme_constant_override("separation", 6)
-	add_child(_order_box)
-
-	for info: Array in [["hinten", BACK_X], ["vorne", FRONT_X]]:
-		var row_label := Label.new()
-		row_label.text = "Reihe " + info[0]
-		row_label.position = Vector2(info[1] + 8, 76)
-		row_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.4))
-		add_child(row_label)
+	# Hintergrund: Gewölbe mit Fackeln und Lava-Brunnen, zum Rand hin abgedunkelt
+	add_child(Backdrop.new())
+	add_child(_vignette(0.85))
 
 	_field = Control.new()
 	_field.size = SCREEN
 	_field.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_field)
 
+	# Leichte Abdunklung auch über den Figuren, damit das Bild einen "Rahmen" bekommt
+	add_child(_vignette(0.35))
+
+	# Abdunklung während der perfekten Reaktion (nur Angreifer und Ziel bleiben hell)
+	_react_dim = ColorRect.new()
+	_react_dim.color = Color(0.01, 0.0, 0.03, 0.0)
+	_react_dim.size = Vector2(SCREEN.x, FIELD_BOTTOM)
+	_react_dim.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_react_dim.z_index = 15
+	add_child(_react_dim)
+
+	for info: Array in [["hinten", BACK_X], ["vorne", FRONT_X]]:
+		var row_label := Label.new()
+		row_label.text = "Reihe " + info[0]
+		row_label.position = Vector2(info[1] + 8, 118)
+		row_label.add_theme_color_override("font_color", Color(1, 0.92, 0.75, 0.55))
+		row_label.add_theme_color_override("font_outline_color", Color.BLACK)
+		row_label.add_theme_constant_override("outline_size", 4)
+		add_child(row_label)
+
+	# Zugleiste oben
+	var order_title := Label.new()
+	order_title.text = "Nächste\nZüge"
+	order_title.position = Vector2(14, 14)
+	order_title.add_theme_font_size_override("font_size", 14)
+	order_title.add_theme_color_override("font_outline_color", Color.BLACK)
+	order_title.add_theme_constant_override("outline_size", 4)
+	add_child(order_title)
+	_order_box = HBoxContainer.new()
+	_order_box.position = Vector2(80, 10)
+	_order_box.add_theme_constant_override("separation", 6)
+	add_child(_order_box)
+
 	# Untere Leiste: Kampf-Log links, Fähigkeiten rechts
-	var bottom := ColorRect.new()
-	bottom.color = Color("0f1019")
-	bottom.position = Vector2(0, 528)
-	bottom.size = Vector2(1280, 192)
+	var bottom := Panel.new()
+	var bottom_style := StyleBoxFlat.new()
+	bottom_style.bg_color = Color(0.03, 0.03, 0.07, 0.96)
+	bottom_style.border_color = Color(0.85, 0.7, 0.4, 0.6)
+	bottom_style.border_width_top = 2
+	bottom.add_theme_stylebox_override("panel", bottom_style)
+	bottom.position = Vector2(0, FIELD_BOTTOM)
+	bottom.size = Vector2(SCREEN.x, SCREEN.y - FIELD_BOTTOM)
+	bottom.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(bottom)
 
 	_log = RichTextLabel.new()
@@ -1010,6 +1142,14 @@ func _build_ui() -> void:
 	_ring_layer.draw.connect(_draw_ring)
 	add_child(_ring_layer)
 
+	_flash_rect = ColorRect.new()
+	_flash_rect.color = Color(1, 1, 1, 0)
+	_flash_rect.size = SCREEN
+	_flash_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_flash_rect.material = Fx.add_material()
+	_flash_rect.z_index = 25
+	add_child(_flash_rect)
+
 	_rotate_hint = Label.new()
 	_rotate_hint.text = "Tipp: Handy quer halten"
 	_rotate_hint.position = Vector2(490, 470)
@@ -1019,6 +1159,46 @@ func _build_ui() -> void:
 	add_child(_rotate_hint)
 	get_tree().root.size_changed.connect(_update_rotate_hint)
 	_update_rotate_hint()
+
+
+func _vignette(strength: float) -> ColorRect:
+	var rect := ColorRect.new()
+	rect.size = Vector2(SCREEN.x, FIELD_BOTTOM)
+	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var mat := ShaderMaterial.new()
+	mat.shader = VIGNETTE_SHADER
+	mat.set_shader_parameter("strength", strength)
+	rect.material = mat
+	return rect
+
+
+## Menü-Optik im Stil von Octopath: dunkelblaue Felder mit feinem goldenen Rand.
+func _make_theme() -> Theme:
+	var t := Theme.new()
+	var states := {
+		"normal": [Color(0.06, 0.07, 0.15, 0.95), Color(0.85, 0.72, 0.45, 0.55)],
+		"hover": [Color(0.1, 0.12, 0.24, 0.95), Color(1.0, 0.85, 0.5, 0.9)],
+		"pressed": [Color(0.16, 0.14, 0.08, 0.95), Color(1.0, 0.85, 0.5, 1.0)],
+		"disabled": [Color(0.05, 0.05, 0.08, 0.85), Color(0.5, 0.5, 0.55, 0.25)],
+		"focus": [Color(0, 0, 0, 0), Color(1.0, 0.85, 0.5, 0.6)],
+	}
+	for state: String in states:
+		var box := StyleBoxFlat.new()
+		box.bg_color = states[state][0]
+		box.border_color = states[state][1]
+		box.set_border_width_all(1 if state == "normal" else 2)
+		box.set_corner_radius_all(3)
+		box.content_margin_left = 8
+		box.content_margin_right = 8
+		box.draw_center = state != "focus"
+		if state != "focus":
+			box.shadow_color = Color(0, 0, 0, 0.4)
+			box.shadow_size = 3
+		t.set_stylebox(state, "Button", box)
+	t.set_color("font_color", "Button", Color("f3ead8"))
+	t.set_color("font_hover_color", "Button", Color.WHITE)
+	t.set_color("font_disabled_color", "Button", Color(1, 1, 1, 0.35))
+	return t
 
 
 func _update_rotate_hint() -> void:
@@ -1044,21 +1224,41 @@ func _refresh() -> void:
 		var f := order[i]
 		var chip := PanelContainer.new()
 		var style := StyleBoxFlat.new()
-		style.bg_color = f.color.darkened(0.55)
-		style.set_corner_radius_all(6)
+		style.bg_color = Color(f.color.darkened(0.7), 0.9)
+		style.set_corner_radius_all(4)
 		style.border_color = f.color if i > 0 else Color("f2c14e")
 		style.set_border_width_all(2 if i > 0 else 4)
-		style.content_margin_left = 6
-		style.content_margin_right = 6
+		style.content_margin_left = 4
+		style.content_margin_right = 4
 		chip.add_theme_stylebox_override("panel", style)
 		chip.custom_minimum_size = Vector2(118, 56)
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 2)
+		chip.add_child(row)
+		# Kleines Bild der Figur
+		var portrait := TextureRect.new()
+		portrait.texture = _portrait(f)
+		portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		portrait.custom_minimum_size = Vector2(24, 48)
+		portrait.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		portrait.flip_h = f.is_hero
+		row.add_child(portrait)
 		var label := Label.new()
 		label.text = ("JETZT\n" if i == 0 else "") + f.display_name
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		label.add_theme_font_size_override("font_size", 15)
-		chip.add_child(label)
+		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		label.clip_text = true
+		label.add_theme_font_size_override("font_size", 12)
+		row.add_child(label)
 		_order_box.add_child(chip)
+
+
+## Erstes Standbild einer Figur (für die Zugleiste).
+func _portrait(f: Fighter) -> Texture2D:
+	var look: Dictionary = FighterView.LOOKS[f.klass]
+	return load(FighterView.SPRITE_PATH % [look.sprite, "idle", 0])
 
 
 func _add_log(text: String) -> void:

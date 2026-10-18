@@ -3,8 +3,6 @@ extends RefCounted
 ## Ein Teilnehmer im Kampf-Prototyp (Held oder Gegner) mit allen Werten,
 ## die die Klassen-Mechaniken aus design.md brauchen.
 
-enum Shape { SQUARE, TRIANGLE, DIAMOND, STAR, CIRCLE, FANG, HEXAGON }
-
 ## So lange "dauert" ein Zug. Geteilt durch Tempo ergibt das den Abstand bis zum nächsten Zug.
 const TURN_COST := 100.0
 const MAX_ULT := 100.0
@@ -12,12 +10,11 @@ const MAX_BLOOD := 40
 const MAX_RES := 5
 
 var display_name: String
-## Klassen-Kennung: tank, archer, ritualist, singer, slime, wolf, boss
+## Klassen-Kennung: tank, archer, ritualist, singer, kobold, slime, boss
 var klass: String
 var class_title: String
 var is_hero: bool
 var color: Color
-var shape: Shape
 var max_hp: int
 var hp: int
 var max_mana := 0
@@ -61,7 +58,7 @@ var intent := ""
 var enraged := false
 
 
-func _init(p_name: String, p_klass: String, p_title: String, p_hero: bool, p_hp: int, p_tempo: int, p_color: Color, p_shape: Shape) -> void:
+func _init(p_name: String, p_klass: String, p_title: String, p_hero: bool, p_hp: int, p_tempo: int, p_color: Color) -> void:
 	display_name = p_name
 	klass = p_klass
 	class_title = p_title
@@ -70,7 +67,6 @@ func _init(p_name: String, p_klass: String, p_title: String, p_hero: bool, p_hp:
 	hp = p_hp
 	tempo = p_tempo
 	color = p_color
-	shape = p_shape
 
 
 func is_alive() -> bool:
