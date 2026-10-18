@@ -36,7 +36,7 @@ Kampfbildschirm seitlich wie Final Fantasy 6: Gegner links, Helden rechts (vorne
 | Arkon | Magier-Tank (vorne) | Umwandlung: halber Schaden geht auf Mana | Schaden, den er mit Mana auffängt |
 | Wren | Bogenschütze (hinten) | Bogen spannen → nächster Schuss ×2,5; Treffer unterbricht. Hinten öfter kritisch | Aufgeladene Schüsse, kritische Treffer |
 | Vesna | Ritualist (hinten) | Heilen kostet Blutvorrat, dann Leben. Biss füllt den Vorrat | Für andere geopfertes Leben |
-| Xavina | Sternensängerin (hinten) | Zwei Sternbilder (orange = Angriff, blau = Schutz), Verblassen, Sternenglanz | Durch Lieder verbrauchte Resonanz |
+| Lyra | Sternensängerin (hinten) | Zwei Sternbilder (orange = Angriff, blau = Schutz), Verblassen, Sternenglanz | Durch Lieder verbrauchte Resonanz |
 
 **Boss Steinwächter:** Steinfaust → kündigt **Felsregen auf die hintere Reihe** an →
 Felsregen → **Kettenzug** (reißt jemanden von hinten nach vorne). Unter 30 % LP wird er wütend.

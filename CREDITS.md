@@ -19,7 +19,7 @@ im öffentlichen Repository https://github.com/benc-uk/super-dungeon-delve
 | Arkon (Magier-Tank) | knight_m |
 | Wren (Bogenschütze) | elf_m |
 | Vesna (Ritualist) | wizzard_f (leicht rötlich eingefärbt) |
-| Xavina (Sternensängerin) | elf_f |
+| Lyra (Sternensängerin) | elf_f |
 | Grubenkobold | goblin |
 | Schleimling | swampy |
 | Steinwächter (Boss) | ogre (leicht steingrau eingefärbt) |
