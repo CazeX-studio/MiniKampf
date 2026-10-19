@@ -3,7 +3,7 @@ extends RefCounted
 ## Lädt die Datendateien aus res://data (Dialoge, Aufträge, Gegenstände, Stufen, Texte, Stadt).
 ## Die Dateien werden einmal gelesen und dann im Speicher behalten.
 
-const FILES := ["dialoge", "auftraege", "gegenstaende", "stufen", "texte", "kreuzweg"]
+const FILES := ["dialoge", "auftraege", "gegenstaende", "stufen", "texte", "kreuzweg", "kaempfe", "laeden", "erfolge"]
 
 static var _cache := {}
 

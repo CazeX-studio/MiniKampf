@@ -267,6 +267,55 @@ func _test_building_blocks() -> void:
 	_talk(world, p, "wache")
 	_check(world.dialog_view(p).text.contains("Befehl der Fünf"), "Die Wache lässt niemanden durch")
 	world.apply_command("a", {type = "dialog_next"})
+
+	# Nacht des Sternenfalls: Fest, Marv, Sternenfall, Kampf, Ren
+	var effects: Array[String] = []
+	world.effect_requested.connect(func(_id: String, effect: String) -> void: effects.append(effect))
+	_check(world.npc_marker(p, "schreiberin") == "!", "Lene lädt zum Fest ein (!)")
+	_talk(world, p, "schreiberin")
+	world.apply_command("a", {type = "dialog_choose", index = 1})
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.flags.has("nacht") and p.progress.quest_state("fest") == "aktiv", "Es wird Nacht, das Fest beginnt")
+	_check(not world.npc_visible(p, "gesandte_glutoase") and not world.npc_visible(p, "marv") and world.npc_visible(p, "marv_fest"),
+		"Die Gesandten sind abgereist, Marv ist auf dem Fest")
+	world.apply_command("a", {type = "move", cell = Vector2i(11, 13)})
+	_tick(world, 10.0)
+	_check(p.in_dialog() and world.dialog_view(p).wer == "Marv", "Marv spricht dich auf dem Fest an")
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	world.apply_command("a", {type = "dialog_choose", index = 1})
+	_check(p.progress.quest_state("fest") == "abgegeben", "Marv hat nach der Sternentafel gefragt")
+	world.apply_command("a", {type = "dialog_next"})
+	_check(effects == ["sternenfall"] and p.progress.quest_state("sternenfall") == "aktiv", "Der Sternenfall beginnt (Lichtblitz)")
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(battles.back() == "sternenfall" and not p.in_dialog(), "Kampf gegen den Sternenfresser beginnt")
+	_check(not world.npc_visible(p, "marv_fest"), "Marv ist weg (in Sicherheit)")
+	# Niederlage: Ren rettet die Gruppe
+	world.apply_command("a", {type = "kampf_ergebnis", kampf = "sternenfall", gewonnen = false})
+	_check(world.npc_visible(p, "ren"), "Ren ist da")
+	_tick(world, 0.2)
+	_check(p.in_dialog() and world.dialog_view(p).text.contains("knapp"), "Ren rettet die Gruppe (Niederlage)")
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	world.apply_command("a", {type = "dialog_next"})
+	_check(not p.in_dialog() and p.progress.quest_state("sternenfall") == "abgegeben" and not world.npc_visible(p, "ren"),
+		"Ren ist wieder verschwunden")
+	_check(p.progress.level == 8 and not p.progress.flags.has("erfolg:schild_hoch"), "Stufe 8, aber kein Erfolg bei Niederlage")
+
+	# Sieg (eigene Welt): Erfolg, und Ren klaut den Splitter
+	var w2 := WorldState.new()
+	var q := w2.add_player("q", "Sieger", "elf_m", Vector2i(12, 14))
+	q.progress.flags = {"nacht": true, "sternenfall": true}
+	q.progress.quests = {"sternenfall": "aktiv"}
+	var achievements: Array[String] = []
+	w2.notice.connect(func(_id: String, text: String) -> void: achievements.append(text))
+	w2.apply_command("q", {type = "kampf_ergebnis", kampf = "sternenfall", gewonnen = true})
+	_check(q.progress.flags.has("erfolg:schild_hoch") and "Erfolg freigeschaltet: Schild hoch, Schild runter" in achievements,
+		"Sieg: Erfolg „Schild hoch, Schild runter“")
+	w2.tick(0.1)
+	_check(q.in_dialog() and w2.dialog_view(q).text.contains("Nicht schlecht"), "Ren klaut den Splitter (Sieg)")
 	var battle := GameData.battle("probe:kunoichi")
 	_check(battle.klasse == "kunoichi" and battle.name == "Probestunde: Kunoichi" and battle.hinweise.erster_zug.contains("Siegel"),
 		"Probestunde-Vorlage füllt Klasse, Name und Erklärung")

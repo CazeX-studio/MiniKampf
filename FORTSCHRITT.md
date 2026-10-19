@@ -40,6 +40,7 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
 | 11 | Kreuzweg-Demo Schritt 4: Marv und Bingos Laden | erledigt |
 | 12 | Kreuzweg-Demo Schritt 5: Gesandte der fünf Regionen mit Probestunden | erledigt |
 | 13 | Kreuzweg-Demo Schritt 6: Der zugewachsene Weg (Wache Holm, Mira) | erledigt |
+| 14 | Kreuzweg-Demo Schritt 7: Nacht des Sternenfalls (Fest, Sternenfresser, Ren) | erledigt |
 
 ## Aufgaben der Runde 1
 
@@ -218,6 +219,27 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
   - Der Marktplatz ist inzwischen recht voll (viele Namensschilder dicht beieinander). Das nehme ich mir beim
     Feinschliff (Schritt 9) vor.
   - Test: Welt-Test mit Korb, Wache und Mira: alles richtig.
+
+- **Schritt 14 – Kreuzweg-Demo, Nacht des Sternenfalls** (Schritt 7 aus `KREUZWEG_PLAN.md`, Stufe 8–10):
+  - **Aufgeräumt:** Die Gesandten stehen jetzt am Anfang „ihrer“ Straße (Arkanum Norden, Nebelinseln Nordwesten,
+    Grünwacht Westen, Messinghafen Osten, Glutoase Süden) statt alle um die Statue. NPCs wippen deutlich ruhiger
+    und nicht mehr alle im Gleichtakt.
+  - **Fest der fünf Wege:** Lene lädt dich ein („Warum fünf Wege? Es gibt doch sechs Straßen.“ – „Die sechste zählt
+    nicht.“). Es wird **Nacht**, auf dem Marktplatz leuchten **fünf Festlaternen** in den Farben der Regionen.
+    Die Gesandten sind abgereist.
+  - **Marv** spricht dich auf dem Fest an und fragt, ob du die Sternentafel schon hast. Mitten im Satz beginnt der
+    **Sternenfall**: greller Lichtblitz, das Bild wackelt, ein Splitter schlägt ein, ein Feldschleim frisst ihn.
+  - **Boss „Der Sternenfresser“** (mit Ida, Bo und Tom): Ein **Sternenpanzer** lässt Treffer fast abprallen. Nur eine
+    **perfekte Parade** erschüttert ihn für kurze Zeit, dann könnt ihr zuschlagen. Nach **10 Zügen** explodiert
+    der Splitter in seinem Bauch. So ist er nur mit mehreren guten Paraden zu schaffen.
+    (Computer-Test mit jeder zweiten Parade gelungen: 11 von 30 Siegen – wer gut pariert, schafft es öfter.)
+  - **Sieg:** Erfolg **„Schild hoch, Schild runter“** (steht jetzt im Auftragsbuch unter „Erfolge“) – und eine
+    Fremde taucht auf, lobt dich und **klaut den Splitter**. **Niederlage:** Alles wird schwarz … dieselbe Fremde
+    **rettet die Gruppe**. Beides Mal stellt sie sich als **Ren** vor („Du hast mich nie gesehen“).
+  - Kein „Nochmal versuchen“ beim Boss: Die Geschichte geht so oder so weiter. Danach: Stufe 8 (Niederlage) bzw. 9 (Sieg).
+  - Auf dem Marktplatz bleibt ein **leuchtender Krater**.
+  - **Platzhalter:** alle Texte (Lene, Marv, Erzähler, Ye, Ren – Ren ist eine Hauptfigur). Der Kampf spielt noch im Gewölbe.
+  - Tests: Welt-Test mit Fest, Sternenfall, Niederlage und Sieg: alles richtig. Sandbox-Kämpfe unverändert.
     sie mit. (Im fertigen Spiel ist der erste Abschluss der über den Auftrag.) Auch in design.md eingetragen.
 
 ## Fertig in Runde 1
@@ -304,6 +326,14 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 4. Nachdem er dich wegschickt, sollte Mira dich ansprechen: „Hörst du sie auch?“
 5. Danach sollte Mira wieder fort sein und du Stufe 7 haben.
 
+**Neu: Nacht des Sternenfalls** (Kreuzweg-Demo, nach Mira)
+1. Prüfe, ob die Gesandten jetzt an den fünf Straßen stehen und die NPCs ruhiger stehen.
+2. Lene lädt zum Fest ein: Wird es Nacht, und leuchten auf dem Marktplatz fünf Laternen?
+3. Geh zum Marktplatz: Marv spricht dich an, dann beginnt der Sternenfall (Lichtblitz) und der Boss-Kampf.
+4. Im Kampf: Pariere die Angriffe des Sternenfressers. Erst nach einer perfekten Parade ist er „ERSCHÜTTERT“ und nimmt
+   richtig Schaden. Achte auf den Countdown „EXPLOSION in X Zügen“.
+5. Danach taucht Ren auf (bei Sieg klaut sie den Splitter, bei Niederlage rettet sie euch). Bei Sieg: Auftragsbuch → Erfolge.
+
 
 **1. Kampf-Sandbox** (Menü → „Kampf-Sandbox“)
 - Wie bisher: bis zu 4 Klassen wählen, Gegner wählen, kämpfen, am Ende die Auswertung ansehen.
@@ -347,7 +377,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
   Zähmen (unter 50 % Leben, Chance = fehlendes Leben, halbes Leben auf der Bank, höchstens 5 Monster).
 ## Als Nächstes (Vorschläge)
 
-- Kreuzweg-Demo nach `KREUZWEG_PLAN.md`: als Nächstes Schritt 7 (Nacht des Sternenfalls: Fest, Sternenfall-Boss, Ren).
+- Kreuzweg-Demo nach `KREUZWEG_PLAN.md`: als Nächstes Schritt 8 (Klassenwahl-Bildschirm und Abreise).
 - Hintergrund für Kämpfe vor der Stadt (Wiese statt Gewölbe).
 - Dialoge der Hauptfiguren: Marco schreibt sie; Platzhalter stehen in `data/dialoge.json`.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).

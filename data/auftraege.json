@@ -65,11 +65,11 @@
 	},
 	"gesandte": {
 		"titel": "Die Gesandten der fünf Regionen",
-		"beschreibung": "Jede Region hat jemanden nach Kreuzweg geschickt, der den Novizen ihre Klassen zeigt. Mindestens eine Probestunde ist Pflicht, die anderen sind freiwillig. Die Gesandten stehen rund um die Statue der Fünf.",
+		"beschreibung": "Jede Region hat jemanden nach Kreuzweg geschickt, der den Novizen ihre Klassen zeigt. Mindestens eine Probestunde ist Pflicht, die anderen sind freiwillig. Jeder Gesandte steht am Anfang der Straße, die in seine Region führt.",
 		"start_bei": "schreiberin",
 		"voraussetzung": "erster_gruppenkampf",
 		"ziele": [
-			{"art": "gemerkt", "merken": "probestunde_gemacht", "text": "An einer Probestunde teilnehmen (Gesandte rund um die Statue)"}
+			{"art": "gemerkt", "merken": "probestunde_gemacht", "text": "An einer Probestunde teilnehmen (Gesandte an den fünf Straßen)"}
 		],
 		"abgeben_bei": "schreiberin",
 		"belohnung": {"gold": 50, "erfahrung": 300}
@@ -93,5 +93,25 @@
 		],
 		"abgeben_bei": "mira",
 		"belohnung": {"erfahrung": 250}
+	},
+	"fest": {
+		"titel": "Das Fest der fünf Wege",
+		"beschreibung": "Heute Abend feiert ganz Kreuzweg auf dem Marktplatz das Fest der fünf Wege. Lene meint, du solltest unbedingt hingehen.",
+		"start_bei": "schreiberin",
+		"voraussetzung": "leises_singen",
+		"ziele": [
+			{"art": "gemerkt", "merken": "marv_fest", "bei": "marv_fest", "text": "Das Fest auf dem Marktplatz besuchen"}
+		],
+		"abgeben_bei": "marv_fest",
+		"belohnung": {"erfahrung": 100}
+	},
+	"sternenfall": {
+		"titel": "Die Nacht des Sternenfalls",
+		"beschreibung": "Sterne fallen vom Himmel. Ein Splitter hat einen Feldschleim in den Sternenfresser verwandelt!",
+		"ziele": [
+			{"art": "gemerkt", "merken": "ren_getroffen", "bei": "ren", "text": "Den Sternenfall überstehen"}
+		],
+		"abgeben_bei": "ren",
+		"belohnung": {"erfahrung": 500}
 	}
 }

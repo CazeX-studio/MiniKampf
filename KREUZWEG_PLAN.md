@@ -11,7 +11,7 @@ Ziel: die erste Stunde aus `design.md` (Repo CazeX-studio/Spieldesign) als spiel
 | 4 | Marv (erst nach dem Tutorial) und Bingos Laden mit der zu teuren Sternentafel | erledigt |
 | 5 | Gesandte der fünf Regionen mit Probestunden (Klassen aus der Sandbox) | erledigt |
 | 6 | Der zugewachsene Weg: Wache und erste Begegnung mit Mira | erledigt |
-| 7 | Nacht des Sternenfalls: Fest, Marv fragt nach dem Brett, Sternenfall-Boss als eigene Instanz (kaum schaffbar, nur mit perfekten Paraden, Erfolg), Ren rettet die Gruppe bei Niederlage oder klaut den Splitter bei Sieg | offen |
+| 7 | Nacht des Sternenfalls: Fest, Marv fragt nach dem Brett, Sternenfall-Boss als eigene Instanz (kaum schaffbar, nur mit perfekten Paraden, Erfolg), Ren rettet die Gruppe bei Niederlage oder klaut den Splitter bei Sieg | erledigt |
 | 8 | Klassenwahl-Bildschirm (Karten mit Diagramm aus 5 Werten, Ult-Vorschau, Probestunden-Knopf) und Abreise | offen |
 | 9 | Feinschliff: ganze erste Stunde am Stück testen, Platzhalter-Musik | offen |
 

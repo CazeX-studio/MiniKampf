@@ -13,6 +13,7 @@ Nach jeder Zeile außer der letzten in einer Gruppe kommt ein Komma.
 | `stufen.json` | Erfahrung, die für Stufe 1 bis 10 nötig ist |
 | `kaempfe.json` | Kämpfe aus der Stadt (Lektionen, Gruppenkampf): Gegner, erlaubte Fähigkeiten, Erklärungen, Erfahrung |
 | `laeden.json` | Läden: welche Waren, wie viel der Händler beim Ankauf zahlt |
+| `erfolge.json` | Erfolge (einmalige Auszeichnungen) |
 | `texte.json` | Kurze Meldungen im Spiel („Neuer Auftrag“, „Stufe erreicht“ …) |
 
 ## Dialoge (`dialoge.json`)
@@ -73,3 +74,13 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
   Gegner, Begleiter, Ult zu Beginn (`ult_start`), Erfahrung beim ersten Sieg, `merken` (wird bei jedem Sieg gemerkt)
   und `hinweis_vorlage` (Erklärung; Name, Rolle, Mechanik, Reaktion und Ult kommen aus den Klassendaten).
 - Die Gesandten und ihre Klassen stehen als Antworten in `dialoge.json` (`{"kampf": "probe:tank"}`).
+
+## Seit Schritt 7
+
+- **Aktionen:** `{"effekt": "sternenfall"}` (Lichtblitz und Wackeln), `{"erfolg": "schild_hoch"}` (Erfolg freischalten).
+- **`kreuzweg.json` → `deko`:** Schmuck, der nur unter einer Bedingung zu sehen ist (`festlaterne`, `krater`).
+  Der gemerkte Wert `nacht` färbt die Stadt dunkelblau.
+- **Kämpfe:** `merken_immer` (wird auch bei Niederlage gemerkt), `erfolg` (bei Sieg), `kein_nochmal` (kein „Nochmal
+  versuchen“), `verloren_text` (Meldung bei Niederlage).
+- **Gegner** (in `scripts/kampf/sandbox.gd`): `panzer` (Schaden-Faktor, bis eine perfekte Parade ihn erschüttert),
+  `erschuettert` (wie viele Züge offen), `wipe_nach` und `wipe_text` (nach so vielen Zügen verliert die Gruppe).

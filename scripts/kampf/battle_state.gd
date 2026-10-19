@@ -323,6 +323,8 @@ func spawn_enemies(ids: Array) -> void:
 		e.resist = data.get("resist", 1.0)
 		e.big = data.get("big", false)
 		e.passive = data.get("passive", false)
+		e.plate = data.get("panzer", 1.0)
+		e.stagger_length = data.get("erschuettert", 2)
 		if data.has("title"):
 			e.display_name = data.title
 		enemies.append(e)
@@ -460,6 +462,7 @@ func _begin_turn(f: Fighter) -> void:
 	f.def_buff_turns = maxi(f.def_buff_turns - 1, 0)
 	f.vuln_turns = maxi(f.vuln_turns - 1, 0)
 	f.blind_turns = maxi(f.blind_turns - 1, 0)
+	f.stagger_turns = maxi(f.stagger_turns - 1, 0)
 	if f.max_mana > 0:
 		f.mana = mini(f.mana + MANA_REGEN, f.max_mana)
 	skills.begin_turn(f)
@@ -591,6 +594,9 @@ func _enemy_turn(e: Fighter) -> void:
 			targets = [pick_target(attack.get("back", false), true)]
 		await enemy_attack(e, targets, attack.base, attack.kind, attack.name)
 		e.step += 1
+		# Zeitbombe (Sternenfresser): nach so vielen eigenen Zügen stirbt die ganze Gruppe
+		if data.has("wipe_nach") and e.is_alive() and e.step >= int(data.wipe_nach):
+			wipe(data.get("wipe_text", "Zu spät!"))
 	e.intent = skills.enemy_intent(e)
 
 
@@ -701,6 +707,11 @@ func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String
 			skills.on_perfect_reaction(t, e)
 		else:
 			hit(e, t, base, kind, e.element)
+	# Perfekte Parade gegen einen Gepanzerten (Sternenfresser): Der Panzer ist kurz offen
+	if success and e.plate < 1.0 and e.is_alive():
+		e.stagger_turns = e.stagger_length
+		float_text(e, "ERSCHÜTTERT!", Color("fff3b0"), 52)
+		add_log("[color=#fff3b0][b]Der Sternenpanzer bekommt Risse![/b] Jetzt angreifen![/color]")
 	refresh()
 	wait(0.45)
 
@@ -730,6 +741,9 @@ func calc_damage(attacker: Fighter, target: Fighter, base: float, kind: String, 
 		dmg *= VULN_MULT
 	if not star:
 		dmg *= target.resist
+	# Sternenpanzer: Treffer prallen fast ab, bis eine perfekte Parade ihn erschüttert
+	if target.plate < 1.0 and target.stagger_turns == 0:
+		dmg *= target.plate
 	_last_eff = Elements.multiplier(element, target.element)
 	dmg *= _last_eff
 	dmg *= skills.damage_bonus(attacker)

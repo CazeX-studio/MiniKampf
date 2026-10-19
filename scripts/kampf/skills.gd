@@ -1270,7 +1270,10 @@ func enemy_intent(e: Fighter) -> String:
 				return "Nächster Zug: Kettenzug nach hinten"
 	var data: Dictionary = Sandbox.ENEMIES[e.klass]
 	var attack: Dictionary = data.attacks[e.step % data.attacks.size()]
-	return "Nächster Zug: %s%s" % [attack.name, " (alle!)" if attack.get("all", false) else ""]
+	var text := "Nächster Zug: %s%s" % [attack.name, " (alle!)" if attack.get("all", false) else ""]
+	if data.has("wipe_nach"):
+		text += "\nEXPLOSION in %d Zügen!" % (int(data.wipe_nach) - e.step)
+	return text
 
 
 # --- Novize (Kreuzweg-Demo) ---------------------------------------------------

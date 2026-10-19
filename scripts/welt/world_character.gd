@@ -10,6 +10,8 @@ var moving := false
 var facing := 1
 ## Zeichen über dem Kopf: "!" = neuer Auftrag, "?" = hier etwas erledigen, "" = nichts
 var marker := ""
+## Wie schnell die Steh-Animation läuft (Bilder pro Sekunde). NPCs stehen ruhiger als Spieler.
+var idle_fps := 6.0
 
 var _frames := {}
 var _sprite: Sprite2D
@@ -51,7 +53,7 @@ func _process(delta: float) -> void:
 	_time += delta
 	var anim := "run" if moving and _frames.run.size() > 0 else "idle"
 	var frames: Array = _frames[anim]
-	_sprite.texture = frames[int(_time * (12.0 if anim == "run" else 6.0)) % frames.size()]
+	_sprite.texture = frames[int(_time * (12.0 if anim == "run" else idle_fps)) % frames.size()]
 	_sprite.flip_h = facing < 0
 	queue_redraw()
 
@@ -63,7 +65,12 @@ func _draw() -> void:
 	draw_set_transform_matrix(Transform2D.IDENTITY)
 	if marker != "":
 		var font := ThemeDB.fallback_font
-		var bob := sin(_time * 4.0) * 3.0
+		var bob := sin(_time * 2.5) * 1.5
 		var pos := Vector2(-20, _head_y - 6 + bob)
 		draw_string_outline(font, pos, marker, HORIZONTAL_ALIGNMENT_CENTER, 40, 30, 7, Color.BLACK)
 		draw_string(font, pos, marker, HORIZONTAL_ALIGNMENT_CENTER, 40, 30, Color("ffd34d"))
+
+
+## Animation an einer anderen Stelle beginnen lassen (damit nicht alle Figuren gleichzeitig wippen).
+func time_offset(seconds: float) -> void:
+	_time += seconds

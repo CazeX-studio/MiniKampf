@@ -124,6 +124,11 @@ var seals: Array[String] = []
 var step := 0
 var intent := ""
 var enraged := false
+## Sternenpanzer (Sternenfresser): Schaden-Faktor, solange er nicht erschüttert ist (1.0 = kein Panzer)
+var plate := 1.0
+## So viele eigene Züge ist der Panzer nach einer perfekten Parade noch offen
+var stagger_turns := 0
+var stagger_length := 2
 
 
 func _init(p_name: String, p_klass: String, p_title: String, p_hero: bool, p_hp: int, p_tempo: int, p_color: Color) -> void:

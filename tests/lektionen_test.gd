@@ -5,6 +5,7 @@ extends SceneTree
 
 ## Mit welcher Stufe man den Kampf im normalen Ablauf erreicht
 const LEVELS := {
+	"sternenfall": 8,
 	"lektion_tempo": 2, "lektion_faehigkeiten": 2, "lektion_parieren": 3, "lektion_reihen": 3, "gruppenkampf": 4,
 	"probe:tank": 5, "probe:twilight": 5, "probe:mechanic": 5, "probe:quartermaster": 5, "probe:smith": 5,
 	"probe:blade": 5, "probe:singer": 5, "probe:archer": 5, "probe:tamer": 5, "probe:ritualist": 5, "probe:kunoichi": 5,

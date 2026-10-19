@@ -72,5 +72,25 @@
 		"merken": "probestunde_gemacht",
 		"erfahrung": 40,
 		"hinweis_vorlage": "Probestunde: %s (Rolle: %s)\n%s\nReaktion: %s.\nUlt: %s. Sie ist schon zu 60 %% voll – lade sie mit der typischen Aktion deiner Klasse auf und probier sie aus! Ida und Bo (Novizen) helfen dir."
+	},
+	"sternenfall": {
+		"name": "Nacht des Sternenfalls: Der Sternenfresser",
+		"ansage": "Der Sternenfresser erhebt sich auf dem Marktplatz! Ida, Bo und Tom stehen dir bei.",
+		"begleiter": [
+			{"name": "Ida", "aussehen": "novize_ida"},
+			{"name": "Bo", "aussehen": "novize_bo"},
+			{"name": "Tom", "aussehen": "novize_tom"}
+		],
+		"wellen": [["sternenfresser"]],
+		"erlaubt": ["schlag", "kraftschlag", "erste_hilfe", "row", "trank"],
+		"erfahrung": 300,
+		"merken": "sternenfresser_besiegt",
+		"merken_immer": "sternenfall_kampf_vorbei",
+		"erfolg": "schild_hoch",
+		"kein_nochmal": true,
+		"verloren_text": "Alles wird schwarz …",
+		"hinweise": {
+			"erster_zug": "Ein Sternenpanzer schützt den Sternenfresser: Normale Treffer prallen fast ab. Nur eine PERFEKTE PARADE erschüttert ihn – dann ist er kurz verwundbar und ihr könnt zuschlagen. Beeilt euch: Nach 10 Zügen explodiert der Splitter in seinem Bauch! Schild hoch, Schild runter!"
+		}
 	}
 }

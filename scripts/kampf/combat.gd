@@ -1057,10 +1057,11 @@ func _world_buttons(shade: Control, won: bool) -> void:
 	back.text = GameData.text("zurueck_kreuzweg")
 	back.add_theme_font_size_override("font_size", 22)
 	back.size = Vector2(330, 72)
-	back.position = Vector2(660 if not won else 475, 560)
+	back.position = Vector2(660 if not won and not state.setup.get("kein_nochmal", false) else 475, 560)
 	back.pressed.connect(func() -> void: _back_to_world(won))
 	shade.add_child(back)
-	if not won:
+	var retry: bool = not won and not state.setup.get("kein_nochmal", false)
+	if retry:
 		var again := Button.new()
 		again.text = GameData.text("nochmal")
 		again.add_theme_font_size_override("font_size", 22)

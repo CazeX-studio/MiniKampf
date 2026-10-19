@@ -30,5 +30,7 @@
 	"laden_kaufen": "Kaufen",
 	"laden_verkaufen": "Verkaufen",
 	"laden_nichts_verkaufen": "Nichts zum Verkaufen.",
-	"schliessen": "Schließen"
+	"schliessen": "Schließen",
+	"erfolg": "Erfolg freigeschaltet: %s",
+	"erfolge": "Erfolge"
 }

@@ -23,6 +23,11 @@ const STICK_RADIUS := 70.0
 const STICK_DEADZONE := 12.0
 const STICK_HOME := Vector2(170, 560)
 const NOTICE_SECONDS := 3.5
+## NPCs stehen ruhiger als Spieler (langsamere Steh-Animation)
+const NPC_IDLE_FPS := 2.0
+const NIGHT_COLOR := Color(0.45, 0.5, 0.78)
+## Farben der fünf Festlaternen (eine pro Region)
+const LANTERN_COLORS: Array[Color] = [Color("b8b0ff"), Color("e0a060"), Color("ffb070"), Color("a8e088"), Color("ffb8d8")]
 
 var state := WorldState.new()
 
@@ -31,6 +36,11 @@ var _objects: Node2D
 var _characters := {}
 ## Sammelpunkt-Ziel ("punkt:0") -> Grafik
 var _pickup_nodes := {}
+## Schmuck-Grafik -> Bedingung, wann sie zu sehen ist
+var _deco_nodes := {}
+## Färbt die Welt nachts dunkelblau (Fest der fünf Wege)
+var _night: CanvasModulate
+var _flash_rect: ColorRect
 var _camera: Camera2D
 var _marker := Vector2.ZERO
 var _marker_time := 0.0
@@ -75,6 +85,9 @@ func _ready() -> void:
 	state.notice.connect(_on_notice)
 	state.progress_changed.connect(_on_progress_changed)
 	state.battle_requested.connect(_on_battle_requested)
+	state.effect_requested.connect(_on_effect)
+	_night = CanvasModulate.new()
+	add_child(_night)
 	var local := state.add_player(LOCAL_ID, "Du", "elf_m", WorldState.start_cell())
 	SaveGame.load_into(local)
 	state.add_player(BOT_ID, "Testgefährte", "lizard_f", WorldState.start_cell() + Vector2i(-1, 0))
@@ -94,10 +107,15 @@ func _ready() -> void:
 		_add_prop(prop)
 	for i in state.pickups.size():
 		_add_pickup("punkt:%d" % i)
+	for deco: Dictionary in state.decorations:
+		_add_decoration(deco)
 	for id: String in state.npcs:
 		var npc: Dictionary = state.npcs[id]
 		var view := WorldCharacter.new()
 		view.setup(npc.look, npc.name, npc.tint, Color("f2c14e"))
+		view.idle_fps = NPC_IDLE_FPS
+		# Jeder NPC beginnt an einer anderen Stelle der Animation, damit nicht alle im Gleichtakt wippen
+		view.time_offset(randf() * 4.0)
 		view.position = cell_center(Vector2(npc.cell))
 		view.facing = 1
 		_objects.add_child(view)
@@ -162,6 +180,13 @@ func _sync() -> void:
 		var node: Node2D = _pickup_nodes[target]
 		node.visible = state.can_use(local, target)
 		node.queue_redraw()
+	# Schmuck (Festlaternen, Krater) und Nacht: je nachdem, wie weit der eigene Spieler ist
+	for node: Node2D in _deco_nodes:
+		node.visible = state.check(local, _deco_nodes[node])
+		if node.visible:
+			node.queue_redraw()
+	var night_color := NIGHT_COLOR if local.progress.flags.has("nacht") else Color.WHITE
+	_night.color = _night.color.lerp(night_color, 0.05)
 	_info.text = "Spieler in Kreuzweg: %d" % state.players.size()
 	for id: String in state.npcs:
 		var npc_view: WorldCharacter = _characters["npc:" + id]
@@ -555,6 +580,13 @@ func _build_ui() -> void:
 	close.pressed.connect(func() -> void: _panel.visible = false)
 	panel_box.add_child(close)
 
+	# Lichtblitz über allem (Sternenfall)
+	_flash_rect = ColorRect.new()
+	_flash_rect.size = Vector2(1280, 720)
+	_flash_rect.color = Color(1, 1, 1, 0)
+	_flash_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(_flash_rect)
+
 	# Ladenfenster (Kaufen und Verkaufen)
 	_shop_panel = _framed_panel()
 	_shop_panel.position = Vector2(290, 130)
@@ -595,6 +627,47 @@ func _framed_panel() -> PanelContainer:
 	style.set_content_margin_all(14)
 	panel.add_theme_stylebox_override("panel", style)
 	return panel
+
+
+## Schmuck in der Stadt (Festlaternen, Krater des Sternenfalls).
+func _add_decoration(deco: Dictionary) -> void:
+	var node := Node2D.new()
+	node.position = cell_center(Vector2(deco.cell))
+	var index := _deco_nodes.size()
+	var art: String = deco.art
+	node.draw.connect(func() -> void: _draw_decoration(node, art, index))
+	_objects.add_child(node)
+	_deco_nodes[node] = deco.cond
+
+
+func _draw_decoration(node: Node2D, art: String, index: int) -> void:
+	match art:
+		"festlaterne":
+			var color: Color = LANTERN_COLORS[index % LANTERN_COLORS.size()]
+			var flicker := 0.85 + 0.15 * sin(_time * 5.0 + index)
+			node.draw_circle(Vector2(0, -58), 26.0, Color(color, 0.18 * flicker))
+			node.draw_rect(Rect2(-2, -50, 4, 50), Color("3a2a1a"))
+			node.draw_rect(Rect2(-7, -66, 14, 16), Color(color.lightened(0.3), flicker))
+			node.draw_rect(Rect2(-8, -68, 16, 3), Color("3a2a1a"))
+		"krater":
+			node.draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, 0.5))
+			node.draw_circle(Vector2.ZERO, 34.0, Color(0.1, 0.08, 0.15, 0.85))
+			node.draw_arc(Vector2.ZERO, 34.0, 0, TAU, 32, Color(0.95, 0.9, 1.0, 0.5 + 0.3 * sin(_time * 3.0)), 3.0)
+			node.draw_set_transform_matrix(Transform2D.IDENTITY)
+			node.draw_circle(Vector2(0, -4), 5.0, Color(0.95, 0.9, 1.0, 0.8))
+
+
+## Besondere Effekte: Beim Sternenfall wird es kurz taghell und das Bild wackelt.
+func _on_effect(player_id: String, effect: String) -> void:
+	if player_id != LOCAL_ID or effect != "sternenfall":
+		return
+	_flash_rect.color = Color(1, 1, 1, 0.9)
+	var tween := create_tween()
+	tween.tween_property(_flash_rect, "color:a", 0.0, 1.6)
+	var shake := create_tween()
+	for i in 8:
+		shake.tween_property(_camera, "offset", Vector2(randf_range(-10, 10), randf_range(-8, 8)), 0.05)
+	shake.tween_property(_camera, "offset", Vector2.ZERO, 0.05)
 
 
 func _go_menu() -> void:
@@ -778,6 +851,15 @@ func _fill_panel() -> void:
 			lines.append("")
 		if lines.is_empty():
 			lines.append(GameData.text("auftragsbuch_leer"))
+		# Erfolge
+		var achievements := GameData.get_file("erfolge")
+		var unlocked: PackedStringArray = []
+		for id: String in achievements:
+			if id != "hinweis" and p.progress.flags.has("erfolg:" + id):
+				unlocked.append("[color=#f2c14e]★ %s[/color] – %s" % [achievements[id].name, achievements[id].beschreibung])
+		if not unlocked.is_empty():
+			lines.append("[b]%s[/b]" % GameData.text("erfolge"))
+			lines.append_array(unlocked)
 	else:
 		_panel_title.text = GameData.text("tasche")
 		lines.append("[b]Gold: %d[/b]" % p.progress.gold)

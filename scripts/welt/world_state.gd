@@ -22,6 +22,8 @@ signal notice(player_id: String, text: String)
 signal progress_changed(player_id: String)
 ## Ein Spieler beginnt einen Kampf (Kennung aus data/kaempfe.json). Die Anzeige wechselt zum Kampfbildschirm.
 signal battle_requested(player_id: String, kampf_id: String)
+## Ein besonderer Effekt für einen Spieler (z. B. "sternenfall": greller Lichtblitz). Nur Anzeige.
+signal effect_requested(player_id: String, effect: String)
 
 enum Tile { GRASS, ROAD, PLAZA, OVERGROWN }
 
@@ -44,6 +46,8 @@ var players := {}
 var npcs := {}
 ## Sammelpunkte: {item, cell}. Jeder Spieler kann jeden Punkt einmal einsammeln.
 var pickups: Array[Dictionary] = []
+## Schmuck in der Stadt, der nur zu bestimmten Zeiten da ist (Festlaternen, Krater): {art, cell, cond}
+var decorations: Array[Dictionary] = []
 
 var _astar := AStarGrid2D.new()
 
@@ -58,6 +62,8 @@ func _init() -> void:
 		npcs[id] = {name = d.name, cell = cell, look = d.aussehen, tint = Color(d.get("farbe", "ffffff")), dialog = d.get("dialog", id),
 				cond = d.get("wenn", {}), approach = d.get("anspringen", {})}
 		blocked[cell] = true
+	for d: Dictionary in town.get("deko", []):
+		decorations.append({art = d.art, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), cond = d.get("wenn", {})})
 	for d: Dictionary in town.get("sammelpunkte", []):
 		pickups.append({item = d.gegenstand, cell = Vector2i(int(d.feld[0]), int(d.feld[1]))})
 	_astar.region = Rect2i(Vector2i.ZERO, SIZE)
@@ -467,6 +473,10 @@ func run_actions(p: PlayerState, actions: Array) -> void:
 			p.progress.flags[action.merken] = true
 		if action.has("laden"):
 			p.shop = action.laden
+		if action.has("effekt"):
+			effect_requested.emit(p.id, action.effekt)
+		if action.has("erfolg"):
+			_unlock(p, action.erfolg)
 		if action.has("kampf"):
 			battle_requested.emit(p.id, action.kampf)
 	_update_quests(p)
@@ -693,12 +703,19 @@ func _battle_result(p: PlayerState, kampf_id: String, won: bool) -> void:
 	var battle: Dictionary = GameData.battle(kampf_id)
 	if battle.is_empty():
 		return
+	# Manche Kämpfe gehen die Geschichte in jedem Fall weiter (Sternenfall: Ren rettet oder klaut)
+	if battle.has("merken_immer"):
+		p.progress.flags[battle.merken_immer] = true
 	if not won:
-		_say(p, GameData.text("kampf_verloren"))
+		_say(p, battle.get("verloren_text", GameData.text("kampf_verloren")))
+		_update_quests(p)
+		progress_changed.emit(p.id)
 		return
 	_say(p, GameData.text("kampf_gewonnen", [battle.get("name", kampf_id)]))
 	if battle.has("merken"):
 		p.progress.flags[battle.merken] = true
+	if battle.has("erfolg"):
+		_unlock(p, battle.erfolg)
 	var flag := "kampf_gewonnen:" + kampf_id
 	if not p.progress.flags.has(flag):
 		p.progress.flags[flag] = true
@@ -706,6 +723,15 @@ func _battle_result(p: PlayerState, kampf_id: String, won: bool) -> void:
 			_give_xp(p, int(battle.erfahrung))
 	_update_quests(p)
 	progress_changed.emit(p.id)
+
+
+## Ein Erfolg (data/erfolge.json) wird freigeschaltet – jeder nur einmal.
+func _unlock(p: PlayerState, id: String) -> void:
+	if p.progress.flags.has("erfolg:" + id):
+		return
+	p.progress.flags["erfolg:" + id] = true
+	var data: Dictionary = GameData.get_file("erfolge").get(id, {name = id})
+	_say(p, GameData.text("erfolg", [data.name]))
 
 
 func _say(p: PlayerState, text: String) -> void:

@@ -9,7 +9,8 @@ var _hint_time := 0.0
 
 func _ready() -> void:
 	var id := OS.get_environment("LEKTION") if OS.has_environment("LEKTION") else "lektion_parieren"
-	BattleRequest.prepare(id, 5 if id.begins_with("probe:") else (4 if id == "gruppenkampf" else 3))
+	var level := 8 if id == "sternenfall" else (5 if id.begins_with("probe:") else (4 if id == "gruppenkampf" else 3))
+	BattleRequest.prepare(id, level, 2)
 	super()
 
 

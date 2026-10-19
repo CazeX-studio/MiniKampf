@@ -21,6 +21,9 @@
 			{"wenn": {"auftrag": "gesandte", "stand": "fertig"}, "knoten": "gesandte_abgeben"},
 			{"wenn": {"auftrag": "korb_fuer_die_wache", "stand": "neu", "gemerkt": "gesandte_bedankt"}, "knoten": "korb"},
 			{"wenn": {"auftrag": "korb_fuer_die_wache", "stand": "aktiv"}, "knoten": "korb_wartet"},
+			{"wenn": {"auftrag": "leises_singen", "stand": "abgegeben", "nicht_gemerkt": "nacht"}, "knoten": "fest"},
+			{"wenn": {"auftrag": "fest", "stand": "aktiv"}, "knoten": "fest_laeuft"},
+			{"wenn": {"gemerkt": "sternenfall"}, "knoten": "nach_sternenfall"},
 			{"knoten": "allgemein"}
 		],
 		"knoten": {
@@ -39,8 +42,8 @@
 			"gesandte_pflicht": {"wer": "Lene", "text": "Eine Probestunde ist Pflicht für alle Novizen, die anderen sind freiwillig. In ein paar Tagen wählst du deine Klasse – dann solltest du wissen, was du wählst.", "antworten": [
 				{"text": "Na gut, ich mache mit.", "weiter": "gesandte_los", "aktionen": [{"auftrag_starten": "gesandte"}]}
 			]},
-			"gesandte_los": {"wer": "Lene", "text": "Die Gesandten stehen rund um die Statue der Fünf. Sprich einfach mit ihnen."},
-			"gesandte_wartet": {"wer": "Lene", "text": "Warst du schon in einer Probestunde? Die Gesandten stehen rund um die Statue."},
+			"gesandte_los": {"wer": "Lene", "text": "Jeder Gesandte steht am Anfang der Straße, die in seine Region führt. Sprich einfach mit ihnen."},
+			"gesandte_wartet": {"wer": "Lene", "text": "Warst du schon in einer Probestunde? Die Gesandten stehen an den Anfängen der fünf Straßen."},
 			"gesandte_abgeben": {"wer": "Lene", "text": "Und? Welche Klasse hat dir gefallen?", "antworten": [
 				{"text": "Schwer zu sagen, ich muss noch nachdenken.", "weiter": "gesandte_danke", "aktionen": [{"auftrag_abgeben": "gesandte"}]},
 				{"text": "Ich glaube, ich weiß es schon.", "weiter": "gesandte_danke", "aktionen": [{"auftrag_abgeben": "gesandte"}]}
@@ -53,7 +56,17 @@
 			]},
 			"suedost": {"wer": "Lene", "text": "Die sechste Straße. Zugewachsen, keiner geht da hin. Frag lieber nicht weiter. Die Wache steht hinter der Schmiede.", "weiter": "korb"},
 			"korb_los": {"wer": "Lene", "text": "Danke! Die Wache heißt Holm. Er ist ein bisschen brummig, aber nett."},
-			"korb_wartet": {"wer": "Lene", "text": "Hast du Holm den Korb schon gebracht? Hinter der Schmiede, am alten Südost-Weg."}
+			"korb_wartet": {"wer": "Lene", "text": "Hast du Holm den Korb schon gebracht? Hinter der Schmiede, am alten Südost-Weg."},
+			"fest": {"wer": "Lene", "text": "Heute Abend ist das Fest der fünf Wege! Die ganze Stadt feiert auf dem Marktplatz – fünf Laternen für die fünf Straßen. Du kommst doch?", "antworten": [
+				{"text": "Natürlich!", "weiter": "fest_los", "aktionen": [{"merken": "nacht"}, {"auftrag_starten": "fest"}]},
+				{"text": "Warum fünf Wege? Es gibt doch sechs Straßen.", "weiter": "fest_sechs"}
+			]},
+			"fest_sechs": {"wer": "Lene", "text": "… Fünf Wege, fünf Regionen. So war es immer. Die sechste Straße zählt nicht. Kommst du?", "antworten": [
+				{"text": "Natürlich.", "weiter": "fest_los", "aktionen": [{"merken": "nacht"}, {"auftrag_starten": "fest"}]}
+			]},
+			"fest_los": {"wer": "Lene", "text": "Die Sonne geht schon unter. Lauf zum Marktplatz, ich komme gleich nach!"},
+			"fest_laeuft": {"wer": "Lene", "text": "Schön, oder? Geh ruhig zum Marktplatz, da ist am meisten los."},
+			"nach_sternenfall": {"wer": "Lene", "text": "Was für eine Nacht … Ruh dich aus, Novize. Morgen sieht die Welt anders aus."}
 		}
 	},
 	"ye": {
@@ -309,6 +322,45 @@
 			"krank": {"wer": "Mira", "text": "Nur ein Husten. Die Lieder werden lauter in letzter Zeit. Das geht vorbei.", "weiter": "abschied"},
 			"hinter": {"wer": "Mira", "text": "Etwas, das man vergessen soll. Mehr weiß ich auch nicht. Noch nicht.", "weiter": "abschied"},
 			"abschied": {"wer": "Mira", "text": "Bald ist das Fest der fünf Wege. Halt die Augen offen – und den Himmel.", "aktionen": [{"merken": "mira_getroffen"}, {"auftrag_abgeben": "leises_singen"}]}
+		}
+	},
+	"marv_fest": {
+		"hinweis": "PLATZHALTER-TEXTE: Marv auf dem Fest, dann beginnt der Sternenfall (Erzähler, Ye).",
+		"einstieg": [{"knoten": "hallo"}],
+		"knoten": {
+			"hallo": {"wer": "Marv", "text": "Da bist du ja! Schönes Fest, oder? Fünf Laternen für die fünf Wege!", "antworten": [
+				{"text": "Ja, wunderschön.", "weiter": "tafel"}
+			]},
+			"tafel": {"wer": "Marv", "text": "Sag mal … hast du die Sternentafel schon?", "antworten": [
+				{"text": "Nein, Marv.", "weiter": "zeit", "aktionen": [{"merken": "marv_fest"}, {"auftrag_abgeben": "fest"}]},
+				{"text": "Fünftausend Gold, Marv!", "weiter": "zeit", "aktionen": [{"merken": "marv_fest"}, {"auftrag_abgeben": "fest"}]}
+			]},
+			"zeit": {"wer": "Marv", "text": "Macht nichts! Ich hab Zeit. Ganz viel Ze–", "weiter": "stern"},
+			"stern": {"wer": "Erzähler", "text": "Plötzlich wird es taghell. Ein Stern fällt. Dann noch einer. Und noch einer.", "aktionen": [{"effekt": "sternenfall"}, {"merken": "sternenfall"}, {"auftrag_starten": "sternenfall"}], "weiter": "einschlag"},
+			"einschlag": {"wer": "Erzähler", "text": "Ein Splitter schlägt mitten auf dem Marktplatz ein. Ein Feldschleim kriecht heran – und verschlingt ihn. Er wächst. Und wächst.", "weiter": "ye"},
+			"ye": {"wer": "Ye", "text": "Novizen! Ida, Bo, Tom – und du! Zu mir! Schild hoch, Schild runter!", "antworten": [
+				{"text": "Los!", "aktionen": [{"kampf": "sternenfall"}]}
+			]}
+		}
+	},
+	"ren": {
+		"hinweis": "PLATZHALTER-TEXTE: Ren (Vorgängerin, Kunoichi) nach dem Sternenfall. Marco schreibt die Dialoge der Hauptfiguren noch.",
+		"einstieg": [
+			{"wenn": {"gemerkt": "sternenfresser_besiegt"}, "knoten": "sieg"},
+			{"knoten": "niederlage"}
+		],
+		"knoten": {
+			"sieg": {"wer": "???", "text": "Nicht schlecht, Novize. Wirklich nicht schlecht.", "weiter": "sieg2"},
+			"sieg2": {"wer": "???", "text": "Den Splitter nehme ich aber mit. Der ist nichts für Anfänger.", "antworten": [
+				{"text": "He! Gib den zurück!", "weiter": "weg"},
+				{"text": "Wer bist du?", "weiter": "weg"}
+			]},
+			"niederlage": {"wer": "???", "text": "Steh auf, Novize. Das war knapp.", "weiter": "niederlage2"},
+			"niederlage2": {"wer": "???", "text": "Ohne mich wärt ihr jetzt Sternenstaub. Den Splitter nehme ich mit – der ist nichts für Anfänger.", "antworten": [
+				{"text": "Danke … wer bist du?", "weiter": "weg"},
+				{"text": "Was willst du mit dem Splitter?", "weiter": "weg"}
+			]},
+			"weg": {"wer": "Ren", "text": "Ren. Und du hast mich nie gesehen.", "aktionen": [{"merken": "ren_getroffen"}, {"auftrag_abgeben": "sternenfall"}]}
 		}
 	}
 }

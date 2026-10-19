@@ -56,6 +56,7 @@ const LOOKS := {
 	"wiesenkobold": {sprite = "goblin", scale = 4.0},
 	"ruepelkobold": {sprite = "goblin", scale = 5.5, tint = Color(1.0, 0.7, 0.6)},
 	"uebungs_ye": {sprite = "wizzard_m", scale = 4.0, tint = Color(0.8, 0.86, 0.95)},
+	"sternenfresser": {sprite = "swampy", scale = 7.0, tint = Color(0.85, 0.8, 1.0)},
 }
 const ANIM_FPS := {"idle": 6.0, "run": 12.0, "hit": 8.0}
 
@@ -419,6 +420,8 @@ func _status() -> Array[String]:
 		status.append("Verwundbar")
 	if fighter.blind_turns > 0:
 		status.append("Geblendet")
+	if fighter.plate < 1.0:
+		status.append("ERSCHÜTTERT" if fighter.stagger_turns > 0 else "Sternenpanzer")
 	if fighter.light:
 		status.append("SPLITTERLICHT")
 	if fighter.charge > 0:

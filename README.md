@@ -43,6 +43,10 @@ Abenteurergilde, Bingos Laden, sechs Straßen (die sechste nach Südosten ist zu
   Eine Probestunde ist Pflicht (Auftrag von Lene), die anderen sind freiwillig.
 - **Der zugewachsene Weg (Stufe 7–8):** Lene schickt dich mit einem Essenskorb zu Wache Holm an der sechsten Straße.
   Er lässt dich nicht durch („Befehl der Fünf“). Danach spricht dich Mira an: „Hörst du sie auch?“
+- **Nacht des Sternenfalls (Stufe 8–10):** Fest der fünf Wege bei Nacht mit Festlaternen, Marv fragt nach der Sternentafel,
+  der Sternenfall verwandelt einen Feldschleim in den Sternenfresser (Boss mit Sternenpanzer: nur perfekte Paraden
+  öffnen ihn, nach 10 Zügen explodiert er). Sieg = Erfolg „Schild hoch, Schild runter“, Ren klaut den Splitter;
+  Niederlage = Ren rettet die Gruppe.
 - **Testgefährte:** Ein zweiter Spieler läuft zur Probe herum.
 
 **Für später mehrere Spieler gebaut:** Die Spiellogik (`scripts/welt/world_state.gd`) kennt keine Grafik.
@@ -131,7 +135,7 @@ Felsregen → **Kettenzug** (reißt jemanden von hinten nach vorne). Unter 30 % 
 - `scripts/kampf/battle_state.gd` – Kampf-Regeln ohne Grafik: Zugreihenfolge, Schaden, Gegner, Wellen. Nimmt Befehle an und meldet Ereignisse
 - `scenes/kampf.tscn` + `scripts/kampf/combat.gd` – Kampf-Anzeige: spielt die Ereignisse ab, Knöpfe, Reaktions-Ring, Auswertung
 - `tests/` – automatische Testkämpfe (`vergleich.gd`), Lektionen (`lektionen_test.gd`), Element-Test, Welt-Test (`welt_test.gd`),
-  Stadt↔Kampf (`uebergang_test.gd`), Vorführ-Szenen (`anzeige_auto.tscn`, `welt_auto.tscn`, `lektion_auto.tscn`, `marv_auto.tscn`, `gesandte_auto.tscn`, `weg_auto.tscn`)
+  Stadt↔Kampf (`uebergang_test.gd`), Vorführ-Szenen (`anzeige_auto.tscn`, `welt_auto.tscn`, `lektion_auto.tscn`, `marv_auto.tscn`, `gesandte_auto.tscn`, `weg_auto.tscn`, `fest_auto.tscn`)
 - `scripts/kampf/battle_request.gd` – Kampf aus der Stadt (welcher Kampf, Ergebnis), `kampf_ki.gd` – Computer-Spieler (Mitstreiter, Tests)
 - `scripts/kampf/skills.gd` – Fähigkeiten aller Klassen, Begleiter und Duette
 - `scripts/kampf/sandbox.gd` – Daten: Klassen, Duette, Monster, Gegner, Kämpfe
