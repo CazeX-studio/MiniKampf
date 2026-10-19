@@ -69,7 +69,7 @@ func _test_building_blocks() -> void:
 	world.apply_command("a", {type = "dialog_next"})
 	_check(not p.in_dialog(), "Einleitung endet")
 	_check(p.progress.quest_state("ankunft") == "aktiv", "Auftrag „Ankunft in Kreuzweg“ läuft")
-	_check(world.objective(p) == "Bei der Gildenschreiberin anmelden", "Ziel-Hinweis zeigt die Anmeldung")
+	_check(world.objective(p) == "Bei Schreiberin Lene anmelden", "Ziel-Hinweis zeigt die Anmeldung")
 	_check(world.npc_marker(p, "schreiberin") == "?" and world.npc_marker(p, "ye") == "", "Zeichen ? über der Gildenschreiberin")
 	world.apply_command("a", {type = "start"})
 	_check(not p.in_dialog(), "Die Einleitung kommt nur einmal")

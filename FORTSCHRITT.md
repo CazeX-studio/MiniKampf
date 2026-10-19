@@ -123,9 +123,9 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
 
 - **Schritt 9 – Kreuzweg-Demo, Ankunft** (Schritt 2 aus `KREUZWEG_PLAN.md`, Stufe 1–2):
   - **Einleitung am Stadttor:** Beim ersten Betreten erzählt ein Erzähler kurz, wo du bist, und schickt dich zur Gilde.
-  - **Abenteurergilde:** Die Gildenschreiberin vor dem Eingang trägt dich als Novize ein und schickt dich zu Ye.
+  - **Abenteurergilde:** Die Gildenschreiberin **Lene** vor dem Eingang trägt dich als Novize ein und schickt dich zu Ye.
   - **Ausbilder Ye:** begrüßt dich, beantwortet Fragen (Kämpfen, Laterne) und gibt den **ersten Auftrag
-    „Die Stadt kennenlernen“**: drei Silberkräuter sammeln und der **Schmiedin** Bescheid sagen. Abgeben bei Ye
+    „Die Stadt kennenlernen“**: drei Silberkräuter sammeln und der **Schmiedin Marta** Bescheid sagen. Abgeben bei Ye
     = 25 Gold, ein Heiltrank und genau **Stufe 2**. Danach kündigt Ye die Grundausbildung am Stadttor an (Schritt 3).
   - **Hilfen zum Zurechtfinden:** „!“ über einem NPC = neuer Auftrag, „?“ = dort etwas erledigen oder abgeben.
     Oben links steht immer das nächste **Ziel** (z. B. „Silberkraut 1 / 3“ oder „Zurück zu Ausbilder Ye“).
@@ -250,6 +250,6 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
     Weiterreichen kostet den Zug.
   - Monsterkarten der Dungeon-Monster gibt es in der Sandbox noch nicht (Zähmen schon).
 
-- **Namen:** Sollen Gildenschreiberin und Schmiedin Namen bekommen? Im Moment heißen sie nur nach ihrem Beruf.
+
 - **Kreuzweg-Demo:** Passen die Positionen (Gilde im Nordosten, Bingos Laden im Westen, die sechste,
   zugewachsene Straße nach Südosten)? Soll Ye vor der Gilde stehen oder drinnen?

@@ -1,16 +1,16 @@
 {
 	"ankunft": {
 		"titel": "Ankunft in Kreuzweg",
-		"beschreibung": "Melde dich in der Abenteurergilde an. Die Gildenschreiberin wartet vor dem Eingang.",
+		"beschreibung": "Melde dich in der Abenteurergilde an. Lene, die Gildenschreiberin, wartet vor dem Eingang.",
 		"ziele": [
-			{"art": "gemerkt", "merken": "gilde_angemeldet", "bei": "schreiberin", "text": "Bei der Gildenschreiberin anmelden"}
+			{"art": "gemerkt", "merken": "gilde_angemeldet", "bei": "schreiberin", "text": "Bei Schreiberin Lene anmelden"}
 		],
 		"abgeben_bei": "schreiberin",
 		"belohnung": {"erfahrung": 20}
 	},
 	"zu_ye": {
 		"titel": "Der Novizen-Ausbilder",
-		"beschreibung": "Die Gildenschreiberin schickt dich zu Ausbilder Ye. Er steht neben der Gilde.",
+		"beschreibung": "Schreiberin Lene schickt dich zu Ausbilder Ye. Er steht neben der Gilde.",
 		"ziele": [
 			{"art": "gemerkt", "merken": "bei_ye_gemeldet", "bei": "ye", "text": "Bei Ausbilder Ye melden"}
 		],
@@ -19,12 +19,12 @@
 	},
 	"erster_auftrag": {
 		"titel": "Die Stadt kennenlernen",
-		"beschreibung": "Ye will, dass du dich in Kreuzweg zurechtfindest: Sammle drei Silberkräuter auf dem Marktplatz und sag der Schmiedin, dass Ye seine Übungsschwerter braucht.",
+		"beschreibung": "Ye will, dass du dich in Kreuzweg zurechtfindest: Sammle drei Silberkräuter auf dem Marktplatz und sag Schmiedin Marta, dass Ye seine Übungsschwerter braucht.",
 		"start_bei": "ye",
 		"voraussetzung": "zu_ye",
 		"ziele": [
 			{"art": "sammeln", "gegenstand": "kraut", "anzahl": 3},
-			{"art": "gemerkt", "merken": "schmiedin_bescheid", "bei": "schmiedin", "text": "Der Schmiedin Bescheid sagen"}
+			{"art": "gemerkt", "merken": "schmiedin_bescheid", "bei": "schmiedin", "text": "Schmiedin Marta Bescheid sagen"}
 		],
 		"abgeben_bei": "ye",
 		"belohnung": {"gold": 25, "erfahrung": 70, "gegenstaende": {"heiltrank": 1}}
