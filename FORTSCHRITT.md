@@ -10,7 +10,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 1 | Kampf-Sandbox prüfen und fertigstellen | erledigt |
 | 2 | Pilzhöhle als spielbarer Test-Dungeon | erledigt |
 | 3 | Gerüst für die Kreuzweg-Demo (Lernprojekt 3) | erledigt |
-| 4 | Web-Export aktualisieren | offen |
+| 4 | Web-Export aktualisieren | erledigt |
 
 ## Fertig
 
@@ -32,9 +32,40 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   (beim zweiten Mal ein anderer Satz), Laterne an der Gildenwand als kleiner Hinweis.
   Spiellogik und Anzeige sind getrennt; ein „Testgefährte“ läuft als zweiter Spieler über dieselben Befehle.
 
-## Als Nächstes
+- **Schritt 4 – Web-Export:** Nach jedem Push automatisch neu gebaut und veröffentlicht (alle Läufe erfolgreich).
 
-- Schritt 4: Web-Export prüfen
+## Was du testen kannst
+
+Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spiel startet jetzt mit einem Menü.
+
+**1. Kampf-Sandbox** (Menü → „Kampf-Sandbox“)
+- Wie bisher: bis zu 4 Klassen wählen, Gegner wählen, kämpfen, am Ende die Auswertung ansehen.
+- Neu beim Duett **Sternentanz** (Sternensängerin + Klingentänzerin): Zaras Klingen treffen danach
+  eine Runde lang mit Sternenkraft (Anzeige „Sternenkraft“ auf ihrem Namensschild).
+
+**2. Pilzhöhle** (in der Sandbox unter „Gegner“)
+- „Pilzhöhle“ = ganzer Dungeon mit 4 Wellen. „Pilzhöhle: nur Bosse“ = schneller Test der Bosse.
+- Im Kampf-Log links unten steht bei jedem Boss, welche Mechanik gerade gilt.
+- **Sporenkönigin:** Achte auf „Mechanik heute“. Bei *Sporenblüte* stehen die Giftwolken auf ihrem
+  Namensschild – nicht mit Feuer übertreiben, „Giftwolke vertreiben“ nutzen. Bei *Sporen-Zwillinge*
+  beide Sporenlinge schnell hintereinander besiegen.
+- **Wurzelmutter:** Nicht auf sie selbst schlagen (heilt sie), sondern auf „Knoten vorne“ und
+  „Knoten hinten“, beide vor ihrem nächsten Zug. Auf ihrem Schild läuft „Verschlingen in X Zügen“.
+- **Vorbote:** Das Bild wird dunkler, die Zugleiste ist weg. „Laterne entzünden“ (hellblaue Knöpfe)
+  hellt auf. Wer „SPLITTERLICHT“ auf dem Namensschild hat, wird nicht angegriffen, verliert aber
+  immer mehr Leben: rechtzeitig „Licht weiterreichen“.
+- Gute Fragen beim Testen: Ist es zu schwer oder zu leicht? Versteht man die Mechaniken aus dem Log?
+
+**3. Kreuzweg-Demo** (Menü → „Kreuzweg-Demo“)
+- Boden antippen = laufen. Ausbilder Ye antippen = hinlaufen und reden („Weiter“ blättert).
+  Beim zweiten Mal sagt er etwas anderes.
+- Der „Testgefährte“ ist ein zweiter Spieler, der zur Probe herumläuft.
+- Nur ein Gerüst mit Platzhalter-Grafik: Die Häuser sind einfache Blöcke, noch keine Kämpfe oder Aufträge.
+
+## Als Nächstes (Vorschläge)
+
+- Kreuzweg-Demo ausbauen: Marv, Bingo, erste Aufträge, Probestunden, Sternenfall-Boss, Klassenwahl.
+- Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).
 
 ## Offene Fragen an Marco
 
@@ -47,5 +78,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     Weiterreichen kostet den Zug.
   - Zähmen und Monsterkarten der Dungeon-Monster gibt es in der Sandbox noch nicht.
 
+- **Kreuzweg-Demo:** Passen die Positionen (Gilde im Nordosten, Bingos Laden im Westen, die sechste,
+  zugewachsene Straße nach Südosten)? Soll Ye vor der Gilde stehen oder drinnen?
 - In der Sandbox heißt die Sternensängerin noch **Lyra**. In der Story ist Lyra jetzt Kaels geopferte
   Schwester. Soll die Sternensängerin in der Sandbox einen anderen Namen bekommen?
