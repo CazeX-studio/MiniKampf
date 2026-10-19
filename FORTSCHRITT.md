@@ -11,7 +11,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 2 | Schnellfeuer, Polarstern, Zähmen, Entscheidung nach der Pilzhöhle | erledigt |
 | 3 | Kunoichi-Ult lädt nur durch Siegel-Kombinationen | erledigt |
 | 4 | Elemente absichern (unbekanntes Element = normaler Schaden) | erledigt |
-| 5 | Selbst gewählte Werte als „vorläufig“ markieren | offen |
+| 5 | Selbst gewählte Werte als „vorläufig“ markieren | erledigt |
 | 6 | Kampf in Regeln und Anzeige trennen | offen |
 
 ## Aufgaben der Runde 1
@@ -46,6 +46,9 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Schritt 4 – Elemente absichern:** Ein unbekanntes Element (z. B. Tippfehler oder ein neues Element ohne Eintrag)
   macht jetzt normalen Schaden, statt das Spiel abstürzen zu lassen. Dazu ein kleiner automatischer Test (10 von 10 richtig).
   Im Spiel ändert sich dadurch nichts Sichtbares.
+
+- **Schritt 5 – Vorläufige Werte:** Die selbst gewählten Passiven und alle Pilzhöhlen-Zahlen stehen jetzt gesammelt
+  im Abschnitt „Vorläufige Werte (Feinschliff am Ende)“.
 
 ## Fertig in Runde 1
 
@@ -106,6 +109,22 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 - Der „Testgefährte“ ist ein zweiter Spieler, der zur Probe herumläuft.
 - Nur ein Gerüst mit Platzhalter-Grafik: Die Häuser sind einfache Blöcke, noch keine Kämpfe oder Aufträge.
 
+
+## Vorläufige Werte (Feinschliff am Ende)
+
+Diese Dinge stehen nicht in design.md, ich habe sie selbst gewählt. Sie sind **vorläufig, Feinschliff am Ende**:
+Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
+
+- **Selbst gewählte Passiven:**
+  - Mechaniker / Roboter „Wartung“: Solange Fritz lebt, repariert sich der Roboter jeden Zug um 5.
+  - Rüstungsschmied: Passende Rüstung fängt 40 % ab, jede Härte (bis 5) noch einmal 6 %.
+  - Zwielicht-Wandler: Am Rand der Leiste „überladen“ = 1,6-facher Schaden, aber jeden Zug 8 % Rückstoß.
+  - Bank-Boni der Zähmer-Monster: Moosling −15 % Schaden, Glutwelpe +15 % Schaden, Bachotter +5 LP je Zug.
+- **Pilzhöhle (alle Zahlen):** Leben und Angriffe der Monster und Bosse, 5 Giftwolken mit je 2 Schaden,
+  Sporenknospen heilen 8 %, Verschlingen nach 3 Zügen, Knotenpaar kostet 25 % Leben,
+  Dunkelheit in 6 Stufen, Splitterlicht brennt 8, 12, 16 …
+- **Neu in Runde 2:** Schnellfeuer (3 × 7), Polarstern (Abwehr+ und 30 % früher dran),
+  Zähmen (unter 50 % Leben, Chance = fehlendes Leben, halbes Leben auf der Bank, höchstens 5 Monster).
 ## Als Nächstes (Vorschläge)
 
 - Kreuzweg-Demo ausbauen: Marv, Bingo, erste Aufträge, Probestunden, Sternenfall-Boss, Klassenwahl.
@@ -113,7 +132,7 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 
 ## Offene Fragen an Marco
 
-- **Pilzhöhle – was ich selbst ergänzt habe** (bitte prüfen):
+- **Pilzhöhle – was ich selbst ergänzt habe** (bitte prüfen; alle Zahlen **vorläufig, Feinschliff am Ende**):
   - Gegen Giftwolken gibt es für jede Klasse „Giftwolke vertreiben“ (kostet den Zug), Wind-Treffer vertreiben auch eine.
     Jede Wolke macht bei jedem Zug der Königin 2 Schaden an allen.
   - „Dieselbe Runde“ heißt im Prototyp: bevor der überlebende Sporenknospe bzw. die Wurzelmutter wieder dran ist.
