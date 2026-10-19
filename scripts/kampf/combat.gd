@@ -32,6 +32,8 @@ const REACT_EARLY := 0.15
 const REACT_LATE := 0.18
 const RING_START := 170.0
 const RING_TARGET := 40.0
+## Unter diesem Namen merkt sich der Spielstand die Urbaum-Entscheidung der Pilzhöhle
+const PILZ_CHOICE_FLAG := "pilzhoehle_urbaum"
 
 var state: BattleState
 
@@ -68,6 +70,8 @@ func _ready() -> void:
 	_build_ui()
 	add_log("Tippe eine Fähigkeit an, dann das Ziel.")
 	add_log("Bei Gegner-Angriffen: tippen, wenn sich der [color=#f2c14e]Ring[/color] schließt!")
+	# Entscheidungen fallen nur beim ersten Abschluss; danach gilt die gespeicherte Wahl
+	Sandbox.pilz_choice = SaveGame.get_flag(PILZ_CHOICE_FLAG)
 	state = BattleState.new(self, Sandbox.team, Sandbox.encounter, randi())
 	state.run()
 
@@ -164,6 +168,8 @@ func _play_event(event: Dictionary) -> void:
 		"end":
 			_clear_actions()
 			if not event.aborted:
+				if event.won and state.dungeon != null and Sandbox.pilz_choice != "":
+					SaveGame.set_flag(PILZ_CHOICE_FLAG, Sandbox.pilz_choice)
 				_show_end_screen(event.won)
 
 

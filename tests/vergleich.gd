@@ -38,6 +38,7 @@ func _run() -> void:
 				Sandbox.team = team
 				Sandbox.encounter = encounter
 				Sandbox.starter = STARTERS[(t + s) % STARTERS.size()]
+				Sandbox.pilz_choice = ""
 				var start_seed := 1000 * (t + 1) + 10 * s + encounter.length()
 				print("Kampf ", number)
 				if OS.has_environment("AB") and number < int(OS.get_environment("AB")): continue

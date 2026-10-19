@@ -29,6 +29,33 @@ static func load_into(p: PlayerState) -> bool:
 	return true
 
 
+## Liest etwas Gemerktes aus dem Spielstand (z. B. eine Entscheidung). "" = nichts gemerkt.
+static func get_flag(flag: String) -> String:
+	var data := _read()
+	return str(data.get("progress", {}).get("flags", {}).get(flag, ""))
+
+
+## Merkt sich etwas im Spielstand, ohne den Rest zu verändern.
+static func set_flag(flag: String, value: String) -> void:
+	var data := _read()
+	var progress: Dictionary = data.get("progress", {})
+	var flags: Dictionary = progress.get("flags", {})
+	flags[flag] = value
+	progress["flags"] = flags
+	data["progress"] = progress
+	data["version"] = VERSION
+	var file := FileAccess.open(PATH, FileAccess.WRITE)
+	if file != null:
+		file.store_string(JSON.stringify(data, "\t"))
+
+
+static func _read() -> Dictionary:
+	if not FileAccess.file_exists(PATH):
+		return {}
+	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(PATH))
+	return data if data is Dictionary else {}
+
+
 static func delete() -> void:
 	if FileAccess.file_exists(PATH):
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(PATH))

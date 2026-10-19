@@ -405,9 +405,14 @@ const FINAL_CHOICES: Array[Dictionary] = [
 
 ## Nach dem Sieg über den Vorboten: Was geschieht mit dem Urbaum? (design.md: „Entscheidung danach“)
 func final_choice() -> void:
-	c.add_log("\n[b]Der Urbaum liegt still. In seinem Stamm pulsiert der große Splitter.[/b] Was tut ihr?")
-	var id: String = await c.ask_choice("Was geschieht mit dem Urbaum?", FINAL_CHOICES)
-	Sandbox.pilz_choice = id
+	var id := Sandbox.pilz_choice
+	if id == "":
+		# Erster Abschluss: Die Gruppe entscheidet. Bei jedem weiteren Lauf gilt diese Wahl automatisch.
+		c.add_log("\n[b]Der Urbaum liegt still. In seinem Stamm pulsiert der große Splitter.[/b] Was tut ihr?")
+		id = await c.ask_choice("Was geschieht mit dem Urbaum?", FINAL_CHOICES)
+		Sandbox.pilz_choice = id
+	else:
+		c.add_log("\n[b]Wie beim ersten Mal …[/b]")
 	if id == "faellen":
 		c.add_log("[color=#c8a0ff]Ihr fällt den Urbaum und nehmt den großen Splitter mit.[/color] Er summt leise in eurem Gepäck. "
 			+ "Über Grünwacht bleibt es grau.")

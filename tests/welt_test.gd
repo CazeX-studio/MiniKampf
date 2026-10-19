@@ -109,7 +109,14 @@ func _test_building_blocks() -> void:
 	var copy := PlayerState.new("b", "Kopie", "elf_m", Vector2i(0, 0))
 	_check(SaveGame.load_into(copy), "Spielstand lässt sich laden")
 	_check(copy.progress.to_dict() == p.progress.to_dict() and copy.cell == p.cell, "Geladener Stand ist gleich")
+	# Entscheidungen (z. B. Urbaum) bleiben im Spielstand, auch wenn danach normal gespeichert wird
+	SaveGame.set_flag("pilzhoehle_urbaum", "retten")
+	var again := PlayerState.new("d", "Wieder", "elf_m", Vector2i(0, 0))
+	SaveGame.load_into(again)
+	SaveGame.save(again)
+	_check(SaveGame.get_flag("pilzhoehle_urbaum") == "retten", "Gespeicherte Entscheidung bleibt erhalten")
 	SaveGame.delete()
+	_check(SaveGame.get_flag("pilzhoehle_urbaum") == "", "Neu beginnen löscht auch die Entscheidung")
 	_check(not SaveGame.load_into(PlayerState.new("c", "Neu", "elf_m", Vector2i(0, 0))), "Gelöschter Spielstand ist weg")
 
 
