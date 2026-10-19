@@ -8,6 +8,9 @@ var protokoll := KampfProtokoll.new()
 var start_seed := 1
 ## Kampf aus der Kreuzweg-Demo (BattleRequest.setup); leer = Sandbox-Kampf
 var setup := {}
+## Angenommener Spieler bei Kämpfen aus der Welt: so oft perfekt bzw. normal pariert
+const PLAYER_PERFECT := 0.35
+const PLAYER_NORMAL := 0.35
 var state: BattleState
 
 
@@ -44,8 +47,13 @@ func choose_action(f: Fighter) -> Dictionary:
 	return ki.choose(state.skills, f)
 
 
-func react(_attacker: Fighter, target: Fighter, _duration: float) -> bool:
-	# Mitstreiter des Computers parieren selten (wie im Spiel), sonst die Hälfte der Fälle
+func react(_attacker: Fighter, target: Fighter, _duration: float) -> Variant:
+	# Kämpfe aus der Welt: Reaktion mit Stufe (Spieler: je 35 % perfekt und normal, Mitstreiter wie im Spiel)
+	if not setup.is_empty():
+		if state.computer.has(target):
+			return ki.react_grade(Combat.ALLY_PARRY_CHANCE, Combat.ALLY_NORMAL_CHANCE)
+		return ki.react_grade(PLAYER_PERFECT, PLAYER_NORMAL)
+	# Sandbox (Vergleich mit dem alten Stand): ja/nein, die Hälfte der Fälle
 	return ki.react(Combat.ALLY_PARRY_CHANCE if state.computer.has(target) else 0.5)
 
 

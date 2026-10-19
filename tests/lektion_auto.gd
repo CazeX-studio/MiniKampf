@@ -35,6 +35,6 @@ func choose_action(f: Fighter) -> Dictionary:
 	return ki.choose(state.skills, f)
 
 
-func react(attacker: Fighter, target: Fighter, duration: float) -> bool:
+func react(attacker: Fighter, target: Fighter, duration: float) -> int:
 	await super(attacker, target, duration)
-	return ki.react()
+	return ki.react_grade(0.4, 0.4)

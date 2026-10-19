@@ -23,6 +23,12 @@ const DEF_BUFF := 0.7
 const VULN_MULT := 1.3
 ## Zwischen zwei Wellen heilen sich die Helden um diesen Anteil.
 const WAVE_HEAL := 0.25
+## Reaktion auf einen Gegner-Angriff (Ring und Balken): verpasst, normal, perfekt
+const REACT_NONE := 0
+const REACT_NORMAL := 1
+const REACT_PERFECT := 2
+## Normal pariert oder ausgewichen: so viel weniger Schaden
+const NORMAL_REACT_BLOCK := 0.25
 ## Pro Stufe über 1 bekommt ein Held so viel mehr Leben und Mana (Novize in der Kreuzweg-Demo).
 const LEVEL_HP := 10
 const LEVEL_MANA := 4
@@ -682,12 +688,16 @@ func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String
 		for t in targets:
 			projectile_bg(e, t, Elements.color(e.element), duration)
 
-	var success := false
+	# Reaktion: 0 = verpasst, 1 = normal pariert/ausgewichen (25 % weniger Schaden), 2 = perfekt (Treffer abgewehrt + Klassen-Effekt)
+	var grade := REACT_NONE
 	if reactors.is_empty():
 		wait(duration)
 	else:
 		await _flush()
-		success = await controller.react(e, focus, duration)
+		var answer: Variant = await controller.react(e, focus, duration)
+		# Ältere Steuerer antworten mit ja/nein (ja = perfekt)
+		grade = (REACT_PERFECT if answer else REACT_NONE) if answer is bool else int(answer)
+	var success := grade == REACT_PERFECT
 
 	for t in targets:
 		if not t.is_alive():
@@ -705,6 +715,11 @@ func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String
 			_last_crit = false
 			_last_eff = 1.0
 			skills.on_perfect_reaction(t, e)
+		elif grade == REACT_NORMAL and t.reaction != "":
+			# Normal pariert oder ausgewichen: nur ein Teil des Schadens kommt an
+			float_text(t, "Pariert" if t.reaction == "parry" else "Ausgewichen", Color("cfe2ff"), 78)
+			var lost := hit(e, t, base * (1.0 - NORMAL_REACT_BLOCK), kind, e.element)
+			t.credit().stat_blocked += roundi(lost * NORMAL_REACT_BLOCK / (1.0 - NORMAL_REACT_BLOCK))
 		else:
 			hit(e, t, base, kind, e.element)
 	# Perfekte Parade gegen einen Gepanzerten (Sternenfresser): Der Panzer ist kurz offen

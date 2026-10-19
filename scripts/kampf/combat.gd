@@ -27,15 +27,19 @@ const VIGNETTE_SHADER := preload("res://shaders/vignette.gdshader")
 const WAVE_SLOTS: Array[Vector2] = [Vector2(30, 300), Vector2(30, 476), Vector2(318, 300), Vector2(318, 476)]
 const BOSS_SLOTS: Array[Vector2] = [Vector2(40, 400), Vector2(330, 290), Vector2(330, 462)]
 
-## Zeitfenster der perfekten Reaktion in Sekunden (vor bzw. nach dem Treffer).
-const REACT_EARLY := 0.15
-const REACT_LATE := 0.18
+## Zeitfenster der normalen Reaktion in Sekunden (vor bzw. nach dem Treffer).
+const REACT_EARLY := 0.25
+const REACT_LATE := 0.25
+## Die Perfekt-Zone liegt in der Mitte der normalen Zone und ist so breit (Anteil)
+const PERFECT_SHARE := 0.2
 const RING_START := 170.0
 const RING_TARGET := 40.0
 ## Unter diesem Namen merkt sich der Spielstand die Urbaum-Entscheidung der Pilzhöhle
 const PILZ_CHOICE_FLAG := "pilzhoehle_urbaum"
 ## So oft gelingt den Novizen-Mitstreitern (Computer) eine perfekte Reaktion
 const ALLY_PARRY_CHANCE := 0.1
+## ... und so oft eine normale (25 % weniger Schaden)
+const ALLY_NORMAL_CHANCE := 0.3
 
 var state: BattleState
 
@@ -478,13 +482,13 @@ func _on_fighter_tapped(target: Fighter) -> void:
 
 # --- Perfekte Reaktion --------------------------------------------------------
 
-## Zeigt den schrumpfenden Ring und die Zeitleiste. Gibt true zurück,
-## wenn im richtigen Moment getippt wurde.
-func react(attacker: Fighter, target: Fighter, duration: float) -> bool:
+## Zeigt den schrumpfenden Ring und die Zeitleiste. Gibt die Reaktion zurück:
+## 0 = verpasst, 1 = normal pariert/ausgewichen (normale Zone), 2 = perfekt (schmale Zone in der Mitte).
+func react(attacker: Fighter, target: Fighter, duration: float) -> int:
 	# Mitstreiter des Computers reagieren selbst, ohne Ring
 	if state.computer.has(target):
 		await wait(duration + REACT_LATE)
-		return _ki.react(ALLY_PARRY_CHANCE)
+		return _ki.react_grade(ALLY_PARRY_CHANCE, ALLY_NORMAL_CHANCE)
 	await _show_hint("erste_reaktion")
 	_react_target = target
 	_react_duration = duration
@@ -505,11 +509,21 @@ func react(attacker: Fighter, target: Fighter, duration: float) -> bool:
 	for v in raised:
 		if is_instance_valid(v):
 			v.z_index = 0
-	return _react_press >= 0.0 and _is_perfect(_react_press)
+	return _grade(_react_press) if _react_press >= 0.0 else BattleState.REACT_NONE
 
 
-func _is_perfect(t: float) -> bool:
-	return t >= _react_duration - REACT_EARLY and t <= _react_duration + REACT_LATE
+## Halbe Breite der Perfekt-Zone in Sekunden.
+func _perfect_half() -> float:
+	return (REACT_EARLY + REACT_LATE) * PERFECT_SHARE * 0.5
+
+
+## Wie gut ein Tippen zum Zeitpunkt t war (Sekunden seit Beginn des Angriffs).
+func _grade(t: float) -> int:
+	if absf(t - _react_duration) <= _perfect_half():
+		return BattleState.REACT_PERFECT
+	if t >= _react_duration - REACT_EARLY and t <= _react_duration + REACT_LATE:
+		return BattleState.REACT_NORMAL
+	return BattleState.REACT_NONE
 
 
 func _react_time() -> float:
@@ -532,20 +546,22 @@ func _input(event: InputEvent) -> void:
 	if _react_press >= 0.0:
 		return
 	_react_press = _react_time()
-	if _is_perfect(_react_press):
-		_react_feedback = "PERFEKT!"
-		var c := view(_react_target).center()
-		Fx.spawn(_field, Fx.Kind.RING, c, Color("6dff8a"), 150.0, 0.45)
-		Fx.spawn(_field, Fx.Kind.GLOW, c, Color("6dff8a"), 120.0, 0.4)
-	elif _react_press < _react_duration:
-		_react_feedback = "Zu früh!"
-	else:
-		_react_feedback = "Zu spät!"
+	var c := view(_react_target).center()
+	match _grade(_react_press):
+		BattleState.REACT_PERFECT:
+			_react_feedback = "PERFEKT!"
+			Fx.spawn(_field, Fx.Kind.RING, c, Color("6dff8a"), 150.0, 0.45)
+			Fx.spawn(_field, Fx.Kind.GLOW, c, Color("6dff8a"), 120.0, 0.4)
+		BattleState.REACT_NORMAL:
+			_react_feedback = "Pariert!" if _react_target.reaction == "parry" else "Ausgewichen!"
+			Fx.spawn(_field, Fx.Kind.RING, c, Color("9fd0ff"), 110.0, 0.35)
+		_:
+			_react_feedback = "Zu früh!" if _react_press < _react_duration else "Zu spät!"
 
 
-## Kurzes Aufblitzen im Zielkreis, genau wenn das Zeitfenster aufgeht.
+## Kurzes Aufblitzen im Zielkreis, genau wenn die Perfekt-Zone aufgeht.
 func _update_glint() -> void:
-	if _react_glint or _react_time() < _react_duration - REACT_EARLY:
+	if _react_glint or _react_time() < _react_duration - _perfect_half():
 		return
 	_react_glint = true
 	if _react_press < 0.0:
@@ -559,14 +575,24 @@ func _draw_ring() -> void:
 	var t := _react_time()
 	var progress := clampf(t / _react_duration, 0.0, 1.0)
 	var radius := lerpf(RING_START, RING_TARGET, progress)
-	var in_window := _is_perfect(t)
+	var grade := _grade(t)
 	var green := Color("6dff8a")
+	var light := Color("c8f08a")
 	var gold := Color("f2c14e")
-	var ring_color := green if in_window else gold
+	var ring_color := gold
+	if grade == BattleState.REACT_PERFECT:
+		ring_color = green
+	elif grade == BattleState.REACT_NORMAL:
+		ring_color = light
 
-	# Zielkreis: Wenn der Ring ihn erreicht, ist der richtige Moment
+	# Zielkreis: Wenn der Ring ihn erreicht, ist der perfekte Moment
 	var pulse := 0.5 + 0.5 * sin(t * 30.0)
-	_ring_layer.draw_circle(c, RING_TARGET, Color(green, 0.25 + 0.2 * pulse) if in_window else Color(1, 1, 1, 0.12))
+	var fill := Color(1, 1, 1, 0.12)
+	if grade == BattleState.REACT_PERFECT:
+		fill = Color(green, 0.3 + 0.25 * pulse)
+	elif grade == BattleState.REACT_NORMAL:
+		fill = Color(light, 0.2)
+	_ring_layer.draw_circle(c, RING_TARGET, fill)
 	_ring_layer.draw_arc(c, RING_TARGET, 0, TAU, 48, Color.WHITE, 4)
 
 	# Schrumpfender Ring mit Leucht-Saum und vier Pfeilen, die nach innen zeigen
@@ -581,16 +607,20 @@ func _draw_ring() -> void:
 			var back := c + dir * (radius + 12.0)
 			_ring_layer.draw_colored_polygon(PackedVector2Array([tip, back + side, back - side]), ring_color)
 
-	# Zeitleiste oben: Der Strich muss im grünen Feld sein
+	# Zeitleiste oben: hellgrüne Zone = normal (25 % weniger Schaden), schmale grüne Mitte = perfekt
 	var bar := Rect2(440, 104, 400, 18)
 	var total := _react_duration + REACT_LATE
-	var zone_from := bar.position.x + bar.size.x * (_react_duration - REACT_EARLY) / total
-	var zone_to := bar.end.x
 	_ring_layer.draw_rect(bar.grow(3), Color(0, 0, 0, 0.75))
 	_ring_layer.draw_rect(bar, Color(1, 1, 1, 0.12))
-	_ring_layer.draw_rect(Rect2(zone_from, bar.position.y, zone_to - zone_from, bar.size.y), Color(green, 0.55 + 0.35 * pulse if in_window else 0.55))
+	var normal_from := _bar_x(bar, total, _react_duration - REACT_EARLY)
+	var normal_to := _bar_x(bar, total, _react_duration + REACT_LATE)
+	_ring_layer.draw_rect(Rect2(normal_from, bar.position.y, normal_to - normal_from, bar.size.y), Color(light, 0.45))
+	var perfect_from := _bar_x(bar, total, _react_duration - _perfect_half())
+	var perfect_to := _bar_x(bar, total, _react_duration + _perfect_half())
+	var perfect_alpha := 0.75 + 0.25 * pulse if grade == BattleState.REACT_PERFECT else 0.85
+	_ring_layer.draw_rect(Rect2(perfect_from, bar.position.y - 2, perfect_to - perfect_from, bar.size.y + 4), Color(green, perfect_alpha))
 	var marker_t := _react_press if _react_press >= 0.0 else t
-	var marker_x := bar.position.x + bar.size.x * clampf(marker_t / total, 0.0, 1.0)
+	var marker_x := _bar_x(bar, total, marker_t)
 	_ring_layer.draw_rect(Rect2(marker_x - 3, bar.position.y - 6, 6, bar.size.y + 12), Color.WHITE)
 
 	var verb := "Parieren" if _react_target.reaction == "parry" else "Ausweichen"
@@ -598,14 +628,24 @@ func _draw_ring() -> void:
 	var color := Color.WHITE
 	if _react_feedback == "PERFEKT!":
 		color = green
+	elif _react_feedback == "Pariert!" or _react_feedback == "Ausgewichen!":
+		color = Color("9fd0ff")
 	elif _react_feedback != "":
 		color = Color("ff6b6b")
-	elif in_window:
+	elif grade == BattleState.REACT_PERFECT:
 		text = "JETZT!"
 		color = green
+	elif grade == BattleState.REACT_NORMAL:
+		text = "Jetzt …"
+		color = light
 	var font := ThemeDB.fallback_font
 	_ring_layer.draw_string_outline(font, Vector2(340, 94), text, HORIZONTAL_ALIGNMENT_CENTER, 600, 26, 8, Color.BLACK)
 	_ring_layer.draw_string(font, Vector2(340, 94), text, HORIZONTAL_ALIGNMENT_CENTER, 600, 26, color)
+
+
+## Position eines Zeitpunkts auf der Zeitleiste.
+func _bar_x(bar: Rect2, total: float, time: float) -> float:
+	return bar.position.x + bar.size.x * clampf(time / total, 0.0, 1.0)
 
 
 # --- Animationen --------------------------------------------------------------

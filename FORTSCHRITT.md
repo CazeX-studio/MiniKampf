@@ -41,6 +41,7 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
 | 12 | Kreuzweg-Demo Schritt 5: Gesandte der fünf Regionen mit Probestunden | erledigt |
 | 13 | Kreuzweg-Demo Schritt 6: Der zugewachsene Weg (Wache Holm, Mira) | erledigt |
 | 14 | Kreuzweg-Demo Schritt 7: Nacht des Sternenfalls (Fest, Sternenfresser, Ren) | erledigt |
+| 15 | Parieren/Ausweichen mit normaler Zone und Perfekt-Zone | erledigt |
 
 ## Aufgaben der Runde 1
 
@@ -240,6 +241,16 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
   - Auf dem Marktplatz bleibt ein **leuchtender Krater**.
   - **Platzhalter:** alle Texte (Lene, Marv, Erzähler, Ye, Ren – Ren ist eine Hauptfigur). Der Kampf spielt noch im Gewölbe.
   - Tests: Welt-Test mit Fest, Sternenfall, Niederlage und Sieg: alles richtig. Sandbox-Kämpfe unverändert.
+
+- **Schritt 15 – Parieren und Ausweichen neu** (überall: Kreuzweg-Demo und Kampf-Sandbox, auch in design.md):
+  - Der Balken oben hat jetzt **zwei Zonen**: Die **hellgrüne normale Zone** (etwa eine halbe Sekunde um den Treffer)
+    = normal pariert bzw. ausgewichen, **25 % weniger Schaden** („Pariert!“ / „Ausgewichen!“).
+    In ihrer Mitte die **schmale grüne Perfekt-Zone** (20 % der Breite, genau wenn der Ring den Kreis erreicht)
+    = **PERFEKT**: kein Schaden und die festgelegten Klassen-Effekte (Mana, Klinge, Konter …).
+  - Nur **perfekte** Paraden zählen für Lektion 3 und erschüttern den Sternenfresser.
+  - Ida, Bo und Tom: 10 % perfekt, 30 % normal.
+  - Computer-Test mit einem Spieler, der je 35 % perfekt und normal trifft: Lektionen und Probestunden schaffbar,
+    der Sternenfresser in 5 von 30 Fällen (kaum schaffbar, wie geplant).
     sie mit. (Im fertigen Spiel ist der erste Abschluss der über den Auftrag.) Auch in design.md eingetragen.
 
 ## Fertig in Runde 1
@@ -333,6 +344,11 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 4. Im Kampf: Pariere die Angriffe des Sternenfressers. Erst nach einer perfekten Parade ist er „ERSCHÜTTERT“ und nimmt
    richtig Schaden. Achte auf den Countdown „EXPLOSION in X Zügen“.
 5. Danach taucht Ren auf (bei Sieg klaut sie den Splitter, bei Niederlage rettet sie euch). Bei Sieg: Auftragsbuch → Erfolge.
+
+**Neu: Parieren mit zwei Zonen** (überall)
+1. Lass dich angreifen und tippe früh im hellgrünen Feld: „Pariert!“ (oder „Ausgewichen!“), der Schaden ist kleiner.
+2. Tippe genau in die schmale grüne Mitte, wenn der Ring den Kreis erreicht: „PERFEKT!“, kein Schaden, Klassen-Effekt.
+3. Lektion 3 bei Ye: Zählen nur die perfekten Paraden?
 
 
 **1. Kampf-Sandbox** (Menü → „Kampf-Sandbox“)

@@ -53,5 +53,15 @@ func react(chance := 0.5) -> bool:
 	return rng.randf() < chance
 
 
+## Reaktion mit Stufe: 2 = perfekt, 1 = normal (25 % weniger Schaden), 0 = verpasst.
+func react_grade(perfect_chance: float, normal_chance: float) -> int:
+	var roll := rng.randf()
+	if roll < perfect_chance:
+		return 2
+	if roll < perfect_chance + normal_chance:
+		return 1
+	return 0
+
+
 func choose_option(options: Array[Dictionary]) -> String:
 	return options[rng.randi() % options.size()].id

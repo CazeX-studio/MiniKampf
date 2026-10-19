@@ -30,8 +30,8 @@
 		"ziel_paraden": 2,
 		"erfahrung": 75,
 		"hinweise": {
-			"erster_zug": "Ye ist nicht zu besiegen. Ziel: zweimal perfekt parieren. Mach einfach deinen Zug und warte auf seinen Angriff.",
-			"erste_reaktion": "Jetzt greift Ye an! Ein Ring schließt sich um dich. Tippe (oder drücke die Leertaste) genau dann, wenn er den inneren Kreis erreicht und grün wird. Zu früh oder zu spät zählt nicht. Übrigens: Als Novize lernt jeder das Parieren. Später hängt es von deiner Klasse ab – manche parieren, manche weichen aus, manche haben gar keine Reaktion."
+			"erster_zug": "Ye ist nicht zu besiegen. Ziel: zweimal PERFEKT parieren. Mach einfach deinen Zug und warte auf seinen Angriff.",
+			"erste_reaktion": "Jetzt greift Ye an! Ein Ring schließt sich um dich, oben läuft ein Balken. Tippe (oder drücke die Leertaste), wenn der Strich im hellgrünen Feld ist: normale Parade, 25 % weniger Schaden. Triffst du die schmale grüne Mitte, wenn der Ring den inneren Kreis erreicht: PERFEKT – kein Schaden. Für diese Lektion zählen nur perfekte Paraden. Übrigens: Als Novize lernt jeder das Parieren. Später hängt es von deiner Klasse ab – manche parieren, manche weichen aus, manche haben gar keine Reaktion."
 		}
 	},
 	"lektion_reihen": {
