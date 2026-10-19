@@ -98,7 +98,7 @@ Felsregen → **Kettenzug** (reißt jemanden von hinten nach vorne). Unter 30 % 
 
 - Leben, Mana, Tempo der Klassen, Gegner und Kämpfe: `scripts/kampf/sandbox.gd`
 - Fähigkeiten, Passiven, Reaktionen und Duette: `scripts/kampf/skills.gd`
-- Allgemeine Regeln (Reihen, Krit, Stärkungen, Boss): Konstanten oben in `scripts/kampf/combat.gd`
+- Allgemeine Regeln (Reihen, Krit, Stärkungen, Boss): Konstanten oben in `scripts/kampf/battle_state.gd`
 - Element-Tabelle: `scripts/kampf/elements.gd`
 
 ## Aufbau
@@ -108,7 +108,9 @@ Felsregen → **Kettenzug** (reißt jemanden von hinten nach vorne). Unter 30 % 
   `dialogs.gd` (Gesprächstexte), `kreuzweg.gd` (Anzeige und Eingabe), `world_character.gd` (Figur)
 - `scenes/auswahl.tscn` + `scripts/kampf/auswahl.gd` – Auswahl-Bildschirm der Kampf-Sandbox
 - `scripts/kampf/pilzhoehle.gd` – Test-Dungeon Pilzhöhle (Abläufe und Mechaniken)
-- `scenes/kampf.tscn` + `scripts/kampf/combat.gd` – Kampfablauf, Gegner, Oberfläche, Auswertung
+- `scripts/kampf/battle_state.gd` – Kampf-Regeln ohne Grafik: Zugreihenfolge, Schaden, Gegner, Wellen. Nimmt Befehle an und meldet Ereignisse
+- `scenes/kampf.tscn` + `scripts/kampf/combat.gd` – Kampf-Anzeige: spielt die Ereignisse ab, Knöpfe, Reaktions-Ring, Auswertung
+- `tests/` – automatische Testkämpfe (`vergleich.gd`), Element-Test, `anzeige_auto.tscn` (Computer spielt mit echter Anzeige)
 - `scripts/kampf/skills.gd` – Fähigkeiten aller Klassen, Begleiter und Duette
 - `scripts/kampf/sandbox.gd` – Daten: Klassen, Duette, Monster, Gegner, Kämpfe
 - `scripts/kampf/elements.gd` – Element-Sechseck, Licht/Schatten, Sternenkraft

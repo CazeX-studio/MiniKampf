@@ -88,6 +88,9 @@ var _shader := ShaderMaterial.new()
 var _glow_color := Color.WHITE
 var _glow := 0.0
 var _flash := 0.0
+## Lebenspunkte, die gerade angezeigt werden. Die Anzeige setzt sie im Takt der abgespielten Treffer,
+## damit die Leiste erst sinkt, wenn der Treffer zu sehen ist (-1 = immer den echten Wert zeigen).
+var shown := -1
 
 
 func setup(p_fighter: Fighter) -> void:
@@ -140,13 +143,13 @@ func _process(delta: float) -> void:
 		if _hold <= 0.0:
 			_set_anim("idle")
 	var anim := _anim if _frames.has(_anim) else "idle"
-	if not fighter.is_alive():
+	if shown_hp() <= 0:
 		anim = "hit" if _frames.has("hit") else "idle"
 	var frames: Array = _frames[anim]
 	body.texture = frames[int(_anim_time * ANIM_FPS[anim]) % frames.size()]
 
 	# Besiegte Figuren werden grau und durchsichtig
-	var alive := fighter.is_alive()
+	var alive := shown_hp() > 0
 	body.modulate = Color.WHITE if alive else Color(0.45, 0.45, 0.5, 0.55)
 
 	var outline := Color(0, 0, 0, 0)
@@ -157,6 +160,10 @@ func _process(delta: float) -> void:
 	_shader.set_shader_parameter("outline_color", outline)
 	_shader.set_shader_parameter("flash", _flash)
 	queue_redraw()
+
+
+func shown_hp() -> int:
+	return shown if shown >= 0 else fighter.hp
 
 
 ## Erstes Standbild einer Figur (für Zugleiste und Auswahl-Bildschirm).
@@ -313,10 +320,10 @@ func _draw_plate() -> void:
 			tag = "Splitter"
 	draw_string(font, Vector2(x0, y + 16), tag, HORIZONTAL_ALIGNMENT_RIGHT, w, 11, tag_color)
 
-	var hp_ratio := float(fighter.hp) / fighter.max_hp
-	_draw_bar(Rect2(x0, y + 21, w, 13), hp_ratio, COL_HP if hp_ratio > 0.3 else COL_HP_LOW, "%d / %d" % [fighter.hp, fighter.max_hp])
+	var hp_ratio := float(shown_hp()) / fighter.max_hp
+	_draw_bar(Rect2(x0, y + 21, w, 13), hp_ratio, COL_HP if hp_ratio > 0.3 else COL_HP_LOW, "%d / %d" % [shown_hp(), fighter.max_hp])
 
-	if not fighter.is_alive():
+	if shown_hp() <= 0:
 		var text := "kaputt" if fighter.klass == "robot" else ("kampfunfähig" if fighter.owner != null else "besiegt")
 		draw_string(font, Vector2(x0, y + 47), text, HORIZONTAL_ALIGNMENT_LEFT, w, 12, Color(1, 1, 1, 0.7))
 		return

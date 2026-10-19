@@ -1,7 +1,10 @@
 extends SceneTree
 ## Lässt viele automatische Kämpfe mit festen Startwerten laufen und schreibt alles in eine Datei.
 ## Aufruf: Godot --headless --path . --script res://tests/vergleich.gd -- alt   (oder: -- neu)
-## Danach die beiden Dateien tests/ergebnis_alt.txt und tests/ergebnis_neu.txt vergleichen.
+## "neu" = Kampf-Zustand aus battle_state.gd (tests/neu_kampf.gd).
+## "alt" = der Kampf vor der Trennung von Regeln und Anzeige (tests/alt_kampf.gd, nur in älteren Ständen,
+## z. B. Commit 687516e; dort zum Vergleich Godots eingebauten Zufall durch denselben Generator ersetzen).
+## Ergebnis vom 2026-10-19: alle 75 Kämpfe Zeile für Zeile identisch.
 
 const TEAMS: Array = [
 	["tank", "archer", "ritualist", "singer"],

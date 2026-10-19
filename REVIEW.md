@@ -71,6 +71,7 @@ Stadt schräg von oben, Statue der Fünf, sechs Straßen (die sechste zugewachse
   Die Regeln warten auf Animationen und rufen direkt Schwebetexte und Effekte auf. Für gemeinsame Kämpfe
   (Lernprojekt 4) muss das getrennt werden: ein Kampf-Zustand, der Befehle annimmt und Ereignisse
   („Treffer 12 auf Arkon“) meldet, und eine Anzeige, die diese Ereignisse abspielt.
+  **Nachtrag (Runde 2): erledigt.** `battle_state.gd` enthält jetzt die Regeln ohne Grafik, `combat.gd` spielt nur noch Ereignisse ab.
 - Der erste Mini-Kampf (`scenes/main.tscn`, `battle.gd`, `combatant.gd`) liegt noch im Projekt,
   ist aber über das Menü nicht mehr erreichbar.
 

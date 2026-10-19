@@ -22,7 +22,7 @@ const PAIR_DAMAGE := 0.25
 const MAX_DARKNESS := 6
 const DARKNESS_STEP := 0.13
 
-var c: Combat
+var c: BattleState
 ## Mechanik der Sporenkönigin in diesem Kampf: "bluete" (Wipe) oder "zwillinge" (Zusammenspiel)
 var queen_mode := ""
 var clouds := 0
@@ -33,7 +33,7 @@ var phase2 := false
 var darkness := 0
 
 
-func _init(p_combat: Combat) -> void:
+func _init(p_combat: BattleState) -> void:
 	c = p_combat
 
 
@@ -53,7 +53,7 @@ func on_wave(_index: int) -> void:
 	queen_mode = ""
 	clouds = 0
 	if _find("sporenkoenigin") != null:
-		queen_mode = ["bluete", "zwillinge"].pick_random()
+		queen_mode = c.pick(["bluete", "zwillinge"])
 		clouds = 0
 		c.add_log("[b]Zwischenboss: Die Sporenkönigin![/b] Ihre Sporenknospen heilen sie.")
 		if queen_mode == "bluete":
@@ -140,7 +140,7 @@ func enemy_turn(e: Fighter) -> void:
 				await c.enemy_attack(e, [c.pick_target(false, true)], 6 + 5 * e.charge, "magic", "Funkenbiss")
 				e.charge += 1
 		"sporenling":
-			await _sporeling_turn(e)
+			_sporeling_turn(e)
 		"sporenkoenigin":
 			await _queen_turn(e)
 		"wurzelmutter":
@@ -164,7 +164,7 @@ func _sporeling_turn(e: Fighter) -> void:
 	if queen != null and queen.is_alive():
 		c.heal(null, queen, roundi(queen.max_hp * SPORE_HEAL))
 		c.add_log("Die Sporenknospe heilt die Sporenkönigin.")
-	await c.wait(0.3)
+	c.wait(0.3)
 
 
 func _queen_turn(e: Fighter) -> void:
@@ -172,7 +172,7 @@ func _queen_turn(e: Fighter) -> void:
 		c.add_log("Die Giftwolken brennen in der Lunge (%d Schaden je Wolke)." % CLOUD_DAMAGE)
 		for a in c.allies():
 			c.apply_damage(a, CLOUD_DAMAGE * clouds, e)
-		await c.wait(0.3)
+		c.wait(0.3)
 	if e.step % 2 == 0:
 		await c.enemy_attack(e, [c.pick_target()], 16, "melee", "Sporenpeitsche")
 	else:
@@ -217,11 +217,11 @@ func _mother_turn(e: Fighter) -> void:
 		await c.enemy_attack(e, [c.pick_target()], 15, "melee", "Wurzelschlag")
 	else:
 		var back_row := c.allies().filter(func(h: Fighter) -> bool: return h.back_row)
-		var target: Fighter = back_row.pick_random() if not back_row.is_empty() else c.pick_target()
+		var target: Fighter = c.pick(back_row) if not back_row.is_empty() else c.pick_target()
 		if target.back_row:
 			target.back_row = false
 			c.add_log("[color=yellow]Wurzeln reißen %s nach vorne![/color]" % target.display_name)
-			await c.move_to_row(target)
+			c.move_to_row(target)
 		await c.enemy_attack(e, [target], 8, "melee", "Wurzelzug")
 
 
@@ -245,7 +245,7 @@ func _herald_turn(e: Fighter) -> void:
 		var burn := 4 + 4 * holder.light_turns
 		c.float_text(holder, "Splitterlicht brennt", Color("fff3b0"), 30)
 		c.apply_damage(holder, burn, e)
-		await c.wait(0.3)
+		c.wait(0.3)
 
 	var others := c.allies().filter(func(h: Fighter) -> bool: return not h.light)
 	if others.is_empty():
@@ -255,7 +255,7 @@ func _herald_turn(e: Fighter) -> void:
 	if e.step % 2 == 0:
 		await c.enemy_attack(e, typed, 11, "magic", "Schattenwelle")
 	else:
-		await c.enemy_attack(e, [typed.pick_random()], 20, "magic", "Leerengriff")
+		await c.enemy_attack(e, [c.pick(typed)], 20, "magic", "Leerengriff")
 
 
 func _light_holder() -> Fighter:
@@ -292,7 +292,7 @@ func check_phase() -> void:
 			_update_intents()
 
 	if mother != null and not mother.is_alive() and not phase2:
-		await _start_phase2()
+		_start_phase2()
 
 	var herald := _find("vorbote")
 	if herald != null:
@@ -302,7 +302,7 @@ func check_phase() -> void:
 			for h in c.heroes:
 				h.light = false
 		elif _light_holder() == null and not c.alive(c.heroes).is_empty():
-			var next: Fighter = c.alive(c.heroes).pick_random()
+			var next: Fighter = c.pick(c.alive(c.heroes))
 			next.light = true
 			next.light_turns = 0
 			c.add_log("Das Splitterlicht springt zu %s." % next.display_name)
@@ -315,21 +315,21 @@ func _start_phase2() -> void:
 	c.add_log("[color=#fff3b0]Das letzte Licht:[/color] Wer das Splitterlicht hält, ist vor dem Vorboten sicher, "
 		+ "brennt aber immer stärker. Reicht es weiter! Laternen entzünden vertreibt die Dunkelheit.")
 	c.screen_flash(Color("200030"))
-	await c.wait(0.8)
-	c._banner("Der Vorbote")
+	c.wait(0.8)
+	c.banner("Der Vorbote")
 	c.spawn_enemies(["vorbote"])
 	darkness = 1
 	c.set_darkness(darkness * DARKNESS_STEP)
 	c.set_order_visible(false)
 	var heroes := c.alive(c.heroes)
 	if not heroes.is_empty():
-		var holder: Fighter = heroes.pick_random()
+		var holder: Fighter = c.pick(heroes)
 		holder.light = true
 		holder.light_turns = 0
 		c.add_log("%s hält das Splitterlicht." % holder.display_name)
 	_update_intents()
 	c.refresh()
-	await c.wait(1.0)
+	c.wait(1.0)
 
 
 ## Schläge auf die Rinde der Wurzelmutter heilen sie (nur Angriffe der Helden).
@@ -391,7 +391,7 @@ func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 			c.burst(target, Color("fff3b0"), 120.0)
 			c.add_log("%s reicht das Splitterlicht an %s weiter." % [f.display_name, target.display_name])
 	_update_intents()
-	await c.wait(0.3)
+	c.wait(0.3)
 
 
 # --- Entscheidung nach dem Dungeon --------------------------------------------

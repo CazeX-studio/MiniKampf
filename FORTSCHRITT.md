@@ -12,7 +12,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 3 | Kunoichi-Ult lädt nur durch Siegel-Kombinationen | erledigt |
 | 4 | Elemente absichern (unbekanntes Element = normaler Schaden) | erledigt |
 | 5 | Selbst gewählte Werte als „vorläufig“ markieren | erledigt |
-| 6 | Kampf in Regeln und Anzeige trennen | offen |
+| 6 | Kampf in Regeln und Anzeige trennen | erledigt |
 
 ## Aufgaben der Runde 1
 
@@ -50,6 +50,20 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Schritt 5 – Vorläufige Werte:** Die selbst gewählten Passiven und alle Pilzhöhlen-Zahlen stehen jetzt gesammelt
   im Abschnitt „Vorläufige Werte (Feinschliff am Ende)“.
 
+- **Schritt 6 – Kampf in Regeln und Anzeige getrennt:**
+  - **Regeln** (`battle_state.gd`): ein Kampf-Zustand ganz ohne Grafik. Er nimmt Befehle an („Vega benutzt
+    Polarstern auf Wren“, „Reaktion getroffen: ja“) und meldet Ereignisse („Treffer 12 auf Sporenwolf“,
+    „Geschoss von Wren zum Dornling“, Log-Zeilen). Er wartet nie auf Animationen und hat seinen eigenen Zufall.
+  - **Anzeige** (`combat.gd`): spielt diese Ereignisse der Reihe nach ab (Figuren, Treffer, Leisten, Log, Ring)
+    und gibt deine Eingaben als Befehle zurück. Die Lebensleiste sinkt erst, wenn der Treffer zu sehen ist.
+  - **Warum:** Für gemeinsame Kämpfe kann der Kampf-Zustand später auf einem Server laufen; jeder Spieler hat nur
+    die Anzeige. Ein Computer-Spieler kann denselben Kampf ohne Grafik in Sekunden durchspielen.
+  - **Geprüft:** 75 automatische Kämpfe (5 Teams, alle 11 Klassen, alle 5 Gegner, je 3 feste Zufallswerte)
+    vor und nach dem Umbau. Ergebnis: **Zug für Zug identisch** (Leben, Mana, Ult, Zugleiste, jede Log-Zeile und
+    jede Schadenszahl, rund 90.000 Zeilen). Für den Vergleich habe ich im alten Stand nur die Zufallsquelle
+    ausgetauscht, sonst nichts. Dazu ein Probelauf mit echter Anzeige, in dem der Computer spielt
+    (`tests/anzeige_auto.tscn`), und alle Szenen starten ohne Fehlermeldung.
+
 ## Fertig in Runde 1
 
 - **Schritt 1 – Kampf-Sandbox:** Alle 11 Klassen, Element-Sechseck, Zähmer mit Monster-Wechsel,
@@ -83,6 +97,8 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
    Monster bei „Wechsel“ in der Liste und kämpft für dich.
 4. „Pilzhöhle: nur Bosse“ schaffen: Am Ende kommt die Frage, was mit dem Urbaum geschieht. Beide Knöpfe ausprobieren.
 5. Kunoichi: Ein einzelnes Siegel lösen lädt die Ult nicht mehr, zwei Siegel auf demselben Gegner lösen (Kombination) schon.
+6. Umbau des Kampfes: Spiel einen ganzen Kampf wie gewohnt. Es sollte sich nichts anders anfühlen: Treffer, Zahlen,
+   Ring zum Parieren, Wellen und Auswertung wie vorher. Achte darauf, dass die Lebensleiste erst beim Treffer sinkt.
 
 
 **1. Kampf-Sandbox** (Menü → „Kampf-Sandbox“)

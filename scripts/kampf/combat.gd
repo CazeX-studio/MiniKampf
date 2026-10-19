@@ -1,16 +1,13 @@
 class_name Combat
 extends Control
-## Kampf-Sandbox nach design.md (Abschnitt 4 und 5):
-## - Zugreihenfolge nach Tempo, Leiste oben zeigt die nächsten Züge
-## - Zwei Reihen: Hinten macht und bekommt man weniger Nahkampf-Schaden
-## - Perfekte Reaktion: Ring schließt sich, im richtigen Moment tippen = Parieren / Ausweichen
-## - Ult-Leiste je Klasse, lädt nur durch die klassentypische Aktion
-## - Element-Sechseck, Licht/Schatten, Sternenkraft
-## - Begleiter (Roboter, Monster des Zähmers) mit eigenem Zug
-## - Auswertung am Ende: Schaden, Heilung, abgewehrter Schaden pro Klasse
-## Die Fähigkeiten der Klassen stehen in skills.gd, die Werte in sandbox.gd.
+## Anzeige der Kampf-Sandbox. Die Regeln stehen in battle_state.gd (ohne Grafik).
+## Diese Datei
+## - spielt die Ereignisse ab, die der Kampf-Zustand meldet (Treffer, Heilung, Geschosse, Log …),
+## - zeigt Knöpfe und Ziele und gibt die Wahl des Spielers als Befehl an den Zustand zurück,
+## - zeigt den Reaktions-Ring (Parieren / Ausweichen) und meldet, ob im richtigen Moment getippt wurde,
+## - zeigt am Ende die Auswertung.
 
-signal _turn_done
+signal _action_chosen(command: Dictionary)
 signal _choice_made(id: String)
 
 const SCREEN := Vector2(1280, 720)
@@ -30,48 +27,19 @@ const VIGNETTE_SHADER := preload("res://shaders/vignette.gdshader")
 const WAVE_SLOTS: Array[Vector2] = [Vector2(30, 300), Vector2(30, 476), Vector2(318, 300), Vector2(318, 476)]
 const BOSS_SLOTS: Array[Vector2] = [Vector2(40, 400), Vector2(330, 290), Vector2(330, 462)]
 
-## Nahkampf-Schaden wird so stark verringert, wenn Angreifer oder Ziel hinten stehen.
-const BACK_ROW_MELEE := 0.6
 ## Zeitfenster der perfekten Reaktion in Sekunden (vor bzw. nach dem Treffer).
 const REACT_EARLY := 0.15
 const REACT_LATE := 0.18
 const RING_START := 170.0
 const RING_TARGET := 40.0
-const CRIT_CHANCE := 0.1
-const CRIT_MULT := 1.5
-const MANA_REGEN := 6
-const BUFF_TURNS := 2
-const ATK_BUFF := 1.4
-const DEF_BUFF := 0.7
-const VULN_MULT := 1.3
-## Zwischen zwei Wellen heilen sich die Helden um diesen Anteil.
-const WAVE_HEAL := 0.25
 
-## Boss-Werte
-const BOSS_FIST := 23
-const BOSS_ROCKFALL := 30
-const BOSS_CHAIN := 10
-const BOSS_RAGE_AT := 0.3
-const BOSS_RAGE_MULT := 1.3
-
-var heroes: Array[Fighter] = []
-## Begleiter auf dem Feld (Roboter, kämpfendes Monster)
-var companions: Array[Fighter] = []
-var enemies: Array[Fighter] = []
-var current: Fighter
-var battle_over := false
-## Zeitpunkt des aktuellen Zuges auf der Zugleiste
-var now := 0.0
-var skills: Skills
-## Dungeon-Regeln (Pilzhöhle), sonst null
-var dungeon: Pilzhoehle
+var state: BattleState
 
 var _views := {}
+## Wer gerade am Zug ist (so weit, wie die Anzeige abgespielt hat)
+var _current: Fighter
 var _pending := {}
 var _pending_user: Fighter
-var _waves: Array = []
-var _wave := 0
-var _turns := 0
 
 var _reacting := false
 var _react_start := 0
@@ -81,10 +49,6 @@ var _react_target: Fighter
 var _react_feedback := ""
 ## Ob das Aufblitzen zu Beginn des Zeitfensters schon gezeigt wurde.
 var _react_glint := false
-var _last_crit := false
-var _last_eff := 1.0
-## Kritische Treffer der laufenden Aktion (lädt die Ult des Bogenschützen).
-var crits := 0
 
 var _field: Control
 var _ring_layer: Control
@@ -99,37 +63,19 @@ var _dark_rect: ColorRect
 
 
 func _ready() -> void:
-	randomize()
-	skills = Skills.new(self)
 	if Sandbox.team.is_empty():
 		Sandbox.team = ["tank", "archer", "ritualist", "singer"]
 	_build_ui()
-	_create_heroes()
-	_waves = Sandbox.ENCOUNTERS[Sandbox.encounter].waves
-	if Sandbox.ENCOUNTERS[Sandbox.encounter].get("dungeon", "") == "pilzhoehle":
-		dungeon = Pilzhoehle.new(self)
-	_spawn_wave(0)
 	add_log("Tippe eine Fähigkeit an, dann das Ziel.")
 	add_log("Bei Gegner-Angriffen: tippen, wenn sich der [color=#f2c14e]Ring[/color] schließt!")
-	_battle_loop()
+	state = BattleState.new(self, Sandbox.team, Sandbox.encounter, randi())
+	state.run()
 
 
-## Beim Verlassen des Kampfes gegenseitige Verweise lösen (Held <-> Roboter/Monster, Schilde),
-## sonst bleiben die Teilnehmer im Speicher liegen.
+## Beim Verlassen des Kampfes Verweise lösen, sonst bleiben die Teilnehmer im Speicher liegen.
 func _exit_tree() -> void:
-	var everyone := all_fighters()
-	for h in heroes:
-		everyone.append_array(h.monsters)
-		if h.robot != null:
-			everyone.append(h.robot)
-	for f in everyone:
-		f.owner = null
-		f.robot = null
-		f.active_monster = null
-		f.monsters.clear()
-		f.protecting = null
-		f.smoke_source = null
-		f.shields.clear()
+	if state != null:
+		state.cleanup()
 
 
 func _process(_delta: float) -> void:
@@ -138,121 +84,117 @@ func _process(_delta: float) -> void:
 		_ring_layer.queue_redraw()
 
 
-# --- Teilnehmer ---------------------------------------------------------------
+# --- Ereignisse abspielen -----------------------------------------------------
 
-func _create_heroes() -> void:
-	for i in Sandbox.team.size():
-		var id: String = Sandbox.team[i]
-		var data: Dictionary = Sandbox.CLASSES[id]
-		var hero := Fighter.new(data.hero, id, data.title, true, data.hp, data.tempo, data.color)
-		hero.max_mana = data.mana
-		hero.mana = data.get("start_mana", data.mana)
-		hero.reaction = data.reaction
-		hero.back_row = data.back
-		heroes.append(hero)
-		skills.setup_hero(hero)
-		_add_view(hero, Vector2(BACK_X if hero.back_row else FRONT_X, HERO_FEET_Y[i]))
-		hero.next_time = hero.turn_delay() * randf_range(0.2, 1.0)
-
-	var mechanic := hero("mechanic")
-	if mechanic != null:
-		add_companion(mechanic.robot, Vector2(COMPANION_X, ROBOT_FEET_Y))
-	var tamer := hero("tamer")
-	if tamer != null:
-		add_companion(tamer.active_monster, Vector2(COMPANION_X, MONSTER_FEET_Y))
-
-
-func add_companion(f: Fighter, feet: Vector2) -> void:
-	companions.append(f)
-	f.on_bench = false
-	_add_view(f, feet)
-	f.next_time = now + f.turn_delay() * randf_range(0.3, 1.0)
-
-
-## Zähmen: Das Monster verlässt die Gegner und wartet beim Zähmer auf der Bank (halbes Leben).
-func tame(tamer: Fighter, e: Fighter) -> void:
-	enemies.erase(e)
-	if _views.has(e):
-		_views[e].queue_free()
-		_views.erase(e)
-	var data: Dictionary = Sandbox.ENEMIES[e.klass]
-	var m := Fighter.new(data.name, e.klass, "Gezähmt", false, data.hp, data.tempo, Elements.color(data.element))
-	m.element = data.element
-	m.owner = tamer
-	m.on_bench = true
-	m.hp = maxi(1, data.hp / 2)
-	tamer.monsters.append(m)
-	add_log("[color=#8fd36b][b]%s zähmt %s![/b][/color] Es wartet auf der Bank (Wechsel)." % [tamer.display_name, m.display_name])
+## Spielt die Ereignisse des Kampf-Zustands der Reihe nach ab.
+func play(events: Array[Dictionary]) -> void:
+	for event in events:
+		await _play_event(event)
+	# Am Ende stimmt die Anzeige wieder genau mit dem Zustand überein
+	for f: Fighter in _views:
+		view(f).shown = f.hp
 	refresh()
 
 
-func remove_companion(f: Fighter) -> void:
-	companions.erase(f)
-	f.on_bench = true
-	if _views.has(f):
-		_views[f].queue_free()
-		_views.erase(f)
+func _play_event(event: Dictionary) -> void:
+	match event.type:
+		"log":
+			add_log(event.text)
+		"float":
+			float_text(event.f, event.text, event.color, event.offset)
+		"status":
+			_turn_label.text = event.text
+		"turn":
+			_current = event.f
+			if _current == null:
+				_clear_actions()
+			refresh()
+		"refresh":
+			refresh()
+		"spawn":
+			_add_view(event.f, _feet(event.f, event.place, event.index))
+			view(event.f).shown = event.hp
+		"despawn":
+			if has_view(event.f):
+				_views[event.f].queue_free()
+				_views.erase(event.f)
+		"hp":
+			if has_view(event.f):
+				view(event.f).shown = event.hp
+		"cast":
+			_cast(event.f, event.ult)
+		"projectile":
+			if event.blocking:
+				await projectile(event.from, event.to, event.color, event.duration)
+			else:
+				projectile(event.from, event.to, event.color, event.duration)
+		"lunge":
+			if event.blocking:
+				await lunge(event.f, event.target, event.duration)
+			else:
+				lunge(event.f, event.target, event.duration)
+		"wait":
+			await wait(event.seconds)
+		"burst":
+			burst(event.f, event.color, event.radius)
+		"flash":
+			screen_flash(event.color)
+		"hop":
+			if has_view(event.f):
+				view(event.f).cast_hop()
+		"banner":
+			_banner(event.text)
+		"row":
+			await move_to_row(event.f)
+		"darkness":
+			create_tween().tween_property(_dark_rect, "color:a", clampf(event.amount, 0.0, 0.92), 0.5)
+		"order_visible":
+			_order_box.visible = event.on
+		"hit_fx":
+			if has_view(event.f):
+				var v := view(event.f)
+				v.hit_react()
+				Fx.spawn(_field, Fx.Kind.SPARKS, v.center(), Color("ffd9a0") if not event.crit else Color("ffe14d"), 70.0 if not event.crit else 110.0, 0.4)
+		"heal_fx":
+			if has_view(event.f):
+				var v := view(event.f)
+				v.glow(Color("8affa0"), 0.6)
+				Fx.spawn(_field, Fx.Kind.GLOW, v.center(), Color("4cff7a"), 90.0, 0.6)
+				Fx.spawn(_field, Fx.Kind.SPARKS, v.center(), Color("b6ffc8"), 60.0, 0.6)
+		"end":
+			_clear_actions()
+			if not event.aborted:
+				_show_end_screen(event.won)
 
 
-func _spawn_wave(index: int) -> void:
-	_wave = index
-	var ids: Array = _waves[index]
-	spawn_enemies(ids)
-	if _waves.size() > 1:
-		add_log("\n[b]Welle %d von %d[/b]" % [index + 1, _waves.size()])
-	if dungeon != null:
-		dungeon.on_wave(index)
-	elif "boss" in ids:
-		add_log("[b]Ein Steinwächter (Erde) und seine Begleiter greifen an![/b]")
+## Wo eine Figur steht ("feet" ist der Punkt, auf dem sie steht).
+func _feet(f: Fighter, place: String, index: int) -> Vector2:
+	match place:
+		"hero":
+			return Vector2(BACK_X if f.back_row else FRONT_X, HERO_FEET_Y[index])
+		"robot":
+			return Vector2(COMPANION_X, ROBOT_FEET_Y)
+		"monster":
+			return Vector2(COMPANION_X, MONSTER_FEET_Y)
+		"boss_wave":
+			return BOSS_SLOTS[index]
+	return WAVE_SLOTS[index]
+
+
+## Glühen beim Wirken einer Fähigkeit (Ult: goldener Lichtblitz über den ganzen Bildschirm).
+func _cast(f: Fighter, ult: bool) -> void:
+	if not has_view(f):
+		return
+	var v := view(f)
+	v.cast_hop()
+	if ult:
+		v.glow(Color("ffe08a"), 1.2)
+		Fx.spawn(_field, Fx.Kind.GLOW, v.center(), Color("f2c14e"), 220.0, 1.0)
+		Fx.spawn(_field, Fx.Kind.RING, v.center(), Color("ffe08a"), 260.0, 0.8)
+		screen_flash(Color("f2c14e"))
 	else:
-		add_log("[b]Monster mit vier Elementen greifen an![/b] Auf die Farbe am Namen achten.")
-
-
-## Ersetzt alle Gegner durch neue (Kennungen aus Sandbox.ENEMIES).
-## Ist ein großer Gegner dabei, steht er links groß, die anderen davor.
-func spawn_enemies(ids: Array) -> void:
-	for e in enemies:
-		if _views.has(e):
-			_views[e].queue_free()
-			_views.erase(e)
-	enemies.clear()
-	var hp_scale: float = Sandbox.HP_SCALE[heroes.size() - 1]
-	var has_big := false
-	for id: String in ids:
-		has_big = has_big or Sandbox.ENEMIES[id].get("big", false)
-	var slots := BOSS_SLOTS if has_big else WAVE_SLOTS
-	for i in ids.size():
-		var id: String = ids[i]
-		var data: Dictionary = Sandbox.ENEMIES[id]
-		var e := Fighter.new(data.name, id, data.element, false, roundi(data.hp * hp_scale), data.tempo, Elements.color(data.element))
-		e.element = data.element
-		e.resist = data.get("resist", 1.0)
-		e.big = data.get("big", false)
-		e.passive = data.get("passive", false)
-		if data.has("title"):
-			e.display_name = data.title
-		enemies.append(e)
-		e.intent = skills.enemy_intent(e)
-		_add_view(e, slots[i])
-		e.next_time = now + e.turn_delay() * randf_range(0.2, 1.0)
-
-
-## Wipe-Mechanik: Die ganze Gruppe stirbt.
-func wipe(reason: String) -> void:
-	add_log("[color=red][b]%s Die ganze Gruppe ist besiegt.[/b][/color]" % reason)
-	screen_flash(Color("200030"))
-	for f in allies():
-		f.hp = 0
-	refresh()
-
-
-## Dunkelheit über dem Kampffeld (0 = hell, 1 = schwarz).
-func set_darkness(amount: float) -> void:
-	create_tween().tween_property(_dark_rect, "color:a", clampf(amount, 0.0, 0.92), 0.5)
-
-
-func set_order_visible(on: bool) -> void:
-	_order_box.visible = on
+		v.glow(f.color.lightened(0.35))
+		Fx.spawn(_field, Fx.Kind.GLOW, v.center(), f.color.lightened(0.35), 110.0, 0.6)
 
 
 ## Legt die Grafik eines Teilnehmers an. "feet" ist der Punkt, auf dem die Figur steht.
@@ -265,29 +207,6 @@ func _add_view(f: Fighter, feet: Vector2) -> void:
 	_views[f] = v
 
 
-func all_fighters() -> Array[Fighter]:
-	var result: Array[Fighter] = []
-	result.append_array(heroes)
-	result.append_array(companions)
-	result.append_array(enemies)
-	return result
-
-
-func alive(group: Array[Fighter]) -> Array[Fighter]:
-	var result: Array[Fighter] = []
-	for f in group:
-		if f.is_alive():
-			result.append(f)
-	return result
-
-
-## Lebende Helden und Begleiter auf dem Feld.
-func allies() -> Array[Fighter]:
-	var result := alive(heroes)
-	result.append_array(alive(companions))
-	return result
-
-
 func has_view(f: Fighter) -> bool:
 	return _views.has(f)
 
@@ -296,153 +215,37 @@ func view(f: Fighter) -> FighterView:
 	return _views[f]
 
 
-func hero(klass: String) -> Fighter:
-	for h in heroes:
-		if h.klass == klass:
-			return h
-	return null
+# --- Eingaben für den Kampf-Zustand -------------------------------------------
 
-
-# --- Zugreihenfolge -----------------------------------------------------------
-
-## Wer als Nächstes dran ist: kleinster Zeitpunkt, bei Gleichstand zuerst die Helden.
-func _earliest(times: Dictionary) -> Fighter:
-	var best: Fighter = null
-	for f: Fighter in times:
-		if best == null or times[f] < times[best] - 0.001 \
-				or (absf(times[f] - times[best]) <= 0.001 and f.is_ally() and not best.is_ally()):
-			best = f
-	return best
-
-
-## Simuliert die nächsten Züge für die Leiste oben.
-func peek_order(count: int) -> Array[Fighter]:
-	var times := {}
-	for f in alive(all_fighters()):
-		if not f.passive:
-			times[f] = f.next_time
-	var result: Array[Fighter] = []
-	while result.size() < count and not times.is_empty():
-		var f := _earliest(times)
-		result.append(f)
-		times[f] += f.turn_delay()
-	return result
-
-
-## Der nächste Gegner auf der Zugleiste (für den gut getimten Monster-Wechsel).
-func next_enemy() -> Fighter:
-	for f in peek_order(12):
-		if not f.is_ally():
-			return f
-	return null
-
-
-## Schiebt ein Ziel auf der Zugleiste nach hinten (Anteil eines Zuges).
-func delay(target: Fighter, fraction: float) -> void:
-	target.next_time += target.turn_delay() * fraction
-
-
-## Holt ein Ziel auf der Zugleiste nach vorne (Anteil eines Zuges).
-func hasten(target: Fighter, fraction: float) -> void:
-	target.next_time = maxf(now + 0.01, target.next_time - target.turn_delay() * fraction)
-
-
-func _battle_loop() -> void:
-	while not battle_over:
-		var times := {}
-		for f in alive(all_fighters()):
-			if not f.passive:
-				times[f] = f.next_time
-		var f := _earliest(times)
-		current = f
-		now = f.next_time
-		refresh()
-		await _begin_turn(f)
-		if await _check_end():
-			return
-		if f.is_alive():
-			_turns += 1
-			if f.is_ally():
-				await _player_turn(f)
-			else:
-				await _enemy_turn(f)
-		f.next_time += f.turn_delay()
-		current = null
-		refresh()
-		if await _check_end():
-			return
-
-
-## Was zu Beginn jedes eigenen Zuges passiert (Abklingzeiten, Mana, Klassen-Mechaniken).
-func _begin_turn(f: Fighter) -> void:
-	for id: String in f.cooldowns.keys():
-		f.cooldowns[id] = maxi(f.cooldowns[id] - 1, 0)
-	f.atk_buff_turns = maxi(f.atk_buff_turns - 1, 0)
-	f.def_buff_turns = maxi(f.def_buff_turns - 1, 0)
-	f.vuln_turns = maxi(f.vuln_turns - 1, 0)
-	f.blind_turns = maxi(f.blind_turns - 1, 0)
-	if f.max_mana > 0:
-		f.mana = mini(f.mana + MANA_REGEN, f.max_mana)
-	await skills.begin_turn(f)
-	refresh()
-
-
-## Prüft Sieg und Niederlage. Nach einer gewonnenen Welle kommt die nächste.
-func _check_end() -> bool:
-	if battle_over:
-		return true
-	if dungeon != null:
-		await dungeon.check_phase()
-	var lost := alive(heroes).is_empty()
-	var won := alive(enemies).is_empty()
-	if won and not lost and _wave < _waves.size() - 1:
-		await _next_wave()
-		return false
-	if not won and not lost:
-		return false
-	battle_over = true
-	_clear_actions()
-	current = null
-	refresh()
-	_turn_label.text = "Sieg!" if won else "Niederlage …"
-	if won:
-		add_log("\n[color=green][b]Alle Gegner sind besiegt![/b][/color]")
-		if dungeon != null:
-			await dungeon.final_choice()
-	else:
-		add_log("\n[color=red][b]Alle Helden sind gefallen.[/b][/color]")
-	await wait(1.0)
-	_show_end_screen(won)
-	return true
-
-
-func _next_wave() -> void:
-	_clear_actions()
-	_turn_label.text = "Welle geschafft!"
-	await wait(0.8)
-	_banner("Welle %d" % (_wave + 2))
-	for h in alive(heroes):
-		heal(null, h, roundi(h.max_hp * WAVE_HEAL))
-	_spawn_wave(_wave + 1)
-	refresh()
-	await wait(1.0)
-
-
-# --- Spieler-Zug --------------------------------------------------------------
-
-func _player_turn(f: Fighter) -> void:
+## Der Zustand fragt: Was macht diese Figur? Antwort kommt, sobald Fähigkeit und Ziel angetippt sind.
+func choose_action(f: Fighter) -> Dictionary:
 	_show_actions(f)
-	await _turn_done
+	var command: Dictionary = await _action_chosen
+	return command
+
+
+## Eine Entscheidung mit mehreren Möglichkeiten (z. B. nach dem Dungeon). Gibt die Kennung zurück.
+func choose_option(title: String, options: Array[Dictionary]) -> String:
+	_clear_actions()
+	_turn_label.text = title
+	for option in options:
+		var button := _action_button("%s\n%s" % [option.name, option.info])
+		button.custom_minimum_size.x = 404
+		button.pressed.connect(func() -> void: _choice_made.emit(option.id))
+		_grid.add_child(button)
+	var id: String = await _choice_made
+	_clear_actions()
+	return id
 
 
 func _show_actions(f: Fighter) -> void:
 	_clear_actions()
 	_turn_label.text = "%s (%s) ist am Zug" % [f.display_name, f.class_title]
-	var list := skills.abilities(f)
+	var list := state.skills.abilities(f)
 	# Mehr als 8 Knöpfe (z. B. mit Dungeon-Aktionen): kleiner, damit 3 Reihen passen
 	var compact := list.size() > 8
 	for ab in list:
-		var reason := skills.blocked_reason(f, ab)
+		var reason := state.skills.blocked_reason(f, ab)
 		var title: String = ab.name
 		if ab.id == "ult":
 			title = "ULT: " + title
@@ -464,19 +267,6 @@ func _show_actions(f: Fighter) -> void:
 
 
 ## Eine Entscheidung mit mehreren Möglichkeiten (z. B. nach dem Dungeon). Gibt die Kennung zurück.
-func ask_choice(title: String, options: Array[Dictionary]) -> String:
-	_clear_actions()
-	_turn_label.text = title
-	for option in options:
-		var button := _action_button("%s\n%s" % [option.name, option.info])
-		button.custom_minimum_size.x = 404
-		button.pressed.connect(func() -> void: _choice_made.emit(option.id))
-		_grid.add_child(button)
-	var id: String = await _choice_made
-	_clear_actions()
-	return id
-
-
 func _action_button(text: String) -> Button:
 	var button := Button.new()
 	button.text = text
@@ -492,15 +282,14 @@ func _on_ability_pressed(f: Fighter, ab: Dictionary) -> void:
 		return
 	if ab.target == "none":
 		_clear_actions()
-		await _execute(f, ab, null)
-		_turn_done.emit()
+		_action_chosen.emit({ab = ab, target = null})
 		return
 	# Ziel auswählen: passende Figuren blinken
 	_pending = ab
 	_pending_user = f
 	_clear_actions()
 	_turn_label.text = "%s: Ziel antippen" % ab.name
-	for target in skills.valid_targets(f, ab):
+	for target in state.skills.valid_targets(f, ab):
 		view(target).targetable = true
 	_add_back_button(f)
 
@@ -510,7 +299,7 @@ func _show_choices(f: Fighter, ab: Dictionary) -> void:
 	_clear_actions()
 	_turn_label.text = "%s: auswählen" % ab.name
 	for choice: Dictionary in ab.choices:
-		var reason := skills.choice_blocked(f, ab, choice)
+		var reason := state.skills.choice_blocked(f, ab, choice)
 		var button := _action_button("%s\n%s" % [choice.name, reason if reason != "" else choice.info])
 		button.disabled = reason != ""
 		var picked := ab.duplicate()
@@ -544,186 +333,17 @@ func _on_fighter_tapped(target: Fighter) -> void:
 	if _pending.is_empty() or not view(target).targetable:
 		return
 	var ab := _pending
-	var f := _pending_user
 	_cancel_targeting()
 	_clear_actions()
-	await _execute(f, ab, target)
-	_turn_done.emit()
+	_action_chosen.emit({ab = ab, target = target})
 
-
-## Führt eine Fähigkeit aus (inklusive Animation).
-func _execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
-	var id: String = ab.id
-	_turn_label.text = "%s: %s" % [f.display_name, ab.name]
-	crits = 0
-	f.mana -= ab.get("mana", 0)
-	if ab.has("cd"):
-		f.cooldowns[id] = ab.cd + 1
-
-	if id == "row":
-		f.back_row = not f.back_row
-		add_log("%s wechselt nach %s." % [f.display_name, f.row_name()])
-		await move_to_row(f)
-		return
-	# Glühen beim Wirken einer Fähigkeit (Ult: goldener Lichtblitz über den ganzen Bildschirm)
-	var v := view(f)
-	v.cast_hop()
-	if id == "ult":
-		f.ult = 0.0
-		f.credit().stat_ults += 1
-		add_log("[color=#f2c14e][b]%s entfesselt %s![/b][/color]" % [f.display_name, ab.name])
-		v.glow(Color("ffe08a"), 1.2)
-		Fx.spawn(_field, Fx.Kind.GLOW, v.center(), Color("f2c14e"), 220.0, 1.0)
-		Fx.spawn(_field, Fx.Kind.RING, v.center(), Color("ffe08a"), 260.0, 0.8)
-		screen_flash(Color("f2c14e"))
-		await wait(0.35)
-	else:
-		v.glow(f.color.lightened(0.35))
-		Fx.spawn(_field, Fx.Kind.GLOW, v.center(), f.color.lightened(0.35), 110.0, 0.6)
-		if ab.has("duet"):
-			add_log("[color=#ffa8e0][b]Duett: %s![/b][/color]" % ab.name)
-
-	await skills.execute(f, ab, target)
-	refresh()
-	await wait(0.35)
-
-
-# --- Gegner-Zug ---------------------------------------------------------------
-
-func _enemy_turn(e: Fighter) -> void:
-	_turn_label.text = "%s ist am Zug …" % e.display_name
-	await wait(0.5)
-	if dungeon != null and dungeon.handles(e):
-		await dungeon.enemy_turn(e)
-	elif e.klass == "boss":
-		await _boss_turn(e)
-	else:
-		var data: Dictionary = Sandbox.ENEMIES[e.klass]
-		var attack: Dictionary = data.attacks[e.step % data.attacks.size()]
-		var targets: Array[Fighter] = []
-		if attack.get("all", false):
-			targets = allies()
-		elif attack.kind == "melee":
-			targets = [pick_target()]
-		else:
-			targets = [pick_target(attack.get("back", false), true)]
-		await enemy_attack(e, targets, attack.base, attack.kind, attack.name)
-		e.step += 1
-	e.intent = skills.enemy_intent(e)
-
-
-func _boss_turn(boss: Fighter) -> void:
-	if not boss.enraged and boss.hp <= boss.max_hp * BOSS_RAGE_AT:
-		boss.enraged = true
-		add_log("[color=red][b]Der Steinwächter wird wütend![/b] Er schlägt härter zu.[/color]")
-	match boss.step % 4:
-		0:
-			await enemy_attack(boss, [pick_target()], BOSS_FIST, "melee", "Steinfaust")
-		1:
-			await enemy_attack(boss, [pick_target()], BOSS_FIST - 6, "melee", "Steinfaust")
-			add_log("[color=yellow]Der Steinwächter hebt die Arme: Gleich regnet es Felsen auf die hintere Reihe! (Magie)[/color]")
-		2:
-			var targets := allies().filter(func(h: Fighter) -> bool: return h.back_row)
-			if targets.is_empty():
-				add_log("Felsregen! Aber hinten steht niemand mehr.")
-				float_text(boss, "Verfehlt!", Color.WHITE)
-			else:
-				var typed: Array[Fighter] = []
-				typed.assign(targets)
-				await enemy_attack(boss, typed, BOSS_ROCKFALL, "magic", "Felsregen")
-		3:
-			var back := allies().filter(func(h: Fighter) -> bool: return h.back_row)
-			var target: Fighter = back.pick_random() if not back.is_empty() else pick_target()
-			if target.back_row:
-				target.back_row = false
-				add_log("[color=yellow]Kettenzug! %s wird nach vorne gerissen.[/color]" % target.display_name)
-				await move_to_row(target)
-			await enemy_attack(boss, [target], BOSS_CHAIN, "melee", "Kettenzug")
-	boss.step += 1
-
-
-## Wen ein Gegner angreift. Bedrohung (Bann-Zeichen, Amboss, Moosschild, Magnet-Haken) zwingt zum Ziel.
-## Nahkämpfer zielen meist auf die vordere Reihe, Fernkämpfer und Magier auf irgendwen.
-func pick_target(prefer_back := false, anyone := false) -> Fighter:
-	var candidates := allies()
-	var taunting := candidates.filter(func(h: Fighter) -> bool: return h.taunt > 0)
-	if not taunting.is_empty():
-		taunting.sort_custom(func(a: Fighter, b: Fighter) -> bool: return a.taunt > b.taunt)
-		var forced: Fighter = taunting[0]
-		forced.taunt -= 1
-		return forced
-	var front := candidates.filter(func(h: Fighter) -> bool: return not h.back_row)
-	var back := candidates.filter(func(h: Fighter) -> bool: return h.back_row)
-	if prefer_back and not back.is_empty():
-		return back.pick_random()
-	if anyone:
-		return candidates.pick_random()
-	if not front.is_empty() and (back.is_empty() or randf() < 0.7):
-		return front.pick_random()
-	return back.pick_random()
-
-
-## Ein Gegner-Angriff mit Chance auf perfekte Reaktion.
-func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String, attack_name: String) -> void:
-	# Der Roboter fängt Angriffe auf den Verbündeten ab, den er beschützt
-	var targets: Array[Fighter] = []
-	var mechanic := hero("mechanic")
-	for t in p_targets:
-		var actual := t
-		if mechanic != null and mechanic.robot.is_alive() and mechanic.robot.protecting == t \
-				and t != mechanic.robot and p_targets.size() == 1:
-			float_text(t, "Roboter schützt!", Color("d9a441"), 26)
-			actual = mechanic.robot
-		if not actual in targets:
-			targets.append(actual)
-	var names: Array[String] = []
-	for t in targets:
-		names.append(t.display_name)
-	add_log("%s: [b]%s[/b] (%s) auf %s" % [e.display_name, attack_name, e.element, ", ".join(names)])
-	_turn_label.text = "%s: %s!" % [e.display_name, attack_name]
-
-	var reactors := targets.filter(func(h: Fighter) -> bool: return h.reaction != "" and h.smoke == 0)
-	var focus: Fighter = reactors[0] if not reactors.is_empty() else targets[0]
-	var duration := randf_range(0.75, 1.15)
-	if kind == "melee":
-		lunge(e, focus, duration)
-	else:
-		for t in targets:
-			projectile(e, t, Elements.color(e.element), duration)
-
-	var success := false
-	if reactors.is_empty():
-		await wait(duration)
-	else:
-		success = await _reaction_window(e, focus, duration)
-
-	for t in targets:
-		if not t.is_alive():
-			continue
-		if t.smoke > 0:
-			t.smoke -= 1
-			var saved := calc_damage(e, t, base, kind, e.element)
-			if t.smoke_source != null:
-				t.smoke_source.credit().stat_blocked += saved
-			float_text(t, "Verfehlt!", Color("d8d8e8"))
-			continue
-		if success and t.reaction != "":
-			t.credit().stat_perfect += 1
-			t.stat_blocked += calc_damage(e, t, base, kind, e.element)
-			_last_crit = false
-			_last_eff = 1.0
-			await skills.on_perfect_reaction(t, e)
-		else:
-			hit(e, t, base, kind, e.element)
-	refresh()
-	await wait(0.45)
 
 
 # --- Perfekte Reaktion --------------------------------------------------------
 
 ## Zeigt den schrumpfenden Ring und die Zeitleiste. Gibt true zurück,
 ## wenn im richtigen Moment getippt wurde.
-func _reaction_window(attacker: Fighter, target: Fighter, duration: float) -> bool:
+func react(attacker: Fighter, target: Fighter, duration: float) -> bool:
 	_react_target = target
 	_react_duration = duration
 	_react_press = -1.0
@@ -843,154 +463,6 @@ func _draw_ring() -> void:
 	var font := ThemeDB.fallback_font
 	_ring_layer.draw_string_outline(font, Vector2(340, 94), text, HORIZONTAL_ALIGNMENT_CENTER, 600, 26, 8, Color.BLACK)
 	_ring_layer.draw_string(font, Vector2(340, 94), text, HORIZONTAL_ALIGNMENT_CENTER, 600, 26, color)
-
-
-# --- Schaden und Heilung ------------------------------------------------------
-
-## Berechnet den Schaden eines Angriffs (ohne Schilde und Rüstungen des Ziels).
-## kind: melee (Nahkampf), ranged (Fernkampf) oder magic (Magie)
-func calc_damage(attacker: Fighter, target: Fighter, base: float, kind: String, element := "") -> int:
-	var dmg := base * randf_range(0.9, 1.1)
-	var star := element == "Sternenkraft"
-	_last_crit = false
-	if attacker.atk_buff_turns > 0:
-		dmg *= ATK_BUFF
-	if kind == "melee":
-		if attacker.back_row:
-			dmg *= BACK_ROW_MELEE
-		if target.back_row:
-			dmg *= BACK_ROW_MELEE
-	if target.def_buff_turns > 0 and not star:
-		dmg *= DEF_BUFF
-	if attacker.blind_turns > 0:
-		dmg *= 0.7
-	if attacker.enraged:
-		dmg *= BOSS_RAGE_MULT
-	if target.vuln_turns > 0:
-		dmg *= VULN_MULT
-	if not star:
-		dmg *= target.resist
-	_last_eff = Elements.multiplier(element, target.element)
-	dmg *= _last_eff
-	dmg *= skills.damage_bonus(attacker)
-	if attacker.is_ally():
-		# Passive "Ruhige Hand": Der Bogenschütze trifft aus der hinteren Reihe öfter kritisch.
-		var chance := CRIT_CHANCE
-		if attacker.klass == "archer" and attacker.back_row:
-			chance += 0.2
-		if randf() < chance:
-			dmg *= CRIT_MULT
-			_last_crit = true
-	return maxi(1, roundi(dmg))
-
-
-## Angriff: Schaden berechnen und zufügen. Gibt die verlorenen LP zurück.
-func hit(attacker: Fighter, target: Fighter, base: float, kind: String, element := "") -> int:
-	if not target.is_alive():
-		return 0
-	var dmg := calc_damage(attacker, target, base, kind, element)
-	var lost := apply_damage(target, dmg, attacker, kind)
-	if dungeon != null:
-		dungeon.on_hit(attacker, target, element, lost)
-	return lost
-
-
-## Zieht Leben ab (Festung, Rüstung, Schilde und Umwandlung eingerechnet).
-## Gibt den tatsächlich verlorenen Lebensbetrag zurück.
-func apply_damage(target: Fighter, amount: int, source: Fighter = null, kind := "") -> int:
-	var crit := _last_crit
-	var eff := _last_eff
-	_last_crit = false
-	_last_eff = 1.0
-	if not target.is_alive():
-		return 0
-	if dungeon != null and dungeon.absorbs(target, amount, source):
-		return 0
-	if crit:
-		crits += 1
-	var tank := hero("tank")
-	if target.is_ally() and tank != null and target != tank and tank.fortress and tank.is_alive():
-		float_text(target, "Festung!", Color("6fa8ff"))
-		var halved := roundi(amount * 0.5)
-		tank.stat_blocked += amount - halved
-		target = tank
-		amount = halved
-	if tank != null and target == tank and tank.fortress:
-		tank.fortress_absorbed += amount
-
-	amount = skills.mitigate(target, amount, kind)
-
-	if target.shield_total() > 0 and amount > 0:
-		var blocked_total := 0
-		for giver: Fighter in target.shields.keys():
-			var used := mini(target.shields[giver], amount)
-			target.shields[giver] -= used
-			amount -= used
-			blocked_total += used
-			giver.credit().stat_blocked += used
-			if target.shields[giver] <= 0:
-				target.shields.erase(giver)
-		if blocked_total > 0:
-			float_text(target, "Schild -%d" % blocked_total, Color("6fa8ff"), 24)
-
-	# Umwandlung: Der Magier-Tank fängt die Hälfte mit Mana ab. Das lädt seine Ult.
-	if target.klass == "tank" and amount > 0:
-		var to_mana := mini(target.mana, amount / 2)
-		target.mana -= to_mana
-		amount -= to_mana
-		target.stat_blocked += to_mana
-		target.add_ult(to_mana * 1.5)
-		if to_mana > 0:
-			float_text(target, "-%d Mana" % to_mana, Color("6fa8ff"), 24)
-
-	var lost := mini(amount, target.hp)
-	target.hp -= lost
-	if source != null and source.is_ally() and not target.is_ally():
-		source.credit().stat_damage += lost
-	# Was der Roboter einsteckt, kommt bei niemand anderem an: zählt beim Mechaniker als abgewehrt
-	if target.klass == "robot":
-		target.credit().stat_blocked += lost
-	elif target.is_ally():
-		target.credit().stat_taken += lost
-
-	if crit:
-		float_text(target, "KRITISCH -%d" % amount, Color("ffd34d"))
-	else:
-		float_text(target, "-%d" % amount, Color("ff6b6b"))
-	if eff > 1.0:
-		float_text(target, "Sehr effektiv!", Color("ffe14d"), 52)
-	elif eff < 1.0:
-		float_text(target, "Wenig effektiv …", Color(0.75, 0.75, 0.8), 52)
-	if has_view(target):
-		var target_view := view(target)
-		target_view.hit_react()
-		Fx.spawn(_field, Fx.Kind.SPARKS, target_view.center(), Color("ffd9a0") if not crit else Color("ffe14d"), 70.0 if not crit else 110.0, 0.4)
-
-	skills.after_damage(target, lost)
-	if not target.is_alive():
-		add_log("[color=red]%s ist besiegt![/color]" % target.display_name)
-		skills.on_death(target)
-	refresh()
-	return lost
-
-
-## Heilt ein Ziel. "source" bekommt die Heilung in der Auswertung gutgeschrieben.
-func heal(source: Fighter, target: Fighter, amount: int) -> int:
-	var healed := target.heal(amount)
-	if source != null:
-		source.credit().stat_heal += healed
-	if has_view(target):
-		float_text(target, "+%d" % healed, Color("6dff8a"))
-		var v := view(target)
-		v.glow(Color("8affa0"), 0.6)
-		Fx.spawn(_field, Fx.Kind.GLOW, v.center(), Color("4cff7a"), 90.0, 0.6)
-		Fx.spawn(_field, Fx.Kind.SPARKS, v.center(), Color("b6ffc8"), 60.0, 0.6)
-	return healed
-
-
-func give_shield(source: Fighter, target: Fighter, amount: int) -> void:
-	target.add_shield(source, amount)
-	float_text(target, "Schild +%d" % amount, Color("6fa8ff"))
 
 
 # --- Animationen --------------------------------------------------------------
@@ -1301,11 +773,11 @@ func _clear_actions() -> void:
 
 func refresh() -> void:
 	for f: Fighter in _views:
-		view(f).active = f == current
+		view(f).active = f == _current
 
 	for child in _order_box.get_children():
 		child.queue_free()
-	var order := peek_order(8)
+	var order := state.peek_order(8)
 	for i in order.size():
 		var f := order[i]
 		var chip := PanelContainer.new()
@@ -1364,8 +836,8 @@ func _show_end_screen(won: bool) -> void:
 	shade.add_child(title)
 
 	var sub := Label.new()
-	sub.text = "Kampfauswertung · %d Züge · Welle %d von %d · %s" % [_turns, _wave + 1, _waves.size(), Sandbox.ENCOUNTERS[Sandbox.encounter].name]
-	if won and dungeon != null:
+	sub.text = "Kampfauswertung · %d Züge · Welle %d von %d · %s" % [state.turns, state.wave + 1, state.waves.size(), Sandbox.ENCOUNTERS[state.encounter].name]
+	if won and state.dungeon != null:
 		sub.text += " · Urbaum gefällt" if Sandbox.pilz_choice == "faellen" else " · Urbaum gerettet"
 	sub.add_theme_font_size_override("font_size", 18)
 	sub.add_theme_color_override("font_color", Color("f2c14e"))
@@ -1387,11 +859,11 @@ func _show_end_screen(won: bool) -> void:
 	var best := {}
 	for key in ["dmg", "heal", "blocked"]:
 		best[key] = 0
-	for h in heroes:
+	for h in state.heroes:
 		best.dmg = maxi(best.dmg, h.stat_damage)
 		best.heal = maxi(best.heal, h.stat_heal)
 		best.blocked = maxi(best.blocked, h.stat_blocked)
-	for h in heroes:
+	for h in state.heroes:
 		var data: Dictionary = Sandbox.CLASSES[h.klass]
 		var name_text := "%s (%s)" % [h.class_title, h.display_name]
 		if not h.is_alive():

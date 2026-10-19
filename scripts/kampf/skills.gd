@@ -41,10 +41,10 @@ const BURN := 5
 const OVERLOAD_MULT := 1.6
 const OVERLOAD_RECOIL := 0.08
 
-var c: Combat
+var c: BattleState
 
 
-func _init(p_combat: Combat) -> void:
+func _init(p_combat: BattleState) -> void:
 	c = p_combat
 
 
@@ -368,12 +368,12 @@ func _monster(tamer: Fighter, id: String) -> Fighter:
 func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 	var id: String = ab.id
 	if ab.has("dungeon"):
-		await c.dungeon.execute(f, ab, target)
+		c.dungeon.execute(f, ab, target)
 		return
 	if ab.has("gold"):
 		_spend_gold(f, ab.gold)
 	if ab.has("duet"):
-		await _execute_duet(f, ab, target)
+		_execute_duet(f, ab, target)
 		var partner := c.hero(ab.partner)
 		f.cooldowns[id] = Sandbox.DUET_CD + 1
 		partner.cooldowns[id] = Sandbox.DUET_CD + 1
@@ -381,32 +381,32 @@ func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 		return
 	match f.klass:
 		"tank":
-			await _tank(f, id, target)
+			_tank(f, id, target)
 		"mechanic":
-			await _mechanic(f, id, target)
+			_mechanic(f, id, target)
 		"robot":
-			await _robot(f, id, target)
+			_robot(f, id, target)
 		"smith":
-			await _smith(f, id, target, ab)
+			_smith(f, id, target, ab)
 		"archer":
-			await _archer(f, id, target)
+			_archer(f, id, target)
 		"blade":
-			await _blade(f, id, target)
+			_blade(f, id, target)
 		"twilight":
-			await _twilight(f, id, target)
+			_twilight(f, id, target)
 		"tamer":
-			await _tamer(f, id, target, ab)
+			_tamer(f, id, target, ab)
 		"ritualist":
-			await _ritualist(f, id, target, int(ab.get("blood", 0)))
+			_ritualist(f, id, target, int(ab.get("blood", 0)))
 		"quartermaster":
-			await _quartermaster(f, id, target, ab)
+			_quartermaster(f, id, target, ab)
 		"kunoichi":
-			await _kunoichi(f, id, target, ab)
+			_kunoichi(f, id, target, ab)
 		"singer":
-			await _singer(f, id, target)
+			_singer(f, id, target)
 		_:
 			if is_pet(f):
-				await _monster_action(f, id, target)
+				_monster_action(f, id, target)
 
 
 ## Monster des Zähmers (Start-Monster und gezähmte).
@@ -417,7 +417,7 @@ static func is_pet(f: Fighter) -> bool:
 func _tank(f: Fighter, id: String, target: Fighter) -> void:
 	match id:
 		"arcane_strike":
-			await c.projectile(f, target, Color("4a8cf0"))
+			c.projectile(f, target, Color("4a8cf0"))
 			c.hit(f, target, 16, "magic")
 		"ban":
 			f.taunt = 3
@@ -428,7 +428,7 @@ func _tank(f: Fighter, id: String, target: Fighter) -> void:
 			c.add_log("%s schützt %s mit einer Barriere." % [f.display_name, target.display_name])
 		"condense":
 			f.mana = mini(f.mana + 25, f.max_mana)
-			f.def_buff_turns = Combat.BUFF_TURNS + 1
+			f.def_buff_turns = BattleState.BUFF_TURNS + 1
 			c.float_text(f, "+25 Mana", Color("6fa8ff"))
 			c.add_log("%s verdichtet seine Rüstung." % f.display_name)
 		"ult":
@@ -441,10 +441,10 @@ func _mechanic(f: Fighter, id: String, target: Fighter) -> void:
 	var robot := f.robot
 	match id:
 		"wrench":
-			await c.lunge(f, target, 0.25)
+			c.lunge(f, target, 0.25)
 			c.hit(f, target, 13, "melee")
 		"hook":
-			await c.projectile(f, target, Color("d9a441"))
+			c.projectile(f, target, Color("d9a441"))
 			c.hit(f, target, 6, "ranged")
 			robot.taunt = 2
 			c.float_text(robot, "Komm her!", Color("d9a441"))
@@ -473,21 +473,21 @@ func _mechanic(f: Fighter, id: String, target: Fighter) -> void:
 func _robot(f: Fighter, id: String, target: Fighter) -> void:
 	match id:
 		"drill":
-			await c.lunge(f, target, 0.3)
+			c.lunge(f, target, 0.3)
 			c.hit(f, target, 10, "melee")
 			if target.is_alive():
 				target.vuln_turns = 3
 				c.float_text(target, "Panzer durchbohrt", Color("d9a441"), 30)
 		"guardmode":
 			f.taunt = 2
-			f.def_buff_turns = Combat.BUFF_TURNS + 1
+			f.def_buff_turns = BattleState.BUFF_TURNS + 1
 			c.float_text(f, "Schutzmodus", Color("aebfd4"))
 
 
 func _smith(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 	match id:
 		"hammer":
-			await c.lunge(f, target, 0.3)
+			c.lunge(f, target, 0.3)
 			c.hit(f, target, 15, "melee")
 		"armor":
 			f.armor = ab.choice
@@ -502,7 +502,7 @@ func _smith(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 		"ult":
 			for a in c.allies():
 				c.give_shield(f, a, 30)
-				a.def_buff_turns = Combat.BUFF_TURNS + 1
+				a.def_buff_turns = BattleState.BUFF_TURNS + 1
 			f.hard = Fighter.MAX_HARD
 			c.add_log("Meisterstück! %s schmiedet für alle eine Rüstung." % f.display_name)
 
@@ -522,7 +522,7 @@ func _archer(f: Fighter, id: String, target: Fighter) -> void:
 				base = 30.0
 				f.charged = false
 				f.add_ult(30)
-			await c.projectile(f, target, Color("b8ff8a"))
+			c.projectile(f, target, Color("b8ff8a"))
 			c.hit(f, target, base, "ranged")
 		"charge":
 			f.charged = true
@@ -530,12 +530,12 @@ func _archer(f: Fighter, id: String, target: Fighter) -> void:
 			c.add_log("%s spannt den Bogen." % f.display_name)
 		"volley":
 			for enemy in c.alive(c.enemies):
-				c.projectile(f, enemy, Color("b8ff8a"))
-			await c.wait(0.3)
+				c.projectile_bg(f, enemy, Color("b8ff8a"))
+			c.wait(0.3)
 			for enemy in c.alive(c.enemies):
 				c.hit(f, enemy, 9, "ranged")
 		"net":
-			await c.projectile(f, target, Color.WHITE)
+			c.projectile(f, target, Color.WHITE)
 			c.hit(f, target, 6, "ranged")
 			c.delay(target, 0.7)
 			c.float_text(target, "Gefesselt", Color.WHITE, 30)
@@ -545,11 +545,11 @@ func _archer(f: Fighter, id: String, target: Fighter) -> void:
 				var targets := c.alive(c.enemies)
 				if targets.is_empty():
 					break
-				var t: Fighter = targets.pick_random()
-				await c.projectile(f, t, Color("b8ff8a"), 0.15)
+				var t: Fighter = c.pick(targets)
+				c.projectile(f, t, Color("b8ff8a"), 0.15)
 				c.hit(f, t, 7, "ranged")
 		"ult":
-			await c.projectile(f, target, Color("f2c14e"))
+			c.projectile(f, target, Color("f2c14e"))
 			c.hit(f, target, 70, "ranged")
 	f.add_ult(20 * c.crits)
 
@@ -561,35 +561,35 @@ func _blade(f: Fighter, id: String, target: Fighter) -> void:
 	match id:
 		"step":
 			var mult := _dance_step(f, id)
-			await c.lunge(f, target, 0.25)
+			c.lunge(f, target, 0.25)
 			c.hit(f, target, 12 * mult, "melee", element)
 			_add_blades(f, 1)
 		"whirl":
 			var mult := _dance_step(f, id)
 			c.burst(f, Color("ffb07a"), 120.0)
-			await c.wait(0.25)
+			c.wait(0.25)
 			for enemy in c.alive(c.enemies):
 				c.hit(f, enemy, 7 * mult, "melee", element)
 			_add_blades(f, 1)
 		"lunge":
 			var mult := _dance_step(f, id)
-			await c.lunge(f, target, 0.2)
+			c.lunge(f, target, 0.2)
 			c.hit(f, target, 17 * mult, "melee", element)
 		"storm":
 			var count := f.blades
 			f.blades = 0
 			f.add_ult(8 * count)
-			await c.projectile(f, target, Color("ffd0a0"))
+			c.projectile(f, target, Color("ffd0a0"))
 			c.hit(f, target, 9 * count, "ranged", element)
 			c.add_log("Klingensturm mit %d Klingen!" % count)
 		"ult":
 			for i in 3:
 				for enemy in c.alive(c.enemies):
-					c.projectile(f, enemy, Color("ffd0a0"), 0.2)
-				await c.wait(0.25)
+					c.projectile_bg(f, enemy, Color("ffd0a0"), 0.2)
+				c.wait(0.25)
 				for enemy in c.alive(c.enemies):
 					c.hit(f, enemy, 10, "melee", element)
-				await c.wait(0.15)
+				c.wait(0.15)
 			f.blades = Fighter.MAX_BLADES
 
 
@@ -618,11 +618,11 @@ func _twilight(f: Fighter, id: String, target: Fighter) -> void:
 		c.float_text(f, "Überladung!", Color("e0c8ff"), -20)
 	match id:
 		"light":
-			await c.projectile(f, target, Elements.color("Licht"))
+			c.projectile(f, target, Elements.color("Licht"))
 			c.hit(f, target, 14 * mult, "magic", "Licht")
 			_shift_balance(f, 2)
 		"shadow":
-			await c.projectile(f, target, Elements.color("Schatten"))
+			c.projectile(f, target, Elements.color("Schatten"))
 			var dealt := c.hit(f, target, 13 * mult, "magic", "Schatten")
 			c.heal(f, f, ceili(dealt * 0.4))
 			_shift_balance(f, -2)
@@ -644,7 +644,7 @@ func _twilight(f: Fighter, id: String, target: Fighter) -> void:
 			_check_crossing(f)
 		"ult":
 			c.screen_flash(Color("2a1040"))
-			await c.wait(0.3)
+			c.wait(0.3)
 			var power := 26 + 5 * absi(f.balance)
 			for enemy in c.alive(c.enemies):
 				var el := Elements.best_against(enemy.element, ["Licht", "Schatten"])
@@ -675,7 +675,7 @@ func _tamer(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 	var m := f.active_monster
 	match id:
 		"sling":
-			await c.projectile(f, target, Color("c9b28a"))
+			c.projectile(f, target, Color("c9b28a"))
 			c.hit(f, target, 8, "ranged")
 		"command":
 			m.next_time = c.now + 0.001
@@ -685,7 +685,7 @@ func _tamer(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 			var next := _monster(f, ab.choice)
 			c.remove_companion(m)
 			f.active_monster = next
-			c.add_companion(next, Vector2(Combat.COMPANION_X, Combat.MONSTER_FEET_Y))
+			c.add_companion(next)
 			next.next_time = c.now + next.turn_delay() * 0.5
 			c.burst(next, Elements.color(next.element), 100.0)
 			c.add_log("%s: „%s, zurück! %s, du bist dran!“" % [f.display_name, m.display_name, next.display_name])
@@ -695,16 +695,16 @@ func _tamer(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 				c.float_text(next, "Gut getimt! Ult +25", Color("8fd36b"), 30)
 				c.add_log("Gut getimter Wechsel: %s (%s) hält %s (%s) gut aus." % [next.display_name, next.element, enemy.display_name, enemy.element])
 		"cheer":
-			m.atk_buff_turns = Combat.BUFF_TURNS + 1
+			m.atk_buff_turns = BattleState.BUFF_TURNS + 1
 			c.heal(f, m, 10)
 			c.float_text(m, "Angriff+", Color("ff8080"), 30)
 		"care":
 			c.heal(f, m, 30)
 		"tame":
-			await c.projectile(f, target, Color("8fd36b"), 0.3)
+			c.projectile(f, target, Color("8fd36b"), 0.3)
 			# Je schwächer das Monster, desto sicherer klappt es (50 % LP = halbe Chance)
 			var chance := 1.0 - float(target.hp) / target.max_hp
-			if randf() < chance:
+			if c.zufall() < chance:
 				c.tame(f, target)
 				f.add_ult(25)
 			else:
@@ -715,8 +715,8 @@ func _tamer(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 			for monster in f.monsters:
 				if not monster.is_alive() or not target.is_alive():
 					continue
-				var from := monster if c.has_view(monster) else f
-				await c.projectile(from, target, Elements.color(monster.element), 0.25)
+				var from := monster if c.on_field(monster) else f
+				c.projectile(from, target, Elements.color(monster.element), 0.25)
 				c.hit(monster, target, 16, "magic", monster.element)
 			for monster in f.monsters:
 				if monster.is_alive():
@@ -726,36 +726,36 @@ func _tamer(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 func _monster_action(f: Fighter, id: String, target: Fighter) -> void:
 	match id:
 		"vine":
-			await c.lunge(f, target, 0.3)
+			c.lunge(f, target, 0.3)
 			c.hit(f, target, 12, "melee", "Pflanze")
 		"moss":
 			f.taunt = 2
-			f.def_buff_turns = Combat.BUFF_TURNS + 1
+			f.def_buff_turns = BattleState.BUFF_TURNS + 1
 			c.float_text(f, "Moosschild", Elements.color("Pflanze"))
 		"ember":
-			await c.lunge(f, target, 0.25)
+			c.lunge(f, target, 0.25)
 			c.hit(f, target, 15, "melee", "Feuer")
 		"breath":
 			for enemy in c.alive(c.enemies):
-				c.projectile(f, enemy, Elements.color("Feuer"))
-			await c.wait(0.3)
+				c.projectile_bg(f, enemy, Elements.color("Feuer"))
+			c.wait(0.3)
 			for enemy in c.alive(c.enemies):
 				c.hit(f, enemy, 8, "magic", "Feuer")
 		"jet":
-			await c.projectile(f, target, Elements.color("Wasser"))
+			c.projectile(f, target, Elements.color("Wasser"))
 			c.hit(f, target, 11, "magic", "Wasser")
 		"spring":
 			c.heal(f, target, 22)
 		"pet_attack":
 			var tame: Dictionary = Sandbox.ENEMIES[f.klass].tame
 			if tame.kind == "melee":
-				await c.lunge(f, target, 0.3)
+				c.lunge(f, target, 0.3)
 			else:
-				await c.projectile(f, target, Elements.color(f.element))
+				c.projectile(f, target, Elements.color(f.element))
 			c.hit(f, target, tame.base, tame.kind, f.element)
 		"pet_guard":
 			f.taunt = 2
-			f.def_buff_turns = Combat.BUFF_TURNS + 1
+			f.def_buff_turns = BattleState.BUFF_TURNS + 1
 			c.float_text(f, "Beschützt", Elements.color(f.element))
 	f.owner.add_ult(12)
 
@@ -763,7 +763,7 @@ func _monster_action(f: Fighter, id: String, target: Fighter) -> void:
 func _ritualist(f: Fighter, id: String, target: Fighter, cost: int) -> void:
 	match id:
 		"bite":
-			await c.lunge(f, target, 0.25)
+			c.lunge(f, target, 0.25)
 			var dealt := c.hit(f, target, 14, "melee")
 			var healed := f.heal(ceili(dealt * 0.5))
 			f.stat_heal += healed
@@ -779,7 +779,7 @@ func _ritualist(f: Fighter, id: String, target: Fighter, cost: int) -> void:
 				c.heal(f, a, 16)
 		"pact":
 			pay_blood(f, cost)
-			target.atk_buff_turns = Combat.BUFF_TURNS + 1
+			target.atk_buff_turns = BattleState.BUFF_TURNS + 1
 			c.float_text(target, "Angriff+", Color("ff8080"))
 			c.add_log("%s schließt einen Blutpakt mit %s." % [f.display_name, target.display_name])
 		"ult":
@@ -798,7 +798,7 @@ func _ritualist(f: Fighter, id: String, target: Fighter, cost: int) -> void:
 				c.heal(f, h, 60)
 			for comp in c.alive(c.companions):
 				c.heal(f, comp, 60)
-	await c.wait(0.1)
+	c.wait(0.1)
 
 
 ## Ritualist bezahlt mit Blutvorrat, der Rest kommt aus dem eigenen Leben.
@@ -843,10 +843,10 @@ func _quartermaster(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> 
 					else:
 						c.float_text(target, "Kein Mana …", Color.WHITE)
 				"bombe":
-					await c.projectile(f, target, Elements.color("Feuer"))
+					c.projectile(f, target, Elements.color("Feuer"))
 					c.hit(f, target, 26, "ranged", "Feuer")
 				"kraftkraut":
-					target.atk_buff_turns = Combat.BUFF_TURNS + 1
+					target.atk_buff_turns = BattleState.BUFF_TURNS + 1
 					c.heal(f, target, 10)
 					c.float_text(target, "Angriff+", Color("ff8080"), 30)
 		"delivery":
@@ -860,18 +860,18 @@ func _quartermaster(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> 
 			c.float_text(target, "Schwachstelle!", Color("f2c14e"), 30)
 			c.add_log("Wertgutachten: %s (%s) ist schwach gegen %s." % [target.display_name, target.element, ", ".join(Elements.weaknesses(target.element))])
 		"coins":
-			await c.projectile(f, target, Color("f2c14e"))
+			c.projectile(f, target, Color("f2c14e"))
 			c.hit(f, target, 24, "ranged")
 		"ult":
 			var power := 8 + mini(40, f.gold_spent / 10)
 			c.add_log("Goldrausch! (%d Gold ausgegeben)" % f.gold_spent)
 			for a in c.allies():
-				a.atk_buff_turns = Combat.BUFF_TURNS + 2
+				a.atk_buff_turns = BattleState.BUFF_TURNS + 2
 				c.hasten(a, 0.4)
 				c.float_text(a, "Motiviert!", Color("f2c14e"))
 			for enemy in c.alive(c.enemies):
-				c.projectile(f, enemy, Color("f2c14e"))
-			await c.wait(0.3)
+				c.projectile_bg(f, enemy, Color("f2c14e"))
+			c.wait(0.3)
 			for enemy in c.alive(c.enemies):
 				c.hit(f, enemy, power, "ranged")
 
@@ -879,11 +879,11 @@ func _quartermaster(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> 
 func _kunoichi(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 	match id:
 		"kunai":
-			await c.projectile(f, target, Color("e8e8f0"), 0.2)
+			c.projectile(f, target, Color("e8e8f0"), 0.2)
 			c.hit(f, target, 11, "ranged")
 		"talisman":
 			var el: String = ab.choice
-			await c.projectile(f, target, Elements.color(el), 0.25)
+			c.projectile(f, target, Elements.color(el), 0.25)
 			target.seals.append(el)
 			if target.seals.size() > Fighter.MAX_SEALS:
 				target.seals.pop_front()
@@ -899,8 +899,8 @@ func _kunoichi(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 				f.add_ult(35)
 			for el: String in seals:
 				c.burst(target, Elements.color(el), 120.0)
-				await _seal_effect(f, target, el, mult)
-				await c.wait(0.2)
+				_seal_effect(f, target, el, mult)
+				c.wait(0.2)
 		"smoke":
 			for a in c.allies():
 				a.smoke = 1
@@ -939,7 +939,7 @@ func _seal_effect(f: Fighter, target: Fighter, el: String, mult: float) -> void:
 func _singer(f: Fighter, id: String, target: Fighter) -> void:
 	match id:
 		"spark":
-			await c.projectile(f, target, Color("ffe680"))
+			c.projectile(f, target, Color("ffe680"))
 			c.hit(f, target, 11, "magic")
 			_add_resonance(f, true)
 		"lullaby":
@@ -957,7 +957,7 @@ func _singer(f: Fighter, id: String, target: Fighter) -> void:
 				c.add_log("[color=#6fe0ff]Sternenglanz![/color] Der Polarstern leuchtet für die ganze Gruppe.")
 				targets = c.allies()
 			for a in targets:
-				a.def_buff_turns = Combat.BUFF_TURNS + 1
+				a.def_buff_turns = BattleState.BUFF_TURNS + 1
 				c.hasten(a, 0.3)
 				c.burst(a, Color("cfe6ff"), 90.0)
 				c.float_text(a, "Polarstern", Color("cfe6ff"), 30)
@@ -972,8 +972,8 @@ func _singer(f: Fighter, id: String, target: Fighter) -> void:
 				c.add_log("[color=#ff8a3d]Sternenglanz![/color] Der Komet trifft alle Gegner.")
 				targets = c.alive(c.enemies)
 			for enemy in targets:
-				c.projectile(f, enemy, Color("ff8a3d"))
-			await c.wait(0.3)
+				c.projectile_bg(f, enemy, Color("ff8a3d"))
+			c.wait(0.3)
 			for enemy in targets:
 				c.hit(f, enemy, dmg, "magic")
 		"meteor":
@@ -985,14 +985,14 @@ func _singer(f: Fighter, id: String, target: Fighter) -> void:
 		"ult":
 			for a in c.allies():
 				c.heal(f, a, 35)
-				a.atk_buff_turns = Combat.BUFF_TURNS + 1
-				a.def_buff_turns = Combat.BUFF_TURNS + 1
+				a.atk_buff_turns = BattleState.BUFF_TURNS + 1
+				a.def_buff_turns = BattleState.BUFF_TURNS + 1
 			for enemy in c.alive(c.enemies):
-				c.projectile(f, enemy, Elements.color("Sternenkraft"))
-			await c.wait(0.3)
+				c.projectile_bg(f, enemy, Elements.color("Sternenkraft"))
+			c.wait(0.3)
 			for enemy in c.alive(c.enemies):
 				c.hit(f, enemy, 22, "magic", "Sternenkraft")
-	await c.wait(0.1)
+	c.wait(0.1)
 
 
 func _add_resonance(f: Fighter, offensive: bool) -> void:
@@ -1012,10 +1012,10 @@ func _execute_duet(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 			var archer := c.hero("archer")
 			var tamer := c.hero("tamer")
 			var m := tamer.active_monster
-			await c.projectile(archer, target, Color("b8ff8a"))
+			c.projectile(archer, target, Color("b8ff8a"))
 			c.hit(archer, target, 18, "ranged")
 			if m.is_alive() and target.is_alive():
-				await c.lunge(m, target, 0.3)
+				c.lunge(m, target, 0.3)
 				c.hit(m, target, 14, "melee", m.element)
 			if target.is_alive():
 				target.vuln_turns = 3
@@ -1025,7 +1025,7 @@ func _execute_duet(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 			var ritualist := c.hero("ritualist")
 			var kunoichi := c.hero("kunoichi")
 			pay_blood(ritualist, 12)
-			await c.projectile(kunoichi, target, Color("c2304f"))
+			c.projectile(kunoichi, target, Color("c2304f"))
 			c.burst(target, Color("c2304f"), 120.0)
 			var dealt := c.hit(kunoichi, target, 24, "magic", "Schatten")
 			for a in c.allies():
@@ -1043,7 +1043,7 @@ func _execute_duet(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 		"gluehende_klingen":
 			var smith := c.hero("smith")
 			var blade := c.hero("blade")
-			await c.projectile(smith, target, Elements.color("Feuer"))
+			c.projectile(smith, target, Elements.color("Feuer"))
 			c.hit(smith, target, 18, "ranged", "Feuer")
 			_add_blades(blade, 3)
 			blade.fire_turns = 3
@@ -1053,7 +1053,7 @@ func _execute_duet(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 			var twilight := c.hero("twilight")
 			for a in c.allies():
 				c.give_shield(f, a, 20)
-			await c.wait(0.2)
+			c.wait(0.2)
 			for enemy in c.alive(c.enemies):
 				c.hit(twilight, enemy, 10, "magic", "Licht")
 		"sternentanz":
@@ -1080,10 +1080,10 @@ func begin_turn(f: Fighter) -> void:
 				c.add_log("[color=#4a8cf0][b]Die Arkane Festung explodiert![/b][/color] (%d aufgefangener Schaden)" % f.fortress_absorbed)
 				c.burst(f, Color("4a8cf0"), 260.0)
 				c.screen_flash(Color("4a8cf0"))
-				await c.wait(0.4)
+				c.wait(0.4)
 				for enemy in c.alive(c.enemies):
 					c.apply_damage(enemy, power, f)
-				await c.wait(0.6)
+				c.wait(0.6)
 		"singer":
 			# Verblassen: Ein Sternbild, das 2 Züge nicht gefüllt wurde, verliert jeden Zug 1 Resonanz.
 			if f.off_idle >= 2 and f.res_off > 0:
@@ -1111,12 +1111,11 @@ func begin_turn(f: Fighter) -> void:
 	if not f.is_ally() and "Feuer" in f.seals:
 		c.float_text(f, "Brennt", Elements.color("Feuer"), 30)
 		c.apply_damage(f, BURN, c.hero("kunoichi"))
-		await c.wait(0.3)
+		c.wait(0.3)
 
 
 ## Was eine perfekte Reaktion bei der jeweiligen Klasse bewirkt (der Treffer wird immer abgewehrt).
 func on_perfect_reaction(h: Fighter, attacker: Fighter) -> void:
-	var v := c.view(h)
 	match h.klass:
 		"tank":
 			h.mana = mini(h.mana + 15, h.max_mana)
@@ -1134,17 +1133,17 @@ func on_perfect_reaction(h: Fighter, attacker: Fighter) -> void:
 			c.float_text(h, "PARIERT! +1 Klinge", Color("ffd0a0"))
 		"kunoichi":
 			c.float_text(h, "AUSGEWICHEN! Konter!", Color("ff7fb0"))
-			v.cast_hop()
-			await c.projectile(h, attacker, Color("e8e8f0"), 0.15)
+			c.hop(h)
+			c.projectile(h, attacker, Color("e8e8f0"), 0.15)
 			c.hit(h, attacker, 8, "ranged")
 		"singer":
 			_add_resonance(h, true)
 			_add_resonance(h, false)
 			c.float_text(h, "AUSGEWICHEN! +1 Resonanz", Color("ffe680"))
-			v.cast_hop()
+			c.hop(h)
 		_:
 			c.float_text(h, "AUSGEWICHEN!", Color("b8ff8a"))
-			v.cast_hop()
+			c.hop(h)
 	c.burst(h, Color("cfe2ff"), 90.0)
 	c.add_log("[color=#8affc1]%s reagiert perfekt![/color]" % h.display_name)
 
