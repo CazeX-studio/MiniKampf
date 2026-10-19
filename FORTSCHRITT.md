@@ -10,7 +10,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 1 | Sternensängerin heißt jetzt „Vega“ | erledigt |
 | 2 | Schnellfeuer, Polarstern, Zähmen, Entscheidung nach der Pilzhöhle | erledigt |
 | 3 | Kunoichi-Ult lädt nur durch Siegel-Kombinationen | erledigt |
-| 4 | Elemente absichern (unbekanntes Element = normaler Schaden) | offen |
+| 4 | Elemente absichern (unbekanntes Element = normaler Schaden) | erledigt |
 | 5 | Selbst gewählte Werte als „vorläufig“ markieren | offen |
 | 6 | Kampf in Regeln und Anzeige trennen | offen |
 
@@ -42,6 +42,10 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 - **Schritt 3 – Kunoichi-Ult:** lädt jetzt nur noch durch ausgelöste Siegel-Kombinationen (+35 je Kombination,
   also nach drei Kombinationen voll). Ein einzelnes gelöstes Siegel lädt nichts mehr.
+
+- **Schritt 4 – Elemente absichern:** Ein unbekanntes Element (z. B. Tippfehler oder ein neues Element ohne Eintrag)
+  macht jetzt normalen Schaden, statt das Spiel abstürzen zu lassen. Dazu ein kleiner automatischer Test (10 von 10 richtig).
+  Im Spiel ändert sich dadurch nichts Sichtbares.
 
 ## Fertig in Runde 1
 

@@ -42,6 +42,9 @@ static func multiplier(attack: String, defense: String) -> float:
 		if attack in light_dark and defense in light_dark and attack != defense:
 			return STRONG_MULT
 		return 1.0
+	# Unbekannte Elemente (Tippfehler, neue Elemente ohne Eintrag) machen normalen Schaden statt abzustürzen
+	if not STRONG.has(attack) or not STRONG.has(defense):
+		return 1.0
 	if defense in STRONG[attack]:
 		return STRONG_MULT
 	if attack in STRONG[defense]:
