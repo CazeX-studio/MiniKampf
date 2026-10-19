@@ -503,6 +503,11 @@ func _build_ui() -> void:
 	_info = _label("", 13, Color("8affc1"))
 	_info.position = Vector2(16, 82)
 	root.add_child(_info)
+	# Lautstärke (auch im Startmenü)
+	var volume := Musik.make_slider(130.0)
+	volume.position = Vector2(16, 102)
+	root.add_child(volume)
+	_buttons.append(volume)
 
 	var x := 1170.0
 	for info: Array in [["Menü", 96, _go_menu], ["Tasche (I)", 120, _toggle_panel.bind("tasche")],

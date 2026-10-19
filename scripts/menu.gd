@@ -45,6 +45,9 @@ func _ready() -> void:
 		Musik.toggle()
 		music.text = "Musik: an (M)" if Musik.enabled else "Musik: aus (M)")
 	add_child(music)
+	var volume := Musik.make_slider(220.0)
+	volume.position = Vector2(470, 535)
+	add_child(volume)
 
 
 func _add_button(text: String, pos: Vector2, scene: String) -> void:

@@ -274,6 +274,8 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
   - **Platzhalter-Musik:** vier kleine Retro-Stücke, selbst erzeugt (keine Lizenzfragen): **Stadt**, **Nacht** (Fest,
     Abspann), **Kampf** und **Boss** (sobald ein großer Gegner auftaucht). Sanftes Überblenden beim Wechsel.
     **Taste M** oder der Knopf im Menü schaltet die Musik an und aus (wird gemerkt).
+  - **Lautstärke-Regler** (nach deinem Wunsch): im Startmenü unter dem Musik-Knopf und oben links in der Kreuzweg-Demo,
+    0–100 % in 5er-Schritten, gilt für alles, was das Spiel abspielt, und wird auf dem Gerät gemerkt.
   - **Kampf vor der Stadt:** Lektionen, Gruppenkampf und Probestunden spielen jetzt auf einer **Wiese vor der
     Stadtmauer von Kreuzweg** (mit Tor, Hügeln, Pollen). Der Sternenfresser kämpft auf dem **Marktplatz bei Nacht**
     (erleuchtete Häuser, die fünf Festlaternen). Sandbox und Pilzhöhle bleiben im Gewölbe.
@@ -395,7 +397,8 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 
 **Die ganze erste Stunde am Stück** (Kreuzweg-Demo → „Neu beginnen“, Ton an)
 1. Spiel einmal von der Ankunft bis zum Abspann durch, ohne Abkürzungen. Notier dir, wo du nicht wusstest, was zu tun ist.
-2. Achte auf die Musik: Stadt, Nacht beim Fest, Kampf, Boss beim Sternenfresser. Taste M bzw. Menü-Knopf schaltet sie ab.
+2. Achte auf die Musik: Stadt, Nacht beim Fest, Kampf, Boss beim Sternenfresser. Taste M bzw. Menü-Knopf schaltet sie ab,
+   der Regler „Lautstärke“ (Menü und oben links in der Stadt) macht sie leiser oder lauter.
 3. Kämpfe vor der Stadt: Wiese mit Stadtmauer im Hintergrund, der Sternenfresser auf dem nächtlichen Marktplatz.
 4. Auf dem Marktplatz: Sind die Namen jetzt übersichtlicher (weit entfernte blenden aus)?
 5. Gute Fragen dabei: Wie lange hast du gebraucht? War ein Kampf zu leicht oder zu schwer? Welche Stelle war langweilig?

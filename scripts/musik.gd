@@ -16,6 +16,8 @@ const VOLUME_DB := -8.0
 const FADE := 1.2
 
 static var enabled := true
+## Lautstärke für alles, was das Spiel abspielt (0 bis 1), über den Regler im Menü und in der Stadt
+static var volume := 0.8
 static var _loaded := false
 static var _instance: Musik
 
@@ -33,9 +35,7 @@ static func play(track: String) -> void:
 ## Musik an oder aus.
 static func toggle() -> void:
 	enabled = not enabled
-	var file := FileAccess.open(SETTINGS, FileAccess.WRITE)
-	if file != null:
-		file.store_string(JSON.stringify({musik = enabled}))
+	_save_settings()
 	var node := _instance_node()
 	if node == null:
 		return
@@ -52,6 +52,8 @@ static func _instance_node() -> Musik:
 		var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(SETTINGS)) if FileAccess.file_exists(SETTINGS) else null
 		if data is Dictionary:
 			enabled = data.get("musik", true)
+			volume = clampf(float(data.get("lautstaerke", volume)), 0.0, 1.0)
+		_apply_volume()
 	if _instance != null and is_instance_valid(_instance):
 		return _instance
 	var tree := Engine.get_main_loop() as SceneTree
@@ -100,3 +102,53 @@ func _fade_out(player: AudioStreamPlayer) -> void:
 	var tween := create_tween()
 	tween.tween_property(player, "volume_db", -40.0, FADE)
 	tween.tween_callback(player.queue_free)
+
+
+## Lautstärke einstellen (0 bis 1) und merken.
+static func set_volume(value: float) -> void:
+	_instance_node()
+	volume = clampf(value, 0.0, 1.0)
+	_apply_volume()
+	_save_settings()
+
+
+static func _apply_volume() -> void:
+	AudioServer.set_bus_mute(0, volume <= 0.001)
+	AudioServer.set_bus_volume_db(0, linear_to_db(maxf(volume, 0.001)))
+
+
+static func _save_settings() -> void:
+	var file := FileAccess.open(SETTINGS, FileAccess.WRITE)
+	if file != null:
+		file.store_string(JSON.stringify({musik = enabled, lautstaerke = volume}))
+
+
+## Fertiger Lautstärke-Regler (Text + Schieberegler) zum Einbauen in Menüs.
+static func make_slider(width := 220.0) -> HBoxContainer:
+	_instance_node()
+	var box := HBoxContainer.new()
+	box.add_theme_constant_override("separation", 8)
+	var label := Label.new()
+	label.text = "Lautstärke"
+	label.add_theme_font_size_override("font_size", 15)
+	label.add_theme_color_override("font_outline_color", Color.BLACK)
+	label.add_theme_constant_override("outline_size", 4)
+	box.add_child(label)
+	var slider := HSlider.new()
+	slider.min_value = 0
+	slider.max_value = 100
+	slider.step = 5
+	slider.value = volume * 100.0
+	slider.custom_minimum_size = Vector2(width, 24)
+	slider.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	slider.focus_mode = Control.FOCUS_NONE
+	var percent := Label.new()
+	percent.text = "%d %%" % int(slider.value)
+	percent.custom_minimum_size = Vector2(48, 0)
+	percent.add_theme_font_size_override("font_size", 15)
+	slider.value_changed.connect(func(v: float) -> void:
+		set_volume(v / 100.0)
+		percent.text = "%d %%" % int(v))
+	box.add_child(slider)
+	box.add_child(percent)
+	return box
