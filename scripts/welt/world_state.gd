@@ -4,6 +4,8 @@ extends RefCounted
 ## Alles, was Spieler tun, kommt als Befehl (Dictionary) mit Spieler-Kennung herein:
 ##   {type = "move", cell = Vector2i}   laufen
 ##   {type = "talk", npc = "ye"}        zu einem NPC laufen und mit ihm reden
+##   {type = "steer", dir = Vector2}    frei laufen in eine Bildschirm-Richtung (Tasten, Steuerknopf), ZERO = stehen bleiben
+##   {type = "interact"}                mit dem NPC direkt nebenan reden (E, Leertaste, Aktions-Knopf)
 ## So kann später ein Server dieselben Befehle von vielen Spielern annehmen;
 ## die Anzeige (kreuzweg.gd) liest nur den Zustand und schickt Befehle.
 
@@ -154,6 +156,40 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 				return
 			p.talk_target = cmd.npc
 			_walk_to(p, spot)
+		"steer":
+			var dir: Vector2 = cmd.dir
+			p.steer = screen_dir_to_cells(dir.limit_length(1.0))
+			if p.steer != Vector2.ZERO:
+				# Freies Laufen ersetzt einen angeklickten Weg
+				p.path.clear()
+				p.talk_target = ""
+		"interact":
+			var npc_id := npc_near(p)
+			if npc_id != "":
+				p.path.clear()
+				p.talk_target = npc_id
+
+
+## Wandelt eine Richtung auf dem Bildschirm (rechts = +x, unten = +y) in Feld-Koordinaten um.
+## Die Länge bleibt gleich, damit man in alle Richtungen gleich schnell läuft.
+static func screen_dir_to_cells(dir: Vector2) -> Vector2:
+	if dir == Vector2.ZERO:
+		return Vector2.ZERO
+	# Bildschirm: x = Feld.x - Feld.y, y = (Feld.x + Feld.y) / 2 (Felder sind doppelt so breit wie hoch)
+	var cells := Vector2(dir.x + 2.0 * dir.y, 2.0 * dir.y - dir.x)
+	return cells.normalized() * dir.length()
+
+
+## Der NPC, der direkt neben dem Spieler steht ("" = keiner).
+func npc_near(p: PlayerState) -> String:
+	var best := ""
+	var best_dist := 1.6
+	for id: String in npcs:
+		var dist := (Vector2(npcs[id].cell) - p.pos).length()
+		if dist < best_dist:
+			best = id
+			best_dist = dist
+	return best
 
 
 func _walk_to(p: PlayerState, target: Vector2i) -> void:
@@ -179,9 +215,28 @@ func _free_neighbor(npc_cell: Vector2i, from: Vector2i) -> Vector2i:
 	return best
 
 
+## Freies Laufen: Schritt in Steuer-Richtung. Vor Häusern, Bäumen und NPCs wird an der Wand entlang gerutscht.
+func _steer(p: PlayerState, delta: float) -> void:
+	var move := p.steer * WALK_SPEED * delta
+	for attempt: Vector2 in [move, Vector2(move.x, 0), Vector2(0, move.y)]:
+		if attempt == Vector2.ZERO:
+			continue
+		var next := p.pos + attempt
+		var cell := Vector2i(next.round())
+		if is_walkable(cell):
+			p.pos = next
+			p.cell = cell
+			break
+	var screen_x := p.steer.x - p.steer.y
+	if absf(screen_x) > 0.01:
+		p.facing = 1 if screen_x > 0 else -1
+
+
 ## Spielt die Welt um "delta" Sekunden weiter (Laufen, Gespräche beginnen).
 func tick(delta: float) -> void:
 	for p: PlayerState in players.values():
+		if p.steer != Vector2.ZERO:
+			_steer(p, delta)
 		var step := WALK_SPEED * delta
 		while step > 0.0 and p.is_moving():
 			var next := Vector2(p.path[0])

@@ -13,6 +13,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 4 | Elemente absichern (unbekanntes Element = normaler Schaden) | erledigt |
 | 5 | Selbst gewählte Werte als „vorläufig“ markieren | erledigt |
 | 6 | Kampf in Regeln und Anzeige trennen | erledigt |
+| 7 | Steuerung in der Welt: Tasten (PC), Steuerknopf und Aktions-Knopf (Handy) | erledigt |
+| 8 | Kreuzweg-Demo Schritt 1: Bausteine (siehe KREUZWEG_PLAN.md) | offen |
 
 ## Aufgaben der Runde 1
 
@@ -64,6 +66,14 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     ausgetauscht, sonst nichts. Dazu ein Probelauf mit echter Anzeige, in dem der Computer spielt
     (`tests/anzeige_auto.tscn`), und alle Szenen starten ohne Fehlermeldung.
 
+- **Schritt 7 – Steuerung in der Welt** (Kreuzweg-Demo, auch in design.md unter „Steuerung“ eingetragen):
+  - **PC:** WASD oder Pfeiltasten = laufen, E oder Leertaste = reden bzw. Gespräch weiterblättern. Klicken zum Hinlaufen bleibt.
+  - **Handy:** Steuerknopf unten links – er erscheint dort, wo der Daumen aufsetzt (kurz antippen ohne Ziehen = hinlaufen).
+    Aktions-Knopf „Reden“ unten rechts. Antippen zum Hinlaufen bleibt. Beides erscheint nur auf Geräten mit Touchscreen.
+  - Häuser, Bäume und NPCs halten dich auf, du rutschst an ihnen entlang.
+  - Wie bisher alles über Befehle an die Welt („steuern“, „benutzen“), damit später Mitspieler dazukommen können.
+  - Der Kampf bleibt rundenbasiert mit Antippen. Automatischer Test `tests/welt_test.gd`: alles richtig.
+
 ## Fertig in Runde 1
 
 - **Schritt 1 – Kampf-Sandbox:** Alle 11 Klassen, Element-Sechseck, Zähmer mit Monster-Wechsel,
@@ -100,6 +110,13 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 6. Umbau des Kampfes: Spiel einen ganzen Kampf wie gewohnt. Es sollte sich nichts anders anfühlen: Treffer, Zahlen,
    Ring zum Parieren, Wellen und Auswertung wie vorher. Achte darauf, dass die Lebensleiste erst beim Treffer sinkt.
 
+**Neu: Steuerung in der Kreuzweg-Demo** (Menü → „Kreuzweg-Demo“)
+1. PC: Mit WASD oder den Pfeiltasten herumlaufen. Läuft die Figur in die richtige Richtung und bleibt an Häusern hängen?
+2. PC: Neben Ausbilder Ye stellen und E (oder Leertaste) drücken: Das Gespräch startet, E blättert weiter.
+3. Handy (quer): Daumen unten links aufsetzen und ziehen. Der Steuerknopf erscheint unter dem Daumen, die Figur läuft.
+4. Handy: Neben Ye „Reden“ unten rechts antippen. Das Gespräch startet.
+5. Antippen bzw. Klicken auf den Boden läuft weiterhin dorthin.
+
 
 **1. Kampf-Sandbox** (Menü → „Kampf-Sandbox“)
 - Wie bisher: bis zu 4 Klassen wählen, Gegner wählen, kämpfen, am Ende die Auswertung ansehen.
@@ -120,7 +137,7 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 - Gute Fragen beim Testen: Ist es zu schwer oder zu leicht? Versteht man die Mechaniken aus dem Log?
 
 **3. Kreuzweg-Demo** (Menü → „Kreuzweg-Demo“)
-- Boden antippen = laufen. Ausbilder Ye antippen = hinlaufen und reden („Weiter“ blättert).
+- Boden antippen = laufen (oder WASD/Pfeiltasten bzw. Steuerknopf). Ausbilder Ye antippen = hinlaufen und reden („Weiter“ oder E blättert).
   Beim zweiten Mal sagt er etwas anderes.
 - Der „Testgefährte“ ist ein zweiter Spieler, der zur Probe herumläuft.
 - Nur ein Gerüst mit Platzhalter-Grafik: Die Häuser sind einfache Blöcke, noch keine Kämpfe oder Aufträge.

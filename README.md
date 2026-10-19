@@ -23,8 +23,8 @@ Das Spiel startet mit einem **Menü**: Kampf-Sandbox oder Kreuzweg-Demo.
 Die Stadt Kreuzweg schräg von oben (Platzhalter-Grafik): Marktplatz mit der Statue der Fünf,
 Abenteurergilde, Bingos Laden, sechs Straßen (die sechste nach Südosten ist zugewachsen).
 
-- **Laufen:** Boden antippen oder anklicken.
-- **Reden:** Ausbilder Ye antippen – man läuft hin, dann startet das Gespräch („Weiter“ blättert).
+- **Laufen:** Boden antippen oder anklicken, WASD/Pfeiltasten (PC) oder Steuerknopf unten links (Handy, erscheint unter dem Daumen).
+- **Reden:** Ausbilder Ye antippen (man läuft hin) oder neben ihm E/Leertaste bzw. den Knopf „Reden“ unten rechts. „Weiter“ oder E blättert.
 - **Testgefährte:** Ein zweiter Spieler läuft zur Probe herum.
 
 **Für später mehrere Spieler gebaut:** Die Spiellogik (`scripts/welt/world_state.gd`) kennt keine Grafik.

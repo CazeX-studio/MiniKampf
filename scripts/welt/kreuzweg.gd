@@ -33,6 +33,20 @@ var _dialog_text: Label
 var _dialog_lines: Array = []
 var _dialog_index := 0
 var _info: Label
+var _menu_button: Button
+
+# Steuerung: zuletzt geschickte Richtung, Steuerknopf und Aktions-Knopf fürs Handy
+const STICK_RADIUS := 70.0
+const STICK_DEADZONE := 12.0
+const STICK_HOME := Vector2(170, 560)
+var _steer_sent := Vector2.ZERO
+var _touch_ui := false
+var _stick_layer: Control
+var _action_button: Button
+var _stick_index := -1
+var _stick_origin := Vector2.ZERO
+var _stick_vec := Vector2.ZERO
+var _stick_moved := false
 
 
 func _ready() -> void:
@@ -68,11 +82,13 @@ func _ready() -> void:
 	_camera.position_smoothing_enabled = true
 	add_child(_camera)
 	_build_ui()
+	_set_touch_ui(DisplayServer.is_touchscreen_available())
 	_sync()
 	_camera.reset_smoothing()
 
 
 func _process(delta: float) -> void:
+	_update_steer()
 	_drive_bot(delta)
 	state.tick(delta)
 	_sync()
@@ -92,7 +108,7 @@ func _sync() -> void:
 			_characters[id] = view
 		var view: WorldCharacter = _characters[id]
 		view.position = cell_center(p.pos)
-		view.moving = p.is_moving()
+		view.moving = p.is_walking()
 		view.facing = p.facing
 	var local: PlayerState = state.players[LOCAL_ID]
 	_camera.position = cell_center(local.pos)
@@ -129,13 +145,98 @@ func screen_to_cell(p: Vector2) -> Vector2i:
 
 
 # --- Eingabe --------------------------------------------------------------------
+# PC: Klicken = hinlaufen, WASD/Pfeiltasten = laufen, E/Leertaste = reden.
+# Handy: Antippen = hinlaufen, Steuerknopf unten links (erscheint unter dem Daumen), Aktions-Knopf unten rechts.
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode in [KEY_E, KEY_SPACE]:
+		_action()
+		get_viewport().set_input_as_handled()
+		return
+	if event is InputEventScreenTouch or event is InputEventScreenDrag:
+		_touch(event)
+		return
 	if _dialog.visible:
 		return
 	if not (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
 		return
-	var world := get_global_mouse_position()
+	# Finger-Berührungen kommen auch als Maus an; die werden schon in _touch behandelt
+	if event.device == InputEvent.DEVICE_ID_EMULATION and _touch_ui:
+		return
+	_tap_at(get_global_mouse_position())
+
+
+## E, Leertaste oder Aktions-Knopf: Gespräch weiterblättern oder mit dem NPC nebenan reden.
+func _action() -> void:
+	if _dialog.visible:
+		_next_line()
+	else:
+		state.apply_command(LOCAL_ID, {type = "interact"})
+
+
+## Richtung aus Tasten und Steuerknopf; wird nur bei Änderung als Befehl geschickt.
+func _update_steer() -> void:
+	var dir := Vector2.ZERO
+	if not _dialog.visible:
+		if Input.is_physical_key_pressed(KEY_A) or Input.is_physical_key_pressed(KEY_LEFT):
+			dir.x -= 1.0
+		if Input.is_physical_key_pressed(KEY_D) or Input.is_physical_key_pressed(KEY_RIGHT):
+			dir.x += 1.0
+		if Input.is_physical_key_pressed(KEY_W) or Input.is_physical_key_pressed(KEY_UP):
+			dir.y -= 1.0
+		if Input.is_physical_key_pressed(KEY_S) or Input.is_physical_key_pressed(KEY_DOWN):
+			dir.y += 1.0
+		dir = dir.normalized()
+		if _stick_vec != Vector2.ZERO:
+			dir = _stick_vec
+	if dir != _steer_sent:
+		_steer_sent = dir
+		state.apply_command(LOCAL_ID, {type = "steer", dir = dir})
+
+
+func _touch(event: InputEvent) -> void:
+	if not _touch_ui:
+		_set_touch_ui(true)
+	if event is InputEventScreenTouch:
+		if event.pressed:
+			if _dialog.visible or _on_buttons(event.position):
+				return
+			if _stick_index == -1 and _in_stick_zone(event.position):
+				_stick_index = event.index
+				_stick_origin = event.position
+				_stick_moved = false
+				_stick_vec = Vector2.ZERO
+			else:
+				_tap_at(_to_world(event.position))
+		elif event.index == _stick_index:
+			# Kurz angetippt ohne zu ziehen: wie ein normales Antippen (hinlaufen)
+			if not _stick_moved and not _dialog.visible:
+				_tap_at(_to_world(event.position))
+			_stick_index = -1
+			_stick_vec = Vector2.ZERO
+		_stick_layer.queue_redraw()
+	elif event is InputEventScreenDrag and event.index == _stick_index:
+		var offset: Vector2 = event.position - _stick_origin
+		if offset.length() > STICK_DEADZONE:
+			_stick_moved = true
+		_stick_vec = (offset / STICK_RADIUS).limit_length(1.0) if _stick_moved else Vector2.ZERO
+		_stick_layer.queue_redraw()
+
+
+func _in_stick_zone(pos: Vector2) -> bool:
+	return pos.x < 1280.0 * 0.45 and pos.y > 720.0 * 0.4
+
+
+func _on_buttons(pos: Vector2) -> bool:
+	return _action_button.get_global_rect().has_point(pos) or _menu_button.get_global_rect().has_point(pos)
+
+
+func _to_world(screen_pos: Vector2) -> Vector2:
+	return get_viewport().get_canvas_transform().affine_inverse() * screen_pos
+
+
+## Antippen / Klicken auf eine Stelle der Welt: hinlaufen oder mit dem NPC dort reden.
+func _tap_at(world: Vector2) -> void:
 	# NPC angetippt? Dann hinlaufen und reden
 	for id: String in state.npcs:
 		var npc_pos := cell_center(Vector2(state.npcs[id].cell))
@@ -248,9 +349,9 @@ func _build_ui() -> void:
 	ui.add_child(root)
 
 	var hint := Label.new()
-	hint.text = "Kreuzweg-Demo · Boden antippen = laufen · Ausbilder Ye antippen = reden"
+	hint.text = "Kreuzweg-Demo · Laufen: antippen, WASD/Pfeiltasten oder Steuerknopf · Reden: E/Leertaste oder Ye antippen"
 	hint.position = Vector2(16, 12)
-	hint.add_theme_font_size_override("font_size", 18)
+	hint.add_theme_font_size_override("font_size", 15)
 	hint.add_theme_color_override("font_outline_color", Color.BLACK)
 	hint.add_theme_constant_override("outline_size", 6)
 	root.add_child(hint)
@@ -269,7 +370,24 @@ func _build_ui() -> void:
 	menu.size = Vector2(96, 44)
 	menu.add_theme_font_size_override("font_size", 16)
 	menu.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/menu.tscn"))
+	menu.focus_mode = Control.FOCUS_NONE
+	_menu_button = menu
 	root.add_child(menu)
+
+	# Handy: Steuerknopf (unten links, erscheint unter dem Daumen) und Aktions-Knopf (unten rechts)
+	_stick_layer = Control.new()
+	_stick_layer.size = Vector2(1280, 720)
+	_stick_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_stick_layer.draw.connect(_draw_stick)
+	root.add_child(_stick_layer)
+	_action_button = Button.new()
+	_action_button.text = "Reden"
+	_action_button.position = Vector2(1100, 560)
+	_action_button.size = Vector2(150, 120)
+	_action_button.add_theme_font_size_override("font_size", 22)
+	_action_button.focus_mode = Control.FOCUS_NONE
+	_action_button.pressed.connect(_action)
+	root.add_child(_action_button)
 
 	_dialog = PanelContainer.new()
 	var style := StyleBoxFlat.new()
@@ -300,7 +418,26 @@ func _build_ui() -> void:
 	next.size_flags_horizontal = Control.SIZE_SHRINK_END
 	next.add_theme_font_size_override("font_size", 17)
 	next.pressed.connect(_next_line)
+	next.focus_mode = Control.FOCUS_NONE
 	box.add_child(next)
+
+
+## Steuerknopf und Aktions-Knopf nur auf Geräten mit Touchscreen zeigen.
+func _set_touch_ui(on: bool) -> void:
+	_touch_ui = on
+	_action_button.visible = on
+	_stick_layer.queue_redraw()
+
+
+func _draw_stick() -> void:
+	if not _touch_ui:
+		return
+	var active := _stick_index != -1
+	var center := _stick_origin if active else STICK_HOME
+	_stick_layer.draw_circle(center, STICK_RADIUS, Color(0, 0, 0, 0.35 if active else 0.18))
+	_stick_layer.draw_arc(center, STICK_RADIUS, 0, TAU, 48, Color(1, 0.9, 0.6, 0.7 if active else 0.3), 3.0)
+	var knob := center + _stick_vec * STICK_RADIUS
+	_stick_layer.draw_circle(knob, 30.0, Color(1, 0.9, 0.6, 0.75 if active else 0.3))
 
 
 func _on_dialog_started(player_id: String, _npc_id: String, lines: Array) -> void:

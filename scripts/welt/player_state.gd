@@ -19,6 +19,9 @@ var talk_target := ""
 var talked := {}
 ## Blickrichtung auf dem Bildschirm: 1 = rechts, -1 = links
 var facing := 1
+## Direkte Steuerung (Tasten oder Steuerknopf): Richtung in Feld-Koordinaten, Länge 0 bis 1.
+## Solange sie nicht null ist, läuft der Spieler frei statt einen Weg entlang.
+var steer := Vector2.ZERO
 
 
 func _init(p_id: String, p_name: String, p_look: String, p_cell: Vector2i) -> void:
@@ -31,3 +34,8 @@ func _init(p_id: String, p_name: String, p_look: String, p_cell: Vector2i) -> vo
 
 func is_moving() -> bool:
 	return not path.is_empty()
+
+
+## Läuft gerade (einen Weg entlang oder frei gesteuert)?
+func is_walking() -> bool:
+	return is_moving() or steer != Vector2.ZERO
