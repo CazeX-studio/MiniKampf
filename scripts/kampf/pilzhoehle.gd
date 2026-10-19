@@ -392,3 +392,24 @@ func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 			c.add_log("%s reicht das Splitterlicht an %s weiter." % [f.display_name, target.display_name])
 	_update_intents()
 	await c.wait(0.3)
+
+
+# --- Entscheidung nach dem Dungeon --------------------------------------------
+
+const FINAL_CHOICES: Array[Dictionary] = [
+	{id = "faellen", name = "Baum fällen, großen Splitter mitnehmen", info = "Der große Splitter gehört euch. Der Urbaum stirbt."},
+	{id = "retten", name = "Splitter herausschneiden, Baum retten", info = "Grünwacht blüht auf, besserer Ruf bei den Zähmern"},
+]
+
+
+## Nach dem Sieg über den Vorboten: Was geschieht mit dem Urbaum? (design.md: „Entscheidung danach“)
+func final_choice() -> void:
+	c.add_log("\n[b]Der Urbaum liegt still. In seinem Stamm pulsiert der große Splitter.[/b] Was tut ihr?")
+	var id: String = await c.ask_choice("Was geschieht mit dem Urbaum?", FINAL_CHOICES)
+	Sandbox.pilz_choice = id
+	if id == "faellen":
+		c.add_log("[color=#c8a0ff]Ihr fällt den Urbaum und nehmt den großen Splitter mit.[/color] Er summt leise in eurem Gepäck. "
+			+ "Über Grünwacht bleibt es grau.")
+	else:
+		c.add_log("[color=#8affc1]Vorsichtig schneidet ihr den Splitter heraus. Der Urbaum atmet auf.[/color] "
+			+ "Grünwacht blüht auf, und die Zähmer werden davon hören (besserer Ruf).")

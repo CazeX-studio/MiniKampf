@@ -124,6 +124,7 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 				{id = "charge", name = "Bogen spannen", info = "Nächster Schuss ×2,5 (Treffer unterbricht)", target = "none"},
 				{id = "volley", name = "Pfeilhagel", info = "9 an alle Gegner · 15 Mana", target = "none", mana = 15, cd = 2},
 				{id = "net", name = "Netzpfeil", info = "6 Schaden, Ziel rutscht auf der Leiste zurück · 10 Mana", target = "enemy", mana = 10, cd = 3},
+				{id = "rapid", name = "Schnellfeuer", info = "3 schnelle Pfeile à 7 auf zufällige Gegner · 12 Mana", target = "none", mana = 12, cd = 2},
 				{id = "ult", name = "Jägerpfeil", info = "70 Fernkampf", target = "enemy"},
 			]
 		"blade":
@@ -154,6 +155,7 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 				{id = "switch", name = "Wechsel", info = "Anderes Monster schicken", target = "choice", cd = 1, choices = choices},
 				{id = "cheer", name = "Anfeuern", info = "Monster Angriff+, +10 LP · 8 Mana", target = "none", mana = 8, cd = 2},
 				{id = "care", name = "Pflege", info = "Monster +30 LP · 10 Mana", target = "none", mana = 10, cd = 1},
+				{id = "tame", name = "Zähmen", info = "Geschwächtes Monster (unter 50 % LP) fangen · 10 Mana", target = "enemy_tamable", mana = 10, cd = 2},
 				{id = "ult", name = "Rudelruf", info = "Alle Monster greifen an (je 16, eigenes Element)", target = "enemy"},
 			]
 		"moosling":
@@ -208,16 +210,28 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 			var lullaby_info := "Heilt 24, +1 Schutz-Sternbild · 8 Mana"
 			if f.res_def >= Fighter.MAX_RES:
 				lullaby_info = "Sternenglanz: heilt die GANZE Gruppe 24 · 8 Mana"
+			var polar_info := "Abwehr+ und früher dran, +1 Schutz-Sternbild · 10 Mana"
+			if f.res_def >= Fighter.MAX_RES:
+				polar_info = "Sternenglanz: Abwehr+ und früher dran für die GANZE Gruppe · 10 Mana"
 			var comet_info := "Verbraucht Angriffs-Resonanz: 8 + 8 je Punkt · 10 Mana"
 			if f.res_off >= Fighter.MAX_RES:
 				comet_info = "Sternenglanz: trifft ALLE Gegner mit 48 · 10 Mana"
 			list = [
 				{id = "spark", name = "Sternenfunke", info = "11 Magie, +1 Angriffs-Sternbild", target = "enemy"},
 				{id = "lullaby", name = "Mondwiegenlied", info = lullaby_info, target = "ally", mana = 8},
+				{id = "polar", name = "Polarstern", info = polar_info, target = "ally", mana = 10, cd = 3},
 				{id = "comet", name = "Kometenlied", info = comet_info, target = "enemy", mana = 10},
 				{id = "meteor", name = "Sternschnuppenregen", info = "Verbraucht Schutz-Resonanz: alle 7 je Punkt · 10 Mana", target = "none", mana = 10},
 				{id = "ult", name = "Himmelszelt", info = "Alle +35 LP, Angriff+/Abwehr+, 22 Sternenkraft", target = "none"},
 			]
+		_:
+			# Gezähmtes Monster: kämpft mit seinem eigenen Angriff für den Zähmer
+			if is_pet(f) and Sandbox.ENEMIES.has(f.klass):
+				var tame: Dictionary = Sandbox.ENEMIES[f.klass].tame
+				list = [
+					{id = "pet_attack", name = tame.name, info = "%d %s" % [tame.base, f.element], target = "enemy"},
+					{id = "pet_guard", name = "Beschützen", info = "Zieht 2 Angriffe auf sich, Abwehr+", target = "none", cd = 2},
+				]
 	if f.is_hero:
 		for duet in Sandbox.active_duets(Sandbox.team):
 			if f.klass == duet.a or f.klass == duet.b:
@@ -286,6 +300,11 @@ func blocked_reason(f: Fighter, ab: Dictionary) -> String:
 		"release":
 			if valid_targets(f, ab).is_empty():
 				return "Keine Siegel"
+		"tame":
+			if f.monsters.size() >= Sandbox.MAX_MONSTERS:
+				return "Kein Platz (%d Monster)" % Sandbox.MAX_MONSTERS
+			if valid_targets(f, ab).is_empty():
+				return "Kein Monster geschwächt"
 		"comet":
 			if f.res_off == 0:
 				return "Keine Resonanz"
@@ -319,6 +338,9 @@ func valid_targets(f: Fighter, ab: Dictionary) -> Array[Fighter]:
 			return c.alive(c.enemies)
 		"enemy_sealed":
 			return c.alive(c.enemies).filter(func(e: Fighter) -> bool: return not e.seals.is_empty())
+		"enemy_tamable":
+			return c.alive(c.enemies).filter(func(e: Fighter) -> bool:
+				return Sandbox.ENEMIES[e.klass].has("tame") and e.hp * 2 <= e.max_hp)
 		"ally":
 			return c.allies()
 		"ally_hero":
@@ -374,8 +396,6 @@ func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 			await _twilight(f, id, target)
 		"tamer":
 			await _tamer(f, id, target, ab)
-		"moosling", "glutwelpe", "bachotter":
-			await _monster_action(f, id, target)
 		"ritualist":
 			await _ritualist(f, id, target, int(ab.get("blood", 0)))
 		"quartermaster":
@@ -384,6 +404,14 @@ func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 			await _kunoichi(f, id, target, ab)
 		"singer":
 			await _singer(f, id, target)
+		_:
+			if is_pet(f):
+				await _monster_action(f, id, target)
+
+
+## Monster des Zähmers (Start-Monster und gezähmte).
+static func is_pet(f: Fighter) -> bool:
+	return f.owner != null and f.klass != "robot"
 
 
 func _tank(f: Fighter, id: String, target: Fighter) -> void:
@@ -512,6 +540,14 @@ func _archer(f: Fighter, id: String, target: Fighter) -> void:
 			c.delay(target, 0.7)
 			c.float_text(target, "Gefesselt", Color.WHITE, 30)
 			c.add_log("%s rutscht auf der Zugleiste nach hinten." % target.display_name)
+		"rapid":
+			for i in 3:
+				var targets := c.alive(c.enemies)
+				if targets.is_empty():
+					break
+				var t: Fighter = targets.pick_random()
+				await c.projectile(f, t, Color("b8ff8a"), 0.15)
+				c.hit(f, t, 7, "ranged")
 		"ult":
 			await c.projectile(f, target, Color("f2c14e"))
 			c.hit(f, target, 70, "ranged")
@@ -664,6 +700,16 @@ func _tamer(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 			c.float_text(m, "Angriff+", Color("ff8080"), 30)
 		"care":
 			c.heal(f, m, 30)
+		"tame":
+			await c.projectile(f, target, Color("8fd36b"), 0.3)
+			# Je schwächer das Monster, desto sicherer klappt es (50 % LP = halbe Chance)
+			var chance := 1.0 - float(target.hp) / target.max_hp
+			if randf() < chance:
+				c.tame(f, target)
+				f.add_ult(25)
+			else:
+				c.float_text(target, "Reißt sich los!", Color("8fd36b"), 30)
+				c.add_log("%s reißt sich los. Weiter schwächen und nochmal versuchen!" % target.display_name)
 		"ult":
 			c.add_log("Rudelruf! Alle Monster von %s greifen an." % f.display_name)
 			for monster in f.monsters:
@@ -700,6 +746,17 @@ func _monster_action(f: Fighter, id: String, target: Fighter) -> void:
 			c.hit(f, target, 11, "magic", "Wasser")
 		"spring":
 			c.heal(f, target, 22)
+		"pet_attack":
+			var tame: Dictionary = Sandbox.ENEMIES[f.klass].tame
+			if tame.kind == "melee":
+				await c.lunge(f, target, 0.3)
+			else:
+				await c.projectile(f, target, Elements.color(f.element))
+			c.hit(f, target, tame.base, tame.kind, f.element)
+		"pet_guard":
+			f.taunt = 2
+			f.def_buff_turns = Combat.BUFF_TURNS + 1
+			c.float_text(f, "Beschützt", Elements.color(f.element))
 	f.owner.add_ult(12)
 
 
@@ -894,6 +951,18 @@ func _singer(f: Fighter, id: String, target: Fighter) -> void:
 			else:
 				c.heal(f, target, 24)
 			_add_resonance(f, false)
+		"polar":
+			# Polarstern: ein fester Leitstern. Mit vollem Schutz-Sternbild (Sternenglanz) für alle.
+			var targets: Array[Fighter] = [target]
+			if f.res_def >= Fighter.MAX_RES:
+				c.add_log("[color=#6fe0ff]Sternenglanz![/color] Der Polarstern leuchtet für die ganze Gruppe.")
+				targets = c.allies()
+			for a in targets:
+				a.def_buff_turns = Combat.BUFF_TURNS + 1
+				c.hasten(a, 0.3)
+				c.burst(a, Color("cfe6ff"), 90.0)
+				c.float_text(a, "Polarstern", Color("cfe6ff"), 30)
+			_add_resonance(f, false)
 		"comet":
 			var used := f.res_off
 			f.res_off = 0
@@ -1037,8 +1106,8 @@ func begin_turn(f: Fighter) -> void:
 			# Passive "Wartung": Solange der Mechaniker lebt, repariert sich der Roboter etwas.
 			if f.owner.is_alive() and f.hp < f.max_hp:
 				c.heal(f.owner, f, 5)
-		"moosling", "glutwelpe", "bachotter":
-			if _bench_has(f.owner, "bachotter"):
+		_:
+			if is_pet(f) and _bench_has(f.owner, "bachotter"):
 				c.heal(f.owner, f, 5)
 	if not f.is_ally() and "Feuer" in f.seals:
 		c.float_text(f, "Brennt", Elements.color("Feuer"), 30)
@@ -1150,8 +1219,9 @@ func on_death(target: Fighter) -> void:
 			if protected != null and protected.is_alive():
 				c.add_log("%s wird von der Explosion mitgetroffen." % protected.display_name)
 				c.apply_damage(protected, 12)
-		"moosling", "glutwelpe", "bachotter":
-			c.add_log("%s muss ein anderes Monster schicken (Wechsel)." % target.owner.display_name)
+		_:
+			if is_pet(target):
+				c.add_log("%s muss ein anderes Monster schicken (Wechsel)." % target.owner.display_name)
 
 
 func _bench_has(tamer: Fighter, id: String) -> bool:

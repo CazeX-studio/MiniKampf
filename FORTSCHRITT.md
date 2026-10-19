@@ -8,7 +8,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | Nr. | Aufgabe | Stand |
 |-----|---------|-------|
 | 1 | Sternensängerin heißt jetzt „Vega“ | erledigt |
-| 2 | Schnellfeuer, Polarstern, Zähmen, Entscheidung nach der Pilzhöhle | offen |
+| 2 | Schnellfeuer, Polarstern, Zähmen, Entscheidung nach der Pilzhöhle | erledigt |
 | 3 | Kunoichi-Ult lädt nur durch Siegel-Kombinationen | offen |
 | 4 | Elemente absichern (unbekanntes Element = normaler Schaden) | offen |
 | 5 | Selbst gewählte Werte als „vorläufig“ markieren | offen |
@@ -26,6 +26,19 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 ## Fertig in Runde 2
 
 - **Schritt 1 – Name:** Die Sternensängerin heißt jetzt überall **Vega** (Lyra ist Kaels Schwester).
+
+- **Schritt 2 – Fehlende Fähigkeiten und Entscheidung:**
+  - **Schnellfeuer** (Bogenschütze): 3 schnelle Pfeile à 7 auf zufällige Gegner, 12 Mana. Kritische Treffer laden wie immer die Ult.
+  - **Polarstern** (Sternensängerin): Ein Verbündeter bekommt Abwehr+ und ist früher dran, +1 Schutz-Sternbild, 10 Mana.
+    Mit vollem Schutz-Sternbild (Sternenglanz) wirkt er auf die ganze Gruppe.
+  - **Zähmen** (Monster-Zähmer): Ein Monster unter 50 % Leben kann gefangen werden. Je schwächer, desto sicherer
+    (bei 50 % halbe Chance). Es kommt mit halbem Leben auf die Bank und kann per „Wechsel“ kämpfen, mit seinem
+    eigenen Angriff und „Beschützen“. Zähmbar sind alle normalen Monster, auch die der Pilzhöhle (nicht Bosse,
+    Sporenknospen und Knoten). Höchstens 5 Monster.
+  - **Entscheidung nach der Pilzhöhle:** Nach dem Sieg über den Vorboten zwei Knöpfe: „Baum fällen, großen Splitter
+    mitnehmen“ oder „Splitter herausschneiden, Baum retten“. Das Ergebnis steht im Log und in der Auswertung.
+  - Neu: **automatische Testkämpfe** (Ordner `tests`): 75 Kämpfe, alle Klassen, alle Gegner, der Computer spielt.
+    Alle laufen ohne Fehler durch, Zähmen, Polarstern und die Entscheidung kommen darin vor.
 
 ## Fertig in Runde 1
 
@@ -52,6 +65,14 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 ## Was du testen kannst
 
 Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spiel startet jetzt mit einem Menü.
+
+**Neu in Runde 2 – bitte testen** (Kampf-Sandbox)
+1. Bogenschütze ins Team nehmen und „Schnellfeuer“ antippen: Drei Pfeile fliegen auf zufällige Gegner.
+2. Sternensängerin (heißt jetzt Vega) nehmen, „Polarstern“ auf einen Helden: Er steht danach weiter vorne in der Zugleiste und hat „Abw+“.
+3. Monster-Zähmer nehmen, einen Gegner unter die Hälfte seines Lebens bringen, dann „Zähmen“. Klappt es, steht das
+   Monster bei „Wechsel“ in der Liste und kämpft für dich.
+4. „Pilzhöhle: nur Bosse“ schaffen: Am Ende kommt die Frage, was mit dem Urbaum geschieht. Beide Knöpfe ausprobieren.
+
 
 **1. Kampf-Sandbox** (Menü → „Kampf-Sandbox“)
 - Wie bisher: bis zu 4 Klassen wählen, Gegner wählen, kämpfen, am Ende die Auswertung ansehen.
@@ -91,7 +112,9 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
   - Ein zerstörtes Knotenpaar kostet die Wurzelmutter 25 % Leben, danach wachsen neue Knoten.
   - Splitterlicht: Der Halter wird vom Vorboten nicht angegriffen, verliert aber jeden Vorboten-Zug mehr Leben (8, 12, 16 …).
     Weiterreichen kostet den Zug.
-  - Zähmen und Monsterkarten der Dungeon-Monster gibt es in der Sandbox noch nicht.
+  - Monsterkarten der Dungeon-Monster gibt es in der Sandbox noch nicht (Zähmen schon).
+  - Entscheidung „Baum retten“: Bekommt die Gruppe den herausgeschnittenen Splitter trotzdem (kleiner?) oder wird er zerstört?
+    Im Moment sagt der Text nur, dass er heraus ist.
 
 - **Kreuzweg-Demo:** Passen die Positionen (Gilde im Nordosten, Bingos Laden im Westen, die sechste,
   zugewachsene Straße nach Südosten)? Soll Ye vor der Gilde stehen oder drinnen?

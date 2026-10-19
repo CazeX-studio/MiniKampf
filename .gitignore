@@ -13,3 +13,6 @@ desktop.ini
 
 # Lokale Testskripte
 /zz_test/
+
+# Ergebnisse der automatischen Testkämpfe
+tests/ergebnis_*.txt

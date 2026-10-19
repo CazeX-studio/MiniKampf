@@ -58,14 +58,14 @@ Alle 11 Startklassen aus `design.md` zum Ausprobieren und Vergleichen.
 | Magier-Tank | Halber Schaden geht auf Mana. Ult Arkane Festung |
 | Mechaniker | Roboter Zahnrad mit eigenem Zug (Bohrer, Schutzmodus), beschützt einen Verbündeten, explodiert beim Tod |
 | Rüstungsschmied | Drei Rüstungen (Nahkampf/Magie/Fernkampf), passende Treffer geben „Gehärtet“ (bis 5) |
-| Bogenschütze | Bogen spannen → ×2,5, hinten öfter kritisch |
+| Bogenschütze | Bogen spannen → ×2,5, hinten öfter kritisch, Schnellfeuer (3 Pfeile auf zufällige Gegner) |
 | Klingentänzerin | Bis 5 Klingen, Schritt + Wirbel + Ausfall = Tanzfolge |
 | Zwielicht-Wandler | Leiste Licht/Schatten, am Rand überladen (×1,6, Rückstoß), Mitte überqueren lädt die Ult |
-| Monster-Zähmer | Moosling, Glutwelpe, Bachotter; eines kämpft mit eigenem Zug, Wechsel per Fähigkeit |
+| Monster-Zähmer | Moosling, Glutwelpe, Bachotter; eines kämpft mit eigenem Zug, Wechsel per Fähigkeit. Zähmen: geschwächte Monster (unter 50 % LP, auch aus der Pilzhöhle) fangen, bis 5 Monster |
 | Ritualist | Heilen kostet Blut, dann Leben |
 | Quartiermeister | Gold und Karren mit Waren (Heiltrank, Manatrank, Bombe, Kraftkraut) |
 | Kunoichi | Element-Siegel kleben und lösen, zwei Siegel = Kombination |
-| Sternensängerin (Vega) | Zwei Sternbilder, Verblassen, Sternenglanz |
+| Sternensängerin (Vega) | Zwei Sternbilder, Verblassen, Sternenglanz, Polarstern (Abwehr+ und früher dran) |
 
 Duette: Treibjagd (Bogenschütze + Zähmer), Blutsiegel (Kunoichi + Ritualist), Nachschub (Mechaniker +
 Quartiermeister), Glühende Klingen (Rüstungsschmied + Klingentänzerin), Zwielicht-Barriere
@@ -75,6 +75,8 @@ Quartiermeister), Glühende Klingen (Rüstungsschmied + Klingentänzerin), Zwiel
 
 Auf dem Auswahl-Bildschirm unter „Gegner“: **Pilzhöhle** (ganzer Dungeon, 4 Wellen) oder
 **Pilzhöhle: nur Bosse** (zum schnellen Testen). Die Regeln stehen im Kampf-Log.
+Nach dem Sieg über den Vorboten entscheidet die Gruppe: Baum fällen und den großen Splitter mitnehmen
+oder den Splitter herausschneiden und den Baum retten.
 
 - **Eigene Monster:** Leuchtmotte (Licht, blendet), Wurzelkriecher (Erde, hält fest),
   Sporenwolf (Pflanze, stärker im Rudel), Glimmerkäfer (Blitz, lädt sich auf und entlädt sich auf alle).

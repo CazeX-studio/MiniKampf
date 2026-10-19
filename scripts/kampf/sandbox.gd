@@ -6,6 +6,8 @@ extends RefCounted
 static var team: Array[String] = []
 static var starter := "glutwelpe"
 static var encounter := "beides"
+## Entscheidung nach der Pilzhöhle: "" (noch keine), "faellen" oder "retten"
+static var pilz_choice := ""
 
 const MAX_TEAM := 4
 
@@ -127,31 +129,44 @@ const MONSTERS := {
 		bench = "Auf der Bank: aktives Monster heilt sich jeden Zug um 5"},
 }
 const MONSTER_ORDER: Array[String] = ["moosling", "glutwelpe", "bachotter"]
+## So viele Monster kann der Zähmer höchstens dabeihaben (3 Start-Monster + 2 gezähmte).
+const MAX_MONSTERS := 5
 
 const ROBOT := {name = "Zahnrad", hp = 130, tempo = 9}
 
 ## Gegner. attacks: der Reihe nach benutzt. kind: melee / ranged / magic, all = trifft alle.
+## tame: zähmbar (Monster-Zähmer), mit dem Angriff, den das Monster dann für die Helden benutzt.
 const ENEMIES := {
 	"glutkobold": {name = "Glutkobold", element = "Feuer", hp = 62, tempo = 13,
-		attacks = [{name = "Glutdolch", base = 13, kind = "melee"}]},
+		attacks = [{name = "Glutdolch", base = 13, kind = "melee"}],
+		tame = {name = "Glutdolch", base = 13, kind = "melee"}},
 	"sumpfschleim": {name = "Sumpfschleim", element = "Wasser", hp = 75, tempo = 8,
-		attacks = [{name = "Schleimschlag", base = 15, kind = "melee"}]},
+		attacks = [{name = "Schleimschlag", base = 15, kind = "melee"}],
+		tame = {name = "Schleimschlag", base = 15, kind = "melee"}},
 	"dornling": {name = "Dornling", element = "Pflanze", hp = 66, tempo = 10,
 		attacks = [{name = "Dornenschuss", base = 12, kind = "ranged"}, {name = "Dornenschuss", base = 12, kind = "ranged"},
-			{name = "Dornenregen", base = 6, kind = "ranged", all = true}]},
+			{name = "Dornenregen", base = 6, kind = "ranged", all = true}],
+		tame = {name = "Dornenschuss", base = 12, kind = "ranged"}},
 	"sturmkobold": {name = "Sturmkobold", element = "Wind", hp = 58, tempo = 14,
-		attacks = [{name = "Windklinge", base = 12, kind = "ranged", back = true}]},
+		attacks = [{name = "Windklinge", base = 12, kind = "ranged", back = true}],
+		tame = {name = "Windklinge", base = 12, kind = "ranged"}},
 	"funkenwicht": {name = "Funkenwicht", element = "Blitz", hp = 70, tempo = 12,
 		attacks = [{name = "Funke", base = 12, kind = "magic"}, {name = "Funke", base = 12, kind = "magic"},
-			{name = "Kettenblitz", base = 7, kind = "magic", all = true}]},
+			{name = "Kettenblitz", base = 7, kind = "magic", all = true}],
+		tame = {name = "Funke", base = 12, kind = "magic"}},
 	"schattenhexe": {name = "Schattenhexe", element = "Schatten", hp = 80, tempo = 11,
-		attacks = [{name = "Schattenpfeil", base = 14, kind = "magic"}, {name = "Dunkler Fluch", base = 6, kind = "magic", all = true}]},
+		attacks = [{name = "Schattenpfeil", base = 14, kind = "magic"}, {name = "Dunkler Fluch", base = 6, kind = "magic", all = true}],
+		tame = {name = "Schattenpfeil", base = 14, kind = "magic"}},
 	"boss": {name = "Steinwächter", element = "Erde", hp = 400, tempo = 9, resist = 0.85, big = true},
 	# Pilzhöhle (Abläufe in pilzhoehle.gd)
-	"leuchtmotte": {name = "Leuchtmotte", element = "Licht", hp = 48, tempo = 14},
-	"wurzelkriecher": {name = "Wurzelkriecher", element = "Erde", hp = 72, tempo = 8},
-	"sporenwolf": {name = "Sporenwolf", element = "Pflanze", hp = 56, tempo = 13},
-	"glimmerkaefer": {name = "Glimmerkäfer", element = "Blitz", hp = 52, tempo = 12},
+	"leuchtmotte": {name = "Leuchtmotte", element = "Licht", hp = 48, tempo = 14,
+		tame = {name = "Blendstaub", base = 9, kind = "magic"}},
+	"wurzelkriecher": {name = "Wurzelkriecher", element = "Erde", hp = 72, tempo = 8,
+		tame = {name = "Umklammern", base = 11, kind = "melee"}},
+	"sporenwolf": {name = "Sporenwolf", element = "Pflanze", hp = 56, tempo = 13,
+		tame = {name = "Rudelbiss", base = 11, kind = "melee"}},
+	"glimmerkaefer": {name = "Glimmerkäfer", element = "Blitz", hp = 52, tempo = 12,
+		tame = {name = "Funkenbiss", base = 10, kind = "magic"}},
 	"sporenkoenigin": {name = "Sporenkönigin", element = "Pflanze", hp = 260, tempo = 9, big = true},
 	"sporenling": {name = "Sporenknospe", element = "Pflanze", hp = 42, tempo = 10},
 	"wurzelmutter": {name = "Wurzelmutter", element = "Pflanze", hp = 300, tempo = 8, big = true},

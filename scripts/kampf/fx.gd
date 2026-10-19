@@ -57,13 +57,17 @@ static func spawn(parent: Node, p_kind: Kind, pos: Vector2, p_color: Color, p_ra
 	return fx
 
 
+## Eigener Zufall nur für die Optik, damit Effekte den Zufall der Spielregeln nicht verändern.
+static var _rng := RandomNumberGenerator.new()
+
+
 func _ready() -> void:
 	material = Fx.add_material()
 	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	if kind == Kind.SPARKS:
 		for i in 14:
-			var angle := randf() * TAU
-			_sparks.append({dir = Vector2.RIGHT.rotated(angle), speed = randf_range(0.5, 1.0)})
+			var angle := _rng.randf() * TAU
+			_sparks.append({dir = Vector2.RIGHT.rotated(angle), speed = _rng.randf_range(0.5, 1.0)})
 
 
 func _process(delta: float) -> void:

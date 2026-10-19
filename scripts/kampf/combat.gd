@@ -11,6 +11,7 @@ extends Control
 ## Die Fähigkeiten der Klassen stehen in skills.gd, die Werte in sandbox.gd.
 
 signal _turn_done
+signal _choice_made(id: String)
 
 const SCREEN := Vector2(1280, 720)
 ## Kampfbildschirm wie Final Fantasy 6: Gegner links, Helden rechts in zwei Reihen.
@@ -166,6 +167,23 @@ func add_companion(f: Fighter, feet: Vector2) -> void:
 	f.on_bench = false
 	_add_view(f, feet)
 	f.next_time = now + f.turn_delay() * randf_range(0.3, 1.0)
+
+
+## Zähmen: Das Monster verlässt die Gegner und wartet beim Zähmer auf der Bank (halbes Leben).
+func tame(tamer: Fighter, e: Fighter) -> void:
+	enemies.erase(e)
+	if _views.has(e):
+		_views[e].queue_free()
+		_views.erase(e)
+	var data: Dictionary = Sandbox.ENEMIES[e.klass]
+	var m := Fighter.new(data.name, e.klass, "Gezähmt", false, data.hp, data.tempo, Elements.color(data.element))
+	m.element = data.element
+	m.owner = tamer
+	m.on_bench = true
+	m.hp = maxi(1, data.hp / 2)
+	tamer.monsters.append(m)
+	add_log("[color=#8fd36b][b]%s zähmt %s![/b][/color] Es wartet auf der Bank (Wechsel)." % [tamer.display_name, m.display_name])
+	refresh()
 
 
 func remove_companion(f: Fighter) -> void:
@@ -389,6 +407,8 @@ func _check_end() -> bool:
 	_turn_label.text = "Sieg!" if won else "Niederlage …"
 	if won:
 		add_log("\n[color=green][b]Alle Gegner sind besiegt![/b][/color]")
+		if dungeon != null:
+			await dungeon.final_choice()
 	else:
 		add_log("\n[color=red][b]Alle Helden sind gefallen.[/b][/color]")
 	await wait(1.0)
@@ -441,6 +461,20 @@ func _show_actions(f: Fighter) -> void:
 			button.add_theme_color_override("font_color", Color("9fe8ff"))
 		button.pressed.connect(_on_ability_pressed.bind(f, ab))
 		_grid.add_child(button)
+
+
+## Eine Entscheidung mit mehreren Möglichkeiten (z. B. nach dem Dungeon). Gibt die Kennung zurück.
+func ask_choice(title: String, options: Array[Dictionary]) -> String:
+	_clear_actions()
+	_turn_label.text = title
+	for option in options:
+		var button := _action_button("%s\n%s" % [option.name, option.info])
+		button.custom_minimum_size.x = 404
+		button.pressed.connect(func() -> void: _choice_made.emit(option.id))
+		_grid.add_child(button)
+	var id: String = await _choice_made
+	_clear_actions()
+	return id
 
 
 func _action_button(text: String) -> Button:
@@ -1331,6 +1365,8 @@ func _show_end_screen(won: bool) -> void:
 
 	var sub := Label.new()
 	sub.text = "Kampfauswertung · %d Züge · Welle %d von %d · %s" % [_turns, _wave + 1, _waves.size(), Sandbox.ENCOUNTERS[Sandbox.encounter].name]
+	if won and dungeon != null:
+		sub.text += " · Urbaum gefällt" if Sandbox.pilz_choice == "faellen" else " · Urbaum gerettet"
 	sub.add_theme_font_size_override("font_size", 18)
 	sub.add_theme_color_override("font_color", Color("f2c14e"))
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
