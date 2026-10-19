@@ -9,19 +9,21 @@ static var kampf_id := ""
 static var setup := {}
 ## Ergebnis für die Welt: {kampf, gewonnen}. Leer = noch nichts zu melden.
 static var result := {}
+## Heiltränke, die in früheren Versuchen desselben Kampfes („Nochmal versuchen“) getrunken wurden
+static var used_before := 0
 
 
 static func active() -> bool:
 	return kampf_id != ""
 
 
-## Bereitet einen Kampf aus data/kaempfe.json vor. Der Spieler ist ein Novize seiner Stufe,
+## Bereitet einen Kampf aus data/kaempfe.json vor. Der Spieler ist ein Novize seiner Stufe mit seinen Heiltränken,
 ## Begleiter (Novizen-Mitstreiter) steuert der Computer.
-static func prepare(id: String, level: int) -> bool:
+static func prepare(id: String, level: int, potions := 0) -> bool:
 	var data: Dictionary = GameData.get_file("kaempfe").get(id, {})
 	if data.is_empty():
 		return false
-	var player := {klasse = "novize", name = "Du", aussehen = "novize", stufe = level}
+	var player := {klasse = "novize", name = "Du", aussehen = "novize", stufe = level, traenke = potions}
 	# Parieren lernt man erst in Lektion 3: davor hat der Novize keine Reaktion
 	if not data.get("reaktion", true):
 		player["reaktion"] = ""
@@ -30,6 +32,7 @@ static func prepare(id: String, level: int) -> bool:
 		heroes.append({klasse = "novize", name = b.name, aussehen = b.get("aussehen", "novize"), stufe = level, computer = true})
 	kampf_id = id
 	result = {}
+	used_before = 0
 	setup = {
 		name = data.get("name", id),
 		ansage = data.get("ansage", ""),
@@ -44,7 +47,15 @@ static func prepare(id: String, level: int) -> bool:
 
 
 ## Der Kampf ist vorbei: Ergebnis für die Welt merken.
-static func finish(won: bool) -> void:
-	result = {kampf = kampf_id, gewonnen = won}
+static func finish(won: bool, potions_used := 0) -> void:
+	result = {kampf = kampf_id, gewonnen = won, traenke_benutzt = used_before + potions_used}
+	used_before = 0
 	kampf_id = ""
 	setup = {}
+
+
+## „Nochmal versuchen“: getrunkene Tränke sind weg, der neue Versuch beginnt mit dem Rest.
+static func retry(potions_used: int) -> void:
+	used_before += potions_used
+	if not setup.is_empty():
+		setup.helden[0]["traenke"] = maxi(0, int(setup.helden[0].get("traenke", 0)) - potions_used)

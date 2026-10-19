@@ -212,6 +212,8 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 				{id = "kraftschlag", name = "Kraftschlag", info = "20 Nahkampf · 10 Mana", target = "enemy", mana = 10, cd = 2},
 				{id = "erste_hilfe", name = "Erste Hilfe", info = "Heilt 22 · 12 Mana", target = "ally", mana = 12, cd = 2},
 			]
+			if f.wares.has("heiltrank"):
+				list.append({id = "trank", name = "Heiltrank (%d)" % f.wares.heiltrank, info = "Heilt 35 · aus deiner Tasche", target = "ally"})
 		"singer":
 			var lullaby_info := "Heilt 24, +1 Schutz-Sternbild · 8 Mana"
 			if f.res_def >= Fighter.MAX_RES:
@@ -314,6 +316,9 @@ func blocked_reason(f: Fighter, ab: Dictionary) -> String:
 		"release":
 			if valid_targets(f, ab).is_empty():
 				return "Keine Siegel"
+		"trank":
+			if f.wares.get("heiltrank", 0) <= 0:
+				return "Keine Tränke mehr"
 		"tame":
 			if f.monsters.size() >= Sandbox.MAX_MONSTERS:
 				return "Kein Platz (%d Monster)" % Sandbox.MAX_MONSTERS
@@ -1277,3 +1282,7 @@ func _novize(f: Fighter, id: String, target: Fighter) -> void:
 			c.hit(f, target, 20, "melee")
 		"erste_hilfe":
 			c.heal(f, target, 22)
+		"trank":
+			f.wares.heiltrank -= 1
+			c.add_log("%s trinkt einen Heiltrank." % f.display_name if target == f else "%s reicht %s einen Heiltrank." % [f.display_name, target.display_name])
+			c.heal(f, target, 35)

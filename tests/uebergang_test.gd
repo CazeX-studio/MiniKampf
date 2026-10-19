@@ -16,6 +16,7 @@ func _run() -> void:
 	p.progress.flags = {angekommen = true, gilde_angemeldet = true, ausbildung_morgen = true}
 	p.progress.xp = 100
 	p.progress.level = 2
+	p.progress.items = {heiltrank = 2}
 	SaveGame.save(p)
 
 	change_scene_to_file("res://scenes/kreuzweg.tscn")
@@ -33,6 +34,9 @@ func _run() -> void:
 	var combat: Combat = current_scene
 	_check(combat.state.setup.get("name", "") == "Lektion 1: Die Tempo-Leiste", "Lektion 1 läuft")
 	_check(combat.state.heroes[0].display_name == "Du" and combat.state.heroes[0].max_hp == 100, "Novize mit Stufe 2 (100 Leben)")
+	_check(combat.state.heroes[0].wares.get("heiltrank", -1) == 2, "Beide Heiltränke sind im Kampf dabei")
+	# Ein Trank wird getrunken
+	combat.state.heroes[0].wares.heiltrank = 1
 	combat._back_to_world(true)
 	await _frames(5)
 	town = current_scene
@@ -40,6 +44,7 @@ func _run() -> void:
 	local = town.local_player()
 	_check(local.progress.flags.has("kampf_gewonnen:lektion_tempo"), "Lektion 1 zählt als bestanden")
 	_check(local.progress.xp == 175, "75 Erfahrung für den ersten Sieg")
+	_check(local.progress.item_count("heiltrank") == 1, "Getrunkener Heiltrank fehlt in der Tasche")
 	_check(local.cell == Vector2i(12, 18) or (Vector2(local.cell) - Vector2(12, 19)).length() < 2.0, "Spieler steht noch bei Ye")
 	SaveGame.delete()
 	print("Übergang Stadt/Kampf: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))

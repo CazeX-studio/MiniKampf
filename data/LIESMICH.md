@@ -12,6 +12,7 @@ Nach jeder Zeile außer der letzten in einer Gruppe kommt ein Komma.
 | `gegenstaende.json` | Gegenstände: Name, Beschreibung, Preis |
 | `stufen.json` | Erfahrung, die für Stufe 1 bis 10 nötig ist |
 | `kaempfe.json` | Kämpfe aus der Stadt (Lektionen, Gruppenkampf): Gegner, erlaubte Fähigkeiten, Erklärungen, Erfahrung |
+| `laeden.json` | Läden: welche Waren, wie viel der Händler beim Ankauf zahlt |
 | `texte.json` | Kurze Meldungen im Spiel („Neuer Auftrag“, „Stufe erreicht“ …) |
 
 ## Dialoge (`dialoge.json`)
@@ -58,3 +59,10 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
 - **Aktion** `{"kampf": "lektion_tempo"}` im Dialog startet den Kampf.
 - **Ziel-Art** `{"art": "kampf", "kampf": "lektion_tempo", "bei": "ye_tor", "text": "…"}` ist erfüllt, sobald der Kampf gewonnen ist.
 - **NPCs** können `"wenn"` haben: Sie sind nur da, wenn die Bedingung stimmt (so steht Ye erst in der Gilde, später am Tor).
+
+## Läden und NPCs, die einen ansprechen (seit Schritt 4)
+
+- **Aktion** `{"laden": "bingo"}` im Dialog öffnet den Laden. Waren und Ankauf-Anteil stehen in `laeden.json`,
+  die Preise in `gegenstaende.json` (Preis 0 = kauft der Händler nicht an).
+- **NPC-Feld** `"anspringen": {"radius": 3}`: Der NPC spricht dich einmal von selbst an, sobald du so nah bist (Marv).
+- Im Kampf: `"trank"` in `erlaubt` = der Novize darf Heiltränke aus seiner Tasche trinken.

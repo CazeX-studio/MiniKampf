@@ -35,6 +35,9 @@ Abenteurergilde, Bingos Laden, sechs Straßen (die sechste nach Südosten ist zu
 - **Grundausbildung (Stufe 2–5):** Ye wartet danach am Stadttor. Vier Lektionen auf dem Kampfbildschirm (Tempo-Leiste,
   Fähigkeiten, Parieren gegen Ye selbst, zwei Reihen) mit Erklär-Fenstern, danach der erste Gruppenkampf mit den
   Novizen Ida, Bo und Tom (der Computer steuert sie). Nach jedem Kampf geht es zurück in die Stadt.
+- **Marv und Bingo:** Nach der Grundausbildung spricht Marv dich von sich aus an (Kreuzweg-Karten!). Bei Handelsherr
+  Bingo kannst du Heiltränke kaufen und Dinge verkaufen; die Sternentafel kostet 5000 Gold. Heiltränke aus der Tasche
+  kann der Novize ab Lektion 4 im Kampf trinken.
 - **Testgefährte:** Ein zweiter Spieler läuft zur Probe herum.
 
 **Für später mehrere Spieler gebaut:** Die Spiellogik (`scripts/welt/world_state.gd`) kennt keine Grafik.
@@ -123,7 +126,7 @@ Felsregen → **Kettenzug** (reißt jemanden von hinten nach vorne). Unter 30 % 
 - `scripts/kampf/battle_state.gd` – Kampf-Regeln ohne Grafik: Zugreihenfolge, Schaden, Gegner, Wellen. Nimmt Befehle an und meldet Ereignisse
 - `scenes/kampf.tscn` + `scripts/kampf/combat.gd` – Kampf-Anzeige: spielt die Ereignisse ab, Knöpfe, Reaktions-Ring, Auswertung
 - `tests/` – automatische Testkämpfe (`vergleich.gd`), Lektionen (`lektionen_test.gd`), Element-Test, Welt-Test (`welt_test.gd`),
-  Stadt↔Kampf (`uebergang_test.gd`), Vorführ-Szenen (`anzeige_auto.tscn`, `welt_auto.tscn`, `lektion_auto.tscn`)
+  Stadt↔Kampf (`uebergang_test.gd`), Vorführ-Szenen (`anzeige_auto.tscn`, `welt_auto.tscn`, `lektion_auto.tscn`, `marv_auto.tscn`)
 - `scripts/kampf/battle_request.gd` – Kampf aus der Stadt (welcher Kampf, Ergebnis), `kampf_ki.gd` – Computer-Spieler (Mitstreiter, Tests)
 - `scripts/kampf/skills.gd` – Fähigkeiten aller Klassen, Begleiter und Duette
 - `scripts/kampf/sandbox.gd` – Daten: Klassen, Duette, Monster, Gegner, Kämpfe

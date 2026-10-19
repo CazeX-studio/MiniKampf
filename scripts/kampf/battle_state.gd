@@ -245,6 +245,8 @@ func _create_heroes() -> void:
 		heroes.append(h)
 		if setup.has("helden"):
 			team.append(id)
+		if spec.has("traenke"):
+			h.wares = {heiltrank = int(spec.traenke)}
 		if spec.get("computer", false):
 			computer[h] = true
 		skills.setup_hero(h)

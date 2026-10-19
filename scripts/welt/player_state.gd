@@ -22,6 +22,8 @@ var facing := 1
 var steer := Vector2.ZERO
 ## Laufendes Gespräch: {id = Dialog, node = Knoten} oder leer
 var dialog := {}
+## Geöffneter Laden (Kennung aus data/laeden.json) oder ""
+var shop := ""
 ## Gold, Tasche, Erfahrung, Aufträge, Gemerktes
 var progress := Progress.new()
 

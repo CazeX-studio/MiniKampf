@@ -1,0 +1,8 @@
+{
+	"hinweis": "Läden: welche Waren es gibt (Preise in gegenstaende.json) und welchen Anteil des Preises der Laden beim Ankauf zahlt.",
+	"bingo": {
+		"name": "Bingos Laden",
+		"waren": ["heiltrank", "sternentafel"],
+		"ankauf": 0.5
+	}
+}

@@ -53,6 +53,10 @@ var _panel: PanelContainer
 var _panel_title: Label
 var _panel_text: RichTextLabel
 var _panel_mode := ""
+var _shop_panel: PanelContainer
+var _shop_box: VBoxContainer
+## Was im Ladenfenster gerade angezeigt wird (zum Neuaufbau bei Änderungen)
+var _shop_shown := ""
 ## Knöpfe, auf denen ein Antippen nicht als Laufen zählt
 var _buttons: Array[Control] = []
 
@@ -109,7 +113,8 @@ func _ready() -> void:
 	_camera.reset_smoothing()
 	# Zurück aus einem Kampf: Ergebnis verbuchen (Erfahrung, Aufträge)
 	if not BattleRequest.result.is_empty():
-		state.apply_command(LOCAL_ID, {type = "kampf_ergebnis", kampf = BattleRequest.result.kampf, gewonnen = BattleRequest.result.gewonnen})
+		state.apply_command(LOCAL_ID, {type = "kampf_ergebnis", kampf = BattleRequest.result.kampf,
+				gewonnen = BattleRequest.result.gewonnen, traenke_benutzt = BattleRequest.result.get("traenke_benutzt", 0)})
 		BattleRequest.result = {}
 	# Beim ersten Betreten der Stadt kommt die Einleitung
 	state.apply_command(LOCAL_ID, {type = "start"})
@@ -127,6 +132,7 @@ func _process(delta: float) -> void:
 	state.tick(delta)
 	_sync()
 	_update_dialog()
+	_update_shop()
 	_marker_time = maxf(_marker_time - delta, 0.0)
 	_ground.queue_redraw()
 
@@ -213,6 +219,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_toggle_panel("auftraege")
 		elif key == KEY_I:
 			_toggle_panel("tasche")
+		elif key == KEY_ESCAPE and local_player().shop != "":
+			state.apply_command(LOCAL_ID, {type = "laden_zu"})
 		elif key == KEY_ESCAPE and _panel.visible:
 			_panel.visible = false
 		else:
@@ -547,6 +555,17 @@ func _build_ui() -> void:
 	close.pressed.connect(func() -> void: _panel.visible = false)
 	panel_box.add_child(close)
 
+	# Ladenfenster (Kaufen und Verkaufen)
+	_shop_panel = _framed_panel()
+	_shop_panel.position = Vector2(290, 130)
+	_shop_panel.size = Vector2(700, 0)
+	_shop_panel.visible = false
+	root.add_child(_shop_panel)
+	_buttons.append(_shop_panel)
+	_shop_box = VBoxContainer.new()
+	_shop_box.add_theme_constant_override("separation", 6)
+	_shop_panel.add_child(_shop_box)
+
 	# Kurze Meldungen oben in der Mitte („+30 Gold“, „Neuer Auftrag …“), über allen Fenstern
 	_notices = VBoxContainer.new()
 	_notices.position = Vector2(390, 80)
@@ -636,6 +655,71 @@ func _update_dialog() -> void:
 	_dialog_next.visible = answers.is_empty()
 
 
+## Ladenfenster: wird neu aufgebaut, sobald sich Laden, Gold oder Tasche ändern.
+func _update_shop() -> void:
+	var p := local_player()
+	var key := "" if p.shop == "" else "%s|%d|%s" % [p.shop, p.progress.gold, str(p.progress.items)]
+	if key == _shop_shown:
+		return
+	_shop_shown = key
+	_shop_panel.visible = p.shop != ""
+	for child in _shop_box.get_children():
+		child.queue_free()
+	if p.shop == "":
+		return
+	var shop: Dictionary = GameData.get_file("laeden").get(p.shop, {})
+	var title := _label("%s  ·  %d Gold" % [shop.get("name", p.shop), p.progress.gold], 22, Color("f2c14e"))
+	_shop_box.add_child(title)
+	_shop_box.add_child(_label(GameData.text("laden_kaufen"), 17, Color("9fe8ff")))
+	for ware in state.shop_wares(p.shop):
+		var item := GameData.item(ware.gegenstand)
+		var row := _shop_row("%s – %s" % [item.get("name", ware.gegenstand), item.get("beschreibung", "")],
+				"%s · %d Gold" % [GameData.text("laden_kaufen"), ware.preis])
+		row.button.pressed.connect(func() -> void: state.apply_command(LOCAL_ID, {type = "kaufen", gegenstand = ware.gegenstand}))
+		if p.progress.gold < ware.preis:
+			row.button.modulate = Color(1, 1, 1, 0.5)
+		_shop_box.add_child(row.box)
+	_shop_box.add_child(_label(GameData.text("laden_verkaufen"), 17, Color("9fe8ff")))
+	var any := false
+	for item_id: String in p.progress.items:
+		var price := state.sell_price(p.shop, item_id)
+		if price <= 0:
+			continue
+		any = true
+		var row := _shop_row("%d × %s" % [p.progress.items[item_id], GameData.item_name(item_id)],
+				"%s · %d Gold" % [GameData.text("laden_verkaufen"), price])
+		row.button.pressed.connect(func() -> void: state.apply_command(LOCAL_ID, {type = "verkaufen", gegenstand = item_id}))
+		_shop_box.add_child(row.box)
+	if not any:
+		_shop_box.add_child(_label(GameData.text("laden_nichts_verkaufen"), 15, Color(1, 1, 1, 0.6)))
+	var close := Button.new()
+	close.text = GameData.text("schliessen")
+	close.custom_minimum_size = Vector2(140, 40)
+	close.size_flags_horizontal = Control.SIZE_SHRINK_END
+	close.focus_mode = Control.FOCUS_NONE
+	close.pressed.connect(func() -> void: state.apply_command(LOCAL_ID, {type = "laden_zu"}))
+	_shop_box.add_child(close)
+	_shop_panel.reset_size()
+
+
+## Eine Zeile im Laden: Text links, Knopf rechts. Gibt {box, button} zurück.
+func _shop_row(text: String, button_text: String) -> Dictionary:
+	var box := HBoxContainer.new()
+	var label := Label.new()
+	label.text = text
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.custom_minimum_size = Vector2(470, 0)
+	label.add_theme_font_size_override("font_size", 15)
+	box.add_child(label)
+	var button := Button.new()
+	button.text = button_text
+	button.custom_minimum_size = Vector2(190, 40)
+	button.add_theme_font_size_override("font_size", 15)
+	button.focus_mode = Control.FOCUS_NONE
+	box.add_child(button)
+	return {box = box, button = button}
+
+
 func _update_hud() -> void:
 	var progress := local_player().progress
 	var xp_span := progress.xp_range()
@@ -708,6 +792,7 @@ func _fill_panel() -> void:
 func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 	if player_id != LOCAL_ID:
 		return
-	if BattleRequest.prepare(kampf_id, local_player().progress.level):
+	var progress := local_player().progress
+	if BattleRequest.prepare(kampf_id, progress.level, progress.item_count("heiltrank")):
 		SaveGame.save(local_player())
 		get_tree().change_scene_to_file.call_deferred("res://scenes/kampf.tscn")

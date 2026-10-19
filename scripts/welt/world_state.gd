@@ -8,9 +8,10 @@ extends RefCounted
 ##   {type = "steer", dir = Vector2}     frei laufen in eine Bildschirm-Richtung (Tasten, Steuerknopf), ZERO = stehen bleiben
 ##   {type = "interact"}                 das Nächste direkt nebenan benutzen (E, Leertaste, Aktions-Knopf)
 ##   {type = "start"}                    Stadt betreten (zeigt beim ersten Mal die Einleitung)
-##   {type = "kampf_ergebnis", kampf = "…", gewonnen = true}  Ergebnis eines Kampfes (vom Kampfbildschirm)
+##   {type = "kampf_ergebnis", kampf = "…", gewonnen = true, traenke_benutzt = 1}  Ergebnis eines Kampfes (vom Kampfbildschirm)
 ##   {type = "dialog_next"}              im Gespräch weiter (wenn es keine Antworten gibt)
 ##   {type = "dialog_choose", index = 0} im Gespräch eine Antwort wählen
+##   {type = "kaufen", gegenstand = "…"} / {type = "verkaufen", gegenstand = "…"} / {type = "laden_zu"}  im geöffneten Laden
 ## So kann später ein Server dieselben Befehle von vielen Spielern annehmen;
 ## die Anzeige (kreuzweg.gd) liest nur den Zustand und schickt Befehle.
 ## NPCs, Sammelpunkte, Dialoge und Aufträge kommen aus den Datendateien in res://data.
@@ -55,7 +56,7 @@ func _init() -> void:
 		var d: Dictionary = npc_data[id]
 		var cell := Vector2i(int(d.feld[0]), int(d.feld[1]))
 		npcs[id] = {name = d.name, cell = cell, look = d.aussehen, tint = Color(d.get("farbe", "ffffff")), dialog = d.get("dialog", id),
-				cond = d.get("wenn", {})}
+				cond = d.get("wenn", {}), approach = d.get("anspringen", {})}
 		blocked[cell] = true
 	for d: Dictionary in town.get("sammelpunkte", []):
 		pickups.append({item = d.gegenstand, cell = Vector2i(int(d.feld[0]), int(d.feld[1]))})
@@ -166,6 +167,7 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 	match cmd.get("type", ""):
 		"move":
 			var target: Vector2i = cmd.cell
+			p.shop = ""
 			if is_walkable(target) and not p.in_dialog():
 				p.use_target = ""
 				_walk_to(p, target)
@@ -177,7 +179,8 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			var dir: Vector2 = cmd.dir
 			p.steer = screen_dir_to_cells(dir.limit_length(1.0)) if not p.in_dialog() else Vector2.ZERO
 			if p.steer != Vector2.ZERO:
-				# Freies Laufen ersetzt einen angeklickten Weg
+				# Freies Laufen ersetzt einen angeklickten Weg und schließt den Laden
+				p.shop = ""
 				p.path.clear()
 				p.use_target = ""
 		"interact":
@@ -194,7 +197,17 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			if start.has("dialog") and (flag == "" or not p.progress.flags.has(flag)):
 				start_dialog(p, start.dialog)
 		"kampf_ergebnis":
+			# Im Kampf getrunkene Heiltränke sind weg (auch bei einer Niederlage)
+			var used := mini(int(cmd.get("traenke_benutzt", 0)), p.progress.item_count("heiltrank"))
+			if used > 0:
+				_give_item(p, "heiltrank", -used)
 			_battle_result(p, str(cmd.get("kampf", "")), bool(cmd.get("gewonnen", false)))
+		"kaufen":
+			_buy(p, str(cmd.get("gegenstand", "")))
+		"verkaufen":
+			_sell(p, str(cmd.get("gegenstand", "")))
+		"laden_zu":
+			p.shop = ""
 		"dialog_next":
 			_dialog_next(p)
 		"dialog_choose":
@@ -325,6 +338,7 @@ func tick(delta: float) -> void:
 			else:
 				p.pos += to_next.normalized() * step
 				step = 0.0
+		_check_approach(p)
 		if not p.is_moving() and p.use_target != "":
 			var target := p.use_target
 			p.use_target = ""
@@ -451,6 +465,8 @@ func run_actions(p: PlayerState, actions: Array) -> void:
 			_give_item(p, action.gegenstand, int(action.get("anzahl", 1)))
 		if action.has("merken"):
 			p.progress.flags[action.merken] = true
+		if action.has("laden"):
+			p.shop = action.laden
 		if action.has("kampf"):
 			battle_requested.emit(p.id, action.kampf)
 	_update_quests(p)
@@ -608,6 +624,68 @@ func _give_item(p: PlayerState, item_id: String, count: int) -> void:
 		_say(p, GameData.text("gegenstand", [count, GameData.item_name(item_id)]))
 	else:
 		_say(p, GameData.text("gegenstand_weg", [-count, GameData.item_name(item_id)]))
+
+
+# --- NPCs, die einen ansprechen ------------------------------------------------
+
+## Manche NPCs (z. B. Marv) sprechen dich von sich aus an, sobald du nah genug bist – einmal.
+func _check_approach(p: PlayerState) -> void:
+	if p.in_dialog() or p.shop != "":
+		return
+	for id: String in npcs:
+		var approach: Dictionary = npcs[id].approach
+		if approach.is_empty() or p.progress.flags.has("angesprochen:" + id) or not npc_visible(p, id):
+			continue
+		if (Vector2(npcs[id].cell) - p.pos).length() <= float(approach.get("radius", 3)):
+			p.progress.flags["angesprochen:" + id] = true
+			p.use_target = ""
+			start_dialog(p, npcs[id].dialog)
+			return
+
+
+# --- Laden ----------------------------------------------------------------------
+
+## Waren eines Ladens: [{gegenstand, preis}] (Preise aus data/gegenstaende.json).
+func shop_wares(shop_id: String) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	for item_id: String in GameData.get_file("laeden").get(shop_id, {}).get("waren", []):
+		result.append({gegenstand = item_id, preis = int(GameData.item(item_id).get("preis", 0))})
+	return result
+
+
+## Was der Laden für einen Gegenstand zahlt (0 = kauft er nicht an).
+func sell_price(shop_id: String, item_id: String) -> int:
+	var factor: float = GameData.get_file("laeden").get(shop_id, {}).get("ankauf", 0.5)
+	return int(floor(int(GameData.item(item_id).get("preis", 0)) * factor))
+
+
+func _buy(p: PlayerState, item_id: String) -> void:
+	if p.shop == "":
+		return
+	for ware in shop_wares(p.shop):
+		if ware.gegenstand != item_id:
+			continue
+		if p.progress.gold < ware.preis:
+			_say(p, GameData.text("zu_wenig_gold", [GameData.item_name(item_id), ware.preis]))
+			return
+		p.progress.gold -= ware.preis
+		_say(p, GameData.text("gold_weg", [ware.preis]))
+		_give_item(p, item_id, 1)
+		_update_quests(p)
+		progress_changed.emit(p.id)
+		return
+
+
+func _sell(p: PlayerState, item_id: String) -> void:
+	if p.shop == "" or p.progress.item_count(item_id) <= 0:
+		return
+	var price := sell_price(p.shop, item_id)
+	if price <= 0:
+		return
+	_give_item(p, item_id, -1)
+	_give_gold(p, price)
+	_update_quests(p)
+	progress_changed.emit(p.id)
 
 
 ## Ergebnis eines Kampfes: Beim ersten Sieg gibt es die Erfahrung aus data/kaempfe.json, Aufträge zählen mit.

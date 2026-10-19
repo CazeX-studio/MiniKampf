@@ -53,5 +53,14 @@
 		],
 		"abgeben_bei": "ye_tor",
 		"belohnung": {"gold": 30, "erfahrung": 100, "gegenstaende": {"heiltrank": 2}}
+	},
+	"marvs_traum": {
+		"titel": "Marvs großer Traum",
+		"beschreibung": "Marv will unbedingt Kreuzweg-Karten mit dir spielen. Dafür braucht man eine Sternentafel – und die gibt es nur bei Handelsherr Bingo.",
+		"ziele": [
+			{"art": "gemerkt", "merken": "sternentafel_gesehen", "bei": "bingo", "text": "Bei Bingo nach der Sternentafel fragen"}
+		],
+		"abgeben_bei": "marv",
+		"belohnung": {"erfahrung": 50}
 	}
 }

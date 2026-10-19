@@ -24,5 +24,11 @@
 	"verstanden": "Verstanden",
 	"zurueck_kreuzweg": "Zurück nach Kreuzweg",
 	"nochmal": "Nochmal versuchen",
-	"aufgeben": "Aufgeben"
+	"aufgeben": "Aufgeben",
+	"zu_wenig_gold": "Zu wenig Gold: %s kostet %d Gold.",
+	"gold_weg": "−%d Gold",
+	"laden_kaufen": "Kaufen",
+	"laden_verkaufen": "Verkaufen",
+	"laden_nichts_verkaufen": "Nichts zum Verkaufen.",
+	"schliessen": "Schließen"
 }

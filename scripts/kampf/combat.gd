@@ -95,8 +95,17 @@ func _battle_name() -> String:
 
 ## Zurück in die Stadt (Kampf aus der Kreuzweg-Demo).
 func _back_to_world(won: bool) -> void:
-	BattleRequest.finish(won)
+	# Verbrauchte Heiltränke fehlen danach in der Tasche
+	BattleRequest.finish(won, _potions_used())
 	get_tree().change_scene_to_file("res://scenes/kreuzweg.tscn")
+
+
+## Wie viele Heiltränke der Spieler in diesem Kampf getrunken hat.
+func _potions_used() -> int:
+	var player := state.heroes[0]
+	if not player.wares.has("heiltrank"):
+		return 0
+	return int(state.setup.helden[0].get("traenke", 0)) - int(player.wares.heiltrank)
 
 
 ## Erklärung zur Reaktion zeigen, BEVOR der erste Gegner-Angriff auf den Spieler losgeht
@@ -1057,7 +1066,9 @@ func _world_buttons(shade: Control, won: bool) -> void:
 		again.add_theme_font_size_override("font_size", 22)
 		again.size = Vector2(330, 72)
 		again.position = Vector2(290, 560)
-		again.pressed.connect(func() -> void: get_tree().reload_current_scene())
+		again.pressed.connect(func() -> void:
+			BattleRequest.retry(_potions_used())
+			get_tree().reload_current_scene())
 		shade.add_child(again)
 
 

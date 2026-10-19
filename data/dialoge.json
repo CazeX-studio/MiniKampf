@@ -127,5 +127,52 @@
 			"ende": {"wer": "Ye", "text": "Deine Grundausbildung ist vorbei. Ruh dich aus. In der Stadt ist bald einiges los."},
 			"danach": {"wer": "Ye", "text": "Willst du nochmal üben? Komm später wieder. Schild hoch, Schild runter."}
 		}
+	},
+	"marv": {
+		"hinweis": "PLATZHALTER-TEXTE: Marv (Running Gag). Marco schreibt die Dialoge der Hauptfiguren noch.",
+		"einstieg": [
+			{"wenn": {"auftrag": "marvs_traum", "stand": "neu"}, "knoten": "hallo"},
+			{"wenn": {"auftrag": "marvs_traum", "stand": "aktiv"}, "knoten": "wartet"},
+			{"wenn": {"auftrag": "marvs_traum", "stand": "fertig"}, "knoten": "abgeben"},
+			{"knoten": "danach"}
+		],
+		"knoten": {
+			"hallo": {"wer": "Marv", "text": "He! Du! Ja, DU! Du bist doch der Novize, der gerade die Kobolde verkloppt hat?", "antworten": [
+				{"text": "Äh … ja?", "weiter": "hallo2"},
+				{"text": "Wer will das wissen?", "weiter": "hallo2"}
+			]},
+			"hallo2": {"wer": "Marv", "text": "Ich bin Marv! Sag mal, hast du schon von Kreuzweg-Karten gehört? Das neue Spiel! Alle reden davon! Also ich. Ich rede davon.", "antworten": [
+				{"text": "Nie gehört. Wie geht das?", "weiter": "regeln"},
+				{"text": "Ich hab gerade keine Zeit.", "weiter": "keine_zeit"}
+			]},
+			"regeln": {"wer": "Marv", "text": "Neun Felder, jeder legt Monsterkarten. Ist deine Zahl höher als meine, gehört die Karte dir! Spielen wir? Bitte?", "weiter": "tafel"},
+			"keine_zeit": {"wer": "Marv", "text": "Ach was, für Kreuzweg-Karten hat man IMMER Zeit! Hör zu …", "weiter": "regeln"},
+			"tafel": {"wer": "Marv", "text": "Nur … man braucht eine Sternentafel dafür. Bingo verkauft sie, drüben vor seinem Laden. Schau sie dir an, dann spielen wir!", "aktionen": [{"auftrag_starten": "marvs_traum"}]},
+			"wartet": {"wer": "Marv", "text": "Warst du schon bei Bingo? Die Sternentafel! Neun Felder! Sie LEUCHTET!"},
+			"abgeben": {"wer": "Marv", "text": "Und? Und? Hast du sie gesehen?", "antworten": [
+				{"text": "Sie kostet 5000 Gold, Marv.", "weiter": "ausrede", "aktionen": [{"auftrag_abgeben": "marvs_traum"}]}
+			]},
+			"ausrede": {"wer": "Marv", "text": "Fünftausend?! … Na, dann spar halt! Ich warte. Ich hab Zeit. Ganz viel Zeit."},
+			"danach": {"wer": "Marv", "text": "Hast du die Sternentafel schon? Nein? Macht nichts. Ich hab Zeit!"}
+		}
+	},
+	"bingo": {
+		"hinweis": "PLATZHALTER-TEXTE: Handelsherr Bingo.",
+		"einstieg": [
+			{"knoten": "hallo"}
+		],
+		"knoten": {
+			"hallo": {"wer": "Bingo", "text": "Willkommen bei Bingo, dem größten Händler zwischen den fünf Straßen! Was darf's sein?", "antworten": [
+				{"text": "Zeig mir deine Waren.", "aktionen": [{"laden": "bingo"}]},
+				{"text": "Was ist das leuchtende Brett da?", "weiter": "tafel"},
+				{"text": "Nichts, danke."}
+			]},
+			"tafel": {"wer": "Bingo", "text": "Die Sternentafel! Eine Erfindung aus Messinghafen, angetrieben von einem echten Sternensplitter. Neun Felder, und gelegte Monster erscheinen als Leuchtbild!", "aktionen": [{"merken": "sternentafel_gesehen"}], "weiter": "preis"},
+			"preis": {"wer": "Bingo", "text": "Und für dich, mein Freund, nur 5000 Gold. Ein Schnäppchen!", "antworten": [
+				{"text": "Fünftausend?!", "weiter": "zu_teuer"},
+				{"text": "Zeig mir lieber deine anderen Waren.", "aktionen": [{"laden": "bingo"}]}
+			]},
+			"zu_teuer": {"wer": "Bingo", "text": "Qualität hat ihren Preis. Komm wieder, wenn dein Beutel schwerer ist."}
+		}
 	}
 }

@@ -37,6 +37,7 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
 | 8 | Kreuzweg-Demo Schritt 1: Bausteine (siehe KREUZWEG_PLAN.md) | erledigt |
 | 9 | Kreuzweg-Demo Schritt 2: Ankunft (Gilde, Ye, erster Auftrag) | erledigt |
 | 10 | Kreuzweg-Demo Schritt 3: Grundausbildung (Lektionen, erster Gruppenkampf) | erledigt |
+| 11 | Kreuzweg-Demo Schritt 4: Marv und Bingos Laden | erledigt |
 
 ## Aufgaben der Runde 1
 
@@ -168,6 +169,21 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
     - **Mitstreiter parieren seltener:** Ida, Bo und Tom schaffen eine perfekte Reaktion nur noch in 10 % der Fälle.
     - **Lektion 4:** Die erste Aktion ist „Nach hinten“. Alle anderen Knöpfe sind gesperrt („Erst ‚Nach hinten‘“),
       bis du die Reihe gewechselt hast. Danach ist alles frei. (In `data/kaempfe.json` als `"zuerst": "row"` festgelegt.)
+
+- **Schritt 11 – Kreuzweg-Demo, Marv und Bingos Laden** (Schritt 4 aus `KREUZWEG_PLAN.md`):
+  - **Marv** ist erst nach der Grundausbildung in der Stadt (an der Straße zwischen Tor und Marktplatz) und
+    **spricht dich von sich aus an**, sobald du vorbeikommst – einmal. Er erzählt begeistert von Kreuzweg-Karten
+    und schickt dich zu Bingo. Auftrag „Marvs großer Traum“: bei Bingo nach der Sternentafel fragen, zurück zu Marv.
+    Seine Antwort auf 5000 Gold: „Dann spar halt! Ich hab Zeit.“ (der Running Gag beginnt).
+  - **Handelsherr Bingo** steht vor seinem Laden. **Laden-Fenster:** Heiltrank kaufen (15 Gold), Dinge aus der Tasche
+    verkaufen (zur Hälfte des Preises), die **Sternentafel für 5000 Gold** (viel zu teuer: „Zu wenig Gold“).
+    Bingo erklärt auf Nachfrage, was die Sternentafel ist.
+  - **Heiltränke im Kampf:** Damit sich der Laden lohnt, kann der Novize ab Lektion 4 und im Gruppenkampf Heiltränke
+    aus seiner Tasche trinken oder reichen (heilt 35). Getrunkene Tränke fehlen danach in der Tasche, auch bei
+    „Nochmal versuchen“.
+  - Neue Datendatei `data/laeden.json`. **Platzhalter:** alle Texte von Marv und Bingo, ihr Aussehen.
+  - Das Mini-Spiel Kreuzweg-Karten selbst kommt später (laut Plan spielt Marv genau einmal mit).
+  - Tests: Welt-Test mit Marv und Bingo (Ansprechen, Kaufen, Verkaufen, zu teuer), Übergangs-Test mit Heiltränken: alles richtig.
     sie mit. (Im fertigen Spiel ist der erste Abschluss der über den Auftrag.) Auch in design.md eingetragen.
 
 ## Fertig in Runde 1
@@ -233,6 +249,13 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 4. Lektion 4: Zuerst geht nur „Nach hinten“, die anderen Knöpfe sind gesperrt. Bekommst du hinten weniger Schaden?
 5. Gruppenkampf mit Ida, Bo und Tom gewinnen und bei Ye abgeben: Danach solltest du Stufe 5 haben.
 
+**Neu: Marv und Bingo** (Kreuzweg-Demo, nach der Grundausbildung)
+1. Vom Stadttor Richtung Marktplatz laufen: Marv sollte dich von selbst ansprechen. Nimm seinen Auftrag an.
+2. Zu Handelsherr Bingo (links vor seinem Laden): „Zeig mir deine Waren“. Kauf einen Heiltrank und verkauf etwas.
+3. Versuch, die Sternentafel zu kaufen: Es sollte „Zu wenig Gold“ kommen.
+4. Bingo nach dem leuchtenden Brett fragen, dann zurück zu Marv und den Auftrag abgeben.
+5. Im Gruppenkampf (oder Lektion 4) einen Heiltrank trinken: Danach sollte er in der Tasche fehlen.
+
 
 **1. Kampf-Sandbox** (Menü → „Kampf-Sandbox“)
 - Wie bisher: bis zu 4 Klassen wählen, Gegner wählen, kämpfen, am Ende die Auswertung ansehen.
@@ -276,7 +299,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
   Zähmen (unter 50 % Leben, Chance = fehlendes Leben, halbes Leben auf der Bank, höchstens 5 Monster).
 ## Als Nächstes (Vorschläge)
 
-- Kreuzweg-Demo nach `KREUZWEG_PLAN.md`: als Nächstes Schritt 4 (Marv nach dem Tutorial und Bingos Laden mit der zu teuren Sternentafel).
+- Kreuzweg-Demo nach `KREUZWEG_PLAN.md`: als Nächstes Schritt 5 (Gesandte der fünf Regionen mit Probestunden).
 - Hintergrund für Kämpfe vor der Stadt (Wiese statt Gewölbe).
 - Dialoge der Hauptfiguren: Marco schreibt sie; Platzhalter stehen in `data/dialoge.json`.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).

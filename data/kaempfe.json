@@ -38,7 +38,7 @@
 		"name": "Lektion 4: Zwei Reihen",
 		"ansage": "Ein Rüpelkobold mit einer großen Keule!",
 		"wellen": [["ruepelkobold"]],
-		"erlaubt": ["schlag", "kraftschlag", "erste_hilfe", "row"],
+		"erlaubt": ["schlag", "kraftschlag", "erste_hilfe", "row", "trank"],
 		"zuerst": "row",
 		"erfahrung": 75,
 		"hinweise": {
@@ -54,7 +54,7 @@
 			{"name": "Tom", "aussehen": "novize_tom"}
 		],
 		"wellen": [["wiesenkobold", "wiesenkobold", "feldschleim", "ruepelkobold"]],
-		"erlaubt": ["schlag", "kraftschlag", "erste_hilfe", "row"],
+		"erlaubt": ["schlag", "kraftschlag", "erste_hilfe", "row", "trank"],
 		"erfahrung": 100,
 		"hinweise": {
 			"erster_zug": "Ida, Bo und Tom sind auch Novizen und handeln selbst. Zusammen seid ihr stärker: Heilt euch gegenseitig mit „Erste Hilfe“ und nehmt euch zuerst die schwachen Kobolde vor."
