@@ -1,0 +1,45 @@
+extends Control
+## Startmenü: Auswahl zwischen den Lernprojekten.
+
+const SCREEN := Vector2(1280, 720)
+
+
+func _ready() -> void:
+	theme = Combat.make_theme()
+	add_child(Backdrop.new())
+	var shade := ColorRect.new()
+	shade.color = Color(0.02, 0.02, 0.05, 0.7)
+	shade.size = SCREEN
+	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(shade)
+
+	var title := Label.new()
+	title.text = "Asterfall"
+	title.add_theme_font_size_override("font_size", 64)
+	title.add_theme_color_override("font_color", Color("f2c14e"))
+	title.add_theme_color_override("font_outline_color", Color.BLACK)
+	title.add_theme_constant_override("outline_size", 10)
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.size = Vector2(SCREEN.x, 90)
+	title.position = Vector2(0, 90)
+	add_child(title)
+	var sub := Label.new()
+	sub.text = "Arbeitstitel · Lernprojekte von CazeX Studio"
+	sub.add_theme_font_size_override("font_size", 20)
+	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	sub.size = Vector2(SCREEN.x, 30)
+	sub.position = Vector2(0, 180)
+	add_child(sub)
+
+	_add_button("Kampf-Sandbox\nAlle 11 Klassen, Pilzhöhle, Auswertung", Vector2(240, 300), "res://scenes/auswahl.tscn")
+	_add_button("Kreuzweg-Demo\nStadt, laufen, Ausbilder Ye (Gerüst)", Vector2(660, 300), "res://scenes/kreuzweg.tscn")
+
+
+func _add_button(text: String, pos: Vector2, scene: String) -> void:
+	var button := Button.new()
+	button.text = text
+	button.position = pos
+	button.size = Vector2(380, 140)
+	button.add_theme_font_size_override("font_size", 22)
+	button.pressed.connect(func() -> void: get_tree().change_scene_to_file(scene))
+	add_child(button)

@@ -104,6 +104,14 @@ func _build() -> void:
 	_start.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/kampf.tscn"))
 	add_child(_start)
 
+	var menu := Button.new()
+	menu.text = "Menü"
+	menu.position = Vector2(1170, 8)
+	menu.size = Vector2(96, 40)
+	menu.add_theme_font_size_override("font_size", 16)
+	menu.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/menu.tscn"))
+	add_child(menu)
+
 	var hint := Label.new()
 	hint.text = "Karte antippen = ins Team nehmen oder wieder herausnehmen. Klassen-Paare aus derselben Region haben eine Duett-Fähigkeit.\nTanks stehen vorne, die anderen hinten. Am Ende zeigt die Auswertung Schaden, Heilung und abgewehrten Schaden pro Klasse."
 	hint.position = Vector2(28, 590)

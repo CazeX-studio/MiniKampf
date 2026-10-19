@@ -16,6 +16,22 @@ Handy quer halten. Jeder Push auf `main` baut die Web-Version automatisch neu
 2. **Importieren** → `C:\GameDev\MiniKampf\project.godot` wählen
 3. **F5** startet das Spiel
 
+Das Spiel startet mit einem **Menü**: Kampf-Sandbox oder Kreuzweg-Demo.
+
+## Kreuzweg-Demo (Lernprojekt 3, Gerüst)
+
+Die Stadt Kreuzweg schräg von oben (Platzhalter-Grafik): Marktplatz mit der Statue der Fünf,
+Abenteurergilde, Bingos Laden, sechs Straßen (die sechste nach Südosten ist zugewachsen).
+
+- **Laufen:** Boden antippen oder anklicken.
+- **Reden:** Ausbilder Ye antippen – man läuft hin, dann startet das Gespräch („Weiter“ blättert).
+- **Testgefährte:** Ein zweiter Spieler läuft zur Probe herum.
+
+**Für später mehrere Spieler gebaut:** Die Spiellogik (`scripts/welt/world_state.gd`) kennt keine Grafik.
+Jeder Spieler schickt nur Befehle wie „laufe zu Feld X“ oder „rede mit Ye“. Die Anzeige
+(`scripts/welt/kreuzweg.gd`) zeichnet nur, was in der Logik steht. Der Testgefährte wird schon über
+dieselben Befehle gesteuert wie ein echter Mitspieler. Später kann ein Server die Logik übernehmen.
+
 ## Kampf-Sandbox (Lernprojekt 2)
 
 Alle 11 Startklassen aus `design.md` zum Ausprobieren und Vergleichen.
@@ -85,7 +101,11 @@ Felsregen → **Kettenzug** (reißt jemanden von hinten nach vorne). Unter 30 % 
 
 ## Aufbau
 
-- `scenes/auswahl.tscn` + `scripts/kampf/auswahl.gd` – Auswahl-Bildschirm (Startszene)
+- `scenes/menu.tscn` + `scripts/menu.gd` – Startmenü (Startszene)
+- `scenes/kreuzweg.tscn` + `scripts/welt/` – Kreuzweg-Demo: `world_state.gd` (Logik), `player_state.gd`,
+  `dialogs.gd` (Gesprächstexte), `kreuzweg.gd` (Anzeige und Eingabe), `world_character.gd` (Figur)
+- `scenes/auswahl.tscn` + `scripts/kampf/auswahl.gd` – Auswahl-Bildschirm der Kampf-Sandbox
+- `scripts/kampf/pilzhoehle.gd` – Test-Dungeon Pilzhöhle (Abläufe und Mechaniken)
 - `scenes/kampf.tscn` + `scripts/kampf/combat.gd` – Kampfablauf, Gegner, Oberfläche, Auswertung
 - `scripts/kampf/skills.gd` – Fähigkeiten aller Klassen, Begleiter und Duette
 - `scripts/kampf/sandbox.gd` – Daten: Klassen, Duette, Monster, Gegner, Kämpfe

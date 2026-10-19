@@ -9,7 +9,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 |-----|---------|-------|
 | 1 | Kampf-Sandbox prüfen und fertigstellen | erledigt |
 | 2 | Pilzhöhle als spielbarer Test-Dungeon | erledigt |
-| 3 | Gerüst für die Kreuzweg-Demo (Lernprojekt 3) | offen |
+| 3 | Gerüst für die Kreuzweg-Demo (Lernprojekt 3) | erledigt |
 | 4 | Web-Export aktualisieren | offen |
 
 ## Fertig
@@ -26,9 +26,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   Alle Mechaniken gehen mit jeder Klasse („Giftwolke vertreiben“, „Laterne entzünden“, „Licht weiterreichen“).
   Automatisch getestet: Wipes, abgewehrtes Verschlingen, Phase 2 und Siege kommen alle vor.
 
+- **Schritt 3 – Kreuzweg-Demo (Gerüst):** Neues Startmenü. Stadt schräg von oben mit Platzhalter-Grafik
+  (Marktplatz, Statue der Fünf, Gilde, Bingos Laden, Schmiede, sechs Straßen, die sechste zugewachsen),
+  Laufen per Antippen mit Wegsuche um Häuser und Bäume, Ausbilder Ye mit kurzem Gespräch
+  (beim zweiten Mal ein anderer Satz), Laterne an der Gildenwand als kleiner Hinweis.
+  Spiellogik und Anzeige sind getrennt; ein „Testgefährte“ läuft als zweiter Spieler über dieselben Befehle.
+
 ## Als Nächstes
 
-- Schritt 3: Gerüst für die Kreuzweg-Demo
+- Schritt 4: Web-Export prüfen
 
 ## Offene Fragen an Marco
 
