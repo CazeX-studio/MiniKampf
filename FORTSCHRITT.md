@@ -3,7 +3,18 @@
 Hier steht, was fertig ist, was als Nächstes kommt und welche Fragen offen sind.
 Wird nach jedem Arbeitsschritt aktualisiert.
 
-## Aufgaben dieser Runde
+## Aufgaben dieser Runde (Runde 2)
+
+| Nr. | Aufgabe | Stand |
+|-----|---------|-------|
+| 1 | Sternensängerin heißt jetzt „Vega“ | erledigt |
+| 2 | Schnellfeuer, Polarstern, Zähmen, Entscheidung nach der Pilzhöhle | offen |
+| 3 | Kunoichi-Ult lädt nur durch Siegel-Kombinationen | offen |
+| 4 | Elemente absichern (unbekanntes Element = normaler Schaden) | offen |
+| 5 | Selbst gewählte Werte als „vorläufig“ markieren | offen |
+| 6 | Kampf in Regeln und Anzeige trennen | offen |
+
+## Aufgaben der Runde 1
 
 | Nr. | Aufgabe | Stand |
 |-----|---------|-------|
@@ -12,7 +23,11 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 3 | Gerüst für die Kreuzweg-Demo (Lernprojekt 3) | erledigt |
 | 4 | Web-Export aktualisieren | erledigt |
 
-## Fertig
+## Fertig in Runde 2
+
+- **Schritt 1 – Name:** Die Sternensängerin heißt jetzt überall **Vega** (Lyra ist Kaels Schwester).
+
+## Fertig in Runde 1
 
 - **Schritt 1 – Kampf-Sandbox:** Alle 11 Klassen, Element-Sechseck, Zähmer mit Monster-Wechsel,
   Mechaniker mit Roboter, sechs Duette und die Kampfauswertung waren schon fertig.
@@ -80,5 +95,3 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 
 - **Kreuzweg-Demo:** Passen die Positionen (Gilde im Nordosten, Bingos Laden im Westen, die sechste,
   zugewachsene Straße nach Südosten)? Soll Ye vor der Gilde stehen oder drinnen?
-- In der Sandbox heißt die Sternensängerin noch **Lyra**. In der Story ist Lyra jetzt Kaels geopferte
-  Schwester. Soll die Sternensängerin in der Sandbox einen anderen Namen bekommen?
