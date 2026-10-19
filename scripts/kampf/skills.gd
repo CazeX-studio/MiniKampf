@@ -895,9 +895,8 @@ func _kunoichi(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 			var mult := 1.5 if combo else 1.0
 			if combo:
 				c.add_log("[color=#ff7fb0]Siegel-Kombination: %s![/color]" % " + ".join(seals))
+				# Die Ult lädt nur durch ausgelöste Kombinationen (design.md), einzelne Siegel laden nichts
 				f.add_ult(35)
-			else:
-				f.add_ult(12)
 			for el: String in seals:
 				c.burst(target, Elements.color(el), 120.0)
 				await _seal_effect(f, target, el, mult)

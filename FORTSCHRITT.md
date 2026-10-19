@@ -9,7 +9,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 |-----|---------|-------|
 | 1 | Sternensängerin heißt jetzt „Vega“ | erledigt |
 | 2 | Schnellfeuer, Polarstern, Zähmen, Entscheidung nach der Pilzhöhle | erledigt |
-| 3 | Kunoichi-Ult lädt nur durch Siegel-Kombinationen | offen |
+| 3 | Kunoichi-Ult lädt nur durch Siegel-Kombinationen | erledigt |
 | 4 | Elemente absichern (unbekanntes Element = normaler Schaden) | offen |
 | 5 | Selbst gewählte Werte als „vorläufig“ markieren | offen |
 | 6 | Kampf in Regeln und Anzeige trennen | offen |
@@ -39,6 +39,9 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     mitnehmen“ oder „Splitter herausschneiden, Baum retten“. Das Ergebnis steht im Log und in der Auswertung.
   - Neu: **automatische Testkämpfe** (Ordner `tests`): 75 Kämpfe, alle Klassen, alle Gegner, der Computer spielt.
     Alle laufen ohne Fehler durch, Zähmen, Polarstern und die Entscheidung kommen darin vor.
+
+- **Schritt 3 – Kunoichi-Ult:** lädt jetzt nur noch durch ausgelöste Siegel-Kombinationen (+35 je Kombination,
+  also nach drei Kombinationen voll). Ein einzelnes gelöstes Siegel lädt nichts mehr.
 
 ## Fertig in Runde 1
 
@@ -72,6 +75,7 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 3. Monster-Zähmer nehmen, einen Gegner unter die Hälfte seines Lebens bringen, dann „Zähmen“. Klappt es, steht das
    Monster bei „Wechsel“ in der Liste und kämpft für dich.
 4. „Pilzhöhle: nur Bosse“ schaffen: Am Ende kommt die Frage, was mit dem Urbaum geschieht. Beide Knöpfe ausprobieren.
+5. Kunoichi: Ein einzelnes Siegel lösen lädt die Ult nicht mehr, zwei Siegel auf demselben Gegner lösen (Kombination) schon.
 
 
 **1. Kampf-Sandbox** (Menü → „Kampf-Sandbox“)
