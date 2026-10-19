@@ -63,6 +63,8 @@ var turns := 0
 var setup := {}
 ## Helden, die der Computer steuert (Novizen-Mitstreiter): Fighter -> true
 var computer := {}
+## Lektion mit vorgegebener erster Aktion (setup.zuerst): schon erledigt?
+var first_done := false
 
 var _events: Array[Dictionary] = []
 var _last_crit := false
@@ -538,6 +540,8 @@ func is_valid(f: Fighter, ab: Dictionary, target: Fighter) -> bool:
 ## Führt eine Fähigkeit aus.
 func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 	var id: String = ab.id
+	if id == setup.get("zuerst", ""):
+		first_done = true
 	status("%s: %s" % [f.display_name, ab.name])
 	crits = 0
 	f.mana -= ab.get("mana", 0)

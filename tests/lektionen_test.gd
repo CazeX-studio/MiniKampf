@@ -37,6 +37,19 @@ func _run() -> void:
 					if line.contains("Du reagiert perfekt"):
 						problems += 1
 						print("FEHLER: %s: Parieren schon möglich" % kampf_id)
+			# Lektion mit vorgegebener erster Aktion („Nach hinten“): vorher trifft der Spieler nichts
+			if kampf_id == "lektion_reihen":
+				var lines: PackedStringArray = node.protokoll.lines
+				var moved := -1
+				var first_hit := -1
+				for n in lines.size():
+					if moved < 0 and lines[n] == "LOG Du wechselt nach hinten.":
+						moved = n
+					if first_hit < 0 and lines[n].begins_with("TXT Rüpelkobold:"):
+						first_hit = n
+				if moved < 0 or (first_hit >= 0 and first_hit < moved):
+					problems += 1
+					print("FEHLER: Lektion 4 beginnt nicht mit „Nach hinten“")
 			if end == "ENDE Sieg":
 				wins += 1
 			turns += node.state.turns

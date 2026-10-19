@@ -25,7 +25,8 @@ func _process(delta: float) -> void:
 
 
 func choose_action(f: Fighter) -> Dictionary:
-	if state.computer.has(f):
+	# ECHT=1: echte Knöpfe zeigen (für Bildschirmfotos der Auswahl)
+	if state.computer.has(f) or OS.has_environment("ECHT"):
 		return await super(f)
 	await _show_hint("erster_zug")
 	_turn_label.text = "Du bist am Zug"

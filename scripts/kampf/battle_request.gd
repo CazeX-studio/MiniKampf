@@ -38,6 +38,7 @@ static func prepare(id: String, level: int) -> bool:
 		erlaubt = data.get("erlaubt", []),
 		hinweise = data.get("hinweise", {}),
 		ziel_paraden = int(data.get("ziel_paraden", 0)),
+		zuerst = data.get("zuerst", ""),
 	}
 	return true
 

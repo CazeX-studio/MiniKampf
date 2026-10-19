@@ -257,6 +257,10 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 ## Kann die Fähigkeit gerade benutzt werden? Gibt "" zurück oder den Grund, warum nicht.
 func blocked_reason(f: Fighter, ab: Dictionary) -> String:
 	var id: String = ab.id
+	# Lektion: Die erste Aktion des Spielers ist vorgegeben (z. B. „Nach hinten“), alles andere ist bis dahin gesperrt
+	var first: String = c.setup.get("zuerst", "")
+	if first != "" and not c.first_done and f.is_hero and not c.computer.has(f) and id != first:
+		return "Erst „Nach hinten“" if first == "row" else "Noch gesperrt"
 	if id == "ult":
 		if not f.ult_ready():
 			return "Ult %d %%" % int(f.ult)

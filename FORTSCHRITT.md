@@ -166,6 +166,8 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
     - **Zahlentasten am PC:** Vor jedem Knopf im Kampf steht seine Nummer, 1–9 wählen ihn aus (Fähigkeiten, Auswahl,
       „Zurück“). Gilt auch in der Kampf-Sandbox. Am Handy bleiben die Knöpfe ohne Nummer.
     - **Mitstreiter parieren seltener:** Ida, Bo und Tom schaffen eine perfekte Reaktion nur noch in 10 % der Fälle.
+    - **Lektion 4:** Die erste Aktion ist „Nach hinten“. Alle anderen Knöpfe sind gesperrt („Erst ‚Nach hinten‘“),
+      bis du die Reihe gewechselt hast. Danach ist alles frei. (In `data/kaempfe.json` als `"zuerst": "row"` festgelegt.)
     sie mit. (Im fertigen Spiel ist der erste Abschluss der über den Auftrag.) Auch in design.md eingetragen.
 
 ## Fertig in Runde 1
@@ -228,7 +230,7 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 2. Lektion 1 und 2 spielen: Erscheinen die Erklär-Fenster, kommt noch KEIN Ring, und geht es danach zurück in die Stadt?
    Am PC: Fähigkeiten mit den Zahlentasten 1, 2, 3 … wählen.
 3. Lektion 3: Ye greift an, tippe, wenn der Ring grün wird. Prüfe, ob die Lektion nach zwei Paraden bestanden ist.
-4. Lektion 4: „Nach hinten“ ausprobieren. Bekommst du hinten weniger Schaden?
+4. Lektion 4: Zuerst geht nur „Nach hinten“, die anderen Knöpfe sind gesperrt. Bekommst du hinten weniger Schaden?
 5. Gruppenkampf mit Ida, Bo und Tom gewinnen und bei Ye abgeben: Danach solltest du Stufe 5 haben.
 
 

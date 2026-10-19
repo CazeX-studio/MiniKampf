@@ -39,9 +39,10 @@
 		"ansage": "Ein Rüpelkobold mit einer großen Keule!",
 		"wellen": [["ruepelkobold"]],
 		"erlaubt": ["schlag", "kraftschlag", "erste_hilfe", "row"],
+		"zuerst": "row",
 		"erfahrung": 75,
 		"hinweise": {
-			"erster_zug": "Der Rüpelkobold schlägt hart zu. In der hinteren Reihe bekommst du weniger Nahkampf-Schaden, machst aber auch weniger. Mit „Nach hinten“ wechselst du die Reihe (kostet den Zug). Probier es aus!"
+			"erster_zug": "Der Rüpelkobold schlägt hart zu. In der hinteren Reihe bekommst du weniger Nahkampf-Schaden, machst aber auch weniger. Wechsle jetzt zuerst mit „Nach hinten“ die Reihe (kostet den Zug) – erst danach kannst du wieder angreifen."
 		}
 	},
 	"gruppenkampf": {
