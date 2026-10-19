@@ -113,6 +113,24 @@ func _ready() -> void:
 	_battle_loop()
 
 
+## Beim Verlassen des Kampfes gegenseitige Verweise lösen (Held <-> Roboter/Monster, Schilde),
+## sonst bleiben die Teilnehmer im Speicher liegen.
+func _exit_tree() -> void:
+	var everyone := all_fighters()
+	for h in heroes:
+		everyone.append_array(h.monsters)
+		if h.robot != null:
+			everyone.append(h.robot)
+	for f in everyone:
+		f.owner = null
+		f.robot = null
+		f.active_monster = null
+		f.monsters.clear()
+		f.protecting = null
+		f.smoke_source = null
+		f.shields.clear()
+
+
 func _process(_delta: float) -> void:
 	if _reacting:
 		_update_glint()
