@@ -17,6 +17,7 @@ var _frames := {}
 var _sprite: Sprite2D
 var _time := 0.0
 var _head_y := 0.0
+var _label: Label
 
 
 func setup(look: String, p_name: String, tint := Color.WHITE, name_color := Color.WHITE) -> void:
@@ -37,6 +38,7 @@ func setup(look: String, p_name: String, tint := Color.WHITE, name_color := Colo
 	add_child(_sprite)
 
 	var label := Label.new()
+	_label = label
 	label.text = p_name
 	label.add_theme_font_size_override("font_size", 14)
 	label.add_theme_color_override("font_color", name_color)
@@ -74,3 +76,8 @@ func _draw() -> void:
 ## Animation an einer anderen Stelle beginnen lassen (damit nicht alle Figuren gleichzeitig wippen).
 func time_offset(seconds: float) -> void:
 	_time += seconds
+
+
+## Namensschild ein- oder ausblenden (weit entfernte NPCs zeigen keinen Namen, damit es übersichtlich bleibt).
+func set_name_alpha(alpha: float) -> void:
+	_label.modulate.a = alpha

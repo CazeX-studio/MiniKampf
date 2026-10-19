@@ -6,6 +6,7 @@ const SCREEN := Vector2(1280, 720)
 
 func _ready() -> void:
 	theme = Combat.make_theme()
+	Musik.play("stadt")
 	add_child(Backdrop.new())
 	var shade := ColorRect.new()
 	shade.color = Color(0.02, 0.02, 0.05, 0.7)
@@ -33,6 +34,17 @@ func _ready() -> void:
 
 	_add_button("Kampf-Sandbox\nAlle 11 Klassen, Pilzhöhle, Auswertung", Vector2(240, 300), "res://scenes/auswahl.tscn")
 	_add_button("Kreuzweg-Demo\nDie erste Stunde als Novize", Vector2(660, 300), "res://scenes/kreuzweg.tscn")
+
+	# Musik an/aus (überall auch mit Taste M)
+	var music := Button.new()
+	music.position = Vector2(540, 470)
+	music.size = Vector2(200, 50)
+	music.add_theme_font_size_override("font_size", 18)
+	music.text = "Musik: an (M)" if Musik.enabled else "Musik: aus (M)"
+	music.pressed.connect(func() -> void:
+		Musik.toggle()
+		music.text = "Musik: an (M)" if Musik.enabled else "Musik: aus (M)")
+	add_child(music)
 
 
 func _add_button(text: String, pos: Vector2, scene: String) -> void:

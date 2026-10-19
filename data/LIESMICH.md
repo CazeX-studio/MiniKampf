@@ -81,7 +81,7 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
 - **Aktionen:** `{"effekt": "sternenfall"}` (Lichtblitz und Wackeln), `{"erfolg": "schild_hoch"}` (Erfolg freischalten).
 - **`kreuzweg.json` → `deko`:** Schmuck, der nur unter einer Bedingung zu sehen ist (`festlaterne`, `krater`).
   Der gemerkte Wert `nacht` färbt die Stadt dunkelblau.
-- **Kämpfe:** `merken_immer` (wird auch bei Niederlage gemerkt), `erfolg` (bei Sieg), `kein_nochmal` (kein „Nochmal
+- **Kämpfe:** `hintergrund` (`wiese` = vor dem Stadttor, Standard; `wiese_nacht`; `marktplatz_nacht`; `gewoelbe`), `merken_immer` (wird auch bei Niederlage gemerkt), `erfolg` (bei Sieg), `kein_nochmal` (kein „Nochmal
   versuchen“), `verloren_text` (Meldung bei Niederlage).
 - **Gegner** (in `scripts/kampf/sandbox.gd`): `panzer` (Schaden-Faktor, bis eine perfekte Parade ihn erschüttert),
   `erschuettert` (wie viele Züge offen), `wipe_nach` und `wipe_text` (nach so vielen Zügen verliert die Gruppe).

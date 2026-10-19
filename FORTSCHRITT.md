@@ -43,6 +43,7 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
 | 14 | Kreuzweg-Demo Schritt 7: Nacht des Sternenfalls (Fest, Sternenfresser, Ren) | erledigt |
 | 15 | Parieren/Ausweichen mit normaler Zone und Perfekt-Zone | erledigt |
 | 16 | Kreuzweg-Demo Schritt 8: Klassenwahl und Abreise | erledigt |
+| 17 | Kreuzweg-Demo Schritt 9: Feinschliff (Musik, Hintergründe, Namen, Durchlauf-Test) | eingebaut, Marco testet am Stück |
 
 ## Aufgaben der Runde 1
 
@@ -268,6 +269,24 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
     manchmal nicht. Und Lene hätte am Morgen sonst noch einmal zum Fest eingeladen.
   - **Platzhalter:** alle Texte (Lene, Marv, Ye, Abspann).
   - Tests: Welt-Test bis zum Abspann, Test des Klassenwahl-Bildschirms (Auswahl, Probestunde, Wahl, Abspann): alles richtig.
+
+- **Schritt 17 – Kreuzweg-Demo, Feinschliff** (Schritt 9 aus `KREUZWEG_PLAN.md`):
+  - **Platzhalter-Musik:** vier kleine Retro-Stücke, selbst erzeugt (keine Lizenzfragen): **Stadt**, **Nacht** (Fest,
+    Abspann), **Kampf** und **Boss** (sobald ein großer Gegner auftaucht). Sanftes Überblenden beim Wechsel.
+    **Taste M** oder der Knopf im Menü schaltet die Musik an und aus (wird gemerkt).
+  - **Kampf vor der Stadt:** Lektionen, Gruppenkampf und Probestunden spielen jetzt auf einer **Wiese vor der
+    Stadtmauer von Kreuzweg** (mit Tor, Hügeln, Pollen). Der Sternenfresser kämpft auf dem **Marktplatz bei Nacht**
+    (erleuchtete Häuser, die fünf Festlaternen). Sandbox und Pilzhöhle bleiben im Gewölbe.
+  - **Marktplatz entzerrt:** NPC-Namen blenden mit der Entfernung aus (nah = voll sichtbar, ab ca. 6 Feldern weg).
+    Die Zeichen „!“ und „?“ bleiben immer sichtbar.
+  - **Automatischer Durchlauf** (`tests/durchlauf_test.gd`): Ein Computer-Spieler spielt die ganze erste Stunde am
+    Stück – mit echten Kämpfen – von der Ankunft bis zum Abspann. Mit fünf verschiedenen Zufallswerten ohne Hänger.
+    **Stufenverlauf:** Ankunft 1 → 2, Grundausbildung bis 5, Gesandte 6 (mit allen Probestunden 7), zugewachsener Weg 7,
+    Sternenfall 8–9, Abreise 9–10. Passt zum Plan in design.md.
+    Der Computer braucht etwa 14 Minuten; wer alles liest, sich umsieht und mehrere Probestunden macht, eher 30–45.
+  - **Werte:** Nach dem Durchlauf nichts Großes geändert. Beobachtung: Mit Heiltränken und Stufe 8 schafft der Computer
+    den Sternenfresser in der Geschichte öfter (etwa jedes zweite Mal) als ohne Tränke. Dein Eindruck beim Testen
+    entscheidet, ob er schwerer werden soll.
     sie mit. (Im fertigen Spiel ist der erste Abschluss der über den Auftrag.) Auch in design.md eingetragen.
 
 ## Fertig in Runde 1
@@ -374,6 +393,13 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 4. Eine Klasse wählen und bestätigen: Ye sollte Klasse, Region und Lehrmeister nennen.
 5. „Leb wohl, Ye.“: Prüfe, ob der Abspann erscheint und „Neu beginnen“ von vorne anfängt.
 
+**Die ganze erste Stunde am Stück** (Kreuzweg-Demo → „Neu beginnen“, Ton an)
+1. Spiel einmal von der Ankunft bis zum Abspann durch, ohne Abkürzungen. Notier dir, wo du nicht wusstest, was zu tun ist.
+2. Achte auf die Musik: Stadt, Nacht beim Fest, Kampf, Boss beim Sternenfresser. Taste M bzw. Menü-Knopf schaltet sie ab.
+3. Kämpfe vor der Stadt: Wiese mit Stadtmauer im Hintergrund, der Sternenfresser auf dem nächtlichen Marktplatz.
+4. Auf dem Marktplatz: Sind die Namen jetzt übersichtlicher (weit entfernte blenden aus)?
+5. Gute Fragen dabei: Wie lange hast du gebraucht? War ein Kampf zu leicht oder zu schwer? Welche Stelle war langweilig?
+
 
 **1. Kampf-Sandbox** (Menü → „Kampf-Sandbox“)
 - Wie bisher: bis zu 4 Klassen wählen, Gegner wählen, kämpfen, am Ende die Auswertung ansehen.
@@ -417,7 +443,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
   Zähmen (unter 50 % Leben, Chance = fehlendes Leben, halbes Leben auf der Bank, höchstens 5 Monster).
 ## Als Nächstes (Vorschläge)
 
-- Kreuzweg-Demo nach `KREUZWEG_PLAN.md`: als Nächstes Schritt 9 (Feinschliff: ganze erste Stunde am Stück testen, Platzhalter-Musik; dabei: Marktplatz entzerren, Kampf-Hintergrund vor der Stadt, Werte abstimmen).
+- Deine Rückmeldungen aus dem Test am Stück einarbeiten (Schwierigkeit, Länge, unklare Stellen).
 - Hintergrund für Kämpfe vor der Stadt (Wiese statt Gewölbe).
 - Dialoge der Hauptfiguren: Marco schreibt sie; Platzhalter stehen in `data/dialoge.json`.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).

@@ -25,6 +25,9 @@ const STICK_HOME := Vector2(170, 560)
 const NOTICE_SECONDS := 3.5
 ## NPCs stehen ruhiger als Spieler (langsamere Steh-Animation)
 const NPC_IDLE_FPS := 2.0
+## NPC-Namen: bis zu dieser Entfernung (Felder) voll sichtbar, ab der zweiten ganz ausgeblendet
+const NAME_FADE_START := 4.0
+const NAME_FADE_END := 6.5
 const NIGHT_COLOR := Color(0.45, 0.5, 0.78)
 ## Farben der fünf Festlaternen (eine pro Region)
 const LANTERN_COLORS: Array[Color] = [Color("b8b0ff"), Color("e0a060"), Color("ffb070"), Color("a8e088"), Color("ffb8d8")]
@@ -188,11 +191,15 @@ func _sync() -> void:
 			node.queue_redraw()
 	var night_color := NIGHT_COLOR if local.progress.flags.has("nacht") else Color.WHITE
 	_night.color = _night.color.lerp(night_color, 0.05)
+	Musik.play("nacht" if local.progress.flags.has("nacht") else "stadt")
 	_info.text = "Spieler in Kreuzweg: %d" % state.players.size()
 	for id: String in state.npcs:
 		var npc_view: WorldCharacter = _characters["npc:" + id]
 		npc_view.visible = state.npc_visible(local, id)
 		npc_view.marker = state.npc_marker(local, id)
+		# Namen nur in der Nähe zeigen (Zeichen ! und ? bleiben immer sichtbar)
+		var distance := (Vector2(state.npcs[id].cell) - local.pos).length()
+		npc_view.set_name_alpha(clampf((NAME_FADE_END - distance) / (NAME_FADE_END - NAME_FADE_START), 0.0, 1.0))
 	var goal := state.objective(local)
 	_goal.text = "Ziel: " + goal if goal != "" else ""
 	_update_hud()

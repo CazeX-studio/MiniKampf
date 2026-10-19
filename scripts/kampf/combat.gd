@@ -74,6 +74,7 @@ var _dark_rect: ColorRect
 
 
 func _ready() -> void:
+	Musik.play("kampf")
 	if Sandbox.team.is_empty():
 		Sandbox.team = ["tank", "archer", "ritualist", "singer"]
 	_build_ui()
@@ -202,6 +203,8 @@ func _play_event(event: Dictionary) -> void:
 			refresh()
 		"spawn":
 			_add_view(event.f, _feet(event.f, event.place, event.index))
+			if event.f.big:
+				Musik.play("boss")
 			view(event.f).shown = event.hp
 		"despawn":
 			if has_view(event.f):
@@ -784,7 +787,10 @@ func _build_ui() -> void:
 	theme = make_theme()
 
 	# Hintergrund: Gewölbe mit Fackeln und Lava-Brunnen, zum Rand hin abgedunkelt
-	add_child(Backdrop.new())
+	var backdrop := Backdrop.new()
+	if BattleRequest.active():
+		backdrop.style = BattleRequest.setup.get("hintergrund", "gewoelbe")
+	add_child(backdrop)
 	add_child(_vignette(0.85))
 
 	_field = Control.new()

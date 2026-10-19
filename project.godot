@@ -15,6 +15,7 @@ config/description="Lernprojekt: Kampf-Sandbox mit allen 11 Startklassen, Elemen
 run/main_scene="res://scenes/menu.tscn"
 config/features=PackedStringArray("4.7")
 
+
 [display]
 
 window/size/viewport_width=1280

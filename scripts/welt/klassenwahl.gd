@@ -22,6 +22,7 @@ var _confirm_text: Label
 
 func _ready() -> void:
 	theme = Combat.make_theme()
+	Musik.play("stadt")
 	_build()
 	var order: Array = GameData.get_file("klassen").get("reihenfolge", Sandbox.CLASS_ORDER)
 	_select(order[0])

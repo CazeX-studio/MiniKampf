@@ -82,6 +82,7 @@
 			{"name": "Tom", "aussehen": "novize_tom"}
 		],
 		"wellen": [["sternenfresser"]],
+		"hintergrund": "marktplatz_nacht",
 		"erlaubt": ["schlag", "kraftschlag", "erste_hilfe", "row", "trank"],
 		"erfahrung": 300,
 		"merken": "sternenfresser_besiegt",

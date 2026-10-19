@@ -32,3 +32,8 @@ im öffentlichen Repository https://github.com/benc-uk/super-dungeon-delve
 
 Selbst gemacht (im Code gezeichnet): Fackeln, Licht- und Leuchteffekte, Staub,
 Randabdunklung, Reaktions-Ring und Zeitleiste.
+
+## Musik
+
+Die Platzhalter-Musik (`assets/musik/`: Stadt, Nacht, Kampf, Boss) ist selbst erzeugt mit `tools/musik_erzeugen.gd`
+(einfache Retro-Klänge, keine fremden Quellen, keine Lizenzfragen). Sie wird später durch richtige Musik ersetzt.

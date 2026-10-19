@@ -6,6 +6,7 @@ const SCREEN := Vector2(1280, 720)
 
 func _ready() -> void:
 	theme = Combat.make_theme()
+	Musik.play("nacht")
 	var bg := ColorRect.new()
 	bg.color = Color("0b0d1a")
 	bg.size = SCREEN

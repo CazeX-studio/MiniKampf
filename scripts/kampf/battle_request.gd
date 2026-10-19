@@ -50,6 +50,7 @@ static func prepare(id: String, level: int, potions := 0) -> bool:
 		hinweise = data.get("hinweise", {}),
 		ziel_paraden = int(data.get("ziel_paraden", 0)),
 		kein_nochmal = data.get("kein_nochmal", false),
+		hintergrund = data.get("hintergrund", "wiese"),
 		zuerst = data.get("zuerst", ""),
 	}
 	return true
