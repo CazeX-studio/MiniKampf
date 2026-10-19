@@ -1,7 +1,8 @@
 {
 	"start": {"feld": [11, 20], "dialog": "ankunft", "nur_wenn_nicht_gemerkt": "angekommen"},
 	"npcs": {
-		"ye": {"name": "Ausbilder Ye", "feld": [13, 9], "aussehen": "wizzard_m", "farbe": "ccdbf2", "dialog": "ye"},
+		"ye": {"name": "Ausbilder Ye", "feld": [13, 9], "aussehen": "wizzard_m", "farbe": "ccdbf2", "dialog": "ye", "wenn": {"nicht_gemerkt": "ausbildung_morgen"}},
+		"ye_tor": {"name": "Ausbilder Ye", "feld": [12, 19], "aussehen": "wizzard_m", "farbe": "ccdbf2", "dialog": "ye_tor", "wenn": {"gemerkt": "ausbildung_morgen"}},
 		"schreiberin": {"name": "Schreiberin Lene", "feld": [16, 9], "aussehen": "wizzard_f", "farbe": "ffe0b0", "dialog": "schreiberin"},
 		"schmiedin": {"name": "Schmiedin Marta", "feld": [15, 16], "aussehen": "knight_f", "farbe": "ffc8a0", "dialog": "schmiedin"}
 	},

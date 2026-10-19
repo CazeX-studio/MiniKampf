@@ -22,6 +22,11 @@ const LOOKS := {
 	"quartermaster": {sprite = "wizzard_m", scale = 4.0, tint = Color(1.0, 0.9, 0.6)},
 	"kunoichi": {sprite = "elf_f", scale = 4.0, tint = Color(1.0, 0.75, 0.88)},
 	"singer": {sprite = "elf_f", scale = 4.0},
+	# Novizen (Kreuzweg-Demo): der Spieler und die Mitstreiter
+	"novize": {sprite = "elf_m", scale = 4.0},
+	"novize_ida": {sprite = "elf_f", scale = 4.0, tint = Color(0.85, 0.95, 1.0)},
+	"novize_bo": {sprite = "lizard_m", scale = 4.0, tint = Color(1.0, 0.9, 0.75)},
+	"novize_tom": {sprite = "knight_m", scale = 4.0, tint = Color(0.9, 1.0, 0.85)},
 	# Begleiter
 	"robot": {sprite = "big_zombie", scale = 2.5, tint = Color(0.72, 0.82, 1.0)},
 	"moosling": {sprite = "swampy", scale = 3.5, tint = Color(0.75, 1.0, 0.65)},
@@ -46,6 +51,11 @@ const LOOKS := {
 	"knoten_vorne": {sprite = "ice_zombie", scale = 4.0, tint = Color(1.0, 0.95, 0.7)},
 	"knoten_hinten": {sprite = "ice_zombie", scale = 4.0, tint = Color(1.0, 0.95, 0.7)},
 	"vorbote": {sprite = "necromancer", scale = 6.5, tint = Color(0.45, 0.38, 0.65)},
+	# Vor dem Stadttor (Grundausbildung)
+	"feldschleim": {sprite = "swampy", scale = 4.0, tint = Color(0.7, 1.0, 0.7)},
+	"wiesenkobold": {sprite = "goblin", scale = 4.0},
+	"ruepelkobold": {sprite = "goblin", scale = 5.5, tint = Color(1.0, 0.7, 0.6)},
+	"uebungs_ye": {sprite = "wizzard_m", scale = 4.0, tint = Color(0.8, 0.86, 0.95)},
 }
 const ANIM_FPS := {"idle": 6.0, "run": 12.0, "hit": 8.0}
 
@@ -96,7 +106,7 @@ var shown := -1
 func setup(p_fighter: Fighter) -> void:
 	fighter = p_fighter
 	mouse_filter = Control.MOUSE_FILTER_STOP
-	var look: Dictionary = LOOKS[fighter.klass]
+	var look: Dictionary = LOOKS[fighter.look_key()]
 	for anim: String in ANIM_FPS:
 		var frames: Array[Texture2D] = []
 		var i := 0
@@ -349,6 +359,10 @@ func _draw_hero_details(font: Font, x0: float, y: float, w: float) -> void:
 	if fighter.ult_ready():
 		ult_color = COL_ULT.lerp(Color.WHITE, 0.5 + 0.5 * sin(_time * 8.0))
 	var ult_text := "ULT bereit!" if fighter.ult_ready() else "ULT %d %%" % int(fighter.ult)
+	if fighter.klass == "novize":
+		# Novizen haben noch keine Ult (kommt mit der Klasse)
+		ult_text = "Ult kommt mit der Klasse"
+		ult_color = Color(0.5, 0.5, 0.5)
 	_draw_bar(Rect2(x0, y + 51, w, 10), fighter.ult / Fighter.MAX_ULT, ult_color, ult_text)
 
 	# Letzte Zeile: besondere Mechanik der Klasse, danach Zustände

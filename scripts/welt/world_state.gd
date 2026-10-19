@@ -8,6 +8,7 @@ extends RefCounted
 ##   {type = "steer", dir = Vector2}     frei laufen in eine Bildschirm-Richtung (Tasten, Steuerknopf), ZERO = stehen bleiben
 ##   {type = "interact"}                 das Nächste direkt nebenan benutzen (E, Leertaste, Aktions-Knopf)
 ##   {type = "start"}                    Stadt betreten (zeigt beim ersten Mal die Einleitung)
+##   {type = "kampf_ergebnis", kampf = "…", gewonnen = true}  Ergebnis eines Kampfes (vom Kampfbildschirm)
 ##   {type = "dialog_next"}              im Gespräch weiter (wenn es keine Antworten gibt)
 ##   {type = "dialog_choose", index = 0} im Gespräch eine Antwort wählen
 ## So kann später ein Server dieselben Befehle von vielen Spielern annehmen;
@@ -18,6 +19,8 @@ extends RefCounted
 signal notice(player_id: String, text: String)
 ## Gold, Tasche, Erfahrung oder Aufträge eines Spielers haben sich geändert (z. B. zum Speichern)
 signal progress_changed(player_id: String)
+## Ein Spieler beginnt einen Kampf (Kennung aus data/kaempfe.json). Die Anzeige wechselt zum Kampfbildschirm.
+signal battle_requested(player_id: String, kampf_id: String)
 
 enum Tile { GRASS, ROAD, PLAZA, OVERGROWN }
 
@@ -51,7 +54,8 @@ func _init() -> void:
 	for id: String in npc_data:
 		var d: Dictionary = npc_data[id]
 		var cell := Vector2i(int(d.feld[0]), int(d.feld[1]))
-		npcs[id] = {name = d.name, cell = cell, look = d.aussehen, tint = Color(d.get("farbe", "ffffff")), dialog = d.get("dialog", id)}
+		npcs[id] = {name = d.name, cell = cell, look = d.aussehen, tint = Color(d.get("farbe", "ffffff")), dialog = d.get("dialog", id),
+				cond = d.get("wenn", {})}
 		blocked[cell] = true
 	for d: Dictionary in town.get("sammelpunkte", []):
 		pickups.append({item = d.gegenstand, cell = Vector2i(int(d.feld[0]), int(d.feld[1]))})
@@ -189,6 +193,8 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			var flag: String = start.get("nur_wenn_nicht_gemerkt", "")
 			if start.has("dialog") and (flag == "" or not p.progress.flags.has(flag)):
 				start_dialog(p, start.dialog)
+		"kampf_ergebnis":
+			_battle_result(p, str(cmd.get("kampf", "")), bool(cmd.get("gewonnen", false)))
 		"dialog_next":
 			_dialog_next(p)
 		"dialog_choose":
@@ -215,11 +221,18 @@ func target_cell(target: String) -> Vector2i:
 	return Vector2i(-1, -1)
 
 
-## Kann dieser Spieler das Ziel benutzen? (Ein schon eingesammelter Punkt nicht mehr.)
+## Kann dieser Spieler das Ziel benutzen? (Ein schon eingesammelter Punkt oder ein gerade abwesender NPC nicht.)
 func can_use(p: PlayerState, target: String) -> bool:
 	if target.begins_with("punkt:"):
 		return target_cell(target) != Vector2i(-1, -1) and not p.progress.flags.has("gesammelt:" + target)
+	if target.begins_with("npc:") and not npc_visible(p, target.substr(4)):
+		return false
 	return target_cell(target) != Vector2i(-1, -1)
+
+
+## Ist der NPC für diesen Spieler gerade da? (z. B. Ye erst in der Gilde, später am Stadttor)
+func npc_visible(p: PlayerState, npc_id: String) -> bool:
+	return npcs.has(npc_id) and check(p, npcs[npc_id].cond)
 
 
 ## Das Nächste, das der Spieler direkt nebenan benutzen kann ("" = nichts).
@@ -438,6 +451,8 @@ func run_actions(p: PlayerState, actions: Array) -> void:
 			_give_item(p, action.gegenstand, int(action.get("anzahl", 1)))
 		if action.has("merken"):
 			p.progress.flags[action.merken] = true
+		if action.has("kampf"):
+			battle_requested.emit(p.id, action.kampf)
 	_update_quests(p)
 	progress_changed.emit(p.id)
 
@@ -465,6 +480,9 @@ func quest_goals_met(p: PlayerState, id: String) -> bool:
 			"gemerkt":
 				if not p.progress.flags.has(goal.merken):
 					return false
+			"kampf":
+				if not p.progress.flags.has("kampf_gewonnen:" + str(goal.kampf)):
+					return false
 	return true
 
 
@@ -477,6 +495,8 @@ func goal_done(p: PlayerState, goal: Dictionary) -> bool:
 			return p.progress.flags.has("geredet:" + str(goal.npc))
 		"gemerkt":
 			return p.progress.flags.has(goal.merken)
+		"kampf":
+			return p.progress.flags.has("kampf_gewonnen:" + str(goal.kampf))
 	return true
 
 
@@ -490,8 +510,8 @@ func goal_text(p: PlayerState, goal: Dictionary) -> String:
 			var npc: Dictionary = npcs.get(goal.npc, {name = goal.npc})
 			var done := p.progress.flags.has("geredet:" + str(goal.npc))
 			return "Mit %s reden%s" % [npc.name, " (erledigt)" if done else ""]
-		"gemerkt":
-			return "%s%s" % [goal.get("text", goal.merken), " (erledigt)" if goal_done(p, goal) else ""]
+		"gemerkt", "kampf":
+			return "%s%s" % [goal.get("text", goal.get("merken", goal.get("kampf", ""))), " (erledigt)" if goal_done(p, goal) else ""]
 	return ""
 
 
@@ -513,6 +533,8 @@ func objective(p: PlayerState) -> String:
 
 ## Zeichen über einem NPC: "!" = neuer Auftrag, "?" = hier etwas erledigen oder abgeben, "" = nichts.
 func npc_marker(p: PlayerState, npc_id: String) -> String:
+	if not npc_visible(p, npc_id):
+		return ""
 	var all_quests := GameData.get_file("auftraege")
 	for id: String in all_quests:
 		var q: Dictionary = all_quests[id]
@@ -586,6 +608,24 @@ func _give_item(p: PlayerState, item_id: String, count: int) -> void:
 		_say(p, GameData.text("gegenstand", [count, GameData.item_name(item_id)]))
 	else:
 		_say(p, GameData.text("gegenstand_weg", [-count, GameData.item_name(item_id)]))
+
+
+## Ergebnis eines Kampfes: Beim ersten Sieg gibt es die Erfahrung aus data/kaempfe.json, Aufträge zählen mit.
+func _battle_result(p: PlayerState, kampf_id: String, won: bool) -> void:
+	var battle: Dictionary = GameData.get_file("kaempfe").get(kampf_id, {})
+	if battle.is_empty():
+		return
+	if not won:
+		_say(p, GameData.text("kampf_verloren"))
+		return
+	_say(p, GameData.text("kampf_gewonnen", [battle.get("name", kampf_id)]))
+	var flag := "kampf_gewonnen:" + kampf_id
+	if not p.progress.flags.has(flag):
+		p.progress.flags[flag] = true
+		if battle.has("erfahrung"):
+			_give_xp(p, int(battle.erfahrung))
+	_update_quests(p)
+	progress_changed.emit(p.id)
 
 
 func _say(p: PlayerState, text: String) -> void:

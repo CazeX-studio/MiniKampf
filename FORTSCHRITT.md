@@ -36,6 +36,7 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
 | 7 | Steuerung in der Welt: Tasten (PC), Steuerknopf und Aktions-Knopf (Handy) | erledigt |
 | 8 | Kreuzweg-Demo Schritt 1: Bausteine (siehe KREUZWEG_PLAN.md) | erledigt |
 | 9 | Kreuzweg-Demo Schritt 2: Ankunft (Gilde, Ye, erster Auftrag) | erledigt |
+| 10 | Kreuzweg-Demo Schritt 3: Grundausbildung (Lektionen, erster Gruppenkampf) | erledigt |
 
 ## Aufgaben der Runde 1
 
@@ -135,6 +136,28 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
   - **Platzhalter:** Alle Texte von Erzähler, Gildenschreiberin, Ye und Schmiedin sind Platzhalter –
     **Marco schreibt die Dialoge der Hauptfiguren noch** (`data/dialoge.json`).
   - Automatischer Test `tests/welt_test.gd` spielt den ganzen Ablauf durch (41 Prüfungen): alles richtig.
+  - Namen nach deiner Antwort: Die Gildenschreiberin heißt **Lene**, die Schmiedin **Marta**.
+
+- **Schritt 10 – Kreuzweg-Demo, Grundausbildung** (Schritt 3 aus `KREUZWEG_PLAN.md`, Stufe 2–5):
+  - Nach Ye's erstem Auftrag steht er **am Stadttor** (in der Gilde ist er dann nicht mehr).
+  - **Vier Lektionen**, jede ein eigener Kampf auf dem Kampfbildschirm, danach geht es zurück in die Stadt:
+    1. **Tempo-Leiste** gegen einen Feldschleim (nur „Schlag“),
+    2. **Fähigkeiten** (neu: Kraftschlag und Erste Hilfe, Mana und Abklingzeit),
+    3. **Parieren** gegen Ye selbst mit Übungsschwert – bestanden nach **zwei perfekten Paraden** („Schild hoch, Schild runter“),
+    4. **Zwei Reihen** gegen einen Rüpelkobold (neu: „Nach hinten“).
+  - **Erklär-Fenster** („Ye erklärt“) halten den Kampf an, bis du „Verstanden“ antippst. Die Erklärung zum Parieren
+    kommt, bevor der erste Schlag losgeht, damit der Ring zum Schlag passt.
+  - **Erster Gruppenkampf:** du mit den Novizen **Ida, Bo und Tom** (der Computer steuert sie) gegen vier Kobolde.
+  - Du kämpfst als **Novize** (noch keine Klasse, keine Ult): mit jeder Stufe etwas mehr Leben und Mana.
+  - Erfahrung gibt es beim **ersten** Sieg jeder Lektion. Verlieren ist nicht schlimm: „Nochmal versuchen“ oder später
+    wieder mit Ye reden. „Aufgeben“ oben rechts bringt dich zurück in die Stadt.
+  - Am Ende: **Stufe 5**, 75 Gold, 3 Heiltränke. Ye kündigt an, dass in der Stadt bald einiges los ist (Schritt 4: Marv und Bingo).
+  - Neue Gegner: Feldschleim, Wiesenkobold, Rüpelkobold (zähmbar wie alle normalen Monster).
+  - **Platzhalter:** alle Texte (Ye, Erklärungen, Ida, Bo, Tom); als Hintergrund dient noch das Gewölbe der Sandbox,
+    nicht die Wiese vor dem Stadttor.
+  - **Tests:** Der Computer hat jede Lektion und den Gruppenkampf je 30-mal gespielt: alles läuft, alles ist für
+    Anfänger schaffbar (Zahlen vorläufig). Welt-Test mit der ganzen Grundausbildung und ein Test für den echten Wechsel
+    Stadt → Kampf → Stadt: alles richtig. Die 75 Sandbox-Kämpfe laufen unverändert.
     sie mit. (Im fertigen Spiel ist der erste Abschluss der über den Auftrag.) Auch in design.md eingetragen.
 
 ## Fertig in Runde 1
@@ -192,6 +215,13 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
    Prüfe, ob das Ziel oben mitzählt.
 5. Bei Ye abgeben: Danach solltest du Stufe 2, 25 Gold und einen Heiltrank haben, und Ye erwähnt die Grundausbildung.
 
+**Neu: Grundausbildung** (Kreuzweg-Demo, nach Ye's erstem Auftrag)
+1. Prüfe, ob Ye nach seinem ersten Auftrag am Stadttor (unten, wo du angekommen bist) mit „!“ steht. Sprich ihn an.
+2. Lektion 1 und 2 spielen: Erscheinen die Erklär-Fenster, und geht es danach zurück in die Stadt?
+3. Lektion 3: Ye greift an, tippe, wenn der Ring grün wird. Prüfe, ob die Lektion nach zwei Paraden bestanden ist.
+4. Lektion 4: „Nach hinten“ ausprobieren. Bekommst du hinten weniger Schaden?
+5. Gruppenkampf mit Ida, Bo und Tom gewinnen und bei Ye abgeben: Danach solltest du Stufe 5 haben.
+
 
 **1. Kampf-Sandbox** (Menü → „Kampf-Sandbox“)
 - Wie bisher: bis zu 4 Klassen wählen, Gegner wählen, kämpfen, am Ende die Auswertung ansehen.
@@ -235,7 +265,8 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
   Zähmen (unter 50 % Leben, Chance = fehlendes Leben, halbes Leben auf der Bank, höchstens 5 Monster).
 ## Als Nächstes (Vorschläge)
 
-- Kreuzweg-Demo nach `KREUZWEG_PLAN.md`: als Nächstes Schritt 3 (Grundausbildung: Kämpfe vor der Stadt, Tutorial, erster Gruppenkampf).
+- Kreuzweg-Demo nach `KREUZWEG_PLAN.md`: als Nächstes Schritt 4 (Marv nach dem Tutorial und Bingos Laden mit der zu teuren Sternentafel).
+- Hintergrund für Kämpfe vor der Stadt (Wiese statt Gewölbe).
 - Dialoge der Hauptfiguren: Marco schreibt sie; Platzhalter stehen in `data/dialoge.json`.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).
 

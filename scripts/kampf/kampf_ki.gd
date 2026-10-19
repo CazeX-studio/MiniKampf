@@ -1,6 +1,6 @@
 class_name KampfKI
 extends RefCounted
-## Einfacher Computer-Spieler für automatische Testkämpfe.
+## Einfacher Computer-Spieler: für automatische Testkämpfe und die Novizen-Mitstreiter in der Kreuzweg-Demo.
 ## Entscheidet nur mit seinem eigenen Zufall (fester Startwert), damit Testläufe wiederholbar sind.
 ## "rules" ist das Objekt mit abilities / blocked_reason / choice_blocked / valid_targets (Skills).
 

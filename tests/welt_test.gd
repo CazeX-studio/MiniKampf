@@ -133,6 +133,43 @@ func _test_building_blocks() -> void:
 	world.apply_command("a", {type = "dialog_next"})
 	_check(not p.in_dialog() and world.objective(p) == "", "Alles erledigt, kein offenes Ziel")
 
+	# Grundausbildung: Ye steht jetzt am Stadttor
+	_check(not world.npc_visible(p, "ye") and world.npc_visible(p, "ye_tor"), "Ye ist von der Gilde ans Stadttor gegangen")
+	_check(world.npc_marker(p, "ye_tor") == "!", "Zeichen ! über Ye am Tor")
+	var battles: Array[String] = []
+	world.battle_requested.connect(func(_id: String, kampf: String) -> void: battles.append(kampf))
+	_talk(world, p, "ye_tor")
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(p.progress.quest_state("grundausbildung") == "aktiv", "Grundausbildung angenommen")
+	for lesson: String in ["lektion_tempo", "lektion_faehigkeiten", "lektion_parieren", "lektion_reihen"]:
+		if not p.in_dialog():
+			_talk(world, p, "ye_tor")
+		world.apply_command("a", {type = "dialog_choose", index = 0})
+		_check(battles.back() == lesson and not p.in_dialog(), "Ye startet " + lesson)
+		# Verlieren zählt nicht, gewinnen schon
+		world.apply_command("a", {type = "kampf_ergebnis", kampf = lesson, gewonnen = false})
+		_check(not world.goal_done(p, {art = "kampf", kampf = lesson}), lesson + " verloren: noch nicht bestanden")
+		world.apply_command("a", {type = "kampf_ergebnis", kampf = lesson, gewonnen = true})
+		_check(world.goal_done(p, {art = "kampf", kampf = lesson}), lesson + " gewonnen: bestanden")
+	_check(p.progress.quest_state("grundausbildung") == "fertig", "Alle vier Lektionen bestanden")
+	var xp_before := p.progress.xp
+	world.apply_command("a", {type = "kampf_ergebnis", kampf = "lektion_tempo", gewonnen = true})
+	_check(p.progress.xp == xp_before, "Erfahrung gibt es nur beim ersten Sieg")
+	_talk(world, p, "ye_tor")
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(p.progress.quest_state("grundausbildung") == "abgegeben", "Grundausbildung abgegeben")
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(p.progress.quest_state("erster_gruppenkampf") == "aktiv" and battles.back() == "gruppenkampf", "Gruppenkampf beginnt")
+	world.apply_command("a", {type = "kampf_ergebnis", kampf = "gruppenkampf", gewonnen = true})
+	_check(world.npc_marker(p, "ye_tor") == "?", "Zurück zu Ye nach dem Gruppenkampf")
+	_talk(world, p, "ye_tor")
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(p.progress.quest_state("erster_gruppenkampf") == "abgegeben", "Gruppenkampf abgegeben")
+	_check(p.progress.xp == 700 and p.progress.level == 5, "Nach der Grundausbildung: Stufe 5 (700 Erfahrung)")
+	_check(p.progress.item_count("heiltrank") == 3 and p.progress.gold == 75, "Belohnungen: 3 Heiltränke, 75 Gold")
+	world.apply_command("a", {type = "dialog_next"})
+	_check(not p.in_dialog() and world.objective(p) == "", "Grundausbildung vorbei, kein offenes Ziel")
+
 	# Stufen bis 10, nicht weiter
 	p.progress.add_xp(100000)
 	_check(p.progress.level == 10 and p.progress.xp_range().y == -1, "Höchststufe ist 10")

@@ -6,12 +6,18 @@ extends Node
 var ki: KampfKI
 var protokoll := KampfProtokoll.new()
 var start_seed := 1
+## Kampf aus der Kreuzweg-Demo (BattleRequest.setup); leer = Sandbox-Kampf
+var setup := {}
 var state: BattleState
 
 
 func _ready() -> void:
 	ki = KampfKI.new(start_seed + 1000)
-	state = BattleState.new(self, Sandbox.team, Sandbox.encounter, start_seed)
+	if setup.is_empty():
+		state = BattleState.new(self, Sandbox.team, Sandbox.encounter, start_seed)
+	else:
+		state = BattleState.new(self, [] as Array[String], "", start_seed)
+		state.setup = setup
 	state.max_turns = KampfProtokoll.MAX_TURNS
 	state.run()
 

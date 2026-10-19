@@ -17,6 +17,8 @@ var display_name: String
 ## Kennung: Klasse (tank, archer …), Begleiter (robot, moosling …) oder Gegner-Art (glutkobold, boss …)
 var klass: String
 var class_title: String
+## Welche Pixel-Figur gezeigt wird ("" = die der Klasse), z. B. für Novizen-Mitstreiter
+var look := ""
 var is_hero: bool
 ## Begleiter (Roboter, Monster) kämpfen für einen Helden ("owner").
 var owner: Fighter
@@ -188,3 +190,8 @@ func add_shield(source: Fighter, amount: int) -> void:
 
 func row_name() -> String:
 	return "hinten" if back_row else "vorne"
+
+
+## Schlüssel für das Aussehen (FighterView.LOOKS).
+func look_key() -> String:
+	return look if look != "" else klass

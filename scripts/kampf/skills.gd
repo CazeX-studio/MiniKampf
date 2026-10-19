@@ -206,6 +206,12 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 				{id = "smoke", name = "Rauchbombe", info = "Nächster Angriff auf jeden verfehlt · 12 Mana", target = "none", mana = 12, cd = 3},
 				{id = "ult", name = "Tausend Siegel", info = "Jeder Gegner 22 mit seiner Schwäche, alle +18 LP", target = "none"},
 			]
+		"novize":
+			list = [
+				{id = "schlag", name = "Schlag", info = "12 Nahkampf", target = "enemy"},
+				{id = "kraftschlag", name = "Kraftschlag", info = "20 Nahkampf · 10 Mana", target = "enemy", mana = 10, cd = 2},
+				{id = "erste_hilfe", name = "Erste Hilfe", info = "Heilt 22 · 12 Mana", target = "ally", mana = 12, cd = 2},
+			]
 		"singer":
 			var lullaby_info := "Heilt 24, +1 Schutz-Sternbild · 8 Mana"
 			if f.res_def >= Fighter.MAX_RES:
@@ -233,7 +239,7 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 					{id = "pet_guard", name = "Beschützen", info = "Zieht 2 Angriffe auf sich, Abwehr+", target = "none", cd = 2},
 				]
 	if f.is_hero:
-		for duet in Sandbox.active_duets(Sandbox.team):
+		for duet in Sandbox.active_duets(c.team):
 			if f.klass == duet.a or f.klass == duet.b:
 				var partner: String = duet.b if f.klass == duet.a else duet.a
 				list.append({id = duet.id, name = duet.name, info = duet.info, target = duet.target, duet = true, partner = partner})
@@ -241,6 +247,10 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 			list.append_array(c.dungeon.extra_abilities(f))
 		var row_name := "Nach vorne" if f.back_row else "Nach hinten"
 		list.append({id = "row", name = row_name, info = "Reihe wechseln (kostet den Zug)", target = "none"})
+	# Grundausbildung: nur die Fähigkeiten, die die Lektion schon erlaubt
+	var allowed: Array = c.setup.get("erlaubt", [])
+	if not allowed.is_empty() and f.is_hero:
+		list = list.filter(func(ab: Dictionary) -> bool: return ab.id in allowed)
 	return list
 
 
@@ -402,6 +412,8 @@ func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 			_quartermaster(f, id, target, ab)
 		"kunoichi":
 			_kunoichi(f, id, target, ab)
+		"novize":
+			_novize(f, id, target)
 		"singer":
 			_singer(f, id, target)
 		_:
@@ -1131,6 +1143,9 @@ func on_perfect_reaction(h: Fighter, attacker: Fighter) -> void:
 		"blade":
 			_add_blades(h, 1)
 			c.float_text(h, "PARIERT! +1 Klinge", Color("ffd0a0"))
+		"novize":
+			c.float_text(h, "PARIERT!", Color("8affc1"))
+			c.hop(h)
 		"kunoichi":
 			c.float_text(h, "AUSGEWICHEN! Konter!", Color("ff7fb0"))
 			c.hop(h)
@@ -1244,3 +1259,17 @@ func enemy_intent(e: Fighter) -> String:
 	var data: Dictionary = Sandbox.ENEMIES[e.klass]
 	var attack: Dictionary = data.attacks[e.step % data.attacks.size()]
 	return "Nächster Zug: %s%s" % [attack.name, " (alle!)" if attack.get("all", false) else ""]
+
+
+# --- Novize (Kreuzweg-Demo) ---------------------------------------------------
+
+func _novize(f: Fighter, id: String, target: Fighter) -> void:
+	match id:
+		"schlag":
+			c.lunge(f, target, 0.25)
+			c.hit(f, target, 12, "melee")
+		"kraftschlag":
+			c.lunge(f, target, 0.3)
+			c.hit(f, target, 20, "melee")
+		"erste_hilfe":
+			c.heal(f, target, 22)

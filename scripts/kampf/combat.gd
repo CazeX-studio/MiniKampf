@@ -51,6 +51,9 @@ var _react_target: Fighter
 var _react_feedback := ""
 ## Ob das Aufblitzen zu Beginn des Zeitfensters schon gezeigt wurde.
 var _react_glint := false
+## Computer-Spieler für Novizen-Mitstreiter und schon gezeigte Erklär-Fenster
+var _ki := KampfKI.new(randi())
+var _hints_shown := {}
 
 var _field: Control
 var _ring_layer: Control
@@ -72,8 +75,75 @@ func _ready() -> void:
 	add_log("Bei Gegner-Angriffen: tippen, wenn sich der [color=#f2c14e]Ring[/color] schließt!")
 	# Entscheidungen fallen nur beim ersten Abschluss; danach gilt die gespeicherte Wahl
 	Sandbox.pilz_choice = SaveGame.get_flag(PILZ_CHOICE_FLAG)
-	state = BattleState.new(self, Sandbox.team, Sandbox.encounter, randi())
+	if BattleRequest.active():
+		# Kampf aus der Kreuzweg-Demo (Lektion, Gruppenkampf)
+		state = BattleState.new(self, [] as Array[String], "", randi())
+		state.setup = BattleRequest.setup
+	else:
+		state = BattleState.new(self, Sandbox.team, Sandbox.encounter, randi())
 	state.run()
+
+
+## Name des Kampfes für die Auswertung.
+func _battle_name() -> String:
+	if not state.setup.is_empty():
+		return state.setup.get("name", "")
+	return Sandbox.ENCOUNTERS[state.encounter].name
+
+
+## Zurück in die Stadt (Kampf aus der Kreuzweg-Demo).
+func _back_to_world(won: bool) -> void:
+	BattleRequest.finish(won)
+	get_tree().change_scene_to_file("res://scenes/kreuzweg.tscn")
+
+
+## Erklärung zur Reaktion zeigen, BEVOR der erste Gegner-Angriff auf den Spieler losgeht
+## (sonst passt der Ring nicht mehr zum Schlag).
+func _attack_hint(target: Fighter) -> void:
+	if target.is_ally() and not state.computer.has(target) and target.reaction != "":
+		await _show_hint("erste_reaktion")
+
+
+## Erklär-Fenster der Grundausbildung: Der Kampf wartet, bis „Verstanden“ angetippt wird.
+func _show_hint(key: String) -> void:
+	var hints: Dictionary = state.setup.get("hinweise", {})
+	if _hints_shown.has(key) or not hints.has(key):
+		return
+	_hints_shown[key] = true
+	var panel := PanelContainer.new()
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.04, 0.05, 0.11, 0.96)
+	style.border_color = Color("8affc1")
+	style.set_border_width_all(2)
+	style.set_corner_radius_all(4)
+	style.set_content_margin_all(16)
+	panel.add_theme_stylebox_override("panel", style)
+	panel.position = Vector2(300, 150)
+	panel.size = Vector2(680, 0)
+	panel.z_index = 40
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 10)
+	panel.add_child(box)
+	var title := Label.new()
+	title.text = "Ye erklärt"
+	title.add_theme_font_size_override("font_size", 20)
+	title.add_theme_color_override("font_color", Color("8affc1"))
+	box.add_child(title)
+	var text := Label.new()
+	text.text = hints[key]
+	text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	text.custom_minimum_size = Vector2(640, 0)
+	text.add_theme_font_size_override("font_size", 18)
+	box.add_child(text)
+	var ok := Button.new()
+	ok.text = GameData.text("verstanden")
+	ok.custom_minimum_size = Vector2(180, 48)
+	ok.size_flags_horizontal = Control.SIZE_SHRINK_END
+	ok.add_theme_font_size_override("font_size", 18)
+	box.add_child(ok)
+	add_child(panel)
+	await ok.pressed
+	panel.queue_free()
 
 
 ## Beim Verlassen des Kampfes Verweise lösen, sonst bleiben die Teilnehmer im Speicher liegen.
@@ -131,11 +201,13 @@ func _play_event(event: Dictionary) -> void:
 			if event.blocking:
 				await projectile(event.from, event.to, event.color, event.duration)
 			else:
+				await _attack_hint(event.to)
 				projectile(event.from, event.to, event.color, event.duration)
 		"lunge":
 			if event.blocking:
 				await lunge(event.f, event.target, event.duration)
 			else:
+				await _attack_hint(event.target)
 				lunge(event.f, event.target, event.duration)
 		"wait":
 			await wait(event.seconds)
@@ -225,6 +297,12 @@ func view(f: Fighter) -> FighterView:
 
 ## Der Zustand fragt: Was macht diese Figur? Antwort kommt, sobald Fähigkeit und Ziel angetippt sind.
 func choose_action(f: Fighter) -> Dictionary:
+	# Novizen-Mitstreiter handeln selbst (Computer)
+	if state.computer.has(f):
+		_turn_label.text = "%s ist am Zug" % f.display_name
+		await wait(0.6)
+		return _ki.choose(state.skills, f)
+	await _show_hint("erster_zug")
 	_show_actions(f)
 	var command: Dictionary = await _action_chosen
 	return command
@@ -247,7 +325,10 @@ func choose_option(title: String, options: Array[Dictionary]) -> String:
 
 func _show_actions(f: Fighter) -> void:
 	_clear_actions()
-	_turn_label.text = "%s (%s) ist am Zug" % [f.display_name, f.class_title]
+	if f.display_name == "Du":
+		_turn_label.text = "Du bist am Zug"
+	else:
+		_turn_label.text = "%s (%s) ist am Zug" % [f.display_name, f.class_title]
 	var list := state.skills.abilities(f)
 	# Mehr als 8 Knöpfe (z. B. mit Dungeon-Aktionen): kleiner, damit 3 Reihen passen
 	var compact := list.size() > 8
@@ -351,6 +432,11 @@ func _on_fighter_tapped(target: Fighter) -> void:
 ## Zeigt den schrumpfenden Ring und die Zeitleiste. Gibt true zurück,
 ## wenn im richtigen Moment getippt wurde.
 func react(attacker: Fighter, target: Fighter, duration: float) -> bool:
+	# Mitstreiter des Computers reagieren selbst, ohne Ring
+	if state.computer.has(target):
+		await wait(duration + REACT_LATE)
+		return _ki.react()
+	await _show_hint("erste_reaktion")
 	_react_target = target
 	_react_duration = duration
 	_react_press = -1.0
@@ -657,11 +743,14 @@ func _build_ui() -> void:
 	add_child(_order_box)
 
 	var menu := Button.new()
-	menu.text = "Auswahl"
+	menu.text = GameData.text("aufgeben") if BattleRequest.active() else "Auswahl"
 	menu.position = Vector2(1170, 16)
 	menu.size = Vector2(96, 44)
 	menu.add_theme_font_size_override("font_size", 16)
-	menu.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/auswahl.tscn"))
+	if BattleRequest.active():
+		menu.pressed.connect(func() -> void: _back_to_world(false))
+	else:
+		menu.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/auswahl.tscn"))
 	add_child(menu)
 
 	# Untere Leiste: Kampf-Log links, Fähigkeiten rechts
@@ -802,13 +891,13 @@ func refresh() -> void:
 		chip.add_child(row)
 		# Kleines Bild der Figur
 		var portrait := TextureRect.new()
-		portrait.texture = FighterView.portrait(f.klass)
+		portrait.texture = FighterView.portrait(f.look_key())
 		portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		portrait.custom_minimum_size = Vector2(24, 48)
 		portrait.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		portrait.flip_h = f.is_ally()
-		portrait.self_modulate = FighterView.tint(f.klass)
+		portrait.self_modulate = FighterView.tint(f.look_key())
 		row.add_child(portrait)
 		var label := Label.new()
 		label.text = ("JETZT\n" if i == 0 else "") + f.display_name
@@ -843,7 +932,7 @@ func _show_end_screen(won: bool) -> void:
 	shade.add_child(title)
 
 	var sub := Label.new()
-	sub.text = "Kampfauswertung · %d Züge · Welle %d von %d · %s" % [state.turns, state.wave + 1, state.waves.size(), Sandbox.ENCOUNTERS[state.encounter].name]
+	sub.text = "Kampfauswertung · %d Züge · Welle %d von %d · %s" % [state.turns, state.wave + 1, state.waves.size(), _battle_name()]
 	if won and state.dungeon != null:
 		sub.text += (" · Urbaum gefällt" if Sandbox.pilz_choice == "faellen" else " · Urbaum gerettet") + " · Belohnung: Sternensplitter"
 	sub.add_theme_font_size_override("font_size", 18)
@@ -893,6 +982,9 @@ func _show_end_screen(won: bool) -> void:
 	hint.position = Vector2(0, 470)
 	shade.add_child(hint)
 
+	if BattleRequest.active():
+		_world_buttons(shade, won)
+		return
 	var again := Button.new()
 	again.text = "Nochmal (gleiches Team)"
 	again.add_theme_font_size_override("font_size", 22)
@@ -907,6 +999,25 @@ func _show_end_screen(won: bool) -> void:
 	change.position = Vector2(660, 560)
 	change.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/auswahl.tscn"))
 	shade.add_child(change)
+
+
+## Knöpfe am Ende eines Kampfes aus der Kreuzweg-Demo: zurück in die Stadt, bei Niederlage auch nochmal.
+func _world_buttons(shade: Control, won: bool) -> void:
+	var back := Button.new()
+	back.text = GameData.text("zurueck_kreuzweg")
+	back.add_theme_font_size_override("font_size", 22)
+	back.size = Vector2(330, 72)
+	back.position = Vector2(660 if not won else 475, 560)
+	back.pressed.connect(func() -> void: _back_to_world(won))
+	shade.add_child(back)
+	if not won:
+		var again := Button.new()
+		again.text = GameData.text("nochmal")
+		again.add_theme_font_size_override("font_size", 22)
+		again.size = Vector2(330, 72)
+		again.position = Vector2(290, 560)
+		again.pressed.connect(func() -> void: get_tree().reload_current_scene())
+		shade.add_child(again)
 
 
 func _cell(text: String, color: Color, font_size: int) -> Label:

@@ -11,6 +11,7 @@ Nach jeder Zeile außer der letzten in einer Gruppe kommt ein Komma.
 | `auftraege.json` | Aufträge: Titel, Beschreibung, Ziele, Belohnung |
 | `gegenstaende.json` | Gegenstände: Name, Beschreibung, Preis |
 | `stufen.json` | Erfahrung, die für Stufe 1 bis 10 nötig ist |
+| `kaempfe.json` | Kämpfe aus der Stadt (Lektionen, Gruppenkampf): Gegner, erlaubte Fähigkeiten, Erklärungen, Erfahrung |
 | `texte.json` | Kurze Meldungen im Spiel („Neuer Auftrag“, „Stufe erreicht“ …) |
 
 ## Dialoge (`dialoge.json`)
@@ -44,3 +45,14 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
 - **Bedingungen** dürfen mehrere Teile haben, z. B. `{"auftrag": "erster_auftrag", "stand": "aktiv", "nicht_gemerkt": "schmiedin_bescheid"}` – dann muss alles stimmen.
 - **`kreuzweg.json` → `start`:** wo neue Spieler die Stadt betreten und welcher Dialog dabei kommt
   (`nur_wenn_nicht_gemerkt`: nur beim ersten Mal).
+
+## Kämpfe (seit Schritt 3, `kaempfe.json`)
+
+- Jeder Kampf hat `name`, `ansage` (erste Zeile im Kampf-Log), `wellen` (Gegner-Kennungen aus `scripts/kampf/sandbox.gd`),
+  `erlaubt` (welche Fähigkeiten der Novize schon hat: `schlag`, `kraftschlag`, `erste_hilfe`, `row` = Reihe wechseln),
+  `erfahrung` (gibt es nur beim ersten Sieg), optional `begleiter` (Novizen-Mitstreiter, der Computer steuert sie),
+  `ziel_paraden` (gewonnen nach so vielen perfekten Paraden) und `hinweise` (Erklär-Fenster:
+  `erster_zug` = vor deinem ersten Zug, `erste_reaktion` = vor dem ersten Angriff auf dich).
+- **Aktion** `{"kampf": "lektion_tempo"}` im Dialog startet den Kampf.
+- **Ziel-Art** `{"art": "kampf", "kampf": "lektion_tempo", "bei": "ye_tor", "text": "…"}` ist erfüllt, sobald der Kampf gewonnen ist.
+- **NPCs** können `"wenn"` haben: Sie sind nur da, wenn die Bedingung stimmt (so steht Ye erst in der Gilde, später am Tor).

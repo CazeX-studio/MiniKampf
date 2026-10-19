@@ -18,5 +18,11 @@
 	"stand_fertig": "erfüllt – abgeben!",
 	"stand_abgegeben": "abgeschlossen",
 	"weiter": "Weiter",
-	"neu_beginnen": "Neu beginnen"
+	"neu_beginnen": "Neu beginnen",
+	"kampf_gewonnen": "Geschafft: %s",
+	"kampf_verloren": "Verloren … Sprich mit Ye, um es nochmal zu versuchen.",
+	"verstanden": "Verstanden",
+	"zurueck_kreuzweg": "Zurück nach Kreuzweg",
+	"nochmal": "Nochmal versuchen",
+	"aufgeben": "Aufgeben"
 }

@@ -23,6 +23,9 @@ const DEF_BUFF := 0.7
 const VULN_MULT := 1.3
 ## Zwischen zwei Wellen heilen sich die Helden um diesen Anteil.
 const WAVE_HEAL := 0.25
+## Pro Stufe über 1 bekommt ein Held so viel mehr Leben und Mana (Novize in der Kreuzweg-Demo).
+const LEVEL_HP := 10
+const LEVEL_MANA := 4
 
 ## Boss-Werte
 const BOSS_FIST := 23
@@ -55,6 +58,11 @@ var encounter := ""
 var waves: Array = []
 var wave := 0
 var turns := 0
+## Kampf aus der Welt (Kreuzweg-Demo) statt aus der Sandbox: {name, helden: [{klasse, name, aussehen, stufe, computer}],
+## wellen: [[Gegner …]], erlaubt: [Fähigkeiten]}. Leer = Sandbox (Team und Gegner aus der Auswahl).
+var setup := {}
+## Helden, die der Computer steuert (Novizen-Mitstreiter): Fighter -> true
+var computer := {}
 
 var _events: Array[Dictionary] = []
 var _last_crit := false
@@ -72,6 +80,11 @@ func _init(p_controller: Object, p_team: Array[String], p_encounter: String, p_s
 ## Startet den Kampf und läuft, bis er vorbei ist.
 func run() -> void:
 	_create_heroes()
+	if setup.has("wellen"):
+		waves = setup.wellen
+		_spawn_wave(0)
+		await _battle_loop()
+		return
 	waves = Sandbox.ENCOUNTERS[encounter].waves
 	if Sandbox.ENCOUNTERS[encounter].get("dungeon", "") == "pilzhoehle":
 		dungeon = Pilzhoehle.new(self)
@@ -211,15 +224,27 @@ func pick(list: Array) -> Variant:
 # --- Teilnehmer ---------------------------------------------------------------
 
 func _create_heroes() -> void:
-	for i in team.size():
-		var id: String = team[i]
+	var specs: Array = setup.get("helden", [])
+	if specs.is_empty():
+		for id in team:
+			specs.append({klasse = id})
+	for i in specs.size():
+		var spec: Dictionary = specs[i]
+		var id: String = spec.klasse
 		var data: Dictionary = Sandbox.CLASSES[id]
-		var h := Fighter.new(data.hero, id, data.title, true, data.hp, data.tempo, data.color)
-		h.max_mana = data.mana
-		h.mana = data.get("start_mana", data.mana)
+		# Höhere Stufe (Novize in der Kreuzweg-Demo): etwas mehr Leben und Mana
+		var level_bonus := int(spec.get("stufe", 1)) - 1
+		var h := Fighter.new(spec.get("name", data.hero), id, data.title, true, data.hp + LEVEL_HP * level_bonus, data.tempo, data.color)
+		h.look = spec.get("aussehen", "")
+		h.max_mana = data.mana + LEVEL_MANA * level_bonus if data.mana > 0 else 0
+		h.mana = data.get("start_mana", h.max_mana)
 		h.reaction = data.reaction
 		h.back_row = data.back
 		heroes.append(h)
+		if setup.has("helden"):
+			team.append(id)
+		if spec.get("computer", false):
+			computer[h] = true
 		skills.setup_hero(h)
 		_emit({type = "spawn", f = h, place = "hero", index = i, hp = h.hp})
 		h.next_time = h.turn_delay() * zufall_range(0.2, 1.0)
@@ -266,7 +291,9 @@ func _spawn_wave(index: int) -> void:
 	spawn_enemies(ids)
 	if waves.size() > 1:
 		add_log("\n[b]Welle %d von %d[/b]" % [index + 1, waves.size()])
-	if dungeon != null:
+	if setup.has("ansage"):
+		add_log("[b]%s[/b]" % setup.ansage)
+	elif dungeon != null:
 		dungeon.on_wave(index)
 	elif "boss" in ids:
 		add_log("[b]Ein Steinwächter (Erde) und seine Begleiter greifen an![/b]")
@@ -442,6 +469,12 @@ func _check_end() -> bool:
 		dungeon.check_phase()
 	var lost := alive(heroes).is_empty()
 	var cleared := alive(enemies).is_empty()
+	# Paraden-Lektion: gewonnen, sobald der Spieler oft genug perfekt pariert hat
+	var parries_needed := int(setup.get("ziel_paraden", 0))
+	if parries_needed > 0 and not lost and heroes[0].stat_perfect >= parries_needed:
+		add_log("[color=#8affc1][b]%d perfekte Paraden – Lektion bestanden![/b][/color]" % parries_needed)
+		cleared = true
+		wave = waves.size() - 1
 	if cleared and not lost and wave < waves.size() - 1:
 		_next_wave()
 		return false
@@ -621,7 +654,10 @@ func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String
 	var names: Array[String] = []
 	for t in targets:
 		names.append(t.display_name)
-	add_log("%s: [b]%s[/b] (%s) auf %s" % [e.display_name, attack_name, e.element, ", ".join(names)])
+	if e.element == "":
+		add_log("%s: [b]%s[/b] auf %s" % [e.display_name, attack_name, ", ".join(names)])
+	else:
+		add_log("%s: [b]%s[/b] (%s) auf %s" % [e.display_name, attack_name, e.element, ", ".join(names)])
 	status("%s: %s!" % [e.display_name, attack_name])
 
 	var reactors := targets.filter(func(h: Fighter) -> bool: return h.reaction != "" and h.smoke == 0)

@@ -100,6 +100,14 @@ const CLASSES := {
 		reaction_text = "Ausweichen: +1 Resonanz in beide",
 		ult = "Himmelszelt · lädt durch verbrauchte Resonanz",
 	},
+	# Novize: Spielfigur der Kreuzweg-Demo vor der Klassenwahl (nicht in der Sandbox-Auswahl)
+	"novize": {
+		hero = "Novize", title = "Novize", role = "Schaden", region = "Kreuzweg", color = Color("8affc1"),
+		hp = 90, mana = 40, tempo = 11, back = false, reaction = "parry",
+		mechanic = "Grundlagen: Schlag, Kraftschlag, Erste Hilfe. Noch keine Klasse.",
+		reaction_text = "Parieren",
+		ult = "keine (kommt mit der Klasse)",
+	},
 }
 
 ## Duett-Fähigkeiten: Klassen-Paare aus derselben Region (Sternentanz: Sternensängerin + Tänzerin).
@@ -173,6 +181,18 @@ const ENEMIES := {
 	"knoten_vorne": {name = "Knoten vorne", element = "Sternenkraft", hp = 40, tempo = 1, passive = true},
 	"knoten_hinten": {name = "Knoten hinten", element = "Sternenkraft", hp = 40, tempo = 1, passive = true},
 	"vorbote": {name = "Der Vorbote", element = "Schatten", hp = 240, tempo = 10, big = true},
+	# Vor dem Stadttor (Grundausbildung in der Kreuzweg-Demo)
+	"feldschleim": {name = "Feldschleim", element = "Wasser", hp = 40, tempo = 8,
+		attacks = [{name = "Schleimstoß", base = 6, kind = "melee"}],
+		tame = {name = "Schleimstoß", base = 8, kind = "melee"}},
+	"wiesenkobold": {name = "Wiesenkobold", element = "Erde", hp = 36, tempo = 12,
+		attacks = [{name = "Stockhieb", base = 7, kind = "melee"}, {name = "Steinwurf", base = 6, kind = "ranged"}],
+		tame = {name = "Stockhieb", base = 9, kind = "melee"}},
+	"ruepelkobold": {name = "Rüpelkobold", element = "Feuer", hp = 80, tempo = 9,
+		attacks = [{name = "Keulenschlag", base = 15, kind = "melee"}],
+		tame = {name = "Keulenschlag", base = 13, kind = "melee"}},
+	"uebungs_ye": {name = "Ausbilder Ye", element = "", hp = 999, tempo = 12, title = "Ausbilder Ye",
+		attacks = [{name = "Übungsschwert", base = 7, kind = "melee"}]},
 }
 
 ## Kämpfe zur Auswahl. Jede Welle ist eine Liste von Gegnern.

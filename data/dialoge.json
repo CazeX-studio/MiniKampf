@@ -60,8 +60,8 @@
 				{"text": "Hier sind die Kräuter. Marta weiß Bescheid.", "weiter": "dank", "aktionen": [{"auftrag_abgeben": "erster_auftrag"}]}
 			]},
 			"dank": {"wer": "Ye", "text": "Gut. Du hörst zu und findest dich zurecht. Das ist mehr, als die meisten Novizen am ersten Tag schaffen.", "weiter": "dank2"},
-			"dank2": {"wer": "Ye", "text": "Morgen früh vor dem Stadttor beginnt deine Grundausbildung. Schlaf gut."},
-			"danach": {"wer": "Ye", "text": "Morgen früh, vor dem Stadttor. Schild hoch, Schild runter."}
+			"dank2": {"wer": "Ye", "text": "Morgen früh vor dem Stadttor beginnt deine Grundausbildung. Schlaf gut.", "aktionen": [{"merken": "ausbildung_morgen"}]},
+			"danach": {"wer": "Ye", "text": "Morgen früh, vor dem Stadttor. Schild hoch, Schild runter.", "aktionen": [{"merken": "ausbildung_morgen"}]}
 		}
 	},
 	"schmiedin": {
@@ -73,6 +73,59 @@
 		"knoten": {
 			"bote": {"wer": "Marta", "text": "Ye schickt dich? Dann will er seine Übungsschwerter. Sag ihm, sie liegen morgen früh am Stadttor.", "aktionen": [{"merken": "schmiedin_bescheid"}]},
 			"allgemein": {"wer": "Marta", "text": "Für Novizen hab ich nur stumpfe Klingen. Komm wieder, wenn du deine Klasse gewählt hast."}
+		}
+	},
+	"ye_tor": {
+		"hinweis": "PLATZHALTER-TEXTE: Ye am Stadttor (Grundausbildung). Marco schreibt die Dialoge der Hauptfiguren noch.",
+		"einstieg": [
+			{"wenn": {"auftrag": "grundausbildung", "stand": "neu"}, "knoten": "morgen"},
+			{"wenn": {"auftrag": "grundausbildung", "stand": "aktiv", "nicht_gemerkt": "kampf_gewonnen:lektion_tempo"}, "knoten": "l1"},
+			{"wenn": {"auftrag": "grundausbildung", "stand": "aktiv", "nicht_gemerkt": "kampf_gewonnen:lektion_faehigkeiten"}, "knoten": "l2"},
+			{"wenn": {"auftrag": "grundausbildung", "stand": "aktiv", "nicht_gemerkt": "kampf_gewonnen:lektion_parieren"}, "knoten": "l3"},
+			{"wenn": {"auftrag": "grundausbildung", "stand": "aktiv", "nicht_gemerkt": "kampf_gewonnen:lektion_reihen"}, "knoten": "l4"},
+			{"wenn": {"auftrag": "grundausbildung", "stand": "fertig"}, "knoten": "abschluss"},
+			{"wenn": {"auftrag": "erster_gruppenkampf", "stand": "neu"}, "knoten": "gruppe"},
+			{"wenn": {"auftrag": "erster_gruppenkampf", "stand": "aktiv"}, "knoten": "gruppe_wartet"},
+			{"wenn": {"auftrag": "erster_gruppenkampf", "stand": "fertig"}, "knoten": "gruppe_abschluss"},
+			{"knoten": "danach"}
+		],
+		"knoten": {
+			"morgen": {"wer": "Ye", "text": "Pünktlich. Gut. Hier vor dem Tor lernst du kämpfen: vier Lektionen, eine nach der anderen.", "antworten": [
+				{"text": "Ich bin bereit.", "weiter": "l1", "aktionen": [{"auftrag_starten": "grundausbildung"}]},
+				{"text": "Gleich, ich muss noch etwas erledigen.", "aktionen": [{"auftrag_starten": "grundausbildung"}]}
+			]},
+			"l1": {"wer": "Ye", "text": "Lektion 1: Wer zuerst handelt, gewinnt oft. Schau dir an, wann du dran bist. Da drüben kriecht ein Feldschleim.", "antworten": [
+				{"text": "Los geht's!", "aktionen": [{"kampf": "lektion_tempo"}]},
+				{"text": "Gleich."}
+			]},
+			"l2": {"wer": "Ye", "text": "Lektion 2: Ein Schlag allein reicht selten. Ich zeige dir zwei Kniffe: Kraftschlag und Erste Hilfe.", "antworten": [
+				{"text": "Zeig her!", "aktionen": [{"kampf": "lektion_faehigkeiten"}]},
+				{"text": "Gleich."}
+			]},
+			"l3": {"wer": "Ye", "text": "Lektion 3. Schild hoch, Schild runter. Im richtigen Moment, nicht früher. Ich greife dich jetzt an.", "antworten": [
+				{"text": "Ich bin bereit.", "aktionen": [{"kampf": "lektion_parieren"}]},
+				{"text": "Gleich."}
+			]},
+			"l4": {"wer": "Ye", "text": "Lektion 4: Vorne trifft man hart und wird hart getroffen. Hinten ist es ruhiger. Such dir den richtigen Platz.", "antworten": [
+				{"text": "Verstanden, los!", "aktionen": [{"kampf": "lektion_reihen"}]},
+				{"text": "Gleich."}
+			]},
+			"abschluss": {"wer": "Ye", "text": "Vier Lektionen, vier Mal gestanden. Nicht schlecht für einen Novizen.", "antworten": [
+				{"text": "Danke, Ye.", "weiter": "gruppe", "aktionen": [{"auftrag_abgeben": "grundausbildung"}]}
+			]},
+			"gruppe": {"wer": "Ye", "text": "Allein kommt da draußen niemand weit. Ida, Bo und Tom sind auch Novizen. Kobolde treiben sich auf der Übungswiese herum – vertreibt sie zusammen.", "antworten": [
+				{"text": "Wir schaffen das!", "aktionen": [{"auftrag_starten": "erster_gruppenkampf"}, {"kampf": "gruppenkampf"}]},
+				{"text": "Gleich.", "aktionen": [{"auftrag_starten": "erster_gruppenkampf"}]}
+			]},
+			"gruppe_wartet": {"wer": "Ye", "text": "Ida, Bo und Tom warten auf dich.", "antworten": [
+				{"text": "Los geht's!", "aktionen": [{"kampf": "gruppenkampf"}]},
+				{"text": "Gleich."}
+			]},
+			"gruppe_abschluss": {"wer": "Ye", "text": "Ihr habt aufeinander aufgepasst. Das ist das Wichtigste, was ich euch beibringen kann.", "antworten": [
+				{"text": "Was kommt jetzt?", "weiter": "ende", "aktionen": [{"auftrag_abgeben": "erster_gruppenkampf"}]}
+			]},
+			"ende": {"wer": "Ye", "text": "Deine Grundausbildung ist vorbei. Ruh dich aus. In der Stadt ist bald einiges los."},
+			"danach": {"wer": "Ye", "text": "Willst du nochmal üben? Komm später wieder. Schild hoch, Schild runter."}
 		}
 	}
 }

@@ -1,0 +1,60 @@
+{
+	"hinweis": "Kämpfe aus der Kreuzweg-Demo. Gegner-Kennungen stehen in scripts/kampf/sandbox.gd (ENEMIES). erlaubt = welche Fähigkeiten der Novize schon hat (row = Reihe wechseln). erfahrung gibt es beim ersten Sieg. Alle Texte sind Platzhalter.",
+	"lektion_tempo": {
+		"name": "Lektion 1: Die Tempo-Leiste",
+		"ansage": "Übungswiese vor dem Stadttor: Ein Feldschleim kriecht heran.",
+		"wellen": [["feldschleim"]],
+		"erlaubt": ["schlag"],
+		"erfahrung": 75,
+		"hinweise": {
+			"erster_zug": "Oben siehst du die Zugleiste: Ganz links steht, wer JETZT dran ist, rechts daneben die nächsten Züge. Schnelle Figuren kommen öfter dran. Jetzt bist du dran: Tippe „Schlag“ und dann den Feldschleim."
+		}
+	},
+	"lektion_faehigkeiten": {
+		"name": "Lektion 2: Fähigkeiten",
+		"ansage": "Ein Feldschleim und ein Wiesenkobold stellen sich dir.",
+		"wellen": [["feldschleim", "wiesenkobold"]],
+		"erlaubt": ["schlag", "kraftschlag", "erste_hilfe"],
+		"erfahrung": 75,
+		"hinweise": {
+			"erster_zug": "Neu: „Kraftschlag“ trifft härter und „Erste Hilfe“ heilt. Beide kosten Mana (blaue Leiste) und brauchen danach eine Pause („Bereit in 2“). Mana kommt jeden Zug ein wenig zurück."
+		}
+	},
+	"lektion_parieren": {
+		"name": "Lektion 3: Parieren",
+		"ansage": "Ye nimmt ein Übungsschwert: „Schild hoch, Schild runter.“",
+		"wellen": [["uebungs_ye"]],
+		"erlaubt": ["schlag", "kraftschlag", "erste_hilfe"],
+		"ziel_paraden": 2,
+		"erfahrung": 75,
+		"hinweise": {
+			"erster_zug": "Ye ist nicht zu besiegen. Ziel: zweimal perfekt parieren. Mach einfach deinen Zug und warte auf seinen Angriff.",
+			"erste_reaktion": "Jetzt greift Ye an! Ein Ring schließt sich um dich. Tippe (oder drücke die Leertaste) genau dann, wenn er den inneren Kreis erreicht und grün wird. Zu früh oder zu spät zählt nicht."
+		}
+	},
+	"lektion_reihen": {
+		"name": "Lektion 4: Zwei Reihen",
+		"ansage": "Ein Rüpelkobold mit einer großen Keule!",
+		"wellen": [["ruepelkobold"]],
+		"erlaubt": ["schlag", "kraftschlag", "erste_hilfe", "row"],
+		"erfahrung": 75,
+		"hinweise": {
+			"erster_zug": "Der Rüpelkobold schlägt hart zu. In der hinteren Reihe bekommst du weniger Nahkampf-Schaden, machst aber auch weniger. Mit „Nach hinten“ wechselst du die Reihe (kostet den Zug). Probier es aus!"
+		}
+	},
+	"gruppenkampf": {
+		"name": "Erster Gruppenkampf",
+		"ansage": "Kobolde überfallen die Übungswiese! Ida, Bo und Tom kämpfen mit dir.",
+		"begleiter": [
+			{"name": "Ida", "aussehen": "novize_ida"},
+			{"name": "Bo", "aussehen": "novize_bo"},
+			{"name": "Tom", "aussehen": "novize_tom"}
+		],
+		"wellen": [["wiesenkobold", "wiesenkobold", "feldschleim", "ruepelkobold"]],
+		"erlaubt": ["schlag", "kraftschlag", "erste_hilfe", "row"],
+		"erfahrung": 100,
+		"hinweise": {
+			"erster_zug": "Ida, Bo und Tom sind auch Novizen und handeln selbst. Zusammen seid ihr stärker: Heilt euch gegenseitig mit „Erste Hilfe“ und nehmt euch zuerst die schwachen Kobolde vor."
+		}
+	}
+}

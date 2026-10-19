@@ -70,6 +70,7 @@ func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color("1b2418"))
 	state.notice.connect(_on_notice)
 	state.progress_changed.connect(_on_progress_changed)
+	state.battle_requested.connect(_on_battle_requested)
 	var local := state.add_player(LOCAL_ID, "Du", "elf_m", WorldState.start_cell())
 	SaveGame.load_into(local)
 	state.add_player(BOT_ID, "Testgefährte", "lizard_f", WorldState.start_cell() + Vector2i(-1, 0))
@@ -106,6 +107,10 @@ func _ready() -> void:
 	_set_touch_ui(DisplayServer.is_touchscreen_available())
 	_sync()
 	_camera.reset_smoothing()
+	# Zurück aus einem Kampf: Ergebnis verbuchen (Erfahrung, Aufträge)
+	if not BattleRequest.result.is_empty():
+		state.apply_command(LOCAL_ID, {type = "kampf_ergebnis", kampf = BattleRequest.result.kampf, gewonnen = BattleRequest.result.gewonnen})
+		BattleRequest.result = {}
 	# Beim ersten Betreten der Stadt kommt die Einleitung
 	state.apply_command(LOCAL_ID, {type = "start"})
 
@@ -153,7 +158,9 @@ func _sync() -> void:
 		node.queue_redraw()
 	_info.text = "Spieler in Kreuzweg: %d" % state.players.size()
 	for id: String in state.npcs:
-		_characters["npc:" + id].marker = state.npc_marker(local, id)
+		var npc_view: WorldCharacter = _characters["npc:" + id]
+		npc_view.visible = state.npc_visible(local, id)
+		npc_view.marker = state.npc_marker(local, id)
 	var goal := state.objective(local)
 	_goal.text = "Ziel: " + goal if goal != "" else ""
 	_update_hud()
@@ -305,6 +312,8 @@ func _tap_at(world: Vector2) -> void:
 		return
 	# NPC angetippt? Dann hinlaufen und reden
 	for id: String in state.npcs:
+		if not state.npc_visible(local_player(), id):
+			continue
 		var npc_pos := cell_center(Vector2(state.npcs[id].cell))
 		if absf(world.x - npc_pos.x) < 30.0 and world.y > npc_pos.y - 90.0 and world.y < npc_pos.y + 12.0:
 			state.apply_command(LOCAL_ID, {type = "talk", npc = id})
@@ -693,3 +702,12 @@ func _fill_panel() -> void:
 		if p.progress.items.is_empty():
 			lines.append(GameData.text("tasche_leer"))
 	_panel_text.text = "\n".join(lines)
+
+
+## Ein Kampf beginnt (z. B. eine Lektion bei Ye): speichern und zum Kampfbildschirm wechseln.
+func _on_battle_requested(player_id: String, kampf_id: String) -> void:
+	if player_id != LOCAL_ID:
+		return
+	if BattleRequest.prepare(kampf_id, local_player().progress.level):
+		SaveGame.save(local_player())
+		get_tree().change_scene_to_file.call_deferred("res://scenes/kampf.tscn")

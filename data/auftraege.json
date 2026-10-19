@@ -28,5 +28,30 @@
 		],
 		"abgeben_bei": "ye",
 		"belohnung": {"gold": 25, "erfahrung": 70, "gegenstaende": {"heiltrank": 1}}
+	},
+	"grundausbildung": {
+		"titel": "Grundausbildung",
+		"beschreibung": "Ye bringt dir vor dem Stadttor in vier Lektionen das Kämpfen bei. Sprich mit ihm, um eine Lektion zu beginnen.",
+		"start_bei": "ye_tor",
+		"voraussetzung": "erster_auftrag",
+		"ziele": [
+			{"art": "kampf", "kampf": "lektion_tempo", "bei": "ye_tor", "text": "Lektion 1: Die Tempo-Leiste"},
+			{"art": "kampf", "kampf": "lektion_faehigkeiten", "bei": "ye_tor", "text": "Lektion 2: Fähigkeiten"},
+			{"art": "kampf", "kampf": "lektion_parieren", "bei": "ye_tor", "text": "Lektion 3: Parieren"},
+			{"art": "kampf", "kampf": "lektion_reihen", "bei": "ye_tor", "text": "Lektion 4: Zwei Reihen"}
+		],
+		"abgeben_bei": "ye_tor",
+		"belohnung": {"gold": 20, "erfahrung": 100}
+	},
+	"erster_gruppenkampf": {
+		"titel": "Der erste Gruppenkampf",
+		"beschreibung": "Zusammen mit den Novizen Ida, Bo und Tom sollst du die Kobolde von der Übungswiese vertreiben.",
+		"start_bei": "ye_tor",
+		"voraussetzung": "grundausbildung",
+		"ziele": [
+			{"art": "kampf", "kampf": "gruppenkampf", "bei": "ye_tor", "text": "Kobolde mit Ida, Bo und Tom vertreiben"}
+		],
+		"abgeben_bei": "ye_tor",
+		"belohnung": {"gold": 30, "erfahrung": 100, "gegenstaende": {"heiltrank": 2}}
 	}
 }
