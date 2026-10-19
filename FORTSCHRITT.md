@@ -38,6 +38,7 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
 | 9 | Kreuzweg-Demo Schritt 2: Ankunft (Gilde, Ye, erster Auftrag) | erledigt |
 | 10 | Kreuzweg-Demo Schritt 3: Grundausbildung (Lektionen, erster Gruppenkampf) | erledigt |
 | 11 | Kreuzweg-Demo Schritt 4: Marv und Bingos Laden | erledigt |
+| 12 | Kreuzweg-Demo Schritt 5: Gesandte der fünf Regionen mit Probestunden | erledigt |
 
 ## Aufgaben der Runde 1
 
@@ -184,6 +185,23 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
   - Neue Datendatei `data/laeden.json`. **Platzhalter:** alle Texte von Marv und Bingo, ihr Aussehen.
   - Das Mini-Spiel Kreuzweg-Karten selbst kommt später (laut Plan spielt Marv genau einmal mit).
   - Tests: Welt-Test mit Marv und Bingo (Ansprechen, Kaufen, Verkaufen, zu teuer), Übergangs-Test mit Heiltränken: alles richtig.
+
+- **Schritt 12 – Kreuzweg-Demo, Gesandte der fünf Regionen** (Schritt 5 aus `KREUZWEG_PLAN.md`, Stufe 5–7):
+  - **Ye am Tor** steht jetzt links neben der Straße (10,19) und nicht mehr hinter den Bäumen.
+  - Nach der Grundausbildung stehen **fünf Gesandte** rund um die Statue der Fünf: Arkanum, Messinghafen, Glutoase,
+    Grünwacht und Nebelinseln. Jeder erzählt kurz von seiner Region und bietet **Probestunden** für ihre Klassen an
+    (zusammen alle 11 Klassen aus der Sandbox).
+  - **Lene** (Schreiberin) vergibt den Auftrag „Die Gesandten der fünf Regionen“: **eine Probestunde ist Pflicht**,
+    die anderen sind freiwillig (jede gibt beim ersten Sieg 40 Erfahrung). Abgeben bei Lene: 300 Erfahrung, 50 Gold
+    – damit **Stufe 6**, mit allen Probestunden Stufe 7.
+  - **Probestunde:** Du spielst die Klasse kurz auf der Übungswiese, **mit Ida und Bo** als Gruppe (sonst sind Tank und
+    Support allein kaum spielbar). Die **Ult ist schon zu 60 % voll** – du lädst sie mit der typischen Aktion der Klasse
+    auf. Ye erklärt vorher die Klasse (Rolle, Mechanik, Reaktion, Ult) aus den Klassendaten.
+  - Gespräche mit vielen Antworten wachsen nach oben, damit sie ins Bild passen. In der Stadt wählen 1–9 Antworten.
+  - **Platzhalter:** Die Gesandten haben noch keine eigenen Namen, alle Texte sind Platzhalter. Hintergrund im Kampf
+    ist noch das Gewölbe.
+  - **Tests:** Der Computer hat alle 11 Probestunden je 30-mal gespielt: alle schaffbar (24–43 Züge, alle Figuren
+    zusammen). Welt-Test mit Lene, Gesandten und Probestunden: alles richtig.
     sie mit. (Im fertigen Spiel ist der erste Abschluss der über den Auftrag.) Auch in design.md eingetragen.
 
 ## Fertig in Runde 1
@@ -256,6 +274,13 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 4. Bingo nach dem leuchtenden Brett fragen, dann zurück zu Marv und den Auftrag abgeben.
 5. Im Gruppenkampf (oder Lektion 4) einen Heiltrank trinken: Danach sollte er in der Tasche fehlen.
 
+**Neu: Gesandte und Probestunden** (Kreuzweg-Demo, nach der Grundausbildung)
+1. Am Stadttor nachsehen: Ye steht jetzt links neben der Straße und nicht mehr hinter den Bäumen.
+2. Lene hat ein „!“: Sprich mit ihr und nimm den Auftrag an.
+3. Geh zu einem der fünf Gesandten rund um die Statue und frag nach der Region. Starte dann eine Probestunde.
+4. Prüfe in der Probestunde, ob die Erklärung zur Klasse passt und ob du die Ult (60 % voll) aufladen und benutzen kannst.
+5. Danach bei Lene abgeben: Prüfe, ob du jetzt Stufe 6 hast. Probier gern noch weitere Klassen aus.
+
 
 **1. Kampf-Sandbox** (Menü → „Kampf-Sandbox“)
 - Wie bisher: bis zu 4 Klassen wählen, Gegner wählen, kämpfen, am Ende die Auswertung ansehen.
@@ -299,7 +324,8 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
   Zähmen (unter 50 % Leben, Chance = fehlendes Leben, halbes Leben auf der Bank, höchstens 5 Monster).
 ## Als Nächstes (Vorschläge)
 
-- Kreuzweg-Demo nach `KREUZWEG_PLAN.md`: als Nächstes Schritt 5 (Gesandte der fünf Regionen mit Probestunden).
+- Kreuzweg-Demo nach `KREUZWEG_PLAN.md`: als Nächstes Schritt 6 (Der zugewachsene Weg: Wache und erste Begegnung mit Mira).
+- Namen für die fünf Gesandten (oder sollen es die Lehrmeister selbst sein?).
 - Hintergrund für Kämpfe vor der Stadt (Wiese statt Gewölbe).
 - Dialoge der Hauptfiguren: Marco schreibt sie; Platzhalter stehen in `data/dialoge.json`.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).

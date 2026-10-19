@@ -1169,7 +1169,10 @@ func on_perfect_reaction(h: Fighter, attacker: Fighter) -> void:
 			c.float_text(h, "AUSGEWICHEN!", Color("b8ff8a"))
 			c.hop(h)
 	c.burst(h, Color("cfe2ff"), 90.0)
-	c.add_log("[color=#8affc1]%s reagiert perfekt![/color]" % h.display_name)
+	if h.display_name == "Du":
+		c.add_log("[color=#8affc1]Du reagierst perfekt![/color]")
+	else:
+		c.add_log("[color=#8affc1]%s reagiert perfekt![/color]" % h.display_name)
 
 
 ## Zusätzlicher Schaden durch Klassen-Passiven des Angreifers.

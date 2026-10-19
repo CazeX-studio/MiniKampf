@@ -213,7 +213,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		var handled := true
 		if key in [KEY_E, KEY_SPACE]:
 			_action()
-		elif key >= KEY_1 and key <= KEY_4:
+		elif key >= KEY_1 and key <= KEY_9:
 			state.apply_command(LOCAL_ID, {type = "dialog_choose", index = key - KEY_1})
 		elif key == KEY_J:
 			_toggle_panel("auftraege")
@@ -653,6 +653,8 @@ func _update_dialog() -> void:
 		button.pressed.connect(func() -> void: state.apply_command(LOCAL_ID, {type = "dialog_choose", index = i}))
 		_dialog_answers.add_child(button)
 	_dialog_next.visible = answers.is_empty()
+	# Viele Antworten: Fenster wächst nach oben, damit es nicht aus dem Bild ragt
+	_place_dialog.call_deferred()
 
 
 ## Ladenfenster: wird neu aufgebaut, sobald sich Laden, Gold oder Tasche ändern.
@@ -796,3 +798,8 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 	if BattleRequest.prepare(kampf_id, progress.level, progress.item_count("heiltrank")):
 		SaveGame.save(local_player())
 		get_tree().change_scene_to_file.call_deferred("res://scenes/kampf.tscn")
+
+
+func _place_dialog() -> void:
+	_dialog.reset_size()
+	_dialog.position.y = minf(440.0, 710.0 - _dialog.size.y)

@@ -59,5 +59,18 @@
 		"hinweise": {
 			"erster_zug": "Ida, Bo und Tom sind auch Novizen und handeln selbst. Zusammen seid ihr stärker: Heilt euch gegenseitig mit „Erste Hilfe“ und nehmt euch zuerst die schwachen Kobolde vor."
 		}
+	},
+	"probestunde": {
+		"hinweis": "Vorlage für alle Probestunden („probe:<klasse>“, z. B. probe:archer). Der Spieler spielt die Klasse (Ult zu 60 % voll), Ida und Bo helfen.",
+		"ansage": "Probestunde auf der Übungswiese: Ida und Bo helfen dir, vier Übungsgegner warten.",
+		"begleiter": [
+			{"name": "Ida", "aussehen": "novize_ida"},
+			{"name": "Bo", "aussehen": "novize_bo"}
+		],
+		"wellen": [["wiesenkobold", "feldschleim", "wiesenkobold", "ruepelkobold"]],
+		"ult_start": 60,
+		"merken": "probestunde_gemacht",
+		"erfahrung": 40,
+		"hinweis_vorlage": "Probestunde: %s (Rolle: %s)\n%s\nReaktion: %s.\nUlt: %s. Sie ist schon zu 60 %% voll – lade sie mit der typischen Aktion deiner Klasse auf und probier sie aus! Ida und Bo (Novizen) helfen dir."
 	}
 }

@@ -4,7 +4,11 @@ extends SceneTree
 ## Aufruf: Godot --headless --path . --script res://tests/lektionen_test.gd
 
 ## Mit welcher Stufe man den Kampf im normalen Ablauf erreicht
-const LEVELS := {lektion_tempo = 2, lektion_faehigkeiten = 2, lektion_parieren = 3, lektion_reihen = 3, gruppenkampf = 4}
+const LEVELS := {
+	"lektion_tempo": 2, "lektion_faehigkeiten": 2, "lektion_parieren": 3, "lektion_reihen": 3, "gruppenkampf": 4,
+	"probe:tank": 5, "probe:twilight": 5, "probe:mechanic": 5, "probe:quartermaster": 5, "probe:smith": 5,
+	"probe:blade": 5, "probe:singer": 5, "probe:archer": 5, "probe:tamer": 5, "probe:ritualist": 5, "probe:kunoichi": 5,
+}
 const RUNS := 30
 
 
@@ -32,9 +36,9 @@ func _run() -> void:
 				problems += 1
 				print("FEHLER: %s endet nicht" % kampf_id)
 			# Lektion 1 und 2: Der Novize kann noch nicht parieren
-			if not GameData.get_file("kaempfe")[kampf_id].get("reaktion", true):
+			if not GameData.battle(kampf_id).get("reaktion", true):
 				for line in node.protokoll.lines:
-					if line.contains("Du reagiert perfekt"):
+					if line.contains("Du reagierst perfekt"):
 						problems += 1
 						print("FEHLER: %s: Parieren schon möglich" % kampf_id)
 			# Lektion mit vorgegebener erster Aktion („Nach hinten“): vorher trifft der Spieler nichts

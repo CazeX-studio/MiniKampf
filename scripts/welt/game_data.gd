@@ -49,3 +49,20 @@ static func level_xp() -> Array:
 
 static func max_level() -> int:
 	return level_xp().size()
+
+
+## Ein Kampf aus data/kaempfe.json. "probe:<klasse>" = Probestunde mit dieser Klasse
+## (gemeinsame Vorlage "probestunde", Erklärung aus den Klassendaten).
+static func battle(id: String) -> Dictionary:
+	var all := get_file("kaempfe")
+	if not id.begins_with("probe:"):
+		return all.get(id, {})
+	var klasse := id.substr(6)
+	if not Sandbox.CLASSES.has(klasse) or not all.has("probestunde"):
+		return {}
+	var data: Dictionary = all.probestunde.duplicate(true)
+	var c: Dictionary = Sandbox.CLASSES[klasse]
+	data["klasse"] = klasse
+	data["name"] = "Probestunde: %s" % c.title
+	data["hinweise"] = {erster_zug = str(data.get("hinweis_vorlage", "%s")) % [c.title, c.role, c.mechanic, c.reaction_text, c.ult]}
+	return data

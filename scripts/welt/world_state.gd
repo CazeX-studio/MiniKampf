@@ -690,13 +690,15 @@ func _sell(p: PlayerState, item_id: String) -> void:
 
 ## Ergebnis eines Kampfes: Beim ersten Sieg gibt es die Erfahrung aus data/kaempfe.json, Aufträge zählen mit.
 func _battle_result(p: PlayerState, kampf_id: String, won: bool) -> void:
-	var battle: Dictionary = GameData.get_file("kaempfe").get(kampf_id, {})
+	var battle: Dictionary = GameData.battle(kampf_id)
 	if battle.is_empty():
 		return
 	if not won:
 		_say(p, GameData.text("kampf_verloren"))
 		return
 	_say(p, GameData.text("kampf_gewonnen", [battle.get("name", kampf_id)]))
+	if battle.has("merken"):
+		p.progress.flags[battle.merken] = true
 	var flag := "kampf_gewonnen:" + kampf_id
 	if not p.progress.flags.has(flag):
 		p.progress.flags[flag] = true

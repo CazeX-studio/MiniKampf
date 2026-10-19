@@ -66,3 +66,10 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
   die Preise in `gegenstaende.json` (Preis 0 = kauft der Händler nicht an).
 - **NPC-Feld** `"anspringen": {"radius": 3}`: Der NPC spricht dich einmal von selbst an, sobald du so nah bist (Marv).
 - Im Kampf: `"trank"` in `erlaubt` = der Novize darf Heiltränke aus seiner Tasche trinken.
+
+## Probestunden (seit Schritt 5)
+
+- Kampf-Kennung `probe:<klasse>` (z. B. `probe:archer`) nutzt die Vorlage `probestunde` in `kaempfe.json`:
+  Gegner, Begleiter, Ult zu Beginn (`ult_start`), Erfahrung beim ersten Sieg, `merken` (wird bei jedem Sieg gemerkt)
+  und `hinweis_vorlage` (Erklärung; Name, Rolle, Mechanik, Reaktion und Ult kommen aus den Klassendaten).
+- Die Gesandten und ihre Klassen stehen als Antworten in `dialoge.json` (`{"kampf": "probe:tank"}`).

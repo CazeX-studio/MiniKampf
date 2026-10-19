@@ -62,5 +62,16 @@
 		],
 		"abgeben_bei": "marv",
 		"belohnung": {"erfahrung": 50}
+	},
+	"gesandte": {
+		"titel": "Die Gesandten der fünf Regionen",
+		"beschreibung": "Jede Region hat jemanden nach Kreuzweg geschickt, der den Novizen ihre Klassen zeigt. Mindestens eine Probestunde ist Pflicht, die anderen sind freiwillig. Die Gesandten stehen rund um die Statue der Fünf.",
+		"start_bei": "schreiberin",
+		"voraussetzung": "erster_gruppenkampf",
+		"ziele": [
+			{"art": "gemerkt", "merken": "probestunde_gemacht", "text": "An einer Probestunde teilnehmen (Gesandte rund um die Statue)"}
+		],
+		"abgeben_bei": "schreiberin",
+		"belohnung": {"gold": 50, "erfahrung": 300}
 	}
 }

@@ -15,6 +15,10 @@
 		"einstieg": [
 			{"wenn": {"auftrag": "ankunft", "stand": "aktiv"}, "knoten": "anmeldung"},
 			{"wenn": {"auftrag": "zu_ye", "stand": "aktiv"}, "knoten": "erinnerung"},
+			{"wenn": {"auftrag": "erster_gruppenkampf", "stand": "abgegeben", "nicht_gemerkt": "gesandte_angekuendigt"}, "knoten": "gesandte_neu"},
+			{"wenn": {"auftrag": "gesandte", "stand": "neu", "gemerkt": "gesandte_angekuendigt"}, "knoten": "gesandte_neu"},
+			{"wenn": {"auftrag": "gesandte", "stand": "aktiv"}, "knoten": "gesandte_wartet"},
+			{"wenn": {"auftrag": "gesandte", "stand": "fertig"}, "knoten": "gesandte_abgeben"},
 			{"knoten": "allgemein"}
 		],
 		"knoten": {
@@ -25,7 +29,21 @@
 			"gilde": {"wer": "Lene", "text": "Wir vermitteln Aufträge und bilden Novizen aus. Wer bei uns eingetragen ist, bekommt Arbeit, Lohn und einen Platz zum Schlafen.", "weiter": "anmeldung"},
 			"eingetragen": {"wer": "Lene", "text": "So, du stehst im Buch. Melde dich jetzt bei Ausbilder Ye, er steht gleich links von hier.", "aktionen": [{"auftrag_starten": "zu_ye"}]},
 			"erinnerung": {"wer": "Lene", "text": "Ausbilder Ye wartet auf dich. Der Mann mit dem blauen Hut, gleich links."},
-			"allgemein": {"wer": "Lene", "text": "Neue Aufträge hängen bald am Brett. Bis dahin hör auf Ye."}
+			"allgemein": {"wer": "Lene", "text": "Neue Aufträge hängen bald am Brett. Bis dahin hör auf Ye."},
+			"gesandte_neu": {"wer": "Lene", "text": "Da bist du ja! Die Gesandten der fünf Regionen sind angekommen. Sie zeigen den Novizen ihre Klassen in Probestunden.", "aktionen": [{"merken": "gesandte_angekuendigt"}], "antworten": [
+				{"text": "Klingt spannend. Ich mache mit.", "weiter": "gesandte_los", "aktionen": [{"auftrag_starten": "gesandte"}]},
+				{"text": "Muss ich da hin?", "weiter": "gesandte_pflicht"}
+			]},
+			"gesandte_pflicht": {"wer": "Lene", "text": "Eine Probestunde ist Pflicht für alle Novizen, die anderen sind freiwillig. In ein paar Tagen wählst du deine Klasse – dann solltest du wissen, was du wählst.", "antworten": [
+				{"text": "Na gut, ich mache mit.", "weiter": "gesandte_los", "aktionen": [{"auftrag_starten": "gesandte"}]}
+			]},
+			"gesandte_los": {"wer": "Lene", "text": "Die Gesandten stehen rund um die Statue der Fünf. Sprich einfach mit ihnen."},
+			"gesandte_wartet": {"wer": "Lene", "text": "Warst du schon in einer Probestunde? Die Gesandten stehen rund um die Statue."},
+			"gesandte_abgeben": {"wer": "Lene", "text": "Und? Welche Klasse hat dir gefallen?", "antworten": [
+				{"text": "Schwer zu sagen, ich muss noch nachdenken.", "weiter": "gesandte_danke", "aktionen": [{"auftrag_abgeben": "gesandte"}]},
+				{"text": "Ich glaube, ich weiß es schon.", "weiter": "gesandte_danke", "aktionen": [{"auftrag_abgeben": "gesandte"}]}
+			]},
+			"gesandte_danke": {"wer": "Lene", "text": "Gut. Du kannst auch noch weitere Probestunden machen, die Gesandten bleiben ein paar Tage. Die Gilde ist stolz auf dich."}
 		}
 	},
 	"ye": {
@@ -173,6 +191,72 @@
 				{"text": "Zeig mir lieber deine anderen Waren.", "aktionen": [{"laden": "bingo"}]}
 			]},
 			"zu_teuer": {"wer": "Bingo", "text": "Qualität hat ihren Preis. Komm wieder, wenn dein Beutel schwerer ist."}
+		}
+	},
+	"gesandte_arkanum": {
+		"hinweis": "PLATZHALTER-TEXTE: Gesandte des Arkanums.",
+		"einstieg": [{"knoten": "hallo"}],
+		"knoten": {
+			"hallo": {"wer": "Gesandte des Arkanums", "text": "Willkommen, Novize. Im Arkanum lernt man, dass Magie schützen kann – und dass zwischen Licht und Schatten ein schmaler Grat liegt.", "antworten": [
+				{"text": "Probestunde: Magier-Tank (Tank)", "aktionen": [{"kampf": "probe:tank"}]},
+				{"text": "Probestunde: Zwielicht-Wandler (Schaden)", "aktionen": [{"kampf": "probe:twilight"}]},
+				{"text": "Erzähl mir vom Arkanum.", "weiter": "region"},
+				{"text": "Später."}
+			]},
+			"region": {"wer": "Gesandte des Arkanums", "text": "Türme auf schwebenden Felsen, ein Turm des Lichts und einer des Schattens. Wer dort lernt, lernt das Gleichgewicht.", "weiter": "hallo"}
+		}
+	},
+	"gesandte_messinghafen": {
+		"hinweis": "PLATZHALTER-TEXTE: Gesandter aus Messinghafen.",
+		"einstieg": [{"knoten": "hallo"}],
+		"knoten": {
+			"hallo": {"wer": "Gesandter aus Messinghafen", "text": "Zahnräder, Dampf und ein Hafen voller Waren! In Messinghafen baut man sich seine Freunde selbst – oder kauft sie.", "antworten": [
+				{"text": "Probestunde: Mechaniker (Tank)", "aktionen": [{"kampf": "probe:mechanic"}]},
+				{"text": "Probestunde: Quartiermeister (Support)", "aktionen": [{"kampf": "probe:quartermaster"}]},
+				{"text": "Erzähl mir von Messinghafen.", "weiter": "region"},
+				{"text": "Später."}
+			]},
+			"region": {"wer": "Gesandter aus Messinghafen", "text": "Die Erfinderstadt am Meer. Übrigens: Die Sternentafel bei Bingo kommt auch von uns. Teuer, aber genial!", "weiter": "hallo"}
+		}
+	},
+	"gesandte_glutoase": {
+		"hinweis": "PLATZHALTER-TEXTE: Gesandte der Glutoase.",
+		"einstieg": [{"knoten": "hallo"}],
+		"knoten": {
+			"hallo": {"wer": "Gesandte der Glutoase", "text": "Die Glutoase grüßt dich! Bei uns wird geschmiedet, getanzt und unter den Sternen gesungen.", "antworten": [
+				{"text": "Probestunde: Rüstungsschmied (Tank)", "aktionen": [{"kampf": "probe:smith"}]},
+				{"text": "Probestunde: Klingentänzerin (Schaden)", "aktionen": [{"kampf": "probe:blade"}]},
+				{"text": "Probestunde: Sternensängerin (Support)", "aktionen": [{"kampf": "probe:singer"}]},
+				{"text": "Erzähl mir von der Glutoase.", "weiter": "region"},
+				{"text": "Später."}
+			]},
+			"region": {"wer": "Gesandte der Glutoase", "text": "Eine Oase am Fuß des Vulkans. Tagsüber glühen die Essen, nachts tanzen wir ums Feuer.", "weiter": "hallo"}
+		}
+	},
+	"gesandte_gruenwacht": {
+		"hinweis": "PLATZHALTER-TEXTE: Gesandter aus Grünwacht.",
+		"einstieg": [{"knoten": "hallo"}],
+		"knoten": {
+			"hallo": {"wer": "Gesandter aus Grünwacht", "text": "Aus Grünwacht, dem Dorf in den Baumkronen. Wir jagen, wir zähmen – und wir hören auf den Wald.", "antworten": [
+				{"text": "Probestunde: Bogenschütze (Schaden)", "aktionen": [{"kampf": "probe:archer"}]},
+				{"text": "Probestunde: Monster-Zähmer (Schaden)", "aktionen": [{"kampf": "probe:tamer"}]},
+				{"text": "Erzähl mir von Grünwacht.", "weiter": "region"},
+				{"text": "Später."}
+			]},
+			"region": {"wer": "Gesandter aus Grünwacht", "text": "Urwald, so weit das Auge reicht. Seit einiger Zeit benehmen sich die Tiere dort seltsam … aber das ist eine andere Geschichte.", "weiter": "hallo"}
+		}
+	},
+	"gesandte_nebelinseln": {
+		"hinweis": "PLATZHALTER-TEXTE: Gesandte der Nebelinseln.",
+		"einstieg": [{"knoten": "hallo"}],
+		"knoten": {
+			"hallo": {"wer": "Gesandte der Nebelinseln", "text": "Aus dem Nebel komme ich, zu dir. Auf unseren Inseln stehen alte Schreine, und manche Wege kennt nur, wer Siegel lesen kann.", "antworten": [
+				{"text": "Probestunde: Ritualist (Support)", "aktionen": [{"kampf": "probe:ritualist"}]},
+				{"text": "Probestunde: Kunoichi (Support)", "aktionen": [{"kampf": "probe:kunoichi"}]},
+				{"text": "Erzähl mir von den Nebelinseln.", "weiter": "region"},
+				{"text": "Später."}
+			]},
+			"region": {"wer": "Gesandte der Nebelinseln", "text": "Nebel, Schreine, Wesen aus alten Sagen. Und ein Schrein, über den man nicht spricht.", "weiter": "hallo"}
 		}
 	}
 }

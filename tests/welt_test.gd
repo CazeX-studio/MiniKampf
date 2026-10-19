@@ -212,6 +212,35 @@ func _test_building_blocks() -> void:
 	_check(p.progress.quest_state("marvs_traum") == "abgegeben" and world.dialog_view(p).text.contains("Zeit"), "Marv hat Zeit")
 	world.apply_command("a", {type = "dialog_next"})
 
+	# Gesandte der fünf Regionen: Lene vergibt den Auftrag, eine Probestunde ist Pflicht
+	for envoy: String in ["gesandte_arkanum", "gesandte_messinghafen", "gesandte_glutoase", "gesandte_gruenwacht", "gesandte_nebelinseln"]:
+		_check(world.npc_visible(p, envoy), envoy + " ist in der Stadt")
+	_check(world.npc_marker(p, "schreiberin") == "!", "Zeichen ! über Lene")
+	_talk(world, p, "schreiberin")
+	world.apply_command("a", {type = "dialog_choose", index = 1})
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(p.progress.quest_state("gesandte") == "aktiv", "Auftrag „Die Gesandten“ läuft")
+	world.apply_command("a", {type = "dialog_next"})
+	_talk(world, p, "gesandte_glutoase")
+	_check(world.dialog_view(p).antworten.size() == 5, "Glutoase: drei Probestunden, Region, Später")
+	world.apply_command("a", {type = "dialog_choose", index = 3})
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_choose", index = 2})
+	_check(battles.back() == "probe:singer" and not p.in_dialog(), "Probestunde Sternensängerin beginnt")
+	var xp_start := p.progress.xp
+	world.apply_command("a", {type = "kampf_ergebnis", kampf = "probe:singer", gewonnen = true})
+	_check(p.progress.quest_state("gesandte") == "fertig" and p.progress.xp == xp_start + 40, "Pflicht-Probestunde geschafft (+40)")
+	world.apply_command("a", {type = "kampf_ergebnis", kampf = "probe:archer", gewonnen = true})
+	_check(p.progress.xp == xp_start + 80, "Weitere Probestunden sind freiwillig (+40)")
+	_check(world.npc_marker(p, "schreiberin") == "?", "Zurück zu Lene")
+	_talk(world, p, "schreiberin")
+	world.apply_command("a", {type = "dialog_choose", index = 1})
+	_check(p.progress.quest_state("gesandte") == "abgegeben" and p.progress.level == 6, "Gesandte abgegeben, Stufe 6")
+	world.apply_command("a", {type = "dialog_next"})
+	var battle := GameData.battle("probe:kunoichi")
+	_check(battle.klasse == "kunoichi" and battle.name == "Probestunde: Kunoichi" and battle.hinweise.erster_zug.contains("Siegel"),
+		"Probestunde-Vorlage füllt Klasse, Name und Erklärung")
+
 	# Stufen bis 10, nicht weiter
 	p.progress.add_xp(100000)
 	_check(p.progress.level == 10 and p.progress.xp_range().y == -1, "Höchststufe ist 10")

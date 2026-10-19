@@ -20,10 +20,15 @@ static func active() -> bool:
 ## Bereitet einen Kampf aus data/kaempfe.json vor. Der Spieler ist ein Novize seiner Stufe mit seinen Heiltränken,
 ## Begleiter (Novizen-Mitstreiter) steuert der Computer.
 static func prepare(id: String, level: int, potions := 0) -> bool:
-	var data: Dictionary = GameData.get_file("kaempfe").get(id, {})
+	var data: Dictionary = GameData.battle(id)
 	if data.is_empty():
 		return false
-	var player := {klasse = "novize", name = "Du", aussehen = "novize", stufe = level, traenke = potions}
+	# Probestunde: Der Spieler spielt kurz eine richtige Klasse (Ult schon teilweise geladen)
+	var klasse: String = data.get("klasse", "novize")
+	var player := {klasse = klasse, name = "Du", aussehen = "novize" if klasse == "novize" else "", stufe = level,
+			ult = float(data.get("ult_start", 0))}
+	if klasse == "novize":
+		player["traenke"] = potions
 	# Parieren lernt man erst in Lektion 3: davor hat der Novize keine Reaktion
 	if not data.get("reaktion", true):
 		player["reaktion"] = ""

@@ -245,6 +245,7 @@ func _create_heroes() -> void:
 		heroes.append(h)
 		if setup.has("helden"):
 			team.append(id)
+		h.ult = float(spec.get("ult", 0.0))
 		if spec.has("traenke"):
 			h.wares = {heiltrank = int(spec.traenke)}
 		if spec.get("computer", false):
