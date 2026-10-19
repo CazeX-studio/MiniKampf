@@ -2,5 +2,6 @@
 	"kraut": {"name": "Silberkraut", "beschreibung": "Ein Heilkraut, das zwischen den Pflastersteinen wächst.", "preis": 2},
 	"heiltrank": {"name": "Heiltrank", "beschreibung": "Heilt im Kampf etwas Leben.", "preis": 15},
 	"sternensplitter": {"name": "Sternensplitter", "beschreibung": "Ein Splitter aus dem Sternenfall. Belohnung aus Dungeons. Er summt leise. (Bingo kauft ihn nicht an.)", "preis": 0},
+	"essenskorb": {"name": "Essenskorb", "beschreibung": "Brot, Käse und ein Krug Tee für die Wache am alten Südost-Weg.", "preis": 0},
 	"sternentafel": {"name": "Sternentafel", "beschreibung": "Spielfeld für Kreuzweg-Karten mit neun leuchtenden Feldern, angetrieben von einem Sternensplitter. Viel zu teuer.", "preis": 5000}
 }

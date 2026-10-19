@@ -39,6 +39,7 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
 | 10 | Kreuzweg-Demo Schritt 3: Grundausbildung (Lektionen, erster Gruppenkampf) | erledigt |
 | 11 | Kreuzweg-Demo Schritt 4: Marv und Bingos Laden | erledigt |
 | 12 | Kreuzweg-Demo Schritt 5: Gesandte der fünf Regionen mit Probestunden | erledigt |
+| 13 | Kreuzweg-Demo Schritt 6: Der zugewachsene Weg (Wache Holm, Mira) | erledigt |
 
 ## Aufgaben der Runde 1
 
@@ -198,10 +199,25 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
     Support allein kaum spielbar). Die **Ult ist schon zu 60 % voll** – du lädst sie mit der typischen Aktion der Klasse
     auf. Ye erklärt vorher die Klasse (Rolle, Mechanik, Reaktion, Ult) aus den Klassendaten.
   - Gespräche mit vielen Antworten wachsen nach oben, damit sie ins Bild passen. In der Stadt wählen 1–9 Antworten.
-  - **Platzhalter:** Die Gesandten haben noch keine eigenen Namen, alle Texte sind Platzhalter. Hintergrund im Kampf
+  - **Namen der Gesandten** (nach deiner Antwort): Magistra Ilwen (Arkanum), Tüftler Pim (Messinghafen), Feuertänzerin
+    Nalia (Glutoase), Fährtenleser Aske (Grünwacht), Schreindienerin Mei (Nebelinseln).
+  - **Platzhalter:** alle Texte der Gesandten. Hintergrund im Kampf
     ist noch das Gewölbe.
   - **Tests:** Der Computer hat alle 11 Probestunden je 30-mal gespielt: alle schaffbar (24–43 Züge, alle Figuren
     zusammen). Welt-Test mit Lene, Gesandten und Probestunden: alles richtig.
+
+- **Schritt 13 – Kreuzweg-Demo, Der zugewachsene Weg** (Schritt 6 aus `KREUZWEG_PLAN.md`, Stufe 7–8):
+  - Nach den Gesandten bittet **Lene** dich, der Wache am alten Südost-Weg einen **Essenskorb** zu bringen.
+  - **Wache Holm** steht am Anfang der zugewachsenen sechsten Straße (hinter der Schmiede). Er freut sich über das
+    Essen, aber zum Weg sagt er nur „Befehl der Fünf: Niemand geht da lang“ – und schickt dich weg.
+  - Danach hörst du ein leises Singen: **Mira** steht plötzlich da und spricht dich an: **„Hörst du sie auch?“**
+    Sie war vor zehn Jahren auch Novize, hustet („Die Lieder werden lauter“) und verabschiedet sich mit einem Hinweis
+    auf das **Fest der fünf Wege**. Danach ist sie wieder fort.
+  - Belohnung: 200 + 250 Erfahrung = **Stufe 7** (mit allen freiwilligen Probestunden Stufe 8).
+  - **Platzhalter:** alle Texte von Lene, Holm und Mira (Mira ist eine Hauptfigur: Marco schreibt ihre Dialoge noch).
+  - Der Marktplatz ist inzwischen recht voll (viele Namensschilder dicht beieinander). Das nehme ich mir beim
+    Feinschliff (Schritt 9) vor.
+  - Test: Welt-Test mit Korb, Wache und Mira: alles richtig.
     sie mit. (Im fertigen Spiel ist der erste Abschluss der über den Auftrag.) Auch in design.md eingetragen.
 
 ## Fertig in Runde 1
@@ -281,6 +297,13 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 4. Prüfe in der Probestunde, ob die Erklärung zur Klasse passt und ob du die Ult (60 % voll) aufladen und benutzen kannst.
 5. Danach bei Lene abgeben: Prüfe, ob du jetzt Stufe 6 hast. Probier gern noch weitere Klassen aus.
 
+**Neu: Der zugewachsene Weg** (Kreuzweg-Demo, nach den Gesandten)
+1. Prüfe bei einem Gesandten, ob er jetzt einen eigenen Namen hat (z. B. Feuertänzerin Nalia).
+2. Lene bittet dich nach den Gesandten um den Essenskorb. Nimm an: Der Korb liegt jetzt in deiner Tasche.
+3. Geh zu Wache Holm am Anfang der zugewachsenen Straße hinter der Schmiede, gib ihm den Korb und frag nach dem Weg.
+4. Nachdem er dich wegschickt, sollte Mira dich ansprechen: „Hörst du sie auch?“
+5. Danach sollte Mira wieder fort sein und du Stufe 7 haben.
+
 
 **1. Kampf-Sandbox** (Menü → „Kampf-Sandbox“)
 - Wie bisher: bis zu 4 Klassen wählen, Gegner wählen, kämpfen, am Ende die Auswertung ansehen.
@@ -324,8 +347,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
   Zähmen (unter 50 % Leben, Chance = fehlendes Leben, halbes Leben auf der Bank, höchstens 5 Monster).
 ## Als Nächstes (Vorschläge)
 
-- Kreuzweg-Demo nach `KREUZWEG_PLAN.md`: als Nächstes Schritt 6 (Der zugewachsene Weg: Wache und erste Begegnung mit Mira).
-- Namen für die fünf Gesandten (oder sollen es die Lehrmeister selbst sein?).
+- Kreuzweg-Demo nach `KREUZWEG_PLAN.md`: als Nächstes Schritt 7 (Nacht des Sternenfalls: Fest, Sternenfall-Boss, Ren).
 - Hintergrund für Kämpfe vor der Stadt (Wiese statt Gewölbe).
 - Dialoge der Hauptfiguren: Marco schreibt sie; Platzhalter stehen in `data/dialoge.json`.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).

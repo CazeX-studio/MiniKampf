@@ -73,5 +73,25 @@
 		],
 		"abgeben_bei": "schreiberin",
 		"belohnung": {"gold": 50, "erfahrung": 300}
+	},
+	"korb_fuer_die_wache": {
+		"titel": "Ein Korb für die Wache",
+		"beschreibung": "Lene bittet dich, der Wache am alten Südost-Weg einen Essenskorb zu bringen. Der Weg beginnt hinter der Schmiede.",
+		"start_bei": "schreiberin",
+		"voraussetzung": "gesandte",
+		"ziele": [
+			{"art": "gemerkt", "merken": "korb_abgegeben", "bei": "wache", "text": "Den Korb zur Wache am alten Südost-Weg bringen"}
+		],
+		"abgeben_bei": "wache",
+		"belohnung": {"erfahrung": 200}
+	},
+	"leises_singen": {
+		"titel": "Ein leises Singen",
+		"beschreibung": "Als die Wache dich wegschickt, hörst du ganz leise ein Singen. Woher kommt es?",
+		"ziele": [
+			{"art": "gemerkt", "merken": "mira_getroffen", "bei": "mira", "text": "Dem leisen Singen folgen"}
+		],
+		"abgeben_bei": "mira",
+		"belohnung": {"erfahrung": 250}
 	}
 }
