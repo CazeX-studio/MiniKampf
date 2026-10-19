@@ -8,10 +8,13 @@ const SCALE := 3.0
 
 var moving := false
 var facing := 1
+## Zeichen über dem Kopf: "!" = neuer Auftrag, "?" = hier etwas erledigen, "" = nichts
+var marker := ""
 
 var _frames := {}
 var _sprite: Sprite2D
 var _time := 0.0
+var _head_y := 0.0
 
 
 func setup(look: String, p_name: String, tint := Color.WHITE, name_color := Color.WHITE) -> void:
@@ -39,7 +42,8 @@ func setup(look: String, p_name: String, tint := Color.WHITE, name_color := Colo
 	label.add_theme_constant_override("outline_size", 5)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.size = Vector2(160, 20)
-	label.position = Vector2(-80, -_sprite.texture.get_height() * SCALE - 24)
+	_head_y = -_sprite.texture.get_height() * SCALE - 24
+	label.position = Vector2(-80, _head_y)
 	add_child(label)
 
 
@@ -56,3 +60,10 @@ func _draw() -> void:
 	# Schatten unter den Füßen
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, 0.45))
 	draw_circle(Vector2.ZERO, 18.0, Color(0, 0, 0, 0.35))
+	draw_set_transform_matrix(Transform2D.IDENTITY)
+	if marker != "":
+		var font := ThemeDB.fallback_font
+		var bob := sin(_time * 4.0) * 3.0
+		var pos := Vector2(-20, _head_y - 6 + bob)
+		draw_string_outline(font, pos, marker, HORIZONTAL_ALIGNMENT_CENTER, 40, 30, 7, Color.BLACK)
+		draw_string(font, pos, marker, HORIZONTAL_ALIGNMENT_CENTER, 40, 30, Color("ffd34d"))

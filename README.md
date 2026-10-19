@@ -27,7 +27,9 @@ Abenteurergilde, Bingos Laden, sechs Straßen (die sechste nach Südosten ist zu
 - **Reden:** Ausbilder Ye antippen (man läuft hin) oder neben ihm E/Leertaste bzw. den Knopf „Reden“ unten rechts. „Weiter“ oder E blättert.
 - **Gespräche mit Antworten:** Antwort antippen oder 1–4 drücken.
 - **Auftragsbuch** (J), **Tasche** mit Gold (I), **Stufe und Erfahrung** oben links (Stufe 1–10).
-- **Probe-Auftrag:** Ye fragen, ob er Arbeit hat, drei leuchtende Silberkräuter einsammeln, abgeben.
+- **Ankunft (Stufe 1–2):** Einleitung am Stadttor, Anmeldung bei der Gildenschreiberin, Meldung bei Ausbilder Ye,
+  sein erster Auftrag (drei Silberkräuter sammeln, der Schmiedin Bescheid sagen). „!“ über einem NPC = neuer Auftrag,
+  „?“ = dort etwas erledigen oder abgeben. Oben links steht immer das nächste Ziel.
 - **Speichern:** automatisch bei jedem Fortschritt (im Browser im Browser-Speicher). „Neu beginnen“ löscht den Stand.
 - **Alle Texte, Dialoge, Aufträge und Zahlen** stehen in `data/` (Erklärung in `data/LIESMICH.md`), nicht im Code.
 - **Testgefährte:** Ein zweiter Spieler läuft zur Probe herum.

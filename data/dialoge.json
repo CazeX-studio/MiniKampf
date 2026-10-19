@@ -1,39 +1,78 @@
 {
+	"ankunft": {
+		"hinweis": "PLATZHALTER-TEXTE: Einleitung bei der Ankunft. Marco schreibt die endgültigen Texte.",
+		"einstieg": [
+			{"knoten": "tor"}
+		],
+		"knoten": {
+			"tor": {"wer": "Erzähler", "text": "Kreuzweg. Die Stadt, in der sich die Wege treffen. Fünf Straßen führen hinaus in die Regionen.", "weiter": "tor2"},
+			"tor2": {"wer": "Erzähler", "text": "Du bist einer von vielen Novizen, die hier ihre Ausbildung beginnen. Wohin dein Weg führt, weißt du noch nicht.", "weiter": "tor3"},
+			"tor3": {"wer": "Erzähler", "text": "Zuerst: Melde dich in der Abenteurergilde an. Sie liegt im Nordosten des Marktplatzes.", "aktionen": [{"merken": "angekommen"}, {"auftrag_starten": "ankunft"}]}
+		}
+	},
+	"schreiberin": {
+		"hinweis": "PLATZHALTER-TEXTE",
+		"einstieg": [
+			{"wenn": {"auftrag": "ankunft", "stand": "aktiv"}, "knoten": "anmeldung"},
+			{"wenn": {"auftrag": "zu_ye", "stand": "aktiv"}, "knoten": "erinnerung"},
+			{"knoten": "allgemein"}
+		],
+		"knoten": {
+			"anmeldung": {"wer": "Gildenschreiberin", "text": "Noch ein Novize! Willkommen in der Abenteurergilde von Kreuzweg. Soll ich dich eintragen?", "antworten": [
+				{"text": "Ja, bitte.", "weiter": "eingetragen", "aktionen": [{"merken": "gilde_angemeldet"}, {"auftrag_abgeben": "ankunft"}]},
+				{"text": "Was macht die Gilde eigentlich?", "weiter": "gilde"}
+			]},
+			"gilde": {"wer": "Gildenschreiberin", "text": "Wir vermitteln Aufträge und bilden Novizen aus. Wer bei uns eingetragen ist, bekommt Arbeit, Lohn und einen Platz zum Schlafen.", "weiter": "anmeldung"},
+			"eingetragen": {"wer": "Gildenschreiberin", "text": "So, du stehst im Buch. Melde dich jetzt bei Ausbilder Ye, er steht gleich links von hier.", "aktionen": [{"auftrag_starten": "zu_ye"}]},
+			"erinnerung": {"wer": "Gildenschreiberin", "text": "Ausbilder Ye wartet auf dich. Der Mann mit dem blauen Hut, gleich links."},
+			"allgemein": {"wer": "Gildenschreiberin", "text": "Neue Aufträge hängen bald am Brett. Bis dahin hör auf Ye."}
+		}
+	},
 	"ye": {
 		"hinweis": "PLATZHALTER-TEXTE: Marco schreibt die Dialoge der Hauptfiguren noch.",
 		"einstieg": [
-			{"wenn": {"nicht_gemerkt": "ye_kennengelernt"}, "knoten": "hallo"},
-			{"wenn": {"auftrag": "kraeuter_fuer_ye", "stand": "fertig"}, "knoten": "abgeben"},
-			{"wenn": {"auftrag": "kraeuter_fuer_ye", "stand": "aktiv"}, "knoten": "wartet"},
-			{"wenn": {"auftrag": "kraeuter_fuer_ye", "stand": "abgegeben"}, "knoten": "danach"},
-			{"knoten": "wieder_da"}
+			{"wenn": {"nicht_gemerkt": "gilde_angemeldet"}, "knoten": "zu_frueh"},
+			{"wenn": {"auftrag": "zu_ye", "stand": "aktiv"}, "knoten": "hallo"},
+			{"wenn": {"auftrag": "erster_auftrag", "stand": "fertig"}, "knoten": "abgeben"},
+			{"wenn": {"auftrag": "erster_auftrag", "stand": "aktiv"}, "knoten": "wartet"},
+			{"wenn": {"auftrag": "erster_auftrag", "stand": "neu"}, "knoten": "auftrag"},
+			{"knoten": "danach"}
 		],
 		"knoten": {
-			"hallo": {"wer": "Ye", "text": "Ah, ein neues Gesicht. Willkommen in Kreuzweg, Novize.", "aktionen": [{"merken": "ye_kennengelernt"}], "weiter": "hallo2"},
-			"hallo2": {"wer": "Ye", "text": "Ich bin Ye. Ich bringe Anfängern bei, wie man da draußen überlebt.", "weiter": "frage"},
-			"frage": {"wer": "Ye", "text": "Und? Was führt dich zu mir?", "antworten": [
-				{"text": "Ich will kämpfen lernen.", "weiter": "kaempfen"},
+			"zu_frueh": {"wer": "Ye", "text": "Ein neues Gesicht. Lass dich erst in der Gilde eintragen, die Schreiberin steht vorne am Eingang."},
+			"hallo": {"wer": "Ye", "text": "Ah, die Schreiberin schickt dich. Willkommen in Kreuzweg, Novize.", "aktionen": [{"merken": "bei_ye_gemeldet"}, {"auftrag_abgeben": "zu_ye"}], "weiter": "hallo2"},
+			"hallo2": {"wer": "Ye", "text": "Ich bin Ye. Ich bringe Anfängern bei, wie man da draußen überlebt. Nicht mehr, nicht weniger.", "weiter": "frage"},
+			"frage": {"wer": "Ye", "text": "Fragen?", "antworten": [
+				{"text": "Wann lerne ich kämpfen?", "weiter": "kaempfen"},
 				{"text": "Was ist das für eine Laterne an der Wand?", "weiter": "laterne"},
-				{"text": "Hast du Arbeit für mich?", "weiter": "auftrag"}
+				{"text": "Keine Fragen. Was soll ich tun?", "weiter": "auftrag"}
 			]},
-			"kaempfen": {"wer": "Ye", "text": "Merk dir eins: Schild hoch, Schild runter. Im richtigen Moment, nicht früher.", "weiter": "frage"},
+			"kaempfen": {"wer": "Ye", "text": "Bald. Merk dir schon mal eins: Schild hoch, Schild runter. Im richtigen Moment, nicht früher.", "weiter": "frage"},
 			"laterne": {"wer": "Ye", "text": "Ein Erinnerungsstück. Vielleicht erzähle ich dir irgendwann davon.", "weiter": "frage"},
-			"auftrag": {"wer": "Ye", "text": "Zwischen den Pflastersteinen wächst Silberkraut. Bring mir drei davon.", "antworten": [
-				{"text": "Mach ich!", "weiter": "angenommen", "aktionen": [{"auftrag_starten": "kraeuter_fuer_ye"}]},
-				{"text": "Später vielleicht.", "weiter": "spaeter"}
+			"auftrag": {"wer": "Ye", "text": "Bevor du kämpfst, lern die Stadt kennen. Bring mir drei Silberkräuter vom Marktplatz und sag der Schmiedin, dass ich meine Übungsschwerter brauche.", "antworten": [
+				{"text": "Mach ich.", "weiter": "angenommen", "aktionen": [{"auftrag_starten": "erster_auftrag"}]},
+				{"text": "Später.", "weiter": "spaeter"}
 			]},
-			"angenommen": {"wer": "Ye", "text": "Gut. Die Kräuter leuchten ein wenig, du wirst sie finden."},
+			"angenommen": {"wer": "Ye", "text": "Die Kräuter leuchten ein wenig. Die Schmiede ist südöstlich vom Marktplatz."},
 			"spaeter": {"wer": "Ye", "text": "Wie du willst. Ich laufe nicht weg."},
-			"wieder_da": {"wer": "Ye", "text": "Na? Schon geübt? Schild hoch, Schild runter.", "antworten": [
-				{"text": "Hast du jetzt Arbeit für mich?", "weiter": "auftrag", "wenn": {"auftrag": "kraeuter_fuer_ye", "stand": "neu"}},
-				{"text": "Bis später, Ye."}
+			"wartet": {"wer": "Ye", "text": "Drei Silberkräuter und ein Wort an die Schmiedin. Dein Auftragsbuch weiß den Rest."},
+			"abgeben": {"wer": "Ye", "text": "Na, wie war's?", "antworten": [
+				{"text": "Hier sind die Kräuter. Die Schmiedin weiß Bescheid.", "weiter": "dank", "aktionen": [{"auftrag_abgeben": "erster_auftrag"}]}
 			]},
-			"wartet": {"wer": "Ye", "text": "Drei Silberkräuter. Sie wachsen rund um den Marktplatz."},
-			"abgeben": {"wer": "Ye", "text": "Du hast sie? Zeig her.", "antworten": [
-				{"text": "Hier, drei Silberkräuter.", "weiter": "dank", "aktionen": [{"auftrag_abgeben": "kraeuter_fuer_ye"}]}
-			]},
-			"dank": {"wer": "Ye", "text": "Sauber gepflückt. Hier, dein Lohn. Und ein Heiltrank – du wirst ihn brauchen."},
-			"danach": {"wer": "Ye", "text": "Die Kräuter riechen gut. Bald zeige ich dir, wie man kämpft."}
+			"dank": {"wer": "Ye", "text": "Gut. Du hörst zu und findest dich zurecht. Das ist mehr, als die meisten Novizen am ersten Tag schaffen.", "weiter": "dank2"},
+			"dank2": {"wer": "Ye", "text": "Morgen früh vor dem Stadttor beginnt deine Grundausbildung. Schlaf gut."},
+			"danach": {"wer": "Ye", "text": "Morgen früh, vor dem Stadttor. Schild hoch, Schild runter."}
+		}
+	},
+	"schmiedin": {
+		"hinweis": "PLATZHALTER-TEXTE",
+		"einstieg": [
+			{"wenn": {"auftrag": "erster_auftrag", "stand": "aktiv", "nicht_gemerkt": "schmiedin_bescheid"}, "knoten": "bote"},
+			{"knoten": "allgemein"}
+		],
+		"knoten": {
+			"bote": {"wer": "Schmiedin", "text": "Ye schickt dich? Dann will er seine Übungsschwerter. Sag ihm, sie liegen morgen früh am Stadttor.", "aktionen": [{"merken": "schmiedin_bescheid"}]},
+			"allgemein": {"wer": "Schmiedin", "text": "Für Novizen hab ich nur stumpfe Klingen. Komm wieder, wenn du deine Klasse gewählt hast."}
 		}
 	}
 }

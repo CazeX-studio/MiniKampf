@@ -47,6 +47,7 @@ var _dialog_next: Button
 var _dialog_shown := {}
 var _info: Label
 var _hud: Label
+var _goal: Label
 var _notices: VBoxContainer
 var _panel: PanelContainer
 var _panel_title: Label
@@ -69,9 +70,9 @@ func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color("1b2418"))
 	state.notice.connect(_on_notice)
 	state.progress_changed.connect(_on_progress_changed)
-	var local := state.add_player(LOCAL_ID, "Du", "elf_m", Vector2i(11, 19))
+	var local := state.add_player(LOCAL_ID, "Du", "elf_m", WorldState.start_cell())
 	SaveGame.load_into(local)
-	state.add_player(BOT_ID, "Testgefährte", "lizard_f", Vector2i(10, 20))
+	state.add_player(BOT_ID, "Testgefährte", "lizard_f", WorldState.start_cell() + Vector2i(-1, 0))
 
 	_ground = Node2D.new()
 	_ground.z_index = -10
@@ -105,6 +106,8 @@ func _ready() -> void:
 	_set_touch_ui(DisplayServer.is_touchscreen_available())
 	_sync()
 	_camera.reset_smoothing()
+	# Beim ersten Betreten der Stadt kommt die Einleitung
+	state.apply_command(LOCAL_ID, {type = "start"})
 
 
 func _exit_tree() -> void:
@@ -149,6 +152,10 @@ func _sync() -> void:
 		node.visible = state.can_use(local, target)
 		node.queue_redraw()
 	_info.text = "Spieler in Kreuzweg: %d" % state.players.size()
+	for id: String in state.npcs:
+		_characters["npc:" + id].marker = state.npc_marker(local, id)
+	var goal := state.objective(local)
+	_goal.text = "Ziel: " + goal if goal != "" else ""
 	_update_hud()
 
 
@@ -440,8 +447,11 @@ func _build_ui() -> void:
 	_hud = _label("", 18, Color("f2c14e"))
 	_hud.position = Vector2(16, 32)
 	root.add_child(_hud)
+	_goal = _label("", 17, Color("9fe8ff"))
+	_goal.position = Vector2(16, 56)
+	root.add_child(_goal)
 	_info = _label("", 13, Color("8affc1"))
-	_info.position = Vector2(16, 58)
+	_info.position = Vector2(16, 82)
 	root.add_child(_info)
 
 	var x := 1170.0
@@ -661,6 +671,8 @@ func _fill_panel() -> void:
 		_panel_title.text = GameData.text("auftragsbuch")
 		for id: String in p.progress.quests:
 			var q := GameData.quest(id)
+			if q.is_empty():
+				continue
 			var quest_state: String = p.progress.quests[id]
 			var color := "8affc1" if quest_state == "fertig" else ("a0a0a0" if quest_state == "abgegeben" else "ffffff")
 			lines.append("[b][color=#%s]%s[/color][/b]  (%s)" % [color, q.get("titel", id), GameData.text("stand_" + quest_state)])

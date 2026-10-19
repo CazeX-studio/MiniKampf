@@ -7,6 +7,7 @@ extends RefCounted
 ##   {type = "use", target = "punkt:0"}  zu etwas hinlaufen und es benutzen ("npc:ye" oder "punkt:Nummer")
 ##   {type = "steer", dir = Vector2}     frei laufen in eine Bildschirm-Richtung (Tasten, Steuerknopf), ZERO = stehen bleiben
 ##   {type = "interact"}                 das Nächste direkt nebenan benutzen (E, Leertaste, Aktions-Knopf)
+##   {type = "start"}                    Stadt betreten (zeigt beim ersten Mal die Einleitung)
 ##   {type = "dialog_next"}              im Gespräch weiter (wenn es keine Antworten gibt)
 ##   {type = "dialog_choose", index = 0} im Gespräch eine Antwort wählen
 ## So kann später ein Server dieselben Befehle von vielen Spielern annehmen;
@@ -182,6 +183,12 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			if target != "":
 				p.path.clear()
 				p.use_target = target
+		"start":
+			# Beim Betreten der Stadt: Einleitung, solange sie noch nicht gesehen wurde
+			var start: Dictionary = GameData.get_file("kreuzweg").get("start", {})
+			var flag: String = start.get("nur_wenn_nicht_gemerkt", "")
+			if start.has("dialog") and (flag == "" or not p.progress.flags.has(flag)):
+				start_dialog(p, start.dialog)
 		"dialog_next":
 			_dialog_next(p)
 		"dialog_choose":
@@ -455,6 +462,21 @@ func quest_goals_met(p: PlayerState, id: String) -> bool:
 			"reden":
 				if not p.progress.flags.has("geredet:" + str(goal.npc)):
 					return false
+			"gemerkt":
+				if not p.progress.flags.has(goal.merken):
+					return false
+	return true
+
+
+## Ist dieses eine Ziel erfüllt?
+func goal_done(p: PlayerState, goal: Dictionary) -> bool:
+	match goal.art:
+		"sammeln":
+			return p.progress.item_count(goal.gegenstand) >= int(goal.anzahl)
+		"reden":
+			return p.progress.flags.has("geredet:" + str(goal.npc))
+		"gemerkt":
+			return p.progress.flags.has(goal.merken)
 	return true
 
 
@@ -468,12 +490,53 @@ func goal_text(p: PlayerState, goal: Dictionary) -> String:
 			var npc: Dictionary = npcs.get(goal.npc, {name = goal.npc})
 			var done := p.progress.flags.has("geredet:" + str(goal.npc))
 			return "Mit %s reden%s" % [npc.name, " (erledigt)" if done else ""]
+		"gemerkt":
+			return "%s%s" % [goal.get("text", goal.merken), " (erledigt)" if goal_done(p, goal) else ""]
+	return ""
+
+
+## Was der Spieler als Nächstes tun soll (für den Hinweis „Ziel: …“). "" = nichts offen.
+func objective(p: PlayerState) -> String:
+	for id: String in p.progress.quests:
+		var q := GameData.quest(id)
+		var quest_state: String = p.progress.quests[id]
+		if q.is_empty() or quest_state == "abgegeben":
+			continue
+		if quest_state == "fertig":
+			var giver: Dictionary = npcs.get(q.get("abgeben_bei", ""), {name = "Auftraggeber"})
+			return "Zurück zu %s" % giver.name
+		for goal: Dictionary in q.get("ziele", []):
+			if not goal_done(p, goal):
+				return goal_text(p, goal)
+	return ""
+
+
+## Zeichen über einem NPC: "!" = neuer Auftrag, "?" = hier etwas erledigen oder abgeben, "" = nichts.
+func npc_marker(p: PlayerState, npc_id: String) -> String:
+	var all_quests := GameData.get_file("auftraege")
+	for id: String in all_quests:
+		var q: Dictionary = all_quests[id]
+		var quest_state := p.progress.quest_state(id)
+		if quest_state == "fertig" and q.get("abgeben_bei", "") == npc_id:
+			return "?"
+		if quest_state == "aktiv":
+			for goal: Dictionary in q.get("ziele", []):
+				if goal.get("bei", "") == npc_id and not goal_done(p, goal):
+					return "?"
+	for id: String in all_quests:
+		var q: Dictionary = all_quests[id]
+		if q.get("start_bei", "") == npc_id and p.progress.quest_state(id) == "neu" \
+				and (not q.has("voraussetzung") or p.progress.quest_state(q.voraussetzung) == "abgegeben"):
+			return "!"
 	return ""
 
 
 ## Aktive Aufträge werden "fertig", sobald alle Ziele erfüllt sind (und wieder "aktiv", falls nicht mehr).
 func _update_quests(p: PlayerState) -> void:
 	for id: String in p.progress.quests.keys():
+		if GameData.quest(id).is_empty():
+			# Auftrag gibt es in den Daten nicht mehr (alter Spielstand)
+			continue
 		var state: String = p.progress.quests[id]
 		var met := quest_goals_met(p, id)
 		if state == "aktiv" and met:
@@ -484,6 +547,9 @@ func _update_quests(p: PlayerState) -> void:
 
 
 func _turn_in_quest(p: PlayerState, id: String) -> void:
+	# Wurde das letzte Ziel gerade eben erfüllt (z. B. im selben Gespräch), gilt der Auftrag ohne Extra-Meldung als fertig
+	if p.progress.quest_state(id) == "aktiv" and quest_goals_met(p, id):
+		p.progress.quests[id] = "fertig"
 	if p.progress.quest_state(id) != "fertig":
 		return
 	var q := GameData.quest(id)
@@ -524,3 +590,9 @@ func _give_item(p: PlayerState, item_id: String, count: int) -> void:
 
 func _say(p: PlayerState, text: String) -> void:
 	notice.emit(p.id, text)
+
+
+## Wo neue Spieler die Stadt betreten (aus data/kreuzweg.json).
+static func start_cell() -> Vector2i:
+	var cell: Array = GameData.get_file("kreuzweg").get("start", {}).get("feld", [11, 19])
+	return Vector2i(int(cell[0]), int(cell[1]))

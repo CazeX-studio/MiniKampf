@@ -34,3 +34,13 @@ und **Knoten**. Ein Knoten hat:
 `titel`, `beschreibung`, `ziele` (Liste: `{"art": "sammeln", "gegenstand": "…", "anzahl": 3}` oder
 `{"art": "reden", "npc": "…"}`), `belohnung` (`gold`, `erfahrung`, `gegenstaende`).
 Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeben (Belohnung erhalten).
+
+## Weitere Felder (seit Schritt 2)
+
+- **Ziel-Art „gemerkt“:** `{"art": "gemerkt", "merken": "schmiedin_bescheid", "bei": "schmiedin", "text": "Der Schmiedin Bescheid sagen"}`
+  ist erfüllt, sobald ein Dialog `{"merken": "schmiedin_bescheid"}` ausgeführt hat. `bei` = über welchem NPC das „?“ erscheint.
+- **Aufträge:** `abgeben_bei` (wo man ihn abgibt, dort erscheint „?“, wenn er erfüllt ist), `start_bei` und
+  `voraussetzung` (wo ein neuer Auftrag mit „!“ angezeigt wird und welcher Auftrag vorher abgeschlossen sein muss).
+- **Bedingungen** dürfen mehrere Teile haben, z. B. `{"auftrag": "erster_auftrag", "stand": "aktiv", "nicht_gemerkt": "schmiedin_bescheid"}` – dann muss alles stimmen.
+- **`kreuzweg.json` → `start`:** wo neue Spieler die Stadt betreten und welcher Dialog dabei kommt
+  (`nur_wenn_nicht_gemerkt`: nur beim ersten Mal).

@@ -4,7 +4,8 @@ extends RefCounted
 ## Später übernimmt das der Server; dann bleibt nur das Format gleich.
 
 const PATH := "user://spielstand.json"
-const VERSION := 1
+## Version 2: Ankunft in Kreuzweg (Schritt 2). Ältere Spielstände passen nicht mehr und werden ignoriert.
+const VERSION := 2
 
 
 static func save(p: PlayerState) -> void:
@@ -19,7 +20,7 @@ static func load_into(p: PlayerState) -> bool:
 	if not FileAccess.file_exists(PATH):
 		return false
 	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(PATH))
-	if not data is Dictionary:
+	if not data is Dictionary or int(data.get("version", 0)) < VERSION:
 		return false
 	p.progress.load_dict(data.get("progress", {}))
 	var cell: Array = data.get("feld", [])

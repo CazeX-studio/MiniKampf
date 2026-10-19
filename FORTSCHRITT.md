@@ -35,6 +35,7 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
 | 6 | Kampf in Regeln und Anzeige trennen | erledigt |
 | 7 | Steuerung in der Welt: Tasten (PC), Steuerknopf und Aktions-Knopf (Handy) | erledigt |
 | 8 | Kreuzweg-Demo Schritt 1: Bausteine (siehe KREUZWEG_PLAN.md) | erledigt |
+| 9 | Kreuzweg-Demo Schritt 2: Ankunft (Gilde, Ye, erster Auftrag) | erledigt |
 
 ## Aufgaben der Runde 1
 
@@ -119,6 +120,21 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
     Die Folgen stehen erst nach der Wahl im Log. Das gilt ab jetzt für alle Entscheidungen.
   - Die Urbaum-Frage kommt **nur beim ersten Abschluss**. Die Wahl wird im Spielstand gespeichert; bei jedem weiteren
     Sieg in der Pilzhöhle gilt sie automatisch („Wie beim ersten Mal …“). „Neu beginnen“ in der Kreuzweg-Demo löscht
+
+- **Schritt 9 – Kreuzweg-Demo, Ankunft** (Schritt 2 aus `KREUZWEG_PLAN.md`, Stufe 1–2):
+  - **Einleitung am Stadttor:** Beim ersten Betreten erzählt ein Erzähler kurz, wo du bist, und schickt dich zur Gilde.
+  - **Abenteurergilde:** Die Gildenschreiberin vor dem Eingang trägt dich als Novize ein und schickt dich zu Ye.
+  - **Ausbilder Ye:** begrüßt dich, beantwortet Fragen (Kämpfen, Laterne) und gibt den **ersten Auftrag
+    „Die Stadt kennenlernen“**: drei Silberkräuter sammeln und der **Schmiedin** Bescheid sagen. Abgeben bei Ye
+    = 25 Gold, ein Heiltrank und genau **Stufe 2**. Danach kündigt Ye die Grundausbildung am Stadttor an (Schritt 3).
+  - **Hilfen zum Zurechtfinden:** „!“ über einem NPC = neuer Auftrag, „?“ = dort etwas erledigen oder abgeben.
+    Oben links steht immer das nächste **Ziel** (z. B. „Silberkraut 1 / 3“ oder „Zurück zu Ausbilder Ye“).
+  - Wer Ye vor der Anmeldung anspricht, wird freundlich zur Gilde geschickt. Marv kommt wie geplant erst nach dem Tutorial.
+  - Der Probe-Auftrag aus Schritt 1 ist durch den echten ersten Auftrag ersetzt. **Alte Spielstände beginnen neu**
+    (sie passten nicht mehr zum neuen Ablauf).
+  - **Platzhalter:** Alle Texte von Erzähler, Gildenschreiberin, Ye und Schmiedin sind Platzhalter –
+    **Marco schreibt die Dialoge der Hauptfiguren noch** (`data/dialoge.json`).
+  - Automatischer Test `tests/welt_test.gd` spielt den ganzen Ablauf durch (41 Prüfungen): alles richtig.
     sie mit. (Im fertigen Spiel ist der erste Abschluss der über den Auftrag.) Auch in design.md eingetragen.
 
 ## Fertig in Runde 1
@@ -165,13 +181,16 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 4. Handy: Neben Ye „Reden“ unten rechts antippen. Das Gespräch startet.
 5. Antippen bzw. Klicken auf den Boden läuft weiterhin dorthin.
 
-**Neu: Bausteine der Kreuzweg-Demo** (Menü → „Kreuzweg-Demo“)
-1. Zu Ye gehen und reden: Er stellt eine Frage mit drei Antworten. Jede Antwort ausprobieren (antippen oder 1–3).
-2. „Hast du Arbeit für mich?“ → „Mach ich!“: Oben erscheint „Neuer Auftrag“. Im „Auftragsbuch“ (oder J) steht er mit „Silberkraut 0 / 3“.
-3. Die drei leuchtenden Kräuter antippen (eins über der Statue, zwei links auf dem Marktplatz; oder daneben E drücken). Danach Ye die Kräuter geben:
-   Oben links steht jetzt Stufe 2 und 30 Gold, in der „Tasche“ (oder I) ein Heiltrank.
-4. Seite neu laden (oder Menü → wieder Kreuzweg-Demo): Gold, Stufe und Auftrag sind noch da (gespeichert).
-5. „Neu beginnen“ antippen: Alles fängt von vorne an.
+**Bausteine der Kreuzweg-Demo:** Gespräche mit Antworten, Auftragsbuch (J), Tasche (I), Stufe oben links, Speichern
+(Seite neu laden = Stand bleibt) und „Neu beginnen“ testest du jetzt direkt im Ablauf „Ankunft in Kreuzweg“.
+
+**Neu: Ankunft in Kreuzweg** (Menü → „Kreuzweg-Demo“, vorher einmal „Neu beginnen“)
+1. Prüfe, ob der Erzähler die Stadt kurz vorstellt und oben „Ziel: Bei der Gildenschreiberin anmelden“ steht.
+2. Zur Gildenschreiberin gehen (das „?“ über ihrem Kopf). Probier beide Antworten aus und lass dich eintragen.
+3. Zu Ausbilder Ye gehen (jetzt hat er das „?“). Stell ihm Fragen und nimm danach seinen Auftrag an.
+4. Der Schmiedin (südlich der Statue, vor der Schmiede) Bescheid sagen und die drei Kräuter sammeln.
+   Prüfe, ob das Ziel oben mitzählt.
+5. Bei Ye abgeben: Danach solltest du Stufe 2, 25 Gold und einen Heiltrank haben, und Ye erwähnt die Grundausbildung.
 
 
 **1. Kampf-Sandbox** (Menü → „Kampf-Sandbox“)
@@ -216,7 +235,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
   Zähmen (unter 50 % Leben, Chance = fehlendes Leben, halbes Leben auf der Bank, höchstens 5 Monster).
 ## Als Nächstes (Vorschläge)
 
-- Kreuzweg-Demo nach `KREUZWEG_PLAN.md`: als Nächstes Schritt 2 (Ankunft: Abenteurergilde, Ausbilder Ye, erster Auftrag).
+- Kreuzweg-Demo nach `KREUZWEG_PLAN.md`: als Nächstes Schritt 3 (Grundausbildung: Kämpfe vor der Stadt, Tutorial, erster Gruppenkampf).
 - Dialoge der Hauptfiguren: Marco schreibt sie; Platzhalter stehen in `data/dialoge.json`.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).
 
@@ -231,5 +250,6 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
     Weiterreichen kostet den Zug.
   - Monsterkarten der Dungeon-Monster gibt es in der Sandbox noch nicht (Zähmen schon).
 
+- **Namen:** Sollen Gildenschreiberin und Schmiedin Namen bekommen? Im Moment heißen sie nur nach ihrem Beruf.
 - **Kreuzweg-Demo:** Passen die Positionen (Gilde im Nordosten, Bingos Laden im Westen, die sechste,
   zugewachsene Straße nach Südosten)? Soll Ye vor der Gilde stehen oder drinnen?

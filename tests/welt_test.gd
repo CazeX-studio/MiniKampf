@@ -57,48 +57,81 @@ func _test_steering() -> void:
 
 func _test_building_blocks() -> void:
 	var world := WorldState.new()
-	var p := world.add_player("a", "Test", "elf_m", Vector2i(11, 19))
+	var p := world.add_player("a", "Test", "elf_m", WorldState.start_cell())
 	var notices: Array[String] = []
 	world.notice.connect(func(_id: String, text: String) -> void: notices.append(text))
 
-	# Gespräch mit Ye: Begrüßung, dann Frage mit drei Antworten
-	world.apply_command("a", {type = "talk", npc = "ye"})
-	_tick(world, 6.0)
-	_check(p.in_dialog() and world.dialog_view(p).wer == "Ye", "Hinlaufen zu Ye startet das Gespräch")
+	# Ankunft: Einleitung am Stadttor, danach der erste Auftrag
+	world.apply_command("a", {type = "start"})
+	_check(p.in_dialog() and world.dialog_view(p).wer == "Erzähler", "Beim Betreten kommt die Einleitung")
 	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "dialog_next"})
-	var view := world.dialog_view(p)
-	_check(view.antworten.size() == 3, "Ye stellt eine Frage mit drei Antworten")
 	world.apply_command("a", {type = "dialog_next"})
-	_check(world.dialog_view(p) == view, "Weiter geht nicht, solange eine Antwort gewählt werden muss")
+	_check(not p.in_dialog(), "Einleitung endet")
+	_check(p.progress.quest_state("ankunft") == "aktiv", "Auftrag „Ankunft in Kreuzweg“ läuft")
+	_check(world.objective(p) == "Bei der Gildenschreiberin anmelden", "Ziel-Hinweis zeigt die Anmeldung")
+	_check(world.npc_marker(p, "schreiberin") == "?" and world.npc_marker(p, "ye") == "", "Zeichen ? über der Gildenschreiberin")
+	world.apply_command("a", {type = "start"})
+	_check(not p.in_dialog(), "Die Einleitung kommt nur einmal")
+
+	# Ye vor der Anmeldung: schickt einen zur Gilde
+	_talk(world, p, "ye")
+	_check(world.dialog_view(p).text.contains("Gilde eintragen"), "Ye schickt Unangemeldete zur Gilde")
+	world.apply_command("a", {type = "dialog_next"})
+
+	# Anmeldung bei der Gildenschreiberin (mit Nachfrage)
+	_talk(world, p, "schreiberin")
+	_check(world.dialog_view(p).antworten.size() == 2, "Schreiberin fragt, ob sie dich eintragen soll")
+	world.apply_command("a", {type = "dialog_choose", index = 1})
+	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "dialog_choose", index = 0})
-	_check(world.dialog_view(p).text.begins_with("Merk dir eins"), "Antwort 1 führt zum passenden Text")
+	_check(p.progress.quest_state("ankunft") == "abgegeben" and p.progress.quest_state("zu_ye") == "aktiv", "Angemeldet, weiter zu Ye")
+	_check(not "Auftrag erfüllt: Ankunft in Kreuzweg – zurück zum Auftraggeber!" in notices, "Keine überflüssige Meldung bei sofortiger Abgabe")
+	world.apply_command("a", {type = "dialog_next"})
+	_check(world.npc_marker(p, "ye") == "?", "Zeichen ? über Ye")
+
+	# Bei Ye melden, Fragen stellen, ersten Auftrag annehmen
+	_talk(world, p, "ye")
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_next"})
+	_check(world.dialog_view(p).antworten.size() == 3, "Ye fragt nach Fragen (drei Antworten)")
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(world.dialog_view(p).text.contains("Schild hoch"), "Antwort 1: Schild hoch, Schild runter")
 	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "dialog_choose", index = 2})
-	world.apply_command("a", {type = "dialog_choose", index = 0})
-	_check(p.progress.quest_state("kraeuter_fuer_ye") == "aktiv", "Auftrag wird über eine Antwort angenommen")
-	_check("Neuer Auftrag: Kräuter für Ye (Probe-Auftrag)" in notices, "Meldung „Neuer Auftrag“ kommt")
+	world.apply_command("a", {type = "dialog_choose", index = 1})
+	_check(p.progress.quest_state("erster_auftrag") == "neu", "„Später“ nimmt den Auftrag nicht an")
 	world.apply_command("a", {type = "dialog_next"})
-	_check(not p.in_dialog(), "Gespräch endet")
+	_check(world.npc_marker(p, "ye") == "!", "Zeichen ! über Ye, solange sein Auftrag offen ist")
+	_talk(world, p, "ye")
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(p.progress.quest_state("erster_auftrag") == "aktiv", "Erster Auftrag angenommen")
+	world.apply_command("a", {type = "dialog_next"})
 
-	# Drei Kräuter sammeln
+	# Schmiedin Bescheid sagen, drei Kräuter sammeln
+	_check(world.npc_marker(p, "schmiedin") == "?", "Zeichen ? über der Schmiedin")
+	_talk(world, p, "schmiedin")
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.flags.has("schmiedin_bescheid") and world.npc_marker(p, "schmiedin") == "", "Schmiedin weiß Bescheid")
 	for i in world.pickups.size():
 		world.apply_command("a", {type = "use", target = "punkt:%d" % i})
-		_tick(world, 8.0)
+		_tick(world, 10.0)
 	_check(p.progress.item_count("kraut") == 3, "Drei Silberkräuter in der Tasche")
 	_check(not world.can_use(p, "punkt:0"), "Ein eingesammeltes Kraut ist für diesen Spieler weg")
-	_check(p.progress.quest_state("kraeuter_fuer_ye") == "fertig", "Auftrag ist erfüllt, sobald alle Kräuter da sind")
+	_check(p.progress.quest_state("erster_auftrag") == "fertig", "Auftrag ist erfüllt")
+	_check(world.objective(p) == "Zurück zu Ausbilder Ye" and world.npc_marker(p, "ye") == "?", "Ziel: zurück zu Ye")
 
 	# Abgeben: Belohnung, Stufe 2
-	world.apply_command("a", {type = "talk", npc = "ye"})
-	_tick(world, 8.0)
-	_check(world.dialog_view(p).antworten.size() == 1, "Ye fragt nach den Kräutern")
+	_talk(world, p, "ye")
 	world.apply_command("a", {type = "dialog_choose", index = 0})
-	_check(p.progress.quest_state("kraeuter_fuer_ye") == "abgegeben", "Auftrag ist abgegeben")
-	_check(p.progress.gold == 30 and p.progress.item_count("heiltrank") == 1 and p.progress.item_count("kraut") == 0,
-		"Belohnung: 30 Gold und ein Heiltrank, die Kräuter sind weg")
-	_check(p.progress.xp == 120 and p.progress.level == 2, "120 Erfahrung = Stufe 2")
+	_check(p.progress.quest_state("erster_auftrag") == "abgegeben", "Auftrag ist abgegeben")
+	_check(p.progress.gold == 25 and p.progress.item_count("heiltrank") == 1 and p.progress.item_count("kraut") == 0,
+		"Belohnung: 25 Gold und ein Heiltrank, die Kräuter sind weg")
+	_check(p.progress.xp == 100 and p.progress.level == 2, "100 Erfahrung = Stufe 2")
 	_check("Stufe 2 erreicht!" in notices, "Meldung „Stufe 2 erreicht!“ kommt")
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_next"})
+	_check(not p.in_dialog() and world.objective(p) == "", "Alles erledigt, kein offenes Ziel")
 
 	# Stufen bis 10, nicht weiter
 	p.progress.add_xp(100000)
@@ -131,3 +164,9 @@ func _check(condition: bool, text: String) -> void:
 	if not condition:
 		_failed += 1
 		print("FEHLER: " + text)
+
+
+## Zum NPC laufen und warten, bis das Gespräch beginnt.
+func _talk(world: WorldState, p: PlayerState, npc: String) -> void:
+	world.apply_command(p.id, {type = "talk", npc = npc})
+	_tick(world, 10.0)
