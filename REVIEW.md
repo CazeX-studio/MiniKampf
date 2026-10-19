@@ -34,7 +34,7 @@ Alle sechs Duette sind drin, auch der Sternentanz mit Sternenkraft.
 - **Kunoichi:** Die Ult lädt auch durch einzelne Siegel (+12), nicht nur durch Kombinationen (+35). design.md sagt „ausgelöste Siegel-Kombinationen“.
 - **Passiven:** Wo design.md keine Passive nennt (Mechaniker, Rüstungsschmied, Zwielicht-Wandler), habe ich selbst eine gewählt, z. B. „Wartung“ beim Roboter. Die stehen nicht in design.md.
 - **Spezialisierungen und Der Klassenlose:** noch nicht gebaut (war auch nicht geplant).
-- **Name:** Die Sternensängerin heißt in der Sandbox „Lyra“. In der Story ist Lyra Kaels Schwester.
+- **Name:** Die Sternensängerin hieß in der Sandbox „Lyra“. Erledigt: Sie heißt jetzt „Vega“ (Lyra ist Kaels Schwester).
 
 ### Elemente – passt
 
@@ -104,7 +104,7 @@ die Veröffentlichung gehört zum neuesten Commit). Die Seite selbst kann ich vo
    Am besten bevor der Kampf noch größer wird.
 2. **Fehlende Kleinigkeiten aus design.md** nachziehen: Schnellfeuer, Polarstern, Zähmen,
    Entscheidung nach der Pilzhöhle, Kunoichi-Ult nur durch Kombinationen.
-3. **Offene Fragen** aus FORTSCHRITT.md beantworten (Pilzhöhle-Regeln, Name Lyra), dann die Werte nachjustieren.
+3. **Offene Fragen** aus FORTSCHRITT.md beantworten (Pilzhöhle-Regeln), dann die Werte nachjustieren.
 4. Den alten ersten Mini-Kampf ins Menü aufnehmen oder als „Archiv“ kennzeichnen.
 
 **Was zuerst?**

@@ -19,7 +19,7 @@ im öffentlichen Repository https://github.com/benc-uk/super-dungeon-delve
 | Magier-Tank, Mechaniker | knight_m |
 | Rüstungsschmied | knight_f |
 | Bogenschütze | elf_m |
-| Sternensängerin, Kunoichi | elf_f |
+| Sternensängerin (Vega), Kunoichi | elf_f |
 | Ritualist | wizzard_f |
 | Zwielicht-Wandler, Quartiermeister | wizzard_m |
 | Klingentänzerin | lizard_f |

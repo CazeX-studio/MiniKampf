@@ -92,7 +92,7 @@ const CLASSES := {
 		ult = "Tausend Siegel · lädt durch ausgelöste Siegel-Kombinationen",
 	},
 	"singer": {
-		hero = "Lyra", title = "Sternensängerin", role = "Support", region = "Glutoase", color = Color("ffd34d"),
+		hero = "Vega", title = "Sternensängerin", role = "Support", region = "Glutoase", color = Color("ffd34d"),
 		hp = 95, mana = 90, tempo = 11, back = true, reaction = "dodge",
 		mechanic = "Zwei Sternbilder (Angriff/Schutz) füllen. Ungenutzt verblassen sie.",
 		reaction_text = "Ausweichen: +1 Resonanz in beide",

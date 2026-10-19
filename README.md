@@ -65,7 +65,7 @@ Alle 11 Startklassen aus `design.md` zum Ausprobieren und Vergleichen.
 | Ritualist | Heilen kostet Blut, dann Leben |
 | Quartiermeister | Gold und Karren mit Waren (Heiltrank, Manatrank, Bombe, Kraftkraut) |
 | Kunoichi | Element-Siegel kleben und lösen, zwei Siegel = Kombination |
-| Sternensängerin | Zwei Sternbilder, Verblassen, Sternenglanz |
+| Sternensängerin (Vega) | Zwei Sternbilder, Verblassen, Sternenglanz |
 
 Duette: Treibjagd (Bogenschütze + Zähmer), Blutsiegel (Kunoichi + Ritualist), Nachschub (Mechaniker +
 Quartiermeister), Glühende Klingen (Rüstungsschmied + Klingentänzerin), Zwielicht-Barriere
