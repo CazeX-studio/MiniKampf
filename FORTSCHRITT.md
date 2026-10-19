@@ -115,6 +115,8 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
   - **Splitter sind Dungeon-Belohnungen** (auch in design.md eingetragen): Nach der Pilzhöhle behält die Gruppe den
     Splitter in beiden Fällen. In der Auswertung steht „Belohnung: Sternensplitter“. Der Sternensplitter steht schon
     als Gegenstand in `data/gegenstaende.json`, damit er später in die Tasche kommen kann.
+  - Die Knöpfe der Urbaum-Entscheidung verraten nicht mehr, was danach passiert (z. B. besserer Ruf bei den Zähmern).
+    Die Folgen stehen erst nach der Wahl im Log. Das gilt ab jetzt für alle Entscheidungen.
 
 ## Fertig in Runde 1
 

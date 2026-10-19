@@ -229,7 +229,8 @@ func choose_option(title: String, options: Array[Dictionary]) -> String:
 	_clear_actions()
 	_turn_label.text = title
 	for option in options:
-		var button := _action_button("%s\n%s" % [option.name, option.info])
+		var info: String = option.get("info", "")
+		var button := _action_button(option.name if info == "" else "%s\n%s" % [option.name, info])
 		button.custom_minimum_size.x = 404
 		button.pressed.connect(func() -> void: _choice_made.emit(option.id))
 		_grid.add_child(button)

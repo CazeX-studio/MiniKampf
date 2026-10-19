@@ -396,9 +396,10 @@ func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 
 # --- Entscheidung nach dem Dungeon --------------------------------------------
 
+## Die Knöpfe verraten absichtlich nicht, was danach passiert (das zeigt sich erst nach der Wahl).
 const FINAL_CHOICES: Array[Dictionary] = [
-	{id = "faellen", name = "Baum fällen, großen Splitter mitnehmen", info = "Der große Splitter gehört euch. Der Urbaum stirbt."},
-	{id = "retten", name = "Splitter herausschneiden, Baum retten", info = "Ihr behaltet den Splitter. Grünwacht blüht auf, besserer Ruf bei den Zähmern"},
+	{id = "faellen", name = "Baum fällen, großen Splitter mitnehmen", info = ""},
+	{id = "retten", name = "Splitter herausschneiden, Baum retten", info = ""},
 ]
 
 
