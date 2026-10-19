@@ -199,7 +199,7 @@ func _draw_diagram() -> void:
 		var value := clampf(float(values.get(AXES[i], 0)) / MAX_VALUE, 0.0, 1.0)
 		points.append(center + dir * radius * maxf(value, 0.04))
 		var label_pos := center + dir * (radius + 22.0) + Vector2(-60, 6)
-		_diagram.draw_string(font, label_pos, "%s %d" % [AXIS_NAMES[AXES[i]], int(values.get(AXES[i], 0))],
+		_diagram.draw_string(font, label_pos, str(AXIS_NAMES[AXES[i]]),
 				HORIZONTAL_ALIGNMENT_CENTER, 120, 14, Color(1, 1, 1, 0.85))
 	for ring in [0.2, 0.4, 0.6, 0.8, 1.0]:
 		var outline := PackedVector2Array()

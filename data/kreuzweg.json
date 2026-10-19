@@ -23,7 +23,7 @@
 			"wenn": {"auftrag": "leises_singen", "stand": "aktiv"}, "anspringen": {"radius": 4}},
 		"marv_fest": {"name": "Marv", "feld": [13, 12], "aussehen": "elf_m", "farbe": "ffb070", "dialog": "marv_fest",
 			"wenn": {"gemerkt": "nacht", "nicht_gemerkt": "sternenfall"}, "anspringen": {"radius": 3}},
-		"ren": {"name": "Ren", "feld": [12, 13], "aussehen": "elf_f", "farbe": "b090ff", "dialog": "ren",
+		"ren": {"name": "???", "feld": [12, 13], "aussehen": "elf_f", "farbe": "b090ff", "dialog": "ren",
 			"wenn": {"gemerkt": "sternenfall_kampf_vorbei", "nicht_gemerkt": "ren_getroffen"}, "anspringen": {"radius": 9}},
 		"marv_abschied": {"name": "Marv", "feld": [10, 17], "aussehen": "elf_m", "farbe": "ffb070", "dialog": "marv_abschied",
 			"wenn": {"gemerkt": "abreise_angekuendigt"}, "anspringen": {"radius": 3}}

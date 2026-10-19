@@ -215,7 +215,7 @@
 				{"text": "Sie kostet 5000 Gold, Marv.", "weiter": "ausrede", "aktionen": [{"auftrag_abgeben": "marvs_traum"}]}
 			]},
 			"ausrede": {"wer": "Marv", "text": "Fünftausend?! … Na, dann spar halt! Ich warte. Ich hab Zeit. Ganz viel Zeit."},
-			"danach": {"wer": "Marv", "text": "Hast du die Sternentafel schon? Nein? Macht nichts. Ich hab Zeit!"}
+			"danach": {"wer": "Marv", "text": "Hast du die Sternentafel schon? … Nein? Hm. Ich frag morgen wieder. Und übermorgen."}
 		}
 	},
 	"bingo": {
@@ -356,7 +356,7 @@
 				{"text": "Nein, Marv.", "weiter": "zeit", "aktionen": [{"merken": "marv_fest"}, {"auftrag_abgeben": "fest"}]},
 				{"text": "Fünftausend Gold, Marv!", "weiter": "zeit", "aktionen": [{"merken": "marv_fest"}, {"auftrag_abgeben": "fest"}]}
 			]},
-			"zeit": {"wer": "Marv", "text": "Macht nichts! Ich hab Zeit. Ganz viel Ze–", "weiter": "stern"},
+			"zeit": {"wer": "Marv", "text": "Macht nichts! Irgendwann spielen wir, ganz besti–", "weiter": "stern"},
 			"stern": {"wer": "Erzähler", "text": "Plötzlich wird es taghell. Ein Stern fällt. Dann noch einer. Und noch einer.", "aktionen": [{"effekt": "sternenfall"}, {"merken": "sternenfall"}, {"auftrag_starten": "sternenfall"}], "weiter": "einschlag"},
 			"einschlag": {"wer": "Erzähler", "text": "Ein Splitter schlägt mitten auf dem Marktplatz ein. Ein Feldschleim kriecht heran – und verschlingt ihn. Er wächst. Und wächst.", "weiter": "ye"},
 			"ye": {"wer": "Ye", "text": "Novizen! Ida, Bo, Tom – und du! Zu mir! Schild hoch, Schild runter!", "antworten": [
@@ -365,7 +365,7 @@
 		}
 	},
 	"ren": {
-		"hinweis": "PLATZHALTER-TEXTE: Ren (Vorgängerin, Kunoichi) nach dem Sternenfall. Marco schreibt die Dialoge der Hauptfiguren noch.",
+		"hinweis": "PLATZHALTER-TEXTE: Ren (Vorgängerin, Kunoichi) nach dem Sternenfall – sie nennt ihren Namen noch nicht. Marco schreibt die Dialoge der Hauptfiguren noch.",
 		"einstieg": [
 			{"wenn": {"gemerkt": "sternenfresser_besiegt"}, "knoten": "sieg"},
 			{"knoten": "niederlage"}
@@ -381,7 +381,7 @@
 				{"text": "Danke … wer bist du?", "weiter": "weg"},
 				{"text": "Was willst du mit dem Splitter?", "weiter": "weg"}
 			]},
-			"weg": {"wer": "Ren", "text": "Ren. Und du hast mich nie gesehen.", "aktionen": [{"merken": "ren_getroffen"}, {"auftrag_abgeben": "sternenfall"}]}
+			"weg": {"wer": "???", "text": "Niemand. Und du hast mich nie gesehen.", "aktionen": [{"merken": "ren_getroffen"}, {"auftrag_abgeben": "sternenfall"}]}
 		}
 	},
 	"marv_abschied": {
@@ -392,7 +392,7 @@
 				{"text": "Wenn ich zurück bin, Marv.", "weiter": "zeit"},
 				{"text": "Kauf dir doch selbst eine Sternentafel.", "weiter": "zeit"}
 			]},
-			"zeit": {"wer": "Marv", "text": "Na gut. Na GUT. Ich warte. Ich hab Zeit. Ganz viel Zeit."}
+			"zeit": {"wer": "Marv", "text": "Na gut. Na GUT. Aber wehe, du übst da draußen heimlich!"}
 		}
 	}
 }
