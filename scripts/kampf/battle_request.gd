@@ -11,6 +11,8 @@ static var setup := {}
 static var result := {}
 ## Heiltränke, die in früheren Versuchen desselben Kampfes („Nochmal versuchen“) getrunken wurden
 static var used_before := 0
+## Wohin es nach dem Kampf zurückgeht (Stadt oder Klassenwahl)
+static var return_scene := "res://scenes/kreuzweg.tscn"
 
 
 static func active() -> bool:
@@ -37,6 +39,7 @@ static func prepare(id: String, level: int, potions := 0) -> bool:
 		heroes.append({klasse = "novize", name = b.name, aussehen = b.get("aussehen", "novize"), stufe = level, computer = true})
 	kampf_id = id
 	result = {}
+	return_scene = "res://scenes/kreuzweg.tscn"
 	used_before = 0
 	setup = {
 		name = data.get("name", id),

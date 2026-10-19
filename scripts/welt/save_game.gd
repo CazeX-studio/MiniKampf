@@ -60,3 +60,8 @@ static func _read() -> Dictionary:
 static func delete() -> void:
 	if FileAccess.file_exists(PATH):
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(PATH))
+
+
+## Fortschritt aus dem Spielstand lesen, ohne einen Spieler anzulegen (z. B. für die Klassenwahl).
+static func read_progress() -> Dictionary:
+	return _read().get("progress", {})

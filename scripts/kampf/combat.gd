@@ -101,7 +101,7 @@ func _battle_name() -> String:
 func _back_to_world(won: bool) -> void:
 	# Verbrauchte Heiltränke fehlen danach in der Tasche
 	BattleRequest.finish(won, _potions_used())
-	get_tree().change_scene_to_file("res://scenes/kreuzweg.tscn")
+	get_tree().change_scene_to_file(BattleRequest.return_scene)
 
 
 ## Wie viele Heiltränke der Spieler in diesem Kampf getrunken hat.

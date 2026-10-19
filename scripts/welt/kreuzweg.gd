@@ -86,6 +86,7 @@ func _ready() -> void:
 	state.progress_changed.connect(_on_progress_changed)
 	state.battle_requested.connect(_on_battle_requested)
 	state.effect_requested.connect(_on_effect)
+	state.scene_requested.connect(_on_scene)
 	_night = CanvasModulate.new()
 	add_child(_night)
 	var local := state.add_player(LOCAL_ID, "Du", "elf_m", WorldState.start_cell())
@@ -885,3 +886,11 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 func _place_dialog() -> void:
 	_dialog.reset_size()
 	_dialog.position.y = minf(440.0, 710.0 - _dialog.size.y)
+
+
+## Ein Dialog wechselt zu einem anderen Bildschirm (Klassenwahl, Abspann): erst speichern.
+func _on_scene(player_id: String, scene: String) -> void:
+	if player_id != LOCAL_ID:
+		return
+	SaveGame.save(local_player())
+	get_tree().change_scene_to_file.call_deferred("res://scenes/%s.tscn" % scene)

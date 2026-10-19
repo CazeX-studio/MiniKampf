@@ -113,5 +113,16 @@
 		],
 		"abgeben_bei": "ren",
 		"belohnung": {"erfahrung": 500}
+	},
+	"abreise": {
+		"titel": "Die Abreise",
+		"beschreibung": "Die Fünf haben entschieden: Alle Novizen reisen in die Regionen und lernen dort ihre Klasse. Ye wartet am Stadttor.",
+		"start_bei": "schreiberin",
+		"voraussetzung": "sternenfall",
+		"ziele": [
+			{"art": "gemerkt", "merken": "klasse_bestaetigt", "bei": "ye_tor", "text": "Bei Ye am Tor deinen Weg wählen"}
+		],
+		"abgeben_bei": "ye_tor",
+		"belohnung": {"erfahrung": 300}
 	}
 }

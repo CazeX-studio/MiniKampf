@@ -47,6 +47,9 @@ Abenteurergilde, Bingos Laden, sechs Straßen (die sechste nach Südosten ist zu
   der Sternenfall verwandelt einen Feldschleim in den Sternenfresser (Boss mit Sternenpanzer: nur perfekte Paraden
   öffnen ihn, nach 10 Zügen explodiert er). Sieg = Erfolg „Schild hoch, Schild runter“, Ren klaut den Splitter;
   Niederlage = Ren rettet die Gruppe.
+- **Klassenwahl und Abreise:** Am Morgen nach dem Sternenfall öffnet Ye die Klassenwahl: alle 11 Klassen mit Rolle,
+  Region, Lehrmeister, Mechanik, Fünfeck-Diagramm (Schaden, Schutz, Heilung, Unterstützung, Schwierigkeit), Ult-Vorschau
+  und Probestunde. Marv verabschiedet sich, Ye nennt deinen Weg, dann der Abspann.
 - **Testgefährte:** Ein zweiter Spieler läuft zur Probe herum.
 
 **Für später mehrere Spieler gebaut:** Die Spiellogik (`scripts/welt/world_state.gd`) kennt keine Grafik.
@@ -130,12 +133,13 @@ Felsregen → **Kettenzug** (reißt jemanden von hinten nach vorne). Unter 30 % 
   `player_state.gd` + `progress.gd` (Spieler und Fortschritt), `game_data.gd` (liest `data/`), `save_game.gd` (Speichern),
   `kreuzweg.gd` (Anzeige und Eingabe), `world_character.gd` (Figur)
 - `data/` – Dialoge, Aufträge, Gegenstände, Stufen, Texte und NPCs der Stadt (JSON, siehe `data/LIESMICH.md`)
+- `scenes/klassenwahl.tscn` + `scripts/welt/klassenwahl.gd` – Klassenwahl; `scenes/abspann.tscn` + `scripts/welt/abspann.gd` – Abspann
 - `scenes/auswahl.tscn` + `scripts/kampf/auswahl.gd` – Auswahl-Bildschirm der Kampf-Sandbox
 - `scripts/kampf/pilzhoehle.gd` – Test-Dungeon Pilzhöhle (Abläufe und Mechaniken)
 - `scripts/kampf/battle_state.gd` – Kampf-Regeln ohne Grafik: Zugreihenfolge, Schaden, Gegner, Wellen. Nimmt Befehle an und meldet Ereignisse
 - `scenes/kampf.tscn` + `scripts/kampf/combat.gd` – Kampf-Anzeige: spielt die Ereignisse ab, Knöpfe, Reaktions-Ring, Auswertung
 - `tests/` – automatische Testkämpfe (`vergleich.gd`), Lektionen (`lektionen_test.gd`), Element-Test, Welt-Test (`welt_test.gd`),
-  Stadt↔Kampf (`uebergang_test.gd`), Vorführ-Szenen (`anzeige_auto.tscn`, `welt_auto.tscn`, `lektion_auto.tscn`, `marv_auto.tscn`, `gesandte_auto.tscn`, `weg_auto.tscn`, `fest_auto.tscn`)
+  Stadt↔Kampf (`uebergang_test.gd`), Vorführ-Szenen (`anzeige_auto.tscn`, `welt_auto.tscn`, `lektion_auto.tscn`, `marv_auto.tscn`, `gesandte_auto.tscn`, `weg_auto.tscn`, `fest_auto.tscn`), Klassenwahl-Test (`klassenwahl_test.gd`)
 - `scripts/kampf/battle_request.gd` – Kampf aus der Stadt (welcher Kampf, Ergebnis), `kampf_ki.gd` – Computer-Spieler (Mitstreiter, Tests)
 - `scripts/kampf/skills.gd` – Fähigkeiten aller Klassen, Begleiter und Duette
 - `scripts/kampf/sandbox.gd` – Daten: Klassen, Duette, Monster, Gegner, Kämpfe

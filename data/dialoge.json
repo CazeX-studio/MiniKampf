@@ -21,8 +21,10 @@
 			{"wenn": {"auftrag": "gesandte", "stand": "fertig"}, "knoten": "gesandte_abgeben"},
 			{"wenn": {"auftrag": "korb_fuer_die_wache", "stand": "neu", "gemerkt": "gesandte_bedankt"}, "knoten": "korb"},
 			{"wenn": {"auftrag": "korb_fuer_die_wache", "stand": "aktiv"}, "knoten": "korb_wartet"},
-			{"wenn": {"auftrag": "leises_singen", "stand": "abgegeben", "nicht_gemerkt": "nacht"}, "knoten": "fest"},
+			{"wenn": {"und": [{"auftrag": "leises_singen", "stand": "abgegeben"}, {"auftrag": "fest", "stand": "neu"}], "nicht_gemerkt": "nacht"}, "knoten": "fest"},
 			{"wenn": {"auftrag": "fest", "stand": "aktiv"}, "knoten": "fest_laeuft"},
+			{"wenn": {"auftrag": "sternenfall", "stand": "abgegeben", "nicht_gemerkt": "abreise_angekuendigt"}, "knoten": "morgen"},
+			{"wenn": {"auftrag": "abreise", "stand": "aktiv"}, "knoten": "abreise_wartet"},
 			{"wenn": {"gemerkt": "sternenfall"}, "knoten": "nach_sternenfall"},
 			{"knoten": "allgemein"}
 		],
@@ -66,7 +68,13 @@
 			]},
 			"fest_los": {"wer": "Lene", "text": "Die Sonne geht schon unter. Lauf zum Marktplatz, ich komme gleich nach!"},
 			"fest_laeuft": {"wer": "Lene", "text": "Schön, oder? Geh ruhig zum Marktplatz, da ist am meisten los."},
-			"nach_sternenfall": {"wer": "Lene", "text": "Was für eine Nacht … Ruh dich aus, Novize. Morgen sieht die Welt anders aus."}
+			"nach_sternenfall": {"wer": "Lene", "text": "Was für eine Nacht … Ruh dich aus, Novize. Morgen sieht die Welt anders aus."},
+			"morgen": {"wer": "Lene", "text": "Guten Morgen. Hast du wenigstens ein bisschen geschlafen? Die Fünf haben in der Nacht entschieden: Alle Novizen reisen heute in die Regionen und lernen dort ihre Klasse.", "aktionen": [{"vergessen": "nacht"}, {"merken": "abreise_angekuendigt"}], "antworten": [
+				{"text": "Heute schon?", "weiter": "morgen2", "aktionen": [{"auftrag_starten": "abreise"}]},
+				{"text": "Ich bin bereit.", "weiter": "morgen2", "aktionen": [{"auftrag_starten": "abreise"}]}
+			]},
+			"morgen2": {"wer": "Lene", "text": "Nach dem Sternenfall will niemand mehr warten. Ye wartet am Stadttor auf dich. Viel Glück, Novize – die Gilde wird dich vermissen."},
+			"abreise_wartet": {"wer": "Lene", "text": "Ye wartet am Stadttor. Viel Glück!"}
 		}
 	},
 	"ye": {
@@ -119,6 +127,8 @@
 	"ye_tor": {
 		"hinweis": "PLATZHALTER-TEXTE: Ye am Stadttor (Grundausbildung). Marco schreibt die Dialoge der Hauptfiguren noch.",
 		"einstieg": [
+			{"wenn": {"auftrag": "abreise", "stand": "aktiv", "nicht_gemerkt": "klasse_gewaehlt"}, "knoten": "wahl"},
+			{"wenn": {"auftrag": "abreise", "stand": "aktiv", "gemerkt": "klasse_gewaehlt"}, "knoten": "abschied"},
 			{"wenn": {"auftrag": "grundausbildung", "stand": "neu"}, "knoten": "morgen"},
 			{"wenn": {"auftrag": "grundausbildung", "stand": "aktiv", "nicht_gemerkt": "kampf_gewonnen:lektion_tempo"}, "knoten": "l1"},
 			{"wenn": {"auftrag": "grundausbildung", "stand": "aktiv", "nicht_gemerkt": "kampf_gewonnen:lektion_faehigkeiten"}, "knoten": "l2"},
@@ -166,7 +176,18 @@
 				{"text": "Was kommt jetzt?", "weiter": "ende", "aktionen": [{"auftrag_abgeben": "erster_gruppenkampf"}]}
 			]},
 			"ende": {"wer": "Ye", "text": "Deine Grundausbildung ist vorbei. Ruh dich aus. In der Stadt ist bald einiges los."},
-			"danach": {"wer": "Ye", "text": "Willst du nochmal üben? Komm später wieder. Schild hoch, Schild runter."}
+			"danach": {"wer": "Ye", "text": "Willst du nochmal üben? Komm später wieder. Schild hoch, Schild runter."},
+			"wahl": {"wer": "Ye", "text": "Heute ziehen die Novizen los, jeder in eine Region. Welchen Weg gehst du?", "antworten": [
+				{"text": "Zeig mir die Klassen.", "aktionen": [{"szene": "klassenwahl"}]},
+				{"text": "Ich muss noch nachdenken."}
+			]},
+			"abschied": {"wer": "Ye", "text": "Also {klasse}. Dein Weg führt {wohin}, zu {lehrmeister}.", "antworten": [
+				{"text": "Ja. Ich bin bereit.", "weiter": "abschied2"},
+				{"text": "Ich habe es mir anders überlegt.", "aktionen": [{"vergessen": "klasse_gewaehlt"}, {"szene": "klassenwahl"}]}
+			]},
+			"abschied2": {"wer": "Ye", "text": "Schild hoch, Schild runter. Vergiss das nie. Und … komm irgendwann zurück. Die Laterne an der Gilde wartet.", "antworten": [
+				{"text": "Leb wohl, Ye.", "aktionen": [{"merken": "klasse_bestaetigt"}, {"auftrag_abgeben": "abreise"}, {"szene": "abspann"}]}
+			]}
 		}
 	},
 	"marv": {
@@ -361,6 +382,17 @@
 				{"text": "Was willst du mit dem Splitter?", "weiter": "weg"}
 			]},
 			"weg": {"wer": "Ren", "text": "Ren. Und du hast mich nie gesehen.", "aktionen": [{"merken": "ren_getroffen"}, {"auftrag_abgeben": "sternenfall"}]}
+		}
+	},
+	"marv_abschied": {
+		"hinweis": "PLATZHALTER-TEXTE: Marv vor der Abreise (Running Gag).",
+		"einstieg": [{"knoten": "hallo"}],
+		"knoten": {
+			"hallo": {"wer": "Marv", "text": "Du gehst?! Heute schon? Und unsere Partie Kreuzweg-Karten?", "antworten": [
+				{"text": "Wenn ich zurück bin, Marv.", "weiter": "zeit"},
+				{"text": "Kauf dir doch selbst eine Sternentafel.", "weiter": "zeit"}
+			]},
+			"zeit": {"wer": "Marv", "text": "Na gut. Na GUT. Ich warte. Ich hab Zeit. Ganz viel Zeit."}
 		}
 	}
 }

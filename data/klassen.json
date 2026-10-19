@@ -1,0 +1,60 @@
+{
+	"hinweis": "Klassenwahl-Bildschirm: Lehrmeister (aus design.md), Werte 0–5 für das Diagramm (VORLÄUFIG, Feinschliff am Ende) und eine kurze Ult-Vorschau. Rolle, Region, Mechanik und Reaktion kommen aus scripts/kampf/sandbox.gd.",
+	"wohin": {"Arkanum": "ins Arkanum", "Messinghafen": "nach Messinghafen", "Glutoase": "in die Glutoase", "Grünwacht": "nach Grünwacht", "Nebelinseln": "auf die Nebelinseln"},
+	"reihenfolge": ["tank", "mechanic", "smith", "archer", "blade", "twilight", "tamer", "ritualist", "quartermaster", "kunoichi", "singer"],
+	"tank": {
+		"lehrmeister": "Bastionsmeister Theron",
+		"werte": {"schaden": 2, "schutz": 5, "heilung": 0, "unterstuetzung": 2, "schwierigkeit": 3},
+		"ult_vorschau": "Arkane Festung: Bis zu deinem nächsten Zug fängst du die Hälfte des Schadens der ganzen Gruppe ab – danach explodiert die Festung mit allem, was sie aufgefangen hat."
+	},
+	"mechanic": {
+		"lehrmeister": "Werkmeisterin Greta",
+		"werte": {"schaden": 3, "schutz": 4, "heilung": 1, "unterstuetzung": 2, "schwierigkeit": 4},
+		"ult_vorschau": "Neuer Roboter: Ist dein Roboter kaputt, baust du ihn neu. Sonst wird er größer, stärker und voll repariert."
+	},
+	"smith": {
+		"lehrmeister": "Essenmeister Brakkus",
+		"werte": {"schaden": 2, "schutz": 5, "heilung": 0, "unterstuetzung": 2, "schwierigkeit": 3},
+		"ult_vorschau": "Meisterstück: Du schmiedest der ganzen Gruppe Rüstung – Schild und Abwehr für alle, du selbst bist voll gehärtet."
+	},
+	"archer": {
+		"lehrmeister": "Pfadmeister Fenn",
+		"werte": {"schaden": 5, "schutz": 1, "heilung": 0, "unterstuetzung": 1, "schwierigkeit": 2},
+		"ult_vorschau": "Jägerpfeil: ein einziger, gewaltiger Schuss auf ein Ziel."
+	},
+	"blade": {
+		"lehrmeister": "Tanzmeisterin Samira",
+		"werte": {"schaden": 5, "schutz": 1, "heilung": 0, "unterstuetzung": 1, "schwierigkeit": 4},
+		"ult_vorschau": "Tanz der tausend Klingen: Dreimal fegen deine Klingen über alle Gegner, danach schweben fünf neue um dich."
+	},
+	"twilight": {
+		"lehrmeister": "Dämmermeister Orrin",
+		"werte": {"schaden": 5, "schutz": 1, "heilung": 1, "unterstuetzung": 1, "schwierigkeit": 5},
+		"ult_vorschau": "Sonnenfinsternis: Licht oder Schatten trifft jeden Gegner dort, wo er am schwächsten ist – je weiter deine Leiste ausschlägt, desto stärker."
+	},
+	"tamer": {
+		"lehrmeister": "Rudelmeisterin Tilda",
+		"werte": {"schaden": 4, "schutz": 2, "heilung": 1, "unterstuetzung": 2, "schwierigkeit": 4},
+		"ult_vorschau": "Rudelruf: Alle deine Monster greifen gleichzeitig an, jedes mit seinem Element."
+	},
+	"ritualist": {
+		"lehrmeister": "Schreinhüter Jin",
+		"werte": {"schaden": 2, "schutz": 1, "heilung": 5, "unterstuetzung": 2, "schwierigkeit": 4},
+		"ult_vorschau": "Großes Opfer: Du gibst die Hälfte deines Lebens – alle anderen werden stark geheilt, Gefallene stehen wieder auf."
+	},
+	"quartermaster": {
+		"lehrmeister": "Handelsherr Bingo",
+		"werte": {"schaden": 2, "schutz": 1, "heilung": 3, "unterstuetzung": 5, "schwierigkeit": 3},
+		"ult_vorschau": "Goldrausch: Die ganze Gruppe ist motiviert, stärker und schneller dran – und Münzen regnen auf die Gegner."
+	},
+	"kunoichi": {
+		"lehrmeister": "Siegelmeisterin Akane",
+		"werte": {"schaden": 3, "schutz": 1, "heilung": 2, "unterstuetzung": 4, "schwierigkeit": 5},
+		"ult_vorschau": "Tausend Siegel: Jeder Gegner wird mit seiner Schwäche getroffen, die Gruppe wird geheilt und geschützt."
+	},
+	"singer": {
+		"lehrmeister": "Hohe Sängerin Xavina",
+		"werte": {"schaden": 2, "schutz": 1, "heilung": 4, "unterstuetzung": 4, "schwierigkeit": 4},
+		"ult_vorschau": "Himmelszelt: Alle werden geheilt und gestärkt, und Sternenkraft trifft jeden Gegner."
+	}
+}

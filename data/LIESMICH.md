@@ -14,6 +14,7 @@ Nach jeder Zeile außer der letzten in einer Gruppe kommt ein Komma.
 | `kaempfe.json` | Kämpfe aus der Stadt (Lektionen, Gruppenkampf): Gegner, erlaubte Fähigkeiten, Erklärungen, Erfahrung |
 | `laeden.json` | Läden: welche Waren, wie viel der Händler beim Ankauf zahlt |
 | `erfolge.json` | Erfolge (einmalige Auszeichnungen) |
+| `klassen.json` | Klassenwahl: Lehrmeister, Werte fürs Diagramm (vorläufig), Ult-Vorschau, Ortsangaben der Regionen |
 | `texte.json` | Kurze Meldungen im Spiel („Neuer Auftrag“, „Stufe erreicht“ …) |
 
 ## Dialoge (`dialoge.json`)
@@ -29,7 +30,7 @@ und **Knoten**. Ein Knoten hat:
 **Aktionen:** `{"auftrag_starten": "kennung"}`, `{"auftrag_abgeben": "kennung"}`, `{"gold": 10}`,
 `{"erfahrung": 50}`, `{"gegenstand": "heiltrank", "anzahl": 1}`, `{"merken": "etwas"}`
 
-**Bedingungen (`wenn`):** `{"auftrag": "kennung", "stand": "neu" / "aktiv" / "fertig" / "abgegeben"}`,
+**Bedingungen (`wenn`):** `{"und": [Bedingung, Bedingung]}` (alle müssen stimmen), `{"auftrag": "kennung", "stand": "neu" / "aktiv" / "fertig" / "abgegeben"}`,
 `{"gemerkt": "etwas"}`, `{"nicht_gemerkt": "etwas"}`, `{"stufe_ab": 3}`
 
 ## Aufträge (`auftraege.json`)
@@ -84,3 +85,9 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
   versuchen“), `verloren_text` (Meldung bei Niederlage).
 - **Gegner** (in `scripts/kampf/sandbox.gd`): `panzer` (Schaden-Faktor, bis eine perfekte Parade ihn erschüttert),
   `erschuettert` (wie viele Züge offen), `wipe_nach` und `wipe_text` (nach so vielen Zügen verliert die Gruppe).
+
+## Seit Schritt 8
+
+- **Aktionen:** `{"szene": "klassenwahl"}` / `{"szene": "abspann"}` (wechselt den Bildschirm),
+  `{"vergessen": "nacht"}` (etwas Gemerktes wieder vergessen, z. B. damit es Morgen wird).
+- **Platzhalter in Dialogtexten:** `{klasse}`, `{region}`, `{wohin}` („ins Arkanum“), `{lehrmeister}` – aus der gewählten Klasse.

@@ -24,6 +24,8 @@ signal progress_changed(player_id: String)
 signal battle_requested(player_id: String, kampf_id: String)
 ## Ein besonderer Effekt für einen Spieler (z. B. "sternenfall": greller Lichtblitz). Nur Anzeige.
 signal effect_requested(player_id: String, effect: String)
+## Wechsel zu einem anderen Bildschirm (z. B. "klassenwahl", "abspann"). Nur Anzeige.
+signal scene_requested(player_id: String, scene: String)
 
 enum Tile { GRASS, ROAD, PLAZA, OVERGROWN }
 
@@ -292,6 +294,9 @@ func _walk_to(p: PlayerState, target: Vector2i) -> void:
 	var path: Array[Vector2i] = []
 	if p.is_moving():
 		path.append(start)
+	elif p.pos != Vector2(p.cell):
+		# Zwischen zwei Feldern stehen geblieben (z. B. weil jemand dich angesprochen hat): erst zurück aufs Feld
+		path.append(p.cell)
 	for i in range(1, route.size()):
 		path.append(route[i])
 	p.path = path
@@ -398,7 +403,7 @@ func dialog_view(p: PlayerState) -> Dictionary:
 	var answers: Array[String] = []
 	for a in _visible_answers(p, node):
 		answers.append(a.text)
-	return {wer = node.get("wer", ""), text = node.get("text", ""), antworten = answers}
+	return {wer = node.get("wer", ""), text = fill_text(p, node.get("text", "")), antworten = answers}
 
 
 func _current_node(p: PlayerState) -> Dictionary:
@@ -444,6 +449,10 @@ func _dialog_choose(p: PlayerState, index: int) -> void:
 
 ## Prüft eine Bedingung aus den Dialog-Daten. Leere Bedingung = immer erfüllt.
 func check(p: PlayerState, cond: Dictionary) -> bool:
+	# {"und": [Bedingung, Bedingung, …]}: alle müssen stimmen (z. B. zwei Aufträge gleichzeitig)
+	for part: Dictionary in cond.get("und", []):
+		if not check(p, part):
+			return false
 	if cond.has("auftrag") and p.progress.quest_state(cond.auftrag) != cond.get("stand", "aktiv"):
 		return false
 	if cond.has("gemerkt") and not p.progress.flags.has(cond.gemerkt):
@@ -473,6 +482,10 @@ func run_actions(p: PlayerState, actions: Array) -> void:
 			p.progress.flags[action.merken] = true
 		if action.has("laden"):
 			p.shop = action.laden
+		if action.has("vergessen"):
+			p.progress.flags.erase(action.vergessen)
+		if action.has("szene"):
+			scene_requested.emit(p.id, action.szene)
 		if action.has("effekt"):
 			effect_requested.emit(p.id, action.effekt)
 		if action.has("erfolg"):
@@ -742,3 +755,15 @@ func _say(p: PlayerState, text: String) -> void:
 static func start_cell() -> Vector2i:
 	var cell: Array = GameData.get_file("kreuzweg").get("start", {}).get("feld", [11, 19])
 	return Vector2i(int(cell[0]), int(cell[1]))
+
+
+## Platzhalter in Dialogtexten: {klasse}, {region}, {wohin} („ins Arkanum“), {lehrmeister} (aus der gewählten Klasse).
+func fill_text(p: PlayerState, text: String) -> String:
+	if not text.contains("{"):
+		return text
+	var klasse: String = str(p.progress.flags.get("klasse", ""))
+	var data: Dictionary = Sandbox.CLASSES.get(klasse, {title = "Novize", region = "?"})
+	var extra: Dictionary = GameData.get_file("klassen").get(klasse, {})
+	var wohin: String = GameData.get_file("klassen").get("wohin", {}).get(data.region, "nach " + data.region)
+	return text.replace("{klasse}", data.title).replace("{region}", data.region).replace("{wohin}", wohin) \
+			.replace("{lehrmeister}", extra.get("lehrmeister", "?"))

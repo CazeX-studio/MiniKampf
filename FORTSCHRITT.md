@@ -42,6 +42,7 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
 | 13 | Kreuzweg-Demo Schritt 6: Der zugewachsene Weg (Wache Holm, Mira) | erledigt |
 | 14 | Kreuzweg-Demo Schritt 7: Nacht des Sternenfalls (Fest, Sternenfresser, Ren) | erledigt |
 | 15 | Parieren/Ausweichen mit normaler Zone und Perfekt-Zone | erledigt |
+| 16 | Kreuzweg-Demo Schritt 8: Klassenwahl und Abreise | erledigt |
 
 ## Aufgaben der Runde 1
 
@@ -251,6 +252,22 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
   - Ida, Bo und Tom: 10 % perfekt, 30 % normal.
   - Computer-Test mit einem Spieler, der je 35 % perfekt und normal trifft: Lektionen und Probestunden schaffbar,
     der Sternenfresser in 5 von 30 Fällen (kaum schaffbar, wie geplant).
+
+- **Schritt 16 – Kreuzweg-Demo, Klassenwahl und Abreise** (Schritt 8 aus `KREUZWEG_PLAN.md`):
+  - **Morgen danach:** Lene verkündet, dass alle Novizen heute in die Regionen reisen (die Nacht endet,
+    die Laternen sind weg, der Krater bleibt). Auftrag „Die Abreise“.
+  - **Marv** spricht dich ein letztes Mal an: „Du gehst?! Und unsere Partie Kreuzweg-Karten? … Ich hab Zeit.“
+  - **Ye am Tor** öffnet den **Klassenwahl-Bildschirm**: links alle 11 Klassen, rechts Rolle, Region, **Lehrmeister**
+    (aus design.md), Mechanik, Reaktion, ein **Fünfeck-Diagramm** (Schaden, Schutz, Heilung, Unterstützung,
+    Schwierigkeit), eine **Ult-Vorschau** und die Knöpfe **„Probestunde“** und **„Diese Klasse wählen“**
+    (mit Nachfrage). Die Probestunde startet direkt und führt danach zurück zur Klassenwahl.
+  - Danach nennt Ye deine Klasse, Region und deinen Lehrmeister („Also Bogenschütze. Dein Weg führt nach Grünwacht,
+    zu Pfadmeister Fenn.“). Umentscheiden geht noch. Mit „Leb wohl, Ye.“ kommt der **Abspann** – Ende der Demo.
+  - Die **Werte im Diagramm** habe ich selbst geschätzt: **vorläufig, Feinschliff am Ende** (in `data/klassen.json`).
+  - Behoben nebenbei: Wurde man mitten im Laufen angesprochen, ging danach das Antippen eines direkt benachbarten NPCs
+    manchmal nicht. Und Lene hätte am Morgen sonst noch einmal zum Fest eingeladen.
+  - **Platzhalter:** alle Texte (Lene, Marv, Ye, Abspann).
+  - Tests: Welt-Test bis zum Abspann, Test des Klassenwahl-Bildschirms (Auswahl, Probestunde, Wahl, Abspann): alles richtig.
     sie mit. (Im fertigen Spiel ist der erste Abschluss der über den Auftrag.) Auch in design.md eingetragen.
 
 ## Fertig in Runde 1
@@ -350,6 +367,13 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 2. Tippe genau in die schmale grüne Mitte, wenn der Ring den Kreis erreicht: „PERFEKT!“, kein Schaden, Klassen-Effekt.
 3. Lektion 3 bei Ye: Zählen nur die perfekten Paraden?
 
+**Neu: Klassenwahl und Abreise** (Kreuzweg-Demo, nach Ren)
+1. Lene ansprechen: Es wird Morgen, die Abreise beginnt. Auf dem Weg zum Tor verabschiedet sich Marv.
+2. Bei Ye am Tor die Klassen anzeigen lassen: Passen die Diagramme und die Ult-Vorschau zu den Klassen?
+3. Bei einer Klasse auf „Probestunde“ tippen: Danach solltest du wieder auf der Klassenwahl landen.
+4. Eine Klasse wählen und bestätigen: Ye sollte Klasse, Region und Lehrmeister nennen.
+5. „Leb wohl, Ye.“: Prüfe, ob der Abspann erscheint und „Neu beginnen“ von vorne anfängt.
+
 
 **1. Kampf-Sandbox** (Menü → „Kampf-Sandbox“)
 - Wie bisher: bis zu 4 Klassen wählen, Gegner wählen, kämpfen, am Ende die Auswertung ansehen.
@@ -393,7 +417,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
   Zähmen (unter 50 % Leben, Chance = fehlendes Leben, halbes Leben auf der Bank, höchstens 5 Monster).
 ## Als Nächstes (Vorschläge)
 
-- Kreuzweg-Demo nach `KREUZWEG_PLAN.md`: als Nächstes Schritt 8 (Klassenwahl-Bildschirm und Abreise).
+- Kreuzweg-Demo nach `KREUZWEG_PLAN.md`: als Nächstes Schritt 9 (Feinschliff: ganze erste Stunde am Stück testen, Platzhalter-Musik; dabei: Marktplatz entzerren, Kampf-Hintergrund vor der Stadt, Werte abstimmen).
 - Hintergrund für Kämpfe vor der Stadt (Wiese statt Gewölbe).
 - Dialoge der Hauptfiguren: Marco schreibt sie; Platzhalter stehen in `data/dialoge.json`.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).

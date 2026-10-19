@@ -32,7 +32,7 @@ func _ready() -> void:
 	add_child(sub)
 
 	_add_button("Kampf-Sandbox\nAlle 11 Klassen, Pilzhöhle, Auswertung", Vector2(240, 300), "res://scenes/auswahl.tscn")
-	_add_button("Kreuzweg-Demo\nStadt, Ye, Gespräche, Aufträge", Vector2(660, 300), "res://scenes/kreuzweg.tscn")
+	_add_button("Kreuzweg-Demo\nDie erste Stunde als Novize", Vector2(660, 300), "res://scenes/kreuzweg.tscn")
 
 
 func _add_button(text: String, pos: Vector2, scene: String) -> void:

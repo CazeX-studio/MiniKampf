@@ -304,6 +304,41 @@ func _test_building_blocks() -> void:
 		"Ren ist wieder verschwunden")
 	_check(p.progress.level == 8 and not p.progress.flags.has("erfolg:schild_hoch"), "Stufe 8, aber kein Erfolg bei Niederlage")
 
+	# Abreise: Lene, Marv verabschiedet sich, Ye öffnet die Klassenwahl, Abspann
+	var scenes: Array[String] = []
+	world.scene_requested.connect(func(_id: String, scene: String) -> void: scenes.append(scene))
+	_check(world.npc_marker(p, "schreiberin") == "!", "Lene hat Neuigkeiten (!)")
+	world.apply_command("a", {type = "talk", npc = "schreiberin"})
+	_tick(world, 10.0)
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	world.apply_command("a", {type = "dialog_next"})
+	_check(not p.progress.flags.has("nacht") and p.progress.quest_state("abreise") == "aktiv", "Es ist Morgen, die Abreise steht an")
+	_check(not world.npc_visible(p, "gesandte_arkanum") and not world.npc_visible(p, "marv") and world.npc_visible(p, "marv_abschied"),
+		"Gesandte bleiben fort, Marv wartet zum Abschied")
+	world.apply_command("a", {type = "move", cell = Vector2i(11, 16)})
+	_tick(world, 10.0)
+	_check(p.in_dialog() and world.dialog_view(p).text.contains("Du gehst"), "Marv will dich nicht gehen lassen")
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	world.apply_command("a", {type = "dialog_next"})
+	_talk(world, p, "schreiberin")
+	_check(world.dialog_view(p).text.contains("Ye wartet am Stadttor") and not p.progress.flags.has("nacht"),
+		"Am Morgen lädt Lene nicht nochmal zum Fest ein")
+	world.apply_command("a", {type = "dialog_next"})
+	_talk(world, p, "ye_tor")
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(scenes == ["klassenwahl"] and not p.in_dialog(), "Ye öffnet die Klassenwahl")
+	# Auf dem Klassenwahl-Bildschirm wird gewählt (dort landet die Wahl im Spielstand)
+	p.progress.flags["klasse"] = "singer"
+	p.progress.flags["klasse_gewaehlt"] = "ja"
+	_talk(world, p, "ye_tor")
+	var farewell: String = world.dialog_view(p).text
+	_check(farewell.contains("Sternensängerin") and farewell.contains("in die Glutoase") and farewell.contains("Hohe Sängerin Xavina"),
+		"Ye nennt Klasse, Region und Lehrmeister")
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(scenes.back() == "abspann" and p.progress.quest_state("abreise") == "abgegeben", "Abreise: Abspann")
+	_check(p.progress.level == 9, "Am Ende der ersten Stunde: Stufe 9 (nach Niederlage gegen den Boss)")
+
 	# Sieg (eigene Welt): Erfolg, und Ren klaut den Splitter
 	var w2 := WorldState.new()
 	var q := w2.add_player("q", "Sieger", "elf_m", Vector2i(12, 14))
