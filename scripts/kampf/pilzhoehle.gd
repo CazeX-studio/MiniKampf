@@ -398,7 +398,7 @@ func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 
 const FINAL_CHOICES: Array[Dictionary] = [
 	{id = "faellen", name = "Baum fällen, großen Splitter mitnehmen", info = "Der große Splitter gehört euch. Der Urbaum stirbt."},
-	{id = "retten", name = "Splitter herausschneiden, Baum retten", info = "Grünwacht blüht auf, besserer Ruf bei den Zähmern"},
+	{id = "retten", name = "Splitter herausschneiden, Baum retten", info = "Ihr behaltet den Splitter. Grünwacht blüht auf, besserer Ruf bei den Zähmern"},
 ]
 
 
@@ -411,5 +411,5 @@ func final_choice() -> void:
 		c.add_log("[color=#c8a0ff]Ihr fällt den Urbaum und nehmt den großen Splitter mit.[/color] Er summt leise in eurem Gepäck. "
 			+ "Über Grünwacht bleibt es grau.")
 	else:
-		c.add_log("[color=#8affc1]Vorsichtig schneidet ihr den Splitter heraus. Der Urbaum atmet auf.[/color] "
+		c.add_log("[color=#8affc1]Vorsichtig schneidet ihr den Splitter heraus und nehmt ihn mit. Der Urbaum atmet auf.[/color] "
 			+ "Grünwacht blüht auf, und die Zähmer werden davon hören (besserer Ruf).")

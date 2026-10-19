@@ -4,7 +4,7 @@
 	},
 	"sammelpunkte": [
 		{"gegenstand": "kraut", "feld": [8, 8]},
-		{"gegenstand": "kraut", "feld": [14, 12]},
+		{"gegenstand": "kraut", "feld": [10, 14]},
 		{"gegenstand": "kraut", "feld": [9, 15]}
 	]
 }

@@ -110,6 +110,12 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
   - **Platzhalter:** Ye's Texte sind Platzhalter – **Marco schreibt die Dialoge der Hauptfiguren noch.**
   - Automatischer Test `tests/welt_test.gd` (Gespräch, Auftrag, Belohnung, Stufen, Speichern): alles richtig.
 
+- **Nachbesserung nach deinem Test:**
+  - Das dritte Silberkraut lag hinter der Schmiede versteckt. Es liegt jetzt frei sichtbar auf dem Marktplatz.
+  - **Splitter sind Dungeon-Belohnungen** (auch in design.md eingetragen): Nach der Pilzhöhle behält die Gruppe den
+    Splitter in beiden Fällen. In der Auswertung steht „Belohnung: Sternensplitter“. Der Sternensplitter steht schon
+    als Gegenstand in `data/gegenstaende.json`, damit er später in die Tasche kommen kann.
+
 ## Fertig in Runde 1
 
 - **Schritt 1 – Kampf-Sandbox:** Alle 11 Klassen, Element-Sechseck, Zähmer mit Monster-Wechsel,
@@ -156,7 +162,7 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 **Neu: Bausteine der Kreuzweg-Demo** (Menü → „Kreuzweg-Demo“)
 1. Zu Ye gehen und reden: Er stellt eine Frage mit drei Antworten. Jede Antwort ausprobieren (antippen oder 1–3).
 2. „Hast du Arbeit für mich?“ → „Mach ich!“: Oben erscheint „Neuer Auftrag“. Im „Auftragsbuch“ (oder J) steht er mit „Silberkraut 0 / 3“.
-3. Die drei leuchtenden Kräuter rund um den Marktplatz antippen (oder daneben E drücken). Danach Ye die Kräuter geben:
+3. Die drei leuchtenden Kräuter antippen (eins über der Statue, zwei links auf dem Marktplatz; oder daneben E drücken). Danach Ye die Kräuter geben:
    Oben links steht jetzt Stufe 2 und 30 Gold, in der „Tasche“ (oder I) ein Heiltrank.
 4. Seite neu laden (oder Menü → wieder Kreuzweg-Demo): Gold, Stufe und Auftrag sind noch da (gespeichert).
 5. „Neu beginnen“ antippen: Alles fängt von vorne an.
@@ -218,8 +224,6 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
   - Splitterlicht: Der Halter wird vom Vorboten nicht angegriffen, verliert aber jeden Vorboten-Zug mehr Leben (8, 12, 16 …).
     Weiterreichen kostet den Zug.
   - Monsterkarten der Dungeon-Monster gibt es in der Sandbox noch nicht (Zähmen schon).
-  - Entscheidung „Baum retten“: Bekommt die Gruppe den herausgeschnittenen Splitter trotzdem (kleiner?) oder wird er zerstört?
-    Im Moment sagt der Text nur, dass er heraus ist.
 
 - **Kreuzweg-Demo:** Passen die Positionen (Gilde im Nordosten, Bingos Laden im Westen, die sechste,
   zugewachsene Straße nach Südosten)? Soll Ye vor der Gilde stehen oder drinnen?
