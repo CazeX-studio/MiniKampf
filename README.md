@@ -78,9 +78,9 @@ Auf dem Auswahl-Bildschirm unter „Gegner“: **Pilzhöhle** (ganzer Dungeon, 4
 
 - **Eigene Monster:** Leuchtmotte (Licht, blendet), Wurzelkriecher (Erde, hält fest),
   Sporenwolf (Pflanze, stärker im Rudel), Glimmerkäfer (Blitz, lädt sich auf und entlädt sich auf alle).
-- **Zwischenboss Sporenkönigin:** Sporenlinge heilen sie. Pro Kampf zufällig eine Mechanik:
+- **Zwischenboss Sporenkönigin:** Sporenknospen heilen sie. Pro Kampf zufällig eine Mechanik:
   *Sporenblüte* (Feuer erzeugt Giftwolken, bei 5 Wolken stirbt die Gruppe; Wind und „Giftwolke vertreiben“
-  helfen) oder *Sporen-Zwillinge* (beide Sporenlinge vor dem nächsten Zug des Überlebenden besiegen).
+  helfen) oder *Sporen-Zwillinge* (beide Sporenknospen vor dem nächsten Zug des Überlebenden besiegen).
 - **Endboss Phase 1 – Wurzelmutter:** Treffer auf die Rinde heilen sie. Knoten vorne und hinten
   vor ihrem nächsten Zug zerstören (sonst wachsen sie nach); jedes Knotenpaar kostet sie ein Viertel ihres Lebens.
   *Verschlingen*: Kommt in 3 ihrer Züge kein Knotenpaar kaputt, stirbt die Gruppe. Wurzelzug zieht nach vorne.

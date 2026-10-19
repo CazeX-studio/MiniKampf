@@ -153,7 +153,7 @@ const ENEMIES := {
 	"sporenwolf": {name = "Sporenwolf", element = "Pflanze", hp = 56, tempo = 13},
 	"glimmerkaefer": {name = "Glimmerkäfer", element = "Blitz", hp = 52, tempo = 12},
 	"sporenkoenigin": {name = "Sporenkönigin", element = "Pflanze", hp = 260, tempo = 9, big = true},
-	"sporenling": {name = "Sporenling", element = "Pflanze", hp = 42, tempo = 10},
+	"sporenling": {name = "Sporenknospe", element = "Pflanze", hp = 42, tempo = 10},
 	"wurzelmutter": {name = "Wurzelmutter", element = "Pflanze", hp = 300, tempo = 8, big = true},
 	"knoten_vorne": {name = "Knoten vorne", element = "Sternenkraft", hp = 40, tempo = 1, passive = true},
 	"knoten_hinten": {name = "Knoten hinten", element = "Sternenkraft", hp = 40, tempo = 1, passive = true},

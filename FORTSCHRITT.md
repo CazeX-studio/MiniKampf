@@ -48,7 +48,7 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 - Im Kampf-Log links unten steht bei jedem Boss, welche Mechanik gerade gilt.
 - **Sporenkönigin:** Achte auf „Mechanik heute“. Bei *Sporenblüte* stehen die Giftwolken auf ihrem
   Namensschild – nicht mit Feuer übertreiben, „Giftwolke vertreiben“ nutzen. Bei *Sporen-Zwillinge*
-  beide Sporenlinge schnell hintereinander besiegen.
+  beide Sporenknospen schnell hintereinander besiegen.
 - **Wurzelmutter:** Nicht auf sie selbst schlagen (heilt sie), sondern auf „Knoten vorne“ und
   „Knoten hinten“, beide vor ihrem nächsten Zug. Auf ihrem Schild läuft „Verschlingen in X Zügen“.
 - **Vorbote:** Das Bild wird dunkler, die Zugleiste ist weg. „Laterne entzünden“ (hellblaue Knöpfe)
@@ -72,7 +72,7 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 - **Pilzhöhle – was ich selbst ergänzt habe** (bitte prüfen):
   - Gegen Giftwolken gibt es für jede Klasse „Giftwolke vertreiben“ (kostet den Zug), Wind-Treffer vertreiben auch eine.
     Jede Wolke macht bei jedem Zug der Königin 2 Schaden an allen.
-  - „Dieselbe Runde“ heißt im Prototyp: bevor der überlebende Sporenling bzw. die Wurzelmutter wieder dran ist.
+  - „Dieselbe Runde“ heißt im Prototyp: bevor der überlebende Sporenknospe bzw. die Wurzelmutter wieder dran ist.
   - Ein zerstörtes Knotenpaar kostet die Wurzelmutter 25 % Leben, danach wachsen neue Knoten.
   - Splitterlicht: Der Halter wird vom Vorboten nicht angegriffen, verliert aber jeden Vorboten-Zug mehr Leben (8, 12, 16 …).
     Weiterreichen kostet den Zug.

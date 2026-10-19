@@ -3,7 +3,7 @@ extends RefCounted
 ## Test-Dungeon Pilzhöhle unter dem Urbaum (design.md: „Grünwacht im Detail“ und „Dungeon-Regeln“).
 ## - Eigene Monster: Leuchtmotte, Wurzelkriecher, Sporenwolf, Glimmerkäfer
 ## - Zwischenboss Sporenkönigin: pro Kampf zufällig EINE Mechanik
-##     Wipe „Sporenblüte“ (5 Giftwolken) oder Zusammenspiel (Sporenlinge in derselben Runde besiegen)
+##     Wipe „Sporenblüte“ (5 Giftwolken) oder Zusammenspiel (Sporenknospen in derselben Runde besiegen)
 ## - Endboss Phase 1 Wurzelmutter: Rinde heilt, Splitter-Knoten treffen,
 ##     Wipe „Verschlingen“ und Zusammenspiel „Zwillingsknoten“
 ## - Endboss Phase 2 Vorbote: Dunkelheit, keine Zugleiste,
@@ -55,12 +55,12 @@ func on_wave(_index: int) -> void:
 	if _find("sporenkoenigin") != null:
 		queen_mode = ["bluete", "zwillinge"].pick_random()
 		clouds = 0
-		c.add_log("[b]Zwischenboss: Die Sporenkönigin![/b] Ihre Sporenlinge heilen sie.")
+		c.add_log("[b]Zwischenboss: Die Sporenkönigin![/b] Ihre Sporenknospen heilen sie.")
 		if queen_mode == "bluete":
 			c.add_log("[color=#c8a0ff]Mechanik heute: Sporenblüte.[/color] Feuer trifft hart, setzt aber Giftwolken frei. "
 				+ "Bei %d Wolken gleichzeitig stirbt die Gruppe! Wind und „Giftwolke vertreiben“ helfen." % MAX_CLOUDS)
 		else:
-			c.add_log("[color=#c8a0ff]Mechanik heute: Sporen-Zwillinge.[/color] Besiegt beide Sporenlinge in derselben Runde, "
+			c.add_log("[color=#c8a0ff]Mechanik heute: Sporen-Zwillinge.[/color] Besiegt beide Sporenknospen in derselben Runde, "
 				+ "sonst holt der eine den anderen zurück.")
 	elif _find("wurzelmutter") != null:
 		devour = DEVOUR_TURNS
@@ -158,12 +158,12 @@ func _sporeling_turn(e: Fighter) -> void:
 				other.hp = other.max_hp
 				other.next_time = c.now + other.turn_delay()
 				c.burst(other, Elements.color("Pflanze"))
-				c.add_log("[color=#c8a0ff]Der Sporenling holt seinen Zwilling zurück![/color] Beide in derselben Runde besiegen!")
+				c.add_log("[color=#c8a0ff]Die Sporenknospe holt ihren Zwilling zurück![/color] Beide in derselben Runde besiegen!")
 				return
 	var queen := _find("sporenkoenigin")
 	if queen != null and queen.is_alive():
 		c.heal(null, queen, roundi(queen.max_hp * SPORE_HEAL))
-		c.add_log("Der Sporenling heilt die Sporenkönigin.")
+		c.add_log("Die Sporenknospe heilt die Sporenkönigin.")
 	await c.wait(0.3)
 
 
