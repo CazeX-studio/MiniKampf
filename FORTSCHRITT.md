@@ -3,6 +3,26 @@
 Hier steht, was fertig ist, was als Nächstes kommt und welche Fragen offen sind.
 Wird nach jedem Arbeitsschritt aktualisiert.
 
+## Kurz zusammengefasst (Runde 2, Stand 2026-10-19)
+
+**Was sich geändert hat:**
+- Die Sternensängerin heißt jetzt **Vega**.
+- Neue Fähigkeiten: **Schnellfeuer** (Bogenschütze), **Polarstern** (Sternensängerin), **Zähmen** (Monster-Zähmer,
+  auch Monster aus der Pilzhöhle). Nach der Pilzhöhle entscheidest du, was mit dem **Urbaum** passiert.
+- Die Ult der Kunoichi lädt nur noch durch Siegel-**Kombinationen**.
+- Unter der Haube: Der Kampf ist jetzt in **Regeln** (ohne Grafik) und **Anzeige** getrennt – die Grundlage für
+  gemeinsame Kämpfe. 75 Computer-Kämpfe laufen vorher und nachher genau gleich ab.
+- **Kreuzweg-Demo:** Laufen mit **WASD/Pfeiltasten** oder **Steuerknopf** am Handy, reden mit **E/Leertaste** oder
+  dem Knopf „Reden“. Neu: **Gespräche mit Antworten**, **Auftragsbuch**, **Gold und Tasche**, **Stufen 1–10**,
+  **automatisches Speichern** und ein kleiner **Probe-Auftrag** bei Ye. Alle Texte stehen in Datendateien (`data/`).
+- Selbst gewählte Zahlen und Passiven sind als **„vorläufig, Feinschliff am Ende“** gesammelt (Abschnitt weiter unten).
+- Neuer Fahrplan für die Kreuzweg-Demo: `KREUZWEG_PLAN.md` (Schritt 0 und 1 sind fertig).
+
+**Was du testen kannst:** siehe „Was du testen kannst“ weiter unten (Abschnitte „Neu in Runde 2“).
+
+**Bitte beachten:** Alle Dialoge von Ye sind **Platzhalter-Texte**. Die Dialoge der Hauptfiguren schreibst du noch;
+sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren ändern (Anleitung in `data/LIESMICH.md`).
+
 ## Aufgaben dieser Runde (Runde 2)
 
 | Nr. | Aufgabe | Stand |
@@ -14,7 +34,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 5 | Selbst gewählte Werte als „vorläufig“ markieren | erledigt |
 | 6 | Kampf in Regeln und Anzeige trennen | erledigt |
 | 7 | Steuerung in der Welt: Tasten (PC), Steuerknopf und Aktions-Knopf (Handy) | erledigt |
-| 8 | Kreuzweg-Demo Schritt 1: Bausteine (siehe KREUZWEG_PLAN.md) | offen |
+| 8 | Kreuzweg-Demo Schritt 1: Bausteine (siehe KREUZWEG_PLAN.md) | erledigt |
 
 ## Aufgaben der Runde 1
 
@@ -74,6 +94,22 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Wie bisher alles über Befehle an die Welt („steuern“, „benutzen“), damit später Mitspieler dazukommen können.
   - Der Kampf bleibt rundenbasiert mit Antippen. Automatischer Test `tests/welt_test.gd`: alles richtig.
 
+- **Schritt 8 – Kreuzweg-Demo, Bausteine** (Schritt 1 aus `KREUZWEG_PLAN.md`):
+  - **Gespräche mit Antworten:** Ye stellt Fragen, du wählst eine Antwort (antippen oder Taste 1–4).
+    Je nach Antwort und Fortschritt sagt er etwas anderes.
+  - **Auftragsbuch** (Knopf „Aufträge“ oder J): zeigt laufende, erfüllte und abgeschlossene Aufträge mit Fortschritt.
+  - **Gold und Tasche** (Knopf „Tasche“ oder I), **Erfahrung und Stufen 1–10** oben links.
+  - **Speichern:** automatisch bei jedem Fortschritt und beim Verlassen. „Neu beginnen“ löscht den Spielstand.
+  - **Probe-Auftrag „Kräuter für Ye“:** nur zum Ausprobieren der Bausteine (der echte erste Auftrag kommt in Schritt 2).
+    Drei leuchtende Silberkräuter einsammeln (antippen oder E daneben), bei Ye abgeben:
+    30 Gold, 120 Erfahrung (= Stufe 2) und ein Heiltrank.
+  - **Alles in Datendateien** (`data/`): Dialoge, Aufträge, Gegenstände, Stufen, Meldungen und die NPCs der Stadt.
+    Anleitung zum Ändern: `data/LIESMICH.md`.
+  - **Mehrspieler-tauglich:** Jeder Spieler hat seinen eigenen Fortschritt, alles läuft über Befehle an die Welt
+    („rede mit Ye“, „wähle Antwort 2“, „sammle Punkt 1“). Jeder sieht nur die Kräuter, die er selbst noch nicht hat.
+  - **Platzhalter:** Ye's Texte sind Platzhalter – **Marco schreibt die Dialoge der Hauptfiguren noch.**
+  - Automatischer Test `tests/welt_test.gd` (Gespräch, Auftrag, Belohnung, Stufen, Speichern): alles richtig.
+
 ## Fertig in Runde 1
 
 - **Schritt 1 – Kampf-Sandbox:** Alle 11 Klassen, Element-Sechseck, Zähmer mit Monster-Wechsel,
@@ -117,6 +153,14 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 4. Handy: Neben Ye „Reden“ unten rechts antippen. Das Gespräch startet.
 5. Antippen bzw. Klicken auf den Boden läuft weiterhin dorthin.
 
+**Neu: Bausteine der Kreuzweg-Demo** (Menü → „Kreuzweg-Demo“)
+1. Zu Ye gehen und reden: Er stellt eine Frage mit drei Antworten. Jede Antwort ausprobieren (antippen oder 1–3).
+2. „Hast du Arbeit für mich?“ → „Mach ich!“: Oben erscheint „Neuer Auftrag“. Im „Auftragsbuch“ (oder J) steht er mit „Silberkraut 0 / 3“.
+3. Die drei leuchtenden Kräuter rund um den Marktplatz antippen (oder daneben E drücken). Danach Ye die Kräuter geben:
+   Oben links steht jetzt Stufe 2 und 30 Gold, in der „Tasche“ (oder I) ein Heiltrank.
+4. Seite neu laden (oder Menü → wieder Kreuzweg-Demo): Gold, Stufe und Auftrag sind noch da (gespeichert).
+5. „Neu beginnen“ antippen: Alles fängt von vorne an.
+
 
 **1. Kampf-Sandbox** (Menü → „Kampf-Sandbox“)
 - Wie bisher: bis zu 4 Klassen wählen, Gegner wählen, kämpfen, am Ende die Auswertung ansehen.
@@ -140,7 +184,7 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 - Boden antippen = laufen (oder WASD/Pfeiltasten bzw. Steuerknopf). Ausbilder Ye antippen = hinlaufen und reden („Weiter“ oder E blättert).
   Beim zweiten Mal sagt er etwas anderes.
 - Der „Testgefährte“ ist ein zweiter Spieler, der zur Probe herumläuft.
-- Nur ein Gerüst mit Platzhalter-Grafik: Die Häuser sind einfache Blöcke, noch keine Kämpfe oder Aufträge.
+- Platzhalter-Grafik: Die Häuser sind einfache Blöcke. Noch keine Kämpfe in der Stadt, nur ein Probe-Auftrag.
 
 
 ## Vorläufige Werte (Feinschliff am Ende)
@@ -160,7 +204,8 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
   Zähmen (unter 50 % Leben, Chance = fehlendes Leben, halbes Leben auf der Bank, höchstens 5 Monster).
 ## Als Nächstes (Vorschläge)
 
-- Kreuzweg-Demo ausbauen: Marv, Bingo, erste Aufträge, Probestunden, Sternenfall-Boss, Klassenwahl.
+- Kreuzweg-Demo nach `KREUZWEG_PLAN.md`: als Nächstes Schritt 2 (Ankunft: Abenteurergilde, Ausbilder Ye, erster Auftrag).
+- Dialoge der Hauptfiguren: Marco schreibt sie; Platzhalter stehen in `data/dialoge.json`.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).
 
 ## Offene Fragen an Marco

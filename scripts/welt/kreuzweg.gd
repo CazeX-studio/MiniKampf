@@ -1,9 +1,10 @@
 extends Node2D
-## Kreuzweg-Demo (Lernprojekt 3, Gerüst): Stadt schräg von oben, Laufen per Maus/Touch,
-## Ausbilder Ye mit einem kurzen Gespräch.
+## Kreuzweg-Demo (Lernprojekt 3): Stadt schräg von oben, Laufen, Gespräche mit Antworten,
+## Aufträge, Gold, Tasche, Erfahrung und Stufen, Speichern.
 ## Dieses Skript ist nur die Anzeige: Es zeichnet den Zustand aus WorldState und
 ## schickt Befehle. Ein zweiter Spieler („Testgefährte“) läuft zur Probe mit,
 ## gesteuert über genau dieselben Befehle – so wie später echte Mitspieler über das Netz.
+## Alle Texte stehen in res://data (siehe data/LIESMICH.md).
 
 const TILE_W := 64.0
 const TILE_H := 32.0
@@ -17,28 +18,43 @@ const TILE_COLORS := {
 	WorldState.Tile.OVERGROWN: [Color("2f4d2a"), Color("3a5a2e")],
 }
 
+# Steuerung: Steuerknopf und Aktions-Knopf fürs Handy
+const STICK_RADIUS := 70.0
+const STICK_DEADZONE := 12.0
+const STICK_HOME := Vector2(170, 560)
+const NOTICE_SECONDS := 3.5
+
 var state := WorldState.new()
 
 var _ground: Node2D
 var _objects: Node2D
 var _characters := {}
+## Sammelpunkt-Ziel ("punkt:0") -> Grafik
+var _pickup_nodes := {}
 var _camera: Camera2D
 var _marker := Vector2.ZERO
 var _marker_time := 0.0
 var _bot_timer := 2.0
+var _time := 0.0
+## Beim "Neu beginnen" nicht mehr speichern
+var _no_save := false
 
 var _dialog: PanelContainer
 var _dialog_name: Label
 var _dialog_text: Label
-var _dialog_lines: Array = []
-var _dialog_index := 0
+var _dialog_answers: VBoxContainer
+var _dialog_next: Button
+var _dialog_shown := {}
 var _info: Label
-var _menu_button: Button
+var _hud: Label
+var _notices: VBoxContainer
+var _panel: PanelContainer
+var _panel_title: Label
+var _panel_text: RichTextLabel
+var _panel_mode := ""
+## Knöpfe, auf denen ein Antippen nicht als Laufen zählt
+var _buttons: Array[Control] = []
 
-# Steuerung: zuletzt geschickte Richtung, Steuerknopf und Aktions-Knopf fürs Handy
-const STICK_RADIUS := 70.0
-const STICK_DEADZONE := 12.0
-const STICK_HOME := Vector2(170, 560)
 var _steer_sent := Vector2.ZERO
 var _touch_ui := false
 var _stick_layer: Control
@@ -51,8 +67,10 @@ var _stick_moved := false
 
 func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color("1b2418"))
-	state.dialog_started.connect(_on_dialog_started)
-	state.add_player(LOCAL_ID, "Du", "elf_m", Vector2i(11, 19))
+	state.notice.connect(_on_notice)
+	state.progress_changed.connect(_on_progress_changed)
+	var local := state.add_player(LOCAL_ID, "Du", "elf_m", Vector2i(11, 19))
+	SaveGame.load_into(local)
 	state.add_player(BOT_ID, "Testgefährte", "lizard_f", Vector2i(10, 20))
 
 	_ground = Node2D.new()
@@ -68,6 +86,8 @@ func _ready() -> void:
 		_add_building(b)
 	for prop: Dictionary in state.props:
 		_add_prop(prop)
+	for i in state.pickups.size():
+		_add_pickup("punkt:%d" % i)
 	for id: String in state.npcs:
 		var npc: Dictionary = state.npcs[id]
 		var view := WorldCharacter.new()
@@ -87,13 +107,24 @@ func _ready() -> void:
 	_camera.reset_smoothing()
 
 
+func _exit_tree() -> void:
+	if not _no_save:
+		SaveGame.save(local_player())
+
+
 func _process(delta: float) -> void:
+	_time += delta
 	_update_steer()
 	_drive_bot(delta)
 	state.tick(delta)
 	_sync()
+	_update_dialog()
 	_marker_time = maxf(_marker_time - delta, 0.0)
 	_ground.queue_redraw()
+
+
+func local_player() -> PlayerState:
+	return state.players[LOCAL_ID]
 
 
 ## Überträgt den Zustand der Spieler auf ihre Figuren.
@@ -110,9 +141,15 @@ func _sync() -> void:
 		view.position = cell_center(p.pos)
 		view.moving = p.is_walking()
 		view.facing = p.facing
-	var local: PlayerState = state.players[LOCAL_ID]
+	var local := local_player()
 	_camera.position = cell_center(local.pos)
+	# Sammelpunkte: Jeder sieht nur die, die er selbst noch nicht eingesammelt hat
+	for target: String in _pickup_nodes:
+		var node: Node2D = _pickup_nodes[target]
+		node.visible = state.can_use(local, target)
+		node.queue_redraw()
 	_info.text = "Spieler in Kreuzweg: %d" % state.players.size()
+	_update_hud()
 
 
 ## Der Testgefährte läuft ab und zu irgendwohin (wie ein Mitspieler).
@@ -144,14 +181,30 @@ func screen_to_cell(p: Vector2) -> Vector2i:
 	return Vector2i(floori(x), floori(y))
 
 
+
 # --- Eingabe --------------------------------------------------------------------
-# PC: Klicken = hinlaufen, WASD/Pfeiltasten = laufen, E/Leertaste = reden.
+# PC: Klicken = hinlaufen, WASD/Pfeiltasten = laufen, E/Leertaste = reden bzw. weiter,
+#     1–4 = Antwort wählen, J = Auftragsbuch, I = Tasche, Esc = Fenster schließen.
 # Handy: Antippen = hinlaufen, Steuerknopf unten links (erscheint unter dem Daumen), Aktions-Knopf unten rechts.
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode in [KEY_E, KEY_SPACE]:
-		_action()
-		get_viewport().set_input_as_handled()
+	if event is InputEventKey and event.pressed and not event.echo:
+		var key: Key = event.physical_keycode
+		var handled := true
+		if key in [KEY_E, KEY_SPACE]:
+			_action()
+		elif key >= KEY_1 and key <= KEY_4:
+			state.apply_command(LOCAL_ID, {type = "dialog_choose", index = key - KEY_1})
+		elif key == KEY_J:
+			_toggle_panel("auftraege")
+		elif key == KEY_I:
+			_toggle_panel("tasche")
+		elif key == KEY_ESCAPE and _panel.visible:
+			_panel.visible = false
+		else:
+			handled = false
+		if handled:
+			get_viewport().set_input_as_handled()
 		return
 	if event is InputEventScreenTouch or event is InputEventScreenDrag:
 		_touch(event)
@@ -166,10 +219,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	_tap_at(get_global_mouse_position())
 
 
-## E, Leertaste oder Aktions-Knopf: Gespräch weiterblättern oder mit dem NPC nebenan reden.
+## E, Leertaste oder Aktions-Knopf: im Gespräch weiter, sonst das Nächste nebenan benutzen.
 func _action() -> void:
-	if _dialog.visible:
-		_next_line()
+	if local_player().in_dialog():
+		state.apply_command(LOCAL_ID, {type = "dialog_next"})
 	else:
 		state.apply_command(LOCAL_ID, {type = "interact"})
 
@@ -177,7 +230,7 @@ func _action() -> void:
 ## Richtung aus Tasten und Steuerknopf; wird nur bei Änderung als Befehl geschickt.
 func _update_steer() -> void:
 	var dir := Vector2.ZERO
-	if not _dialog.visible:
+	if not local_player().in_dialog():
 		if Input.is_physical_key_pressed(KEY_A) or Input.is_physical_key_pressed(KEY_LEFT):
 			dir.x -= 1.0
 		if Input.is_physical_key_pressed(KEY_D) or Input.is_physical_key_pressed(KEY_RIGHT):
@@ -228,21 +281,34 @@ func _in_stick_zone(pos: Vector2) -> bool:
 
 
 func _on_buttons(pos: Vector2) -> bool:
-	return _action_button.get_global_rect().has_point(pos) or _menu_button.get_global_rect().has_point(pos)
+	for c in _buttons:
+		if c.visible and c.get_global_rect().has_point(pos):
+			return true
+	return false
 
 
 func _to_world(screen_pos: Vector2) -> Vector2:
 	return get_viewport().get_canvas_transform().affine_inverse() * screen_pos
 
 
-## Antippen / Klicken auf eine Stelle der Welt: hinlaufen oder mit dem NPC dort reden.
+## Antippen / Klicken auf eine Stelle der Welt: hinlaufen, mit dem NPC dort reden oder etwas einsammeln.
 func _tap_at(world: Vector2) -> void:
+	if _panel.visible:
+		_panel.visible = false
+		return
 	# NPC angetippt? Dann hinlaufen und reden
 	for id: String in state.npcs:
 		var npc_pos := cell_center(Vector2(state.npcs[id].cell))
 		if absf(world.x - npc_pos.x) < 30.0 and world.y > npc_pos.y - 90.0 and world.y < npc_pos.y + 12.0:
 			state.apply_command(LOCAL_ID, {type = "talk", npc = id})
 			_show_marker(npc_pos)
+			return
+	# Sammelpunkt angetippt? Dann hinlaufen und einsammeln
+	for target: String in _pickup_nodes:
+		var node: Node2D = _pickup_nodes[target]
+		if node.visible and (world - (node.position + Vector2(0, -12))).length() < 26.0:
+			state.apply_command(LOCAL_ID, {type = "use", target = target})
+			_show_marker(node.position)
 			return
 	var cell := screen_to_cell(world)
 	if state.is_walkable(cell):
@@ -337,6 +403,26 @@ func _draw_prop(node: Node2D, kind: String) -> void:
 			node.draw_rect(Rect2(-1, -74, 2, 8), Color("3a3a3a"))
 
 
+
+## Ein Sammelpunkt (z. B. Silberkraut): kleine leuchtende Pflanze.
+func _add_pickup(target: String) -> void:
+	var node := Node2D.new()
+	node.position = cell_center(Vector2(state.target_cell(target)))
+	node.draw.connect(func() -> void: _draw_pickup(node))
+	_objects.add_child(node)
+	_pickup_nodes[target] = node
+
+
+func _draw_pickup(node: Node2D) -> void:
+	var glow := 0.5 + 0.5 * sin(_time * 3.0 + node.position.x)
+	node.draw_circle(Vector2(0, -10), 16.0, Color(0.8, 1.0, 0.9, 0.12 + 0.12 * glow))
+	for i in 3:
+		var angle := -PI / 2 + (i - 1) * 0.6
+		var tip := Vector2(0, -2) + Vector2.from_angle(angle) * 16.0
+		node.draw_line(Vector2(0, -2), tip, Color("9fe8c8"), 3.0)
+		node.draw_circle(tip, 3.5, Color(0.85, 1.0, 0.95, 0.7 + 0.3 * glow))
+
+
 # --- Oberfläche -----------------------------------------------------------------
 
 func _build_ui() -> void:
@@ -348,31 +434,30 @@ func _build_ui() -> void:
 	root.theme = Combat.make_theme()
 	ui.add_child(root)
 
-	var hint := Label.new()
-	hint.text = "Kreuzweg-Demo · Laufen: antippen, WASD/Pfeiltasten oder Steuerknopf · Reden: E/Leertaste oder Ye antippen"
-	hint.position = Vector2(16, 12)
-	hint.add_theme_font_size_override("font_size", 15)
-	hint.add_theme_color_override("font_outline_color", Color.BLACK)
-	hint.add_theme_constant_override("outline_size", 6)
+	var hint := _label("Laufen: antippen / WASD / Steuerknopf · Reden: E oder Leertaste", 14, Color.WHITE)
+	hint.position = Vector2(16, 10)
 	root.add_child(hint)
-
-	_info = Label.new()
-	_info.position = Vector2(16, 40)
-	_info.add_theme_font_size_override("font_size", 14)
-	_info.add_theme_color_override("font_color", Color("8affc1"))
-	_info.add_theme_color_override("font_outline_color", Color.BLACK)
-	_info.add_theme_constant_override("outline_size", 5)
+	_hud = _label("", 18, Color("f2c14e"))
+	_hud.position = Vector2(16, 32)
+	root.add_child(_hud)
+	_info = _label("", 13, Color("8affc1"))
+	_info.position = Vector2(16, 58)
 	root.add_child(_info)
 
-	var menu := Button.new()
-	menu.text = "Menü"
-	menu.position = Vector2(1170, 12)
-	menu.size = Vector2(96, 44)
-	menu.add_theme_font_size_override("font_size", 16)
-	menu.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/menu.tscn"))
-	menu.focus_mode = Control.FOCUS_NONE
-	_menu_button = menu
-	root.add_child(menu)
+	var x := 1170.0
+	for info: Array in [["Menü", 96, _go_menu], ["Tasche (I)", 120, _toggle_panel.bind("tasche")],
+			["Aufträge (J)", 140, _toggle_panel.bind("auftraege")], [GameData.text("neu_beginnen"), 140, _restart]]:
+		var button := Button.new()
+		button.text = info[0]
+		button.size = Vector2(info[1], 44)
+		x -= 0.0 if info[0] == "Menü" else info[1] + 8.0
+		button.position = Vector2(x, 12)
+		button.add_theme_font_size_override("font_size", 15)
+		button.focus_mode = Control.FOCUS_NONE
+		button.pressed.connect(info[2])
+		root.add_child(button)
+		_buttons.append(button)
+
 
 	# Handy: Steuerknopf (unten links, erscheint unter dem Daumen) und Aktions-Knopf (unten rechts)
 	_stick_layer = Control.new()
@@ -388,38 +473,101 @@ func _build_ui() -> void:
 	_action_button.focus_mode = Control.FOCUS_NONE
 	_action_button.pressed.connect(_action)
 	root.add_child(_action_button)
+	_buttons.append(_action_button)
 
-	_dialog = PanelContainer.new()
+	# Gesprächsfenster mit Antwort-Knöpfen
+	_dialog = _framed_panel()
+	_dialog.position = Vector2(120, 440)
+	_dialog.size = Vector2(960, 260)
+	_dialog.visible = false
+	root.add_child(_dialog)
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 6)
+	_dialog.add_child(box)
+	_dialog_name = _label("", 20, Color("f2c14e"))
+	box.add_child(_dialog_name)
+	_dialog_text = Label.new()
+	_dialog_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_dialog_text.custom_minimum_size = Vector2(920, 54)
+	_dialog_text.add_theme_font_size_override("font_size", 19)
+	box.add_child(_dialog_text)
+	_dialog_answers = VBoxContainer.new()
+	_dialog_answers.add_theme_constant_override("separation", 4)
+	box.add_child(_dialog_answers)
+	_dialog_next = Button.new()
+	_dialog_next.text = GameData.text("weiter")
+	_dialog_next.custom_minimum_size = Vector2(160, 44)
+	_dialog_next.size_flags_horizontal = Control.SIZE_SHRINK_END
+	_dialog_next.add_theme_font_size_override("font_size", 17)
+	_dialog_next.focus_mode = Control.FOCUS_NONE
+	_dialog_next.pressed.connect(func() -> void: state.apply_command(LOCAL_ID, {type = "dialog_next"}))
+	box.add_child(_dialog_next)
+
+	# Fenster für Auftragsbuch und Tasche
+	_panel = _framed_panel()
+	_panel.position = Vector2(340, 90)
+	_panel.size = Vector2(600, 440)
+	_panel.visible = false
+	root.add_child(_panel)
+	_buttons.append(_panel)
+	var panel_box := VBoxContainer.new()
+	_panel.add_child(panel_box)
+	_panel_title = _label("", 22, Color("f2c14e"))
+	panel_box.add_child(_panel_title)
+	_panel_text = RichTextLabel.new()
+	_panel_text.bbcode_enabled = true
+	_panel_text.custom_minimum_size = Vector2(570, 330)
+	_panel_text.add_theme_font_size_override("normal_font_size", 16)
+	_panel_text.add_theme_font_size_override("bold_font_size", 17)
+	panel_box.add_child(_panel_text)
+	var close := Button.new()
+	close.text = "Schließen"
+	close.custom_minimum_size = Vector2(140, 40)
+	close.size_flags_horizontal = Control.SIZE_SHRINK_END
+	close.focus_mode = Control.FOCUS_NONE
+	close.pressed.connect(func() -> void: _panel.visible = false)
+	panel_box.add_child(close)
+
+	# Kurze Meldungen oben in der Mitte („+30 Gold“, „Neuer Auftrag …“), über allen Fenstern
+	_notices = VBoxContainer.new()
+	_notices.position = Vector2(390, 80)
+	_notices.size = Vector2(500, 0)
+	_notices.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(_notices)
+
+
+func _label(text: String, font_size: int, color: Color) -> Label:
+	var label := Label.new()
+	label.text = text
+	label.add_theme_font_size_override("font_size", font_size)
+	label.add_theme_color_override("font_color", color)
+	label.add_theme_color_override("font_outline_color", Color.BLACK)
+	label.add_theme_constant_override("outline_size", 5)
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return label
+
+
+func _framed_panel() -> PanelContainer:
+	var panel := PanelContainer.new()
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(0.04, 0.05, 0.11, 0.95)
 	style.border_color = Color(0.85, 0.72, 0.45, 0.8)
 	style.set_border_width_all(2)
 	style.set_corner_radius_all(4)
 	style.set_content_margin_all(14)
-	_dialog.add_theme_stylebox_override("panel", style)
-	_dialog.position = Vector2(140, 520)
-	_dialog.size = Vector2(1000, 180)
-	_dialog.visible = false
-	root.add_child(_dialog)
-	var box := VBoxContainer.new()
-	_dialog.add_child(box)
-	_dialog_name = Label.new()
-	_dialog_name.add_theme_font_size_override("font_size", 20)
-	_dialog_name.add_theme_color_override("font_color", Color("f2c14e"))
-	box.add_child(_dialog_name)
-	_dialog_text = Label.new()
-	_dialog_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_dialog_text.custom_minimum_size = Vector2(960, 70)
-	_dialog_text.add_theme_font_size_override("font_size", 19)
-	box.add_child(_dialog_text)
-	var next := Button.new()
-	next.text = "Weiter"
-	next.custom_minimum_size = Vector2(160, 44)
-	next.size_flags_horizontal = Control.SIZE_SHRINK_END
-	next.add_theme_font_size_override("font_size", 17)
-	next.pressed.connect(_next_line)
-	next.focus_mode = Control.FOCUS_NONE
-	box.add_child(next)
+	panel.add_theme_stylebox_override("panel", style)
+	return panel
+
+
+func _go_menu() -> void:
+	get_tree().change_scene_to_file("res://scenes/menu.tscn")
+
+
+## Spielstand löschen und von vorn beginnen.
+func _restart() -> void:
+	_no_save = true
+	SaveGame.delete()
+	get_tree().reload_current_scene()
 
 
 ## Steuerknopf und Aktions-Knopf nur auf Geräten mit Touchscreen zeigen.
@@ -440,25 +588,96 @@ func _draw_stick() -> void:
 	_stick_layer.draw_circle(knob, 30.0, Color(1, 0.9, 0.6, 0.75 if active else 0.3))
 
 
-func _on_dialog_started(player_id: String, _npc_id: String, lines: Array) -> void:
-	# Nur Gespräche des eigenen Spielers werden hier angezeigt
-	if player_id != LOCAL_ID or lines.is_empty():
+# --- Gespräch, Anzeige oben, Meldungen, Fenster --------------------------------
+
+## Zeigt das Gespräch des eigenen Spielers so, wie es im Zustand steht.
+func _update_dialog() -> void:
+	var view := state.dialog_view(local_player())
+	if view == _dialog_shown:
 		return
-	_dialog_lines = lines
-	_dialog_index = 0
-	_dialog.visible = true
-	_show_line()
-
-
-func _show_line() -> void:
-	var line: Dictionary = _dialog_lines[_dialog_index]
-	_dialog_name.text = line.who
-	_dialog_text.text = line.text
-
-
-func _next_line() -> void:
-	_dialog_index += 1
-	if _dialog_index >= _dialog_lines.size():
-		_dialog.visible = false
+	_dialog_shown = view
+	_dialog.visible = not view.is_empty()
+	_action_button.text = "Weiter" if _dialog.visible else "Reden"
+	if view.is_empty():
 		return
-	_show_line()
+	_dialog_name.text = view.wer
+	_dialog_text.text = view.text
+	for child in _dialog_answers.get_children():
+		child.queue_free()
+	var answers: Array = view.antworten
+	for i in answers.size():
+		var button := Button.new()
+		button.text = "%d. %s" % [i + 1, answers[i]]
+		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		button.custom_minimum_size = Vector2(920, 38)
+		button.add_theme_font_size_override("font_size", 17)
+		button.focus_mode = Control.FOCUS_NONE
+		button.pressed.connect(func() -> void: state.apply_command(LOCAL_ID, {type = "dialog_choose", index = i}))
+		_dialog_answers.add_child(button)
+	_dialog_next.visible = answers.is_empty()
+
+
+func _update_hud() -> void:
+	var progress := local_player().progress
+	var xp_span := progress.xp_range()
+	var xp_text := GameData.text("hud_max") if xp_span.y < 0 else GameData.text("hud_erfahrung", [progress.xp, xp_span.y])
+	_hud.text = GameData.text("hud", [progress.level, xp_text, progress.gold])
+	if _panel.visible:
+		_fill_panel()
+
+
+func _on_notice(player_id: String, text: String) -> void:
+	if player_id != LOCAL_ID:
+		return
+	var label := _label(text, 20, Color("fff3b0"))
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.custom_minimum_size = Vector2(500, 0)
+	_notices.add_child(label)
+	var tween := create_tween()
+	tween.tween_interval(NOTICE_SECONDS)
+	tween.tween_property(label, "modulate:a", 0.0, 0.6)
+	tween.tween_callback(label.queue_free)
+
+
+## Automatisch speichern, sobald sich der Fortschritt des eigenen Spielers ändert.
+func _on_progress_changed(player_id: String) -> void:
+	if player_id == LOCAL_ID and not _no_save:
+		SaveGame.save(local_player())
+
+
+func _toggle_panel(mode: String) -> void:
+	if _panel.visible and _panel_mode == mode:
+		_panel.visible = false
+		return
+	_panel_mode = mode
+	_panel.visible = true
+	_fill_panel()
+
+
+func _fill_panel() -> void:
+	var p := local_player()
+	var lines: PackedStringArray = []
+	if _panel_mode == "auftraege":
+		_panel_title.text = GameData.text("auftragsbuch")
+		for id: String in p.progress.quests:
+			var q := GameData.quest(id)
+			var quest_state: String = p.progress.quests[id]
+			var color := "8affc1" if quest_state == "fertig" else ("a0a0a0" if quest_state == "abgegeben" else "ffffff")
+			lines.append("[b][color=#%s]%s[/color][/b]  (%s)" % [color, q.get("titel", id), GameData.text("stand_" + quest_state)])
+			if quest_state != "abgegeben":
+				lines.append(q.get("beschreibung", ""))
+				for goal: Dictionary in q.get("ziele", []):
+					lines.append("  • " + state.goal_text(p, goal))
+			lines.append("")
+		if lines.is_empty():
+			lines.append(GameData.text("auftragsbuch_leer"))
+	else:
+		_panel_title.text = GameData.text("tasche")
+		lines.append("[b]Gold: %d[/b]" % p.progress.gold)
+		lines.append("")
+		for id: String in p.progress.items:
+			var item := GameData.item(id)
+			lines.append("[b]%d × %s[/b] – %s" % [p.progress.items[id], item.get("name", id), item.get("beschreibung", "")])
+		if p.progress.items.is_empty():
+			lines.append(GameData.text("tasche_leer"))
+	_panel_text.text = "\n".join(lines)

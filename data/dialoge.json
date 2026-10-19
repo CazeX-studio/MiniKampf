@@ -1,0 +1,39 @@
+{
+	"ye": {
+		"hinweis": "PLATZHALTER-TEXTE: Marco schreibt die Dialoge der Hauptfiguren noch.",
+		"einstieg": [
+			{"wenn": {"nicht_gemerkt": "ye_kennengelernt"}, "knoten": "hallo"},
+			{"wenn": {"auftrag": "kraeuter_fuer_ye", "stand": "fertig"}, "knoten": "abgeben"},
+			{"wenn": {"auftrag": "kraeuter_fuer_ye", "stand": "aktiv"}, "knoten": "wartet"},
+			{"wenn": {"auftrag": "kraeuter_fuer_ye", "stand": "abgegeben"}, "knoten": "danach"},
+			{"knoten": "wieder_da"}
+		],
+		"knoten": {
+			"hallo": {"wer": "Ye", "text": "Ah, ein neues Gesicht. Willkommen in Kreuzweg, Novize.", "aktionen": [{"merken": "ye_kennengelernt"}], "weiter": "hallo2"},
+			"hallo2": {"wer": "Ye", "text": "Ich bin Ye. Ich bringe Anfängern bei, wie man da draußen überlebt.", "weiter": "frage"},
+			"frage": {"wer": "Ye", "text": "Und? Was führt dich zu mir?", "antworten": [
+				{"text": "Ich will kämpfen lernen.", "weiter": "kaempfen"},
+				{"text": "Was ist das für eine Laterne an der Wand?", "weiter": "laterne"},
+				{"text": "Hast du Arbeit für mich?", "weiter": "auftrag"}
+			]},
+			"kaempfen": {"wer": "Ye", "text": "Merk dir eins: Schild hoch, Schild runter. Im richtigen Moment, nicht früher.", "weiter": "frage"},
+			"laterne": {"wer": "Ye", "text": "Ein Erinnerungsstück. Vielleicht erzähle ich dir irgendwann davon.", "weiter": "frage"},
+			"auftrag": {"wer": "Ye", "text": "Zwischen den Pflastersteinen wächst Silberkraut. Bring mir drei davon.", "antworten": [
+				{"text": "Mach ich!", "weiter": "angenommen", "aktionen": [{"auftrag_starten": "kraeuter_fuer_ye"}]},
+				{"text": "Später vielleicht.", "weiter": "spaeter"}
+			]},
+			"angenommen": {"wer": "Ye", "text": "Gut. Die Kräuter leuchten ein wenig, du wirst sie finden."},
+			"spaeter": {"wer": "Ye", "text": "Wie du willst. Ich laufe nicht weg."},
+			"wieder_da": {"wer": "Ye", "text": "Na? Schon geübt? Schild hoch, Schild runter.", "antworten": [
+				{"text": "Hast du jetzt Arbeit für mich?", "weiter": "auftrag", "wenn": {"auftrag": "kraeuter_fuer_ye", "stand": "neu"}},
+				{"text": "Bis später, Ye."}
+			]},
+			"wartet": {"wer": "Ye", "text": "Drei Silberkräuter. Sie wachsen rund um den Marktplatz."},
+			"abgeben": {"wer": "Ye", "text": "Du hast sie? Zeig her.", "antworten": [
+				{"text": "Hier, drei Silberkräuter.", "weiter": "dank", "aktionen": [{"auftrag_abgeben": "kraeuter_fuer_ye"}]}
+			]},
+			"dank": {"wer": "Ye", "text": "Sauber gepflückt. Hier, dein Lohn. Und ein Heiltrank – du wirst ihn brauchen."},
+			"danach": {"wer": "Ye", "text": "Die Kräuter riechen gut. Bald zeige ich dir, wie man kämpft."}
+		}
+	}
+}

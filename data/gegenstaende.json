@@ -1,0 +1,5 @@
+{
+	"kraut": {"name": "Silberkraut", "beschreibung": "Ein Heilkraut, das zwischen den Pflastersteinen wächst.", "preis": 2},
+	"heiltrank": {"name": "Heiltrank", "beschreibung": "Heilt im Kampf etwas Leben.", "preis": 15},
+	"sternentafel": {"name": "Sternentafel", "beschreibung": "Das Spielfeld für Kreuzweg-Karten. Viel zu teuer.", "preis": 5000}
+}

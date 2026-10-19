@@ -5,7 +5,7 @@ Ziel: die erste Stunde aus `design.md` (Repo CazeX-studio/Spieldesign) als spiel
 | Nr. | Schritt | Stand |
 |-----|---------|-------|
 | 0 | Kampf in Regeln und Anzeige trennen (Voraussetzung) | erledigt |
-| 1 | Bausteine: Dialoge mit Antwortmöglichkeiten, Auftragsbuch, Gold und Inventar, Erfahrung und Stufen 1–10, Speichern. Dialoge, Aufträge und Texte stehen in eigenen Datendateien, nicht im Code. | offen |
+| 1 | Bausteine: Dialoge mit Antwortmöglichkeiten, Auftragsbuch, Gold und Inventar, Erfahrung und Stufen 1–10, Speichern. Dialoge, Aufträge und Texte stehen in eigenen Datendateien, nicht im Code. | erledigt |
 | 2 | Ankunft (Stufe 1–2): Abenteurergilde, Ausbilder Ye, erster Auftrag | offen |
 | 3 | Grundausbildung (Stufe 2–5): Kämpfe vor der Stadt mit Wechsel zum Kampfbildschirm, Tutorial Schritt für Schritt, erster Gruppenkampf mit Novizen-NPCs | offen |
 | 4 | Marv (erst nach dem Tutorial) und Bingos Laden mit der zu teuren Sternentafel | offen |

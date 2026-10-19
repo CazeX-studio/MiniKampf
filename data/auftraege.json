@@ -1,0 +1,11 @@
+{
+	"kraeuter_fuer_ye": {
+		"titel": "Kräuter für Ye (Probe-Auftrag)",
+		"beschreibung": "Ausbilder Ye braucht drei Silberkräuter vom Marktplatz. Sammle sie und bring sie ihm.",
+		"auftraggeber": "ye",
+		"ziele": [
+			{"art": "sammeln", "gegenstand": "kraut", "anzahl": 3}
+		],
+		"belohnung": {"gold": 30, "erfahrung": 120, "gegenstaende": {"heiltrank": 1}}
+	}
+}

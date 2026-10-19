@@ -1,0 +1,22 @@
+{
+	"auftrag_neu": "Neuer Auftrag: %s",
+	"auftrag_fertig": "Auftrag erfüllt: %s – zurück zum Auftraggeber!",
+	"auftrag_abgegeben": "Auftrag abgeschlossen: %s",
+	"gold": "+%d Gold",
+	"erfahrung": "+%d Erfahrung",
+	"gegenstand": "+%d %s",
+	"gegenstand_weg": "−%d %s",
+	"stufe": "Stufe %d erreicht!",
+	"hud": "Stufe %d · %s · %d Gold",
+	"hud_erfahrung": "%d / %d Erfahrung",
+	"hud_max": "Höchststufe",
+	"auftragsbuch": "Auftragsbuch",
+	"auftragsbuch_leer": "Noch keine Aufträge. Sprich mit den Leuten in der Stadt!",
+	"tasche": "Tasche",
+	"tasche_leer": "Die Tasche ist leer.",
+	"stand_aktiv": "läuft",
+	"stand_fertig": "erfüllt – abgeben!",
+	"stand_abgegeben": "abgeschlossen",
+	"weiter": "Weiter",
+	"neu_beginnen": "Neu beginnen"
+}

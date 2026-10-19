@@ -1,0 +1,4 @@
+{
+	"hinweis": "Erfahrung, die man insgesamt braucht, um eine Stufe zu erreichen. Erster Eintrag = Stufe 1, letzter = Stufe 10 (Höchststufe der Demo). Vorläufige Zahlen.",
+	"erfahrung_fuer_stufe": [0, 100, 250, 450, 700, 1000, 1350, 1750, 2200, 2700]
+}

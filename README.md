@@ -18,13 +18,18 @@ Handy quer halten. Jeder Push auf `main` baut die Web-Version automatisch neu
 
 Das Spiel startet mit einem **Menü**: Kampf-Sandbox oder Kreuzweg-Demo.
 
-## Kreuzweg-Demo (Lernprojekt 3, Gerüst)
+## Kreuzweg-Demo (Lernprojekt 3, Fahrplan in `KREUZWEG_PLAN.md`)
 
 Die Stadt Kreuzweg schräg von oben (Platzhalter-Grafik): Marktplatz mit der Statue der Fünf,
 Abenteurergilde, Bingos Laden, sechs Straßen (die sechste nach Südosten ist zugewachsen).
 
 - **Laufen:** Boden antippen oder anklicken, WASD/Pfeiltasten (PC) oder Steuerknopf unten links (Handy, erscheint unter dem Daumen).
 - **Reden:** Ausbilder Ye antippen (man läuft hin) oder neben ihm E/Leertaste bzw. den Knopf „Reden“ unten rechts. „Weiter“ oder E blättert.
+- **Gespräche mit Antworten:** Antwort antippen oder 1–4 drücken.
+- **Auftragsbuch** (J), **Tasche** mit Gold (I), **Stufe und Erfahrung** oben links (Stufe 1–10).
+- **Probe-Auftrag:** Ye fragen, ob er Arbeit hat, drei leuchtende Silberkräuter einsammeln, abgeben.
+- **Speichern:** automatisch bei jedem Fortschritt (im Browser im Browser-Speicher). „Neu beginnen“ löscht den Stand.
+- **Alle Texte, Dialoge, Aufträge und Zahlen** stehen in `data/` (Erklärung in `data/LIESMICH.md`), nicht im Code.
 - **Testgefährte:** Ein zweiter Spieler läuft zur Probe herum.
 
 **Für später mehrere Spieler gebaut:** Die Spiellogik (`scripts/welt/world_state.gd`) kennt keine Grafik.
@@ -104,13 +109,15 @@ Felsregen → **Kettenzug** (reißt jemanden von hinten nach vorne). Unter 30 % 
 ## Aufbau
 
 - `scenes/menu.tscn` + `scripts/menu.gd` – Startmenü (Startszene)
-- `scenes/kreuzweg.tscn` + `scripts/welt/` – Kreuzweg-Demo: `world_state.gd` (Logik), `player_state.gd`,
-  `dialogs.gd` (Gesprächstexte), `kreuzweg.gd` (Anzeige und Eingabe), `world_character.gd` (Figur)
+- `scenes/kreuzweg.tscn` + `scripts/welt/` – Kreuzweg-Demo: `world_state.gd` (Logik: Laufen, Gespräche, Aufträge, Belohnungen),
+  `player_state.gd` + `progress.gd` (Spieler und Fortschritt), `game_data.gd` (liest `data/`), `save_game.gd` (Speichern),
+  `kreuzweg.gd` (Anzeige und Eingabe), `world_character.gd` (Figur)
+- `data/` – Dialoge, Aufträge, Gegenstände, Stufen, Texte und NPCs der Stadt (JSON, siehe `data/LIESMICH.md`)
 - `scenes/auswahl.tscn` + `scripts/kampf/auswahl.gd` – Auswahl-Bildschirm der Kampf-Sandbox
 - `scripts/kampf/pilzhoehle.gd` – Test-Dungeon Pilzhöhle (Abläufe und Mechaniken)
 - `scripts/kampf/battle_state.gd` – Kampf-Regeln ohne Grafik: Zugreihenfolge, Schaden, Gegner, Wellen. Nimmt Befehle an und meldet Ereignisse
 - `scenes/kampf.tscn` + `scripts/kampf/combat.gd` – Kampf-Anzeige: spielt die Ereignisse ab, Knöpfe, Reaktions-Ring, Auswertung
-- `tests/` – automatische Testkämpfe (`vergleich.gd`), Element-Test, `anzeige_auto.tscn` (Computer spielt mit echter Anzeige)
+- `tests/` – automatische Testkämpfe (`vergleich.gd`), Element-Test, Welt-Test (`welt_test.gd`), Vorführ-Szenen (`anzeige_auto.tscn`, `welt_auto.tscn`)
 - `scripts/kampf/skills.gd` – Fähigkeiten aller Klassen, Begleiter und Duette
 - `scripts/kampf/sandbox.gd` – Daten: Klassen, Duette, Monster, Gegner, Kämpfe
 - `scripts/kampf/elements.gd` – Element-Sechseck, Licht/Schatten, Sternenkraft

@@ -1,0 +1,10 @@
+{
+	"npcs": {
+		"ye": {"name": "Ausbilder Ye", "feld": [13, 9], "aussehen": "wizzard_m", "farbe": "ccdbf2", "dialog": "ye"}
+	},
+	"sammelpunkte": [
+		{"gegenstand": "kraut", "feld": [8, 8]},
+		{"gegenstand": "kraut", "feld": [14, 12]},
+		{"gegenstand": "kraut", "feld": [9, 15]}
+	]
+}
