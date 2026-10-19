@@ -34,6 +34,8 @@ const RING_START := 170.0
 const RING_TARGET := 40.0
 ## Unter diesem Namen merkt sich der Spielstand die Urbaum-Entscheidung der Pilzhöhle
 const PILZ_CHOICE_FLAG := "pilzhoehle_urbaum"
+## So oft gelingt den Novizen-Mitstreitern (Computer) eine perfekte Reaktion
+const ALLY_PARRY_CHANCE := 0.1
 
 var state: BattleState
 
@@ -318,6 +320,7 @@ func choose_option(title: String, options: Array[Dictionary]) -> String:
 		button.custom_minimum_size.x = 404
 		button.pressed.connect(func() -> void: _choice_made.emit(option.id))
 		_grid.add_child(button)
+	_number_buttons()
 	var id: String = await _choice_made
 	_clear_actions()
 	return id
@@ -352,6 +355,7 @@ func _show_actions(f: Fighter) -> void:
 			button.add_theme_color_override("font_color", Color("9fe8ff"))
 		button.pressed.connect(_on_ability_pressed.bind(f, ab))
 		_grid.add_child(button)
+	_number_buttons()
 
 
 ## Eine Entscheidung mit mehreren Möglichkeiten (z. B. nach dem Dungeon). Gibt die Kennung zurück.
@@ -398,11 +402,47 @@ func _show_choices(f: Fighter, ab: Dictionary) -> void:
 	_add_back_button(f)
 
 
+## PC: Zahlentasten 1–9 drücken den passenden Knopf unten (Fähigkeiten, Auswahl, Zurück).
+func _number_key(event: InputEvent) -> void:
+	if not (event is InputEventKey and event.pressed and not event.echo):
+		return
+	var key: Key = event.physical_keycode
+	var index := -1
+	if key >= KEY_1 and key <= KEY_9:
+		index = key - KEY_1
+	elif key >= KEY_KP_1 and key <= KEY_KP_9:
+		index = key - KEY_KP_1
+	if index < 0:
+		return
+	var buttons := _grid_buttons()
+	if index < buttons.size() and not buttons[index].disabled:
+		get_viewport().set_input_as_handled()
+		buttons[index].pressed.emit()
+
+
+func _grid_buttons() -> Array[Button]:
+	var buttons: Array[Button] = []
+	for child in _grid.get_children():
+		if child is Button and not child.is_queued_for_deletion():
+			buttons.append(child)
+	return buttons
+
+
+## Am PC steht vor jedem Knopf seine Zahlentaste.
+func _number_buttons() -> void:
+	if DisplayServer.is_touchscreen_available():
+		return
+	var buttons := _grid_buttons()
+	for i in mini(buttons.size(), 9):
+		buttons[i].text = "%d · %s" % [i + 1, buttons[i].text]
+
+
 func _add_back_button(f: Fighter) -> void:
 	var back := _action_button("Zurück")
 	back.add_theme_font_size_override("font_size", 18)
 	back.pressed.connect(_on_back_pressed.bind(f))
 	_grid.add_child(back)
+	_number_buttons()
 
 
 func _on_back_pressed(f: Fighter) -> void:
@@ -435,7 +475,7 @@ func react(attacker: Fighter, target: Fighter, duration: float) -> bool:
 	# Mitstreiter des Computers reagieren selbst, ohne Ring
 	if state.computer.has(target):
 		await wait(duration + REACT_LATE)
-		return _ki.react()
+		return _ki.react(ALLY_PARRY_CHANCE)
 	await _show_hint("erste_reaktion")
 	_react_target = target
 	_react_duration = duration
@@ -469,6 +509,7 @@ func _react_time() -> float:
 
 func _input(event: InputEvent) -> void:
 	if not _reacting:
+		_number_key(event)
 		return
 	var pressed := false
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:

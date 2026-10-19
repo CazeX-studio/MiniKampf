@@ -44,8 +44,10 @@ func choose_action(f: Fighter) -> Dictionary:
 	return ki.choose(state.skills, f)
 
 
-func react(_attacker: Fighter, _target: Fighter, _duration: float) -> bool:
-	return ki.react()
+func react(_attacker: Fighter, target: Fighter, _duration: float) -> bool:
+	# Mitstreiter des Computers parieren selten (wie im Spiel), sonst die Hälfte der Fälle
+	return ki.react(Combat.ALLY_PARRY_CHANCE if state.computer.has(target) else 0.5)
+
 
 
 func choose_option(_title: String, options: Array[Dictionary]) -> String:

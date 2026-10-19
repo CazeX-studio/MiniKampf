@@ -48,9 +48,9 @@ func choose(rules: Skills, f: Fighter) -> Dictionary:
 	return {ab = pick, target = target}
 
 
-## Perfekte Reaktion klappt in der Hälfte der Fälle.
-func react() -> bool:
-	return rng.randf() < 0.5
+## Perfekte Reaktion: klappt mit der angegebenen Wahrscheinlichkeit (Tests: die Hälfte, Mitstreiter: selten).
+func react(chance := 0.5) -> bool:
+	return rng.randf() < chance
 
 
 func choose_option(options: Array[Dictionary]) -> String:

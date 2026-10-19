@@ -158,6 +158,14 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
   - **Tests:** Der Computer hat jede Lektion und den Gruppenkampf je 30-mal gespielt: alles läuft, alles ist für
     Anfänger schaffbar (Zahlen vorläufig). Welt-Test mit der ganzen Grundausbildung und ein Test für den echten Wechsel
     Stadt → Kampf → Stadt: alles richtig. Die 75 Sandbox-Kämpfe laufen unverändert.
+  - **Nachbesserung nach deinem Test:**
+    - In **Lektion 1 und 2** kann der Novize noch **nicht parieren** (kein Ring). Parieren kommt erst in Lektion 3.
+      Ye erklärt dort zusätzlich: Als Novize lernt jeder das Parieren, später hängt es von der Klasse ab
+      (manche parieren, manche weichen aus, manche haben keine Reaktion). Auf dem Klassenwahl-Bildschirm (Schritt 8)
+      steht das dann bei jeder Klasse.
+    - **Zahlentasten am PC:** Vor jedem Knopf im Kampf steht seine Nummer, 1–9 wählen ihn aus (Fähigkeiten, Auswahl,
+      „Zurück“). Gilt auch in der Kampf-Sandbox. Am Handy bleiben die Knöpfe ohne Nummer.
+    - **Mitstreiter parieren seltener:** Ida, Bo und Tom schaffen eine perfekte Reaktion nur noch in 10 % der Fälle.
     sie mit. (Im fertigen Spiel ist der erste Abschluss der über den Auftrag.) Auch in design.md eingetragen.
 
 ## Fertig in Runde 1
@@ -217,7 +225,8 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 
 **Neu: Grundausbildung** (Kreuzweg-Demo, nach Ye's erstem Auftrag)
 1. Prüfe, ob Ye nach seinem ersten Auftrag am Stadttor (unten, wo du angekommen bist) mit „!“ steht. Sprich ihn an.
-2. Lektion 1 und 2 spielen: Erscheinen die Erklär-Fenster, und geht es danach zurück in die Stadt?
+2. Lektion 1 und 2 spielen: Erscheinen die Erklär-Fenster, kommt noch KEIN Ring, und geht es danach zurück in die Stadt?
+   Am PC: Fähigkeiten mit den Zahlentasten 1, 2, 3 … wählen.
 3. Lektion 3: Ye greift an, tippe, wenn der Ring grün wird. Prüfe, ob die Lektion nach zwei Paraden bestanden ist.
 4. Lektion 4: „Nach hinten“ ausprobieren. Bekommst du hinten weniger Schaden?
 5. Gruppenkampf mit Ida, Bo und Tom gewinnen und bei Ye abgeben: Danach solltest du Stufe 5 haben.

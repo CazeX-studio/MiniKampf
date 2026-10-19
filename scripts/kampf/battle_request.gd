@@ -21,7 +21,11 @@ static func prepare(id: String, level: int) -> bool:
 	var data: Dictionary = GameData.get_file("kaempfe").get(id, {})
 	if data.is_empty():
 		return false
-	var heroes: Array = [{klasse = "novize", name = "Du", aussehen = "novize", stufe = level}]
+	var player := {klasse = "novize", name = "Du", aussehen = "novize", stufe = level}
+	# Parieren lernt man erst in Lektion 3: davor hat der Novize keine Reaktion
+	if not data.get("reaktion", true):
+		player["reaktion"] = ""
+	var heroes: Array = [player]
 	for b: Dictionary in data.get("begleiter", []):
 		heroes.append({klasse = "novize", name = b.name, aussehen = b.get("aussehen", "novize"), stufe = level, computer = true})
 	kampf_id = id

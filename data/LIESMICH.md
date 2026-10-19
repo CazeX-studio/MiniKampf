@@ -51,6 +51,7 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
 - Jeder Kampf hat `name`, `ansage` (erste Zeile im Kampf-Log), `wellen` (Gegner-Kennungen aus `scripts/kampf/sandbox.gd`),
   `erlaubt` (welche Fähigkeiten der Novize schon hat: `schlag`, `kraftschlag`, `erste_hilfe`, `row` = Reihe wechseln),
   `erfahrung` (gibt es nur beim ersten Sieg), optional `begleiter` (Novizen-Mitstreiter, der Computer steuert sie),
+  `reaktion: false` (der Novize kann noch nicht parieren, z. B. Lektion 1 und 2),
   `ziel_paraden` (gewonnen nach so vielen perfekten Paraden) und `hinweise` (Erklär-Fenster:
   `erster_zug` = vor deinem ersten Zug, `erste_reaktion` = vor dem ersten Angriff auf dich).
 - **Aktion** `{"kampf": "lektion_tempo"}` im Dialog startet den Kampf.

@@ -5,6 +5,7 @@
 		"ansage": "Übungswiese vor dem Stadttor: Ein Feldschleim kriecht heran.",
 		"wellen": [["feldschleim"]],
 		"erlaubt": ["schlag"],
+		"reaktion": false,
 		"erfahrung": 75,
 		"hinweise": {
 			"erster_zug": "Oben siehst du die Zugleiste: Ganz links steht, wer JETZT dran ist, rechts daneben die nächsten Züge. Schnelle Figuren kommen öfter dran. Jetzt bist du dran: Tippe „Schlag“ und dann den Feldschleim."
@@ -15,6 +16,7 @@
 		"ansage": "Ein Feldschleim und ein Wiesenkobold stellen sich dir.",
 		"wellen": [["feldschleim", "wiesenkobold"]],
 		"erlaubt": ["schlag", "kraftschlag", "erste_hilfe"],
+		"reaktion": false,
 		"erfahrung": 75,
 		"hinweise": {
 			"erster_zug": "Neu: „Kraftschlag“ trifft härter und „Erste Hilfe“ heilt. Beide kosten Mana (blaue Leiste) und brauchen danach eine Pause („Bereit in 2“). Mana kommt jeden Zug ein wenig zurück."
@@ -29,7 +31,7 @@
 		"erfahrung": 75,
 		"hinweise": {
 			"erster_zug": "Ye ist nicht zu besiegen. Ziel: zweimal perfekt parieren. Mach einfach deinen Zug und warte auf seinen Angriff.",
-			"erste_reaktion": "Jetzt greift Ye an! Ein Ring schließt sich um dich. Tippe (oder drücke die Leertaste) genau dann, wenn er den inneren Kreis erreicht und grün wird. Zu früh oder zu spät zählt nicht."
+			"erste_reaktion": "Jetzt greift Ye an! Ein Ring schließt sich um dich. Tippe (oder drücke die Leertaste) genau dann, wenn er den inneren Kreis erreicht und grün wird. Zu früh oder zu spät zählt nicht. Übrigens: Als Novize lernt jeder das Parieren. Später hängt es von deiner Klasse ab – manche parieren, manche weichen aus, manche haben gar keine Reaktion."
 		}
 	},
 	"lektion_reihen": {

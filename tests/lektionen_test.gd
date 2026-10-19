@@ -31,6 +31,12 @@ func _run() -> void:
 			if end == "":
 				problems += 1
 				print("FEHLER: %s endet nicht" % kampf_id)
+			# Lektion 1 und 2: Der Novize kann noch nicht parieren
+			if not GameData.get_file("kaempfe")[kampf_id].get("reaktion", true):
+				for line in node.protokoll.lines:
+					if line.contains("Du reagiert perfekt"):
+						problems += 1
+						print("FEHLER: %s: Parieren schon möglich" % kampf_id)
 			if end == "ENDE Sieg":
 				wins += 1
 			turns += node.state.turns

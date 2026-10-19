@@ -238,7 +238,7 @@ func _create_heroes() -> void:
 		h.look = spec.get("aussehen", "")
 		h.max_mana = data.mana + LEVEL_MANA * level_bonus if data.mana > 0 else 0
 		h.mana = data.get("start_mana", h.max_mana)
-		h.reaction = data.reaction
+		h.reaction = spec.get("reaktion", data.reaction)
 		h.back_row = data.back
 		heroes.append(h)
 		if setup.has("helden"):
