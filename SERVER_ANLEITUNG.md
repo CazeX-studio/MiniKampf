@@ -49,3 +49,17 @@ GitHub nur noch auf **„Merge pull request“**.
   fliegt dabei kurz raus und kann gleich wieder beitreten.
 - **Später** (mehr Spieler, kein Einschlafen) können wir auf einen kleinen gemieteten Server wechseln. Am Spiel
   ändert sich dafür nur die Adresse.
+
+## Umzug nach Frankfurt (einmalig, nach dem Merge vom 20.10.)
+
+Der erste Server stand in Oregon (USA), weil im Bauplan noch kein Standort stand. Von Deutschland aus ist das weit,
+deshalb hängt das Spiel öfter. Der Bauplan sagt jetzt **Frankfurt**. Den Standort eines bestehenden Dienstes kann
+Render nicht ändern, deshalb einmal neu anlegen:
+
+1. Pull Request mergen (Link schickt Claude).
+2. **https://dashboard.render.com** → **asterfall-server** → **„Settings“** → ganz unten **„Delete Web Service“**
+   → Namen zur Bestätigung eintippen → löschen.
+3. **https://dashboard.render.com/blueprints** → deinen Blueprint öffnen → **„Manual Sync“** (bzw. „Sync“).
+   Render legt den Server neu an, diesmal in Frankfurt.
+4. Warten, bis in den Logs wieder `Netz: Gastgeber bereit auf Port 10000` steht, und die Adresse prüfen
+   (sollte wieder `asterfall-server.onrender.com` sein; sonst Claude die neue Adresse schicken).

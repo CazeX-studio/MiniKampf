@@ -333,28 +333,34 @@ func _steer(p: PlayerState, delta: float) -> void:
 ## Spielt die Welt um "delta" Sekunden weiter (Laufen, Benutzen nach der Ankunft).
 func tick(delta: float) -> void:
 	for p: PlayerState in players.values():
-		if p.steer != Vector2.ZERO:
-			_steer(p, delta)
-		var step := WALK_SPEED * delta
-		while step > 0.0 and p.is_moving():
-			var next := Vector2(p.path[0])
-			var to_next := next - p.pos
-			if absf(to_next.x - to_next.y) > 0.01:
-				# Bildschirm-Richtung: x - y wird größer = nach rechts
-				p.facing = 1 if to_next.x - to_next.y > 0 else -1
-			if to_next.length() <= step:
-				step -= to_next.length()
-				p.pos = next
-				p.cell = p.path.pop_front()
-			else:
-				p.pos += to_next.normalized() * step
-				step = 0.0
+		move_player(p, delta)
 		_check_approach(p)
 		if not p.is_moving() and p.use_target != "":
 			var target := p.use_target
 			p.use_target = ""
 			if (Vector2(target_cell(target)) - p.pos).length() < USE_RANGE:
 				_use(p, target)
+
+
+## Nur das Laufen eines Spielers (frei gesteuert oder einen Weg entlang), ohne Reden und Benutzen.
+## Beim Zusammenspielen bewegt ein Mitspieler damit seine eigene Figur sofort, ohne auf den Gastgeber zu warten.
+func move_player(p: PlayerState, delta: float) -> void:
+	if p.steer != Vector2.ZERO:
+		_steer(p, delta)
+	var step := WALK_SPEED * delta
+	while step > 0.0 and p.is_moving():
+		var next := Vector2(p.path[0])
+		var to_next := next - p.pos
+		if absf(to_next.x - to_next.y) > 0.01:
+			# Bildschirm-Richtung: x - y wird größer = nach rechts
+			p.facing = 1 if to_next.x - to_next.y > 0 else -1
+		if to_next.length() <= step:
+			step -= to_next.length()
+			p.pos = next
+			p.cell = p.path.pop_front()
+		else:
+			p.pos += to_next.normalized() * step
+			step = 0.0
 
 
 func _use(p: PlayerState, target: String) -> void:

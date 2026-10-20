@@ -4,6 +4,8 @@ services:
     name: asterfall-server
     runtime: docker
     plan: free
+    # Frankfurt: kurzer Weg für Spieler in Deutschland
+    region: frankfurt
     dockerfilePath: ./server/Dockerfile
     dockerContext: .
     branch: main

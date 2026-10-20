@@ -29,6 +29,15 @@ const ONLINE_WAIT := 120.0
 ## Alle so viele Sekunden meldet sich ein Mitspieler kurz beim Gastgeber, auch wenn er nur herumsteht
 ## (sonst hält der kostenlose Server die Runde für leer und schläft ein)
 const PING_SECONDS := 30.0
+## Mitspieler zeigen die anderen Figuren so viele Sekunden „in der Vergangenheit“. Dafür laufen sie gleichmäßig,
+## auch wenn die Berichte des Gastgebers unregelmäßig ankommen (Internet).
+const INTERP_DELAY := 0.2
+## Bleiben Berichte aus (Aussetzer), läuft eine Figur höchstens so lange in ihrer Richtung weiter (Sekunden)
+const EXTRAPOLATE_MAX := 0.6
+## Ein Server ohne Grafik rechnet höchstens so oft pro Sekunde (spart Rechenzeit beim kostenlosen Anbieter)
+const SERVER_FPS := 30
+## Diese Befehle führt ein Mitspieler sofort auch bei sich aus, damit die eigene Figur ohne Verzögerung läuft
+const PREDICTED := ["steer", "move", "talk", "use"]
 const MAX_PLAYERS := 4
 ## So oft pro Sekunde schickt der Gastgeber, wo alle stehen
 const SNAPSHOT_RATE := 15.0
@@ -58,8 +67,12 @@ var _ping_timer := PING_SECONDS
 var _window_id := str(randi())
 ## Gastgeber: zuletzt geschickter eigener Zustand je Mitspieler (nur Änderungen werden geschickt)
 var _sent_own := {}
-## Mitspieler: wohin die Figuren laufen (aus dem letzten Bericht des Gastgebers)
-var _targets := {}
+## Mitspieler: die letzten Berichte des Gastgebers je Figur: [Zeit beim Gastgeber, Platz, Blickrichtung, läuft]
+var _history := {}
+## Mitspieler: Unterschied zwischen eigener Uhr und der Uhr des Gastgebers (kleinster gemessener Wert)
+var _clock_offset := INF
+## Mitspieler: seit wann die eigene Figur nicht mehr selbst läuft (Sekunden)
+var _own_idle := 0.0
 
 
 static func online() -> bool:
@@ -81,6 +94,7 @@ static func host(p_name: String, look: String) -> Error:
 
 ## Server ohne eigenen Spieler (z. B. später im Internet).
 static func serve() -> Error:
+	Engine.max_fps = SERVER_FPS
 	return _start_server("Server", "elf_m", Mode.SERVER)
 
 
@@ -137,7 +151,8 @@ static func join(address: String, p_name: String, look: String) -> Error:
 	mode = Mode.CLIENT
 	_set_me(p_name, look, "")
 	world = WorldState.new()
-	node._targets.clear()
+	node._history.clear()
+	node._clock_offset = INF
 	for sig: Signal in [_api().connected_to_server, _api().connection_failed, _api().server_disconnected]:
 		for c: Dictionary in sig.get_connections():
 			sig.disconnect(c.callable)
@@ -167,6 +182,9 @@ static func send(cmd: Dictionary) -> void:
 			world.apply_command(my_id, cmd)
 		Mode.CLIENT:
 			_instance._c_command.rpc_id(1, cmd)
+			# Laufen sofort selbst ausführen (der Gastgeber rechnet dasselbe und korrigiert nur, wenn es abweicht)
+			if cmd.get("type", "") in PREDICTED:
+				world.apply_command(my_id, cmd)
 
 
 ## Der eigene Spieler betritt die Stadt (er steht schon in Netz.world, beim Mitspieler im Spiegelbild).
@@ -180,6 +198,8 @@ static func leave_world() -> void:
 	if world == null:
 		return
 	world.remove_player(my_id)
+	if _instance != null:
+		_instance._history.erase(my_id)
 	if mode == Mode.CLIENT and _api().multiplayer_peer is WebSocketMultiplayerPeer:
 		_instance._c_leave.rpc_id(1)
 
@@ -238,13 +258,7 @@ func _process(delta: float) -> void:
 		if _ping_timer <= 0.0 and my_id != "":
 			_ping_timer = PING_SECONDS
 			_c_ping.rpc_id(1)
-		# Figuren gleiten sanft zu dem Platz, den der Gastgeber zuletzt gemeldet hat
-		for id: String in _targets:
-			var p: PlayerState = world.players.get(id)
-			if p == null:
-				continue
-			var target: Vector2 = _targets[id]
-			p.pos = target if p.pos.distance_to(target) > 3.0 else p.pos.lerp(target, clampf(delta * 12.0, 0.0, 1.0))
+		_move_mirror(delta)
 
 
 # --- Spielstand-Sperre (mehrere Fenster auf einem PC) ---------------------------
@@ -278,7 +292,7 @@ func _send_snapshot() -> void:
 	var list: Array = []
 	for p: PlayerState in world.players.values():
 		list.append([p.id, p.display_name, p.look, p.pos, p.facing, p.is_walking()])
-	_s_snapshot.rpc(list)
+	_s_snapshot.rpc(_clock(), list)
 
 
 ## Schickt einem Mitspieler seinen eigenen Zustand (Gespräch, Laden, Fortschritt), wenn er sich geändert hat.
@@ -391,11 +405,13 @@ func _on_server_lost() -> void:
 	disconnected.emit()
 
 
-## Wo alle Spieler stehen (vom Gastgeber, mehrmals pro Sekunde).
+## Wo alle Spieler stehen (vom Gastgeber, mehrmals pro Sekunde, mit seiner Uhrzeit).
 @rpc("authority", "unreliable_ordered")
-func _s_snapshot(list: Array) -> void:
+func _s_snapshot(server_time: float, list: Array) -> void:
 	if mode != Mode.CLIENT or world == null:
 		return
+	# Der schnellste Bericht zeigt am besten, wie die beiden Uhren zueinander stehen
+	_clock_offset = minf(_clock_offset, _clock() - server_time)
 	var seen := {}
 	for entry: Array in list:
 		var id: String = entry[0]
@@ -406,15 +422,92 @@ func _s_snapshot(list: Array) -> void:
 			if id == my_id or not world.players.has(my_id):
 				continue
 			p = world.add_player(id, entry[1], entry[2], Vector2i(Vector2(entry[3]).round()))
-		var pos: Vector2 = entry[3]
-		_targets[id] = pos
-		p.cell = Vector2i(pos.round())
-		p.facing = entry[4]
-		p.remote_walking = entry[5]
+		var history: Array = _history.get(id, [])
+		history.append([server_time, entry[3], entry[4], entry[5]])
+		while history.size() > 2 and float(history[1][0]) < server_time - 1.0:
+			history.pop_front()
+		_history[id] = history
 	for id: String in world.players.keys():
 		if id != my_id and not seen.has(id):
 			world.remove_player(id)
-			_targets.erase(id)
+			_history.erase(id)
+
+
+## Bewegt die Figuren im Spiegelbild: die eigene sofort (vorhergesagt), die anderen gleichmäßig etwas verzögert.
+func _move_mirror(delta: float) -> void:
+	var render_time := _clock() - _clock_offset - INTERP_DELAY
+	for id: String in _history:
+		var p: PlayerState = world.players.get(id)
+		if p == null:
+			continue
+		var sample := sample_history(_history[id], render_time)
+		if id == my_id:
+			_correct_own(p, delta, sample)
+			continue
+		# Kleine Sprünge (z. B. nach einem Aussetzer) weich ausgleichen, große sofort übernehmen
+		var target: Vector2 = sample.pos
+		p.pos = target if p.pos.distance_to(target) > 2.0 else p.pos.lerp(target, clampf(delta * 15.0, 0.0, 1.0))
+		p.cell = Vector2i(p.pos.round())
+		p.facing = sample.facing
+		p.remote_walking = sample.walking
+	var me: PlayerState = world.players.get(my_id)
+	if me != null and not _history.has(my_id):
+		world.move_player(me, delta)
+
+
+## Eigene Figur: läuft sofort selbst. Weicht sie stark vom Gastgeber ab, wird sie zu ihm gezogen.
+func _correct_own(me: PlayerState, delta: float, sample: Dictionary) -> void:
+	me.remote_walking = false
+	world.move_player(me, delta)
+	var history: Array = _history[my_id]
+	var latest: Array = history[history.size() - 1]
+	var server_pos: Vector2 = latest[1]
+	var server_walking: bool = latest[3]
+	if me.is_walking():
+		_own_idle = 0.0
+		if me.pos.distance_to(server_pos) > 3.0:
+			me.pos = server_pos
+			me.path.clear()
+	else:
+		_own_idle += delta
+		if _own_idle > 1.0 and server_walking:
+			# Der Gastgeber lässt die Figur laufen (z. B. nach einem Antippen, das hier nicht vorhergesagt wurde)
+			me.pos = sample.pos
+			me.facing = sample.facing
+			me.remote_walking = true
+		elif _own_idle > 0.5 and me.pos.distance_to(server_pos) > 0.05:
+			# Stehen geblieben: sanft auf den Platz, den der Gastgeber kennt
+			me.pos = me.pos.move_toward(server_pos, WorldState.WALK_SPEED * delta)
+			me.remote_walking = me.pos.distance_to(server_pos) > 0.3
+	me.cell = Vector2i(me.pos.round())
+
+
+## Platz einer Figur zu einem Zeitpunkt, zwischen zwei Berichten des Gastgebers verrechnet.
+static func sample_history(history: Array, time: float) -> Dictionary:
+	var last: Array = history[history.size() - 1]
+	if time >= float(last[0]):
+		# Noch kein neuer Bericht: Eine laufende Figur läuft kurz in ihrer Richtung weiter
+		if bool(last[3]) and history.size() >= 2:
+			var before: Array = history[history.size() - 2]
+			var span := float(last[0]) - float(before[0])
+			if span > 0.0001:
+				var velocity := (Vector2(last[1]) - Vector2(before[1])) / span
+				return {pos = Vector2(last[1]) + velocity * minf(time - float(last[0]), EXTRAPOLATE_MAX), facing = last[2], walking = true}
+		return {pos = last[1], facing = last[2], walking = last[3]}
+	var first: Array = history[0]
+	if time <= float(first[0]):
+		return {pos = first[1], facing = first[2], walking = first[3]}
+	for i in range(history.size() - 1, 0, -1):
+		var a: Array = history[i - 1]
+		var b: Array = history[i]
+		if time >= float(a[0]):
+			var t := (time - float(a[0])) / maxf(float(b[0]) - float(a[0]), 0.0001)
+			return {pos = Vector2(a[1]).lerp(b[1], t), facing = b[2], walking = b[3] or a[3]}
+	return {pos = first[1], facing = first[2], walking = first[3]}
+
+
+static func _clock() -> float:
+	return Time.get_ticks_usec() / 1000000.0
 
 
 ## Eigener Zustand vom Gastgeber: Gespräch, Laden, Fortschritt.
