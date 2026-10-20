@@ -84,6 +84,9 @@ static func build_group(id: String, members: Array) -> Dictionary:
 	var result_setup := _make_setup(id, data, heroes, phases, waves)
 	# Gemeinsam gibt es kein „Nochmal versuchen“ (alle müssten zustimmen)
 	result_setup["kein_nochmal"] = true
+	# Manche Bosse (Sternenfresser) passen sich der Gruppengröße an: je weiterer Spieler mehr Leben
+	if data.has("gruppe_staerke"):
+		result_setup["gegner_leben"] = 1.0 + float(data.gruppe_staerke) * (members.size() - 1)
 	return result_setup
 
 

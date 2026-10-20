@@ -10,6 +10,8 @@ func _initialize() -> void:
 	_test_result_rules()
 	_test_scene()
 	_test_scene_battle()
+	_test_star_night()
+	_test_boss_scaling()
 	print("Szenen: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)
 
@@ -130,6 +132,78 @@ func _test_scene_battle() -> void:
 	_check(w.players["b"].progress.quest_state("erster_gruppenkampf") == "aktiv", "Die anderen Aktionen gelten trotzdem für alle")
 	w._scene_actions({voters = ["a"], watchers = ["b"]}, [{kampf = "gruppenkampf"}])
 	_check(solo_battles == [["a", "gruppenkampf"]] and group_battles.size() == 1, "Nur einer stimmt ab: normaler Kampf allein")
+
+
+## Nacht des Sternenfalls zusammen: Marv holt die Gruppe auf dem Fest, alle sehen den Sternenfall,
+## nach dem Kampf wartet Ren, bis alle zurück sind, und spricht dann alle zusammen an.
+func _test_star_night() -> void:
+	var w := WorldState.new()
+	var marv: Vector2i = w.npcs["marv_fest"].cell
+	var used: Array = []
+	for id: String in ["a", "b", "z"]:
+		var cell := _near(w, marv, used) if id != "z" else WorldState.start_cell()
+		used.append(cell)
+		var p := w.add_player(id, id.to_upper(), "elf_m", cell)
+		if id != "z":
+			p.progress.flags["nacht"] = true
+			p.progress.quests["fest"] = "aktiv"
+	w.group_members = func(_id: String) -> Array: return ["a", "b"]
+	w.group_leader = func(_id: String) -> String: return "a"
+	var effects := {}
+	w.effect_requested.connect(func(id: String, effect: String) -> void: effects[id] = effects.get(id, []) + [effect])
+	var battles := []
+	w.group_battle_requested.connect(func(ids: Array, kampf: String) -> void: battles.append([ids, kampf]))
+	w.tick(0.05)
+	var a: PlayerState = w.players["a"]
+	var b: PlayerState = w.players["b"]
+	_check(a.in_dialog() and b.in_dialog() and a.dialog.has("szene"), "Marv spricht die Gruppe auf dem Fest gemeinsam an")
+	_check(b.progress.flags.has("angesprochen:marv_fest"), "Marv spricht danach niemanden aus der Gruppe noch einmal an")
+	# Durch das Gespräch: Antworten wählen und weiterblättern, bis der Kampf beginnt
+	for i in 12:
+		if not a.in_dialog():
+			break
+		if w.dialog_view(a).antworten.is_empty():
+			w.apply_command("a", {type = "dialog_next"})
+		else:
+			w.apply_command("a", {type = "dialog_choose", index = 0})
+			w.apply_command("b", {type = "dialog_choose", index = 0})
+	_check(effects.get("a", []) == ["sternenfall"] and effects.get("b", []) == ["sternenfall"], "Sternenfall: einmal für jeden in der Szene")
+	_check(effects.get("z", []) == ["sternenfall"], "… und auch für alle anderen in der Stadt sichtbar")
+	_check(battles == [[["a", "b"], "sternenfall"]], "Beide kämpfen zusammen gegen den Sternenfresser")
+
+	# Kampf: beide verlassen die Stadt. A kommt zuerst zurück und wartet, bis B auch da ist.
+	w.add_battle_group(["a", "b"])
+	var b_cell := b.cell
+	w.remove_player("b")
+	w.apply_command("a", {type = "kampf_ergebnis", kampf = "sternenfall", gewonnen = true})
+	for i in 10:
+		w.tick(0.05)
+	_check(not a.in_dialog() and w.waiting_for_group("a"), "Ren wartet, solange noch jemand aus der Gruppe kämpft")
+	var b2 := w.add_player("b", "B", "elf_m", b_cell)
+	b2.progress.load_dict(b.progress.to_dict())
+	w.apply_command("b", {type = "kampf_ergebnis", kampf = "sternenfall", gewonnen = true})
+	w.tick(0.05)
+	_check(a.in_dialog() and b2.in_dialog() and a.dialog.get("id", "") == "ren", "Alle zurück: Ren spricht beide zusammen an")
+	_check(w.dialog_view(b2).get("szene", {}).get("rolle", "") in ["spricht", "abstimmen"], "Beide stimmen in der Szene mit Ren ab")
+	_check(a.progress.flags.has("erfolg:schild_hoch") and b2.progress.flags.has("erfolg:schild_hoch"), "Beide haben den Erfolg „Schild hoch, Schild runter“")
+
+
+## Der Sternenfresser hat mehr Leben, je mehr Spieler mitkämpfen.
+func _test_boss_scaling() -> void:
+	var one := BattleRequest.build_group("sternenfall", [{name = "A", stufe = 8}])
+	var two := BattleRequest.build_group("sternenfall", [{name = "A", stufe = 8}, {name = "B", stufe = 8}])
+	_check(is_equal_approx(float(two.gegner_leben), 1.25) and is_equal_approx(float(one.gegner_leben), 1.0), "Zwei Spieler: Sternenfresser mit 25 % mehr Leben")
+	_check(not BattleRequest.build_group("gruppenkampf", [{name = "A", stufe = 3}, {name = "B", stufe = 3}]).has("gegner_leben"), "Andere Kämpfe bleiben gleich stark")
+	var hp := []
+	for setup: Dictionary in [one, two]:
+		var battle := BattleState.new(null, [] as Array[String], "", 1)
+		battle.setup = setup
+		battle._create_heroes()
+		battle.waves = setup.wellen
+		battle._spawn_wave(0)
+		hp.append(battle.enemies[0].hp)
+		battle.cleanup()
+	_check(hp[1] > hp[0], "Im Kampf: %d statt %d Leben" % [hp[1], hp[0]])
 
 
 func _tick_until(w: WorldState, done: Callable) -> void:

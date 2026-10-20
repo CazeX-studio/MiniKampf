@@ -346,7 +346,8 @@ func spawn_enemies(ids: Array) -> void:
 	for e in enemies:
 		_emit({type = "despawn", f = e})
 	enemies.clear()
-	var hp_scale: float = Sandbox.HP_SCALE[heroes.size() - 1]
+	# Gruppenkampf: Bosse wie der Sternenfresser haben mehr Leben, je mehr Spieler mitkämpfen (setup.gegner_leben)
+	var hp_scale: float = Sandbox.HP_SCALE[heroes.size() - 1] * float(setup.get("gegner_leben", 1.0))
 	var has_big := false
 	for id: String in ids:
 		has_big = has_big or Sandbox.ENEMIES[id].get("big", false)

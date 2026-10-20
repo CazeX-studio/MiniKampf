@@ -472,6 +472,8 @@ func _on_peer_disconnected(peer: int) -> void:
 	_last_chat.erase(id)
 	for bid: int in _battles.keys():
 		_battle_gone(id, bid)
+	if world != null:
+		world.battle_member_gone(id)
 	if _groups != null:
 		_groups.remove_player(id)
 	_sent_group.erase(id)
@@ -614,6 +616,7 @@ func _on_group_battle(ids: Array, kampf_id: String) -> void:
 	var battle := GemeinsamerKampf.new(bid, setup, battle_seed, owners, _broadcast_battle)
 	_battles[bid] = battle
 	_battle_players[bid] = ids.duplicate()
+	world.add_battle_group(ids)
 	battle.finished.connect(func() -> void:
 		_battles.erase(bid)
 		_battle_players.erase(bid))

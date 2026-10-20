@@ -71,6 +71,16 @@ const VOTE_SECONDS := 30.0
 ## Laufende Szenen: Nummer -> {dialog, node, speaker, voters, watchers, votes = {Spieler: Antwort}, time_left}
 var scenes := {}
 var _next_scene := 1
+## Effekte, die alle in der Stadt sehen (design.md: Der Sternenfall ist für alle in Kreuzweg sichtbar)
+const GLOBAL_EFFECTS := ["sternenfall"]
+## Gruppenkämpfe, aus denen noch nicht alle zurück sind: [{ids, back = {Spieler: true}, time}].
+## Solange spricht niemand aus der Gruppe von sich aus an (z. B. Ren wartet, bis alle wieder da sind).
+var battle_groups: Array[Dictionary] = []
+## So lange wird höchstens auf die anderen gewartet (Sekunden)
+const BATTLE_WAIT_MAX := 600.0
+## Laufende Zeit der Welt (Sekunden)
+var _time := 0.0
+var _effect_time := {}
 
 
 func _init() -> void:
@@ -268,6 +278,7 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			if used > 0:
 				_give_item(p, "heiltrank", -used)
 			_battle_result(p, str(cmd.get("kampf", "")), bool(cmd.get("gewonnen", false)))
+			_back_from_battle(p.id)
 		"kaufen":
 			_buy(p, str(cmd.get("gegenstand", "")))
 		"verkaufen":
@@ -392,6 +403,7 @@ func _steer(p: PlayerState, delta: float) -> void:
 
 ## Spielt die Welt um "delta" Sekunden weiter (Laufen, Benutzen nach der Ankunft).
 func tick(delta: float) -> void:
+	_time += delta
 	_tick_scenes(delta)
 	for p: PlayerState in players.values():
 		move_player(p, delta)
@@ -536,8 +548,52 @@ func _dialog_choose(p: PlayerState, index: int) -> void:
 
 # --- Gemeinsame Szenen ----------------------------------------------------------
 
+## Ein Effekt für einen Spieler – oder für alle in der Stadt (Sternenfall), dann nur einmal, auch wenn mehrere ihn auslösen.
+func _effect(p: PlayerState, effect: String) -> void:
+	if not effect in GLOBAL_EFFECTS:
+		effect_requested.emit(p.id, effect)
+		return
+	if _time - float(_effect_time.get(effect, -INF)) < 3.0:
+		return
+	_effect_time[effect] = _time
+	for id: String in players:
+		effect_requested.emit(id, effect)
+
+
+## Ein Gruppenkampf beginnt (Netz): Danach warten alle Beteiligten aufeinander, bevor sie jemand anspricht.
+func add_battle_group(ids: Array) -> void:
+	battle_groups.append({ids = ids.duplicate(), back = {}, time = _time})
+
+
+## Ein Spieler ist aus dem Kampf zurück. Sind alle da, ist die Gruppe nicht mehr gesperrt.
+func _back_from_battle(id: String) -> void:
+	for g: Dictionary in battle_groups.duplicate():
+		if id in g.ids:
+			g.back[id] = true
+			if g.back.size() >= g.ids.size():
+				battle_groups.erase(g)
+
+
+## Ein Spieler hat das Spiel verlassen: Auf ihn wird nicht mehr gewartet.
+func battle_member_gone(id: String) -> void:
+	for g: Dictionary in battle_groups.duplicate():
+		g.ids.erase(id)
+		g.back.erase(id)
+		if g.ids.is_empty() or g.back.size() >= g.ids.size():
+			battle_groups.erase(g)
+
+
+## Wartet dieser Spieler noch auf Mitspieler aus einem gemeinsamen Kampf?
+func waiting_for_group(id: String) -> bool:
+	for g: Dictionary in battle_groups:
+		if id in g.ids and _time - float(g.time) < BATTLE_WAIT_MAX:
+			return true
+	return false
+
+
 ## Ein Spieler spricht eine Figur an: allein wie immer, in einer Gruppe mit Mitgliedern in der Nähe als gemeinsame Szene.
-func _start_talk(p: PlayerState, npc_id: String) -> void:
+## approach_flag: Spricht die Figur von sich aus an (Marv, Ren), gilt das für alle, die mit abstimmen.
+func _start_talk(p: PlayerState, npc_id: String, approach_flag := "") -> void:
 	var dialog_id: String = npcs[npc_id].dialog
 	var entry := _entry_node(p, dialog_id)
 	var partners: Array[PlayerState] = []
@@ -558,6 +614,8 @@ func _start_talk(p: PlayerState, npc_id: String) -> void:
 		other.progress.flags[flag] = true
 		if npc_visible(other, npc_id) and _entry_node(other, dialog_id) == entry:
 			voters.append(other.id)
+			if approach_flag != "":
+				other.progress.flags[approach_flag] = true
 			_update_quests(other)
 		else:
 			if not had_flag:
@@ -824,7 +882,7 @@ func run_actions(p: PlayerState, actions: Array) -> void:
 		if action.has("szene"):
 			scene_requested.emit(p.id, action.szene)
 		if action.has("effekt"):
-			effect_requested.emit(p.id, action.effekt)
+			_effect(p, action.effekt)
 		if action.has("erfolg"):
 			_unlock(p, action.erfolg)
 		if action.has("kampf"):
@@ -992,7 +1050,7 @@ func _give_item(p: PlayerState, item_id: String, count: int) -> void:
 
 ## Manche NPCs (z. B. Marv) sprechen dich von sich aus an, sobald du nah genug bist – einmal.
 func _check_approach(p: PlayerState) -> void:
-	if p.in_dialog() or p.shop != "":
+	if p.in_dialog() or p.shop != "" or waiting_for_group(p.id):
 		return
 	for id: String in npcs:
 		var approach: Dictionary = npcs[id].approach
@@ -1001,7 +1059,8 @@ func _check_approach(p: PlayerState) -> void:
 		if (Vector2(npcs[id].cell) - p.pos).length() <= float(approach.get("radius", 3)):
 			p.progress.flags["angesprochen:" + id] = true
 			p.use_target = ""
-			start_dialog(p, npcs[id].dialog)
+			# Gruppenmitglieder in der Nähe erleben das mit (z. B. Marv auf dem Fest, Ren nach dem Sternenfresser)
+			_start_talk(p, id, "angesprochen:" + id)
 			return
 
 

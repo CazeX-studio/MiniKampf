@@ -31,7 +31,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 4 | Gruppe bilden (einladen, Gruppenfenster, Gruppenführer) | eingebaut, Marco testet |
 | 5 | Geschichte gemeinsam erleben (Abstimmung) | eingebaut, Marco testet |
 | 6 | Gemeinsamer Kampf | eingebaut, Marco testet |
-| 7–8 | Sternenfall zusammen, Feinschliff | offen |
+| 7 | Nacht des Sternenfalls zusammen | eingebaut, Marco testet |
+| 8 | Feinschliff (Verbindungsabbruch, Test mit 4 Spielern) | offen |
 
 ## Fertig in Lernprojekt 4
 
@@ -159,6 +160,23 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     `tests/netz_gruppenkampf_test.gd`: zwei echte Programme mit echter Kampf-Anzeige kämpfen den Gruppenkampf zusammen –
     gleiches Ergebnis auf beiden, danach zurück in der Stadt. Szenen-Test: Kampf aus einer Szene wird zum Gruppenkampf.
     Alle bisherigen Tests laufen weiter.
+
+- **Schritt 7 – Nacht des Sternenfalls zusammen:**
+  - **Marv spricht die Gruppe gemeinsam an:** Kommt jemand auf dem Fest in Marvs Nähe, werden Gruppenmitglieder in der Nähe
+    mit in die Szene geholt (wie bei Schritt 5). Danach spricht Marv niemanden aus der Gruppe noch einmal an.
+  - **Den Sternenfall sehen alle in der Stadt** (greller Lichtblitz, Wackeln), auch wer gar nicht auf dem Fest ist –
+    so steht es in design.md. Er kommt nur einmal, auch wenn mehrere ihn auslösen.
+  - **Sternenfresser für die Gruppe:** Alle, die bei Ye „Los!“ mit abgestimmt haben, kämpfen zusammen (Schritt 6).
+    Er **passt sich der Gruppengröße an**: je weiterem Spieler 25 % mehr Leben (allein 240, zu zweit 300, zu viert 420).
+    In `data/kaempfe.json` als `"gruppe_staerke": 0.25` einstellbar (vorläufig, Feinschliff am Ende).
+  - **Ren kommt erst, wenn alle zurück sind:** Wer zuerst aus dem Kampf kommt (oder aufgegeben hat), wartet. Sind alle
+    wieder in der Stadt, spricht Ren die Gruppe **gemeinsam** an. Wer aufgegeben hat, hat „verloren“ und schaut bei Ren zu,
+    wenn die anderen gewonnen haben. Wer das Spiel verlässt, auf den wird nicht gewartet.
+  - Allein läuft die Nacht wie bisher.
+  - **Platzhalter:** Ye ruft „Ida, Bo, Tom – und du!“, auch wenn Mitspieler dabei sind.
+  - **Tests:** Szenen-Test mit der ganzen Nacht (Marv holt beide, Sternenfall für alle einmal, gemeinsamer Boss, Ren wartet
+    und kommt dann für beide, beide haben den Erfolg) und dem stärkeren Sternenfresser. Der Sternenfresser lief auch als
+    echter Gruppenkampf zwischen zwei Programmen (gleiches Ergebnis auf beiden). Alle bisherigen Tests laufen weiter.
 
 ## Aufgaben dieser Runde (Runde 2)
 
@@ -637,6 +655,12 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 3. Ist beim eigenen Zug oben die Uhr (25 s) zu sehen, und beim anderen „… ist am Zug“?
 4. Einmal 25 Sekunden nichts tun: Kommt ein Standardangriff?
 5. Einer tippt auf „Aufgeben“: Kämpft der andere weiter?
+
+**Neu: Nacht des Sternenfalls zusammen** (zwei Geräte in einer Gruppe, beide bis zum Fest gespielt)
+1. Zusammen zum Marktplatz: Spricht Marv euch beide gemeinsam an?
+2. Sehen beide den Sternenfall (Lichtblitz)? Ein drittes Gerät, das nicht auf dem Fest ist, sollte ihn auch sehen.
+3. Beide „Los!“: Kämpft ihr zusammen gegen den Sternenfresser? Hat er mehr Leben als allein (300 statt 240)?
+4. Einer gibt auf: Wartet er in der Stadt, bis der andere fertig ist, und spricht Ren dann beide zusammen an?
 
 **Die ganze erste Stunde am Stück** (Kreuzweg-Demo → „Neu beginnen“, Ton an)
 1. Spiel einmal von der Ankunft bis zum Abspann durch, ohne Abkürzungen. Notier dir, wo du nicht wusstest, was zu tun ist.
