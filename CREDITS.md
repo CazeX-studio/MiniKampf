@@ -37,3 +37,8 @@ Randabdunklung, Reaktions-Ring und Zeitleiste.
 
 Die Platzhalter-Musik (`assets/musik/`: Stadt, Nacht, Kampf, Boss) ist selbst erzeugt mit `tools/musik_erzeugen.gd`
 (einfache Retro-Klänge, keine fremden Quellen, keine Lizenzfragen). Sie wird später durch richtige Musik ersetzt.
+
+## Geräusche
+
+Die Kampf-Geräusche (`assets/sfx/`: Schlag, Wurf, Treffer, Kritisch, Parade, Perfekt, Zauber, Heilung) sind ebenfalls
+selbst erzeugt, mit `tools/sounds_erzeugen.gd`. Platzhalter, keine Lizenzfragen.

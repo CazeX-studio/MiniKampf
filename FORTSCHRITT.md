@@ -11,7 +11,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   (alle 9 Schritte aus `KREUZWEG_PLAN.md`). Steuerung per Tasten, Steuerknopf oder Antippen, Speichern, Musik mit Lautstärke-Regler.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **begonnen.** Schritt 1 ist eingebaut:
   bis zu 4 Spieler laufen gemeinsam durch Kreuzweg (Gastgeber am PC, Mitspieler treten bei).
-- **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); offen: Kampf-Sounds, größere Stadt mit Ständen, Gesandten-Auswahl mit zwei Klassen pro Region. Außerdem Schritt 1 von
+- **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche; offen: größere Stadt mit Ständen, Gesandten-Auswahl mit zwei Klassen pro Region. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
 - **Platzhalter:** Alle Texte der Hauptfiguren (Ye, Mira, Ren, Marv, Lene, Bingo, Gesandte …) stehen in `data/dialoge.json`
@@ -370,6 +370,12 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     Lernkampf 18 von 30 gewonnen, Gruppenkampf 25 von 30, Sternenfresser 8 von 30. Im kompletten Durchlauf hat der
     Computer den Gruppenkampf erst im dritten Versuch geschafft. Probestunden bleiben leicht (zum Ausprobieren).
   - Sandbox unverändert (Vergleich mit 75 Kämpfen: gleich).
+
+- **Schritt 19 – Kampf-Geräusche** (nach deinem Wunsch): Schlag (Luftzug), Wurf/Pfeil/Zauber-Geschoss, Treffer
+  (bei kritischen Treffern kräftiger), **Parade** (Klirren), **perfekte Parade** (Klirren mit hellem Dreiklang),
+  Ausweichen (Luftzug), Zauber/Fähigkeit (aufsteigender Ton, bei der Ult tiefer) und Heilung (zwei Glockentöne).
+  Auch die Paraden von Ida, Bo und Tom sind zu hören. Selbst erzeugt (`tools/sounds_erzeugen.gd`), Platzhalter.
+  Der Lautstärke-Regler gilt auch für die Geräusche; Taste M schaltet nur die Musik ab.
     sie mit. (Im fertigen Spiel ist der erste Abschluss der über den Auftrag.) Auch in design.md eingetragen.
 
 ## Fertig in Runde 1
@@ -397,6 +403,12 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 ## Was du testen kannst
 
 Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spiel startet jetzt mit einem Menü.
+
+**Neu: Kampf-Geräusche** (irgendein Kampf, Ton an)
+1. Greif an: Hörst du einen Luftzug beim Schlag und einen dumpfen Treffer?
+2. Parier normal (hellgrünes Feld): Klirren. Perfekt (grüne Mitte): Klirren mit hellem Klang.
+3. „Erste Hilfe“: zwei Glockentöne. Eine Fähigkeit der Probestunde: aufsteigender Zauberton.
+4. Taste M: Die Musik geht aus, die Geräusche bleiben. Der Lautstärke-Regler macht beides leiser.
 
 **Neu: Grundwerte und langer Lernkampf** (Kreuzweg-Demo → „Neu beginnen“)
 1. Oben rechts „Werte (C)“ antippen: Leben 45, Mana 30, Angriff 20, Tempo 11 – mit kurzer Erklärung.

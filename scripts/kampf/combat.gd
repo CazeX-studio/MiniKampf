@@ -216,14 +216,17 @@ func _play_event(event: Dictionary) -> void:
 			if has_view(event.f):
 				view(event.f).shown = event.hp
 		"cast":
+			Geraeusche.play("zauber", 0.8 if event.ult else 1.0)
 			_cast(event.f, event.ult)
 		"projectile":
+			Geraeusche.play("wurf")
 			if event.blocking:
 				await projectile(event.from, event.to, event.color, event.duration)
 			else:
 				await _attack_hint(event.to)
 				projectile(event.from, event.to, event.color, event.duration)
 		"lunge":
+			Geraeusche.play("schlag")
 			if event.blocking:
 				await lunge(event.f, event.target, event.duration)
 			else:
@@ -247,11 +250,13 @@ func _play_event(event: Dictionary) -> void:
 		"order_visible":
 			_order_box.visible = event.on
 		"hit_fx":
+			Geraeusche.play("kritisch" if event.crit else "treffer")
 			if has_view(event.f):
 				var v := view(event.f)
 				v.hit_react()
 				Fx.spawn(_field, Fx.Kind.SPARKS, v.center(), Color("ffd9a0") if not event.crit else Color("ffe14d"), 70.0 if not event.crit else 110.0, 0.4)
 		"heal_fx":
+			Geraeusche.play("heilung")
 			if has_view(event.f):
 				var v := view(event.f)
 				v.glow(Color("8affa0"), 0.6)
@@ -493,7 +498,12 @@ func react(attacker: Fighter, target: Fighter, duration: float) -> int:
 	# Mitstreiter des Computers reagieren selbst, ohne Ring
 	if state.computer.has(target):
 		await wait(duration + REACT_LATE)
-		return _ki.react_grade(ALLY_PARRY_CHANCE, ALLY_NORMAL_CHANCE)
+		var grade := _ki.react_grade(ALLY_PARRY_CHANCE, ALLY_NORMAL_CHANCE)
+		if grade == BattleState.REACT_PERFECT:
+			Geraeusche.play("perfekt")
+		elif grade == BattleState.REACT_NORMAL:
+			Geraeusche.play("parade")
+		return grade
 	await _show_hint("erste_reaktion")
 	_react_target = target
 	_react_duration = duration
@@ -555,10 +565,12 @@ func _input(event: InputEvent) -> void:
 	match _grade(_react_press):
 		BattleState.REACT_PERFECT:
 			_react_feedback = "PERFEKT!"
+			Geraeusche.play("perfekt")
 			Fx.spawn(_field, Fx.Kind.RING, c, Color("6dff8a"), 150.0, 0.45)
 			Fx.spawn(_field, Fx.Kind.GLOW, c, Color("6dff8a"), 120.0, 0.4)
 		BattleState.REACT_NORMAL:
 			_react_feedback = "Pariert!" if _react_target.reaction == "parry" else "Ausgewichen!"
+			Geraeusche.play("parade" if _react_target.reaction == "parry" else "wurf", 1.0 if _react_target.reaction == "parry" else 1.3)
 			Fx.spawn(_field, Fx.Kind.RING, c, Color("9fd0ff"), 110.0, 0.35)
 		_:
 			_react_feedback = "Zu früh!" if _react_press < _react_duration else "Zu spät!"
