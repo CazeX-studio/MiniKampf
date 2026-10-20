@@ -18,6 +18,8 @@ var _sprite: Sprite2D
 var _time := 0.0
 var _head_y := 0.0
 var _label: Label
+var _bubble: PanelContainer
+var _bubble_time := 0.0
 
 
 func setup(look: String, p_name: String, tint := Color.WHITE, name_color := Color.WHITE) -> void:
@@ -53,6 +55,13 @@ func setup(look: String, p_name: String, tint := Color.WHITE, name_color := Colo
 
 func _process(delta: float) -> void:
 	_time += delta
+	if _bubble != null:
+		_bubble_time -= delta
+		_bubble.modulate.a = clampf(_bubble_time, 0.0, 1.0)
+		_bubble.position = Vector2(-_bubble.size.x * 0.5, _head_y - _bubble.size.y - 4)
+		if _bubble_time <= 0.0:
+			_bubble.queue_free()
+			_bubble = null
 	var anim := "run" if moving and _frames.run.size() > 0 else "idle"
 	var frames: Array = _frames[anim]
 	_sprite.texture = frames[int(_time * (12.0 if anim == "run" else idle_fps)) % frames.size()]
@@ -81,3 +90,26 @@ func time_offset(seconds: float) -> void:
 ## Namensschild ein- oder ausblenden (weit entfernte NPCs zeigen keinen Namen, damit es übersichtlich bleibt).
 func set_name_alpha(alpha: float) -> void:
 	_label.modulate.a = alpha
+
+
+## Sprechblase über dem Kopf (Chat beim Zusammenspielen), verschwindet nach ein paar Sekunden.
+func say(text: String, seconds := 6.0) -> void:
+	if _bubble != null:
+		_bubble.queue_free()
+	_bubble = PanelContainer.new()
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(1, 1, 1, 0.92)
+	style.set_corner_radius_all(8)
+	style.set_content_margin_all(6)
+	_bubble.add_theme_stylebox_override("panel", style)
+	var label := Label.new()
+	label.text = text
+	label.add_theme_font_size_override("font_size", 14)
+	label.add_theme_color_override("font_color", Color("1b1b24"))
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.custom_minimum_size = Vector2(minf(220.0, 14.0 + text.length() * 7.5), 0)
+	_bubble.add_child(label)
+	add_child(_bubble)
+	_bubble.reset_size()
+	_bubble.position = Vector2(-_bubble.size.x * 0.5, _head_y - _bubble.size.y - 4)
+	_bubble_time = seconds

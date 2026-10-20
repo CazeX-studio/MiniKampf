@@ -69,6 +69,7 @@ func _process(delta: float) -> bool:
 				var me: PlayerState = w.players[Netz.my_id]
 				_check(me.pos.distance_to(Vector2(WorldState.start_cell())) > 1.0, "Eigene Figur hat sich im Spiegelbild bewegt")
 				Netz.send({type = "start"})
+				Netz.chat("Hallo zusammen\nZeile 2")
 				_step = 4
 				_time = 0.0
 		4:
@@ -76,6 +77,11 @@ func _process(delta: float) -> bool:
 				var me: PlayerState = w.players[Netz.my_id]
 				_check(me.in_dialog(), "Einleitung kommt vom Gastgeber zurück (eigenes Gespräch)")
 				_check(w.dialog_view(me).get("text", "") != "", "Gesprächstext lässt sich im Spiegelbild lesen")
+				var texts: Array[String] = []
+				for entry in Netz.chat_log:
+					texts.append("%s|%s" % [entry.name, entry.text])
+				_check("Testhost|Willkommen!" in texts, "Chat: Nachricht des Gastgebers kommt an")
+				_check("Testkind|Hallo zusammen Zeile 2" in texts, "Chat: eigene Nachricht kommt bei allen an")
 				Netz.leave_world()
 				_step = 5
 				_time = 0.0

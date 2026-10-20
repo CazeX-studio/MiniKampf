@@ -16,6 +16,8 @@ signal connected
 signal connection_failed
 ## Die Verbindung ist abgerissen (nur Mitspieler)
 signal disconnected
+## Eine Chat-Nachricht für alle in Kreuzweg ist angekommen. Leerer Name = Hinweis des Spiels („Mira ist in Kreuzweg“).
+signal chat_received(id: String, sender: String, text: String)
 
 enum Mode { OFFLINE, HOST, SERVER, CLIENT }
 
@@ -38,6 +40,12 @@ const EXTRAPOLATE_MAX := 0.6
 const SERVER_FPS := 30
 ## Diese Befehle führt ein Mitspieler sofort auch bei sich aus, damit die eigene Figur ohne Verzögerung läuft
 const PREDICTED := ["steer", "move", "talk", "use"]
+## Chat: so viele Zeichen höchstens pro Nachricht
+const CHAT_MAX_LENGTH := 120
+## Chat: so viele Sekunden mindestens zwischen zwei Nachrichten eines Spielers (gegen Überfluten)
+const CHAT_MIN_GAP := 0.6
+## Chat: so viele Nachrichten werden aufgehoben (z. B. für die Rückkehr aus einem Kampf)
+const CHAT_HISTORY := 30
 const MAX_PLAYERS := 4
 ## So oft pro Sekunde schickt der Gastgeber, wo alle stehen
 const SNAPSHOT_RATE := 15.0
@@ -52,6 +60,8 @@ static var my_id := ""
 static var my_name := ""
 static var my_look := "elf_m"
 static var _instance: Netz
+## Die letzten Chat-Nachrichten: {id, name, text}
+static var chat_log: Array[Dictionary] = []
 ## Nur für automatische Tests: fester Spielstand, damit kein echter Spielstand überschrieben wird
 static var save_override := ""
 
@@ -73,6 +83,10 @@ var _history := {}
 var _clock_offset := INF
 ## Mitspieler: seit wann die eigene Figur nicht mehr selbst läuft (Sekunden)
 var _own_idle := 0.0
+## Gastgeber: wann jeder Spieler zuletzt geschrieben hat
+var _last_chat := {}
+## Gastgeber: Namen der Mitspieler, die schon begrüßt wurden (Rückkehr aus einem Kampf zählt nicht als neu)
+var _greeted := {}
 
 
 static func online() -> bool:
@@ -164,6 +178,10 @@ static func join(address: String, p_name: String, look: String) -> Error:
 
 ## Verbindung beenden, zurück zum Allein-Spielen.
 static func stop() -> void:
+	chat_log.clear()
+	if _instance != null and is_instance_valid(_instance):
+		_instance._last_chat.clear()
+		_instance._greeted.clear()
 	if _api().multiplayer_peer is WebSocketMultiplayerPeer:
 		_api().multiplayer_peer.close()
 		_api().multiplayer_peer = OfflineMultiplayerPeer.new()
@@ -185,6 +203,23 @@ static func send(cmd: Dictionary) -> void:
 			# Laufen sofort selbst ausführen (der Gastgeber rechnet dasselbe und korrigiert nur, wenn es abweicht)
 			if cmd.get("type", "") in PREDICTED:
 				world.apply_command(my_id, cmd)
+
+
+## Schickt eine Chat-Nachricht an alle in Kreuzweg.
+static func chat(text: String) -> void:
+	var clean := clean_chat(text)
+	if clean == "":
+		return
+	match mode:
+		Mode.HOST:
+			_instance._chat_from(my_id, clean)
+		Mode.CLIENT:
+			_instance._c_chat.rpc_id(1, clean)
+
+
+## Chat-Text aufräumen: keine Zeilenumbrüche, nicht zu lang.
+static func clean_chat(text: String) -> String:
+	return text.replace("\n", " ").replace("\r", " ").replace("\t", " ").strip_edges().left(CHAT_MAX_LENGTH)
 
 
 ## Der eigene Spieler betritt die Stadt (er steht schon in Netz.world, beim Mitspieler im Spiegelbild).
@@ -347,7 +382,11 @@ func _on_peer_disconnected(peer: int) -> void:
 	if world != null and world.players.has(id):
 		print("Netz: %s hat das Spiel verlassen" % world.players[id].display_name)
 		world.remove_player(id)
+	if _greeted.has(id):
+		_s_chat.rpc("", "", "%s hat das Spiel verlassen." % _greeted[id])
+		_greeted.erase(id)
 	_sent_own.erase(id)
+	_last_chat.erase(id)
 
 
 ## Ein Mitspieler betritt die Stadt und bringt seinen Spielstand mit.
@@ -368,12 +407,43 @@ func _c_join(p_name: String, look: String, progress: Dictionary, cell: Array) ->
 	p.progress.load_dict(progress)
 	_sent_own.erase(id)
 	print("Netz: %s ist in Kreuzweg" % p.display_name)
+	if not _greeted.has(id):
+		_greeted[id] = p.display_name
+		_s_chat.rpc("", "", "%s ist in Kreuzweg." % p.display_name)
 
 
 ## Lebenszeichen eines Mitspielers (hält den kostenlosen Server wach)
 @rpc("any_peer", "reliable")
 func _c_ping() -> void:
 	pass
+
+
+## Chat-Nachricht eines Mitspielers
+@rpc("any_peer", "reliable")
+func _c_chat(text: String) -> void:
+	if mode == Mode.HOST or mode == Mode.SERVER:
+		_chat_from("p%d" % multiplayer.get_remote_sender_id(), clean_chat(text))
+
+
+## Gastgeber: prüft eine Nachricht und schickt sie an alle (nur wer in der Stadt steht, nicht zu oft).
+func _chat_from(id: String, text: String) -> void:
+	var p: PlayerState = world.players.get(id) if world != null else null
+	if p == null or text == "":
+		return
+	var now := _clock()
+	if now - float(_last_chat.get(id, -INF)) < CHAT_MIN_GAP:
+		return
+	_last_chat[id] = now
+	_s_chat.rpc(id, p.display_name, text)
+
+
+## Chat-Nachricht für alle (kommt auch beim Gastgeber selbst an)
+@rpc("authority", "call_local", "reliable")
+func _s_chat(id: String, sender: String, text: String) -> void:
+	chat_log.append({id = id, name = sender, text = text})
+	while chat_log.size() > CHAT_HISTORY:
+		chat_log.pop_front()
+	chat_received.emit(id, sender, text)
 
 
 @rpc("any_peer", "reliable")

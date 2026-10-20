@@ -76,6 +76,14 @@ var _shop_shown := ""
 ## Knöpfe, auf denen ein Antippen nicht als Laufen zählt
 var _buttons: Array[Control] = []
 
+## Chat beim Zusammenspielen: Knopf, Eingabezeile und die letzten Nachrichten
+var _chat_button: Button
+var _chat_input: LineEdit
+var _chat_box: VBoxContainer
+var _chat_lines: Array[Label] = []
+const CHAT_LINES := 6
+const CHAT_FADE_SECONDS := 20.0
+
 var _steer_sent := Vector2.ZERO
 var _touch_ui := false
 var _stick_layer: Control
@@ -92,6 +100,7 @@ func _ready() -> void:
 	if Netz.online():
 		local_id = Netz.my_id
 		Netz._node().disconnected.connect(_on_net_lost)
+		Netz._node().chat_received.connect(_on_chat)
 	state.notice.connect(_on_notice)
 	state.progress_changed.connect(_on_progress_changed)
 	state.battle_requested.connect(_on_battle_requested)
@@ -176,6 +185,7 @@ func _process(delta: float) -> void:
 	_sync()
 	_update_dialog()
 	_update_shop()
+	_update_chat()
 	_marker_time = maxf(_marker_time - delta, 0.0)
 	_marker_node.queue_redraw()
 
@@ -282,7 +292,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		var key: Key = event.physical_keycode
 		var handled := true
-		if key in [KEY_E, KEY_SPACE]:
+		if key in [KEY_ENTER, KEY_KP_ENTER] and Netz.online():
+			_open_chat()
+		elif key in [KEY_E, KEY_SPACE]:
 			_action()
 		elif key >= KEY_1 and key <= KEY_9:
 			_send({type = "dialog_choose", index = key - KEY_1})
@@ -325,8 +337,11 @@ func _action() -> void:
 ## Richtung aus Tasten und Steuerknopf; wird nur bei Änderung als Befehl geschickt.
 func _update_steer() -> void:
 	var dir := Vector2.ZERO
+	var typing := _chat_input != null and _chat_input.has_focus()
 	if not local_player().in_dialog():
-		if Input.is_physical_key_pressed(KEY_A) or Input.is_physical_key_pressed(KEY_LEFT):
+		if typing:
+			pass
+		elif Input.is_physical_key_pressed(KEY_A) or Input.is_physical_key_pressed(KEY_LEFT):
 			dir.x -= 1.0
 		if Input.is_physical_key_pressed(KEY_D) or Input.is_physical_key_pressed(KEY_RIGHT):
 			dir.x += 1.0
@@ -628,6 +643,8 @@ func _build_ui() -> void:
 	volume.position = Vector2(16, 102)
 	root.add_child(volume)
 	_buttons.append(volume)
+	if Netz.online():
+		_build_chat(root)
 
 	var x := 1170.0
 	for info: Array in [["Menü", 96, _go_menu], ["Tasche (I)", 120, _toggle_panel.bind("tasche")], ["Werte (C)", 116, _toggle_panel.bind("werte")],
@@ -810,6 +827,99 @@ func _go_menu() -> void:
 		_no_save = true
 		Netz.stop()
 	get_tree().change_scene_to_file("res://scenes/menu.tscn")
+
+
+# --- Chat (nur beim Zusammenspielen) --------------------------------------------
+# PC: Enter öffnet die Eingabe, Enter schickt ab, Esc bricht ab. Handy: Knopf „Chat“.
+
+func _build_chat(root: Control) -> void:
+	_chat_button = Button.new()
+	_chat_button.text = "Chat (Enter)"
+	_chat_button.position = Vector2(16, 140)
+	_chat_button.size = Vector2(130, 40)
+	_chat_button.add_theme_font_size_override("font_size", 15)
+	_chat_button.focus_mode = Control.FOCUS_NONE
+	_chat_button.pressed.connect(_open_chat)
+	root.add_child(_chat_button)
+	_buttons.append(_chat_button)
+	_chat_input = LineEdit.new()
+	_chat_input.position = Vector2(154, 140)
+	_chat_input.size = Vector2(420, 40)
+	_chat_input.max_length = Netz.CHAT_MAX_LENGTH
+	_chat_input.placeholder_text = "Nachricht an alle in Kreuzweg …"
+	_chat_input.add_theme_font_size_override("font_size", 16)
+	_chat_input.visible = false
+	_chat_input.text_submitted.connect(_on_chat_submitted)
+	_chat_input.gui_input.connect(func(event: InputEvent) -> void:
+		if event is InputEventKey and event.pressed and event.physical_keycode == KEY_ESCAPE:
+			_close_chat()
+			_chat_input.accept_event())
+	root.add_child(_chat_input)
+	_buttons.append(_chat_input)
+	_chat_box = VBoxContainer.new()
+	_chat_box.position = Vector2(16, 188)
+	_chat_box.custom_minimum_size = Vector2(460, 0)
+	_chat_box.add_theme_constant_override("separation", 2)
+	_chat_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(_chat_box)
+	# Was vorher geschrieben wurde (z. B. während eines Kampfes), gleich zeigen
+	var start := maxi(Netz.chat_log.size() - CHAT_LINES, 0)
+	for i in range(start, Netz.chat_log.size()):
+		var entry: Dictionary = Netz.chat_log[i]
+		_add_chat_line(entry.name, entry.text)
+
+
+func _open_chat() -> void:
+	if _chat_input == null:
+		return
+	_chat_input.visible = true
+	_chat_input.grab_focus()
+	for line in _chat_lines:
+		line.set_meta("zeit", _time)
+
+
+func _close_chat() -> void:
+	_chat_input.text = ""
+	_chat_input.release_focus()
+	_chat_input.visible = false
+
+
+func _on_chat_submitted(text: String) -> void:
+	Netz.chat(text)
+	_close_chat()
+
+
+func _on_chat(id: String, sender: String, text: String) -> void:
+	_add_chat_line(sender, text)
+	if sender != "" and _characters.has(id):
+		_characters[id].say(text)
+
+
+func _add_chat_line(sender: String, text: String) -> void:
+	var line := Label.new()
+	line.text = "%s: %s" % [sender, text] if sender != "" else text
+	line.add_theme_font_size_override("font_size", 15)
+	line.add_theme_color_override("font_color", Color("ffffff") if sender != "" else Color("b8c4d0"))
+	line.add_theme_color_override("font_outline_color", Color.BLACK)
+	line.add_theme_constant_override("outline_size", 5)
+	line.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	line.custom_minimum_size = Vector2(460, 0)
+	line.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	line.set_meta("zeit", _time)
+	_chat_box.add_child(line)
+	_chat_lines.append(line)
+	while _chat_lines.size() > CHAT_LINES:
+		_chat_lines.pop_front().queue_free()
+
+
+## Alte Nachrichten blenden langsam aus (bei offener Eingabe bleiben alle sichtbar).
+func _update_chat() -> void:
+	if _chat_box == null:
+		return
+	var open := _chat_input.visible
+	for line in _chat_lines:
+		var age := _time - float(line.get_meta("zeit", _time))
+		line.modulate.a = 1.0 if open else clampf((CHAT_FADE_SECONDS - age) / 3.0, 0.0, 1.0)
 
 
 ## Verbindung zum Gastgeber verloren: zurück ins Menü (der Spielstand ist auf dem Gerät gespeichert).

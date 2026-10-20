@@ -27,7 +27,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 1 | Zusammen in Kreuzweg laufen (Gastgeber, Beitreten, alle sehen sich) | eingebaut, Marco testet |
 | – | Entscheidungen: kostenloser Server, Story gemeinsam mit Abstimmung, Chat mit Schnellsätzen, ein Spielstand | entschieden 20.10., Spielstand eingebaut |
 | 2 | Online-Server im Internet (kostenlos bei Render) | vorbereitet, Marco legt das Konto an |
-| 3–8 | Chat, Gruppe, Geschichte gemeinsam, gemeinsamer Kampf, Sternenfall zusammen, Feinschliff | offen |
+| 3 | Chat mit freiem Text und Sprechblase | eingebaut, Marco testet |
+| 4–8 | Gruppe, Geschichte gemeinsam, gemeinsamer Kampf, Sternenfall zusammen, Feinschliff | offen |
 
 ## Fertig in Lernprojekt 4
 
@@ -81,6 +82,19 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     - **Server rechnet sparsamer** (höchstens 30-mal pro Sekunde), weil der kostenlose Tarif wenig Rechenleistung hat.
     - **Gemessen** mit künstlich schlechter Verbindung (alle 2 Sekunden 0,35 Sekunden Aussetzer): Sprünge der Mitspieler
       von 69 auf 3, Stillstand-Bilder ungefähr halbiert. Alle Tests laufen.
+
+- **Schritt 3 – Chat:**
+  - Beim Zusammenspielen gibt es oben links den Knopf **„Chat (Enter)“**. Am PC öffnet **Enter** die Eingabe, Enter
+    schickt ab, **Esc** bricht ab. Am Handy den Knopf antippen, dann erscheint die Tastatur.
+  - Die Nachricht geht an **alle in Kreuzweg**: Sie steht links unter dem Knopf (die letzten 6, ältere blenden nach
+    20 Sekunden aus) und als **Sprechblase** über dem Kopf des Schreibers (6 Sekunden).
+  - Hinweise vom Spiel im Chat: „Mira ist in Kreuzweg.“ und „… hat das Spiel verlassen.“ (nicht nach jedem Kampf neu).
+  - Während man tippt, läuft die Figur nicht (WASD sind dann Buchstaben).
+  - Schutz: höchstens 120 Zeichen, keine Zeilenumbrüche, höchstens eine Nachricht alle 0,6 Sekunden pro Spieler.
+    Wer gerade kämpft, kann nicht schreiben, sieht nach dem Kampf aber, was geschrieben wurde.
+  - Schnellsätze und Emotes kommen später (Vorschläge in design.md im Ideen-Parkplatz).
+  - **Tests:** Gastgeber und Mitspieler schreiben sich, zu schnelle Nachricht wird verworfen, Hinweise beim Kommen und
+    Gehen, Chat in der echten Stadt mit Sprechblase – alles richtig. Alle bisherigen Tests laufen weiter.
 
 ## Aufgaben dieser Runde (Runde 2)
 
@@ -531,6 +545,13 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 4. In einem Fenster laufen (WASD) und mit Lene reden: Läuft die Figur im anderen Fenster mit, und hat jeder seinen eigenen Auftrag?
    Fenster 1 sollte deinen normalen Spielstand haben (wie in der Kreuzweg-Demo), Fenster 2 einen eigenen.
 5. Fenster 1 (Gastgeber) → „Menü“: Fenster 2 sollte mit einem Hinweis auf „Zusammen spielen“ zurückkehren.
+
+**Neu: Chat** (Web-Version oder zwei Fenster, „Zusammen spielen“ → Online-Server)
+1. Auf zwei Geräten beitreten: Steht im Chat „… ist in Kreuzweg.“?
+2. Am PC Enter drücken, etwas schreiben, Enter: Steht es bei beiden im Chat und als Sprechblase über deiner Figur?
+3. Am Handy auf „Chat (Enter)“ tippen: Kommt die Tastatur, und ist das Eingabefeld noch zu sehen?
+4. Während der Eingabe W, A, S, D tippen: Die Figur sollte stehen bleiben.
+5. Ein Gerät schließen: Steht beim anderen „… hat das Spiel verlassen.“?
 
 **Die ganze erste Stunde am Stück** (Kreuzweg-Demo → „Neu beginnen“, Ton an)
 1. Spiel einmal von der Ankunft bis zum Abspann durch, ohne Abkürzungen. Notier dir, wo du nicht wusstest, was zu tun ist.
