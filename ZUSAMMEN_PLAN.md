@@ -16,13 +16,14 @@ Das ist der Schritt zum Online-Spiel. Grundlage ist die Kreuzweg-Demo (Lernproje
 | Nr. | Schritt | Stand |
 |-----|---------|-------|
 | 0 | Plan schreiben (diese Datei) | erledigt |
-| 1 | **Zusammen in Kreuzweg laufen:** Bildschirm „Zusammen spielen“ (Name, Figur, Adresse), Gastgeber werden (PC) oder beitreten. Alle sehen sich mit Namen in der Stadt laufen. Jeder behält seinen eigenen Fortschritt und spielt die Geschichte für sich, Kämpfe noch allein. Server ohne Grafik für später. | eingebaut – Marco testet |
-| 2 | **Über das Internet:** Server ohne Grafik bei einem Anbieter, sichere Verbindung (nötig für Browser und Handy), Adresse fest in der Web-Version, damit Freunde einfach auf „Beitreten“ tippen. Braucht Marcos Entscheidung (siehe unten). | offen |
-| 3 | **Chat:** Chatfenster (Enter am PC, Knopf am Handy) und Sprechblase über dem Kopf. Erst ein Kanal für alle in Kreuzweg, später Gruppe und Flüstern (design.md: Welt, Gruppe, Gilde, Flüstern). | offen |
-| 4 | **Gruppe bilden:** Mitspieler antippen → „In Gruppe einladen“. Gruppenfenster mit Namen, Stufe und Leben. Bis zu 4 Spieler. | offen |
-| 5 | **Gemeinsamer Kampf:** Gruppenkampf bei Ye und Probestunden mit der Gruppe. Die Kampfregeln laufen beim Gastgeber (die Trennung aus Runde 2 macht das möglich), jeder steuert seine eigene Figur. **Zeitlimit 25 Sekunden pro Zug** (design.md: 20–30 s, sonst Standardangriff). Parieren wird am eigenen Gerät gemessen, damit die Verbindung das Timing nicht verdirbt. Freie Plätze füllen Ida, Bo und Tom. | offen |
-| 6 | **Nacht des Sternenfalls zusammen:** Der Sternenfall ist für alle in der Stadt sichtbar, der Sternenfresser als eigene Instanz für die Gruppe (passt sich der Gruppengröße an, wie in design.md). | offen |
-| 7 | **Feinschliff:** Verbindungsabbruch und Wiederkommen, eigene Figur läuft ohne Verzögerung, Test mit 4 Spielern, automatischer Durchlauf zu zweit. | offen |
+| 1 | **Zusammen in Kreuzweg laufen:** Bildschirm „Zusammen spielen“ (Name, Figur, Adresse), Gastgeber werden (PC) oder beitreten. Alle sehen sich mit Namen in der Stadt laufen. Derselbe Spielstand wie allein (Entscheidung 20.10.). Kämpfe noch allein. Server ohne Grafik für später. | eingebaut – Marco testet |
+| 2 | **Über das Internet:** Server ohne Grafik bei einem **kostenlosen Anbieter** (Entscheidung 20.10.), sichere Verbindung (nötig für Browser und Handy), Adresse fest in der Web-Version, damit Freunde einfach auf „Beitreten“ tippen. Marco legt das Konto an, ich schreibe die Anleitung. | offen |
+| 3 | **Chat:** freier Text und dazu **Schnellsätze und Emotes** (Entscheidung 20.10.), Chatfenster (Enter am PC, Knopf am Handy) und Sprechblase über dem Kopf. Erst ein Kanal für alle in Kreuzweg, später Gruppe und Flüstern (design.md: Welt, Gruppe, Gilde, Flüstern). | offen |
+| 4 | **Gruppe bilden:** Mitspieler antippen → „In Gruppe einladen“. Gruppenfenster mit Namen, Stufe und Leben. Bis zu 4 Spieler, einer ist Gruppenführer. | offen |
+| 5 | **Geschichte gemeinsam erleben** (Entscheidung 20.10.): Spricht jemand aus der Gruppe eine Hauptfigur an, sehen alle das Gespräch. Bei Antworten **stimmen alle ab**; der Fortschritt zählt für alle in der Gruppe. Allein bleibt alles wie bisher. | offen |
+| 6 | **Gemeinsamer Kampf:** Gruppenkampf bei Ye und Probestunden mit der Gruppe. Die Kampfregeln laufen beim Gastgeber (die Trennung aus Runde 2 macht das möglich), jeder steuert seine eigene Figur. **Zeitlimit 25 Sekunden pro Zug** (design.md: 20–30 s, sonst Standardangriff). Parieren wird am eigenen Gerät gemessen, damit die Verbindung das Timing nicht verdirbt. Freie Plätze füllen die Novizen-NPCs. | offen |
+| 7 | **Nacht des Sternenfalls zusammen:** Der Sternenfall ist für alle in der Stadt sichtbar, der Sternenfresser als eigene Instanz für die Gruppe (passt sich der Gruppengröße an, wie in design.md). | offen |
+| 8 | **Feinschliff:** Verbindungsabbruch und Wiederkommen, eigene Figur läuft ohne Verzögerung, Test mit 4 Spielern, automatischer Durchlauf zu zweit. | offen |
 
 ## Regeln
 
@@ -32,15 +33,18 @@ Das ist der Schritt zum Online-Spiel. Grundlage ist die Kreuzweg-Demo (Lernproje
 - Nach jedem Schritt: committen, pushen, in `FORTSCHRITT.md` eintragen, was Marco testen kann
   (dazu im Chat eine kurze Test-Liste mit 3 bis 5 Punkten).
 
-## Offene Entscheidungen für Marco
+## Entscheidungen von Marco (20.10.2026, auch in design.md unter „MMO-Teil“)
 
-1. **Wo läuft der Server fürs Internet (Schritt 2)?** Vorschlag: ein kleiner gemieteter Server (ein paar Euro im Monat)
-   oder ein kostenloses Angebot zum Ausprobieren. Dort läuft dasselbe Spiel ohne Grafik. Dafür braucht es ein Konto bei
-   einem Anbieter, das legst du an; ich schreibe die Anleitung und richte den Rest ein.
-   Bis dahin geht das Zusammenspielen am PC (mehrere Fenster) und mit der PC-Version im eigenen WLAN.
-2. **Geschichte in der Gruppe:** Vorläufig spielt jeder seine eigene Geschichte, man sieht sich nur in der Stadt.
-   Soll später die Gruppe Story-Schritte gemeinsam erleben (z. B. alle sehen Ye's Gespräch, Abstimmung bei Antworten)?
-   design.md sagt: „große Wendepunkte per Abstimmung“.
-3. **Chat:** nur freier Text, oder zusätzlich Schnellsätze und Emotes (praktisch am Handy)?
-4. **Spielstand beim Zusammenspielen:** Vorläufig hat jeder Name einen eigenen Spielstand, getrennt vom Allein-Spiel
-   (so gehen auch mehrere Fenster auf einem PC). Oder soll man seinen Allein-Spielstand mitnehmen?
+1. **Server:** zum Ausprobieren erst ein kostenloses Angebot, später bei Bedarf ein gemieteter Server.
+2. **Geschichte in der Gruppe:** gemeinsam erleben, bei Antworten stimmen alle ab (Schritt 5).
+3. **Chat:** freier Text und dazu Schnellsätze und Emotes (Schritt 3).
+4. **Spielstand:** ein Charakter für alles – beim Zusammenspielen derselbe Spielstand wie allein.
+   Damit man am PC trotzdem mit zwei Fenstern testen kann, bekommt ein **zweites Fenster auf demselben Gerät**
+   automatisch einen eigenen Spielstand.
+
+## Noch offen (klären wir, wenn der Schritt dran ist)
+
+- Abstimmung bei Gleichstand (z. B. zwei gegen zwei): Vorschlag: Der Gruppenführer entscheidet.
+- Was passiert, wenn in der Gruppe einer schon weiter in der Geschichte ist als die anderen? Vorschlag: Er kann
+  mitspielen und hilft, sein eigener Fortschritt ändert sich bei schon erledigten Szenen nicht.
+- Schnellsätze: welche genau (Vorschlag: Hallo, Danke, Komm her, Warte, Gut gemacht, Winken, Jubeln).

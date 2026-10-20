@@ -21,6 +21,7 @@ func _process(delta: float) -> bool:
 	match _step:
 		0:
 			if _time > 3.0:
+				Netz.save_override = "user://spielstand_test_stadt.json"
 				Netz.join("localhost", "Stadttest", "wizzard_f")
 				SaveGame.delete()
 				Netz._node().connected.connect(func() -> void:
@@ -62,14 +63,14 @@ func _process(delta: float) -> bool:
 			if _time > 1.0:
 				_check(not Netz.online(), "Menü beendet das Zusammenspielen")
 				_check(SaveGame.path == SaveGame.DEFAULT_PATH, "Allein-Spielstand gilt wieder")
-				_check(FileAccess.file_exists("user://spielstand_zusammen_stadttest.json"), "Spielstand unter eigenem Namen gespeichert")
+				_check(FileAccess.file_exists("user://spielstand_test_stadt.json"), "Spielstand beim Verlassen gespeichert")
 				return _finish()
 	return false
 
 
 func _finish() -> bool:
 	OS.kill(_pid)
-	DirAccess.remove_absolute(ProjectSettings.globalize_path("user://spielstand_zusammen_stadttest.json"))
+	DirAccess.remove_absolute(ProjectSettings.globalize_path("user://spielstand_test_stadt.json"))
 	print("Netz-Stadt: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)
 	return true

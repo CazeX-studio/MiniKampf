@@ -34,8 +34,18 @@ static var my_id := ""
 static var my_name := ""
 static var my_look := "elf_m"
 static var _instance: Netz
+## Nur für automatische Tests: fester Spielstand, damit kein echter Spielstand überschrieben wird
+static var save_override := ""
+
+## Merkt, welches Fenster gerade den normalen Spielstand benutzt (damit ein zweites Fenster auf demselben PC
+## einen eigenen bekommt und sich die beiden nicht gegenseitig überschreiben)
+const LOCK_PATH := "user://spielstand_in_benutzung.json"
+const LOCK_SECONDS := 6.0
 
 var _snapshot_timer := 0.0
+var _lock_timer := 0.0
+## Kennung dieses Fensters für die Spielstand-Sperre
+var _window_id := str(randi())
 ## Gastgeber: zuletzt geschickter eigener Zustand je Mitspieler (nur Änderungen werden geschickt)
 var _sent_own := {}
 ## Mitspieler: wohin die Figuren laufen (aus dem letzten Bericht des Gastgebers)
@@ -121,6 +131,8 @@ static func stop() -> void:
 	mode = Mode.OFFLINE
 	world = null
 	my_id = ""
+	if _instance != null and is_instance_valid(_instance) and _instance._owns_lock():
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(LOCK_PATH))
 	SaveGame.path = SaveGame.DEFAULT_PATH
 
 
@@ -152,12 +164,19 @@ static func _set_me(p_name: String, look: String, id: String) -> void:
 	my_name = p_name
 	my_look = look
 	my_id = id
-	# Jeder Name hat beim Zusammenspielen einen eigenen Spielstand (so gehen auch mehrere Fenster auf einem PC)
-	var safe := ""
-	for ch in p_name.to_lower():
-		if (ch >= "a" and ch <= "z") or (ch >= "0" and ch <= "9"):
-			safe += ch
-	SaveGame.path = "user://spielstand_zusammen_%s.json" % (safe if safe != "" else "spieler")
+	# Beim Zusammenspielen gilt derselbe Spielstand wie allein (ein Charakter für alles).
+	# Ausnahme: Benutzt ein anderes Fenster auf diesem Gerät ihn gerade, bekommt dieses Fenster einen eigenen.
+	if save_override != "":
+		SaveGame.path = save_override
+	elif _node()._lock_taken_by_other():
+		var safe := ""
+		for ch in p_name.to_lower():
+			if (ch >= "a" and ch <= "z") or (ch >= "0" and ch <= "9"):
+				safe += ch
+		SaveGame.path = "user://spielstand_fenster_%s.json" % (safe if safe != "" else "spieler")
+	else:
+		SaveGame.path = SaveGame.DEFAULT_PATH
+		_node()._write_lock()
 
 
 ## Die Netz-Schnittstelle des ganzen Spiels (gilt für alle Knoten, auch für diesen hier).
@@ -177,6 +196,11 @@ static func _node() -> Netz:
 
 
 func _process(delta: float) -> void:
+	if online() and _owns_lock():
+		_lock_timer -= delta
+		if _lock_timer <= 0.0:
+			_lock_timer = LOCK_SECONDS / 3.0
+			_write_lock()
 	if mode == Mode.HOST or mode == Mode.SERVER:
 		world.tick(delta)
 		_snapshot_timer -= delta
@@ -193,6 +217,31 @@ func _process(delta: float) -> void:
 				continue
 			var target: Vector2 = _targets[id]
 			p.pos = target if p.pos.distance_to(target) > 3.0 else p.pos.lerp(target, clampf(delta * 12.0, 0.0, 1.0))
+
+
+# --- Spielstand-Sperre (mehrere Fenster auf einem PC) ---------------------------
+
+func _read_lock() -> Dictionary:
+	if not FileAccess.file_exists(LOCK_PATH):
+		return {}
+	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(LOCK_PATH))
+	return data if data is Dictionary else {}
+
+
+func _lock_taken_by_other() -> bool:
+	var lock := _read_lock()
+	return lock.get("fenster", _window_id) != _window_id \
+			and Time.get_unix_time_from_system() - float(lock.get("zeit", 0.0)) < LOCK_SECONDS
+
+
+func _owns_lock() -> bool:
+	return SaveGame.path == SaveGame.DEFAULT_PATH and _read_lock().get("fenster", "") == _window_id
+
+
+func _write_lock() -> void:
+	var file := FileAccess.open(LOCK_PATH, FileAccess.WRITE)
+	if file != null:
+		file.store_string(JSON.stringify({fenster = _window_id, zeit = Time.get_unix_time_from_system()}))
 
 
 # --- Gastgeber ------------------------------------------------------------------

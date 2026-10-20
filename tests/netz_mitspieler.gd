@@ -13,6 +13,7 @@ func _initialize() -> void:
 
 
 func _start() -> void:
+	Netz.save_override = "user://spielstand_test_mitspieler.json"
 	if Netz.join("localhost", "Testkind", "elf_f") != OK:
 		quit(2)
 		return
@@ -74,9 +75,8 @@ func _process(delta: float) -> bool:
 				_time = 0.0
 		5:
 			if _time > 1.0:
-				Netz.stop()
-				SaveGame.path = "user://spielstand_zusammen_testkind.json"
 				SaveGame.delete()
+				Netz.stop()
 				print("Mitspieler: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 				quit(_failed)
 				return true

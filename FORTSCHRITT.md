@@ -12,7 +12,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **begonnen.** Schritt 1 ist eingebaut:
   bis zu 4 Spieler laufen gemeinsam durch Kreuzweg (Gastgeber am PC, Mitspieler treten bei).
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück einarbeiten (kommen später), Schritt 1 von
-  „Zusammen spielen“ testen und die offenen Entscheidungen in `ZUSAMMEN_PLAN.md` treffen.
+  „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`; für Schritt 2
+  (Internet) legt Marco ein Konto bei einem kostenlosen Anbieter an.
 - **Platzhalter:** Alle Texte der Hauptfiguren (Ye, Mira, Ren, Marv, Lene, Bingo, Gesandte …) stehen in `data/dialoge.json`
   und werden von Marco noch geschrieben (Anleitung in `data/LIESMICH.md`).
 - Selbst gewählte Zahlen und Passiven: Abschnitt „Vorläufige Werte (Feinschliff am Ende)“ unten.
@@ -24,7 +25,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 |-----|---------|-------|
 | 0 | Plan schreiben | erledigt |
 | 1 | Zusammen in Kreuzweg laufen (Gastgeber, Beitreten, alle sehen sich) | eingebaut, Marco testet |
-| 2–7 | Internet, Chat, Gruppe, gemeinsamer Kampf, Sternenfall zusammen, Feinschliff | offen |
+| – | Entscheidungen: kostenloser Server, Story gemeinsam mit Abstimmung, Chat mit Schnellsätzen, ein Spielstand | entschieden 20.10., Spielstand eingebaut |
+| 2–8 | Internet, Chat, Gruppe, Geschichte gemeinsam, gemeinsamer Kampf, Sternenfall zusammen, Feinschliff | offen |
 
 ## Fertig in Lernprojekt 4
 
@@ -37,9 +39,12 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - **Wie es funktioniert:** Nur der Gastgeber hat die echte Stadt. Mitspieler schicken ihre Befehle (laufen, reden,
     Antwort wählen, kaufen …) und bekommen zurück, wo alle stehen, und ihren eigenen Fortschritt. Das klappt, weil die
     Stadt seit Lernprojekt 3 nur über Befehle gesteuert wird – an den Regeln der Stadt musste nichts geändert werden.
-  - **Jeder spielt seine eigene Geschichte** (Aufträge, Gespräche, Nacht beim Fest …) und hat beim Zusammenspielen einen
-    **eigenen Spielstand pro Name**, getrennt vom Allein-Spiel. So gehen auch zwei Fenster auf einem PC. *(vorläufig,
-    siehe offene Fragen in `ZUSAMMEN_PLAN.md`)*
+  - Noch spielt **jeder seine eigene Geschichte** (Aufträge, Gespräche, Nacht beim Fest …). Gemeinsam mit Abstimmung
+    kommt in Schritt 5.
+  - **Spielstand (nach deiner Entscheidung):** Beim Zusammenspielen gilt **derselbe Spielstand wie allein**, ein Charakter
+    für alles. Läuft auf demselben PC schon ein anderes Fenster mit diesem Spielstand, bekommt das zweite Fenster
+    automatisch einen eigenen (`spielstand_fenster_<Name>`), damit sich die beiden beim Testen nicht überschreiben.
+    Die automatischen Tests benutzen eigene Test-Spielstände und fassen deinen nie an.
   - **Kämpfe sind noch allein:** Wer kämpft, verschwindet kurz aus der Stadt und kommt danach zurück.
     Der gemeinsame Kampf ist Schritt 5.
   - **„Menü“** beendet das Zusammenspielen (beim Gastgeber für alle). Reißt die Verbindung ab, landest du wieder auf
@@ -49,7 +54,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     (Schritt 2), weil Browser aus Sicherheitsgründen nur sichere Verbindungen erlauben. Ausnahme: Browser und Gastgeber
     auf demselben PC (`localhost`). Die eigene Figur reagiert minimal verzögert (im WLAN kaum spürbar), das glätte ich in Schritt 7.
   - **Tests:** `tests/netz_test.gd` startet ein zweites Programm als Mitspieler: Beitreten, Name und Figur, Laufen,
-    Einleitung vom Gastgeber, Verlassen – alles richtig (10 Prüfungen). `tests/netz_stadt_test.gd` öffnet die echte
+    Einleitung vom Gastgeber, Verlassen, dazu der Spielstand für ein zweites Fenster – alles richtig (14 Prüfungen). `tests/netz_stadt_test.gd` öffnet die echte
     Stadt gegen einen Server ohne Grafik, inklusive „Neu beginnen“ und „Menü“: alles richtig (13 Prüfungen).
     Alle bisherigen Tests (Welt, Klassenwahl, Übergang, Lektionen, Elemente, Durchlauf der ersten Stunde) laufen unverändert.
 
@@ -430,6 +435,7 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 2. Fenster 1: Menü → „Zusammen spielen“, Name eingeben, Figur mit < > wählen, „Gastgeber werden“.
 3. Fenster 2: anderen Namen und andere Figur, Adresse `localhost`, „Beitreten“. Siehst du dich in beiden Fenstern gegenseitig?
 4. In einem Fenster laufen (WASD) und mit Lene reden: Läuft die Figur im anderen Fenster mit, und hat jeder seinen eigenen Auftrag?
+   Fenster 1 sollte deinen normalen Spielstand haben (wie in der Kreuzweg-Demo), Fenster 2 einen eigenen.
 5. Fenster 1 (Gastgeber) → „Menü“: Fenster 2 sollte mit einem Hinweis auf „Zusammen spielen“ zurückkehren.
 
 **Die ganze erste Stunde am Stück** (Kreuzweg-Demo → „Neu beginnen“, Ton an)
@@ -463,12 +469,12 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Dialoge der Hauptfiguren: Marco schreibt sie; Platzhalter stehen in `data/dialoge.json`.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).
 - Lernprojekt 4 „Zusammen spielen“ weiterbauen (`ZUSAMMEN_PLAN.md`, als Nächstes Schritt 2: Server im Internet,
-  braucht deine Entscheidung zum Anbieter). Danach Lernprojekt 5 „Grünwacht“ (erst einen Plan schreiben).
+  du legst ein Konto bei einem kostenlosen Anbieter an, ich schreibe die Anleitung). Danach Lernprojekt 5 „Grünwacht“ (erst einen Plan schreiben).
 
 ## Offene Fragen an Marco
 
-- **Zusammen spielen:** vier Entscheidungen in `ZUSAMMEN_PLAN.md` (Server-Anbieter, gemeinsame Geschichte in der Gruppe,
-  Chat-Art, Spielstand beim Zusammenspielen).
+- **Zusammen spielen:** Die vier Entscheidungen sind getroffen (20.10.). Kleinere Fragen für später stehen in
+  `ZUSAMMEN_PLAN.md` unter „Noch offen“ (Gleichstand bei Abstimmungen, unterschiedlicher Story-Stand, welche Schnellsätze).
 
 - **Pilzhöhle – was ich selbst ergänzt habe** (bitte prüfen; alle Zahlen **vorläufig, Feinschliff am Ende**):
   - Gegen Giftwolken gibt es für jede Klasse „Giftwolke vertreiben“ (kostet den Zug), Wind-Treffer vertreiben auch eine.

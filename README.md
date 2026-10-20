@@ -60,8 +60,8 @@ dieselben Befehle gesteuert wie ein echter Mitspieler. Später kann ein Server d
 ## Zusammen spielen (Lernprojekt 4, Fahrplan in `ZUSAMMEN_PLAN.md`)
 
 Menü → **„Zusammen spielen“**: Name und Figur wählen, dann **Gastgeber werden** (nur PC-Version) oder **Beitreten**.
-Bis zu 4 Spieler laufen gleichzeitig durch Kreuzweg und sehen sich mit Namen. Jeder behält seinen eigenen Fortschritt
-(eigener Spielstand pro Name), Kämpfe sind noch allein.
+Bis zu 4 Spieler laufen gleichzeitig durch Kreuzweg und sehen sich mit Namen. Jeder spielt mit seinem normalen
+Spielstand (derselbe wie allein); ein zweites Fenster auf demselben PC bekommt automatisch einen eigenen. Kämpfe sind noch allein.
 
 - **Zwei Fenster am PC:** In Godot oben „Debuggen → Ausführungsinstanzen anpassen…“ (englisch: „Debug → Customize Run
   Instances…“), „Mehrere Instanzen aktivieren“ und 2 eintragen, dann F5. Fenster 1: Gastgeber werden, Fenster 2: Beitreten

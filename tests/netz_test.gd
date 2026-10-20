@@ -18,12 +18,13 @@ func _initialize() -> void:
 
 
 func _start() -> void:
-	SaveGame.path = "user://spielstand_zusammen_testhost.json"
-	SaveGame.delete()
+	_test_lock()
+	Netz.save_override = "user://spielstand_test_gastgeber.json"
 	if Netz.host("Testhost", "knight_m") != OK:
 		print("Netz: Gastgeber startet nicht")
 		quit(1)
 		return
+	SaveGame.delete()
 	# Der Gastgeber steht selbst in der Stadt (wie in kreuzweg.gd)
 	Netz.world.add_player(Netz.my_id, Netz.my_name, Netz.my_look, WorldState.start_cell())
 	_pid = OS.create_process(OS.get_executable_path(),
@@ -62,7 +63,27 @@ func _process(delta: float) -> bool:
 	return false
 
 
+## Derselbe Spielstand wie allein – außer ein anderes Fenster auf diesem PC benutzt ihn gerade.
+func _test_lock() -> void:
+	var lock_file := ProjectSettings.globalize_path(Netz.LOCK_PATH)
+	var file := FileAccess.open(Netz.LOCK_PATH, FileAccess.WRITE)
+	file.store_string(JSON.stringify({fenster = "anderes", zeit = Time.get_unix_time_from_system()}))
+	file.close()
+	Netz._set_me("Zweites Fenster", "elf_m", "")
+	_check(SaveGame.path == "user://spielstand_fenster_zweitesfenster.json", "Zweites Fenster auf demselben PC bekommt einen eigenen Spielstand")
+	file = FileAccess.open(Netz.LOCK_PATH, FileAccess.WRITE)
+	file.store_string(JSON.stringify({fenster = "anderes", zeit = Time.get_unix_time_from_system() - 60.0}))
+	file.close()
+	Netz._set_me("Marco", "elf_m", "")
+	_check(SaveGame.path == SaveGame.DEFAULT_PATH, "Sonst gilt derselbe Spielstand wie allein")
+	_check(Netz._node()._owns_lock(), "Dieses Fenster merkt sich, dass es den Spielstand benutzt")
+	Netz.stop()
+	_check(not FileAccess.file_exists(Netz.LOCK_PATH), "Beim Beenden wird der Spielstand wieder freigegeben")
+	DirAccess.remove_absolute(lock_file)
+
+
 func _finish() -> void:
+	SaveGame.delete()
 	Netz.stop()
 	print("Netz: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)
