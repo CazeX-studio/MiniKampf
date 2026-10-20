@@ -68,6 +68,8 @@ Spielstand (derselbe wie allein); ein zweites Fenster auf demselben PC bekommt a
   mit Adresse `localhost`.
 - **Im eigenen WLAN:** Der Gastgeber sieht oben links seine Adresse (z. B. `192.168.178.20`), die gibt der Mitspieler ein
   (beide mit der PC-Version; Windows fragt beim ersten Mal, ob das Spiel ins Netz darf → erlauben).
+- **Chat:** Enter (PC) oder Knopf „Chat“ (Handy), Nachricht an alle in Kreuzweg, mit Sprechblase über dem Kopf.
+- **Gruppe:** Mitspieler antippen → „In Gruppe einladen“. Gruppenfenster rechts oben (Stufe, Leben, ★ = Gruppenführer), bis zu 4 Spieler.
 - **Übers Internet:** Knopf **„Online-Server“** (geht auch im Browser und am Handy). Der Server läuft kostenlos bei
   Render; einrichten nach `SERVER_ANLEITUNG.md` (Bauplan `render.yaml`, Paket `server/Dockerfile`).
 - **Server ohne Grafik** selbst starten: `Godot --headless --path . -- --server` (Port 8910, oder `-- --server --port=1234`)

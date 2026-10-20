@@ -33,6 +33,8 @@ func _on_connected() -> void:
 		if id == Netz.my_id:
 			_notices.append(text))
 	Netz.enter_world(p)
+	# Einladungen in eine Gruppe gleich annehmen
+	Netz._node().group_invited.connect(func(_from_id: String, _from_name: String) -> void: Netz.group_action("annehmen"))
 	_step = 1
 	_time = 0.0
 
@@ -69,6 +71,7 @@ func _process(delta: float) -> bool:
 				var me: PlayerState = w.players[Netz.my_id]
 				_check(me.pos.distance_to(Vector2(WorldState.start_cell())) > 1.0, "Eigene Figur hat sich im Spiegelbild bewegt")
 				Netz.send({type = "start"})
+				Netz.chat("Hallo zusammen\nZeile 2")
 				_step = 4
 				_time = 0.0
 		4:
@@ -76,6 +79,14 @@ func _process(delta: float) -> bool:
 				var me: PlayerState = w.players[Netz.my_id]
 				_check(me.in_dialog(), "Einleitung kommt vom Gastgeber zurück (eigenes Gespräch)")
 				_check(w.dialog_view(me).get("text", "") != "", "Gesprächstext lässt sich im Spiegelbild lesen")
+				var texts: Array[String] = []
+				for entry in Netz.chat_log:
+					texts.append("%s|%s" % [entry.name, entry.text])
+				_check("Testhost|Willkommen!" in texts, "Chat: Nachricht des Gastgebers kommt an")
+				_check("Testkind|Hallo zusammen Zeile 2" in texts, "Chat: eigene Nachricht kommt bei allen an")
+				var members: Array = Netz.group.get("members", [])
+				_check(members.size() == 2 and Netz.group.get("leader", "") == "p1", "Gruppe: mit dem Gastgeber in einer Gruppe, er führt")
+				_check(not Netz.i_lead() and Netz.in_my_group("p1"), "Gruppe: Gastgeber gilt als Gruppenmitglied")
 				Netz.leave_world()
 				_step = 5
 				_time = 0.0

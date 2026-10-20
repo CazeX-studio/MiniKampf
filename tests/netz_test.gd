@@ -11,6 +11,8 @@ var _guest_id := ""
 var _guest_start := Vector2.ZERO
 var _saw_move := false
 var _saw_dialog := false
+var _saw_group := false
+var _saw_fighting := false
 
 
 func _initialize() -> void:
@@ -41,18 +43,40 @@ func _process(delta: float) -> bool:
 		if id != Netz.my_id and _guest_id == "":
 			_guest_id = id
 			_guest_start = Netz.world.players[id].pos
+			# Begrüßung im Chat, zweimal schnell hintereinander (die zweite ist zu schnell und wird verworfen)
+			Netz.chat("Willkommen!")
+			Netz.chat("Zu schnell")
+			# Mitspieler in die Gruppe einladen (er nimmt an)
+			Netz.group_action("einladen", _guest_id)
 	if _guest_id != "" and Netz.world.players.has(_guest_id):
 		var guest: PlayerState = Netz.world.players[_guest_id]
 		if guest.pos.distance_to(_guest_start) > 1.0:
 			_saw_move = true
 		if guest.in_dialog():
 			_saw_dialog = true
+	if Netz.group.get("members", []).size() == 2 and Netz.i_lead():
+		_saw_group = true
+	for m: Dictionary in Netz.group.get("members", []):
+		if m.id == _guest_id and not m.in_stadt:
+			_saw_fighting = true
 	if _pid > 0 and not OS.is_process_running(_pid):
 		var code := OS.get_process_exit_code(_pid)
 		_check(_guest_id != "", "Mitspieler ist beim Gastgeber in Kreuzweg angekommen")
 		_check(_saw_move, "Mitspieler läuft beim Gastgeber (Befehl „steuern“ über das Netz)")
 		_check(_saw_dialog, "Mitspieler redet beim Gastgeber (Einleitung startet)")
 		_check(Netz.world.players.size() == 1, "Mitspieler ist nach dem Verlassen wieder weg")
+		var texts: Array[String] = []
+		for entry in Netz.chat_log:
+			texts.append("%s|%s" % [entry.name, entry.text])
+		_check("|Testkind ist in Kreuzweg." in texts, "Chat-Hinweis: Mitspieler ist in Kreuzweg")
+		_check("Testhost|Willkommen!" in texts, "Gastgeber schreibt im Chat")
+		_check(not "Testhost|Zu schnell" in texts, "Zu schnelle zweite Nachricht wird verworfen")
+		_check("Testkind|Hallo zusammen Zeile 2" in texts, "Chat-Nachricht des Mitspielers kommt an (ohne Zeilenumbruch)")
+		_check("|Testkind hat das Spiel verlassen." in texts, "Chat-Hinweis: Mitspieler hat das Spiel verlassen")
+		_check(Netz.clean_chat("x".repeat(500)).length() == Netz.CHAT_MAX_LENGTH, "Zu lange Nachrichten werden gekürzt")
+		_check(_saw_group, "Gruppe: Mitspieler hat die Einladung angenommen, Gastgeber führt")
+		_check(_saw_fighting, "Gruppe: Wer die Stadt verlässt (z. B. Kampf), bleibt in der Gruppe")
+		_check(Netz.group.is_empty(), "Gruppe: Geht der Mitspieler, ist die Gruppe aufgelöst")
 		_check(code == 0, "Mitspieler hat alle seine Prüfungen bestanden (Rückgabe %d)" % code)
 		_finish()
 		return true

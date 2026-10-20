@@ -49,6 +49,21 @@ func _process(delta: float) -> bool:
 				var town := current_scene
 				_check(town._characters.has(Netz.my_id), "Eigene Figur steht in der Stadt")
 				_check(not town._characters.has("gefaehrte"), "Kein Testgefährte beim Zusammenspielen")
+				_check(town._chat_button != null and town._chat_button.visible, "Chat-Knopf ist da")
+				town._open_chat()
+				_check(town._chat_input.visible and town._chat_input.has_focus(), "Chat-Eingabe öffnet sich")
+				town._on_chat_submitted("Hallo Kreuzweg")
+				_check(not town._chat_input.visible, "Nach dem Abschicken schließt die Eingabe")
+				_step = 31
+				_time = 0.0
+		31:
+			if _time > 1.0:
+				var town := current_scene
+				var lines: Array[String] = []
+				for line in town._chat_lines:
+					lines.append(line.text)
+				_check("Stadttest: Hallo Kreuzweg" in lines, "Eigene Nachricht steht im Chat")
+				_check(town._characters[Netz.my_id]._bubble != null, "Sprechblase über der eigenen Figur")
 				town._restart()
 				_step = 4
 				_time = 0.0
