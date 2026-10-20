@@ -71,6 +71,7 @@ Spielstand (derselbe wie allein); ein zweites Fenster auf demselben PC bekommt a
 - **Chat:** Enter (PC) oder Knopf „Chat“ (Handy), Nachricht an alle in Kreuzweg, mit Sprechblase über dem Kopf.
 - **Gruppe:** Mitspieler antippen → „In Gruppe einladen“. Gruppenfenster rechts oben (Stufe, Leben, ★ = Gruppenführer), bis zu 4 Spieler.
 - **Geschichte gemeinsam:** Spricht ein Gruppenmitglied eine Figur an, erleben Mitglieder in der Nähe das Gespräch mit und stimmen bei Antworten ab (Gleichstand: Gruppenführer entscheidet; wer woanders in der Geschichte ist, schaut zu).
+- **Gemeinsamer Kampf:** Beginnt in einer gemeinsamen Szene ein Kampf, kämpfen alle zusammen, die abgestimmt haben. Jeder steuert seine Figur (25 s pro Zug), freie Plätze füllen die Novizen. Jedes Gerät rechnet den Kampf selbst, übers Netz gehen nur die Entscheidungen.
 - **Übers Internet:** Knopf **„Online-Server“** (geht auch im Browser und am Handy). Der Server läuft kostenlos bei
   Render; einrichten nach `SERVER_ANLEITUNG.md` (Bauplan `render.yaml`, Paket `server/Dockerfile`).
 - **Server ohne Grafik** selbst starten: `Godot --headless --path . -- --server` (Port 8910, oder `-- --server --port=1234`)

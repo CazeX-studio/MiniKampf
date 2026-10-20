@@ -30,7 +30,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 3 | Chat mit freiem Text und Sprechblase | eingebaut, Marco testet |
 | 4 | Gruppe bilden (einladen, Gruppenfenster, Gruppenführer) | eingebaut, Marco testet |
 | 5 | Geschichte gemeinsam erleben (Abstimmung) | eingebaut, Marco testet |
-| 6–8 | Gemeinsamer Kampf, Sternenfall zusammen, Feinschliff | offen |
+| 6 | Gemeinsamer Kampf | eingebaut, Marco testet |
+| 7–8 | Sternenfall zusammen, Feinschliff | offen |
 
 ## Fertig in Lernprojekt 4
 
@@ -134,6 +135,30 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - **Tests:** `tests/szene_test.gd` (Mitholen, Abstimmen, Zuschauen, Gleichstand, Weiterblättern, Verlassen, Zeit,
     Belohnungen – 23 Prüfungen) und im Netz-Test eine echte gemeinsame Szene mit Lene zwischen zwei Programmen –
     alles richtig. Alle bisherigen Tests laufen weiter.
+
+- **Schritt 6 – Gemeinsamer Kampf:**
+  - Beginnt in einer **gemeinsamen Szene ein Kampf** (z. B. „Wir schaffen das!“ bei Ye für den Gruppenkampf), kämpfen
+    **alle zusammen, die mit abgestimmt haben** (nach deiner Entscheidung). Wer nur zugeschaut hat, bleibt in der Stadt.
+  - **Jeder steuert seine eigene Figur.** Die Spieler stehen vorne, **freie Plätze füllen die Novizen-Mitstreiter**
+    (z. B. zwei Spieler + Ida und Bo beim Gruppenkampf). Im Kampf sieht jeder aus wie seine Figur in der Stadt.
+  - **25 Sekunden pro Zug** (die Uhr steht oben beim eigenen Zug), danach kommt automatisch ein **Standardangriff**.
+    Bei den anderen steht „Mira ist am Zug …“.
+  - **Parieren** misst jedes Gerät selbst (die Verbindung verdirbt das Timing nicht), die anderen sehen das Ergebnis.
+  - **Aufgeben** bringt einen zurück in die Stadt (als Niederlage); die anderen kämpfen weiter, für die Figur entscheidet
+    ab dann der Server (Standardangriff). Genauso, wenn jemand die Verbindung verliert.
+  - Gemeinsam gibt es kein „Nochmal versuchen“ (dafür müssten alle zustimmen). Jeder bekommt danach sein Ergebnis
+    (Erfahrung, Aufträge, getrunkene Heiltränke) wie bisher.
+  - **Wie es funktioniert:** Die Kampfregeln ergeben bei gleichem Startwert und gleichen Entscheidungen immer genau denselben
+    Kampf (das hatten wir in Runde 2 so gebaut). Deshalb rechnet **jedes Gerät den Kampf selbst**, und übers Netz gehen nur
+    die **Entscheidungen** (Fähigkeit und Ziel, wie gut pariert wurde). Der Server rechnet unsichtbar mit, prüft jede
+    Entscheidung und springt ein, wenn jemand weg ist (`scripts/netz/gemeinsamer_kampf.gd`).
+  - **Platzhalter:** Die Texte des Gruppenkampfs sprechen noch von „Ida, Bo und Tom kämpfen mit dir“, auch wenn Mitspieler dabei sind.
+  - Noch nicht gemeinsam: der Sternenfresser mit Ren (das ist Schritt 7).
+  - **Tests:** `tests/gruppenkampf_test.gd`: Server und zwei Mitspieler rechnen drei Kämpfe (normal, einer gibt auf,
+    ungültige Entscheidungen) – jedes Mal **genau gleich** (Sieger, Züge, Leben aller Figuren, Kampf-Log).
+    `tests/netz_gruppenkampf_test.gd`: zwei echte Programme mit echter Kampf-Anzeige kämpfen den Gruppenkampf zusammen –
+    gleiches Ergebnis auf beiden, danach zurück in der Stadt. Szenen-Test: Kampf aus einer Szene wird zum Gruppenkampf.
+    Alle bisherigen Tests laufen weiter.
 
 ## Aufgaben dieser Runde (Runde 2)
 
@@ -605,6 +630,13 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 3. Gleich wählen: Haben danach beide den Auftrag „zu Ye“?
 4. Einer ist schon weiter (z. B. schon bei Ye gewesen): Steht bei ihm „Du schaust zu“, und kann er nicht wählen?
 5. „Szene verlassen“: Ist man raus, und läuft das Gespräch für den anderen weiter?
+
+**Neu: Gemeinsamer Kampf** (zwei Geräte, in einer Gruppe, beide bis zur Grundausbildung gespielt)
+1. Nebeneinander zu Ye ans Tor, einer spricht ihn an, beide wählen beim Gruppenkampf „Wir schaffen das!“.
+2. Landen beide im selben Kampf, mit euren Figuren vorne und Ida/Bo als Mitstreiter?
+3. Ist beim eigenen Zug oben die Uhr (25 s) zu sehen, und beim anderen „… ist am Zug“?
+4. Einmal 25 Sekunden nichts tun: Kommt ein Standardangriff?
+5. Einer tippt auf „Aufgeben“: Kämpft der andere weiter?
 
 **Die ganze erste Stunde am Stück** (Kreuzweg-Demo → „Neu beginnen“, Ton an)
 1. Spiel einmal von der Ankunft bis zum Abspann durch, ohne Abkürzungen. Notier dir, wo du nicht wusstest, was zu tun ist.

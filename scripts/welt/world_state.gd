@@ -23,6 +23,8 @@ signal notice(player_id: String, text: String)
 signal progress_changed(player_id: String)
 ## Ein Spieler beginnt einen Kampf (Kennung aus data/kaempfe.json). Die Anzeige wechselt zum Kampfbildschirm.
 signal battle_requested(player_id: String, kampf_id: String)
+## Mehrere Spieler einer gemeinsamen Szene kämpfen zusammen (Zusammenspielen). Netz startet den Gruppenkampf.
+signal group_battle_requested(player_ids: Array, kampf_id: String)
 ## Ein besonderer Effekt für einen Spieler (z. B. "sternenfall": greller Lichtblitz). Nur Anzeige.
 signal effect_requested(player_id: String, effect: String)
 ## Wechsel zu einem anderen Bildschirm (z. B. "klassenwahl", "abspann"). Nur Anzeige.
@@ -603,9 +605,31 @@ func _scene_enter(sid: int, node_id: String) -> void:
 	scene.time_left = VOTE_SECONDS
 	for id in _scene_members(scene):
 		players[id].dialog = {id = scene.dialog, node = node_id, szene = sid}
-	for id: String in scene.voters.duplicate():
+	_scene_actions(scene, node.get("aktionen", []))
+
+
+## Aktionen einer Szene für alle, die abstimmen. Ein Kampf wird zum Gruppenkampf, wenn mehrere dabei sind.
+func _scene_actions(scene: Dictionary, actions: Array) -> void:
+	var voters: Array[String] = []
+	for id: String in scene.voters:
 		if players.has(id):
-			run_actions(players[id], node.get("aktionen", []))
+			voters.append(id)
+	var kampf := ""
+	var rest: Array = []
+	for action: Dictionary in actions:
+		if action.has("kampf") and voters.size() > 1:
+			kampf = action.kampf
+			var other := action.duplicate()
+			other.erase("kampf")
+			if not other.is_empty():
+				rest.append(other)
+		else:
+			rest.append(action)
+	for id in voters:
+		if players.has(id):
+			run_actions(players[id], rest)
+	if kampf != "":
+		group_battle_requested.emit(voters, kampf)
 
 
 func _end_scene(sid: int) -> void:
@@ -687,9 +711,7 @@ func _scene_decide(sid: int) -> void:
 	if scene.votes.size() > 1:
 		for id in _scene_members(scene):
 			notice.emit(id, "Die Gruppe hat gewählt: „%s“" % answer.text)
-	for id: String in scene.voters.duplicate():
-		if players.has(id):
-			run_actions(players[id], answer.get("aktionen", []))
+	_scene_actions(scene, answer.get("aktionen", []))
 	if not scenes.has(sid):
 		return
 	if answer.has("weiter"):

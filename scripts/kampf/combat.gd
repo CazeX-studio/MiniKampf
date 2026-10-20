@@ -60,6 +60,13 @@ var _react_glint := false
 ## Computer-Spieler für Novizen-Mitstreiter und schon gezeigte Erklär-Fenster
 var _ki := KampfKI.new(randi())
 var _hints_shown := {}
+## Gruppenkampf beim Zusammenspielen: {bid, seed, mine, owners} (leer = allein). Siehe GemeinsamerKampf.
+var _group := {}
+## Fortlaufende Nummer jeder Frage der Kampfregeln (auf allen Geräten gleich)
+var _seq := 0
+## Restzeit für den eigenen Zug im Gruppenkampf (Sekunden, < 0 = keine Uhr)
+var _turn_time := -1.0
+var _turn_text := ""
 
 var _field: Control
 var _ring_layer: Control
@@ -82,7 +89,18 @@ func _ready() -> void:
 	add_log("Bei Gegner-Angriffen: tippen, wenn sich der [color=#f2c14e]Ring[/color] schließt!")
 	# Entscheidungen fallen nur beim ersten Abschluss; danach gilt die gespeicherte Wahl
 	Sandbox.pilz_choice = SaveGame.get_flag(PILZ_CHOICE_FLAG)
-	if BattleRequest.active():
+	if BattleRequest.active() and not BattleRequest.group.is_empty():
+		# Gruppenkampf: gleicher Startwert wie bei allen anderen, Entscheidungen kommen übers Netz
+		_group = BattleRequest.group
+		state = BattleState.new(self, [] as Array[String], "", int(_group.seed))
+		state.setup = BattleRequest.setup
+		_ki = KampfKI.new(GemeinsamerKampf.ki_seed(int(_group.seed)))
+		Netz._node().disconnected.connect(func() -> void:
+			get_tree().set_meta("netz_meldung", "Die Verbindung ist während des Kampfes abgerissen. Dein Fortschritt ist gespeichert.")
+			BattleRequest.finish(false)
+			BattleRequest.result = {}
+			get_tree().change_scene_to_file.call_deferred("res://scenes/zusammen.tscn"))
+	elif BattleRequest.active():
 		# Kampf aus der Kreuzweg-Demo (Lektion, Gruppenkampf)
 		state = BattleState.new(self, [] as Array[String], "", randi())
 		state.setup = BattleRequest.setup
@@ -107,16 +125,42 @@ func _back_to_world(won: bool) -> void:
 
 ## Wie viele Heiltränke der Spieler in diesem Kampf getrunken hat.
 func _potions_used() -> int:
-	var player := state.heroes[0]
+	var index := int(_group.get("mine", 0))
+	var player := state.heroes[index]
 	if not player.wares.has("heiltrank"):
 		return 0
-	return int(state.setup.helden[0].get("traenke", 0)) - int(player.wares.heiltrank)
+	return int(state.setup.helden[index].get("traenke", 0)) - int(player.wares.heiltrank)
+
+
+# --- Gruppenkampf ---------------------------------------------------------------
+
+## Wer steuert diese Figur? "" = ich (oder allein), sonst der Spieler (Kennung) bzw. "computer".
+func _owner(f: Fighter) -> String:
+	if state.computer.has(f):
+		return "computer"
+	if _group.is_empty():
+		return ""
+	var who := GemeinsamerKampf.owner_in(state, _group.owners, f)
+	if who == "":
+		return "computer"
+	return "" if who == str(_group.owners[int(_group.mine)]) else who
+
+
+func _is_remote(f: Fighter) -> bool:
+	return _owner(f) not in ["", "computer"]
+
+
+## Wartet auf die Entscheidung Nummer "seq" vom Gastgeber.
+func _net_decision(seq: int) -> Dictionary:
+	while not Netz.battle_buffer.has(seq):
+		await Netz._node().battle_decision
+	return Netz.battle_buffer[seq]
 
 
 ## Erklärung zur Reaktion zeigen, BEVOR der erste Gegner-Angriff auf den Spieler losgeht
 ## (sonst passt der Ring nicht mehr zum Schlag).
 func _attack_hint(target: Fighter) -> void:
-	if target.is_ally() and not state.computer.has(target) and target.reaction != "":
+	if target.is_ally() and _owner(target) == "" and target.reaction != "":
 		await _show_hint("erste_reaktion")
 
 
@@ -170,7 +214,14 @@ func _exit_tree() -> void:
 		state.cleanup()
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	# Uhr für den eigenen Zug im Gruppenkampf
+	if _turn_time >= 0.0:
+		_turn_time -= delta
+		_turn_label.text = "%s · noch %d s" % [_turn_text, ceili(maxf(_turn_time, 0.0))]
+		if _turn_time <= 0.0:
+			_turn_time = -1.0
+			_time_up()
 	if _reacting:
 		_update_glint()
 		_ring_layer.queue_redraw()
@@ -322,20 +373,62 @@ func view(f: Fighter) -> FighterView:
 
 ## Der Zustand fragt: Was macht diese Figur? Antwort kommt, sobald Fähigkeit und Ziel angetippt sind.
 func choose_action(f: Fighter) -> Dictionary:
+	_seq += 1
+	var seq := _seq
 	# Novizen-Mitstreiter handeln selbst (Computer)
-	if state.computer.has(f):
+	if state.computer.has(f) or _owner(f) == "computer":
 		_turn_label.text = "%s ist am Zug" % f.display_name
 		await wait(0.6)
 		return _ki.choose(state.skills, f)
+	# Mitspieler: warten, bis seine Entscheidung übers Netz kommt
+	if _is_remote(f):
+		_clear_actions()
+		_turn_label.text = "%s ist am Zug …" % f.display_name
+		return GemeinsamerKampf.decode_action(state.skills, f, await _net_decision(seq))
 	await _show_hint("erster_zug")
 	_show_actions(f)
+	if not _group.is_empty():
+		_turn_text = _turn_label.text
+		_turn_time = GemeinsamerKampf.TURN_SECONDS
 	var command: Dictionary = await _action_chosen
-	return command
+	_turn_time = -1.0
+	if _group.is_empty():
+		return command
+	# Gruppenkampf: an den Gastgeber schicken; was er zurückschickt, gilt (auf allen Geräten gleich)
+	Netz.battle_decide(seq, GemeinsamerKampf.encode_action(state.skills, f, command))
+	_clear_actions()
+	_turn_label.text = "Warte auf die anderen …"
+	var decided := GemeinsamerKampf.decode_action(state.skills, f, await _net_decision(seq))
+	return decided if not decided.is_empty() else command
+
+
+## Zeit für den eigenen Zug ist um: Standardangriff.
+func _time_up() -> void:
+	if _pending_user == null and _grid_buttons().is_empty():
+		return
+	var f: Fighter = _current
+	if f == null:
+		return
+	_cancel_targeting()
+	_clear_actions()
+	add_log("[color=#ffb070]Zeit abgelaufen – Standardangriff.[/color]")
+	_action_chosen.emit(GemeinsamerKampf.default_action(state.skills, f, _ki_fallback()))
+
+
+## Zufall nur für den Notfall-Standardangriff (darf den gemeinsamen Zufall der Mitstreiter nicht verändern)
+func _ki_fallback() -> KampfKI:
+	return KampfKI.new(randi())
 
 
 ## Eine Entscheidung mit mehreren Möglichkeiten (z. B. nach dem Dungeon). Gibt die Kennung zurück.
 func choose_option(title: String, options: Array[Dictionary]) -> String:
+	_seq += 1
+	var seq := _seq
 	_clear_actions()
+	# Gruppenkampf: Der erste Spieler entscheidet, die anderen warten
+	if not _group.is_empty() and str(_group.owners[int(_group.mine)]) != _first_player():
+		_turn_label.text = "%s – die Gruppe entscheidet …" % title
+		return str((await _net_decision(seq)).get("o", options[0].id))
 	_turn_label.text = title
 	for option in options:
 		var info: String = option.get("info", "")
@@ -346,12 +439,22 @@ func choose_option(title: String, options: Array[Dictionary]) -> String:
 	_number_buttons()
 	var id: String = await _choice_made
 	_clear_actions()
-	return id
+	if _group.is_empty():
+		return id
+	Netz.battle_decide(seq, {o = id})
+	return str((await _net_decision(seq)).get("o", id))
+
+
+func _first_player() -> String:
+	for o in _group.get("owners", []):
+		if str(o) != "":
+			return str(o)
+	return ""
 
 
 func _show_actions(f: Fighter) -> void:
 	_clear_actions()
-	if f.display_name == "Du":
+	if f.display_name == "Du" or (not _group.is_empty() and _owner(f) == ""):
 		_turn_label.text = "Du bist am Zug"
 	else:
 		_turn_label.text = "%s (%s) ist am Zug" % [f.display_name, f.class_title]
@@ -495,8 +598,19 @@ func _on_fighter_tapped(target: Fighter) -> void:
 ## Zeigt den schrumpfenden Ring und die Zeitleiste. Gibt die Reaktion zurück:
 ## 0 = verpasst, 1 = normal pariert/ausgewichen (normale Zone), 2 = perfekt (schmale Zone in der Mitte).
 func react(attacker: Fighter, target: Fighter, duration: float) -> int:
+	_seq += 1
+	var seq := _seq
+	# Mitspieler: Er pariert auf seinem Gerät, hier kommt nur das Ergebnis an
+	if _is_remote(target):
+		await wait(duration + REACT_LATE)
+		var remote := clampi(int((await _net_decision(seq)).get("g", 0)), 0, 2)
+		if remote == BattleState.REACT_PERFECT:
+			Geraeusche.play("perfekt")
+		elif remote == BattleState.REACT_NORMAL:
+			Geraeusche.play("parade")
+		return remote
 	# Mitstreiter des Computers reagieren selbst, ohne Ring
-	if state.computer.has(target):
+	if state.computer.has(target) or _owner(target) == "computer":
 		await wait(duration + REACT_LATE)
 		var grade := _ki.react_grade(ALLY_PARRY_CHANCE, ALLY_NORMAL_CHANCE)
 		if grade == BattleState.REACT_PERFECT:
@@ -524,7 +638,11 @@ func react(attacker: Fighter, target: Fighter, duration: float) -> int:
 	for v in raised:
 		if is_instance_valid(v):
 			v.z_index = 0
-	return _grade(_react_press) if _react_press >= 0.0 else BattleState.REACT_NONE
+	var grade := _grade(_react_press) if _react_press >= 0.0 else BattleState.REACT_NONE
+	if _group.is_empty():
+		return grade
+	Netz.battle_decide(seq, {g = grade})
+	return clampi(int((await _net_decision(seq)).get("g", grade)), 0, 2)
 
 
 ## Halbe Breite der Perfekt-Zone in Sekunden.
@@ -858,7 +976,11 @@ func _build_ui() -> void:
 	menu.size = Vector2(96, 44)
 	menu.add_theme_font_size_override("font_size", 16)
 	if BattleRequest.active():
-		menu.pressed.connect(func() -> void: _back_to_world(false))
+		menu.pressed.connect(func() -> void:
+			# Gruppenkampf: Die anderen kämpfen weiter, für die eigene Figur entscheidet ab jetzt der Gastgeber
+			if not _group.is_empty():
+				Netz.battle_leave()
+			_back_to_world(false))
 	else:
 		menu.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/auswahl.tscn"))
 	add_child(menu)

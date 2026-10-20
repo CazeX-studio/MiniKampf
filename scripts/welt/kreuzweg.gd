@@ -113,6 +113,7 @@ func _ready() -> void:
 		Netz._node().group_changed.connect(_update_group)
 		Netz._node().group_invited.connect(_on_group_invited)
 		Netz._node().group_notice.connect(func(text: String) -> void: _on_notice(local_id, text))
+		Netz._node().battle_started.connect(_on_group_battle)
 	state.notice.connect(_on_notice)
 	state.progress_changed.connect(_on_progress_changed)
 	state.battle_requested.connect(_on_battle_requested)
@@ -1337,6 +1338,12 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 	if BattleRequest.prepare(kampf_id, progress.level, progress.item_count("heiltrank")):
 		SaveGame.save(local_player())
 		get_tree().change_scene_to_file.call_deferred("res://scenes/kampf.tscn")
+
+
+## Gruppenkampf beginnt (Netz hat den Kampf schon vorbereitet): speichern und zum Kampfbildschirm.
+func _on_group_battle(_kampf_id: String) -> void:
+	SaveGame.save(local_player())
+	get_tree().change_scene_to_file.call_deferred("res://scenes/kampf.tscn")
 
 
 func _place_dialog() -> void:

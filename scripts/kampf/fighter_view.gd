@@ -107,7 +107,7 @@ var shown := -1
 func setup(p_fighter: Fighter) -> void:
 	fighter = p_fighter
 	mouse_filter = Control.MOUSE_FILTER_STOP
-	var look: Dictionary = LOOKS[fighter.look_key()]
+	var look: Dictionary = look_data(fighter.look_key())
 	for anim: String in ANIM_FPS:
 		var frames: Array[Texture2D] = []
 		var i := 0
@@ -178,12 +178,20 @@ func shown_hp() -> int:
 
 
 ## Erstes Standbild einer Figur (für Zugleiste und Auswahl-Bildschirm).
+## Aussehen einer Figur. Unbekannte Namen sind Pixel-Figuren aus dem 0x72-Paket (z. B. die Figur, die ein Spieler
+## beim Zusammenspielen gewählt hat).
+static func look_data(key: String) -> Dictionary:
+	if LOOKS.has(key):
+		return LOOKS[key]
+	return {sprite = key, scale = 4.0} if ResourceLoader.exists(SPRITE_PATH % [key, "idle", 0]) else LOOKS["novize"]
+
+
 static func portrait(klass: String) -> Texture2D:
-	return load(SPRITE_PATH % [LOOKS[klass].sprite, "idle", 0])
+	return load(SPRITE_PATH % [look_data(klass).sprite, "idle", 0])
 
 
 static func tint(klass: String) -> Color:
-	return LOOKS[klass].get("tint", Color.WHITE)
+	return look_data(klass).get("tint", Color.WHITE)
 
 
 ## Antippbar sind nur die Figur selbst und ihr Namensschild

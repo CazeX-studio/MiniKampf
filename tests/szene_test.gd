@@ -9,6 +9,7 @@ var _failed := 0
 func _initialize() -> void:
 	_test_result_rules()
 	_test_scene()
+	_test_scene_battle()
 	print("Szenen: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)
 
@@ -113,6 +114,22 @@ func _test_scene() -> void:
 	w3.apply_command("s", {type = "talk", npc = "schreiberin"})
 	_tick_until(w3, func() -> bool: return solo.in_dialog())
 	_check(not solo.dialog.has("szene") and not w3.dialog_view(solo).has("szene"), "Allein: normales Gespräch ohne Abstimmung")
+
+
+## Ein Kampf aus einer Szene: mit mehreren Abstimmenden ein Gruppenkampf, sonst wie bisher einzeln.
+func _test_scene_battle() -> void:
+	var w := WorldState.new()
+	w.add_player("a", "A", "elf_m", WorldState.start_cell())
+	w.add_player("b", "B", "elf_m", WorldState.start_cell() + Vector2i(1, 0))
+	var group_battles := []
+	var solo_battles := []
+	w.group_battle_requested.connect(func(ids: Array, kampf: String) -> void: group_battles.append([ids, kampf]))
+	w.battle_requested.connect(func(id: String, kampf: String) -> void: solo_battles.append([id, kampf]))
+	w._scene_actions({voters = ["a", "b"], watchers = []}, [{auftrag_starten = "erster_gruppenkampf"}, {kampf = "gruppenkampf"}])
+	_check(group_battles == [[["a", "b"], "gruppenkampf"]] and solo_battles.is_empty(), "Kampf aus einer Szene mit zwei Abstimmenden: Gruppenkampf für beide")
+	_check(w.players["b"].progress.quest_state("erster_gruppenkampf") == "aktiv", "Die anderen Aktionen gelten trotzdem für alle")
+	w._scene_actions({voters = ["a"], watchers = ["b"]}, [{kampf = "gruppenkampf"}])
+	_check(solo_battles == [["a", "gruppenkampf"]] and group_battles.size() == 1, "Nur einer stimmt ab: normaler Kampf allein")
 
 
 func _tick_until(w: WorldState, done: Callable) -> void:

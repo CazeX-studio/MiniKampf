@@ -13,6 +13,9 @@ static var result := {}
 static var used_before := 0
 ## Wohin es nach dem Kampf zurückgeht (Stadt oder Klassenwahl)
 static var return_scene := "res://scenes/kreuzweg.tscn"
+## Gruppenkampf beim Zusammenspielen: {bid, seed, mine = eigener Held (Nummer), owners = [Spieler je Held, "" = Computer]}.
+## Leer = allein.
+static var group := {}
 
 
 static func active() -> bool:
@@ -46,7 +49,56 @@ static func prepare(id: String, level: int, potions := 0) -> bool:
 	result = {}
 	return_scene = "res://scenes/kreuzweg.tscn"
 	used_before = 0
-	setup = {
+	group = {}
+	setup = _make_setup(id, data, heroes, phases, waves)
+	return true
+
+
+## Aufbau eines Gruppenkampfs (Gastgeber): erst die Spieler der Gruppe, freie Plätze füllen die Novizen-Mitstreiter.
+## members: [{name, stufe, traenke, aussehen}]. Gibt den Aufbau zurück (leer, wenn es den Kampf nicht gibt).
+static func build_group(id: String, members: Array) -> Dictionary:
+	var data: Dictionary = GameData.battle(id)
+	if data.is_empty():
+		return {}
+	var klasse: String = data.get("klasse", "novize")
+	var heroes: Array = []
+	for m: Dictionary in members:
+		# Im Kampf sieht jeder Spieler aus wie seine Figur in der Stadt (so kann man sich auseinanderhalten)
+		var hero := {klasse = klasse, name = m.name, aussehen = str(m.get("aussehen", "novize")) if klasse == "novize" else "", stufe = int(m.stufe),
+				ult = float(data.get("ult_start", 0))}
+		if klasse == "novize":
+			hero["traenke"] = int(m.get("traenke", 0))
+		if not data.get("reaktion", true):
+			hero["reaktion"] = ""
+		heroes.append(hero)
+	var allies: Array = data.get("begleiter", [])
+	var level := int(members[0].stufe) if not members.is_empty() else 1
+	var free := mini(allies.size() + 1, 4) - heroes.size()
+	for i in clampi(free, 0, allies.size()):
+		var b: Dictionary = allies[i]
+		heroes.append({klasse = "novize", name = b.name, aussehen = b.get("aussehen", "novize"), stufe = level, computer = true})
+	var phases: Array = data.get("phasen", [])
+	var waves: Array = data.get("wellen", [])
+	if not phases.is_empty():
+		waves = phases.map(func(ph: Dictionary) -> Array: return ph.gegner)
+	var result_setup := _make_setup(id, data, heroes, phases, waves)
+	# Gemeinsam gibt es kein „Nochmal versuchen“ (alle müssten zustimmen)
+	result_setup["kein_nochmal"] = true
+	return result_setup
+
+
+## Mitspieler: Gruppenkampf vom Gastgeber übernehmen.
+static func prepare_group(id: String, p_setup: Dictionary, info: Dictionary) -> void:
+	kampf_id = id
+	result = {}
+	return_scene = "res://scenes/kreuzweg.tscn"
+	used_before = 0
+	setup = p_setup
+	group = info
+
+
+static func _make_setup(id: String, data: Dictionary, heroes: Array, phases: Array, waves: Array) -> Dictionary:
+	var result_setup := {
 		name = data.get("name", id),
 		ansage = data.get("ansage", ""),
 		helden = heroes,
@@ -59,8 +111,8 @@ static func prepare(id: String, level: int, potions := 0) -> bool:
 		zuerst = data.get("zuerst", ""),
 	}
 	if not phases.is_empty():
-		setup["phasen"] = phases
-	return true
+		result_setup["phasen"] = phases
+	return result_setup
 
 
 ## Der Kampf ist vorbei: Ergebnis für die Welt merken.
@@ -69,6 +121,7 @@ static func finish(won: bool, potions_used := 0) -> void:
 	used_before = 0
 	kampf_id = ""
 	setup = {}
+	group = {}
 
 
 ## „Nochmal versuchen“: getrunkene Tränke sind weg, der neue Versuch beginnt mit dem Rest.

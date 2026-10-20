@@ -24,6 +24,10 @@ signal group_changed
 signal group_invited(from_id: String, from_name: String)
 ## Kurze Meldung zur Gruppe („Mira ist der Gruppe beigetreten.“)
 signal group_notice(text: String)
+## Ein Gruppenkampf beginnt (BattleRequest ist schon vorbereitet)
+signal battle_started(kampf_id: String)
+## Eine Entscheidung im Gruppenkampf ist angekommen (siehe Netz.battle_buffer)
+signal battle_decision(seq: int)
 
 enum Mode { OFFLINE, HOST, SERVER, CLIENT }
 
@@ -72,6 +76,8 @@ static var chat_log: Array[Dictionary] = []
 static var save_override := ""
 ## Die eigene Gruppe: {leader = Spieler, members = [{id, name, level, leben, in_stadt}, …]} oder leer
 static var group := {}
+## Entscheidungen im laufenden Gruppenkampf: Nummer -> Daten
+static var battle_buffer := {}
 
 ## Merkt, welches Fenster gerade den normalen Spielstand benutzt (damit ein zweites Fenster auf demselben PC
 ## einen eigenen bekommt und sich die beiden nicht gegenseitig überschreiben)
@@ -101,6 +107,10 @@ var _groups: Gruppen
 var _sent_group := {}
 ## Gastgeber: letzte bekannte Stufe je Spieler (auch während er kämpft)
 var _levels := {}
+## Gastgeber: laufende Gruppenkämpfe (Nummer -> GemeinsamerKampf) und ihre Spieler
+var _battles := {}
+var _battle_players := {}
+var _next_bid := 1
 
 
 static func online() -> bool:
@@ -150,6 +160,9 @@ static func _start_server(p_name: String, look: String, p_mode: Mode) -> Error:
 	world.group_members = func(id: String) -> Array: return node._groups.group(id).get("members", [])
 	world.group_leader = func(id: String) -> String: return node._groups.group(id).get("leader", "")
 	node._sent_group.clear()
+	node._battles.clear()
+	node._battle_players.clear()
+	world.group_battle_requested.connect(node._on_group_battle)
 	node._levels.clear()
 	if p_mode == Mode.HOST:
 		node._groups.set_player_name("p1", p_name)
@@ -204,6 +217,10 @@ static func join(address: String, p_name: String, look: String) -> Error:
 static func stop() -> void:
 	chat_log.clear()
 	group = {}
+	battle_buffer.clear()
+	if _instance != null and is_instance_valid(_instance):
+		_instance._battles.clear()
+		_instance._battle_players.clear()
 	if _instance != null and is_instance_valid(_instance):
 		_instance._last_chat.clear()
 		_instance._greeted.clear()
@@ -249,6 +266,26 @@ static func group_action(action: String, target := "") -> void:
 			_instance._group_from(my_id, action, target)
 		Mode.CLIENT:
 			_instance._c_group.rpc_id(1, action, target)
+
+
+## Gruppenkampf: eigene Entscheidung (Nummer, Daten) an den Gastgeber.
+static func battle_decide(seq: int, data: Dictionary) -> void:
+	var bid := int(BattleRequest.group.get("bid", 0))
+	match mode:
+		Mode.HOST:
+			_instance._battle_from(my_id, bid, seq, data)
+		Mode.CLIENT:
+			_instance._c_battle_decision.rpc_id(1, bid, seq, data)
+
+
+## Gruppenkampf verlassen (Aufgeben): Der Gastgeber entscheidet ab jetzt für die eigene Figur.
+static func battle_leave() -> void:
+	var bid := int(BattleRequest.group.get("bid", 0))
+	match mode:
+		Mode.HOST:
+			_instance._battle_gone(my_id, bid)
+		Mode.CLIENT:
+			_instance._c_battle_leave.rpc_id(1, bid)
 
 
 static func in_my_group(id: String) -> bool:
@@ -433,6 +470,8 @@ func _on_peer_disconnected(peer: int) -> void:
 		_greeted.erase(id)
 	_sent_own.erase(id)
 	_last_chat.erase(id)
+	for bid: int in _battles.keys():
+		_battle_gone(id, bid)
 	if _groups != null:
 		_groups.remove_player(id)
 	_sent_group.erase(id)
@@ -553,6 +592,87 @@ func _s_group_event(kind: String, a: String, b: String) -> void:
 		group_invited.emit(a, b)
 	else:
 		group_notice.emit(a)
+
+
+# --- Gruppenkampf ---------------------------------------------------------------
+
+## Mehrere Spieler einer Szene kämpfen zusammen: Aufbau, Startwert und wer welchen Helden steuert, an alle.
+func _on_group_battle(ids: Array, kampf_id: String) -> void:
+	var members: Array = []
+	for id: String in ids:
+		var p: PlayerState = world.players[id]
+		members.append({name = p.display_name, stufe = p.progress.level, traenke = p.progress.item_count("heiltrank"), aussehen = p.look})
+	var setup := BattleRequest.build_group(kampf_id, members)
+	if setup.is_empty():
+		return
+	var owners: Array = ids.duplicate()
+	while owners.size() < setup.helden.size():
+		owners.append("")
+	var bid := _next_bid
+	_next_bid += 1
+	var battle_seed := randi()
+	var battle := GemeinsamerKampf.new(bid, setup, battle_seed, owners, _broadcast_battle)
+	_battles[bid] = battle
+	_battle_players[bid] = ids.duplicate()
+	battle.finished.connect(func() -> void:
+		_battles.erase(bid)
+		_battle_players.erase(bid))
+	for i in ids.size():
+		var info := {bid = bid, seed = battle_seed, mine = i, owners = owners}
+		var id: String = ids[i]
+		if id == my_id and mode == Mode.HOST:
+			_s_battle_start(kampf_id, setup, info)
+		elif _peer_of(id) in multiplayer.get_peers():
+			_s_battle_start.rpc_id(_peer_of(id), kampf_id, setup, info)
+	print("Netz: Gruppenkampf %s mit %d Spielern" % [kampf_id, ids.size()])
+	battle.start()
+
+
+func _battle_from(id: String, bid: int, seq: int, data: Dictionary) -> void:
+	if _battles.has(bid):
+		_battles[bid].receive(id, seq, data)
+
+
+func _battle_gone(id: String, bid: int) -> void:
+	if _battles.has(bid) and id in _battle_players.get(bid, []):
+		_battles[bid].player_gone(id)
+
+
+func _broadcast_battle(bid: int, seq: int, data: Dictionary) -> void:
+	for id: String in _battle_players.get(bid, []):
+		if id == my_id and mode == Mode.HOST:
+			_s_battle_decision(bid, seq, data)
+		elif _peer_of(id) in multiplayer.get_peers():
+			_s_battle_decision.rpc_id(_peer_of(id), bid, seq, data)
+
+
+@rpc("any_peer", "reliable")
+func _c_battle_decision(bid: int, seq: int, data: Dictionary) -> void:
+	if mode == Mode.HOST or mode == Mode.SERVER:
+		_battle_from("p%d" % multiplayer.get_remote_sender_id(), bid, seq, data)
+
+
+@rpc("any_peer", "reliable")
+func _c_battle_leave(bid: int) -> void:
+	if mode == Mode.HOST or mode == Mode.SERVER:
+		_battle_gone("p%d" % multiplayer.get_remote_sender_id(), bid)
+
+
+## Gruppenkampf beginnt für den eigenen Spieler
+@rpc("authority", "reliable")
+func _s_battle_start(kampf_id: String, setup: Dictionary, info: Dictionary) -> void:
+	battle_buffer.clear()
+	BattleRequest.prepare_group(kampf_id, setup.duplicate(true), info)
+	battle_started.emit(kampf_id)
+
+
+## Entscheidung im Gruppenkampf (vom Gastgeber, an alle Beteiligten)
+@rpc("authority", "reliable")
+func _s_battle_decision(bid: int, seq: int, data: Dictionary) -> void:
+	if int(BattleRequest.group.get("bid", -1)) != bid:
+		return
+	battle_buffer[seq] = data
+	battle_decision.emit(seq)
 
 
 ## Chat-Nachricht eines Mitspielers
