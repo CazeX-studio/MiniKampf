@@ -1,59 +1,62 @@
 {
 	"hinweis": "Kämpfe aus der Kreuzweg-Demo. Gegner-Kennungen stehen in scripts/kampf/sandbox.gd (ENEMIES). erlaubt = welche Fähigkeiten der Novize schon hat (row = Reihe wechseln). erfahrung gibt es beim ersten Sieg. Alle Texte sind Platzhalter.",
-	"lektion_tempo": {
-		"name": "Lektion 1: Die Tempo-Leiste",
-		"ansage": "Übungswiese vor dem Stadttor: Ein Feldschleim kriecht heran.",
-		"wellen": [["feldschleim"]],
-		"erlaubt": ["schlag"],
-		"reaktion": false,
-		"erfahrung": 75,
-		"hinweise": {
-			"erster_zug": "Oben siehst du die Zugleiste: Ganz links steht, wer JETZT dran ist, rechts daneben die nächsten Züge. Schnelle Figuren kommen öfter dran. Jetzt bist du dran: Tippe „Schlag“ und dann den Feldschleim."
-		}
-	},
-	"lektion_faehigkeiten": {
-		"name": "Lektion 2: Fähigkeiten",
-		"ansage": "Ein Feldschleim und ein Wiesenkobold stellen sich dir.",
-		"wellen": [["feldschleim", "wiesenkobold"]],
-		"erlaubt": ["schlag", "kraftschlag", "erste_hilfe"],
-		"reaktion": false,
-		"erfahrung": 75,
-		"hinweise": {
-			"erster_zug": "Neu: „Kraftschlag“ trifft härter und „Erste Hilfe“ heilt. Beide kosten Mana (blaue Leiste) und brauchen danach eine Pause („Bereit in 2“). Mana kommt jeden Zug ein wenig zurück."
-		}
-	},
-	"lektion_parieren": {
-		"name": "Lektion 3: Parieren",
-		"ansage": "Ye nimmt ein Übungsschwert: „Schild hoch, Schild runter.“",
-		"wellen": [["uebungs_ye"]],
-		"erlaubt": ["schlag", "kraftschlag", "erste_hilfe"],
-		"ziel_paraden": 2,
-		"erfahrung": 75,
-		"hinweise": {
-			"erster_zug": "Ye ist nicht zu besiegen. Ziel: zweimal PERFEKT parieren. Mach einfach deinen Zug und warte auf seinen Angriff.",
-			"erste_reaktion": "Jetzt greift Ye an! Ein Ring schließt sich um dich, oben läuft ein Balken. Tippe (oder drücke die Leertaste), wenn der Strich im hellgrünen Feld ist: normale Parade, 25 % weniger Schaden. Triffst du die schmale grüne Mitte, wenn der Ring den inneren Kreis erreicht: PERFEKT – kein Schaden. Für diese Lektion zählen nur perfekte Paraden. Übrigens: Als Novize lernt jeder das Parieren. Später hängt es von deiner Klasse ab – manche parieren, manche weichen aus, manche haben gar keine Reaktion."
-		}
-	},
-	"lektion_reihen": {
-		"name": "Lektion 4: Zwei Reihen",
-		"ansage": "Ein Rüpelkobold mit einer großen Keule!",
-		"wellen": [["ruepelkobold"]],
-		"erlaubt": ["schlag", "kraftschlag", "erste_hilfe", "row", "trank"],
-		"zuerst": "row",
-		"erfahrung": 75,
-		"hinweise": {
-			"erster_zug": "Der Rüpelkobold schlägt hart zu. In der hinteren Reihe bekommst du weniger Nahkampf-Schaden, machst aber auch weniger. Wechsle jetzt zuerst mit „Nach hinten“ die Reihe (kostet den Zug) – erst danach kannst du wieder angreifen."
-		}
+	"grundausbildung": {
+		"name": "Grundausbildung bei Ye",
+		"hinweis": "Langer Lernkampf: Jede Phase ist eine Lektion mit eigenen Gegnern, Fähigkeiten und Erklärungen. Verliert man, geht es bei der Phase weiter, in der man verloren hat.",
+		"erfahrung": 300,
+		"phasen": [
+			{
+				"name": "Lektion 1: Die Tempo-Leiste",
+				"ansage": "Übungswiese vor dem Stadttor: Ein Feldschleim kriecht heran.",
+				"gegner": ["feldschleim"],
+				"erlaubt": ["schlag"],
+				"reaktion": false,
+				"hinweise": {
+					"erster_zug": "Oben siehst du die Zugleiste: Ganz links steht, wer JETZT dran ist, rechts daneben die nächsten Züge. Schnelle Figuren kommen öfter dran.\nUnter dir stehen deine Grundwerte: Leben (grün) – ist es leer, fällst du. Mana (blau) – Kraft für Fähigkeiten. Mit jeder Stufe wachsen sie, dazu dein Angriff.\nJetzt bist du dran: Tippe „Schlag“ und dann den Feldschleim."
+				}
+			},
+			{
+				"name": "Lektion 2: Fähigkeiten",
+				"ansage": "Ein Feldschleim und ein Wiesenkobold stellen sich dir.",
+				"gegner": ["feldschleim", "wiesenkobold"],
+				"erlaubt": ["schlag", "kraftschlag", "erste_hilfe"],
+				"reaktion": false,
+				"hinweise": {
+					"erster_zug": "Gut gemacht – aber es geht weiter! Neu: „Kraftschlag“ trifft härter und „Erste Hilfe“ heilt. Beide kosten Mana (blaue Leiste) und brauchen danach eine Pause („Bereit in 2“). Mana kommt jeden Zug ein wenig zurück. Pass auf dein Leben auf!"
+				}
+			},
+			{
+				"name": "Lektion 3: Parieren",
+				"ansage": "Ye nimmt ein Übungsschwert: „Schild hoch, Schild runter.“",
+				"gegner": ["uebungs_ye"],
+				"erlaubt": ["schlag", "kraftschlag", "erste_hilfe"],
+				"ziel_paraden": 2,
+				"hinweise": {
+					"erster_zug": "Jetzt bin ich dran. Mich kannst du nicht besiegen. Ziel: zweimal PERFEKT parieren. Mach einfach deinen Zug und warte auf meinen Angriff.",
+					"erste_reaktion": "Jetzt greife ich an! Ein Ring schließt sich um dich, oben läuft ein Balken. Tippe (oder drücke die Leertaste), wenn der Strich im hellgrünen Feld ist: normale Parade, 25 % weniger Schaden. Triffst du die schmale grüne Mitte, wenn der Ring den inneren Kreis erreicht: PERFEKT – kein Schaden. Für diese Lektion zählen nur perfekte Paraden. Übrigens: Als Novize lernt jeder das Parieren. Später hängt es von deiner Klasse ab – manche parieren, manche weichen aus, manche haben gar keine Reaktion."
+				}
+			},
+			{
+				"name": "Lektion 4: Zwei Reihen",
+				"ansage": "Ein Rüpelkobold mit einer großen Keule stürmt heran!",
+				"gegner": ["ruepelkobold"],
+				"erlaubt": ["schlag", "kraftschlag", "erste_hilfe", "row", "trank"],
+				"zuerst": "row",
+				"hinweise": {
+					"erster_zug": "Letzte Lektion! Der Rüpelkobold schlägt hart zu. In der hinteren Reihe bekommst du weniger Nahkampf-Schaden, machst aber auch weniger. Wechsle jetzt zuerst mit „Nach hinten“ die Reihe (kostet den Zug) – erst danach kannst du wieder angreifen. Parieren klappt jetzt auch wieder."
+				}
+			}
+		]
 	},
 	"gruppenkampf": {
 		"name": "Erster Gruppenkampf",
-		"ansage": "Kobolde überfallen die Übungswiese! Ida, Bo und Tom kämpfen mit dir.",
+		"ansage": "Kobolde überfallen die Übungswiese – und hinter ihnen kommen noch mehr! Ida, Bo und Tom kämpfen mit dir.",
 		"begleiter": [
 			{"name": "Ida", "aussehen": "novize_ida"},
 			{"name": "Bo", "aussehen": "novize_bo"},
 			{"name": "Tom", "aussehen": "novize_tom"}
 		],
-		"wellen": [["wiesenkobold", "wiesenkobold", "feldschleim", "ruepelkobold"]],
+		"wellen": [["wiesenkobold", "wiesenkobold", "feldschleim", "ruepelkobold"], ["ruepelkobold", "wiesenkobold", "ruepelkobold", "feldschleim"]],
 		"erlaubt": ["schlag", "kraftschlag", "erste_hilfe", "row", "trank"],
 		"erfahrung": 100,
 		"hinweise": {

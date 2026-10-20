@@ -128,7 +128,8 @@ func _test_building_blocks() -> void:
 	_check(p.progress.gold == 25 and p.progress.item_count("heiltrank") == 1 and p.progress.item_count("kraut") == 0,
 		"Belohnung: 25 Gold und ein Heiltrank, die Kräuter sind weg")
 	_check(p.progress.xp == 100 and p.progress.level == 2, "100 Erfahrung = Stufe 2")
-	_check("Stufe 2 erreicht!" in notices, "Meldung „Stufe 2 erreicht!“ kommt")
+	_check(notices.any(func(n: String) -> bool: return n.begins_with("Stufe 2 erreicht!") and n.contains("Leben +7")), "Meldung „Stufe 2 erreicht!“ mit neuen Werten kommt")
+	_check(notices.any(func(n: String) -> bool: return n.contains("Werte (C)")), "Tipp zu den Werten kommt")
 	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "dialog_next"})
 	_check(not p.in_dialog() and world.objective(p) == "", "Alles erledigt, kein offenes Ziel")
@@ -141,19 +142,15 @@ func _test_building_blocks() -> void:
 	_talk(world, p, "ye_tor")
 	world.apply_command("a", {type = "dialog_choose", index = 0})
 	_check(p.progress.quest_state("grundausbildung") == "aktiv", "Grundausbildung angenommen")
-	for lesson: String in ["lektion_tempo", "lektion_faehigkeiten", "lektion_parieren", "lektion_reihen"]:
-		if not p.in_dialog():
-			_talk(world, p, "ye_tor")
-		world.apply_command("a", {type = "dialog_choose", index = 0})
-		_check(battles.back() == lesson and not p.in_dialog(), "Ye startet " + lesson)
-		# Verlieren zählt nicht, gewinnen schon
-		world.apply_command("a", {type = "kampf_ergebnis", kampf = lesson, gewonnen = false})
-		_check(not world.goal_done(p, {art = "kampf", kampf = lesson}), lesson + " verloren: noch nicht bestanden")
-		world.apply_command("a", {type = "kampf_ergebnis", kampf = lesson, gewonnen = true})
-		_check(world.goal_done(p, {art = "kampf", kampf = lesson}), lesson + " gewonnen: bestanden")
-	_check(p.progress.quest_state("grundausbildung") == "fertig", "Alle vier Lektionen bestanden")
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(battles.back() == "grundausbildung" and not p.in_dialog(), "Ye startet den langen Übungskampf")
+	# Verlieren zählt nicht, gewinnen schon
+	world.apply_command("a", {type = "kampf_ergebnis", kampf = "grundausbildung", gewonnen = false})
+	_check(not world.goal_done(p, {art = "kampf", kampf = "grundausbildung"}), "Übungskampf verloren: noch nicht bestanden")
+	world.apply_command("a", {type = "kampf_ergebnis", kampf = "grundausbildung", gewonnen = true})
+	_check(p.progress.quest_state("grundausbildung") == "fertig", "Übungskampf gewonnen: Grundausbildung bestanden")
 	var xp_before := p.progress.xp
-	world.apply_command("a", {type = "kampf_ergebnis", kampf = "lektion_tempo", gewonnen = true})
+	world.apply_command("a", {type = "kampf_ergebnis", kampf = "grundausbildung", gewonnen = true})
 	_check(p.progress.xp == xp_before, "Erfahrung gibt es nur beim ersten Sieg")
 	_talk(world, p, "ye_tor")
 	world.apply_command("a", {type = "dialog_choose", index = 0})

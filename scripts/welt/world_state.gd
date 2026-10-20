@@ -644,7 +644,9 @@ func _give_xp(p: PlayerState, amount: int) -> void:
 	var reached := p.progress.add_xp(amount)
 	_say(p, GameData.text("erfahrung", [amount]))
 	for level in reached:
-		_say(p, GameData.text("stufe", [level]))
+		_say(p, GameData.text("stufe", [level, Grundwerte.growth_text()]))
+		if level == 2:
+			_say(p, GameData.text("werte_tipp"))
 
 
 func _give_item(p: PlayerState, item_id: String, count: int) -> void:

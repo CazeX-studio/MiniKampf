@@ -107,6 +107,9 @@ var res_def := 0
 var off_idle := 0
 var def_idle := 0
 
+## Angriffs-Faktor aus den Grundwerten (Novize in der Kreuzweg-Demo): mehr Schaden und Heilung pro Stufe
+var power := 1.0
+
 # Gegner
 var resist := 1.0
 ## Großer Gegner (Boss): größeres Namensschild unter der Figur

@@ -270,7 +270,7 @@ func screen_to_cell(p: Vector2) -> Vector2i:
 
 # --- Eingabe --------------------------------------------------------------------
 # PC: Klicken = hinlaufen, WASD/Pfeiltasten = laufen, E/Leertaste = reden bzw. weiter,
-#     1–4 = Antwort wählen, J = Auftragsbuch, I = Tasche, Esc = Fenster schließen.
+#     1–4 = Antwort wählen, J = Auftragsbuch, I = Tasche, C = Werte, Esc = Fenster schließen.
 # Handy: Antippen = hinlaufen, Steuerknopf unten links (erscheint unter dem Daumen), Aktions-Knopf unten rechts.
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -285,6 +285,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_toggle_panel("auftraege")
 		elif key == KEY_I:
 			_toggle_panel("tasche")
+		elif key == KEY_C:
+			_toggle_panel("werte")
 		elif key == KEY_ESCAPE and local_player().shop != "":
 			_send({type = "laden_zu"})
 		elif key == KEY_ESCAPE and _panel.visible:
@@ -543,7 +545,7 @@ func _build_ui() -> void:
 	_buttons.append(volume)
 
 	var x := 1170.0
-	for info: Array in [["Menü", 96, _go_menu], ["Tasche (I)", 120, _toggle_panel.bind("tasche")],
+	for info: Array in [["Menü", 96, _go_menu], ["Tasche (I)", 120, _toggle_panel.bind("tasche")], ["Werte (C)", 116, _toggle_panel.bind("werte")],
 			["Aufträge (J)", 140, _toggle_panel.bind("auftraege")], [GameData.text("neu_beginnen"), 140, _restart]]:
 		var button := Button.new()
 		button.text = info[0]
@@ -918,6 +920,19 @@ func _fill_panel() -> void:
 		if not unlocked.is_empty():
 			lines.append("[b]%s[/b]" % GameData.text("erfolge"))
 			lines.append_array(unlocked)
+	elif _panel_mode == "werte":
+		_panel_title.text = GameData.text("werte")
+		var stats := Grundwerte.for_level(p.progress.level)
+		lines.append("[b]Stufe %d[/b]" % p.progress.level)
+		lines.append("")
+		for key: String in Grundwerte.NAMES:
+			lines.append("[b]%s: %d[/b]" % [Grundwerte.NAMES[key], stats[key]])
+		lines.append("")
+		lines.append(GameData.text("werte_naechste", [Grundwerte.growth_text()]))
+		lines.append("")
+		lines.append(GameData.text("werte_erklaerung"))
+		lines.append("")
+		lines.append("[color=#a0a0a0]%s[/color]" % GameData.text("werte_spaeter"))
 	else:
 		_panel_title.text = GameData.text("tasche")
 		lines.append("[b]Gold: %d[/b]" % p.progress.gold)

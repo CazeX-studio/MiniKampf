@@ -32,8 +32,8 @@ func _run() -> void:
 	await _frames(5)
 	_check(current_scene is Combat, "Wechsel zum Kampfbildschirm")
 	var combat: Combat = current_scene
-	_check(combat.state.setup.get("name", "") == "Lektion 1: Die Tempo-Leiste", "Lektion 1 läuft")
-	_check(combat.state.heroes[0].display_name == "Du" and combat.state.heroes[0].max_hp == 100, "Novize mit Stufe 2 (100 Leben)")
+	_check(combat.state.setup.get("name", "") == "Grundausbildung bei Ye", "Übungskampf läuft")
+	_check(combat.state.heroes[0].display_name == "Du" and combat.state.heroes[0].max_hp == 52, "Novize mit Stufe 2 (52 Leben)")
 	_check(combat.state.heroes[0].wares.get("heiltrank", -1) == 2, "Beide Heiltränke sind im Kampf dabei")
 	# Ein Trank wird getrunken
 	combat.state.heroes[0].wares.heiltrank = 1
@@ -42,8 +42,8 @@ func _run() -> void:
 	town = current_scene
 	_check(town.has_method("local_player"), "Zurück in der Stadt")
 	local = town.local_player()
-	_check(local.progress.flags.has("kampf_gewonnen:lektion_tempo"), "Lektion 1 zählt als bestanden")
-	_check(local.progress.xp == 175, "75 Erfahrung für den ersten Sieg")
+	_check(local.progress.flags.has("kampf_gewonnen:grundausbildung"), "Übungskampf zählt als bestanden")
+	_check(local.progress.xp == 400, "300 Erfahrung für den ersten Sieg")
 	_check(local.progress.item_count("heiltrank") == 1, "Getrunkener Heiltrank fehlt in der Tasche")
 	_check(local.cell == Vector2i(12, 18) or (Vector2(local.cell) - Vector2(12, 19)).length() < 2.0, "Spieler steht noch bei Ye")
 	SaveGame.delete()

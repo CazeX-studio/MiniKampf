@@ -11,7 +11,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   (alle 9 Schritte aus `KREUZWEG_PLAN.md`). Steuerung per Tasten, Steuerknopf oder Antippen, Speichern, Musik mit Lautstärke-Regler.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **begonnen.** Schritt 1 ist eingebaut:
   bis zu 4 Spieler laufen gemeinsam durch Kreuzweg (Gastgeber am PC, Mitspieler treten bei).
-- **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück einarbeiten (kommen später), Schritt 1 von
+- **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); offen: Kampf-Sounds, größere Stadt mit Ständen, Gesandten-Auswahl mit zwei Klassen pro Region. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
 - **Platzhalter:** Alle Texte der Hauptfiguren (Ye, Mira, Ren, Marv, Lene, Bingo, Gesandte …) stehen in `data/dialoge.json`
@@ -350,6 +350,28 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     den Sternenfresser in der Geschichte öfter (etwa jedes zweite Mal) als ohne Tränke. Dein Eindruck beim Testen
     entscheidet, ob er schwerer werden soll.
 
+- **Schritt 18 – Rückmeldungen aus deinem Test, Teil 1** (Grundwerte, ein langer Lernkampf, Kleinigkeiten):
+  - **Die Unbekannte** nennt ihren Namen nicht mehr: „???“ über dem Kopf und im Gespräch („Niemand. Und du hast mich nie gesehen.“).
+  - **Marv** sagt „Ich hab Zeit. Ganz viel Zeit.“ nur noch beim ersten Mal. Danach fragt er weiter nach der Sternentafel
+    („Ich frag morgen wieder. Und übermorgen.“), auf dem Fest wird er vom Stern unterbrochen, beim Abschied:
+    „Aber wehe, du übst da draußen heimlich!“ (Platzhalter.)
+  - **Klassenwahl:** keine Zahlen mehr hinter den Werten im Diagramm.
+  - **Grundwerte** (neu, Zahlen in `data/stufen.json`, **vorläufig, Feinschliff am Ende**): Leben, Mana, Angriff, Tempo.
+    Stufe 1: 45 Leben (vorher 90), 30 Mana, Angriff 20, Tempo 11. Jede Stufe: **Leben +7, Mana +3, Angriff +1**.
+    Angriff 20 = normaler Schaden, jeder Punkt mehr = 5 % mehr Schaden **und Heilung** (Stufe 9: 40 % mehr).
+    Beim Stufenaufstieg steht, was gewachsen ist. Neues Fenster **„Werte (C)“** in der Stadt erklärt die Grundwerte.
+    Ye erklärt sie auch im ersten Kampf. Die sechs Eigenschaften mit freien Punkten (design.md) kommen später mit der Klasse.
+  - **Ein langer Lernkampf statt vier einzelner:** „Grundausbildung bei Ye“ hat vier Phasen (Tempo-Leiste → Fähigkeiten →
+    Parieren gegen Ye → zwei Reihen). Jede Phase bringt neue Gegner, schaltet neue Fähigkeiten frei und Ye erklärt.
+    Dein Leben geht mit in die nächste Phase (ein Viertel wird geheilt). Verlierst du, beginnt „Nochmal versuchen“
+    bei der Lektion, in der du verloren hast. 300 Erfahrung beim ersten Sieg.
+  - **Schwerer:** Feldschleim, Wiesenkobold und Rüpelkobold schlagen härter, Kobolde haben mehr Leben.
+    Der Gruppenkampf hat eine **zweite Welle** (zwei Rüpelkobolde). Messung mit dem Computer-Spieler (pariert die Hälfte):
+    Lernkampf 18 von 30 gewonnen, Gruppenkampf 25 von 30, Sternenfresser 8 von 30. Im kompletten Durchlauf hat der
+    Computer den Gruppenkampf erst im dritten Versuch geschafft. Probestunden bleiben leicht (zum Ausprobieren).
+  - Sandbox unverändert (Vergleich mit 75 Kämpfen: gleich).
+    sie mit. (Im fertigen Spiel ist der erste Abschluss der über den Auftrag.) Auch in design.md eingetragen.
+
 ## Fertig in Runde 1
 
 - **Schritt 1 – Kampf-Sandbox:** Alle 11 Klassen, Element-Sechseck, Zähmer mit Monster-Wechsel,
@@ -375,6 +397,14 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 ## Was du testen kannst
 
 Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spiel startet jetzt mit einem Menü.
+
+**Neu: Grundwerte und langer Lernkampf** (Kreuzweg-Demo → „Neu beginnen“)
+1. Oben rechts „Werte (C)“ antippen: Leben 45, Mana 30, Angriff 20, Tempo 11 – mit kurzer Erklärung.
+2. Bei Ye am Tor: Die Grundausbildung ist jetzt ein einziger langer Kampf mit vier Lektionen hintereinander.
+   Achte darauf, ob Ye zwischendurch gut erklärt, was neu ist.
+3. Verlier ruhig mal absichtlich in Lektion 3 oder 4: „Nochmal versuchen“ sollte bei dieser Lektion weitermachen.
+4. Fühlen sich die Kämpfe jetzt fordernder an? Besonders der Gruppenkampf mit der zweiten Welle.
+5. Die Unbekannte nach dem Sternenfall heißt nur „???“, und Marv sagt „Ganz viel Zeit“ nur beim ersten Mal.
 
 **Neu in Runde 2 – bitte testen** (Kampf-Sandbox)
 1. Bogenschütze ins Team nehmen und „Schnellfeuer“ antippen: Drei Pfeile fliegen auf zufällige Gegner.

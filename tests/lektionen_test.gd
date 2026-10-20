@@ -6,7 +6,7 @@ extends SceneTree
 ## Mit welcher Stufe man den Kampf im normalen Ablauf erreicht
 const LEVELS := {
 	"sternenfall": 8,
-	"lektion_tempo": 2, "lektion_faehigkeiten": 2, "lektion_parieren": 3, "lektion_reihen": 3, "gruppenkampf": 4,
+	"grundausbildung": 2, "gruppenkampf": 4,
 	"probe:tank": 5, "probe:twilight": 5, "probe:mechanic": 5, "probe:quartermaster": 5, "probe:smith": 5,
 	"probe:blade": 5, "probe:singer": 5, "probe:archer": 5, "probe:tamer": 5, "probe:ritualist": 5, "probe:kunoichi": 5,
 }
@@ -36,25 +36,33 @@ func _run() -> void:
 			if end == "":
 				problems += 1
 				print("FEHLER: %s endet nicht" % kampf_id)
-			# Lektion 1 und 2: Der Novize kann noch nicht parieren
-			if not GameData.battle(kampf_id).get("reaktion", true):
-				for line in node.protokoll.lines:
-					if line.contains("Du reagierst perfekt"):
-						problems += 1
-						print("FEHLER: %s: Parieren schon möglich" % kampf_id)
-			# Lektion mit vorgegebener erster Aktion („Nach hinten“): vorher trifft der Spieler nichts
-			if kampf_id == "lektion_reihen":
+			# Langer Lernkampf: In Lektion 1 und 2 kann der Novize noch nicht parieren,
+			# Lektion 4 beginnt mit „Nach hinten“ (vorher trifft der Spieler nichts)
+			if kampf_id == "grundausbildung":
 				var lines: PackedStringArray = node.protokoll.lines
-				var moved := -1
-				var first_hit := -1
+				var l3 := -1
+				var l4 := -1
 				for n in lines.size():
-					if moved < 0 and lines[n] == "LOG Du wechselt nach hinten.":
-						moved = n
-					if first_hit < 0 and lines[n].begins_with("TXT Rüpelkobold:"):
-						first_hit = n
-				if moved < 0 or (first_hit >= 0 and first_hit < moved):
-					problems += 1
-					print("FEHLER: Lektion 4 beginnt nicht mit „Nach hinten“")
+					if l3 < 0 and lines[n].contains("Lektion 3: Parieren"):
+						l3 = n
+					if l4 < 0 and lines[n].contains("Lektion 4: Zwei Reihen"):
+						l4 = n
+				for n in (l3 if l3 >= 0 else lines.size()):
+					if lines[n].contains("Du reagierst perfekt"):
+						problems += 1
+						print("FEHLER: Parieren schon in Lektion 1/2 möglich")
+						break
+				if l4 >= 0:
+					var moved := -1
+					var first_hit := -1
+					for n in range(l4, lines.size()):
+						if moved < 0 and lines[n] == "LOG Du wechselt nach hinten.":
+							moved = n
+						if first_hit < 0 and lines[n].begins_with("TXT Rüpelkobold:"):
+							first_hit = n
+					if first_hit >= 0 and (moved < 0 or first_hit < moved):
+						problems += 1
+						print("FEHLER: Lektion 4 beginnt nicht mit „Nach hinten“")
 			if end == "ENDE Sieg":
 				wins += 1
 			turns += node.state.turns

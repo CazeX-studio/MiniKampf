@@ -31,9 +31,14 @@ static func prepare(id: String, level: int, potions := 0) -> bool:
 			ult = float(data.get("ult_start", 0))}
 	if klasse == "novize":
 		player["traenke"] = potions
-	# Parieren lernt man erst in Lektion 3: davor hat der Novize keine Reaktion
+	# Parieren lernt man erst in Lektion 3: davor hat der Novize keine Reaktion (im langen Lernkampf je Phase)
 	if not data.get("reaktion", true):
 		player["reaktion"] = ""
+	# Langer Lernkampf: jede Phase ist eine Welle mit eigenen Regeln
+	var phases: Array = data.get("phasen", [])
+	var waves: Array = data.get("wellen", [])
+	if not phases.is_empty():
+		waves = phases.map(func(ph: Dictionary) -> Array: return ph.gegner)
 	var heroes: Array = [player]
 	for b: Dictionary in data.get("begleiter", []):
 		heroes.append({klasse = "novize", name = b.name, aussehen = b.get("aussehen", "novize"), stufe = level, computer = true})
@@ -45,7 +50,7 @@ static func prepare(id: String, level: int, potions := 0) -> bool:
 		name = data.get("name", id),
 		ansage = data.get("ansage", ""),
 		helden = heroes,
-		wellen = data.wellen,
+		wellen = waves,
 		erlaubt = data.get("erlaubt", []),
 		hinweise = data.get("hinweise", {}),
 		ziel_paraden = int(data.get("ziel_paraden", 0)),
@@ -53,6 +58,8 @@ static func prepare(id: String, level: int, potions := 0) -> bool:
 		hintergrund = data.get("hintergrund", "wiese"),
 		zuerst = data.get("zuerst", ""),
 	}
+	if not phases.is_empty():
+		setup["phasen"] = phases
 	return true
 
 
@@ -65,7 +72,10 @@ static func finish(won: bool, potions_used := 0) -> void:
 
 
 ## „Nochmal versuchen“: getrunkene Tränke sind weg, der neue Versuch beginnt mit dem Rest.
-static func retry(potions_used: int) -> void:
+## Im langen Lernkampf geht es bei der Phase weiter, in der man verloren hat.
+static func retry(potions_used: int, phase := 0) -> void:
 	used_before += potions_used
+	if setup.has("phasen"):
+		setup["start_welle"] = phase
 	if not setup.is_empty():
 		setup.helden[0]["traenke"] = maxi(0, int(setup.helden[0].get("traenke", 0)) - potions_used)

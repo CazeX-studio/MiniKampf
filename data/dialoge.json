@@ -130,10 +130,7 @@
 			{"wenn": {"auftrag": "abreise", "stand": "aktiv", "nicht_gemerkt": "klasse_gewaehlt"}, "knoten": "wahl"},
 			{"wenn": {"auftrag": "abreise", "stand": "aktiv", "gemerkt": "klasse_gewaehlt"}, "knoten": "abschied"},
 			{"wenn": {"auftrag": "grundausbildung", "stand": "neu"}, "knoten": "morgen"},
-			{"wenn": {"auftrag": "grundausbildung", "stand": "aktiv", "nicht_gemerkt": "kampf_gewonnen:lektion_tempo"}, "knoten": "l1"},
-			{"wenn": {"auftrag": "grundausbildung", "stand": "aktiv", "nicht_gemerkt": "kampf_gewonnen:lektion_faehigkeiten"}, "knoten": "l2"},
-			{"wenn": {"auftrag": "grundausbildung", "stand": "aktiv", "nicht_gemerkt": "kampf_gewonnen:lektion_parieren"}, "knoten": "l3"},
-			{"wenn": {"auftrag": "grundausbildung", "stand": "aktiv", "nicht_gemerkt": "kampf_gewonnen:lektion_reihen"}, "knoten": "l4"},
+			{"wenn": {"auftrag": "grundausbildung", "stand": "aktiv"}, "knoten": "uebung"},
 			{"wenn": {"auftrag": "grundausbildung", "stand": "fertig"}, "knoten": "abschluss"},
 			{"wenn": {"auftrag": "erster_gruppenkampf", "stand": "neu"}, "knoten": "gruppe"},
 			{"wenn": {"auftrag": "erster_gruppenkampf", "stand": "aktiv"}, "knoten": "gruppe_wartet"},
@@ -141,27 +138,15 @@
 			{"knoten": "danach"}
 		],
 		"knoten": {
-			"morgen": {"wer": "Ye", "text": "Pünktlich. Gut. Hier vor dem Tor lernst du kämpfen: vier Lektionen, eine nach der anderen.", "antworten": [
-				{"text": "Ich bin bereit.", "weiter": "l1", "aktionen": [{"auftrag_starten": "grundausbildung"}]},
+			"morgen": {"wer": "Ye", "text": "Pünktlich. Gut. Hier vor dem Tor lernst du kämpfen: ein langer Übungskampf, vier Lektionen am Stück. Ich erkläre dir alles unterwegs.", "antworten": [
+				{"text": "Ich bin bereit.", "weiter": "uebung", "aktionen": [{"auftrag_starten": "grundausbildung"}]},
 				{"text": "Gleich, ich muss noch etwas erledigen.", "aktionen": [{"auftrag_starten": "grundausbildung"}]}
 			]},
-			"l1": {"wer": "Ye", "text": "Lektion 1: Wer zuerst handelt, gewinnt oft. Schau dir an, wann du dran bist. Da drüben kriecht ein Feldschleim.", "antworten": [
-				{"text": "Los geht's!", "aktionen": [{"kampf": "lektion_tempo"}]},
+			"uebung": {"wer": "Ye", "text": "Wer zuerst handelt, gewinnt oft. Schlagen, heilen, parieren, den richtigen Platz finden – eins nach dem anderen. Hör gut zu, wenn ich etwas erkläre.", "antworten": [
+				{"text": "Los geht's!", "aktionen": [{"kampf": "grundausbildung"}]},
 				{"text": "Gleich."}
 			]},
-			"l2": {"wer": "Ye", "text": "Lektion 2: Ein Schlag allein reicht selten. Ich zeige dir zwei Kniffe: Kraftschlag und Erste Hilfe.", "antworten": [
-				{"text": "Zeig her!", "aktionen": [{"kampf": "lektion_faehigkeiten"}]},
-				{"text": "Gleich."}
-			]},
-			"l3": {"wer": "Ye", "text": "Lektion 3. Schild hoch, Schild runter. Im richtigen Moment, nicht früher. Ich greife dich jetzt an.", "antworten": [
-				{"text": "Ich bin bereit.", "aktionen": [{"kampf": "lektion_parieren"}]},
-				{"text": "Gleich."}
-			]},
-			"l4": {"wer": "Ye", "text": "Lektion 4: Vorne trifft man hart und wird hart getroffen. Hinten ist es ruhiger. Such dir den richtigen Platz.", "antworten": [
-				{"text": "Verstanden, los!", "aktionen": [{"kampf": "lektion_reihen"}]},
-				{"text": "Gleich."}
-			]},
-			"abschluss": {"wer": "Ye", "text": "Vier Lektionen, vier Mal gestanden. Nicht schlecht für einen Novizen.", "antworten": [
+			"abschluss": {"wer": "Ye", "text": "Vier Lektionen am Stück, und du stehst noch. Nicht schlecht für einen Novizen.", "antworten": [
 				{"text": "Danke, Ye.", "weiter": "gruppe", "aktionen": [{"auftrag_abgeben": "grundausbildung"}]}
 			]},
 			"gruppe": {"wer": "Ye", "text": "Allein kommt da draußen niemand weit. Ida, Bo und Tom sind auch Novizen. Kobolde treiben sich auf der Übungswiese herum – vertreibt sie zusammen.", "antworten": [

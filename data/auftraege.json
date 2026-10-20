@@ -31,14 +31,11 @@
 	},
 	"grundausbildung": {
 		"titel": "Grundausbildung",
-		"beschreibung": "Ye bringt dir vor dem Stadttor in vier Lektionen das Kämpfen bei. Sprich mit ihm, um eine Lektion zu beginnen.",
+		"beschreibung": "Ye bringt dir vor dem Stadttor das Kämpfen bei: ein langer Übungskampf mit vier Lektionen. Sprich mit ihm, um anzufangen.",
 		"start_bei": "ye_tor",
 		"voraussetzung": "erster_auftrag",
 		"ziele": [
-			{"art": "kampf", "kampf": "lektion_tempo", "bei": "ye_tor", "text": "Lektion 1: Die Tempo-Leiste"},
-			{"art": "kampf", "kampf": "lektion_faehigkeiten", "bei": "ye_tor", "text": "Lektion 2: Fähigkeiten"},
-			{"art": "kampf", "kampf": "lektion_parieren", "bei": "ye_tor", "text": "Lektion 3: Parieren"},
-			{"art": "kampf", "kampf": "lektion_reihen", "bei": "ye_tor", "text": "Lektion 4: Zwei Reihen"}
+			{"art": "kampf", "kampf": "grundausbildung", "bei": "ye_tor", "text": "Den Übungskampf bei Ye bestehen"}
 		],
 		"abgeben_bei": "ye_tor",
 		"belohnung": {"gold": 20, "erfahrung": 100}

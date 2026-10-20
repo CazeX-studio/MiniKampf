@@ -22,6 +22,8 @@ const WARES := {
 	"kraftkraut": {name = "Kraftkraut", info = "Angriff+ 2 Züge, +10 LP", value = 25, then = "ally"},
 }
 const START_WARES := {"heiltrank": 3, "manatrank": 2, "bombe": 2, "kraftkraut": 2}
+## Grundschaden und -heilung des Novizen (wächst mit dem Angriff, s. Grundwerte)
+const NOVIZE := {schlag = 12, kraftschlag = 20, erste_hilfe = 16, trank = 25}
 const START_GOLD := 300
 const CART_HP := 60
 ## Passive "Feilschen": Gold-Fähigkeiten kosten weniger.
@@ -208,12 +210,12 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 			]
 		"novize":
 			list = [
-				{id = "schlag", name = "Schlag", info = "12 Nahkampf", target = "enemy"},
-				{id = "kraftschlag", name = "Kraftschlag", info = "20 Nahkampf · 10 Mana", target = "enemy", mana = 10, cd = 2},
-				{id = "erste_hilfe", name = "Erste Hilfe", info = "Heilt 22 · 12 Mana", target = "ally", mana = 12, cd = 2},
+				{id = "schlag", name = "Schlag", info = "%d Nahkampf" % roundi(NOVIZE.schlag * f.power), target = "enemy"},
+				{id = "kraftschlag", name = "Kraftschlag", info = "%d Nahkampf · 10 Mana" % roundi(NOVIZE.kraftschlag * f.power), target = "enemy", mana = 10, cd = 2},
+				{id = "erste_hilfe", name = "Erste Hilfe", info = "Heilt %d · 12 Mana" % roundi(NOVIZE.erste_hilfe * f.power), target = "ally", mana = 12, cd = 2},
 			]
 			if f.wares.has("heiltrank"):
-				list.append({id = "trank", name = "Heiltrank (%d)" % f.wares.heiltrank, info = "Heilt 35 · aus deiner Tasche", target = "ally"})
+				list.append({id = "trank", name = "Heiltrank (%d)" % f.wares.heiltrank, info = "Heilt %d · aus deiner Tasche" % roundi(NOVIZE.trank * f.power), target = "ally"})
 		"singer":
 			var lullaby_info := "Heilt 24, +1 Schutz-Sternbild · 8 Mana"
 			if f.res_def >= Fighter.MAX_RES:
@@ -1282,13 +1284,13 @@ func _novize(f: Fighter, id: String, target: Fighter) -> void:
 	match id:
 		"schlag":
 			c.lunge(f, target, 0.25)
-			c.hit(f, target, 12, "melee")
+			c.hit(f, target, NOVIZE.schlag, "melee")
 		"kraftschlag":
 			c.lunge(f, target, 0.3)
-			c.hit(f, target, 20, "melee")
+			c.hit(f, target, NOVIZE.kraftschlag, "melee")
 		"erste_hilfe":
-			c.heal(f, target, 22)
+			c.heal(f, target, roundi(NOVIZE.erste_hilfe * f.power))
 		"trank":
 			f.wares.heiltrank -= 1
 			c.add_log("%s trinkt einen Heiltrank." % f.display_name if target == f else "%s reicht %s einen Heiltrank." % [f.display_name, target.display_name])
-			c.heal(f, target, 35)
+			c.heal(f, target, roundi(NOVIZE.trank * f.power))

@@ -1,4 +1,6 @@
 {
-	"hinweis": "Erfahrung, die man insgesamt braucht, um eine Stufe zu erreichen. Erster Eintrag = Stufe 1, letzter = Stufe 10 (Höchststufe der Demo). Vorläufige Zahlen.",
-	"erfahrung_fuer_stufe": [0, 100, 250, 450, 700, 1000, 1350, 1750, 2200, 2700]
+	"hinweis": "Erfahrung, die man insgesamt braucht, um eine Stufe zu erreichen. Erster Eintrag = Stufe 1, letzter = Stufe 10 (Höchststufe der Demo). Grundwerte: Werte des Novizen auf Stufe 1, pro_stufe kommt mit jeder weiteren Stufe dazu. Angriff 20 = normaler Schaden, jeder Punkt mehr = 5 % mehr Schaden und Heilung. Vorläufige Zahlen.",
+	"erfahrung_fuer_stufe": [0, 100, 250, 450, 700, 1000, 1350, 1750, 2200, 2700],
+	"grundwerte": {"leben": 45, "mana": 30, "angriff": 20, "tempo": 11},
+	"pro_stufe": {"leben": 7, "mana": 3, "angriff": 1, "tempo": 0}
 }

@@ -71,6 +71,8 @@ var setup := {}
 var computer := {}
 ## Lektion mit vorgegebener erster Aktion (setup.zuerst): schon erledigt?
 var first_done := false
+## Langer Lernkampf (setup.phasen): perfekte Paraden zu Beginn der aktuellen Phase
+var parry_base := 0
 
 var _events: Array[Dictionary] = []
 var _last_crit := false
@@ -90,7 +92,7 @@ func run() -> void:
 	_create_heroes()
 	if setup.has("wellen"):
 		waves = setup.wellen
-		_spawn_wave(0)
+		_spawn_wave(int(setup.get("start_welle", 0)))
 		await _battle_loop()
 		return
 	waves = Sandbox.ENCOUNTERS[encounter].waves
@@ -240,11 +242,19 @@ func _create_heroes() -> void:
 		var spec: Dictionary = specs[i]
 		var id: String = spec.klasse
 		var data: Dictionary = Sandbox.CLASSES[id]
-		# Höhere Stufe (Novize in der Kreuzweg-Demo): etwas mehr Leben und Mana
+		# Höhere Stufe: mehr Leben und Mana (der Novize bekommt seine Grundwerte, s. Grundwerte)
 		var level_bonus := int(spec.get("stufe", 1)) - 1
-		var h := Fighter.new(spec.get("name", data.hero), id, data.title, true, data.hp + LEVEL_HP * level_bonus, data.tempo, data.color)
+		var h: Fighter
+		if id == "novize":
+			# Novize: Grundwerte je nach Stufe (data/stufen.json)
+			var stats := Grundwerte.for_level(level_bonus + 1)
+			h = Fighter.new(spec.get("name", data.hero), id, data.title, true, stats.leben, stats.tempo, data.color)
+			h.max_mana = stats.mana
+			h.power = Grundwerte.power(level_bonus + 1)
+		else:
+			h = Fighter.new(spec.get("name", data.hero), id, data.title, true, data.hp + LEVEL_HP * level_bonus, data.tempo, data.color)
+			h.max_mana = data.mana + LEVEL_MANA * level_bonus if data.mana > 0 else 0
 		h.look = spec.get("aussehen", "")
-		h.max_mana = data.mana + LEVEL_MANA * level_bonus if data.mana > 0 else 0
 		h.mana = data.get("start_mana", h.max_mana)
 		h.reaction = spec.get("reaktion", data.reaction)
 		h.back_row = data.back
@@ -298,9 +308,13 @@ func tame(tamer: Fighter, e: Fighter) -> void:
 
 func _spawn_wave(index: int) -> void:
 	wave = index
+	if setup.has("phasen"):
+		_apply_phase(index)
 	var ids: Array = waves[index]
 	spawn_enemies(ids)
-	if waves.size() > 1:
+	if setup.has("phasen"):
+		add_log("\n[b]%s[/b]" % setup.phasen[index].get("name", ""))
+	elif waves.size() > 1:
 		add_log("\n[b]Welle %d von %d[/b]" % [index + 1, waves.size()])
 	if setup.has("ansage"):
 		add_log("[b]%s[/b]" % setup.ansage)
@@ -310,6 +324,21 @@ func _spawn_wave(index: int) -> void:
 		add_log("[b]Ein Steinwächter (Erde) und seine Begleiter greifen an![/b]")
 	else:
 		add_log("[b]Monster mit vier Elementen greifen an![/b] Auf die Farbe am Namen achten.")
+
+
+## Langer Lernkampf: Jede Phase (Lektion) bringt eigene Regeln mit – erlaubte Fähigkeiten, Reaktion an/aus,
+## Paraden-Ziel, Pflicht-Aktion, Ansage und Ye-Erklärungen.
+func _apply_phase(index: int) -> void:
+	var phase: Dictionary = setup.phasen[index]
+	setup.erlaubt = phase.get("erlaubt", [])
+	setup.ziel_paraden = int(phase.get("ziel_paraden", 0))
+	setup.zuerst = phase.get("zuerst", "")
+	setup.hinweise = phase.get("hinweise", {})
+	setup.ansage = phase.get("ansage", "")
+	first_done = false
+	var player := heroes[0]
+	player.reaction = Sandbox.CLASSES[player.klass].reaction if phase.get("reaktion", true) else ""
+	parry_base = player.stat_perfect
 
 
 ## Ersetzt alle Gegner durch neue (Kennungen aus Sandbox.ENEMIES).
@@ -485,10 +514,11 @@ func _check_end() -> bool:
 	var cleared := alive(enemies).is_empty()
 	# Paraden-Lektion: gewonnen, sobald der Spieler oft genug perfekt pariert hat
 	var parries_needed := int(setup.get("ziel_paraden", 0))
-	if parries_needed > 0 and not lost and heroes[0].stat_perfect >= parries_needed:
+	if parries_needed > 0 and not lost and heroes[0].stat_perfect - parry_base >= parries_needed:
 		add_log("[color=#8affc1][b]%d perfekte Paraden – Lektion bestanden![/b][/color]" % parries_needed)
 		cleared = true
-		wave = waves.size() - 1
+		if not setup.has("phasen"):
+			wave = waves.size() - 1
 	if cleared and not lost and wave < waves.size() - 1:
 		_next_wave()
 		return false
@@ -514,7 +544,10 @@ func _check_end() -> bool:
 func _next_wave() -> void:
 	status("Welle geschafft!")
 	wait(0.8)
-	banner("Welle %d" % (wave + 2))
+	if setup.has("phasen"):
+		banner(setup.phasen[wave + 1].get("name", ""))
+	else:
+		banner("Welle %d" % (wave + 2))
 	for h in alive(heroes):
 		heal(null, h, roundi(h.max_hp * WAVE_HEAL))
 	_spawn_wave(wave + 1)
@@ -761,7 +794,7 @@ func calc_damage(attacker: Fighter, target: Fighter, base: float, kind: String, 
 		dmg *= target.plate
 	_last_eff = Elements.multiplier(element, target.element)
 	dmg *= _last_eff
-	dmg *= skills.damage_bonus(attacker)
+	dmg *= skills.damage_bonus(attacker) * attacker.power
 	if attacker.is_ally():
 		# Passive "Ruhige Hand": Der Bogenschütze trifft aus der hinteren Reihe öfter kritisch.
 		var chance := CRIT_CHANCE

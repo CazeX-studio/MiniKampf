@@ -123,9 +123,11 @@ func _attack_hint(target: Fighter) -> void:
 ## Erklär-Fenster der Grundausbildung: Der Kampf wartet, bis „Verstanden“ angetippt wird.
 func _show_hint(key: String) -> void:
 	var hints: Dictionary = state.setup.get("hinweise", {})
-	if _hints_shown.has(key) or not hints.has(key):
+	# Im langen Lernkampf hat jede Phase ihre eigenen Erklärungen
+	var seen := "%d:%s" % [state.wave, key]
+	if _hints_shown.has(seen) or not hints.has(key):
 		return
-	_hints_shown[key] = true
+	_hints_shown[seen] = true
 	var panel := PanelContainer.new()
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(0.04, 0.05, 0.11, 0.96)
@@ -1114,7 +1116,7 @@ func _world_buttons(shade: Control, won: bool) -> void:
 		again.size = Vector2(330, 72)
 		again.position = Vector2(290, 560)
 		again.pressed.connect(func() -> void:
-			BattleRequest.retry(_potions_used())
+			BattleRequest.retry(_potions_used(), state.wave)
 			get_tree().reload_current_scene())
 		shade.add_child(again)
 

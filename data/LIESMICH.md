@@ -58,8 +58,8 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
   `zuerst` (diese Aktion muss als Erstes kommen, alles andere ist bis dahin gesperrt, z. B. `"row"` in Lektion 4),
   `ziel_paraden` (gewonnen nach so vielen perfekten Paraden) und `hinweise` (Erklär-Fenster:
   `erster_zug` = vor deinem ersten Zug, `erste_reaktion` = vor dem ersten Angriff auf dich).
-- **Aktion** `{"kampf": "lektion_tempo"}` im Dialog startet den Kampf.
-- **Ziel-Art** `{"art": "kampf", "kampf": "lektion_tempo", "bei": "ye_tor", "text": "…"}` ist erfüllt, sobald der Kampf gewonnen ist.
+- **Aktion** `{"kampf": "grundausbildung"}` im Dialog startet den Kampf.
+- **Ziel-Art** `{"art": "kampf", "kampf": "grundausbildung", "bei": "ye_tor", "text": "…"}` ist erfüllt, sobald der Kampf gewonnen ist.
 - **NPCs** können `"wenn"` haben: Sie sind nur da, wenn die Bedingung stimmt (so steht Ye erst in der Gilde, später am Tor).
 
 ## Läden und NPCs, die einen ansprechen (seit Schritt 4)

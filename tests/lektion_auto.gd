@@ -1,14 +1,14 @@
 extends Combat
 ## Eine Lektion der Grundausbildung mit echter Anzeige, der Computer spielt (für Bildschirmfotos).
 ## Erklär-Fenster werden nach kurzer Zeit automatisch bestätigt.
-## Kampf wählen: Umgebungsvariable LEKTION (Standard: lektion_parieren).
+## Kampf wählen: Umgebungsvariable LEKTION (Standard: grundausbildung).
 
 var ki := KampfKI.new(3)
 var _hint_time := 0.0
 
 
 func _ready() -> void:
-	var id := OS.get_environment("LEKTION") if OS.has_environment("LEKTION") else "lektion_parieren"
+	var id := OS.get_environment("LEKTION") if OS.has_environment("LEKTION") else "grundausbildung"
 	var level := 8 if id == "sternenfall" else (5 if id.begins_with("probe:") else (4 if id == "gruppenkampf" else 3))
 	BattleRequest.prepare(id, level, 2)
 	super()
