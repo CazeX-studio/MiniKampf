@@ -1,0 +1,10 @@
+# Bauplan für den kostenlosen Online-Server bei Render (Anleitung: SERVER_ANLEITUNG.md)
+services:
+  - type: web
+    name: asterfall-server
+    runtime: docker
+    plan: free
+    dockerfilePath: ./server/Dockerfile
+    dockerContext: .
+    branch: main
+    autoDeploy: true

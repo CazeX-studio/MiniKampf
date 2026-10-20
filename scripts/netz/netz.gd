@@ -20,6 +20,15 @@ signal disconnected
 enum Mode { OFFLINE, HOST, SERVER, CLIENT }
 
 const PORT := 8910
+## Adresse des Online-Servers im Internet (Schritt 2, kostenloser Anbieter Render).
+## Stimmt sie nicht (z. B. weil der Name beim Anbieter schon vergeben war), hier ändern.
+const ONLINE_ADDRESS := "wss://asterfall-server.onrender.com"
+## So lange wird auf den Online-Server gewartet (Sekunden). Der kostenlose Server schläft, wenn niemand spielt,
+## und braucht dann bis zu einer Minute zum Aufwachen.
+const ONLINE_WAIT := 120.0
+## Alle so viele Sekunden meldet sich ein Mitspieler kurz beim Gastgeber, auch wenn er nur herumsteht
+## (sonst hält der kostenlose Server die Runde für leer und schläft ein)
+const PING_SECONDS := 30.0
 const MAX_PLAYERS := 4
 ## So oft pro Sekunde schickt der Gastgeber, wo alle stehen
 const SNAPSHOT_RATE := 15.0
@@ -44,6 +53,7 @@ const LOCK_SECONDS := 6.0
 
 var _snapshot_timer := 0.0
 var _lock_timer := 0.0
+var _ping_timer := PING_SECONDS
 ## Kennung dieses Fensters für die Spielstand-Sperre
 var _window_id := str(randi())
 ## Gastgeber: zuletzt geschickter eigener Zustand je Mitspieler (nur Änderungen werden geschickt)
@@ -77,7 +87,8 @@ static func serve() -> Error:
 static func _start_server(p_name: String, look: String, p_mode: Mode) -> Error:
 	stop()
 	var peer := WebSocketMultiplayerPeer.new()
-	var err := peer.create_server(PORT)
+	var port := server_port()
+	var err := peer.create_server(port)
 	if err != OK:
 		return err
 	var node := _node()
@@ -92,8 +103,19 @@ static func _start_server(p_name: String, look: String, p_mode: Mode) -> Error:
 	world.scene_requested.connect(node._on_world_scene)
 	if not _api().peer_disconnected.is_connected(node._on_peer_disconnected):
 		_api().peer_disconnected.connect(node._on_peer_disconnected)
-	print("Netz: Gastgeber bereit auf Port %d" % PORT)
+	print("Netz: Gastgeber bereit auf Port %d" % port)
 	return OK
+
+
+## Port für Gastgeber und Server: Der Anbieter im Internet gibt ihn vor (PORT), sonst --port=… oder 8910.
+static func server_port() -> int:
+	var from_env := OS.get_environment("PORT")
+	if from_env.is_valid_int():
+		return int(from_env)
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--port=") and arg.substr(7).is_valid_int():
+			return int(arg.substr(7))
+	return PORT
 
 
 ## Bei einem Gastgeber mitspielen. Adresse: "localhost", "192.168.0.5" oder eine volle Adresse ("wss://…").
@@ -105,6 +127,8 @@ static func join(address: String, p_name: String, look: String) -> Error:
 	if not url.begins_with("ws://") and not url.begins_with("wss://"):
 		url = "ws://%s:%d" % [url, PORT]
 	var peer := WebSocketMultiplayerPeer.new()
+	# Ein Server im Internet darf länger brauchen (er wacht vielleicht gerade auf)
+	peer.handshake_timeout = ONLINE_WAIT if url.begins_with("wss://") else 5.0
 	var err := peer.create_client(url)
 	if err != OK:
 		return err
@@ -210,6 +234,10 @@ func _process(delta: float) -> void:
 			for id: String in world.players:
 				_flush_own(id)
 	elif mode == Mode.CLIENT and world != null:
+		_ping_timer -= delta
+		if _ping_timer <= 0.0 and my_id != "":
+			_ping_timer = PING_SECONDS
+			_c_ping.rpc_id(1)
 		# Figuren gleiten sanft zu dem Platz, den der Gastgeber zuletzt gemeldet hat
 		for id: String in _targets:
 			var p: PlayerState = world.players.get(id)
@@ -326,6 +354,12 @@ func _c_join(p_name: String, look: String, progress: Dictionary, cell: Array) ->
 	p.progress.load_dict(progress)
 	_sent_own.erase(id)
 	print("Netz: %s ist in Kreuzweg" % p.display_name)
+
+
+## Lebenszeichen eines Mitspielers (hält den kostenlosen Server wach)
+@rpc("any_peer", "reliable")
+func _c_ping() -> void:
+	pass
 
 
 @rpc("any_peer", "reliable")

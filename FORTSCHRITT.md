@@ -12,8 +12,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **begonnen.** Schritt 1 ist eingebaut:
   bis zu 4 Spieler laufen gemeinsam durch Kreuzweg (Gastgeber am PC, Mitspieler treten bei).
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück einarbeiten (kommen später), Schritt 1 von
-  „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`; für Schritt 2
-  (Internet) legt Marco ein Konto bei einem kostenlosen Anbieter an.
+  „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
+  (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
 - **Platzhalter:** Alle Texte der Hauptfiguren (Ye, Mira, Ren, Marv, Lene, Bingo, Gesandte …) stehen in `data/dialoge.json`
   und werden von Marco noch geschrieben (Anleitung in `data/LIESMICH.md`).
 - Selbst gewählte Zahlen und Passiven: Abschnitt „Vorläufige Werte (Feinschliff am Ende)“ unten.
@@ -26,7 +26,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 0 | Plan schreiben | erledigt |
 | 1 | Zusammen in Kreuzweg laufen (Gastgeber, Beitreten, alle sehen sich) | eingebaut, Marco testet |
 | – | Entscheidungen: kostenloser Server, Story gemeinsam mit Abstimmung, Chat mit Schnellsätzen, ein Spielstand | entschieden 20.10., Spielstand eingebaut |
-| 2–8 | Internet, Chat, Gruppe, Geschichte gemeinsam, gemeinsamer Kampf, Sternenfall zusammen, Feinschliff | offen |
+| 2 | Online-Server im Internet (kostenlos bei Render) | vorbereitet, Marco legt das Konto an |
+| 3–8 | Chat, Gruppe, Geschichte gemeinsam, gemeinsamer Kampf, Sternenfall zusammen, Feinschliff | offen |
 
 ## Fertig in Lernprojekt 4
 
@@ -57,6 +58,20 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     Einleitung vom Gastgeber, Verlassen, dazu der Spielstand für ein zweites Fenster – alles richtig (14 Prüfungen). `tests/netz_stadt_test.gd` öffnet die echte
     Stadt gegen einen Server ohne Grafik, inklusive „Neu beginnen“ und „Menü“: alles richtig (13 Prüfungen).
     Alle bisherigen Tests (Welt, Klassenwahl, Übergang, Lektionen, Elemente, Durchlauf der ersten Stunde) laufen unverändert.
+
+- **Schritt 2 – Online-Server (vorbereitet):**
+  - Auf „Zusammen spielen“ gibt es den neuen Knopf **„Online-Server (übers Internet)“**. Er verbindet mit dem Server
+    bei Render (`wss://asterfall-server.onrender.com`, sichere Verbindung, geht im Browser und am Handy).
+  - Der Server ist dasselbe Spiel ohne Grafik. Bauplan für Render: `render.yaml` und `server/Dockerfile`. Den Port
+    gibt der Anbieter vor.
+  - **Der kostenlose Server schläft**, wenn 15 Minuten niemand spielt, und braucht dann bis zu einer Minute zum Aufwachen.
+    Das Spiel wartet deshalb bis zu zwei Minuten und sagt das auch an. Verbundene Mitspieler melden sich alle 30 Sekunden
+    kurz, damit er nicht mitten im Spiel einschläft.
+  - **Geprüft:** Das Server-Paket hier nachgebaut (gleiches Spiel, Port 10000 wie bei Render) und einen Mitspieler
+    verbunden: Beitreten, Laufen, Einleitung, alles richtig. Den Download-Teil des Bauplans (Godot holen) konnte ich hier
+    nicht ausprobieren, weil diese Umgebung keine Pakete aus dem Internet laden darf; das zeigt sich beim ersten Bau bei
+    Render. Alle bisherigen Tests laufen weiter.
+  - **Was du tun musst:** `SERVER_ANLEITUNG.md` (Konto bei Render, einmal „Apply“, mir die Adresse schicken).
 
 ## Aufgaben dieser Runde (Runde 2)
 

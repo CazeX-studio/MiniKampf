@@ -13,6 +13,7 @@ var _look_label: Label
 var _status: Label
 var _host_button: Button
 var _join_button: Button
+var _online_button: Button
 
 
 func _ready() -> void:
@@ -80,8 +81,9 @@ func _ready() -> void:
 	hint.position = Vector2(300, 428)
 	add_child(hint)
 
-	_host_button = _big_button("Gastgeber werden", Vector2(300, 480), _on_host)
-	_join_button = _big_button("Beitreten", Vector2(660, 480), _on_join)
+	_host_button = _big_button("Gastgeber werden", Vector2(240, 480), _on_host)
+	_join_button = _big_button("Beitreten\n(Adresse oben)", Vector2(520, 480), _on_join)
+	_online_button = _big_button("Online-Server\n(übers Internet)", Vector2(800, 480), _on_online)
 	if OS.has_feature("web"):
 		# Im Browser kann man nur beitreten (Gastgeber geht nur mit der PC-Version)
 		_host_button.disabled = true
@@ -134,14 +136,24 @@ func _on_host() -> void:
 
 
 func _on_join() -> void:
+	_connect(_address.text, "Verbinde mit %s …" % (_address.text if _address.text != "" else "localhost"))
+
+
+## Online-Server im Internet (geht auch im Browser und am Handy).
+func _on_online() -> void:
+	_connect(Netz.ONLINE_ADDRESS, "Verbinde mit dem Online-Server … Wenn er geschlafen hat, wacht er jetzt auf (bis zu einer Minute).")
+
+
+func _connect(address: String, waiting_text: String) -> void:
 	_save_settings()
-	var err := Netz.join(_address.text, _player_name(), Netz.LOOKS[_look])
+	var err := Netz.join(address, _player_name(), Netz.LOOKS[_look])
 	if err != OK:
 		_status.text = "Die Adresse stimmt nicht (Fehler %d)." % err
 		return
-	_status.text = "Verbinde mit %s …" % (_address.text if _address.text != "" else "localhost")
+	_status.text = waiting_text
 	_host_button.disabled = true
 	_join_button.disabled = true
+	_online_button.disabled = true
 	var node := Netz._node()
 	node.connected.connect(_on_connected, CONNECT_ONE_SHOT)
 	node.connection_failed.connect(_on_failed, CONNECT_ONE_SHOT)
@@ -159,6 +171,7 @@ func _on_failed() -> void:
 	_status.text = "Keine Verbindung. Stimmt die Adresse, und ist der Gastgeber schon in Kreuzweg?"
 	_host_button.disabled = OS.has_feature("web")
 	_join_button.disabled = false
+	_online_button.disabled = false
 
 
 func _load_settings() -> Dictionary:
@@ -198,7 +211,7 @@ func _big_button(text: String, pos: Vector2, action: Callable) -> Button:
 	var button := Button.new()
 	button.text = text
 	button.position = pos
-	button.size = Vector2(320, 90)
+	button.size = Vector2(250, 90)
 	button.add_theme_font_size_override("font_size", 22)
 	button.pressed.connect(action)
 	add_child(button)
