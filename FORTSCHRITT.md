@@ -3,25 +3,17 @@
 Hier steht, was fertig ist, was als Nächstes kommt und welche Fragen offen sind.
 Wird nach jedem Arbeitsschritt aktualisiert.
 
-## Kurz zusammengefasst (Runde 2, Stand 2026-10-19)
+## Aktueller Stand (2026-10-20)
 
-**Was sich geändert hat:**
-- Die Sternensängerin heißt jetzt **Vega**.
-- Neue Fähigkeiten: **Schnellfeuer** (Bogenschütze), **Polarstern** (Sternensängerin), **Zähmen** (Monster-Zähmer,
-  auch Monster aus der Pilzhöhle). Nach der Pilzhöhle entscheidest du, was mit dem **Urbaum** passiert.
-- Die Ult der Kunoichi lädt nur noch durch Siegel-**Kombinationen**.
-- Unter der Haube: Der Kampf ist jetzt in **Regeln** (ohne Grafik) und **Anzeige** getrennt – die Grundlage für
-  gemeinsame Kämpfe. 75 Computer-Kämpfe laufen vorher und nachher genau gleich ab.
-- **Kreuzweg-Demo:** Laufen mit **WASD/Pfeiltasten** oder **Steuerknopf** am Handy, reden mit **E/Leertaste** oder
-  dem Knopf „Reden“. Neu: **Gespräche mit Antworten**, **Auftragsbuch**, **Gold und Tasche**, **Stufen 1–10**,
-  **automatisches Speichern** und ein kleiner **Probe-Auftrag** bei Ye. Alle Texte stehen in Datendateien (`data/`).
-- Selbst gewählte Zahlen und Passiven sind als **„vorläufig, Feinschliff am Ende“** gesammelt (Abschnitt weiter unten).
-- Neuer Fahrplan für die Kreuzweg-Demo: `KREUZWEG_PLAN.md` (Schritt 0 und 1 sind fertig).
-
-**Was du testen kannst:** siehe „Was du testen kannst“ weiter unten (Abschnitte „Neu in Runde 2“).
-
-**Bitte beachten:** Alle Dialoge von Ye sind **Platzhalter-Texte**. Die Dialoge der Hauptfiguren schreibst du noch;
-sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren ändern (Anleitung in `data/LIESMICH.md`).
+- **Kampf-Sandbox** (Lernprojekt 2): alle 11 Klassen, Element-Sechseck, Duette, Zähmen, Test-Dungeon Pilzhöhle
+  mit Urbaum-Entscheidung, Kampfauswertung. Der Kampf ist in Regeln (`battle_state.gd`) und Anzeige (`combat.gd`) getrennt.
+- **Kreuzweg-Demo** (Lernprojekt 3): Die **erste Stunde ist komplett spielbar**, von der Ankunft bis zum Abspann
+  (alle 9 Schritte aus `KREUZWEG_PLAN.md`). Steuerung per Tasten, Steuerknopf oder Antippen, Speichern, Musik mit Lautstärke-Regler.
+- **Als Nächstes:** Marco testet die erste Stunde **am Stück**, danach werden seine Rückmeldungen eingearbeitet.
+- **Platzhalter:** Alle Texte der Hauptfiguren (Ye, Mira, Ren, Marv, Lene, Bingo, Gesandte …) stehen in `data/dialoge.json`
+  und werden von Marco noch geschrieben (Anleitung in `data/LIESMICH.md`).
+- Selbst gewählte Zahlen und Passiven: Abschnitt „Vorläufige Werte (Feinschliff am Ende)“ unten.
+- Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
 
 ## Aufgaben dieser Runde (Runde 2)
 
@@ -128,6 +120,7 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
     Die Folgen stehen erst nach der Wahl im Log. Das gilt ab jetzt für alle Entscheidungen.
   - Die Urbaum-Frage kommt **nur beim ersten Abschluss**. Die Wahl wird im Spielstand gespeichert; bei jedem weiteren
     Sieg in der Pilzhöhle gilt sie automatisch („Wie beim ersten Mal …“). „Neu beginnen“ in der Kreuzweg-Demo löscht
+    sie mit. (Im fertigen Spiel ist der erste Abschluss der über den Auftrag.) Auch in design.md eingetragen.
 
 - **Schritt 9 – Kreuzweg-Demo, Ankunft** (Schritt 2 aus `KREUZWEG_PLAN.md`, Stufe 1–2):
   - **Einleitung am Stadttor:** Beim ersten Betreten erzählt ein Erzähler kurz, wo du bist, und schickt dich zur Gilde.
@@ -180,7 +173,7 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
   - **Marv** ist erst nach der Grundausbildung in der Stadt (an der Straße zwischen Tor und Marktplatz) und
     **spricht dich von sich aus an**, sobald du vorbeikommst – einmal. Er erzählt begeistert von Kreuzweg-Karten
     und schickt dich zu Bingo. Auftrag „Marvs großer Traum“: bei Bingo nach der Sternentafel fragen, zurück zu Marv.
-    Seine Antwort auf 5000 Gold: „Dann spar halt! Ich hab Zeit.“ (der Running Gag beginnt).
+    Seine Antwort auf 5000 Gold: „Dann spar halt! Ich warte. Ich hab Zeit.“ (der Running Gag beginnt; „Ich hab Zeit“ sagt er nur an dieser einen Stelle).
   - **Handelsherr Bingo** steht vor seinem Laden. **Laden-Fenster:** Heiltrank kaufen (15 Gold), Dinge aus der Tasche
     verkaufen (zur Hälfte des Preises), die **Sternentafel für 5000 Gold** (viel zu teuer: „Zu wenig Gold“).
     Bingo erklärt auf Nachfrage, was die Sternentafel ist.
@@ -238,7 +231,7 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
     (Computer-Test mit jeder zweiten Parade gelungen: 11 von 30 Siegen – wer gut pariert, schafft es öfter.)
   - **Sieg:** Erfolg **„Schild hoch, Schild runter“** (steht jetzt im Auftragsbuch unter „Erfolge“) – und eine
     Fremde taucht auf, lobt dich und **klaut den Splitter**. **Niederlage:** Alles wird schwarz … dieselbe Fremde
-    **rettet die Gruppe**. Beides Mal stellt sie sich als **Ren** vor („Du hast mich nie gesehen“).
+    **rettet die Gruppe**. Ihren Namen nennt sie nicht (Namensschild „???“, sie sagt nur „Niemand. Und du hast mich nie gesehen.“). Im Spiel heißt sie intern weiter Ren.
   - Kein „Nochmal versuchen“ beim Boss: Die Geschichte geht so oder so weiter. Danach: Stufe 8 (Niederlage) bzw. 9 (Sieg).
   - Auf dem Marktplatz bleibt ein **leuchtender Krater**.
   - **Platzhalter:** alle Texte (Lene, Marv, Erzähler, Ye, Ren – Ren ist eine Hauptfigur). Der Kampf spielt noch im Gewölbe.
@@ -257,7 +250,7 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
 - **Schritt 16 – Kreuzweg-Demo, Klassenwahl und Abreise** (Schritt 8 aus `KREUZWEG_PLAN.md`):
   - **Morgen danach:** Lene verkündet, dass alle Novizen heute in die Regionen reisen (die Nacht endet,
     die Laternen sind weg, der Krater bleibt). Auftrag „Die Abreise“.
-  - **Marv** spricht dich ein letztes Mal an: „Du gehst?! Und unsere Partie Kreuzweg-Karten? … Ich hab Zeit.“
+  - **Marv** spricht dich ein letztes Mal an: „Du gehst?! Und unsere Partie Kreuzweg-Karten?“ (ohne „Zeit“, nach deinem Test geändert).
   - **Ye am Tor** öffnet den **Klassenwahl-Bildschirm**: links alle 11 Klassen, rechts Rolle, Region, **Lehrmeister**
     (aus design.md), Mechanik, Reaktion, ein **Fünfeck-Diagramm** (Schaden, Schutz, Heilung, Unterstützung,
     Schwierigkeit), eine **Ult-Vorschau** und die Knöpfe **„Probestunde“** und **„Diese Klasse wählen“**
@@ -289,7 +282,6 @@ sie stehen in `data/dialoge.json` und lassen sich dort ohne Programmieren änder
   - **Werte:** Nach dem Durchlauf nichts Großes geändert. Beobachtung: Mit Heiltränken und Stufe 8 schafft der Computer
     den Sternenfresser in der Geschichte öfter (etwa jedes zweite Mal) als ohne Tränke. Dein Eindruck beim Testen
     entscheidet, ob er schwerer werden soll.
-    sie mit. (Im fertigen Spiel ist der erste Abschluss der über den Auftrag.) Auch in design.md eingetragen.
 
 ## Fertig in Runde 1
 
@@ -381,7 +373,7 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 3. Geh zum Marktplatz: Marv spricht dich an, dann beginnt der Sternenfall (Lichtblitz) und der Boss-Kampf.
 4. Im Kampf: Pariere die Angriffe des Sternenfressers. Erst nach einer perfekten Parade ist er „ERSCHÜTTERT“ und nimmt
    richtig Schaden. Achte auf den Countdown „EXPLOSION in X Zügen“.
-5. Danach taucht Ren auf (bei Sieg klaut sie den Splitter, bei Niederlage rettet sie euch). Bei Sieg: Auftragsbuch → Erfolge.
+5. Danach taucht eine namenlose Fremde auf (Ren; bei Sieg klaut sie den Splitter, bei Niederlage rettet sie euch). Bei Sieg: Auftragsbuch → Erfolge.
 
 **Neu: Parieren mit zwei Zonen** (überall)
 1. Lass dich angreifen und tippe früh im hellgrünen Feld: „Pariert!“ (oder „Ausgewichen!“), der Schaden ist kleiner.
@@ -404,30 +396,6 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 5. Gute Fragen dabei: Wie lange hast du gebraucht? War ein Kampf zu leicht oder zu schwer? Welche Stelle war langweilig?
 
 
-**1. Kampf-Sandbox** (Menü → „Kampf-Sandbox“)
-- Wie bisher: bis zu 4 Klassen wählen, Gegner wählen, kämpfen, am Ende die Auswertung ansehen.
-- Neu beim Duett **Sternentanz** (Sternensängerin + Klingentänzerin): Zaras Klingen treffen danach
-  eine Runde lang mit Sternenkraft (Anzeige „Sternenkraft“ auf ihrem Namensschild).
-
-**2. Pilzhöhle** (in der Sandbox unter „Gegner“)
-- „Pilzhöhle“ = ganzer Dungeon mit 4 Wellen. „Pilzhöhle: nur Bosse“ = schneller Test der Bosse.
-- Im Kampf-Log links unten steht bei jedem Boss, welche Mechanik gerade gilt.
-- **Sporenkönigin:** Achte auf „Mechanik heute“. Bei *Sporenblüte* stehen die Giftwolken auf ihrem
-  Namensschild – nicht mit Feuer übertreiben, „Giftwolke vertreiben“ nutzen. Bei *Sporen-Zwillinge*
-  beide Sporenknospen schnell hintereinander besiegen.
-- **Wurzelmutter:** Nicht auf sie selbst schlagen (heilt sie), sondern auf „Knoten vorne“ und
-  „Knoten hinten“, beide vor ihrem nächsten Zug. Auf ihrem Schild läuft „Verschlingen in X Zügen“.
-- **Vorbote:** Das Bild wird dunkler, die Zugleiste ist weg. „Laterne entzünden“ (hellblaue Knöpfe)
-  hellt auf. Wer „SPLITTERLICHT“ auf dem Namensschild hat, wird nicht angegriffen, verliert aber
-  immer mehr Leben: rechtzeitig „Licht weiterreichen“.
-- Gute Fragen beim Testen: Ist es zu schwer oder zu leicht? Versteht man die Mechaniken aus dem Log?
-
-**3. Kreuzweg-Demo** (Menü → „Kreuzweg-Demo“)
-- Boden antippen = laufen (oder WASD/Pfeiltasten bzw. Steuerknopf). Ausbilder Ye antippen = hinlaufen und reden („Weiter“ oder E blättert).
-  Beim zweiten Mal sagt er etwas anderes.
-- Der „Testgefährte“ ist ein zweiter Spieler, der zur Probe herumläuft.
-- Platzhalter-Grafik: Die Häuser sind einfache Blöcke. Noch keine Kämpfe in der Stadt, nur ein Probe-Auftrag.
-
 
 ## Vorläufige Werte (Feinschliff am Ende)
 
@@ -446,10 +414,10 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
   Zähmen (unter 50 % Leben, Chance = fehlendes Leben, halbes Leben auf der Bank, höchstens 5 Monster).
 ## Als Nächstes (Vorschläge)
 
-- Deine Rückmeldungen aus dem Test am Stück einarbeiten (Schwierigkeit, Länge, unklare Stellen).
-- Hintergrund für Kämpfe vor der Stadt (Wiese statt Gewölbe).
+- Deine Rückmeldungen aus dem Test der ersten Stunde am Stück einarbeiten (Schwierigkeit, Länge, unklare Stellen).
 - Dialoge der Hauptfiguren: Marco schreibt sie; Platzhalter stehen in `data/dialoge.json`.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).
+- Danach laut Fahrplan in design.md: Lernprojekt 4 „Zusammen spielen“ oder Lernprojekt 5 „Grünwacht“ (erst einen Plan schreiben).
 
 ## Offene Fragen an Marco
 
@@ -464,4 +432,5 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 
 
 - **Kreuzweg-Demo:** Passen die Positionen (Gilde im Nordosten, Bingos Laden im Westen, die sechste,
-  zugewachsene Straße nach Südosten)? Soll Ye vor der Gilde stehen oder drinnen?
+  zugewachsene Straße nach Südosten, Gesandte an „ihren“ Straßen)?
+- **Sternenfresser:** Mit Heiltränken schafft der Computer ihn etwa jedes zweite Mal. Soll er schwerer werden?
