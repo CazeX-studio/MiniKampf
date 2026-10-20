@@ -28,7 +28,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | – | Entscheidungen: kostenloser Server, Story gemeinsam mit Abstimmung, Chat mit Schnellsätzen, ein Spielstand | entschieden 20.10., Spielstand eingebaut |
 | 2 | Online-Server im Internet (kostenlos bei Render) | vorbereitet, Marco legt das Konto an |
 | 3 | Chat mit freiem Text und Sprechblase | eingebaut, Marco testet |
-| 4–8 | Gruppe, Geschichte gemeinsam, gemeinsamer Kampf, Sternenfall zusammen, Feinschliff | offen |
+| 4 | Gruppe bilden (einladen, Gruppenfenster, Gruppenführer) | eingebaut, Marco testet |
+| 5–8 | Geschichte gemeinsam, gemeinsamer Kampf, Sternenfall zusammen, Feinschliff | offen |
 
 ## Fertig in Lernprojekt 4
 
@@ -95,6 +96,24 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Schnellsätze und Emotes kommen später (Vorschläge in design.md im Ideen-Parkplatz).
   - **Tests:** Gastgeber und Mitspieler schreiben sich, zu schnelle Nachricht wird verworfen, Hinweise beim Kommen und
     Gehen, Chat in der echten Stadt mit Sprechblase – alles richtig. Alle bisherigen Tests laufen weiter.
+
+- **Schritt 4 – Gruppe bilden:**
+  - **Mitspieler antippen** (oder anklicken) öffnet ein kleines Menü: **„In Gruppe einladen“**. Als Gruppenführer
+    stehen bei Mitgliedern **„Führung übergeben“** und **„Aus Gruppe nehmen“**.
+  - Der Eingeladene bekommt ein Fenster „Marco lädt dich in die Gruppe ein.“ mit **Annehmen** und **Ablehnen**.
+    Die Einladung gilt 60 Sekunden.
+  - **Gruppenfenster** rechts oben: alle Mitglieder mit Stufe und Leben, ★ = Gruppenführer, „kämpft gerade“ bei
+    jemandem, der gerade einen Kampf spielt. Knopf **„Gruppe verlassen“**. Gruppenmitglieder haben in der Stadt
+    einen **hellblauen Namen**.
+  - **Regeln:** höchstens 4 Spieler. Nur der Gruppenführer lädt ein. Wer die Gruppe gründet (die erste Einladung wird
+    angenommen), führt sie. Geht der Gruppenführer, führt der Nächste. Wer allein übrig bleibt, ist nicht mehr in einer
+    Gruppe. Wer kämpft, bleibt in der Gruppe; wer das Spiel verlässt, ist raus.
+  - Die Leben-Leiste ist in der Stadt immer voll (Kämpfe heilen ganz). Im gemeinsamen Kampf (Schritt 6) zeigt sie
+    das echte Leben.
+  - Die Regeln stehen in einem eigenen Baustein ohne Grafik (`scripts/netz/gruppen.gd`), darauf bauen später die
+    gemeinsame Geschichte (Abstimmung, Gruppenführer bei Gleichstand) und der gemeinsame Kampf auf.
+  - **Tests:** `tests/gruppen_test.gd` prüft alle Regeln (20 Prüfungen), der Netz-Test eine echte Einladung zwischen
+    zwei Programmen – alles richtig. Alle bisherigen Tests laufen weiter.
 
 ## Aufgaben dieser Runde (Runde 2)
 
@@ -552,6 +571,13 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 3. Am Handy auf „Chat (Enter)“ tippen: Kommt die Tastatur, und ist das Eingabefeld noch zu sehen?
 4. Während der Eingabe W, A, S, D tippen: Die Figur sollte stehen bleiben.
 5. Ein Gerät schließen: Steht beim anderen „… hat das Spiel verlassen.“?
+
+**Neu: Gruppe bilden** (zwei Geräte, „Zusammen spielen“ → Online-Server)
+1. Auf dem einen Gerät den anderen Spieler antippen: Kommt das Menü mit „In Gruppe einladen“?
+2. Auf dem anderen Gerät „Annehmen“: Erscheint bei beiden rechts oben das Gruppenfenster, mit ★ beim Einladenden?
+3. Sind die Namen der Gruppenmitglieder in der Stadt hellblau?
+4. Einer startet einen Kampf (z. B. bei Ye): Steht beim anderen „kämpft gerade“?
+5. „Gruppe verlassen“: Verschwindet das Fenster bei beiden (bei zwei Spielern ist die Gruppe dann aufgelöst)?
 
 **Die ganze erste Stunde am Stück** (Kreuzweg-Demo → „Neu beginnen“, Ton an)
 1. Spiel einmal von der Ankunft bis zum Abspann durch, ohne Abkürzungen. Notier dir, wo du nicht wusstest, was zu tun ist.

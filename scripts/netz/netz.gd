@@ -18,6 +18,12 @@ signal connection_failed
 signal disconnected
 ## Eine Chat-Nachricht für alle in Kreuzweg ist angekommen. Leerer Name = Hinweis des Spiels („Mira ist in Kreuzweg“).
 signal chat_received(id: String, sender: String, text: String)
+## Die eigene Gruppe hat sich geändert (siehe Netz.group)
+signal group_changed
+## Jemand lädt einen in seine Gruppe ein
+signal group_invited(from_id: String, from_name: String)
+## Kurze Meldung zur Gruppe („Mira ist der Gruppe beigetreten.“)
+signal group_notice(text: String)
 
 enum Mode { OFFLINE, HOST, SERVER, CLIENT }
 
@@ -64,6 +70,8 @@ static var _instance: Netz
 static var chat_log: Array[Dictionary] = []
 ## Nur für automatische Tests: fester Spielstand, damit kein echter Spielstand überschrieben wird
 static var save_override := ""
+## Die eigene Gruppe: {leader = Spieler, members = [{id, name, level, leben, in_stadt}, …]} oder leer
+static var group := {}
 
 ## Merkt, welches Fenster gerade den normalen Spielstand benutzt (damit ein zweites Fenster auf demselben PC
 ## einen eigenen bekommt und sich die beiden nicht gegenseitig überschreiben)
@@ -87,6 +95,12 @@ var _own_idle := 0.0
 var _last_chat := {}
 ## Gastgeber: Namen der Mitspieler, die schon begrüßt wurden (Rückkehr aus einem Kampf zählt nicht als neu)
 var _greeted := {}
+## Gastgeber: Gruppen aller Spieler
+var _groups: Gruppen
+## Gastgeber: zuletzt geschickte Gruppen-Ansicht je Spieler (nur Änderungen werden geschickt)
+var _sent_group := {}
+## Gastgeber: letzte bekannte Stufe je Spieler (auch während er kämpft)
+var _levels := {}
 
 
 static func online() -> bool:
@@ -129,6 +143,13 @@ static func _start_server(p_name: String, look: String, p_mode: Mode) -> Error:
 	world.battle_requested.connect(node._on_world_battle)
 	world.effect_requested.connect(node._on_world_effect)
 	world.scene_requested.connect(node._on_world_scene)
+	node._groups = Gruppen.new()
+	node._groups.notice.connect(node._on_group_notice)
+	node._groups.invited.connect(node._on_group_invited)
+	node._sent_group.clear()
+	node._levels.clear()
+	if p_mode == Mode.HOST:
+		node._groups.set_player_name("p1", p_name)
 	if not _api().peer_disconnected.is_connected(node._on_peer_disconnected):
 		_api().peer_disconnected.connect(node._on_peer_disconnected)
 	print("Netz: Gastgeber bereit auf Port %d" % port)
@@ -179,6 +200,7 @@ static func join(address: String, p_name: String, look: String) -> Error:
 ## Verbindung beenden, zurück zum Allein-Spielen.
 static func stop() -> void:
 	chat_log.clear()
+	group = {}
 	if _instance != null and is_instance_valid(_instance):
 		_instance._last_chat.clear()
 		_instance._greeted.clear()
@@ -215,6 +237,26 @@ static func chat(text: String) -> void:
 			_instance._chat_from(my_id, clean)
 		Mode.CLIENT:
 			_instance._c_chat.rpc_id(1, clean)
+
+
+## Gruppe: "einladen", "annehmen", "ablehnen", "verlassen", "entfernen" oder "fuehrung" (Führung übergeben).
+static func group_action(action: String, target := "") -> void:
+	match mode:
+		Mode.HOST:
+			_instance._group_from(my_id, action, target)
+		Mode.CLIENT:
+			_instance._c_group.rpc_id(1, action, target)
+
+
+static func in_my_group(id: String) -> bool:
+	for m: Dictionary in group.get("members", []):
+		if m.id == id:
+			return true
+	return false
+
+
+static func i_lead() -> bool:
+	return group.get("leader", "") == my_id
 
 
 ## Chat-Text aufräumen: keine Zeilenumbrüche, nicht zu lang.
@@ -288,6 +330,7 @@ func _process(delta: float) -> void:
 			_send_snapshot()
 			for id: String in world.players:
 				_flush_own(id)
+			_flush_groups()
 	elif mode == Mode.CLIENT and world != null:
 		_ping_timer -= delta
 		if _ping_timer <= 0.0 and my_id != "":
@@ -387,6 +430,10 @@ func _on_peer_disconnected(peer: int) -> void:
 		_greeted.erase(id)
 	_sent_own.erase(id)
 	_last_chat.erase(id)
+	if _groups != null:
+		_groups.remove_player(id)
+	_sent_group.erase(id)
+	_levels.erase(id)
 
 
 ## Ein Mitspieler betritt die Stadt und bringt seinen Spielstand mit.
@@ -405,6 +452,7 @@ func _c_join(p_name: String, look: String, progress: Dictionary, cell: Array) ->
 	world.remove_player(id)
 	var p := world.add_player(id, p_name.left(16), look if look in LOOKS else "elf_m", start)
 	p.progress.load_dict(progress)
+	_groups.set_player_name(id, p.display_name)
 	_sent_own.erase(id)
 	print("Netz: %s ist in Kreuzweg" % p.display_name)
 	if not _greeted.has(id):
@@ -416,6 +464,92 @@ func _c_join(p_name: String, look: String, progress: Dictionary, cell: Array) ->
 @rpc("any_peer", "reliable")
 func _c_ping() -> void:
 	pass
+
+
+## Gruppen-Wunsch eines Mitspielers
+@rpc("any_peer", "reliable")
+func _c_group(action: String, target: String) -> void:
+	if mode == Mode.HOST or mode == Mode.SERVER:
+		_group_from("p%d" % multiplayer.get_remote_sender_id(), action, target)
+
+
+func _group_from(id: String, action: String, target: String) -> void:
+	if _groups == null or not _groups.names.has(id):
+		return
+	match action:
+		"einladen":
+			_groups.invite(id, target, _clock())
+		"annehmen":
+			_groups.accept(id, _clock())
+		"ablehnen":
+			_groups.decline(id)
+		"verlassen":
+			_groups.leave(id)
+		"entfernen":
+			_groups.kick(id, target)
+		"fuehrung":
+			_groups.promote(id, target)
+	_flush_groups()
+
+
+## Schickt jedem Spieler seine Gruppe, wenn sie sich geändert hat (Mitglieder, Führung, Stufe, wer gerade kämpft).
+func _flush_groups() -> void:
+	if _groups == null:
+		return
+	for id: String in world.players:
+		_levels[id] = world.players[id].progress.level
+	for id: String in _groups.names:
+		var view := _group_view(id)
+		var text := var_to_str(view)
+		if _sent_group.get(id, "") == text:
+			continue
+		_sent_group[id] = text
+		if id == my_id and mode == Mode.HOST:
+			_s_group(view)
+		elif _peer_of(id) > 1:
+			_s_group.rpc_id(_peer_of(id), view)
+
+
+func _group_view(id: String) -> Dictionary:
+	var g := _groups.group(id)
+	if g.is_empty():
+		return {}
+	var members: Array = []
+	for m: String in g.members:
+		var level: int = _levels.get(m, 1)
+		members.append({id = m, name = _groups.names.get(m, "?"), level = level,
+				leben = int(Grundwerte.for_level(level).leben), in_stadt = world.players.has(m)})
+	return {leader = g.leader, members = members}
+
+
+func _on_group_notice(id: String, text: String) -> void:
+	if id == my_id and mode == Mode.HOST:
+		_s_group_event("notice", text, "")
+	elif _peer_of(id) > 1:
+		_s_group_event.rpc_id(_peer_of(id), "notice", text, "")
+
+
+func _on_group_invited(id: String, from_id: String, from_name: String) -> void:
+	if id == my_id and mode == Mode.HOST:
+		_s_group_event("einladung", from_id, from_name)
+	elif _peer_of(id) > 1:
+		_s_group_event.rpc_id(_peer_of(id), "einladung", from_id, from_name)
+
+
+## Die eigene Gruppe (vom Gastgeber)
+@rpc("authority", "reliable")
+func _s_group(view: Dictionary) -> void:
+	group = view
+	group_changed.emit()
+
+
+## Gruppen-Ereignis für den eigenen Spieler: Meldung oder Einladung
+@rpc("authority", "reliable")
+func _s_group_event(kind: String, a: String, b: String) -> void:
+	if kind == "einladung":
+		group_invited.emit(a, b)
+	else:
+		group_notice.emit(a)
 
 
 ## Chat-Nachricht eines Mitspielers

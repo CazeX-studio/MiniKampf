@@ -84,6 +84,15 @@ var _chat_lines: Array[Label] = []
 const CHAT_LINES := 6
 const CHAT_FADE_SECONDS := 20.0
 
+## Gruppe beim Zusammenspielen: Fenster mit den Mitgliedern, Menü beim Antippen eines Mitspielers, Einladung
+var _group_panel: PanelContainer
+var _group_box: VBoxContainer
+var _player_menu: PanelContainer
+var _player_menu_box: VBoxContainer
+var _invite_panel: PanelContainer
+var _invite_label: Label
+const GROUP_NAME_COLOR := Color("7fc8ff")
+
 var _steer_sent := Vector2.ZERO
 var _touch_ui := false
 var _stick_layer: Control
@@ -101,6 +110,9 @@ func _ready() -> void:
 		local_id = Netz.my_id
 		Netz._node().disconnected.connect(_on_net_lost)
 		Netz._node().chat_received.connect(_on_chat)
+		Netz._node().group_changed.connect(_update_group)
+		Netz._node().group_invited.connect(_on_group_invited)
+		Netz._node().group_notice.connect(func(text: String) -> void: _on_notice(local_id, text))
 	state.notice.connect(_on_notice)
 	state.progress_changed.connect(_on_progress_changed)
 	state.battle_requested.connect(_on_battle_requested)
@@ -213,6 +225,8 @@ func _sync() -> void:
 			_objects.add_child(view)
 			_characters[id] = view
 		var view: WorldCharacter = _characters[id]
+		if id != local_id and Netz.online():
+			view.set_name_color(GROUP_NAME_COLOR if Netz.in_my_group(id) else Color.WHITE)
 		view.position = cell_center(p.pos)
 		view.moving = p.is_walking()
 		view.facing = p.facing
@@ -306,6 +320,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_toggle_panel("werte")
 		elif key == KEY_ESCAPE and local_player().shop != "":
 			_send({type = "laden_zu"})
+		elif key == KEY_ESCAPE and _player_menu != null and _player_menu.visible:
+			_player_menu.visible = false
 		elif key == KEY_ESCAPE and _panel.visible:
 			_panel.visible = false
 		else:
@@ -406,6 +422,15 @@ func _tap_at(world: Vector2) -> void:
 	if _panel.visible:
 		_panel.visible = false
 		return
+	# Mitspieler angetippt? Dann das Menü (einladen, Gruppe)
+	if Netz.online():
+		for id: String in state.players:
+			if id == local_id:
+				continue
+			var player_pos := cell_center(state.players[id].pos)
+			if absf(world.x - player_pos.x) < 30.0 and world.y > player_pos.y - 90.0 and world.y < player_pos.y + 12.0:
+				_open_player_menu(id)
+				return
 	# NPC angetippt? Dann hinlaufen und reden
 	for id: String in state.npcs:
 		if not state.npc_visible(local_player(), id):
@@ -645,6 +670,7 @@ func _build_ui() -> void:
 	_buttons.append(volume)
 	if Netz.online():
 		_build_chat(root)
+		_build_group(root)
 
 	var x := 1170.0
 	for info: Array in [["Menü", 96, _go_menu], ["Tasche (I)", 120, _toggle_panel.bind("tasche")], ["Werte (C)", 116, _toggle_panel.bind("werte")],
@@ -920,6 +946,126 @@ func _update_chat() -> void:
 	for line in _chat_lines:
 		var age := _time - float(line.get_meta("zeit", _time))
 		line.modulate.a = 1.0 if open else clampf((CHAT_FADE_SECONDS - age) / 3.0, 0.0, 1.0)
+
+
+# --- Gruppe (nur beim Zusammenspielen) ------------------------------------------
+# Mitspieler antippen → Menü (einladen; als Gruppenführer: entfernen, Führung übergeben).
+# Rechts oben das Gruppenfenster mit Namen, Stufe und Leben, ★ = Gruppenführer.
+
+func _build_group(root: Control) -> void:
+	_group_panel = _framed_panel()
+	_group_panel.position = Vector2(1040, 66)
+	_group_panel.custom_minimum_size = Vector2(226, 0)
+	_group_panel.visible = false
+	root.add_child(_group_panel)
+	_buttons.append(_group_panel)
+	_group_box = VBoxContainer.new()
+	_group_box.add_theme_constant_override("separation", 4)
+	_group_panel.add_child(_group_box)
+
+	_player_menu = _framed_panel()
+	_player_menu.position = Vector2(500, 150)
+	_player_menu.custom_minimum_size = Vector2(280, 0)
+	_player_menu.visible = false
+	root.add_child(_player_menu)
+	_buttons.append(_player_menu)
+	_player_menu_box = VBoxContainer.new()
+	_player_menu_box.add_theme_constant_override("separation", 6)
+	_player_menu.add_child(_player_menu_box)
+
+	_invite_panel = _framed_panel()
+	_invite_panel.position = Vector2(440, 300)
+	_invite_panel.custom_minimum_size = Vector2(400, 0)
+	_invite_panel.visible = false
+	root.add_child(_invite_panel)
+	_buttons.append(_invite_panel)
+	var invite_box := VBoxContainer.new()
+	invite_box.add_theme_constant_override("separation", 8)
+	_invite_panel.add_child(invite_box)
+	_invite_label = _label("", 18, Color.WHITE)
+	_invite_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_invite_label.custom_minimum_size = Vector2(370, 0)
+	invite_box.add_child(_invite_label)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	invite_box.add_child(row)
+	for info: Array in [["Annehmen", "annehmen"], ["Ablehnen", "ablehnen"]]:
+		var answer: String = info[1]
+		row.add_child(_menu_button(info[0], func() -> void:
+			Netz.group_action(answer)
+			_invite_panel.visible = false))
+	_update_group()
+
+
+func _menu_button(text: String, action: Callable) -> Button:
+	var button := Button.new()
+	button.text = text
+	button.custom_minimum_size = Vector2(170, 44)
+	button.add_theme_font_size_override("font_size", 16)
+	button.focus_mode = Control.FOCUS_NONE
+	button.pressed.connect(action)
+	return button
+
+
+func _open_player_menu(id: String) -> void:
+	var p: PlayerState = state.players[id]
+	for child in _player_menu_box.get_children():
+		child.queue_free()
+	_player_menu_box.add_child(_label(p.display_name, 20, Color("f2c14e")))
+	var buttons := 0
+	if not Netz.in_my_group(id) and (Netz.group.is_empty() or Netz.i_lead()):
+		_player_menu_box.add_child(_menu_button("In Gruppe einladen", _player_action.bind("einladen", id)))
+		buttons += 1
+	if Netz.in_my_group(id) and Netz.i_lead():
+		_player_menu_box.add_child(_menu_button("Führung übergeben", _player_action.bind("fuehrung", id)))
+		_player_menu_box.add_child(_menu_button("Aus Gruppe nehmen", _player_action.bind("entfernen", id)))
+		buttons += 2
+	if buttons == 0:
+		var hint := _label("In deiner Gruppe." if Netz.in_my_group(id) else "Nur der Gruppenführer kann einladen.", 15, Color("cccccc"))
+		_player_menu_box.add_child(hint)
+	_player_menu_box.add_child(_menu_button("Schließen", func() -> void: _player_menu.visible = false))
+	_player_menu.reset_size()
+	_player_menu.visible = true
+
+
+func _player_action(action: String, id: String) -> void:
+	Netz.group_action(action, id)
+	_player_menu.visible = false
+
+
+func _on_group_invited(_from_id: String, from_name: String) -> void:
+	_invite_label.text = "%s lädt dich in die Gruppe ein." % from_name
+	_invite_panel.reset_size()
+	_invite_panel.visible = true
+
+
+## Gruppenfenster neu aufbauen (Mitglieder, Stufe, Leben, wer gerade kämpft).
+func _update_group() -> void:
+	if _group_panel == null:
+		return
+	for child in _group_box.get_children():
+		child.queue_free()
+	var members: Array = Netz.group.get("members", [])
+	_group_panel.visible = not members.is_empty()
+	if members.is_empty():
+		return
+	_group_box.add_child(_label("Gruppe (%d/%d)" % [members.size(), Gruppen.MAX_SIZE], 17, Color("f2c14e")))
+	for m: Dictionary in members:
+		var star := "★ " if m.id == Netz.group.leader else ""
+		var color := Color("8affc1") if m.id == local_id else GROUP_NAME_COLOR
+		_group_box.add_child(_label(star + str(m.name), 16, color))
+		var info := "Stufe %d · Leben %d" % [m.level, m.leben]
+		if not m.in_stadt:
+			info += " · kämpft gerade"
+		_group_box.add_child(_label(info, 13, Color("dddddd")))
+		# Leben (in der Stadt immer voll; im gemeinsamen Kampf später die echte Leiste)
+		var bar := ColorRect.new()
+		bar.color = Color("5ac85a")
+		bar.custom_minimum_size = Vector2(200, 5)
+		bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_group_box.add_child(bar)
+	_group_box.add_child(_menu_button("Gruppe verlassen", func() -> void: Netz.group_action("verlassen")))
+	_group_panel.reset_size()
 
 
 ## Verbindung zum Gastgeber verloren: zurück ins Menü (der Spielstand ist auf dem Gerät gespeichert).

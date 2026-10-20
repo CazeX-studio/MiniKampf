@@ -113,3 +113,8 @@ func say(text: String, seconds := 6.0) -> void:
 	_bubble.reset_size()
 	_bubble.position = Vector2(-_bubble.size.x * 0.5, _head_y - _bubble.size.y - 4)
 	_bubble_time = seconds
+
+
+## Farbe des Namensschilds ändern (z. B. Gruppenmitglieder hellblau).
+func set_name_color(color: Color) -> void:
+	_label.add_theme_color_override("font_color", color)
