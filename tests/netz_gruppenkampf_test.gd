@@ -1,14 +1,17 @@
 extends SceneTree
-## Gemeinsamer Kampf mit echter Kampf-Anzeige und echtem Netz: Dieses Programm ist Gastgeber (und spielt mit),
-## ein zweites (tests/netz_gruppenkampf_gast.gd) tritt bei. Beide kämpfen den Gruppenkampf bei Ye zusammen
-## (zwei Spieler, zwei Novizen-Mitstreiter). Am Ende müssen beide genau dasselbe Ergebnis haben.
+## Vier Spieler mit echter Kampf-Anzeige und echtem Netz: Dieses Programm ist Gastgeber (und spielt mit),
+## drei weitere (tests/netz_gruppenkampf_gast.gd) treten bei. Alle bilden eine Gruppe, schreiben im Chat und kämpfen
+## den Gruppenkampf bei Ye zu viert (kein Platz mehr für Novizen-Mitstreiter). Am Ende müssen alle genau dasselbe
+## Ergebnis haben. Mit weniger Mitspielern: … -- 1  (dann füllen Mitstreiter auf)
 ## Aufruf: Godot --headless --path . --script res://tests/netz_gruppenkampf_test.gd
 
 var _failed := 0
 var _t := 0.0
-var _pid := -1
+const GUESTS: Array[Array] = [["Mira", "wizzard_f"], ["Kael", "lizard_m"], ["Lyra", "elf_f"]]
+var _pids: Array[int] = []
+var _count := 3
 var _step := 0
-var _guest := ""
+var _guests: Array[String] = []
 var _done := false
 
 
@@ -18,15 +21,34 @@ func _initialize() -> void:
 
 func _go() -> void:
 	Engine.time_scale = 4.0
-	for f in ["zz_gk_host.json", "zz_gk_gast.json"]:
+	var args := OS.get_cmdline_user_args()
+	if not args.is_empty():
+		_count = clampi(int(args[0]), 1, 3)
+	for f in _files():
 		DirAccess.remove_absolute(ProjectSettings.globalize_path("user://" + f))
 	Netz.save_override = "user://zz_gk_host_spielstand.json"
 	SaveGame.path = Netz.save_override
 	SaveGame.delete()
 	_check(Netz.host("Marco", "knight_m") == OK, "Gastgeber startet")
 	change_scene_to_file("res://scenes/kreuzweg.tscn")
-	_pid = OS.create_process(OS.get_executable_path(),
-			["--headless", "--path", ProjectSettings.globalize_path("res://"), "--script", "res://tests/netz_gruppenkampf_gast.gd"])
+	for i in _count:
+		_pids.append(OS.create_process(OS.get_executable_path(),
+				["--headless", "--path", ProjectSettings.globalize_path("res://"), "--script", "res://tests/netz_gruppenkampf_gast.gd",
+				"--", GUESTS[i][0], GUESTS[i][1]]))
+
+
+func _files() -> Array[String]:
+	var files: Array[String] = ["zz_gk_host.json"]
+	for g in GUESTS:
+		files.append("zz_gk_gast_%s.json" % g[0])
+	return files
+
+
+func _guests_running() -> bool:
+	for pid in _pids:
+		if OS.is_process_running(pid):
+			return true
+	return false
 
 
 func _process(delta: float) -> bool:
@@ -34,18 +56,29 @@ func _process(delta: float) -> bool:
 	NetzGruppenkampfHelfer.drive(self)
 	match _step:
 		0:
-			for id: String in Netz.world.players if Netz.world else {}:
-				if id != Netz.my_id:
-					_guest = id
-			if _guest != "":
-				Netz.group_action("einladen", _guest)
+			if Netz.world != null:
+				for id: String in Netz.world.players:
+					if id != Netz.my_id and not id in _guests:
+						_guests.append(id)
+						Netz.group_action("einladen", id)
+			if _guests.size() == _count:
 				_step = 1
 				_t = 0.0
+			elif _t > 30.0:
+				_check(false, "Alle %d Mitspieler sind in Kreuzweg" % _count)
+				return _finish()
 		1:
-			if Netz.group.get("members", []).size() == 2:
-				_check(true, "Gruppe steht")
-				# Wie aus einer gemeinsamen Szene bei Ye: beide kämpfen zusammen
-				Netz.world.group_battle_requested.emit([Netz.my_id, _guest], "gruppenkampf")
+			if Netz.group.get("members", []).size() == _count + 1 and _t > 3.0:
+				_check(true, "Gruppe mit %d Spielern steht" % (_count + 1))
+				var greetings := 0
+				for entry in Netz.chat_log:
+					if str(entry.text).begins_with("Hallo, ich bin"):
+						greetings += 1
+				_check(greetings == _count, "Chat: alle Mitspieler haben gegrüßt (%d)" % greetings)
+				# Wie aus einer gemeinsamen Szene bei Ye: alle kämpfen zusammen
+				var ids: Array = [Netz.my_id]
+				ids.append_array(_guests)
+				Netz.world.group_battle_requested.emit(ids, "gruppenkampf")
 				_step = 2
 				_t = 0.0
 			elif _t > 20.0:
@@ -54,8 +87,12 @@ func _process(delta: float) -> bool:
 		2:
 			if current_scene is Combat:
 				_check(current_scene._group.mine == 0 and current_scene.state.heroes.size() == 4, "Kampfbildschirm: Gruppenkampf mit vier Helden, ich steuere den ersten")
-				_check(current_scene._is_remote(current_scene.state.heroes[1]), "Der zweite Held gehört dem Mitspieler")
-				_check(current_scene.state.computer.size() == 2, "Zwei Novizen-Mitstreiter spielt der Computer")
+				var remote := 0
+				for h in current_scene.state.heroes:
+					if current_scene._is_remote(h):
+						remote += 1
+				_check(remote == _count, "%d Helden gehören den Mitspielern" % _count)
+				_check(current_scene.state.computer.size() == 3 - _count, "%d Novizen-Mitstreiter spielt der Computer" % (3 - _count))
 				_step = 3
 				_t = 0.0
 			elif _t > 10.0:
@@ -64,11 +101,14 @@ func _process(delta: float) -> bool:
 		3:
 			if not _done and NetzGruppenkampfHelfer.finish(self, "zz_gk_host.json"):
 				_done = true
-			if _done and not OS.is_process_running(_pid):
+			if _done and not _guests_running():
 				var host := _read("zz_gk_host.json")
-				var guest := _read("zz_gk_gast.json")
-				_check(not guest.is_empty(), "Mitspieler hat zu Ende gekämpft")
-				_check(host == guest, "Beide haben genau dasselbe Ergebnis (Sieger, Züge, Leben aller Figuren)")
+				var all_same := true
+				for i in _count:
+					var guest := _read("zz_gk_gast_%s.json" % GUESTS[i][0])
+					_check(not guest.is_empty(), "%s hat zu Ende gekämpft" % GUESTS[i][0])
+					all_same = all_same and host == guest
+				_check(all_same, "Alle haben genau dasselbe Ergebnis (Sieger, Züge, Leben aller Figuren)")
 				print("    %s nach %d Zügen" % ["Sieg" if host.get("won", false) else "Niederlage", int(host.get("turns", 0))])
 				_check(current_scene != null and current_scene.has_method("local_player"), "Zurück in der Stadt")
 				return _finish()
@@ -87,10 +127,11 @@ func _read(file_name: String) -> Dictionary:
 
 
 func _finish() -> bool:
-	if _pid > 0 and OS.is_process_running(_pid):
-		OS.kill(_pid)
+	for pid in _pids:
+		if OS.is_process_running(pid):
+			OS.kill(pid)
 	SaveGame.delete()
-	for f in ["zz_gk_host.json", "zz_gk_gast.json"]:
+	for f in _files():
 		DirAccess.remove_absolute(ProjectSettings.globalize_path("user://" + f))
 	Netz.stop()
 	print("Netz-Gruppenkampf: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))

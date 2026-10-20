@@ -93,6 +93,10 @@ var _invite_panel: PanelContainer
 var _invite_label: Label
 const GROUP_NAME_COLOR := Color("7fc8ff")
 
+## Hinweis beim Wiederverbinden und ob die Stadt beim Neuladen nicht „verlassen“ melden soll
+var _reconnect_label: Label
+var _skip_leave := false
+
 var _steer_sent := Vector2.ZERO
 var _touch_ui := false
 var _stick_layer: Control
@@ -114,6 +118,8 @@ func _ready() -> void:
 		Netz._node().group_invited.connect(_on_group_invited)
 		Netz._node().group_notice.connect(func(text: String) -> void: _on_notice(local_id, text))
 		Netz._node().battle_started.connect(_on_group_battle)
+		Netz._node().reconnecting.connect(_on_reconnecting)
+		Netz._node().reconnected.connect(_on_reconnected)
 	state.notice.connect(_on_notice)
 	state.progress_changed.connect(_on_progress_changed)
 	state.battle_requested.connect(_on_battle_requested)
@@ -184,7 +190,7 @@ func _ready() -> void:
 func _exit_tree() -> void:
 	if not _no_save:
 		SaveGame.save(local_player())
-	if Netz.online():
+	if Netz.online() and not _skip_leave:
 		Netz.leave_world()
 
 
@@ -1067,6 +1073,26 @@ func _update_group() -> void:
 		_group_box.add_child(bar)
 	_group_box.add_child(_menu_button("Gruppe verlassen", func() -> void: Netz.group_action("verlassen")))
 	_group_panel.reset_size()
+
+
+## Verbindung kurz weg: Hinweis zeigen, das Spiel verbindet von selbst neu.
+func _on_reconnecting(attempt: int, tries: int) -> void:
+	if not _no_save:
+		SaveGame.save(local_player())
+	if _reconnect_label == null:
+		_reconnect_label = _label("", 24, Color("fff3b0"))
+		_reconnect_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_reconnect_label.size = Vector2(1280, 40)
+		_reconnect_label.position = Vector2(0, 330)
+		_flash_rect.get_parent().add_child(_reconnect_label)
+	_reconnect_label.text = "Verbindung weg – verbinde neu (Versuch %d von %d) …" % [attempt, tries]
+
+
+## Wieder verbunden: die Stadt mit dem gespeicherten Fortschritt neu betreten.
+func _on_reconnected() -> void:
+	_no_save = true
+	_skip_leave = true
+	get_tree().reload_current_scene.call_deferred()
 
 
 ## Verbindung zum Gastgeber verloren: zurück ins Menü (der Spielstand ist auf dem Gerät gespeichert).

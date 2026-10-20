@@ -9,8 +9,9 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   mit Urbaum-Entscheidung, Kampfauswertung. Der Kampf ist in Regeln (`battle_state.gd`) und Anzeige (`combat.gd`) getrennt.
 - **Kreuzweg-Demo** (Lernprojekt 3): Die **erste Stunde ist komplett spielbar**, von der Ankunft bis zum Abspann
   (alle 9 Schritte aus `KREUZWEG_PLAN.md`). Steuerung per Tasten, Steuerknopf oder Antippen, Speichern, Musik mit Lautstärke-Regler.
-- **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **begonnen.** Schritt 1 ist eingebaut:
-  bis zu 4 Spieler laufen gemeinsam durch Kreuzweg (Gastgeber am PC, Mitspieler treten bei).
+- **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
+  Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
+  gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -32,7 +33,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 5 | Geschichte gemeinsam erleben (Abstimmung) | eingebaut, Marco testet |
 | 6 | Gemeinsamer Kampf | eingebaut, Marco testet |
 | 7 | Nacht des Sternenfalls zusammen | eingebaut, Marco testet |
-| 8 | Feinschliff (Verbindungsabbruch, Test mit 4 Spielern) | offen |
+| 8 | Feinschliff (Wiederverbinden, Test mit 4 Spielern, Durchlauf zu zweit) | eingebaut, Marco testet |
 
 ## Fertig in Lernprojekt 4
 
@@ -177,6 +178,38 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - **Tests:** Szenen-Test mit der ganzen Nacht (Marv holt beide, Sternenfall für alle einmal, gemeinsamer Boss, Ren wartet
     und kommt dann für beide, beide haben den Erfolg) und dem stärkeren Sternenfresser. Der Sternenfresser lief auch als
     echter Gruppenkampf zwischen zwei Programmen (gleiches Ergebnis auf beiden). Alle bisherigen Tests laufen weiter.
+
+- **Schritt 8 – Feinschliff:**
+  - **Wiederverbinden:** Reißt die Verbindung in der Stadt ab (Funkloch, Server startet neu), steht in der Mitte
+    „Verbindung weg – verbinde neu (Versuch 1 von 3) …“. Das Spiel versucht es bis zu dreimal von selbst und holt dich
+    danach mit deinem gespeicherten Fortschritt zurück in die Stadt. Erst wenn alle drei Versuche scheitern, geht es
+    zurück zu „Zusammen spielen“ mit einem Hinweis.
+  - **Gruppe bleibt:** Kommst du innerhalb von 3 Minuten zurück, bist du wieder in deiner alten Gruppe
+    („Mira ist wieder da.“). War die Gruppe zu zweit (sie löst sich dann auf), wird sie neu gebildet.
+  - Im Gruppenkampf geht das Wiederverbinden nicht (der Kampf läuft weiter, der Server übernimmt deine Figur); dann zurück
+    zu „Zusammen spielen“, der Fortschritt ist gespeichert.
+  - **Test mit 4 Spielern:** Gastgeber + drei Mitspieler-Programme treten bei, bilden eine Gruppe, grüßen im Chat und
+    kämpfen den Gruppenkampf zu viert (keine Mitstreiter mehr nötig) – alle vier haben genau dasselbe Ergebnis.
+  - **Durchlauf zu zweit:** Zwei Computer-Spieler in einer Gruppe spielen die ganze erste Stunde bis zum Abspann – mit
+    gemeinsamen Szenen (Ye, Marv, Bingo, Lene, Marv auf dem Fest, Ren …), uneinigen Abstimmungen, Gruppenkämpfen
+    (Grundausbildung, Gruppenkampf, Sternenfresser) und Ren, die auf beide wartet. Mit sieben Startwerten ohne Hänger.
+    Beobachtung: Ist einer in der Geschichte schon weiter, schaut er bei Marv nur zu, und jeder kämpft den Sternenfresser
+    für sich – so ist es gewollt.
+  - **Tests:** `tests/netz_wiederverbinden_test.gd`, `tests/netz_gruppenkampf_test.gd` (jetzt zu viert),
+    `tests/durchlauf_zu_zweit_test.gd` – alles richtig. Alle bisherigen Tests laufen weiter.
+
+## Lernprojekt 4 auf einen Blick
+
+| Was | Wie |
+|-----|-----|
+| Beitreten | Menü → „Zusammen spielen“ → „Online-Server“ (Browser, Handy, PC) oder Gastgeber/Beitreten im eigenen WLAN |
+| Spielstand | derselbe wie allein (zweites Fenster auf demselben PC: eigener) |
+| Chat | Enter bzw. Knopf „Chat“, Sprechblase über dem Kopf |
+| Gruppe | Mitspieler antippen → einladen, bis 4, ★ = Gruppenführer |
+| Geschichte | Gruppenmitglieder in der Nähe erleben Gespräche mit und stimmen ab (Gleichstand: Gruppenführer) |
+| Kampf | Kampf aus einer gemeinsamen Szene = Gruppenkampf, 25 s pro Zug, freie Plätze: Novizen |
+| Sternenfall | für alle sichtbar, Boss passt sich der Gruppe an, Ren für alle gemeinsam |
+| Abbruch | automatisch neu verbinden, Gruppe bleibt |
 
 ## Aufgaben dieser Runde (Runde 2)
 
@@ -662,6 +695,11 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 3. Beide „Los!“: Kämpft ihr zusammen gegen den Sternenfresser? Hat er mehr Leben als allein (300 statt 240)?
 4. Einer gibt auf: Wartet er in der Stadt, bis der andere fertig ist, und spricht Ren dann beide zusammen an?
 
+**Neu: Wiederverbinden** (zwei Geräte, Online-Server, in einer Gruppe)
+1. Am Handy kurz das WLAN/die mobilen Daten aus- und wieder einschalten: Erscheint „Verbindung weg – verbinde neu …“?
+2. Bist du danach wieder in der Stadt, mit deinem Fortschritt?
+3. Bist du wieder in der Gruppe (beim anderen: „… ist wieder da.“)?
+
 **Die ganze erste Stunde am Stück** (Kreuzweg-Demo → „Neu beginnen“, Ton an)
 1. Spiel einmal von der Ankunft bis zum Abspann durch, ohne Abkürzungen. Notier dir, wo du nicht wusstest, was zu tun ist.
 2. Achte auf die Musik: Stadt, Nacht beim Fest, Kampf, Boss beim Sternenfresser. Taste M bzw. Menü-Knopf schaltet sie ab,
@@ -692,8 +730,9 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Deine Rückmeldungen aus dem Test der ersten Stunde am Stück einarbeiten (Schwierigkeit, Länge, unklare Stellen).
 - Dialoge der Hauptfiguren: Marco schreibt sie; Platzhalter stehen in `data/dialoge.json`.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).
-- Lernprojekt 4 „Zusammen spielen“ weiterbauen (`ZUSAMMEN_PLAN.md`, als Nächstes Schritt 2: Server im Internet,
-  du legst ein Konto bei einem kostenlosen Anbieter an, ich schreibe die Anleitung). Danach Lernprojekt 5 „Grünwacht“ (erst einen Plan schreiben).
+- Lernprojekt 4 „Zusammen spielen“ ist gebaut: deine Rückmeldungen aus dem Test mit Freunden einarbeiten.
+- Danach Lernprojekt 5 „Grünwacht“ (erst einen Plan schreiben).
+- Hinten angestellt: Schnellsätze und Emotes (Vorschläge im Ideen-Parkplatz von design.md).
 
 ## Offene Fragen an Marco
 

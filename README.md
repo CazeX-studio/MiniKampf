@@ -72,13 +72,16 @@ Spielstand (derselbe wie allein); ein zweites Fenster auf demselben PC bekommt a
 - **Gruppe:** Mitspieler antippen → „In Gruppe einladen“. Gruppenfenster rechts oben (Stufe, Leben, ★ = Gruppenführer), bis zu 4 Spieler.
 - **Geschichte gemeinsam:** Spricht ein Gruppenmitglied eine Figur an, erleben Mitglieder in der Nähe das Gespräch mit und stimmen bei Antworten ab (Gleichstand: Gruppenführer entscheidet; wer woanders in der Geschichte ist, schaut zu).
 - **Gemeinsamer Kampf:** Beginnt in einer gemeinsamen Szene ein Kampf, kämpfen alle zusammen, die abgestimmt haben. Jeder steuert seine Figur (25 s pro Zug), freie Plätze füllen die Novizen. Jedes Gerät rechnet den Kampf selbst, übers Netz gehen nur die Entscheidungen.
+- **Wiederverbinden:** Reißt die Verbindung ab, verbindet das Spiel bis zu dreimal von selbst neu; die Gruppe bleibt erhalten.
 - **Übers Internet:** Knopf **„Online-Server“** (geht auch im Browser und am Handy). Der Server läuft kostenlos bei
   Render; einrichten nach `SERVER_ANLEITUNG.md` (Bauplan `render.yaml`, Paket `server/Dockerfile`).
 - **Server ohne Grafik** selbst starten: `Godot --headless --path . -- --server` (Port 8910, oder `-- --server --port=1234`)
 - Technik: `scripts/netz/netz.gd` (Verbindung über WebSocket, Port 8910), Bildschirm `scripts/netz/zusammen.gd`.
   Der Gastgeber hat die echte Welt (`WorldState`), Mitspieler schicken nur Befehle und bekommen ein Spiegelbild zurück.
-- Tests: `tests/netz_test.gd` (Gastgeber + zweites Programm als Mitspieler) und `tests/netz_stadt_test.gd`
-  (echte Stadt-Anzeige gegen einen Server ohne Grafik).
+- Tests: `tests/netz_test.gd` (Gastgeber + Mitspieler: Laufen, Chat, Gruppe, gemeinsame Szene), `tests/netz_stadt_test.gd`
+  (echte Stadt gegen einen Server ohne Grafik), `tests/netz_gruppenkampf_test.gd` (vier Spieler, echter Gruppenkampf),
+  `tests/netz_wiederverbinden_test.gd`, ohne Netz: `tests/gruppen_test.gd`, `tests/szene_test.gd`, `tests/gruppenkampf_test.gd`,
+  `tests/durchlauf_zu_zweit_test.gd` (die ganze erste Stunde zu zweit).
 
 ## Kampf-Sandbox (Lernprojekt 2)
 

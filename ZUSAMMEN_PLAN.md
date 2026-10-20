@@ -23,7 +23,7 @@ Das ist der Schritt zum Online-Spiel. Grundlage ist die Kreuzweg-Demo (Lernproje
 | 5 | **Geschichte gemeinsam erleben** (Entscheidung 20.10.): Spricht jemand aus der Gruppe eine Figur an, sehen alle Mitglieder in der Nähe (8 Felder, Entscheidung 20.10.) das Gespräch. Bei Antworten **stimmen alle ab**, bei Gleichstand entscheidet der **Gruppenführer**. Wer die Szene schon erlebt hat, sieht sie mit, stimmt aber nicht mit ab (er hat seine Entscheidung schon getroffen, sie bleibt für ihn bestehen). Der Fortschritt zählt für alle, die die Szene noch nicht hatten. Allein bleibt alles wie bisher. | eingebaut – Marco testet |
 | 6 | **Gemeinsamer Kampf:** Beginnt in einer gemeinsamen Szene ein Kampf, kämpfen alle zusammen, die abgestimmt haben (Entscheidung 20.10.). Die Kampfregeln laufen beim Gastgeber (die Trennung aus Runde 2 macht das möglich), jeder steuert seine eigene Figur. **Zeitlimit 25 Sekunden pro Zug** (design.md: 20–30 s, sonst Standardangriff). Parieren wird am eigenen Gerät gemessen, damit die Verbindung das Timing nicht verdirbt. Freie Plätze füllen die Novizen-NPCs. | eingebaut – Marco testet |
 | 7 | **Nacht des Sternenfalls zusammen:** Der Sternenfall ist für alle in der Stadt sichtbar, der Sternenfresser als eigene Instanz für die Gruppe (passt sich der Gruppengröße an, wie in design.md). | eingebaut – Marco testet |
-| 8 | **Feinschliff:** Verbindungsabbruch und Wiederkommen, eigene Figur läuft ohne Verzögerung, Test mit 4 Spielern, automatischer Durchlauf zu zweit. | offen |
+| 8 | **Feinschliff:** Verbindungsabbruch und Wiederkommen, eigene Figur läuft ohne Verzögerung, Test mit 4 Spielern, automatischer Durchlauf zu zweit. | eingebaut – Marco testet |
 
 ## Regeln
 
