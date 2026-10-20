@@ -386,6 +386,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     steht jetzt weiter weg von der Wache am sechsten Weg (Marta davor). Zweite Nachbesserung: Schmiede, Wohnhaus und
     ein Haus am Marktplatz verschoben. Jedes Haus hält jetzt mindestens ein Feld Abstand zu Straßen und Marktplatz
     (ein Test prüft das automatisch).
+    Nalia (Glutoase) und Aske (Grünwacht) stehen jetzt rechts neben ihrem Stand statt dahinter bzw. davor.
   - **Häuser mit Satteldach** statt Kästen: Fachwerk-Balken, Tür mit Bogen, beleuchtete Fenster, Ziegelreihen, Schornstein.
   - **Stände der Gesandten:** Jeder Gesandte steht am Anfang seiner Straße vor einem kleinen Stand – Tresen,
     gestreiftes Sonnendach mit Bogenkante in der Farbe der Region, Schild mit dem Namen der Region.
