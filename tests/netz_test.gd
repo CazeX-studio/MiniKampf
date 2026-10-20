@@ -19,6 +19,7 @@ func _initialize() -> void:
 
 func _start() -> void:
 	_test_lock()
+	_test_sampling()
 	Netz.save_override = "user://spielstand_test_gastgeber.json"
 	if Netz.host("Testhost", "knight_m") != OK:
 		print("Netz: Gastgeber startet nicht")
@@ -80,6 +81,18 @@ func _test_lock() -> void:
 	Netz.stop()
 	_check(not FileAccess.file_exists(Netz.LOCK_PATH), "Beim Beenden wird der Spielstand wieder freigegeben")
 	DirAccess.remove_absolute(lock_file)
+
+
+## Mitspieler sehen andere Figuren gleichmäßig zwischen zwei Berichten des Gastgebers.
+func _test_sampling() -> void:
+	var history: Array = [[1.0, Vector2(0, 0), 1, true], [1.2, Vector2(2, 0), 1, true], [1.4, Vector2(2, 2), -1, false]]
+	_check(Netz.sample_history(history, 1.1).pos.is_equal_approx(Vector2(1, 0)), "Zwischen zwei Berichten: genau dazwischen")
+	_check(Netz.sample_history(history, 1.3).pos.is_equal_approx(Vector2(2, 1)), "Zwischen dem zweiten und dritten Bericht")
+	_check(Netz.sample_history(history, 5.0).pos == Vector2(2, 2), "Nach dem letzten Bericht: bleibt stehen, wenn die Figur stand")
+	var walking: Array = [[1.0, Vector2(0, 0), 1, true], [1.2, Vector2(1, 0), 1, true]]
+	_check(Netz.sample_history(walking, 1.3).pos.is_equal_approx(Vector2(1.5, 0)), "Aussetzer: Eine laufende Figur läuft kurz weiter")
+	_check(Netz.sample_history(walking, 9.0).pos.is_equal_approx(Vector2(1.0 + 5.0 * Netz.EXTRAPOLATE_MAX, 0)), "… aber nicht endlos")
+	_check(Netz.sample_history(history, 0.0).pos == Vector2(0, 0), "Vor dem ersten Bericht: am Anfang")
 
 
 func _finish() -> void:

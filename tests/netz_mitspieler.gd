@@ -6,6 +6,8 @@ var _failed := 0
 var _time := 0.0
 var _step := 0
 var _notices: Array[String] = []
+var _start_pos := Vector2.ZERO
+var _checked_instant := false
 
 
 func _initialize() -> void:
@@ -52,8 +54,12 @@ func _process(delta: float) -> bool:
 				_check(host != null and host.display_name == "Testhost" and host.look == "knight_m", "Name und Figur des Gastgebers kommen an")
 				_step = 2
 				_time = 0.0
+				_start_pos = w.players[Netz.my_id].pos
 				Netz.send({type = "steer", dir = Vector2(1, 0)})
 		2:
+			if not _checked_instant and _time > 0.05:
+				_checked_instant = true
+				_check(w.players[Netz.my_id].pos.distance_to(_start_pos) > 0.05, "Eigene Figur läuft sofort los (ohne auf den Gastgeber zu warten)")
 			if _time > 1.0:
 				Netz.send({type = "steer", dir = Vector2.ZERO})
 				_step = 3

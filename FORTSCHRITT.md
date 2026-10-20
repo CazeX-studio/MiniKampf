@@ -71,7 +71,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     verbunden: Beitreten, Laufen, Einleitung, alles richtig. Den Download-Teil des Bauplans (Godot holen) konnte ich hier
     nicht ausprobieren, weil diese Umgebung keine Pakete aus dem Internet laden darf; das zeigt sich beim ersten Bau bei
     Render. Alle bisherigen Tests laufen weiter.
-  - **Was du tun musst:** `SERVER_ANLEITUNG.md` (Konto bei Render, einmal „Apply“, mir die Adresse schicken).
+  - **Läuft** (Marco, 20.10.): Verbinden klappt, aber man hing öfter. Darum nachgebessert:
+    - **Standort Frankfurt** statt Oregon (USA) im Bauplan. Dafür muss der Dienst einmal neu angelegt werden
+      (Anleitung unten in `SERVER_ANLEITUNG.md`).
+    - **Eigene Figur läuft sofort** los, ohne auf den Server zu warten. Der Server rechnet dasselbe und zieht die Figur
+      nur zurück, wenn sie stark abweicht.
+    - **Mitspieler laufen gleichmäßig:** Sie werden 0,2 Sekunden verzögert gezeigt, dafür ohne Ruckeln. Bleiben Nachrichten
+      kurz aus, laufen sie noch bis zu 0,6 Sekunden in ihrer Richtung weiter.
+    - **Server rechnet sparsamer** (höchstens 30-mal pro Sekunde), weil der kostenlose Tarif wenig Rechenleistung hat.
+    - **Gemessen** mit künstlich schlechter Verbindung (alle 2 Sekunden 0,35 Sekunden Aussetzer): Sprünge der Mitspieler
+      von 69 auf 3, Stillstand-Bilder ungefähr halbiert. Alle Tests laufen.
 
 ## Aufgaben dieser Runde (Runde 2)
 
