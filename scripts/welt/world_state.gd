@@ -118,15 +118,15 @@ func _build_map() -> void:
 	# Wichtige Häuser
 	_building("Abenteurergilde", Rect2i(27, 9, 6, 4), 64.0, Color("8a5a3c"), "haus", Color("7a2f2a"))
 	_building("Bingos Laden", Rect2i(8, 28, 4, 4), 48.0, Color("a07a3a"), "haus", Color("3f6a8a"))
-	_building("Schmiede", Rect2i(33, 24, 4, 3), 42.0, Color("6a5048"), "haus", Color("3c3c44"))
-	_building("Wohnhaus", Rect2i(13, 9, 4, 3), 40.0, Color("7a6a5a"), "haus", Color("8a4a2a"))
+	_building("Schmiede", Rect2i(33, 25, 4, 3), 42.0, Color("6a5048"), "haus", Color("3c3c44"))
+	_building("Wohnhaus", Rect2i(14, 8, 4, 3), 40.0, Color("7a6a5a"), "haus", Color("8a4a2a"))
 	# Weitere Wohnhäuser ohne Namen
 	var houses := [
 		[Rect2i(14, 4, 3, 3), Color("8a7a62"), Color("6a3a2a")], [Rect2i(35, 8, 4, 3), Color("75685a"), Color("4a5a3a")],
 		[Rect2i(37, 13, 3, 3), Color("8c7458"), Color("7a2f2a")], [Rect2i(3, 14, 3, 3), Color("80705e"), Color("3f5a6a")],
 		[Rect2i(13, 35, 4, 3), Color("7c6c58"), Color("8a4a2a")], [Rect2i(4, 36, 3, 3), Color("8a7a62"), Color("5a3a4a")],
 		[Rect2i(27, 37, 3, 3), Color("75685a"), Color("6a3a2a")], [Rect2i(38, 30, 3, 3), Color("8c7458"), Color("3f5a6a")],
-		[Rect2i(14, 26, 3, 3), Color("80705e"), Color("7a2f2a")], [Rect2i(27, 2, 3, 3), Color("7c6c58"), Color("4a5a3a")],
+		[Rect2i(13, 28, 3, 3), Color("80705e"), Color("7a2f2a")], [Rect2i(27, 2, 3, 3), Color("7c6c58"), Color("4a5a3a")],
 	]
 	for h: Array in houses:
 		_building("", h[0], 34.0, h[1], "haus", h[2])

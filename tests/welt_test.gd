@@ -17,15 +17,17 @@ func _test_steering() -> void:
 	var world := WorldState.new()
 	var p := world.add_player("a", "Test", "elf_m", Vector2i(22, 38))
 
-	# Kein Haus steht auf einer Straße (auch nicht auf der zugewachsenen)
+	# Kein Haus steht auf oder direkt an einer Straße oder dem Marktplatz (ein Feld Abstand)
 	var on_road := false
 	for bld: Dictionary in world.buildings:
-		for y in range(bld.rect.position.y, bld.rect.end.y):
-			for x in range(bld.rect.position.x, bld.rect.end.x):
-				if world.tile_at(Vector2i(x, y)) in [WorldState.Tile.ROAD, WorldState.Tile.OVERGROWN]:
+		if bld.art != "haus":
+			continue
+		for y in range(bld.rect.position.y - 1, bld.rect.end.y + 1):
+			for x in range(bld.rect.position.x - 1, bld.rect.end.x + 1):
+				if world.tile_at(Vector2i(x, y)) in [WorldState.Tile.ROAD, WorldState.Tile.OVERGROWN, WorldState.Tile.PLAZA]:
 					on_road = true
-	_check(not on_road, "Kein Haus steht auf einer Straße")
-	_check((Vector2(world.npcs.wache.cell) - Vector2(33, 24)).length() > 5.0, "Die Wache steht nicht direkt an der Schmiede")
+	_check(not on_road, "Kein Haus steht auf oder direkt an Straße oder Marktplatz")
+	_check((Vector2(world.npcs.wache.cell) - Vector2(33, 25)).length() > 5.0, "Die Wache steht nicht direkt an der Schmiede")
 
 	# Nach oben steuern: Der Spieler läuft auf dem Bildschirm nach oben (Feld x und y werden kleiner)
 	var start := p.pos

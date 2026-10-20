@@ -4,7 +4,7 @@
 		"ye": {"name": "Ausbilder Ye", "feld": [29, 15], "aussehen": "wizzard_m", "farbe": "ccdbf2", "dialog": "ye", "wenn": {"nicht_gemerkt": "ausbildung_morgen"}},
 		"ye_tor": {"name": "Ausbilder Ye", "feld": [20, 38], "aussehen": "wizzard_m", "farbe": "ccdbf2", "dialog": "ye_tor", "wenn": {"gemerkt": "ausbildung_morgen"}},
 		"schreiberin": {"name": "Schreiberin Lene", "feld": [32, 15], "aussehen": "wizzard_f", "farbe": "ffe0b0", "dialog": "schreiberin"},
-		"schmiedin": {"name": "Schmiedin Marta", "feld": [35, 28], "aussehen": "knight_f", "farbe": "ffc8a0", "dialog": "schmiedin"},
+		"schmiedin": {"name": "Schmiedin Marta", "feld": [35, 29], "aussehen": "knight_f", "farbe": "ffc8a0", "dialog": "schmiedin"},
 		"bingo": {"name": "Handelsherr Bingo", "feld": [10, 33], "aussehen": "knight_m", "farbe": "ffd36b", "dialog": "bingo"},
 		"marv": {"name": "Marv", "feld": [20, 34], "aussehen": "elf_m", "farbe": "ffb070", "dialog": "marv",
 			"wenn": {"und": [{"auftrag": "erster_gruppenkampf", "stand": "abgegeben"}, {"auftrag": "fest", "stand": "neu"}]}, "anspringen": {"radius": 5}},

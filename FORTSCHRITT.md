@@ -383,7 +383,9 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     damit man sie klar sieht. Zehn zusätzliche Wohnhäuser, Blumen, viel mehr Bäume. Alle Figuren stehen an denselben
     Stellen wie vorher, nur weiter auseinander. Man läuft schneller (5,5 statt 4 Felder pro Sekunde).
   - Nachbesserung nach deinem Test: Das Wohnhaus stand auf dem fünften Weg (Nordwesten) – verschoben. Die Schmiede
-    steht jetzt weiter weg von der Wache am sechsten Weg (Marta davor). Ein Test prüft, dass kein Haus auf einer Straße steht.
+    steht jetzt weiter weg von der Wache am sechsten Weg (Marta davor). Zweite Nachbesserung: Schmiede, Wohnhaus und
+    ein Haus am Marktplatz verschoben. Jedes Haus hält jetzt mindestens ein Feld Abstand zu Straßen und Marktplatz
+    (ein Test prüft das automatisch).
   - **Häuser mit Satteldach** statt Kästen: Fachwerk-Balken, Tür mit Bogen, beleuchtete Fenster, Ziegelreihen, Schornstein.
   - **Stände der Gesandten:** Jeder Gesandte steht am Anfang seiner Straße vor einem kleinen Stand – Tresen,
     gestreiftes Sonnendach mit Bogenkante in der Farbe der Region, Schild mit dem Namen der Region.
