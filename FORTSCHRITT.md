@@ -29,7 +29,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 2 | Online-Server im Internet (kostenlos bei Render) | vorbereitet, Marco legt das Konto an |
 | 3 | Chat mit freiem Text und Sprechblase | eingebaut, Marco testet |
 | 4 | Gruppe bilden (einladen, Gruppenfenster, Gruppenführer) | eingebaut, Marco testet |
-| 5–8 | Geschichte gemeinsam, gemeinsamer Kampf, Sternenfall zusammen, Feinschliff | offen |
+| 5 | Geschichte gemeinsam erleben (Abstimmung) | eingebaut, Marco testet |
+| 6–8 | Gemeinsamer Kampf, Sternenfall zusammen, Feinschliff | offen |
 
 ## Fertig in Lernprojekt 4
 
@@ -114,6 +115,25 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     gemeinsame Geschichte (Abstimmung, Gruppenführer bei Gleichstand) und der gemeinsame Kampf auf.
   - **Tests:** `tests/gruppen_test.gd` prüft alle Regeln (20 Prüfungen), der Netz-Test eine echte Einladung zwischen
     zwei Programmen – alles richtig. Alle bisherigen Tests laufen weiter.
+
+- **Schritt 5 – Geschichte gemeinsam erleben:**
+  - Spricht jemand aus einer Gruppe eine Figur an, werden **Gruppenmitglieder in der Nähe** (8 Felder, nach deiner
+    Entscheidung) in das Gespräch geholt: „Gemeinsame Szene: Marco spricht mit Schreiberin Lene.“ Alle sehen denselben Text.
+  - **Wer spricht, blättert weiter.** Bei Antworten **stimmen alle ab**, die in der Geschichte an derselben Stelle sind.
+    Man sieht, wie viele Stimmen jede Antwort hat (✔ = eigene Stimme), wie viele noch fehlen und die Restzeit.
+    Haben alle gewählt, gilt die Mehrheit; **bei Gleichstand entscheidet der Gruppenführer** (hat er nicht mitgestimmt:
+    wer spricht). Nach **30 Sekunden** zählen die abgegebenen Stimmen.
+  - **Wer an einer anderen Stelle der Geschichte ist** (z. B. die Szene schon erlebt hat), **schaut zu**: Er sieht alles,
+    kann aber nicht abstimmen und bekommt keine Belohnung. Seine eigene frühere Wahl bleibt.
+  - Belohnungen, Aufträge und Gemerktes gelten für alle, die abgestimmt haben.
+  - **„Szene verlassen“** holt einen aus der Szene. Geht der Sprecher (Knopf, Kampf, Spiel verlassen), spricht der Nächste
+    weiter. Ist niemand mehr da, der abstimmen darf, ist die Szene vorbei.
+  - Allein (ohne Gruppe oder ohne Mitglieder in der Nähe) läuft jedes Gespräch wie bisher.
+  - Noch vorläufig: Ein Kampf aus einem Gespräch (z. B. Lektion bei Ye) startet bei jedem einzeln. Gemeinsam kämpfen
+    kommt in Schritt 6.
+  - **Tests:** `tests/szene_test.gd` (Mitholen, Abstimmen, Zuschauen, Gleichstand, Weiterblättern, Verlassen, Zeit,
+    Belohnungen – 23 Prüfungen) und im Netz-Test eine echte gemeinsame Szene mit Lene zwischen zwei Programmen –
+    alles richtig. Alle bisherigen Tests laufen weiter.
 
 ## Aufgaben dieser Runde (Runde 2)
 
@@ -578,6 +598,13 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 3. Sind die Namen der Gruppenmitglieder in der Stadt hellblau?
 4. Einer startet einen Kampf (z. B. bei Ye): Steht beim anderen „kämpft gerade“?
 5. „Gruppe verlassen“: Verschwindet das Fenster bei beiden (bei zwei Spielern ist die Gruppe dann aufgelöst)?
+
+**Neu: Geschichte gemeinsam** (zwei Geräte, beide „Neu beginnen“, in einer Gruppe)
+1. Beide die Einleitung durchklicken und nebeneinander zu Lene gehen. Einer spricht sie an: Ist der andere mit im Gespräch?
+2. Bei „Soll ich dich eintragen?“ verschieden wählen: Entscheidet der Gruppenführer (★)?
+3. Gleich wählen: Haben danach beide den Auftrag „zu Ye“?
+4. Einer ist schon weiter (z. B. schon bei Ye gewesen): Steht bei ihm „Du schaust zu“, und kann er nicht wählen?
+5. „Szene verlassen“: Ist man raus, und läuft das Gespräch für den anderen weiter?
 
 **Die ganze erste Stunde am Stück** (Kreuzweg-Demo → „Neu beginnen“, Ton an)
 1. Spiel einmal von der Ankunft bis zum Abspann durch, ohne Abkürzungen. Notier dir, wo du nicht wusstest, was zu tun ist.

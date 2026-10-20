@@ -1117,18 +1117,61 @@ func _update_dialog() -> void:
 	for child in _dialog_answers.get_children():
 		child.queue_free()
 	var answers: Array = view.antworten
+	# Gemeinsame Szene: Stimmen zählen, wer spricht, wer zuschaut
+	var scene: Dictionary = view.get("szene", {})
+	var watching: bool = scene.get("rolle", "") == "zuschauen"
 	for i in answers.size():
 		var button := Button.new()
 		button.text = "%d. %s" % [i + 1, answers[i]]
+		if not scene.is_empty():
+			var votes: int = scene.stimmen[i]
+			if votes > 0:
+				button.text += "   (%d %s)" % [votes, "Stimme" if votes == 1 else "Stimmen"]
+			if scene.meine == i:
+				button.text = "✔ " + button.text
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		button.custom_minimum_size = Vector2(920, 38)
 		button.add_theme_font_size_override("font_size", 17)
 		button.focus_mode = Control.FOCUS_NONE
+		button.disabled = watching
 		button.pressed.connect(func() -> void: _send({type = "dialog_choose", index = i}))
 		_dialog_answers.add_child(button)
-	_dialog_next.visible = answers.is_empty()
+	var speaking: bool = scene.is_empty() or scene.rolle == "spricht"
+	_dialog_next.visible = answers.is_empty() and speaking
+	if not scene.is_empty():
+		_dialog_answers.add_child(_scene_status(scene, answers.size()))
 	# Viele Antworten: Fenster wächst nach oben, damit es nicht aus dem Bild ragt
 	_place_dialog.call_deferred()
+
+
+## Zeile unter einem gemeinsamen Gespräch: wer spricht, Stand der Abstimmung, Knopf zum Verlassen.
+func _scene_status(scene: Dictionary, answer_count: int) -> Control:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 12)
+	var text := ""
+	match scene.rolle:
+		"zuschauen":
+			text = "Du schaust zu: Du bist in der Geschichte an einer anderen Stelle (oder hast das schon erlebt)."
+		_:
+			if answer_count > 0:
+				text = "Abstimmung: noch %d offen · %d s · Bei Gleichstand entscheidet der Gruppenführer." % [scene.offen, scene.zeit] \
+						if scene.offen > 0 else "Alle haben gewählt."
+			elif scene.rolle != "spricht":
+				text = "%s blättert weiter …" % scene.sprecher
+	if scene.rolle != "spricht":
+		text = ("Gemeinsam mit %s. " % scene.sprecher) + text
+	var label := _label(text, 14, Color("9fe8ff"))
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.custom_minimum_size = Vector2(740, 0)
+	row.add_child(label)
+	var leave := Button.new()
+	leave.text = "Szene verlassen"
+	leave.custom_minimum_size = Vector2(160, 34)
+	leave.add_theme_font_size_override("font_size", 14)
+	leave.focus_mode = Control.FOCUS_NONE
+	leave.pressed.connect(func() -> void: _send({type = "szene_verlassen"}))
+	row.add_child(leave)
+	return row
 
 
 ## Ladenfenster: wird neu aufgebaut, sobald sich Laden, Gold oder Tasche ändern.

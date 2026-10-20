@@ -146,6 +146,9 @@ static func _start_server(p_name: String, look: String, p_mode: Mode) -> Error:
 	node._groups = Gruppen.new()
 	node._groups.notice.connect(node._on_group_notice)
 	node._groups.invited.connect(node._on_group_invited)
+	# Gemeinsame Szenen: Die Welt fragt hier, wer mit wem in einer Gruppe ist und wer sie führt
+	world.group_members = func(id: String) -> Array: return node._groups.group(id).get("members", [])
+	world.group_leader = func(id: String) -> String: return node._groups.group(id).get("leader", "")
 	node._sent_group.clear()
 	node._levels.clear()
 	if p_mode == Mode.HOST:
@@ -379,7 +382,7 @@ func _flush_own(id: String) -> void:
 	var p: PlayerState = world.players.get(id)
 	if peer <= 1 or p == null:
 		return
-	var data := {dialog = p.dialog, shop = p.shop, progress = p.progress.to_dict(), feld = [p.cell.x, p.cell.y]}
+	var data := {dialog = world.dialog_for_sync(p), shop = p.shop, progress = p.progress.to_dict(), feld = [p.cell.x, p.cell.y]}
 	var text := var_to_str(data)
 	if _sent_own.get(id, "") == text:
 		return
@@ -525,14 +528,14 @@ func _group_view(id: String) -> Dictionary:
 func _on_group_notice(id: String, text: String) -> void:
 	if id == my_id and mode == Mode.HOST:
 		_s_group_event("notice", text, "")
-	elif _peer_of(id) > 1:
+	elif _peer_of(id) in multiplayer.get_peers():
 		_s_group_event.rpc_id(_peer_of(id), "notice", text, "")
 
 
 func _on_group_invited(id: String, from_id: String, from_name: String) -> void:
 	if id == my_id and mode == Mode.HOST:
 		_s_group_event("einladung", from_id, from_name)
-	elif _peer_of(id) > 1:
+	elif _peer_of(id) in multiplayer.get_peers():
 		_s_group_event.rpc_id(_peer_of(id), "einladung", from_id, from_name)
 
 

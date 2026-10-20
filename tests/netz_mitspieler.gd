@@ -87,6 +87,28 @@ func _process(delta: float) -> bool:
 				var members: Array = Netz.group.get("members", [])
 				_check(members.size() == 2 and Netz.group.get("leader", "") == "p1", "Gruppe: mit dem Gastgeber in einer Gruppe, er führt")
 				_check(not Netz.i_lead() and Netz.in_my_group("p1"), "Gruppe: Gastgeber gilt als Gruppenmitglied")
+				# Einleitung zu Ende blättern, danach holt der Gastgeber uns in eine gemeinsame Szene mit Lene
+				for i in 8:
+					Netz.send({type = "dialog_next"})
+				_step = 41
+				_time = 0.0
+		41:
+			var me: PlayerState = w.players[Netz.my_id]
+			var view := w.dialog_view(me)
+			if view.has("szene"):
+				_check(view.szene.rolle == "abstimmen" and view.szene.sprecher == "Testhost", "Szene: Gastgeber spricht, ich stimme ab")
+				_check(view.antworten.size() == 2 and view.wer == "Lene", "Szene: Lenes Frage mit zwei Antworten kommt an")
+				Netz.send({type = "dialog_choose", index = 1})
+				_step = 42
+				_time = 0.0
+			elif _time > 8.0:
+				_check(false, "Szene: Gastgeber holt mich in die Szene")
+				_step = 42
+		42:
+			var me: PlayerState = w.players[Netz.my_id]
+			if me.progress.quest_state("zu_ye") == "aktiv" or _time > 8.0:
+				_check(me.progress.flags.has("gilde_angemeldet"), "Szene: Gruppenführer hat bei Gleichstand entschieden, ich bin angemeldet")
+				_check(me.progress.quest_state("zu_ye") == "aktiv", "Szene: nächster Auftrag auch bei mir")
 				Netz.leave_world()
 				_step = 5
 				_time = 0.0
