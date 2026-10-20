@@ -1,0 +1,446 @@
+class_name Netz
+extends Node
+## Zusammen spielen (Lernprojekt 4): Verbindung zwischen Spielern über das Netz (WebSocket, geht auch im Browser).
+##
+## Der Gastgeber (oder ein Server ohne Grafik) hat die einzige echte Welt (WorldState) und spielt sie weiter.
+## Mitspieler schicken nur Befehle („steuern“, „rede mit Ye“) und bekommen zurück, wo alle stehen,
+## dazu ihren eigenen Fortschritt, Meldungen und Kampf-Wünsche. Bei ihnen ist die Welt nur ein Spiegelbild.
+##
+## Aufruf von überall: Netz.host(...), Netz.join(...), Netz.send(befehl), Netz.stop().
+## Wie Musik hängt sich der Knoten selbst an die Wurzel des Spiels und bleibt beim Szenenwechsel bestehen.
+## Ein Server ohne Grafik startet mit: Godot --headless --path . -- --server
+
+## Die Verbindung zum Gastgeber steht (nur Mitspieler)
+signal connected
+## Die Verbindung kam nicht zustande (nur Mitspieler)
+signal connection_failed
+## Die Verbindung ist abgerissen (nur Mitspieler)
+signal disconnected
+
+enum Mode { OFFLINE, HOST, SERVER, CLIENT }
+
+const PORT := 8910
+## Adresse des Online-Servers im Internet (Schritt 2, kostenloser Anbieter Render).
+## Stimmt sie nicht (z. B. weil der Name beim Anbieter schon vergeben war), hier ändern.
+const ONLINE_ADDRESS := "wss://asterfall-server.onrender.com"
+## So lange wird auf den Online-Server gewartet (Sekunden). Der kostenlose Server schläft, wenn niemand spielt,
+## und braucht dann bis zu einer Minute zum Aufwachen.
+const ONLINE_WAIT := 120.0
+## Alle so viele Sekunden meldet sich ein Mitspieler kurz beim Gastgeber, auch wenn er nur herumsteht
+## (sonst hält der kostenlose Server die Runde für leer und schläft ein)
+const PING_SECONDS := 30.0
+const MAX_PLAYERS := 4
+## So oft pro Sekunde schickt der Gastgeber, wo alle stehen
+const SNAPSHOT_RATE := 15.0
+## Diese Figuren kann man sich aussuchen (Namen aus dem 0x72-Paket)
+const LOOKS: Array[String] = ["elf_m", "elf_f", "knight_m", "knight_f", "wizzard_m", "wizzard_f", "lizard_m", "lizard_f"]
+
+static var mode := Mode.OFFLINE
+## Die Welt: beim Gastgeber die echte, bei Mitspielern das Spiegelbild. Offline: null.
+static var world: WorldState
+## Kennung des eigenen Spielers in der Welt ("p1" = Gastgeber)
+static var my_id := ""
+static var my_name := ""
+static var my_look := "elf_m"
+static var _instance: Netz
+## Nur für automatische Tests: fester Spielstand, damit kein echter Spielstand überschrieben wird
+static var save_override := ""
+
+## Merkt, welches Fenster gerade den normalen Spielstand benutzt (damit ein zweites Fenster auf demselben PC
+## einen eigenen bekommt und sich die beiden nicht gegenseitig überschreiben)
+const LOCK_PATH := "user://spielstand_in_benutzung.json"
+const LOCK_SECONDS := 6.0
+
+var _snapshot_timer := 0.0
+var _lock_timer := 0.0
+var _ping_timer := PING_SECONDS
+## Kennung dieses Fensters für die Spielstand-Sperre
+var _window_id := str(randi())
+## Gastgeber: zuletzt geschickter eigener Zustand je Mitspieler (nur Änderungen werden geschickt)
+var _sent_own := {}
+## Mitspieler: wohin die Figuren laufen (aus dem letzten Bericht des Gastgebers)
+var _targets := {}
+
+
+static func online() -> bool:
+	return mode != Mode.OFFLINE
+
+
+## Adresse dieses Geräts im eigenen Netz (WLAN), die Mitspieler beim Beitreten eingeben.
+static func local_address() -> String:
+	for address in IP.get_local_addresses():
+		if address.begins_with("192.168.") or address.begins_with("10.") or address.begins_with("172."):
+			return address
+	return "localhost"
+
+
+## Gastgeber werden: eigene Welt öffnen, Mitspieler können beitreten. Geht nicht im Browser.
+static func host(p_name: String, look: String) -> Error:
+	return _start_server(p_name, look, Mode.HOST)
+
+
+## Server ohne eigenen Spieler (z. B. später im Internet).
+static func serve() -> Error:
+	return _start_server("Server", "elf_m", Mode.SERVER)
+
+
+static func _start_server(p_name: String, look: String, p_mode: Mode) -> Error:
+	stop()
+	var peer := WebSocketMultiplayerPeer.new()
+	var port := server_port()
+	var err := peer.create_server(port)
+	if err != OK:
+		return err
+	var node := _node()
+	_api().multiplayer_peer = peer
+	mode = p_mode
+	_set_me(p_name, look, "p1")
+	world = WorldState.new()
+	world.notice.connect(node._on_world_notice)
+	world.progress_changed.connect(node._on_world_progress)
+	world.battle_requested.connect(node._on_world_battle)
+	world.effect_requested.connect(node._on_world_effect)
+	world.scene_requested.connect(node._on_world_scene)
+	if not _api().peer_disconnected.is_connected(node._on_peer_disconnected):
+		_api().peer_disconnected.connect(node._on_peer_disconnected)
+	print("Netz: Gastgeber bereit auf Port %d" % port)
+	return OK
+
+
+## Port für Gastgeber und Server: Der Anbieter im Internet gibt ihn vor (PORT), sonst --port=… oder 8910.
+static func server_port() -> int:
+	var from_env := OS.get_environment("PORT")
+	if from_env.is_valid_int():
+		return int(from_env)
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--port=") and arg.substr(7).is_valid_int():
+			return int(arg.substr(7))
+	return PORT
+
+
+## Bei einem Gastgeber mitspielen. Adresse: "localhost", "192.168.0.5" oder eine volle Adresse ("wss://…").
+static func join(address: String, p_name: String, look: String) -> Error:
+	stop()
+	var url := address.strip_edges()
+	if url == "":
+		url = "localhost"
+	if not url.begins_with("ws://") and not url.begins_with("wss://"):
+		url = "ws://%s:%d" % [url, PORT]
+	var peer := WebSocketMultiplayerPeer.new()
+	# Ein Server im Internet darf länger brauchen (er wacht vielleicht gerade auf)
+	peer.handshake_timeout = ONLINE_WAIT if url.begins_with("wss://") else 5.0
+	var err := peer.create_client(url)
+	if err != OK:
+		return err
+	var node := _node()
+	_api().multiplayer_peer = peer
+	mode = Mode.CLIENT
+	_set_me(p_name, look, "")
+	world = WorldState.new()
+	node._targets.clear()
+	for sig: Signal in [_api().connected_to_server, _api().connection_failed, _api().server_disconnected]:
+		for c: Dictionary in sig.get_connections():
+			sig.disconnect(c.callable)
+	_api().connected_to_server.connect(node._on_connected)
+	_api().connection_failed.connect(node._on_failed)
+	_api().server_disconnected.connect(node._on_server_lost)
+	return OK
+
+
+## Verbindung beenden, zurück zum Allein-Spielen.
+static func stop() -> void:
+	if _api().multiplayer_peer is WebSocketMultiplayerPeer:
+		_api().multiplayer_peer.close()
+		_api().multiplayer_peer = OfflineMultiplayerPeer.new()
+	mode = Mode.OFFLINE
+	world = null
+	my_id = ""
+	if _instance != null and is_instance_valid(_instance) and _instance._owns_lock():
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(LOCK_PATH))
+	SaveGame.path = SaveGame.DEFAULT_PATH
+
+
+## Schickt einen Befehl des eigenen Spielers an die Welt.
+static func send(cmd: Dictionary) -> void:
+	match mode:
+		Mode.HOST:
+			world.apply_command(my_id, cmd)
+		Mode.CLIENT:
+			_instance._c_command.rpc_id(1, cmd)
+
+
+## Der eigene Spieler betritt die Stadt (er steht schon in Netz.world, beim Mitspieler im Spiegelbild).
+static func enter_world(p: PlayerState) -> void:
+	if mode == Mode.CLIENT:
+		_instance._c_join.rpc_id(1, p.display_name, p.look, p.progress.to_dict(), [p.cell.x, p.cell.y])
+
+
+## Der eigene Spieler verlässt die Stadt (Kampf, Klassenwahl, Menü).
+static func leave_world() -> void:
+	if world == null:
+		return
+	world.remove_player(my_id)
+	if mode == Mode.CLIENT and _api().multiplayer_peer is WebSocketMultiplayerPeer:
+		_instance._c_leave.rpc_id(1)
+
+
+static func _set_me(p_name: String, look: String, id: String) -> void:
+	my_name = p_name
+	my_look = look
+	my_id = id
+	# Beim Zusammenspielen gilt derselbe Spielstand wie allein (ein Charakter für alles).
+	# Ausnahme: Benutzt ein anderes Fenster auf diesem Gerät ihn gerade, bekommt dieses Fenster einen eigenen.
+	if save_override != "":
+		SaveGame.path = save_override
+	elif _node()._lock_taken_by_other():
+		var safe := ""
+		for ch in p_name.to_lower():
+			if (ch >= "a" and ch <= "z") or (ch >= "0" and ch <= "9"):
+				safe += ch
+		SaveGame.path = "user://spielstand_fenster_%s.json" % (safe if safe != "" else "spieler")
+	else:
+		SaveGame.path = SaveGame.DEFAULT_PATH
+		_node()._write_lock()
+
+
+## Die Netz-Schnittstelle des ganzen Spiels (gilt für alle Knoten, auch für diesen hier).
+static func _api() -> MultiplayerAPI:
+	return (Engine.get_main_loop() as SceneTree).get_multiplayer()
+
+
+static func _node() -> Netz:
+	if _instance != null and is_instance_valid(_instance):
+		return _instance
+	var tree := Engine.get_main_loop() as SceneTree
+	_instance = Netz.new()
+	_instance.name = "Netz"
+	_instance.process_mode = Node.PROCESS_MODE_ALWAYS
+	tree.root.add_child(_instance)
+	return _instance
+
+
+func _process(delta: float) -> void:
+	if online() and _owns_lock():
+		_lock_timer -= delta
+		if _lock_timer <= 0.0:
+			_lock_timer = LOCK_SECONDS / 3.0
+			_write_lock()
+	if mode == Mode.HOST or mode == Mode.SERVER:
+		world.tick(delta)
+		_snapshot_timer -= delta
+		if _snapshot_timer <= 0.0:
+			_snapshot_timer = 1.0 / SNAPSHOT_RATE
+			_send_snapshot()
+			for id: String in world.players:
+				_flush_own(id)
+	elif mode == Mode.CLIENT and world != null:
+		_ping_timer -= delta
+		if _ping_timer <= 0.0 and my_id != "":
+			_ping_timer = PING_SECONDS
+			_c_ping.rpc_id(1)
+		# Figuren gleiten sanft zu dem Platz, den der Gastgeber zuletzt gemeldet hat
+		for id: String in _targets:
+			var p: PlayerState = world.players.get(id)
+			if p == null:
+				continue
+			var target: Vector2 = _targets[id]
+			p.pos = target if p.pos.distance_to(target) > 3.0 else p.pos.lerp(target, clampf(delta * 12.0, 0.0, 1.0))
+
+
+# --- Spielstand-Sperre (mehrere Fenster auf einem PC) ---------------------------
+
+func _read_lock() -> Dictionary:
+	if not FileAccess.file_exists(LOCK_PATH):
+		return {}
+	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(LOCK_PATH))
+	return data if data is Dictionary else {}
+
+
+func _lock_taken_by_other() -> bool:
+	var lock := _read_lock()
+	return lock.get("fenster", _window_id) != _window_id \
+			and Time.get_unix_time_from_system() - float(lock.get("zeit", 0.0)) < LOCK_SECONDS
+
+
+func _owns_lock() -> bool:
+	return SaveGame.path == SaveGame.DEFAULT_PATH and _read_lock().get("fenster", "") == _window_id
+
+
+func _write_lock() -> void:
+	var file := FileAccess.open(LOCK_PATH, FileAccess.WRITE)
+	if file != null:
+		file.store_string(JSON.stringify({fenster = _window_id, zeit = Time.get_unix_time_from_system()}))
+
+
+# --- Gastgeber ------------------------------------------------------------------
+
+func _send_snapshot() -> void:
+	var list: Array = []
+	for p: PlayerState in world.players.values():
+		list.append([p.id, p.display_name, p.look, p.pos, p.facing, p.is_walking()])
+	_s_snapshot.rpc(list)
+
+
+## Schickt einem Mitspieler seinen eigenen Zustand (Gespräch, Laden, Fortschritt), wenn er sich geändert hat.
+func _flush_own(id: String) -> void:
+	var peer := _peer_of(id)
+	var p: PlayerState = world.players.get(id)
+	if peer <= 1 or p == null:
+		return
+	var data := {dialog = p.dialog, shop = p.shop, progress = p.progress.to_dict(), feld = [p.cell.x, p.cell.y]}
+	var text := var_to_str(data)
+	if _sent_own.get(id, "") == text:
+		return
+	_sent_own[id] = text
+	_s_own.rpc_id(peer, data)
+
+
+func _peer_of(id: String) -> int:
+	return int(id.substr(1)) if id.begins_with("p") else 0
+
+
+func _forward(id: String, kind: String, a: Variant, b: Variant = null) -> void:
+	var peer := _peer_of(id)
+	if peer <= 1:
+		return
+	# Erst den Fortschritt schicken, damit der Mitspieler beim Ereignis schon den neuen Stand hat
+	_flush_own(id)
+	_s_event.rpc_id(peer, kind, a, b)
+
+
+func _on_world_notice(id: String, text: String) -> void:
+	_forward(id, "notice", text)
+
+
+func _on_world_progress(id: String) -> void:
+	_forward(id, "progress", null)
+
+
+func _on_world_battle(id: String, kampf_id: String) -> void:
+	_forward(id, "battle", kampf_id)
+
+
+func _on_world_effect(id: String, effect: String) -> void:
+	_forward(id, "effect", effect)
+
+
+func _on_world_scene(id: String, scene: String) -> void:
+	_forward(id, "scene", scene)
+
+
+func _on_peer_disconnected(peer: int) -> void:
+	var id := "p%d" % peer
+	if world != null and world.players.has(id):
+		print("Netz: %s hat das Spiel verlassen" % world.players[id].display_name)
+		world.remove_player(id)
+	_sent_own.erase(id)
+
+
+## Ein Mitspieler betritt die Stadt und bringt seinen Spielstand mit.
+@rpc("any_peer", "reliable")
+func _c_join(p_name: String, look: String, progress: Dictionary, cell: Array) -> void:
+	if mode != Mode.HOST and mode != Mode.SERVER:
+		return
+	var peer := multiplayer.get_remote_sender_id()
+	var id := "p%d" % peer
+	var others := world.players.size() - (1 if world.players.has(id) else 0)
+	if others >= MAX_PLAYERS:
+		return
+	var start := WorldState.start_cell()
+	if cell.size() == 2 and world.is_walkable(Vector2i(int(cell[0]), int(cell[1]))):
+		start = Vector2i(int(cell[0]), int(cell[1]))
+	world.remove_player(id)
+	var p := world.add_player(id, p_name.left(16), look if look in LOOKS else "elf_m", start)
+	p.progress.load_dict(progress)
+	_sent_own.erase(id)
+	print("Netz: %s ist in Kreuzweg" % p.display_name)
+
+
+## Lebenszeichen eines Mitspielers (hält den kostenlosen Server wach)
+@rpc("any_peer", "reliable")
+func _c_ping() -> void:
+	pass
+
+
+@rpc("any_peer", "reliable")
+func _c_leave() -> void:
+	if world != null and (mode == Mode.HOST or mode == Mode.SERVER):
+		world.remove_player("p%d" % multiplayer.get_remote_sender_id())
+
+
+@rpc("any_peer", "reliable")
+func _c_command(cmd: Dictionary) -> void:
+	if world != null and (mode == Mode.HOST or mode == Mode.SERVER):
+		world.apply_command("p%d" % multiplayer.get_remote_sender_id(), cmd)
+
+
+# --- Mitspieler -----------------------------------------------------------------
+
+func _on_connected() -> void:
+	my_id = "p%d" % multiplayer.get_unique_id()
+	connected.emit()
+
+
+func _on_failed() -> void:
+	stop()
+	connection_failed.emit()
+
+
+func _on_server_lost() -> void:
+	stop()
+	disconnected.emit()
+
+
+## Wo alle Spieler stehen (vom Gastgeber, mehrmals pro Sekunde).
+@rpc("authority", "unreliable_ordered")
+func _s_snapshot(list: Array) -> void:
+	if mode != Mode.CLIENT or world == null:
+		return
+	var seen := {}
+	for entry: Array in list:
+		var id: String = entry[0]
+		seen[id] = true
+		var p: PlayerState = world.players.get(id)
+		if p == null:
+			# Den eigenen Spieler legt die Stadt selbst an; erst wenn er dort steht, kommen die anderen dazu
+			if id == my_id or not world.players.has(my_id):
+				continue
+			p = world.add_player(id, entry[1], entry[2], Vector2i(Vector2(entry[3]).round()))
+		var pos: Vector2 = entry[3]
+		_targets[id] = pos
+		p.cell = Vector2i(pos.round())
+		p.facing = entry[4]
+		p.remote_walking = entry[5]
+	for id: String in world.players.keys():
+		if id != my_id and not seen.has(id):
+			world.remove_player(id)
+			_targets.erase(id)
+
+
+## Eigener Zustand vom Gastgeber: Gespräch, Laden, Fortschritt.
+@rpc("authority", "reliable")
+func _s_own(data: Dictionary) -> void:
+	if mode != Mode.CLIENT or world == null or not world.players.has(my_id):
+		return
+	var p: PlayerState = world.players[my_id]
+	p.dialog = data.get("dialog", {})
+	p.shop = data.get("shop", "")
+	p.progress.load_dict(data.get("progress", {}))
+
+
+## Ein Ereignis für den eigenen Spieler (Meldung, Fortschritt, Kampf, Effekt, Bildschirmwechsel).
+@rpc("authority", "reliable")
+func _s_event(kind: String, a: Variant, _b: Variant) -> void:
+	if mode != Mode.CLIENT or world == null or not world.players.has(my_id):
+		return
+	match kind:
+		"notice":
+			world.notice.emit(my_id, a)
+		"progress":
+			world.progress_changed.emit(my_id)
+		"battle":
+			world.battle_requested.emit(my_id, a)
+		"effect":
+			world.effect_requested.emit(my_id, a)
+		"scene":
+			world.scene_requested.emit(my_id, a)

@@ -2,13 +2,13 @@ extends Node2D
 ## Kreuzweg-Demo (Lernprojekt 3): Stadt schräg von oben, Laufen, Gespräche mit Antworten,
 ## Aufträge, Gold, Tasche, Erfahrung und Stufen, Speichern.
 ## Dieses Skript ist nur die Anzeige: Es zeichnet den Zustand aus WorldState und
-## schickt Befehle. Ein zweiter Spieler („Testgefährte“) läuft zur Probe mit,
-## gesteuert über genau dieselben Befehle – so wie später echte Mitspieler über das Netz.
+## schickt Befehle. Allein läuft ein zweiter Spieler („Testgefährte“) zur Probe mit,
+## gesteuert über genau dieselben Befehle. Beim Zusammenspielen (Netz) kommen die Befehle
+## echter Mitspieler beim Gastgeber an, und die Welt hier ist die des Gastgebers bzw. ihr Spiegelbild.
 ## Alle Texte stehen in res://data (siehe data/LIESMICH.md).
 
 const TILE_W := 64.0
 const TILE_H := 32.0
-const LOCAL_ID := "spieler"
 const BOT_ID := "gefaehrte"
 
 const TILE_COLORS := {
@@ -32,7 +32,9 @@ const NIGHT_COLOR := Color(0.45, 0.5, 0.78)
 ## Farben der fünf Festlaternen (eine pro Region)
 const LANTERN_COLORS: Array[Color] = [Color("b8b0ff"), Color("e0a060"), Color("ffb070"), Color("a8e088"), Color("ffb8d8")]
 
-var state := WorldState.new()
+var state: WorldState
+## Kennung des eigenen Spielers (beim Zusammenspielen vom Netz vergeben)
+var local_id := "spieler"
 
 var _ground: Node2D
 var _objects: Node2D
@@ -85,6 +87,10 @@ var _stick_moved := false
 
 func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color("1b2418"))
+	state = Netz.world if Netz.online() else WorldState.new()
+	if Netz.online():
+		local_id = Netz.my_id
+		Netz._node().disconnected.connect(_on_net_lost)
 	state.notice.connect(_on_notice)
 	state.progress_changed.connect(_on_progress_changed)
 	state.battle_requested.connect(_on_battle_requested)
@@ -92,9 +98,15 @@ func _ready() -> void:
 	state.scene_requested.connect(_on_scene)
 	_night = CanvasModulate.new()
 	add_child(_night)
-	var local := state.add_player(LOCAL_ID, "Du", "elf_m", WorldState.start_cell())
-	SaveGame.load_into(local)
-	state.add_player(BOT_ID, "Testgefährte", "lizard_f", WorldState.start_cell() + Vector2i(-1, 0))
+	var local: PlayerState
+	if Netz.online():
+		local = state.add_player(local_id, Netz.my_name, Netz.my_look, WorldState.start_cell())
+		SaveGame.load_into(local)
+		Netz.enter_world(local)
+	else:
+		local = state.add_player(local_id, "Du", "elf_m", WorldState.start_cell())
+		SaveGame.load_into(local)
+		state.add_player(BOT_ID, "Testgefährte", "lizard_f", WorldState.start_cell() + Vector2i(-1, 0))
 
 	_ground = Node2D.new()
 	_ground.z_index = -10
@@ -135,23 +147,27 @@ func _ready() -> void:
 	_camera.reset_smoothing()
 	# Zurück aus einem Kampf: Ergebnis verbuchen (Erfahrung, Aufträge)
 	if not BattleRequest.result.is_empty():
-		state.apply_command(LOCAL_ID, {type = "kampf_ergebnis", kampf = BattleRequest.result.kampf,
+		_send({type = "kampf_ergebnis", kampf = BattleRequest.result.kampf,
 				gewonnen = BattleRequest.result.gewonnen, traenke_benutzt = BattleRequest.result.get("traenke_benutzt", 0)})
 		BattleRequest.result = {}
 	# Beim ersten Betreten der Stadt kommt die Einleitung
-	state.apply_command(LOCAL_ID, {type = "start"})
+	_send({type = "start"})
 
 
 func _exit_tree() -> void:
 	if not _no_save:
 		SaveGame.save(local_player())
+	if Netz.online():
+		Netz.leave_world()
 
 
 func _process(delta: float) -> void:
 	_time += delta
 	_update_steer()
-	_drive_bot(delta)
-	state.tick(delta)
+	if not Netz.online():
+		# Beim Zusammenspielen spielt der Gastgeber die Welt weiter (Netz), hier nur allein
+		_drive_bot(delta)
+		state.tick(delta)
 	_sync()
 	_update_dialog()
 	_update_shop()
@@ -160,7 +176,15 @@ func _process(delta: float) -> void:
 
 
 func local_player() -> PlayerState:
-	return state.players[LOCAL_ID]
+	return state.players[local_id]
+
+
+## Schickt einen Befehl des eigenen Spielers: allein direkt an die Welt, zusammen über das Netz.
+func _send(cmd: Dictionary) -> void:
+	if Netz.online():
+		Netz.send(cmd)
+	else:
+		state.apply_command(local_id, cmd)
 
 
 ## Überträgt den Zustand der Spieler auf ihre Figuren.
@@ -169,7 +193,7 @@ func _sync() -> void:
 		var p: PlayerState = state.players[id]
 		if not _characters.has(id):
 			var view := WorldCharacter.new()
-			var is_local := id == LOCAL_ID
+			var is_local := id == local_id
 			view.setup(p.look, p.display_name, Color.WHITE, Color("8affc1") if is_local else Color.WHITE)
 			_objects.add_child(view)
 			_characters[id] = view
@@ -177,6 +201,11 @@ func _sync() -> void:
 		view.position = cell_center(p.pos)
 		view.moving = p.is_walking()
 		view.facing = p.facing
+	# Mitspieler, die gegangen sind (oder gerade kämpfen), verschwinden
+	for id: String in _characters.keys():
+		if not id.begins_with("npc:") and not state.players.has(id):
+			_characters[id].queue_free()
+			_characters.erase(id)
 	var local := local_player()
 	_camera.position = cell_center(local.pos)
 	# Sammelpunkte: Jeder sieht nur die, die er selbst noch nicht eingesammelt hat
@@ -192,7 +221,11 @@ func _sync() -> void:
 	var night_color := NIGHT_COLOR if local.progress.flags.has("nacht") else Color.WHITE
 	_night.color = _night.color.lerp(night_color, 0.05)
 	Musik.play("nacht" if local.progress.flags.has("nacht") else "stadt")
-	_info.text = "Spieler in Kreuzweg: %d" % state.players.size()
+	if Netz.online():
+		_info.text = "Zusammen: %d Spieler%s" % [state.players.size(), " · Gastgeber, Adresse: " + Netz.local_address() if Netz.mode == Netz.Mode.HOST else ""]
+		_info.reset_size()
+	else:
+		_info.text = "Spieler in Kreuzweg: %d" % state.players.size()
 	for id: String in state.npcs:
 		var npc_view: WorldCharacter = _characters["npc:" + id]
 		npc_view.visible = state.npc_visible(local, id)
@@ -247,13 +280,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		if key in [KEY_E, KEY_SPACE]:
 			_action()
 		elif key >= KEY_1 and key <= KEY_9:
-			state.apply_command(LOCAL_ID, {type = "dialog_choose", index = key - KEY_1})
+			_send({type = "dialog_choose", index = key - KEY_1})
 		elif key == KEY_J:
 			_toggle_panel("auftraege")
 		elif key == KEY_I:
 			_toggle_panel("tasche")
 		elif key == KEY_ESCAPE and local_player().shop != "":
-			state.apply_command(LOCAL_ID, {type = "laden_zu"})
+			_send({type = "laden_zu"})
 		elif key == KEY_ESCAPE and _panel.visible:
 			_panel.visible = false
 		else:
@@ -277,9 +310,9 @@ func _unhandled_input(event: InputEvent) -> void:
 ## E, Leertaste oder Aktions-Knopf: im Gespräch weiter, sonst das Nächste nebenan benutzen.
 func _action() -> void:
 	if local_player().in_dialog():
-		state.apply_command(LOCAL_ID, {type = "dialog_next"})
+		_send({type = "dialog_next"})
 	else:
-		state.apply_command(LOCAL_ID, {type = "interact"})
+		_send({type = "interact"})
 
 
 ## Richtung aus Tasten und Steuerknopf; wird nur bei Änderung als Befehl geschickt.
@@ -299,7 +332,7 @@ func _update_steer() -> void:
 			dir = _stick_vec
 	if dir != _steer_sent:
 		_steer_sent = dir
-		state.apply_command(LOCAL_ID, {type = "steer", dir = dir})
+		_send({type = "steer", dir = dir})
 
 
 func _touch(event: InputEvent) -> void:
@@ -357,19 +390,19 @@ func _tap_at(world: Vector2) -> void:
 			continue
 		var npc_pos := cell_center(Vector2(state.npcs[id].cell))
 		if absf(world.x - npc_pos.x) < 30.0 and world.y > npc_pos.y - 90.0 and world.y < npc_pos.y + 12.0:
-			state.apply_command(LOCAL_ID, {type = "talk", npc = id})
+			_send({type = "talk", npc = id})
 			_show_marker(npc_pos)
 			return
 	# Sammelpunkt angetippt? Dann hinlaufen und einsammeln
 	for target: String in _pickup_nodes:
 		var node: Node2D = _pickup_nodes[target]
 		if node.visible and (world - (node.position + Vector2(0, -12))).length() < 26.0:
-			state.apply_command(LOCAL_ID, {type = "use", target = target})
+			_send({type = "use", target = target})
 			_show_marker(node.position)
 			return
 	var cell := screen_to_cell(world)
 	if state.is_walkable(cell):
-		state.apply_command(LOCAL_ID, {type = "move", cell = cell})
+		_send({type = "move", cell = cell})
 		_show_marker(cell_center(Vector2(cell)))
 
 
@@ -565,7 +598,7 @@ func _build_ui() -> void:
 	_dialog_next.size_flags_horizontal = Control.SIZE_SHRINK_END
 	_dialog_next.add_theme_font_size_override("font_size", 17)
 	_dialog_next.focus_mode = Control.FOCUS_NONE
-	_dialog_next.pressed.connect(func() -> void: state.apply_command(LOCAL_ID, {type = "dialog_next"}))
+	_dialog_next.pressed.connect(func() -> void: _send({type = "dialog_next"}))
 	box.add_child(_dialog_next)
 
 	# Fenster für Auftragsbuch und Tasche
@@ -672,7 +705,7 @@ func _draw_decoration(node: Node2D, art: String, index: int) -> void:
 
 ## Besondere Effekte: Beim Sternenfall wird es kurz taghell und das Bild wackelt.
 func _on_effect(player_id: String, effect: String) -> void:
-	if player_id != LOCAL_ID or effect != "sternenfall":
+	if player_id != local_id or effect != "sternenfall":
 		return
 	_flash_rect.color = Color(1, 1, 1, 0.9)
 	var tween := create_tween()
@@ -684,7 +717,19 @@ func _on_effect(player_id: String, effect: String) -> void:
 
 
 func _go_menu() -> void:
+	# Zurück ins Menü beendet das Zusammenspielen (beim Gastgeber für alle)
+	if Netz.online():
+		SaveGame.save(local_player())
+		_no_save = true
+		Netz.stop()
 	get_tree().change_scene_to_file("res://scenes/menu.tscn")
+
+
+## Verbindung zum Gastgeber verloren: zurück ins Menü (der Spielstand ist auf dem Gerät gespeichert).
+func _on_net_lost() -> void:
+	_no_save = true
+	get_tree().set_meta("netz_meldung", "Die Verbindung zum Gastgeber ist abgerissen. Dein Fortschritt ist gespeichert.")
+	get_tree().change_scene_to_file.call_deferred("res://scenes/zusammen.tscn")
 
 
 ## Spielstand löschen und von vorn beginnen.
@@ -736,7 +781,7 @@ func _update_dialog() -> void:
 		button.custom_minimum_size = Vector2(920, 38)
 		button.add_theme_font_size_override("font_size", 17)
 		button.focus_mode = Control.FOCUS_NONE
-		button.pressed.connect(func() -> void: state.apply_command(LOCAL_ID, {type = "dialog_choose", index = i}))
+		button.pressed.connect(func() -> void: _send({type = "dialog_choose", index = i}))
 		_dialog_answers.add_child(button)
 	_dialog_next.visible = answers.is_empty()
 	# Viele Antworten: Fenster wächst nach oben, damit es nicht aus dem Bild ragt
@@ -763,7 +808,7 @@ func _update_shop() -> void:
 		var item := GameData.item(ware.gegenstand)
 		var row := _shop_row("%s – %s" % [item.get("name", ware.gegenstand), item.get("beschreibung", "")],
 				"%s · %d Gold" % [GameData.text("laden_kaufen"), ware.preis])
-		row.button.pressed.connect(func() -> void: state.apply_command(LOCAL_ID, {type = "kaufen", gegenstand = ware.gegenstand}))
+		row.button.pressed.connect(func() -> void: _send({type = "kaufen", gegenstand = ware.gegenstand}))
 		if p.progress.gold < ware.preis:
 			row.button.modulate = Color(1, 1, 1, 0.5)
 		_shop_box.add_child(row.box)
@@ -776,7 +821,7 @@ func _update_shop() -> void:
 		any = true
 		var row := _shop_row("%d × %s" % [p.progress.items[item_id], GameData.item_name(item_id)],
 				"%s · %d Gold" % [GameData.text("laden_verkaufen"), price])
-		row.button.pressed.connect(func() -> void: state.apply_command(LOCAL_ID, {type = "verkaufen", gegenstand = item_id}))
+		row.button.pressed.connect(func() -> void: _send({type = "verkaufen", gegenstand = item_id}))
 		_shop_box.add_child(row.box)
 	if not any:
 		_shop_box.add_child(_label(GameData.text("laden_nichts_verkaufen"), 15, Color(1, 1, 1, 0.6)))
@@ -785,7 +830,7 @@ func _update_shop() -> void:
 	close.custom_minimum_size = Vector2(140, 40)
 	close.size_flags_horizontal = Control.SIZE_SHRINK_END
 	close.focus_mode = Control.FOCUS_NONE
-	close.pressed.connect(func() -> void: state.apply_command(LOCAL_ID, {type = "laden_zu"}))
+	close.pressed.connect(func() -> void: _send({type = "laden_zu"}))
 	_shop_box.add_child(close)
 	_shop_panel.reset_size()
 
@@ -818,7 +863,7 @@ func _update_hud() -> void:
 
 
 func _on_notice(player_id: String, text: String) -> void:
-	if player_id != LOCAL_ID:
+	if player_id != local_id:
 		return
 	var label := _label(text, 20, Color("fff3b0"))
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -832,7 +877,7 @@ func _on_notice(player_id: String, text: String) -> void:
 
 ## Automatisch speichern, sobald sich der Fortschritt des eigenen Spielers ändert.
 func _on_progress_changed(player_id: String) -> void:
-	if player_id == LOCAL_ID and not _no_save:
+	if player_id == local_id and not _no_save:
 		SaveGame.save(local_player())
 
 
@@ -887,7 +932,7 @@ func _fill_panel() -> void:
 
 ## Ein Kampf beginnt (z. B. eine Lektion bei Ye): speichern und zum Kampfbildschirm wechseln.
 func _on_battle_requested(player_id: String, kampf_id: String) -> void:
-	if player_id != LOCAL_ID:
+	if player_id != local_id:
 		return
 	var progress := local_player().progress
 	if BattleRequest.prepare(kampf_id, progress.level, progress.item_count("heiltrank")):
@@ -902,7 +947,7 @@ func _place_dialog() -> void:
 
 ## Ein Dialog wechselt zu einem anderen Bildschirm (Klassenwahl, Abspann): erst speichern.
 func _on_scene(player_id: String, scene: String) -> void:
-	if player_id != LOCAL_ID:
+	if player_id != local_id:
 		return
 	SaveGame.save(local_player())
 	get_tree().change_scene_to_file.call_deferred("res://scenes/%s.tscn" % scene)
