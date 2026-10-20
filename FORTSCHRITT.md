@@ -473,8 +473,9 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 
 ## Offene Fragen an Marco
 
-- **Zusammen spielen:** Die vier Entscheidungen sind getroffen (20.10.). Kleinere Fragen für später stehen in
-  `ZUSAMMEN_PLAN.md` unter „Noch offen“ (Gleichstand bei Abstimmungen, unterschiedlicher Story-Stand, welche Schnellsätze).
+- **Zusammen spielen:** Die vier Entscheidungen sind getroffen (20.10.). Auch geklärt: Bei Gleichstand entscheidet der
+  Gruppenführer, wer eine Szene schon erlebt hat, stimmt nicht mehr mit ab. Schnellsätze sind hinten angestellt
+  (Vorschläge in design.md im Ideen-Parkplatz).
 
 - **Pilzhöhle – was ich selbst ergänzt habe** (bitte prüfen; alle Zahlen **vorläufig, Feinschliff am Ende**):
   - Gegen Giftwolken gibt es für jede Klasse „Giftwolke vertreiben“ (kostet den Zug), Wind-Treffer vertreiben auch eine.
