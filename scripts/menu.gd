@@ -32,8 +32,16 @@ func _ready() -> void:
 	sub.position = Vector2(0, 180)
 	add_child(sub)
 
-	_add_button("Kampf-Sandbox\nAlle 11 Klassen, Pilzhöhle, Auswertung", Vector2(240, 300), "res://scenes/auswahl.tscn")
-	_add_button("Kreuzweg-Demo\nDie erste Stunde als Novize", Vector2(660, 300), "res://scenes/kreuzweg.tscn")
+	_add_button("Kampf-Sandbox\nAlle 11 Klassen, Pilzhöhle, Auswertung", Vector2(40, 300), "res://scenes/auswahl.tscn")
+	_add_button("Kreuzweg-Demo\nDie erste Stunde als Novize", Vector2(450, 300), "res://scenes/kreuzweg.tscn")
+	_add_button("Zusammen spielen\nMit bis zu 4 Spielern in Kreuzweg", Vector2(860, 300), "res://scenes/zusammen.tscn")
+
+	# Server ohne Grafik: Godot --headless --path . -- --server
+	if "--server" in OS.get_cmdline_user_args():
+		_start_server.call_deferred()
+	else:
+		# Wer ins Menü zurückkommt (z. B. vom Abspann), spielt wieder allein
+		Netz.stop()
 
 	# Musik an/aus (überall auch mit Taste M)
 	var music := Button.new()
@@ -48,6 +56,12 @@ func _ready() -> void:
 	var volume := Musik.make_slider(220.0)
 	volume.position = Vector2(470, 535)
 	add_child(volume)
+
+
+func _start_server() -> void:
+	if Netz.serve() != OK:
+		print("Netz: Server konnte nicht starten (Port %d belegt?)" % Netz.PORT)
+		get_tree().quit(1)
 
 
 func _add_button(text: String, pos: Vector2, scene: String) -> void:

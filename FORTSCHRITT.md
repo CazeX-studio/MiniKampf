@@ -9,11 +9,49 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   mit Urbaum-Entscheidung, Kampfauswertung. Der Kampf ist in Regeln (`battle_state.gd`) und Anzeige (`combat.gd`) getrennt.
 - **Kreuzweg-Demo** (Lernprojekt 3): Die **erste Stunde ist komplett spielbar**, von der Ankunft bis zum Abspann
   (alle 9 Schritte aus `KREUZWEG_PLAN.md`). Steuerung per Tasten, Steuerknopf oder Antippen, Speichern, Musik mit Lautstärke-Regler.
-- **Als Nächstes:** Marco testet die erste Stunde **am Stück**, danach werden seine Rückmeldungen eingearbeitet.
+- **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **begonnen.** Schritt 1 ist eingebaut:
+  bis zu 4 Spieler laufen gemeinsam durch Kreuzweg (Gastgeber am PC, Mitspieler treten bei).
+- **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück einarbeiten (kommen später), Schritt 1 von
+  „Zusammen spielen“ testen und die offenen Entscheidungen in `ZUSAMMEN_PLAN.md` treffen.
 - **Platzhalter:** Alle Texte der Hauptfiguren (Ye, Mira, Ren, Marv, Lene, Bingo, Gesandte …) stehen in `data/dialoge.json`
   und werden von Marco noch geschrieben (Anleitung in `data/LIESMICH.md`).
 - Selbst gewählte Zahlen und Passiven: Abschnitt „Vorläufige Werte (Feinschliff am Ende)“ unten.
 - Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
+
+## Aufgaben Lernprojekt 4 „Zusammen spielen“ (Fahrplan in `ZUSAMMEN_PLAN.md`)
+
+| Nr. | Aufgabe | Stand |
+|-----|---------|-------|
+| 0 | Plan schreiben | erledigt |
+| 1 | Zusammen in Kreuzweg laufen (Gastgeber, Beitreten, alle sehen sich) | eingebaut, Marco testet |
+| 2–7 | Internet, Chat, Gruppe, gemeinsamer Kampf, Sternenfall zusammen, Feinschliff | offen |
+
+## Fertig in Lernprojekt 4
+
+- **Schritt 1 – Zusammen in Kreuzweg laufen:**
+  - Im Menü gibt es den neuen Knopf **„Zusammen spielen“**. Dort wählst du **Name** und **Figur** (8 Pixel-Figuren)
+    und tippst auf **„Gastgeber werden“** (nur PC-Version) oder **„Beitreten“** (mit der Adresse des Gastgebers).
+    Name, Figur und Adresse werden gemerkt.
+  - In Kreuzweg sehen sich **bis zu 4 Spieler** gegenseitig laufen, mit Namen über dem Kopf (dein eigener grün).
+    Oben links steht „Zusammen: 2 Spieler“, beim Gastgeber dazu die **Adresse für Mitspieler** im eigenen WLAN.
+  - **Wie es funktioniert:** Nur der Gastgeber hat die echte Stadt. Mitspieler schicken ihre Befehle (laufen, reden,
+    Antwort wählen, kaufen …) und bekommen zurück, wo alle stehen, und ihren eigenen Fortschritt. Das klappt, weil die
+    Stadt seit Lernprojekt 3 nur über Befehle gesteuert wird – an den Regeln der Stadt musste nichts geändert werden.
+  - **Jeder spielt seine eigene Geschichte** (Aufträge, Gespräche, Nacht beim Fest …) und hat beim Zusammenspielen einen
+    **eigenen Spielstand pro Name**, getrennt vom Allein-Spiel. So gehen auch zwei Fenster auf einem PC. *(vorläufig,
+    siehe offene Fragen in `ZUSAMMEN_PLAN.md`)*
+  - **Kämpfe sind noch allein:** Wer kämpft, verschwindet kurz aus der Stadt und kommt danach zurück.
+    Der gemeinsame Kampf ist Schritt 5.
+  - **„Menü“** beendet das Zusammenspielen (beim Gastgeber für alle). Reißt die Verbindung ab, landest du wieder auf
+    „Zusammen spielen“ mit einem Hinweis; dein Fortschritt ist gespeichert.
+  - **Server ohne Grafik** für später: `Godot --headless --path . -- --server` (gleiches Spiel, keine eigene Figur).
+  - **Grenzen bisher:** Am Handy und im Browser geht nur „Beitreten“, und zwar erst richtig mit einem Server im Internet
+    (Schritt 2), weil Browser aus Sicherheitsgründen nur sichere Verbindungen erlauben. Ausnahme: Browser und Gastgeber
+    auf demselben PC (`localhost`). Die eigene Figur reagiert minimal verzögert (im WLAN kaum spürbar), das glätte ich in Schritt 7.
+  - **Tests:** `tests/netz_test.gd` startet ein zweites Programm als Mitspieler: Beitreten, Name und Figur, Laufen,
+    Einleitung vom Gastgeber, Verlassen – alles richtig (10 Prüfungen). `tests/netz_stadt_test.gd` öffnet die echte
+    Stadt gegen einen Server ohne Grafik, inklusive „Neu beginnen“ und „Menü“: alles richtig (13 Prüfungen).
+    Alle bisherigen Tests (Welt, Klassenwahl, Übergang, Lektionen, Elemente, Durchlauf der ersten Stunde) laufen unverändert.
 
 ## Aufgaben dieser Runde (Runde 2)
 
@@ -387,6 +425,13 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 4. Eine Klasse wählen und bestätigen: Ye sollte Klasse, Region und Lehrmeister nennen.
 5. „Leb wohl, Ye.“: Prüfe, ob der Abspann erscheint und „Neu beginnen“ von vorne anfängt.
 
+**Neu: Zusammen spielen, Schritt 1** (am PC in Godot, Anleitung auch in der README)
+1. In Godot „Debuggen → Ausführungsinstanzen anpassen…“ öffnen, „Mehrere Instanzen aktivieren“, 2 eintragen, F5.
+2. Fenster 1: Menü → „Zusammen spielen“, Name eingeben, Figur mit < > wählen, „Gastgeber werden“.
+3. Fenster 2: anderen Namen und andere Figur, Adresse `localhost`, „Beitreten“. Siehst du dich in beiden Fenstern gegenseitig?
+4. In einem Fenster laufen (WASD) und mit Lene reden: Läuft die Figur im anderen Fenster mit, und hat jeder seinen eigenen Auftrag?
+5. Fenster 1 (Gastgeber) → „Menü“: Fenster 2 sollte mit einem Hinweis auf „Zusammen spielen“ zurückkehren.
+
 **Die ganze erste Stunde am Stück** (Kreuzweg-Demo → „Neu beginnen“, Ton an)
 1. Spiel einmal von der Ankunft bis zum Abspann durch, ohne Abkürzungen. Notier dir, wo du nicht wusstest, was zu tun ist.
 2. Achte auf die Musik: Stadt, Nacht beim Fest, Kampf, Boss beim Sternenfresser. Taste M bzw. Menü-Knopf schaltet sie ab,
@@ -417,9 +462,13 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Deine Rückmeldungen aus dem Test der ersten Stunde am Stück einarbeiten (Schwierigkeit, Länge, unklare Stellen).
 - Dialoge der Hauptfiguren: Marco schreibt sie; Platzhalter stehen in `data/dialoge.json`.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).
-- Danach laut Fahrplan in design.md: Lernprojekt 4 „Zusammen spielen“ oder Lernprojekt 5 „Grünwacht“ (erst einen Plan schreiben).
+- Lernprojekt 4 „Zusammen spielen“ weiterbauen (`ZUSAMMEN_PLAN.md`, als Nächstes Schritt 2: Server im Internet,
+  braucht deine Entscheidung zum Anbieter). Danach Lernprojekt 5 „Grünwacht“ (erst einen Plan schreiben).
 
 ## Offene Fragen an Marco
+
+- **Zusammen spielen:** vier Entscheidungen in `ZUSAMMEN_PLAN.md` (Server-Anbieter, gemeinsame Geschichte in der Gruppe,
+  Chat-Art, Spielstand beim Zusammenspielen).
 
 - **Pilzhöhle – was ich selbst ergänzt habe** (bitte prüfen; alle Zahlen **vorläufig, Feinschliff am Ende**):
   - Gegen Giftwolken gibt es für jede Klasse „Giftwolke vertreiben“ (kostet den Zug), Wind-Treffer vertreiben auch eine.

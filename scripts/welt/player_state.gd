@@ -20,6 +20,8 @@ var facing := 1
 ## Direkte Steuerung (Tasten oder Steuerknopf): Richtung in Feld-Koordinaten, Länge 0 bis 1.
 ## Solange sie nicht null ist, läuft der Spieler frei statt einen Weg entlang.
 var steer := Vector2.ZERO
+## Beim Zusammenspielen: Der Gastgeber meldet, dass diese Figur gerade läuft (nur Anzeige im Spiegelbild)
+var remote_walking := false
 ## Laufendes Gespräch: {id = Dialog, node = Knoten} oder leer
 var dialog := {}
 ## Geöffneter Laden (Kennung aus data/laeden.json) oder ""
@@ -42,7 +44,7 @@ func is_moving() -> bool:
 
 ## Läuft gerade (einen Weg entlang oder frei gesteuert)?
 func is_walking() -> bool:
-	return is_moving() or steer != Vector2.ZERO
+	return is_moving() or steer != Vector2.ZERO or remote_walking
 
 
 func in_dialog() -> bool:

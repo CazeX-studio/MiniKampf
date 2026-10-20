@@ -16,7 +16,7 @@ Handy quer halten. Jeder Push auf `main` baut die Web-Version automatisch neu
 2. **Importieren** → `C:\GameDev\MiniKampf\project.godot` wählen
 3. **F5** startet das Spiel
 
-Das Spiel startet mit einem **Menü**: Kampf-Sandbox oder Kreuzweg-Demo.
+Das Spiel startet mit einem **Menü**: Kampf-Sandbox, Kreuzweg-Demo oder Zusammen spielen.
 
 ## Kreuzweg-Demo (Lernprojekt 3, Fahrplan in `KREUZWEG_PLAN.md`)
 
@@ -56,6 +56,23 @@ Abenteurergilde, Bingos Laden, sechs Straßen (die sechste nach Südosten ist zu
 Jeder Spieler schickt nur Befehle wie „laufe zu Feld X“ oder „rede mit Ye“. Die Anzeige
 (`scripts/welt/kreuzweg.gd`) zeichnet nur, was in der Logik steht. Der Testgefährte wird schon über
 dieselben Befehle gesteuert wie ein echter Mitspieler. Später kann ein Server die Logik übernehmen.
+
+## Zusammen spielen (Lernprojekt 4, Fahrplan in `ZUSAMMEN_PLAN.md`)
+
+Menü → **„Zusammen spielen“**: Name und Figur wählen, dann **Gastgeber werden** (nur PC-Version) oder **Beitreten**.
+Bis zu 4 Spieler laufen gleichzeitig durch Kreuzweg und sehen sich mit Namen. Jeder behält seinen eigenen Fortschritt
+(eigener Spielstand pro Name), Kämpfe sind noch allein.
+
+- **Zwei Fenster am PC:** In Godot oben „Debuggen → Ausführungsinstanzen anpassen…“ (englisch: „Debug → Customize Run
+  Instances…“), „Mehrere Instanzen aktivieren“ und 2 eintragen, dann F5. Fenster 1: Gastgeber werden, Fenster 2: Beitreten
+  mit Adresse `localhost`.
+- **Im eigenen WLAN:** Der Gastgeber sieht oben links seine Adresse (z. B. `192.168.178.20`), die gibt der Mitspieler ein
+  (beide mit der PC-Version; Windows fragt beim ersten Mal, ob das Spiel ins Netz darf → erlauben).
+- **Server ohne Grafik** (für später im Internet): `Godot --headless --path . -- --server`
+- Technik: `scripts/netz/netz.gd` (Verbindung über WebSocket, Port 8910), Bildschirm `scripts/netz/zusammen.gd`.
+  Der Gastgeber hat die echte Welt (`WorldState`), Mitspieler schicken nur Befehle und bekommen ein Spiegelbild zurück.
+- Tests: `tests/netz_test.gd` (Gastgeber + zweites Programm als Mitspieler) und `tests/netz_stadt_test.gd`
+  (echte Stadt-Anzeige gegen einen Server ohne Grafik).
 
 ## Kampf-Sandbox (Lernprojekt 2)
 
