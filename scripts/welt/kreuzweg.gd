@@ -49,6 +49,7 @@ var _flash_rect: ColorRect
 var _camera: Camera2D
 var _marker := Vector2.ZERO
 var _marker_time := 0.0
+var _marker_node: Node2D
 var _bot_timer := 2.0
 var _time := 0.0
 ## Beim "Neu beginnen" nicht mehr speichern
@@ -112,6 +113,10 @@ func _ready() -> void:
 	_ground.z_index = -10
 	_ground.draw.connect(_draw_ground)
 	add_child(_ground)
+	_marker_node = Node2D.new()
+	_marker_node.z_index = -9
+	_marker_node.draw.connect(_draw_tap_marker)
+	add_child(_marker_node)
 
 	# Alles, was steht, wird nach Tiefe sortiert (wer weiter unten steht, ist vorne)
 	_objects = Node2D.new()
@@ -172,7 +177,7 @@ func _process(delta: float) -> void:
 	_update_dialog()
 	_update_shop()
 	_marker_time = maxf(_marker_time - delta, 0.0)
-	_ground.queue_redraw()
+	_marker_node.queue_redraw()
 
 
 func local_player() -> PlayerState:
@@ -245,7 +250,7 @@ func _drive_bot(delta: float) -> void:
 		return
 	_bot_timer = randf_range(3.0, 6.0)
 	for i in 20:
-		var cell := Vector2i(randi_range(3, 18), randi_range(3, 18))
+		var cell := Vector2i(randi_range(3, WorldState.SIZE.x - 4), randi_range(3, WorldState.SIZE.y - 4))
 		if state.is_walkable(cell):
 			state.apply_command(BOT_ID, {type = "move", cell = cell})
 			return
@@ -419,7 +424,8 @@ func _draw_ground() -> void:
 	for y in WorldState.SIZE.y:
 		for x in WorldState.SIZE.x:
 			var cell := Vector2i(x, y)
-			var colors: Array = TILE_COLORS[state.tile_at(cell)]
+			var tile := state.tile_at(cell)
+			var colors: Array = TILE_COLORS[tile]
 			var color: Color = colors[(x + y) % 2]
 			var top := cell_to_screen(Vector2(cell))
 			var diamond := PackedVector2Array([
@@ -430,40 +436,103 @@ func _draw_ground() -> void:
 			])
 			_ground.draw_colored_polygon(diamond, color)
 			_ground.draw_polyline(diamond + PackedVector2Array([top]), Color(0, 0, 0, 0.08), 1.0)
-	# Wohin getippt wurde
+			# Klare Straßen: dunkler Rand, wo Straße oder Platz an Gras grenzt
+			if tile == WorldState.Tile.ROAD or tile == WorldState.Tile.PLAZA:
+				var edges := [[Vector2i(0, -1), 0, 1], [Vector2i(1, 0), 1, 2], [Vector2i(0, 1), 2, 3], [Vector2i(-1, 0), 3, 0]]
+				for e: Array in edges:
+					var other := state.tile_at(cell + e[0])
+					if other == WorldState.Tile.GRASS or other == WorldState.Tile.OVERGROWN:
+						_ground.draw_line(diamond[e[1]], diamond[e[2]], Color("4a3c2a"), 3.0)
+
+
+## Wohin getippt wurde: kleiner Ring auf dem Boden (eigene Ebene, damit der Boden nicht jedes Bild neu gemalt wird).
+func _draw_tap_marker() -> void:
 	if _marker_time > 0.0:
 		var r := 22.0 * (1.0 - _marker_time / 0.6) + 6.0
-		_ground.draw_set_transform(_marker, 0.0, Vector2(1.0, 0.5))
-		_ground.draw_arc(Vector2.ZERO, r, 0, TAU, 24, Color(1, 0.9, 0.5, _marker_time / 0.6), 3.0)
-		_ground.draw_set_transform_matrix(Transform2D.IDENTITY)
+		_marker_node.draw_set_transform(_marker, 0.0, Vector2(1.0, 0.5))
+		_marker_node.draw_arc(Vector2.ZERO, r, 0, TAU, 24, Color(1, 0.9, 0.5, _marker_time / 0.6), 3.0)
+		_marker_node.draw_set_transform_matrix(Transform2D.IDENTITY)
 
 
-## Ein Haus als einfacher Block (Platzhalter), mit Namensschild.
+## Ein Haus (Wände, Satteldach, Tür, Fenster) oder die Statue, mit Namensschild.
 func _add_building(b: Dictionary) -> void:
 	var rect: Rect2i = b.rect
 	var node := Node2D.new()
 	# Sortierpunkt: die vorderste Ecke unten
 	node.position = cell_to_screen(Vector2(rect.end))
-	node.draw.connect(func() -> void: _draw_block(node, rect, b.height, b.color, b.name))
+	if b.get("art", "haus") == "statue":
+		node.draw.connect(func() -> void: _draw_statue(node, rect, b.height, b.color, b.name))
+	else:
+		node.draw.connect(func() -> void: _draw_house(node, rect, b.height, b.color, b.roof, b.name))
 	_objects.add_child(node)
 
 
-func _draw_block(node: Node2D, rect: Rect2i, height: float, color: Color, label: String) -> void:
+func _draw_house(node: Node2D, rect: Rect2i, height: float, color: Color, roof: Color, label: String) -> void:
 	var base := node.position
 	var a := cell_to_screen(Vector2(rect.position)) - base
 	var b := cell_to_screen(Vector2(rect.end.x, rect.position.y)) - base
 	var c := Vector2.ZERO
 	var d := cell_to_screen(Vector2(rect.position.x, rect.end.y)) - base
 	var up := Vector2(0, -height)
-	node.draw_colored_polygon(PackedVector2Array([d, c, c + up, d + up]), color.darkened(0.25))
-	node.draw_colored_polygon(PackedVector2Array([c, b, b + up, c + up]), color.darkened(0.45))
-	node.draw_colored_polygon(PackedVector2Array([a + up, b + up, c + up, d + up]), color.lightened(0.15))
-	node.draw_polyline(PackedVector2Array([a + up, b + up, c + up, d + up, a + up]), Color(0, 0, 0, 0.35), 1.5)
-	# Tür an der linken Vorderseite
-	var door := (d + c) * 0.5
-	node.draw_rect(Rect2(door + Vector2(-8, -24), Vector2(16, 24)), Color("2a1c14"))
+	# Wände
+	node.draw_colored_polygon(PackedVector2Array([d, c, c + up, d + up]), color.darkened(0.15))
+	node.draw_colored_polygon(PackedVector2Array([c, b, b + up, c + up]), color.darkened(0.4))
+	# Fachwerk-Balken an den Ecken und unter dem Dach
+	var beam := color.darkened(0.6)
+	for p: Vector2 in [d, c, b]:
+		node.draw_line(p, p + up, beam, 3.0)
+	node.draw_line(d + up, c + up, beam, 3.0)
+	node.draw_line(c + up, b + up, beam, 3.0)
+	# Tür und Fenster auf der vorderen Seite
+	var front := c - d
+	var door := d + front * 0.3
+	node.draw_colored_polygon(PackedVector2Array([door + Vector2(-8, 4), door + Vector2(8, 8), door + Vector2(8, -18), door + Vector2(-8, -22)]), Color("2a1c14"))
+	node.draw_circle(door + Vector2(0, -21), 8.0, Color("2a1c14"))
+	for t: float in [0.62, 0.84]:
+		var w := d + front * t + Vector2(0, -height * 0.55)
+		node.draw_colored_polygon(PackedVector2Array([w + Vector2(-6, -7), w + Vector2(6, -4), w + Vector2(6, 7), w + Vector2(-6, 4)]), Color("f2d38a"))
+	var side := b - c
+	var w2 := c + side * 0.5 + Vector2(0, -height * 0.55)
+	node.draw_colored_polygon(PackedVector2Array([w2 + Vector2(-6, -4), w2 + Vector2(6, -7), w2 + Vector2(6, 4), w2 + Vector2(-6, 7)]), Color("c9ad6e"))
+	# Satteldach: First über der Mitte, vorne und hinten ein Stück überstehend
+	var ridge_h := Vector2(0, -minf(rect.size.y, rect.size.x) * 9.0 - 14.0)
+	var over := (c - d).normalized() * 6.0
+	var r1 := (a + d) * 0.5 + up + ridge_h - over
+	var r2 := (b + c) * 0.5 + up + ridge_h + over
+	var eave := (d - a).normalized() * 6.0 + Vector2(0, 3)
+	node.draw_colored_polygon(PackedVector2Array([a + up - eave - over, b + up - eave + over, r2, r1]), roof.darkened(0.3))
+	node.draw_colored_polygon(PackedVector2Array([c + up, b + up, (b + c) * 0.5 + up + ridge_h]), color.darkened(0.3))
+	node.draw_colored_polygon(PackedVector2Array([r1, r2, c + up + eave + over, d + up + eave - over]), roof)
+	# Ziegelreihen
+	for t: float in [0.33, 0.66]:
+		node.draw_line(r1.lerp(d + up + eave - over, t), r2.lerp(c + up + eave + over, t), roof.darkened(0.25), 2.0)
+	node.draw_line(r1, r2, roof.lightened(0.25), 3.0)
+	# Schornstein
+	var chimney := r1.lerp(r2, 0.75) + Vector2(0, 4)
+	node.draw_rect(Rect2(chimney + Vector2(-5, -18), Vector2(10, 18)), Color("5a4a44"))
+	if label != "":
+		var font := ThemeDB.fallback_font
+		var title_pos := (r1 + r2) * 0.5 + Vector2(-90, -14)
+		node.draw_string_outline(font, title_pos, label, HORIZONTAL_ALIGNMENT_CENTER, 180, 14, 5, Color.BLACK)
+		node.draw_string(font, title_pos, label, HORIZONTAL_ALIGNMENT_CENTER, 180, 14, Color("f3ead8"))
+
+
+## Statue der Fünf: runder Sockel mit fünf Figuren (Platzhalter).
+func _draw_statue(node: Node2D, rect: Rect2i, height: float, color: Color, label: String) -> void:
+	var center := cell_to_screen(Vector2(rect.position) + Vector2(rect.size) * 0.5) - node.position
+	node.draw_set_transform(center, 0.0, Vector2(1.0, 0.5))
+	node.draw_circle(Vector2.ZERO, 50.0, color.darkened(0.35))
+	node.draw_set_transform(center + Vector2(0, -12), 0.0, Vector2(1.0, 0.5))
+	node.draw_circle(Vector2.ZERO, 44.0, color.darkened(0.1))
+	node.draw_set_transform_matrix(Transform2D.IDENTITY)
+	node.draw_rect(Rect2(center + Vector2(-44, -12), Vector2(88, 12)), color.darkened(0.1))
+	for i in 5:
+		var p := center + Vector2.from_angle(TAU * i / 5.0 - PI / 2) * Vector2(26, 11) + Vector2(0, -14)
+		node.draw_rect(Rect2(p + Vector2(-5, -height * 0.7), Vector2(10, height * 0.7)), color)
+		node.draw_circle(p + Vector2(0, -height * 0.7 - 5), 7.0, color.lightened(0.15))
+		node.draw_circle(p + Vector2(0, -height * 0.7 - 16), 3.0, LANTERN_COLORS[i])
 	var font := ThemeDB.fallback_font
-	var title_pos := (a + c) * 0.5 + up + Vector2(-90, -8)
+	var title_pos := center + Vector2(-90, -height - 30)
 	node.draw_string_outline(font, title_pos, label, HORIZONTAL_ALIGNMENT_CENTER, 180, 14, 5, Color.BLACK)
 	node.draw_string(font, title_pos, label, HORIZONTAL_ALIGNMENT_CENTER, 180, 14, Color("f3ead8"))
 
@@ -472,12 +541,28 @@ func _add_prop(prop: Dictionary) -> void:
 	var node := Node2D.new()
 	node.position = cell_center(Vector2(prop.cell))
 	var kind: String = prop.kind
-	node.draw.connect(func() -> void: _draw_prop(node, kind))
+	node.draw.connect(func() -> void: _draw_prop(node, kind, prop))
 	_objects.add_child(node)
 
 
-func _draw_prop(node: Node2D, kind: String) -> void:
+func _draw_prop(node: Node2D, kind: String, prop: Dictionary) -> void:
 	match kind:
+		"stand":
+			_draw_stand(node, prop.color, prop.text)
+		"well":
+			node.draw_set_transform(Vector2(0, -4), 0.0, Vector2(1.0, 0.5))
+			node.draw_circle(Vector2.ZERO, 20.0, Color("6a6458"))
+			node.draw_circle(Vector2.ZERO, 14.0, Color("1e3a4a"))
+			node.draw_set_transform_matrix(Transform2D.IDENTITY)
+			node.draw_rect(Rect2(-20, -4, 40, 8), Color("6a6458"))
+			node.draw_line(Vector2(-16, -4), Vector2(-16, -40), Color("5a3a22"), 3.0)
+			node.draw_line(Vector2(16, -4), Vector2(16, -40), Color("5a3a22"), 3.0)
+			node.draw_colored_polygon(PackedVector2Array([Vector2(-24, -38), Vector2(0, -54), Vector2(24, -38)]), Color("7a3a2a"))
+		"flowers":
+			for i in 5:
+				var p := Vector2((i - 2) * 7.0, (i % 2) * 5.0 - 4.0)
+				node.draw_line(p, p + Vector2(0, -8), Color("3c7a33"), 2.0)
+				node.draw_circle(p + Vector2(0, -9), 3.5, [Color("ff8fb0"), Color("ffd36b"), Color("b8b0ff")][i % 3])
 		"tree":
 			node.draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, 0.45))
 			node.draw_circle(Vector2.ZERO, 20.0, Color(0, 0, 0, 0.3))
@@ -970,3 +1055,34 @@ func _on_scene(player_id: String, scene: String) -> void:
 	if parts[0] == "klassenwahl":
 		Klassenwahl.region = parts[1] if parts.size() > 1 else ""
 	get_tree().change_scene_to_file.call_deferred("res://scenes/%s.tscn" % parts[0])
+
+
+## Kleiner Werbe-Stand eines Gesandten: Tresen, zwei Pfosten, gestreiftes Sonnendach mit Bogenkante, Schild mit der Region.
+func _draw_stand(node: Node2D, color: Color, text: String) -> void:
+	node.draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, 0.45))
+	node.draw_circle(Vector2.ZERO, 26.0, Color(0, 0, 0, 0.25))
+	node.draw_set_transform_matrix(Transform2D.IDENTITY)
+	var wood := Color("6e4a2c")
+	# Pfosten
+	node.draw_line(Vector2(-22, 2), Vector2(-22, -46), wood.darkened(0.2), 3.0)
+	node.draw_line(Vector2(22, 2), Vector2(22, -46), wood.darkened(0.2), 3.0)
+	# Tresen mit Tuch in der Farbe der Region
+	node.draw_colored_polygon(PackedVector2Array([Vector2(-24, -16), Vector2(24, -16), Vector2(22, 2), Vector2(-22, 2)]), wood)
+	node.draw_colored_polygon(PackedVector2Array([Vector2(-18, -16), Vector2(18, -16), Vector2(16, -4), Vector2(-16, -4)]), color.darkened(0.15))
+	node.draw_rect(Rect2(-26, -19, 52, 4), wood.lightened(0.15))
+	# Ein paar Waren auf dem Tresen
+	node.draw_circle(Vector2(-12, -22), 4.0, color.lightened(0.3))
+	node.draw_rect(Rect2(2, -27, 8, 8), Color("d8c8a0"))
+	node.draw_circle(Vector2(16, -22), 3.0, Color("f2c14e"))
+	# Sonnendach: Streifen, vorne mit Bogenkante
+	var stripes := 6
+	for i in stripes:
+		var x0 := -30.0 + i * 60.0 / stripes
+		var x1 := x0 + 60.0 / stripes
+		var col := color if i % 2 == 0 else Color("f3ead8")
+		node.draw_colored_polygon(PackedVector2Array([Vector2(x0 * 0.8, -58), Vector2(x1 * 0.8, -58), Vector2(x1, -44), Vector2(x0, -44)]), col)
+		node.draw_circle(Vector2((x0 + x1) * 0.5, -44), 5.0, col)
+	# Schild
+	var font := ThemeDB.fallback_font
+	node.draw_string_outline(font, Vector2(-60, -64), text, HORIZONTAL_ALIGNMENT_CENTER, 120, 12, 4, Color.BLACK)
+	node.draw_string(font, Vector2(-60, -64), text, HORIZONTAL_ALIGNMENT_CENTER, 120, 12, color.lightened(0.4))

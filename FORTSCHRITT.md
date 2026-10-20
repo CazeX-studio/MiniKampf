@@ -11,7 +11,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   (alle 9 Schritte aus `KREUZWEG_PLAN.md`). Steuerung per Tasten, Steuerknopf oder Antippen, Speichern, Musik mit Lautstärke-Regler.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **begonnen.** Schritt 1 ist eingebaut:
   bis zu 4 Spieler laufen gemeinsam durch Kreuzweg (Gastgeber am PC, Mitspieler treten bei).
-- **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche; offen: größere Stadt mit Ständen, Gesandten-Auswahl mit zwei Klassen pro Region. Außerdem Schritt 1 von
+- **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
 - **Platzhalter:** Alle Texte der Hauptfiguren (Ye, Mira, Ren, Marv, Lene, Bingo, Gesandte …) stehen in `data/dialoge.json`
@@ -376,6 +376,21 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   Ausweichen (Luftzug), Zauber/Fähigkeit (aufsteigender Ton, bei der Ult tiefer) und Heilung (zwei Glockentöne).
   Auch die Paraden von Ida, Bo und Tom sind zu hören. Selbst erzeugt (`tools/sounds_erzeugen.gd`), Platzhalter.
   Der Lautstärke-Regler gilt auch für die Geräusche; Taste M schaltet nur die Musik ab.
+
+- **Schritt 20 – Größere Stadt, Stände, Gesandten-Bildschirm** (Rückmeldungen Teil 3):
+  - **Kreuzweg ist viermal so groß** (44 × 44 Felder statt 22 × 22). Runder Marktplatz mit der Statue der Fünf
+    (fünf Figuren mit den Farben der Regionen) und einem Brunnen. **Straßen drei Felder breit** mit dunklem Rand,
+    damit man sie klar sieht. Zehn zusätzliche Wohnhäuser, Blumen, viel mehr Bäume. Alle Figuren stehen an denselben
+    Stellen wie vorher, nur weiter auseinander. Man läuft schneller (5,5 statt 4 Felder pro Sekunde).
+  - **Häuser mit Satteldach** statt Kästen: Fachwerk-Balken, Tür mit Bogen, beleuchtete Fenster, Ziegelreihen, Schornstein.
+  - **Stände der Gesandten:** Jeder Gesandte steht am Anfang seiner Straße vor einem kleinen Stand – Tresen,
+    gestreiftes Sonnendach mit Bogenkante in der Farbe der Region, Schild mit dem Namen der Region.
+    Positionen stehen in `data/kreuzweg.json` unter „staende“.
+  - **Gesandten-Bildschirm:** „Zeig mir eure Klassen.“ öffnet denselben Bildschirm wie die Klassenwahl, aber nur
+    mit den Klassen der Region (zwei, in der Glutoase drei). Mit Diagramm, Ult-Vorschau und Knopf „Probestunde“;
+    „Wählen“ gibt es erst am Tag der Abreise bei Ye. Nach der Probestunde geht es zurück zu diesem Bildschirm.
+  - Tests: Welt, Übergang, Klassenwahl (mit Gesandten-Bildschirm), Netz, kompletter Durchlauf: alles richtig.
+    Neue Vorführ-Szene `tests/karte_auto.tscn` (Übersicht der Stadt für Bildschirmfotos).
     sie mit. (Im fertigen Spiel ist der erste Abschluss der über den Auftrag.) Auch in design.md eingetragen.
 
 ## Fertig in Runde 1
@@ -403,6 +418,14 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 ## Was du testen kannst
 
 Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spiel startet jetzt mit einem Menü.
+
+**Neu: Größere Stadt und Gesandten-Stände** (Kreuzweg-Demo → „Neu beginnen“)
+1. Lauf einmal durch die Stadt: Ist sie groß genug? Erkennst du die fünf Straßen gut?
+2. Gefallen dir die Häuser mit Dach besser als die Kästen von vorher?
+3. Wenn die Gesandten da sind: Jeder steht vor einem kleinen Stand an seiner Straße. Sind die Stände klein und hübsch genug?
+4. Bei einem Gesandten „Zeig mir eure Klassen.“: Du siehst nur seine Klassen (Glutoase drei, sonst zwei), kannst eine
+   Probestunde machen und landest danach wieder dort.
+5. Ist das Laufen jetzt zu lang, oder passt es mit dem schnelleren Gehen?
 
 **Neu: Kampf-Geräusche** (irgendein Kampf, Ton an)
 1. Greif an: Hörst du einen Luftzug beim Schlag und einen dumpfen Treffer?

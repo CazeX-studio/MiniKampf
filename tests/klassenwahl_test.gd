@@ -10,7 +10,7 @@ func _initialize() -> void:
 
 
 func _run() -> void:
-	var p := PlayerState.new("spieler", "Du", "elf_m", Vector2i(10, 18))
+	var p := PlayerState.new("spieler", "Du", "elf_m", Vector2i(20, 36))
 	p.progress.quests = {sternenfall = "abgegeben", abreise = "aktiv"}
 	p.progress.flags = {"angekommen": true, "ausbildung_morgen": true, "abreise_angekuendigt": true, "sternenfall": true}
 	p.progress.level = 9

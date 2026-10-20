@@ -6,7 +6,7 @@ var _step := 0
 
 
 func _ready() -> void:
-	var p := PlayerState.new("spieler", "Du", "elf_m", Vector2i(11, 16))
+	var p := PlayerState.new("spieler", "Du", "elf_m", Vector2i(22, 32))
 	p.progress.quests = {ankunft = "abgegeben", zu_ye = "abgegeben", erster_auftrag = "abgegeben",
 		grundausbildung = "abgegeben", erster_gruppenkampf = "abgegeben", marvs_traum = "abgegeben", gesandte = "abgegeben",
 		korb_fuer_die_wache = "abgegeben", leises_singen = "abgegeben", fest = "aktiv"}
@@ -22,7 +22,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	_t += delta
 	var plan: Array = [
-		[0.5, func() -> void: state.apply_command(LOCAL_ID, {type = "move", cell = Vector2i(11, 14)})],
+		[0.5, func() -> void: state.apply_command(LOCAL_ID, {type = "move", cell = Vector2i(22, 28)})],
 		[4.0, func() -> void: state.apply_command(LOCAL_ID, {type = "dialog_choose", index = 0})],
 		[4.5, func() -> void: state.apply_command(LOCAL_ID, {type = "dialog_choose", index = 0})],
 		[5.0, func() -> void: state.apply_command(LOCAL_ID, {type = "dialog_next"})],

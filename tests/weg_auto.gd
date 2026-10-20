@@ -6,7 +6,7 @@ var _step := 0
 
 
 func _ready() -> void:
-	var p := PlayerState.new("spieler", "Du", "elf_m", Vector2i(13, 12))
+	var p := PlayerState.new("spieler", "Du", "elf_m", Vector2i(26, 24))
 	p.progress.quests = {ankunft = "abgegeben", zu_ye = "abgegeben", erster_auftrag = "abgegeben",
 		grundausbildung = "abgegeben", erster_gruppenkampf = "abgegeben", marvs_traum = "abgegeben", gesandte = "abgegeben",
 		korb_fuer_die_wache = "aktiv"}
