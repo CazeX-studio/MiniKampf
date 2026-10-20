@@ -1,13 +1,19 @@
+class_name Klassenwahl
 extends Control
 ## Klassenwahl am Ende der ersten Stunde (design.md: „Klassenwahl-Bildschirm“):
 ## Alle 11 Klassen mit Rolle, Region, Lehrmeister, Mechanik, Diagramm aus fünf Werten, Ult-Vorschau,
 ## Knopf „Probestunde“. Man wählt eine. Die Wahl wird im Spielstand gemerkt, danach geht es zurück nach Kreuzweg.
 ## Texte und Werte: data/klassen.json und scripts/kampf/sandbox.gd.
+## Bei einem Gesandten (region gesetzt) zeigt derselbe Bildschirm nur die Klassen seiner Region – zum Ansehen
+## und für die Probestunde. Gewählt wird erst am Tag der Abreise bei Ye.
 
 const SCREEN := Vector2(1280, 720)
 const AXES: Array[String] = ["schaden", "schutz", "heilung", "unterstuetzung", "schwierigkeit"]
 const AXIS_NAMES := {schaden = "Schaden", schutz = "Schutz", heilung = "Heilung", unterstuetzung = "Unterstützung", schwierigkeit = "Schwierigkeit"}
 const MAX_VALUE := 5.0
+
+## Region des Gesandten, dessen Klassen gezeigt werden ("" = Klassenwahl bei Ye mit allen Klassen)
+static var region := ""
 
 var _selected := ""
 var _list_buttons := {}
@@ -24,8 +30,7 @@ func _ready() -> void:
 	theme = Combat.make_theme()
 	Musik.play("stadt")
 	_build()
-	var order: Array = GameData.get_file("klassen").get("reihenfolge", Sandbox.CLASS_ORDER)
-	_select(order[0])
+	_select(_classes()[0])
 
 
 func _build() -> void:
@@ -37,7 +42,7 @@ func _build() -> void:
 	add_child(shade)
 
 	var heading := Label.new()
-	heading.text = "Wähle deinen Weg"
+	heading.text = "Wähle deinen Weg" if region == "" else "Klassen der Region %s" % region
 	heading.position = Vector2(28, 12)
 	heading.add_theme_font_size_override("font_size", 30)
 	heading.add_theme_color_override("font_color", Color("f2c14e"))
@@ -47,7 +52,9 @@ func _build() -> void:
 	back.text = "Zurück"
 	back.position = Vector2(1150, 16)
 	back.size = Vector2(110, 44)
-	back.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/kreuzweg.tscn"))
+	back.pressed.connect(func() -> void:
+		region = ""
+		get_tree().change_scene_to_file("res://scenes/kreuzweg.tscn"))
 	add_child(back)
 
 	# Links: alle Klassen
@@ -55,11 +62,11 @@ func _build() -> void:
 	list.position = Vector2(28, 66)
 	list.add_theme_constant_override("separation", 5)
 	add_child(list)
-	for id: String in GameData.get_file("klassen").get("reihenfolge", Sandbox.CLASS_ORDER):
+	for id: String in _classes():
 		var data: Dictionary = Sandbox.CLASSES[id]
 		var button := Button.new()
 		button.text = "%s  ·  %s" % [data.title, data.role]
-		button.custom_minimum_size = Vector2(300, 52)
+		button.custom_minimum_size = Vector2(300, 52 if region == "" else 80)
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		button.add_theme_font_size_override("font_size", 17)
 		button.add_theme_color_override("font_color", Sandbox.ROLE_COLORS[data.role].lightened(0.35))
@@ -132,6 +139,16 @@ func _build() -> void:
 	choose.add_theme_color_override("font_color", Color("f2c14e"))
 	choose.pressed.connect(_ask_confirm)
 	add_child(choose)
+	if region != "":
+		# Beim Gesandten wird nur geschaut und ausprobiert
+		choose.visible = false
+		trial.position.x = 1040
+		var note := Label.new()
+		note.text = "Wählen kannst du am Tag der Abreise bei Ye."
+		note.position = Vector2(28, 660)
+		note.add_theme_font_size_override("font_size", 15)
+		note.add_theme_color_override("font_color", Color(1, 1, 1, 0.7))
+		add_child(note)
 
 	# Nachfrage vor der Wahl
 	_confirm = PanelContainer.new()
@@ -162,6 +179,14 @@ func _build() -> void:
 	no.custom_minimum_size = Vector2(150, 50)
 	no.pressed.connect(func() -> void: _confirm.visible = false)
 	row.add_child(no)
+
+
+## Die Klassen, die dieser Bildschirm zeigt (alle oder nur die der Region des Gesandten).
+func _classes() -> Array:
+	var order: Array = GameData.get_file("klassen").get("reihenfolge", Sandbox.CLASS_ORDER)
+	if region == "":
+		return order
+	return order.filter(func(id: String) -> bool: return Sandbox.CLASSES[id].region == region)
 
 
 func _select(id: String) -> void:

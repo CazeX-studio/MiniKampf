@@ -52,6 +52,15 @@ func _run() -> void:
 		if _pending_scene == "abspann":
 			finished = true
 			break
+		# Beim Gesandten: Klassen der Region ansehen und eine davon in der Probestunde ausprobieren
+		if _pending_scene.begins_with("klassenwahl:"):
+			var region := _pending_scene.get_slice(":", 1)
+			_pending_scene = ""
+			var options: Array = GameData.get_file("klassen").reihenfolge.filter(
+					func(id: String) -> bool: return Sandbox.CLASSES[id].region == region)
+			_pending_battle = "probe:" + str(options[_rng.randi() % options.size()])
+			_seconds += 30.0
+			continue
 		if _pending_scene == "klassenwahl":
 			_pending_scene = ""
 			var classes: Array = GameData.get_file("klassen").reihenfolge

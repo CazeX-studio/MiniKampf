@@ -227,8 +227,7 @@
 		"einstieg": [{"knoten": "hallo"}],
 		"knoten": {
 			"hallo": {"wer": "Ilwen", "text": "Ich bin Magistra Ilwen, Gesandte des Arkanums. Willkommen, Novize. Bei uns lernt man, dass Magie schützen kann – und dass zwischen Licht und Schatten ein schmaler Grat liegt.", "antworten": [
-				{"text": "Probestunde: Magier-Tank (Tank)", "aktionen": [{"kampf": "probe:tank"}]},
-				{"text": "Probestunde: Zwielicht-Wandler (Schaden)", "aktionen": [{"kampf": "probe:twilight"}]},
+				{"text": "Zeig mir eure Klassen.", "aktionen": [{"szene": "klassenwahl:Arkanum"}]},
 				{"text": "Erzähl mir vom Arkanum.", "weiter": "region"},
 				{"text": "Später."}
 			]},
@@ -240,8 +239,7 @@
 		"einstieg": [{"knoten": "hallo"}],
 		"knoten": {
 			"hallo": {"wer": "Pim", "text": "Pim, Tüftler und Gesandter aus Messinghafen! Zahnräder, Dampf und ein Hafen voller Waren! In Messinghafen baut man sich seine Freunde selbst – oder kauft sie.", "antworten": [
-				{"text": "Probestunde: Mechaniker (Tank)", "aktionen": [{"kampf": "probe:mechanic"}]},
-				{"text": "Probestunde: Quartiermeister (Support)", "aktionen": [{"kampf": "probe:quartermaster"}]},
+				{"text": "Zeig mir eure Klassen.", "aktionen": [{"szene": "klassenwahl:Messinghafen"}]},
 				{"text": "Erzähl mir von Messinghafen.", "weiter": "region"},
 				{"text": "Später."}
 			]},
@@ -253,9 +251,7 @@
 		"einstieg": [{"knoten": "hallo"}],
 		"knoten": {
 			"hallo": {"wer": "Nalia", "text": "Nalia, Feuertänzerin und Gesandte der Glutoase. Die Oase grüßt dich! Bei uns wird geschmiedet, getanzt und unter den Sternen gesungen.", "antworten": [
-				{"text": "Probestunde: Rüstungsschmied (Tank)", "aktionen": [{"kampf": "probe:smith"}]},
-				{"text": "Probestunde: Klingentänzerin (Schaden)", "aktionen": [{"kampf": "probe:blade"}]},
-				{"text": "Probestunde: Sternensängerin (Support)", "aktionen": [{"kampf": "probe:singer"}]},
+				{"text": "Zeig mir eure Klassen.", "aktionen": [{"szene": "klassenwahl:Glutoase"}]},
 				{"text": "Erzähl mir von der Glutoase.", "weiter": "region"},
 				{"text": "Später."}
 			]},
@@ -267,8 +263,7 @@
 		"einstieg": [{"knoten": "hallo"}],
 		"knoten": {
 			"hallo": {"wer": "Aske", "text": "Aske, Fährtenleser aus Grünwacht, dem Dorf in den Baumkronen. Wir jagen, wir zähmen – und wir hören auf den Wald.", "antworten": [
-				{"text": "Probestunde: Bogenschütze (Schaden)", "aktionen": [{"kampf": "probe:archer"}]},
-				{"text": "Probestunde: Monster-Zähmer (Schaden)", "aktionen": [{"kampf": "probe:tamer"}]},
+				{"text": "Zeig mir eure Klassen.", "aktionen": [{"szene": "klassenwahl:Grünwacht"}]},
 				{"text": "Erzähl mir von Grünwacht.", "weiter": "region"},
 				{"text": "Später."}
 			]},
@@ -280,8 +275,7 @@
 		"einstieg": [{"knoten": "hallo"}],
 		"knoten": {
 			"hallo": {"wer": "Mei", "text": "Ich bin Mei, Schreindienerin und Gesandte der Nebelinseln. Auf unseren Inseln stehen alte Schreine, und manche Wege kennt nur, wer Siegel lesen kann.", "antworten": [
-				{"text": "Probestunde: Ritualist (Support)", "aktionen": [{"kampf": "probe:ritualist"}]},
-				{"text": "Probestunde: Kunoichi (Support)", "aktionen": [{"kampf": "probe:kunoichi"}]},
+				{"text": "Zeig mir eure Klassen.", "aktionen": [{"szene": "klassenwahl:Nebelinseln"}]},
 				{"text": "Erzähl mir von den Nebelinseln.", "weiter": "region"},
 				{"text": "Später."}
 			]},

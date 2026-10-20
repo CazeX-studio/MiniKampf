@@ -219,11 +219,14 @@ func _test_building_blocks() -> void:
 	_check(p.progress.quest_state("gesandte") == "aktiv", "Auftrag „Die Gesandten“ läuft")
 	world.apply_command("a", {type = "dialog_next"})
 	_talk(world, p, "gesandte_glutoase")
-	_check(world.dialog_view(p).antworten.size() == 5, "Glutoase: drei Probestunden, Region, Später")
-	world.apply_command("a", {type = "dialog_choose", index = 3})
+	_check(world.dialog_view(p).antworten.size() == 3, "Glutoase: Klassen ansehen, Region, Später")
+	var envoy_scenes: Array[String] = []
+	world.scene_requested.connect(func(_id: String, scene: String) -> void: envoy_scenes.append(scene))
+	world.apply_command("a", {type = "dialog_choose", index = 1})
 	world.apply_command("a", {type = "dialog_next"})
-	world.apply_command("a", {type = "dialog_choose", index = 2})
-	_check(battles.back() == "probe:singer" and not p.in_dialog(), "Probestunde Sternensängerin beginnt")
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(envoy_scenes == ["klassenwahl:Glutoase"] and not p.in_dialog(), "Nalia zeigt die Klassen der Glutoase")
+	# Die Probestunde startet im Klassen-Bildschirm, das Ergebnis kommt wie jeder Kampf zur Welt
 	var xp_start := p.progress.xp
 	world.apply_command("a", {type = "kampf_ergebnis", kampf = "probe:singer", gewonnen = true})
 	_check(p.progress.quest_state("gesandte") == "fertig" and p.progress.xp == xp_start + 40, "Pflicht-Probestunde geschafft (+40)")

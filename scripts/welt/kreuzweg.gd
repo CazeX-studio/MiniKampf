@@ -965,4 +965,8 @@ func _on_scene(player_id: String, scene: String) -> void:
 	if player_id != local_id:
 		return
 	SaveGame.save(local_player())
-	get_tree().change_scene_to_file.call_deferred("res://scenes/%s.tscn" % scene)
+	# "klassenwahl:Glutoase" = die Klassen einer Region beim Gesandten ansehen
+	var parts := scene.split(":")
+	if parts[0] == "klassenwahl":
+		Klassenwahl.region = parts[1] if parts.size() > 1 else ""
+	get_tree().change_scene_to_file.call_deferred("res://scenes/%s.tscn" % parts[0])
