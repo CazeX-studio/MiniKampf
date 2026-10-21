@@ -16,6 +16,8 @@ func _initialize() -> void:
 	_test_wild()
 	_test_fenn("verschonen")
 	_test_fenn("schiessen")
+	_test_tamer(false)
+	_test_tamer(true)
 	print("Grünwacht: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)
 
@@ -357,6 +359,69 @@ func _test_fenn(choice: String) -> void:
 	# Der Kampf selbst: zwei Lektionen, als Bogenschütze
 	BattleRequest.prepare("fenns_pruefung", 12, 0, "archer")
 	_check(BattleRequest.setup.helden[0].klasse == "archer" and BattleRequest.setup.phasen.size() == 2, "Scheibenkampf: Bogenschütze, zwei Lektionen")
+	BattleRequest.kampf_id = ""
+
+
+## Schritt 4: Zähmer-Start bei Esche, Kobalt fordert heraus (Sieg oder Niederlage), Tilda bringt das Zähmen bei.
+func _test_tamer(kobalt_won: bool) -> void:
+	var world := WorldState.new()
+	var battles: Array[String] = []
+	world.battle_requested.connect(func(_id: String, kampf: String) -> void: battles.append(kampf))
+	var p := world.add_player("a", "Test", "elf_m", Vector2i(6, 15))
+	p.progress.flags["klasse"] = "tamer"
+	p.progress.quests["nach_gruenwacht"] = "abgegeben"
+	p.progress.level = 13
+	world.change_map(p, "wipfelheim", Vector2i(14, 22))
+	_check(world.npc_marker(p, "esche") == "!" and world.npc_marker(p, "fenn") == "", "Zähmer: „!“ bei Esche, nicht bei Fenn")
+	world.apply_command("a", {type = "talk", npc = "esche"})
+	_tick(world, 3.0)
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_next"})
+	var answers: Array = world.dialog_view(p).antworten
+	_check(answers.size() == 4 and str(answers[1]).begins_with("Glutwelpe"), "Esche zeigt die drei Start-Monster")
+	world.apply_command("a", {type = "dialog_choose", index = 1})
+	_check(p.progress.flags.get("monster", []) == ["glutwelpe"] and p.progress.item_count("schleuder") == 1, "Glutwelpe gewählt, Schleuder bekommen")
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_next"})
+	_check(not p.in_dialog() or p.dialog.id == "kobalt", "Esche ist fertig")
+	_tick(world, 1.0)
+	_check(p.in_dialog() and p.dialog.id == "kobalt" and world.dialog_view(p).text.contains("Bachotter"), "Kobalt fordert heraus und nimmt den Bachotter")
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(battles == ["kobalt_bachotter"], "Rivalenkampf beginnt")
+	world.apply_command("a", {type = "kampf_ergebnis", kampf = "kobalt_bachotter", gewonnen = kobalt_won})
+	_check(p.progress.flags.has("kobalt_gekaempft") and p.progress.quest_state("esches_monster") == "fertig", "Nach dem Rivalenkampf geht es weiter (%s)" % ("Sieg" if kobalt_won else "Niederlage"))
+	_check(p.progress.flags.has("erfolg:rivale_kobalt") == kobalt_won, "Erfolg „Rivale besiegt“ nur beim Sieg")
+	world.apply_command("a", {type = "talk", npc = "kobalt"})
+	_tick(world, 3.0)
+	_check(world.dialog_view(p).text.contains("Glück gehabt" if kobalt_won else "Trainier mal mehr"), "Kobalt reagiert auf den Ausgang")
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "talk", npc = "esche"})
+	_tick(world, 3.0)
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.quest_state("esches_monster") == "abgegeben", "Esches Auftrag abgegeben")
+
+	# Tilda: ein Monster in der Wildnis zähmen
+	_check(world.npc_marker(p, "tilda") == "!", "Tilda hat ein „!“")
+	world.change_map(p, "wipfelheim", Vector2i(27, 16))
+	world.apply_command("a", {type = "talk", npc = "tilda"})
+	_tick(world, 3.0)
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.quest_state("tildas_unterricht") == "aktiv", "Tildas Unterricht läuft")
+	world.apply_command("a", {type = "kampf_ergebnis", kampf = "wild:0", gewonnen = true, gezaehmt = ["windfalke"]})
+	_check(p.progress.flags.monster == ["glutwelpe", "windfalke"], "Gezähmter Windfalke bleibt im Rudel")
+	_check(p.progress.quest_state("tildas_unterricht") == "fertig", "Erstes Zähmen erfüllt Tildas Auftrag")
+	world.apply_command("a", {type = "talk", npc = "tilda"})
+	_tick(world, 3.0)
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.quest_state("tildas_unterricht") == "abgegeben" and p.progress.flags.has("klasse_gelernt"), "Tilda: Du bist jetzt Zähmer")
+	for i in 5:
+		world.apply_command("a", {type = "kampf_ergebnis", kampf = "wild:0", gewonnen = true, gezaehmt = ["steinkroete"]})
+	_check(p.progress.flags.monster.size() == Sandbox.MAX_MONSTERS, "Rudel höchstens 5 Monster")
+
+	# Im Kampf: das eigene Rudel statt aller drei Start-Monster
+	BattleRequest.prepare("wild:0", 13, 0, "tamer", ["glutwelpe", "windfalke"])
+	_check(BattleRequest.setup.helden[0].monster == ["glutwelpe", "windfalke"], "Kampf mit dem eigenen Rudel")
 	BattleRequest.kampf_id = ""
 
 

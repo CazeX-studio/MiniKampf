@@ -198,6 +198,13 @@ const ENEMIES := {
 		absicht = "Steht still. Aus der hinteren Reihe trifft deine ruhige Hand öfter kritisch."},
 	"laufscheibe": {name = "Laufende Scheibe", element = "", hp = 60, tempo = 1, passive = true, resist = 0.3,
 		absicht = "Läuft hin und her: Ein schneller Schuss streift nur. Erst den Bogen spannen!"},
+	# Rivale Kobalt (Esches Neffe): nimmt immer das Start-Monster, das deins schlägt. Werte vorläufig.
+	"kobalts_moosling": {name = "Kobalts Moosling", element = "Pflanze", hp = 120, tempo = 8,
+		attacks = [{name = "Rankenschlag", base = 14, kind = "melee"}, {name = "Dornenpeitsche", base = 8, kind = "magic", all = true}]},
+	"kobalts_glutwelpe": {name = "Kobalts Glutwelpe", element = "Feuer", hp = 85, tempo = 13,
+		attacks = [{name = "Glutbiss", base = 13, kind = "melee"}, {name = "Funkenregen", base = 6, kind = "magic", all = true}]},
+	"kobalts_bachotter": {name = "Kobalts Bachotter", element = "Wasser", hp = 95, tempo = 11,
+		attacks = [{name = "Wasserstrahl", base = 12, kind = "ranged"}, {name = "Welle", base = 6, kind = "magic", all = true}]},
 	# Grünwacht: Monster auf dem Weg und im Wald (design.md „Grünwacht im Detail“). Werte vorläufig, Feinschliff am Ende.
 	"rindenbaer": {name = "Rindenbär", element = "Pflanze", hp = 120, tempo = 7, resist = 0.9,
 		attacks = [{name = "Prankenhieb", base = 15, kind = "melee"}, {name = "Prankenhieb", base = 15, kind = "melee"},

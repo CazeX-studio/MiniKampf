@@ -59,14 +59,20 @@ func setup_hero(h: Fighter) -> void:
 			robot.owner = h
 			h.robot = robot
 		"tamer":
-			for id: String in Sandbox.MONSTER_ORDER:
-				var data: Dictionary = Sandbox.MONSTERS[id]
-				var m := Fighter.new(data.name, id, data.role, false, data.hp, data.tempo, Elements.color(data.element))
+			# Ohne eigenes Rudel (Sandbox, Probestunde): alle drei Start-Monster. In der Welt: das eigene Rudel,
+			# das erste ist das aktive. Gezähmte Monster stehen in Sandbox.ENEMIES.
+			var own: Array = h.get_meta("monster", [])
+			var ids: Array = own if not own.is_empty() else Sandbox.MONSTER_ORDER
+			for id: String in ids:
+				var data: Dictionary = Sandbox.MONSTERS.get(id, Sandbox.ENEMIES.get(id, {}))
+				if data.is_empty():
+					continue
+				var m := Fighter.new(data.name, id, data.get("role", "Gezähmt"), false, data.hp, data.tempo, Elements.color(data.element))
 				m.element = data.element
 				m.owner = h
 				m.on_bench = true
 				h.monsters.append(m)
-				if id == Sandbox.starter:
+				if (own.is_empty() and id == Sandbox.starter) or (not own.is_empty() and h.active_monster == null):
 					h.active_monster = m
 			if h.active_monster == null:
 				h.active_monster = h.monsters[0]

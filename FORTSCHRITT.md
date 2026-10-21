@@ -23,7 +23,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   über den Weg nach Grünwacht, durch den Wald und mit dem Seilaufzug hinauf nach Wipfelheim (siehe „Fertig in
   Lernprojekt 5“ und „Was du testen kannst“). **Schritt 2 eingebaut:** Monster auf dem Weg (Stufe 10–15) und dem
   Waldboden (15–20), Kämpfe mit der eigenen Klasse, Stufen bis 20. **Schritt 3 eingebaut:** Fenns Prüfung der drei
-  Ziele für Bogenschützen. Als Nächstes Schritt 4 (Professor Esche und Kobalt).
+  Ziele für Bogenschützen. **Schritt 4 eingebaut:** Professor Esche, Rivale Kobalt und Tildas Unterricht für Zähmer.
+  Als Nächstes Schritt 5 (veränderte Tiere, Jäger oder Zähmer, Ruf, Kael).
   Marco testet am Schluss alles zusammen.
 - **Neu (21.10.): Figuren und Nebenaufträge aus Sitzung 21** in Kreuzweg: Wirtin Hanne mit Gasthaus Wegrast, Vogt Edmar,
   Steinmetz Quill, die Kinder Pip und Lotte, die Wache heißt jetzt Brom. Fünf Nebenaufträge mit **blauem „!“ und „?“**
@@ -42,7 +43,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 1 | Die Reise und Wipfelheim (mehrere Karten, Weg von Kreuzweg, Koch-Stand) | eingebaut, Marco testet am Schluss |
 | 2 | Die eigene Klasse in der Welt, Monster der Region | eingebaut, Marco testet am Schluss |
 | 3 | Einstieg Bogenschütze: Fenns Prüfung der drei Ziele | eingebaut, Marco testet am Schluss |
-| 4 | Einstieg Zähmer: Professor Esche und Kobalt | offen |
+| 4 | Einstieg Zähmer: Professor Esche und Kobalt | eingebaut, Marco testet am Schluss |
 | 5 | Geschichte 1 und 2: veränderte Tiere (Jäger oder Zähmer, Ruf), Kael | offen |
 | 6 | Geschichte 3: Rowans leeres Grab (Erinnerungs-Szene) | offen |
 | 7 | Dungeon Pilzhöhle unter dem Urbaum | offen |
@@ -123,6 +124,23 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     antippt, läuft hin).
   - **Platzhalter:** alle Texte von Fenn und vom Silberhirsch, die Bilder der Scheiben (Strohpuppen).
   - **Tests:** Prüfung mit beiden Entscheidungen im Grünwacht-Test, der Scheibenkampf im Lernkampf-Test (30 von 30).
+
+- **Schritt 4 – Professor Esche, Kobalt und Tilda** (21.10., nur für Zähmer):
+  - **Esche** (vor seinem Labor im Süden von Wipfelheim) hat nach Ysolde ein „!“: Er erklärt das Element-Dreieck
+    (Feuer schlägt Pflanze, Pflanze schlägt Wasser, Wasser schlägt Feuer) und du wählst **Moosling, Glutwelpe oder
+    Bachotter**. Dazu gibt es die **Schleuder**.
+  - **Eigenes Rudel:** Ab jetzt kämpft dein Zähmer mit **seinen** Monstern statt mit allen dreien (vorher, auf dem Weg,
+    noch wie in der Probestunde mit allen drei). Das Rudel steht unter „Werte (C)“.
+  - **Kobalt**, Esches Neffe, kommt sofort angelaufen, nimmt das Monster, das deins schlägt, und fordert dich heraus.
+    Sieg = Erfolg **„Rivale besiegt“**, Niederlage ist kein Spielende (Kobalt: „Hab ich doch gesagt!“). Er hat Stufe 16
+    und viel Leben: In der Simulation gewinnt man mit Moosling etwa jedes zweite Mal, mit Glutwelpe und Bachotter
+    meistens.
+  - **Tilda** bringt danach das Zähmen bei: ein Monster in der Wildnis unter halbes Leben bringen, dann „Zähmen“.
+    **Gezähmte Monster bleiben jetzt im Rudel** (höchstens 5), auch nach dem Kampf und im Spielstand.
+    Danach: „Du bist jetzt Zähmer, Kleines.“
+  - **Platzhalter:** alle Texte von Esche, Kobalt und Tilda, die Bilder von Kobalts Monstern.
+  - **Tests:** Esche → Kobalt (Sieg und Niederlage) → Tilda im Grünwacht-Test, Kobalt und Zähmer mit eigenem Rudel
+    im Wildnis-Test.
 
 ## Aufgaben Lernprojekt 4 „Zusammen spielen“ (Fahrplan in `ZUSAMMEN_PLAN.md`)
 
@@ -694,6 +712,11 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spiel startet jetzt mit einem Menü.
 
+**Neu: Grünwacht Schritt 4 – Esche, Kobalt, Tilda** (als Zähmer, nach dem Gespräch mit Ysolde)
+1. Esche: Ist die Wahl der drei Start-Monster klar? Bekommst du die Schleuder?
+2. Kobalt: Kommt er gleich angelaufen und nimmt das passende Gegenstück? Ist der Kampf spannend, aber schaffbar?
+3. Tilda: Klappt das Zähmen in der Wildnis? Steht das neue Monster danach unter „Werte (C)“ im Rudel und kämpft mit?
+
 **Neu: Grünwacht Schritt 3 – Fenns Prüfung** (als Bogenschütze, nach dem Gespräch mit Ysolde)
 1. Hat Fenn ein „!“? Erklärt er die Scheiben gut (hintere Reihe, Bogen spannen)?
 2. Findest du den Silberhirsch im Westen des Waldes?
@@ -910,7 +933,8 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).
 - Lernprojekt 4 „Zusammen spielen“ ist gebaut: deine Rückmeldungen aus dem Test mit Freunden einarbeiten.
 - Lernprojekt 5 „Grünwacht“: Schritt 1 (Reise nach Wipfelheim) und Schritt 2 (Monster, eigene Klasse, Stufe 20)
-  sind eingebaut, Schritt 3 (Fenns Prüfung) auch. Als Nächstes Schritt 4: Professor Esche, Start-Monster und Kobalt.
+  sind eingebaut, Schritt 3 (Fenns Prüfung) und Schritt 4 (Esche, Kobalt, Tilda) auch. Als Nächstes Schritt 5:
+  veränderte Tiere (Jäger oder Zähmer, Ruf) und Kael.
 - Hinten angestellt: Schnellsätze und Emotes (Vorschläge im Ideen-Parkplatz von design.md).
 
 ## Offene Fragen an Marco

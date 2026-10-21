@@ -278,6 +278,9 @@ func _create_heroes() -> void:
 			h.wares = {heiltrank = int(spec.traenke)}
 		if spec.get("computer", false):
 			computer[h] = true
+		# Zähmer in der Welt: sein eigenes Rudel (Start-Monster von Professor Esche und gezähmte Monster)
+		if spec.has("monster") and not spec.monster.is_empty():
+			h.set_meta("monster", spec.monster)
 		skills.setup_hero(h)
 		# Kampf in der Welt mit der eigenen Klasse (ab Grünwacht): Schaden und Heilung wachsen mit der Stufe,
 		# Roboter und Monster des Helden werden genauso stärker (spec.macht, siehe BattleRequest)
@@ -324,6 +327,9 @@ func tame(tamer: Fighter, e: Fighter) -> void:
 	m.owner = tamer
 	m.on_bench = true
 	m.hp = maxi(1, data.hp / 2)
+	m.power = tamer.power
+	# Für die Welt: Dieses Monster bleibt nach dem Kampf im Rudel (BattleRequest.finish)
+	m.set_meta("neu_gezaehmt", true)
 	tamer.monsters.append(m)
 	add_log("[color=#8fd36b][b]%s zähmt %s![/b][/color] Es wartet auf der Bank (Wechsel)." % [tamer.display_name, m.display_name])
 	refresh()

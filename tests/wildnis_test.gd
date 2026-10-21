@@ -59,6 +59,39 @@ func _run() -> void:
 		var m: Dictionary = wild[index]
 		print("  %2d %-16s %-48s Stufe %d: %d %%" % [index, m.karte, ", ".join(m.gegner), m.stufe,
 				roundi(100.0 * total[index] / (runs * classes.size()))])
+	# Zähmer mit eigenem Rudel: Rivale Kobalt (Gegenstück zum Start-Monster) und die Wildnis nur mit dem Start-Monster
+	print("Zähmer mit eigenem Rudel:")
+	for starter: String in ["moosling", "glutwelpe", "bachotter"]:
+		var counter: String = {moosling = "glutwelpe", glutwelpe = "bachotter", bachotter = "moosling"}[starter]
+		var kobalt_wins := _play(harness, "kobalt_" + counter, 12, [starter], runs * 2)
+		var wild_wins := 0
+		for index in wild.size():
+			wild_wins += _play(harness, "wild:%d" % index, wild[index].stufe, [starter, "windfalke"], runs)
+		var wild_rate := float(wild_wins) / (runs * wild.size())
+		print("  %-10s Kobalt: %d von %d · Wildnis mit Start-Monster und Windfalke: %d %%" % [starter, kobalt_wins, runs * 2, roundi(wild_rate * 100)])
+		if kobalt_wins == 0 or kobalt_wins == runs * 2:
+			problems += 1
+			print("FEHLER: Kobalt mit %s ist nie oder immer zu schlagen" % starter)
+		if wild_rate < MIN_WIN_RATE:
+			problems += 1
+			print("FEHLER: Zähmer mit %s gewinnt allein zu selten" % starter)
 	BattleRequest.kampf_id = ""
 	print("Wildnis: %s" % ("alles richtig" if problems == 0 else "%d Fehler" % problems))
 	quit(problems)
+
+
+## Spielt einen Kampf des Zähmers mit eigenem Rudel mehrmals durch. Gibt die Siege zurück.
+func _play(harness: GDScript, kampf_id: String, level: int, pack: Array, count: int) -> int:
+	var wins := 0
+	for i in count:
+		BattleRequest.prepare(kampf_id, level, 0, "tamer", pack)
+		var node: Node = harness.new()
+		node.start_seed = 300 + i * 13
+		node.setup = BattleRequest.setup
+		root.add_child(node)
+		for l in node.protokoll.lines:
+			if l == "ENDE Sieg":
+				wins += 1
+		root.remove_child(node)
+		node.free()
+	return wins

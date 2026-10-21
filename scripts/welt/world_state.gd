@@ -385,6 +385,8 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			if used > 0:
 				_give_item(p, "heiltrank", -used)
 			_fighting.erase(p.id)
+			for monster_id: String in cmd.get("gezaehmt", []):
+				_add_to_pack(p, monster_id, true)
 			_battle_result(p, str(cmd.get("kampf", "")), bool(cmd.get("gewonnen", false)))
 			_back_from_battle(p.id)
 		"benutzen":
@@ -1041,6 +1043,8 @@ func run_actions(p: PlayerState, actions: Array) -> void:
 			_unlock(p, action.erfolg)
 		if action.has("kampf"):
 			battle_requested.emit(p.id, action.kampf)
+		if action.has("monster_geben"):
+			_add_to_pack(p, action.monster_geben)
 		if action.has("reisen"):
 			# {"reisen": "wipfelheim", "feld": [x, y]}: auf eine andere Karte (z. B. mit dem Seilaufzug)
 			var to: Array = action.get("feld", [-1, -1])
@@ -1238,6 +1242,26 @@ func _give_item(p: PlayerState, item_id: String, count: int) -> void:
 		_say(p, GameData.text("gegenstand_weg", [-count, GameData.item_name(item_id)]))
 
 
+# --- Rudel des Zähmers -------------------------------------------------------------
+
+## Ein Monster kommt ins Rudel (Start-Monster von Esche oder in der Wildnis gezähmt). Höchstens Sandbox.MAX_MONSTERS.
+func _add_to_pack(p: PlayerState, monster_id: String, tamed := false) -> void:
+	if not Sandbox.MONSTERS.has(monster_id) and not Sandbox.ENEMIES.has(monster_id):
+		return
+	var pack: Array = p.progress.flags.get("monster", []).duplicate()
+	var name: String = Sandbox.MONSTERS.get(monster_id, Sandbox.ENEMIES.get(monster_id, {})).name
+	if pack.size() >= Sandbox.MAX_MONSTERS:
+		_say(p, GameData.text("rudel_voll", [name]))
+		return
+	pack.append(monster_id)
+	p.progress.flags["monster"] = pack
+	if tamed:
+		p.progress.flags["erstes_zaehmen"] = true
+	_say(p, GameData.text("rudel_neu", [name]))
+	_update_quests(p)
+	progress_changed.emit(p.id)
+
+
 # --- Monster in der Wildnis ------------------------------------------------------
 
 ## Steht das Monster für diesen Spieler gerade da? (Nach einem Sieg ist es eine Weile weg.)
@@ -1290,7 +1314,8 @@ func _check_approach(p: PlayerState) -> void:
 		return
 	for id: String in npcs:
 		var approach: Dictionary = npcs[id].approach
-		if approach.is_empty() or p.progress.flags.has("angesprochen:" + id) or not npc_visible(p, id):
+		if approach.is_empty() or p.progress.flags.has("angesprochen:" + id) or not npc_visible(p, id) \
+				or not check(p, approach.get("wenn", {})):
 			continue
 		if (Vector2(npcs[id].cell) - p.pos).length() <= float(approach.get("radius", 3)):
 			p.progress.flags["angesprochen:" + id] = true

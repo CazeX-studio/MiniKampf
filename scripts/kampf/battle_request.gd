@@ -40,8 +40,9 @@ static func fighting_class(data: Dictionary, own_class: String) -> String:
 
 
 ## Bereitet einen Kampf aus data/kaempfe.json vor. Der Spieler ist ein Novize seiner Stufe mit seinen Heiltränken,
-## Begleiter (Novizen-Mitstreiter) steuert der Computer. own_class: die gewählte Klasse (für Kämpfe in der Wildnis).
-static func prepare(id: String, level: int, potions := 0, own_class := "") -> bool:
+## Begleiter (Novizen-Mitstreiter) steuert der Computer. own_class: die gewählte Klasse (für Kämpfe in der Wildnis),
+## own_monsters: das Rudel eines Zähmers (leer = noch keins, dann wie in der Probestunde alle drei Start-Monster).
+static func prepare(id: String, level: int, potions := 0, own_class := "", own_monsters: Array = []) -> bool:
 	var data: Dictionary = GameData.battle(id)
 	if data.is_empty():
 		return false
@@ -51,6 +52,8 @@ static func prepare(id: String, level: int, potions := 0, own_class := "") -> bo
 			ult = float(data.get("ult_start", 0))}
 	if data.get("eigene_klasse", false):
 		player["macht"] = hero_power(level)
+		if klasse == "tamer":
+			player["monster"] = own_monsters
 	if klasse == "novize":
 		player["traenke"] = potions
 	# Parieren lernt man erst in Lektion 3: davor hat der Novize keine Reaktion (im langen Lernkampf je Phase)
@@ -74,7 +77,7 @@ static func prepare(id: String, level: int, potions := 0, own_class := "") -> bo
 
 
 ## Aufbau eines Gruppenkampfs (Gastgeber): erst die Spieler der Gruppe, freie Plätze füllen die Novizen-Mitstreiter.
-## members: [{name, stufe, traenke, aussehen, klasse}]. Gibt den Aufbau zurück (leer, wenn es den Kampf nicht gibt).
+## members: [{name, stufe, traenke, aussehen, klasse, monster}]. Gibt den Aufbau zurück (leer, wenn es den Kampf nicht gibt).
 static func build_group(id: String, members: Array) -> Dictionary:
 	var data: Dictionary = GameData.battle(id)
 	if data.is_empty():
@@ -87,6 +90,8 @@ static func build_group(id: String, members: Array) -> Dictionary:
 				ult = float(data.get("ult_start", 0))}
 		if data.get("eigene_klasse", false):
 			hero["macht"] = hero_power(int(m.stufe))
+			if klasse == "tamer":
+				hero["monster"] = m.get("monster", [])
 		if klasse == "novize":
 			hero["traenke"] = int(m.get("traenke", 0))
 		if not data.get("reaktion", true):
@@ -107,7 +112,7 @@ static func build_group(id: String, members: Array) -> Dictionary:
 	result_setup["kein_nochmal"] = true
 	# Manche Bosse (Sternenfresser) passen sich der Gruppengröße an: je weiterer Spieler mehr Leben
 	if data.has("gruppe_staerke"):
-		result_setup["gegner_leben"] = 1.0 + float(data.gruppe_staerke) * (members.size() - 1)
+		result_setup["gegner_leben"] = float(result_setup.gegner_leben) * (1.0 + float(data.gruppe_staerke) * (members.size() - 1))
 	return result_setup
 
 
@@ -134,6 +139,8 @@ static func _make_setup(id: String, data: Dictionary, heroes: Array, phases: Arr
 		hintergrund = data.get("hintergrund", "wiese"),
 		zuerst = data.get("zuerst", ""),
 		gegner_stufe = int(data.get("gegner_stufe", 1)),
+		# Rivalen und besondere Gegner: so viel mehr Leben (z. B. Kobalt), Gruppenkämpfe rechnen noch die Gruppengröße drauf
+		gegner_leben = float(data.get("gegner_leben", 1.0)),
 	}
 	if not phases.is_empty():
 		result_setup["phasen"] = phases
@@ -141,8 +148,8 @@ static func _make_setup(id: String, data: Dictionary, heroes: Array, phases: Arr
 
 
 ## Der Kampf ist vorbei: Ergebnis für die Welt merken.
-static func finish(won: bool, potions_used := 0) -> void:
-	result = {kampf = kampf_id, gewonnen = won, traenke_benutzt = used_before + potions_used}
+static func finish(won: bool, potions_used := 0, tamed: Array = []) -> void:
+	result = {kampf = kampf_id, gewonnen = won, traenke_benutzt = used_before + potions_used, gezaehmt = tamed}
 	used_before = 0
 	kampf_id = ""
 	setup = {}

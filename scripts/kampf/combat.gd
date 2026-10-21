@@ -118,9 +118,19 @@ func _battle_name() -> String:
 
 ## Zurück in die Stadt (Kampf aus der Kreuzweg-Demo).
 func _back_to_world(won: bool) -> void:
-	# Verbrauchte Heiltränke fehlen danach in der Tasche
-	BattleRequest.finish(won, _potions_used())
+	# Verbrauchte Heiltränke fehlen danach in der Tasche, gezähmte Monster kommen ins Rudel
+	BattleRequest.finish(won, _potions_used(), _tamed())
 	get_tree().change_scene_to_file(BattleRequest.return_scene)
+
+
+## Monster, die der eigene Zähmer in diesem Kampf gezähmt hat (Kennungen).
+func _tamed() -> Array:
+	var player := state.heroes[int(_group.get("mine", 0))]
+	var result: Array = []
+	for m in player.monsters:
+		if m.has_meta("neu_gezaehmt"):
+			result.append(m.klass)
+	return result
 
 
 ## Wie viele Heiltränke der Spieler in diesem Kampf getrunken hat.

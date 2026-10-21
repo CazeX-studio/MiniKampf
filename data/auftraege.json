@@ -214,5 +214,30 @@
 		],
 		"abgeben_bei": "fenn",
 		"belohnung": {"gold": 60, "erfahrung": 500}
+	},
+	"esches_monster": {
+		"titel": "Professor Esches Monster",
+		"beschreibung": "Professor Esche hat drei Start-Monster für Zähmer. Such dir eins aus – und pass auf Kobalt auf, Esches Neffen.",
+		"start_bei": "esche",
+		"start_wenn": {"klasse": "tamer"},
+		"voraussetzung": "nach_gruenwacht",
+		"ziele": [
+			{"art": "gemerkt", "merken": "starter_gewaehlt", "bei": "esche", "text": "Bei Professor Esche ein Start-Monster wählen"},
+			{"art": "gemerkt", "merken": "kobalt_gekaempft", "bei": "kobalt", "text": "Gegen Kobalt antreten"}
+		],
+		"abgeben_bei": "esche",
+		"belohnung": {"gold": 40, "erfahrung": 300}
+	},
+	"tildas_unterricht": {
+		"titel": "Tildas Unterricht",
+		"beschreibung": "Rudelmeisterin Tilda bringt dir das Zähmen bei: Ein Monster in der Wildnis erst schwächen (unter halbes Leben), dann „Zähmen“. Je schwächer, desto sicherer.",
+		"start_bei": "tilda",
+		"start_wenn": {"klasse": "tamer"},
+		"voraussetzung": "esches_monster",
+		"ziele": [
+			{"art": "gemerkt", "merken": "erstes_zaehmen", "text": "Ein Monster auf dem Weg oder im Wald zähmen"}
+		],
+		"abgeben_bei": "tilda",
+		"belohnung": {"gold": 60, "erfahrung": 500}
 	}
 }

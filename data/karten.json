@@ -578,6 +578,24 @@
 				"farbe": "e0e0c0",
 				"dialog": "esche"
 			},
+			"kobalt": {
+				"name": "Kobalt",
+				"feld": [
+					16,
+					22
+				],
+				"aussehen": "elf_m",
+				"farbe": "a0c8ff",
+				"dialog": "kobalt",
+				"anspringen": {
+					"radius": 3,
+					"wenn": {
+						"klasse": "tamer",
+						"gemerkt": "starter_gewaehlt",
+						"nicht_gemerkt": "kobalt_gekaempft"
+					}
+				}
+			},
 			"marv_gruenwacht": {
 				"name": "Marv",
 				"feld": [

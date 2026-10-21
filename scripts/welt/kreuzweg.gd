@@ -173,8 +173,8 @@ func _ready() -> void:
 	_camera.reset_smoothing()
 	# Zurück aus einem Kampf: Ergebnis verbuchen (Erfahrung, Aufträge)
 	if not BattleRequest.result.is_empty():
-		_send({type = "kampf_ergebnis", kampf = BattleRequest.result.kampf,
-				gewonnen = BattleRequest.result.gewonnen, traenke_benutzt = BattleRequest.result.get("traenke_benutzt", 0)})
+		_send({type = "kampf_ergebnis", kampf = BattleRequest.result.kampf, gewonnen = BattleRequest.result.gewonnen,
+				traenke_benutzt = BattleRequest.result.get("traenke_benutzt", 0), gezaehmt = BattleRequest.result.get("gezaehmt", [])})
 		BattleRequest.result = {}
 	# Beim ersten Betreten der Stadt kommt die Einleitung
 	_send({type = "start"})
@@ -1588,6 +1588,11 @@ func _fill_panel() -> void:
 				lines.append("[b]Mana: %d[/b]" % (data.mana + BattleState.LEVEL_MANA * bonus))
 			lines.append("[b]Tempo: %d[/b]" % data.tempo)
 			lines.append("[b]Stärke: %d %%[/b] (Schaden und Heilung)" % roundi(BattleRequest.hero_power(p.progress.level) * 100))
+			if klasse == "tamer":
+				var pack: PackedStringArray = []
+				for id: String in p.progress.flags.get("monster", []):
+					pack.append(Sandbox.MONSTERS.get(id, Sandbox.ENEMIES.get(id, {name = id})).name)
+				lines.append("[b]Rudel:[/b] %s" % (", ".join(pack) if not pack.is_empty() else GameData.text("rudel_leer")))
 			lines.append("")
 			lines.append(GameData.text("werte_klasse", [BattleState.LEVEL_HP, BattleState.LEVEL_MANA, roundi(BattleRequest.HERO_POWER_PER_LEVEL * 100)]))
 			_panel_text.text = "\n".join(lines)
@@ -1621,7 +1626,8 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 	if player_id != local_id:
 		return
 	var progress := local_player().progress
-	if BattleRequest.prepare(kampf_id, progress.level, progress.item_count("heiltrank"), str(progress.flags.get("klasse", ""))):
+	if BattleRequest.prepare(kampf_id, progress.level, progress.item_count("heiltrank"), str(progress.flags.get("klasse", "")),
+			progress.flags.get("monster", [])):
 		SaveGame.save(local_player())
 		get_tree().change_scene_to_file.call_deferred("res://scenes/kampf.tscn")
 

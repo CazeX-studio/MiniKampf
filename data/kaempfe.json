@@ -140,5 +140,8 @@
 				}
 			}
 		]
-	}
+	},
+	"kobalt_moosling": {"name": "Rivalenkampf: Kobalts Moosling", "klasse": "tamer", "eigene_klasse": true, "ansage": "Kobalt: „Mein Moosling gegen deins! Los!“", "wellen": [["kobalts_moosling"]], "gegner_stufe": 16, "hintergrund": "wald", "erfahrung": 250, "gegner_leben": 2.5, "merken_immer": "kobalt_gekaempft", "merken": "kobalt_sieg", "erfolg": "rivale_kobalt", "verloren_text": "Kobalt jubelt. Eine Niederlage ist kein Spielende – du kannst weitermachen."},
+	"kobalt_glutwelpe": {"name": "Rivalenkampf: Kobalts Glutwelpe", "klasse": "tamer", "eigene_klasse": true, "ansage": "Kobalt: „Mein Glutwelpe gegen deins! Los!“", "wellen": [["kobalts_glutwelpe"]], "gegner_stufe": 16, "hintergrund": "wald", "erfahrung": 250, "gegner_leben": 2.5, "merken_immer": "kobalt_gekaempft", "merken": "kobalt_sieg", "erfolg": "rivale_kobalt", "verloren_text": "Kobalt jubelt. Eine Niederlage ist kein Spielende – du kannst weitermachen."},
+	"kobalt_bachotter": {"name": "Rivalenkampf: Kobalts Bachotter", "klasse": "tamer", "eigene_klasse": true, "ansage": "Kobalt: „Mein Bachotter gegen deins! Los!“", "wellen": [["kobalts_bachotter"]], "gegner_stufe": 16, "hintergrund": "wald", "erfahrung": 250, "gegner_leben": 2.5, "merken_immer": "kobalt_gekaempft", "merken": "kobalt_sieg", "erfolg": "rivale_kobalt", "verloren_text": "Kobalt jubelt. Eine Niederlage ist kein Spielende – du kannst weitermachen."}
 }
