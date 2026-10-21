@@ -41,8 +41,11 @@ Abenteurergilde, Bingos Laden, sechs Straßen (die sechste nach Südosten ist zu
 - **Gesandte der fünf Regionen (Stufe 5–7):** Rund um die Statue stehen Gesandte aus Arkanum, Messinghafen, Glutoase,
   Grünwacht und den Nebelinseln. In **Probestunden** spielst du kurz eine ihrer Klassen (mit Ida und Bo, Ult halb voll).
   Eine Probestunde ist Pflicht (Auftrag von Lene), die anderen sind freiwillig.
-- **Der zugewachsene Weg (Stufe 7–8):** Lene schickt dich mit einem Essenskorb zu Wache Holm an der sechsten Straße.
-  Er lässt dich nicht durch („Befehl der Fünf“). Danach spricht dich Mira an: „Hörst du sie auch?“
+- **Der zugewachsene Weg (Stufe 7–8):** Lene schickt dich mit einem Essenskorb zu Torwache Brom an der sechsten Straße.
+  Er lässt dich nicht durch („Befehl ist Befehl“). Danach spricht dich Mira an: „Hörst du sie auch?“
+- **Nebenaufträge (Sitzung 21):** blaues „!“ und „?“ statt gelb. Wirtin Hanne (Gasthaus Wegrast): „Hannes Kater“ und
+  „Ein Festmahl“; Steinmetz Quill: „Glanz für die Fünf“ (Bürste in der Tasche benutzen); Vogt Edmar: „Fünf Farben“
+  (Festlaternen aufhängen); Pip und Lotte: „Die Dunkelheit spielen“.
 - **Nacht des Sternenfalls (Stufe 8–10):** Fest der fünf Wege bei Nacht mit Festlaternen, Marv fragt nach der Sternentafel,
   der Sternenfall verwandelt einen Feldschleim in den Sternenfresser (Boss mit Sternenpanzer: nur perfekte Paraden
   öffnen ihn, nach 10 Zügen explodiert er). Sieg = Erfolg „Schild hoch, Schild runter“, Ren klaut den Splitter;

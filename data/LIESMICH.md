@@ -91,3 +91,18 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
 - **Aktionen:** `{"szene": "klassenwahl"}` / `{"szene": "abspann"}` (wechselt den Bildschirm),
   `{"vergessen": "nacht"}` (etwas Gemerktes wieder vergessen, z. B. damit es Morgen wird).
 - **Platzhalter in Dialogtexten:** `{klasse}`, `{region}`, `{wohin}` („ins Arkanum“), `{lehrmeister}` – aus der gewählten Klasse.
+
+## Seit Schritt 21 (Nebenaufträge, Sitzung 21)
+
+- **Nebenauftrag:** `"neben": true` im Auftrag. Dann sind „!“ und „?“ über der Figur **blau** statt gelb, im Auftragsbuch
+  steht „◆ Nebenauftrag:“ davor. Hauptaufträge gehen bei den Zeichen und beim „Ziel:“ oben links immer vor.
+- **Ziel mit Bedingung:** Ein Ziel darf `"wenn"` haben – dann erscheint sein „?“ über der Figur erst, wenn die Bedingung
+  stimmt (z. B. Ye erst, wenn alle fünf Laternen hängen).
+- **Bedingung „oder“:** `{"oder": [Bedingung, Bedingung]}` – eine reicht (z. B. Festlaterne nachts oder wenn aufgehängt).
+- **`kreuzweg.json` → `orte`:** Stellen, die man benutzen kann (hinlaufen bzw. antippen, E / Leertaste / „Reden“):
+  `art` (Aussehen: `kater`, `laternenhaken`), `feld`, `wenn` (nur dann da), und was passiert: `dialog`, `aktionen`
+  und/oder `meldung` (kurzer Text oben).
+- **Sammelpunkte** dürfen `"wenn"` haben (z. B. Wiesenkraut nur, solange „Ein Festmahl“ läuft).
+- **Gegenstände benutzen:** in `gegenstaende.json` `"benutzen": {"feld": [x, y], "radius": 3, "dialog": "…", "sonst": "…"}`.
+  In der Tasche steht dann „[Benutzen]“. Nah genug an `feld` startet der Dialog, sonst kommt die Meldung `sonst`.
+

@@ -79,6 +79,9 @@ func _run() -> void:
 
 	_check(finished, "Die erste Stunde endet mit dem Abspann")
 	_check(p.progress.flags.has("klasse"), "Eine Klasse wurde gewählt")
+	for id: String in GameData.get_file("auftraege"):
+		if GameData.quest(id).get("neben", false):
+			_check(p.progress.quest_state(id) == "abgegeben", "Nebenauftrag „%s“ abgeschlossen" % GameData.quest(id).titel)
 	print("\nKämpfe:")
 	for line in _battle_log:
 		print("  " + line)
@@ -112,7 +115,8 @@ func _answer() -> void:
 	world.apply_command("spieler", {type = "dialog_choose", index = best})
 
 
-## Nächstes Ziel: NPC mit ? oder !, sonst Sammelpunkt für ein Sammel-Ziel, sonst reihum alle NPCs.
+## Nächstes Ziel: NPC mit ? oder !, sonst Sammelpunkt für ein Sammel-Ziel, sonst ein Ort (Kater, Laterne)
+## oder ein Gegenstand zum Benutzen (Bürste), sonst reihum alle NPCs.
 func _next_goal() -> void:
 	for mark: String in ["?", "!"]:
 		for id: String in world.npcs:
@@ -125,9 +129,23 @@ func _next_goal() -> void:
 		for goal: Dictionary in GameData.quest(id).get("ziele", []):
 			if goal.art == "sammeln" and not world.goal_done(p, goal):
 				for i in world.pickups.size():
-					if world.can_use(p, "punkt:%d" % i):
+					if world.can_use(p, "punkt:%d" % i) and world.pickups[i].item == goal.gegenstand:
 						world.apply_command("spieler", {type = "use", target = "punkt:%d" % i})
 						return
+	for i in world.places.size():
+		if world.can_use(p, "ort:%d" % i):
+			world.apply_command("spieler", {type = "use", target = "ort:%d" % i})
+			return
+	for item_id: String in p.progress.items:
+		var use: Dictionary = GameData.item(item_id).get("benutzen", {})
+		var entries: Array = GameData.dialog(use.get("dialog", "")).get("einstieg", [])
+		if entries.size() > 1 and world.check(p, entries[0].get("wenn", {})):
+			var spot := Vector2(float(use.feld[0]), float(use.feld[1]))
+			if (spot - p.pos).length() <= float(use.radius):
+				world.apply_command("spieler", {type = "benutzen", gegenstand = item_id})
+			else:
+				world.apply_command("spieler", {type = "move", cell = world._free_neighbor(Vector2i(spot.round()), p.cell)})
+			return
 	var candidates: Array[String] = []
 	for id: String in world.npcs:
 		if world.npc_visible(p, id) and not _talked_round.has(id):

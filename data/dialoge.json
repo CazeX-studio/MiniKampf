@@ -129,6 +129,7 @@
 		"einstieg": [
 			{"wenn": {"auftrag": "abreise", "stand": "aktiv", "nicht_gemerkt": "klasse_gewaehlt"}, "knoten": "wahl"},
 			{"wenn": {"auftrag": "abreise", "stand": "aktiv", "gemerkt": "klasse_gewaehlt"}, "knoten": "abschied"},
+			{"wenn": {"auftrag": "fuenf_farben", "stand": "aktiv", "nicht_gemerkt": "ye_laternen", "und": [{"gemerkt": "laterne_arkanum"}, {"gemerkt": "laterne_messinghafen"}, {"gemerkt": "laterne_glutoase"}, {"gemerkt": "laterne_gruenwacht"}, {"gemerkt": "laterne_nebelinseln"}]}, "knoten": "laternen"},
 			{"wenn": {"auftrag": "grundausbildung", "stand": "neu"}, "knoten": "morgen"},
 			{"wenn": {"auftrag": "grundausbildung", "stand": "aktiv"}, "knoten": "uebung"},
 			{"wenn": {"auftrag": "grundausbildung", "stand": "fertig"}, "knoten": "abschluss"},
@@ -161,6 +162,12 @@
 				{"text": "Was kommt jetzt?", "weiter": "ende", "aktionen": [{"auftrag_abgeben": "erster_gruppenkampf"}]}
 			]},
 			"ende": {"wer": "Ye", "text": "Deine Grundausbildung ist vorbei. Ruh dich aus. In der Stadt ist bald einiges los."},
+			"laternen": {"wer": "Ye", "text": "Die Laternen? Hab ich gesehen. Fünf Farben. Schön.", "weiter": "laternen2"},
+			"laternen2": {"wer": "Ye", "text": "Fehlt nur eine.", "aktionen": [{"merken": "ye_laternen"}], "antworten": [
+				{"text": "Welche denn?", "weiter": "laternen3"},
+				{"text": "Es gibt doch nur fünf Regionen.", "weiter": "laternen3"}
+			]},
+			"laternen3": {"wer": "Ye", "text": "Hm? Ach, nichts. Ein alter Mann redet. Geh, Edmar wartet bestimmt schon."},
 			"danach": {"wer": "Ye", "text": "Willst du nochmal üben? Komm später wieder. Schild hoch, Schild runter."},
 			"wahl": {"wer": "Ye", "text": "Heute ziehen die Novizen los, jeder in eine Region. Welchen Weg gehst du?", "antworten": [
 				{"text": "Zeig mir die Klassen.", "aktionen": [{"szene": "klassenwahl"}]},
@@ -283,23 +290,23 @@
 		}
 	},
 	"wache": {
-		"hinweis": "PLATZHALTER-TEXTE: Wache Holm am zugewachsenen sechsten Weg.",
+		"hinweis": "PLATZHALTER-TEXTE: Torwache Brom am zugewachsenen sechsten Weg (hieß vorher Holm, Name aus Sitzung 21).",
 		"einstieg": [
 			{"wenn": {"auftrag": "korb_fuer_die_wache", "stand": "aktiv"}, "knoten": "korb"},
 			{"knoten": "weg"}
 		],
 		"knoten": {
-			"korb": {"wer": "Holm", "text": "Halt! Hier geht's nicht weiter. … Moment. Ist das ein Essenskorb? Von Lene?", "antworten": [
+			"korb": {"wer": "Brom", "text": "Halt! Hier geht's nicht weiter. … Moment. Ist das ein Essenskorb? Von Lene?", "antworten": [
 				{"text": "Ja, für dich.", "weiter": "danke", "aktionen": [{"merken": "korb_abgegeben"}, {"gegenstand": "essenskorb", "anzahl": -1}, {"auftrag_abgeben": "korb_fuer_die_wache"}]}
 			]},
-			"danke": {"wer": "Holm", "text": "Endlich! Drei Tage nur Zwieback. Danke, Novize.", "antworten": [
+			"danke": {"wer": "Brom", "text": "Endlich! Drei Tage nur Zwieback. Danke, Novize.", "antworten": [
 				{"text": "Wohin führt der Weg hinter dir?", "weiter": "wohin"},
 				{"text": "Warum steht hier überhaupt eine Wache?", "weiter": "warum"}
 			]},
-			"wohin": {"wer": "Holm", "text": "Nirgendwohin. Eine alte Straße, zugewachsen. Befehl der Fünf: Niemand geht da lang.", "weiter": "wegschicken"},
-			"warum": {"wer": "Holm", "text": "Weil die Fünf es so wollen. Das war schon so, bevor ich Wache wurde. Mein Vater stand hier auch schon.", "weiter": "wegschicken"},
-			"wegschicken": {"wer": "Holm", "text": "Genug gefragt. Geh zurück in die Stadt, Novize. Hier gibt es nichts für dich.", "aktionen": [{"auftrag_starten": "leises_singen"}]},
-			"weg": {"wer": "Holm", "text": "Hier geht's nicht weiter. Befehl der Fünf."}
+			"wohin": {"wer": "Brom", "text": "Nirgendwohin. Eine alte Straße, zugewachsen. Befehl der Fünf: Niemand geht da lang.", "weiter": "wegschicken"},
+			"warum": {"wer": "Brom", "text": "Weil die Fünf es so wollen. Das war schon so, bevor ich Wache wurde. Mein Vater stand hier auch schon.", "weiter": "wegschicken"},
+			"wegschicken": {"wer": "Brom", "text": "Genug gefragt. Geh zurück in die Stadt, Novize. Hier gibt es nichts für dich.", "aktionen": [{"auftrag_starten": "leises_singen"}]},
+			"weg": {"wer": "Brom", "text": "Da geht's nirgendwohin. Befehl ist Befehl."}
 		}
 	},
 	"mira": {
@@ -372,6 +379,134 @@
 				{"text": "Kauf dir doch selbst eine Sternentafel.", "weiter": "zeit"}
 			]},
 			"zeit": {"wer": "Marv", "text": "Na gut. Na GUT. Aber wehe, du übst da draußen heimlich!"}
+		}
+	},
+	"hanne": {
+		"hinweis": "PLATZHALTER-TEXTE: Wirtin Hanne vor dem Gasthaus Wegrast (Nebenaufträge „Hannes Kater“ und „Ein Festmahl“). Herzlich, laut, weiß jedes Gerücht.",
+		"einstieg": [
+			{"wenn": {"auftrag": "hannes_kater", "stand": "fertig"}, "knoten": "kater_zurueck"},
+			{"wenn": {"auftrag": "hannes_kater", "stand": "aktiv"}, "knoten": "kater_wartet"},
+			{"wenn": {"auftrag": "hannes_kater", "stand": "neu", "und": [{"auftrag": "ankunft", "stand": "abgegeben"}]}, "knoten": "kater"},
+			{"wenn": {"auftrag": "festmahl", "stand": "fertig"}, "knoten": "festmahl_zurueck"},
+			{"wenn": {"auftrag": "festmahl", "stand": "aktiv"}, "knoten": "festmahl_wartet"},
+			{"wenn": {"auftrag": "festmahl", "stand": "neu", "und": [{"auftrag": "hannes_kater", "stand": "abgegeben"}]}, "knoten": "festmahl"},
+			{"knoten": "geruecht"}
+		],
+		"knoten": {
+			"kater": {"wer": "Hanne", "text": "Ach, ein neues Gesicht! Willkommen im Wegrast, Schätzchen! Sag mal … hast du einen schwarzen Kater gesehen?", "weiter": "kater2"},
+			"kater2": {"wer": "Hanne", "text": "Brösel ist wieder ausgebüxt! Frag doch Pip und Lotte, die Kinder auf dem Marktplatz sehen alles.", "antworten": [
+				{"text": "Ich halte die Augen offen.", "aktionen": [{"auftrag_starten": "hannes_kater"}]},
+				{"text": "Später vielleicht."}
+			]},
+			"kater_wartet": {"wer": "Hanne", "text": "Noch kein Brösel? Der kommt immer erst, wenn's Fisch gibt, der Halunke."},
+			"kater_zurueck": {"wer": "Hanne", "text": "BRÖSEL! Da bist du ja, du Ausreißer! Danke, Schätzchen. Hier, für deine Mühe.", "aktionen": [{"auftrag_abgeben": "hannes_kater"}]},
+			"festmahl": {"wer": "Hanne", "text": "Bald ist das Fest der fünf Wege, und ich soll für die halbe Stadt kochen! Mir fehlt Wiesenkraut und Fleisch.", "weiter": "festmahl2"},
+			"festmahl2": {"wer": "Hanne", "text": "Draußen auf den Kreuzwegfeldern wächst das Kraut, und der Jäger hat mir Fleisch bereitgelegt. Holst du's mir?", "antworten": [
+				{"text": "Mach ich.", "aktionen": [{"auftrag_starten": "festmahl"}]},
+				{"text": "Gerade nicht."}
+			]},
+			"festmahl_wartet": {"wer": "Hanne", "text": "Drei Bund Wiesenkraut und zwei Stück Fleisch, Schätzchen. Die Felder liegen am Stadtrand, da, wo die Straßen rausführen."},
+			"festmahl_zurueck": {"wer": "Hanne", "text": "Riecht das gut! So wahr die fünf Wege, das wird ein Festmahl! Komm am Festabend vorbei, du kriegst die erste Schüssel.", "aktionen": [{"auftrag_abgeben": "festmahl"}]},
+			"geruecht": {"wer": "Hanne", "text": "Weißt du, was man sich erzählt? Am alten Südost-Tor soll es nachts summen. Brom sagt, das ist der Wind. Pah!"}
+		}
+	},
+	"lotte": {
+		"hinweis": "PLATZHALTER-TEXTE: Lotte (Kind) auf dem Marktplatz.",
+		"einstieg": [
+			{"wenn": {"auftrag": "hannes_kater", "stand": "aktiv", "nicht_gemerkt": "kater_spur"}, "knoten": "kater"},
+			{"knoten": "allgemein"}
+		],
+		"knoten": {
+			"kater": {"wer": "Lotte", "text": "Brösel? Der ist vorhin in die Gasse neben Bingos Laden gerannt! Mit einem Fischkopf im Maul!", "aktionen": [{"merken": "kater_spur"}]},
+			"allgemein": {"wer": "Lotte", "text": "Wenn ich groß bin, werde ich wie Ysolde! Die hat die Dunkelheit ganz allein zurückgehalten."}
+		}
+	},
+	"pip": {
+		"hinweis": "PLATZHALTER-TEXTE: Pip (Kind) auf dem Marktplatz, Nebenauftrag „Die Dunkelheit spielen“.",
+		"einstieg": [
+			{"wenn": {"auftrag": "dunkelheit_spielen", "stand": "neu", "und": [{"auftrag": "ankunft", "stand": "abgegeben"}]}, "knoten": "frage"},
+			{"wenn": {"auftrag": "dunkelheit_spielen", "stand": "aktiv"}, "knoten": "spiel"},
+			{"wenn": {"auftrag": "hannes_kater", "stand": "aktiv", "nicht_gemerkt": "kater_spur"}, "knoten": "kater"},
+			{"knoten": "allgemein"}
+		],
+		"knoten": {
+			"frage": {"wer": "Pip", "text": "Wir spielen „Die Fünf gegen die Dunkelheit“! Aber keiner will die Dunkelheit sein. Du vielleicht?", "antworten": [
+				{"text": "Na gut, ich bin die Dunkelheit.", "weiter": "spiel", "aktionen": [{"auftrag_starten": "dunkelheit_spielen"}]},
+				{"text": "Später vielleicht."}
+			]},
+			"spiel": {"wer": "Pip", "text": "Ich bin Hadrak, Lotte ist Ysolde, und du bist der Schatten! Los, sei gruselig!", "antworten": [
+				{"text": "Grrr! Ich verschlinge die Stadt!", "weiter": "angriff"},
+				{"text": "Buh.", "weiter": "angriff"}
+			]},
+			"angriff": {"wer": "Lotte", "text": "Fünf Wege, ein Sieg! Nimm das! Und das! *pikst dich mit einem Holzschwert*", "antworten": [
+				{"text": "Theatralisch umfallen", "weiter": "gewonnen"},
+				{"text": "„Ich gebe auf!“", "weiter": "gewonnen"}
+			]},
+			"gewonnen": {"wer": "Pip", "text": "Gewonnen! Die Dunkelheit verliert immer!", "aktionen": [{"merken": "dunkelheit_gespielt"}, {"auftrag_abgeben": "dunkelheit_spielen"}], "weiter": "gesicht"},
+			"gesicht": {"wer": "Lotte", "text": "Pip … warum hat die Dunkelheit auf der Statue eigentlich kein Gesicht?", "weiter": "gesicht2"},
+			"gesicht2": {"wer": "Pip", "text": "Weil sie böse ist. Das weiß doch jeder. … Oder?"},
+			"kater": {"wer": "Pip", "text": "Ein Kater? Frag Lotte, die hat Augen wie ein Falke."},
+			"allgemein": {"wer": "Pip", "text": "Nochmal Dunkelheit spielen? Heute nicht, Mama sagt, ich hab genug gesiegt."}
+		}
+	},
+	"quill": {
+		"hinweis": "PLATZHALTER-TEXTE: Steinmetz Quill an der Statue der Fünf, Nebenauftrag „Glanz für die Fünf“. Leiser erster Hinweis auf die Wahrheit.",
+		"einstieg": [
+			{"wenn": {"auftrag": "glanz_fuer_die_fuenf", "stand": "fertig"}, "knoten": "zeile"},
+			{"wenn": {"auftrag": "glanz_fuer_die_fuenf", "stand": "aktiv"}, "knoten": "wartet"},
+			{"wenn": {"auftrag": "glanz_fuer_die_fuenf", "stand": "neu", "und": [{"auftrag": "erster_auftrag", "stand": "abgegeben"}]}, "knoten": "frage"},
+			{"knoten": "allgemein"}
+		],
+		"knoten": {
+			"frage": {"wer": "Quill", "text": "Mein Großvater hat diese Statue gebaut. Zum Fest soll sie glänzen, aber meine Knie wollen nicht mehr.", "weiter": "frage2"},
+			"frage2": {"wer": "Quill", "text": "Nimm die Bürste und schrubb das Moos vom Sockel. Stell dich direkt daneben und benutz sie aus deiner Tasche.", "antworten": [
+				{"text": "Gib her.", "aktionen": [{"auftrag_starten": "glanz_fuer_die_fuenf"}, {"gegenstand": "buerste", "anzahl": 1}]},
+				{"text": "Ein andermal."}
+			]},
+			"wartet": {"wer": "Quill", "text": "Die Bürste ist in deiner Tasche. Direkt an die Statue stellen, dann „Benutzen“."},
+			"zeile": {"wer": "Quill", "text": "Eine sechste Zeile? Unter dem Moos? … Davon hat mein Großvater nie etwas erzählt.", "weiter": "zeile2"},
+			"zeile2": {"wer": "Quill", "text": "Weißt du, ich fand immer, die Gesichter sehen nicht nach Sieg aus. Eher nach … Hier, nimm das. Und danke.", "aktionen": [{"gegenstand": "buerste", "anzahl": -1}, {"auftrag_abgeben": "glanz_fuer_die_fuenf"}]},
+			"allgemein": {"wer": "Quill", "text": "„Fünf Wege, ein Sieg.“ Schöne Inschrift. Aber schau dir die Gesichter an. Sieht so ein Sieg aus?"}
+		}
+	},
+	"statue_putzen": {
+		"hinweis": "PLATZHALTER-TEXTE: Kommt, wenn man die Bürste an der Statue benutzt.",
+		"einstieg": [
+			{"wenn": {"auftrag": "glanz_fuer_die_fuenf", "stand": "aktiv", "nicht_gemerkt": "statue_geputzt"}, "knoten": "putzen"},
+			{"knoten": "sauber"}
+		],
+		"knoten": {
+			"putzen": {"wer": "Statue der Fünf", "text": "Du schrubbst das Moos vom Sockel. Darunter erscheint die Inschrift: „Fünf Wege, ein Sieg“.", "weiter": "putzen2"},
+			"putzen2": {"wer": "Statue der Fünf", "text": "Darunter noch eine Zeile – weggemeißelt. Nur ein paar Buchstaben sind zu erkennen: „… und der sechs…“", "aktionen": [{"merken": "statue_geputzt"}, {"merken": "sechste_zeile_gesehen"}]},
+			"sauber": {"wer": "Statue der Fünf", "text": "Die Statue glänzt. Die weggemeißelte Zeile bleibt unlesbar."}
+		}
+	},
+	"kater": {
+		"hinweis": "PLATZHALTER-TEXTE: Hannes Kater Brösel in der Gasse neben Bingos Laden.",
+		"einstieg": [
+			{"knoten": "gefunden"}
+		],
+		"knoten": {
+			"gefunden": {"wer": "Brösel", "text": "Miau. *Der Kater lässt den Fischkopf fallen, schaut dich lange an und trottet Richtung Wegrast davon.*", "aktionen": [{"merken": "kater_gefunden"}]}
+		}
+	},
+	"edmar": {
+		"hinweis": "PLATZHALTER-TEXTE: Vogt Edmar organisiert das Fest der fünf Wege und glaubt jedes Wort der Legende. Nebenauftrag „Fünf Farben“.",
+		"einstieg": [
+			{"wenn": {"auftrag": "fuenf_farben", "stand": "fertig"}, "knoten": "fertig"},
+			{"wenn": {"auftrag": "fuenf_farben", "stand": "aktiv"}, "knoten": "wartet"},
+			{"wenn": {"auftrag": "fuenf_farben", "stand": "neu", "und": [{"auftrag": "erster_gruppenkampf", "stand": "abgegeben"}]}, "knoten": "frage"},
+			{"knoten": "allgemein"}
+		],
+		"knoten": {
+			"frage": {"wer": "Edmar", "text": "Novize! Gerade recht. Das Fest der fünf Wege ist das wichtigste Fest des Jahres, und nichts ist fertig!", "weiter": "frage2"},
+			"frage2": {"wer": "Edmar", "text": "Fünf Laternen, eine für jede Region, rund um den Marktplatz. Die leeren Pfähle siehst du schon. Hilfst du?", "antworten": [
+				{"text": "Gern.", "aktionen": [{"auftrag_starten": "fuenf_farben"}, {"gegenstand": "festlaterne", "anzahl": 5}]},
+				{"text": "Später."}
+			]},
+			"wartet": {"wer": "Edmar", "text": "Jede Laterne an ihren Pfahl: Arkanum im Norden, Messinghafen im Osten, Glutoase im Süden, Grünwacht im Westen, Nebelinseln im Nordwesten."},
+			"fertig": {"wer": "Edmar", "text": "Wunderbar! Fünf Wege, fünf Farben, ein Sieg! So wahr die fünf Wege, das wird das schönste Fest seit Jahren.", "aktionen": [{"auftrag_abgeben": "fuenf_farben"}]},
+			"allgemein": {"wer": "Edmar", "text": "Die Fünf haben die Dunkelheit besiegt, und wir feiern es jedes Jahr. So gehört sich das!"}
 		}
 	}
 }

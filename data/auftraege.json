@@ -121,5 +121,73 @@
 		],
 		"abgeben_bei": "ye_tor",
 		"belohnung": {"erfahrung": 300}
+	},
+	"hannes_kater": {
+		"titel": "Hannes Kater",
+		"neben": true,
+		"beschreibung": "Wirtin Hannes Kater Brösel ist ausgebüxt. Frag die Kinder Pip und Lotte auf dem Marktplatz, ob sie ihn gesehen haben. Steht man direkt vor etwas, benutzt man es mit E oder der Leertaste (am Handy: Knopf „Reden“).",
+		"start_bei": "hanne",
+		"voraussetzung": "ankunft",
+		"ziele": [
+			{"art": "gemerkt", "merken": "kater_spur", "bei": "lotte", "text": "Pip und Lotte nach dem Kater fragen"},
+			{"art": "gemerkt", "merken": "kater_gefunden", "text": "Den Kater in der Gasse neben Bingos Laden finden (E / Leertaste)"}
+		],
+		"abgeben_bei": "hanne",
+		"belohnung": {"gold": 10, "erfahrung": 40}
+	},
+	"festmahl": {
+		"titel": "Ein Festmahl",
+		"neben": true,
+		"beschreibung": "Hanne kocht für das Fest der fünf Wege. Sammle Wiesenkraut und das Wildfleisch, das der Jäger bereitgelegt hat – draußen auf den Kreuzwegfeldern am Rand der Stadt. Wo es etwas zu sammeln gibt, leuchtet es.",
+		"start_bei": "hanne",
+		"voraussetzung": "hannes_kater",
+		"ziele": [
+			{"art": "sammeln", "gegenstand": "wiesenkraut", "anzahl": 3},
+			{"art": "sammeln", "gegenstand": "wildfleisch", "anzahl": 2}
+		],
+		"abgeben_bei": "hanne",
+		"belohnung": {"gold": 20, "erfahrung": 80, "gegenstaende": {"heiltrank": 1}}
+	},
+	"glanz_fuer_die_fuenf": {
+		"titel": "Glanz für die Fünf",
+		"neben": true,
+		"beschreibung": "Steinmetz Quill will die Statue der Fünf zum Fest putzen lassen. Stell dich direkt neben die Statue, öffne die Tasche (I) und tippe bei der Bürste auf „Benutzen“.",
+		"start_bei": "quill",
+		"voraussetzung": "erster_auftrag",
+		"ziele": [
+			{"art": "gemerkt", "merken": "statue_geputzt", "text": "Die Statue mit der Bürste putzen (Tasche → Benutzen)"}
+		],
+		"abgeben_bei": "quill",
+		"belohnung": {"gold": 15, "erfahrung": 60}
+	},
+	"fuenf_farben": {
+		"titel": "Fünf Farben",
+		"neben": true,
+		"beschreibung": "Vogt Edmar braucht Hilfe beim Schmuck für das Fest: Häng die fünf Festlaternen in den Farben der Regionen rund um den Marktplatz auf. Die leeren Laternenpfähle schimmern.",
+		"start_bei": "edmar",
+		"voraussetzung": "erster_gruppenkampf",
+		"ziele": [
+			{"art": "gemerkt", "merken": "laterne_arkanum", "text": "Violette Laterne (Arkanum) aufhängen – Norden"},
+			{"art": "gemerkt", "merken": "laterne_messinghafen", "text": "Kupferne Laterne (Messinghafen) aufhängen – Osten"},
+			{"art": "gemerkt", "merken": "laterne_glutoase", "text": "Glutrote Laterne (Glutoase) aufhängen – Süden"},
+			{"art": "gemerkt", "merken": "laterne_gruenwacht", "text": "Grüne Laterne (Grünwacht) aufhängen – Westen"},
+			{"art": "gemerkt", "merken": "laterne_nebelinseln", "text": "Rosa Laterne (Nebelinseln) aufhängen – Nordwesten"},
+			{"art": "gemerkt", "merken": "ye_laternen", "bei": "ye_tor", "text": "Ye am Stadttor fragen, was er davon hält",
+				"wenn": {"gemerkt": "laterne_arkanum", "und": [{"gemerkt": "laterne_messinghafen"}, {"gemerkt": "laterne_glutoase"}, {"gemerkt": "laterne_gruenwacht"}, {"gemerkt": "laterne_nebelinseln"}]}}
+		],
+		"abgeben_bei": "edmar",
+		"belohnung": {"gold": 20, "erfahrung": 80}
+	},
+	"dunkelheit_spielen": {
+		"titel": "Die Dunkelheit spielen",
+		"neben": true,
+		"beschreibung": "Pip und Lotte spielen „Die Fünf gegen die Dunkelheit“. Niemand will die Dunkelheit sein – also du.",
+		"start_bei": "pip",
+		"voraussetzung": "ankunft",
+		"ziele": [
+			{"art": "gemerkt", "merken": "dunkelheit_gespielt", "bei": "pip", "text": "Mit Pip und Lotte spielen und verlieren"}
+		],
+		"abgeben_bei": "pip",
+		"belohnung": {"erfahrung": 30}
 	}
 }

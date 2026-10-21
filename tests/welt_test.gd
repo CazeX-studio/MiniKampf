@@ -9,6 +9,7 @@ var _failed := 0
 func _initialize() -> void:
 	_test_steering()
 	_test_building_blocks()
+	_test_side_quests()
 	print("Welt: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)
 
@@ -277,7 +278,7 @@ func _test_building_blocks() -> void:
 	_check(not p.in_dialog() and not world.npc_visible(p, "mira"), "Mira ist wieder fort")
 	_check(p.progress.level == 7, "Nach dem zugewachsenen Weg: Stufe 7")
 	_talk(world, p, "wache")
-	_check(world.dialog_view(p).text.contains("Befehl der Fünf"), "Die Wache lässt niemanden durch")
+	_check(world.dialog_view(p).text.contains("Befehl ist Befehl"), "Die Wache lässt niemanden durch")
 	world.apply_command("a", {type = "dialog_next"})
 
 	# Nacht des Sternenfalls: Fest, Marv, Sternenfall, Kampf, Ren
@@ -385,6 +386,84 @@ func _test_building_blocks() -> void:
 	SaveGame.delete()
 	_check(SaveGame.get_flag("pilzhoehle_urbaum") == "", "Neu beginnen löscht auch die Entscheidung")
 	_check(not SaveGame.load_into(PlayerState.new("c", "Neu", "elf_m", Vector2i(0, 0))), "Gelöschter Spielstand ist weg")
+
+
+## Nebenaufträge aus Sitzung 21: blaues Zeichen, Hauptaufträge gehen vor, Kater (Ort), Bürste (Gegenstand benutzen), Laternen.
+func _test_side_quests() -> void:
+	var world := WorldState.new()
+	var p := world.add_player("a", "Test", "elf_m", WorldState.start_cell())
+	var notices: Array[String] = []
+	world.notice.connect(func(_id: String, text: String) -> void: notices.append(text))
+	_check(world.npc_marker(p, "hanne") == "", "Hanne hat vor der Anmeldung noch keinen Auftrag")
+	p.progress.quests["ankunft"] = "abgegeben"
+	_check(world.npc_marker(p, "hanne") == "!" and world.npc_marker_side(p, "hanne"), "Blaues ! über Hanne (Nebenauftrag)")
+	_check(world.npc_marker(p, "schreiberin") == "" or not world.npc_marker_side(p, "schreiberin"), "Lene hat kein blaues Zeichen")
+
+	# Hannes Kater: Lotte fragen, Kater in der Gasse finden (Aktions-Taste), zurück zu Hanne
+	_talk(world, p, "hanne")
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(p.progress.quest_state("hannes_kater") == "aktiv", "Hannes Kater angenommen")
+	_check(notices.has("Neuer Nebenauftrag: Hannes Kater"), "Meldung „Neuer Nebenauftrag“")
+	_check(world.objective(p).begins_with("Nebenbei: "), "Ziel zeigt den Nebenauftrag als „Nebenbei“")
+	_check(world.npc_marker(p, "lotte") == "?" and world.npc_marker_side(p, "lotte"), "Blaues ? über Lotte")
+	_talk(world, p, "lotte")
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.flags.has("kater_spur"), "Lotte hat den Kater gesehen")
+	world.apply_command("a", {type = "move", cell = Vector2i(12, 30)})
+	_tick(world, 15.0)
+	world.apply_command("a", {type = "interact"})
+	_tick(world, 0.2)
+	_check(p.in_dialog() and world.dialog_view(p).wer == "Brösel", "Aktions-Taste am Kater")
+	world.apply_command("a", {type = "dialog_next"})
+	_check(not world.can_use(p, "ort:0") and p.progress.quest_state("hannes_kater") == "fertig", "Kater gefunden, ist danach weg")
+	_check(world.npc_marker(p, "hanne") == "?" and world.npc_marker_side(p, "hanne"), "Blaues ? über Hanne")
+
+	# Hauptaufträge gehen beim Zeichen und beim Ziel vor
+	p.progress.quests["zu_ye"] = "aktiv"
+	_check(not world.objective(p).begins_with("Nebenbei: "), "Ziel zeigt zuerst den Hauptauftrag")
+	_check(world.npc_marker(p, "ye") == "?" and not world.npc_marker_side(p, "ye"), "Gelbes ? über Ye")
+	p.progress.quests["zu_ye"] = "abgegeben"
+
+	# Glanz für die Fünf: Bürste benutzen – weit weg geht es nicht, direkt an der Statue schon
+	p.progress.quests["erster_auftrag"] = "abgegeben"
+	_talk(world, p, "quill")
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(p.progress.item_count("buerste") == 1, "Bürste von Quill bekommen")
+	world.apply_command("a", {type = "move", cell = Vector2i(10, 22)})
+	_tick(world, 15.0)
+	world.apply_command("a", {type = "benutzen", gegenstand = "buerste"})
+	_check(not p.in_dialog() and notices[-1].contains("Statue"), "Bürste weit weg von der Statue: nur ein Hinweis")
+	world.apply_command("a", {type = "move", cell = Vector2i(20, 22)})
+	_tick(world, 15.0)
+	world.apply_command("a", {type = "benutzen", gegenstand = "buerste"})
+	_check(p.in_dialog() and world.dialog_view(p).wer == "Statue der Fünf", "Bürste an der Statue benutzt")
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.flags.has("sechste_zeile_gesehen") and p.progress.quest_state("glanz_fuer_die_fuenf") == "fertig", "Die sechste Zeile gefunden")
+
+	# Fünf Farben: Laternen aufhängen, Ye erst danach mit ?
+	for id: String in ["grundausbildung", "erster_gruppenkampf", "marvs_traum", "gesandte"]:
+		p.progress.quests[id] = "abgegeben"
+	p.progress.flags["ausbildung_morgen"] = true
+	# Marv würde unterwegs von selbst ansprechen (gewollt), hier überspringen
+	p.progress.flags["angesprochen:marv"] = true
+	_talk(world, p, "edmar")
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(p.progress.item_count("festlaterne") == 5, "Fünf Festlaternen von Edmar")
+	_check(world.npc_marker(p, "ye_tor") == "", "Ye hat noch kein ?, solange Laternen fehlen")
+	for i in world.places.size():
+		if world.places[i].art == "laternenhaken":
+			world.apply_command("a", {type = "use", target = "ort:%d" % i})
+			_tick(world, 20.0)
+	_check(p.progress.item_count("festlaterne") == 0 and p.progress.flags.has("laterne_gruenwacht"), "Alle Laternen hängen")
+	_check(world.check(p, world.decorations[3].cond), "Aufgehängte Laterne ist auch am Tag zu sehen")
+	_check(world.npc_marker(p, "ye_tor") == "?" and world.npc_marker_side(p, "ye_tor"), "Jetzt blaues ? über Ye am Tor")
+	_talk(world, p, "ye_tor")
+	world.apply_command("a", {type = "dialog_next"})
+	_check(world.dialog_view(p).text == "Fehlt nur eine.", "Ye: Fehlt nur eine.")
 
 
 func _tick(world: WorldState, seconds: float) -> void:
