@@ -24,7 +24,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   Lernprojekt 5“ und „Was du testen kannst“). **Schritt 2 eingebaut:** Monster auf dem Weg (Stufe 10–15) und dem
   Waldboden (15–20), Kämpfe mit der eigenen Klasse, Stufen bis 20. **Schritt 3 eingebaut:** Fenns Prüfung der drei
   Ziele für Bogenschützen. **Schritt 4 eingebaut:** Professor Esche, Rivale Kobalt und Tildas Unterricht für Zähmer.
-  **Schritt 5 eingebaut:** Leuchtende Tiere (Jäger oder Zähmer, Ruf) und Kael. Als Nächstes Schritt 6 (Rowans leeres Grab).
+  **Schritt 5 eingebaut:** Leuchtende Tiere (Jäger oder Zähmer, Ruf) und Kael. **Schritt 6 eingebaut:** Rowans leeres
+  Grab mit der ersten Erinnerungs-Szene. Als Nächstes Schritt 7 (Pilzhöhle unter dem Urbaum als echter Dungeon).
   Marco testet am Schluss alles zusammen.
 - **Neu (21.10.): Figuren und Nebenaufträge aus Sitzung 21** in Kreuzweg: Wirtin Hanne mit Gasthaus Wegrast, Vogt Edmar,
   Steinmetz Quill, die Kinder Pip und Lotte, die Wache heißt jetzt Brom. Fünf Nebenaufträge mit **blauem „!“ und „?“**
@@ -45,7 +46,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 3 | Einstieg Bogenschütze: Fenns Prüfung der drei Ziele | eingebaut, Marco testet am Schluss |
 | 4 | Einstieg Zähmer: Professor Esche und Kobalt | eingebaut, Marco testet am Schluss |
 | 5 | Geschichte 1 und 2: veränderte Tiere (Jäger oder Zähmer, Ruf), Kael | eingebaut, Marco testet am Schluss |
-| 6 | Geschichte 3: Rowans leeres Grab (Erinnerungs-Szene) | offen |
+| 6 | Geschichte 3: Rowans leeres Grab (Erinnerungs-Szene) | eingebaut, Marco testet am Schluss |
 | 7 | Dungeon Pilzhöhle unter dem Urbaum | offen |
 | 8 | Ende der Region: Ysolde und Kael, Abstimmung | offen |
 | 9 | Kreuzweg-Karten mit Sternentafel, Marv, Oma Hagebutte | offen |
@@ -155,6 +156,19 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     ihrem Bruder. Rowan. … Sein Grab liegt unten im Wald. Es ist leer.“ Ysolde danach: „Hör nicht auf ihn.“
   - **Platzhalter:** alle Texte (Ysolde, Tilda, Kael, das Tier), die Bilder von Kael und dem Bären.
   - **Tests:** Geschichte mit beiden Entscheidungen im Grünwacht-Test, der Bär mit jeder Klasse im Wildnis-Test (86 %).
+
+- **Schritt 6 – Rowans leeres Grab** (21.10.):
+  - Kael gibt nach seinem Auftritt den Auftrag **„Das leere Grab“**. Das Grab steht im **Nordwesten des Waldbodens**:
+    „Rowan Dornfeder. Gefallen am sechsten Weg.“ Die Erde ist eingesunken, das Grab ist leer, ein Splitter leuchtet.
+  - **Neuer Baustein Erinnerungs-Szene** („Den Splitter berühren.“): ein eigener Bildschirm in blassen Farben, kein
+    Kampf. Nacht am sechsten Weg, Menschen fliehen, Ysolde ruft „Bleibt stehen!“ und schießt, Rowan dreht sich zu ihr
+    um: „Ysolde …“. Weiter mit Tippen, E oder Leertaste. Danach zurück zum Grab.
+  - Erinnerungen stehen in **`data/erinnerungen.json`** (Figuren, Text, wer wohin läuft, wer sich umdreht, Pfeile).
+    Du kannst dort eigene Erinnerungen dazuschreiben.
+  - **Kael** danach: „Sie hat auf ihren eigenen Bruder geschossen.“ Er erzählt vom **großen Splitter unter dem Urbaum**
+    (führt zur Pilzhöhle, Schritt 7).
+  - **Platzhalter:** alle Texte (Grab, Erinnerung, Kael), das Bild des Grabsteins.
+  - **Tests:** Grab und Kael im Grünwacht-Test, neuer Test `tests/erinnerung_test.gd` (alle Schritte der Erinnerung).
 
 ## Aufgaben Lernprojekt 4 „Zusammen spielen“ (Fahrplan in `ZUSAMMEN_PLAN.md`)
 
@@ -726,6 +740,11 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spiel startet jetzt mit einem Menü.
 
+**Neu: Grünwacht Schritt 6 – Rowans leeres Grab** (nach Kael)
+1. Findest du das Grab im Nordwesten des Waldes?
+2. Die Erinnerung im Splitter: Wirkt sie? Ist sie zu kurz oder zu lang? (Die Texte schreibst du noch.)
+3. Macht Kael danach neugierig auf den Urbaum?
+
 **Neu: Grünwacht Schritt 5 – Leuchtende Tiere und Kael** (jede Klasse, nach dem Gespräch mit Ysolde)
 1. Ysolde und Tilda: Werden die beiden Sichtweisen klar?
 2. Der Splitter-Rindenbär im Nordosten des Waldes: Ist die Entscheidung spannend? Ist der Kampf zu schwer?
@@ -954,7 +973,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Lernprojekt 4 „Zusammen spielen“ ist gebaut: deine Rückmeldungen aus dem Test mit Freunden einarbeiten.
 - Lernprojekt 5 „Grünwacht“: Schritt 1 (Reise nach Wipfelheim) und Schritt 2 (Monster, eigene Klasse, Stufe 20)
   sind eingebaut, ebenso Schritt 3 (Fenns Prüfung), 4 (Esche, Kobalt, Tilda) und 5 (Leuchtende Tiere, Ruf, Kael).
-  Als Nächstes Schritt 6: Rowans leeres Grab mit der Erinnerungs-Szene.
+  Schritt 6 (Rowans Grab, Erinnerungs-Szene) auch. Als Nächstes Schritt 7: die Pilzhöhle als echter Dungeon.
 - Hinten angestellt: Schnellsätze und Emotes (Vorschläge im Ideen-Parkplatz von design.md).
 
 ## Offene Fragen an Marco

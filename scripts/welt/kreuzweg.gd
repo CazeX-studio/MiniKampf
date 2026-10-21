@@ -837,6 +837,19 @@ func _draw_pickup(node: Node2D, art: String) -> void:
 			node.draw_polyline(PackedVector2Array([Vector2(-20, -6), Vector2(0, -16), Vector2(20, -6), Vector2(0, 4), Vector2(-20, -6)]), Color("4a3020"), 2.0)
 			node.draw_circle(Vector2(0, -6), 18.0, Color(1.0, 0.95, 0.7, 0.06 + 0.08 * glow))
 			return
+		"grab":
+			# Rowans Grabstein, davor eingesunkene Erde und ein kleiner Splitter
+			node.draw_set_transform(Vector2(0, 2), 0.0, Vector2(1.0, 0.45))
+			node.draw_circle(Vector2(6, 0), 16.0, Color("1c140e"))
+			node.draw_set_transform_matrix(Transform2D.IDENTITY)
+			node.draw_rect(Rect2(-14, -34, 20, 34), Color("7a7a74"))
+			node.draw_circle(Vector2(-4, -34), 10.0, Color("7a7a74"))
+			node.draw_rect(Rect2(-10, -26, 12, 2), Color("55554f"))
+			node.draw_rect(Rect2(-10, -21, 12, 2), Color("55554f"))
+			node.draw_circle(Vector2(-12, -6), 5.0, Color("3c6e33"))
+			node.draw_circle(Vector2(12, 0), 3.0, Color(0.85, 0.7, 1.0, 0.5 + 0.4 * glow))
+			node.draw_circle(Vector2(12, 0), 9.0, Color(0.85, 0.7, 1.0, 0.12 * glow))
+			return
 		"splittertier":
 			# Rindenbär mit leuchtenden Splittern im Fell (Geschichte Grünwacht Teil 1)
 			var bark := Color("5a4030")
@@ -1688,6 +1701,9 @@ func _on_scene(player_id: String, scene: String) -> void:
 	var parts := scene.split(":")
 	if parts[0] == "klassenwahl":
 		Klassenwahl.region = parts[1] if parts.size() > 1 else ""
+	# "erinnerung:rowan" = eine Erinnerungs-Szene aus data/erinnerungen.json
+	if parts[0] == "erinnerung":
+		Erinnerung.id = parts[1] if parts.size() > 1 else ""
 	get_tree().change_scene_to_file.call_deferred("res://scenes/%s.tscn" % parts[0])
 
 

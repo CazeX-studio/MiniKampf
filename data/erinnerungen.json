@@ -1,0 +1,112 @@
+{
+	"hinweis": "Erinnerungs-Szenen: Ein Splitter zeigt etwas aus der Vergangenheit (blasse Farben, kein Kampf). figuren: wer vorkommt (aussehen wie in kreuzweg.json, pos = Platz auf dem Bildschirm, 1280 × 720, blick 1 = nach rechts, -1 = nach links, sichtbar = schon am Anfang da). schritte: der Reihe nach, weiter mit Tippen. Je Schritt: text, wer (leer = Erzähler), zeigen / verschwinden (Figuren), bewegen ({Figur: [x, y]}), blick ({Figur: 1 oder -1}), pfeil ([von, zu]). ALLE TEXTE SIND PLATZHALTER, Marco schreibt sie noch.",
+	"rowan": {
+		"titel": "Erinnerung im Splitter",
+		"figuren": {
+			"ysolde": {
+				"name": "Ysolde",
+				"aussehen": "elf_f",
+				"farbe": "c8e0b0",
+				"pos": [
+					1080,
+					500
+				],
+				"blick": -1
+			},
+			"rowan": {
+				"name": "Rowan",
+				"aussehen": "elf_m",
+				"farbe": "d8c8a0",
+				"pos": [
+					820,
+					510
+				],
+				"blick": -1
+			},
+			"fliehend1": {
+				"name": "",
+				"aussehen": "wizzard_m",
+				"farbe": "9090b0",
+				"pos": [
+					760,
+					490
+				],
+				"blick": -1
+			},
+			"fliehend2": {
+				"name": "",
+				"aussehen": "wizzard_f",
+				"farbe": "9090b0",
+				"pos": [
+					700,
+					530
+				],
+				"blick": -1
+			}
+		},
+		"schritte": [
+			{
+				"text": "Der Splitter wird warm in deiner Hand. Die Farben um dich herum verblassen …"
+			},
+			{
+				"text": "Nacht. Eine Straße führt nach Osten, weg von allem, was du kennst. Der sechste Weg.",
+				"zeigen": [
+					"rowan",
+					"fliehend1",
+					"fliehend2"
+				]
+			},
+			{
+				"text": "Menschen fliehen. Einer von ihnen hält die Hand eines anderen fest.",
+				"bewegen": {
+					"fliehend1": [
+						430,
+						490
+					],
+					"fliehend2": [
+						370,
+						530
+					],
+					"rowan": [
+						560,
+						510
+					]
+				}
+			},
+			{
+				"wer": "Ysolde",
+				"text": "Bleibt stehen! Niemand verlässt diesen Ort!",
+				"zeigen": [
+					"ysolde"
+				]
+			},
+			{
+				"wer": "Ysolde",
+				"text": "…",
+				"pfeil": [
+					"ysolde",
+					"fliehend1"
+				],
+				"verschwinden": [
+					"fliehend1"
+				]
+			},
+			{
+				"text": "Einer der Fliehenden bleibt stehen. Langsam dreht er sich um.",
+				"blick": {
+					"rowan": 1
+				}
+			},
+			{
+				"wer": "Rowan",
+				"text": "Ysolde …"
+			},
+			{
+				"text": "Sie senkt den Bogen nicht."
+			},
+			{
+				"text": "Das Bild zerfällt. Der Splitter in deiner Hand ist kalt."
+			}
+		]
+	}
+}

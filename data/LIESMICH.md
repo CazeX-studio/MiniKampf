@@ -7,6 +7,7 @@ Nach jeder Zeile außer der letzten in einer Gruppe kommt ein Komma.
 | Datei | Inhalt |
 |-------|--------|
 | `kreuzweg.json` | NPCs (Name, Platz, Aussehen, welcher Dialog) und Sammelpunkte in der Stadt |
+| `erinnerungen.json` | Erinnerungs-Szenen (ein Splitter zeigt die Vergangenheit): Figuren und Schritte, Aktion `{"szene": "erinnerung:rowan"}` |
 | `karten.json` | Alle Karten außer Kreuzweg (Weg nach Grünwacht, Waldboden, Wipfelheim) als Bild aus Zeichen, mit Häusern, NPCs, Orten und Ausgängen |
 | `dialoge.json` | Gespräche: wer spricht, was, Antwortmöglichkeiten, was danach passiert |
 | `auftraege.json` | Aufträge: Titel, Beschreibung, Ziele, Belohnung |

@@ -493,6 +493,32 @@ func _test_story(side: String) -> void:
 	_check(world.dialog_view(p).text.contains("Hör nicht auf ihn"), "Ysolde verschließt sich")
 	world.change_reputation(p, side, 500)
 	_check(world.reputation(p, side) == WorldState.REPUTATION_MAX, "Ruf höchstens 100")
+	world.apply_command("a", {type = "dialog_next"})
+
+	# Schritt 6: Das leere Grab und die Erinnerung im Splitter, danach Kael
+	var scenes: Array[String] = []
+	world.scene_requested.connect(func(_id: String, scene: String) -> void: scenes.append(scene))
+	_check(p.progress.quest_state("das_leere_grab") == "aktiv", "Kael gibt den Auftrag „Das leere Grab“")
+	var grave := _place_target(world, "waldboden", "grab")
+	world.change_map(p, "waldboden", Vector2i(14, 12))
+	world.apply_command("a", {type = "use", target = grave})
+	for i in 600:
+		world.tick(0.05)
+		if p.in_dialog():
+			break
+	_check(p.in_dialog() and p.dialog.id == "rowans_grab", "Rowans Grab gefunden")
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(scenes == ["erinnerung:rowan"] and p.progress.quest_state("das_leere_grab") == "fertig", "Splitter berührt: Erinnerung öffnet sich")
+	p.progress.flags["angesprochen:marv_gruenwacht"] = true
+	world.change_map(p, "wipfelheim", Vector2i(20, 14))
+	world.apply_command("a", {type = "talk", npc = "kael"})
+	_tick(world, 2.0)
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.quest_state("das_leere_grab") == "abgegeben" and world.dialog_view(p).text.contains("Urbaum"), "Kael erzählt vom großen Splitter unter dem Urbaum")
 
 
 func _place_target(world: WorldState, map_id: String, art: String) -> String:

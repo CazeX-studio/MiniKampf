@@ -251,5 +251,15 @@
 		],
 		"abgeben_bei": "ysolde",
 		"belohnung": {"gold": 50, "erfahrung": 600}
+	},
+	"das_leere_grab": {
+		"titel": "Das leere Grab",
+		"beschreibung": "Kael sagt, das Grab von Ysoldes Bruder Rowan liegt unten im Wald – und es ist leer. Sieh es dir an.",
+		"voraussetzung": "veraenderte_tiere",
+		"ziele": [
+			{"art": "gemerkt", "merken": "erinnerung_rowan", "text": "Rowans Grab im Nordwesten des Waldbodens finden"}
+		],
+		"abgeben_bei": "kael",
+		"belohnung": {"gold": 40, "erfahrung": 500}
 	}
 }
