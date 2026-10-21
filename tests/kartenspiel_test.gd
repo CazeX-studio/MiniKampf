@@ -127,6 +127,12 @@ func _test_world() -> void:
 	_check(int(p.progress.flags.karten.get("wilder_moosling", 0)) == 1 and p.progress.gold == gold + 40, "Sieg: Moosling-Karte und Gold")
 	world.apply_command("a", {type = "karten_ergebnis", gegner = "oma_hagebutte", gewonnen = true})
 	_check(int(p.progress.flags.karten.get("wilder_moosling", 0)) == 1, "Die Karte gibt es nur beim ersten Sieg")
+	_check(p.progress.quest_state("omas_herausforderung") == "fertig", "Nebenauftrag „Omas Herausforderung“ erfüllt")
+	world.apply_command("a", {type = "talk", npc = "oma_hagebutte"})
+	_tick(world, 4.0)
+	_check(world.dialog_view(p).text.contains("vierzig Jahren!"), "Oma ist geschlagen")
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.quest_state("omas_herausforderung") == "abgegeben", "Omas Herausforderung abgegeben")
 
 	# Monsterkarten als Beute in der Wildnis
 	world.card_rng.seed = 1

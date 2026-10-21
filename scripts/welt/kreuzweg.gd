@@ -894,6 +894,20 @@ func _draw_pickup(node: Node2D, art: String) -> void:
 			for side: float in [-1.0, 1.0]:
 				node.draw_line(Vector2(side * 30, -4), Vector2(side * 14, -30), Color("4a3020"), 7.0)
 			return
+		"bienenstock":
+			# Der verrückte Bienenstock: hängt an einem Ast, Bienen kreisen im Takt
+			node.draw_line(Vector2(-30, -78), Vector2(30, -78), Color("4a3020"), 6.0)
+			node.draw_line(Vector2(0, -78), Vector2(0, -64), Color("4a3020"), 3.0)
+			node.draw_set_transform(Vector2(0, -44), 0.0, Vector2(0.8, 1.0))
+			node.draw_circle(Vector2.ZERO, 20.0, Color("c89838"))
+			node.draw_set_transform_matrix(Transform2D.IDENTITY)
+			for i in 4:
+				node.draw_line(Vector2(-14, -54 + i * 7), Vector2(14, -54 + i * 7), Color("8a6420"), 2.0)
+			node.draw_circle(Vector2(0, -30), 4.0, Color("2a1c10"))
+			for i in 6:
+				var angle := _time * (2.0 + i * 0.3) + i
+				node.draw_circle(Vector2(cos(angle) * 30.0, -44 + sin(angle * 1.3) * 20.0), 2.5, Color("ffe060"))
+			return
 		"grab":
 			# Rowans Grabstein, davor eingesunkene Erde und ein kleiner Splitter
 			node.draw_set_transform(Vector2(0, 2), 0.0, Vector2(1.0, 0.45))

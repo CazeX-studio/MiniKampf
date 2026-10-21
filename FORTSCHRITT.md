@@ -27,7 +27,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   **Schritt 5 eingebaut:** Leuchtende Tiere (Jäger oder Zähmer, Ruf) und Kael. **Schritt 6 eingebaut:** Rowans leeres
   Grab mit der ersten Erinnerungs-Szene. **Schritt 7 eingebaut:** die Pilzhöhle unter dem Urbaum als echter Dungeon.
   **Schritt 8 eingebaut:** Ende der Region (Ysolde und Kael, Wahrheit oder Geheimnis, Abspann „Ende von Grünwacht“).
-  **Schritt 9 eingebaut:** Kreuzweg-Karten mit Sternentafel, Marv und Oma Hagebutte. Als Nächstes Schritt 10 (Nebenaufträge).
+  **Schritt 9 eingebaut:** Kreuzweg-Karten mit Sternentafel, Marv und Oma Hagebutte. **Schritt 10 eingebaut:** Nebenaufträge
+  (Kobalts Revanche, Omas Herausforderung, der verrückte Bienenstock). Als Nächstes Schritt 11 (Feinschliff).
   Marco testet am Schluss alles zusammen.
 - **Neu (21.10.): Figuren und Nebenaufträge aus Sitzung 21** in Kreuzweg: Wirtin Hanne mit Gasthaus Wegrast, Vogt Edmar,
   Steinmetz Quill, die Kinder Pip und Lotte, die Wache heißt jetzt Brom. Fünf Nebenaufträge mit **blauem „!“ und „?“**
@@ -225,6 +226,21 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     mit guten Grünwacht-Karten 40 % (ein Mensch, der mitdenkt, gewinnt öfter). Kartenwerte vorläufig.
   - **Neu für Aufträge:** Ziel „besitzen“ (einen Gegenstand haben, ohne dass er abgegeben wird), Bedingung „hat“.
   - **Tests:** neuer Test `tests/kartenspiel_test.gd` (Regeln, Gegner, Bingo, Marv, Oma, Beute, Spieltisch).
+
+- **Schritt 10 – Nebenaufträge in Grünwacht** (21.10., alle mit blauem „!“ und „?“):
+  - **Kobalts Revanche** (nur Zähmer, nach Tildas Unterricht): Kobalt hat jetzt **zwei Monster** (wieder das
+    Gegenstück zu deinem Start-Monster plus ein zweites). Sieg oder Niederlage, beides schließt den Auftrag ab.
+    Mit drei eigenen Monstern gewinnt man gut die Hälfte der Kämpfe (vorläufig).
+  - **Oma Hagebuttes Herausforderung:** Wer eine Sternentafel hat, bekommt von ihr den Auftrag, sie einmal zu schlagen.
+    Belohnung 60 Gold und Erfahrung (dazu wie bisher die Moosling-Karte beim ersten Sieg).
+  - **Der verrückte Bienenstock** (alle Klassen, Auftrag bei Professor Esche): Ganz im Südosten des Waldbodens hängt ein
+    Bienenstock, der immer dasselbe Lied summt. **Näher herangehen** = Kampf gegen zwei wilde Bienenschwärme.
+    **Stehen bleiben und zuhören** = fünf Töne und eine Pause, als ob ein sechster fehlt (wie das Lied der sechs Wege).
+    Esche erzählt danach von einer **Bienenhüterin** weit weg (Hinweis auf die spätere Klasse). Belohnung: zwei
+    Honigwaben (für den Beruf Kochen, kommt später).
+  - **Platzhalter:** alle Texte.
+  - **Tests:** im Grünwacht-Test (Revanche, Bienenstock auf beiden Wegen), im Kartenspiel-Test (Omas Auftrag), im
+    Wildnis-Test (Bienenschwarm und Revanche sind schaffbar).
 
 ## Aufgaben Lernprojekt 4 „Zusammen spielen“ (Fahrplan in `ZUSAMMEN_PLAN.md`)
 
@@ -796,6 +812,11 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spiel startet jetzt mit einem Menü.
 
+**Neu: Grünwacht Schritt 10 – Nebenaufträge** (blaues Zeichen)
+1. Als Zähmer nach Tildas Unterricht: Will Kobalt eine Revanche? Ist der Kampf gegen zwei Monster schaffbar?
+2. Oma Hagebutte: Gibt sie dir den Auftrag, sobald du eine Sternentafel hast?
+3. Der Bienenstock im Südosten des Waldbodens: Findest du ihn? Was ist spannender, Kampf oder Zuhören?
+
 **Neu: Grünwacht Schritt 9 – Kreuzweg-Karten** (nach Grünwacht zurück nach Kreuzweg)
 1. Bei Bingo in Kreuzweg: Bekommst du die Sternentafel für 600 Gold?
 2. Marv in Wipfelheim: Spielt er einmal mit dir, und hat er danach nur noch Ausreden?
@@ -1046,8 +1067,8 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Lernprojekt 4 „Zusammen spielen“ ist gebaut: deine Rückmeldungen aus dem Test mit Freunden einarbeiten.
 - Lernprojekt 5 „Grünwacht“: Schritt 1 (Reise nach Wipfelheim) und Schritt 2 (Monster, eigene Klasse, Stufe 20)
   sind eingebaut, ebenso Schritt 3 (Fenns Prüfung), 4 (Esche, Kobalt, Tilda) und 5 (Leuchtende Tiere, Ruf, Kael).
-  Schritt 6 (Rowans Grab), 7 (Pilzhöhle), 8 (Ende der Region) und 9 (Kreuzweg-Karten) auch. Als Nächstes Schritt 10:
-  die übrigen Nebenaufträge (Kobalts Revanche, Bienenstock).
+  Schritt 6 (Rowans Grab), 7 (Pilzhöhle), 8 (Ende der Region) und 9 (Kreuzweg-Karten) auch. Schritt 10
+  (Nebenaufträge) auch. Als Nächstes Schritt 11: Feinschliff (Musik, Durchlauf, Abstimmung).
 - Hinten angestellt: Schnellsätze und Emotes (Vorschläge im Ideen-Parkplatz von design.md).
 
 ## Offene Fragen an Marco

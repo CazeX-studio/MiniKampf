@@ -62,7 +62,7 @@ func _run() -> void:
 		print("  %2d %-16s %-48s Stufe %d: %d %%" % [index, m.karte, ", ".join(m.gegner), m.stufe,
 				roundi(100.0 * total[index] / (runs * classes.size()))])
 	# Geschichtskämpfe (allein, mit jeder Klasse, auf der Stufe, auf der man sie erreicht)
-	for story: Array in [["splitterbaer", 15], ["pilz_koenigin", 19], ["pilz_urbaum", 20]]:
+	for story: Array in [["splitterbaer", 15], ["bienenschwarm", 16], ["pilz_koenigin", 19], ["pilz_urbaum", 20]]:
 		var line := "%-14s" % story[0]
 		var all_wins := 0
 		for klasse: String in classes:
@@ -90,11 +90,16 @@ func _run() -> void:
 	for starter: String in ["moosling", "glutwelpe", "bachotter"]:
 		var counter: String = {moosling = "glutwelpe", glutwelpe = "bachotter", bachotter = "moosling"}[starter]
 		var kobalt_wins := _play(harness, "kobalt_" + counter, 12, [starter], runs * 2)
+		# Kobalts Revanche (Schritt 10): zwei Monster, man hat inzwischen drei
+		var revanche_wins := _play(harness, "kobalt2_" + counter, 17, [starter, "windfalke", "steinkroete"], runs * 2)
 		var wild_wins := 0
 		for index in wild.size():
 			wild_wins += _play(harness, "wild:%d" % index, wild[index].stufe, [starter, "windfalke"], runs)
 		var wild_rate := float(wild_wins) / (runs * wild.size())
-		print("  %-10s Kobalt: %d von %d · Wildnis mit Start-Monster und Windfalke: %d %%" % [starter, kobalt_wins, runs * 2, roundi(wild_rate * 100)])
+		print("  %-10s Kobalt: %d von %d · Revanche: %d von %d · Wildnis mit Start-Monster und Windfalke: %d %%" % [starter, kobalt_wins, runs * 2, revanche_wins, runs * 2, roundi(wild_rate * 100)])
+		if revanche_wins == 0 or revanche_wins == runs * 2:
+			problems += 1
+			print("FEHLER: Kobalts Revanche mit %s ist nie oder immer zu schlagen" % starter)
 		if kobalt_wins == 0 or kobalt_wins == runs * 2:
 			problems += 1
 			print("FEHLER: Kobalt mit %s ist nie oder immer zu schlagen" % starter)

@@ -22,6 +22,8 @@ func _initialize() -> void:
 	_test_story("zaehmer")
 	_test_dungeon("retten")
 	_test_dungeon("faellen")
+	_test_bees("naeher")
+	_test_bees("zuhoeren")
 	print("Grünwacht: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)
 
@@ -426,6 +428,27 @@ func _test_tamer(kobalt_won: bool) -> void:
 		world.apply_command("a", {type = "kampf_ergebnis", kampf = "wild:0", gewonnen = true, gezaehmt = ["steinkroete"]})
 	_check(p.progress.flags.monster.size() == Sandbox.MAX_MONSTERS, "Rudel höchstens 5 Monster")
 
+	# Schritt 10: Kobalts Revanche mit zwei Monstern (blauer Nebenauftrag nach Tildas Unterricht)
+	_check(world.npc_marker(p, "kobalt") == "!" and world.npc_marker_side(p, "kobalt"), "Kobalt will eine Revanche (blaues „!“)")
+	p.progress.flags["angesprochen:marv_gruenwacht"] = true  # Marv soll hier nicht dazwischenreden
+	world.apply_command("a", {type = "talk", npc = "kobalt"})
+	_tick(world, 3.0)
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.quest_state("kobalts_revanche") == "aktiv", "Revanche angenommen")
+	world.apply_command("a", {type = "talk", npc = "kobalt"})
+	_tick(world, 3.0)
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(battles.back() == "kobalt2_bachotter" and GameData.battle("kobalt2_bachotter").wellen[0].size() == 2, "Revanche: Bachotter und Glutwelpe")
+	world.apply_command("a", {type = "kampf_ergebnis", kampf = "kobalt2_bachotter", gewonnen = kobalt_won})
+	_check(p.progress.quest_state("kobalts_revanche") == "fertig", "Revanche gekämpft (%s)" % ("Sieg" if kobalt_won else "Niederlage"))
+	world.apply_command("a", {type = "talk", npc = "kobalt"})
+	_tick(world, 3.0)
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.quest_state("kobalts_revanche") == "abgegeben", "Kobalts Revanche abgegeben")
+
 	# Im Kampf: das eigene Rudel statt aller drei Start-Monster
 	BattleRequest.prepare("wild:0", 13, 0, "tamer", ["glutwelpe", "windfalke"])
 	_check(BattleRequest.setup.helden[0].monster == ["glutwelpe", "windfalke"], "Kampf mit dem eigenen Rudel")
@@ -630,6 +653,54 @@ func _test_dungeon(choice: String) -> void:
 
 
 ## Zu einem Boss-Ort laufen, den Kampf beginnen und mit dem Ergebnis zurückkommen.
+## Schritt 10: Der verrückte Bienenstock – näher herangehen (Kampf) oder zuhören (fünf Töne und eine Pause).
+func _test_bees(path: String) -> void:
+	var world := WorldState.new()
+	var battles: Array[String] = []
+	world.battle_requested.connect(func(_id: String, kampf: String) -> void: battles.append(kampf))
+	var p := world.add_player("a", "Test", "elf_m", Vector2i(6, 15))
+	p.progress.flags["klasse"] = "fighter"
+	p.progress.quests["nach_gruenwacht"] = "abgegeben"
+	p.progress.level = 16
+	world.change_map(p, "wipfelheim", Vector2i(14, 22))
+	_check(world.npc_marker_side(p, "esche"), "Esche hat einen Nebenauftrag (Bienenstock)")
+	world.apply_command("a", {type = "talk", npc = "esche"})
+	_tick(world, 3.0)
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.quest_state("bienenstock") == "aktiv", "Bienenstock-Auftrag läuft")
+	var hive := _place_target(world, "waldboden", "bienenstock")
+	_check(hive != "", "Der Bienenstock steht auf dem Waldboden")
+	world.change_map(p, "waldboden", Vector2i(25, 24))
+	world.apply_command("a", {type = "use", target = hive})
+	for i in 600:
+		world.tick(0.05)
+		if p.in_dialog():
+			break
+	_check(p.in_dialog() and p.dialog.id == "bienenstock", "Am Bienenstock")
+	if path == "naeher":
+		world.apply_command("a", {type = "dialog_choose", index = 0})
+		world.apply_command("a", {type = "dialog_next"})
+		_check(battles == ["bienenschwarm"], "Der Schwarm greift an")
+		world.apply_command("a", {type = "kampf_ergebnis", kampf = "bienenschwarm", gewonnen = false})
+		_check(p.progress.quest_state("bienenstock") == "aktiv", "Verloren: Auftrag läuft weiter")
+		world.apply_command("a", {type = "kampf_ergebnis", kampf = "bienenschwarm", gewonnen = true})
+	else:
+		world.apply_command("a", {type = "dialog_choose", index = 1})
+		_check(world.dialog_view(p).text.contains("Fünf Töne"), "Fünf Töne und eine Pause")
+		world.apply_command("a", {type = "dialog_next"})
+		_check(battles.is_empty(), "Zuhören: kein Kampf")
+	_check(p.progress.quest_state("bienenstock") == "fertig", "Bienenstock untersucht (%s)" % path)
+	world.change_map(p, "wipfelheim", Vector2i(14, 22))
+	world.apply_command("a", {type = "talk", npc = "esche"})
+	_tick(world, 3.0)
+	_check(world.dialog_view(p).text.contains("Fünf Töne" if path == "zuhoeren" else "Schwarm"), "Esche reagiert auf das, was man getan hat")
+	world.apply_command("a", {type = "dialog_next"})
+	_check(world.dialog_view(p).text.contains("Bienenhüterin"), "Hinweis auf die Bienenhüterin")
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.quest_state("bienenstock") == "abgegeben" and p.progress.item_count("honigwabe") == 2, "Abgegeben: zwei Honigwaben")
+
+
 func _fight_place(world: WorldState, p: PlayerState, target: String, kampf: String, won: bool) -> void:
 	world.apply_command(p.id, {type = "use", target = target})
 	for i in 600:

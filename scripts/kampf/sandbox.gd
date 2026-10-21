@@ -209,6 +209,9 @@ const ENEMIES := {
 	"splitterbaer": {name = "Splitter-Rindenbär", element = "Sternenkraft", hp = 150, tempo = 8, big = true,
 		attacks = [{name = "Splitterprankenhieb", base = 17, kind = "melee"}, {name = "Splitterregen", base = 8, kind = "magic", all = true},
 			{name = "Brüllen vor Schmerz", base = 12, kind = "melee"}]},
+	# Nebenauftrag „Der verrückte Bienenstock“
+	"bienenschwarm": {name = "Wilder Bienenschwarm", element = "Wind", hp = 70, tempo = 15,
+		attacks = [{name = "Stich", base = 10, kind = "ranged"}, {name = "Summender Schwarm", base = 5, kind = "magic", all = true}]},
 	# Grünwacht: Monster auf dem Weg und im Wald (design.md „Grünwacht im Detail“). Werte vorläufig, Feinschliff am Ende.
 	"rindenbaer": {name = "Rindenbär", element = "Pflanze", hp = 120, tempo = 7, resist = 0.9,
 		attacks = [{name = "Prankenhieb", base = 15, kind = "melee"}, {name = "Prankenhieb", base = 15, kind = "melee"},

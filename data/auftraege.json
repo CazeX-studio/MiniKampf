@@ -287,6 +287,7 @@
 	"marvs_partie": {
 		"titel": "Marvs Partie",
 		"neben": true,
+		"gebiet": "gruenwacht",
 		"beschreibung": "Marv ist dir bis nach Wipfelheim nachgereist. Er will EINE Partie Kreuzweg-Karten. Die Sternentafel gibt es bei Bingo in Kreuzweg.",
 		"start_bei": "marv_gruenwacht",
 		"voraussetzung": "nach_gruenwacht",
@@ -296,5 +297,46 @@
 		],
 		"abgeben_bei": "marv_gruenwacht",
 		"belohnung": {"erfahrung": 200}
+	},
+	"kobalts_revanche": {
+		"titel": "Kobalts Revanche",
+		"neben": true,
+		"gebiet": "gruenwacht",
+		"beschreibung": "Kobalt hat trainiert und will eine Revanche – mit zwei Monstern.",
+		"start_bei": "kobalt",
+		"start_wenn": {"klasse": "tamer"},
+		"voraussetzung": "tildas_unterricht",
+		"ziele": [
+			{"art": "gemerkt", "merken": "kobalt_revanche_gekaempft", "bei": "kobalt", "text": "Die Revanche gegen Kobalt"}
+		],
+		"abgeben_bei": "kobalt",
+		"belohnung": {"gold": 80, "erfahrung": 300}
+	},
+	"omas_herausforderung": {
+		"titel": "Oma Hagebuttes Herausforderung",
+		"neben": true,
+		"gebiet": "gruenwacht",
+		"beschreibung": "Oma Hagebutte spielt seit vierzig Jahren Kreuzweg-Karten und verliert nicht gern. Schlag sie einmal.",
+		"start_bei": "oma_hagebutte",
+		"start_wenn": {"hat": "sternentafel"},
+		"voraussetzung": "nach_gruenwacht",
+		"ziele": [
+			{"art": "gemerkt", "merken": "karten_sieg:oma_hagebutte", "bei": "oma_hagebutte", "text": "Oma Hagebutte bei Kreuzweg-Karten schlagen"}
+		],
+		"abgeben_bei": "oma_hagebutte",
+		"belohnung": {"gold": 60, "erfahrung": 300}
+	},
+	"bienenstock": {
+		"titel": "Der verrückte Bienenstock",
+		"neben": true,
+		"gebiet": "gruenwacht",
+		"beschreibung": "Professor Esche sagt, ein Bienenstock ganz im Südosten des Waldbodens summt seit Tagen dasselbe Lied. Sieh nach.",
+		"start_bei": "esche",
+		"voraussetzung": "nach_gruenwacht",
+		"ziele": [
+			{"art": "gemerkt", "merken": "bienen_beobachtet", "text": "Den Bienenstock im Südosten des Waldbodens untersuchen"}
+		],
+		"abgeben_bei": "esche",
+		"belohnung": {"gold": 30, "erfahrung": 250, "gegenstaende": {"honigwabe": 2}}
 	}
 }
