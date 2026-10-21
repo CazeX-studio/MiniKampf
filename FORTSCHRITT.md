@@ -556,6 +556,9 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - **Neu nach deinem Wunsch: „Ein Brief vom Tor“** (Brom, nach dem Korb): Brom darf seinen Posten nicht verlassen und gibt
     dir einen Brief für **Hanne** („Ein … Dienstschreiben. Nicht lesen!“). Hanne: „Dieser alte Brummbär … Sag ihm, er soll am
     Festabend vorbeikommen. Befehl ist Befehl.“ Zurück zu Brom mit ihrer Antwort. Platzhalter-Texte.
+  - **Empfehlungsschreiben** (aus der Entscheidung zur Weltkarte vom 21.10.: Städte nur mit Empfehlung von Ye oder Lene):
+    Beim Abschied gibt Ye dir ein Empfehlungsschreiben („Ohne das lassen dich die Stadtwachen nicht hinein.“). Es liegt
+    danach in der Tasche und wird gebraucht, sobald es die Regionen gibt (Lernprojekt 5).
   - **Tessa und Gorm statt Ida, Bo und Tom** (deine Entscheidung vom 21.10.): Die Novizen-Mitstreiter heißen jetzt
     Tessa (übereifrig) und Gorm (ängstlich) und sind **zu zweit statt zu dritt** – im ersten Gruppenkampf, in den
     Probestunden und beim Sternenfresser. Beim Zusammenspielen füllen sie die Gruppe bis **drei** auf (zwei Spieler + einer

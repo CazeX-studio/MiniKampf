@@ -280,6 +280,10 @@ func _test_building_blocks() -> void:
 	_talk(world, p, "wache")
 	_check(world.dialog_view(p).text.contains("Befehl ist Befehl"), "Die Wache lässt niemanden durch")
 	world.apply_command("a", {type = "dialog_next"})
+	# Brom bittet um den Brief für Hanne (Nebenauftrag) – hier ablehnen
+	_check(world.dialog_view(p).antworten.size() == 3, "Brom bietet seinen Brief an")
+	world.apply_command("a", {type = "dialog_choose", index = 2})
+	_check(not p.in_dialog() and p.progress.quest_state("brief_vom_tor") == "neu", "Brief abgelehnt, Gespräch zu Ende")
 
 	# Nacht des Sternenfalls: Fest, Marv, Sternenfall, Kampf, Ren
 	var effects: Array[String] = []
@@ -348,6 +352,9 @@ func _test_building_blocks() -> void:
 	_check(farewell.contains("Sternensängerin") and farewell.contains("in die Glutoase") and farewell.contains("Hohe Sängerin Xavina"),
 		"Ye nennt Klasse, Region und Lehrmeister")
 	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(world.dialog_view(p).text.contains("Empfehlungsschreiben") and p.progress.item_count("empfehlungsschreiben") == 1,
+		"Ye gibt ein Empfehlungsschreiben für die Stadtwachen")
+	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "dialog_choose", index = 0})
 	_check(scenes.back() == "abspann" and p.progress.quest_state("abreise") == "abgegeben", "Abreise: Abspann")
 	_check(p.progress.level == 9, "Am Ende der ersten Stunde: Stufe 9 (nach Niederlage gegen den Boss)")

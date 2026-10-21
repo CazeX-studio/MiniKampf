@@ -174,9 +174,10 @@
 				{"text": "Ich muss noch nachdenken."}
 			]},
 			"abschied": {"wer": "Ye", "text": "Also {klasse}. Dein Weg führt {wohin}, zu {lehrmeister}.", "antworten": [
-				{"text": "Ja. Ich bin bereit.", "weiter": "abschied2"},
+				{"text": "Ja. Ich bin bereit.", "weiter": "empfehlung"},
 				{"text": "Ich habe es mir anders überlegt.", "aktionen": [{"vergessen": "klasse_gewaehlt"}, {"szene": "klassenwahl"}]}
 			]},
+			"empfehlung": {"wer": "Ye", "text": "Hier. Ein Empfehlungsschreiben. Ohne das lassen dich die Stadtwachen nicht hinein. Novizen gibt es viele.", "aktionen": [{"gegenstand": "empfehlungsschreiben", "anzahl": 1}], "weiter": "abschied2"},
 			"abschied2": {"wer": "Ye", "text": "Schild hoch, Schild runter. Vergiss das nie. Und … komm irgendwann zurück. Die Laterne an der Gilde wartet.", "antworten": [
 				{"text": "Leb wohl, Ye.", "aktionen": [{"merken": "klasse_bestaetigt"}, {"auftrag_abgeben": "abreise"}, {"szene": "abspann"}]}
 			]}
