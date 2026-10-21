@@ -20,6 +20,8 @@ func _initialize() -> void:
 	_test_tamer(true)
 	_test_story("jaeger")
 	_test_story("zaehmer")
+	_test_dungeon("retten")
+	_test_dungeon("faellen")
 	print("Grünwacht: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)
 
@@ -50,6 +52,9 @@ func _test_maps() -> void:
 					if m.is_walkable(Vector2i(x, y)):
 						inside = Vector2i(x, y)
 			spots.append(["Ausgang nach " + e.karte, inside])
+		for wild: Dictionary in world.monsters:
+			if wild.karte == map_id:
+				spots.append(["Monster " + ", ".join(wild.gegner), wild.feld])
 		if map_id == WorldState.KREUZWEG:
 			# Kreuzweg ist schon durch die anderen Tests abgedeckt, hier nur der neue Ausgang
 			spots = spots.filter(func(s: Array) -> bool: return str(s[0]).begins_with("Ausgang"))
@@ -519,6 +524,89 @@ func _test_story(side: String) -> void:
 	world.apply_command("a", {type = "dialog_choose", index = 0})
 	world.apply_command("a", {type = "dialog_next"})
 	_check(p.progress.quest_state("das_leere_grab") == "abgegeben" and world.dialog_view(p).text.contains("Urbaum"), "Kael erzählt vom großen Splitter unter dem Urbaum")
+
+
+## Schritt 7: Ein Lauf durch die Pilzhöhle. Beim ersten Abschluss entscheidet man, später gilt die Wahl automatisch.
+func _test_dungeon(choice: String) -> void:
+	var world := WorldState.new()
+	var battles: Array[String] = []
+	world.battle_requested.connect(func(_id: String, kampf: String) -> void: battles.append(kampf))
+	var p := world.add_player("a", "Test", "elf_m", Vector2i(6, 15))
+	p.progress.flags["klasse"] = "blade"
+	p.progress.quests["das_leere_grab"] = "abgegeben"
+	p.progress.level = 19
+	var door := _place_target(world, "waldboden", "hoehle")
+	world.change_map(p, "waldboden", Vector2i(14, 12))
+	_check(not world.can_use(p, door), "Ohne Auftrag kein Weg in die Pilzhöhle")
+	p.progress.quests["der_urbaum"] = "aktiv"
+	world.apply_command("a", {type = "use", target = door})
+	for i in 400:
+		world.tick(0.05)
+		if p.map != "waldboden":
+			break
+	_check(p.map == "pilzhoehle", "Zwischen den Wurzeln hinab in die Pilzhöhle")
+	_check(world.get_map("pilzhoehle").dungeon == "pilzhoehle", "Die Karte ist ein Dungeon")
+	_check(GameData.battle("wild:%d" % _wild_index(world, "pilzhoehle")).dungeon == "pilzhoehle", "Monster der Höhle kämpfen mit Dungeon-Regeln")
+	var queen := _place_target(world, "pilzhoehle", "sporenkoenigin")
+	var mother := _place_target(world, "pilzhoehle", "wurzelmutter")
+	var heart := _place_target(world, "pilzhoehle", "urbaum_herz")
+	_check(world.can_use(p, queen) and not world.can_use(p, mother), "Erst die Sporenkönigin, die Wurzelmutter noch nicht")
+	_fight_place(world, p, queen, "pilz_koenigin", false)
+	_check(p.pos == Vector2(world.get_map("pilzhoehle").start), "Niederlage: Man wacht am Eingang der Höhle auf")
+	_fight_place(world, p, queen, "pilz_koenigin", true)
+	_check(not world.can_use(p, queen) and world.can_use(p, mother), "Königin besiegt, die Wurzelmutter wartet")
+	_fight_place(world, p, mother, "pilz_urbaum", true)
+	_check(world.can_use(p, heart), "Das Herz des Urbaums liegt frei")
+	_check(BattleRequest.prepare("pilz_urbaum", 20, 0, "blade") and BattleRequest.setup.helden.size() == 4 and BattleRequest.setup.dungeon == "pilzhoehle",
+			"Bosskampf: Ida, Bo und Tom helfen, Dungeon-Regeln gelten")
+	BattleRequest.kampf_id = ""
+	world.apply_command("a", {type = "use", target = heart})
+	_tick(world, 6.0)
+	_check(p.in_dialog() and p.dialog.id == "urbaum_herz", "Am Herz des Urbaums")
+	var answers: Array = world.dialog_view(p).antworten
+	_check(answers.size() == 2 and not str(answers).contains("Ruf"), "Zwei Möglichkeiten, ohne die Folgen zu verraten")
+	world.apply_command("a", {type = "dialog_choose", index = 0 if choice == "faellen" else 1})
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.item_count("sternensplitter") == 1 and p.progress.quest_state("der_urbaum") == "fertig", "Belohnung: ein Sternensplitter, Auftrag erfüllt")
+	_check(p.progress.flags.has("urbaum_gerettet") == (choice == "retten"), "Entscheidung gemerkt (%s)" % choice)
+	_check((world.reputation(p, "zaehmer") == 10) == (choice == "retten"), "Retten verbessert den Ruf bei den Zähmern")
+
+	# Zweiter Lauf: Bosse wieder da, die Entscheidung gilt automatisch
+	world.change_map(p, "waldboden", Vector2i(10, 18))
+	world.change_map(p, "pilzhoehle", Vector2i(27, 11))
+	_check(world.can_use(p, queen) and not world.can_use(p, heart), "Neuer Lauf: Die Sporenkönigin ist wieder da")
+	_fight_place(world, p, queen, "pilz_koenigin", true)
+	_fight_place(world, p, mother, "pilz_urbaum", true)
+	world.apply_command("a", {type = "use", target = heart})
+	_tick(world, 6.0)
+	_check(p.dialog.get("node", "") == "wieder", "Zweiter Lauf: keine neue Entscheidung")
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.item_count("sternensplitter") == 2, "Zweiter Lauf: noch ein Sternensplitter")
+
+	world.change_map(p, "wipfelheim", Vector2i(15, 15))
+	world.apply_command("a", {type = "talk", npc = "ysolde"})
+	_tick(world, 2.0)
+	_check(world.dialog_view(p).text.contains("gefallen" if choice == "faellen" else "Der Wald atmet"), "Ysolde spürt, was mit dem Urbaum geschah")
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.quest_state("der_urbaum") == "abgegeben", "Auftrag „Der Splitter im Urbaum“ abgegeben")
+
+
+## Zu einem Boss-Ort laufen, den Kampf beginnen und mit dem Ergebnis zurückkommen.
+func _fight_place(world: WorldState, p: PlayerState, target: String, kampf: String, won: bool) -> void:
+	world.apply_command(p.id, {type = "use", target = target})
+	for i in 600:
+		world.tick(0.05)
+		if p.in_dialog():
+			break
+	world.apply_command(p.id, {type = "dialog_choose", index = 0})
+	world.apply_command(p.id, {type = "kampf_ergebnis", kampf = kampf, gewonnen = won})
+
+
+func _wild_index(world: WorldState, map_id: String) -> int:
+	for i in world.monsters.size():
+		if world.monsters[i].karte == map_id:
+			return i
+	return -1
 
 
 func _place_target(world: WorldState, map_id: String, art: String) -> String:

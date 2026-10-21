@@ -141,6 +141,10 @@ static func _make_setup(id: String, data: Dictionary, heroes: Array, phases: Arr
 		gegner_stufe = int(data.get("gegner_stufe", 1)),
 		# Rivalen und besondere Gegner: so viel mehr Leben (z. B. Kobalt), Gruppenkämpfe rechnen noch die Gruppengröße drauf
 		gegner_leben = float(data.get("gegner_leben", 1.0)),
+		# Dungeon-Regeln (Pilzhöhle: Mechaniken der Bosse und Monster). Entscheidungen fallen dann in der Welt.
+		dungeon = data.get("dungeon", ""),
+		entscheidung_in_der_welt = data.get("entscheidung_in_der_welt", false),
+		verschlingen_zuege = int(data.get("verschlingen_zuege", 3)),
 	}
 	if not phases.is_empty():
 		result_setup["phasen"] = phases

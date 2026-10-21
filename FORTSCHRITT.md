@@ -25,7 +25,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   Waldboden (15–20), Kämpfe mit der eigenen Klasse, Stufen bis 20. **Schritt 3 eingebaut:** Fenns Prüfung der drei
   Ziele für Bogenschützen. **Schritt 4 eingebaut:** Professor Esche, Rivale Kobalt und Tildas Unterricht für Zähmer.
   **Schritt 5 eingebaut:** Leuchtende Tiere (Jäger oder Zähmer, Ruf) und Kael. **Schritt 6 eingebaut:** Rowans leeres
-  Grab mit der ersten Erinnerungs-Szene. Als Nächstes Schritt 7 (Pilzhöhle unter dem Urbaum als echter Dungeon).
+  Grab mit der ersten Erinnerungs-Szene. **Schritt 7 eingebaut:** die Pilzhöhle unter dem Urbaum als echter Dungeon.
+  Als Nächstes Schritt 8 (Ende der Region: Ysolde und Kael, Abstimmung).
   Marco testet am Schluss alles zusammen.
 - **Neu (21.10.): Figuren und Nebenaufträge aus Sitzung 21** in Kreuzweg: Wirtin Hanne mit Gasthaus Wegrast, Vogt Edmar,
   Steinmetz Quill, die Kinder Pip und Lotte, die Wache heißt jetzt Brom. Fünf Nebenaufträge mit **blauem „!“ und „?“**
@@ -47,7 +48,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 4 | Einstieg Zähmer: Professor Esche und Kobalt | eingebaut, Marco testet am Schluss |
 | 5 | Geschichte 1 und 2: veränderte Tiere (Jäger oder Zähmer, Ruf), Kael | eingebaut, Marco testet am Schluss |
 | 6 | Geschichte 3: Rowans leeres Grab (Erinnerungs-Szene) | eingebaut, Marco testet am Schluss |
-| 7 | Dungeon Pilzhöhle unter dem Urbaum | offen |
+| 7 | Dungeon Pilzhöhle unter dem Urbaum | eingebaut, Marco testet am Schluss |
 | 8 | Ende der Region: Ysolde und Kael, Abstimmung | offen |
 | 9 | Kreuzweg-Karten mit Sternentafel, Marv, Oma Hagebutte | offen |
 | 10 | Nebenaufträge (Kobalt, Bienenstock) | offen |
@@ -169,6 +170,29 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     (führt zur Pilzhöhle, Schritt 7).
   - **Platzhalter:** alle Texte (Grab, Erinnerung, Kael), das Bild des Grabsteins.
   - **Tests:** Grab und Kael im Grünwacht-Test, neuer Test `tests/erinnerung_test.gd` (alle Schritte der Erinnerung).
+
+- **Schritt 7 – Pilzhöhle unter dem Urbaum** (21.10.):
+  - Nach dem Grab gibt Kael den Auftrag **„Der Splitter im Urbaum“**. Der **Eingang** liegt zwischen den Wurzeln eines
+    Riesenbaums im Süden des Waldbodens (erst mit dem Auftrag offen).
+  - **Neue Höhlen-Karte** mit Höhlenboden, Fels, leuchtenden Riesenpilzen und Wurzeln: Eingangshalle, ein Gang mit
+    Seitenhöhle, die Kammer der **Sporenkönigin** (Zwischenboss) und ganz im Westen die Kammer der **Wurzelmutter**
+    (Endboss, mit dem **Vorboten** als zweiter Phase). Unterwegs vier Gruppen Dungeon-Monster (Sporenwölfe,
+    Leuchtmotten, Wurzelkriecher, Glimmerkäfer, Stufe 18–19).
+  - Alle Mechaniken wie in der Sandbox (Sporenblüte, Zwillingsknoten, Verschlingen, Lichtfraß, Das letzte Licht).
+    Die Bosse stehen als große Figuren in ihren Kammern. **Ida, Bo und Tom** kämpfen mit, wenn Plätze frei sind
+    (allein also zu viert, zu zweit mit zwei von ihnen). Wer verliert, wacht am Eingang der Höhle auf.
+  - **Am Herz des Urbaums** (erscheint nach der Wurzelmutter): „Den Baum fällen und den großen Splitter mitnehmen.“ oder
+    „Den Splitter vorsichtig herausschneiden und den Baum retten.“ (ohne Folgen zu verraten, in der Gruppe wird
+    abgestimmt). **Nur beim ersten Abschluss**, danach gilt die Wahl automatisch. Retten bringt Ruf bei den Zähmern.
+    Belohnung bei jedem Abschluss: ein **Sternensplitter**.
+  - **Läufe:** Wer die Höhle von außen betritt, beginnt einen neuen Lauf (die Bosse sind wieder da).
+  - **Ysolde** spürt danach, was mit dem Urbaum geschah, und nimmt den Auftrag ab.
+  - **Schwierigkeit** (Computer-Spieler mit drei Novizen, Stufe 19–20): Sporenkönigin 86 %, Wurzelmutter 70 %.
+    Damit es allein schaffbar ist, kommt „Verschlingen“ in der Welt erst nach 4 statt 3 Zügen, und die Bosse haben
+    weniger Leben als ihre Stufe vermuten lässt (vorläufig, Feinschliff am Ende). Splitter-Knoten und Zielscheiben
+    wachsen nicht mehr mit der Stufe (sie gehören zur Mechanik).
+  - **Platzhalter:** alle Texte, die Höhle als Karte.
+  - **Tests:** zwei Läufe mit beiden Entscheidungen im Grünwacht-Test, die Bosse mit jeder Klasse im Wildnis-Test.
 
 ## Aufgaben Lernprojekt 4 „Zusammen spielen“ (Fahrplan in `ZUSAMMEN_PLAN.md`)
 
@@ -740,6 +764,12 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spiel startet jetzt mit einem Menü.
 
+**Neu: Grünwacht Schritt 7 – Pilzhöhle** (nach Kael, am besten zu zweit oder zu dritt)
+1. Findest du den Eingang zwischen den Wurzeln im Süden des Waldbodens? Wirkt die Höhle düster genug?
+2. Sporenkönigin und Wurzelmutter: Sind die Mechaniken im Kampf verständlich? Zu schwer, zu leicht?
+3. Das Herz des Urbaums: Ist die Entscheidung schwer? Abstimmung in der Gruppe klappt?
+4. Geh ein zweites Mal hinein: Sind die Bosse wieder da, und gilt deine erste Entscheidung automatisch?
+
 **Neu: Grünwacht Schritt 6 – Rowans leeres Grab** (nach Kael)
 1. Findest du das Grab im Nordwesten des Waldes?
 2. Die Erinnerung im Splitter: Wirkt sie? Ist sie zu kurz oder zu lang? (Die Texte schreibst du noch.)
@@ -973,7 +1003,8 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Lernprojekt 4 „Zusammen spielen“ ist gebaut: deine Rückmeldungen aus dem Test mit Freunden einarbeiten.
 - Lernprojekt 5 „Grünwacht“: Schritt 1 (Reise nach Wipfelheim) und Schritt 2 (Monster, eigene Klasse, Stufe 20)
   sind eingebaut, ebenso Schritt 3 (Fenns Prüfung), 4 (Esche, Kobalt, Tilda) und 5 (Leuchtende Tiere, Ruf, Kael).
-  Schritt 6 (Rowans Grab, Erinnerungs-Szene) auch. Als Nächstes Schritt 7: die Pilzhöhle als echter Dungeon.
+  Schritt 6 (Rowans Grab, Erinnerungs-Szene) und Schritt 7 (Pilzhöhle) auch. Als Nächstes Schritt 8: das Ende der
+  Region mit Ysolde und Kael.
 - Hinten angestellt: Schnellsätze und Emotes (Vorschläge im Ideen-Parkplatz von design.md).
 
 ## Offene Fragen an Marco

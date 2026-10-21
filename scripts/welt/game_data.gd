@@ -63,7 +63,8 @@ static func wild_monsters() -> Array[Dictionary]:
 			continue
 		for d: Dictionary in maps[map_id].get("monster", []):
 			result.append({karte = map_id, feld = Vector2i(int(d.feld[0]), int(d.feld[1])), gegner = d.gegner,
-					stufe = int(d.get("stufe", 1)), hintergrund = maps[map_id].get("kampf_hintergrund", "wald")})
+					stufe = int(d.get("stufe", 1)), hintergrund = maps[map_id].get("kampf_hintergrund", "wald"),
+					dungeon = maps[map_id].get("dungeon", "")})
 	_cache["_wild"] = result
 	return result
 
@@ -87,7 +88,8 @@ static func battle(id: String) -> Dictionary:
 			names.append(Sandbox.ENEMIES[enemy].name)
 		return {name = "%s (Stufe %d)" % [" und ".join(names), m.stufe], ansage = text("wild_ansage" if names.size() == 1 else "wild_ansage_mehrere", [" und ".join(names)]),
 				wellen = [m.gegner], gegner_stufe = m.stufe, eigene_klasse = true, wild = true, hintergrund = m.hintergrund,
-				erfahrung = WILD_XP_PER_LEVEL * m.stufe * m.gegner.size(), gold = WILD_GOLD_PER_LEVEL * m.stufe * m.gegner.size()}
+				erfahrung = WILD_XP_PER_LEVEL * m.stufe * m.gegner.size(), gold = WILD_GOLD_PER_LEVEL * m.stufe * m.gegner.size(),
+				dungeon = m.dungeon, entscheidung_in_der_welt = true}
 	var all := get_file("kaempfe")
 	if not id.begins_with("probe:"):
 		return all.get(id, {})

@@ -35,8 +35,8 @@ signal effect_requested(player_id: String, effect: String)
 signal scene_requested(player_id: String, scene: String)
 
 ## Böden. Kreuzweg: Wiese, Straße, Platz, Gestrüpp. Grünwacht: Waldboden, Planken (Plattformen in den Baumkronen),
-## Hängebrücke und Laub (die Baumkronen unter den Plattformen, dort kann man nicht laufen).
-enum Tile { GRASS, ROAD, PLAZA, OVERGROWN, FOREST, PLANKS, BRIDGE, CANOPY }
+## Hängebrücke und Laub (die Baumkronen unter den Plattformen, dort kann man nicht laufen). Höhlen: Höhlenboden und Fels.
+enum Tile { GRASS, ROAD, PLAZA, OVERGROWN, FOREST, PLANKS, BRIDGE, CANOPY, CAVE, ROCK }
 
 ## Kennung der Stadt Kreuzweg (dort beginnt das Spiel)
 const KREUZWEG := "kreuzweg"
@@ -307,6 +307,11 @@ func change_map(p: PlayerState, map_id: String, cell: Vector2i) -> void:
 	var m: WorldMap = maps[map_id]
 	if not m.is_walkable(cell):
 		cell = m.start
+	# Dungeon von außen betreten: ein neuer Lauf beginnt (Bosse sind wieder da, die Entscheidung bleibt bestehen)
+	if m.dungeon != "" and p.map != map_id:
+		for flag: String in p.progress.flags.keys():
+			if flag.begins_with("lauf:"):
+				p.progress.flags.erase(flag)
 	p.map = map_id
 	p.cell = cell
 	p.pos = Vector2(cell)
@@ -1403,6 +1408,11 @@ func _battle_result(p: PlayerState, kampf_id: String, won: bool) -> void:
 		p.progress.flags[battle.merken_immer] = true
 	if not won:
 		_say(p, battle.get("verloren_text", GameData.text("kampf_verloren")))
+		# Dungeon-Bosse: Wer verliert, wacht am Eingang wieder auf
+		if battle.get("zurueck_zum_start", false):
+			p.path.clear()
+			p.cell = get_map(p.map).start
+			p.pos = Vector2(p.cell)
 		_update_quests(p)
 		progress_changed.emit(p.id)
 		return

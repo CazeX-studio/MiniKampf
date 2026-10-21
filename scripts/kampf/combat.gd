@@ -1175,7 +1175,7 @@ func _show_end_screen(won: bool) -> void:
 
 	var sub := Label.new()
 	sub.text = "Kampfauswertung · %d Züge · Welle %d von %d · %s" % [state.turns, state.wave + 1, state.waves.size(), _battle_name()]
-	if won and state.dungeon != null:
+	if won and state.dungeon != null and not state.setup.get("entscheidung_in_der_welt", false):
 		sub.text += (" · Urbaum gefällt" if Sandbox.pilz_choice == "faellen" else " · Urbaum gerettet") + " · Belohnung: Sternensplitter"
 	sub.add_theme_font_size_override("font_size", 18)
 	sub.add_theme_color_override("font_color", Color("f2c14e"))

@@ -68,6 +68,23 @@
 			"boden": "waldboden",
 			"gesperrt": true,
 			"ding": "lagerfeuer"
+		},
+		"h": {
+			"boden": "hoehle"
+		},
+		"X": {
+			"boden": "fels",
+			"gesperrt": true
+		},
+		"P": {
+			"boden": "hoehle",
+			"gesperrt": true,
+			"ding": "riesenpilz"
+		},
+		"W": {
+			"boden": "hoehle",
+			"gesperrt": true,
+			"ding": "wurzel"
 		}
 	},
 	"weg_gruenwacht": {
@@ -254,8 +271,8 @@
 			",p,,t,,,,,,=====,,,,,====,,,,,",
 			",,,,,t,,,t,,===,,t,t,,,,,,tbt,",
 			",,,,,t,,,,,,,,,,b,,,t,,,,,,,,t",
-			",,p,,,,,,tb,,,,,ttp,,p,,,,,,,,",
-			"t,,,,,,,,t,,R,,,,b,,,,,bt,,,,,",
+			",,p,,,,,,t,,,,,,ttp,,p,,,,,,,,",
+			"t,,,,,,,,,,,,,,,,b,,,,,bt,,,,,",
 			"t,t,,,,tbt,,,,b,,,,,,,,,b,,,,,",
 			"b,,t,,p,,,tbt,,,,R,pt,t,p,,,b,",
 			",,,,,,,,,t,pt,,,,,,,,,,,,,R,,t",
@@ -417,6 +434,39 @@
 				"dialog": "rowans_grab"
 			},
 			{
+				"art": "hoehle",
+				"feld": [
+					11,
+					18
+				],
+				"meldung": "Du kriechst zwischen den Wurzeln hinab in die Dunkelheit.",
+				"wenn": {
+					"oder": [
+						{
+							"auftrag": "der_urbaum",
+							"stand": "aktiv"
+						},
+						{
+							"auftrag": "der_urbaum",
+							"stand": "fertig"
+						},
+						{
+							"auftrag": "der_urbaum",
+							"stand": "abgegeben"
+						}
+					]
+				},
+				"aktionen": [
+					{
+						"reisen": "pilzhoehle",
+						"feld": [
+							27,
+							11
+						]
+					}
+				]
+			},
+			{
 				"art": "splittertier",
 				"feld": [
 					24,
@@ -442,6 +492,141 @@
 					"stand": "aktiv",
 					"gemerkt": "fenn_ziele",
 					"nicht_gemerkt": "pruefung_hirsch"
+				}
+			}
+		]
+	},
+	"pilzhoehle": {
+		"name": "Pilzhöhle unter dem Urbaum",
+		"grund": "hoehle",
+		"licht": "9a8cc0",
+		"musik": "nacht",
+		"dungeon": "pilzhoehle",
+		"kampf_hintergrund": "gewoelbe",
+		"start": [
+			27,
+			11
+		],
+		"raster": [
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXXXXXXXXXXXXXXXXPhhhPXXXXXXXX",
+			"XXXXXXXXXXXXXXXXXhhhhhXXXXXXXX",
+			"XPhhhhPXXXXXXXXXXhhhhhXXXXXXXX",
+			"XhhhWhhXXPhhhhhPXhhhhhXXXXXXXX",
+			"XhhhhhhXXhhhWhhhXhhhhhXhPhhhhX",
+			"XhWhhhhXXhhhhhhhXhhhhhXhhhhhhX",
+			"XhhhhhhXXhhhhhhhhhhhhhWhhhhhhh",
+			"Xhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+			"Xhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+			"XhhhhhhXXhhhhhhhhhhWhhhhhhhhhX",
+			"XhhhhhhXXhhhhhhhXXXXXXXPhhhhPX",
+			"XhhhhWhXXhhhhWhhXXXXXXXXXXXXXX",
+			"XhhhhhhXXPhhhhhPXXXXXXXXXXXXXX",
+			"XPhhhhhXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+		],
+		"ausgaenge": [
+			{
+				"bereich": [
+					29,
+					10,
+					1,
+					3
+				],
+				"karte": "waldboden",
+				"feld": [
+					10,
+					18
+				]
+			}
+		],
+		"monster": [
+			{
+				"feld": [
+					25,
+					10
+				],
+				"gegner": [
+					"sporenwolf",
+					"sporenwolf"
+				],
+				"stufe": 18
+			},
+			{
+				"feld": [
+					20,
+					12
+				],
+				"gegner": [
+					"leuchtmotte",
+					"wurzelkriecher"
+				],
+				"stufe": 18
+			},
+			{
+				"feld": [
+					19,
+					6
+				],
+				"gegner": [
+					"glimmerkaefer",
+					"glimmerkaefer"
+				],
+				"stufe": 19
+			},
+			{
+				"feld": [
+					16,
+					11
+				],
+				"gegner": [
+					"sporenwolf",
+					"leuchtmotte",
+					"wurzelkriecher"
+				],
+				"stufe": 19
+			}
+		],
+		"orte": [
+			{
+				"art": "sporenkoenigin",
+				"feld": [
+					11,
+					11
+				],
+				"dialog": "pilz_koenigin",
+				"wenn": {
+					"nicht_gemerkt": "lauf:koenigin"
+				}
+			},
+			{
+				"art": "wurzelmutter",
+				"feld": [
+					3,
+					11
+				],
+				"dialog": "pilz_urbaum",
+				"wenn": {
+					"gemerkt": "lauf:koenigin",
+					"nicht_gemerkt": "lauf:urbaum"
+				}
+			},
+			{
+				"art": "urbaum_herz",
+				"feld": [
+					3,
+					12
+				],
+				"dialog": "urbaum_herz",
+				"wenn": {
+					"gemerkt": "lauf:urbaum",
+					"nicht_gemerkt": "lauf:splitter"
 				}
 			}
 		]

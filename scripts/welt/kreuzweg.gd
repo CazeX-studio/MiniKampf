@@ -21,6 +21,8 @@ const TILE_COLORS := {
 	WorldState.Tile.PLANKS: [Color("8a6440"), Color("805c3a")],
 	WorldState.Tile.BRIDGE: [Color("a07a4c"), Color("987246")],
 	WorldState.Tile.CANOPY: [Color("1f3a1f"), Color("244222")],
+	WorldState.Tile.CAVE: [Color("3a3240"), Color("362e3c")],
+	WorldState.Tile.ROCK: [Color("1c1820"), Color("201b24")],
 }
 
 # Steuerung: Steuerknopf und Aktions-Knopf fürs Handy
@@ -583,6 +585,11 @@ func _draw_ground() -> void:
 					var other := m.tile_at(cell + e[0])
 					if other in [WorldState.Tile.GRASS, WorldState.Tile.OVERGROWN, WorldState.Tile.FOREST]:
 						_ground.draw_line(diamond[e[1]], diamond[e[2]], Color("4a3c2a"), 3.0)
+			elif tile == WorldState.Tile.ROCK:
+				# Fels: ein dunkler Block mit hellerer Kante zum Höhlenboden
+				for e: Array in edges:
+					if m.tile_at(cell + e[0]) == WorldState.Tile.CAVE:
+						_ground.draw_line(diamond[e[1]], diamond[e[2]], Color("4a4250"), 3.0)
 			elif tile == WorldState.Tile.CANOPY:
 				# Baumkronen unter den Plattformen: ein paar Blätterbüschel
 				var leaf := Color("2c5228") if (x * 7 + y * 3) % 5 < 2 else Color("1a3218")
@@ -760,6 +767,20 @@ func _draw_prop(node: Node2D, kind: String, prop: Dictionary) -> void:
 			node.draw_circle(Vector2(0, -120), 38.0, Color("2f5a2a"))
 			node.draw_circle(Vector2(-18, -132), 24.0, Color("3c6e33"))
 			node.draw_circle(Vector2(20, -128), 22.0, Color("355f2e"))
+		"riesenpilz":
+			# Leuchtender Riesenpilz in der Pilzhöhle
+			var pulse := 0.8 + 0.2 * sin(_time * 2.0 + node.position.x * 0.01)
+			node.draw_circle(Vector2(0, -34), 34.0, Color(0.6, 0.4, 1.0, 0.10 * pulse))
+			node.draw_rect(Rect2(-5, -30, 10, 30), Color("d8d0c0"))
+			node.draw_set_transform(Vector2(0, -34), 0.0, Vector2(1.0, 0.55))
+			node.draw_circle(Vector2.ZERO, 22.0, Color(0.55, 0.35, 0.85).lightened(0.2 * pulse))
+			node.draw_set_transform_matrix(Transform2D.IDENTITY)
+			for i in 4:
+				node.draw_circle(Vector2(-12 + i * 8.0, -38 + (i % 2) * 4.0), 2.5, Color(0.9, 0.85, 1.0, pulse))
+		"wurzel":
+			node.draw_line(Vector2(-28, -6), Vector2(-6, -20), Color("4a3020"), 9.0)
+			node.draw_line(Vector2(-6, -20), Vector2(22, -4), Color("4a3020"), 9.0)
+			node.draw_line(Vector2(-6, -20), Vector2(-2, -44), Color("3e2818"), 7.0)
 		"zielscheibe":
 			node.draw_line(Vector2(-8, 0), Vector2(-4, -24), Color("5a3a22"), 3.0)
 			node.draw_line(Vector2(8, 0), Vector2(4, -24), Color("5a3a22"), 3.0)
@@ -793,10 +814,22 @@ func _add_pickup(target: String) -> void:
 	node.draw.connect(func() -> void: _draw_pickup(node, art))
 	_add_map_node(node)
 	_pickup_nodes[target] = node
+	# Bosse in Dungeons: dieselbe Figur wie im Kampf, nur größer
+	if FighterView.LOOKS.has(art):
+		var look: Dictionary = FighterView.LOOKS[art]
+		var boss := WorldCharacter.new()
+		boss.setup(look.sprite, Sandbox.ENEMIES.get(art, {name = ""}).name, look.get("tint", Color.WHITE), Color("ff9090"))
+		boss.scale = Vector2(1.8, 1.8)
+		boss.idle_fps = NPC_IDLE_FPS * 2.0
+		node.add_child(boss)
 
 
 func _draw_pickup(node: Node2D, art: String) -> void:
 	var glow := 0.5 + 0.5 * sin(_time * 3.0 + node.position.x)
+	# Bosse in Dungeons (die Figur selbst hängt als Kind am Knoten): nur ein leichtes Leuchten darunter
+	if FighterView.LOOKS.has(art):
+		node.draw_circle(Vector2(0, -40), 60.0, Color(0.7, 0.5, 1.0, 0.06 + 0.06 * glow))
+		return
 	match art:
 		"kater":
 			# Hannes Kater: kleine schwarze Katze, der Schwanz wippt
@@ -836,6 +869,25 @@ func _draw_pickup(node: Node2D, art: String) -> void:
 			node.draw_colored_polygon(PackedVector2Array([Vector2(-20, -6), Vector2(0, -16), Vector2(20, -6), Vector2(0, 4)]), Color("7a5634"))
 			node.draw_polyline(PackedVector2Array([Vector2(-20, -6), Vector2(0, -16), Vector2(20, -6), Vector2(0, 4), Vector2(-20, -6)]), Color("4a3020"), 2.0)
 			node.draw_circle(Vector2(0, -6), 18.0, Color(1.0, 0.95, 0.7, 0.06 + 0.08 * glow))
+			return
+		"urbaum_herz":
+			# Das Herz des Urbaums: ein großer Splitter im Stamm, der pulsiert
+			var beat := 0.5 + 0.5 * sin(_time * 2.4)
+			node.draw_rect(Rect2(-22, -70, 44, 70), Color("4a3020"))
+			node.draw_rect(Rect2(-22, -70, 12, 70), Color("3a2414"))
+			node.draw_circle(Vector2(0, -40), 34.0 + 6.0 * beat, Color(0.75, 0.55, 1.0, 0.12 + 0.12 * beat))
+			node.draw_colored_polygon(PackedVector2Array([Vector2(0, -60), Vector2(10, -40), Vector2(0, -22), Vector2(-10, -40)]),
+					Color(0.85, 0.7, 1.0).lightened(0.3 * beat))
+			return
+		"hoehle":
+			# Eingang zur Pilzhöhle zwischen den Wurzeln des Urbaums
+			node.draw_set_transform(Vector2(0, -6), 0.0, Vector2(1.0, 0.6))
+			node.draw_circle(Vector2.ZERO, 30.0, Color("4a3020"))
+			node.draw_circle(Vector2(0, 2), 22.0, Color("0c0810"))
+			node.draw_set_transform_matrix(Transform2D.IDENTITY)
+			node.draw_circle(Vector2(0, -8), 26.0, Color(0.6, 0.4, 1.0, 0.08 + 0.08 * glow))
+			for side: float in [-1.0, 1.0]:
+				node.draw_line(Vector2(side * 30, -4), Vector2(side * 14, -30), Color("4a3020"), 7.0)
 			return
 		"grab":
 			# Rowans Grabstein, davor eingesunkene Erde und ein kleiner Splitter

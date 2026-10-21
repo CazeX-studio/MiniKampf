@@ -37,6 +37,12 @@ func _init(p_combat: BattleState) -> void:
 	c = p_combat
 
 
+## Züge bis „Verschlingen“. In der Welt (setup.verschlingen_zuege) kann es mehr sein: Allein helfen dort nur
+## die Novizen-Mitstreiter, die sich nicht absprechen.
+func devour_turns() -> int:
+	return int(c.setup.get("verschlingen_zuege", DEVOUR_TURNS))
+
+
 func handles(e: Fighter) -> bool:
 	return e.klass in ENEMY_IDS
 
@@ -63,14 +69,14 @@ func on_wave(_index: int) -> void:
 			c.add_log("[color=#c8a0ff]Mechanik heute: Sporen-Zwillinge.[/color] Besiegt beide Sporenknospen in derselben Runde, "
 				+ "sonst holt der eine den anderen zurück.")
 	elif _find("wurzelmutter") != null:
-		devour = DEVOUR_TURNS
+		devour = devour_turns()
 		pairs_since_warning = 0
 		pair_broken = false
 		phase2 = false
 		c.add_log("[b]Endboss: Die Wurzelmutter[/b], der gequälte Urbaum. Schläge auf die Rinde heilen sie, "
 			+ "trefft die leuchtenden Splitter-Knoten!")
 		c.add_log("[color=#c8a0ff]Zwillingsknoten:[/color] Knoten vorne und hinten vor ihrem nächsten Zug zerstören, sonst wachsen sie nach. "
-			+ "[color=#ff8080]Verschlingen[/color] kommt in %d Zügen, wenn bis dahin kein Knotenpaar zerstört ist." % DEVOUR_TURNS)
+			+ "[color=#ff8080]Verschlingen[/color] kommt in %d Zügen, wenn bis dahin kein Knotenpaar zerstört ist." % devour_turns())
 	else:
 		c.add_log("[b]Tief in der Pilzhöhle unter dem Urbaum …[/b] Diese Monster gibt es nur hier.")
 	_update_intents()
@@ -204,7 +210,7 @@ func _mother_turn(e: Fighter) -> void:
 	if devour <= 0:
 		if pairs_since_warning > 0:
 			c.add_log("[color=#8affc1]Verschlingen abgewehrt![/color] Die Wurzeln weichen zurück … und sammeln neue Kraft.")
-			devour = DEVOUR_TURNS
+			devour = devour_turns()
 			pairs_since_warning = 0
 		else:
 			c.burst(e, Color("4a2a10"), 300.0)
@@ -405,6 +411,11 @@ const FINAL_CHOICES: Array[Dictionary] = [
 
 ## Nach dem Sieg über den Vorboten: Was geschieht mit dem Urbaum? (design.md: „Entscheidung danach“)
 func final_choice() -> void:
+	# In der Welt entscheidet die Gruppe am Herz des Urbaums (nach dem Kampf), nicht hier
+	if c.setup.get("entscheidung_in_der_welt", false):
+		if _find("vorbote") != null:
+			c.add_log("\n[b]Der Vorbote zerfällt. Der Urbaum liegt still, in seinem Stamm pulsiert der große Splitter.[/b]")
+		return
 	var id := Sandbox.pilz_choice
 	if id == "":
 		# Erster Abschluss: Die Gruppe entscheidet. Bei jedem weiteren Lauf gilt diese Wahl automatisch.

@@ -261,5 +261,16 @@
 		],
 		"abgeben_bei": "kael",
 		"belohnung": {"gold": 40, "erfahrung": 500}
+	},
+	"der_urbaum": {
+		"titel": "Der Splitter im Urbaum",
+		"beschreibung": "Unter dem Urbaum, tief in den Wurzeln, liegt ein großer Splitter. Der Eingang zur Pilzhöhle liegt zwischen den Wurzeln eines Riesenbaums im Süden des Waldbodens. Das ist ein Dungeon: Geht am besten zu mehreren (allein helfen Ida, Bo und Tom bei den Bossen).",
+		"voraussetzung": "das_leere_grab",
+		"ziele": [
+			{"art": "gemerkt", "merken": "pilzhoehle_abgeschlossen", "text": "In der Pilzhöhle die Sporenkönigin und die Wurzelmutter besiegen"},
+			{"art": "gemerkt", "merken": "urbaum_entschieden", "text": "Am Herz des Urbaums entscheiden"}
+		],
+		"abgeben_bei": "ysolde",
+		"belohnung": {"gold": 150, "erfahrung": 1200}
 	}
 }

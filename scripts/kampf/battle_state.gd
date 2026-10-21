@@ -104,6 +104,9 @@ func run() -> void:
 	_create_heroes()
 	if setup.has("wellen"):
 		waves = setup.wellen
+		# Dungeon in der Welt (Pilzhöhle unter dem Urbaum): dieselben Mechaniken wie in der Sandbox
+		if setup.get("dungeon", "") == "pilzhoehle":
+			dungeon = Pilzhoehle.new(self)
 		_spawn_wave(int(setup.get("start_welle", 0)))
 		await _battle_loop()
 		return
@@ -385,7 +388,9 @@ func spawn_enemies(ids: Array) -> void:
 	for i in ids.size():
 		var id: String = ids[i]
 		var data: Dictionary = Sandbox.ENEMIES[id]
-		var e := Fighter.new(data.name, id, data.element, false, roundi(data.hp * hp_scale * monster_hp(level)), data.tempo, Elements.color(data.element))
+		# Was sich nicht wehrt (Splitter-Knoten, Zielscheiben), wächst nicht mit der Stufe: Es gehört zur Mechanik
+		var level_hp := 1.0 if data.get("passive", false) else monster_hp(level)
+		var e := Fighter.new(data.name, id, data.element, false, roundi(data.hp * hp_scale * level_hp), data.tempo, Elements.color(data.element))
 		e.element = data.element
 		e.power = monster_power(level)
 		e.resist = data.get("resist", 1.0)

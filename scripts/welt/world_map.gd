@@ -23,6 +23,8 @@ var exits: Array[Dictionary] = []
 var light := Color.WHITE
 ## Welches Musikstück läuft (Platzhalter, bis es eigene Musik gibt)
 var music := "stadt"
+## Dungeon-Regeln für Kämpfe auf dieser Karte ("pilzhoehle") oder "" (normale Karte)
+var dungeon := ""
 
 var astar := AStarGrid2D.new()
 
@@ -50,6 +52,7 @@ static func from_data(p_id: String, data: Dictionary, legend: Dictionary) -> Wor
 	m.title = data.get("name", p_id)
 	m.light = Color(data.get("licht", "ffffff"))
 	m.music = data.get("musik", "stadt")
+	m.dungeon = data.get("dungeon", "")
 	var start: Array = data.get("start", [1, 1])
 	m.start = Vector2i(int(start[0]), int(start[1]))
 	for y in raster.size():
@@ -94,6 +97,10 @@ static func _tile_of(boden: String) -> int:
 			return WorldState.Tile.BRIDGE
 		"laub":
 			return WorldState.Tile.CANOPY
+		"hoehle":
+			return WorldState.Tile.CAVE
+		"fels":
+			return WorldState.Tile.ROCK
 	return WorldState.Tile.FOREST
 
 

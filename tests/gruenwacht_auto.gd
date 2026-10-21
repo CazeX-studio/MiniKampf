@@ -18,6 +18,10 @@ const SPOTS := [
 	["wipfelheim_marv", "wipfelheim", Vector2i(21, 14)],
 	["kreuzweg_westen", "kreuzweg", Vector2i(4, 22)],
 	["waldboden_hirsch", "waldboden", Vector2i(5, 23)],
+	["waldboden_hoehle", "waldboden", Vector2i(10, 17)],
+	["hoehle_eingang", "pilzhoehle", Vector2i(25, 11)],
+	["hoehle_koenigin", "pilzhoehle", Vector2i(14, 12)],
+	["hoehle_urbaum", "pilzhoehle", Vector2i(6, 12)],
 ]
 
 var _t := 0.0
@@ -28,7 +32,7 @@ func _ready() -> void:
 	var file := FileAccess.open(SaveGame.path, FileAccess.WRITE)
 	file.store_string(JSON.stringify({version = SaveGame.VERSION, karte = "weg_gruenwacht", feld = [37, 6],
 			progress = {level = 10, flags = {"angekommen": true, "klasse": "archer", "klasse_bestaetigt": true,
-				"angesprochen:marv_gruenwacht": true, "fenn_ziele": true}, quests = {nach_gruenwacht = "aktiv", fenns_pruefung = "aktiv"}}}))
+				"angesprochen:marv_gruenwacht": true, "fenn_ziele": true}, quests = {nach_gruenwacht = "aktiv", fenns_pruefung = "aktiv", der_urbaum = "aktiv"}}}))
 	file.close()
 	super()
 	_no_save = true
@@ -60,6 +64,11 @@ func _process(delta: float) -> void:
 	var spot: Array = SPOTS[_index]
 	if spot[0] == "weg_mitte":
 		local_player().progress.level = 12
+	if spot[0] == "hoehle_urbaum":
+		# Die Königin gilt in diesem Lauf als besiegt, damit die Wurzelmutter zu sehen ist
+		state.change_map(local_player(), spot[1], spot[2])
+		local_player().progress.flags["lauf:koenigin"] = true
+		return
 	state.change_map(local_player(), spot[1], spot[2])
 
 

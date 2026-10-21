@@ -130,4 +130,9 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
   Gruppenmitglieder in der Nähe kämpfen mit). Jeder Sieg bringt Erfahrung (12 × Stufe je Monster) und Gold (2 × Stufe),
   danach ist das Monster für einen eine Minute weg. Gegner-Kennungen stehen in `scripts/kampf/sandbox.gd` (ENEMIES).
   `kampf_hintergrund` der Karte: Bild im Kampf (`wald`, `wiese`, `gewoelbe` …).
+- **Dungeons** (seit Grünwacht Schritt 7): Eine Karte mit `"dungeon": "pilzhoehle"` benutzt in allen Kämpfen die
+  Dungeon-Regeln (Mechaniken der Pilzhöhle). Gemerktes, das mit `lauf:` beginnt (z. B. `lauf:koenigin`), wird beim
+  Betreten von außen gelöscht: So sind die Bosse bei jedem neuen Lauf wieder da, Entscheidungen bleiben bestehen.
+  Bosse sind Orte mit dem Bild des Gegners (`"art": "sporenkoenigin"`), Kämpfe mit `"begleiter"` füllen freie
+  Plätze mit Ida, Bo und Tom.
 - **Stufen** (`stufen.json`): jetzt bis Stufe 20 (Kreuzweg 1–10, Weg nach Grünwacht 10–15, Grünwacht 15–20).

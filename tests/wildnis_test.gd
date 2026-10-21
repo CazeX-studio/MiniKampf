@@ -46,11 +46,13 @@ func _run() -> void:
 				root.remove_child(node)
 				node.free()
 			line += " %d" % wins
-			class_wins += wins
-			class_runs += runs
+			# Allein leveln: Weg und Wald. Dungeon-Monster sind für Gruppen gedacht und zählen hier nicht mit.
+			if m.get("dungeon", "") == "":
+				class_wins += wins
+				class_runs += runs
 			total[index] = int(total.get(index, 0)) + wins
 		var rate := float(class_wins) / class_runs
-		print("%s  → %d %%" % [line, roundi(rate * 100)])
+		print("%s  → %d %% (ohne Dungeon)" % [line, roundi(rate * 100)])
 		if rate < MIN_WIN_RATE:
 			problems += 1
 			print("FEHLER: %s gewinnt allein zu selten (%d %%)" % [klasse, roundi(rate * 100)])
@@ -60,7 +62,7 @@ func _run() -> void:
 		print("  %2d %-16s %-48s Stufe %d: %d %%" % [index, m.karte, ", ".join(m.gegner), m.stufe,
 				roundi(100.0 * total[index] / (runs * classes.size()))])
 	# Geschichtskämpfe (allein, mit jeder Klasse, auf der Stufe, auf der man sie erreicht)
-	for story: Array in [["splitterbaer", 15]]:
+	for story: Array in [["splitterbaer", 15], ["pilz_koenigin", 19], ["pilz_urbaum", 20]]:
 		var line := "%-14s" % story[0]
 		var all_wins := 0
 		for klasse: String in classes:
