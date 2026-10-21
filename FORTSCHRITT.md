@@ -17,8 +17,9 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
 - **Lernprojekt 5 „Grünwacht“:** Plan steht in `GRUENWACHT_PLAN.md` (11 Schritte: Reise nach Wipfelheim, eigene Klasse
   in der Welt, Fenns Prüfung, Professor Esche und Kobalt, Ysoldes Geschichte, Pilzhöhle als echter Dungeon,
-  Kreuzweg-Karten mit Sternentafel, Nebenaufträge, Feinschliff). **Vor Schritt 1 bitte die 6 offenen Fragen** am Ende
-  des Plans beantworten.
+  Kreuzweg-Karten mit Sternentafel, Nebenaufträge, Feinschliff). Marcos Entscheidungen vom 21.10. stehen im Plan
+  (alle Klassen dürfen hin, gleicher Spielstand, Weg Stufe 10–15 und Grünwacht 15–20, Sternentafel bei Bingo in Kreuzweg,
+  Koch-Stand als Platzhalter, Ruf sichtbar). **Als Nächstes Schritt 1.**
 - **Neu (21.10.): Figuren und Nebenaufträge aus Sitzung 21** in Kreuzweg: Wirtin Hanne mit Gasthaus Wegrast, Vogt Edmar,
   Steinmetz Quill, die Kinder Pip und Lotte, die Wache heißt jetzt Brom. Fünf Nebenaufträge mit **blauem „!“ und „?“**
   (Hauptaufträge bleiben gelb). Siehe „Schritt 21“ unten, Test-Liste unter „Was du testen kannst“.
@@ -32,8 +33,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | Nr. | Aufgabe | Stand |
 |-----|---------|-------|
 | 0 | Plan schreiben | erledigt |
-| – | Entscheidungen: andere Klassen, Übergang aus der Demo, Stufen, Sternentafel, Kochen, Ruf | offen, Marco entscheidet |
-| 1 | Die Reise und Wipfelheim (mehrere Karten) | offen |
+| – | Entscheidungen: alle Klassen, gleicher Spielstand, Stufen nach Reihenfolge, Sternentafel bei Bingo, Koch-Stand als Platzhalter, Ruf sichtbar | entschieden 21.10. |
+| 1 | Die Reise und Wipfelheim (mehrere Karten, Weg von Kreuzweg, Koch-Stand) | offen |
 | 2 | Die eigene Klasse in der Welt, Monster der Region | offen |
 | 3 | Einstieg Bogenschütze: Fenns Prüfung der drei Ziele | offen |
 | 4 | Einstieg Zähmer: Professor Esche und Kobalt | offen |
@@ -804,14 +805,13 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Dialoge der Hauptfiguren: Marco schreibt sie; Platzhalter stehen in `data/dialoge.json`.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).
 - Lernprojekt 4 „Zusammen spielen“ ist gebaut: deine Rückmeldungen aus dem Test mit Freunden einarbeiten.
-- Lernprojekt 5 „Grünwacht“: Plan steht (`GRUENWACHT_PLAN.md`). Sobald die offenen Fragen beantwortet sind, Schritt 1.
+- Lernprojekt 5 „Grünwacht“: Plan steht (`GRUENWACHT_PLAN.md`). Entscheidungen vom 21.10. sind drin, als Nächstes Schritt 1.
 - Hinten angestellt: Schnellsätze und Emotes (Vorschläge im Ideen-Parkplatz von design.md).
 
 ## Offene Fragen an Marco
 
-- **Grünwacht (Lernprojekt 5):** sechs Fragen mit Vorschlägen am Ende von `GRUENWACHT_PLAN.md`
-  (andere Klassen in Grünwacht, Übergang aus der Demo, Stufe 10–20, Sternentafel bei Bingos Wanderkarren,
-  Kochen erst später, Ruf sichtbar).
+- **Stufen der späteren Regionen** (Vorschlag, eilt nicht): 2. Region 20–25, 3. 25–30, 4. 30–35, 5. 35–40,
+  Akt 3 40–50. Grünwacht selbst ist entschieden (Weg 10–15, Region 15–20).
 
 - **Zusammen spielen:** Die vier Entscheidungen sind getroffen (20.10.). Auch geklärt: Bei Gleichstand entscheidet der
   Gruppenführer, wer eine Szene schon erlebt hat, stimmt nicht mehr mit ab. Schnellsätze sind hinten angestellt
