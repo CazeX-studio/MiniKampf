@@ -810,8 +810,6 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 
 ## Offene Fragen an Marco
 
-- **Stufen der späteren Regionen** (Vorschlag, eilt nicht): 2. Region 20–25, 3. 25–30, 4. 30–35, 5. 35–40,
-  Akt 3 40–50. Grünwacht selbst ist entschieden (Weg 10–15, Region 15–20).
 
 - **Zusammen spielen:** Die vier Entscheidungen sind getroffen (20.10.). Auch geklärt: Bei Gleichstand entscheidet der
   Gruppenführer, wer eine Szene schon erlebt hat, stimmt nicht mehr mit ab. Schnellsätze sind hinten angestellt

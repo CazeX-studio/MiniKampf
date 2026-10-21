@@ -56,8 +56,8 @@ einen Dungeon in der Welt und ein Mini-Spiel.
 3. **Stufen nach Reihenfolge:** Der **Weg von Kreuzweg** in die Region liegt **5 Stufen über dem Novizen-Ende**
    (Stufe 10–15). Die Stufen einer Region richten sich danach, **die wievielte Region** sie auf der eigenen Reise ist.
    In dieser Demo ist Grünwacht für alle die erste Region: **Stufe 15–20**.
-   Vorschlag für später (noch nicht entschieden, steht im Ideen-Parkplatz): 2. Region 20–25, 3. Region 25–30,
-   4. Region 30–35, 5. Region 35–40, Akt 3 in Immernacht 40–50 (passt zur Höchststufe 50).
+   Für später vorläufig beschlossen: 2. Region 20–25, 3. Region 25–30, 4. Region 30–35, 5. Region 35–40,
+   Akt 3 in Immernacht 40–50 (passt zur Höchststufe 50). Angepasst wird das, wenn weitere Regionen dazukommen.
    Die Klassenstufe (Fähigkeitspunkte) kommt erst in Lernprojekt 6, bis dahin schalten sich Fähigkeiten mit der Stufe frei.
 4. **Sternentafel bei Bingo in Kreuzweg:** Man reist dafür über den Weg zurück (Schritt 9).
 5. **Berufe kommen später.** In Wipfelheim steht schon ein leerer Koch-Stand als Platzhalter (Schritt 1).
