@@ -201,5 +201,18 @@
 		],
 		"abgeben_bei": "ysolde",
 		"belohnung": {"gold": 50, "erfahrung": 100}
+	},
+	"fenns_pruefung": {
+		"titel": "Die Prüfung der drei Ziele",
+		"beschreibung": "Pfadmeister Fenn prüft jeden Bogenschützen mit drei Zielen: stehende Scheiben, laufende Scheiben – und ein drittes Ziel im Wald.",
+		"start_bei": "fenn",
+		"start_wenn": {"klasse": "archer"},
+		"voraussetzung": "nach_gruenwacht",
+		"ziele": [
+			{"art": "kampf", "kampf": "fenns_pruefung", "bei": "fenn", "text": "Das erste und zweite Ziel an Fenns Schießstand"},
+			{"art": "gemerkt", "merken": "pruefung_hirsch", "text": "Das dritte Ziel: den Silberhirsch im Wald aufspüren (Westen)"}
+		],
+		"abgeben_bei": "fenn",
+		"belohnung": {"gold": 60, "erfahrung": 500}
 	}
 }

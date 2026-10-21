@@ -57,6 +57,9 @@ const LOOKS := {
 	"ruepelkobold": {sprite = "goblin", scale = 5.5, tint = Color(1.0, 0.7, 0.6)},
 	"uebungs_ye": {sprite = "wizzard_m", scale = 4.0, tint = Color(0.8, 0.86, 0.95)},
 	"sternenfresser": {sprite = "swampy", scale = 7.0, tint = Color(0.85, 0.8, 1.0)},
+	# Fenns Prüfung (Platzhalter-Bilder: Strohpuppen)
+	"zielscheibe": {sprite = "zombie", scale = 4.0, tint = Color(1.0, 0.88, 0.55)},
+	"laufscheibe": {sprite = "goblin", scale = 4.0, tint = Color(1.0, 0.9, 0.6)},
 	# Grünwacht
 	"rindenbaer": {sprite = "ogre", scale = 4.5, tint = Color(0.75, 0.62, 0.45)},
 	"windfalke": {sprite = "imp", scale = 4.0, tint = Color(0.85, 0.95, 1.0)},

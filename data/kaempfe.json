@@ -97,5 +97,48 @@
 		"hinweise": {
 			"erster_zug": "Ein Sternenpanzer schützt den Sternenfresser: Normale Treffer prallen fast ab. Nur eine PERFEKTE PARADE erschüttert ihn – dann ist er kurz verwundbar und ihr könnt zuschlagen. Beeilt euch: Nach 10 Zügen explodiert der Splitter in seinem Bauch! Schild hoch, Schild runter!"
 		}
+	},
+	"fenns_pruefung": {
+		"name": "Fenns Prüfung der drei Ziele",
+		"hinweis": "Erstes und zweites Ziel als Lernkampf (Phasen wie die Grundausbildung). Das dritte Ziel (Silberhirsch) ist kein Kampf. Texte sind Platzhalter.",
+		"klasse": "archer",
+		"eigene_klasse": true,
+		"hintergrund": "wald",
+		"erfahrung": 400,
+		"merken": "fenn_ziele",
+		"phasen": [
+			{
+				"name": "Erstes Ziel: Stehende Scheiben",
+				"ansage": "Fenns Schießstand: Drei Strohscheiben stehen am Rand der Plattform.",
+				"gegner": [
+					"zielscheibe",
+					"zielscheibe",
+					"zielscheibe"
+				],
+				"erlaubt": [
+					"shot",
+					"row"
+				],
+				"hinweise": {
+					"erster_zug": "Fenn: „Drei Scheiben. … Bleib hinten.“\nDu stehst in der hinteren Reihe. Von dort trifft deine ruhige Hand öfter kritisch (Passive „Ruhige Hand“). Tippe „Schneller Schuss“ und dann eine Scheibe."
+				}
+			},
+			{
+				"name": "Zweites Ziel: Laufende Scheiben",
+				"ansage": "Zwei Scheiben an Seilen sausen hin und her.",
+				"gegner": [
+					"laufscheibe",
+					"laufscheibe"
+				],
+				"erlaubt": [
+					"shot",
+					"charge",
+					"row"
+				],
+				"hinweise": {
+					"erster_zug": "Fenn: „Sie laufen. … Ein schneller Schuss streift nur.“\nNeu: „Bogen spannen“. Dein nächster Schuss trifft dann 2,5-mal so hart (aufgeladener Schuss) und lädt deine Ult. Spannen, dann schießen."
+				}
+			}
+		]
 	}
 }

@@ -17,6 +17,7 @@ const SPOTS := [
 	["wipfelheim_esche", "wipfelheim", Vector2i(16, 24)],
 	["wipfelheim_marv", "wipfelheim", Vector2i(21, 14)],
 	["kreuzweg_westen", "kreuzweg", Vector2i(4, 22)],
+	["waldboden_hirsch", "waldboden", Vector2i(5, 23)],
 ]
 
 var _t := 0.0
@@ -27,7 +28,7 @@ func _ready() -> void:
 	var file := FileAccess.open(SaveGame.path, FileAccess.WRITE)
 	file.store_string(JSON.stringify({version = SaveGame.VERSION, karte = "weg_gruenwacht", feld = [37, 6],
 			progress = {level = 10, flags = {"angekommen": true, "klasse": "archer", "klasse_bestaetigt": true,
-				"angesprochen:marv_gruenwacht": true}, quests = {nach_gruenwacht = "aktiv"}}}))
+				"angesprochen:marv_gruenwacht": true, "fenn_ziele": true}, quests = {nach_gruenwacht = "aktiv", fenns_pruefung = "aktiv"}}}))
 	file.close()
 	super()
 	_no_save = true

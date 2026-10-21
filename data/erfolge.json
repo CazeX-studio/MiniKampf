@@ -1,4 +1,5 @@
 {
 	"hinweis": "Erfolge: einmalige Auszeichnungen. Freischalten mit der Aktion {\"erfolg\": \"kennung\"} oder \"erfolg\" in kaempfe.json.",
-	"schild_hoch": {"name": "Schild hoch, Schild runter", "beschreibung": "Den Sternenfresser in der Nacht des Sternenfalls als Novize besiegt."}
+	"schild_hoch": {"name": "Schild hoch, Schild runter", "beschreibung": "Den Sternenfresser in der Nacht des Sternenfalls als Novize besiegt."},
+	"jaeger_schiesst_nicht": {"name": "Ein Jäger weiß, wann er nicht schießt", "beschreibung": "Bei Fenns Prüfung den Silberhirsch verschont."}
 }

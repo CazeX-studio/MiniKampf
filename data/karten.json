@@ -261,8 +261,8 @@
 			",,,,,,,,,t,pt,,,,,,,,,,,,,R,,t",
 			",,,,,R,,,,,,t,,,,,,,t,,,p,,,p,",
 			"t,,,,,,b,,,,t,,,,,,bt,tt,p,,,,",
-			"b,,,t,,b,,,,,,,,,,,,t,,,t,,,t,",
-			",,,,t,,t,,,bt,,,,,,,b,,,,,,,,,"
+			"b,,,,,,b,,,,,,,,,,,,t,,,t,,,t,",
+			",,,,,,,t,,,bt,,,,,,,b,,,,,,,,,"
 		],
 		"ausgaenge": [
 			{
@@ -407,6 +407,20 @@
 						]
 					}
 				]
+			},
+			{
+				"art": "silberhirsch",
+				"feld": [
+					3,
+					24
+				],
+				"dialog": "silberhirsch",
+				"wenn": {
+					"auftrag": "fenns_pruefung",
+					"stand": "aktiv",
+					"gemerkt": "fenn_ziele",
+					"nicht_gemerkt": "pruefung_hirsch"
+				}
 			}
 		]
 	},

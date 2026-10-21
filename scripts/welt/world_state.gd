@@ -73,7 +73,7 @@ var decorations: Array[Dictionary] = []
 ## Weile nicht mehr (MONSTER_RESPAWN), die anderen Spieler schon.
 var monsters: Array[Dictionary] = []
 ## So nah muss man einem Monster kommen, damit der Kampf beginnt (Felder)
-const MONSTER_TOUCH := 0.8
+const MONSTER_TOUCH := 0.6
 ## So lange bleibt ein besiegtes Monster für den Spieler weg (Sekunden)
 const MONSTER_RESPAWN := 60.0
 ## Spieler, deren Kampf gerade beginnt (bis das Ergebnis kommt oder sie gehen): Kennung -> true
@@ -126,6 +126,11 @@ func _init() -> void:
 		if all_maps[id] is Dictionary and all_maps[id].has("raster"):
 			maps[id] = WorldMap.from_data(id, all_maps[id], legend)
 			_add_things(id, all_maps[id])
+	# Wer irgendwo hintippt, läuft um Monster herum statt mitten hindurch (nur wer sie antippt, läuft hin)
+	for m: Dictionary in monsters:
+		var astar: AStarGrid2D = get_map(m.karte).astar
+		if astar.region.has_point(m.feld) and not astar.is_point_solid(m.feld):
+			astar.set_point_weight_scale(m.feld, 40.0)
 
 
 ## NPCs, Sammelpunkte, Orte und Schmuck einer Karte aus ihren Daten.
@@ -1150,8 +1155,10 @@ func _marker(p: PlayerState, npc_id: String) -> Array:
 						return ["?", side]
 		for id: String in all_quests:
 			var q: Dictionary = all_quests[id]
+			# start_wenn: nur für manche Spieler (z. B. Fenns Prüfung nur für Bogenschützen)
 			if bool(q.get("neben", false)) == side and q.get("start_bei", "") == npc_id and p.progress.quest_state(id) == "neu" \
-					and (not q.has("voraussetzung") or p.progress.quest_state(q.voraussetzung) == "abgegeben"):
+					and (not q.has("voraussetzung") or p.progress.quest_state(q.voraussetzung) == "abgegeben") \
+					and check(p, q.get("start_wenn", {})):
 				return ["!", side]
 	return ["", false]
 

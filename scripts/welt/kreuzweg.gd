@@ -837,6 +837,26 @@ func _draw_pickup(node: Node2D, art: String) -> void:
 			node.draw_polyline(PackedVector2Array([Vector2(-20, -6), Vector2(0, -16), Vector2(20, -6), Vector2(0, 4), Vector2(-20, -6)]), Color("4a3020"), 2.0)
 			node.draw_circle(Vector2(0, -6), 18.0, Color(1.0, 0.95, 0.7, 0.06 + 0.08 * glow))
 			return
+		"silberhirsch":
+			# Fenns drittes Ziel: ein silberner Hirsch, der leise schimmert
+			var fur := Color(0.88, 0.92, 1.0)
+			node.draw_circle(Vector2(0, -26), 36.0, Color(0.85, 0.95, 1.0, 0.10 + 0.10 * glow))
+			node.draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, 0.4))
+			node.draw_circle(Vector2.ZERO, 18.0, Color(0, 0, 0, 0.3))
+			node.draw_set_transform_matrix(Transform2D.IDENTITY)
+			for leg: float in [-10.0, -5.0, 6.0, 11.0]:
+				node.draw_line(Vector2(leg, -18), Vector2(leg, 0), fur.darkened(0.2), 2.5)
+			node.draw_set_transform(Vector2(0, -24), 0.0, Vector2(1.0, 0.55))
+			node.draw_circle(Vector2.ZERO, 15.0, fur)
+			node.draw_set_transform_matrix(Transform2D.IDENTITY)
+			node.draw_line(Vector2(-11, -28), Vector2(-16, -42), fur, 5.0)
+			node.draw_circle(Vector2(-18, -45), 5.5, fur)
+			for side: float in [-1.0, 1.0]:
+				var base := Vector2(-18 + side * 3.0, -50)
+				node.draw_line(base, base + Vector2(side * 6.0, -10), Color(0.95, 0.95, 0.85), 2.0)
+				node.draw_line(base + Vector2(side * 3.0, -5), base + Vector2(side * 10.0, -8), Color(0.95, 0.95, 0.85), 2.0)
+			node.draw_circle(Vector2(-20, -46), 1.2, Color("1c2030"))
+			return
 		"leer":
 			return
 	node.draw_circle(Vector2(0, -10), 16.0, Color(0.8, 1.0, 0.9, 0.12 + 0.12 * glow))

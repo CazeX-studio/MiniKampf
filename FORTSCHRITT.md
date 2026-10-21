@@ -22,7 +22,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   Koch-Stand als Platzhalter, Ruf sichtbar). **Schritt 1 eingebaut (21.10.):** Nach „Leb wohl, Ye.“ geht es weiter
   über den Weg nach Grünwacht, durch den Wald und mit dem Seilaufzug hinauf nach Wipfelheim (siehe „Fertig in
   Lernprojekt 5“ und „Was du testen kannst“). **Schritt 2 eingebaut:** Monster auf dem Weg (Stufe 10–15) und dem
-  Waldboden (15–20), Kämpfe mit der eigenen Klasse, Stufen bis 20. Als Nächstes Schritt 3 (Fenns Prüfung).
+  Waldboden (15–20), Kämpfe mit der eigenen Klasse, Stufen bis 20. **Schritt 3 eingebaut:** Fenns Prüfung der drei
+  Ziele für Bogenschützen. Als Nächstes Schritt 4 (Professor Esche und Kobalt).
   Marco testet am Schluss alles zusammen.
 - **Neu (21.10.): Figuren und Nebenaufträge aus Sitzung 21** in Kreuzweg: Wirtin Hanne mit Gasthaus Wegrast, Vogt Edmar,
   Steinmetz Quill, die Kinder Pip und Lotte, die Wache heißt jetzt Brom. Fünf Nebenaufträge mit **blauem „!“ und „?“**
@@ -40,7 +41,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | – | Entscheidungen: alle Klassen, gleicher Spielstand, Stufen nach Reihenfolge, Sternentafel bei Bingo, Koch-Stand als Platzhalter, Ruf sichtbar | entschieden 21.10. |
 | 1 | Die Reise und Wipfelheim (mehrere Karten, Weg von Kreuzweg, Koch-Stand) | eingebaut, Marco testet am Schluss |
 | 2 | Die eigene Klasse in der Welt, Monster der Region | eingebaut, Marco testet am Schluss |
-| 3 | Einstieg Bogenschütze: Fenns Prüfung der drei Ziele | offen |
+| 3 | Einstieg Bogenschütze: Fenns Prüfung der drei Ziele | eingebaut, Marco testet am Schluss |
 | 4 | Einstieg Zähmer: Professor Esche und Kobalt | offen |
 | 5 | Geschichte 1 und 2: veränderte Tiere (Jäger oder Zähmer, Ruf), Kael | offen |
 | 6 | Geschichte 3: Rowans leeres Grab (Erinnerungs-Szene) | offen |
@@ -104,6 +105,24 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     **Ritualist** (etwa 60 %, er hat nur einen Angriff).
   - **Behoben:** Die alten Foto-Programme (`welt_auto`, `fest_auto`, `gesandte_auto`, `marv_auto`, `weg_auto`) liefen
     seit Lernprojekt 4 nicht mehr (alter Name `LOCAL_ID`).
+
+- **Schritt 3 – Fenns Prüfung der drei Ziele** (21.10., nur für Bogenschützen):
+  - Nach dem Gespräch mit Ysolde hat **Fenn** (Schießstand im Norden von Wipfelheim) ein „!“, aber nur für
+    Bogenschützen (neu: Aufträge können nur für bestimmte Klassen gelten).
+  - **Erstes Ziel:** drei stehende Strohscheiben. Fenn erklärt die hintere Reihe und die „Ruhige Hand“ (mehr kritische
+    Treffer von hinten). Erlaubt: Schneller Schuss, Reihe wechseln.
+  - **Zweites Ziel:** zwei laufende Scheiben. Ein schneller Schuss streift nur (30 %), erst **Bogen spannen**, dann
+    schießen (aufgeladener Schuss, lädt die Ult). Beides ist ein Lernkampf mit zwei Lektionen wie die Grundausbildung.
+  - **Drittes Ziel:** Der **Silberhirsch** steht auf einer kleinen Lichtung im Westen des Waldbodens (erscheint erst
+    jetzt). Er sieht dich an. Auswahl: „Den Bogen spannen und schießen.“ oder „Den Bogen sinken lassen.“ (ohne
+    Hinweis auf die Folgen).
+  - **Fenns Urteil:** Verschont → „Ein Jäger weiß, wann er nicht schießt. … Du bist jetzt Bogenschütze.“ und der Erfolg
+    **„Ein Jäger weiß, wann er nicht schießt“**. Geschossen → bestanden, aber „Das war nicht die Prüfung.“ (design.md).
+    Belohnung: 500 Erfahrung, 60 Gold.
+  - **Neu beim Laufen:** Wer irgendwohin tippt, läuft um Monster herum statt mitten hindurch (nur wer ein Monster
+    antippt, läuft hin).
+  - **Platzhalter:** alle Texte von Fenn und vom Silberhirsch, die Bilder der Scheiben (Strohpuppen).
+  - **Tests:** Prüfung mit beiden Entscheidungen im Grünwacht-Test, der Scheibenkampf im Lernkampf-Test (30 von 30).
 
 ## Aufgaben Lernprojekt 4 „Zusammen spielen“ (Fahrplan in `ZUSAMMEN_PLAN.md`)
 
@@ -675,6 +694,12 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spiel startet jetzt mit einem Menü.
 
+**Neu: Grünwacht Schritt 3 – Fenns Prüfung** (als Bogenschütze, nach dem Gespräch mit Ysolde)
+1. Hat Fenn ein „!“? Erklärt er die Scheiben gut (hintere Reihe, Bogen spannen)?
+2. Findest du den Silberhirsch im Westen des Waldes?
+3. Probier beide Entscheidungen aus (vorher speichern geht nicht, also zwei Durchläufe oder zu zweit):
+   Passt Fenns Reaktion? Gibt es den Erfolg beim Verschonen?
+
 **Neu: Grünwacht Schritt 2 – Monster und deine Klasse** (nach Schritt 1, auf dem Weg nach Grünwacht)
 1. Siehst du die Monster neben dem Weg mit Name und Stufe? Passen die Farben (grau, weiß, orange, rot)?
 2. Lauf in eines hinein: Kämpfst du mit deiner Klasse, im Wald-Hintergrund?
@@ -885,7 +910,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).
 - Lernprojekt 4 „Zusammen spielen“ ist gebaut: deine Rückmeldungen aus dem Test mit Freunden einarbeiten.
 - Lernprojekt 5 „Grünwacht“: Schritt 1 (Reise nach Wipfelheim) und Schritt 2 (Monster, eigene Klasse, Stufe 20)
-  sind eingebaut. Als Nächstes Schritt 3: Fenns Prüfung der drei Ziele.
+  sind eingebaut, Schritt 3 (Fenns Prüfung) auch. Als Nächstes Schritt 4: Professor Esche, Start-Monster und Kobalt.
 - Hinten angestellt: Schnellsätze und Emotes (Vorschläge im Ideen-Parkplatz von design.md).
 
 ## Offene Fragen an Marco

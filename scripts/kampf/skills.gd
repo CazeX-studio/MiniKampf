@@ -1271,6 +1271,8 @@ func enemy_intent(e: Fighter) -> String:
 			3:
 				return "Nächster Zug: Kettenzug nach hinten"
 	var data: Dictionary = Sandbox.ENEMIES[e.klass]
+	if not data.has("attacks"):
+		return data.get("absicht", "")
 	var attack: Dictionary = data.attacks[e.step % data.attacks.size()]
 	var text := "Nächster Zug: %s%s" % [attack.name, " (alle!)" if attack.get("all", false) else ""]
 	if data.has("wipe_nach"):

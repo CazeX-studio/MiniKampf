@@ -193,6 +193,11 @@ const ENEMIES := {
 		tame = {name = "Keulenschlag", base = 13, kind = "melee"}},
 	"uebungs_ye": {name = "Ausbilder Ye", element = "", hp = 999, tempo = 12, title = "Ausbilder Ye",
 		attacks = [{name = "Übungsschwert", base = 7, kind = "melee"}]},
+	# Fenns Prüfung der drei Ziele (Bogenschütze): Scheiben wehren sich nicht (passive), absicht = Text über der Scheibe
+	"zielscheibe": {name = "Zielscheibe", element = "", hp = 40, tempo = 1, passive = true,
+		absicht = "Steht still. Aus der hinteren Reihe trifft deine ruhige Hand öfter kritisch."},
+	"laufscheibe": {name = "Laufende Scheibe", element = "", hp = 60, tempo = 1, passive = true, resist = 0.3,
+		absicht = "Läuft hin und her: Ein schneller Schuss streift nur. Erst den Bogen spannen!"},
 	# Grünwacht: Monster auf dem Weg und im Wald (design.md „Grünwacht im Detail“). Werte vorläufig, Feinschliff am Ende.
 	"rindenbaer": {name = "Rindenbär", element = "Pflanze", hp = 120, tempo = 7, resist = 0.9,
 		attacks = [{name = "Prankenhieb", base = 15, kind = "melee"}, {name = "Prankenhieb", base = 15, kind = "melee"},

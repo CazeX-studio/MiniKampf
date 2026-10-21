@@ -14,6 +14,8 @@ func _initialize() -> void:
 	_test_separate_maps()
 	_test_save()
 	_test_wild()
+	_test_fenn("verschonen")
+	_test_fenn("schiessen")
 	print("Grünwacht: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)
 
@@ -143,11 +145,11 @@ func _test_journey() -> void:
 	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "talk", npc = "fenn"})
 	_tick(world, 8.0)
-	_check(p.in_dialog() and p.dialog.id == "fenn" and p.dialog.node == "schueler", "Fenn erkennt seinen Schüler")
+	_check(p.in_dialog() and p.dialog.id == "fenn" and p.dialog.node == "start", "Fenn bietet seinem Schüler die Prüfung an")
 
-	# Und wieder hinunter
+	# Und wieder hinunter („Gleich.“)
 	world.apply_command("a", {type = "dialog_next"})
-	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_choose", index = 1})
 	world.apply_command("a", {type = "use", target = _place_target(world, "wipfelheim", "seilaufzug")})
 	_tick(world, 8.0)
 	_check(p.map == "waldboden", "Mit dem Seilaufzug wieder hinunter")
@@ -297,6 +299,65 @@ func _test_wild() -> void:
 	w2.apply_command("a", {type = "use", target = target})
 	_tick(w2, 3.0)
 	_check(group_battles.size() == 1 and group_battles[0][0].size() == 2, "Gruppe in der Nähe kämpft gemeinsam gegen das Monster")
+
+
+## Schritt 3: Fenns Prüfung. Wer den Silberhirsch verschont, besteht mit Erfolg; wer schießt, besteht auch, Fenn ist enttäuscht.
+func _test_fenn(choice: String) -> void:
+	var world := WorldState.new()
+	var battles: Array[String] = []
+	world.battle_requested.connect(func(_id: String, kampf: String) -> void: battles.append(kampf))
+	var p := world.add_player("a", "Test", "elf_m", Vector2i(6, 15))
+	p.progress.flags["klasse"] = "archer"
+	p.progress.quests["nach_gruenwacht"] = "abgegeben"
+	p.progress.level = 12
+	world.change_map(p, "wipfelheim", Vector2i(16, 5))
+	_check(world.npc_marker(p, "fenn") == "!", "Fenn hat ein „!“ für den Bogenschützen")
+	var other := world.add_player("b", "Zähmer", "elf_f", Vector2i(6, 15))
+	other.progress.flags["klasse"] = "tamer"
+	other.progress.quests["nach_gruenwacht"] = "abgegeben"
+	world.change_map(other, "wipfelheim", Vector2i(16, 6))
+	_check(world.npc_marker(other, "fenn") == "", "Für den Zähmer kein „!“ bei Fenn")
+
+	world.apply_command("a", {type = "talk", npc = "fenn"})
+	_tick(world, 4.0)
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(p.progress.quest_state("fenns_pruefung") == "aktiv" and battles == ["fenns_pruefung"], "Prüfung beginnt mit dem Kampf an den Scheiben")
+	world.apply_command("a", {type = "kampf_ergebnis", kampf = "fenns_pruefung", gewonnen = true})
+	_check(p.progress.flags.has("fenn_ziele"), "Erstes und zweites Ziel geschafft")
+	_check(world.objective(p).contains("Silberhirsch"), "Ziel: den Silberhirsch aufspüren")
+
+	var deer := _place_target(world, "waldboden", "silberhirsch")
+	_check(not world.can_use(p, deer), "Der Hirsch ist oben in Wipfelheim nicht zu sehen")
+	world.change_map(p, "waldboden", Vector2i(14, 12))
+	_check(world.can_use(p, deer), "Der Silberhirsch steht im Wald")
+	world.apply_command("a", {type = "use", target = deer})
+	for i in 600:
+		world.tick(0.05)
+		if p.in_dialog():
+			break
+	_check(p.in_dialog() and p.dialog.id == "silberhirsch", "Hinlaufen ohne Monsterkampf, der Hirsch sieht dich an")
+	_check(battles.size() == 1, "Auf dem Weg zum Hirsch kein Kampf (um Monster herum gelaufen)")
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_choose", index = 1 if choice == "verschonen" else 0})
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.quest_state("fenns_pruefung") == "fertig", "Drittes Ziel erledigt (%s)" % choice)
+	_check(not world.can_use(p, deer), "Der Hirsch ist danach weg")
+
+	world.change_map(p, "wipfelheim", Vector2i(16, 5))
+	world.apply_command("a", {type = "talk", npc = "fenn"})
+	_tick(world, 4.0)
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.quest_state("fenns_pruefung") == "abgegeben" and p.progress.flags.has("klasse_gelernt"), "Prüfung bestanden (%s)" % choice)
+	if choice == "verschonen":
+		_check(p.progress.flags.has("erfolg:jaeger_schiesst_nicht"), "Erfolg „Ein Jäger weiß, wann er nicht schießt“")
+	else:
+		_check(not p.progress.flags.has("erfolg:jaeger_schiesst_nicht") and world.dialog_view(p).text.contains("nicht die Prüfung"), "Fenn ist enttäuscht")
+
+	# Der Kampf selbst: zwei Lektionen, als Bogenschütze
+	BattleRequest.prepare("fenns_pruefung", 12, 0, "archer")
+	_check(BattleRequest.setup.helden[0].klasse == "archer" and BattleRequest.setup.phasen.size() == 2, "Scheibenkampf: Bogenschütze, zwei Lektionen")
+	BattleRequest.kampf_id = ""
 
 
 func _place_target(world: WorldState, map_id: String, art: String) -> String:
