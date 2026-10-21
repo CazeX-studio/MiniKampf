@@ -1,6 +1,8 @@
 class_name WorldState
 extends RefCounted
-## Spiellogik der Stadt Kreuzweg – ohne Grafik.
+## Spiellogik der Welt – ohne Grafik. Die Welt besteht aus mehreren Karten (Kreuzweg, der Weg nach Grünwacht,
+## Waldboden, Wipfelheim …); jeder Spieler steht auf genau einer (PlayerState.map). Kreuzweg wird hier gebaut,
+## die anderen Karten kommen aus data/karten.json (siehe WorldMap).
 ## Alles, was Spieler tun, kommt als Befehl (Dictionary) mit Spieler-Kennung herein:
 ##   {type = "move", cell = Vector2i}    laufen
 ##   {type = "talk", npc = "ye"}         zu einem NPC laufen und mit ihm reden
@@ -13,6 +15,9 @@ extends RefCounted
 ##   {type = "dialog_choose", index = 0} im Gespräch eine Antwort wählen
 ##   {type = "szene_verlassen"}          eine gemeinsame Szene verlassen (Zusammenspielen)
 ##   {type = "kaufen", gegenstand = "…"} / {type = "verkaufen", gegenstand = "…"} / {type = "laden_zu"}  im geöffneten Laden
+##   {type = "karten_ergebnis", gegner = "marv", gewonnen = true, unentschieden = false}  Ende einer Partie Kreuzweg-Karten
+## Auf eine andere Karte kommt man über Ausgänge am Rand (hineinlaufen) oder über Orte mit der Aktion "reisen" (Seilaufzug).
+## Monster in der Wildnis ("monster:<Nummer>", aus data/karten.json): hineinlaufen oder antippen startet den Kampf.
 ## So kann später ein Server dieselben Befehle von vielen Spielern annehmen;
 ## die Anzeige (kreuzweg.gd) liest nur den Zustand und schickt Befehle.
 ## NPCs, Sammelpunkte, Dialoge und Aufträge kommen aus den Datendateien in res://data.
@@ -30,7 +35,12 @@ signal effect_requested(player_id: String, effect: String)
 ## Wechsel zu einem anderen Bildschirm (z. B. "klassenwahl", "abspann"). Nur Anzeige.
 signal scene_requested(player_id: String, scene: String)
 
-enum Tile { GRASS, ROAD, PLAZA, OVERGROWN }
+## Böden. Kreuzweg: Wiese, Straße, Platz, Gestrüpp. Grünwacht: Waldboden, Planken (Plattformen in den Baumkronen),
+## Hängebrücke und Laub (die Baumkronen unter den Plattformen, dort kann man nicht laufen). Höhlen: Höhlenboden und Fels.
+enum Tile { GRASS, ROAD, PLAZA, OVERGROWN, FOREST, PLANKS, BRIDGE, CANOPY, CAVE, ROCK }
+
+## Kennung der Stadt Kreuzweg (dort beginnt das Spiel)
+const KREUZWEG := "kreuzweg"
 
 const SIZE := Vector2i(44, 44)
 const CENTER := Vector2i(22, 22)
@@ -41,6 +51,9 @@ const WALK_SPEED := 5.5
 ## So nah muss man an etwas stehen, um es zu benutzen (in Feldern)
 const USE_RANGE := 1.6
 
+## Alle Karten: Kennung -> WorldMap
+var maps := {}
+## Kreuzweg (tiles, blocked, buildings und props zeigen auf dieselben Daten wie maps["kreuzweg"])
 ## tiles[y][x]
 var tiles: Array = []
 var blocked := {}
@@ -49,16 +62,25 @@ var buildings: Array[Dictionary] = []
 ## Kleinkram: {kind = "tree" / "bush" / "lantern" / "well" / "flowers" / "stand", cell} (Stand: auch color, text)
 var props: Array[Dictionary] = []
 var players := {}
-## NPCs: id -> {name, cell, look, tint, dialog}
+## NPCs aller Karten: id -> {name, cell, map, look, tint, dialog}
 var npcs := {}
-## Sammelpunkte: {item, cell}. Jeder Spieler kann jeden Punkt einmal einsammeln.
+## Sammelpunkte: {item, cell, map}. Jeder Spieler kann jeden Punkt einmal einsammeln.
 var pickups: Array[Dictionary] = []
-## Orte, die man benutzen kann (Kater, Laternenhaken …), nur solange ihre Bedingung stimmt
+## Orte, die man benutzen kann (Kater, Laternenhaken, Seilaufzug …), nur solange ihre Bedingung stimmt
 var places: Array[Dictionary] = []
-## Schmuck in der Stadt, der nur zu bestimmten Zeiten da ist (Festlaternen, Krater): {art, cell, cond}
+## Schmuck, der nur zu bestimmten Zeiten da ist (Festlaternen, Krater, Wegweiser): {art, cell, map, cond, text}
 var decorations: Array[Dictionary] = []
-
-var _astar := AStarGrid2D.new()
+## Monster in der Wildnis: {karte, feld, gegner, stufe} (GameData.wild_monsters). Wer eines besiegt, sieht es eine
+## Weile nicht mehr (MONSTER_RESPAWN), die anderen Spieler schon.
+var monsters: Array[Dictionary] = []
+## So nah muss man einem Monster kommen, damit der Kampf beginnt (Felder)
+const MONSTER_TOUCH := 0.6
+## So lange bleibt ein besiegtes Monster für den Spieler weg (Sekunden)
+const MONSTER_RESPAWN := 60.0
+## Spieler, deren Kampf gerade beginnt (bis das Ergebnis kommt oder sie gehen): Kennung -> true
+var _fighting := {}
+## Zufall für Monsterkarten als Beute (Tests setzen einen festen Startwert)
+var card_rng := RandomNumberGenerator.new()
 
 ## --- Gemeinsame Szenen (Zusammenspielen, Lernprojekt 4 Schritt 5) ---
 ## Spricht ein Gruppenmitglied eine Figur an, erleben Mitglieder in der Nähe das Gespräch mit. Bei Antworten stimmen alle
@@ -86,27 +108,52 @@ var _effect_time := {}
 
 
 func _init() -> void:
+	var town_map := WorldMap.new(KREUZWEG, SIZE, Tile.GRASS)
+	town_map.title = "Kreuzweg"
+	tiles = town_map.tiles
+	blocked = town_map.blocked
+	buildings = town_map.buildings
+	props = town_map.props
+	maps[KREUZWEG] = town_map
 	_build_map()
 	var town := GameData.get_file("kreuzweg")
-	var npc_data: Dictionary = town.get("npcs", {})
+	town_map.start = start_cell()
+	for d: Dictionary in town.get("ausgaenge", []):
+		town_map.add_exit(d)
+	town_map.finish()
+	_add_things(KREUZWEG, town)
+	monsters = GameData.wild_monsters()
+	var all_maps := GameData.get_file("karten")
+	var legend: Dictionary = all_maps.get("zeichen", {})
+	for id: String in all_maps:
+		if all_maps[id] is Dictionary and all_maps[id].has("raster"):
+			maps[id] = WorldMap.from_data(id, all_maps[id], legend)
+			_add_things(id, all_maps[id])
+	# Wer irgendwo hintippt, läuft um Monster herum statt mitten hindurch (nur wer sie antippt, läuft hin)
+	for m: Dictionary in monsters:
+		var astar: AStarGrid2D = get_map(m.karte).astar
+		if astar.region.has_point(m.feld) and not astar.is_point_solid(m.feld):
+			astar.set_point_weight_scale(m.feld, 40.0)
+
+
+## NPCs, Sammelpunkte, Orte und Schmuck einer Karte aus ihren Daten.
+func _add_things(map_id: String, data: Dictionary) -> void:
+	var m: WorldMap = maps[map_id]
+	var npc_data: Dictionary = data.get("npcs", {})
 	for id: String in npc_data:
 		var d: Dictionary = npc_data[id]
 		var cell := Vector2i(int(d.feld[0]), int(d.feld[1]))
-		npcs[id] = {name = d.name, cell = cell, look = d.aussehen, tint = Color(d.get("farbe", "ffffff")), dialog = d.get("dialog", id),
-				cond = d.get("wenn", {}), approach = d.get("anspringen", {})}
-		blocked[cell] = true
-	for d: Dictionary in town.get("deko", []):
-		decorations.append({art = d.art, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), cond = d.get("wenn", {})})
-	for d: Dictionary in town.get("sammelpunkte", []):
-		pickups.append({item = d.gegenstand, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), cond = d.get("wenn", {})})
-	for d: Dictionary in town.get("orte", []):
-		places.append({art = d.art, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), cond = d.get("wenn", {}),
+		npcs[id] = {name = d.name, cell = cell, map = map_id, look = d.aussehen, tint = Color(d.get("farbe", "ffffff")),
+				dialog = d.get("dialog", id), cond = d.get("wenn", {}), approach = d.get("anspringen", {})}
+		m.block(cell)
+	for d: Dictionary in data.get("deko", []):
+		decorations.append({art = d.art, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), map = map_id, cond = d.get("wenn", {}),
+				text = d.get("text", "")})
+	for d: Dictionary in data.get("sammelpunkte", []):
+		pickups.append({item = d.gegenstand, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), map = map_id, cond = d.get("wenn", {})})
+	for d: Dictionary in data.get("orte", []):
+		places.append({art = d.art, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), map = map_id, cond = d.get("wenn", {}),
 				dialog = d.get("dialog", ""), actions = d.get("aktionen", []), text = d.get("meldung", "")})
-	_astar.region = Rect2i(Vector2i.ZERO, SIZE)
-	_astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
-	_astar.update()
-	for cell: Vector2i in blocked:
-		_astar.set_point_solid(cell)
 
 
 # --- Karte ----------------------------------------------------------------------
@@ -114,11 +161,6 @@ func _init() -> void:
 ## Kreuzweg: Marktplatz mit der Statue der Fünf in der Mitte, sechs Straßen nach draußen.
 ## Die sechste (nach Südosten) ist zugewachsen und endet in Gestrüpp.
 func _build_map() -> void:
-	for y in SIZE.y:
-		var row: Array = []
-		for x in SIZE.x:
-			row.append(Tile.GRASS)
-		tiles.append(row)
 	var town := GameData.get_file("kreuzweg")
 
 	# Marktplatz (rund)
@@ -209,22 +251,88 @@ func _set_tile(cell: Vector2i, tile: Tile) -> void:
 
 
 func _building(p_name: String, rect: Rect2i, height: float, color: Color, art := "haus", roof := Color("6a3a2a")) -> void:
-	buildings.append({name = p_name, rect = rect, height = height, color = color, art = art, roof = roof})
-	for y in range(rect.position.y, rect.end.y):
-		for x in range(rect.position.x, rect.end.x):
-			blocked[Vector2i(x, y)] = true
+	maps[KREUZWEG].add_building(p_name, rect, height, color, art, roof)
 
 
-func in_bounds(cell: Vector2i) -> bool:
-	return cell.x >= 0 and cell.y >= 0 and cell.x < SIZE.x and cell.y < SIZE.y
+## Die Karte mit dieser Kennung (unbekannte Kennung: Kreuzweg).
+func get_map(map_id: String) -> WorldMap:
+	return maps.get(map_id, maps[KREUZWEG])
 
 
-func tile_at(cell: Vector2i) -> int:
-	return tiles[cell.y][cell.x] if in_bounds(cell) else -1
+func in_bounds(cell: Vector2i, map_id := KREUZWEG) -> bool:
+	return get_map(map_id).in_bounds(cell)
 
 
-func is_walkable(cell: Vector2i) -> bool:
-	return in_bounds(cell) and not blocked.has(cell)
+func tile_at(cell: Vector2i, map_id := KREUZWEG) -> int:
+	return get_map(map_id).tile_at(cell)
+
+
+func is_walkable(cell: Vector2i, map_id := KREUZWEG) -> bool:
+	return get_map(map_id).is_walkable(cell)
+
+
+## Nach dem Laden eines Spielstands: Gibt es die Karte nicht (mehr) oder ist das Feld belegt, geht es an den Start.
+func fix_position(p: PlayerState) -> void:
+	if not maps.has(p.map):
+		p.map = KREUZWEG
+		p.cell = start_cell()
+	if not is_walkable(p.cell, p.map):
+		p.cell = get_map(p.map).start
+	p.pos = Vector2(p.cell)
+
+
+## Auf welcher Karte ein Ziel ("npc:ye", "punkt:0", "ort:0") liegt ("" = unbekannt).
+func target_map(target: String) -> String:
+	var parts := target.split(":")
+	if parts.size() != 2:
+		return ""
+	if parts[0] == "npc" and npcs.has(parts[1]):
+		return npcs[parts[1]].map
+	if parts[0] == "punkt" and int(parts[1]) < pickups.size():
+		return pickups[int(parts[1])].map
+	if parts[0] == "ort" and int(parts[1]) < places.size():
+		return places[int(parts[1])].map
+	if parts[0] == "monster" and int(parts[1]) < monsters.size():
+		return monsters[int(parts[1])].karte
+	return ""
+
+
+## Bringt einen Spieler auf eine andere Karte (Ausgang am Rand, Seilaufzug). Ein laufendes Gespräch oder ein
+## offener Laden endet. Steht das Zielfeld nicht frei, kommt er am Start der Karte an.
+func change_map(p: PlayerState, map_id: String, cell: Vector2i) -> void:
+	if not maps.has(map_id):
+		return
+	_leave_scene(p)
+	p.dialog = {}
+	p.shop = ""
+	p.path.clear()
+	p.use_target = ""
+	var m: WorldMap = maps[map_id]
+	if not m.is_walkable(cell):
+		cell = m.start
+	# Dungeon von außen betreten: ein neuer Lauf beginnt (Bosse sind wieder da, die Entscheidung bleibt bestehen)
+	if m.dungeon != "" and p.map != map_id:
+		for flag: String in p.progress.flags.keys():
+			if flag.begins_with("lauf:"):
+				p.progress.flags.erase(flag)
+	p.map = map_id
+	p.cell = cell
+	p.pos = Vector2(cell)
+	_say(p, GameData.text("karte_betreten", [m.title]))
+	# Für Aufträge wie „Reise nach Wipfelheim“
+	p.progress.flags["besucht:" + map_id] = true
+	_update_quests(p)
+	progress_changed.emit(p.id)
+
+
+## Steht der Spieler in einem Ausgang seiner Karte, kommt er auf die nächste.
+func _check_exits(p: PlayerState) -> void:
+	if p.in_dialog():
+		return
+	for e: Dictionary in get_map(p.map).exits:
+		if e.rect.has_point(p.cell) and check(p, e.cond):
+			change_map(p, e.karte, e.feld)
+			return
 
 
 # --- Spieler --------------------------------------------------------------------
@@ -239,6 +347,7 @@ func remove_player(id: String) -> void:
 	if players.has(id):
 		_leave_scene(players[id])
 	players.erase(id)
+	_fighting.erase(id)
 
 
 ## Nimmt einen Befehl eines Spielers an.
@@ -250,7 +359,7 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 		"move":
 			var target: Vector2i = cmd.cell
 			p.shop = ""
-			if is_walkable(target) and not p.in_dialog():
+			if is_walkable(target, p.map) and not p.in_dialog():
 				p.use_target = ""
 				_walk_to(p, target)
 		"talk":
@@ -283,8 +392,13 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			var used := mini(int(cmd.get("traenke_benutzt", 0)), p.progress.item_count("heiltrank"))
 			if used > 0:
 				_give_item(p, "heiltrank", -used)
+			_fighting.erase(p.id)
+			for monster_id: String in cmd.get("gezaehmt", []):
+				_add_to_pack(p, monster_id, true)
 			_battle_result(p, str(cmd.get("kampf", "")), bool(cmd.get("gewonnen", false)))
 			_back_from_battle(p.id)
+		"karten_ergebnis":
+			_card_result(p, str(cmd.get("gegner", "")), bool(cmd.get("gewonnen", false)), bool(cmd.get("unentschieden", false)))
 		"benutzen":
 			_use_item(p, str(cmd.get("gegenstand", "")))
 		"kaufen":
@@ -320,24 +434,30 @@ func target_cell(target: String) -> Vector2i:
 		return pickups[int(parts[1])].cell
 	if parts.size() == 2 and parts[0] == "ort" and int(parts[1]) < places.size():
 		return places[int(parts[1])].cell
+	if parts.size() == 2 and parts[0] == "monster" and int(parts[1]) < monsters.size():
+		return monsters[int(parts[1])].feld
 	return Vector2i(-1, -1)
 
 
 ## Kann dieser Spieler das Ziel benutzen? (Ein schon eingesammelter Punkt oder ein gerade abwesender NPC nicht.)
 func can_use(p: PlayerState, target: String) -> bool:
+	if target_map(target) != p.map:
+		return false
 	if target.begins_with("punkt:"):
 		return target_cell(target) != Vector2i(-1, -1) and not p.progress.flags.has("gesammelt:" + target) \
 				and check(p, pickups[int(target.substr(6))].cond)
 	if target.begins_with("ort:"):
 		return target_cell(target) != Vector2i(-1, -1) and check(p, places[int(target.substr(4))].cond)
+	if target.begins_with("monster:"):
+		return target_cell(target) != Vector2i(-1, -1) and monster_here(p, int(target.substr(8)))
 	if target.begins_with("npc:") and not npc_visible(p, target.substr(4)):
 		return false
 	return target_cell(target) != Vector2i(-1, -1)
 
 
-## Ist der NPC für diesen Spieler gerade da? (z. B. Ye erst in der Gilde, später am Stadttor)
+## Ist der NPC für diesen Spieler gerade da? (z. B. Ye erst in der Gilde, später am Stadttor; nur auf der eigenen Karte)
 func npc_visible(p: PlayerState, npc_id: String) -> bool:
-	return npcs.has(npc_id) and check(p, npcs[npc_id].cond)
+	return npcs.has(npc_id) and npcs[npc_id].map == p.map and check(p, npcs[npc_id].cond)
 
 
 ## Das Nächste, das der Spieler direkt nebenan benutzen kann ("" = nichts).
@@ -351,6 +471,8 @@ func usable_near(p: PlayerState) -> String:
 		targets.append("punkt:%d" % i)
 	for i in places.size():
 		targets.append("ort:%d" % i)
+	for i in monsters.size():
+		targets.append("monster:%d" % i)
 	for target in targets:
 		if not can_use(p, target):
 			continue
@@ -366,7 +488,7 @@ func _go_use(p: PlayerState, target: String) -> void:
 	if p.in_dialog() or not can_use(p, target):
 		return
 	var cell := target_cell(target)
-	var spot := cell if not target.begins_with("npc:") and is_walkable(cell) else _free_neighbor(cell, p.cell)
+	var spot := cell if not target.begins_with("npc:") and is_walkable(cell, p.map) else _free_neighbor(cell, p.cell, p.map)
 	if spot == Vector2i(-1, -1):
 		return
 	p.use_target = target
@@ -376,7 +498,7 @@ func _go_use(p: PlayerState, target: String) -> void:
 func _walk_to(p: PlayerState, target: Vector2i) -> void:
 	# Läuft der Spieler gerade, geht es vom nächsten Feld aus weiter
 	var start := p.path[0] if p.is_moving() else p.cell
-	var route := _astar.get_id_path(start, target)
+	var route := get_map(p.map).astar.get_id_path(start, target)
 	var path: Array[Vector2i] = []
 	if p.is_moving():
 		path.append(start)
@@ -389,12 +511,12 @@ func _walk_to(p: PlayerState, target: Vector2i) -> void:
 
 
 ## Freies Nachbarfeld, das am nächsten am Spieler liegt.
-func _free_neighbor(npc_cell: Vector2i, from: Vector2i) -> Vector2i:
+func _free_neighbor(npc_cell: Vector2i, from: Vector2i, map_id := KREUZWEG) -> Vector2i:
 	var best := Vector2i(-1, -1)
 	for dir: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1),
 			Vector2i(1, 1), Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 1)]:
 		var cell := npc_cell + dir
-		if is_walkable(cell) and (best == Vector2i(-1, -1) or (cell - from).length() < (best - from).length()):
+		if is_walkable(cell, map_id) and (best == Vector2i(-1, -1) or (cell - from).length() < (best - from).length()):
 			best = cell
 	return best
 
@@ -407,7 +529,7 @@ func _steer(p: PlayerState, delta: float) -> void:
 			continue
 		var next := p.pos + attempt
 		var cell := Vector2i(next.round())
-		if is_walkable(cell):
+		if is_walkable(cell, p.map):
 			p.pos = next
 			p.cell = cell
 			break
@@ -422,6 +544,8 @@ func tick(delta: float) -> void:
 	_tick_scenes(delta)
 	for p: PlayerState in players.values():
 		move_player(p, delta)
+		_check_exits(p)
+		_check_monsters(p)
 		_check_approach(p)
 		if not p.is_moving() and p.use_target != "":
 			var target := p.use_target
@@ -453,6 +577,9 @@ func move_player(p: PlayerState, delta: float) -> void:
 
 func _use(p: PlayerState, target: String) -> void:
 	if not can_use(p, target):
+		return
+	if target.begins_with("monster:"):
+		_start_wild(p, int(target.substr(8)))
 		return
 	if target.begins_with("npc:"):
 		var npc_id := target.substr(4)
@@ -580,7 +707,8 @@ func _effect(p: PlayerState, effect: String) -> void:
 		return
 	_effect_time[effect] = _time
 	for id: String in players:
-		effect_requested.emit(id, effect)
+		if players[id].map == p.map:
+			effect_requested.emit(id, effect)
 
 
 ## Ein Gruppenkampf beginnt (Netz): Danach warten alle Beteiligten aufeinander, bevor sie jemand anspricht.
@@ -622,7 +750,7 @@ func _start_talk(p: PlayerState, npc_id: String, approach_flag := "") -> void:
 	var partners: Array[PlayerState] = []
 	for id: String in group_members.call(p.id):
 		var other: PlayerState = players.get(id)
-		if other != null and other != p and not other.in_dialog() and other.shop == "" \
+		if other != null and other != p and not other.in_dialog() and other.shop == "" and other.map == p.map \
 				and other.pos.distance_to(p.pos) <= SCENE_RANGE:
 			partners.append(other)
 	if partners.is_empty() or entry == "":
@@ -882,7 +1010,24 @@ func check(p: PlayerState, cond: Dictionary) -> bool:
 		return false
 	if cond.has("stufe_ab") and p.progress.level < int(cond.stufe_ab):
 		return false
+	# {"region": "Grünwacht"}: Die gewählte Klasse gehört in diese Region ({"nicht_region": …} = gerade nicht)
+	if cond.has("region") and _class_region(p) != cond.region:
+		return false
+	if cond.has("nicht_region") and _class_region(p) == cond.nicht_region:
+		return false
+	# {"hat": "sternentafel"}: diesen Gegenstand in der Tasche ({"nicht_hat": …} = nicht)
+	if cond.has("hat") and p.progress.item_count(cond.hat) <= 0:
+		return false
+	if cond.has("nicht_hat") and p.progress.item_count(cond.nicht_hat) > 0:
+		return false
+	# {"klasse": "archer"}: genau diese Klasse gewählt
+	if cond.has("klasse") and str(p.progress.flags.get("klasse", "")) != cond.klasse:
+		return false
 	return true
+
+
+func _class_region(p: PlayerState) -> String:
+	return str(Sandbox.CLASSES.get(str(p.progress.flags.get("klasse", "")), {}).get("region", ""))
 
 
 func run_actions(p: PlayerState, actions: Array) -> void:
@@ -913,6 +1058,21 @@ func run_actions(p: PlayerState, actions: Array) -> void:
 			_unlock(p, action.erfolg)
 		if action.has("kampf"):
 			battle_requested.emit(p.id, action.kampf)
+		if action.has("ruf"):
+			# {"ruf": "jaeger", "wert": 10}: Ruf bei einer Gruppe (Jäger, Zähmer …), sichtbar unter „Werte“
+			change_reputation(p, str(action.ruf), int(action.get("wert", 0)))
+		if action.has("kartenspiel"):
+			# {"kartenspiel": "marv"}: eine Partie Kreuzweg-Karten gegen diese Figur (eigener Bildschirm)
+			_ensure_starter_cards(p)
+			scene_requested.emit(p.id, "kartenspiel:" + str(action.kartenspiel))
+		if action.has("karte"):
+			add_card(p, str(action.karte))
+		if action.has("monster_geben"):
+			_add_to_pack(p, action.monster_geben)
+		if action.has("reisen"):
+			# {"reisen": "wipfelheim", "feld": [x, y]}: auf eine andere Karte (z. B. mit dem Seilaufzug)
+			var to: Array = action.get("feld", [-1, -1])
+			change_map(p, action.reisen, Vector2i(int(to[0]), int(to[1])))
 	_update_quests(p)
 	progress_changed.emit(p.id)
 
@@ -940,6 +1100,9 @@ func quest_goals_met(p: PlayerState, id: String) -> bool:
 			"gemerkt":
 				if not p.progress.flags.has(goal.merken):
 					return false
+			"besitzen":
+				if p.progress.item_count(goal.gegenstand) < int(goal.get("anzahl", 1)):
+					return false
 			"kampf":
 				if not p.progress.flags.has("kampf_gewonnen:" + str(goal.kampf)):
 					return false
@@ -955,6 +1118,8 @@ func goal_done(p: PlayerState, goal: Dictionary) -> bool:
 			return p.progress.flags.has("geredet:" + str(goal.npc))
 		"gemerkt":
 			return p.progress.flags.has(goal.merken)
+		"besitzen":
+			return p.progress.item_count(goal.gegenstand) >= int(goal.get("anzahl", 1))
 		"kampf":
 			return p.progress.flags.has("kampf_gewonnen:" + str(goal.kampf))
 	return true
@@ -970,7 +1135,7 @@ func goal_text(p: PlayerState, goal: Dictionary) -> String:
 			var npc: Dictionary = npcs.get(goal.npc, {name = goal.npc})
 			var done := p.progress.flags.has("geredet:" + str(goal.npc))
 			return "Mit %s reden%s" % [npc.name, " (erledigt)" if done else ""]
-		"gemerkt", "kampf":
+		"gemerkt", "kampf", "besitzen":
 			return "%s%s" % [goal.get("text", goal.get("merken", goal.get("kampf", ""))), " (erledigt)" if goal_done(p, goal) else ""]
 	return ""
 
@@ -1023,8 +1188,10 @@ func _marker(p: PlayerState, npc_id: String) -> Array:
 						return ["?", side]
 		for id: String in all_quests:
 			var q: Dictionary = all_quests[id]
+			# start_wenn: nur für manche Spieler (z. B. Fenns Prüfung nur für Bogenschützen)
 			if bool(q.get("neben", false)) == side and q.get("start_bei", "") == npc_id and p.progress.quest_state(id) == "neu" \
-					and (not q.has("voraussetzung") or p.progress.quest_state(q.voraussetzung) == "abgegeben"):
+					and (not q.has("voraussetzung") or p.progress.quest_state(q.voraussetzung) == "abgegeben") \
+					and check(p, q.get("start_wenn", {})):
 				return ["!", side]
 	return ["", false]
 
@@ -1073,7 +1240,7 @@ func _use_item(p: PlayerState, item_id: String) -> void:
 	if use.is_empty() or p.in_dialog() or p.progress.item_count(item_id) <= 0:
 		return
 	var spot := Vector2(float(use.feld[0]), float(use.feld[1]))
-	if (spot - p.pos).length() > float(use.get("radius", 2.0)):
+	if use.get("karte", KREUZWEG) != p.map or (spot - p.pos).length() > float(use.get("radius", 2.0)):
 		_say(p, use.get("sonst", GameData.text("benutzen_nicht_hier", [GameData.item_name(item_id)])))
 		return
 	p.path.clear()
@@ -1104,6 +1271,87 @@ func _give_item(p: PlayerState, item_id: String, count: int) -> void:
 		_say(p, GameData.text("gegenstand_weg", [-count, GameData.item_name(item_id)]))
 
 
+# --- Ruf ------------------------------------------------------------------------------
+
+## Ruf liegt zwischen -100 und 100 (0 = neutral). Gruppen und ihre Namen stehen in data/texte.json („ruf_jaeger“ …).
+const REPUTATION_MAX := 100
+
+
+func reputation(p: PlayerState, group: String) -> int:
+	return int(p.progress.flags.get("ruf:" + group, 0))
+
+
+func change_reputation(p: PlayerState, group: String, amount: int) -> void:
+	if amount == 0:
+		return
+	p.progress.flags["ruf:" + group] = clampi(reputation(p, group) + amount, -REPUTATION_MAX, REPUTATION_MAX)
+	_say(p, GameData.text("ruf_aenderung", [GameData.text("ruf_" + group), "+%d" % amount if amount > 0 else str(amount)]))
+
+
+# --- Rudel des Zähmers -------------------------------------------------------------
+
+## Ein Monster kommt ins Rudel (Start-Monster von Esche oder in der Wildnis gezähmt). Höchstens Sandbox.MAX_MONSTERS.
+func _add_to_pack(p: PlayerState, monster_id: String, tamed := false) -> void:
+	if not Sandbox.MONSTERS.has(monster_id) and not Sandbox.ENEMIES.has(monster_id):
+		return
+	var pack: Array = p.progress.flags.get("monster", []).duplicate()
+	var name: String = Sandbox.MONSTERS.get(monster_id, Sandbox.ENEMIES.get(monster_id, {})).name
+	if pack.size() >= Sandbox.MAX_MONSTERS:
+		_say(p, GameData.text("rudel_voll", [name]))
+		return
+	pack.append(monster_id)
+	p.progress.flags["monster"] = pack
+	if tamed:
+		p.progress.flags["erstes_zaehmen"] = true
+	_say(p, GameData.text("rudel_neu", [name]))
+	_update_quests(p)
+	progress_changed.emit(p.id)
+
+
+# --- Monster in der Wildnis ------------------------------------------------------
+
+## Steht das Monster für diesen Spieler gerade da? (Nach einem Sieg ist es eine Weile weg.)
+func monster_here(p: PlayerState, index: int) -> bool:
+	var beaten := float(p.progress.flags.get("besiegt:monster:%d" % index, -INF))
+	return Time.get_unix_time_from_system() - beaten >= MONSTER_RESPAWN
+
+
+## Läuft der Spieler in ein Monster hinein, beginnt der Kampf.
+func _check_monsters(p: PlayerState) -> void:
+	if p.in_dialog() or p.shop != "" or _fighting.has(p.id) or waiting_for_group(p.id):
+		return
+	for i in monsters.size():
+		var m: Dictionary = monsters[i]
+		if m.karte == p.map and (Vector2(m.feld) - p.pos).length() < MONSTER_TOUCH and monster_here(p, i):
+			_start_wild(p, i)
+			return
+
+
+## Kampf gegen ein Monster: allein oder mit den Gruppenmitgliedern in der Nähe (wie bei gemeinsamen Szenen).
+func _start_wild(p: PlayerState, index: int) -> void:
+	if _fighting.has(p.id) or p.in_dialog():
+		return
+	var ids: Array[String] = [p.id]
+	for id: String in group_members.call(p.id):
+		var other: PlayerState = players.get(id)
+		if other != null and other != p and other.map == p.map and not other.in_dialog() and other.shop == "" \
+				and not _fighting.has(id) and other.pos.distance_to(p.pos) <= SCENE_RANGE:
+			ids.append(id)
+	for id in ids:
+		_fighting[id] = true
+		players[id].path.clear()
+		players[id].steer = Vector2.ZERO
+		players[id].use_target = ""
+	var kampf := "wild:%d" % index
+	if ids.size() > 1:
+		for id in ids:
+			if id != p.id:
+				notice.emit(id, GameData.text("wild_gruppe", [p.display_name]))
+		group_battle_requested.emit(ids, kampf)
+	else:
+		battle_requested.emit(p.id, kampf)
+
+
 # --- NPCs, die einen ansprechen ------------------------------------------------
 
 ## Manche NPCs (z. B. Marv) sprechen dich von sich aus an, sobald du nah genug bist – einmal.
@@ -1112,7 +1360,8 @@ func _check_approach(p: PlayerState) -> void:
 		return
 	for id: String in npcs:
 		var approach: Dictionary = npcs[id].approach
-		if approach.is_empty() or p.progress.flags.has("angesprochen:" + id) or not npc_visible(p, id):
+		if approach.is_empty() or p.progress.flags.has("angesprochen:" + id) or not npc_visible(p, id) \
+				or not check(p, approach.get("wenn", {})):
 			continue
 		if (Vector2(npcs[id].cell) - p.pos).length() <= float(approach.get("radius", 3)):
 			p.progress.flags["angesprochen:" + id] = true
@@ -1127,8 +1376,10 @@ func _check_approach(p: PlayerState) -> void:
 ## Waren eines Ladens: [{gegenstand, preis}] (Preise aus data/gegenstaende.json).
 func shop_wares(shop_id: String) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
-	for item_id: String in GameData.get_file("laeden").get(shop_id, {}).get("waren", []):
-		result.append({gegenstand = item_id, preis = int(GameData.item(item_id).get("preis", 0))})
+	# Ein Laden kann eigene Preise haben ("preise"), sonst gilt der Preis aus gegenstaende.json
+	var shop: Dictionary = GameData.get_file("laeden").get(shop_id, {})
+	for item_id: String in shop.get("waren", []):
+		result.append({gegenstand = item_id, preis = int(shop.get("preise", {}).get(item_id, GameData.item(item_id).get("preis", 0)))})
 	return result
 
 
@@ -1172,11 +1423,19 @@ func _battle_result(p: PlayerState, kampf_id: String, won: bool) -> void:
 	var battle: Dictionary = GameData.battle(kampf_id)
 	if battle.is_empty():
 		return
+	if battle.get("wild", false):
+		_wild_result(p, kampf_id, battle, won)
+		return
 	# Manche Kämpfe gehen die Geschichte in jedem Fall weiter (Sternenfall: Ren rettet oder klaut)
 	if battle.has("merken_immer"):
 		p.progress.flags[battle.merken_immer] = true
 	if not won:
 		_say(p, battle.get("verloren_text", GameData.text("kampf_verloren")))
+		# Dungeon-Bosse: Wer verliert, wacht am Eingang wieder auf
+		if battle.get("zurueck_zum_start", false):
+			p.path.clear()
+			p.cell = get_map(p.map).start
+			p.pos = Vector2(p.cell)
 		_update_quests(p)
 		progress_changed.emit(p.id)
 		return
@@ -1190,6 +1449,70 @@ func _battle_result(p: PlayerState, kampf_id: String, won: bool) -> void:
 		p.progress.flags[flag] = true
 		if battle.has("erfahrung"):
 			_give_xp(p, int(battle.erfahrung))
+	_update_quests(p)
+	progress_changed.emit(p.id)
+
+
+## Kreuzweg-Karten: Sammlung im Spielstand (Gemerktes "karten": Kennung -> Anzahl).
+func add_card(p: PlayerState, card_id: String) -> void:
+	if not GameData.get_file("kartenspiel").get("karten", {}).has(card_id):
+		return
+	var cards: Dictionary = p.progress.flags.get("karten", {}).duplicate()
+	cards[card_id] = int(cards.get(card_id, 0)) + 1
+	p.progress.flags["karten"] = cards
+	_say(p, GameData.text("karte_neu", [KartenSpiel.card(card_id).name]))
+
+
+## Mit der Sternentafel kommen die Startkarten (beim ersten Spiel).
+func _ensure_starter_cards(p: PlayerState) -> void:
+	if not p.progress.flags.get("karten", {}).is_empty():
+		return
+	var cards := {}
+	for id: String in GameData.get_file("kartenspiel").get("startkarten", []):
+		cards[id] = int(cards.get(id, 0)) + 1
+	p.progress.flags["karten"] = cards
+	_say(p, GameData.text("startkarten", [cards.size()]))
+
+
+## Ende einer Partie: gemerkt wird, gegen wen man gespielt hat; ein Sieg bringt die Belohnung des Gegners
+## (Gold jedes Mal, eine besondere Karte nur beim ersten Sieg).
+func _card_result(p: PlayerState, opponent: String, won: bool, draw: bool) -> void:
+	var data: Dictionary = GameData.get_file("kartenspiel").get("gegner", {}).get(opponent, {})
+	if data.is_empty():
+		return
+	p.progress.flags["gespielt:" + opponent] = true
+	if won:
+		_say(p, GameData.text("karten_sieg", [data.get("name", opponent)]))
+		var reward: Dictionary = data.get("belohnung", {})
+		if reward.has("gold"):
+			_give_gold(p, int(reward.gold))
+		if reward.has("karte") and not p.progress.flags.has("karten_sieg:" + opponent):
+			add_card(p, str(reward.karte))
+		p.progress.flags["karten_sieg:" + opponent] = true
+	else:
+		_say(p, GameData.text("karten_unentschieden" if draw else "karten_verloren", [data.get("name", opponent)]))
+	_update_quests(p)
+	progress_changed.emit(p.id)
+
+
+## Monster in der Wildnis: Jeder Sieg bringt Erfahrung und etwas Gold, das Monster ist dann eine Weile weg.
+## Bei einer Niederlage wacht man am Start der Karte wieder auf.
+func _wild_result(p: PlayerState, kampf_id: String, battle: Dictionary, won: bool) -> void:
+	if won:
+		_say(p, GameData.text("kampf_gewonnen", [battle.get("name", kampf_id)]))
+		p.progress.flags["besiegt:monster:%d" % int(kampf_id.substr(5))] = Time.get_unix_time_from_system()
+		_give_gold(p, int(battle.get("gold", 0)))
+		_give_xp(p, int(battle.get("erfahrung", 0)))
+		# Mit etwas Glück eine Monsterkarte (nur wer schon eine Sternentafel hat, sammelt Karten)
+		var drop: Array = GameData.wild_monsters()[int(kampf_id.substr(5))].gegner
+		if p.progress.item_count("sternentafel") > 0 and card_rng.randf() < float(GameData.get_file("kartenspiel").get("beute", 0.0)):
+			add_card(p, str(drop[card_rng.randi() % drop.size()]))
+	else:
+		_say(p, GameData.text("wild_verloren"))
+		var start := get_map(p.map).start
+		p.path.clear()
+		p.cell = start
+		p.pos = Vector2(start)
 	_update_quests(p)
 	progress_changed.emit(p.id)
 

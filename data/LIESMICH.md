@@ -7,6 +7,8 @@ Nach jeder Zeile außer der letzten in einer Gruppe kommt ein Komma.
 | Datei | Inhalt |
 |-------|--------|
 | `kreuzweg.json` | NPCs (Name, Platz, Aussehen, welcher Dialog) und Sammelpunkte in der Stadt |
+| `erinnerungen.json` | Erinnerungs-Szenen (ein Splitter zeigt die Vergangenheit): Figuren und Schritte, Aktion `{"szene": "erinnerung:rowan"}` |
+| `karten.json` | Alle Karten außer Kreuzweg (Weg nach Grünwacht, Waldboden, Wipfelheim) als Bild aus Zeichen, mit Häusern, NPCs, Orten und Ausgängen |
 | `dialoge.json` | Gespräche: wer spricht, was, Antwortmöglichkeiten, was danach passiert |
 | `auftraege.json` | Aufträge: Titel, Beschreibung, Ziele, Belohnung |
 | `gegenstaende.json` | Gegenstände: Name, Beschreibung, Preis |
@@ -106,3 +108,31 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
 - **Gegenstände benutzen:** in `gegenstaende.json` `"benutzen": {"feld": [x, y], "radius": 3, "dialog": "…", "sonst": "…"}`.
   In der Tasche steht dann „[Benutzen]“. Nah genug an `feld` startet der Dialog, sonst kommt die Meldung `sonst`.
 
+## Karten (seit Grünwacht Schritt 1, `karten.json`)
+
+- Jede Karte hat `name` (erscheint beim Betreten), `grund` (Boden, wo ein Zeichen keinen eigenen nennt), `start`
+  (wo man ankommt, wenn nichts anderes gilt), optional `licht` (Farbe, z. B. etwas dunkler im Wald) und `raster`.
+- **`raster`** ist die Karte als Bild: eine Zeile pro Reihe, ein Zeichen pro Feld. Links oben ist Feld [0, 0],
+  x zählt nach rechts, y nach unten (im Spiel liegt x schräg nach rechts unten, y schräg nach links unten).
+  Was die Zeichen bedeuten, steht oben in der Datei unter `zeichen`, z. B. `~` Baumkronen (gesperrt), `#` Plattform,
+  `-` Hängebrücke, `,` Waldboden, `=` Weg, `t` Baum, `R` Riesenbaum. Neue Zeichen kann man dort dazuschreiben.
+- `haeuser` (`feld`: [x, y, Breite, Höhe]), `staende`, `npcs`, `orte`, `sammelpunkte` und `deko` wie in `kreuzweg.json`.
+- **`ausgaenge`:** `{"bereich": [x, y, Breite, Höhe], "karte": "waldboden", "feld": [27, 12], "wenn": {…}}` – wer in den Bereich
+  läuft, kommt auf die andere Karte an das Feld. Auch `kreuzweg.json` hat einen (Weststraße, erst nach der Klassenwahl).
+- **Aktion `{"reisen": "wipfelheim", "feld": [6, 15]}`** bringt einen auf eine andere Karte (z. B. der Seilaufzug als Ort).
+- **Deko `wegweiser`:** `"text": "Grünwacht|Kreuzweg"` = oben ein Schild nach links, darunter eins nach rechts.
+- **Ziel `{"art": "gemerkt", "merken": "besucht:wipfelheim"}`** ist erfüllt, sobald man die Karte einmal betreten hat.
+- **Bedingungen nach Klasse:** `{"klasse": "archer"}` (genau diese Klasse), `{"region": "Grünwacht"}` (Klasse gehört in
+  diese Region), `{"nicht_region": "Grünwacht"}` (gehört nicht dorthin). Kennungen der Klassen: siehe `klassen.json` → `reihenfolge`.
+- **`monster`** (seit Grünwacht Schritt 2): Monster in der Wildnis, z. B.
+  `{"feld": [33, 8], "gegner": ["windfalke", "windfalke"], "stufe": 11}`. Man sieht das erste Monster der Gruppe
+  mit Name und Stufe auf der Karte; läuft man hinein oder tippt es an, beginnt der Kampf (mit der eigenen Klasse,
+  Gruppenmitglieder in der Nähe kämpfen mit). Jeder Sieg bringt Erfahrung (12 × Stufe je Monster) und Gold (2 × Stufe),
+  danach ist das Monster für einen eine Minute weg. Gegner-Kennungen stehen in `scripts/kampf/sandbox.gd` (ENEMIES).
+  `kampf_hintergrund` der Karte: Bild im Kampf (`wald`, `wiese`, `gewoelbe` …).
+- **Dungeons** (seit Grünwacht Schritt 7): Eine Karte mit `"dungeon": "pilzhoehle"` benutzt in allen Kämpfen die
+  Dungeon-Regeln (Mechaniken der Pilzhöhle). Gemerktes, das mit `lauf:` beginnt (z. B. `lauf:koenigin`), wird beim
+  Betreten von außen gelöscht: So sind die Bosse bei jedem neuen Lauf wieder da, Entscheidungen bleiben bestehen.
+  Bosse sind Orte mit dem Bild des Gegners (`"art": "sporenkoenigin"`), Kämpfe mit `"begleiter"` füllen freie
+  Plätze mit Ida, Bo und Tom.
+- **Stufen** (`stufen.json`): jetzt bis Stufe 20 (Kreuzweg 1–10, Weg nach Grünwacht 10–15, Grünwacht 15–20).

@@ -193,7 +193,7 @@ func _test_boss_scaling() -> void:
 	var one := BattleRequest.build_group("sternenfall", [{name = "A", stufe = 8}])
 	var two := BattleRequest.build_group("sternenfall", [{name = "A", stufe = 8}, {name = "B", stufe = 8}])
 	_check(is_equal_approx(float(two.gegner_leben), 1.25) and is_equal_approx(float(one.gegner_leben), 1.0), "Zwei Spieler: Sternenfresser mit 25 % mehr Leben")
-	_check(not BattleRequest.build_group("gruppenkampf", [{name = "A", stufe = 3}, {name = "B", stufe = 3}]).has("gegner_leben"), "Andere Kämpfe bleiben gleich stark")
+	_check(is_equal_approx(float(BattleRequest.build_group("gruppenkampf", [{name = "A", stufe = 3}, {name = "B", stufe = 3}]).get("gegner_leben", 1.0)), 1.0), "Andere Kämpfe bleiben gleich stark")
 	var hp := []
 	for setup: Dictionary in [one, two]:
 		var battle := BattleState.new(null, [] as Array[String], "", 1)

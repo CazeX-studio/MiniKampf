@@ -1,4 +1,7 @@
 {
+	"honigwabe": {"name": "Honigwabe", "beschreibung": "Vom verrückten Bienenstock. Süß, und sie summt ganz leise. (Für den Beruf Kochen, kommt später.)", "preis": 8},
+	"sternensplitter": {"name": "Sternensplitter", "beschreibung": "Ein Splitter des Siegels. Er summt leise. Belohnung für einen abgeschlossenen Dungeon.", "preis": 0},
+	"schleuder": {"name": "Schleuder", "beschreibung": "Von Professor Esche. Zähmer schießen damit im Kampf kleine Steine (Fähigkeit „Schleuder“).", "preis": 0},
 	"kraut": {"name": "Silberkraut", "beschreibung": "Ein Heilkraut, das zwischen den Pflastersteinen wächst.", "preis": 2},
 	"heiltrank": {"name": "Heiltrank", "beschreibung": "Heilt im Kampf etwas Leben.", "preis": 15},
 	"sternensplitter": {"name": "Sternensplitter", "beschreibung": "Ein Splitter aus dem Sternenfall. Belohnung aus Dungeons. Er summt leise. (Bingo kauft ihn nicht an.)", "preis": 0},

@@ -33,6 +33,41 @@ const NORMAL_REACT_BLOCK := 0.25
 const LEVEL_HP := 10
 const LEVEL_MANA := 4
 
+## Monster in der Wildnis (Grünwacht): pro Stufe über 1 so viel mehr Leben und Schaden (vorläufig, Feinschliff am Ende)
+const MONSTER_HP_PER_LEVEL := 0.09
+const MONSTER_POWER_PER_LEVEL := 0.06
+
+
+## Stufenabstand (Grünwacht, Entscheidung 21.10.: Die Stufe soll mehr zählen): Ist der Gegner höher als man selbst,
+## macht man pro Stufe so viel weniger Schaden und Heilung und bekommt so viel härtere Treffer. Ist man höher, umgekehrt.
+## Höchstens MAX_LEVEL_GAP Stufen zählen. Bei gleicher Stufe ändert sich nichts. Vorläufig, Feinschliff am Ende.
+const GAP_HERO_PER_LEVEL := 0.06
+const GAP_ENEMY_PER_LEVEL := 0.08
+const MAX_LEVEL_GAP := 5
+
+
+## Stufenabstand Gegner minus Held, begrenzt auf ±MAX_LEVEL_GAP.
+static func level_gap(enemy_level: int, hero_level: int) -> int:
+	return clampi(enemy_level - hero_level, -MAX_LEVEL_GAP, MAX_LEVEL_GAP)
+
+
+## Schaden und Heilung des Helden bei diesem Stufenabstand (1 = gleich stark).
+static func gap_hero_factor(gap: int) -> float:
+	return 1.0 - GAP_HERO_PER_LEVEL * gap
+
+
+## Schaden der Gegner bei diesem Stufenabstand (1 = gleich stark).
+static func gap_enemy_factor(gap: int) -> float:
+	return 1.0 + GAP_ENEMY_PER_LEVEL * gap
+
+
+static func monster_hp(level: int) -> float:
+	return 1.0 + MONSTER_HP_PER_LEVEL * maxi(level - 1, 0)
+
+
+static func monster_power(level: int) -> float:
+	return 1.0 + MONSTER_POWER_PER_LEVEL * maxi(level - 1, 0)
+
 ## Boss-Werte
 const BOSS_FIST := 23
 const BOSS_ROCKFALL := 30
@@ -77,6 +112,8 @@ var parry_base := 0
 var _events: Array[Dictionary] = []
 var _last_crit := false
 var _last_eff := 1.0
+## Stufen der Helden, für die der Stufenabstand zu den Gegnern zählt
+var _gap_levels: Array[int] = []
 
 
 func _init(p_controller: Object, p_team: Array[String], p_encounter: String, p_seed: int) -> void:
@@ -92,6 +129,9 @@ func run() -> void:
 	_create_heroes()
 	if setup.has("wellen"):
 		waves = setup.wellen
+		# Dungeon in der Welt (Pilzhöhle unter dem Urbaum): dieselben Mechaniken wie in der Sandbox
+		if setup.get("dungeon", "") == "pilzhoehle":
+			dungeon = Pilzhoehle.new(self)
 		_spawn_wave(int(setup.get("start_welle", 0)))
 		await _battle_loop()
 		return
@@ -266,7 +306,25 @@ func _create_heroes() -> void:
 			h.wares = {heiltrank = int(spec.traenke)}
 		if spec.get("computer", false):
 			computer[h] = true
+		# Zähmer in der Welt: sein eigenes Rudel (Start-Monster von Professor Esche und gezähmte Monster)
+		if spec.has("monster") and not spec.monster.is_empty():
+			h.set_meta("monster", spec.monster)
 		skills.setup_hero(h)
+		# Kampf in der Welt mit der eigenen Klasse (ab Grünwacht): Schaden und Heilung wachsen mit der Stufe,
+		# Roboter und Monster des Helden werden genauso stärker (spec.macht, siehe BattleRequest)
+		if spec.has("macht"):
+			h.power = float(spec.macht)
+			# Stufenabstand zu den Gegnern (nur wenn die Gegner eine Stufe haben)
+			if setup.has("gegner_stufe"):
+				h.power *= gap_hero_factor(level_gap(int(setup.gegner_stufe), level_bonus + 1))
+				_gap_levels.append(level_bonus + 1)
+			var buddies: Array[Fighter] = h.monsters.duplicate()
+			if h.robot != null:
+				buddies.append(h.robot)
+			for b in buddies:
+				b.power = h.power
+				b.max_hp = roundi(b.max_hp * float(spec.macht))
+				b.hp = b.max_hp
 		_emit({type = "spawn", f = h, place = "hero", index = i, hp = h.hp})
 		h.next_time = h.turn_delay() * zufall_range(0.2, 1.0)
 
@@ -301,6 +359,9 @@ func tame(tamer: Fighter, e: Fighter) -> void:
 	m.owner = tamer
 	m.on_bench = true
 	m.hp = maxi(1, data.hp / 2)
+	m.power = tamer.power
+	# Für die Welt: Dieses Monster bleibt nach dem Kampf im Rudel (BattleRequest.finish)
+	m.set_meta("neu_gezaehmt", true)
 	tamer.monsters.append(m)
 	add_log("[color=#8fd36b][b]%s zähmt %s![/b][/color] Es wartet auf der Bank (Wechsel)." % [tamer.display_name, m.display_name])
 	refresh()
@@ -348,14 +409,19 @@ func spawn_enemies(ids: Array) -> void:
 	enemies.clear()
 	# Gruppenkampf: Bosse wie der Sternenfresser haben mehr Leben, je mehr Spieler mitkämpfen (setup.gegner_leben)
 	var hp_scale: float = Sandbox.HP_SCALE[heroes.size() - 1] * float(setup.get("gegner_leben", 1.0))
+	# Monster in der Wildnis haben eine Stufe (setup.gegner_stufe): mehr Leben und härtere Treffer
+	var level := int(setup.get("gegner_stufe", 1))
 	var has_big := false
 	for id: String in ids:
 		has_big = has_big or Sandbox.ENEMIES[id].get("big", false)
 	for i in ids.size():
 		var id: String = ids[i]
 		var data: Dictionary = Sandbox.ENEMIES[id]
-		var e := Fighter.new(data.name, id, data.element, false, roundi(data.hp * hp_scale), data.tempo, Elements.color(data.element))
+		# Was sich nicht wehrt (Splitter-Knoten, Zielscheiben), wächst nicht mit der Stufe: Es gehört zur Mechanik
+		var level_hp := 1.0 if data.get("passive", false) else monster_hp(level)
+		var e := Fighter.new(data.name, id, data.element, false, roundi(data.hp * hp_scale * level_hp), data.tempo, Elements.color(data.element))
 		e.element = data.element
+		e.power = monster_power(level) * _enemy_gap_factor(level)
 		e.resist = data.get("resist", 1.0)
 		e.big = data.get("big", false)
 		e.passive = data.get("passive", false)
@@ -367,6 +433,16 @@ func spawn_enemies(ids: Array) -> void:
 		e.intent = skills.enemy_intent(e)
 		_emit({type = "spawn", f = e, place = "boss_wave" if has_big else "wave", index = i, hp = e.hp})
 		e.next_time = now + e.turn_delay() * zufall_range(0.2, 1.0)
+
+
+## Härtere oder schwächere Treffer der Gegner durch den Stufenabstand (in der Gruppe zählt die mittlere Stufe).
+func _enemy_gap_factor(enemy_level: int) -> float:
+	if _gap_levels.is_empty():
+		return 1.0
+	var total := 0
+	for l in _gap_levels:
+		total += l
+	return gap_enemy_factor(level_gap(enemy_level, roundi(float(total) / _gap_levels.size())))
 
 
 ## Wipe-Mechanik: Die ganze Gruppe stirbt.
@@ -898,6 +974,9 @@ func apply_damage(target: Fighter, amount: int, source: Fighter = null, kind := 
 
 ## Heilt ein Ziel. "source" bekommt die Heilung in der Auswertung gutgeschrieben.
 func heal(source: Fighter, target: Fighter, amount: int) -> int:
+	# Heilung wächst mit der Stufe (der Novize rechnet seine Stärke schon selbst ein)
+	if source != null and source.klass != "novize":
+		amount = roundi(amount * source.power)
 	var healed := target.heal(amount)
 	if source != null:
 		source.credit().stat_heal += healed

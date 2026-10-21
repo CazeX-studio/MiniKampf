@@ -1,0 +1,1233 @@
+{
+	"hinweis": "Karten außerhalb von Kreuzweg. Jede Karte ist ein Bild aus Zeichen (raster: eine Zeile pro Reihe, ein Zeichen pro Feld; links oben ist Feld [0, 0], x nach rechts, y nach unten). Was die Zeichen bedeuten, steht unter \"zeichen\". Häuser, Stände, NPCs, Orte und Schmuck wie in kreuzweg.json. ausgaenge: Wer in den Bereich [x, y, Breite, Höhe] läuft, kommt auf die Karte \"karte\" an das Feld \"feld\" (nur wenn \"wenn\" stimmt). Orte mit {\"reisen\": Karte, \"feld\": [x, y]} bringen einen beim Benutzen hin (Seilaufzug). monster: Monster in der Wildnis mit Feld, Gegnern (Kennungen aus scripts/kampf/sandbox.gd) und Stufe; kampf_hintergrund: Bild im Kampf.",
+	"zeichen": {
+		"hinweis": "Was die Zeichen in den Karten bedeuten. boden: wiese, waldboden, weg, platz, gestruepp, planken, bruecke, laub. gesperrt: dort kann man nicht laufen. ding: was dort steht (baum, busch, blumen, pilze, stein, riesenbaum, stamm, zielscheibe, lagerfeuer).",
+		"~": {
+			"boden": "laub",
+			"gesperrt": true
+		},
+		".": {
+			"boden": "wiese"
+		},
+		",": {
+			"boden": "waldboden"
+		},
+		"=": {
+			"boden": "weg"
+		},
+		"#": {
+			"boden": "planken"
+		},
+		"-": {
+			"boden": "bruecke"
+		},
+		"T": {
+			"boden": "wiese",
+			"gesperrt": true,
+			"ding": "tree"
+		},
+		"t": {
+			"boden": "waldboden",
+			"gesperrt": true,
+			"ding": "tree"
+		},
+		"b": {
+			"boden": "waldboden",
+			"gesperrt": true,
+			"ding": "bush"
+		},
+		"f": {
+			"boden": "wiese",
+			"ding": "flowers"
+		},
+		"p": {
+			"boden": "waldboden",
+			"ding": "pilze"
+		},
+		"s": {
+			"boden": "wiese",
+			"gesperrt": true,
+			"ding": "stein"
+		},
+		"R": {
+			"boden": "waldboden",
+			"gesperrt": true,
+			"ding": "riesenbaum"
+		},
+		"O": {
+			"boden": "planken",
+			"gesperrt": true,
+			"ding": "stamm"
+		},
+		"Z": {
+			"boden": "planken",
+			"gesperrt": true,
+			"ding": "zielscheibe"
+		},
+		"L": {
+			"boden": "waldboden",
+			"gesperrt": true,
+			"ding": "lagerfeuer"
+		},
+		"h": {
+			"boden": "hoehle"
+		},
+		"X": {
+			"boden": "fels",
+			"gesperrt": true
+		},
+		"P": {
+			"boden": "hoehle",
+			"gesperrt": true,
+			"ding": "riesenpilz"
+		},
+		"W": {
+			"boden": "hoehle",
+			"gesperrt": true,
+			"ding": "wurzel"
+		}
+	},
+	"weg_gruenwacht": {
+		"name": "Der Weg nach Grünwacht",
+		"musik": "wald",
+		"grund": "wiese",
+		"start": [
+			37,
+			6
+		],
+		"raster": [
+			",,,,t,t,,t,,,,t,t...,...............f...",
+			"p,,,,,p,,,,,b,,,,.,,,...................",
+			",,,t,,,,,,,,tt,,,,,L,.Ts...T......T...f.",
+			"pt,,,b,,,,,,,,,,,,,,,,............T.....",
+			",,,,,,,,,,,,=============...............",
+			"========================================",
+			"========================================",
+			"============,,,,.,,......===============",
+			",,,,,,,,,,,,,p,bb,......................",
+			",b,,,,t,,b,,,,b,,b.t.......f..........T.",
+			",,,,,,,,,,,,,p,tb.t,.............T....T.",
+			",,,t,t,,,tb,t,,t.tf.fT...s......T.......",
+			"b,b,,tbp,t,,t,tt,b,...T.T....f...s......"
+		],
+		"ausgaenge": [
+			{
+				"bereich": [
+					39,
+					4,
+					1,
+					5
+				],
+				"karte": "kreuzweg",
+				"feld": [
+					2,
+					22
+				]
+			},
+			{
+				"bereich": [
+					0,
+					4,
+					1,
+					5
+				],
+				"karte": "waldboden",
+				"feld": [
+					27,
+					12
+				]
+			}
+		],
+		"kampf_hintergrund": "wald",
+		"monster": [
+			{
+				"feld": [
+					33,
+					8
+				],
+				"gegner": [
+					"windfalke"
+				],
+				"stufe": 10
+			},
+			{
+				"feld": [
+					29,
+					3
+				],
+				"gegner": [
+					"steinkroete"
+				],
+				"stufe": 11
+			},
+			{
+				"feld": [
+					25,
+					9
+				],
+				"gegner": [
+					"windfalke",
+					"windfalke"
+				],
+				"stufe": 11
+			},
+			{
+				"feld": [
+					21,
+					8
+				],
+				"gegner": [
+					"waldsporenling",
+					"steinkroete"
+				],
+				"stufe": 12
+			},
+			{
+				"feld": [
+					16,
+					2
+				],
+				"gegner": [
+					"windfalke",
+					"waldsporenling"
+				],
+				"stufe": 13
+			},
+			{
+				"feld": [
+					12,
+					9
+				],
+				"gegner": [
+					"steinkroete",
+					"steinkroete"
+				],
+				"stufe": 13
+			},
+			{
+				"feld": [
+					8,
+					2
+				],
+				"gegner": [
+					"waldsporenling",
+					"waldsporenling",
+					"windfalke"
+				],
+				"stufe": 14
+			},
+			{
+				"feld": [
+					4,
+					9
+				],
+				"gegner": [
+					"donnerhirsch"
+				],
+				"stufe": 15
+			}
+		],
+		"deko": [
+			{
+				"art": "wegweiser",
+				"feld": [
+					36,
+					3
+				],
+				"text": "Grünwacht|Kreuzweg"
+			},
+			{
+				"art": "wegweiser",
+				"feld": [
+					3,
+					3
+				],
+				"text": "Wipfelheim|Kreuzweg"
+			}
+		]
+	},
+	"waldboden": {
+		"name": "Waldboden unter Wipfelheim",
+		"musik": "wald",
+		"musik_wenn": {
+			"urbaum_gefaellt": "wald_welk"
+		},
+		"grund": "waldboden",
+		"licht": "b4c4a4",
+		"start": [
+			27,
+			12
+		],
+		"raster": [
+			",,,,,,,t,,t,,,,bpt,,,,,,,,,,,t",
+			",,,,,,,t,,t,,t,t,,ptt,,,,,,,,t",
+			",,,,,,,t,,,t,,p,t,,,,t,,,,,,,t",
+			",,,,,,p,,,,,,t,,,,,,,p,,,,,,,,",
+			",,,,,,,b,p,,b,,,,R,ttp,,,,R,,t",
+			",tt,,,,,t,,,,,b,,,,,,,tt,,,,b,",
+			"t,ptb,,,b,,,,t,,,,,,t,,,,,t,,,",
+			",t,,,p,,,,t,,,,tb,,,,,,t,,,t,,",
+			",,,t,p,,,,t,,,,,,,,,,,,,,,,pp,",
+			"b,,tt,tp,,,,===,,pt,,R,,,,,,,,",
+			",,t,p,,,,,,=====,,,,,,,,,,,,,,",
+			"p,,,,,b,,,===========,,,,=====",
+			"b,b,,,,,t,====================",
+			",,,,,,R,,,====================",
+			",p,,t,,,,,,=====,,,,,====,,,,,",
+			",,,,,t,,,t,,===,,t,t,,,,,,tbt,",
+			",,,,,t,,,,,,,,,,b,,,t,,,,,,,,t",
+			",,p,,,,,,t,,,,,,ttp,,p,,,,,,,,",
+			"t,,,,,,,,,,,,,,,,b,,,,,bt,,,,,",
+			"t,t,,,,tbt,,,,b,,,,,,,,,b,,,,,",
+			"b,,t,,p,,,tbt,,,,R,pt,t,p,,,b,",
+			",,,,,,,,,t,pt,,,,,,,,,,,,,R,,t",
+			",,,,,R,,,,,,t,,,,,,,t,,,p,,,,,",
+			"t,,,,,,b,,,,t,,,,,,bt,tt,,,,,,",
+			"b,,,,,,b,,,,,,,,,,,,t,,,t,,,,,",
+			",,,,,,,t,,,bt,,,,,,,b,,,,,,,,,"
+		],
+		"ausgaenge": [
+			{
+				"bereich": [
+					29,
+					9,
+					1,
+					7
+				],
+				"karte": "weg_gruenwacht",
+				"feld": [
+					1,
+					6
+				]
+			}
+		],
+		"kampf_hintergrund": "wald",
+		"monster": [
+			{
+				"feld": [
+					25,
+					8
+				],
+				"gegner": [
+					"rindenbaer"
+				],
+				"stufe": 15
+			},
+			{
+				"feld": [
+					22,
+					16
+				],
+				"gegner": [
+					"donnerhirsch",
+					"waldsporenling"
+				],
+				"stufe": 16
+			},
+			{
+				"feld": [
+					19,
+					7
+				],
+				"gegner": [
+					"windfalke",
+					"windfalke",
+					"waldsporenling"
+				],
+				"stufe": 16
+			},
+			{
+				"feld": [
+					23,
+					21
+				],
+				"gegner": [
+					"wilder_moosling"
+				],
+				"stufe": 16
+			},
+			{
+				"feld": [
+					8,
+					8
+				],
+				"gegner": [
+					"rindenbaer",
+					"waldsporenling"
+				],
+				"stufe": 17
+			},
+			{
+				"feld": [
+					10,
+					3
+				],
+				"gegner": [
+					"wilde_glutwelpe"
+				],
+				"stufe": 17
+			},
+			{
+				"feld": [
+					7,
+					17
+				],
+				"gegner": [
+					"donnerhirsch",
+					"windfalke"
+				],
+				"stufe": 18
+			},
+			{
+				"feld": [
+					26,
+					18
+				],
+				"gegner": [
+					"wilder_bachotter"
+				],
+				"stufe": 18
+			},
+			{
+				"feld": [
+					14,
+					21
+				],
+				"gegner": [
+					"rindenbaer",
+					"donnerhirsch"
+				],
+				"stufe": 19
+			},
+			{
+				"feld": [
+					3,
+					11
+				],
+				"gegner": [
+					"rindenbaer",
+					"steinkroete",
+					"donnerhirsch"
+				],
+				"stufe": 20
+			}
+		],
+		"deko": [
+			{
+				"art": "bluete",
+				"feld": [
+					13,
+					10
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					15,
+					14
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					22,
+					12
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					27,
+					13
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					9,
+					15
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					5,
+					20
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					18,
+					4
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					13,
+					10
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					15,
+					14
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					22,
+					12
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					27,
+					13
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					9,
+					15
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					5,
+					20
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					18,
+					4
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			}
+		],
+		"orte": [
+			{
+				"art": "seilaufzug",
+				"feld": [
+					13,
+					12
+				],
+				"meldung": "Der Seilaufzug knarrt und zieht dich hinauf in die Baumkronen.",
+				"aktionen": [
+					{
+						"reisen": "wipfelheim",
+						"feld": [
+							6,
+							15
+						]
+					}
+				]
+			},
+			{
+				"art": "grab",
+				"feld": [
+					3,
+					2
+				],
+				"dialog": "rowans_grab"
+			},
+			{
+				"art": "bienenstock",
+				"feld": [
+					27,
+					24
+				],
+				"dialog": "bienenstock"
+			},
+			{
+				"art": "hoehle",
+				"feld": [
+					11,
+					18
+				],
+				"meldung": "Du kriechst zwischen den Wurzeln hinab in die Dunkelheit.",
+				"wenn": {
+					"oder": [
+						{
+							"auftrag": "der_urbaum",
+							"stand": "aktiv"
+						},
+						{
+							"auftrag": "der_urbaum",
+							"stand": "fertig"
+						},
+						{
+							"auftrag": "der_urbaum",
+							"stand": "abgegeben"
+						}
+					]
+				},
+				"aktionen": [
+					{
+						"reisen": "pilzhoehle",
+						"feld": [
+							27,
+							11
+						]
+					}
+				]
+			},
+			{
+				"art": "splittertier",
+				"feld": [
+					24,
+					2
+				],
+				"dialog": "splittertier",
+				"wenn": {
+					"auftrag": "veraenderte_tiere",
+					"stand": "aktiv",
+					"gemerkt": "tilda_tiere",
+					"nicht_gemerkt": "tier_besiegt"
+				}
+			},
+			{
+				"art": "silberhirsch",
+				"feld": [
+					3,
+					24
+				],
+				"dialog": "silberhirsch",
+				"wenn": {
+					"auftrag": "fenns_pruefung",
+					"stand": "aktiv",
+					"gemerkt": "fenn_ziele",
+					"nicht_gemerkt": "pruefung_hirsch"
+				}
+			}
+		]
+	},
+	"pilzhoehle": {
+		"name": "Pilzhöhle unter dem Urbaum",
+		"grund": "hoehle",
+		"licht": "9a8cc0",
+		"musik": "wald_nacht",
+		"dungeon": "pilzhoehle",
+		"kampf_hintergrund": "gewoelbe",
+		"start": [
+			27,
+			11
+		],
+		"raster": [
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXXXXXXXXXXXXXXXXPhhhPXXXXXXXX",
+			"XXXXXXXXXXXXXXXXXhhhhhXXXXXXXX",
+			"XPhhhhPXXXXXXXXXXhhhhhXXXXXXXX",
+			"XhhhWhhXXPhhhhhPXhhhhhXXXXXXXX",
+			"XhhhhhhXXhhhWhhhXhhhhhXhPhhhhX",
+			"XhWhhhhXXhhhhhhhXhhhhhXhhhhhhX",
+			"XhhhhhhXXhhhhhhhhhhhhhWhhhhhhh",
+			"Xhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+			"Xhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+			"XhhhhhhXXhhhhhhhhhhWhhhhhhhhhX",
+			"XhhhhhhXXhhhhhhhXXXXXXXPhhhhPX",
+			"XhhhhWhXXhhhhWhhXXXXXXXXXXXXXX",
+			"XhhhhhhXXPhhhhhPXXXXXXXXXXXXXX",
+			"XPhhhhhXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+		],
+		"ausgaenge": [
+			{
+				"bereich": [
+					29,
+					10,
+					1,
+					3
+				],
+				"karte": "waldboden",
+				"feld": [
+					10,
+					18
+				]
+			}
+		],
+		"monster": [
+			{
+				"feld": [
+					25,
+					10
+				],
+				"gegner": [
+					"sporenwolf",
+					"sporenwolf"
+				],
+				"stufe": 18
+			},
+			{
+				"feld": [
+					20,
+					12
+				],
+				"gegner": [
+					"leuchtmotte",
+					"wurzelkriecher"
+				],
+				"stufe": 18
+			},
+			{
+				"feld": [
+					19,
+					6
+				],
+				"gegner": [
+					"glimmerkaefer",
+					"glimmerkaefer"
+				],
+				"stufe": 19
+			},
+			{
+				"feld": [
+					16,
+					11
+				],
+				"gegner": [
+					"sporenwolf",
+					"leuchtmotte",
+					"wurzelkriecher"
+				],
+				"stufe": 19
+			}
+		],
+		"orte": [
+			{
+				"art": "sporenkoenigin",
+				"feld": [
+					11,
+					11
+				],
+				"dialog": "pilz_koenigin",
+				"wenn": {
+					"nicht_gemerkt": "lauf:koenigin"
+				}
+			},
+			{
+				"art": "wurzelmutter",
+				"feld": [
+					3,
+					11
+				],
+				"dialog": "pilz_urbaum",
+				"wenn": {
+					"gemerkt": "lauf:koenigin",
+					"nicht_gemerkt": "lauf:urbaum"
+				}
+			},
+			{
+				"art": "urbaum_herz",
+				"feld": [
+					3,
+					12
+				],
+				"dialog": "urbaum_herz",
+				"wenn": {
+					"gemerkt": "lauf:urbaum",
+					"nicht_gemerkt": "lauf:splitter"
+				}
+			}
+		]
+	},
+	"wipfelheim": {
+		"name": "Wipfelheim",
+		"musik": "wald",
+		"musik_wenn": {
+			"urbaum_gefaellt": "wald_welk"
+		},
+		"grund": "laub",
+		"licht": "eef6e4",
+		"start": [
+			6,
+			15
+		],
+		"raster": [
+			"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+			"~~~~~~~~~~~~~#########~~~~~~~~~~",
+			"~~~~~~~~~~~~~#######Z#~~~~~~~~~~",
+			"~~~~~~~~~~~~~#########~~~~~~~~~~",
+			"~~~~~~~~~~~~~########Z~~~~~~~~~~",
+			"~~~~~~~~~~~~~#########~~~~~~~~~~",
+			"~~~~~~~~~~~~~#######Z#~~~~~~~~~~",
+			"~~~~~~~~~~~~~~~~--~~~~~~~~~~~~~~",
+			"~~~~~~~~~~~~~~~~--~~~~~~~~~~~~~~",
+			"~~~~~~~~~~~~##########~~~~~~~~~~",
+			"~~~~~~~~~~~~##########~~~#####O~",
+			"~~~O######~~##########~~~######~",
+			"~~~#######~~##########---######~",
+			"~~~#######--##########---######~",
+			"~~~#######--##########---######~",
+			"~~~#######--##########~~~######~",
+			"~~~#######~~##########~~~######~",
+			"~~~#######~~##########~~~######~",
+			"~~~~~~~~~~~~#########O~~~~~~~~~~",
+			"~~~~~~~~~~~~~~~~--~~~~~~~~~~~~~~",
+			"~~~~~~~~~~~~~~~~--~~~~~~~~~~~~~~",
+			"~~~~~~~~~~~~~#########~~~~~~~~~~",
+			"~~~~~~~~~~~~~#########~~~~~~~~~~",
+			"~~~~~~~~~~~~~#########~~~~~~~~~~",
+			"~~~~~~~~~~~~~#########~~~~~~~~~~",
+			"~~~~~~~~~~~~~#########~~~~~~~~~~",
+			"~~~~~~~~~~~~~O########~~~~~~~~~~",
+			"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+		],
+		"haeuser": [
+			{
+				"name": "Dornfeders Halle",
+				"feld": [
+					15,
+					10,
+					4,
+					3
+				],
+				"hoehe": 50,
+				"farbe": "6a4a30",
+				"dach": "4a6a3a"
+			},
+			{
+				"name": "Esches Labor",
+				"feld": [
+					17,
+					22,
+					3,
+					3
+				],
+				"hoehe": 40,
+				"farbe": "7a6048",
+				"dach": "5a7a3a"
+			},
+			{
+				"name": "",
+				"feld": [
+					26,
+					11,
+					2,
+					2
+				],
+				"hoehe": 30,
+				"farbe": "6a5038",
+				"dach": "3f5a2a"
+			}
+		],
+		"staende": [
+			{
+				"feld": [
+					8,
+					12
+				],
+				"farbe": "c8a060",
+				"text": "Koch-Stand"
+			}
+		],
+		"deko": [
+			{
+				"art": "bluete",
+				"feld": [
+					5,
+					13
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					7,
+					16
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					14,
+					10
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					20,
+					11
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					13,
+					17
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					18,
+					2
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					14,
+					5
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					26,
+					16
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					29,
+					13
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					14,
+					22
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					20,
+					25
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					5,
+					13
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					7,
+					16
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					14,
+					10
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					20,
+					11
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					13,
+					17
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					18,
+					2
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					14,
+					5
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					26,
+					16
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					29,
+					13
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					14,
+					22
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					20,
+					25
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			}
+		],
+		"orte": [
+			{
+				"art": "seilaufzug",
+				"feld": [
+					4,
+					15
+				],
+				"meldung": "Der Seilaufzug lässt dich hinunter auf den Waldboden.",
+				"aktionen": [
+					{
+						"reisen": "waldboden",
+						"feld": [
+							14,
+							12
+						]
+					}
+				]
+			},
+			{
+				"art": "leer",
+				"feld": [
+					8,
+					12
+				],
+				"dialog": "koch_stand"
+			}
+		],
+		"npcs": {
+			"ysolde": {
+				"name": "Ysolde Dornfeder",
+				"feld": [
+					16,
+					14
+				],
+				"aussehen": "elf_f",
+				"farbe": "c8e0b0",
+				"dialog": "ysolde"
+			},
+			"fenn": {
+				"name": "Pfadmeister Fenn",
+				"feld": [
+					15,
+					3
+				],
+				"aussehen": "elf_m",
+				"farbe": "b0d890",
+				"dialog": "fenn"
+			},
+			"tilda": {
+				"name": "Rudelmeisterin Tilda",
+				"feld": [
+					28,
+					15
+				],
+				"aussehen": "knight_f",
+				"farbe": "d8c090",
+				"dialog": "tilda"
+			},
+			"esche": {
+				"name": "Professor Esche",
+				"feld": [
+					15,
+					24
+				],
+				"aussehen": "wizzard_m",
+				"farbe": "e0e0c0",
+				"dialog": "esche"
+			},
+			"kael": {
+				"name": "Kael",
+				"feld": [
+					19,
+					13
+				],
+				"aussehen": "lizard_m",
+				"farbe": "c0a0a0",
+				"dialog": "kael",
+				"wenn": {
+					"auftrag": "veraenderte_tiere",
+					"stand": "abgegeben",
+					"nicht_gemerkt": "wahrheit_entschieden"
+				},
+				"anspringen": {
+					"radius": 5,
+					"wenn": {
+						"nicht_gemerkt": "kael_getroffen"
+					}
+				}
+			},
+			"oma_hagebutte": {
+				"name": "Oma Hagebutte",
+				"feld": [
+					7,
+					16
+				],
+				"aussehen": "wizzard_f",
+				"farbe": "f0c8d0",
+				"dialog": "oma_hagebutte"
+			},
+			"kobalt": {
+				"name": "Kobalt",
+				"feld": [
+					16,
+					22
+				],
+				"aussehen": "elf_m",
+				"farbe": "a0c8ff",
+				"dialog": "kobalt",
+				"anspringen": {
+					"radius": 3,
+					"wenn": {
+						"klasse": "tamer",
+						"gemerkt": "starter_gewaehlt",
+						"nicht_gemerkt": "kobalt_gekaempft"
+					}
+				}
+			},
+			"marv_gruenwacht": {
+				"name": "Marv",
+				"feld": [
+					23,
+					12
+				],
+				"aussehen": "elf_m",
+				"farbe": "ffb070",
+				"dialog": "marv_gruenwacht",
+				"anspringen": {
+					"radius": 4
+				}
+			}
+		}
+	}
+}

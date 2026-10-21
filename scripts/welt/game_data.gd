@@ -3,7 +3,7 @@ extends RefCounted
 ## Lädt die Datendateien aus res://data (Dialoge, Aufträge, Gegenstände, Stufen, Texte, Stadt).
 ## Die Dateien werden einmal gelesen und dann im Speicher behalten.
 
-const FILES := ["dialoge", "auftraege", "gegenstaende", "stufen", "texte", "kreuzweg", "kaempfe", "laeden", "erfolge", "klassen"]
+const FILES := ["dialoge", "auftraege", "gegenstaende", "stufen", "texte", "kreuzweg", "kaempfe", "laeden", "erfolge", "klassen", "karten", "erinnerungen", "kartenspiel"]
 
 static var _cache := {}
 
@@ -51,9 +51,45 @@ static func max_level() -> int:
 	return level_xp().size()
 
 
+## Alle Monster in der Wildnis aus data/karten.json, in fester Reihenfolge (Kennung im Spiel: "monster:<Nummer>").
+## Je Eintrag: {karte, feld, gegner, stufe}.
+static func wild_monsters() -> Array[Dictionary]:
+	if _cache.has("_wild"):
+		return _cache._wild
+	var result: Array[Dictionary] = []
+	var maps := get_file("karten")
+	for map_id: String in maps:
+		if not maps[map_id] is Dictionary:
+			continue
+		for d: Dictionary in maps[map_id].get("monster", []):
+			result.append({karte = map_id, feld = Vector2i(int(d.feld[0]), int(d.feld[1])), gegner = d.gegner,
+					stufe = int(d.get("stufe", 1)), hintergrund = maps[map_id].get("kampf_hintergrund", "wald"),
+					dungeon = maps[map_id].get("dungeon", "")})
+	_cache["_wild"] = result
+	return result
+
+
+## Erfahrung und Gold für einen Sieg über Monster in der Wildnis (jedes Mal, nicht nur beim ersten Sieg).
+const WILD_XP_PER_LEVEL := 12
+const WILD_GOLD_PER_LEVEL := 2
+
+
 ## Ein Kampf aus data/kaempfe.json. "probe:<klasse>" = Probestunde mit dieser Klasse
-## (gemeinsame Vorlage "probestunde", Erklärung aus den Klassendaten).
+## (gemeinsame Vorlage "probestunde", Erklärung aus den Klassendaten). "wild:<Nummer>" = Monster in der Wildnis.
 static func battle(id: String) -> Dictionary:
+	if id.begins_with("wild:"):
+		var list := wild_monsters()
+		var index := int(id.substr(5))
+		if index < 0 or index >= list.size():
+			return {}
+		var m: Dictionary = list[index]
+		var names: PackedStringArray = []
+		for enemy: String in m.gegner:
+			names.append(Sandbox.ENEMIES[enemy].name)
+		return {name = "%s (Stufe %d)" % [" und ".join(names), m.stufe], ansage = text("wild_ansage" if names.size() == 1 else "wild_ansage_mehrere", [" und ".join(names)]),
+				wellen = [m.gegner], gegner_stufe = m.stufe, eigene_klasse = true, wild = true, hintergrund = m.hintergrund,
+				erfahrung = WILD_XP_PER_LEVEL * m.stufe * m.gegner.size(), gold = WILD_GOLD_PER_LEVEL * m.stufe * m.gegner.size(),
+				dungeon = m.dungeon, entscheidung_in_der_welt = true}
 	var all := get_file("kaempfe")
 	if not id.begins_with("probe:"):
 		return all.get(id, {})

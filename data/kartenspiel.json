@@ -1,0 +1,235 @@
+{
+	"hinweis": "Kreuzweg-Karten (design.md, angelehnt an Triple Triad). karten: Kennung = Monster (Bild wie im Kampf), werte = [oben, rechts, unten, links] von 1 bis 9. startkarten: was man mit der Sternentafel bekommt. gegner: NPC-Gegner mit Deck (5 Karten), Spielweise (zufall = legt irgendwas, schlau = dreht möglichst viele um) und Belohnung beim Sieg (gold, karte = die erste Karte gibt es beim ersten Sieg). beute: Chance auf eine Monsterkarte nach einem Sieg in der Wildnis. Alle Zahlen vorläufig.",
+	"karten": {
+		"feldschleim": {
+			"name": "Feldschleim",
+			"werte": [
+				2,
+				3,
+				1,
+				3
+			]
+		},
+		"wiesenkobold": {
+			"name": "Wiesenkobold",
+			"werte": [
+				3,
+				2,
+				3,
+				1
+			]
+		},
+		"ruepelkobold": {
+			"name": "Rüpelkobold",
+			"werte": [
+				4,
+				3,
+				2,
+				4
+			]
+		},
+		"glutkobold": {
+			"name": "Glutkobold",
+			"werte": [
+				3,
+				4,
+				2,
+				2
+			]
+		},
+		"sumpfschleim": {
+			"name": "Sumpfschleim",
+			"werte": [
+				2,
+				2,
+				4,
+				3
+			]
+		},
+		"dornling": {
+			"name": "Dornling",
+			"werte": [
+				4,
+				1,
+				3,
+				3
+			]
+		},
+		"sturmkobold": {
+			"name": "Sturmkobold",
+			"werte": [
+				1,
+				4,
+				3,
+				3
+			]
+		},
+		"windfalke": {
+			"name": "Windfalke",
+			"werte": [
+				5,
+				3,
+				2,
+				4
+			]
+		},
+		"steinkroete": {
+			"name": "Steinkröte",
+			"werte": [
+				2,
+				5,
+				5,
+				2
+			]
+		},
+		"waldsporenling": {
+			"name": "Sporenling",
+			"werte": [
+				3,
+				2,
+				4,
+				4
+			]
+		},
+		"rindenbaer": {
+			"name": "Rindenbär",
+			"werte": [
+				6,
+				4,
+				5,
+				3
+			]
+		},
+		"donnerhirsch": {
+			"name": "Donnerhirsch",
+			"werte": [
+				5,
+				6,
+				3,
+				4
+			]
+		},
+		"wilder_moosling": {
+			"name": "Moosling",
+			"werte": [
+				4,
+				3,
+				6,
+				3
+			]
+		},
+		"wilde_glutwelpe": {
+			"name": "Glutwelpe",
+			"werte": [
+				5,
+				5,
+				2,
+				4
+			]
+		},
+		"wilder_bachotter": {
+			"name": "Bachotter",
+			"werte": [
+				3,
+				5,
+				4,
+				4
+			]
+		},
+		"sporenwolf": {
+			"name": "Sporenwolf",
+			"werte": [
+				5,
+				4,
+				4,
+				5
+			]
+		},
+		"leuchtmotte": {
+			"name": "Leuchtmotte",
+			"werte": [
+				6,
+				2,
+				3,
+				6
+			]
+		},
+		"wurzelkriecher": {
+			"name": "Wurzelkriecher",
+			"werte": [
+				3,
+				6,
+				6,
+				2
+			]
+		},
+		"glimmerkaefer": {
+			"name": "Glimmerkäfer",
+			"werte": [
+				4,
+				6,
+				2,
+				5
+			]
+		},
+		"sporenkoenigin": {
+			"name": "Sporenkönigin",
+			"werte": [
+				7,
+				5,
+				6,
+				4
+			]
+		},
+		"wurzelmutter": {
+			"name": "Wurzelmutter",
+			"werte": [
+				6,
+				7,
+				5,
+				6
+			]
+		}
+	},
+	"startkarten": [
+		"feldschleim",
+		"wiesenkobold",
+		"ruepelkobold",
+		"glutkobold",
+		"sumpfschleim",
+		"dornling",
+		"sturmkobold"
+	],
+	"beute": 0.2,
+	"gegner": {
+		"marv": {
+			"name": "Marv",
+			"deck": [
+				"feldschleim",
+				"feldschleim",
+				"wiesenkobold",
+				"sumpfschleim",
+				"glutkobold"
+			],
+			"spielweise": "zufall",
+			"belohnung": {
+				"gold": 20
+			}
+		},
+		"oma_hagebutte": {
+			"name": "Oma Hagebutte",
+			"deck": [
+				"rindenbaer",
+				"steinkroete",
+				"windfalke",
+				"wilder_moosling",
+				"waldsporenling"
+			],
+			"spielweise": "schlau",
+			"belohnung": {
+				"gold": 40,
+				"karte": "wilder_moosling"
+			}
+		}
+	}
+}

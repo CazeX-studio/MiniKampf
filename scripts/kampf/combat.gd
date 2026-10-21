@@ -118,9 +118,19 @@ func _battle_name() -> String:
 
 ## Zurück in die Stadt (Kampf aus der Kreuzweg-Demo).
 func _back_to_world(won: bool) -> void:
-	# Verbrauchte Heiltränke fehlen danach in der Tasche
-	BattleRequest.finish(won, _potions_used())
+	# Verbrauchte Heiltränke fehlen danach in der Tasche, gezähmte Monster kommen ins Rudel
+	BattleRequest.finish(won, _potions_used(), _tamed())
 	get_tree().change_scene_to_file(BattleRequest.return_scene)
+
+
+## Monster, die der eigene Zähmer in diesem Kampf gezähmt hat (Kennungen).
+func _tamed() -> Array:
+	var player := state.heroes[int(_group.get("mine", 0))]
+	var result: Array = []
+	for m in player.monsters:
+		if m.has_meta("neu_gezaehmt"):
+			result.append(m.klass)
+	return result
 
 
 ## Wie viele Heiltränke der Spieler in diesem Kampf getrunken hat.
@@ -1165,7 +1175,7 @@ func _show_end_screen(won: bool) -> void:
 
 	var sub := Label.new()
 	sub.text = "Kampfauswertung · %d Züge · Welle %d von %d · %s" % [state.turns, state.wave + 1, state.waves.size(), _battle_name()]
-	if won and state.dungeon != null:
+	if won and state.dungeon != null and not state.setup.get("entscheidung_in_der_welt", false):
 		sub.text += (" · Urbaum gefällt" if Sandbox.pilz_choice == "faellen" else " · Urbaum gerettet") + " · Belohnung: Sternensplitter"
 	sub.add_theme_font_size_override("font_size", 18)
 	sub.add_theme_color_override("font_color", Color("f2c14e"))

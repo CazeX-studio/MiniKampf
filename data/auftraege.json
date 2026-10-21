@@ -189,5 +189,154 @@
 		],
 		"abgeben_bei": "pip",
 		"belohnung": {"erfahrung": 30}
+	},
+	"nach_gruenwacht": {
+		"titel": "Der Weg nach Grünwacht",
+		"start_bei": "ye_tor",
+		"voraussetzung": "abreise",
+		"beschreibung": "Deine Reise beginnt in Grünwacht, der ersten Region. Folge der Weststraße aus Kreuzweg hinaus, durch den Wald bis zum Seilaufzug. Oben in den Baumkronen liegt Wipfelheim, dort wacht Ysolde Dornfeder.",
+		"ziele": [
+			{"art": "gemerkt", "merken": "besucht:wipfelheim", "text": "Über den Weg und den Seilaufzug im Wald nach Wipfelheim"},
+			{"art": "reden", "npc": "ysolde", "bei": "ysolde"}
+		],
+		"abgeben_bei": "ysolde",
+		"belohnung": {"gold": 50, "erfahrung": 100}
+	},
+	"fenns_pruefung": {
+		"titel": "Die Prüfung der drei Ziele",
+		"beschreibung": "Pfadmeister Fenn prüft jeden Bogenschützen mit drei Zielen: stehende Scheiben, laufende Scheiben – und ein drittes Ziel im Wald.",
+		"start_bei": "fenn",
+		"start_wenn": {"klasse": "archer"},
+		"voraussetzung": "nach_gruenwacht",
+		"ziele": [
+			{"art": "kampf", "kampf": "fenns_pruefung", "bei": "fenn", "text": "Das erste und zweite Ziel an Fenns Schießstand"},
+			{"art": "gemerkt", "merken": "pruefung_hirsch", "text": "Das dritte Ziel: den Silberhirsch im Wald aufspüren (Westen)"}
+		],
+		"abgeben_bei": "fenn",
+		"belohnung": {"gold": 60, "erfahrung": 500}
+	},
+	"esches_monster": {
+		"titel": "Professor Esches Monster",
+		"beschreibung": "Professor Esche hat drei Start-Monster für Zähmer. Such dir eins aus – und pass auf Kobalt auf, Esches Neffen.",
+		"start_bei": "esche",
+		"start_wenn": {"klasse": "tamer"},
+		"voraussetzung": "nach_gruenwacht",
+		"ziele": [
+			{"art": "gemerkt", "merken": "starter_gewaehlt", "bei": "esche", "text": "Bei Professor Esche ein Start-Monster wählen"},
+			{"art": "gemerkt", "merken": "kobalt_gekaempft", "bei": "kobalt", "text": "Gegen Kobalt antreten"}
+		],
+		"abgeben_bei": "esche",
+		"belohnung": {"gold": 40, "erfahrung": 300}
+	},
+	"tildas_unterricht": {
+		"titel": "Tildas Unterricht",
+		"beschreibung": "Rudelmeisterin Tilda bringt dir das Zähmen bei: Ein Monster in der Wildnis erst schwächen (unter halbes Leben), dann „Zähmen“. Je schwächer, desto sicherer.",
+		"start_bei": "tilda",
+		"start_wenn": {"klasse": "tamer"},
+		"voraussetzung": "esches_monster",
+		"ziele": [
+			{"art": "gemerkt", "merken": "erstes_zaehmen", "text": "Ein Monster auf dem Weg oder im Wald zähmen"}
+		],
+		"abgeben_bei": "tilda",
+		"belohnung": {"gold": 60, "erfahrung": 500}
+	},
+	"veraenderte_tiere": {
+		"titel": "Leuchtende Tiere",
+		"beschreibung": "Splitter im Wald verändern die Tiere. Ysolde will sie jagen lassen, Tilda will sie retten. Hör dir beide Seiten an und entscheide selbst.",
+		"start_bei": "ysolde",
+		"voraussetzung": "nach_gruenwacht",
+		"ziele": [
+			{"art": "gemerkt", "merken": "tilda_tiere", "bei": "tilda", "text": "Tilda nach den Tieren fragen (Rudelhof im Osten)"},
+			{"art": "gemerkt", "merken": "tier_besiegt", "text": "Das veränderte Tier im Nordosten des Waldbodens finden"}
+		],
+		"abgeben_bei": "ysolde",
+		"belohnung": {"gold": 50, "erfahrung": 900}
+	},
+	"das_leere_grab": {
+		"titel": "Das leere Grab",
+		"beschreibung": "Kael sagt, das Grab von Ysoldes Bruder Rowan liegt unten im Wald – und es ist leer. Sieh es dir an.",
+		"voraussetzung": "veraenderte_tiere",
+		"ziele": [
+			{"art": "gemerkt", "merken": "erinnerung_rowan", "text": "Rowans Grab im Nordwesten des Waldbodens finden"}
+		],
+		"abgeben_bei": "kael",
+		"belohnung": {"gold": 40, "erfahrung": 800}
+	},
+	"der_urbaum": {
+		"titel": "Der Splitter im Urbaum",
+		"beschreibung": "Unter dem Urbaum, tief in den Wurzeln, liegt ein großer Splitter. Der Eingang zur Pilzhöhle liegt zwischen den Wurzeln eines Riesenbaums im Süden des Waldbodens. Das ist ein Dungeon: Geht am besten zu mehreren (allein helfen Ida, Bo und Tom bei den Bossen).",
+		"voraussetzung": "das_leere_grab",
+		"ziele": [
+			{"art": "gemerkt", "merken": "pilzhoehle_abgeschlossen", "text": "In der Pilzhöhle die Sporenkönigin und die Wurzelmutter besiegen"},
+			{"art": "gemerkt", "merken": "urbaum_entschieden", "text": "Am Herz des Urbaums entscheiden"}
+		],
+		"abgeben_bei": "ysolde",
+		"belohnung": {"gold": 150, "erfahrung": 1600}
+	},
+	"die_wahrheit": {
+		"titel": "Die Wahrheit über Rowan",
+		"beschreibung": "Kael will, dass Ysolde vor ganz Wipfelheim gesteht, was am sechsten Weg geschah. Er wartet vor Dornfeders Halle.",
+		"start_bei": "kael",
+		"voraussetzung": "der_urbaum",
+		"ziele": [
+			{"art": "gemerkt", "merken": "wahrheit_entschieden", "bei": "ysolde", "text": "Ysolde und Kael vor Dornfeders Halle gegenüberstellen"}
+		],
+		"abgeben_bei": "ysolde",
+		"belohnung": {"gold": 100, "erfahrung": 1200}
+	},
+	"marvs_partie": {
+		"titel": "Marvs Partie",
+		"neben": true,
+		"gebiet": "gruenwacht",
+		"beschreibung": "Marv ist dir bis nach Wipfelheim nachgereist. Er will EINE Partie Kreuzweg-Karten. Die Sternentafel gibt es bei Bingo in Kreuzweg.",
+		"start_bei": "marv_gruenwacht",
+		"voraussetzung": "nach_gruenwacht",
+		"ziele": [
+			{"art": "besitzen", "gegenstand": "sternentafel", "text": "Bei Bingo in Kreuzweg eine Sternentafel kaufen"},
+			{"art": "gemerkt", "merken": "gespielt:marv", "bei": "marv_gruenwacht", "text": "Eine Partie gegen Marv in Wipfelheim"}
+		],
+		"abgeben_bei": "marv_gruenwacht",
+		"belohnung": {"erfahrung": 200}
+	},
+	"kobalts_revanche": {
+		"titel": "Kobalts Revanche",
+		"neben": true,
+		"gebiet": "gruenwacht",
+		"beschreibung": "Kobalt hat trainiert und will eine Revanche – mit zwei Monstern.",
+		"start_bei": "kobalt",
+		"start_wenn": {"klasse": "tamer"},
+		"voraussetzung": "tildas_unterricht",
+		"ziele": [
+			{"art": "gemerkt", "merken": "kobalt_revanche_gekaempft", "bei": "kobalt", "text": "Die Revanche gegen Kobalt"}
+		],
+		"abgeben_bei": "kobalt",
+		"belohnung": {"gold": 80, "erfahrung": 300}
+	},
+	"omas_herausforderung": {
+		"titel": "Oma Hagebuttes Herausforderung",
+		"neben": true,
+		"gebiet": "gruenwacht",
+		"beschreibung": "Oma Hagebutte spielt seit vierzig Jahren Kreuzweg-Karten und verliert nicht gern. Schlag sie einmal.",
+		"start_bei": "oma_hagebutte",
+		"start_wenn": {"hat": "sternentafel"},
+		"voraussetzung": "nach_gruenwacht",
+		"ziele": [
+			{"art": "gemerkt", "merken": "karten_sieg:oma_hagebutte", "bei": "oma_hagebutte", "text": "Oma Hagebutte bei Kreuzweg-Karten schlagen"}
+		],
+		"abgeben_bei": "oma_hagebutte",
+		"belohnung": {"gold": 60, "erfahrung": 300}
+	},
+	"bienenstock": {
+		"titel": "Der verrückte Bienenstock",
+		"neben": true,
+		"gebiet": "gruenwacht",
+		"beschreibung": "Professor Esche sagt, ein Bienenstock ganz im Südosten des Waldbodens summt seit Tagen dasselbe Lied. Sieh nach.",
+		"start_bei": "esche",
+		"voraussetzung": "nach_gruenwacht",
+		"ziele": [
+			{"art": "gemerkt", "merken": "bienen_beobachtet", "text": "Den Bienenstock im Südosten des Waldbodens untersuchen"}
+		],
+		"abgeben_bei": "esche",
+		"belohnung": {"gold": 30, "erfahrung": 250, "gegenstaende": {"honigwabe": 2}}
 	}
 }

@@ -15,6 +15,22 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
+- **Lernprojekt 5 „Grünwacht“:** Plan steht in `GRUENWACHT_PLAN.md` (11 Schritte: Reise nach Wipfelheim, eigene Klasse
+  in der Welt, Fenns Prüfung, Professor Esche und Kobalt, Ysoldes Geschichte, Pilzhöhle als echter Dungeon,
+  Kreuzweg-Karten mit Sternentafel, Nebenaufträge, Feinschliff). Marcos Entscheidungen vom 21.10. stehen im Plan
+  (alle Klassen dürfen hin, gleicher Spielstand, Weg Stufe 10–15 und Grünwacht 15–20, Sternentafel bei Bingo in Kreuzweg,
+  Koch-Stand als Platzhalter, Ruf sichtbar). **Schritt 1 eingebaut (21.10.):** Nach „Leb wohl, Ye.“ geht es weiter
+  über den Weg nach Grünwacht, durch den Wald und mit dem Seilaufzug hinauf nach Wipfelheim (siehe „Fertig in
+  Lernprojekt 5“ und „Was du testen kannst“). **Schritt 2 eingebaut:** Monster auf dem Weg (Stufe 10–15) und dem
+  Waldboden (15–20), Kämpfe mit der eigenen Klasse, Stufen bis 20. **Schritt 3 eingebaut:** Fenns Prüfung der drei
+  Ziele für Bogenschützen. **Schritt 4 eingebaut:** Professor Esche, Rivale Kobalt und Tildas Unterricht für Zähmer.
+  **Schritt 5 eingebaut:** Leuchtende Tiere (Jäger oder Zähmer, Ruf) und Kael. **Schritt 6 eingebaut:** Rowans leeres
+  Grab mit der ersten Erinnerungs-Szene. **Schritt 7 eingebaut:** die Pilzhöhle unter dem Urbaum als echter Dungeon.
+  **Schritt 8 eingebaut:** Ende der Region (Ysolde und Kael, Wahrheit oder Geheimnis, Abspann „Ende von Grünwacht“).
+  **Schritt 9 eingebaut:** Kreuzweg-Karten mit Sternentafel, Marv und Oma Hagebutte. **Schritt 10 eingebaut:** Nebenaufträge
+  (Kobalts Revanche, Omas Herausforderung, der verrückte Bienenstock). **Schritt 11 eingebaut:** Feinschliff
+  (Grünwacht-Musik, automatischer Durchlauf der ganzen Region, Erfahrung abgestimmt). **Alle 11 Schritte sind gebaut.**
+  Jetzt testet Marco alles zusammen.
 - **Neu (21.10.): Figuren und Nebenaufträge aus Sitzung 21** in Kreuzweg: Wirtin Hanne mit Gasthaus Wegrast, Vogt Edmar,
   Steinmetz Quill, die Kinder Pip und Lotte, die Wache heißt jetzt Brom. Fünf Nebenaufträge mit **blauem „!“ und „?“**
   (Hauptaufträge bleiben gelb). Siehe „Schritt 21“ unten, Test-Liste unter „Was du testen kannst“.
@@ -22,6 +38,235 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   und werden von Marco noch geschrieben (Anleitung in `data/LIESMICH.md`).
 - Selbst gewählte Zahlen und Passiven: Abschnitt „Vorläufige Werte (Feinschliff am Ende)“ unten.
 - Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
+
+## Aufgaben Lernprojekt 5 „Grünwacht“ (Fahrplan in `GRUENWACHT_PLAN.md`)
+
+| Nr. | Aufgabe | Stand |
+|-----|---------|-------|
+| 0 | Plan schreiben | erledigt |
+| – | Entscheidungen: alle Klassen, gleicher Spielstand, Stufen nach Reihenfolge, Sternentafel bei Bingo, Koch-Stand als Platzhalter, Ruf sichtbar | entschieden 21.10. |
+| 1 | Die Reise und Wipfelheim (mehrere Karten, Weg von Kreuzweg, Koch-Stand) | eingebaut, Marco testet am Schluss |
+| 2 | Die eigene Klasse in der Welt, Monster der Region | eingebaut, Marco testet am Schluss |
+| 3 | Einstieg Bogenschütze: Fenns Prüfung der drei Ziele | eingebaut, Marco testet am Schluss |
+| 4 | Einstieg Zähmer: Professor Esche und Kobalt | eingebaut, Marco testet am Schluss |
+| 5 | Geschichte 1 und 2: veränderte Tiere (Jäger oder Zähmer, Ruf), Kael | eingebaut, Marco testet am Schluss |
+| 6 | Geschichte 3: Rowans leeres Grab (Erinnerungs-Szene) | eingebaut, Marco testet am Schluss |
+| 7 | Dungeon Pilzhöhle unter dem Urbaum | eingebaut, Marco testet am Schluss |
+| 8 | Ende der Region: Ysolde und Kael, Abstimmung | eingebaut, Marco testet am Schluss |
+| 9 | Kreuzweg-Karten mit Sternentafel, Marv, Oma Hagebutte | eingebaut, Marco testet am Schluss |
+| 10 | Nebenaufträge (Kobalt, Oma Hagebutte, Bienenstock) | eingebaut, Marco testet am Schluss |
+| 11 | Feinschliff (Musik, Durchlauf, Stufen) | eingebaut, Marco testet am Schluss |
+
+## Fertig in Lernprojekt 5
+
+- **Schritt 1 – Die Reise und Wipfelheim** (21.10.):
+  - **Neuer Baustein „mehrere Karten“:** Die Welt besteht jetzt aus mehreren Karten, jeder Spieler steht auf einer.
+    Kreuzweg bleibt wie bisher. Die neuen Karten stehen in **`data/karten.json`** als Bild aus Zeichen
+    (`~` Baumkronen, `#` Plattform, `-` Hängebrücke, `,` Waldboden, `=` Weg, `t` Baum, `R` Riesenbaum …).
+    Du kannst sie dort selbst ändern, Anleitung in `data/LIESMICH.md`.
+  - **Drei neue Karten:**
+    - **Der Weg nach Grünwacht:** Straße von Kreuzweg nach Westen, erst Wiese mit Blumen, dann immer mehr Wald,
+      in der Mitte ein Rastplatz mit Lagerfeuer, Wegweiser an beiden Enden.
+    - **Waldboden unter Wipfelheim:** dunkler Wald mit Riesenbäumen und Pilzen, ein Pfad führt zur Lichtung mit dem
+      **Seilaufzug**. (Hier kommen in Schritt 2 die Monster hin, später der Eingang zur Pilzhöhle.)
+    - **Wipfelheim:** fünf Plattformen in den Baumkronen, verbunden durch Hängebrücken: Ankunft mit Seilaufzug und
+      **Koch-Stand** (Platzhalter: „Hier wird bald gekocht.“), in der Mitte **Dornfeders Halle** mit Ysolde, im Norden
+      **Fenns Schießstand** mit Zielscheiben, im Osten **Tildas Rudelhof**, im Süden **Esches Labor**.
+      **Marv** steht auf der Brücke zu Tilda und spricht dich an.
+  - **So kommt man hin:** Nach „Leb wohl, Ye.“ kommt der Abspann, jetzt **„Ende von Akt 1“** mit dem Knopf
+    **„Weiter nach Grünwacht“**. Danach stehst du auf dem Weg (derselbe Spielstand). Läufst du an den Rand,
+    kommst du auf die nächste Karte: Weg ↔ Kreuzweg (Weststraße, erst nach der Klassenwahl) und Weg ↔ Waldboden.
+    Den Seilaufzug benutzt du wie eine Figur (antippen oder E / Leertaste).
+  - **Auftrag „Der Weg nach Grünwacht“:** nach Wipfelheim reisen, mit Ysolde reden (50 Gold, 100 Erfahrung).
+    Ysolde fragt je nach Klasse anders weiter: Bogenschützen nach Fenn, Zähmer nach Esche, alle anderen hören,
+    dass ihr Lehrmeister weit weg ist (Entscheidung 21.10.: alle Klassen dürfen nach Grünwacht).
+    Wer die erste Stunde schon vorher beendet hatte, bekommt den Auftrag nachträglich bei Ye am Tor (gelbes „!“).
+  - **Zusammen spielen:** Der Server kennt alle Karten. Man sieht nur Mitspieler auf derselben Karte, gemeinsame Szenen
+    gibt es nur auf derselben Karte, die Gruppe bleibt über Kartenwechsel bestehen. Beim Beitreten kommt man dort an,
+    wo man zuletzt war.
+  - **Platzhalter:** alle Texte von Ysolde, Fenn, Tilda, Esche, Marv und Ye (neu: „noch da“, „Westen“) in `data/dialoge.json`.
+    Musik: vorerst die Stadt-Musik (eigene Grünwacht-Musik kommt in Schritt 11).
+  - **Tests:** `tests/gruenwacht_test.gd` (Karten erreichbar, ganze Reise bis Ysolde, alter Spielstand, Klassen,
+    Karten getrennt, Speichern) und `tests/netz_gruenwacht_test.gd` (Server und Mitspieler: Weg → Waldboden →
+    Wipfelheim → neu betreten). Alle bisherigen Tests laufen unverändert. Bildschirmfotos: `tests/gruenwacht_auto.tscn`.
+
+- **Schritt 2 – Die eigene Klasse in der Welt** (21.10.):
+  - **Monster in der Wildnis:** Auf dem Weg nach Grünwacht stehen 8 Monstergruppen (Stufe 10 bei Kreuzweg bis 15 am
+    Waldrand), auf dem Waldboden 10 (Stufe 15–20). Die Monster aus design.md: **Rindenbär** (Pflanze, zäh),
+    **Windfalke** (Wind, schnell), **Donnerhirsch** (Blitz, stark), **Steinkröte** (Erde, hart), **Sporenling**
+    (Pflanze, Giftsporen auf alle) und selten **wilde Mooslinge, Glutwelpen und Bachotter**.
+  - Über jedem Monster steht Name und Stufe (bei Gruppen „+1“, „+2“). **Farbe des Namens:** grau = leicht,
+    weiß = passend, orange = schwer, rot = sehr schwer (im Vergleich zu deiner Stufe).
+  - **Kampf:** hineinlaufen oder antippen. Du kämpfst jetzt **mit deiner gewählten Klasse** (vorher nur in den
+    Probestunden). Gruppenmitglieder in der Nähe kämpfen mit, jeder mit seiner Klasse. Neuer Kampf-Hintergrund **Wald**.
+  - **Nach dem Kampf:** Sieg = Erfahrung (12 × Stufe je Monster) und etwas Gold, das Monster ist für dich eine Minute
+    weg. Niederlage = du wachst am Anfang der Karte wieder auf.
+  - **Stufen bis 20** (Kreuzweg 1–10, Weg 10–15, Grünwacht 15–20, Entscheidung 21.10.). Mit jeder Stufe: Leben +10,
+    Mana +4, Stärke +5 % (Schaden und Heilung, auch für Roboter und Monster des Zähmers). Monster: pro Stufe
+    9 % mehr Leben und 6 % mehr Schaden.
+  - **Werte (C):** zeigt nach der Klassenwahl die Werte deiner Klasse (Leben, Mana, Tempo, Stärke).
+  - **Test `tests/wildnis_test.gd`:** Der Computer spielt jede Klasse allein gegen jedes Monster (auf dessen Stufe,
+    mit durchschnittlichen Paraden). Einzelne Monster schafft jede Klasse fast immer, Zweiergruppen meist,
+    Dreiergruppen sind schwer. Allein am stärksten: Tank, Mechaniker, Sternensängerin; am schwächsten der
+    **Ritualist** (etwa 60 %, er hat nur einen Angriff).
+  - **Behoben:** Die alten Foto-Programme (`welt_auto`, `fest_auto`, `gesandte_auto`, `marv_auto`, `weg_auto`) liefen
+    seit Lernprojekt 4 nicht mehr (alter Name `LOCAL_ID`).
+
+- **Schritt 3 – Fenns Prüfung der drei Ziele** (21.10., nur für Bogenschützen):
+  - Nach dem Gespräch mit Ysolde hat **Fenn** (Schießstand im Norden von Wipfelheim) ein „!“, aber nur für
+    Bogenschützen (neu: Aufträge können nur für bestimmte Klassen gelten).
+  - **Erstes Ziel:** drei stehende Strohscheiben. Fenn erklärt die hintere Reihe und die „Ruhige Hand“ (mehr kritische
+    Treffer von hinten). Erlaubt: Schneller Schuss, Reihe wechseln.
+  - **Zweites Ziel:** zwei laufende Scheiben. Ein schneller Schuss streift nur (30 %), erst **Bogen spannen**, dann
+    schießen (aufgeladener Schuss, lädt die Ult). Beides ist ein Lernkampf mit zwei Lektionen wie die Grundausbildung.
+  - **Drittes Ziel:** Der **Silberhirsch** steht auf einer kleinen Lichtung im Westen des Waldbodens (erscheint erst
+    jetzt). Er sieht dich an. Auswahl: „Den Bogen spannen und schießen.“ oder „Den Bogen sinken lassen.“ (ohne
+    Hinweis auf die Folgen).
+  - **Fenns Urteil:** Verschont → „Ein Jäger weiß, wann er nicht schießt. … Du bist jetzt Bogenschütze.“ und der Erfolg
+    **„Ein Jäger weiß, wann er nicht schießt“**. Geschossen → bestanden, aber „Das war nicht die Prüfung.“ (design.md).
+    Belohnung: 500 Erfahrung, 60 Gold.
+  - **Neu beim Laufen:** Wer irgendwohin tippt, läuft um Monster herum statt mitten hindurch (nur wer ein Monster
+    antippt, läuft hin).
+  - **Platzhalter:** alle Texte von Fenn und vom Silberhirsch, die Bilder der Scheiben (Strohpuppen).
+  - **Tests:** Prüfung mit beiden Entscheidungen im Grünwacht-Test, der Scheibenkampf im Lernkampf-Test (30 von 30).
+
+- **Schritt 4 – Professor Esche, Kobalt und Tilda** (21.10., nur für Zähmer):
+  - **Esche** (vor seinem Labor im Süden von Wipfelheim) hat nach Ysolde ein „!“: Er erklärt das Element-Dreieck
+    (Feuer schlägt Pflanze, Pflanze schlägt Wasser, Wasser schlägt Feuer) und du wählst **Moosling, Glutwelpe oder
+    Bachotter**. Dazu gibt es die **Schleuder**.
+  - **Eigenes Rudel:** Ab jetzt kämpft dein Zähmer mit **seinen** Monstern statt mit allen dreien (vorher, auf dem Weg,
+    noch wie in der Probestunde mit allen drei). Das Rudel steht unter „Werte (C)“.
+  - **Kobalt**, Esches Neffe, kommt sofort angelaufen, nimmt das Monster, das deins schlägt, und fordert dich heraus.
+    Sieg = Erfolg **„Rivale besiegt“**, Niederlage ist kein Spielende (Kobalt: „Hab ich doch gesagt!“). Er hat Stufe 16
+    und viel Leben: In der Simulation gewinnt man mit Moosling etwa jedes zweite Mal, mit Glutwelpe und Bachotter
+    meistens.
+  - **Tilda** bringt danach das Zähmen bei: ein Monster in der Wildnis unter halbes Leben bringen, dann „Zähmen“.
+    **Gezähmte Monster bleiben jetzt im Rudel** (höchstens 5), auch nach dem Kampf und im Spielstand.
+    Danach: „Du bist jetzt Zähmer, Kleines.“
+  - **Platzhalter:** alle Texte von Esche, Kobalt und Tilda, die Bilder von Kobalts Monstern.
+  - **Tests:** Esche → Kobalt (Sieg und Niederlage) → Tilda im Grünwacht-Test, Kobalt und Zähmer mit eigenem Rudel
+    im Wildnis-Test.
+
+- **Schritt 5 – Leuchtende Tiere und Kael** (21.10., für alle Klassen):
+  - **Ysolde** hat nach der Ankunft ein neues „!“: Im Wald sind Tiere mit Splittern im Fell, sie werden wild,
+    sie lässt sie jagen. **Tilda** (Rudelhof) sieht das anders: Splitter herausziehen, dann werden sie wieder sie selbst.
+  - Danach steht im Nordosten des Waldbodens ein **Splitter-Rindenbär** (Sternenkraft). Deine **persönliche Entscheidung**:
+    „Ihn jagen, wie Ysolde es will.“ oder „Ihn bändigen und die Splitter herausziehen, wie Tilda es will.“
+    Beides ist ein Kampf (Stufe 17, viel Leben). Verliert man, kann man es wieder versuchen, ohne neu zu entscheiden.
+  - **Neuer Baustein Ruf** (Entscheidung 21.10.: sichtbar): Jäger +15 und Zähmer -10 bzw. umgekehrt. Unter
+    **„Werte (C)“** steht der Ruf als Leiste aus 10 Kästchen: rot = misstrauisch, grau = neutral, grün = geschätzt.
+  - **Ysolde** reagiert auf deine Wahl („Ein Tier weniger, das leidet.“ oder „Hoffentlich weiß Tilda, was sie tut.“).
+  - Danach steht **Kael** vor Dornfeders Halle und spricht dich an: Er will, dass Ysolde gesteht. „Frag sie nach
+    ihrem Bruder. Rowan. … Sein Grab liegt unten im Wald. Es ist leer.“ Ysolde danach: „Hör nicht auf ihn.“
+  - **Platzhalter:** alle Texte (Ysolde, Tilda, Kael, das Tier), die Bilder von Kael und dem Bären.
+  - **Tests:** Geschichte mit beiden Entscheidungen im Grünwacht-Test, der Bär mit jeder Klasse im Wildnis-Test (86 %).
+
+- **Schritt 6 – Rowans leeres Grab** (21.10.):
+  - Kael gibt nach seinem Auftritt den Auftrag **„Das leere Grab“**. Das Grab steht im **Nordwesten des Waldbodens**:
+    „Rowan Dornfeder. Gefallen am sechsten Weg.“ Die Erde ist eingesunken, das Grab ist leer, ein Splitter leuchtet.
+  - **Neuer Baustein Erinnerungs-Szene** („Den Splitter berühren.“): ein eigener Bildschirm in blassen Farben, kein
+    Kampf. Nacht am sechsten Weg, Menschen fliehen, Ysolde ruft „Bleibt stehen!“ und schießt, Rowan dreht sich zu ihr
+    um: „Ysolde …“. Weiter mit Tippen, E oder Leertaste. Danach zurück zum Grab.
+  - Erinnerungen stehen in **`data/erinnerungen.json`** (Figuren, Text, wer wohin läuft, wer sich umdreht, Pfeile).
+    Du kannst dort eigene Erinnerungen dazuschreiben.
+  - **Kael** danach: „Sie hat auf ihren eigenen Bruder geschossen.“ Er erzählt vom **großen Splitter unter dem Urbaum**
+    (führt zur Pilzhöhle, Schritt 7).
+  - **Platzhalter:** alle Texte (Grab, Erinnerung, Kael), das Bild des Grabsteins.
+  - **Tests:** Grab und Kael im Grünwacht-Test, neuer Test `tests/erinnerung_test.gd` (alle Schritte der Erinnerung).
+
+- **Schritt 7 – Pilzhöhle unter dem Urbaum** (21.10.):
+  - Nach dem Grab gibt Kael den Auftrag **„Der Splitter im Urbaum“**. Der **Eingang** liegt zwischen den Wurzeln eines
+    Riesenbaums im Süden des Waldbodens (erst mit dem Auftrag offen).
+  - **Neue Höhlen-Karte** mit Höhlenboden, Fels, leuchtenden Riesenpilzen und Wurzeln: Eingangshalle, ein Gang mit
+    Seitenhöhle, die Kammer der **Sporenkönigin** (Zwischenboss) und ganz im Westen die Kammer der **Wurzelmutter**
+    (Endboss, mit dem **Vorboten** als zweiter Phase). Unterwegs vier Gruppen Dungeon-Monster (Sporenwölfe,
+    Leuchtmotten, Wurzelkriecher, Glimmerkäfer, Stufe 18–19).
+  - Alle Mechaniken wie in der Sandbox (Sporenblüte, Zwillingsknoten, Verschlingen, Lichtfraß, Das letzte Licht).
+    Die Bosse stehen als große Figuren in ihren Kammern. **Ida, Bo und Tom** kämpfen mit, wenn Plätze frei sind
+    (allein also zu viert, zu zweit mit zwei von ihnen). Wer verliert, wacht am Eingang der Höhle auf.
+  - **Am Herz des Urbaums** (erscheint nach der Wurzelmutter): „Den Baum fällen und den großen Splitter mitnehmen.“ oder
+    „Den Splitter vorsichtig herausschneiden und den Baum retten.“ (ohne Folgen zu verraten, in der Gruppe wird
+    abgestimmt). **Nur beim ersten Abschluss**, danach gilt die Wahl automatisch. Retten bringt Ruf bei den Zähmern.
+    Belohnung bei jedem Abschluss: ein **Sternensplitter**.
+  - **Läufe:** Wer die Höhle von außen betritt, beginnt einen neuen Lauf (die Bosse sind wieder da).
+  - **Ysolde** spürt danach, was mit dem Urbaum geschah, und nimmt den Auftrag ab.
+  - **Schwierigkeit** (Computer-Spieler mit drei Novizen, Stufe 19–20): Sporenkönigin 86 %, Wurzelmutter 70 %.
+    Damit es allein schaffbar ist, kommt „Verschlingen“ in der Welt erst nach 4 statt 3 Zügen, und die Bosse haben
+    weniger Leben als ihre Stufe vermuten lässt (vorläufig, Feinschliff am Ende). Splitter-Knoten und Zielscheiben
+    wachsen nicht mehr mit der Stufe (sie gehören zur Mechanik).
+  - **Platzhalter:** alle Texte, die Höhle als Karte.
+  - **Tests:** zwei Läufe mit beiden Entscheidungen im Grünwacht-Test, die Bosse mit jeder Klasse im Wildnis-Test.
+
+- **Schritt 8 – Ende der Region** (21.10.):
+  - Nach dem Urbaum hat **Kael** ein „!“: „Jetzt. Vor ihrer Halle. Vor allen.“ (Auftrag „Die Wahrheit über Rowan“).
+  - Bei **Ysolde** kommt die **Konfrontation**: Kael stellt sie, Ysolde erzählt ein Stück („Ich hatte Befehl. Niemand
+    verlässt diesen Ort.“). Dann die **Abstimmung** (in der Gruppe alle): „Die Wahrheit vor ganz Wipfelheim aussprechen.“
+    oder „Das Geheimnis bewahren.“ Danach: **„Rowan … er könnte noch leben.“** Kael ist anschließend fort.
+  - **Abspann „Ende von Grünwacht“** mit Rückblick auf deine Entscheidungen (Silberhirsch, Kobalt, Splitter-Bär,
+    Urbaum, Wahrheit) und dem Knopf „Zurück nach Wipfelheim“ (Grünwacht bleibt spielbar).
+  - **Wipfelheim und der Wald verändern sich:** Urbaum gerettet = Blüten auf Plattformen und Waldboden,
+    gefällt = welkes Laub.
+  - **Platzhalter:** alle Texte.
+  - **Tests:** Konfrontation mit beiden Entscheidungen im Grünwacht-Test, neuer Test `tests/abspann_test.gd`.
+
+- **Schritt 9 – Kreuzweg-Karten** (21.10.):
+  - **Das Mini-Spiel** (design.md, angelehnt an Triple Triad): 3×3-Feld auf der Sternentafel, je 5 Karten mit vier
+    Zahlen (oben, rechts, unten, links). Ist deine Zahl höher als die der angrenzenden gegnerischen Karte, gehört sie
+    dir. Wer am Ende mehr Karten hat (Feld und Hand), gewinnt. Wer anfängt, wird ausgelost.
+  - **Spieltisch:** eigener Bildschirm. Links deine Karten (blau), rechts die des Gegners (rot), erst Karte antippen
+    (Gold), dann ein Feld. Gerade umgedrehte Karten haben einen weißen Rand. Gespielt wird mit deinen 5 stärksten Karten.
+  - **Sternentafel:** In Akt 1 kostet sie bei Bingo weiter 5000 Gold (zu teuer, wie geplant). Nach der Rückkehr aus
+    Grünwacht hat Bingo einen **Heimkehrer-Preis von 600 Gold**. Mit der Tafel kommen **7 Startkarten**.
+  - **Monsterkarten:** Wer eine Sternentafel hat, bekommt nach Siegen in der Wildnis manchmal (20 %) eine Karte eines
+    der besiegten Monster. 21 Karten gibt es bisher (Kreuzweg, Grünwacht, Pilzhöhle). Die Sammlung steht in der Tasche (I).
+  - **Marv:** Nebenauftrag „Marvs Partie“ (blau). Mit der Tafel spielt er **genau einmal** mit dir (Erfolg „Marv hatte
+    Zeit“), danach: „Sorry, ich muss gerade Eichhörnchen zählen.“ (design.md). Er legt seine Karten wild durcheinander.
+  - **Oma Hagebutte** (Wipfelheim, an der Ankunft): erste richtige Gegnerin, spielt schlau. Sieg = 40 Gold, beim ersten
+    Sieg eine **Moosling-Karte**. Revanche jederzeit.
+  - **Schwierigkeit** (Computer gegen Computer): gegen Marv mit Startkarten 92 % Siege, gegen Oma mit Startkarten 7 %,
+    mit guten Grünwacht-Karten 40 % (ein Mensch, der mitdenkt, gewinnt öfter). Kartenwerte vorläufig.
+  - **Neu für Aufträge:** Ziel „besitzen“ (einen Gegenstand haben, ohne dass er abgegeben wird), Bedingung „hat“.
+  - **Tests:** neuer Test `tests/kartenspiel_test.gd` (Regeln, Gegner, Bingo, Marv, Oma, Beute, Spieltisch).
+
+- **Schritt 10 – Nebenaufträge in Grünwacht** (21.10., alle mit blauem „!“ und „?“):
+  - **Kobalts Revanche** (nur Zähmer, nach Tildas Unterricht): Kobalt hat jetzt **zwei Monster** (wieder das
+    Gegenstück zu deinem Start-Monster plus ein zweites). Sieg oder Niederlage, beides schließt den Auftrag ab.
+    Mit drei eigenen Monstern gewinnt man gut die Hälfte der Kämpfe (vorläufig).
+  - **Oma Hagebuttes Herausforderung:** Wer eine Sternentafel hat, bekommt von ihr den Auftrag, sie einmal zu schlagen.
+    Belohnung 60 Gold und Erfahrung (dazu wie bisher die Moosling-Karte beim ersten Sieg).
+  - **Der verrückte Bienenstock** (alle Klassen, Auftrag bei Professor Esche): Ganz im Südosten des Waldbodens hängt ein
+    Bienenstock, der immer dasselbe Lied summt. **Näher herangehen** = Kampf gegen zwei wilde Bienenschwärme.
+    **Stehen bleiben und zuhören** = fünf Töne und eine Pause, als ob ein sechster fehlt (wie das Lied der sechs Wege).
+    Esche erzählt danach von einer **Bienenhüterin** weit weg (Hinweis auf die spätere Klasse). Belohnung: zwei
+    Honigwaben (für den Beruf Kochen, kommt später).
+  - **Platzhalter:** alle Texte.
+  - **Tests:** im Grünwacht-Test (Revanche, Bienenstock auf beiden Wegen), im Kartenspiel-Test (Omas Auftrag), im
+    Wildnis-Test (Bienenschwarm und Revanche sind schaffbar).
+
+- **Schritt 11 – Feinschliff Grünwacht** (21.10.):
+  - **Eigene Platzhalter-Musik:** „Wald“ (Holzflöte über Harfe, ab und zu Vogelrufe) auf dem Weg, dem Waldboden und in
+    Wipfelheim. Wurde der Urbaum gefällt, läuft dort „Welker Wald“ (dieselbe Stimmung in Moll, langsamer, ohne
+    Vögel). In der Pilzhöhle „Wald bei Nacht“ (langsame Harfe, tiefe Flöte, Tropfen). Selbst erzeugt wie die anderen
+    Stücke, mit `tools/musik_erzeugen.gd`.
+  - **Automatischer Durchlauf** `tests/durchlauf_gruenwacht_test.gd`: Ein Computer-Spieler startet beim Abschied von
+    Ye (Stufe 10, wie am Ende von Akt 1), reist über den Weg nach Wipfelheim, folgt den Zeichen auf allen Karten,
+    erledigt die Aufträge, kämpft wirklich (auch gegen Monster, wenn ein Kampf zu schwer war) und spielt bis zum
+    Abspann „Ende von Grünwacht“. Einmal als Bogenschütze, als Zähmer und als Klingentänzerin (Glutoase).
+  - **Ergebnis des Durchlaufs** (geschätzte Spielzeit nur für die Hauptgeschichte, ohne Nebenaufträge und Lesen):
+    Bogenschütze 16 Minuten, Stufe 19 am Ende. Zähmer 51 Minuten, Stufe 20 (er muss vor der Sporenkönigin
+    mehrmals Monster bekämpfen). Klingentänzerin 15 Minuten, Stufe 18.
+  - **Erfahrung abgestimmt:** Ohne Nebenaufträge war man am Ende erst Stufe 17 (Grünwacht soll 15–20 sein). Jetzt gibt
+    es mehr Erfahrung für die Hauptaufträge (Leuchtende Tiere 900, Das leere Grab 800, Der Urbaum 1600, Die Wahrheit
+    1200) und den Splitter-Rindenbär (600). Mit Nebenaufträgen erreicht man Stufe 20.
+  - **Die Stufe zählt mehr** (deine Entscheidung vom 21.10.): Ist ein Gegner höher als du, machst du pro Stufe 6 %
+    weniger Schaden und Heilung und er trifft 8 % härter. Bist du höher, ist es umgekehrt (höchstens 5 Stufen zählen).
+    Bei gleicher Stufe ändert sich nichts. Beispiel: Den Splitter-Rindenbär (Stufe 17) schafft man mit Stufe 17 in
+    89 % der Kämpfe, mit Stufe 12 nur noch in 32 %. Kobalts erster Kampf hat jetzt Stufe 12 (so trifft man ihn) und
+    dafür mehr Leben, er ist also ungefähr so schwer wie vorher.
+  - **Durchlauf danach:** Man muss vor der Pilzhöhle auf Stufe 17–18 kommen, vorher verliert man gegen die
+    Sporenkönigin. Geschätzte Spielzeit jetzt: Bogenschütze 76 Minuten, Klingentänzerin etwa 4 Stunden, Zähmer etwa
+    4,5 Stunden (der Computer-Spieler kämpft nicht sehr geschickt gegen Monster, echte Spieler sind schneller).
+    Am Ende sind alle Stufe 20.
 
 ## Aufgaben Lernprojekt 4 „Zusammen spielen“ (Fahrplan in `ZUSAMMEN_PLAN.md`)
 
@@ -593,6 +838,70 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spiel startet jetzt mit einem Menü.
 
+**Neu: Grünwacht Schritt 11 – Feinschliff** (am besten Grünwacht einmal am Stück spielen)
+1. Die Wald-Musik: Passt sie zu Wipfelheim? Hörst du den Unterschied in der Pilzhöhle und nach dem Fällen des Urbaums?
+2. Stimmt die Länge? Fühlt sich die Region wie Stufe 15–20 an, oder kommst du zu schnell oder zu langsam voran?
+
+**Neu: Grünwacht Schritt 10 – Nebenaufträge** (blaues Zeichen)
+1. Als Zähmer nach Tildas Unterricht: Will Kobalt eine Revanche? Ist der Kampf gegen zwei Monster schaffbar?
+2. Oma Hagebutte: Gibt sie dir den Auftrag, sobald du eine Sternentafel hast?
+3. Der Bienenstock im Südosten des Waldbodens: Findest du ihn? Was ist spannender, Kampf oder Zuhören?
+
+**Neu: Grünwacht Schritt 9 – Kreuzweg-Karten** (nach Grünwacht zurück nach Kreuzweg)
+1. Bei Bingo in Kreuzweg: Bekommst du die Sternentafel für 600 Gold?
+2. Marv in Wipfelheim: Spielt er einmal mit dir, und hat er danach nur noch Ausreden?
+3. Der Spieltisch: Sind die Regeln verständlich? Siehst du gut, welche Karte wem gehört?
+4. Oma Hagebutte: Zu schwer, zu leicht? Bekommst du nach Siegen gegen Monster ab und zu Karten?
+
+**Neu: Grünwacht Schritt 8 – Ende der Region** (nach dem Urbaum)
+1. Kael und Ysolde vor Dornfeders Halle: Ist die Konfrontation spannend? Fällt die Abstimmung schwer?
+2. Der Abspann „Ende von Grünwacht“: Stimmt der Rückblick? Kommst du danach zurück nach Wipfelheim?
+3. Blüht Wipfelheim auf (Urbaum gerettet) bzw. liegt welkes Laub (gefällt)?
+
+**Neu: Grünwacht Schritt 7 – Pilzhöhle** (nach Kael, am besten zu zweit oder zu dritt)
+1. Findest du den Eingang zwischen den Wurzeln im Süden des Waldbodens? Wirkt die Höhle düster genug?
+2. Sporenkönigin und Wurzelmutter: Sind die Mechaniken im Kampf verständlich? Zu schwer, zu leicht?
+3. Das Herz des Urbaums: Ist die Entscheidung schwer? Abstimmung in der Gruppe klappt?
+4. Geh ein zweites Mal hinein: Sind die Bosse wieder da, und gilt deine erste Entscheidung automatisch?
+
+**Neu: Grünwacht Schritt 6 – Rowans leeres Grab** (nach Kael)
+1. Findest du das Grab im Nordwesten des Waldes?
+2. Die Erinnerung im Splitter: Wirkt sie? Ist sie zu kurz oder zu lang? (Die Texte schreibst du noch.)
+3. Macht Kael danach neugierig auf den Urbaum?
+
+**Neu: Grünwacht Schritt 5 – Leuchtende Tiere und Kael** (jede Klasse, nach dem Gespräch mit Ysolde)
+1. Ysolde und Tilda: Werden die beiden Sichtweisen klar?
+2. Der Splitter-Rindenbär im Nordosten des Waldes: Ist die Entscheidung spannend? Ist der Kampf zu schwer?
+3. „Werte (C)“: Siehst du den Ruf bei Jägern und Zähmern? Ist die Leiste verständlich?
+4. Kael: Passt sein Auftritt? Macht er neugierig auf Rowans Grab?
+
+**Neu: Grünwacht Schritt 4 – Esche, Kobalt, Tilda** (als Zähmer, nach dem Gespräch mit Ysolde)
+1. Esche: Ist die Wahl der drei Start-Monster klar? Bekommst du die Schleuder?
+2. Kobalt: Kommt er gleich angelaufen und nimmt das passende Gegenstück? Ist der Kampf spannend, aber schaffbar?
+3. Tilda: Klappt das Zähmen in der Wildnis? Steht das neue Monster danach unter „Werte (C)“ im Rudel und kämpft mit?
+
+**Neu: Grünwacht Schritt 3 – Fenns Prüfung** (als Bogenschütze, nach dem Gespräch mit Ysolde)
+1. Hat Fenn ein „!“? Erklärt er die Scheiben gut (hintere Reihe, Bogen spannen)?
+2. Findest du den Silberhirsch im Westen des Waldes?
+3. Probier beide Entscheidungen aus (vorher speichern geht nicht, also zwei Durchläufe oder zu zweit):
+   Passt Fenns Reaktion? Gibt es den Erfolg beim Verschonen?
+
+**Neu: Grünwacht Schritt 2 – Monster und deine Klasse** (nach Schritt 1, auf dem Weg nach Grünwacht)
+1. Siehst du die Monster neben dem Weg mit Name und Stufe? Passen die Farben (grau, weiß, orange, rot)?
+2. Lauf in eines hinein: Kämpfst du mit deiner Klasse, im Wald-Hintergrund?
+3. Nach dem Sieg: Erfahrung und Gold? Ist das Monster eine Minute weg?
+4. Steigst du über Stufe 10? Zeigt „Werte (C)“ die Werte deiner Klasse?
+5. Sind die Kämpfe zu leicht oder zu schwer? Wie lange dauert es bis Stufe 15?
+
+**Neu: Grünwacht Schritt 1 – die Reise nach Wipfelheim** (Kreuzweg-Demo, mit deinem Spielstand vom Ende der ersten Stunde)
+1. Hast du die erste Stunde schon beendet: Steht über Ye am Stadttor ein gelbes „!“? Er gibt dir den Auftrag
+   „Der Weg nach Grünwacht“. (Neu gespielt: Nach „Leb wohl, Ye.“ kommt „Ende von Akt 1“ → „Weiter nach Grünwacht“.)
+2. Lauf die Weststraße hinaus bis an den Rand: Kommst du auf den Weg nach Grünwacht? Und zurück nach Kreuzweg?
+3. Auf dem Weg nach Westen in den Wald, dort zum Seilaufzug auf der Lichtung: Bringt er dich nach Wipfelheim hinauf?
+4. In Wipfelheim: Gefallen dir die Plattformen, Brücken und Plätze? Findest du Ysolde, Fenn, Tilda, Esche und den
+   Koch-Stand? Spricht Marv dich an der Brücke an?
+5. Rede mit Ysolde: Ist der Auftrag erledigt, und fragt sie passend zu deiner Klasse weiter?
+
 **Neu: Figuren und Nebenaufträge aus Sitzung 21** (Kreuzweg-Demo → „Neu beginnen“)
 1. Nach der Anmeldung bei Lene: Haben Wirtin Hanne (vor dem Gasthaus Wegrast an der Weststraße) und Pip (Marktplatz)
    ein **blaues „!“**? Ist es gut vom gelben „!“ der Geschichte zu unterscheiden?
@@ -775,6 +1084,13 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
   Dunkelheit in 6 Stufen, Splitterlicht brennt 8, 12, 16 …
 - **Neu in Runde 2:** Schnellfeuer (3 × 7), Polarstern (Abwehr+ und 30 % früher dran),
   Zähmen (unter 50 % Leben, Chance = fehlendes Leben, halbes Leben auf der Bank, höchstens 5 Monster).
+- **Grünwacht (Schritt 2):** Monster-Werte (Rindenbär, Windfalke, Donnerhirsch, Steinkröte, Sporenling, wilde
+  Start-Monster), Stufen-Wachstum (Helden +5 % Stärke, Monster +9 % Leben und +6 % Schaden je Stufe), Erfahrung
+  (12 × Stufe je Monster), Gold (2 × Stufe), eine Minute bis ein Monster wiederkommt, Erfahrungstabelle bis Stufe 20.
+- **Stufenabstand:** 6 % weniger Schaden und 8 % härtere Treffer pro Stufe unter dem Gegner, höchstens 5 Stufen.
+- **Grünwacht (Schritt 9–11):** Kartenwerte von Kreuzweg-Karten, Kobalts Revanche (zwei Monster, Leben ×1,4),
+  Bienenschwarm, Erfahrung der Hauptaufträge (siehe Schritt 11), die drei Wald-Musikstücke.
+
 ## Als Nächstes (Vorschläge)
 
 - Deine Rückmeldungen aus dem Test der ersten Stunde am Stück einarbeiten (Schwierigkeit, Länge, unklare Stellen).
@@ -782,10 +1098,24 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Dialoge der Hauptfiguren: Marco schreibt sie; Platzhalter stehen in `data/dialoge.json`.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).
 - Lernprojekt 4 „Zusammen spielen“ ist gebaut: deine Rückmeldungen aus dem Test mit Freunden einarbeiten.
-- Danach Lernprojekt 5 „Grünwacht“ (erst einen Plan schreiben).
+- Lernprojekt 5 „Grünwacht“: Schritt 1 (Reise nach Wipfelheim) und Schritt 2 (Monster, eigene Klasse, Stufe 20)
+  sind eingebaut, ebenso Schritt 3 (Fenns Prüfung), 4 (Esche, Kobalt, Tilda) und 5 (Leuchtende Tiere, Ruf, Kael).
+  Schritt 6 (Rowans Grab), 7 (Pilzhöhle), 8 (Ende der Region) und 9 (Kreuzweg-Karten) auch. Schritt 10
+  (Nebenaufträge) und 11 (Feinschliff) auch: **Grünwacht ist fertig gebaut.** Als Nächstes testet Marco alles am
+  Stück, dann kommen seine Rückmeldungen und die echten Texte.
 - Hinten angestellt: Schnellsätze und Emotes (Vorschläge im Ideen-Parkplatz von design.md).
 
 ## Offene Fragen an Marco
+
+- **Grünwacht Schritt 11 (entschieden 21.10.):** Die Stufe soll mehr zählen → eingebaut (Stufenabstand, siehe
+  „Nach deinem Test-Feedback“ bei Schritt 11). Der Zähmer bleibt allein schwächer; seine Monster bekommen später
+  Stufen, Entwicklungsstufen und werden beim Tod zum Ei (steht in design.md, Details noch offen).
+- **Grünwacht Schritt 2 (vorläufig, Feinschliff am Ende):** Der Ritualist ist allein am schwächsten. Soll er für das
+  Allein-Spielen etwas mehr Schaden bekommen? Und sollen alle Klassen in der Wildnis Heiltränke benutzen dürfen
+  (design.md: Verbrauchsgegenstände für alle, vier Gürtelplätze)? Bisher kann das nur der Novize.
+- **Grünwacht Schritt 1:** Passen die Plätze in Wipfelheim (Ysolde in der Mitte, Fenn im Norden, Tilda im Osten,
+  Esche im Süden, Koch-Stand an der Ankunft)? Ist Marv, der dir nach Wipfelheim nachgereist ist, lustig oder zu viel?
+
 
 - **Zusammen spielen:** Die vier Entscheidungen sind getroffen (20.10.). Auch geklärt: Bei Gleichstand entscheidet der
   Gruppenführer, wer eine Szene schon erlebt hat, stimmt nicht mehr mit ab. Schnellsätze sind hinten angestellt

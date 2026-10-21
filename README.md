@@ -60,6 +60,19 @@ Jeder Spieler schickt nur Befehle wie „laufe zu Feld X“ oder „rede mit Ye�
 (`scripts/welt/kreuzweg.gd`) zeichnet nur, was in der Logik steht. Der Testgefährte wird schon über
 dieselben Befehle gesteuert wie ein echter Mitspieler. Später kann ein Server die Logik übernehmen.
 
+## Grünwacht (Lernprojekt 5, Fahrplan in `GRUENWACHT_PLAN.md`)
+
+Nach der Klassenwahl geht es weiter in die erste Region Grünwacht. Geplant sind Fenns Prüfung, Professor Esche und
+Kobalt, Ysoldes Geschichte, die Pilzhöhle als Dungeon und Kreuzweg-Karten.
+
+- **Schritt 1 (eingebaut):** Nach „Leb wohl, Ye.“ → „Ende von Akt 1“ → **„Weiter nach Grünwacht“**. Die Weststraße
+  aus Kreuzweg führt auf den **Weg nach Grünwacht**, weiter in den **Waldboden** und mit dem **Seilaufzug** hinauf
+  nach **Wipfelheim** (Plattformen in den Baumkronen mit Hängebrücken, Ysolde, Fenn, Tilda, Esche, Marv, Koch-Stand).
+  Auftrag „Der Weg nach Grünwacht“. Die Karten stehen in `data/karten.json` (Anleitung in `data/LIESMICH.md`).
+- **Schritt 2 (eingebaut):** Monster auf dem Weg (Stufe 10–15) und dem Waldboden (15–20) mit Name und Stufe
+  (Farbe = Gefahr). Hineinlaufen oder antippen startet den Kampf **mit deiner Klasse** im Wald, Gruppenmitglieder
+  in der Nähe kämpfen mit. Stufen bis 20, „Werte (C)“ zeigt die Werte deiner Klasse.
+
 ## Zusammen spielen (Lernprojekt 4, Fahrplan in `ZUSAMMEN_PLAN.md`)
 
 Menü → **„Zusammen spielen“**: Name und Figur wählen, dann **Gastgeber werden** (nur PC-Version) oder **Beitreten**.
@@ -167,10 +180,10 @@ Felsregen → **Kettenzug** (reißt jemanden von hinten nach vorne). Unter 30 % 
 - `scripts/kampf/pilzhoehle.gd` – Test-Dungeon Pilzhöhle (Abläufe und Mechaniken)
 - `scripts/kampf/battle_state.gd` – Kampf-Regeln ohne Grafik: Zugreihenfolge, Schaden, Gegner, Wellen. Nimmt Befehle an und meldet Ereignisse
 - `scenes/kampf.tscn` + `scripts/kampf/combat.gd` – Kampf-Anzeige: spielt die Ereignisse ab, Knöpfe, Reaktions-Ring, Auswertung
-- `tests/` – Durchlauf der ganzen ersten Stunde (`durchlauf_test.gd`), automatische Testkämpfe (`vergleich.gd`), Lektionen (`lektionen_test.gd`), Element-Test, Welt-Test (`welt_test.gd`),
+- `tests/` – Durchlauf der ganzen ersten Stunde (`durchlauf_test.gd`) und von ganz Grünwacht (`durchlauf_gruenwacht_test.gd`), automatische Testkämpfe (`vergleich.gd`), Lektionen (`lektionen_test.gd`), Element-Test, Welt-Test (`welt_test.gd`),
   Stadt↔Kampf (`uebergang_test.gd`), Vorführ-Szenen (`anzeige_auto.tscn`, `welt_auto.tscn`, `lektion_auto.tscn`, `marv_auto.tscn`, `gesandte_auto.tscn`, `weg_auto.tscn`, `fest_auto.tscn`), Klassenwahl-Test (`klassenwahl_test.gd`)
 - `scripts/kampf/battle_request.gd` – Kampf aus der Stadt (welcher Kampf, Ergebnis), `kampf_ki.gd` – Computer-Spieler (Mitstreiter, Tests)
-- `scripts/musik.gd` + `assets/musik/` – Platzhalter-Musik (Stadt, Nacht, Kampf, Boss; Taste M = an/aus, Lautstärke-Regler im Menü und in der Stadt), erzeugt mit `tools/musik_erzeugen.gd`
+- `scripts/musik.gd` + `assets/musik/` – Platzhalter-Musik (Stadt, Nacht, Kampf, Boss, Wald, welker Wald, Wald bei Nacht; Taste M = an/aus, Lautstärke-Regler im Menü und in der Stadt), erzeugt mit `tools/musik_erzeugen.gd`
 - `scripts/kampf/skills.gd` – Fähigkeiten aller Klassen, Begleiter und Duette
 - `scripts/kampf/sandbox.gd` – Daten: Klassen, Duette, Monster, Gegner, Kämpfe
 - `scripts/kampf/elements.gd` – Element-Sechseck, Licht/Schatten, Sternenkraft

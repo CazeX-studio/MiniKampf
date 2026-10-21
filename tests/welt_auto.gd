@@ -14,16 +14,16 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_t += delta
-	var next := func() -> void: state.apply_command(LOCAL_ID, {type = "dialog_next"})
-	var choose := func(i: int) -> void: state.apply_command(LOCAL_ID, {type = "dialog_choose", index = i})
+	var next := func() -> void: state.apply_command(local_id, {type = "dialog_next"})
+	var choose := func(i: int) -> void: state.apply_command(local_id, {type = "dialog_choose", index = i})
 	var plan: Array = [
 		[1.5, next], [2.0, next], [2.5, next],
 		[3.0, func() -> void: _key(KEY_W, true)],
 		[3.6, func() -> void: _key(KEY_W, false)],
-		[4.5, func() -> void: state.apply_command(LOCAL_ID, {type = "talk", npc = "schreiberin"})],
+		[4.5, func() -> void: state.apply_command(local_id, {type = "talk", npc = "schreiberin"})],
 		[9.5, choose.bind(0)],
 		[10.5, next],
-		[11.0, func() -> void: state.apply_command(LOCAL_ID, {type = "talk", npc = "ye"})],
+		[11.0, func() -> void: state.apply_command(local_id, {type = "talk", npc = "ye"})],
 		[13.0, next], [13.5, next],
 		[15.0, choose.bind(2)],
 		[16.0, choose.bind(0)],

@@ -9,6 +9,7 @@ const LEVELS := {
 	"grundausbildung": 2, "gruppenkampf": 4,
 	"probe:tank": 5, "probe:twilight": 5, "probe:mechanic": 5, "probe:quartermaster": 5, "probe:smith": 5,
 	"probe:blade": 5, "probe:singer": 5, "probe:archer": 5, "probe:tamer": 5, "probe:ritualist": 5, "probe:kunoichi": 5,
+	"fenns_pruefung": 11,
 }
 const RUNS := 30
 

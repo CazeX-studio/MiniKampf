@@ -10,6 +10,9 @@ const TRACKS := {
 	nacht = "res://assets/musik/nacht.wav",
 	kampf = "res://assets/musik/kampf.wav",
 	boss = "res://assets/musik/boss.wav",
+	wald = "res://assets/musik/wald.wav",
+	wald_welk = "res://assets/musik/wald_welk.wav",
+	wald_nacht = "res://assets/musik/wald_nacht.wav",
 }
 const SETTINGS := "user://einstellungen.json"
 const VOLUME_DB := -8.0

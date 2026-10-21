@@ -80,7 +80,8 @@ func _run() -> void:
 	_check(finished, "Die erste Stunde endet mit dem Abspann")
 	_check(p.progress.flags.has("klasse"), "Eine Klasse wurde gewählt")
 	for id: String in GameData.get_file("auftraege"):
-		if GameData.quest(id).get("neben", false):
+		# Nur die Nebenaufträge der ersten Stunde (Grünwacht-Aufträge haben ein eigenes Gebiet)
+		if GameData.quest(id).get("neben", false) and not GameData.quest(id).has("gebiet"):
 			_check(p.progress.quest_state(id) == "abgegeben", "Nebenauftrag „%s“ abgeschlossen" % GameData.quest(id).titel)
 	print("\nKämpfe:")
 	for line in _battle_log:
