@@ -140,6 +140,47 @@ func remove_player(id: String) -> void:
 	names.erase(id)
 
 
+## Wer mit diesem Spieler in der Gruppe ist und wer führt (bevor seine Verbindung abreißt).
+func snapshot(id: String) -> Dictionary:
+	var g := group(id)
+	if g.is_empty():
+		return {}
+	var others: Array = g.members.duplicate()
+	others.erase(id)
+	return {others = others, leader = g.leader}
+
+
+## Ein Spieler ist nach einem Verbindungsabbruch zurück (mit neuer Kennung): wieder in die Gruppe seiner Mitspieler.
+## Gibt es die Gruppe nicht mehr (zu zweit löst sie sich auf), wird sie mit dem ersten noch anwesenden neu gebildet.
+func restore(id: String, snap: Dictionary) -> bool:
+	if group_of.has(id):
+		return false
+	var others: Array = []
+	for o: String in snap.get("others", []):
+		if names.has(o):
+			others.append(o)
+	if others.is_empty():
+		return false
+	for o: String in others:
+		if group_of.has(o):
+			var gid: int = group_of[o]
+			if groups[gid].members.size() >= MAX_SIZE:
+				return false
+			groups[gid].members.append(id)
+			group_of[id] = gid
+			_tell_group(gid, "%s ist wieder da." % _name(id))
+			return true
+	var partner: String = others[0]
+	var gid := _next_id
+	_next_id += 1
+	var leader := partner if snap.get("leader", "") in snap.get("others", []) else id
+	groups[gid] = {leader = leader, members = [leader, id if leader == partner else partner]}
+	group_of[id] = gid
+	group_of[partner] = gid
+	_tell_group(gid, "%s ist wieder da." % _name(id))
+	return true
+
+
 func _tell_group(gid: int, text: String) -> void:
 	for member: String in groups.get(gid, {}).get("members", []):
 		notice.emit(member, text)

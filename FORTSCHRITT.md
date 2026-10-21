@@ -9,8 +9,9 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   mit Urbaum-Entscheidung, Kampfauswertung. Der Kampf ist in Regeln (`battle_state.gd`) und Anzeige (`combat.gd`) getrennt.
 - **Kreuzweg-Demo** (Lernprojekt 3): Die **erste Stunde ist komplett spielbar**, von der Ankunft bis zum Abspann
   (alle 9 Schritte aus `KREUZWEG_PLAN.md`). Steuerung per Tasten, Steuerknopf oder Antippen, Speichern, Musik mit Lautstärke-Regler.
-- **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **begonnen.** Schritt 1 ist eingebaut:
-  bis zu 4 Spieler laufen gemeinsam durch Kreuzweg (Gastgeber am PC, Mitspieler treten bei).
+- **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
+  Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
+  gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -29,7 +30,10 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 2 | Online-Server im Internet (kostenlos bei Render) | vorbereitet, Marco legt das Konto an |
 | 3 | Chat mit freiem Text und Sprechblase | eingebaut, Marco testet |
 | 4 | Gruppe bilden (einladen, Gruppenfenster, Gruppenführer) | eingebaut, Marco testet |
-| 5–8 | Geschichte gemeinsam, gemeinsamer Kampf, Sternenfall zusammen, Feinschliff | offen |
+| 5 | Geschichte gemeinsam erleben (Abstimmung) | eingebaut, Marco testet |
+| 6 | Gemeinsamer Kampf | eingebaut, Marco testet |
+| 7 | Nacht des Sternenfalls zusammen | eingebaut, Marco testet |
+| 8 | Feinschliff (Wiederverbinden, Test mit 4 Spielern, Durchlauf zu zweit) | eingebaut, Marco testet |
 
 ## Fertig in Lernprojekt 4
 
@@ -114,6 +118,98 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     gemeinsame Geschichte (Abstimmung, Gruppenführer bei Gleichstand) und der gemeinsame Kampf auf.
   - **Tests:** `tests/gruppen_test.gd` prüft alle Regeln (20 Prüfungen), der Netz-Test eine echte Einladung zwischen
     zwei Programmen – alles richtig. Alle bisherigen Tests laufen weiter.
+
+- **Schritt 5 – Geschichte gemeinsam erleben:**
+  - Spricht jemand aus einer Gruppe eine Figur an, werden **Gruppenmitglieder in der Nähe** (8 Felder, nach deiner
+    Entscheidung) in das Gespräch geholt: „Gemeinsame Szene: Marco spricht mit Schreiberin Lene.“ Alle sehen denselben Text.
+  - **Wer spricht, blättert weiter.** Bei Antworten **stimmen alle ab**, die in der Geschichte an derselben Stelle sind.
+    Man sieht, wie viele Stimmen jede Antwort hat (✔ = eigene Stimme), wie viele noch fehlen und die Restzeit.
+    Haben alle gewählt, gilt die Mehrheit; **bei Gleichstand entscheidet der Gruppenführer** (hat er nicht mitgestimmt:
+    wer spricht). Nach **30 Sekunden** zählen die abgegebenen Stimmen.
+  - **Wer an einer anderen Stelle der Geschichte ist** (z. B. die Szene schon erlebt hat), **schaut zu**: Er sieht alles,
+    kann aber nicht abstimmen und bekommt keine Belohnung. Seine eigene frühere Wahl bleibt.
+  - Belohnungen, Aufträge und Gemerktes gelten für alle, die abgestimmt haben.
+  - **„Szene verlassen“** holt einen aus der Szene. Geht der Sprecher (Knopf, Kampf, Spiel verlassen), spricht der Nächste
+    weiter. Ist niemand mehr da, der abstimmen darf, ist die Szene vorbei.
+  - Allein (ohne Gruppe oder ohne Mitglieder in der Nähe) läuft jedes Gespräch wie bisher.
+  - Noch vorläufig: Ein Kampf aus einem Gespräch (z. B. Lektion bei Ye) startet bei jedem einzeln. Gemeinsam kämpfen
+    kommt in Schritt 6.
+  - **Tests:** `tests/szene_test.gd` (Mitholen, Abstimmen, Zuschauen, Gleichstand, Weiterblättern, Verlassen, Zeit,
+    Belohnungen – 23 Prüfungen) und im Netz-Test eine echte gemeinsame Szene mit Lene zwischen zwei Programmen –
+    alles richtig. Alle bisherigen Tests laufen weiter.
+
+- **Schritt 6 – Gemeinsamer Kampf:**
+  - Beginnt in einer **gemeinsamen Szene ein Kampf** (z. B. „Wir schaffen das!“ bei Ye für den Gruppenkampf), kämpfen
+    **alle zusammen, die mit abgestimmt haben** (nach deiner Entscheidung). Wer nur zugeschaut hat, bleibt in der Stadt.
+  - **Jeder steuert seine eigene Figur.** Die Spieler stehen vorne, **freie Plätze füllen die Novizen-Mitstreiter**
+    (z. B. zwei Spieler + Ida und Bo beim Gruppenkampf). Im Kampf sieht jeder aus wie seine Figur in der Stadt.
+  - **25 Sekunden pro Zug** (die Uhr steht oben beim eigenen Zug), danach kommt automatisch ein **Standardangriff**.
+    Bei den anderen steht „Mira ist am Zug …“.
+  - **Parieren** misst jedes Gerät selbst (die Verbindung verdirbt das Timing nicht), die anderen sehen das Ergebnis.
+  - **Aufgeben** bringt einen zurück in die Stadt (als Niederlage); die anderen kämpfen weiter, für die Figur entscheidet
+    ab dann der Server (Standardangriff). Genauso, wenn jemand die Verbindung verliert.
+  - Gemeinsam gibt es kein „Nochmal versuchen“ (dafür müssten alle zustimmen). Jeder bekommt danach sein Ergebnis
+    (Erfahrung, Aufträge, getrunkene Heiltränke) wie bisher.
+  - **Wie es funktioniert:** Die Kampfregeln ergeben bei gleichem Startwert und gleichen Entscheidungen immer genau denselben
+    Kampf (das hatten wir in Runde 2 so gebaut). Deshalb rechnet **jedes Gerät den Kampf selbst**, und übers Netz gehen nur
+    die **Entscheidungen** (Fähigkeit und Ziel, wie gut pariert wurde). Der Server rechnet unsichtbar mit, prüft jede
+    Entscheidung und springt ein, wenn jemand weg ist (`scripts/netz/gemeinsamer_kampf.gd`).
+  - **Platzhalter:** Die Texte des Gruppenkampfs sprechen noch von „Ida, Bo und Tom kämpfen mit dir“, auch wenn Mitspieler dabei sind.
+  - Noch nicht gemeinsam: der Sternenfresser mit Ren (das ist Schritt 7).
+  - **Tests:** `tests/gruppenkampf_test.gd`: Server und zwei Mitspieler rechnen drei Kämpfe (normal, einer gibt auf,
+    ungültige Entscheidungen) – jedes Mal **genau gleich** (Sieger, Züge, Leben aller Figuren, Kampf-Log).
+    `tests/netz_gruppenkampf_test.gd`: zwei echte Programme mit echter Kampf-Anzeige kämpfen den Gruppenkampf zusammen –
+    gleiches Ergebnis auf beiden, danach zurück in der Stadt. Szenen-Test: Kampf aus einer Szene wird zum Gruppenkampf.
+    Alle bisherigen Tests laufen weiter.
+
+- **Schritt 7 – Nacht des Sternenfalls zusammen:**
+  - **Marv spricht die Gruppe gemeinsam an:** Kommt jemand auf dem Fest in Marvs Nähe, werden Gruppenmitglieder in der Nähe
+    mit in die Szene geholt (wie bei Schritt 5). Danach spricht Marv niemanden aus der Gruppe noch einmal an.
+  - **Den Sternenfall sehen alle in der Stadt** (greller Lichtblitz, Wackeln), auch wer gar nicht auf dem Fest ist –
+    so steht es in design.md. Er kommt nur einmal, auch wenn mehrere ihn auslösen.
+  - **Sternenfresser für die Gruppe:** Alle, die bei Ye „Los!“ mit abgestimmt haben, kämpfen zusammen (Schritt 6).
+    Er **passt sich der Gruppengröße an**: je weiterem Spieler 25 % mehr Leben (allein 240, zu zweit 300, zu viert 420).
+    In `data/kaempfe.json` als `"gruppe_staerke": 0.25` einstellbar (vorläufig, Feinschliff am Ende).
+  - **Ren kommt erst, wenn alle zurück sind:** Wer zuerst aus dem Kampf kommt (oder aufgegeben hat), wartet. Sind alle
+    wieder in der Stadt, spricht Ren die Gruppe **gemeinsam** an. Wer aufgegeben hat, hat „verloren“ und schaut bei Ren zu,
+    wenn die anderen gewonnen haben. Wer das Spiel verlässt, auf den wird nicht gewartet.
+  - Allein läuft die Nacht wie bisher.
+  - **Platzhalter:** Ye ruft „Ida, Bo, Tom – und du!“, auch wenn Mitspieler dabei sind.
+  - **Tests:** Szenen-Test mit der ganzen Nacht (Marv holt beide, Sternenfall für alle einmal, gemeinsamer Boss, Ren wartet
+    und kommt dann für beide, beide haben den Erfolg) und dem stärkeren Sternenfresser. Der Sternenfresser lief auch als
+    echter Gruppenkampf zwischen zwei Programmen (gleiches Ergebnis auf beiden). Alle bisherigen Tests laufen weiter.
+
+- **Schritt 8 – Feinschliff:**
+  - **Wiederverbinden:** Reißt die Verbindung in der Stadt ab (Funkloch, Server startet neu), steht in der Mitte
+    „Verbindung weg – verbinde neu (Versuch 1 von 3) …“. Das Spiel versucht es bis zu dreimal von selbst und holt dich
+    danach mit deinem gespeicherten Fortschritt zurück in die Stadt. Erst wenn alle drei Versuche scheitern, geht es
+    zurück zu „Zusammen spielen“ mit einem Hinweis.
+  - **Gruppe bleibt:** Kommst du innerhalb von 3 Minuten zurück, bist du wieder in deiner alten Gruppe
+    („Mira ist wieder da.“). War die Gruppe zu zweit (sie löst sich dann auf), wird sie neu gebildet.
+  - Im Gruppenkampf geht das Wiederverbinden nicht (der Kampf läuft weiter, der Server übernimmt deine Figur); dann zurück
+    zu „Zusammen spielen“, der Fortschritt ist gespeichert.
+  - **Test mit 4 Spielern:** Gastgeber + drei Mitspieler-Programme treten bei, bilden eine Gruppe, grüßen im Chat und
+    kämpfen den Gruppenkampf zu viert (keine Mitstreiter mehr nötig) – alle vier haben genau dasselbe Ergebnis.
+  - **Durchlauf zu zweit:** Zwei Computer-Spieler in einer Gruppe spielen die ganze erste Stunde bis zum Abspann – mit
+    gemeinsamen Szenen (Ye, Marv, Bingo, Lene, Marv auf dem Fest, Ren …), uneinigen Abstimmungen, Gruppenkämpfen
+    (Grundausbildung, Gruppenkampf, Sternenfresser) und Ren, die auf beide wartet. Mit sieben Startwerten ohne Hänger.
+    Beobachtung: Ist einer in der Geschichte schon weiter, schaut er bei Marv nur zu, und jeder kämpft den Sternenfresser
+    für sich – so ist es gewollt.
+  - **Tests:** `tests/netz_wiederverbinden_test.gd`, `tests/netz_gruppenkampf_test.gd` (jetzt zu viert),
+    `tests/durchlauf_zu_zweit_test.gd` – alles richtig. Alle bisherigen Tests laufen weiter.
+
+## Lernprojekt 4 auf einen Blick
+
+| Was | Wie |
+|-----|-----|
+| Beitreten | Menü → „Zusammen spielen“ → „Online-Server“ (Browser, Handy, PC) oder Gastgeber/Beitreten im eigenen WLAN |
+| Spielstand | derselbe wie allein (zweites Fenster auf demselben PC: eigener) |
+| Chat | Enter bzw. Knopf „Chat“, Sprechblase über dem Kopf |
+| Gruppe | Mitspieler antippen → einladen, bis 4, ★ = Gruppenführer |
+| Geschichte | Gruppenmitglieder in der Nähe erleben Gespräche mit und stimmen ab (Gleichstand: Gruppenführer) |
+| Kampf | Kampf aus einer gemeinsamen Szene = Gruppenkampf, 25 s pro Zug, freie Plätze: Novizen |
+| Sternenfall | für alle sichtbar, Boss passt sich der Gruppe an, Ren für alle gemeinsam |
+| Abbruch | automatisch neu verbinden, Gruppe bleibt |
 
 ## Aufgaben dieser Runde (Runde 2)
 
@@ -579,6 +675,31 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 4. Einer startet einen Kampf (z. B. bei Ye): Steht beim anderen „kämpft gerade“?
 5. „Gruppe verlassen“: Verschwindet das Fenster bei beiden (bei zwei Spielern ist die Gruppe dann aufgelöst)?
 
+**Neu: Geschichte gemeinsam** (zwei Geräte, beide „Neu beginnen“, in einer Gruppe)
+1. Beide die Einleitung durchklicken und nebeneinander zu Lene gehen. Einer spricht sie an: Ist der andere mit im Gespräch?
+2. Bei „Soll ich dich eintragen?“ verschieden wählen: Entscheidet der Gruppenführer (★)?
+3. Gleich wählen: Haben danach beide den Auftrag „zu Ye“?
+4. Einer ist schon weiter (z. B. schon bei Ye gewesen): Steht bei ihm „Du schaust zu“, und kann er nicht wählen?
+5. „Szene verlassen“: Ist man raus, und läuft das Gespräch für den anderen weiter?
+
+**Neu: Gemeinsamer Kampf** (zwei Geräte, in einer Gruppe, beide bis zur Grundausbildung gespielt)
+1. Nebeneinander zu Ye ans Tor, einer spricht ihn an, beide wählen beim Gruppenkampf „Wir schaffen das!“.
+2. Landen beide im selben Kampf, mit euren Figuren vorne und Ida/Bo als Mitstreiter?
+3. Ist beim eigenen Zug oben die Uhr (25 s) zu sehen, und beim anderen „… ist am Zug“?
+4. Einmal 25 Sekunden nichts tun: Kommt ein Standardangriff?
+5. Einer tippt auf „Aufgeben“: Kämpft der andere weiter?
+
+**Neu: Nacht des Sternenfalls zusammen** (zwei Geräte in einer Gruppe, beide bis zum Fest gespielt)
+1. Zusammen zum Marktplatz: Spricht Marv euch beide gemeinsam an?
+2. Sehen beide den Sternenfall (Lichtblitz)? Ein drittes Gerät, das nicht auf dem Fest ist, sollte ihn auch sehen.
+3. Beide „Los!“: Kämpft ihr zusammen gegen den Sternenfresser? Hat er mehr Leben als allein (300 statt 240)?
+4. Einer gibt auf: Wartet er in der Stadt, bis der andere fertig ist, und spricht Ren dann beide zusammen an?
+
+**Neu: Wiederverbinden** (zwei Geräte, Online-Server, in einer Gruppe)
+1. Am Handy kurz das WLAN/die mobilen Daten aus- und wieder einschalten: Erscheint „Verbindung weg – verbinde neu …“?
+2. Bist du danach wieder in der Stadt, mit deinem Fortschritt?
+3. Bist du wieder in der Gruppe (beim anderen: „… ist wieder da.“)?
+
 **Die ganze erste Stunde am Stück** (Kreuzweg-Demo → „Neu beginnen“, Ton an)
 1. Spiel einmal von der Ankunft bis zum Abspann durch, ohne Abkürzungen. Notier dir, wo du nicht wusstest, was zu tun ist.
 2. Achte auf die Musik: Stadt, Nacht beim Fest, Kampf, Boss beim Sternenfresser. Taste M bzw. Menü-Knopf schaltet sie ab,
@@ -609,8 +730,9 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Deine Rückmeldungen aus dem Test der ersten Stunde am Stück einarbeiten (Schwierigkeit, Länge, unklare Stellen).
 - Dialoge der Hauptfiguren: Marco schreibt sie; Platzhalter stehen in `data/dialoge.json`.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).
-- Lernprojekt 4 „Zusammen spielen“ weiterbauen (`ZUSAMMEN_PLAN.md`, als Nächstes Schritt 2: Server im Internet,
-  du legst ein Konto bei einem kostenlosen Anbieter an, ich schreibe die Anleitung). Danach Lernprojekt 5 „Grünwacht“ (erst einen Plan schreiben).
+- Lernprojekt 4 „Zusammen spielen“ ist gebaut: deine Rückmeldungen aus dem Test mit Freunden einarbeiten.
+- Danach Lernprojekt 5 „Grünwacht“ (erst einen Plan schreiben).
+- Hinten angestellt: Schnellsätze und Emotes (Vorschläge im Ideen-Parkplatz von design.md).
 
 ## Offene Fragen an Marco
 

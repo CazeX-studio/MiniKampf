@@ -24,6 +24,14 @@ signal group_changed
 signal group_invited(from_id: String, from_name: String)
 ## Kurze Meldung zur Gruppe („Mira ist der Gruppe beigetreten.“)
 signal group_notice(text: String)
+## Ein Gruppenkampf beginnt (BattleRequest ist schon vorbereitet)
+signal battle_started(kampf_id: String)
+## Verbindung weg, das Spiel versucht es neu (Versuch, höchstens)
+signal reconnecting(attempt: int, tries: int)
+## Wieder verbunden (neue Kennung, die Stadt muss neu betreten werden)
+signal reconnected
+## Eine Entscheidung im Gruppenkampf ist angekommen (siehe Netz.battle_buffer)
+signal battle_decision(seq: int)
 
 enum Mode { OFFLINE, HOST, SERVER, CLIENT }
 
@@ -37,6 +45,11 @@ const ONLINE_WAIT := 120.0
 ## Alle so viele Sekunden meldet sich ein Mitspieler kurz beim Gastgeber, auch wenn er nur herumsteht
 ## (sonst hält der kostenlose Server die Runde für leer und schläft ein)
 const PING_SECONDS := 30.0
+## So oft versucht ein Mitspieler, sich nach einem Verbindungsabbruch neu zu verbinden
+const RECONNECT_TRIES := 3
+const RECONNECT_PAUSE := 2.0
+## So lange merkt sich der Gastgeber die Gruppe eines Spielers, dessen Verbindung abgerissen ist (Sekunden)
+const REJOIN_SECONDS := 180.0
 ## Mitspieler zeigen die anderen Figuren so viele Sekunden „in der Vergangenheit“. Dafür laufen sie gleichmäßig,
 ## auch wenn die Berichte des Gastgebers unregelmäßig ankommen (Internet).
 const INTERP_DELAY := 0.2
@@ -72,6 +85,11 @@ static var chat_log: Array[Dictionary] = []
 static var save_override := ""
 ## Die eigene Gruppe: {leader = Spieler, members = [{id, name, level, leben, in_stadt}, …]} oder leer
 static var group := {}
+## Entscheidungen im laufenden Gruppenkampf: Nummer -> Daten
+static var battle_buffer := {}
+## Mitspieler: Adresse des Gastgebers (für das Wiederverbinden) und ob die Verbindung gerade steht
+static var _url := ""
+static var _ready_to_send := false
 
 ## Merkt, welches Fenster gerade den normalen Spielstand benutzt (damit ein zweites Fenster auf demselben PC
 ## einen eigenen bekommt und sich die beiden nicht gegenseitig überschreiben)
@@ -81,6 +99,9 @@ const LOCK_SECONDS := 6.0
 var _snapshot_timer := 0.0
 var _lock_timer := 0.0
 var _ping_timer := PING_SECONDS
+var _reconnect_attempt := 0
+## Gastgeber: Gruppen von Spielern, deren Verbindung abgerissen ist: Name -> {snap, time}
+var _rejoin := {}
 ## Kennung dieses Fensters für die Spielstand-Sperre
 var _window_id := str(randi())
 ## Gastgeber: zuletzt geschickter eigener Zustand je Mitspieler (nur Änderungen werden geschickt)
@@ -101,6 +122,10 @@ var _groups: Gruppen
 var _sent_group := {}
 ## Gastgeber: letzte bekannte Stufe je Spieler (auch während er kämpft)
 var _levels := {}
+## Gastgeber: laufende Gruppenkämpfe (Nummer -> GemeinsamerKampf) und ihre Spieler
+var _battles := {}
+var _battle_players := {}
+var _next_bid := 1
 
 
 static func online() -> bool:
@@ -146,7 +171,13 @@ static func _start_server(p_name: String, look: String, p_mode: Mode) -> Error:
 	node._groups = Gruppen.new()
 	node._groups.notice.connect(node._on_group_notice)
 	node._groups.invited.connect(node._on_group_invited)
+	# Gemeinsame Szenen: Die Welt fragt hier, wer mit wem in einer Gruppe ist und wer sie führt
+	world.group_members = func(id: String) -> Array: return node._groups.group(id).get("members", [])
+	world.group_leader = func(id: String) -> String: return node._groups.group(id).get("leader", "")
 	node._sent_group.clear()
+	node._battles.clear()
+	node._battle_players.clear()
+	world.group_battle_requested.connect(node._on_group_battle)
 	node._levels.clear()
 	if p_mode == Mode.HOST:
 		node._groups.set_player_name("p1", p_name)
@@ -175,14 +206,11 @@ static func join(address: String, p_name: String, look: String) -> Error:
 		url = "localhost"
 	if not url.begins_with("ws://") and not url.begins_with("wss://"):
 		url = "ws://%s:%d" % [url, PORT]
-	var peer := WebSocketMultiplayerPeer.new()
-	# Ein Server im Internet darf länger brauchen (er wacht vielleicht gerade auf)
-	peer.handshake_timeout = ONLINE_WAIT if url.begins_with("wss://") else 5.0
-	var err := peer.create_client(url)
+	var err := _connect(url)
 	if err != OK:
 		return err
 	var node := _node()
-	_api().multiplayer_peer = peer
+	node._reconnect_attempt = 0
 	mode = Mode.CLIENT
 	_set_me(p_name, look, "")
 	world = WorldState.new()
@@ -197,10 +225,28 @@ static func join(address: String, p_name: String, look: String) -> Error:
 	return OK
 
 
+static func _connect(url: String) -> Error:
+	_url = url
+	_ready_to_send = false
+	var peer := WebSocketMultiplayerPeer.new()
+	# Ein Server im Internet darf länger brauchen (er wacht vielleicht gerade auf)
+	peer.handshake_timeout = ONLINE_WAIT if url.begins_with("wss://") else 5.0
+	var err := peer.create_client(url)
+	if err != OK:
+		return err
+	_node()
+	_api().multiplayer_peer = peer
+	return OK
+
+
 ## Verbindung beenden, zurück zum Allein-Spielen.
 static func stop() -> void:
 	chat_log.clear()
 	group = {}
+	battle_buffer.clear()
+	if _instance != null and is_instance_valid(_instance):
+		_instance._battles.clear()
+		_instance._battle_players.clear()
 	if _instance != null and is_instance_valid(_instance):
 		_instance._last_chat.clear()
 		_instance._greeted.clear()
@@ -221,6 +267,8 @@ static func send(cmd: Dictionary) -> void:
 		Mode.HOST:
 			world.apply_command(my_id, cmd)
 		Mode.CLIENT:
+			if not _ready_to_send:
+				return
 			_instance._c_command.rpc_id(1, cmd)
 			# Laufen sofort selbst ausführen (der Gastgeber rechnet dasselbe und korrigiert nur, wenn es abweicht)
 			if cmd.get("type", "") in PREDICTED:
@@ -248,6 +296,26 @@ static func group_action(action: String, target := "") -> void:
 			_instance._c_group.rpc_id(1, action, target)
 
 
+## Gruppenkampf: eigene Entscheidung (Nummer, Daten) an den Gastgeber.
+static func battle_decide(seq: int, data: Dictionary) -> void:
+	var bid := int(BattleRequest.group.get("bid", 0))
+	match mode:
+		Mode.HOST:
+			_instance._battle_from(my_id, bid, seq, data)
+		Mode.CLIENT:
+			_instance._c_battle_decision.rpc_id(1, bid, seq, data)
+
+
+## Gruppenkampf verlassen (Aufgeben): Der Gastgeber entscheidet ab jetzt für die eigene Figur.
+static func battle_leave() -> void:
+	var bid := int(BattleRequest.group.get("bid", 0))
+	match mode:
+		Mode.HOST:
+			_instance._battle_gone(my_id, bid)
+		Mode.CLIENT:
+			_instance._c_battle_leave.rpc_id(1, bid)
+
+
 static func in_my_group(id: String) -> bool:
 	for m: Dictionary in group.get("members", []):
 		if m.id == id:
@@ -266,7 +334,7 @@ static func clean_chat(text: String) -> String:
 
 ## Der eigene Spieler betritt die Stadt (er steht schon in Netz.world, beim Mitspieler im Spiegelbild).
 static func enter_world(p: PlayerState) -> void:
-	if mode == Mode.CLIENT:
+	if mode == Mode.CLIENT and _ready_to_send:
 		_instance._c_join.rpc_id(1, p.display_name, p.look, p.progress.to_dict(), [p.cell.x, p.cell.y])
 
 
@@ -277,7 +345,7 @@ static func leave_world() -> void:
 	world.remove_player(my_id)
 	if _instance != null:
 		_instance._history.erase(my_id)
-	if mode == Mode.CLIENT and _api().multiplayer_peer is WebSocketMultiplayerPeer:
+	if mode == Mode.CLIENT and _ready_to_send:
 		_instance._c_leave.rpc_id(1)
 
 
@@ -333,7 +401,7 @@ func _process(delta: float) -> void:
 			_flush_groups()
 	elif mode == Mode.CLIENT and world != null:
 		_ping_timer -= delta
-		if _ping_timer <= 0.0 and my_id != "":
+		if _ping_timer <= 0.0 and my_id != "" and _ready_to_send:
 			_ping_timer = PING_SECONDS
 			_c_ping.rpc_id(1)
 		_move_mirror(delta)
@@ -379,7 +447,7 @@ func _flush_own(id: String) -> void:
 	var p: PlayerState = world.players.get(id)
 	if peer <= 1 or p == null:
 		return
-	var data := {dialog = p.dialog, shop = p.shop, progress = p.progress.to_dict(), feld = [p.cell.x, p.cell.y]}
+	var data := {dialog = world.dialog_for_sync(p), shop = p.shop, progress = p.progress.to_dict(), feld = [p.cell.x, p.cell.y]}
 	var text := var_to_str(data)
 	if _sent_own.get(id, "") == text:
 		return
@@ -425,11 +493,19 @@ func _on_peer_disconnected(peer: int) -> void:
 	if world != null and world.players.has(id):
 		print("Netz: %s hat das Spiel verlassen" % world.players[id].display_name)
 		world.remove_player(id)
+	if _groups != null and _groups.names.has(id):
+		var snap := _groups.snapshot(id)
+		if not snap.is_empty():
+			_rejoin[_groups.names[id]] = {snap = snap, time = _clock()}
 	if _greeted.has(id):
 		_s_chat.rpc("", "", "%s hat das Spiel verlassen." % _greeted[id])
 		_greeted.erase(id)
 	_sent_own.erase(id)
 	_last_chat.erase(id)
+	for bid: int in _battles.keys():
+		_battle_gone(id, bid)
+	if world != null:
+		world.battle_member_gone(id)
 	if _groups != null:
 		_groups.remove_player(id)
 	_sent_group.erase(id)
@@ -453,6 +529,11 @@ func _c_join(p_name: String, look: String, progress: Dictionary, cell: Array) ->
 	var p := world.add_player(id, p_name.left(16), look if look in LOOKS else "elf_m", start)
 	p.progress.load_dict(progress)
 	_groups.set_player_name(id, p.display_name)
+	# Nach einem Verbindungsabbruch zurück: wieder in die alte Gruppe
+	var back: Dictionary = _rejoin.get(p.display_name, {})
+	_rejoin.erase(p.display_name)
+	if not back.is_empty() and _clock() - float(back.time) < REJOIN_SECONDS:
+		_groups.restore(id, back.snap)
 	_sent_own.erase(id)
 	print("Netz: %s ist in Kreuzweg" % p.display_name)
 	if not _greeted.has(id):
@@ -525,14 +606,14 @@ func _group_view(id: String) -> Dictionary:
 func _on_group_notice(id: String, text: String) -> void:
 	if id == my_id and mode == Mode.HOST:
 		_s_group_event("notice", text, "")
-	elif _peer_of(id) > 1:
+	elif _peer_of(id) in multiplayer.get_peers():
 		_s_group_event.rpc_id(_peer_of(id), "notice", text, "")
 
 
 func _on_group_invited(id: String, from_id: String, from_name: String) -> void:
 	if id == my_id and mode == Mode.HOST:
 		_s_group_event("einladung", from_id, from_name)
-	elif _peer_of(id) > 1:
+	elif _peer_of(id) in multiplayer.get_peers():
 		_s_group_event.rpc_id(_peer_of(id), "einladung", from_id, from_name)
 
 
@@ -550,6 +631,88 @@ func _s_group_event(kind: String, a: String, b: String) -> void:
 		group_invited.emit(a, b)
 	else:
 		group_notice.emit(a)
+
+
+# --- Gruppenkampf ---------------------------------------------------------------
+
+## Mehrere Spieler einer Szene kämpfen zusammen: Aufbau, Startwert und wer welchen Helden steuert, an alle.
+func _on_group_battle(ids: Array, kampf_id: String) -> void:
+	var members: Array = []
+	for id: String in ids:
+		var p: PlayerState = world.players[id]
+		members.append({name = p.display_name, stufe = p.progress.level, traenke = p.progress.item_count("heiltrank"), aussehen = p.look})
+	var setup := BattleRequest.build_group(kampf_id, members)
+	if setup.is_empty():
+		return
+	var owners: Array = ids.duplicate()
+	while owners.size() < setup.helden.size():
+		owners.append("")
+	var bid := _next_bid
+	_next_bid += 1
+	var battle_seed := randi()
+	var battle := GemeinsamerKampf.new(bid, setup, battle_seed, owners, _broadcast_battle)
+	_battles[bid] = battle
+	_battle_players[bid] = ids.duplicate()
+	world.add_battle_group(ids)
+	battle.finished.connect(func() -> void:
+		_battles.erase(bid)
+		_battle_players.erase(bid))
+	for i in ids.size():
+		var info := {bid = bid, seed = battle_seed, mine = i, owners = owners}
+		var id: String = ids[i]
+		if id == my_id and mode == Mode.HOST:
+			_s_battle_start(kampf_id, setup, info)
+		elif _peer_of(id) in multiplayer.get_peers():
+			_s_battle_start.rpc_id(_peer_of(id), kampf_id, setup, info)
+	print("Netz: Gruppenkampf %s mit %d Spielern" % [kampf_id, ids.size()])
+	battle.start()
+
+
+func _battle_from(id: String, bid: int, seq: int, data: Dictionary) -> void:
+	if _battles.has(bid):
+		_battles[bid].receive(id, seq, data)
+
+
+func _battle_gone(id: String, bid: int) -> void:
+	if _battles.has(bid) and id in _battle_players.get(bid, []):
+		_battles[bid].player_gone(id)
+
+
+func _broadcast_battle(bid: int, seq: int, data: Dictionary) -> void:
+	for id: String in _battle_players.get(bid, []):
+		if id == my_id and mode == Mode.HOST:
+			_s_battle_decision(bid, seq, data)
+		elif _peer_of(id) in multiplayer.get_peers():
+			_s_battle_decision.rpc_id(_peer_of(id), bid, seq, data)
+
+
+@rpc("any_peer", "reliable")
+func _c_battle_decision(bid: int, seq: int, data: Dictionary) -> void:
+	if mode == Mode.HOST or mode == Mode.SERVER:
+		_battle_from("p%d" % multiplayer.get_remote_sender_id(), bid, seq, data)
+
+
+@rpc("any_peer", "reliable")
+func _c_battle_leave(bid: int) -> void:
+	if mode == Mode.HOST or mode == Mode.SERVER:
+		_battle_gone("p%d" % multiplayer.get_remote_sender_id(), bid)
+
+
+## Gruppenkampf beginnt für den eigenen Spieler
+@rpc("authority", "reliable")
+func _s_battle_start(kampf_id: String, setup: Dictionary, info: Dictionary) -> void:
+	battle_buffer.clear()
+	BattleRequest.prepare_group(kampf_id, setup.duplicate(true), info)
+	battle_started.emit(kampf_id)
+
+
+## Entscheidung im Gruppenkampf (vom Gastgeber, an alle Beteiligten)
+@rpc("authority", "reliable")
+func _s_battle_decision(bid: int, seq: int, data: Dictionary) -> void:
+	if int(BattleRequest.group.get("bid", -1)) != bid:
+		return
+	battle_buffer[seq] = data
+	battle_decision.emit(seq)
 
 
 ## Chat-Nachricht eines Mitspielers
@@ -596,17 +759,52 @@ func _c_command(cmd: Dictionary) -> void:
 
 func _on_connected() -> void:
 	my_id = "p%d" % multiplayer.get_unique_id()
+	_ready_to_send = true
+	if _reconnect_attempt > 0:
+		# Wieder da: frisches Spiegelbild, die Stadt tritt mit dem gespeicherten Fortschritt neu bei
+		_reconnect_attempt = 0
+		world = WorldState.new()
+		_history.clear()
+		_clock_offset = INF
+		group = {}
+		print("Netz: wieder verbunden")
+		reconnected.emit()
+		return
 	connected.emit()
 
 
 func _on_failed() -> void:
+	if _reconnect_attempt > 0:
+		_try_reconnect()
+		return
 	stop()
 	connection_failed.emit()
 
 
+## Verbindung weg: In der Stadt wird bis zu RECONNECT_TRIES-mal neu verbunden (z. B. kurzer Funkloch, Server startet neu).
+## Im Gruppenkampf geht das nicht (der Kampf läuft beim Gastgeber weiter), dann zurück zu „Zusammen spielen“.
 func _on_server_lost() -> void:
+	_ready_to_send = false
+	if mode == Mode.CLIENT and my_id != "" and BattleRequest.group.is_empty():
+		_try_reconnect()
+		return
 	stop()
 	disconnected.emit()
+
+
+func _try_reconnect() -> void:
+	_reconnect_attempt += 1
+	if _reconnect_attempt > RECONNECT_TRIES:
+		_reconnect_attempt = 0
+		stop()
+		disconnected.emit()
+		return
+	reconnecting.emit(_reconnect_attempt, RECONNECT_TRIES)
+	await get_tree().create_timer(RECONNECT_PAUSE).timeout
+	if mode != Mode.CLIENT:
+		return
+	if _connect(_url) != OK:
+		_try_reconnect()
 
 
 ## Wo alle Spieler stehen (vom Gastgeber, mehrmals pro Sekunde, mit seiner Uhrzeit).

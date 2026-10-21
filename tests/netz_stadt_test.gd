@@ -37,6 +37,8 @@ func _process(delta: float) -> bool:
 			if _time > 1.5:
 				var town := current_scene
 				_check(town != null and town.has_method("local_player"), "Kreuzweg ist offen")
+				if town == null or not town.has_method("local_player"):
+					return _finish()
 				_check(town.local_id == Netz.my_id and Netz.my_id != "p1", "Eigene Kennung kommt vom Server")
 				_check(town.state == Netz.world, "Die Stadt zeigt das Spiegelbild der Server-Welt")
 				_check(town.local_player().in_dialog(), "Einleitung vom Server ist zu sehen (Befehl „start“ beim Betreten)")

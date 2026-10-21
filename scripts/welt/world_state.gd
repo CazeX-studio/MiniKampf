@@ -11,6 +11,7 @@ extends RefCounted
 ##   {type = "kampf_ergebnis", kampf = "…", gewonnen = true, traenke_benutzt = 1}  Ergebnis eines Kampfes (vom Kampfbildschirm)
 ##   {type = "dialog_next"}              im Gespräch weiter (wenn es keine Antworten gibt)
 ##   {type = "dialog_choose", index = 0} im Gespräch eine Antwort wählen
+##   {type = "szene_verlassen"}          eine gemeinsame Szene verlassen (Zusammenspielen)
 ##   {type = "kaufen", gegenstand = "…"} / {type = "verkaufen", gegenstand = "…"} / {type = "laden_zu"}  im geöffneten Laden
 ## So kann später ein Server dieselben Befehle von vielen Spielern annehmen;
 ## die Anzeige (kreuzweg.gd) liest nur den Zustand und schickt Befehle.
@@ -22,6 +23,8 @@ signal notice(player_id: String, text: String)
 signal progress_changed(player_id: String)
 ## Ein Spieler beginnt einen Kampf (Kennung aus data/kaempfe.json). Die Anzeige wechselt zum Kampfbildschirm.
 signal battle_requested(player_id: String, kampf_id: String)
+## Mehrere Spieler einer gemeinsamen Szene kämpfen zusammen (Zusammenspielen). Netz startet den Gruppenkampf.
+signal group_battle_requested(player_ids: Array, kampf_id: String)
 ## Ein besonderer Effekt für einen Spieler (z. B. "sternenfall": greller Lichtblitz). Nur Anzeige.
 signal effect_requested(player_id: String, effect: String)
 ## Wechsel zu einem anderen Bildschirm (z. B. "klassenwahl", "abspann"). Nur Anzeige.
@@ -54,6 +57,30 @@ var pickups: Array[Dictionary] = []
 var decorations: Array[Dictionary] = []
 
 var _astar := AStarGrid2D.new()
+
+## --- Gemeinsame Szenen (Zusammenspielen, Lernprojekt 4 Schritt 5) ---
+## Spricht ein Gruppenmitglied eine Figur an, erleben Mitglieder in der Nähe das Gespräch mit. Bei Antworten stimmen alle
+## ab, die in der Geschichte an derselben Stelle sind; wer woanders steht (z. B. die Szene schon erlebt hat), schaut zu.
+## Bei Gleichstand entscheidet der Gruppenführer. Netz setzt hier ein, wer mit wem in einer Gruppe ist.
+var group_members: Callable = func(_id: String) -> Array: return []
+var group_leader: Callable = func(_id: String) -> String: return ""
+## So nah müssen Gruppenmitglieder stehen, um mitgeholt zu werden (Felder)
+const SCENE_RANGE := 8.0
+## So lange wird auf Stimmen gewartet (Sekunden); danach zählen die abgegebenen
+const VOTE_SECONDS := 30.0
+## Laufende Szenen: Nummer -> {dialog, node, speaker, voters, watchers, votes = {Spieler: Antwort}, time_left}
+var scenes := {}
+var _next_scene := 1
+## Effekte, die alle in der Stadt sehen (design.md: Der Sternenfall ist für alle in Kreuzweg sichtbar)
+const GLOBAL_EFFECTS := ["sternenfall"]
+## Gruppenkämpfe, aus denen noch nicht alle zurück sind: [{ids, back = {Spieler: true}, time}].
+## Solange spricht niemand aus der Gruppe von sich aus an (z. B. Ren wartet, bis alle wieder da sind).
+var battle_groups: Array[Dictionary] = []
+## So lange wird höchstens auf die anderen gewartet (Sekunden)
+const BATTLE_WAIT_MAX := 600.0
+## Laufende Zeit der Welt (Sekunden)
+var _time := 0.0
+var _effect_time := {}
 
 
 func _init() -> void:
@@ -203,6 +230,8 @@ func add_player(id: String, p_name: String, look: String, cell: Vector2i) -> Pla
 
 
 func remove_player(id: String) -> void:
+	if players.has(id):
+		_leave_scene(players[id])
 	players.erase(id)
 
 
@@ -249,12 +278,15 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			if used > 0:
 				_give_item(p, "heiltrank", -used)
 			_battle_result(p, str(cmd.get("kampf", "")), bool(cmd.get("gewonnen", false)))
+			_back_from_battle(p.id)
 		"kaufen":
 			_buy(p, str(cmd.get("gegenstand", "")))
 		"verkaufen":
 			_sell(p, str(cmd.get("gegenstand", "")))
 		"laden_zu":
 			p.shop = ""
+		"szene_verlassen":
+			_leave_scene(p)
 		"dialog_next":
 			_dialog_next(p)
 		"dialog_choose":
@@ -371,6 +403,8 @@ func _steer(p: PlayerState, delta: float) -> void:
 
 ## Spielt die Welt um "delta" Sekunden weiter (Laufen, Benutzen nach der Ankunft).
 func tick(delta: float) -> void:
+	_time += delta
+	_tick_scenes(delta)
 	for p: PlayerState in players.values():
 		move_player(p, delta)
 		_check_approach(p)
@@ -409,7 +443,7 @@ func _use(p: PlayerState, target: String) -> void:
 		var npc_id := target.substr(4)
 		p.progress.flags["geredet:" + npc_id] = true
 		_update_quests(p)
-		start_dialog(p, npcs[npc_id].dialog)
+		_start_talk(p, npc_id)
 	else:
 		var pickup: Dictionary = pickups[int(target.substr(6))]
 		p.progress.flags["gesammelt:" + target] = true
@@ -441,14 +475,30 @@ func _enter_node(p: PlayerState, dialog_id: String, node_id: String) -> void:
 
 
 ## Was der Spieler gerade im Gespräch sieht: {wer, text, antworten (nur die erlaubten)}. Leer = kein Gespräch.
+## In einer gemeinsamen Szene kommt "szene" dazu: {rolle, sprecher, stimmen, meine, offen, zeit, teilnehmer}.
 func dialog_view(p: PlayerState) -> Dictionary:
 	if not p.in_dialog():
 		return {}
+	# Mitspieler: Die Ansicht der Szene hat der Gastgeber schon berechnet
+	if p.dialog.has("ansicht"):
+		return p.dialog.ansicht
+	if p.dialog.has("szene") and scenes.has(p.dialog.szene):
+		return _scene_view(p, scenes[p.dialog.szene])
 	var node := _current_node(p)
 	var answers: Array[String] = []
 	for a in _visible_answers(p, node):
 		answers.append(a.text)
 	return {wer = node.get("wer", ""), text = fill_text(p, node.get("text", "")), antworten = answers}
+
+
+## Gesprächszustand zum Verschicken an einen Mitspieler (in einer Szene mit fertiger Ansicht, weil das Spiegelbild
+## die Szene selbst nicht kennt).
+func dialog_for_sync(p: PlayerState) -> Dictionary:
+	if not p.dialog.has("szene"):
+		return p.dialog
+	var d := p.dialog.duplicate()
+	d["ansicht"] = dialog_view(p)
+	return d
 
 
 func _current_node(p: PlayerState) -> Dictionary:
@@ -466,6 +516,9 @@ func _visible_answers(p: PlayerState, node: Dictionary) -> Array[Dictionary]:
 func _dialog_next(p: PlayerState) -> void:
 	if not p.in_dialog():
 		return
+	if p.dialog.has("szene"):
+		_scene_next(p)
+		return
 	var node := _current_node(p)
 	if not _visible_answers(p, node).is_empty():
 		return
@@ -478,6 +531,9 @@ func _dialog_next(p: PlayerState) -> void:
 func _dialog_choose(p: PlayerState, index: int) -> void:
 	if not p.in_dialog():
 		return
+	if p.dialog.has("szene"):
+		_scene_vote(p, index)
+		return
 	var answers := _visible_answers(p, _current_node(p))
 	if index < 0 or index >= answers.size():
 		return
@@ -488,6 +544,300 @@ func _dialog_choose(p: PlayerState, index: int) -> void:
 		_enter_node(p, dialog_id, answer.weiter)
 	else:
 		p.dialog = {}
+
+
+# --- Gemeinsame Szenen ----------------------------------------------------------
+
+## Ein Effekt für einen Spieler – oder für alle in der Stadt (Sternenfall), dann nur einmal, auch wenn mehrere ihn auslösen.
+func _effect(p: PlayerState, effect: String) -> void:
+	if not effect in GLOBAL_EFFECTS:
+		effect_requested.emit(p.id, effect)
+		return
+	if _time - float(_effect_time.get(effect, -INF)) < 3.0:
+		return
+	_effect_time[effect] = _time
+	for id: String in players:
+		effect_requested.emit(id, effect)
+
+
+## Ein Gruppenkampf beginnt (Netz): Danach warten alle Beteiligten aufeinander, bevor sie jemand anspricht.
+func add_battle_group(ids: Array) -> void:
+	battle_groups.append({ids = ids.duplicate(), back = {}, time = _time})
+
+
+## Ein Spieler ist aus dem Kampf zurück. Sind alle da, ist die Gruppe nicht mehr gesperrt.
+func _back_from_battle(id: String) -> void:
+	for g: Dictionary in battle_groups.duplicate():
+		if id in g.ids:
+			g.back[id] = true
+			if g.back.size() >= g.ids.size():
+				battle_groups.erase(g)
+
+
+## Ein Spieler hat das Spiel verlassen: Auf ihn wird nicht mehr gewartet.
+func battle_member_gone(id: String) -> void:
+	for g: Dictionary in battle_groups.duplicate():
+		g.ids.erase(id)
+		g.back.erase(id)
+		if g.ids.is_empty() or g.back.size() >= g.ids.size():
+			battle_groups.erase(g)
+
+
+## Wartet dieser Spieler noch auf Mitspieler aus einem gemeinsamen Kampf?
+func waiting_for_group(id: String) -> bool:
+	for g: Dictionary in battle_groups:
+		if id in g.ids and _time - float(g.time) < BATTLE_WAIT_MAX:
+			return true
+	return false
+
+
+## Ein Spieler spricht eine Figur an: allein wie immer, in einer Gruppe mit Mitgliedern in der Nähe als gemeinsame Szene.
+## approach_flag: Spricht die Figur von sich aus an (Marv, Ren), gilt das für alle, die mit abstimmen.
+func _start_talk(p: PlayerState, npc_id: String, approach_flag := "") -> void:
+	var dialog_id: String = npcs[npc_id].dialog
+	var entry := _entry_node(p, dialog_id)
+	var partners: Array[PlayerState] = []
+	for id: String in group_members.call(p.id):
+		var other: PlayerState = players.get(id)
+		if other != null and other != p and not other.in_dialog() and other.shop == "" \
+				and other.pos.distance_to(p.pos) <= SCENE_RANGE:
+			partners.append(other)
+	if partners.is_empty() or entry == "":
+		start_dialog(p, dialog_id)
+		return
+	var voters: Array[String] = [p.id]
+	var watchers: Array[String] = []
+	for other in partners:
+		# Abstimmen darf, wer in der Geschichte an derselben Stelle ist (gleicher Einstieg ins Gespräch)
+		var flag := "geredet:" + npc_id
+		var had_flag := other.progress.flags.has(flag)
+		other.progress.flags[flag] = true
+		if npc_visible(other, npc_id) and _entry_node(other, dialog_id) == entry:
+			voters.append(other.id)
+			if approach_flag != "":
+				other.progress.flags[approach_flag] = true
+			_update_quests(other)
+		else:
+			if not had_flag:
+				other.progress.flags.erase(flag)
+			watchers.append(other.id)
+		other.path.clear()
+		other.steer = Vector2.ZERO
+		other.use_target = ""
+	p.path.clear()
+	p.steer = Vector2.ZERO
+	var sid := _next_scene
+	_next_scene += 1
+	scenes[sid] = {dialog = dialog_id, node = "", speaker = p.id, voters = voters, watchers = watchers, votes = {}, time_left = VOTE_SECONDS}
+	for id: String in voters + watchers:
+		if id != p.id:
+			notice.emit(id, "Gemeinsame Szene: %s spricht mit %s." % [p.display_name, npcs[npc_id].name])
+	_scene_enter(sid, entry)
+
+
+## Erster passender Einstieg eines Gesprächs für diesen Spieler ("" = keiner).
+func _entry_node(p: PlayerState, dialog_id: String) -> String:
+	for entry: Dictionary in GameData.dialog(dialog_id).get("einstieg", []):
+		if check(p, entry.get("wenn", {})):
+			return entry.knoten
+	return ""
+
+
+func _scene_members(scene: Dictionary) -> Array[String]:
+	var result: Array[String] = []
+	for id: String in scene.voters + scene.watchers:
+		if players.has(id):
+			result.append(id)
+	return result
+
+
+## Alle in der Szene gehen zum nächsten Knoten. Aktionen (Aufträge, Belohnungen …) gelten für alle, die abstimmen.
+func _scene_enter(sid: int, node_id: String) -> void:
+	var scene: Dictionary = scenes[sid]
+	var node: Dictionary = GameData.dialog(scene.dialog).get("knoten", {}).get(node_id, {})
+	if node.is_empty():
+		_end_scene(sid)
+		return
+	scene.node = node_id
+	scene.votes = {}
+	scene.time_left = VOTE_SECONDS
+	for id in _scene_members(scene):
+		players[id].dialog = {id = scene.dialog, node = node_id, szene = sid}
+	_scene_actions(scene, node.get("aktionen", []))
+
+
+## Aktionen einer Szene für alle, die abstimmen. Ein Kampf wird zum Gruppenkampf, wenn mehrere dabei sind.
+func _scene_actions(scene: Dictionary, actions: Array) -> void:
+	var voters: Array[String] = []
+	for id: String in scene.voters:
+		if players.has(id):
+			voters.append(id)
+	var kampf := ""
+	var rest: Array = []
+	for action: Dictionary in actions:
+		if action.has("kampf") and voters.size() > 1:
+			kampf = action.kampf
+			var other := action.duplicate()
+			other.erase("kampf")
+			if not other.is_empty():
+				rest.append(other)
+		else:
+			rest.append(action)
+	for id in voters:
+		if players.has(id):
+			run_actions(players[id], rest)
+	if kampf != "":
+		group_battle_requested.emit(voters, kampf)
+
+
+func _end_scene(sid: int) -> void:
+	var scene: Dictionary = scenes.get(sid, {})
+	for id in _scene_members(scene):
+		if players[id].dialog.get("szene", -1) == sid:
+			players[id].dialog = {}
+	scenes.erase(sid)
+
+
+func _scene_speaker(scene: Dictionary) -> PlayerState:
+	return players.get(scene.speaker)
+
+
+## Weiterblättern (ohne Antworten): nur wer spricht.
+func _scene_next(p: PlayerState) -> void:
+	var sid: int = p.dialog.szene
+	var scene: Dictionary = scenes.get(sid, {})
+	if scene.is_empty() or scene.speaker != p.id:
+		return
+	var node := _current_node(p)
+	if not _visible_answers(p, node).is_empty():
+		return
+	if node.has("weiter"):
+		_scene_enter(sid, node.weiter)
+	else:
+		_end_scene(sid)
+
+
+## Stimme abgeben. Haben alle gewählt, wird entschieden.
+func _scene_vote(p: PlayerState, index: int) -> void:
+	var sid: int = p.dialog.szene
+	var scene: Dictionary = scenes.get(sid, {})
+	if scene.is_empty() or not p.id in scene.voters:
+		return
+	var speaker := _scene_speaker(scene)
+	var answers := _visible_answers(speaker, _current_node(speaker))
+	if index < 0 or index >= answers.size():
+		return
+	scene.votes[p.id] = index
+	var open := 0
+	for id: String in scene.voters:
+		if players.has(id) and not scene.votes.has(id):
+			open += 1
+	if open == 0:
+		_scene_decide(sid)
+
+
+## Die Antwort mit den meisten Stimmen gilt. Bei Gleichstand entscheidet der Gruppenführer
+## (hat er nicht mit abgestimmt: wer spricht, sonst die erste der gleichauf liegenden Antworten).
+func scene_result(votes: Dictionary, leader: String, speaker: String) -> int:
+	var counts := {}
+	for id: String in votes:
+		counts[votes[id]] = counts.get(votes[id], 0) + 1
+	var best := 0
+	for c: int in counts.values():
+		best = maxi(best, c)
+	var tied: Array[int] = []
+	for index: int in counts:
+		if counts[index] == best:
+			tied.append(index)
+	tied.sort()
+	if tied.size() > 1:
+		if votes.has(leader) and votes[leader] in tied:
+			return votes[leader]
+		if votes.has(speaker) and votes[speaker] in tied:
+			return votes[speaker]
+	return tied[0] if not tied.is_empty() else -1
+
+
+func _scene_decide(sid: int) -> void:
+	var scene: Dictionary = scenes[sid]
+	var speaker := _scene_speaker(scene)
+	var answers := _visible_answers(speaker, _current_node(speaker))
+	var index := scene_result(scene.votes, group_leader.call(speaker.id), speaker.id)
+	if index < 0 or index >= answers.size():
+		return
+	var answer := answers[index]
+	if scene.votes.size() > 1:
+		for id in _scene_members(scene):
+			notice.emit(id, "Die Gruppe hat gewählt: „%s“" % answer.text)
+	_scene_actions(scene, answer.get("aktionen", []))
+	if not scenes.has(sid):
+		return
+	if answer.has("weiter"):
+		_scene_enter(sid, answer.weiter)
+	else:
+		_end_scene(sid)
+
+
+## Ein Spieler verlässt die Szene (Knopf, Kampf oder Spiel verlassen). Wer spricht, wird ersetzt;
+## ist niemand mehr da, der abstimmen darf, ist die Szene vorbei.
+func _leave_scene(p: PlayerState) -> void:
+	if not p.dialog.has("szene"):
+		return
+	var sid: int = p.dialog.szene
+	p.dialog = {}
+	var scene: Dictionary = scenes.get(sid, {})
+	if scene.is_empty():
+		return
+	scene.voters.erase(p.id)
+	scene.watchers.erase(p.id)
+	scene.votes.erase(p.id)
+	var voters: Array[String] = []
+	for id: String in scene.voters:
+		if players.has(id):
+			voters.append(id)
+	if voters.is_empty():
+		_end_scene(sid)
+		return
+	if scene.speaker == p.id:
+		scene.speaker = voters[0]
+	if scene.votes.size() >= voters.size() and not scene.votes.is_empty():
+		_scene_decide(sid)
+
+
+## Läuft die Zeit für eine Abstimmung ab, zählen die abgegebenen Stimmen.
+func _tick_scenes(delta: float) -> void:
+	for sid: int in scenes.keys():
+		var scene: Dictionary = scenes.get(sid, {})
+		if scene.is_empty():
+			continue
+		scene.time_left -= delta
+		if scene.time_left <= 0.0:
+			scene.time_left = VOTE_SECONDS
+			if not scene.votes.is_empty():
+				_scene_decide(sid)
+
+
+func _scene_view(p: PlayerState, scene: Dictionary) -> Dictionary:
+	var speaker := _scene_speaker(scene)
+	if speaker == null:
+		return {}
+	var node := _current_node(speaker)
+	var answers: Array[String] = []
+	var votes: Array[int] = []
+	for a in _visible_answers(speaker, node):
+		answers.append(a.text)
+		votes.append(0)
+	for id: String in scene.votes:
+		if scene.votes[id] < votes.size():
+			votes[scene.votes[id]] += 1
+	var open := 0
+	for id: String in scene.voters:
+		if players.has(id) and not scene.votes.has(id):
+			open += 1
+	var role := "spricht" if p.id == speaker.id else ("abstimmen" if p.id in scene.voters else "zuschauen")
+	return {wer = node.get("wer", ""), text = fill_text(p, node.get("text", "")), antworten = answers,
+			szene = {rolle = role, sprecher = speaker.display_name, stimmen = votes, meine = scene.votes.get(p.id, -1),
+				offen = open, zeit = ceili(scene.time_left), teilnehmer = _scene_members(scene).size()}}
 
 
 # --- Bedingungen und Aktionen (aus den Datendateien) --------------------------
@@ -532,7 +882,7 @@ func run_actions(p: PlayerState, actions: Array) -> void:
 		if action.has("szene"):
 			scene_requested.emit(p.id, action.szene)
 		if action.has("effekt"):
-			effect_requested.emit(p.id, action.effekt)
+			_effect(p, action.effekt)
 		if action.has("erfolg"):
 			_unlock(p, action.erfolg)
 		if action.has("kampf"):
@@ -700,7 +1050,7 @@ func _give_item(p: PlayerState, item_id: String, count: int) -> void:
 
 ## Manche NPCs (z. B. Marv) sprechen dich von sich aus an, sobald du nah genug bist – einmal.
 func _check_approach(p: PlayerState) -> void:
-	if p.in_dialog() or p.shop != "":
+	if p.in_dialog() or p.shop != "" or waiting_for_group(p.id):
 		return
 	for id: String in npcs:
 		var approach: Dictionary = npcs[id].approach
@@ -709,7 +1059,8 @@ func _check_approach(p: PlayerState) -> void:
 		if (Vector2(npcs[id].cell) - p.pos).length() <= float(approach.get("radius", 3)):
 			p.progress.flags["angesprochen:" + id] = true
 			p.use_target = ""
-			start_dialog(p, npcs[id].dialog)
+			# Gruppenmitglieder in der Nähe erleben das mit (z. B. Marv auf dem Fest, Ren nach dem Sternenfresser)
+			_start_talk(p, id, "angesprochen:" + id)
 			return
 
 

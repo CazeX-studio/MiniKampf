@@ -13,6 +13,9 @@ var _saw_move := false
 var _saw_dialog := false
 var _saw_group := false
 var _saw_fighting := false
+var _scene_started := false
+var _host_voted := false
+var _scene_ok := false
 
 
 func _initialize() -> void:
@@ -56,6 +59,7 @@ func _process(delta: float) -> bool:
 			_saw_dialog = true
 	if Netz.group.get("members", []).size() == 2 and Netz.i_lead():
 		_saw_group = true
+	_drive_scene()
 	for m: Dictionary in Netz.group.get("members", []):
 		if m.id == _guest_id and not m.in_stadt:
 			_saw_fighting = true
@@ -77,6 +81,7 @@ func _process(delta: float) -> bool:
 		_check(_saw_group, "Gruppe: Mitspieler hat die Einladung angenommen, Gastgeber führt")
 		_check(_saw_fighting, "Gruppe: Wer die Stadt verlässt (z. B. Kampf), bleibt in der Gruppe")
 		_check(Netz.group.is_empty(), "Gruppe: Geht der Mitspieler, ist die Gruppe aufgelöst")
+		_check(_scene_ok, "Gemeinsame Szene: Mitspieler stimmt mit ab, Gleichstand entscheidet der Gruppenführer, beide bekommen den Fortschritt")
 		_check(code == 0, "Mitspieler hat alle seine Prüfungen bestanden (Rückgabe %d)" % code)
 		_finish()
 		return true
@@ -86,6 +91,29 @@ func _process(delta: float) -> bool:
 		_finish()
 		return true
 	return false
+
+
+## Gemeinsame Szene mit Lene: Sobald der Mitspieler die Einleitung beendet hat, spricht der Gastgeber Lene an.
+## Der Mitspieler wählt Antwort 2, der Gastgeber Antwort 1: Gleichstand, der Gastgeber führt die Gruppe und entscheidet.
+func _drive_scene() -> void:
+	var w := Netz.world
+	var me: PlayerState = w.players.get(Netz.my_id)
+	var guest: PlayerState = w.players.get(_guest_id)
+	if me == null or guest == null:
+		return
+	if not _scene_started and _saw_dialog and _saw_group and not guest.in_dialog():
+		_scene_started = true
+		me.progress.quests["ankunft"] = "aktiv"
+		w._start_talk(me, "schreiberin")
+	if _scene_started and me.dialog.has("szene"):
+		var scene: Dictionary = w.scenes.get(me.dialog.szene, {})
+		if not _host_voted and scene.get("votes", {}).has(_guest_id):
+			_host_voted = true
+			Netz.send({type = "dialog_choose", index = 0})
+		elif me.dialog.node == "eingetragen":
+			Netz.send({type = "dialog_next"})
+	if guest.progress.flags.has("gilde_angemeldet") and me.progress.flags.has("gilde_angemeldet"):
+		_scene_ok = true
 
 
 ## Derselbe Spielstand wie allein – außer ein anderes Fenster auf diesem PC benutzt ihn gerade.
