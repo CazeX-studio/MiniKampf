@@ -18,6 +18,8 @@ func _initialize() -> void:
 	_test_fenn("schiessen")
 	_test_tamer(false)
 	_test_tamer(true)
+	_test_story("jaeger")
+	_test_story("zaehmer")
 	print("Grünwacht: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)
 
@@ -423,6 +425,74 @@ func _test_tamer(kobalt_won: bool) -> void:
 	BattleRequest.prepare("wild:0", 13, 0, "tamer", ["glutwelpe", "windfalke"])
 	_check(BattleRequest.setup.helden[0].monster == ["glutwelpe", "windfalke"], "Kampf mit dem eigenen Rudel")
 	BattleRequest.kampf_id = ""
+
+
+## Schritt 5: Ysolde und Tilda streiten über die veränderten Tiere, man entscheidet selbst (Ruf), danach kommt Kael.
+func _test_story(side: String) -> void:
+	var world := WorldState.new()
+	var battles: Array[String] = []
+	world.battle_requested.connect(func(_id: String, kampf: String) -> void: battles.append(kampf))
+	var p := world.add_player("a", "Test", "elf_m", Vector2i(6, 15))
+	p.progress.flags["klasse"] = "ritualist"
+	p.progress.quests["nach_gruenwacht"] = "abgegeben"
+	p.progress.level = 15
+	world.change_map(p, "wipfelheim", Vector2i(15, 15))
+	_check(world.npc_marker(p, "ysolde") == "!", "Ysolde hat ein „!“ (für alle Klassen)")
+	world.apply_command("a", {type = "talk", npc = "ysolde"})
+	_tick(world, 2.0)
+	for i in 3:
+		world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.quest_state("veraenderte_tiere") == "aktiv", "Auftrag „Leuchtende Tiere“ läuft")
+	_check(world.objective(p).contains("Tilda"), "Ziel: Tilda fragen")
+	var beast := _place_target(world, "waldboden", "splittertier")
+	world.change_map(p, "waldboden", Vector2i(22, 3))
+	_check(not world.can_use(p, beast), "Das Tier ist erst nach Tildas Sicht zu finden")
+	world.change_map(p, "wipfelheim", Vector2i(27, 16))
+	world.apply_command("a", {type = "talk", npc = "tilda"})
+	_tick(world, 3.0)
+	_check(world.dialog_view(p).text.contains("Jagen?"), "Tilda widerspricht Ysolde")
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_next"})
+	world.change_map(p, "waldboden", Vector2i(22, 3))
+	_check(world.can_use(p, beast), "Der Splitter-Rindenbär steht im Wald")
+	world.apply_command("a", {type = "use", target = beast})
+	_tick(world, 3.0)
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_choose", index = 0 if side == "jaeger" else 1})
+	_check(battles == ["splitterbaer"], "Kampf gegen den Splitter-Rindenbär")
+	var other := "zaehmer" if side == "jaeger" else "jaeger"
+	_check(world.reputation(p, side) == 15 and world.reputation(p, other) == -10, "Ruf: %s +15, %s -10" % [side, other])
+	world.apply_command("a", {type = "kampf_ergebnis", kampf = "splitterbaer", gewonnen = false})
+	_check(world.can_use(p, beast) and p.progress.quest_state("veraenderte_tiere") == "aktiv", "Verloren: Der Bär ist noch da")
+	world.apply_command("a", {type = "use", target = beast})
+	_tick(world, 4.0)
+	_check(p.dialog.get("node", "") == "nochmal", "Zweiter Versuch ohne neue Entscheidung")
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	world.apply_command("a", {type = "kampf_ergebnis", kampf = "splitterbaer", gewonnen = true})
+	_check(world.reputation(p, side) == 15, "Ruf zählt nur einmal")
+	_check(p.progress.quest_state("veraenderte_tiere") == "fertig" and not world.can_use(p, beast), "Tier besiegt, zurück zu Ysolde")
+
+	world.change_map(p, "wipfelheim", Vector2i(15, 15))
+	world.apply_command("a", {type = "talk", npc = "ysolde"})
+	_tick(world, 2.0)
+	_check(world.dialog_view(p).text.contains("Ein Tier weniger" if side == "jaeger" else "nicht getötet"), "Ysolde reagiert auf die Entscheidung")
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.quest_state("veraenderte_tiere") == "abgegeben", "Auftrag abgegeben")
+	_check(world.npc_visible(p, "kael"), "Kael ist jetzt in Wipfelheim")
+	_tick(world, 1.0)
+	_check(p.in_dialog() and p.dialog.id == "kael", "Kael spricht einen an")
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.flags.has("kael_getroffen") and world.dialog_view(p).text.contains("leer"), "Kael: Rowans Grab ist leer")
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "talk", npc = "ysolde"})
+	_tick(world, 2.0)
+	_check(world.dialog_view(p).text.contains("Hör nicht auf ihn"), "Ysolde verschließt sich")
+	world.change_reputation(p, side, 500)
+	_check(world.reputation(p, side) == WorldState.REPUTATION_MAX, "Ruf höchstens 100")
 
 
 func _place_target(world: WorldState, map_id: String, art: String) -> String:

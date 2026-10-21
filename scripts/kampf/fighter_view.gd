@@ -60,6 +60,7 @@ const LOOKS := {
 	# Fenns Prüfung (Platzhalter-Bilder: Strohpuppen)
 	"zielscheibe": {sprite = "zombie", scale = 4.0, tint = Color(1.0, 0.88, 0.55)},
 	"laufscheibe": {sprite = "goblin", scale = 4.0, tint = Color(1.0, 0.9, 0.6)},
+	"splitterbaer": {sprite = "ogre", scale = 5.5, tint = Color(0.85, 0.8, 1.0)},
 	# Kobalts Monster
 	"kobalts_moosling": {sprite = "swampy", scale = 4.0, tint = Color(0.6, 0.9, 0.5)},
 	"kobalts_glutwelpe": {sprite = "imp", scale = 4.0, tint = Color(1.0, 0.65, 0.45)},

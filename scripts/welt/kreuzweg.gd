@@ -837,6 +837,22 @@ func _draw_pickup(node: Node2D, art: String) -> void:
 			node.draw_polyline(PackedVector2Array([Vector2(-20, -6), Vector2(0, -16), Vector2(20, -6), Vector2(0, 4), Vector2(-20, -6)]), Color("4a3020"), 2.0)
 			node.draw_circle(Vector2(0, -6), 18.0, Color(1.0, 0.95, 0.7, 0.06 + 0.08 * glow))
 			return
+		"splittertier":
+			# Rindenbär mit leuchtenden Splittern im Fell (Geschichte Grünwacht Teil 1)
+			var bark := Color("5a4030")
+			node.draw_circle(Vector2(0, -22), 40.0, Color(0.7, 0.5, 1.0, 0.10 + 0.12 * glow))
+			node.draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, 0.4))
+			node.draw_circle(Vector2.ZERO, 24.0, Color(0, 0, 0, 0.35))
+			node.draw_set_transform_matrix(Transform2D.IDENTITY)
+			node.draw_circle(Vector2(0, -20), 20.0, bark)
+			node.draw_circle(Vector2(-14, -36), 11.0, bark)
+			node.draw_circle(Vector2(-20, -45), 4.0, bark.darkened(0.2))
+			node.draw_circle(Vector2(-8, -45), 4.0, bark.darkened(0.2))
+			node.draw_circle(Vector2(-17, -37), 1.8, Color("f0e0ff"))
+			for i in 4:
+				var at := Vector2(-6 + i * 6.0, -30 + (i % 2) * 8.0)
+				node.draw_colored_polygon(PackedVector2Array([at, at + Vector2(3, -9), at + Vector2(6, 0)]), Color(0.8, 0.6, 1.0, 0.7 + 0.3 * glow))
+			return
 		"silberhirsch":
 			# Fenns drittes Ziel: ein silberner Hirsch, der leise schimmert
 			var fur := Color(0.88, 0.92, 1.0)
@@ -1593,6 +1609,7 @@ func _fill_panel() -> void:
 				for id: String in p.progress.flags.get("monster", []):
 					pack.append(Sandbox.MONSTERS.get(id, Sandbox.ENEMIES.get(id, {name = id})).name)
 				lines.append("[b]Rudel:[/b] %s" % (", ".join(pack) if not pack.is_empty() else GameData.text("rudel_leer")))
+			_reputation_lines(p, lines)
 			lines.append("")
 			lines.append(GameData.text("werte_klasse", [BattleState.LEVEL_HP, BattleState.LEVEL_MANA, roundi(BattleRequest.HERO_POWER_PER_LEVEL * 100)]))
 			_panel_text.text = "\n".join(lines)
@@ -1619,6 +1636,25 @@ func _fill_panel() -> void:
 		if p.progress.items.is_empty():
 			lines.append(GameData.text("tasche_leer"))
 	_panel_text.text = "\n".join(lines)
+
+
+## Ruf bei den Gruppen der Regionen als kleine Leiste (nur Gruppen, bei denen man schon Ruf hat).
+## Links rot (abgelehnt), Mitte grau (neutral), rechts grün (geschätzt).
+func _reputation_lines(p: PlayerState, lines: PackedStringArray) -> void:
+	var shown := false
+	for key: String in p.progress.flags:
+		if not key.begins_with("ruf:"):
+			continue
+		if not shown:
+			lines.append("")
+			lines.append("[b]Ruf[/b]")
+			shown = true
+		var value := int(p.progress.flags[key])
+		var filled := roundi((value + WorldState.REPUTATION_MAX) / float(WorldState.REPUTATION_MAX) * 5.0)
+		var color := "6dff8a" if value > 20 else ("ff7070" if value < -20 else "c8c8c8")
+		var word := GameData.text("ruf_gut" if value > 20 else ("ruf_schlecht" if value < -20 else "ruf_neutral"))
+		lines.append("%s  [color=#%s]%s[/color][color=#555555]%s[/color]  %s" % [GameData.text("ruf_" + key.substr(4)), color,
+				"■".repeat(filled), "■".repeat(10 - filled), word])
 
 
 ## Ein Kampf beginnt (z. B. eine Lektion bei Ye): speichern und zum Kampfbildschirm wechseln.

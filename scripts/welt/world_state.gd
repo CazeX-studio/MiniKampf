@@ -1043,6 +1043,9 @@ func run_actions(p: PlayerState, actions: Array) -> void:
 			_unlock(p, action.erfolg)
 		if action.has("kampf"):
 			battle_requested.emit(p.id, action.kampf)
+		if action.has("ruf"):
+			# {"ruf": "jaeger", "wert": 10}: Ruf bei einer Gruppe (Jäger, Zähmer …), sichtbar unter „Werte“
+			change_reputation(p, str(action.ruf), int(action.get("wert", 0)))
 		if action.has("monster_geben"):
 			_add_to_pack(p, action.monster_geben)
 		if action.has("reisen"):
@@ -1240,6 +1243,23 @@ func _give_item(p: PlayerState, item_id: String, count: int) -> void:
 		_say(p, GameData.text("gegenstand", [count, GameData.item_name(item_id)]))
 	else:
 		_say(p, GameData.text("gegenstand_weg", [-count, GameData.item_name(item_id)]))
+
+
+# --- Ruf ------------------------------------------------------------------------------
+
+## Ruf liegt zwischen -100 und 100 (0 = neutral). Gruppen und ihre Namen stehen in data/texte.json („ruf_jaeger“ …).
+const REPUTATION_MAX := 100
+
+
+func reputation(p: PlayerState, group: String) -> int:
+	return int(p.progress.flags.get("ruf:" + group, 0))
+
+
+func change_reputation(p: PlayerState, group: String, amount: int) -> void:
+	if amount == 0:
+		return
+	p.progress.flags["ruf:" + group] = clampi(reputation(p, group) + amount, -REPUTATION_MAX, REPUTATION_MAX)
+	_say(p, GameData.text("ruf_aenderung", [GameData.text("ruf_" + group), "+%d" % amount if amount > 0 else str(amount)]))
 
 
 # --- Rudel des Zähmers -------------------------------------------------------------

@@ -205,6 +205,10 @@ const ENEMIES := {
 		attacks = [{name = "Glutbiss", base = 13, kind = "melee"}, {name = "Funkenregen", base = 6, kind = "magic", all = true}]},
 	"kobalts_bachotter": {name = "Kobalts Bachotter", element = "Wasser", hp = 95, tempo = 11,
 		attacks = [{name = "Wasserstrahl", base = 12, kind = "ranged"}, {name = "Welle", base = 6, kind = "magic", all = true}]},
+	# Geschichte Grünwacht Teil 1: ein Rindenbär, dem Splitter im Fell stecken (Sternenkraft)
+	"splitterbaer": {name = "Splitter-Rindenbär", element = "Sternenkraft", hp = 150, tempo = 8, big = true,
+		attacks = [{name = "Splitterprankenhieb", base = 17, kind = "melee"}, {name = "Splitterregen", base = 8, kind = "magic", all = true},
+			{name = "Brüllen vor Schmerz", base = 12, kind = "melee"}]},
 	# Grünwacht: Monster auf dem Weg und im Wald (design.md „Grünwacht im Detail“). Werte vorläufig, Feinschliff am Ende.
 	"rindenbaer": {name = "Rindenbär", element = "Pflanze", hp = 120, tempo = 7, resist = 0.9,
 		attacks = [{name = "Prankenhieb", base = 15, kind = "melee"}, {name = "Prankenhieb", base = 15, kind = "melee"},

@@ -239,5 +239,17 @@
 		],
 		"abgeben_bei": "tilda",
 		"belohnung": {"gold": 60, "erfahrung": 500}
+	},
+	"veraenderte_tiere": {
+		"titel": "Leuchtende Tiere",
+		"beschreibung": "Splitter im Wald verändern die Tiere. Ysolde will sie jagen lassen, Tilda will sie retten. Hör dir beide Seiten an und entscheide selbst.",
+		"start_bei": "ysolde",
+		"voraussetzung": "nach_gruenwacht",
+		"ziele": [
+			{"art": "gemerkt", "merken": "tilda_tiere", "bei": "tilda", "text": "Tilda nach den Tieren fragen (Rudelhof im Osten)"},
+			{"art": "gemerkt", "merken": "tier_besiegt", "text": "Das veränderte Tier im Nordosten des Waldbodens finden"}
+		],
+		"abgeben_bei": "ysolde",
+		"belohnung": {"gold": 50, "erfahrung": 600}
 	}
 }

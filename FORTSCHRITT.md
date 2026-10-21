@@ -24,7 +24,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   Lernprojekt 5“ und „Was du testen kannst“). **Schritt 2 eingebaut:** Monster auf dem Weg (Stufe 10–15) und dem
   Waldboden (15–20), Kämpfe mit der eigenen Klasse, Stufen bis 20. **Schritt 3 eingebaut:** Fenns Prüfung der drei
   Ziele für Bogenschützen. **Schritt 4 eingebaut:** Professor Esche, Rivale Kobalt und Tildas Unterricht für Zähmer.
-  Als Nächstes Schritt 5 (veränderte Tiere, Jäger oder Zähmer, Ruf, Kael).
+  **Schritt 5 eingebaut:** Leuchtende Tiere (Jäger oder Zähmer, Ruf) und Kael. Als Nächstes Schritt 6 (Rowans leeres Grab).
   Marco testet am Schluss alles zusammen.
 - **Neu (21.10.): Figuren und Nebenaufträge aus Sitzung 21** in Kreuzweg: Wirtin Hanne mit Gasthaus Wegrast, Vogt Edmar,
   Steinmetz Quill, die Kinder Pip und Lotte, die Wache heißt jetzt Brom. Fünf Nebenaufträge mit **blauem „!“ und „?“**
@@ -44,7 +44,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 2 | Die eigene Klasse in der Welt, Monster der Region | eingebaut, Marco testet am Schluss |
 | 3 | Einstieg Bogenschütze: Fenns Prüfung der drei Ziele | eingebaut, Marco testet am Schluss |
 | 4 | Einstieg Zähmer: Professor Esche und Kobalt | eingebaut, Marco testet am Schluss |
-| 5 | Geschichte 1 und 2: veränderte Tiere (Jäger oder Zähmer, Ruf), Kael | offen |
+| 5 | Geschichte 1 und 2: veränderte Tiere (Jäger oder Zähmer, Ruf), Kael | eingebaut, Marco testet am Schluss |
 | 6 | Geschichte 3: Rowans leeres Grab (Erinnerungs-Szene) | offen |
 | 7 | Dungeon Pilzhöhle unter dem Urbaum | offen |
 | 8 | Ende der Region: Ysolde und Kael, Abstimmung | offen |
@@ -141,6 +141,20 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - **Platzhalter:** alle Texte von Esche, Kobalt und Tilda, die Bilder von Kobalts Monstern.
   - **Tests:** Esche → Kobalt (Sieg und Niederlage) → Tilda im Grünwacht-Test, Kobalt und Zähmer mit eigenem Rudel
     im Wildnis-Test.
+
+- **Schritt 5 – Leuchtende Tiere und Kael** (21.10., für alle Klassen):
+  - **Ysolde** hat nach der Ankunft ein neues „!“: Im Wald sind Tiere mit Splittern im Fell, sie werden wild,
+    sie lässt sie jagen. **Tilda** (Rudelhof) sieht das anders: Splitter herausziehen, dann werden sie wieder sie selbst.
+  - Danach steht im Nordosten des Waldbodens ein **Splitter-Rindenbär** (Sternenkraft). Deine **persönliche Entscheidung**:
+    „Ihn jagen, wie Ysolde es will.“ oder „Ihn bändigen und die Splitter herausziehen, wie Tilda es will.“
+    Beides ist ein Kampf (Stufe 17, viel Leben). Verliert man, kann man es wieder versuchen, ohne neu zu entscheiden.
+  - **Neuer Baustein Ruf** (Entscheidung 21.10.: sichtbar): Jäger +15 und Zähmer -10 bzw. umgekehrt. Unter
+    **„Werte (C)“** steht der Ruf als Leiste aus 10 Kästchen: rot = misstrauisch, grau = neutral, grün = geschätzt.
+  - **Ysolde** reagiert auf deine Wahl („Ein Tier weniger, das leidet.“ oder „Hoffentlich weiß Tilda, was sie tut.“).
+  - Danach steht **Kael** vor Dornfeders Halle und spricht dich an: Er will, dass Ysolde gesteht. „Frag sie nach
+    ihrem Bruder. Rowan. … Sein Grab liegt unten im Wald. Es ist leer.“ Ysolde danach: „Hör nicht auf ihn.“
+  - **Platzhalter:** alle Texte (Ysolde, Tilda, Kael, das Tier), die Bilder von Kael und dem Bären.
+  - **Tests:** Geschichte mit beiden Entscheidungen im Grünwacht-Test, der Bär mit jeder Klasse im Wildnis-Test (86 %).
 
 ## Aufgaben Lernprojekt 4 „Zusammen spielen“ (Fahrplan in `ZUSAMMEN_PLAN.md`)
 
@@ -712,6 +726,12 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spiel startet jetzt mit einem Menü.
 
+**Neu: Grünwacht Schritt 5 – Leuchtende Tiere und Kael** (jede Klasse, nach dem Gespräch mit Ysolde)
+1. Ysolde und Tilda: Werden die beiden Sichtweisen klar?
+2. Der Splitter-Rindenbär im Nordosten des Waldes: Ist die Entscheidung spannend? Ist der Kampf zu schwer?
+3. „Werte (C)“: Siehst du den Ruf bei Jägern und Zähmern? Ist die Leiste verständlich?
+4. Kael: Passt sein Auftritt? Macht er neugierig auf Rowans Grab?
+
 **Neu: Grünwacht Schritt 4 – Esche, Kobalt, Tilda** (als Zähmer, nach dem Gespräch mit Ysolde)
 1. Esche: Ist die Wahl der drei Start-Monster klar? Bekommst du die Schleuder?
 2. Kobalt: Kommt er gleich angelaufen und nimmt das passende Gegenstück? Ist der Kampf spannend, aber schaffbar?
@@ -933,8 +953,8 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).
 - Lernprojekt 4 „Zusammen spielen“ ist gebaut: deine Rückmeldungen aus dem Test mit Freunden einarbeiten.
 - Lernprojekt 5 „Grünwacht“: Schritt 1 (Reise nach Wipfelheim) und Schritt 2 (Monster, eigene Klasse, Stufe 20)
-  sind eingebaut, Schritt 3 (Fenns Prüfung) und Schritt 4 (Esche, Kobalt, Tilda) auch. Als Nächstes Schritt 5:
-  veränderte Tiere (Jäger oder Zähmer, Ruf) und Kael.
+  sind eingebaut, ebenso Schritt 3 (Fenns Prüfung), 4 (Esche, Kobalt, Tilda) und 5 (Leuchtende Tiere, Ruf, Kael).
+  Als Nächstes Schritt 6: Rowans leeres Grab mit der Erinnerungs-Szene.
 - Hinten angestellt: Schnellsätze und Emotes (Vorschläge im Ideen-Parkplatz von design.md).
 
 ## Offene Fragen an Marco

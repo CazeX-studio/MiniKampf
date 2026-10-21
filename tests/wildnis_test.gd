@@ -59,6 +59,30 @@ func _run() -> void:
 		var m: Dictionary = wild[index]
 		print("  %2d %-16s %-48s Stufe %d: %d %%" % [index, m.karte, ", ".join(m.gegner), m.stufe,
 				roundi(100.0 * total[index] / (runs * classes.size()))])
+	# Geschichtskämpfe (allein, mit jeder Klasse, auf der Stufe, auf der man sie erreicht)
+	for story: Array in [["splitterbaer", 15]]:
+		var line := "%-14s" % story[0]
+		var all_wins := 0
+		for klasse: String in classes:
+			var wins := 0
+			for i in runs:
+				BattleRequest.prepare(story[0], story[1], 0, klasse)
+				var node: Node = harness.new()
+				node.start_seed = 700 + i * 11
+				node.setup = BattleRequest.setup
+				root.add_child(node)
+				for l in node.protokoll.lines:
+					if l == "ENDE Sieg":
+						wins += 1
+				root.remove_child(node)
+				node.free()
+			line += " %d" % wins
+			all_wins += wins
+		var rate := float(all_wins) / (runs * classes.size())
+		print("%s → %d %% (Stufe %d)" % [line, roundi(rate * 100), story[1]])
+		if rate < MIN_WIN_RATE:
+			problems += 1
+			print("FEHLER: %s ist allein zu schwer" % story[0])
 	# Zähmer mit eigenem Rudel: Rivale Kobalt (Gegenstück zum Start-Monster) und die Wildnis nur mit dem Start-Monster
 	print("Zähmer mit eigenem Rudel:")
 	for starter: String in ["moosling", "glutwelpe", "bachotter"]:

@@ -237,10 +237,10 @@
 			12
 		],
 		"raster": [
-			",,t,t,,t,,t,,,,bpt,,,,,,t,,,,t",
-			",p,,b,,t,,t,,t,t,,ptt,tt,,,,,t",
+			",,t,t,,t,,t,,,,bpt,,,,,,,,,,,t",
+			",p,,b,,t,,t,,t,t,,ptt,,,,,,,,t",
 			",b,,t,,t,,,t,,p,t,,,,t,,,,,,,t",
-			",,,,,,p,,,,,,t,,,,,,,p,,p,,,,,",
+			",,,,,,p,,,,,,t,,,,,,,p,,,,,,,,",
 			",,,,R,,b,p,,b,,,,R,ttp,,,,R,,t",
 			",tt,,,,,t,,,,,b,,,,,,,tt,,,,b,",
 			"t,ptb,,,b,,,,t,,,,,,t,,,,,t,,,",
@@ -407,6 +407,20 @@
 						]
 					}
 				]
+			},
+			{
+				"art": "splittertier",
+				"feld": [
+					24,
+					2
+				],
+				"dialog": "splittertier",
+				"wenn": {
+					"auftrag": "veraenderte_tiere",
+					"stand": "aktiv",
+					"gemerkt": "tilda_tiere",
+					"nicht_gemerkt": "tier_besiegt"
+				}
 			},
 			{
 				"art": "silberhirsch",
@@ -577,6 +591,26 @@
 				"aussehen": "wizzard_m",
 				"farbe": "e0e0c0",
 				"dialog": "esche"
+			},
+			"kael": {
+				"name": "Kael",
+				"feld": [
+					19,
+					13
+				],
+				"aussehen": "lizard_m",
+				"farbe": "c0a0a0",
+				"dialog": "kael",
+				"wenn": {
+					"auftrag": "veraenderte_tiere",
+					"stand": "abgegeben"
+				},
+				"anspringen": {
+					"radius": 5,
+					"wenn": {
+						"nicht_gemerkt": "kael_getroffen"
+					}
+				}
 			},
 			"kobalt": {
 				"name": "Kobalt",
