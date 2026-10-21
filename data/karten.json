@@ -407,6 +407,148 @@
 				"stufe": 20
 			}
 		],
+		"deko": [
+			{
+				"art": "bluete",
+				"feld": [
+					13,
+					10
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					15,
+					14
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					22,
+					12
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					27,
+					13
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					9,
+					15
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					5,
+					20
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					18,
+					4
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					13,
+					10
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					15,
+					14
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					22,
+					12
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					27,
+					13
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					9,
+					15
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					5,
+					20
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					18,
+					4
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			}
+		],
 		"orte": [
 			{
 				"art": "seilaufzug",
@@ -717,6 +859,228 @@
 				"text": "Koch-Stand"
 			}
 		],
+		"deko": [
+			{
+				"art": "bluete",
+				"feld": [
+					5,
+					13
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					7,
+					16
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					14,
+					10
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					20,
+					11
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					13,
+					17
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					18,
+					2
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					14,
+					5
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					26,
+					16
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					29,
+					13
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					14,
+					22
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "bluete",
+				"feld": [
+					20,
+					25
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gerettet"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					5,
+					13
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					7,
+					16
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					14,
+					10
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					20,
+					11
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					13,
+					17
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					18,
+					2
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					14,
+					5
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					26,
+					16
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					29,
+					13
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					14,
+					22
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			},
+			{
+				"art": "welk",
+				"feld": [
+					20,
+					25
+				],
+				"wenn": {
+					"gemerkt": "urbaum_gefaellt"
+				}
+			}
+		],
 		"orte": [
 			{
 				"art": "seilaufzug",
@@ -796,7 +1160,8 @@
 				"dialog": "kael",
 				"wenn": {
 					"auftrag": "veraenderte_tiere",
-					"stand": "abgegeben"
+					"stand": "abgegeben",
+					"nicht_gemerkt": "wahrheit_entschieden"
 				},
 				"anspringen": {
 					"radius": 5,

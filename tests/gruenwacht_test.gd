@@ -590,6 +590,44 @@ func _test_dungeon(choice: String) -> void:
 	world.apply_command("a", {type = "dialog_next"})
 	_check(p.progress.quest_state("der_urbaum") == "abgegeben", "Auftrag „Der Splitter im Urbaum“ abgegeben")
 
+	# Schritt 8: Ysolde und Kael, Abstimmung über die Wahrheit, Ende der Region
+	world.apply_command("a", {type = "dialog_next"})
+	var scenes: Array[String] = []
+	world.scene_requested.connect(func(_id: String, scene: String) -> void: scenes.append(scene))
+	p.progress.flags["kael_getroffen"] = true
+	p.progress.flags["angesprochen:kael"] = true
+	p.progress.quests["veraenderte_tiere"] = "abgegeben"
+	_check(world.npc_marker(p, "kael") == "!", "Kael hat ein „!“")
+	world.apply_command("a", {type = "talk", npc = "kael"})
+	_tick(world, 3.0)
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(p.progress.quest_state("die_wahrheit") == "aktiv", "Kael: Jetzt, vor allen")
+	world.apply_command("a", {type = "talk", npc = "ysolde"})
+	_tick(world, 3.0)
+	_check(p.dialog.get("node", "") == "konfrontation", "Konfrontation vor Dornfeders Halle")
+	for i in 5:
+		world.apply_command("a", {type = "dialog_next"})
+	var truth := choice == "retten"
+	world.apply_command("a", {type = "dialog_choose", index = 0 if truth else 1})
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_next"})
+	_check(world.dialog_view(p).text.contains("er könnte noch leben"), "Ysolde: „Rowan … er könnte noch leben.“")
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.quest_state("die_wahrheit") == "abgegeben" and scenes == ["abspann:gruenwacht"], "Ende von Grünwacht (Abspann)")
+	_check(p.progress.flags.has("wahrheit_wipfelheim") == truth and p.progress.flags.has("geheimnis_bewahrt") != truth, "Entscheidung über die Wahrheit gemerkt")
+	_check(not world.npc_visible(p, "kael"), "Kael ist danach fort")
+	var blooming := 0
+	var withered := 0
+	for deco: Dictionary in world.decorations:
+		if deco.map == "wipfelheim" and world.check(p, deco.cond):
+			if deco.art == "bluete":
+				blooming += 1
+			elif deco.art == "welk":
+				withered += 1
+	_check((blooming > 0 and withered == 0) if choice == "retten" else (withered > 0 and blooming == 0), "Wipfelheim blüht auf bzw. welkt (%s)" % choice)
+
 
 ## Zu einem Boss-Ort laufen, den Kampf beginnen und mit dem Ergebnis zurückkommen.
 func _fight_place(world: WorldState, p: PlayerState, target: String, kampf: String, won: bool) -> void:

@@ -272,5 +272,16 @@
 		],
 		"abgeben_bei": "ysolde",
 		"belohnung": {"gold": 150, "erfahrung": 1200}
+	},
+	"die_wahrheit": {
+		"titel": "Die Wahrheit über Rowan",
+		"beschreibung": "Kael will, dass Ysolde vor ganz Wipfelheim gesteht, was am sechsten Weg geschah. Er wartet vor Dornfeders Halle.",
+		"start_bei": "kael",
+		"voraussetzung": "der_urbaum",
+		"ziele": [
+			{"art": "gemerkt", "merken": "wahrheit_entschieden", "bei": "ysolde", "text": "Ysolde und Kael vor Dornfeders Halle gegenüberstellen"}
+		],
+		"abgeben_bei": "ysolde",
+		"belohnung": {"gold": 100, "erfahrung": 800}
 	}
 }

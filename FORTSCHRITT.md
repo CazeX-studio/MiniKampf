@@ -26,7 +26,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   Ziele für Bogenschützen. **Schritt 4 eingebaut:** Professor Esche, Rivale Kobalt und Tildas Unterricht für Zähmer.
   **Schritt 5 eingebaut:** Leuchtende Tiere (Jäger oder Zähmer, Ruf) und Kael. **Schritt 6 eingebaut:** Rowans leeres
   Grab mit der ersten Erinnerungs-Szene. **Schritt 7 eingebaut:** die Pilzhöhle unter dem Urbaum als echter Dungeon.
-  Als Nächstes Schritt 8 (Ende der Region: Ysolde und Kael, Abstimmung).
+  **Schritt 8 eingebaut:** Ende der Region (Ysolde und Kael, Wahrheit oder Geheimnis, Abspann „Ende von Grünwacht“).
+  Als Nächstes Schritt 9 (Kreuzweg-Karten mit Sternentafel).
   Marco testet am Schluss alles zusammen.
 - **Neu (21.10.): Figuren und Nebenaufträge aus Sitzung 21** in Kreuzweg: Wirtin Hanne mit Gasthaus Wegrast, Vogt Edmar,
   Steinmetz Quill, die Kinder Pip und Lotte, die Wache heißt jetzt Brom. Fünf Nebenaufträge mit **blauem „!“ und „?“**
@@ -49,7 +50,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 5 | Geschichte 1 und 2: veränderte Tiere (Jäger oder Zähmer, Ruf), Kael | eingebaut, Marco testet am Schluss |
 | 6 | Geschichte 3: Rowans leeres Grab (Erinnerungs-Szene) | eingebaut, Marco testet am Schluss |
 | 7 | Dungeon Pilzhöhle unter dem Urbaum | eingebaut, Marco testet am Schluss |
-| 8 | Ende der Region: Ysolde und Kael, Abstimmung | offen |
+| 8 | Ende der Region: Ysolde und Kael, Abstimmung | eingebaut, Marco testet am Schluss |
 | 9 | Kreuzweg-Karten mit Sternentafel, Marv, Oma Hagebutte | offen |
 | 10 | Nebenaufträge (Kobalt, Bienenstock) | offen |
 | 11 | Feinschliff (Musik, Durchlauf, Stufen) | offen |
@@ -193,6 +194,18 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     wachsen nicht mehr mit der Stufe (sie gehören zur Mechanik).
   - **Platzhalter:** alle Texte, die Höhle als Karte.
   - **Tests:** zwei Läufe mit beiden Entscheidungen im Grünwacht-Test, die Bosse mit jeder Klasse im Wildnis-Test.
+
+- **Schritt 8 – Ende der Region** (21.10.):
+  - Nach dem Urbaum hat **Kael** ein „!“: „Jetzt. Vor ihrer Halle. Vor allen.“ (Auftrag „Die Wahrheit über Rowan“).
+  - Bei **Ysolde** kommt die **Konfrontation**: Kael stellt sie, Ysolde erzählt ein Stück („Ich hatte Befehl. Niemand
+    verlässt diesen Ort.“). Dann die **Abstimmung** (in der Gruppe alle): „Die Wahrheit vor ganz Wipfelheim aussprechen.“
+    oder „Das Geheimnis bewahren.“ Danach: **„Rowan … er könnte noch leben.“** Kael ist anschließend fort.
+  - **Abspann „Ende von Grünwacht“** mit Rückblick auf deine Entscheidungen (Silberhirsch, Kobalt, Splitter-Bär,
+    Urbaum, Wahrheit) und dem Knopf „Zurück nach Wipfelheim“ (Grünwacht bleibt spielbar).
+  - **Wipfelheim und der Wald verändern sich:** Urbaum gerettet = Blüten auf Plattformen und Waldboden,
+    gefällt = welkes Laub.
+  - **Platzhalter:** alle Texte.
+  - **Tests:** Konfrontation mit beiden Entscheidungen im Grünwacht-Test, neuer Test `tests/abspann_test.gd`.
 
 ## Aufgaben Lernprojekt 4 „Zusammen spielen“ (Fahrplan in `ZUSAMMEN_PLAN.md`)
 
@@ -764,6 +777,11 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spiel startet jetzt mit einem Menü.
 
+**Neu: Grünwacht Schritt 8 – Ende der Region** (nach dem Urbaum)
+1. Kael und Ysolde vor Dornfeders Halle: Ist die Konfrontation spannend? Fällt die Abstimmung schwer?
+2. Der Abspann „Ende von Grünwacht“: Stimmt der Rückblick? Kommst du danach zurück nach Wipfelheim?
+3. Blüht Wipfelheim auf (Urbaum gerettet) bzw. liegt welkes Laub (gefällt)?
+
 **Neu: Grünwacht Schritt 7 – Pilzhöhle** (nach Kael, am besten zu zweit oder zu dritt)
 1. Findest du den Eingang zwischen den Wurzeln im Süden des Waldbodens? Wirkt die Höhle düster genug?
 2. Sporenkönigin und Wurzelmutter: Sind die Mechaniken im Kampf verständlich? Zu schwer, zu leicht?
@@ -1003,8 +1021,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Lernprojekt 4 „Zusammen spielen“ ist gebaut: deine Rückmeldungen aus dem Test mit Freunden einarbeiten.
 - Lernprojekt 5 „Grünwacht“: Schritt 1 (Reise nach Wipfelheim) und Schritt 2 (Monster, eigene Klasse, Stufe 20)
   sind eingebaut, ebenso Schritt 3 (Fenns Prüfung), 4 (Esche, Kobalt, Tilda) und 5 (Leuchtende Tiere, Ruf, Kael).
-  Schritt 6 (Rowans Grab, Erinnerungs-Szene) und Schritt 7 (Pilzhöhle) auch. Als Nächstes Schritt 8: das Ende der
-  Region mit Ysolde und Kael.
+  Schritt 6 (Rowans Grab), 7 (Pilzhöhle) und 8 (Ende der Region) auch. Als Nächstes Schritt 9: Kreuzweg-Karten.
 - Hinten angestellt: Schnellsätze und Emotes (Vorschläge im Ideen-Parkplatz von design.md).
 
 ## Offene Fragen an Marco

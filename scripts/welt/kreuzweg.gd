@@ -1154,6 +1154,18 @@ func _draw_decoration(node: Node2D, art: String, index: int) -> void:
 				node.draw_colored_polygon(PackedVector2Array([Vector2(near, y), Vector2(far, y), Vector2(far + 8.0 * dir, y + 8.0),
 						Vector2(far, y + 16.0), Vector2(near, y + 16.0)]), Color("a07a4c"))
 				node.draw_string(font, Vector2(minf(near, far) + 7.0, y + 12.0), parts[i], HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("2a1c10"))
+		"bluete":
+			# Grünwacht blüht auf (Urbaum gerettet)
+			for i in 6:
+				var at := Vector2((i % 3 - 1) * 12.0, -float(i / 3) * 8.0 - 4.0)
+				node.draw_circle(at, 5.0, [Color("ffb8d8"), Color("ffe680"), Color("ffffff")][i % 3])
+				node.draw_circle(at, 2.0, Color("f2c14e"))
+		"welk":
+			# Welkes Laub (Urbaum gefällt)
+			for i in 5:
+				var at := Vector2((i - 2) * 9.0, float(i % 2) * 5.0 - 2.0)
+				node.draw_colored_polygon(PackedVector2Array([at + Vector2(-5, 0), at + Vector2(0, -4), at + Vector2(5, 0), at + Vector2(0, 3)]),
+						[Color("8a6a3a"), Color("6a5030"), Color("9a7a4a")][i % 3])
 		"krater":
 			node.draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, 0.5))
 			node.draw_circle(Vector2.ZERO, 34.0, Color(0.1, 0.08, 0.15, 0.85))
@@ -1753,6 +1765,9 @@ func _on_scene(player_id: String, scene: String) -> void:
 	var parts := scene.split(":")
 	if parts[0] == "klassenwahl":
 		Klassenwahl.region = parts[1] if parts.size() > 1 else ""
+	# "abspann:gruenwacht" = Ende der Region Grünwacht (Rückblick), "abspann" = Ende von Akt 1
+	if parts[0] == "abspann":
+		Abspann.variante = parts[1] if parts.size() > 1 else ""
 	# "erinnerung:rowan" = eine Erinnerungs-Szene aus data/erinnerungen.json
 	if parts[0] == "erinnerung":
 		Erinnerung.id = parts[1] if parts.size() > 1 else ""

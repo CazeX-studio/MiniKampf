@@ -22,6 +22,7 @@ const SPOTS := [
 	["hoehle_eingang", "pilzhoehle", Vector2i(25, 11)],
 	["hoehle_koenigin", "pilzhoehle", Vector2i(14, 12)],
 	["hoehle_urbaum", "pilzhoehle", Vector2i(6, 12)],
+	["wipfelheim_bluete", "wipfelheim", Vector2i(10, 14)],
 ]
 
 var _t := 0.0
@@ -64,6 +65,8 @@ func _process(delta: float) -> void:
 	var spot: Array = SPOTS[_index]
 	if spot[0] == "weg_mitte":
 		local_player().progress.level = 12
+	if spot[0] == "wipfelheim_bluete":
+		local_player().progress.flags["urbaum_gerettet"] = true
 	if spot[0] == "hoehle_urbaum":
 		# Die Königin gilt in diesem Lauf als besiegt, damit die Wurzelmutter zu sehen ist
 		state.change_map(local_player(), spot[1], spot[2])
