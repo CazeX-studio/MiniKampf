@@ -60,6 +60,11 @@ Jeder Spieler schickt nur Befehle wie „laufe zu Feld X“ oder „rede mit Ye�
 (`scripts/welt/kreuzweg.gd`) zeichnet nur, was in der Logik steht. Der Testgefährte wird schon über
 dieselben Befehle gesteuert wie ein echter Mitspieler. Später kann ein Server die Logik übernehmen.
 
+## Grünwacht (Lernprojekt 5, Fahrplan in `GRUENWACHT_PLAN.md`)
+
+Noch nicht gebaut, der Plan steht: Nach der Klassenwahl geht es weiter in die erste Region Grünwacht (Wipfelheim),
+mit Fenns Prüfung, Professor Esche und Kobalt, Ysoldes Geschichte, der Pilzhöhle als Dungeon und Kreuzweg-Karten.
+
 ## Zusammen spielen (Lernprojekt 4, Fahrplan in `ZUSAMMEN_PLAN.md`)
 
 Menü → **„Zusammen spielen“**: Name und Figur wählen, dann **Gastgeber werden** (nur PC-Version) oder **Beitreten**.

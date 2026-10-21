@@ -15,6 +15,10 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
+- **Lernprojekt 5 „Grünwacht“:** Plan steht in `GRUENWACHT_PLAN.md` (11 Schritte: Reise nach Wipfelheim, eigene Klasse
+  in der Welt, Fenns Prüfung, Professor Esche und Kobalt, Ysoldes Geschichte, Pilzhöhle als echter Dungeon,
+  Kreuzweg-Karten mit Sternentafel, Nebenaufträge, Feinschliff). **Vor Schritt 1 bitte die 6 offenen Fragen** am Ende
+  des Plans beantworten.
 - **Neu (21.10.): Figuren und Nebenaufträge aus Sitzung 21** in Kreuzweg: Wirtin Hanne mit Gasthaus Wegrast, Vogt Edmar,
   Steinmetz Quill, die Kinder Pip und Lotte, die Wache heißt jetzt Brom. Fünf Nebenaufträge mit **blauem „!“ und „?“**
   (Hauptaufträge bleiben gelb). Siehe „Schritt 21“ unten, Test-Liste unter „Was du testen kannst“.
@@ -22,6 +26,24 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   und werden von Marco noch geschrieben (Anleitung in `data/LIESMICH.md`).
 - Selbst gewählte Zahlen und Passiven: Abschnitt „Vorläufige Werte (Feinschliff am Ende)“ unten.
 - Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
+
+## Aufgaben Lernprojekt 5 „Grünwacht“ (Fahrplan in `GRUENWACHT_PLAN.md`)
+
+| Nr. | Aufgabe | Stand |
+|-----|---------|-------|
+| 0 | Plan schreiben | erledigt |
+| – | Entscheidungen: andere Klassen, Übergang aus der Demo, Stufen, Sternentafel, Kochen, Ruf | offen, Marco entscheidet |
+| 1 | Die Reise und Wipfelheim (mehrere Karten) | offen |
+| 2 | Die eigene Klasse in der Welt, Monster der Region | offen |
+| 3 | Einstieg Bogenschütze: Fenns Prüfung der drei Ziele | offen |
+| 4 | Einstieg Zähmer: Professor Esche und Kobalt | offen |
+| 5 | Geschichte 1 und 2: veränderte Tiere (Jäger oder Zähmer, Ruf), Kael | offen |
+| 6 | Geschichte 3: Rowans leeres Grab (Erinnerungs-Szene) | offen |
+| 7 | Dungeon Pilzhöhle unter dem Urbaum | offen |
+| 8 | Ende der Region: Ysolde und Kael, Abstimmung | offen |
+| 9 | Kreuzweg-Karten mit Sternentafel, Marv, Oma Hagebutte | offen |
+| 10 | Nebenaufträge (Kobalt, Bienenstock) | offen |
+| 11 | Feinschliff (Musik, Durchlauf, Stufen) | offen |
 
 ## Aufgaben Lernprojekt 4 „Zusammen spielen“ (Fahrplan in `ZUSAMMEN_PLAN.md`)
 
@@ -782,10 +804,14 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Dialoge der Hauptfiguren: Marco schreibt sie; Platzhalter stehen in `data/dialoge.json`.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).
 - Lernprojekt 4 „Zusammen spielen“ ist gebaut: deine Rückmeldungen aus dem Test mit Freunden einarbeiten.
-- Danach Lernprojekt 5 „Grünwacht“ (erst einen Plan schreiben).
+- Lernprojekt 5 „Grünwacht“: Plan steht (`GRUENWACHT_PLAN.md`). Sobald die offenen Fragen beantwortet sind, Schritt 1.
 - Hinten angestellt: Schnellsätze und Emotes (Vorschläge im Ideen-Parkplatz von design.md).
 
 ## Offene Fragen an Marco
+
+- **Grünwacht (Lernprojekt 5):** sechs Fragen mit Vorschlägen am Ende von `GRUENWACHT_PLAN.md`
+  (andere Klassen in Grünwacht, Übergang aus der Demo, Stufe 10–20, Sternentafel bei Bingos Wanderkarren,
+  Kochen erst später, Ruf sichtbar).
 
 - **Zusammen spielen:** Die vier Entscheidungen sind getroffen (20.10.). Auch geklärt: Bei Gleichstand entscheidet der
   Gruppenführer, wer eine Szene schon erlebt hat, stimmt nicht mehr mit ab. Schnellsätze sind hinten angestellt
