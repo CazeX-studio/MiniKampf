@@ -157,7 +157,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     Kampf (das hatten wir in Runde 2 so gebaut). Deshalb rechnet **jedes Gerät den Kampf selbst**, und übers Netz gehen nur
     die **Entscheidungen** (Fähigkeit und Ziel, wie gut pariert wurde). Der Server rechnet unsichtbar mit, prüft jede
     Entscheidung und springt ein, wenn jemand weg ist (`scripts/netz/gemeinsamer_kampf.gd`).
-  - **Platzhalter:** Die Texte des Gruppenkampfs sprechen noch von „Ida, Bo und Tom kämpfen mit dir“, auch wenn Mitspieler dabei sind.
+  - **Platzhalter:** Die Texte des Gruppenkampfs sprechen noch von „Tessa und Gorm kämpfen mit dir“ (früher Ida, Bo und Tom), auch wenn Mitspieler dabei sind.
   - Noch nicht gemeinsam: der Sternenfresser mit Ren (das ist Schritt 7).
   - **Tests:** `tests/gruppenkampf_test.gd`: Server und zwei Mitspieler rechnen drei Kämpfe (normal, einer gibt auf,
     ungültige Entscheidungen) – jedes Mal **genau gleich** (Sieger, Züge, Leben aller Figuren, Kampf-Log).
@@ -177,7 +177,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     wieder in der Stadt, spricht Ren die Gruppe **gemeinsam** an. Wer aufgegeben hat, hat „verloren“ und schaut bei Ren zu,
     wenn die anderen gewonnen haben. Wer das Spiel verlässt, auf den wird nicht gewartet.
   - Allein läuft die Nacht wie bisher.
-  - **Platzhalter:** Ye ruft „Ida, Bo, Tom – und du!“, auch wenn Mitspieler dabei sind.
+  - **Platzhalter:** Ye ruft „Tessa, Gorm – und du!“ (früher Ida, Bo, Tom), auch wenn Mitspieler dabei sind.
   - **Tests:** Szenen-Test mit der ganzen Nacht (Marv holt beide, Sternenfall für alle einmal, gemeinsamer Boss, Ren wartet
     und kommt dann für beide, beide haben den Erfolg) und dem stärkeren Sternenfresser. Der Sternenfresser lief auch als
     echter Gruppenkampf zwischen zwei Programmen (gleiches Ergebnis auf beiden). Alle bisherigen Tests laufen weiter.
@@ -554,8 +554,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - **„Essen für Brom“** aus Sitzung 21 gibt es schon: Das ist der Hauptauftrag „Ein Korb für die Wache“ (Lene schickt dich
     mit dem Essen zu Brom, er erzählt vom Weg, danach kommt Mira). Er bleibt deshalb ein Hauptauftrag mit gelbem Zeichen.
     Siehe offene Fragen.
-  - **Noch nicht eingebaut:** die Mitschüler **Tessa und Gorm** (in der Demo heißen die Novizen-Mitstreiter Ida, Bo und Tom;
-    siehe offene Fragen) und „Kreuzweg verändert sich mit der Story“ (Akt 2 und 3 gibt es in der Demo noch nicht).
+  - **Tessa und Gorm statt Ida, Bo und Tom** (deine Entscheidung vom 21.10.): Die Novizen-Mitstreiter heißen jetzt
+    Tessa (übereifrig) und Gorm (ängstlich) und sind **zu zweit statt zu dritt** – im ersten Gruppenkampf, in den
+    Probestunden und beim Sternenfresser. Beim Zusammenspielen füllen sie die Gruppe bis **drei** auf (zwei Spieler + einer
+    von ihnen, ab drei Spielern keiner mehr).
+    - **Gruppenkampf neu abgestimmt**, weil einer weniger mitkämpft: Er wäre sonst viel schwerer geworden (8 statt 25 von 30
+      Siegen). Jetzt hat die zweite Welle nur noch **zwei Rüpelkobolde** (vorher vier Gegner). Gemessen: 48 von 60 Siegen,
+      also etwa so oft wie vorher (25 von 30). **Vorläufig, Feinschliff am Ende.**
+    - **Sternenfresser** wird mit zwei Mitstreitern eher etwas leichter (gemessen 22 von 60 statt vorher etwa 8 von 30).
+      Mehr Leben für ihn ändert daran kaum etwas, deshalb habe ich ihn gelassen – siehe offene Fragen.
+  - **Noch nicht eingebaut:** „Kreuzweg verändert sich mit der Story“ (Akt 2 und 3 gibt es in der Demo noch nicht).
   - **Platzhalter:** alle Texte der neuen Figuren (Stil nach dem Leitfaden „Sprache der Figuren“). Belohnungen (10–20 Gold,
     30–80 Erfahrung, ein Heiltrank beim Festmahl) sind **vorläufig, Feinschliff am Ende**.
   - **Neue Bausteine** (in `data/LIESMICH.md` erklärt): Aufträge mit `"neben": true`, **Orte** zum Benutzen (Kater,
@@ -806,10 +814,11 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
     eigenen Namen steht. Passt das?
   - **„Essen für Brom“** ist in der Demo schon der Hauptauftrag „Ein Korb für die Wache“ (führt zu Mira). Soll er so
     bleiben, oder möchtest du zusätzlich einen kleinen Nebenauftrag, z. B. Brom in der Festnacht einen Teller von Hanne bringen?
-  - **Tessa und Gorm:** In der Demo kämpfen drei Novizen mit (Ida, Bo, Tom). Sollen sie Tessa und Gorm heißen
-    (dann zu zweit statt zu dritt), oder bleiben Ida, Bo und Tom?
+  - ~~Tessa und Gorm?~~ Entschieden 21.10.: Tessa und Gorm, eingebaut.
   - Passen die Plätze (Wegrast an der Weststraße, Edmar am Brunnen, Quill vor der Statue, Kinder im Südwesten des Marktplatzes)?
 
 - **Kreuzweg-Demo:** Passen die Positionen (Gilde im Nordosten, Bingos Laden im Westen, die sechste,
   zugewachsene Straße nach Südosten, Gesandte an „ihren“ Straßen)?
 - **Sternenfresser:** Mit Heiltränken schafft der Computer ihn etwa jedes zweite Mal. Soll er schwerer werden?
+  Seit Tessa und Gorm (zu zweit) gewinnt der Computer-Spieler ohne Tränke etwa jedes dritte Mal (vorher jedes vierte).
+  design.md sagt „kaum schaffbar“. Vorschlag: kürzere Zeit bis zur Explosion (z. B. 8 statt 10 Züge).

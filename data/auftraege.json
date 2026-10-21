@@ -42,11 +42,11 @@
 	},
 	"erster_gruppenkampf": {
 		"titel": "Der erste Gruppenkampf",
-		"beschreibung": "Zusammen mit den Novizen Ida, Bo und Tom sollst du die Kobolde von der Übungswiese vertreiben.",
+		"beschreibung": "Zusammen mit den Novizen Tessa und Gorm sollst du die Kobolde von der Übungswiese vertreiben.",
 		"start_bei": "ye_tor",
 		"voraussetzung": "grundausbildung",
 		"ziele": [
-			{"art": "kampf", "kampf": "gruppenkampf", "bei": "ye_tor", "text": "Kobolde mit Ida, Bo und Tom vertreiben"}
+			{"art": "kampf", "kampf": "gruppenkampf", "bei": "ye_tor", "text": "Kobolde mit Tessa und Gorm vertreiben"}
 		],
 		"abgeben_bei": "ye_tor",
 		"belohnung": {"gold": 30, "erfahrung": 100, "gegenstaende": {"heiltrank": 2}}

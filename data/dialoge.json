@@ -150,11 +150,11 @@
 			"abschluss": {"wer": "Ye", "text": "Vier Lektionen am Stück, und du stehst noch. Nicht schlecht für einen Novizen.", "antworten": [
 				{"text": "Danke, Ye.", "weiter": "gruppe", "aktionen": [{"auftrag_abgeben": "grundausbildung"}]}
 			]},
-			"gruppe": {"wer": "Ye", "text": "Allein kommt da draußen niemand weit. Ida, Bo und Tom sind auch Novizen. Kobolde treiben sich auf der Übungswiese herum – vertreibt sie zusammen.", "antworten": [
+			"gruppe": {"wer": "Ye", "text": "Allein kommt da draußen niemand weit. Tessa und Gorm sind auch Novizen. Sie ist übereifrig, er ist ängstlich. Kobolde treiben sich auf der Übungswiese herum – vertreibt sie zusammen.", "antworten": [
 				{"text": "Wir schaffen das!", "aktionen": [{"auftrag_starten": "erster_gruppenkampf"}, {"kampf": "gruppenkampf"}]},
 				{"text": "Gleich.", "aktionen": [{"auftrag_starten": "erster_gruppenkampf"}]}
 			]},
-			"gruppe_wartet": {"wer": "Ye", "text": "Ida, Bo und Tom warten auf dich.", "antworten": [
+			"gruppe_wartet": {"wer": "Ye", "text": "Tessa und Gorm warten auf dich. Na ja, Tessa wartet. Gorm zittert.", "antworten": [
 				{"text": "Los geht's!", "aktionen": [{"kampf": "gruppenkampf"}]},
 				{"text": "Gleich."}
 			]},
@@ -345,7 +345,7 @@
 			"zeit": {"wer": "Marv", "text": "Macht nichts! Irgendwann spielen wir, ganz besti–", "weiter": "stern"},
 			"stern": {"wer": "Erzähler", "text": "Plötzlich wird es taghell. Ein Stern fällt. Dann noch einer. Und noch einer.", "aktionen": [{"effekt": "sternenfall"}, {"merken": "sternenfall"}, {"auftrag_starten": "sternenfall"}], "weiter": "einschlag"},
 			"einschlag": {"wer": "Erzähler", "text": "Ein Splitter schlägt mitten auf dem Marktplatz ein. Ein Feldschleim kriecht heran – und verschlingt ihn. Er wächst. Und wächst.", "weiter": "ye"},
-			"ye": {"wer": "Ye", "text": "Novizen! Ida, Bo, Tom – und du! Zu mir! Schild hoch, Schild runter!", "antworten": [
+			"ye": {"wer": "Ye", "text": "Novizen! Tessa, Gorm – und du! Zu mir! Schild hoch, Schild runter!", "antworten": [
 				{"text": "Los!", "aktionen": [{"kampf": "sternenfall"}]}
 			]}
 		}

@@ -34,12 +34,12 @@ Abenteurergilde, Bingos Laden, sechs Straßen (die sechste nach Südosten ist zu
 - **Alle Texte, Dialoge, Aufträge und Zahlen** stehen in `data/` (Erklärung in `data/LIESMICH.md`), nicht im Code.
 - **Grundausbildung (Stufe 2–5):** Ye wartet danach am Stadttor. Vier Lektionen auf dem Kampfbildschirm (Tempo-Leiste,
   Fähigkeiten, Parieren gegen Ye selbst, zwei Reihen) mit Erklär-Fenstern, danach der erste Gruppenkampf mit den
-  Novizen Ida, Bo und Tom (der Computer steuert sie). Nach jedem Kampf geht es zurück in die Stadt.
+  Novizen Tessa und Gorm (der Computer steuert sie). Nach jedem Kampf geht es zurück in die Stadt.
 - **Marv und Bingo:** Nach der Grundausbildung spricht Marv dich von sich aus an (Kreuzweg-Karten!). Bei Handelsherr
   Bingo kannst du Heiltränke kaufen und Dinge verkaufen; die Sternentafel kostet 5000 Gold. Heiltränke aus der Tasche
   kann der Novize ab Lektion 4 im Kampf trinken.
 - **Gesandte der fünf Regionen (Stufe 5–7):** Rund um die Statue stehen Gesandte aus Arkanum, Messinghafen, Glutoase,
-  Grünwacht und den Nebelinseln. In **Probestunden** spielst du kurz eine ihrer Klassen (mit Ida und Bo, Ult halb voll).
+  Grünwacht und den Nebelinseln. In **Probestunden** spielst du kurz eine ihrer Klassen (mit Tessa und Gorm, Ult halb voll).
   Eine Probestunde ist Pflicht (Auftrag von Lene), die anderen sind freiwillig.
 - **Der zugewachsene Weg (Stufe 7–8):** Lene schickt dich mit einem Essenskorb zu Torwache Brom an der sechsten Straße.
   Er lässt dich nicht durch („Befehl ist Befehl“). Danach spricht dich Mira an: „Hörst du sie auch?“

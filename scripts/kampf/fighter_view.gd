@@ -24,9 +24,8 @@ const LOOKS := {
 	"singer": {sprite = "elf_f", scale = 4.0},
 	# Novizen (Kreuzweg-Demo): der Spieler und die Mitstreiter
 	"novize": {sprite = "elf_m", scale = 4.0},
-	"novize_ida": {sprite = "elf_f", scale = 4.0, tint = Color(0.85, 0.95, 1.0)},
-	"novize_bo": {sprite = "lizard_m", scale = 4.0, tint = Color(1.0, 0.9, 0.75)},
-	"novize_tom": {sprite = "knight_m", scale = 4.0, tint = Color(0.9, 1.0, 0.85)},
+	"novize_tessa": {sprite = "elf_f", scale = 4.0, tint = Color(0.85, 0.95, 1.0)},
+	"novize_gorm": {sprite = "knight_m", scale = 4.0, tint = Color(0.9, 1.0, 0.85)},
 	# Begleiter
 	"robot": {sprite = "big_zombie", scale = 2.5, tint = Color(0.72, 0.82, 1.0)},
 	"moosling": {sprite = "swampy", scale = 3.5, tint = Color(0.75, 1.0, 0.65)},
