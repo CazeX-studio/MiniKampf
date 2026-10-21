@@ -79,6 +79,7 @@ func _run() -> void:
 
 	_check(finished, "Die erste Stunde endet mit dem Abspann")
 	_check(p.progress.flags.has("klasse"), "Eine Klasse wurde gewählt")
+	_check(p.progress.item_count("empfehlungsschreiben") == 1, "Ye gibt zum Abschied das Empfehlungsschreiben")
 	for id: String in GameData.get_file("auftraege"):
 		if GameData.quest(id).get("neben", false):
 			_check(p.progress.quest_state(id) == "abgegeben", "Nebenauftrag „%s“ abgeschlossen" % GameData.quest(id).titel)
@@ -118,6 +119,11 @@ func _answer() -> void:
 ## Nächstes Ziel: NPC mit ? oder !, sonst Sammelpunkt für ein Sammel-Ziel, sonst ein Ort (Kater, Laterne)
 ## oder ein Gegenstand zum Benutzen (Bürste), sonst reihum alle NPCs.
 func _next_goal() -> void:
+	# Neue Nebenaufträge zuerst annehmen, damit der Durchlauf alle mitprüft (sonst läuft die Geschichte davon)
+	for id: String in world.npcs:
+		if world.npc_marker(p, id) == "!" and world.npc_marker_side(p, id):
+			world.apply_command("spieler", {type = "talk", npc = id})
+			return
 	for mark: String in ["?", "!"]:
 		for id: String in world.npcs:
 			if world.npc_marker(p, id) == mark:

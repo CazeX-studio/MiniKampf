@@ -157,7 +157,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     Kampf (das hatten wir in Runde 2 so gebaut). Deshalb rechnet **jedes Gerät den Kampf selbst**, und übers Netz gehen nur
     die **Entscheidungen** (Fähigkeit und Ziel, wie gut pariert wurde). Der Server rechnet unsichtbar mit, prüft jede
     Entscheidung und springt ein, wenn jemand weg ist (`scripts/netz/gemeinsamer_kampf.gd`).
-  - **Platzhalter:** Die Texte des Gruppenkampfs sprechen noch von „Ida, Bo und Tom kämpfen mit dir“, auch wenn Mitspieler dabei sind.
+  - **Platzhalter:** Die Texte des Gruppenkampfs sprechen noch von „Tessa und Gorm kämpfen mit dir“ (früher Ida, Bo und Tom), auch wenn Mitspieler dabei sind.
   - Noch nicht gemeinsam: der Sternenfresser mit Ren (das ist Schritt 7).
   - **Tests:** `tests/gruppenkampf_test.gd`: Server und zwei Mitspieler rechnen drei Kämpfe (normal, einer gibt auf,
     ungültige Entscheidungen) – jedes Mal **genau gleich** (Sieger, Züge, Leben aller Figuren, Kampf-Log).
@@ -177,7 +177,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     wieder in der Stadt, spricht Ren die Gruppe **gemeinsam** an. Wer aufgegeben hat, hat „verloren“ und schaut bei Ren zu,
     wenn die anderen gewonnen haben. Wer das Spiel verlässt, auf den wird nicht gewartet.
   - Allein läuft die Nacht wie bisher.
-  - **Platzhalter:** Ye ruft „Ida, Bo, Tom – und du!“, auch wenn Mitspieler dabei sind.
+  - **Platzhalter:** Ye ruft „Tessa, Gorm – und du!“ (früher Ida, Bo, Tom), auch wenn Mitspieler dabei sind.
   - **Tests:** Szenen-Test mit der ganzen Nacht (Marv holt beide, Sternenfall für alle einmal, gemeinsamer Boss, Ren wartet
     und kommt dann für beide, beide haben den Erfolg) und dem stärkeren Sternenfresser. Der Sternenfresser lief auch als
     echter Gruppenkampf zwischen zwei Programmen (gleiches Ergebnis auf beiden). Alle bisherigen Tests laufen weiter.
@@ -552,10 +552,25 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     - **Die Dunkelheit spielen** (Pip, gleich nach der Anmeldung): Du bist die Dunkelheit und verlierst. Danach fragt Lotte:
       „Warum hat die Dunkelheit auf der Statue eigentlich kein Gesicht?“
   - **„Essen für Brom“** aus Sitzung 21 gibt es schon: Das ist der Hauptauftrag „Ein Korb für die Wache“ (Lene schickt dich
-    mit dem Essen zu Brom, er erzählt vom Weg, danach kommt Mira). Er bleibt deshalb ein Hauptauftrag mit gelbem Zeichen.
-    Siehe offene Fragen.
-  - **Noch nicht eingebaut:** die Mitschüler **Tessa und Gorm** (in der Demo heißen die Novizen-Mitstreiter Ida, Bo und Tom;
-    siehe offene Fragen) und „Kreuzweg verändert sich mit der Story“ (Akt 2 und 3 gibt es in der Demo noch nicht).
+    mit dem Essen zu Brom, er erzählt vom Weg, danach kommt Mira). Er bleibt ein Hauptauftrag mit gelbem Zeichen.
+  - **Neu nach deinem Wunsch: „Ein Brief vom Tor“** (Brom, nach dem Korb): Brom darf seinen Posten nicht verlassen und gibt
+    dir einen Brief für **Hanne** („Ein … Dienstschreiben. Nicht lesen!“). Hanne: „Dieser alte Brummbär … Sag ihm, er soll am
+    Festabend vorbeikommen. Befehl ist Befehl.“ Zurück zu Brom mit ihrer Antwort. Platzhalter-Texte.
+  - **Empfehlungsschreiben** (aus der Entscheidung zur Weltkarte vom 21.10.: Städte nur mit Empfehlung von Ye oder Lene):
+    Beim Abschied gibt Ye dir ein Empfehlungsschreiben („Ohne das lassen dich die Stadtwachen nicht hinein.“). Es liegt
+    danach in der Tasche und wird gebraucht, sobald es die Regionen gibt (Lernprojekt 5).
+  - **Tessa und Gorm statt Ida, Bo und Tom** (deine Entscheidung vom 21.10.): Die Novizen-Mitstreiter heißen jetzt
+    Tessa (übereifrig) und Gorm (ängstlich) und sind **zu zweit statt zu dritt** – im ersten Gruppenkampf, in den
+    Probestunden und beim Sternenfresser. Beim Zusammenspielen füllen sie die Gruppe bis **drei** auf (zwei Spieler + einer
+    von ihnen, ab drei Spielern keiner mehr).
+    - **Gruppenkampf neu abgestimmt**, weil einer weniger mitkämpft: Er wäre sonst viel schwerer geworden (8 statt 25 von 30
+      Siegen). Jetzt hat die zweite Welle nur noch **zwei Rüpelkobolde** (vorher vier Gegner). Gemessen: 48 von 60 Siegen,
+      also etwa so oft wie vorher (25 von 30). **Vorläufig, Feinschliff am Ende.**
+    - **Sternenfresser schwerer** (deine Entscheidung vom 21.10.): Neuer Angriff **„Sternenschlund“** – er trifft immer einen
+      Spieler (nie Tessa oder Gorm), wird einen Zug vorher angekündigt („Nur eine PERFEKTE Parade rettet dich!“), und wer
+      ihn nicht perfekt pariert, ist sofort besiegt. Dazu explodiert der Splitter jetzt **nach 8 statt 10 Zügen**.
+      Gemessen (Computer-Spieler pariert die Hälfte): **12 von 60 Siegen** (vorher 22 von 60). **Vorläufig, Feinschliff am Ende.**
+  - **Noch nicht eingebaut:** „Kreuzweg verändert sich mit der Story“ (Akt 2 und 3 gibt es in der Demo noch nicht).
   - **Platzhalter:** alle Texte der neuen Figuren (Stil nach dem Leitfaden „Sprache der Figuren“). Belohnungen (10–20 Gold,
     30–80 Erfahrung, ein Heiltrank beim Festmahl) sind **vorläufig, Feinschliff am Ende**.
   - **Neue Bausteine** (in `data/LIESMICH.md` erklärt): Aufträge mit `"neben": true`, **Orte** zum Benutzen (Kater,
@@ -602,6 +617,8 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 4. **Fünf Farben** bei Edmar (am Brunnen, nach dem ersten Gruppenkampf): Laternen aufhängen, dann zu Ye ans Tor.
 5. Auftragsbuch (J): Stehen die Nebenaufträge mit blauem „◆ Nebenauftrag“ da? Ist oben bei „Ziel:“ immer klar,
    was die Geschichte als Nächstes will?
+6. Nach dem Korb für Brom: Hat er ein blaues „!“? Bring seinen Brief zu Hanne und ihre Antwort zurück.
+7. Sternenfresser: Kommt die Warnung vor dem „Sternenschlund“ rechtzeitig, und fühlt sich der Kampf jetzt „kaum schaffbar“ an?
 
 **Neu: Größere Stadt und Gesandten-Stände** (Kreuzweg-Demo → „Neu beginnen“)
 1. Lauf einmal durch die Stadt: Ist sie groß genug? Erkennst du die fünf Straßen gut?
@@ -802,14 +819,12 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 
 
 - **Sitzung 21 in der Demo:**
-  - **Farbe der Nebenaufträge:** Ich habe **Blau** genommen, weil Grün schon für „erfüllt“ im Auftragsbuch und für deinen
-    eigenen Namen steht. Passt das?
-  - **„Essen für Brom“** ist in der Demo schon der Hauptauftrag „Ein Korb für die Wache“ (führt zu Mira). Soll er so
-    bleiben, oder möchtest du zusätzlich einen kleinen Nebenauftrag, z. B. Brom in der Festnacht einen Teller von Hanne bringen?
-  - **Tessa und Gorm:** In der Demo kämpfen drei Novizen mit (Ida, Bo, Tom). Sollen sie Tessa und Gorm heißen
-    (dann zu zweit statt zu dritt), oder bleiben Ida, Bo und Tom?
+  - ~~Farbe der Nebenaufträge?~~ Entschieden 21.10.: Blau.
+  - ~~„Essen für Brom“?~~ Entschieden 21.10.: zusätzlich ein Nebenauftrag mit einem Brief – eingebaut als „Ein Brief vom Tor“.
+  - ~~Tessa und Gorm?~~ Entschieden 21.10.: Tessa und Gorm, eingebaut.
   - Passen die Plätze (Wegrast an der Weststraße, Edmar am Brunnen, Quill vor der Statue, Kinder im Südwesten des Marktplatzes)?
 
 - **Kreuzweg-Demo:** Passen die Positionen (Gilde im Nordosten, Bingos Laden im Westen, die sechste,
   zugewachsene Straße nach Südosten, Gesandte an „ihren“ Straßen)?
 - **Sternenfresser:** Mit Heiltränken schafft der Computer ihn etwa jedes zweite Mal. Soll er schwerer werden?
+  → Entschieden 21.10.: schwerer. Eingebaut: „Sternenschlund“ (nur perfekte Parade rettet) und Explosion nach 8 Zügen.

@@ -75,7 +75,7 @@ class Teilnehmer:
 
 
 func _initialize() -> void:
-	_run_case("Zwei Spieler + zwei Mitstreiter, alle bleiben", -1, false, 11)
+	_run_case("Zwei Spieler + ein Mitstreiter, alle bleiben", -1, false, 11)
 	_run_case("Mira gibt mitten im Kampf auf, der Gastgeber springt ein", 6, false, 12)
 	_run_case("Ungültige Entscheidungen werden durch einen Standardangriff ersetzt", -1, true, 13)
 	print("Gruppenkampf: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
@@ -86,7 +86,7 @@ func _run_case(title: String, leave_at: int, cheat: bool, battle_seed: int) -> v
 	print("--- " + title)
 	var members := [{name = "Marco", stufe = 4, traenke = 1, aussehen = "knight_m"}, {name = "Mira", stufe = 4, traenke = 0}]
 	var setup := BattleRequest.build_group("gruppenkampf", members)
-	_check(setup.helden.size() == 4 and setup.helden[2].get("computer", false), "Aufbau: zwei Spieler, zwei Mitstreiter füllen auf")
+	_check(setup.helden.size() == 3 and setup.helden[2].get("computer", false), "Aufbau: zwei Spieler, ein Mitstreiter füllt auf (Gruppe aus drei)")
 	_check(setup.helden[0].name == "Marco" and setup.helden[0].aussehen == "knight_m" and not setup.helden[0].get("computer", false), "Spieler stehen vorne und spielen selbst")
 	var owners: Array = ["a", "b", "", ""]
 	var players: Array[Teilnehmer] = []
