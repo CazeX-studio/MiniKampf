@@ -38,6 +38,29 @@ const MONSTER_HP_PER_LEVEL := 0.09
 const MONSTER_POWER_PER_LEVEL := 0.06
 
 
+## Stufenabstand (Grünwacht, Entscheidung 21.10.: Die Stufe soll mehr zählen): Ist der Gegner höher als man selbst,
+## macht man pro Stufe so viel weniger Schaden und Heilung und bekommt so viel härtere Treffer. Ist man höher, umgekehrt.
+## Höchstens MAX_LEVEL_GAP Stufen zählen. Bei gleicher Stufe ändert sich nichts. Vorläufig, Feinschliff am Ende.
+const GAP_HERO_PER_LEVEL := 0.06
+const GAP_ENEMY_PER_LEVEL := 0.08
+const MAX_LEVEL_GAP := 5
+
+
+## Stufenabstand Gegner minus Held, begrenzt auf ±MAX_LEVEL_GAP.
+static func level_gap(enemy_level: int, hero_level: int) -> int:
+	return clampi(enemy_level - hero_level, -MAX_LEVEL_GAP, MAX_LEVEL_GAP)
+
+
+## Schaden und Heilung des Helden bei diesem Stufenabstand (1 = gleich stark).
+static func gap_hero_factor(gap: int) -> float:
+	return 1.0 - GAP_HERO_PER_LEVEL * gap
+
+
+## Schaden der Gegner bei diesem Stufenabstand (1 = gleich stark).
+static func gap_enemy_factor(gap: int) -> float:
+	return 1.0 + GAP_ENEMY_PER_LEVEL * gap
+
+
 static func monster_hp(level: int) -> float:
 	return 1.0 + MONSTER_HP_PER_LEVEL * maxi(level - 1, 0)
 
@@ -89,6 +112,8 @@ var parry_base := 0
 var _events: Array[Dictionary] = []
 var _last_crit := false
 var _last_eff := 1.0
+## Stufen der Helden, für die der Stufenabstand zu den Gegnern zählt
+var _gap_levels: Array[int] = []
 
 
 func _init(p_controller: Object, p_team: Array[String], p_encounter: String, p_seed: int) -> void:
@@ -289,12 +314,16 @@ func _create_heroes() -> void:
 		# Roboter und Monster des Helden werden genauso stärker (spec.macht, siehe BattleRequest)
 		if spec.has("macht"):
 			h.power = float(spec.macht)
+			# Stufenabstand zu den Gegnern (nur wenn die Gegner eine Stufe haben)
+			if setup.has("gegner_stufe"):
+				h.power *= gap_hero_factor(level_gap(int(setup.gegner_stufe), level_bonus + 1))
+				_gap_levels.append(level_bonus + 1)
 			var buddies: Array[Fighter] = h.monsters.duplicate()
 			if h.robot != null:
 				buddies.append(h.robot)
 			for b in buddies:
 				b.power = h.power
-				b.max_hp = roundi(b.max_hp * h.power)
+				b.max_hp = roundi(b.max_hp * float(spec.macht))
 				b.hp = b.max_hp
 		_emit({type = "spawn", f = h, place = "hero", index = i, hp = h.hp})
 		h.next_time = h.turn_delay() * zufall_range(0.2, 1.0)
@@ -392,7 +421,7 @@ func spawn_enemies(ids: Array) -> void:
 		var level_hp := 1.0 if data.get("passive", false) else monster_hp(level)
 		var e := Fighter.new(data.name, id, data.element, false, roundi(data.hp * hp_scale * level_hp), data.tempo, Elements.color(data.element))
 		e.element = data.element
-		e.power = monster_power(level)
+		e.power = monster_power(level) * _enemy_gap_factor(level)
 		e.resist = data.get("resist", 1.0)
 		e.big = data.get("big", false)
 		e.passive = data.get("passive", false)
@@ -404,6 +433,16 @@ func spawn_enemies(ids: Array) -> void:
 		e.intent = skills.enemy_intent(e)
 		_emit({type = "spawn", f = e, place = "boss_wave" if has_big else "wave", index = i, hp = e.hp})
 		e.next_time = now + e.turn_delay() * zufall_range(0.2, 1.0)
+
+
+## Härtere oder schwächere Treffer der Gegner durch den Stufenabstand (in der Gruppe zählt die mittlere Stufe).
+func _enemy_gap_factor(enemy_level: int) -> float:
+	if _gap_levels.is_empty():
+		return 1.0
+	var total := 0
+	for l in _gap_levels:
+		total += l
+	return gap_enemy_factor(level_gap(enemy_level, roundi(float(total) / _gap_levels.size())))
 
 
 ## Wipe-Mechanik: Die ganze Gruppe stirbt.

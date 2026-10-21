@@ -258,6 +258,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - **Erfahrung abgestimmt:** Ohne Nebenaufträge war man am Ende erst Stufe 17 (Grünwacht soll 15–20 sein). Jetzt gibt
     es mehr Erfahrung für die Hauptaufträge (Leuchtende Tiere 900, Das leere Grab 800, Der Urbaum 1600, Die Wahrheit
     1200) und den Splitter-Rindenbär (600). Mit Nebenaufträgen erreicht man Stufe 20.
+  - **Die Stufe zählt mehr** (deine Entscheidung vom 21.10.): Ist ein Gegner höher als du, machst du pro Stufe 6 %
+    weniger Schaden und Heilung und er trifft 8 % härter. Bist du höher, ist es umgekehrt (höchstens 5 Stufen zählen).
+    Bei gleicher Stufe ändert sich nichts. Beispiel: Den Splitter-Rindenbär (Stufe 17) schafft man mit Stufe 17 in
+    89 % der Kämpfe, mit Stufe 12 nur noch in 32 %. Kobalts erster Kampf hat jetzt Stufe 12 (so trifft man ihn) und
+    dafür mehr Leben, er ist also ungefähr so schwer wie vorher.
+  - **Durchlauf danach:** Man muss vor der Pilzhöhle auf Stufe 17–18 kommen, vorher verliert man gegen die
+    Sporenkönigin. Geschätzte Spielzeit jetzt: Bogenschütze 76 Minuten, Klingentänzerin etwa 4 Stunden, Zähmer etwa
+    4,5 Stunden (der Computer-Spieler kämpft nicht sehr geschickt gegen Monster, echte Spieler sind schneller).
+    Am Ende sind alle Stufe 20.
 
 ## Aufgaben Lernprojekt 4 „Zusammen spielen“ (Fahrplan in `ZUSAMMEN_PLAN.md`)
 
@@ -1078,6 +1087,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - **Grünwacht (Schritt 2):** Monster-Werte (Rindenbär, Windfalke, Donnerhirsch, Steinkröte, Sporenling, wilde
   Start-Monster), Stufen-Wachstum (Helden +5 % Stärke, Monster +9 % Leben und +6 % Schaden je Stufe), Erfahrung
   (12 × Stufe je Monster), Gold (2 × Stufe), eine Minute bis ein Monster wiederkommt, Erfahrungstabelle bis Stufe 20.
+- **Stufenabstand:** 6 % weniger Schaden und 8 % härtere Treffer pro Stufe unter dem Gegner, höchstens 5 Stufen.
 - **Grünwacht (Schritt 9–11):** Kartenwerte von Kreuzweg-Karten, Kobalts Revanche (zwei Monster, Leben ×1,4),
   Bienenschwarm, Erfahrung der Hauptaufträge (siehe Schritt 11), die drei Wald-Musikstücke.
 
@@ -1097,12 +1107,9 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 
 ## Offene Fragen an Marco
 
-- **Grünwacht Schritt 11 (Abstimmung):** Im automatischen Durchlauf schafft man die Pilzhöhle allein schon mit Stufe
-  14–16, obwohl sie für Stufe 19–20 und eine Gruppe gedacht ist. Die Stufe macht im Kampf nur wenig Unterschied
-  (+5 % Stärke je Stufe). Soll die Stufe mehr zählen (dann muss man vorher mehr Monster bekämpfen), oder ist es gut so,
-  dass man die Geschichte auch etwas früher schafft? Und der Zähmer tut sich allein in der Pilzhöhle deutlich schwerer
-  als die anderen: etwas stärker machen oder so lassen (Zähmer spielt man eher in der Gruppe)?
-
+- **Grünwacht Schritt 11 (entschieden 21.10.):** Die Stufe soll mehr zählen → eingebaut (Stufenabstand, siehe
+  „Nach deinem Test-Feedback“ bei Schritt 11). Der Zähmer bleibt allein schwächer; seine Monster bekommen später
+  Stufen, Entwicklungsstufen und werden beim Tod zum Ei (steht in design.md, Details noch offen).
 - **Grünwacht Schritt 2 (vorläufig, Feinschliff am Ende):** Der Ritualist ist allein am schwächsten. Soll er für das
   Allein-Spielen etwas mehr Schaden bekommen? Und sollen alle Klassen in der Wildnis Heiltränke benutzen dürfen
   (design.md: Verbrauchsgegenstände für alle, vier Gürtelplätze)? Bisher kann das nur der Novize.

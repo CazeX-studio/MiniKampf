@@ -85,6 +85,28 @@ func _run() -> void:
 		if rate < MIN_WIN_RATE:
 			problems += 1
 			print("FEHLER: %s ist allein zu schwer" % story[0])
+	# Stufenabstand (Entscheidung 21.10.: Die Stufe soll mehr zählen): Mit 5 Stufen zu wenig verliert man den
+	# Splitter-Rindenbär (Stufe 17) deutlich öfter als auf seiner Stufe
+	var gap_rates := {}
+	for level: int in [12, 17]:
+		var gap_wins := 0
+		for klasse: String in classes:
+			for i in runs:
+				BattleRequest.prepare("splitterbaer", level, 0, klasse)
+				var node: Node = harness.new()
+				node.start_seed = 500 + i * 7
+				node.setup = BattleRequest.setup
+				root.add_child(node)
+				for l in node.protokoll.lines:
+					if l == "ENDE Sieg":
+						gap_wins += 1
+				root.remove_child(node)
+				node.free()
+		gap_rates[level] = roundi(100.0 * gap_wins / (runs * classes.size()))
+	print("Stufenabstand: Splitter-Rindenbär (Stufe 17) mit Stufe 12: %d %%, mit Stufe 17: %d %%" % [gap_rates[12], gap_rates[17]])
+	if gap_rates[12] > gap_rates[17] - 25:
+		problems += 1
+		print("FEHLER: Die Stufe zählt zu wenig")
 	# Zähmer mit eigenem Rudel: Rivale Kobalt (Gegenstück zum Start-Monster) und die Wildnis nur mit dem Start-Monster
 	print("Zähmer mit eigenem Rudel:")
 	for starter: String in ["moosling", "glutwelpe", "bachotter"]:
