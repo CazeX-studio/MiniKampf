@@ -23,6 +23,8 @@ var exits: Array[Dictionary] = []
 var light := Color.WHITE
 ## Welches Musikstück läuft (Platzhalter, bis es eigene Musik gibt)
 var music := "stadt"
+## Anderes Stück, wenn ein Merker gesetzt ist: {merker: stück} (z. B. welker Wald nach dem Fällen des Urbaums)
+var music_if: Dictionary = {}
 ## Dungeon-Regeln für Kämpfe auf dieser Karte ("pilzhoehle") oder "" (normale Karte)
 var dungeon := ""
 
@@ -52,6 +54,7 @@ static func from_data(p_id: String, data: Dictionary, legend: Dictionary) -> Wor
 	m.title = data.get("name", p_id)
 	m.light = Color(data.get("licht", "ffffff"))
 	m.music = data.get("musik", "stadt")
+	m.music_if = data.get("musik_wenn", {})
 	m.dungeon = data.get("dungeon", "")
 	var start: Array = data.get("start", [1, 1])
 	m.start = Vector2i(int(start[0]), int(start[1]))
@@ -149,3 +152,11 @@ func set_tile(cell: Vector2i, tile: int) -> void:
 
 func is_walkable(cell: Vector2i) -> bool:
 	return in_bounds(cell) and not blocked.has(cell)
+
+
+## Das Musikstück für einen Spieler mit diesen Merkern.
+func music_for(flags: Dictionary) -> String:
+	for flag: String in music_if:
+		if flags.has(flag):
+			return music_if[flag]
+	return music

@@ -89,6 +89,7 @@
 	},
 	"weg_gruenwacht": {
 		"name": "Der Weg nach Grünwacht",
+		"musik": "wald",
 		"grund": "wiese",
 		"start": [
 			37,
@@ -247,6 +248,10 @@
 	},
 	"waldboden": {
 		"name": "Waldboden unter Wipfelheim",
+		"musik": "wald",
+		"musik_wenn": {
+			"urbaum_gefaellt": "wald_welk"
+		},
 		"grund": "waldboden",
 		"licht": "b4c4a4",
 		"start": [
@@ -650,7 +655,7 @@
 		"name": "Pilzhöhle unter dem Urbaum",
 		"grund": "hoehle",
 		"licht": "9a8cc0",
-		"musik": "nacht",
+		"musik": "wald_nacht",
 		"dungeon": "pilzhoehle",
 		"kampf_hintergrund": "gewoelbe",
 		"start": [
@@ -783,6 +788,10 @@
 	},
 	"wipfelheim": {
 		"name": "Wipfelheim",
+		"musik": "wald",
+		"musik_wenn": {
+			"urbaum_gefaellt": "wald_welk"
+		},
 		"grund": "laub",
 		"licht": "eef6e4",
 		"start": [

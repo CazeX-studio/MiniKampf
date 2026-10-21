@@ -338,7 +338,7 @@ func _sync() -> void:
 	var m := state.get_map(local.map)
 	var night_color := NIGHT_COLOR if local.progress.flags.has("nacht") else m.light
 	_night.color = _night.color.lerp(night_color, 0.05)
-	Musik.play("nacht" if local.progress.flags.has("nacht") else m.music)
+	Musik.play("nacht" if local.progress.flags.has("nacht") else m.music_for(local.progress.flags))
 	var here := state.players.values().filter(func(other: PlayerState) -> bool: return other.map == local.map).size()
 	if Netz.online():
 		_info.text = "%s · Zusammen: %d Spieler%s" % [m.title, here, " · Gastgeber, Adresse: " + Netz.local_address() if Netz.mode == Netz.Mode.HOST else ""]

@@ -250,7 +250,7 @@
 			{"art": "gemerkt", "merken": "tier_besiegt", "text": "Das veränderte Tier im Nordosten des Waldbodens finden"}
 		],
 		"abgeben_bei": "ysolde",
-		"belohnung": {"gold": 50, "erfahrung": 600}
+		"belohnung": {"gold": 50, "erfahrung": 900}
 	},
 	"das_leere_grab": {
 		"titel": "Das leere Grab",
@@ -260,7 +260,7 @@
 			{"art": "gemerkt", "merken": "erinnerung_rowan", "text": "Rowans Grab im Nordwesten des Waldbodens finden"}
 		],
 		"abgeben_bei": "kael",
-		"belohnung": {"gold": 40, "erfahrung": 500}
+		"belohnung": {"gold": 40, "erfahrung": 800}
 	},
 	"der_urbaum": {
 		"titel": "Der Splitter im Urbaum",
@@ -271,7 +271,7 @@
 			{"art": "gemerkt", "merken": "urbaum_entschieden", "text": "Am Herz des Urbaums entscheiden"}
 		],
 		"abgeben_bei": "ysolde",
-		"belohnung": {"gold": 150, "erfahrung": 1200}
+		"belohnung": {"gold": 150, "erfahrung": 1600}
 	},
 	"die_wahrheit": {
 		"titel": "Die Wahrheit über Rowan",
@@ -282,7 +282,7 @@
 			{"art": "gemerkt", "merken": "wahrheit_entschieden", "bei": "ysolde", "text": "Ysolde und Kael vor Dornfeders Halle gegenüberstellen"}
 		],
 		"abgeben_bei": "ysolde",
-		"belohnung": {"gold": 100, "erfahrung": 800}
+		"belohnung": {"gold": 100, "erfahrung": 1200}
 	},
 	"marvs_partie": {
 		"titel": "Marvs Partie",

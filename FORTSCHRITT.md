@@ -28,8 +28,9 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   Grab mit der ersten Erinnerungs-Szene. **Schritt 7 eingebaut:** die Pilzhöhle unter dem Urbaum als echter Dungeon.
   **Schritt 8 eingebaut:** Ende der Region (Ysolde und Kael, Wahrheit oder Geheimnis, Abspann „Ende von Grünwacht“).
   **Schritt 9 eingebaut:** Kreuzweg-Karten mit Sternentafel, Marv und Oma Hagebutte. **Schritt 10 eingebaut:** Nebenaufträge
-  (Kobalts Revanche, Omas Herausforderung, der verrückte Bienenstock). Als Nächstes Schritt 11 (Feinschliff).
-  Marco testet am Schluss alles zusammen.
+  (Kobalts Revanche, Omas Herausforderung, der verrückte Bienenstock). **Schritt 11 eingebaut:** Feinschliff
+  (Grünwacht-Musik, automatischer Durchlauf der ganzen Region, Erfahrung abgestimmt). **Alle 11 Schritte sind gebaut.**
+  Jetzt testet Marco alles zusammen.
 - **Neu (21.10.): Figuren und Nebenaufträge aus Sitzung 21** in Kreuzweg: Wirtin Hanne mit Gasthaus Wegrast, Vogt Edmar,
   Steinmetz Quill, die Kinder Pip und Lotte, die Wache heißt jetzt Brom. Fünf Nebenaufträge mit **blauem „!“ und „?“**
   (Hauptaufträge bleiben gelb). Siehe „Schritt 21“ unten, Test-Liste unter „Was du testen kannst“.
@@ -53,8 +54,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 7 | Dungeon Pilzhöhle unter dem Urbaum | eingebaut, Marco testet am Schluss |
 | 8 | Ende der Region: Ysolde und Kael, Abstimmung | eingebaut, Marco testet am Schluss |
 | 9 | Kreuzweg-Karten mit Sternentafel, Marv, Oma Hagebutte | eingebaut, Marco testet am Schluss |
-| 10 | Nebenaufträge (Kobalt, Bienenstock) | offen |
-| 11 | Feinschliff (Musik, Durchlauf, Stufen) | offen |
+| 10 | Nebenaufträge (Kobalt, Oma Hagebutte, Bienenstock) | eingebaut, Marco testet am Schluss |
+| 11 | Feinschliff (Musik, Durchlauf, Stufen) | eingebaut, Marco testet am Schluss |
 
 ## Fertig in Lernprojekt 5
 
@@ -241,6 +242,22 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - **Platzhalter:** alle Texte.
   - **Tests:** im Grünwacht-Test (Revanche, Bienenstock auf beiden Wegen), im Kartenspiel-Test (Omas Auftrag), im
     Wildnis-Test (Bienenschwarm und Revanche sind schaffbar).
+
+- **Schritt 11 – Feinschliff Grünwacht** (21.10.):
+  - **Eigene Platzhalter-Musik:** „Wald“ (Holzflöte über Harfe, ab und zu Vogelrufe) auf dem Weg, dem Waldboden und in
+    Wipfelheim. Wurde der Urbaum gefällt, läuft dort „Welker Wald“ (dieselbe Stimmung in Moll, langsamer, ohne
+    Vögel). In der Pilzhöhle „Wald bei Nacht“ (langsame Harfe, tiefe Flöte, Tropfen). Selbst erzeugt wie die anderen
+    Stücke, mit `tools/musik_erzeugen.gd`.
+  - **Automatischer Durchlauf** `tests/durchlauf_gruenwacht_test.gd`: Ein Computer-Spieler startet beim Abschied von
+    Ye (Stufe 10, wie am Ende von Akt 1), reist über den Weg nach Wipfelheim, folgt den Zeichen auf allen Karten,
+    erledigt die Aufträge, kämpft wirklich (auch gegen Monster, wenn ein Kampf zu schwer war) und spielt bis zum
+    Abspann „Ende von Grünwacht“. Einmal als Bogenschütze, als Zähmer und als Klingentänzerin (Glutoase).
+  - **Ergebnis des Durchlaufs** (geschätzte Spielzeit nur für die Hauptgeschichte, ohne Nebenaufträge und Lesen):
+    Bogenschütze 16 Minuten, Stufe 19 am Ende. Zähmer 51 Minuten, Stufe 20 (er muss vor der Sporenkönigin
+    mehrmals Monster bekämpfen). Klingentänzerin 15 Minuten, Stufe 18.
+  - **Erfahrung abgestimmt:** Ohne Nebenaufträge war man am Ende erst Stufe 17 (Grünwacht soll 15–20 sein). Jetzt gibt
+    es mehr Erfahrung für die Hauptaufträge (Leuchtende Tiere 900, Das leere Grab 800, Der Urbaum 1600, Die Wahrheit
+    1200) und den Splitter-Rindenbär (600). Mit Nebenaufträgen erreicht man Stufe 20.
 
 ## Aufgaben Lernprojekt 4 „Zusammen spielen“ (Fahrplan in `ZUSAMMEN_PLAN.md`)
 
@@ -812,6 +829,10 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spiel startet jetzt mit einem Menü.
 
+**Neu: Grünwacht Schritt 11 – Feinschliff** (am besten Grünwacht einmal am Stück spielen)
+1. Die Wald-Musik: Passt sie zu Wipfelheim? Hörst du den Unterschied in der Pilzhöhle und nach dem Fällen des Urbaums?
+2. Stimmt die Länge? Fühlt sich die Region wie Stufe 15–20 an, oder kommst du zu schnell oder zu langsam voran?
+
 **Neu: Grünwacht Schritt 10 – Nebenaufträge** (blaues Zeichen)
 1. Als Zähmer nach Tildas Unterricht: Will Kobalt eine Revanche? Ist der Kampf gegen zwei Monster schaffbar?
 2. Oma Hagebutte: Gibt sie dir den Auftrag, sobald du eine Sternentafel hast?
@@ -1057,6 +1078,8 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - **Grünwacht (Schritt 2):** Monster-Werte (Rindenbär, Windfalke, Donnerhirsch, Steinkröte, Sporenling, wilde
   Start-Monster), Stufen-Wachstum (Helden +5 % Stärke, Monster +9 % Leben und +6 % Schaden je Stufe), Erfahrung
   (12 × Stufe je Monster), Gold (2 × Stufe), eine Minute bis ein Monster wiederkommt, Erfahrungstabelle bis Stufe 20.
+- **Grünwacht (Schritt 9–11):** Kartenwerte von Kreuzweg-Karten, Kobalts Revanche (zwei Monster, Leben ×1,4),
+  Bienenschwarm, Erfahrung der Hauptaufträge (siehe Schritt 11), die drei Wald-Musikstücke.
 
 ## Als Nächstes (Vorschläge)
 
@@ -1068,10 +1091,17 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Lernprojekt 5 „Grünwacht“: Schritt 1 (Reise nach Wipfelheim) und Schritt 2 (Monster, eigene Klasse, Stufe 20)
   sind eingebaut, ebenso Schritt 3 (Fenns Prüfung), 4 (Esche, Kobalt, Tilda) und 5 (Leuchtende Tiere, Ruf, Kael).
   Schritt 6 (Rowans Grab), 7 (Pilzhöhle), 8 (Ende der Region) und 9 (Kreuzweg-Karten) auch. Schritt 10
-  (Nebenaufträge) auch. Als Nächstes Schritt 11: Feinschliff (Musik, Durchlauf, Abstimmung).
+  (Nebenaufträge) und 11 (Feinschliff) auch: **Grünwacht ist fertig gebaut.** Als Nächstes testet Marco alles am
+  Stück, dann kommen seine Rückmeldungen und die echten Texte.
 - Hinten angestellt: Schnellsätze und Emotes (Vorschläge im Ideen-Parkplatz von design.md).
 
 ## Offene Fragen an Marco
+
+- **Grünwacht Schritt 11 (Abstimmung):** Im automatischen Durchlauf schafft man die Pilzhöhle allein schon mit Stufe
+  14–16, obwohl sie für Stufe 19–20 und eine Gruppe gedacht ist. Die Stufe macht im Kampf nur wenig Unterschied
+  (+5 % Stärke je Stufe). Soll die Stufe mehr zählen (dann muss man vorher mehr Monster bekämpfen), oder ist es gut so,
+  dass man die Geschichte auch etwas früher schafft? Und der Zähmer tut sich allein in der Pilzhöhle deutlich schwerer
+  als die anderen: etwas stärker machen oder so lassen (Zähmer spielt man eher in der Gruppe)?
 
 - **Grünwacht Schritt 2 (vorläufig, Feinschliff am Ende):** Der Ritualist ist allein am schwächsten. Soll er für das
   Allein-Spielen etwas mehr Schaden bekommen? Und sollen alle Klassen in der Wildnis Heiltränke benutzen dürfen

@@ -180,10 +180,10 @@ Felsregen → **Kettenzug** (reißt jemanden von hinten nach vorne). Unter 30 % 
 - `scripts/kampf/pilzhoehle.gd` – Test-Dungeon Pilzhöhle (Abläufe und Mechaniken)
 - `scripts/kampf/battle_state.gd` – Kampf-Regeln ohne Grafik: Zugreihenfolge, Schaden, Gegner, Wellen. Nimmt Befehle an und meldet Ereignisse
 - `scenes/kampf.tscn` + `scripts/kampf/combat.gd` – Kampf-Anzeige: spielt die Ereignisse ab, Knöpfe, Reaktions-Ring, Auswertung
-- `tests/` – Durchlauf der ganzen ersten Stunde (`durchlauf_test.gd`), automatische Testkämpfe (`vergleich.gd`), Lektionen (`lektionen_test.gd`), Element-Test, Welt-Test (`welt_test.gd`),
+- `tests/` – Durchlauf der ganzen ersten Stunde (`durchlauf_test.gd`) und von ganz Grünwacht (`durchlauf_gruenwacht_test.gd`), automatische Testkämpfe (`vergleich.gd`), Lektionen (`lektionen_test.gd`), Element-Test, Welt-Test (`welt_test.gd`),
   Stadt↔Kampf (`uebergang_test.gd`), Vorführ-Szenen (`anzeige_auto.tscn`, `welt_auto.tscn`, `lektion_auto.tscn`, `marv_auto.tscn`, `gesandte_auto.tscn`, `weg_auto.tscn`, `fest_auto.tscn`), Klassenwahl-Test (`klassenwahl_test.gd`)
 - `scripts/kampf/battle_request.gd` – Kampf aus der Stadt (welcher Kampf, Ergebnis), `kampf_ki.gd` – Computer-Spieler (Mitstreiter, Tests)
-- `scripts/musik.gd` + `assets/musik/` – Platzhalter-Musik (Stadt, Nacht, Kampf, Boss; Taste M = an/aus, Lautstärke-Regler im Menü und in der Stadt), erzeugt mit `tools/musik_erzeugen.gd`
+- `scripts/musik.gd` + `assets/musik/` – Platzhalter-Musik (Stadt, Nacht, Kampf, Boss, Wald, welker Wald, Wald bei Nacht; Taste M = an/aus, Lautstärke-Regler im Menü und in der Stadt), erzeugt mit `tools/musik_erzeugen.gd`
 - `scripts/kampf/skills.gd` – Fähigkeiten aller Klassen, Begleiter und Duette
 - `scripts/kampf/sandbox.gd` – Daten: Klassen, Duette, Monster, Gegner, Kämpfe
 - `scripts/kampf/elements.gd` – Element-Sechseck, Licht/Schatten, Sternenkraft

@@ -34,6 +34,11 @@ func _test_maps() -> void:
 	for id: String in ["weg_gruenwacht", "waldboden", "wipfelheim"]:
 		_check(world.maps.has(id), "Karte %s ist geladen" % id)
 	_check(world.maps.kreuzweg.title == "Kreuzweg" and world.maps.wipfelheim.title == "Wipfelheim", "Karten haben Namen")
+	# Schritt 11: eigene Platzhalter-Musik für Grünwacht (welk, wenn der Urbaum gefällt wurde; Höhle dunkler)
+	_check(world.maps.wipfelheim.music_for({}) == "wald" and world.maps.weg_gruenwacht.music_for({}) == "wald", "Musik im Wald")
+	_check(world.maps.waldboden.music_for({urbaum_gefaellt = true}) == "wald_welk" and world.maps.pilzhoehle.music_for({}) == "wald_nacht", "Musik welk und in der Höhle")
+	for track: String in ["wald", "wald_welk", "wald_nacht"]:
+		_check(Musik.TRACKS.has(track) and ResourceLoader.exists(Musik.TRACKS[track]), "Musikstück %s ist da" % track)
 	for map_id: String in world.maps:
 		var m: WorldMap = world.maps[map_id]
 		_check(m.is_walkable(m.start), "%s: Start ist begehbar" % map_id)
