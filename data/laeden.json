@@ -1,5 +1,12 @@
 {
 	"hinweis": "Läden: welche Waren es gibt (Preise in gegenstaende.json) und welchen Anteil des Preises der Laden beim Ankauf zahlt.",
+	"bingo_heimkehr": {
+		"name": "Bingos Laden",
+		"hinweis": "Nach der Rückkehr aus Grünwacht: Heimkehrer-Preis für die Sternentafel.",
+		"waren": ["heiltrank", "sternentafel"],
+		"preise": {"sternentafel": 600},
+		"ankauf": 0.5
+	},
 	"bingo": {
 		"name": "Bingos Laden",
 		"waren": ["heiltrank", "sternentafel"],

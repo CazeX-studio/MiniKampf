@@ -1170,6 +1170,16 @@
 					}
 				}
 			},
+			"oma_hagebutte": {
+				"name": "Oma Hagebutte",
+				"feld": [
+					7,
+					16
+				],
+				"aussehen": "wizzard_f",
+				"farbe": "f0c8d0",
+				"dialog": "oma_hagebutte"
+			},
 			"kobalt": {
 				"name": "Kobalt",
 				"feld": [

@@ -283,5 +283,18 @@
 		],
 		"abgeben_bei": "ysolde",
 		"belohnung": {"gold": 100, "erfahrung": 800}
+	},
+	"marvs_partie": {
+		"titel": "Marvs Partie",
+		"neben": true,
+		"beschreibung": "Marv ist dir bis nach Wipfelheim nachgereist. Er will EINE Partie Kreuzweg-Karten. Die Sternentafel gibt es bei Bingo in Kreuzweg.",
+		"start_bei": "marv_gruenwacht",
+		"voraussetzung": "nach_gruenwacht",
+		"ziele": [
+			{"art": "besitzen", "gegenstand": "sternentafel", "text": "Bei Bingo in Kreuzweg eine Sternentafel kaufen"},
+			{"art": "gemerkt", "merken": "gespielt:marv", "bei": "marv_gruenwacht", "text": "Eine Partie gegen Marv in Wipfelheim"}
+		],
+		"abgeben_bei": "marv_gruenwacht",
+		"belohnung": {"erfahrung": 200}
 	}
 }

@@ -15,6 +15,7 @@ extends RefCounted
 ##   {type = "dialog_choose", index = 0} im Gespräch eine Antwort wählen
 ##   {type = "szene_verlassen"}          eine gemeinsame Szene verlassen (Zusammenspielen)
 ##   {type = "kaufen", gegenstand = "…"} / {type = "verkaufen", gegenstand = "…"} / {type = "laden_zu"}  im geöffneten Laden
+##   {type = "karten_ergebnis", gegner = "marv", gewonnen = true, unentschieden = false}  Ende einer Partie Kreuzweg-Karten
 ## Auf eine andere Karte kommt man über Ausgänge am Rand (hineinlaufen) oder über Orte mit der Aktion "reisen" (Seilaufzug).
 ## Monster in der Wildnis ("monster:<Nummer>", aus data/karten.json): hineinlaufen oder antippen startet den Kampf.
 ## So kann später ein Server dieselben Befehle von vielen Spielern annehmen;
@@ -78,6 +79,8 @@ const MONSTER_TOUCH := 0.6
 const MONSTER_RESPAWN := 60.0
 ## Spieler, deren Kampf gerade beginnt (bis das Ergebnis kommt oder sie gehen): Kennung -> true
 var _fighting := {}
+## Zufall für Monsterkarten als Beute (Tests setzen einen festen Startwert)
+var card_rng := RandomNumberGenerator.new()
 
 ## --- Gemeinsame Szenen (Zusammenspielen, Lernprojekt 4 Schritt 5) ---
 ## Spricht ein Gruppenmitglied eine Figur an, erleben Mitglieder in der Nähe das Gespräch mit. Bei Antworten stimmen alle
@@ -394,6 +397,8 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 				_add_to_pack(p, monster_id, true)
 			_battle_result(p, str(cmd.get("kampf", "")), bool(cmd.get("gewonnen", false)))
 			_back_from_battle(p.id)
+		"karten_ergebnis":
+			_card_result(p, str(cmd.get("gegner", "")), bool(cmd.get("gewonnen", false)), bool(cmd.get("unentschieden", false)))
 		"benutzen":
 			_use_item(p, str(cmd.get("gegenstand", "")))
 		"kaufen":
@@ -1010,6 +1015,11 @@ func check(p: PlayerState, cond: Dictionary) -> bool:
 		return false
 	if cond.has("nicht_region") and _class_region(p) == cond.nicht_region:
 		return false
+	# {"hat": "sternentafel"}: diesen Gegenstand in der Tasche ({"nicht_hat": …} = nicht)
+	if cond.has("hat") and p.progress.item_count(cond.hat) <= 0:
+		return false
+	if cond.has("nicht_hat") and p.progress.item_count(cond.nicht_hat) > 0:
+		return false
 	# {"klasse": "archer"}: genau diese Klasse gewählt
 	if cond.has("klasse") and str(p.progress.flags.get("klasse", "")) != cond.klasse:
 		return false
@@ -1051,6 +1061,12 @@ func run_actions(p: PlayerState, actions: Array) -> void:
 		if action.has("ruf"):
 			# {"ruf": "jaeger", "wert": 10}: Ruf bei einer Gruppe (Jäger, Zähmer …), sichtbar unter „Werte“
 			change_reputation(p, str(action.ruf), int(action.get("wert", 0)))
+		if action.has("kartenspiel"):
+			# {"kartenspiel": "marv"}: eine Partie Kreuzweg-Karten gegen diese Figur (eigener Bildschirm)
+			_ensure_starter_cards(p)
+			scene_requested.emit(p.id, "kartenspiel:" + str(action.kartenspiel))
+		if action.has("karte"):
+			add_card(p, str(action.karte))
 		if action.has("monster_geben"):
 			_add_to_pack(p, action.monster_geben)
 		if action.has("reisen"):
@@ -1084,6 +1100,9 @@ func quest_goals_met(p: PlayerState, id: String) -> bool:
 			"gemerkt":
 				if not p.progress.flags.has(goal.merken):
 					return false
+			"besitzen":
+				if p.progress.item_count(goal.gegenstand) < int(goal.get("anzahl", 1)):
+					return false
 			"kampf":
 				if not p.progress.flags.has("kampf_gewonnen:" + str(goal.kampf)):
 					return false
@@ -1099,6 +1118,8 @@ func goal_done(p: PlayerState, goal: Dictionary) -> bool:
 			return p.progress.flags.has("geredet:" + str(goal.npc))
 		"gemerkt":
 			return p.progress.flags.has(goal.merken)
+		"besitzen":
+			return p.progress.item_count(goal.gegenstand) >= int(goal.get("anzahl", 1))
 		"kampf":
 			return p.progress.flags.has("kampf_gewonnen:" + str(goal.kampf))
 	return true
@@ -1114,7 +1135,7 @@ func goal_text(p: PlayerState, goal: Dictionary) -> String:
 			var npc: Dictionary = npcs.get(goal.npc, {name = goal.npc})
 			var done := p.progress.flags.has("geredet:" + str(goal.npc))
 			return "Mit %s reden%s" % [npc.name, " (erledigt)" if done else ""]
-		"gemerkt", "kampf":
+		"gemerkt", "kampf", "besitzen":
 			return "%s%s" % [goal.get("text", goal.get("merken", goal.get("kampf", ""))), " (erledigt)" if goal_done(p, goal) else ""]
 	return ""
 
@@ -1355,8 +1376,10 @@ func _check_approach(p: PlayerState) -> void:
 ## Waren eines Ladens: [{gegenstand, preis}] (Preise aus data/gegenstaende.json).
 func shop_wares(shop_id: String) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
-	for item_id: String in GameData.get_file("laeden").get(shop_id, {}).get("waren", []):
-		result.append({gegenstand = item_id, preis = int(GameData.item(item_id).get("preis", 0))})
+	# Ein Laden kann eigene Preise haben ("preise"), sonst gilt der Preis aus gegenstaende.json
+	var shop: Dictionary = GameData.get_file("laeden").get(shop_id, {})
+	for item_id: String in shop.get("waren", []):
+		result.append({gegenstand = item_id, preis = int(shop.get("preise", {}).get(item_id, GameData.item(item_id).get("preis", 0)))})
 	return result
 
 
@@ -1430,6 +1453,48 @@ func _battle_result(p: PlayerState, kampf_id: String, won: bool) -> void:
 	progress_changed.emit(p.id)
 
 
+## Kreuzweg-Karten: Sammlung im Spielstand (Gemerktes "karten": Kennung -> Anzahl).
+func add_card(p: PlayerState, card_id: String) -> void:
+	if not GameData.get_file("kartenspiel").get("karten", {}).has(card_id):
+		return
+	var cards: Dictionary = p.progress.flags.get("karten", {}).duplicate()
+	cards[card_id] = int(cards.get(card_id, 0)) + 1
+	p.progress.flags["karten"] = cards
+	_say(p, GameData.text("karte_neu", [KartenSpiel.card(card_id).name]))
+
+
+## Mit der Sternentafel kommen die Startkarten (beim ersten Spiel).
+func _ensure_starter_cards(p: PlayerState) -> void:
+	if not p.progress.flags.get("karten", {}).is_empty():
+		return
+	var cards := {}
+	for id: String in GameData.get_file("kartenspiel").get("startkarten", []):
+		cards[id] = int(cards.get(id, 0)) + 1
+	p.progress.flags["karten"] = cards
+	_say(p, GameData.text("startkarten", [cards.size()]))
+
+
+## Ende einer Partie: gemerkt wird, gegen wen man gespielt hat; ein Sieg bringt die Belohnung des Gegners
+## (Gold jedes Mal, eine besondere Karte nur beim ersten Sieg).
+func _card_result(p: PlayerState, opponent: String, won: bool, draw: bool) -> void:
+	var data: Dictionary = GameData.get_file("kartenspiel").get("gegner", {}).get(opponent, {})
+	if data.is_empty():
+		return
+	p.progress.flags["gespielt:" + opponent] = true
+	if won:
+		_say(p, GameData.text("karten_sieg", [data.get("name", opponent)]))
+		var reward: Dictionary = data.get("belohnung", {})
+		if reward.has("gold"):
+			_give_gold(p, int(reward.gold))
+		if reward.has("karte") and not p.progress.flags.has("karten_sieg:" + opponent):
+			add_card(p, str(reward.karte))
+		p.progress.flags["karten_sieg:" + opponent] = true
+	else:
+		_say(p, GameData.text("karten_unentschieden" if draw else "karten_verloren", [data.get("name", opponent)]))
+	_update_quests(p)
+	progress_changed.emit(p.id)
+
+
 ## Monster in der Wildnis: Jeder Sieg bringt Erfahrung und etwas Gold, das Monster ist dann eine Weile weg.
 ## Bei einer Niederlage wacht man am Start der Karte wieder auf.
 func _wild_result(p: PlayerState, kampf_id: String, battle: Dictionary, won: bool) -> void:
@@ -1438,6 +1503,10 @@ func _wild_result(p: PlayerState, kampf_id: String, battle: Dictionary, won: boo
 		p.progress.flags["besiegt:monster:%d" % int(kampf_id.substr(5))] = Time.get_unix_time_from_system()
 		_give_gold(p, int(battle.get("gold", 0)))
 		_give_xp(p, int(battle.get("erfahrung", 0)))
+		# Mit etwas Glück eine Monsterkarte (nur wer schon eine Sternentafel hat, sammelt Karten)
+		var drop: Array = GameData.wild_monsters()[int(kampf_id.substr(5))].gegner
+		if p.progress.item_count("sternentafel") > 0 and card_rng.randf() < float(GameData.get_file("kartenspiel").get("beute", 0.0)):
+			add_card(p, str(drop[card_rng.randi() % drop.size()]))
 	else:
 		_say(p, GameData.text("wild_verloren"))
 		var start := get_map(p.map).start

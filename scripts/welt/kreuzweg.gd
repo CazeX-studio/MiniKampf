@@ -178,6 +178,11 @@ func _ready() -> void:
 		_send({type = "kampf_ergebnis", kampf = BattleRequest.result.kampf, gewonnen = BattleRequest.result.gewonnen,
 				traenke_benutzt = BattleRequest.result.get("traenke_benutzt", 0), gezaehmt = BattleRequest.result.get("gezaehmt", [])})
 		BattleRequest.result = {}
+	# Zurück von einer Partie Kreuzweg-Karten: Ergebnis verbuchen
+	if not KartenTisch.ergebnis.is_empty():
+		_send({type = "karten_ergebnis", gegner = KartenTisch.ergebnis.gegner, gewonnen = KartenTisch.ergebnis.gewonnen,
+				unentschieden = KartenTisch.ergebnis.unentschieden})
+		KartenTisch.ergebnis = {}
 	# Beim ersten Betreten der Stadt kommt die Einleitung
 	_send({type = "start"})
 
@@ -1712,6 +1717,14 @@ func _fill_panel() -> void:
 			lines.append("[b]%d × %s[/b] – %s%s" % [p.progress.items[id], item.get("name", id), item.get("beschreibung", ""), use])
 		if p.progress.items.is_empty():
 			lines.append(GameData.text("tasche_leer"))
+		# Kreuzweg-Karten (Sammlung)
+		var cards: Dictionary = p.progress.flags.get("karten", {})
+		if not cards.is_empty():
+			var names: PackedStringArray = []
+			for id: String in cards:
+				names.append("%s%s" % [KartenSpiel.card(id).name, " ×%d" % cards[id] if int(cards[id]) > 1 else ""])
+			lines.append("")
+			lines.append("[b]Kreuzweg-Karten (%d):[/b] %s" % [names.size(), ", ".join(names)])
 	_panel_text.text = "\n".join(lines)
 
 
@@ -1768,6 +1781,12 @@ func _on_scene(player_id: String, scene: String) -> void:
 	# "abspann:gruenwacht" = Ende der Region Grünwacht (Rückblick), "abspann" = Ende von Akt 1
 	if parts[0] == "abspann":
 		Abspann.variante = parts[1] if parts.size() > 1 else ""
+	# "kartenspiel:marv" = eine Partie Kreuzweg-Karten gegen diese Figur, mit den eigenen stärksten Karten
+	if parts[0] == "kartenspiel":
+		KartenTisch.gegner = parts[1] if parts.size() > 1 else ""
+		KartenTisch.deck = KartenSpiel.best_deck(local_player().progress.flags.get("karten", {}))
+		get_tree().change_scene_to_file.call_deferred("res://scenes/kartentisch.tscn")
+		return
 	# "erinnerung:rowan" = eine Erinnerungs-Szene aus data/erinnerungen.json
 	if parts[0] == "erinnerung":
 		Erinnerung.id = parts[1] if parts.size() > 1 else ""

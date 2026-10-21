@@ -27,7 +27,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   **Schritt 5 eingebaut:** Leuchtende Tiere (Jäger oder Zähmer, Ruf) und Kael. **Schritt 6 eingebaut:** Rowans leeres
   Grab mit der ersten Erinnerungs-Szene. **Schritt 7 eingebaut:** die Pilzhöhle unter dem Urbaum als echter Dungeon.
   **Schritt 8 eingebaut:** Ende der Region (Ysolde und Kael, Wahrheit oder Geheimnis, Abspann „Ende von Grünwacht“).
-  Als Nächstes Schritt 9 (Kreuzweg-Karten mit Sternentafel).
+  **Schritt 9 eingebaut:** Kreuzweg-Karten mit Sternentafel, Marv und Oma Hagebutte. Als Nächstes Schritt 10 (Nebenaufträge).
   Marco testet am Schluss alles zusammen.
 - **Neu (21.10.): Figuren und Nebenaufträge aus Sitzung 21** in Kreuzweg: Wirtin Hanne mit Gasthaus Wegrast, Vogt Edmar,
   Steinmetz Quill, die Kinder Pip und Lotte, die Wache heißt jetzt Brom. Fünf Nebenaufträge mit **blauem „!“ und „?“**
@@ -51,7 +51,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 6 | Geschichte 3: Rowans leeres Grab (Erinnerungs-Szene) | eingebaut, Marco testet am Schluss |
 | 7 | Dungeon Pilzhöhle unter dem Urbaum | eingebaut, Marco testet am Schluss |
 | 8 | Ende der Region: Ysolde und Kael, Abstimmung | eingebaut, Marco testet am Schluss |
-| 9 | Kreuzweg-Karten mit Sternentafel, Marv, Oma Hagebutte | offen |
+| 9 | Kreuzweg-Karten mit Sternentafel, Marv, Oma Hagebutte | eingebaut, Marco testet am Schluss |
 | 10 | Nebenaufträge (Kobalt, Bienenstock) | offen |
 | 11 | Feinschliff (Musik, Durchlauf, Stufen) | offen |
 
@@ -206,6 +206,25 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     gefällt = welkes Laub.
   - **Platzhalter:** alle Texte.
   - **Tests:** Konfrontation mit beiden Entscheidungen im Grünwacht-Test, neuer Test `tests/abspann_test.gd`.
+
+- **Schritt 9 – Kreuzweg-Karten** (21.10.):
+  - **Das Mini-Spiel** (design.md, angelehnt an Triple Triad): 3×3-Feld auf der Sternentafel, je 5 Karten mit vier
+    Zahlen (oben, rechts, unten, links). Ist deine Zahl höher als die der angrenzenden gegnerischen Karte, gehört sie
+    dir. Wer am Ende mehr Karten hat (Feld und Hand), gewinnt. Wer anfängt, wird ausgelost.
+  - **Spieltisch:** eigener Bildschirm. Links deine Karten (blau), rechts die des Gegners (rot), erst Karte antippen
+    (Gold), dann ein Feld. Gerade umgedrehte Karten haben einen weißen Rand. Gespielt wird mit deinen 5 stärksten Karten.
+  - **Sternentafel:** In Akt 1 kostet sie bei Bingo weiter 5000 Gold (zu teuer, wie geplant). Nach der Rückkehr aus
+    Grünwacht hat Bingo einen **Heimkehrer-Preis von 600 Gold**. Mit der Tafel kommen **7 Startkarten**.
+  - **Monsterkarten:** Wer eine Sternentafel hat, bekommt nach Siegen in der Wildnis manchmal (20 %) eine Karte eines
+    der besiegten Monster. 21 Karten gibt es bisher (Kreuzweg, Grünwacht, Pilzhöhle). Die Sammlung steht in der Tasche (I).
+  - **Marv:** Nebenauftrag „Marvs Partie“ (blau). Mit der Tafel spielt er **genau einmal** mit dir (Erfolg „Marv hatte
+    Zeit“), danach: „Sorry, ich muss gerade Eichhörnchen zählen.“ (design.md). Er legt seine Karten wild durcheinander.
+  - **Oma Hagebutte** (Wipfelheim, an der Ankunft): erste richtige Gegnerin, spielt schlau. Sieg = 40 Gold, beim ersten
+    Sieg eine **Moosling-Karte**. Revanche jederzeit.
+  - **Schwierigkeit** (Computer gegen Computer): gegen Marv mit Startkarten 92 % Siege, gegen Oma mit Startkarten 7 %,
+    mit guten Grünwacht-Karten 40 % (ein Mensch, der mitdenkt, gewinnt öfter). Kartenwerte vorläufig.
+  - **Neu für Aufträge:** Ziel „besitzen“ (einen Gegenstand haben, ohne dass er abgegeben wird), Bedingung „hat“.
+  - **Tests:** neuer Test `tests/kartenspiel_test.gd` (Regeln, Gegner, Bingo, Marv, Oma, Beute, Spieltisch).
 
 ## Aufgaben Lernprojekt 4 „Zusammen spielen“ (Fahrplan in `ZUSAMMEN_PLAN.md`)
 
@@ -777,6 +796,12 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spiel startet jetzt mit einem Menü.
 
+**Neu: Grünwacht Schritt 9 – Kreuzweg-Karten** (nach Grünwacht zurück nach Kreuzweg)
+1. Bei Bingo in Kreuzweg: Bekommst du die Sternentafel für 600 Gold?
+2. Marv in Wipfelheim: Spielt er einmal mit dir, und hat er danach nur noch Ausreden?
+3. Der Spieltisch: Sind die Regeln verständlich? Siehst du gut, welche Karte wem gehört?
+4. Oma Hagebutte: Zu schwer, zu leicht? Bekommst du nach Siegen gegen Monster ab und zu Karten?
+
 **Neu: Grünwacht Schritt 8 – Ende der Region** (nach dem Urbaum)
 1. Kael und Ysolde vor Dornfeders Halle: Ist die Konfrontation spannend? Fällt die Abstimmung schwer?
 2. Der Abspann „Ende von Grünwacht“: Stimmt der Rückblick? Kommst du danach zurück nach Wipfelheim?
@@ -1021,7 +1046,8 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Lernprojekt 4 „Zusammen spielen“ ist gebaut: deine Rückmeldungen aus dem Test mit Freunden einarbeiten.
 - Lernprojekt 5 „Grünwacht“: Schritt 1 (Reise nach Wipfelheim) und Schritt 2 (Monster, eigene Klasse, Stufe 20)
   sind eingebaut, ebenso Schritt 3 (Fenns Prüfung), 4 (Esche, Kobalt, Tilda) und 5 (Leuchtende Tiere, Ruf, Kael).
-  Schritt 6 (Rowans Grab), 7 (Pilzhöhle) und 8 (Ende der Region) auch. Als Nächstes Schritt 9: Kreuzweg-Karten.
+  Schritt 6 (Rowans Grab), 7 (Pilzhöhle), 8 (Ende der Region) und 9 (Kreuzweg-Karten) auch. Als Nächstes Schritt 10:
+  die übrigen Nebenaufträge (Kobalts Revanche, Bienenstock).
 - Hinten angestellt: Schnellsätze und Emotes (Vorschläge im Ideen-Parkplatz von design.md).
 
 ## Offene Fragen an Marco
