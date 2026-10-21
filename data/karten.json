@@ -1,0 +1,382 @@
+{
+	"hinweis": "Karten außerhalb von Kreuzweg. Jede Karte ist ein Bild aus Zeichen (raster: eine Zeile pro Reihe, ein Zeichen pro Feld; links oben ist Feld [0, 0], x nach rechts, y nach unten). Was die Zeichen bedeuten, steht unter \"zeichen\". Häuser, Stände, NPCs, Orte und Schmuck wie in kreuzweg.json. ausgaenge: Wer in den Bereich [x, y, Breite, Höhe] läuft, kommt auf die Karte \"karte\" an das Feld \"feld\" (nur wenn \"wenn\" stimmt). Orte mit {\"reisen\": Karte, \"feld\": [x, y]} bringen einen beim Benutzen hin (Seilaufzug).",
+	"zeichen": {
+		"hinweis": "Was die Zeichen in den Karten bedeuten. boden: wiese, waldboden, weg, platz, gestruepp, planken, bruecke, laub. gesperrt: dort kann man nicht laufen. ding: was dort steht (baum, busch, blumen, pilze, stein, riesenbaum, stamm, zielscheibe, lagerfeuer).",
+		"~": {
+			"boden": "laub",
+			"gesperrt": true
+		},
+		".": {
+			"boden": "wiese"
+		},
+		",": {
+			"boden": "waldboden"
+		},
+		"=": {
+			"boden": "weg"
+		},
+		"#": {
+			"boden": "planken"
+		},
+		"-": {
+			"boden": "bruecke"
+		},
+		"T": {
+			"boden": "wiese",
+			"gesperrt": true,
+			"ding": "tree"
+		},
+		"t": {
+			"boden": "waldboden",
+			"gesperrt": true,
+			"ding": "tree"
+		},
+		"b": {
+			"boden": "waldboden",
+			"gesperrt": true,
+			"ding": "bush"
+		},
+		"f": {
+			"boden": "wiese",
+			"ding": "flowers"
+		},
+		"p": {
+			"boden": "waldboden",
+			"ding": "pilze"
+		},
+		"s": {
+			"boden": "wiese",
+			"gesperrt": true,
+			"ding": "stein"
+		},
+		"R": {
+			"boden": "waldboden",
+			"gesperrt": true,
+			"ding": "riesenbaum"
+		},
+		"O": {
+			"boden": "planken",
+			"gesperrt": true,
+			"ding": "stamm"
+		},
+		"Z": {
+			"boden": "planken",
+			"gesperrt": true,
+			"ding": "zielscheibe"
+		},
+		"L": {
+			"boden": "waldboden",
+			"gesperrt": true,
+			"ding": "lagerfeuer"
+		}
+	},
+	"weg_gruenwacht": {
+		"name": "Der Weg nach Grünwacht",
+		"grund": "wiese",
+		"start": [
+			37,
+			6
+		],
+		"raster": [
+			",,,,t,t,,t,,,,t,t...,...............f...",
+			"p,,,,,p,b,,,b,,,T.,,,...................",
+			",,,t,,,,,,,,tt,,t,,L,.Ts...T......T...f.",
+			"pt,,,b,,,,,,,,,,,,,,,,............T.....",
+			",,,,,,,,,,,,=============...............",
+			"========================================",
+			"========================================",
+			"============,,,,.,,......===============",
+			",,,,,,,,,,,,,p,bb,...,..................",
+			",b,,b,t,,b,,t,b,,b.t.......f..........T.",
+			",,,,t,,,,,,,pp,tb.t,.............T....T.",
+			",,,t,t,,,tb,t,,t.tf.fT...s......T.......",
+			"b,b,,tbp,t,,t,tt,b,...T.T....f...s......"
+		],
+		"ausgaenge": [
+			{
+				"bereich": [
+					39,
+					4,
+					1,
+					5
+				],
+				"karte": "kreuzweg",
+				"feld": [
+					2,
+					22
+				]
+			},
+			{
+				"bereich": [
+					0,
+					4,
+					1,
+					5
+				],
+				"karte": "waldboden",
+				"feld": [
+					27,
+					12
+				]
+			}
+		],
+		"deko": [
+			{
+				"art": "wegweiser",
+				"feld": [
+					36,
+					3
+				],
+				"text": "Grünwacht|Kreuzweg"
+			},
+			{
+				"art": "wegweiser",
+				"feld": [
+					3,
+					3
+				],
+				"text": "Wipfelheim|Kreuzweg"
+			}
+		]
+	},
+	"waldboden": {
+		"name": "Waldboden unter Wipfelheim",
+		"grund": "waldboden",
+		"licht": "b4c4a4",
+		"start": [
+			27,
+			12
+		],
+		"raster": [
+			",,t,t,,t,,t,,,,bpt,,,,,,t,,,,t",
+			",p,,b,,t,,t,,t,t,,ptt,tt,,,,,t",
+			",b,,t,,t,,,t,,p,t,,,,t,,,,,,,t",
+			",,,,,,p,,t,t,t,,,,,,,p,,p,,,,,",
+			",,,,R,,b,pt,b,,,,R,ttp,,,,R,,t",
+			",tt,,,,,t,,,,,b,,,,,,,tt,,,,b,",
+			"t,ptb,,,b,,,,t,,,,,,t,,,,,t,,,",
+			",t,,,p,,,,t,,,,tb,bt,,,t,,,t,,",
+			",,,t,p,bptt,,,,,,,,,,,,,,,,pp,",
+			"b,,tt,tp,,,,===,,pt,,R,,,,,,,,",
+			",,t,p,,,,,,=====,,,,,,,,,,,,,,",
+			"p,,,,,b,,,===========,,,,=====",
+			"b,b,,,,,t,====================",
+			",,,,,,R,,,====================",
+			",p,,t,,,,,,=====,,,,,====,,,,,",
+			",,,,,t,,,t,,===,,t,t,,,,,,tbt,",
+			",,,,,t,,,,,,,,,,b,,,t,t,,,,,,t",
+			",,p,,,,,,tb,,,,,ttp,,pp,,,,,,,",
+			"t,,,,,,,,t,,R,,,,b,,,,,bt,,p,,",
+			"t,t,,,,tbt,,,,b,,,,,,,,,b,,,,,",
+			"b,,t,,p,,,tbt,,,,R,pt,t,p,,,b,",
+			",,,,,,,,,t,ptt,,,,,,,,t,,,R,,t",
+			",,,,,R,,,,,,t,,,,,,,t,,,p,,,p,",
+			"t,,,,,,b,,,,t,,,,,,bt,tt,p,,,,",
+			"b,,,t,,b,,,,,,,,,,,,t,,,t,,,t,",
+			",,,,t,,t,,,bt,,,,,,,b,,,,,,,,,"
+		],
+		"ausgaenge": [
+			{
+				"bereich": [
+					29,
+					9,
+					1,
+					7
+				],
+				"karte": "weg_gruenwacht",
+				"feld": [
+					1,
+					6
+				]
+			}
+		],
+		"orte": [
+			{
+				"art": "seilaufzug",
+				"feld": [
+					13,
+					12
+				],
+				"meldung": "Der Seilaufzug knarrt und zieht dich hinauf in die Baumkronen.",
+				"aktionen": [
+					{
+						"reisen": "wipfelheim",
+						"feld": [
+							6,
+							15
+						]
+					}
+				]
+			}
+		]
+	},
+	"wipfelheim": {
+		"name": "Wipfelheim",
+		"grund": "laub",
+		"licht": "eef6e4",
+		"start": [
+			6,
+			15
+		],
+		"raster": [
+			"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+			"~~~~~~~~~~~~~#########~~~~~~~~~~",
+			"~~~~~~~~~~~~~#######Z#~~~~~~~~~~",
+			"~~~~~~~~~~~~~#########~~~~~~~~~~",
+			"~~~~~~~~~~~~~########Z~~~~~~~~~~",
+			"~~~~~~~~~~~~~#########~~~~~~~~~~",
+			"~~~~~~~~~~~~~#######Z#~~~~~~~~~~",
+			"~~~~~~~~~~~~~~~~--~~~~~~~~~~~~~~",
+			"~~~~~~~~~~~~~~~~--~~~~~~~~~~~~~~",
+			"~~~~~~~~~~~~##########~~~~~~~~~~",
+			"~~~~~~~~~~~~##########~~~#####O~",
+			"~~~O######~~##########~~~######~",
+			"~~~#######~~##########---######~",
+			"~~~#######--##########---######~",
+			"~~~#######--##########---######~",
+			"~~~#######--##########~~~######~",
+			"~~~#######~~##########~~~######~",
+			"~~~#######~~##########~~~######~",
+			"~~~~~~~~~~~~#########O~~~~~~~~~~",
+			"~~~~~~~~~~~~~~~~--~~~~~~~~~~~~~~",
+			"~~~~~~~~~~~~~~~~--~~~~~~~~~~~~~~",
+			"~~~~~~~~~~~~~#########~~~~~~~~~~",
+			"~~~~~~~~~~~~~#########~~~~~~~~~~",
+			"~~~~~~~~~~~~~#########~~~~~~~~~~",
+			"~~~~~~~~~~~~~#########~~~~~~~~~~",
+			"~~~~~~~~~~~~~#########~~~~~~~~~~",
+			"~~~~~~~~~~~~~O########~~~~~~~~~~",
+			"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+		],
+		"haeuser": [
+			{
+				"name": "Dornfeders Halle",
+				"feld": [
+					15,
+					10,
+					4,
+					3
+				],
+				"hoehe": 50,
+				"farbe": "6a4a30",
+				"dach": "4a6a3a"
+			},
+			{
+				"name": "Esches Labor",
+				"feld": [
+					17,
+					22,
+					3,
+					3
+				],
+				"hoehe": 40,
+				"farbe": "7a6048",
+				"dach": "5a7a3a"
+			},
+			{
+				"name": "",
+				"feld": [
+					26,
+					11,
+					2,
+					2
+				],
+				"hoehe": 30,
+				"farbe": "6a5038",
+				"dach": "3f5a2a"
+			}
+		],
+		"staende": [
+			{
+				"feld": [
+					8,
+					12
+				],
+				"farbe": "c8a060",
+				"text": "Koch-Stand"
+			}
+		],
+		"orte": [
+			{
+				"art": "seilaufzug",
+				"feld": [
+					4,
+					15
+				],
+				"meldung": "Der Seilaufzug lässt dich hinunter auf den Waldboden.",
+				"aktionen": [
+					{
+						"reisen": "waldboden",
+						"feld": [
+							14,
+							12
+						]
+					}
+				]
+			},
+			{
+				"art": "leer",
+				"feld": [
+					8,
+					12
+				],
+				"dialog": "koch_stand"
+			}
+		],
+		"npcs": {
+			"ysolde": {
+				"name": "Ysolde Dornfeder",
+				"feld": [
+					16,
+					14
+				],
+				"aussehen": "elf_f",
+				"farbe": "c8e0b0",
+				"dialog": "ysolde"
+			},
+			"fenn": {
+				"name": "Pfadmeister Fenn",
+				"feld": [
+					15,
+					3
+				],
+				"aussehen": "elf_m",
+				"farbe": "b0d890",
+				"dialog": "fenn"
+			},
+			"tilda": {
+				"name": "Rudelmeisterin Tilda",
+				"feld": [
+					28,
+					15
+				],
+				"aussehen": "knight_f",
+				"farbe": "d8c090",
+				"dialog": "tilda"
+			},
+			"esche": {
+				"name": "Professor Esche",
+				"feld": [
+					15,
+					24
+				],
+				"aussehen": "wizzard_m",
+				"farbe": "e0e0c0",
+				"dialog": "esche"
+			},
+			"marv_gruenwacht": {
+				"name": "Marv",
+				"feld": [
+					23,
+					12
+				],
+				"aussehen": "elf_m",
+				"farbe": "ffb070",
+				"dialog": "marv_gruenwacht",
+				"anspringen": {
+					"radius": 4
+				}
+			}
+		}
+	}
+}

@@ -7,6 +7,8 @@ var id: String
 var display_name: String
 ## Welche Pixel-Figur gezeigt wird (Name aus dem 0x72-Paket)
 var look: String
+## Karte, auf der der Spieler gerade steht (Kennung, siehe WorldState.maps)
+var map := "kreuzweg"
 ## Feld, auf dem der Spieler gerade steht
 var cell: Vector2i
 ## Genaue Position in Feld-Koordinaten (zwischen zwei Feldern beim Laufen)

@@ -335,7 +335,7 @@ static func clean_chat(text: String) -> String:
 ## Der eigene Spieler betritt die Stadt (er steht schon in Netz.world, beim Mitspieler im Spiegelbild).
 static func enter_world(p: PlayerState) -> void:
 	if mode == Mode.CLIENT and _ready_to_send:
-		_instance._c_join.rpc_id(1, p.display_name, p.look, p.progress.to_dict(), [p.cell.x, p.cell.y])
+		_instance._c_join.rpc_id(1, p.display_name, p.look, p.progress.to_dict(), [p.cell.x, p.cell.y], p.map)
 
 
 ## Der eigene Spieler verlässt die Stadt (Kampf, Klassenwahl, Menü).
@@ -437,7 +437,7 @@ func _write_lock() -> void:
 func _send_snapshot() -> void:
 	var list: Array = []
 	for p: PlayerState in world.players.values():
-		list.append([p.id, p.display_name, p.look, p.pos, p.facing, p.is_walking()])
+		list.append([p.id, p.display_name, p.look, p.pos, p.facing, p.is_walking(), p.map])
 	_s_snapshot.rpc(_clock(), list)
 
 
@@ -447,7 +447,7 @@ func _flush_own(id: String) -> void:
 	var p: PlayerState = world.players.get(id)
 	if peer <= 1 or p == null:
 		return
-	var data := {dialog = world.dialog_for_sync(p), shop = p.shop, progress = p.progress.to_dict(), feld = [p.cell.x, p.cell.y]}
+	var data := {dialog = world.dialog_for_sync(p), shop = p.shop, progress = p.progress.to_dict(), feld = [p.cell.x, p.cell.y], karte = p.map}
 	var text := var_to_str(data)
 	if _sent_own.get(id, "") == text:
 		return
@@ -514,7 +514,7 @@ func _on_peer_disconnected(peer: int) -> void:
 
 ## Ein Mitspieler betritt die Stadt und bringt seinen Spielstand mit.
 @rpc("any_peer", "reliable")
-func _c_join(p_name: String, look: String, progress: Dictionary, cell: Array) -> void:
+func _c_join(p_name: String, look: String, progress: Dictionary, cell: Array, karte: String) -> void:
 	if mode != Mode.HOST and mode != Mode.SERVER:
 		return
 	var peer := multiplayer.get_remote_sender_id()
@@ -522,11 +522,15 @@ func _c_join(p_name: String, look: String, progress: Dictionary, cell: Array) ->
 	var others := world.players.size() - (1 if world.players.has(id) else 0)
 	if others >= MAX_PLAYERS:
 		return
-	var start := WorldState.start_cell()
-	if cell.size() == 2 and world.is_walkable(Vector2i(int(cell[0]), int(cell[1]))):
+	# Der Mitspieler kommt dort an, wo er zuletzt stand (unbekannte Karte: Kreuzweg)
+	if not world.maps.has(karte):
+		karte = WorldState.KREUZWEG
+	var start := world.get_map(karte).start
+	if cell.size() == 2 and world.is_walkable(Vector2i(int(cell[0]), int(cell[1])), karte):
 		start = Vector2i(int(cell[0]), int(cell[1]))
 	world.remove_player(id)
 	var p := world.add_player(id, p_name.left(16), look if look in LOOKS else "elf_m", start)
+	p.map = karte
 	p.progress.load_dict(progress)
 	_groups.set_player_name(id, p.display_name)
 	# Nach einem Verbindungsabbruch zurück: wieder in die alte Gruppe
@@ -535,10 +539,11 @@ func _c_join(p_name: String, look: String, progress: Dictionary, cell: Array) ->
 	if not back.is_empty() and _clock() - float(back.time) < REJOIN_SECONDS:
 		_groups.restore(id, back.snap)
 	_sent_own.erase(id)
-	print("Netz: %s ist in Kreuzweg" % p.display_name)
+	var place := world.get_map(karte).title
+	print("Netz: %s ist in %s" % [p.display_name, place])
 	if not _greeted.has(id):
 		_greeted[id] = p.display_name
-		_s_chat.rpc("", "", "%s ist in Kreuzweg." % p.display_name)
+		_s_chat.rpc("", "", "%s ist in %s." % [p.display_name, place])
 
 
 ## Lebenszeichen eines Mitspielers (hält den kostenlosen Server wach)
@@ -824,6 +829,9 @@ func _s_snapshot(server_time: float, list: Array) -> void:
 			if id == my_id or not world.players.has(my_id):
 				continue
 			p = world.add_player(id, entry[1], entry[2], Vector2i(Vector2(entry[3]).round()))
+		if p.map != entry[6]:
+			# Auf eine andere Karte gewechselt: dort sofort hinstellen, nicht hinüberlaufen lassen
+			_place_on_map(p, entry[6], entry[3])
 		var history: Array = _history.get(id, [])
 		history.append([server_time, entry[3], entry[4], entry[5]])
 		while history.size() > 2 and float(history[1][0]) < server_time - 1.0:
@@ -833,6 +841,16 @@ func _s_snapshot(server_time: float, list: Array) -> void:
 		if id != my_id and not seen.has(id):
 			world.remove_player(id)
 			_history.erase(id)
+
+
+## Eine Figur im Spiegelbild steht jetzt auf einer anderen Karte (der Gastgeber hat sie dorthin gebracht).
+func _place_on_map(p: PlayerState, map_id: String, pos: Vector2) -> void:
+	p.map = map_id
+	p.pos = pos
+	p.cell = Vector2i(pos.round())
+	p.path.clear()
+	p.use_target = ""
+	_history.erase(p.id)
 
 
 ## Bewegt die Figuren im Spiegelbild: die eigene sofort (vorhergesagt), die anderen gleichmäßig etwas verzögert.
@@ -918,6 +936,9 @@ func _s_own(data: Dictionary) -> void:
 	if mode != Mode.CLIENT or world == null or not world.players.has(my_id):
 		return
 	var p: PlayerState = world.players[my_id]
+	var cell: Array = data.get("feld", [])
+	if data.get("karte", p.map) != p.map and cell.size() == 2:
+		_place_on_map(p, data.karte, Vector2(int(cell[0]), int(cell[1])))
 	p.dialog = data.get("dialog", {})
 	p.shop = data.get("shop", "")
 	p.progress.load_dict(data.get("progress", {}))

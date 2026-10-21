@@ -62,8 +62,13 @@ dieselben Befehle gesteuert wie ein echter Mitspieler. Später kann ein Server d
 
 ## Grünwacht (Lernprojekt 5, Fahrplan in `GRUENWACHT_PLAN.md`)
 
-Noch nicht gebaut, der Plan steht: Nach der Klassenwahl geht es weiter in die erste Region Grünwacht (Wipfelheim),
-mit Fenns Prüfung, Professor Esche und Kobalt, Ysoldes Geschichte, der Pilzhöhle als Dungeon und Kreuzweg-Karten.
+Nach der Klassenwahl geht es weiter in die erste Region Grünwacht. Geplant sind Fenns Prüfung, Professor Esche und
+Kobalt, Ysoldes Geschichte, die Pilzhöhle als Dungeon und Kreuzweg-Karten.
+
+- **Schritt 1 (eingebaut):** Nach „Leb wohl, Ye.“ → „Ende von Akt 1“ → **„Weiter nach Grünwacht“**. Die Weststraße
+  aus Kreuzweg führt auf den **Weg nach Grünwacht**, weiter in den **Waldboden** und mit dem **Seilaufzug** hinauf
+  nach **Wipfelheim** (Plattformen in den Baumkronen mit Hängebrücken, Ysolde, Fenn, Tilda, Esche, Marv, Koch-Stand).
+  Auftrag „Der Weg nach Grünwacht“. Die Karten stehen in `data/karten.json` (Anleitung in `data/LIESMICH.md`).
 
 ## Zusammen spielen (Lernprojekt 4, Fahrplan in `ZUSAMMEN_PLAN.md`)
 

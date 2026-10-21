@@ -7,6 +7,7 @@ Nach jeder Zeile außer der letzten in einer Gruppe kommt ein Komma.
 | Datei | Inhalt |
 |-------|--------|
 | `kreuzweg.json` | NPCs (Name, Platz, Aussehen, welcher Dialog) und Sammelpunkte in der Stadt |
+| `karten.json` | Alle Karten außer Kreuzweg (Weg nach Grünwacht, Waldboden, Wipfelheim) als Bild aus Zeichen, mit Häusern, NPCs, Orten und Ausgängen |
 | `dialoge.json` | Gespräche: wer spricht, was, Antwortmöglichkeiten, was danach passiert |
 | `auftraege.json` | Aufträge: Titel, Beschreibung, Ziele, Belohnung |
 | `gegenstaende.json` | Gegenstände: Name, Beschreibung, Preis |
@@ -106,3 +107,19 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
 - **Gegenstände benutzen:** in `gegenstaende.json` `"benutzen": {"feld": [x, y], "radius": 3, "dialog": "…", "sonst": "…"}`.
   In der Tasche steht dann „[Benutzen]“. Nah genug an `feld` startet der Dialog, sonst kommt die Meldung `sonst`.
 
+## Karten (seit Grünwacht Schritt 1, `karten.json`)
+
+- Jede Karte hat `name` (erscheint beim Betreten), `grund` (Boden, wo ein Zeichen keinen eigenen nennt), `start`
+  (wo man ankommt, wenn nichts anderes gilt), optional `licht` (Farbe, z. B. etwas dunkler im Wald) und `raster`.
+- **`raster`** ist die Karte als Bild: eine Zeile pro Reihe, ein Zeichen pro Feld. Links oben ist Feld [0, 0],
+  x zählt nach rechts, y nach unten (im Spiel liegt x schräg nach rechts unten, y schräg nach links unten).
+  Was die Zeichen bedeuten, steht oben in der Datei unter `zeichen`, z. B. `~` Baumkronen (gesperrt), `#` Plattform,
+  `-` Hängebrücke, `,` Waldboden, `=` Weg, `t` Baum, `R` Riesenbaum. Neue Zeichen kann man dort dazuschreiben.
+- `haeuser` (`feld`: [x, y, Breite, Höhe]), `staende`, `npcs`, `orte`, `sammelpunkte` und `deko` wie in `kreuzweg.json`.
+- **`ausgaenge`:** `{"bereich": [x, y, Breite, Höhe], "karte": "waldboden", "feld": [27, 12], "wenn": {…}}` – wer in den Bereich
+  läuft, kommt auf die andere Karte an das Feld. Auch `kreuzweg.json` hat einen (Weststraße, erst nach der Klassenwahl).
+- **Aktion `{"reisen": "wipfelheim", "feld": [6, 15]}`** bringt einen auf eine andere Karte (z. B. der Seilaufzug als Ort).
+- **Deko `wegweiser`:** `"text": "Grünwacht|Kreuzweg"` = oben ein Schild nach links, darunter eins nach rechts.
+- **Ziel `{"art": "gemerkt", "merken": "besucht:wipfelheim"}`** ist erfüllt, sobald man die Karte einmal betreten hat.
+- **Bedingungen nach Klasse:** `{"klasse": "archer"}` (genau diese Klasse), `{"region": "Grünwacht"}` (Klasse gehört in
+  diese Region), `{"nicht_region": "Grünwacht"}` (gehört nicht dorthin). Kennungen der Klassen: siehe `klassen.json` → `reihenfolge`.

@@ -1,6 +1,7 @@
 extends Node2D
-## Kreuzweg-Demo (Lernprojekt 3): Stadt schräg von oben, Laufen, Gespräche mit Antworten,
-## Aufträge, Gold, Tasche, Erfahrung und Stufen, Speichern.
+## Kreuzweg-Demo (Lernprojekt 3) und Grünwacht (Lernprojekt 5): Welt schräg von oben, Laufen, Gespräche mit Antworten,
+## Aufträge, Gold, Tasche, Erfahrung und Stufen, Speichern. Gezeigt wird immer die Karte, auf der der eigene Spieler steht
+## (Kreuzweg, der Weg nach Grünwacht, Waldboden, Wipfelheim); wechselt er die Karte, wird sie neu aufgebaut.
 ## Dieses Skript ist nur die Anzeige: Es zeichnet den Zustand aus WorldState und
 ## schickt Befehle. Allein läuft ein zweiter Spieler („Testgefährte“) zur Probe mit,
 ## gesteuert über genau dieselben Befehle. Beim Zusammenspielen (Netz) kommen die Befehle
@@ -16,6 +17,10 @@ const TILE_COLORS := {
 	WorldState.Tile.ROAD: [Color("8a7556"), Color("837052")],
 	WorldState.Tile.PLAZA: [Color("9d9585"), Color("948c7c")],
 	WorldState.Tile.OVERGROWN: [Color("2f4d2a"), Color("3a5a2e")],
+	WorldState.Tile.FOREST: [Color("33502c"), Color("37552f")],
+	WorldState.Tile.PLANKS: [Color("8a6440"), Color("805c3a")],
+	WorldState.Tile.BRIDGE: [Color("a07a4c"), Color("987246")],
+	WorldState.Tile.CANOPY: [Color("1f3a1f"), Color("244222")],
 }
 
 # Steuerung: Steuerknopf und Aktions-Knopf fürs Handy
@@ -43,6 +48,10 @@ var _characters := {}
 var _pickup_nodes := {}
 ## Schmuck-Grafik -> Bedingung, wann sie zu sehen ist
 var _deco_nodes := {}
+## Alles, was zur gerade gezeigten Karte gehört (Häuser, Kleinkram, NPCs …); wird beim Kartenwechsel ersetzt
+var _map_nodes: Array[Node] = []
+## Karte, die gerade gezeigt wird
+var _shown_map := ""
 ## Färbt die Welt nachts dunkelblau (Fest der fünf Wege)
 var _night: CanvasModulate
 var _flash_rect: ColorRect
@@ -131,10 +140,12 @@ func _ready() -> void:
 	if Netz.online():
 		local = state.add_player(local_id, Netz.my_name, Netz.my_look, WorldState.start_cell())
 		SaveGame.load_into(local)
+		state.fix_position(local)
 		Netz.enter_world(local)
 	else:
 		local = state.add_player(local_id, "Du", "elf_m", WorldState.start_cell())
 		SaveGame.load_into(local)
+		state.fix_position(local)
 		state.add_player(BOT_ID, "Testgefährte", "lizard_f", WorldState.start_cell() + Vector2i(-1, 0))
 
 	_ground = Node2D.new()
@@ -150,27 +161,7 @@ func _ready() -> void:
 	_objects = Node2D.new()
 	_objects.y_sort_enabled = true
 	add_child(_objects)
-	for b: Dictionary in state.buildings:
-		_add_building(b)
-	for prop: Dictionary in state.props:
-		_add_prop(prop)
-	for i in state.pickups.size():
-		_add_pickup("punkt:%d" % i)
-	for i in state.places.size():
-		_add_pickup("ort:%d" % i)
-	for deco: Dictionary in state.decorations:
-		_add_decoration(deco)
-	for id: String in state.npcs:
-		var npc: Dictionary = state.npcs[id]
-		var view := WorldCharacter.new()
-		view.setup(npc.look, npc.name, npc.tint, Color("f2c14e"))
-		view.idle_fps = NPC_IDLE_FPS
-		# Jeder NPC beginnt an einer anderen Stelle der Animation, damit nicht alle im Gleichtakt wippen
-		view.time_offset(randf() * 4.0)
-		view.position = cell_center(Vector2(npc.cell))
-		view.facing = 1
-		_objects.add_child(view)
-		_characters["npc:" + id] = view
+	_build_map_view()
 
 	_camera = Camera2D.new()
 	_camera.zoom = Vector2(1.25, 1.25)
@@ -187,6 +178,53 @@ func _ready() -> void:
 		BattleRequest.result = {}
 	# Beim ersten Betreten der Stadt kommt die Einleitung
 	_send({type = "start"})
+
+
+## Baut die Karte des eigenen Spielers auf (beim Start und nach jedem Kartenwechsel).
+func _build_map_view() -> void:
+	var local := local_player()
+	_shown_map = local.map
+	for node in _map_nodes:
+		node.queue_free()
+	_map_nodes.clear()
+	_pickup_nodes.clear()
+	_deco_nodes.clear()
+	for id: String in _characters.keys():
+		if id.begins_with("npc:"):
+			_characters.erase(id)
+	var m := state.get_map(local.map)
+	for b: Dictionary in m.buildings:
+		_add_building(b)
+	for prop: Dictionary in m.props:
+		_add_prop(prop)
+	for i in state.pickups.size():
+		if state.pickups[i].map == local.map:
+			_add_pickup("punkt:%d" % i)
+	for i in state.places.size():
+		if state.places[i].map == local.map:
+			_add_pickup("ort:%d" % i)
+	for deco: Dictionary in state.decorations:
+		if deco.map == local.map:
+			_add_decoration(deco)
+	for id: String in state.npcs:
+		var npc: Dictionary = state.npcs[id]
+		if npc.map != local.map:
+			continue
+		var view := WorldCharacter.new()
+		view.setup(npc.look, npc.name, npc.tint, Color("f2c14e"))
+		view.idle_fps = NPC_IDLE_FPS
+		# Jeder NPC beginnt an einer anderen Stelle der Animation, damit nicht alle im Gleichtakt wippen
+		view.time_offset(randf() * 4.0)
+		view.position = cell_center(Vector2(npc.cell))
+		view.facing = 1
+		_add_map_node(view)
+		_characters["npc:" + id] = view
+	_ground.queue_redraw()
+
+
+func _add_map_node(node: Node2D) -> void:
+	_objects.add_child(node)
+	_map_nodes.append(node)
 
 
 func _exit_tree() -> void:
@@ -225,6 +263,11 @@ func _send(cmd: Dictionary) -> void:
 
 ## Überträgt den Zustand der Spieler auf ihre Figuren.
 func _sync() -> void:
+	var local := local_player()
+	if local.map != _shown_map:
+		_build_map_view()
+		_camera.position = cell_center(local.pos)
+		_camera.reset_smoothing()
 	for id: String in state.players:
 		var p: PlayerState = state.players[id]
 		if not _characters.has(id):
@@ -239,12 +282,13 @@ func _sync() -> void:
 		view.position = cell_center(p.pos)
 		view.moving = p.is_walking()
 		view.facing = p.facing
+		# Wer auf einer anderen Karte steht, ist hier nicht zu sehen
+		view.visible = p.map == local.map
 	# Mitspieler, die gegangen sind (oder gerade kämpfen), verschwinden
 	for id: String in _characters.keys():
 		if not id.begins_with("npc:") and not state.players.has(id):
 			_characters[id].queue_free()
 			_characters.erase(id)
-	var local := local_player()
 	_camera.position = cell_center(local.pos)
 	# Sammelpunkte: Jeder sieht nur die, die er selbst noch nicht eingesammelt hat
 	for target: String in _pickup_nodes:
@@ -256,15 +300,19 @@ func _sync() -> void:
 		node.visible = state.check(local, _deco_nodes[node])
 		if node.visible:
 			node.queue_redraw()
-	var night_color := NIGHT_COLOR if local.progress.flags.has("nacht") else Color.WHITE
+	var m := state.get_map(local.map)
+	var night_color := NIGHT_COLOR if local.progress.flags.has("nacht") else m.light
 	_night.color = _night.color.lerp(night_color, 0.05)
-	Musik.play("nacht" if local.progress.flags.has("nacht") else "stadt")
+	Musik.play("nacht" if local.progress.flags.has("nacht") else m.music)
+	var here := state.players.values().filter(func(other: PlayerState) -> bool: return other.map == local.map).size()
 	if Netz.online():
-		_info.text = "Zusammen: %d Spieler%s" % [state.players.size(), " · Gastgeber, Adresse: " + Netz.local_address() if Netz.mode == Netz.Mode.HOST else ""]
+		_info.text = "%s · Zusammen: %d Spieler%s" % [m.title, here, " · Gastgeber, Adresse: " + Netz.local_address() if Netz.mode == Netz.Mode.HOST else ""]
 		_info.reset_size()
 	else:
-		_info.text = "Spieler in Kreuzweg: %d" % state.players.size()
+		_info.text = "Spieler in %s: %d" % [m.title, here]
 	for id: String in state.npcs:
+		if not _characters.has("npc:" + id):
+			continue
 		var npc_view: WorldCharacter = _characters["npc:" + id]
 		npc_view.visible = state.npc_visible(local, id)
 		npc_view.marker = state.npc_marker(local, id)
@@ -435,7 +483,7 @@ func _tap_at(world: Vector2) -> void:
 	# Mitspieler angetippt? Dann das Menü (einladen, Gruppe)
 	if Netz.online():
 		for id: String in state.players:
-			if id == local_id:
+			if id == local_id or state.players[id].map != local_player().map:
 				continue
 			var player_pos := cell_center(state.players[id].pos)
 			if absf(world.x - player_pos.x) < 30.0 and world.y > player_pos.y - 90.0 and world.y < player_pos.y + 12.0:
@@ -458,7 +506,7 @@ func _tap_at(world: Vector2) -> void:
 			_show_marker(node.position)
 			return
 	var cell := screen_to_cell(world)
-	if state.is_walkable(cell):
+	if state.is_walkable(cell, local_player().map):
 		_send({type = "move", cell = cell})
 		_show_marker(cell_center(Vector2(cell)))
 
@@ -471,10 +519,11 @@ func _show_marker(pos: Vector2) -> void:
 # --- Zeichnen -------------------------------------------------------------------
 
 func _draw_ground() -> void:
-	for y in WorldState.SIZE.y:
-		for x in WorldState.SIZE.x:
+	var m := state.get_map(_shown_map)
+	for y in m.size.y:
+		for x in m.size.x:
 			var cell := Vector2i(x, y)
-			var tile := state.tile_at(cell)
+			var tile := m.tile_at(cell)
 			var colors: Array = TILE_COLORS[tile]
 			var color: Color = colors[(x + y) % 2]
 			var top := cell_to_screen(Vector2(cell))
@@ -487,12 +536,25 @@ func _draw_ground() -> void:
 			_ground.draw_colored_polygon(diamond, color)
 			_ground.draw_polyline(diamond + PackedVector2Array([top]), Color(0, 0, 0, 0.08), 1.0)
 			# Klare Straßen: dunkler Rand, wo Straße oder Platz an Gras grenzt
+			var edges := [[Vector2i(0, -1), 0, 1], [Vector2i(1, 0), 1, 2], [Vector2i(0, 1), 2, 3], [Vector2i(-1, 0), 3, 0]]
 			if tile == WorldState.Tile.ROAD or tile == WorldState.Tile.PLAZA:
-				var edges := [[Vector2i(0, -1), 0, 1], [Vector2i(1, 0), 1, 2], [Vector2i(0, 1), 2, 3], [Vector2i(-1, 0), 3, 0]]
 				for e: Array in edges:
-					var other := state.tile_at(cell + e[0])
-					if other == WorldState.Tile.GRASS or other == WorldState.Tile.OVERGROWN:
+					var other := m.tile_at(cell + e[0])
+					if other in [WorldState.Tile.GRASS, WorldState.Tile.OVERGROWN, WorldState.Tile.FOREST]:
 						_ground.draw_line(diamond[e[1]], diamond[e[2]], Color("4a3c2a"), 3.0)
+			elif tile == WorldState.Tile.CANOPY:
+				# Baumkronen unter den Plattformen: ein paar Blätterbüschel
+				var leaf := Color("2c5228") if (x * 7 + y * 3) % 5 < 2 else Color("1a3218")
+				_ground.draw_circle(top + Vector2(((x * 13) % 9) - 4.0, TILE_H * 0.5 + ((y * 7) % 5) - 2.0), 9.0, leaf)
+			elif tile == WorldState.Tile.PLANKS or tile == WorldState.Tile.BRIDGE:
+				# Bretterfugen; am Rand zur Tiefe ein dunkler Rand, an Brücken Seile
+				var a: Vector2 = diamond[0].lerp(diamond[3], 0.5)
+				var b: Vector2 = diamond[1].lerp(diamond[2], 0.5)
+				_ground.draw_line(a, b, color.darkened(0.25), 1.0)
+				for e: Array in edges:
+					if m.tile_at(cell + e[0]) in [WorldState.Tile.CANOPY, -1]:
+						var rim := Color("3a2414") if tile == WorldState.Tile.PLANKS else Color("d8c08a")
+						_ground.draw_line(diamond[e[1]], diamond[e[2]], rim, 3.0 if tile == WorldState.Tile.PLANKS else 2.0)
 
 
 ## Wohin getippt wurde: kleiner Ring auf dem Boden (eigene Ebene, damit der Boden nicht jedes Bild neu gemalt wird).
@@ -514,7 +576,7 @@ func _add_building(b: Dictionary) -> void:
 		node.draw.connect(func() -> void: _draw_statue(node, rect, b.height, b.color, b.name))
 	else:
 		node.draw.connect(func() -> void: _draw_house(node, rect, b.height, b.color, b.roof, b.name))
-	_objects.add_child(node)
+	_add_map_node(node)
 
 
 func _draw_house(node: Node2D, rect: Rect2i, height: float, color: Color, roof: Color, label: String) -> void:
@@ -592,7 +654,7 @@ func _add_prop(prop: Dictionary) -> void:
 	node.position = cell_center(Vector2(prop.cell))
 	var kind: String = prop.kind
 	node.draw.connect(func() -> void: _draw_prop(node, kind, prop))
-	_objects.add_child(node)
+	_add_map_node(node)
 
 
 func _draw_prop(node: Node2D, kind: String, prop: Dictionary) -> void:
@@ -623,6 +685,53 @@ func _draw_prop(node: Node2D, kind: String, prop: Dictionary) -> void:
 		"bush":
 			node.draw_circle(Vector2(0, -10), 16.0, Color("26401f"))
 			node.draw_circle(Vector2(10, -14), 10.0, Color("30502a"))
+		"pilze":
+			for i in 3:
+				var at := Vector2((i - 1) * 7.0, (i % 2) * 4.0 - 2.0)
+				node.draw_rect(Rect2(at + Vector2(-1.5, -6), Vector2(3, 6)), Color("e8dcc0"))
+				node.draw_circle(at + Vector2(0, -7), 4.5, [Color("c84a3a"), Color("d8a050"), Color("b8885a")][i])
+		"stein":
+			node.draw_set_transform(Vector2(0, -6), 0.0, Vector2(1.0, 0.7))
+			node.draw_circle(Vector2.ZERO, 14.0, Color("6a6a62"))
+			node.draw_circle(Vector2(-4, -4), 8.0, Color("7e7e74"))
+			node.draw_set_transform_matrix(Transform2D.IDENTITY)
+		"riesenbaum":
+			# Stamm eines Riesenbaums: geht oben aus dem Bild hinaus (dort oben liegt Wipfelheim)
+			node.draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, 0.45))
+			node.draw_circle(Vector2.ZERO, 46.0, Color(0, 0, 0, 0.35))
+			node.draw_set_transform_matrix(Transform2D.IDENTITY)
+			for root in [-1.0, 1.0]:
+				node.draw_colored_polygon(PackedVector2Array([Vector2(root * 18, -20), Vector2(root * 46, 8), Vector2(root * 10, 4)]), Color("4a3020"))
+			node.draw_rect(Rect2(-24, -230, 48, 234), Color("5a3a24"))
+			node.draw_rect(Rect2(-24, -230, 13, 234), Color("4a2e1c"))
+			for k in 4:
+				node.draw_line(Vector2(-12 + (k % 3) * 11, -40 - k * 50), Vector2(-9 + (k % 3) * 11, -68 - k * 50), Color("3a2414"), 2.0)
+			# Oben verschwindet der Stamm im Blätterdach
+			node.draw_circle(Vector2(0, -236), 34.0, Color("23401f"))
+			node.draw_circle(Vector2(-24, -226), 22.0, Color("2a4a24"))
+			node.draw_circle(Vector2(24, -224), 22.0, Color("264522"))
+		"stamm":
+			# Stamm, der durch eine Plattform wächst
+			node.draw_set_transform(Vector2(0, -4), 0.0, Vector2(1.0, 0.5))
+			node.draw_circle(Vector2.ZERO, 22.0, Color("4a2e1c"))
+			node.draw_set_transform_matrix(Transform2D.IDENTITY)
+			node.draw_rect(Rect2(-20, -110, 40, 106), Color("5a3a24"))
+			node.draw_circle(Vector2(0, -120), 38.0, Color("2f5a2a"))
+			node.draw_circle(Vector2(-18, -132), 24.0, Color("3c6e33"))
+			node.draw_circle(Vector2(20, -128), 22.0, Color("355f2e"))
+		"zielscheibe":
+			node.draw_line(Vector2(-8, 0), Vector2(-4, -24), Color("5a3a22"), 3.0)
+			node.draw_line(Vector2(8, 0), Vector2(4, -24), Color("5a3a22"), 3.0)
+			for r: Array in [[16.0, Color("e8e0c8")], [11.0, Color("c84a3a")], [6.0, Color("e8e0c8")], [2.5, Color("c84a3a")]]:
+				node.draw_circle(Vector2(0, -32), r[0], r[1])
+		"lagerfeuer":
+			var flicker := 0.8 + 0.2 * sin(_time * 9.0)
+			node.draw_circle(Vector2(0, -10), 30.0, Color(1.0, 0.6, 0.2, 0.15 * flicker))
+			for i in 5:
+				var a := TAU * i / 5.0
+				node.draw_circle(Vector2(cos(a) * 12.0, sin(a) * 6.0 - 2.0), 4.0, Color("6a6a62"))
+			node.draw_colored_polygon(PackedVector2Array([Vector2(-7, -2), Vector2(0, -22 * flicker), Vector2(7, -2)]), Color("ff9a3c"))
+			node.draw_colored_polygon(PackedVector2Array([Vector2(-3, -2), Vector2(0, -12 * flicker), Vector2(3, -2)]), Color("ffe08a"))
 		"lantern":
 			# Ye's Laterne an der Wand der Gilde (Hinweis auf den Klassenlosen)
 			node.draw_circle(Vector2(0, -60), 14.0, Color(1.0, 0.8, 0.4, 0.25))
@@ -641,7 +750,7 @@ func _add_pickup(target: String) -> void:
 	else:
 		art = state.pickups[int(target.substr(6))].item
 	node.draw.connect(func() -> void: _draw_pickup(node, art))
-	_objects.add_child(node)
+	_add_map_node(node)
 	_pickup_nodes[target] = node
 
 
@@ -677,6 +786,17 @@ func _draw_pickup(node: Node2D, art: String) -> void:
 			node.draw_circle(Vector2.ZERO, 10.0, Color("e8dcc0"))
 			node.draw_set_transform_matrix(Transform2D.IDENTITY)
 			node.draw_circle(Vector2(0, -8), 5.0, Color("a0483a"))
+			return
+		"seilaufzug":
+			# Plattform an Seilen, die nach oben in die Baumkronen führen
+			var sway := sin(_time * 1.5) * 2.0
+			node.draw_line(Vector2(-14, -8), Vector2(-10 + sway, -150), Color("c8b080"), 2.0)
+			node.draw_line(Vector2(14, -8), Vector2(10 + sway, -150), Color("c8b080"), 2.0)
+			node.draw_colored_polygon(PackedVector2Array([Vector2(-20, -6), Vector2(0, -16), Vector2(20, -6), Vector2(0, 4)]), Color("7a5634"))
+			node.draw_polyline(PackedVector2Array([Vector2(-20, -6), Vector2(0, -16), Vector2(20, -6), Vector2(0, 4), Vector2(-20, -6)]), Color("4a3020"), 2.0)
+			node.draw_circle(Vector2(0, -6), 18.0, Color(1.0, 0.95, 0.7, 0.06 + 0.08 * glow))
+			return
+		"leer":
 			return
 	node.draw_circle(Vector2(0, -10), 16.0, Color(0.8, 1.0, 0.9, 0.12 + 0.12 * glow))
 	for i in 3:
@@ -861,8 +981,9 @@ func _add_decoration(deco: Dictionary) -> void:
 	node.position = cell_center(Vector2(deco.cell))
 	var index := _deco_nodes.size()
 	var art: String = deco.art
+	node.set_meta("text", deco.get("text", ""))
 	node.draw.connect(func() -> void: _draw_decoration(node, art, index))
-	_objects.add_child(node)
+	_add_map_node(node)
 	_deco_nodes[node] = deco.cond
 
 
@@ -875,6 +996,22 @@ func _draw_decoration(node: Node2D, art: String, index: int) -> void:
 			node.draw_rect(Rect2(-2, -50, 4, 50), Color("3a2a1a"))
 			node.draw_rect(Rect2(-7, -66, 14, 16), Color(color.lightened(0.3), flicker))
 			node.draw_rect(Rect2(-8, -68, 16, 3), Color("3a2a1a"))
+		"wegweiser":
+			# Text "links|rechts": oben ein Schild nach links (Westen), darunter eins nach rechts
+			node.draw_rect(Rect2(-2, -64, 4, 64), Color("5a3a22"))
+			var font := ThemeDB.fallback_font
+			var parts := str(node.get_meta("text", "")).split("|")
+			for i in parts.size():
+				if parts[i] == "":
+					continue
+				var w := font.get_string_size(parts[i], HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x + 14.0
+				var y := -66.0 + i * 20.0
+				var dir := -1.0 if i == 0 else 1.0
+				var near := 4.0 * -dir
+				var far := near + w * dir
+				node.draw_colored_polygon(PackedVector2Array([Vector2(near, y), Vector2(far, y), Vector2(far + 8.0 * dir, y + 8.0),
+						Vector2(far, y + 16.0), Vector2(near, y + 16.0)]), Color("a07a4c"))
+				node.draw_string(font, Vector2(minf(near, far) + 7.0, y + 12.0), parts[i], HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("2a1c10"))
 		"krater":
 			node.draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, 0.5))
 			node.draw_circle(Vector2.ZERO, 34.0, Color(0.1, 0.08, 0.15, 0.85))

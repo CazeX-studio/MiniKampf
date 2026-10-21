@@ -14,7 +14,7 @@ static func save(p: PlayerState) -> void:
 	var file := FileAccess.open(path, FileAccess.WRITE)
 	if file == null:
 		return
-	file.store_string(JSON.stringify({version = VERSION, progress = p.progress.to_dict(), feld = [p.cell.x, p.cell.y]}, "\t"))
+	file.store_string(JSON.stringify({version = VERSION, progress = p.progress.to_dict(), karte = p.map, feld = [p.cell.x, p.cell.y]}, "\t"))
 
 
 ## Lädt einen gespeicherten Stand in den Spieler. Gibt false zurück, wenn es keinen gibt.
@@ -25,6 +25,8 @@ static func load_into(p: PlayerState) -> bool:
 	if not data is Dictionary or int(data.get("version", 0)) < VERSION:
 		return false
 	p.progress.load_dict(data.get("progress", {}))
+	# Ältere Spielstände kennen nur Kreuzweg
+	p.map = str(data.get("karte", "kreuzweg"))
 	var cell: Array = data.get("feld", [])
 	if cell.size() == 2:
 		p.cell = Vector2i(int(cell[0]), int(cell[1]))

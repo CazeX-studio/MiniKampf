@@ -19,7 +19,9 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   in der Welt, Fenns Prüfung, Professor Esche und Kobalt, Ysoldes Geschichte, Pilzhöhle als echter Dungeon,
   Kreuzweg-Karten mit Sternentafel, Nebenaufträge, Feinschliff). Marcos Entscheidungen vom 21.10. stehen im Plan
   (alle Klassen dürfen hin, gleicher Spielstand, Weg Stufe 10–15 und Grünwacht 15–20, Sternentafel bei Bingo in Kreuzweg,
-  Koch-Stand als Platzhalter, Ruf sichtbar). **Als Nächstes Schritt 1.**
+  Koch-Stand als Platzhalter, Ruf sichtbar). **Schritt 1 eingebaut (21.10.):** Nach „Leb wohl, Ye.“ geht es weiter
+  über den Weg nach Grünwacht, durch den Wald und mit dem Seilaufzug hinauf nach Wipfelheim (siehe „Fertig in
+  Lernprojekt 5“ und „Was du testen kannst“). Als Nächstes Schritt 2 (eigene Klasse in der Welt, Monster).
 - **Neu (21.10.): Figuren und Nebenaufträge aus Sitzung 21** in Kreuzweg: Wirtin Hanne mit Gasthaus Wegrast, Vogt Edmar,
   Steinmetz Quill, die Kinder Pip und Lotte, die Wache heißt jetzt Brom. Fünf Nebenaufträge mit **blauem „!“ und „?“**
   (Hauptaufträge bleiben gelb). Siehe „Schritt 21“ unten, Test-Liste unter „Was du testen kannst“.
@@ -34,7 +36,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 |-----|---------|-------|
 | 0 | Plan schreiben | erledigt |
 | – | Entscheidungen: alle Klassen, gleicher Spielstand, Stufen nach Reihenfolge, Sternentafel bei Bingo, Koch-Stand als Platzhalter, Ruf sichtbar | entschieden 21.10. |
-| 1 | Die Reise und Wipfelheim (mehrere Karten, Weg von Kreuzweg, Koch-Stand) | offen |
+| 1 | Die Reise und Wipfelheim (mehrere Karten, Weg von Kreuzweg, Koch-Stand) | eingebaut, Marco testet |
 | 2 | Die eigene Klasse in der Welt, Monster der Region | offen |
 | 3 | Einstieg Bogenschütze: Fenns Prüfung der drei Ziele | offen |
 | 4 | Einstieg Zähmer: Professor Esche und Kobalt | offen |
@@ -45,6 +47,39 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 9 | Kreuzweg-Karten mit Sternentafel, Marv, Oma Hagebutte | offen |
 | 10 | Nebenaufträge (Kobalt, Bienenstock) | offen |
 | 11 | Feinschliff (Musik, Durchlauf, Stufen) | offen |
+
+## Fertig in Lernprojekt 5
+
+- **Schritt 1 – Die Reise und Wipfelheim** (21.10.):
+  - **Neuer Baustein „mehrere Karten“:** Die Welt besteht jetzt aus mehreren Karten, jeder Spieler steht auf einer.
+    Kreuzweg bleibt wie bisher. Die neuen Karten stehen in **`data/karten.json`** als Bild aus Zeichen
+    (`~` Baumkronen, `#` Plattform, `-` Hängebrücke, `,` Waldboden, `=` Weg, `t` Baum, `R` Riesenbaum …).
+    Du kannst sie dort selbst ändern, Anleitung in `data/LIESMICH.md`.
+  - **Drei neue Karten:**
+    - **Der Weg nach Grünwacht:** Straße von Kreuzweg nach Westen, erst Wiese mit Blumen, dann immer mehr Wald,
+      in der Mitte ein Rastplatz mit Lagerfeuer, Wegweiser an beiden Enden.
+    - **Waldboden unter Wipfelheim:** dunkler Wald mit Riesenbäumen und Pilzen, ein Pfad führt zur Lichtung mit dem
+      **Seilaufzug**. (Hier kommen in Schritt 2 die Monster hin, später der Eingang zur Pilzhöhle.)
+    - **Wipfelheim:** fünf Plattformen in den Baumkronen, verbunden durch Hängebrücken: Ankunft mit Seilaufzug und
+      **Koch-Stand** (Platzhalter: „Hier wird bald gekocht.“), in der Mitte **Dornfeders Halle** mit Ysolde, im Norden
+      **Fenns Schießstand** mit Zielscheiben, im Osten **Tildas Rudelhof**, im Süden **Esches Labor**.
+      **Marv** steht auf der Brücke zu Tilda und spricht dich an.
+  - **So kommt man hin:** Nach „Leb wohl, Ye.“ kommt der Abspann, jetzt **„Ende von Akt 1“** mit dem Knopf
+    **„Weiter nach Grünwacht“**. Danach stehst du auf dem Weg (derselbe Spielstand). Läufst du an den Rand,
+    kommst du auf die nächste Karte: Weg ↔ Kreuzweg (Weststraße, erst nach der Klassenwahl) und Weg ↔ Waldboden.
+    Den Seilaufzug benutzt du wie eine Figur (antippen oder E / Leertaste).
+  - **Auftrag „Der Weg nach Grünwacht“:** nach Wipfelheim reisen, mit Ysolde reden (50 Gold, 100 Erfahrung).
+    Ysolde fragt je nach Klasse anders weiter: Bogenschützen nach Fenn, Zähmer nach Esche, alle anderen hören,
+    dass ihr Lehrmeister weit weg ist (Entscheidung 21.10.: alle Klassen dürfen nach Grünwacht).
+    Wer die erste Stunde schon vorher beendet hatte, bekommt den Auftrag nachträglich bei Ye am Tor (gelbes „!“).
+  - **Zusammen spielen:** Der Server kennt alle Karten. Man sieht nur Mitspieler auf derselben Karte, gemeinsame Szenen
+    gibt es nur auf derselben Karte, die Gruppe bleibt über Kartenwechsel bestehen. Beim Beitreten kommt man dort an,
+    wo man zuletzt war.
+  - **Platzhalter:** alle Texte von Ysolde, Fenn, Tilda, Esche, Marv und Ye (neu: „noch da“, „Westen“) in `data/dialoge.json`.
+    Musik: vorerst die Stadt-Musik (eigene Grünwacht-Musik kommt in Schritt 11).
+  - **Tests:** `tests/gruenwacht_test.gd` (Karten erreichbar, ganze Reise bis Ysolde, alter Spielstand, Klassen,
+    Karten getrennt, Speichern) und `tests/netz_gruenwacht_test.gd` (Server und Mitspieler: Weg → Waldboden →
+    Wipfelheim → neu betreten). Alle bisherigen Tests laufen unverändert. Bildschirmfotos: `tests/gruenwacht_auto.tscn`.
 
 ## Aufgaben Lernprojekt 4 „Zusammen spielen“ (Fahrplan in `ZUSAMMEN_PLAN.md`)
 
@@ -616,6 +651,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spiel startet jetzt mit einem Menü.
 
+**Neu: Grünwacht Schritt 1 – die Reise nach Wipfelheim** (Kreuzweg-Demo, mit deinem Spielstand vom Ende der ersten Stunde)
+1. Hast du die erste Stunde schon beendet: Steht über Ye am Stadttor ein gelbes „!“? Er gibt dir den Auftrag
+   „Der Weg nach Grünwacht“. (Neu gespielt: Nach „Leb wohl, Ye.“ kommt „Ende von Akt 1“ → „Weiter nach Grünwacht“.)
+2. Lauf die Weststraße hinaus bis an den Rand: Kommst du auf den Weg nach Grünwacht? Und zurück nach Kreuzweg?
+3. Auf dem Weg nach Westen in den Wald, dort zum Seilaufzug auf der Lichtung: Bringt er dich nach Wipfelheim hinauf?
+4. In Wipfelheim: Gefallen dir die Plattformen, Brücken und Plätze? Findest du Ysolde, Fenn, Tilda, Esche und den
+   Koch-Stand? Spricht Marv dich an der Brücke an?
+5. Rede mit Ysolde: Ist der Auftrag erledigt, und fragt sie passend zu deiner Klasse weiter?
+
 **Neu: Figuren und Nebenaufträge aus Sitzung 21** (Kreuzweg-Demo → „Neu beginnen“)
 1. Nach der Anmeldung bei Lene: Haben Wirtin Hanne (vor dem Gasthaus Wegrast an der Weststraße) und Pip (Marktplatz)
    ein **blaues „!“**? Ist es gut vom gelben „!“ der Geschichte zu unterscheiden?
@@ -805,10 +849,14 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Dialoge der Hauptfiguren: Marco schreibt sie; Platzhalter stehen in `data/dialoge.json`.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).
 - Lernprojekt 4 „Zusammen spielen“ ist gebaut: deine Rückmeldungen aus dem Test mit Freunden einarbeiten.
-- Lernprojekt 5 „Grünwacht“: Plan steht (`GRUENWACHT_PLAN.md`). Entscheidungen vom 21.10. sind drin, als Nächstes Schritt 1.
+- Lernprojekt 5 „Grünwacht“: Schritt 1 (Reise nach Wipfelheim) ist eingebaut. Als Nächstes Schritt 2: die eigene
+  Klasse in der Welt (Stufe 10–15 auf dem Weg, 15–20 in Grünwacht) und Monster auf dem Weg und dem Waldboden.
 - Hinten angestellt: Schnellsätze und Emotes (Vorschläge im Ideen-Parkplatz von design.md).
 
 ## Offene Fragen an Marco
+
+- **Grünwacht Schritt 1:** Passen die Plätze in Wipfelheim (Ysolde in der Mitte, Fenn im Norden, Tilda im Osten,
+  Esche im Süden, Koch-Stand an der Ankunft)? Ist Marv, der dir nach Wipfelheim nachgereist ist, lustig oder zu viel?
 
 
 - **Zusammen spielen:** Die vier Entscheidungen sind getroffen (20.10.). Auch geklärt: Bei Gleichstand entscheidet der

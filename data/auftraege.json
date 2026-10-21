@@ -189,5 +189,17 @@
 		],
 		"abgeben_bei": "pip",
 		"belohnung": {"erfahrung": 30}
+	},
+	"nach_gruenwacht": {
+		"titel": "Der Weg nach Grünwacht",
+		"start_bei": "ye_tor",
+		"voraussetzung": "abreise",
+		"beschreibung": "Deine Reise beginnt in Grünwacht, der ersten Region. Folge der Weststraße aus Kreuzweg hinaus, durch den Wald bis zum Seilaufzug. Oben in den Baumkronen liegt Wipfelheim, dort wacht Ysolde Dornfeder.",
+		"ziele": [
+			{"art": "gemerkt", "merken": "besucht:wipfelheim", "text": "Über den Weg und den Seilaufzug im Wald nach Wipfelheim"},
+			{"art": "reden", "npc": "ysolde", "bei": "ysolde"}
+		],
+		"abgeben_bei": "ysolde",
+		"belohnung": {"gold": 50, "erfahrung": 100}
 	}
 }

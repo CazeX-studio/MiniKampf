@@ -1,6 +1,8 @@
 class_name WorldState
 extends RefCounted
-## Spiellogik der Stadt Kreuzweg – ohne Grafik.
+## Spiellogik der Welt – ohne Grafik. Die Welt besteht aus mehreren Karten (Kreuzweg, der Weg nach Grünwacht,
+## Waldboden, Wipfelheim …); jeder Spieler steht auf genau einer (PlayerState.map). Kreuzweg wird hier gebaut,
+## die anderen Karten kommen aus data/karten.json (siehe WorldMap).
 ## Alles, was Spieler tun, kommt als Befehl (Dictionary) mit Spieler-Kennung herein:
 ##   {type = "move", cell = Vector2i}    laufen
 ##   {type = "talk", npc = "ye"}         zu einem NPC laufen und mit ihm reden
@@ -13,6 +15,7 @@ extends RefCounted
 ##   {type = "dialog_choose", index = 0} im Gespräch eine Antwort wählen
 ##   {type = "szene_verlassen"}          eine gemeinsame Szene verlassen (Zusammenspielen)
 ##   {type = "kaufen", gegenstand = "…"} / {type = "verkaufen", gegenstand = "…"} / {type = "laden_zu"}  im geöffneten Laden
+## Auf eine andere Karte kommt man über Ausgänge am Rand (hineinlaufen) oder über Orte mit der Aktion "reisen" (Seilaufzug).
 ## So kann später ein Server dieselben Befehle von vielen Spielern annehmen;
 ## die Anzeige (kreuzweg.gd) liest nur den Zustand und schickt Befehle.
 ## NPCs, Sammelpunkte, Dialoge und Aufträge kommen aus den Datendateien in res://data.
@@ -30,7 +33,12 @@ signal effect_requested(player_id: String, effect: String)
 ## Wechsel zu einem anderen Bildschirm (z. B. "klassenwahl", "abspann"). Nur Anzeige.
 signal scene_requested(player_id: String, scene: String)
 
-enum Tile { GRASS, ROAD, PLAZA, OVERGROWN }
+## Böden. Kreuzweg: Wiese, Straße, Platz, Gestrüpp. Grünwacht: Waldboden, Planken (Plattformen in den Baumkronen),
+## Hängebrücke und Laub (die Baumkronen unter den Plattformen, dort kann man nicht laufen).
+enum Tile { GRASS, ROAD, PLAZA, OVERGROWN, FOREST, PLANKS, BRIDGE, CANOPY }
+
+## Kennung der Stadt Kreuzweg (dort beginnt das Spiel)
+const KREUZWEG := "kreuzweg"
 
 const SIZE := Vector2i(44, 44)
 const CENTER := Vector2i(22, 22)
@@ -41,6 +49,9 @@ const WALK_SPEED := 5.5
 ## So nah muss man an etwas stehen, um es zu benutzen (in Feldern)
 const USE_RANGE := 1.6
 
+## Alle Karten: Kennung -> WorldMap
+var maps := {}
+## Kreuzweg (tiles, blocked, buildings und props zeigen auf dieselben Daten wie maps["kreuzweg"])
 ## tiles[y][x]
 var tiles: Array = []
 var blocked := {}
@@ -49,16 +60,14 @@ var buildings: Array[Dictionary] = []
 ## Kleinkram: {kind = "tree" / "bush" / "lantern" / "well" / "flowers" / "stand", cell} (Stand: auch color, text)
 var props: Array[Dictionary] = []
 var players := {}
-## NPCs: id -> {name, cell, look, tint, dialog}
+## NPCs aller Karten: id -> {name, cell, map, look, tint, dialog}
 var npcs := {}
-## Sammelpunkte: {item, cell}. Jeder Spieler kann jeden Punkt einmal einsammeln.
+## Sammelpunkte: {item, cell, map}. Jeder Spieler kann jeden Punkt einmal einsammeln.
 var pickups: Array[Dictionary] = []
-## Orte, die man benutzen kann (Kater, Laternenhaken …), nur solange ihre Bedingung stimmt
+## Orte, die man benutzen kann (Kater, Laternenhaken, Seilaufzug …), nur solange ihre Bedingung stimmt
 var places: Array[Dictionary] = []
-## Schmuck in der Stadt, der nur zu bestimmten Zeiten da ist (Festlaternen, Krater): {art, cell, cond}
+## Schmuck, der nur zu bestimmten Zeiten da ist (Festlaternen, Krater, Wegweiser): {art, cell, map, cond, text}
 var decorations: Array[Dictionary] = []
-
-var _astar := AStarGrid2D.new()
 
 ## --- Gemeinsame Szenen (Zusammenspielen, Lernprojekt 4 Schritt 5) ---
 ## Spricht ein Gruppenmitglied eine Figur an, erleben Mitglieder in der Nähe das Gespräch mit. Bei Antworten stimmen alle
@@ -86,27 +95,46 @@ var _effect_time := {}
 
 
 func _init() -> void:
+	var town_map := WorldMap.new(KREUZWEG, SIZE, Tile.GRASS)
+	town_map.title = "Kreuzweg"
+	tiles = town_map.tiles
+	blocked = town_map.blocked
+	buildings = town_map.buildings
+	props = town_map.props
+	maps[KREUZWEG] = town_map
 	_build_map()
 	var town := GameData.get_file("kreuzweg")
-	var npc_data: Dictionary = town.get("npcs", {})
+	town_map.start = start_cell()
+	for d: Dictionary in town.get("ausgaenge", []):
+		town_map.add_exit(d)
+	town_map.finish()
+	_add_things(KREUZWEG, town)
+	var all_maps := GameData.get_file("karten")
+	var legend: Dictionary = all_maps.get("zeichen", {})
+	for id: String in all_maps:
+		if all_maps[id] is Dictionary and all_maps[id].has("raster"):
+			maps[id] = WorldMap.from_data(id, all_maps[id], legend)
+			_add_things(id, all_maps[id])
+
+
+## NPCs, Sammelpunkte, Orte und Schmuck einer Karte aus ihren Daten.
+func _add_things(map_id: String, data: Dictionary) -> void:
+	var m: WorldMap = maps[map_id]
+	var npc_data: Dictionary = data.get("npcs", {})
 	for id: String in npc_data:
 		var d: Dictionary = npc_data[id]
 		var cell := Vector2i(int(d.feld[0]), int(d.feld[1]))
-		npcs[id] = {name = d.name, cell = cell, look = d.aussehen, tint = Color(d.get("farbe", "ffffff")), dialog = d.get("dialog", id),
-				cond = d.get("wenn", {}), approach = d.get("anspringen", {})}
-		blocked[cell] = true
-	for d: Dictionary in town.get("deko", []):
-		decorations.append({art = d.art, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), cond = d.get("wenn", {})})
-	for d: Dictionary in town.get("sammelpunkte", []):
-		pickups.append({item = d.gegenstand, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), cond = d.get("wenn", {})})
-	for d: Dictionary in town.get("orte", []):
-		places.append({art = d.art, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), cond = d.get("wenn", {}),
+		npcs[id] = {name = d.name, cell = cell, map = map_id, look = d.aussehen, tint = Color(d.get("farbe", "ffffff")),
+				dialog = d.get("dialog", id), cond = d.get("wenn", {}), approach = d.get("anspringen", {})}
+		m.block(cell)
+	for d: Dictionary in data.get("deko", []):
+		decorations.append({art = d.art, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), map = map_id, cond = d.get("wenn", {}),
+				text = d.get("text", "")})
+	for d: Dictionary in data.get("sammelpunkte", []):
+		pickups.append({item = d.gegenstand, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), map = map_id, cond = d.get("wenn", {})})
+	for d: Dictionary in data.get("orte", []):
+		places.append({art = d.art, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), map = map_id, cond = d.get("wenn", {}),
 				dialog = d.get("dialog", ""), actions = d.get("aktionen", []), text = d.get("meldung", "")})
-	_astar.region = Rect2i(Vector2i.ZERO, SIZE)
-	_astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
-	_astar.update()
-	for cell: Vector2i in blocked:
-		_astar.set_point_solid(cell)
 
 
 # --- Karte ----------------------------------------------------------------------
@@ -114,11 +142,6 @@ func _init() -> void:
 ## Kreuzweg: Marktplatz mit der Statue der Fünf in der Mitte, sechs Straßen nach draußen.
 ## Die sechste (nach Südosten) ist zugewachsen und endet in Gestrüpp.
 func _build_map() -> void:
-	for y in SIZE.y:
-		var row: Array = []
-		for x in SIZE.x:
-			row.append(Tile.GRASS)
-		tiles.append(row)
 	var town := GameData.get_file("kreuzweg")
 
 	# Marktplatz (rund)
@@ -209,22 +232,81 @@ func _set_tile(cell: Vector2i, tile: Tile) -> void:
 
 
 func _building(p_name: String, rect: Rect2i, height: float, color: Color, art := "haus", roof := Color("6a3a2a")) -> void:
-	buildings.append({name = p_name, rect = rect, height = height, color = color, art = art, roof = roof})
-	for y in range(rect.position.y, rect.end.y):
-		for x in range(rect.position.x, rect.end.x):
-			blocked[Vector2i(x, y)] = true
+	maps[KREUZWEG].add_building(p_name, rect, height, color, art, roof)
 
 
-func in_bounds(cell: Vector2i) -> bool:
-	return cell.x >= 0 and cell.y >= 0 and cell.x < SIZE.x and cell.y < SIZE.y
+## Die Karte mit dieser Kennung (unbekannte Kennung: Kreuzweg).
+func get_map(map_id: String) -> WorldMap:
+	return maps.get(map_id, maps[KREUZWEG])
 
 
-func tile_at(cell: Vector2i) -> int:
-	return tiles[cell.y][cell.x] if in_bounds(cell) else -1
+func in_bounds(cell: Vector2i, map_id := KREUZWEG) -> bool:
+	return get_map(map_id).in_bounds(cell)
 
 
-func is_walkable(cell: Vector2i) -> bool:
-	return in_bounds(cell) and not blocked.has(cell)
+func tile_at(cell: Vector2i, map_id := KREUZWEG) -> int:
+	return get_map(map_id).tile_at(cell)
+
+
+func is_walkable(cell: Vector2i, map_id := KREUZWEG) -> bool:
+	return get_map(map_id).is_walkable(cell)
+
+
+## Nach dem Laden eines Spielstands: Gibt es die Karte nicht (mehr) oder ist das Feld belegt, geht es an den Start.
+func fix_position(p: PlayerState) -> void:
+	if not maps.has(p.map):
+		p.map = KREUZWEG
+		p.cell = start_cell()
+	if not is_walkable(p.cell, p.map):
+		p.cell = get_map(p.map).start
+	p.pos = Vector2(p.cell)
+
+
+## Auf welcher Karte ein Ziel ("npc:ye", "punkt:0", "ort:0") liegt ("" = unbekannt).
+func target_map(target: String) -> String:
+	var parts := target.split(":")
+	if parts.size() != 2:
+		return ""
+	if parts[0] == "npc" and npcs.has(parts[1]):
+		return npcs[parts[1]].map
+	if parts[0] == "punkt" and int(parts[1]) < pickups.size():
+		return pickups[int(parts[1])].map
+	if parts[0] == "ort" and int(parts[1]) < places.size():
+		return places[int(parts[1])].map
+	return ""
+
+
+## Bringt einen Spieler auf eine andere Karte (Ausgang am Rand, Seilaufzug). Ein laufendes Gespräch oder ein
+## offener Laden endet. Steht das Zielfeld nicht frei, kommt er am Start der Karte an.
+func change_map(p: PlayerState, map_id: String, cell: Vector2i) -> void:
+	if not maps.has(map_id):
+		return
+	_leave_scene(p)
+	p.dialog = {}
+	p.shop = ""
+	p.path.clear()
+	p.use_target = ""
+	var m: WorldMap = maps[map_id]
+	if not m.is_walkable(cell):
+		cell = m.start
+	p.map = map_id
+	p.cell = cell
+	p.pos = Vector2(cell)
+	_say(p, GameData.text("karte_betreten", [m.title]))
+	# Für Aufträge wie „Reise nach Wipfelheim“
+	p.progress.flags["besucht:" + map_id] = true
+	_update_quests(p)
+	progress_changed.emit(p.id)
+
+
+## Steht der Spieler in einem Ausgang seiner Karte, kommt er auf die nächste.
+func _check_exits(p: PlayerState) -> void:
+	if p.in_dialog():
+		return
+	for e: Dictionary in get_map(p.map).exits:
+		if e.rect.has_point(p.cell) and check(p, e.cond):
+			change_map(p, e.karte, e.feld)
+			return
 
 
 # --- Spieler --------------------------------------------------------------------
@@ -250,7 +332,7 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 		"move":
 			var target: Vector2i = cmd.cell
 			p.shop = ""
-			if is_walkable(target) and not p.in_dialog():
+			if is_walkable(target, p.map) and not p.in_dialog():
 				p.use_target = ""
 				_walk_to(p, target)
 		"talk":
@@ -325,6 +407,8 @@ func target_cell(target: String) -> Vector2i:
 
 ## Kann dieser Spieler das Ziel benutzen? (Ein schon eingesammelter Punkt oder ein gerade abwesender NPC nicht.)
 func can_use(p: PlayerState, target: String) -> bool:
+	if target_map(target) != p.map:
+		return false
 	if target.begins_with("punkt:"):
 		return target_cell(target) != Vector2i(-1, -1) and not p.progress.flags.has("gesammelt:" + target) \
 				and check(p, pickups[int(target.substr(6))].cond)
@@ -335,9 +419,9 @@ func can_use(p: PlayerState, target: String) -> bool:
 	return target_cell(target) != Vector2i(-1, -1)
 
 
-## Ist der NPC für diesen Spieler gerade da? (z. B. Ye erst in der Gilde, später am Stadttor)
+## Ist der NPC für diesen Spieler gerade da? (z. B. Ye erst in der Gilde, später am Stadttor; nur auf der eigenen Karte)
 func npc_visible(p: PlayerState, npc_id: String) -> bool:
-	return npcs.has(npc_id) and check(p, npcs[npc_id].cond)
+	return npcs.has(npc_id) and npcs[npc_id].map == p.map and check(p, npcs[npc_id].cond)
 
 
 ## Das Nächste, das der Spieler direkt nebenan benutzen kann ("" = nichts).
@@ -366,7 +450,7 @@ func _go_use(p: PlayerState, target: String) -> void:
 	if p.in_dialog() or not can_use(p, target):
 		return
 	var cell := target_cell(target)
-	var spot := cell if not target.begins_with("npc:") and is_walkable(cell) else _free_neighbor(cell, p.cell)
+	var spot := cell if not target.begins_with("npc:") and is_walkable(cell, p.map) else _free_neighbor(cell, p.cell, p.map)
 	if spot == Vector2i(-1, -1):
 		return
 	p.use_target = target
@@ -376,7 +460,7 @@ func _go_use(p: PlayerState, target: String) -> void:
 func _walk_to(p: PlayerState, target: Vector2i) -> void:
 	# Läuft der Spieler gerade, geht es vom nächsten Feld aus weiter
 	var start := p.path[0] if p.is_moving() else p.cell
-	var route := _astar.get_id_path(start, target)
+	var route := get_map(p.map).astar.get_id_path(start, target)
 	var path: Array[Vector2i] = []
 	if p.is_moving():
 		path.append(start)
@@ -389,12 +473,12 @@ func _walk_to(p: PlayerState, target: Vector2i) -> void:
 
 
 ## Freies Nachbarfeld, das am nächsten am Spieler liegt.
-func _free_neighbor(npc_cell: Vector2i, from: Vector2i) -> Vector2i:
+func _free_neighbor(npc_cell: Vector2i, from: Vector2i, map_id := KREUZWEG) -> Vector2i:
 	var best := Vector2i(-1, -1)
 	for dir: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1),
 			Vector2i(1, 1), Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 1)]:
 		var cell := npc_cell + dir
-		if is_walkable(cell) and (best == Vector2i(-1, -1) or (cell - from).length() < (best - from).length()):
+		if is_walkable(cell, map_id) and (best == Vector2i(-1, -1) or (cell - from).length() < (best - from).length()):
 			best = cell
 	return best
 
@@ -407,7 +491,7 @@ func _steer(p: PlayerState, delta: float) -> void:
 			continue
 		var next := p.pos + attempt
 		var cell := Vector2i(next.round())
-		if is_walkable(cell):
+		if is_walkable(cell, p.map):
 			p.pos = next
 			p.cell = cell
 			break
@@ -422,6 +506,7 @@ func tick(delta: float) -> void:
 	_tick_scenes(delta)
 	for p: PlayerState in players.values():
 		move_player(p, delta)
+		_check_exits(p)
 		_check_approach(p)
 		if not p.is_moving() and p.use_target != "":
 			var target := p.use_target
@@ -580,7 +665,8 @@ func _effect(p: PlayerState, effect: String) -> void:
 		return
 	_effect_time[effect] = _time
 	for id: String in players:
-		effect_requested.emit(id, effect)
+		if players[id].map == p.map:
+			effect_requested.emit(id, effect)
 
 
 ## Ein Gruppenkampf beginnt (Netz): Danach warten alle Beteiligten aufeinander, bevor sie jemand anspricht.
@@ -622,7 +708,7 @@ func _start_talk(p: PlayerState, npc_id: String, approach_flag := "") -> void:
 	var partners: Array[PlayerState] = []
 	for id: String in group_members.call(p.id):
 		var other: PlayerState = players.get(id)
-		if other != null and other != p and not other.in_dialog() and other.shop == "" \
+		if other != null and other != p and not other.in_dialog() and other.shop == "" and other.map == p.map \
 				and other.pos.distance_to(p.pos) <= SCENE_RANGE:
 			partners.append(other)
 	if partners.is_empty() or entry == "":
@@ -882,7 +968,19 @@ func check(p: PlayerState, cond: Dictionary) -> bool:
 		return false
 	if cond.has("stufe_ab") and p.progress.level < int(cond.stufe_ab):
 		return false
+	# {"region": "Grünwacht"}: Die gewählte Klasse gehört in diese Region ({"nicht_region": …} = gerade nicht)
+	if cond.has("region") and _class_region(p) != cond.region:
+		return false
+	if cond.has("nicht_region") and _class_region(p) == cond.nicht_region:
+		return false
+	# {"klasse": "archer"}: genau diese Klasse gewählt
+	if cond.has("klasse") and str(p.progress.flags.get("klasse", "")) != cond.klasse:
+		return false
 	return true
+
+
+func _class_region(p: PlayerState) -> String:
+	return str(Sandbox.CLASSES.get(str(p.progress.flags.get("klasse", "")), {}).get("region", ""))
 
 
 func run_actions(p: PlayerState, actions: Array) -> void:
@@ -913,6 +1011,10 @@ func run_actions(p: PlayerState, actions: Array) -> void:
 			_unlock(p, action.erfolg)
 		if action.has("kampf"):
 			battle_requested.emit(p.id, action.kampf)
+		if action.has("reisen"):
+			# {"reisen": "wipfelheim", "feld": [x, y]}: auf eine andere Karte (z. B. mit dem Seilaufzug)
+			var to: Array = action.get("feld", [-1, -1])
+			change_map(p, action.reisen, Vector2i(int(to[0]), int(to[1])))
 	_update_quests(p)
 	progress_changed.emit(p.id)
 
@@ -1073,7 +1175,7 @@ func _use_item(p: PlayerState, item_id: String) -> void:
 	if use.is_empty() or p.in_dialog() or p.progress.item_count(item_id) <= 0:
 		return
 	var spot := Vector2(float(use.feld[0]), float(use.feld[1]))
-	if (spot - p.pos).length() > float(use.get("radius", 2.0)):
+	if use.get("karte", KREUZWEG) != p.map or (spot - p.pos).length() > float(use.get("radius", 2.0)):
 		_say(p, use.get("sonst", GameData.text("benutzen_nicht_hier", [GameData.item_name(item_id)])))
 		return
 	p.path.clear()
