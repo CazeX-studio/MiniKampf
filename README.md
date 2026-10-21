@@ -69,6 +69,9 @@ Kobalt, Ysoldes Geschichte, die Pilzhöhle als Dungeon und Kreuzweg-Karten.
   aus Kreuzweg führt auf den **Weg nach Grünwacht**, weiter in den **Waldboden** und mit dem **Seilaufzug** hinauf
   nach **Wipfelheim** (Plattformen in den Baumkronen mit Hängebrücken, Ysolde, Fenn, Tilda, Esche, Marv, Koch-Stand).
   Auftrag „Der Weg nach Grünwacht“. Die Karten stehen in `data/karten.json` (Anleitung in `data/LIESMICH.md`).
+- **Schritt 2 (eingebaut):** Monster auf dem Weg (Stufe 10–15) und dem Waldboden (15–20) mit Name und Stufe
+  (Farbe = Gefahr). Hineinlaufen oder antippen startet den Kampf **mit deiner Klasse** im Wald, Gruppenmitglieder
+  in der Nähe kämpfen mit. Stufen bis 20, „Werte (C)“ zeigt die Werte deiner Klasse.
 
 ## Zusammen spielen (Lernprojekt 4, Fahrplan in `ZUSAMMEN_PLAN.md`)
 

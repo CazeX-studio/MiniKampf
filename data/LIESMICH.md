@@ -123,3 +123,10 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
 - **Ziel `{"art": "gemerkt", "merken": "besucht:wipfelheim"}`** ist erfüllt, sobald man die Karte einmal betreten hat.
 - **Bedingungen nach Klasse:** `{"klasse": "archer"}` (genau diese Klasse), `{"region": "Grünwacht"}` (Klasse gehört in
   diese Region), `{"nicht_region": "Grünwacht"}` (gehört nicht dorthin). Kennungen der Klassen: siehe `klassen.json` → `reihenfolge`.
+- **`monster`** (seit Grünwacht Schritt 2): Monster in der Wildnis, z. B.
+  `{"feld": [33, 8], "gegner": ["windfalke", "windfalke"], "stufe": 11}`. Man sieht das erste Monster der Gruppe
+  mit Name und Stufe auf der Karte; läuft man hinein oder tippt es an, beginnt der Kampf (mit der eigenen Klasse,
+  Gruppenmitglieder in der Nähe kämpfen mit). Jeder Sieg bringt Erfahrung (12 × Stufe je Monster) und Gold (2 × Stufe),
+  danach ist das Monster für einen eine Minute weg. Gegner-Kennungen stehen in `scripts/kampf/sandbox.gd` (ENEMIES).
+  `kampf_hintergrund` der Karte: Bild im Kampf (`wald`, `wiese`, `gewoelbe` …).
+- **Stufen** (`stufen.json`): jetzt bis Stufe 20 (Kreuzweg 1–10, Weg nach Grünwacht 10–15, Grünwacht 15–20).

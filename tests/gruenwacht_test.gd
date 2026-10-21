@@ -13,6 +13,7 @@ func _initialize() -> void:
 	_test_classes()
 	_test_separate_maps()
 	_test_save()
+	_test_wild()
 	print("Grünwacht: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)
 
@@ -223,6 +224,79 @@ func _test_save() -> void:
 	_check(q.map == "wipfelheim" and q.cell == world.maps.wipfelheim.start, "Belegtes Feld im Spielstand: an den Start der Karte")
 	SaveGame.delete()
 	SaveGame.path = SaveGame.DEFAULT_PATH
+
+
+## Schritt 2: Monster auf dem Weg und dem Waldboden, Kampf mit der eigenen Klasse, Erfahrung bis Stufe 20.
+func _test_wild() -> void:
+	_check(GameData.max_level() == 20, "Höchststufe der Demo ist 20")
+	var levels: Array[int] = []
+	for m: Dictionary in GameData.wild_monsters():
+		if m.karte == "weg_gruenwacht":
+			_check(m.stufe >= 10 and m.stufe <= 15, "Monster auf dem Weg: Stufe 10–15 (%d)" % m.stufe)
+		elif m.karte == "waldboden":
+			_check(m.stufe >= 15 and m.stufe <= 20, "Monster im Wald: Stufe 15–20 (%d)" % m.stufe)
+		levels.append(m.stufe)
+	_check(levels.min() == 10 and levels.max() == 20, "Monster von Stufe 10 bis 20")
+
+	# Kampf mit der eigenen Klasse, Stärke nach Stufe
+	_check(BattleRequest.prepare("wild:0", 12, 0, "archer"), "Kampf gegen ein Monster lässt sich vorbereiten")
+	var hero: Dictionary = BattleRequest.setup.helden[0]
+	_check(hero.klasse == "archer" and is_equal_approx(float(hero.macht), BattleRequest.hero_power(12)), "Man kämpft als Bogenschütze mit Stärke nach Stufe")
+	_check(BattleRequest.setup.gegner_stufe == GameData.wild_monsters()[0].stufe and BattleRequest.setup.hintergrund == "wald", "Monster haben ihre Stufe, Hintergrund Wald")
+	BattleRequest.prepare("wild:0", 12, 0, "")
+	_check(BattleRequest.setup.helden[0].klasse == "novize", "Ohne Klasse kämpft man als Novize")
+	BattleRequest.prepare("probe:archer", 5, 0, "tamer")
+	_check(BattleRequest.setup.helden[0].klasse == "archer" and not BattleRequest.setup.helden[0].has("macht"), "Probestunden bleiben wie bisher")
+	var group := BattleRequest.build_group("wild:1", [{name = "A", stufe = 11, klasse = "tank"}, {name = "B", stufe = 12, klasse = "singer"}])
+	_check(group.helden[0].klasse == "tank" and group.helden[1].klasse == "singer", "Gruppenkampf: jeder mit seiner Klasse")
+	BattleRequest.kampf_id = ""
+
+	# In der Welt: hineinlaufen startet den Kampf
+	var world := WorldState.new()
+	var battles: Array[String] = []
+	world.battle_requested.connect(func(_id: String, kampf: String) -> void: battles.append(kampf))
+	var p := world.add_player("a", "Test", "elf_m", Vector2i(37, 6))
+	p.progress.flags["klasse"] = "archer"
+	p.progress.level = 10
+	p.progress.xp = 2700
+	world.change_map(p, "weg_gruenwacht", Vector2i(37, 6))
+	var index := -1
+	for i in world.monsters.size():
+		if world.monsters[i].karte == "weg_gruenwacht" and index < 0:
+			index = i
+	var target := "monster:%d" % index
+	_check(world.can_use(p, target), "Monster ist zu sehen")
+	world.apply_command("a", {type = "use", target = target})
+	_tick(world, 6.0)
+	_check(battles == ["wild:%d" % index], "Antippen: hinlaufen, der Kampf beginnt (genau einmal)")
+	var gold := p.progress.gold
+	world.apply_command("a", {type = "kampf_ergebnis", kampf = "wild:%d" % index, gewonnen = true})
+	_check(p.progress.xp > 2700 and p.progress.gold > gold, "Sieg: Erfahrung und Gold")
+	_check(not world.can_use(p, target), "Besiegtes Monster ist eine Weile weg")
+	_tick(world, 2.0)
+	_check(battles.size() == 1, "Kein neuer Kampf mit dem besiegten Monster")
+	p.progress.flags["besiegt:monster:%d" % index] = Time.get_unix_time_from_system() - WorldState.MONSTER_RESPAWN - 1.0
+	_check(world.can_use(p, target), "Nach einer Weile ist es wieder da")
+	world.apply_command("a", {type = "kampf_ergebnis", kampf = "wild:%d" % index, gewonnen = false})
+	_check(p.cell == world.maps.weg_gruenwacht.start, "Niederlage: Man wacht am Start der Karte auf")
+
+	# Erfahrung reicht bis Stufe 20
+	p.progress.add_xp(20000)
+	_check(p.progress.level == 20, "Stufe 20 ist erreichbar")
+
+	# Gruppe: Wer in der Nähe steht, kämpft mit
+	var w2 := WorldState.new()
+	var group_battles: Array = []
+	w2.group_battle_requested.connect(func(ids: Array, kampf: String) -> void: group_battles.append([ids, kampf]))
+	var a := w2.add_player("a", "A", "elf_m", Vector2i(1, 1))
+	var b := w2.add_player("b", "B", "elf_f", Vector2i(1, 1))
+	w2.group_members = func(_id: String) -> Array: return ["a", "b"]
+	var m: Dictionary = w2.monsters[index]
+	w2.change_map(a, "weg_gruenwacht", m.feld + Vector2i(2, 0))
+	w2.change_map(b, "weg_gruenwacht", m.feld + Vector2i(3, 0))
+	w2.apply_command("a", {type = "use", target = target})
+	_tick(w2, 3.0)
+	_check(group_battles.size() == 1 and group_battles[0][0].size() == 2, "Gruppe in der Nähe kämpft gemeinsam gegen das Monster")
 
 
 func _place_target(world: WorldState, map_id: String, art: String) -> String:

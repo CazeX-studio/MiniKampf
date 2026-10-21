@@ -2,7 +2,8 @@ class_name Backdrop
 extends Control
 ## Hintergrund des Kampfbildschirms: ein dunkles Gewölbe aus den 0x72-Kacheln
 ## mit Fackeln, Lava-Brunnen, Lichtflecken und schwebendem Staub (Octopath-Stimmung).
-## Andere Stile: "wiese" (vor dem Stadttor von Kreuzweg, Tag), "wiese_nacht" und "marktplatz_nacht" (Sternenfall).
+## Andere Stile: "wiese" (vor dem Stadttor von Kreuzweg, Tag), "wiese_nacht" und "marktplatz_nacht" (Sternenfall),
+## "wald" (Grünwacht: Weg und Waldboden).
 
 const TILE_PATH := "res://assets/0x72_dungeontileset_ii/%s.png"
 ## Kacheln sind 16 Pixel groß und werden 4-fach vergrößert.
@@ -26,7 +27,7 @@ var _wall_pick: Array[String] = []
 var _time := 0.0
 var _lights: Node2D
 ## "gewoelbe", "wiese" oder "wiese_nacht" (vor dem Einhängen setzen)
-var style := "gewoelbe"  # oder "wiese", "wiese_nacht", "marktplatz_nacht"
+var style := "gewoelbe"  # oder "wiese", "wiese_nacht", "marktplatz_nacht", "wald"
 var _stars: Array[Vector2] = []
 
 
@@ -77,6 +78,9 @@ func _tile(name: String, col: int, y: float, tint := AMBIENT) -> void:
 
 
 func _draw() -> void:
+	if style == "wald":
+		_draw_forest()
+		return
 	if style != "gewoelbe":
 		_draw_meadow(style != "wiese", style == "marktplatz_nacht")
 		return
@@ -136,6 +140,9 @@ func _draw_torch(base: Vector2, seed_value: int) -> void:
 
 ## Lichtflecken (werden addiert und hellen die Szene auf).
 func _draw_lights() -> void:
+	if style == "wald":
+		_draw_forest_lights()
+		return
 	if style != "gewoelbe":
 		_draw_meadow_lights(style != "wiese")
 		return
@@ -233,6 +240,51 @@ func _draw_plaza() -> void:
 		draw_rect(Rect2(x - 8, 104, 16, 18), lantern_colors[i])
 
 
+## Wald von Grünwacht: Blätterdach, Stämme in mehreren Reihen, Waldboden mit Wurzeln und Pilzen.
+func _draw_forest() -> void:
+	# Durch das Blätterdach scheint etwas grünes Licht
+	for i in 12:
+		var t := float(i) / 11.0
+		draw_rect(Rect2(0, i * 15.0, 1280, 16), Color("16301c").lerp(Color("3c5a2c"), t))
+	# Stämme weit hinten (dunkel, schmal), dann näher (heller, breiter)
+	for layer in 3:
+		var shade := Color("1c2a18").lerp(Color("3a2a1c"), layer / 2.0)
+		var width := 28.0 + layer * 22.0
+		for i in 7:
+			var x := float((i * 211 + layer * 97) % 1380) - 50.0
+			draw_rect(Rect2(x, 0, width, 186 + layer * 6.0), shade)
+			draw_rect(Rect2(x, 0, width * 0.3, 186 + layer * 6.0), shade.darkened(0.25))
+	# Blätterdach oben
+	for i in 26:
+		var x := float(i * 53 % 1300)
+		draw_circle(Vector2(x, float((i * 37) % 40)), 46.0 + float(i % 3) * 10.0, Color("1d3a1c") if i % 2 == 0 else Color("24461f"))
+	# Waldboden: Streifen, weiter vorne heller
+	for row in 22:
+		var t := float(row) / 21.0
+		draw_rect(Rect2(0, 186 + row * 16.0, 1280, 17), Color("23331c").lerp(Color("3a4e28"), t))
+	# Wurzeln, Moos und Pilze (fester Zufall aus _floor_pick)
+	for i in _floor_pick.size():
+		var x := float((i * 97) % 1280)
+		var y := 200.0 + float((i * 53) % 320)
+		if i % 7 == 0:
+			draw_line(Vector2(x, y), Vector2(x + 40, y + 6), Color("4a3422"), 4.0)
+		elif i % 11 == 0:
+			draw_rect(Rect2(x, y - 6, 3, 6), Color("e8dcc0"))
+			draw_circle(Vector2(x + 1, y - 7), 4.0, Color("c84a3a"))
+		else:
+			draw_rect(Rect2(x, y, 4, 6), Color("2f4a24"))
+
+
+## Licht im Wald: Sonnenstrahlen durch das Blätterdach.
+func _draw_forest_lights() -> void:
+	var glow := Fx.glow_texture()
+	for i in 4:
+		var x := 120.0 + i * 330.0
+		var sway := 0.85 + 0.15 * sin(_time * 0.8 + i)
+		_lights.draw_texture_rect(glow, Rect2(Vector2(x - 90, -120), Vector2(180, 560)), false, Color(0.9, 1.0, 0.6, 0.16 * sway))
+	_lights.draw_texture_rect(glow, Rect2(Vector2(640, 150), Vector2(640, 430)), false, Color(0.9, 1.0, 0.7, 0.14))
+
+
 ## Licht auf der Wiese: Sonne bzw. Mond und Glühwürmchen.
 func _draw_meadow_lights(night: bool) -> void:
 	var glow := Fx.glow_texture()
@@ -262,7 +314,7 @@ func _add_dust() -> void:
 	dust.scale_amount_min = 2.0
 	dust.scale_amount_max = 4.0
 	var ramp := Gradient.new()
-	var tone := Color(1, 0.85, 0.6) if style == "gewoelbe" else (Color(0.8, 1.0, 0.5) if style == "wiese_nacht" else Color(1, 1, 0.85))
+	var tone := Color(1, 0.85, 0.6) if style == "gewoelbe" else (Color(0.8, 1.0, 0.5) if style in ["wiese_nacht", "wald"] else Color(1, 1, 0.85))
 	ramp.set_color(0, Color(tone, 0))
 	ramp.add_point(0.3, Color(tone, 0.45))
 	ramp.add_point(0.7, Color(tone, 0.35))

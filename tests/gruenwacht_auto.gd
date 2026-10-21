@@ -1,5 +1,6 @@
 extends "res://scripts/welt/kreuzweg.gd"
-## Bildschirmfotos der Karten von Grünwacht (Weg, Waldboden, Wipfelheim) und des Ausgangs in Kreuzweg.
+## Bildschirmfotos der Karten von Grünwacht (Weg, Waldboden, Wipfelheim), des Ausgangs in Kreuzweg
+## und zum Schluss eines Kampfes im Wald (Bogenschütze gegen Rindenbär und Donnerhirsch).
 ## Aufruf mit Fenster: Godot --path . res://tests/gruenwacht_auto.tscn
 ## Die Bilder landen im Ordner aus der Umgebungsvariable FOTO_ORDNER (sonst user://).
 
@@ -39,14 +40,28 @@ func _process(delta: float) -> void:
 		return
 	_t = 0.0
 	if _index >= 0:
-		var folder := OS.get_environment("FOTO_ORDNER")
-		var path := (folder if folder != "" else ProjectSettings.globalize_path("user://")) + "/grünwacht_%s.png" % SPOTS[_index][0]
+		var path := path_for(SPOTS[_index][0])
 		get_viewport().get_texture().get_image().save_png(path)
 		print("Foto: ", path)
 	_index += 1
 	if _index >= SPOTS.size():
 		SaveGame.delete()
-		get_tree().quit()
+		var helper: Node = load("res://tests/foto_helfer.gd").new()
+		helper.path = path_for("kampf_wald")
+		helper.wait = 4.0
+		get_tree().root.add_child(helper)
+		var wild := GameData.wild_monsters()
+		var index := wild.size() - 2
+		BattleRequest.prepare("wild:%d" % index, wild[index].stufe, 0, "archer")
+		get_tree().change_scene_to_file("res://scenes/kampf.tscn")
+		set_process(false)
 		return
 	var spot: Array = SPOTS[_index]
+	if spot[0] == "weg_mitte":
+		local_player().progress.level = 12
 	state.change_map(local_player(), spot[1], spot[2])
+
+
+static func path_for(name: String) -> String:
+	var folder := OS.get_environment("FOTO_ORDNER")
+	return (folder if folder != "" else ProjectSettings.globalize_path("user://")) + "/grünwacht_%s.png" % name

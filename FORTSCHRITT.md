@@ -21,7 +21,9 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   (alle Klassen dürfen hin, gleicher Spielstand, Weg Stufe 10–15 und Grünwacht 15–20, Sternentafel bei Bingo in Kreuzweg,
   Koch-Stand als Platzhalter, Ruf sichtbar). **Schritt 1 eingebaut (21.10.):** Nach „Leb wohl, Ye.“ geht es weiter
   über den Weg nach Grünwacht, durch den Wald und mit dem Seilaufzug hinauf nach Wipfelheim (siehe „Fertig in
-  Lernprojekt 5“ und „Was du testen kannst“). Als Nächstes Schritt 2 (eigene Klasse in der Welt, Monster).
+  Lernprojekt 5“ und „Was du testen kannst“). **Schritt 2 eingebaut:** Monster auf dem Weg (Stufe 10–15) und dem
+  Waldboden (15–20), Kämpfe mit der eigenen Klasse, Stufen bis 20. Als Nächstes Schritt 3 (Fenns Prüfung).
+  Marco testet am Schluss alles zusammen.
 - **Neu (21.10.): Figuren und Nebenaufträge aus Sitzung 21** in Kreuzweg: Wirtin Hanne mit Gasthaus Wegrast, Vogt Edmar,
   Steinmetz Quill, die Kinder Pip und Lotte, die Wache heißt jetzt Brom. Fünf Nebenaufträge mit **blauem „!“ und „?“**
   (Hauptaufträge bleiben gelb). Siehe „Schritt 21“ unten, Test-Liste unter „Was du testen kannst“.
@@ -36,8 +38,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 |-----|---------|-------|
 | 0 | Plan schreiben | erledigt |
 | – | Entscheidungen: alle Klassen, gleicher Spielstand, Stufen nach Reihenfolge, Sternentafel bei Bingo, Koch-Stand als Platzhalter, Ruf sichtbar | entschieden 21.10. |
-| 1 | Die Reise und Wipfelheim (mehrere Karten, Weg von Kreuzweg, Koch-Stand) | eingebaut, Marco testet |
-| 2 | Die eigene Klasse in der Welt, Monster der Region | offen |
+| 1 | Die Reise und Wipfelheim (mehrere Karten, Weg von Kreuzweg, Koch-Stand) | eingebaut, Marco testet am Schluss |
+| 2 | Die eigene Klasse in der Welt, Monster der Region | eingebaut, Marco testet am Schluss |
 | 3 | Einstieg Bogenschütze: Fenns Prüfung der drei Ziele | offen |
 | 4 | Einstieg Zähmer: Professor Esche und Kobalt | offen |
 | 5 | Geschichte 1 und 2: veränderte Tiere (Jäger oder Zähmer, Ruf), Kael | offen |
@@ -80,6 +82,28 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - **Tests:** `tests/gruenwacht_test.gd` (Karten erreichbar, ganze Reise bis Ysolde, alter Spielstand, Klassen,
     Karten getrennt, Speichern) und `tests/netz_gruenwacht_test.gd` (Server und Mitspieler: Weg → Waldboden →
     Wipfelheim → neu betreten). Alle bisherigen Tests laufen unverändert. Bildschirmfotos: `tests/gruenwacht_auto.tscn`.
+
+- **Schritt 2 – Die eigene Klasse in der Welt** (21.10.):
+  - **Monster in der Wildnis:** Auf dem Weg nach Grünwacht stehen 8 Monstergruppen (Stufe 10 bei Kreuzweg bis 15 am
+    Waldrand), auf dem Waldboden 10 (Stufe 15–20). Die Monster aus design.md: **Rindenbär** (Pflanze, zäh),
+    **Windfalke** (Wind, schnell), **Donnerhirsch** (Blitz, stark), **Steinkröte** (Erde, hart), **Sporenling**
+    (Pflanze, Giftsporen auf alle) und selten **wilde Mooslinge, Glutwelpen und Bachotter**.
+  - Über jedem Monster steht Name und Stufe (bei Gruppen „+1“, „+2“). **Farbe des Namens:** grau = leicht,
+    weiß = passend, orange = schwer, rot = sehr schwer (im Vergleich zu deiner Stufe).
+  - **Kampf:** hineinlaufen oder antippen. Du kämpfst jetzt **mit deiner gewählten Klasse** (vorher nur in den
+    Probestunden). Gruppenmitglieder in der Nähe kämpfen mit, jeder mit seiner Klasse. Neuer Kampf-Hintergrund **Wald**.
+  - **Nach dem Kampf:** Sieg = Erfahrung (12 × Stufe je Monster) und etwas Gold, das Monster ist für dich eine Minute
+    weg. Niederlage = du wachst am Anfang der Karte wieder auf.
+  - **Stufen bis 20** (Kreuzweg 1–10, Weg 10–15, Grünwacht 15–20, Entscheidung 21.10.). Mit jeder Stufe: Leben +10,
+    Mana +4, Stärke +5 % (Schaden und Heilung, auch für Roboter und Monster des Zähmers). Monster: pro Stufe
+    9 % mehr Leben und 6 % mehr Schaden.
+  - **Werte (C):** zeigt nach der Klassenwahl die Werte deiner Klasse (Leben, Mana, Tempo, Stärke).
+  - **Test `tests/wildnis_test.gd`:** Der Computer spielt jede Klasse allein gegen jedes Monster (auf dessen Stufe,
+    mit durchschnittlichen Paraden). Einzelne Monster schafft jede Klasse fast immer, Zweiergruppen meist,
+    Dreiergruppen sind schwer. Allein am stärksten: Tank, Mechaniker, Sternensängerin; am schwächsten der
+    **Ritualist** (etwa 60 %, er hat nur einen Angriff).
+  - **Behoben:** Die alten Foto-Programme (`welt_auto`, `fest_auto`, `gesandte_auto`, `marv_auto`, `weg_auto`) liefen
+    seit Lernprojekt 4 nicht mehr (alter Name `LOCAL_ID`).
 
 ## Aufgaben Lernprojekt 4 „Zusammen spielen“ (Fahrplan in `ZUSAMMEN_PLAN.md`)
 
@@ -651,6 +675,13 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spiel startet jetzt mit einem Menü.
 
+**Neu: Grünwacht Schritt 2 – Monster und deine Klasse** (nach Schritt 1, auf dem Weg nach Grünwacht)
+1. Siehst du die Monster neben dem Weg mit Name und Stufe? Passen die Farben (grau, weiß, orange, rot)?
+2. Lauf in eines hinein: Kämpfst du mit deiner Klasse, im Wald-Hintergrund?
+3. Nach dem Sieg: Erfahrung und Gold? Ist das Monster eine Minute weg?
+4. Steigst du über Stufe 10? Zeigt „Werte (C)“ die Werte deiner Klasse?
+5. Sind die Kämpfe zu leicht oder zu schwer? Wie lange dauert es bis Stufe 15?
+
 **Neu: Grünwacht Schritt 1 – die Reise nach Wipfelheim** (Kreuzweg-Demo, mit deinem Spielstand vom Ende der ersten Stunde)
 1. Hast du die erste Stunde schon beendet: Steht über Ye am Stadttor ein gelbes „!“? Er gibt dir den Auftrag
    „Der Weg nach Grünwacht“. (Neu gespielt: Nach „Leb wohl, Ye.“ kommt „Ende von Akt 1“ → „Weiter nach Grünwacht“.)
@@ -842,6 +873,10 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
   Dunkelheit in 6 Stufen, Splitterlicht brennt 8, 12, 16 …
 - **Neu in Runde 2:** Schnellfeuer (3 × 7), Polarstern (Abwehr+ und 30 % früher dran),
   Zähmen (unter 50 % Leben, Chance = fehlendes Leben, halbes Leben auf der Bank, höchstens 5 Monster).
+- **Grünwacht (Schritt 2):** Monster-Werte (Rindenbär, Windfalke, Donnerhirsch, Steinkröte, Sporenling, wilde
+  Start-Monster), Stufen-Wachstum (Helden +5 % Stärke, Monster +9 % Leben und +6 % Schaden je Stufe), Erfahrung
+  (12 × Stufe je Monster), Gold (2 × Stufe), eine Minute bis ein Monster wiederkommt, Erfahrungstabelle bis Stufe 20.
+
 ## Als Nächstes (Vorschläge)
 
 - Deine Rückmeldungen aus dem Test der ersten Stunde am Stück einarbeiten (Schwierigkeit, Länge, unklare Stellen).
@@ -849,12 +884,15 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Dialoge der Hauptfiguren: Marco schreibt sie; Platzhalter stehen in `data/dialoge.json`.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).
 - Lernprojekt 4 „Zusammen spielen“ ist gebaut: deine Rückmeldungen aus dem Test mit Freunden einarbeiten.
-- Lernprojekt 5 „Grünwacht“: Schritt 1 (Reise nach Wipfelheim) ist eingebaut. Als Nächstes Schritt 2: die eigene
-  Klasse in der Welt (Stufe 10–15 auf dem Weg, 15–20 in Grünwacht) und Monster auf dem Weg und dem Waldboden.
+- Lernprojekt 5 „Grünwacht“: Schritt 1 (Reise nach Wipfelheim) und Schritt 2 (Monster, eigene Klasse, Stufe 20)
+  sind eingebaut. Als Nächstes Schritt 3: Fenns Prüfung der drei Ziele.
 - Hinten angestellt: Schnellsätze und Emotes (Vorschläge im Ideen-Parkplatz von design.md).
 
 ## Offene Fragen an Marco
 
+- **Grünwacht Schritt 2 (vorläufig, Feinschliff am Ende):** Der Ritualist ist allein am schwächsten. Soll er für das
+  Allein-Spielen etwas mehr Schaden bekommen? Und sollen alle Klassen in der Wildnis Heiltränke benutzen dürfen
+  (design.md: Verbrauchsgegenstände für alle, vier Gürtelplätze)? Bisher kann das nur der Novize.
 - **Grünwacht Schritt 1:** Passen die Plätze in Wipfelheim (Ysolde in der Mitte, Fenn im Norden, Tilda im Osten,
   Esche im Süden, Koch-Stand an der Ankunft)? Ist Marv, der dir nach Wipfelheim nachgereist ist, lustig oder zu viel?
 

@@ -33,6 +33,18 @@ const NORMAL_REACT_BLOCK := 0.25
 const LEVEL_HP := 10
 const LEVEL_MANA := 4
 
+## Monster in der Wildnis (Grünwacht): pro Stufe über 1 so viel mehr Leben und Schaden (vorläufig, Feinschliff am Ende)
+const MONSTER_HP_PER_LEVEL := 0.09
+const MONSTER_POWER_PER_LEVEL := 0.06
+
+
+static func monster_hp(level: int) -> float:
+	return 1.0 + MONSTER_HP_PER_LEVEL * maxi(level - 1, 0)
+
+
+static func monster_power(level: int) -> float:
+	return 1.0 + MONSTER_POWER_PER_LEVEL * maxi(level - 1, 0)
+
 ## Boss-Werte
 const BOSS_FIST := 23
 const BOSS_ROCKFALL := 30
@@ -267,6 +279,17 @@ func _create_heroes() -> void:
 		if spec.get("computer", false):
 			computer[h] = true
 		skills.setup_hero(h)
+		# Kampf in der Welt mit der eigenen Klasse (ab Grünwacht): Schaden und Heilung wachsen mit der Stufe,
+		# Roboter und Monster des Helden werden genauso stärker (spec.macht, siehe BattleRequest)
+		if spec.has("macht"):
+			h.power = float(spec.macht)
+			var buddies: Array[Fighter] = h.monsters.duplicate()
+			if h.robot != null:
+				buddies.append(h.robot)
+			for b in buddies:
+				b.power = h.power
+				b.max_hp = roundi(b.max_hp * h.power)
+				b.hp = b.max_hp
 		_emit({type = "spawn", f = h, place = "hero", index = i, hp = h.hp})
 		h.next_time = h.turn_delay() * zufall_range(0.2, 1.0)
 
@@ -348,14 +371,17 @@ func spawn_enemies(ids: Array) -> void:
 	enemies.clear()
 	# Gruppenkampf: Bosse wie der Sternenfresser haben mehr Leben, je mehr Spieler mitkämpfen (setup.gegner_leben)
 	var hp_scale: float = Sandbox.HP_SCALE[heroes.size() - 1] * float(setup.get("gegner_leben", 1.0))
+	# Monster in der Wildnis haben eine Stufe (setup.gegner_stufe): mehr Leben und härtere Treffer
+	var level := int(setup.get("gegner_stufe", 1))
 	var has_big := false
 	for id: String in ids:
 		has_big = has_big or Sandbox.ENEMIES[id].get("big", false)
 	for i in ids.size():
 		var id: String = ids[i]
 		var data: Dictionary = Sandbox.ENEMIES[id]
-		var e := Fighter.new(data.name, id, data.element, false, roundi(data.hp * hp_scale), data.tempo, Elements.color(data.element))
+		var e := Fighter.new(data.name, id, data.element, false, roundi(data.hp * hp_scale * monster_hp(level)), data.tempo, Elements.color(data.element))
 		e.element = data.element
+		e.power = monster_power(level)
 		e.resist = data.get("resist", 1.0)
 		e.big = data.get("big", false)
 		e.passive = data.get("passive", false)
@@ -898,6 +924,9 @@ func apply_damage(target: Fighter, amount: int, source: Fighter = null, kind := 
 
 ## Heilt ein Ziel. "source" bekommt die Heilung in der Auswertung gutgeschrieben.
 func heal(source: Fighter, target: Fighter, amount: int) -> int:
+	# Heilung wächst mit der Stufe (der Novize rechnet seine Stärke schon selbst ein)
+	if source != null and source.klass != "novize":
+		amount = roundi(amount * source.power)
 	var healed := target.heal(amount)
 	if source != null:
 		source.credit().stat_heal += healed

@@ -22,11 +22,11 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	_t += delta
 	var plan: Array = [
-		[0.5, func() -> void: state.apply_command(LOCAL_ID, {type = "talk", npc = "wache"})],
-		[5.5, func() -> void: state.apply_command(LOCAL_ID, {type = "dialog_choose", index = 0})],
-		[6.0, func() -> void: state.apply_command(LOCAL_ID, {type = "dialog_choose", index = 1})],
-		[6.5, func() -> void: state.apply_command(LOCAL_ID, {type = "dialog_next"})],
-		[7.5, func() -> void: state.apply_command(LOCAL_ID, {type = "dialog_next"})],
+		[0.5, func() -> void: state.apply_command(local_id, {type = "talk", npc = "wache"})],
+		[5.5, func() -> void: state.apply_command(local_id, {type = "dialog_choose", index = 0})],
+		[6.0, func() -> void: state.apply_command(local_id, {type = "dialog_choose", index = 1})],
+		[6.5, func() -> void: state.apply_command(local_id, {type = "dialog_next"})],
+		[7.5, func() -> void: state.apply_command(local_id, {type = "dialog_next"})],
 	]
 	while _step < plan.size() and _t >= plan[_step][0]:
 		plan[_step][1].call()

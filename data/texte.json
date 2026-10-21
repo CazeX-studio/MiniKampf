@@ -1,6 +1,11 @@
 {
 	"auftrag_neu": "Neuer Auftrag: %s",
 	"karte_betreten": "– %s –",
+	"werte_klasse": "Mit jeder Stufe: Leben +%d · Mana +%d · Stärke +%d %%. Monster in der Wildnis haben auch eine Stufe: graue Namen sind leicht, weiße passen, orange und rote sind gefährlich.",
+	"wild_ansage": "%s greift an!",
+	"wild_ansage_mehrere": "%s greifen an!",
+	"wild_gruppe": "%s wird angegriffen – du kämpfst mit!",
+	"wild_verloren": "Du kommst am Rand der Karte wieder zu dir. Ruh dich kurz aus.",
 	"nebenauftrag_neu": "Neuer Nebenauftrag: %s",
 	"nebenauftrag": "Nebenauftrag",
 	"nebenauftrag_ziel": "Nebenbei: ",

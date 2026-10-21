@@ -185,12 +185,13 @@ func _build_map_view() -> void:
 	var local := local_player()
 	_shown_map = local.map
 	for node in _map_nodes:
-		node.queue_free()
+		if is_instance_valid(node):
+			node.queue_free()
 	_map_nodes.clear()
 	_pickup_nodes.clear()
 	_deco_nodes.clear()
 	for id: String in _characters.keys():
-		if id.begins_with("npc:"):
+		if id.begins_with("npc:") or id.begins_with("monster:"):
 			_characters.erase(id)
 	var m := state.get_map(local.map)
 	for b: Dictionary in m.buildings:
@@ -219,7 +220,34 @@ func _build_map_view() -> void:
 		view.facing = 1
 		_add_map_node(view)
 		_characters["npc:" + id] = view
+	# Monster in der Wildnis: Aussehen wie im Kampf, Name mit Stufe
+	for i in state.monsters.size():
+		var wild: Dictionary = state.monsters[i]
+		if wild.karte != local.map:
+			continue
+		var look: Dictionary = FighterView.LOOKS.get(wild.gegner[0], {sprite = "goblin"})
+		var label := "%s%s · Stufe %d" % [Sandbox.ENEMIES[wild.gegner[0]].name, " +%d" % (wild.gegner.size() - 1) if wild.gegner.size() > 1 else "", wild.stufe]
+		var view := WorldCharacter.new()
+		view.setup(look.sprite, label, look.get("tint", Color.WHITE), _danger_color(wild.stufe, local.progress.level))
+		view.idle_fps = NPC_IDLE_FPS * 2.0
+		view.time_offset(randf() * 4.0)
+		view.position = cell_center(Vector2(wild.feld))
+		view.facing = -1 if i % 2 == 0 else 1
+		_add_map_node(view)
+		_characters["monster:%d" % i] = view
 	_ground.queue_redraw()
+
+
+## Farbe des Monsternamens: grau = leicht, weiß = passend, orange = schwer, rot = sehr schwer.
+static func _danger_color(monster_level: int, player_level: int) -> Color:
+	var diff := monster_level - player_level
+	if diff <= -3:
+		return Color("a8a8a8")
+	if diff <= 2:
+		return Color.WHITE
+	if diff <= 4:
+		return Color("ffb050")
+	return Color("ff6060")
 
 
 func _add_map_node(node: Node2D) -> void:
@@ -286,7 +314,7 @@ func _sync() -> void:
 		view.visible = p.map == local.map
 	# Mitspieler, die gegangen sind (oder gerade kämpfen), verschwinden
 	for id: String in _characters.keys():
-		if not id.begins_with("npc:") and not state.players.has(id):
+		if not id.begins_with("npc:") and not id.begins_with("monster:") and not state.players.has(id):
 			_characters[id].queue_free()
 			_characters.erase(id)
 	_camera.position = cell_center(local.pos)
@@ -310,6 +338,11 @@ func _sync() -> void:
 		_info.reset_size()
 	else:
 		_info.text = "Spieler in %s: %d" % [m.title, here]
+	for i in state.monsters.size():
+		if _characters.has("monster:%d" % i):
+			var monster_view: WorldCharacter = _characters["monster:%d" % i]
+			monster_view.visible = state.can_use(local, "monster:%d" % i)
+			monster_view.set_name_color(_danger_color(state.monsters[i].stufe, local.progress.level))
 	for id: String in state.npcs:
 		if not _characters.has("npc:" + id):
 			continue
@@ -498,6 +531,14 @@ func _tap_at(world: Vector2) -> void:
 			_send({type = "talk", npc = id})
 			_show_marker(npc_pos)
 			return
+	# Monster angetippt? Dann hinlaufen, der Kampf beginnt
+	for id: String in _characters:
+		if id.begins_with("monster:") and _characters[id].visible:
+			var monster_pos: Vector2 = _characters[id].position
+			if absf(world.x - monster_pos.x) < 30.0 and world.y > monster_pos.y - 90.0 and world.y < monster_pos.y + 12.0:
+				_send({type = "use", target = id})
+				_show_marker(monster_pos)
+				return
 	# Sammelpunkt angetippt? Dann hinlaufen und einsammeln
 	for target: String in _pickup_nodes:
 		var node: Node2D = _pickup_nodes[target]
@@ -1515,6 +1556,22 @@ func _fill_panel() -> void:
 			lines.append_array(unlocked)
 	elif _panel_mode == "werte":
 		_panel_title.text = GameData.text("werte")
+		var klasse := str(p.progress.flags.get("klasse", ""))
+		if p.progress.flags.has("klasse_bestaetigt") and Sandbox.CLASSES.has(klasse):
+			# Nach der Klassenwahl: Werte der eigenen Klasse (so kämpft man in der Wildnis)
+			var data: Dictionary = Sandbox.CLASSES[klasse]
+			var bonus := p.progress.level - 1
+			lines.append("[b]%s · Stufe %d[/b]" % [data.title, p.progress.level])
+			lines.append("")
+			lines.append("[b]Leben: %d[/b]" % (data.hp + BattleState.LEVEL_HP * bonus))
+			if data.mana > 0:
+				lines.append("[b]Mana: %d[/b]" % (data.mana + BattleState.LEVEL_MANA * bonus))
+			lines.append("[b]Tempo: %d[/b]" % data.tempo)
+			lines.append("[b]Stärke: %d %%[/b] (Schaden und Heilung)" % roundi(BattleRequest.hero_power(p.progress.level) * 100))
+			lines.append("")
+			lines.append(GameData.text("werte_klasse", [BattleState.LEVEL_HP, BattleState.LEVEL_MANA, roundi(BattleRequest.HERO_POWER_PER_LEVEL * 100)]))
+			_panel_text.text = "\n".join(lines)
+			return
 		var stats := Grundwerte.for_level(p.progress.level)
 		lines.append("[b]Stufe %d[/b]" % p.progress.level)
 		lines.append("")
@@ -1544,7 +1601,7 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 	if player_id != local_id:
 		return
 	var progress := local_player().progress
-	if BattleRequest.prepare(kampf_id, progress.level, progress.item_count("heiltrank")):
+	if BattleRequest.prepare(kampf_id, progress.level, progress.item_count("heiltrank"), str(progress.flags.get("klasse", ""))):
 		SaveGame.save(local_player())
 		get_tree().change_scene_to_file.call_deferred("res://scenes/kampf.tscn")
 

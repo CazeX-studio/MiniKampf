@@ -368,9 +368,9 @@ func _test_building_blocks() -> void:
 	_check(battle.klasse == "kunoichi" and battle.name == "Probestunde: Kunoichi" and battle.hinweise.erster_zug.contains("Siegel"),
 		"Probestunde-Vorlage füllt Klasse, Name und Erklärung")
 
-	# Stufen bis 10, nicht weiter
+	# Stufen bis 20 (Kreuzweg 1–10, Grünwacht bis 20), nicht weiter
 	p.progress.add_xp(100000)
-	_check(p.progress.level == 10 and p.progress.xp_range().y == -1, "Höchststufe ist 10")
+	_check(p.progress.level == 20 and p.progress.xp_range().y == -1, "Höchststufe ist 20")
 
 	# Speichern und Laden
 	SaveGame.save(p)

@@ -20,16 +20,16 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_t += delta
-	var choose := func(i: int) -> void: state.apply_command(LOCAL_ID, {type = "dialog_choose", index = i})
+	var choose := func(i: int) -> void: state.apply_command(local_id, {type = "dialog_choose", index = i})
 	var plan: Array = [
-		[0.5, func() -> void: state.apply_command(LOCAL_ID, {type = "move", cell = Vector2i(22, 32)})],
+		[0.5, func() -> void: state.apply_command(local_id, {type = "move", cell = Vector2i(22, 32)})],
 		[3.5, choose.bind(0)],
 		[4.0, choose.bind(0)],
-		[4.5, func() -> void: state.apply_command(LOCAL_ID, {type = "dialog_next"})],
-		[5.0, func() -> void: state.apply_command(LOCAL_ID, {type = "dialog_next"})],
-		[5.5, func() -> void: state.apply_command(LOCAL_ID, {type = "talk", npc = "bingo"})],
+		[4.5, func() -> void: state.apply_command(local_id, {type = "dialog_next"})],
+		[5.0, func() -> void: state.apply_command(local_id, {type = "dialog_next"})],
+		[5.5, func() -> void: state.apply_command(local_id, {type = "talk", npc = "bingo"})],
 		[9.0, choose.bind(0)],
-		[9.5, func() -> void: state.apply_command(LOCAL_ID, {type = "kaufen", gegenstand = "sternentafel"})],
+		[9.5, func() -> void: state.apply_command(local_id, {type = "kaufen", gegenstand = "sternentafel"})],
 	]
 	while _step < plan.size() and _t >= plan[_step][0]:
 		plan[_step][1].call()

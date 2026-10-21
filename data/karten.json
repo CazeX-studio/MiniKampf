@@ -1,5 +1,5 @@
 {
-	"hinweis": "Karten außerhalb von Kreuzweg. Jede Karte ist ein Bild aus Zeichen (raster: eine Zeile pro Reihe, ein Zeichen pro Feld; links oben ist Feld [0, 0], x nach rechts, y nach unten). Was die Zeichen bedeuten, steht unter \"zeichen\". Häuser, Stände, NPCs, Orte und Schmuck wie in kreuzweg.json. ausgaenge: Wer in den Bereich [x, y, Breite, Höhe] läuft, kommt auf die Karte \"karte\" an das Feld \"feld\" (nur wenn \"wenn\" stimmt). Orte mit {\"reisen\": Karte, \"feld\": [x, y]} bringen einen beim Benutzen hin (Seilaufzug).",
+	"hinweis": "Karten außerhalb von Kreuzweg. Jede Karte ist ein Bild aus Zeichen (raster: eine Zeile pro Reihe, ein Zeichen pro Feld; links oben ist Feld [0, 0], x nach rechts, y nach unten). Was die Zeichen bedeuten, steht unter \"zeichen\". Häuser, Stände, NPCs, Orte und Schmuck wie in kreuzweg.json. ausgaenge: Wer in den Bereich [x, y, Breite, Höhe] läuft, kommt auf die Karte \"karte\" an das Feld \"feld\" (nur wenn \"wenn\" stimmt). Orte mit {\"reisen\": Karte, \"feld\": [x, y]} bringen einen beim Benutzen hin (Seilaufzug). monster: Monster in der Wildnis mit Feld, Gegnern (Kennungen aus scripts/kampf/sandbox.gd) und Stufe; kampf_hintergrund: Bild im Kampf.",
 	"zeichen": {
 		"hinweis": "Was die Zeichen in den Karten bedeuten. boden: wiese, waldboden, weg, platz, gestruepp, planken, bruecke, laub. gesperrt: dort kann man nicht laufen. ding: was dort steht (baum, busch, blumen, pilze, stein, riesenbaum, stamm, zielscheibe, lagerfeuer).",
 		"~": {
@@ -79,16 +79,16 @@
 		],
 		"raster": [
 			",,,,t,t,,t,,,,t,t...,...............f...",
-			"p,,,,,p,b,,,b,,,T.,,,...................",
-			",,,t,,,,,,,,tt,,t,,L,.Ts...T......T...f.",
+			"p,,,,,p,,,,,b,,,,.,,,...................",
+			",,,t,,,,,,,,tt,,,,,L,.Ts...T......T...f.",
 			"pt,,,b,,,,,,,,,,,,,,,,............T.....",
 			",,,,,,,,,,,,=============...............",
 			"========================================",
 			"========================================",
 			"============,,,,.,,......===============",
-			",,,,,,,,,,,,,p,bb,...,..................",
-			",b,,b,t,,b,,t,b,,b.t.......f..........T.",
-			",,,,t,,,,,,,pp,tb.t,.............T....T.",
+			",,,,,,,,,,,,,p,bb,......................",
+			",b,,,,t,,b,,,,b,,b.t.......f..........T.",
+			",,,,,,,,,,,,,p,tb.t,.............T....T.",
 			",,,t,t,,,tb,t,,t.tf.fT...s......T.......",
 			"b,b,,tbp,t,,t,tt,b,...T.T....f...s......"
 		],
@@ -118,6 +118,95 @@
 					27,
 					12
 				]
+			}
+		],
+		"kampf_hintergrund": "wald",
+		"monster": [
+			{
+				"feld": [
+					33,
+					8
+				],
+				"gegner": [
+					"windfalke"
+				],
+				"stufe": 10
+			},
+			{
+				"feld": [
+					29,
+					3
+				],
+				"gegner": [
+					"steinkroete"
+				],
+				"stufe": 11
+			},
+			{
+				"feld": [
+					25,
+					9
+				],
+				"gegner": [
+					"windfalke",
+					"windfalke"
+				],
+				"stufe": 11
+			},
+			{
+				"feld": [
+					21,
+					8
+				],
+				"gegner": [
+					"waldsporenling",
+					"steinkroete"
+				],
+				"stufe": 12
+			},
+			{
+				"feld": [
+					16,
+					2
+				],
+				"gegner": [
+					"windfalke",
+					"waldsporenling"
+				],
+				"stufe": 13
+			},
+			{
+				"feld": [
+					12,
+					9
+				],
+				"gegner": [
+					"steinkroete",
+					"steinkroete"
+				],
+				"stufe": 13
+			},
+			{
+				"feld": [
+					8,
+					2
+				],
+				"gegner": [
+					"waldsporenling",
+					"waldsporenling",
+					"windfalke"
+				],
+				"stufe": 14
+			},
+			{
+				"feld": [
+					4,
+					9
+				],
+				"gegner": [
+					"donnerhirsch"
+				],
+				"stufe": 15
 			}
 		],
 		"deko": [
@@ -151,12 +240,12 @@
 			",,t,t,,t,,t,,,,bpt,,,,,,t,,,,t",
 			",p,,b,,t,,t,,t,t,,ptt,tt,,,,,t",
 			",b,,t,,t,,,t,,p,t,,,,t,,,,,,,t",
-			",,,,,,p,,t,t,t,,,,,,,p,,p,,,,,",
-			",,,,R,,b,pt,b,,,,R,ttp,,,,R,,t",
+			",,,,,,p,,,,,,t,,,,,,,p,,p,,,,,",
+			",,,,R,,b,p,,b,,,,R,ttp,,,,R,,t",
 			",tt,,,,,t,,,,,b,,,,,,,tt,,,,b,",
 			"t,ptb,,,b,,,,t,,,,,,t,,,,,t,,,",
-			",t,,,p,,,,t,,,,tb,bt,,,t,,,t,,",
-			",,,t,p,bptt,,,,,,,,,,,,,,,,pp,",
+			",t,,,p,,,,t,,,,tb,,,,,,t,,,t,,",
+			",,,t,p,,,,t,,,,,,,,,,,,,,,,pp,",
 			"b,,tt,tp,,,,===,,pt,,R,,,,,,,,",
 			",,t,p,,,,,,=====,,,,,,,,,,,,,,",
 			"p,,,,,b,,,===========,,,,=====",
@@ -164,12 +253,12 @@
 			",,,,,,R,,,====================",
 			",p,,t,,,,,,=====,,,,,====,,,,,",
 			",,,,,t,,,t,,===,,t,t,,,,,,tbt,",
-			",,,,,t,,,,,,,,,,b,,,t,t,,,,,,t",
-			",,p,,,,,,tb,,,,,ttp,,pp,,,,,,,",
-			"t,,,,,,,,t,,R,,,,b,,,,,bt,,p,,",
+			",,,,,t,,,,,,,,,,b,,,t,,,,,,,,t",
+			",,p,,,,,,tb,,,,,ttp,,p,,,,,,,,",
+			"t,,,,,,,,t,,R,,,,b,,,,,bt,,,,,",
 			"t,t,,,,tbt,,,,b,,,,,,,,,b,,,,,",
 			"b,,t,,p,,,tbt,,,,R,pt,t,p,,,b,",
-			",,,,,,,,,t,ptt,,,,,,,,t,,,R,,t",
+			",,,,,,,,,t,pt,,,,,,,,,,,,,R,,t",
 			",,,,,R,,,,,,t,,,,,,,t,,,p,,,p,",
 			"t,,,,,,b,,,,t,,,,,,bt,tt,p,,,,",
 			"b,,,t,,b,,,,,,,,,,,,t,,,t,,,t,",
@@ -188,6 +277,117 @@
 					1,
 					6
 				]
+			}
+		],
+		"kampf_hintergrund": "wald",
+		"monster": [
+			{
+				"feld": [
+					25,
+					8
+				],
+				"gegner": [
+					"rindenbaer"
+				],
+				"stufe": 15
+			},
+			{
+				"feld": [
+					22,
+					16
+				],
+				"gegner": [
+					"donnerhirsch",
+					"waldsporenling"
+				],
+				"stufe": 16
+			},
+			{
+				"feld": [
+					19,
+					7
+				],
+				"gegner": [
+					"windfalke",
+					"windfalke",
+					"waldsporenling"
+				],
+				"stufe": 16
+			},
+			{
+				"feld": [
+					23,
+					21
+				],
+				"gegner": [
+					"wilder_moosling"
+				],
+				"stufe": 16
+			},
+			{
+				"feld": [
+					8,
+					8
+				],
+				"gegner": [
+					"rindenbaer",
+					"waldsporenling"
+				],
+				"stufe": 17
+			},
+			{
+				"feld": [
+					10,
+					3
+				],
+				"gegner": [
+					"wilde_glutwelpe"
+				],
+				"stufe": 17
+			},
+			{
+				"feld": [
+					7,
+					17
+				],
+				"gegner": [
+					"donnerhirsch",
+					"windfalke"
+				],
+				"stufe": 18
+			},
+			{
+				"feld": [
+					26,
+					18
+				],
+				"gegner": [
+					"wilder_bachotter"
+				],
+				"stufe": 18
+			},
+			{
+				"feld": [
+					14,
+					21
+				],
+				"gegner": [
+					"rindenbaer",
+					"donnerhirsch"
+				],
+				"stufe": 19
+			},
+			{
+				"feld": [
+					3,
+					11
+				],
+				"gegner": [
+					"rindenbaer",
+					"steinkroete",
+					"donnerhirsch"
+				],
+				"stufe": 20
 			}
 		],
 		"orte": [

@@ -16,6 +16,7 @@ extends RefCounted
 ##   {type = "szene_verlassen"}          eine gemeinsame Szene verlassen (Zusammenspielen)
 ##   {type = "kaufen", gegenstand = "…"} / {type = "verkaufen", gegenstand = "…"} / {type = "laden_zu"}  im geöffneten Laden
 ## Auf eine andere Karte kommt man über Ausgänge am Rand (hineinlaufen) oder über Orte mit der Aktion "reisen" (Seilaufzug).
+## Monster in der Wildnis ("monster:<Nummer>", aus data/karten.json): hineinlaufen oder antippen startet den Kampf.
 ## So kann später ein Server dieselben Befehle von vielen Spielern annehmen;
 ## die Anzeige (kreuzweg.gd) liest nur den Zustand und schickt Befehle.
 ## NPCs, Sammelpunkte, Dialoge und Aufträge kommen aus den Datendateien in res://data.
@@ -68,6 +69,15 @@ var pickups: Array[Dictionary] = []
 var places: Array[Dictionary] = []
 ## Schmuck, der nur zu bestimmten Zeiten da ist (Festlaternen, Krater, Wegweiser): {art, cell, map, cond, text}
 var decorations: Array[Dictionary] = []
+## Monster in der Wildnis: {karte, feld, gegner, stufe} (GameData.wild_monsters). Wer eines besiegt, sieht es eine
+## Weile nicht mehr (MONSTER_RESPAWN), die anderen Spieler schon.
+var monsters: Array[Dictionary] = []
+## So nah muss man einem Monster kommen, damit der Kampf beginnt (Felder)
+const MONSTER_TOUCH := 0.8
+## So lange bleibt ein besiegtes Monster für den Spieler weg (Sekunden)
+const MONSTER_RESPAWN := 60.0
+## Spieler, deren Kampf gerade beginnt (bis das Ergebnis kommt oder sie gehen): Kennung -> true
+var _fighting := {}
 
 ## --- Gemeinsame Szenen (Zusammenspielen, Lernprojekt 4 Schritt 5) ---
 ## Spricht ein Gruppenmitglied eine Figur an, erleben Mitglieder in der Nähe das Gespräch mit. Bei Antworten stimmen alle
@@ -109,6 +119,7 @@ func _init() -> void:
 		town_map.add_exit(d)
 	town_map.finish()
 	_add_things(KREUZWEG, town)
+	monsters = GameData.wild_monsters()
 	var all_maps := GameData.get_file("karten")
 	var legend: Dictionary = all_maps.get("zeichen", {})
 	for id: String in all_maps:
@@ -273,6 +284,8 @@ func target_map(target: String) -> String:
 		return pickups[int(parts[1])].map
 	if parts[0] == "ort" and int(parts[1]) < places.size():
 		return places[int(parts[1])].map
+	if parts[0] == "monster" and int(parts[1]) < monsters.size():
+		return monsters[int(parts[1])].karte
 	return ""
 
 
@@ -321,6 +334,7 @@ func remove_player(id: String) -> void:
 	if players.has(id):
 		_leave_scene(players[id])
 	players.erase(id)
+	_fighting.erase(id)
 
 
 ## Nimmt einen Befehl eines Spielers an.
@@ -365,6 +379,7 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			var used := mini(int(cmd.get("traenke_benutzt", 0)), p.progress.item_count("heiltrank"))
 			if used > 0:
 				_give_item(p, "heiltrank", -used)
+			_fighting.erase(p.id)
 			_battle_result(p, str(cmd.get("kampf", "")), bool(cmd.get("gewonnen", false)))
 			_back_from_battle(p.id)
 		"benutzen":
@@ -402,6 +417,8 @@ func target_cell(target: String) -> Vector2i:
 		return pickups[int(parts[1])].cell
 	if parts.size() == 2 and parts[0] == "ort" and int(parts[1]) < places.size():
 		return places[int(parts[1])].cell
+	if parts.size() == 2 and parts[0] == "monster" and int(parts[1]) < monsters.size():
+		return monsters[int(parts[1])].feld
 	return Vector2i(-1, -1)
 
 
@@ -414,6 +431,8 @@ func can_use(p: PlayerState, target: String) -> bool:
 				and check(p, pickups[int(target.substr(6))].cond)
 	if target.begins_with("ort:"):
 		return target_cell(target) != Vector2i(-1, -1) and check(p, places[int(target.substr(4))].cond)
+	if target.begins_with("monster:"):
+		return target_cell(target) != Vector2i(-1, -1) and monster_here(p, int(target.substr(8)))
 	if target.begins_with("npc:") and not npc_visible(p, target.substr(4)):
 		return false
 	return target_cell(target) != Vector2i(-1, -1)
@@ -435,6 +454,8 @@ func usable_near(p: PlayerState) -> String:
 		targets.append("punkt:%d" % i)
 	for i in places.size():
 		targets.append("ort:%d" % i)
+	for i in monsters.size():
+		targets.append("monster:%d" % i)
 	for target in targets:
 		if not can_use(p, target):
 			continue
@@ -507,6 +528,7 @@ func tick(delta: float) -> void:
 	for p: PlayerState in players.values():
 		move_player(p, delta)
 		_check_exits(p)
+		_check_monsters(p)
 		_check_approach(p)
 		if not p.is_moving() and p.use_target != "":
 			var target := p.use_target
@@ -538,6 +560,9 @@ func move_player(p: PlayerState, delta: float) -> void:
 
 func _use(p: PlayerState, target: String) -> void:
 	if not can_use(p, target):
+		return
+	if target.begins_with("monster:"):
+		_start_wild(p, int(target.substr(8)))
 		return
 	if target.begins_with("npc:"):
 		var npc_id := target.substr(4)
@@ -1206,6 +1231,50 @@ func _give_item(p: PlayerState, item_id: String, count: int) -> void:
 		_say(p, GameData.text("gegenstand_weg", [-count, GameData.item_name(item_id)]))
 
 
+# --- Monster in der Wildnis ------------------------------------------------------
+
+## Steht das Monster für diesen Spieler gerade da? (Nach einem Sieg ist es eine Weile weg.)
+func monster_here(p: PlayerState, index: int) -> bool:
+	var beaten := float(p.progress.flags.get("besiegt:monster:%d" % index, -INF))
+	return Time.get_unix_time_from_system() - beaten >= MONSTER_RESPAWN
+
+
+## Läuft der Spieler in ein Monster hinein, beginnt der Kampf.
+func _check_monsters(p: PlayerState) -> void:
+	if p.in_dialog() or p.shop != "" or _fighting.has(p.id) or waiting_for_group(p.id):
+		return
+	for i in monsters.size():
+		var m: Dictionary = monsters[i]
+		if m.karte == p.map and (Vector2(m.feld) - p.pos).length() < MONSTER_TOUCH and monster_here(p, i):
+			_start_wild(p, i)
+			return
+
+
+## Kampf gegen ein Monster: allein oder mit den Gruppenmitgliedern in der Nähe (wie bei gemeinsamen Szenen).
+func _start_wild(p: PlayerState, index: int) -> void:
+	if _fighting.has(p.id) or p.in_dialog():
+		return
+	var ids: Array[String] = [p.id]
+	for id: String in group_members.call(p.id):
+		var other: PlayerState = players.get(id)
+		if other != null and other != p and other.map == p.map and not other.in_dialog() and other.shop == "" \
+				and not _fighting.has(id) and other.pos.distance_to(p.pos) <= SCENE_RANGE:
+			ids.append(id)
+	for id in ids:
+		_fighting[id] = true
+		players[id].path.clear()
+		players[id].steer = Vector2.ZERO
+		players[id].use_target = ""
+	var kampf := "wild:%d" % index
+	if ids.size() > 1:
+		for id in ids:
+			if id != p.id:
+				notice.emit(id, GameData.text("wild_gruppe", [p.display_name]))
+		group_battle_requested.emit(ids, kampf)
+	else:
+		battle_requested.emit(p.id, kampf)
+
+
 # --- NPCs, die einen ansprechen ------------------------------------------------
 
 ## Manche NPCs (z. B. Marv) sprechen dich von sich aus an, sobald du nah genug bist – einmal.
@@ -1274,6 +1343,9 @@ func _battle_result(p: PlayerState, kampf_id: String, won: bool) -> void:
 	var battle: Dictionary = GameData.battle(kampf_id)
 	if battle.is_empty():
 		return
+	if battle.get("wild", false):
+		_wild_result(p, kampf_id, battle, won)
+		return
 	# Manche Kämpfe gehen die Geschichte in jedem Fall weiter (Sternenfall: Ren rettet oder klaut)
 	if battle.has("merken_immer"):
 		p.progress.flags[battle.merken_immer] = true
@@ -1292,6 +1364,24 @@ func _battle_result(p: PlayerState, kampf_id: String, won: bool) -> void:
 		p.progress.flags[flag] = true
 		if battle.has("erfahrung"):
 			_give_xp(p, int(battle.erfahrung))
+	_update_quests(p)
+	progress_changed.emit(p.id)
+
+
+## Monster in der Wildnis: Jeder Sieg bringt Erfahrung und etwas Gold, das Monster ist dann eine Weile weg.
+## Bei einer Niederlage wacht man am Start der Karte wieder auf.
+func _wild_result(p: PlayerState, kampf_id: String, battle: Dictionary, won: bool) -> void:
+	if won:
+		_say(p, GameData.text("kampf_gewonnen", [battle.get("name", kampf_id)]))
+		p.progress.flags["besiegt:monster:%d" % int(kampf_id.substr(5))] = Time.get_unix_time_from_system()
+		_give_gold(p, int(battle.get("gold", 0)))
+		_give_xp(p, int(battle.get("erfahrung", 0)))
+	else:
+		_say(p, GameData.text("wild_verloren"))
+		var start := get_map(p.map).start
+		p.path.clear()
+		p.cell = start
+		p.pos = Vector2(start)
 	_update_quests(p)
 	progress_changed.emit(p.id)
 

@@ -21,7 +21,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	_t += delta
 	var plan: Array = [
-		[2.5, func() -> void: state.apply_command(LOCAL_ID, {type = "talk", npc = "gesandte_glutoase"})],
+		[2.5, func() -> void: state.apply_command(local_id, {type = "talk", npc = "gesandte_glutoase"})],
 	]
 	while _step < plan.size() and _t >= plan[_step][0]:
 		plan[_step][1].call()

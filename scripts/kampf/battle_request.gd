@@ -22,16 +22,35 @@ static func active() -> bool:
 	return kampf_id != ""
 
 
+## Mit der eigenen Klasse in der Welt (ab Grünwacht): pro Stufe über 1 so viel mehr Schaden und Heilung
+## (vorläufig, Feinschliff am Ende). Leben und Mana wachsen wie beim Novizen (BattleState.LEVEL_HP).
+const HERO_POWER_PER_LEVEL := 0.05
+
+
+static func hero_power(level: int) -> float:
+	return 1.0 + HERO_POWER_PER_LEVEL * maxi(level - 1, 0)
+
+
+## Mit welcher Klasse man kämpft: in der Probestunde die geprobte, bei Monstern in der Wildnis die eigene
+## (wenn schon gewählt), sonst als Novize.
+static func fighting_class(data: Dictionary, own_class: String) -> String:
+	if data.get("eigene_klasse", false) and Sandbox.CLASSES.has(own_class) and own_class != "novize":
+		return own_class
+	return data.get("klasse", "novize")
+
+
 ## Bereitet einen Kampf aus data/kaempfe.json vor. Der Spieler ist ein Novize seiner Stufe mit seinen Heiltränken,
-## Begleiter (Novizen-Mitstreiter) steuert der Computer.
-static func prepare(id: String, level: int, potions := 0) -> bool:
+## Begleiter (Novizen-Mitstreiter) steuert der Computer. own_class: die gewählte Klasse (für Kämpfe in der Wildnis).
+static func prepare(id: String, level: int, potions := 0, own_class := "") -> bool:
 	var data: Dictionary = GameData.battle(id)
 	if data.is_empty():
 		return false
 	# Probestunde: Der Spieler spielt kurz eine richtige Klasse (Ult schon teilweise geladen)
-	var klasse: String = data.get("klasse", "novize")
+	var klasse := fighting_class(data, own_class)
 	var player := {klasse = klasse, name = "Du", aussehen = "novize" if klasse == "novize" else "", stufe = level,
 			ult = float(data.get("ult_start", 0))}
+	if data.get("eigene_klasse", false):
+		player["macht"] = hero_power(level)
 	if klasse == "novize":
 		player["traenke"] = potions
 	# Parieren lernt man erst in Lektion 3: davor hat der Novize keine Reaktion (im langen Lernkampf je Phase)
@@ -55,17 +74,19 @@ static func prepare(id: String, level: int, potions := 0) -> bool:
 
 
 ## Aufbau eines Gruppenkampfs (Gastgeber): erst die Spieler der Gruppe, freie Plätze füllen die Novizen-Mitstreiter.
-## members: [{name, stufe, traenke, aussehen}]. Gibt den Aufbau zurück (leer, wenn es den Kampf nicht gibt).
+## members: [{name, stufe, traenke, aussehen, klasse}]. Gibt den Aufbau zurück (leer, wenn es den Kampf nicht gibt).
 static func build_group(id: String, members: Array) -> Dictionary:
 	var data: Dictionary = GameData.battle(id)
 	if data.is_empty():
 		return {}
-	var klasse: String = data.get("klasse", "novize")
 	var heroes: Array = []
 	for m: Dictionary in members:
 		# Im Kampf sieht jeder Spieler aus wie seine Figur in der Stadt (so kann man sich auseinanderhalten)
+		var klasse := fighting_class(data, str(m.get("klasse", "")))
 		var hero := {klasse = klasse, name = m.name, aussehen = str(m.get("aussehen", "novize")) if klasse == "novize" else "", stufe = int(m.stufe),
 				ult = float(data.get("ult_start", 0))}
+		if data.get("eigene_klasse", false):
+			hero["macht"] = hero_power(int(m.stufe))
 		if klasse == "novize":
 			hero["traenke"] = int(m.get("traenke", 0))
 		if not data.get("reaktion", true):
@@ -112,6 +133,7 @@ static func _make_setup(id: String, data: Dictionary, heroes: Array, phases: Arr
 		kein_nochmal = data.get("kein_nochmal", false),
 		hintergrund = data.get("hintergrund", "wiese"),
 		zuerst = data.get("zuerst", ""),
+		gegner_stufe = int(data.get("gegner_stufe", 1)),
 	}
 	if not phases.is_empty():
 		result_setup["phasen"] = phases
