@@ -18,7 +18,7 @@
 			"wenn": {"und": [{"auftrag": "erster_gruppenkampf", "stand": "abgegeben"}, {"auftrag": "fest", "stand": "neu"}]}},
 		"gesandte_nebelinseln": {"name": "Schreindienerin Mei", "feld": [17, 14], "aussehen": "elf_f", "farbe": "ffb8d8", "dialog": "gesandte_nebelinseln",
 			"wenn": {"und": [{"auftrag": "erster_gruppenkampf", "stand": "abgegeben"}, {"auftrag": "fest", "stand": "neu"}]}},
-		"wache": {"name": "Wache Holm", "feld": [28, 28], "aussehen": "knight_m", "farbe": "b0b8c8", "dialog": "wache"},
+		"wache": {"name": "Torwache Brom", "feld": [28, 28], "aussehen": "knight_m", "farbe": "b0b8c8", "dialog": "wache"},
 		"mira": {"name": "Mira", "feld": [26, 33], "aussehen": "elf_f", "farbe": "fff0c0", "dialog": "mira",
 			"wenn": {"auftrag": "leises_singen", "stand": "aktiv"}, "anspringen": {"radius": 7}},
 		"marv_fest": {"name": "Marv", "feld": [26, 24], "aussehen": "elf_m", "farbe": "ffb070", "dialog": "marv_fest",
@@ -26,14 +26,19 @@
 		"ren": {"name": "???", "feld": [24, 26], "aussehen": "elf_f", "farbe": "b090ff", "dialog": "ren",
 			"wenn": {"gemerkt": "sternenfall_kampf_vorbei", "nicht_gemerkt": "ren_getroffen"}, "anspringen": {"radius": 16}},
 		"marv_abschied": {"name": "Marv", "feld": [20, 34], "aussehen": "elf_m", "farbe": "ffb070", "dialog": "marv_abschied",
-			"wenn": {"gemerkt": "abreise_angekuendigt"}, "anspringen": {"radius": 5}}
+			"wenn": {"gemerkt": "abreise_angekuendigt"}, "anspringen": {"radius": 5}},
+		"hanne": {"name": "Wirtin Hanne", "feld": [7, 20], "aussehen": "knight_f", "farbe": "ffd0c0", "dialog": "hanne"},
+		"edmar": {"name": "Vogt Edmar", "feld": [26, 18], "aussehen": "wizzard_m", "farbe": "f0d890", "dialog": "edmar"},
+		"quill": {"name": "Steinmetz Quill", "feld": [20, 24], "aussehen": "knight_m", "farbe": "c8c0b0", "dialog": "quill"},
+		"pip": {"name": "Pip", "feld": [17, 26], "aussehen": "elf_m", "farbe": "ffe8a0", "dialog": "pip"},
+		"lotte": {"name": "Lotte", "feld": [19, 26], "aussehen": "elf_f", "farbe": "c0e8ff", "dialog": "lotte"}
 	},
 	"deko": [
-		{"art": "festlaterne", "feld": [24, 15], "wenn": {"gemerkt": "nacht"}},
-		{"art": "festlaterne", "feld": [29, 24], "wenn": {"gemerkt": "nacht"}},
-		{"art": "festlaterne", "feld": [20, 29], "wenn": {"gemerkt": "nacht"}},
-		{"art": "festlaterne", "feld": [15, 20], "wenn": {"gemerkt": "nacht"}},
-		{"art": "festlaterne", "feld": [19, 15], "wenn": {"gemerkt": "nacht"}},
+		{"art": "festlaterne", "feld": [24, 15], "wenn": {"oder": [{"gemerkt": "nacht"}, {"gemerkt": "laterne_arkanum"}]}},
+		{"art": "festlaterne", "feld": [29, 24], "wenn": {"oder": [{"gemerkt": "nacht"}, {"gemerkt": "laterne_messinghafen"}]}},
+		{"art": "festlaterne", "feld": [20, 29], "wenn": {"oder": [{"gemerkt": "nacht"}, {"gemerkt": "laterne_glutoase"}]}},
+		{"art": "festlaterne", "feld": [15, 20], "wenn": {"oder": [{"gemerkt": "nacht"}, {"gemerkt": "laterne_gruenwacht"}]}},
+		{"art": "festlaterne", "feld": [19, 15], "wenn": {"oder": [{"gemerkt": "nacht"}, {"gemerkt": "laterne_nebelinseln"}]}},
 		{"art": "krater", "feld": [24, 22], "wenn": {"gemerkt": "sternenfall"}}
 	],
 	"staende": [
@@ -46,6 +51,24 @@
 	"sammelpunkte": [
 		{"gegenstand": "kraut", "feld": [16, 16]},
 		{"gegenstand": "kraut", "feld": [20, 28]},
-		{"gegenstand": "kraut", "feld": [18, 30]}
+		{"gegenstand": "kraut", "feld": [18, 30]},
+		{"gegenstand": "wiesenkraut", "feld": [4, 41], "wenn": {"auftrag": "festmahl", "stand": "aktiv"}},
+		{"gegenstand": "wiesenkraut", "feld": [16, 42], "wenn": {"auftrag": "festmahl", "stand": "aktiv"}},
+		{"gegenstand": "wiesenkraut", "feld": [38, 5], "wenn": {"auftrag": "festmahl", "stand": "aktiv"}},
+		{"gegenstand": "wildfleisch", "feld": [6, 2], "wenn": {"auftrag": "festmahl", "stand": "aktiv"}},
+		{"gegenstand": "wildfleisch", "feld": [41, 17], "wenn": {"auftrag": "festmahl", "stand": "aktiv"}}
+	],
+	"orte": [
+		{"art": "kater", "feld": [12, 31], "dialog": "kater", "wenn": {"auftrag": "hannes_kater", "stand": "aktiv", "nicht_gemerkt": "kater_gefunden"}},
+		{"art": "laternenhaken", "feld": [24, 15], "wenn": {"auftrag": "fuenf_farben", "stand": "aktiv", "nicht_gemerkt": "laterne_arkanum"},
+			"meldung": "Du hängst die violette Laterne des Arkanums auf.", "aktionen": [{"merken": "laterne_arkanum"}, {"gegenstand": "festlaterne", "anzahl": -1}]},
+		{"art": "laternenhaken", "feld": [29, 24], "wenn": {"auftrag": "fuenf_farben", "stand": "aktiv", "nicht_gemerkt": "laterne_messinghafen"},
+			"meldung": "Du hängst die kupferne Laterne von Messinghafen auf.", "aktionen": [{"merken": "laterne_messinghafen"}, {"gegenstand": "festlaterne", "anzahl": -1}]},
+		{"art": "laternenhaken", "feld": [20, 29], "wenn": {"auftrag": "fuenf_farben", "stand": "aktiv", "nicht_gemerkt": "laterne_glutoase"},
+			"meldung": "Du hängst die glutrote Laterne der Glutoase auf.", "aktionen": [{"merken": "laterne_glutoase"}, {"gegenstand": "festlaterne", "anzahl": -1}]},
+		{"art": "laternenhaken", "feld": [15, 20], "wenn": {"auftrag": "fuenf_farben", "stand": "aktiv", "nicht_gemerkt": "laterne_gruenwacht"},
+			"meldung": "Du hängst die grüne Laterne der Grünwacht auf.", "aktionen": [{"merken": "laterne_gruenwacht"}, {"gegenstand": "festlaterne", "anzahl": -1}]},
+		{"art": "laternenhaken", "feld": [19, 15], "wenn": {"auftrag": "fuenf_farben", "stand": "aktiv", "nicht_gemerkt": "laterne_nebelinseln"},
+			"meldung": "Du hängst die rosa Laterne der Nebelinseln auf.", "aktionen": [{"merken": "laterne_nebelinseln"}, {"gegenstand": "festlaterne", "anzahl": -1}]}
 	]
 }

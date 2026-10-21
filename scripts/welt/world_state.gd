@@ -53,6 +53,8 @@ var players := {}
 var npcs := {}
 ## Sammelpunkte: {item, cell}. Jeder Spieler kann jeden Punkt einmal einsammeln.
 var pickups: Array[Dictionary] = []
+## Orte, die man benutzen kann (Kater, Laternenhaken …), nur solange ihre Bedingung stimmt
+var places: Array[Dictionary] = []
 ## Schmuck in der Stadt, der nur zu bestimmten Zeiten da ist (Festlaternen, Krater): {art, cell, cond}
 var decorations: Array[Dictionary] = []
 
@@ -96,7 +98,10 @@ func _init() -> void:
 	for d: Dictionary in town.get("deko", []):
 		decorations.append({art = d.art, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), cond = d.get("wenn", {})})
 	for d: Dictionary in town.get("sammelpunkte", []):
-		pickups.append({item = d.gegenstand, cell = Vector2i(int(d.feld[0]), int(d.feld[1]))})
+		pickups.append({item = d.gegenstand, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), cond = d.get("wenn", {})})
+	for d: Dictionary in town.get("orte", []):
+		places.append({art = d.art, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), cond = d.get("wenn", {}),
+				dialog = d.get("dialog", ""), actions = d.get("aktionen", []), text = d.get("meldung", "")})
 	_astar.region = Rect2i(Vector2i.ZERO, SIZE)
 	_astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
 	_astar.update()
@@ -147,6 +152,7 @@ func _build_map() -> void:
 	_building("Bingos Laden", Rect2i(8, 28, 4, 4), 48.0, Color("a07a3a"), "haus", Color("3f6a8a"))
 	_building("Schmiede", Rect2i(33, 25, 4, 3), 42.0, Color("6a5048"), "haus", Color("3c3c44"))
 	_building("Wohnhaus", Rect2i(14, 8, 4, 3), 40.0, Color("7a6a5a"), "haus", Color("8a4a2a"))
+	_building("Gasthaus Wegrast", Rect2i(6, 17, 4, 3), 46.0, Color("8a6a48"), "haus", Color("5a6a3a"))
 	# Weitere Wohnhäuser ohne Namen
 	var houses := [
 		[Rect2i(14, 4, 3, 3), Color("8a7a62"), Color("6a3a2a")], [Rect2i(35, 8, 4, 3), Color("75685a"), Color("4a5a3a")],
@@ -178,7 +184,7 @@ func _build_map() -> void:
 	for id: String in town.get("npcs", {}):
 		var f: Array = town.npcs[id].feld
 		reserved.append(Vector2i(int(f[0]), int(f[1])))
-	for d: Dictionary in town.get("sammelpunkte", []) + town.get("deko", []):
+	for d: Dictionary in town.get("sammelpunkte", []) + town.get("deko", []) + town.get("orte", []):
 		reserved.append(Vector2i(int(d.feld[0]), int(d.feld[1])))
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 6
@@ -279,6 +285,8 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 				_give_item(p, "heiltrank", -used)
 			_battle_result(p, str(cmd.get("kampf", "")), bool(cmd.get("gewonnen", false)))
 			_back_from_battle(p.id)
+		"benutzen":
+			_use_item(p, str(cmd.get("gegenstand", "")))
 		"kaufen":
 			_buy(p, str(cmd.get("gegenstand", "")))
 		"verkaufen":
@@ -303,20 +311,25 @@ static func screen_dir_to_cells(dir: Vector2) -> Vector2:
 	return cells.normalized() * dir.length()
 
 
-## Wo ein Ziel ("npc:ye", "punkt:0") steht.
+## Wo ein Ziel ("npc:ye", "punkt:0", "ort:0") steht.
 func target_cell(target: String) -> Vector2i:
 	var parts := target.split(":")
 	if parts.size() == 2 and parts[0] == "npc" and npcs.has(parts[1]):
 		return npcs[parts[1]].cell
 	if parts.size() == 2 and parts[0] == "punkt" and int(parts[1]) < pickups.size():
 		return pickups[int(parts[1])].cell
+	if parts.size() == 2 and parts[0] == "ort" and int(parts[1]) < places.size():
+		return places[int(parts[1])].cell
 	return Vector2i(-1, -1)
 
 
 ## Kann dieser Spieler das Ziel benutzen? (Ein schon eingesammelter Punkt oder ein gerade abwesender NPC nicht.)
 func can_use(p: PlayerState, target: String) -> bool:
 	if target.begins_with("punkt:"):
-		return target_cell(target) != Vector2i(-1, -1) and not p.progress.flags.has("gesammelt:" + target)
+		return target_cell(target) != Vector2i(-1, -1) and not p.progress.flags.has("gesammelt:" + target) \
+				and check(p, pickups[int(target.substr(6))].cond)
+	if target.begins_with("ort:"):
+		return target_cell(target) != Vector2i(-1, -1) and check(p, places[int(target.substr(4))].cond)
 	if target.begins_with("npc:") and not npc_visible(p, target.substr(4)):
 		return false
 	return target_cell(target) != Vector2i(-1, -1)
@@ -336,6 +349,8 @@ func usable_near(p: PlayerState) -> String:
 		targets.append("npc:" + id)
 	for i in pickups.size():
 		targets.append("punkt:%d" % i)
+	for i in places.size():
+		targets.append("ort:%d" % i)
 	for target in targets:
 		if not can_use(p, target):
 			continue
@@ -346,12 +361,12 @@ func usable_near(p: PlayerState) -> String:
 	return best
 
 
-## Hinlaufen und benutzen (NPC: auf ein freies Nachbarfeld, Sammelpunkt: drauf).
+## Hinlaufen und benutzen (NPC: auf ein freies Nachbarfeld, Sammelpunkt und Ort: drauf).
 func _go_use(p: PlayerState, target: String) -> void:
 	if p.in_dialog() or not can_use(p, target):
 		return
 	var cell := target_cell(target)
-	var spot := cell if target.begins_with("punkt:") and is_walkable(cell) else _free_neighbor(cell, p.cell)
+	var spot := cell if not target.begins_with("npc:") and is_walkable(cell) else _free_neighbor(cell, p.cell)
 	if spot == Vector2i(-1, -1):
 		return
 	p.use_target = target
@@ -444,6 +459,14 @@ func _use(p: PlayerState, target: String) -> void:
 		p.progress.flags["geredet:" + npc_id] = true
 		_update_quests(p)
 		_start_talk(p, npc_id)
+	elif target.begins_with("ort:"):
+		var place: Dictionary = places[int(target.substr(4))]
+		if place.text != "":
+			_say(p, place.text)
+		if place.dialog != "":
+			start_dialog(p, place.dialog)
+		run_actions(p, place.actions)
+		progress_changed.emit(p.id)
 	else:
 		var pickup: Dictionary = pickups[int(target.substr(6))]
 		p.progress.flags["gesammelt:" + target] = true
@@ -848,6 +871,9 @@ func check(p: PlayerState, cond: Dictionary) -> bool:
 	for part: Dictionary in cond.get("und", []):
 		if not check(p, part):
 			return false
+	# {"oder": [Bedingung, Bedingung, …]}: eine reicht
+	if cond.has("oder") and not cond.oder.any(func(part: Dictionary) -> bool: return check(p, part)):
+		return false
 	if cond.has("auftrag") and p.progress.quest_state(cond.auftrag) != cond.get("stand", "aktiv"):
 		return false
 	if cond.has("gemerkt") and not p.progress.flags.has(cond.gemerkt):
@@ -898,7 +924,7 @@ func _start_quest(p: PlayerState, id: String) -> void:
 	if q.is_empty() or p.progress.quest_state(id) != "neu":
 		return
 	p.progress.quests[id] = "aktiv"
-	_say(p, GameData.text("auftrag_neu", [q.titel]))
+	_say(p, GameData.text("nebenauftrag_neu" if q.get("neben", false) else "auftrag_neu", [q.titel]))
 
 
 ## Sind alle Ziele eines Auftrags erfüllt?
@@ -950,41 +976,57 @@ func goal_text(p: PlayerState, goal: Dictionary) -> String:
 
 
 ## Was der Spieler als Nächstes tun soll (für den Hinweis „Ziel: …“). "" = nichts offen.
+## Hauptaufträge gehen vor, Nebenaufträge stehen nur da, wenn in der Geschichte gerade nichts offen ist.
 func objective(p: PlayerState) -> String:
-	for id: String in p.progress.quests:
-		var q := GameData.quest(id)
-		var quest_state: String = p.progress.quests[id]
-		if q.is_empty() or quest_state == "abgegeben":
-			continue
-		if quest_state == "fertig":
-			var giver: Dictionary = npcs.get(q.get("abgeben_bei", ""), {name = "Auftraggeber"})
-			return "Zurück zu %s" % giver.name
-		for goal: Dictionary in q.get("ziele", []):
-			if not goal_done(p, goal):
-				return goal_text(p, goal)
+	for side: bool in [false, true]:
+		for id: String in p.progress.quests:
+			var q := GameData.quest(id)
+			var quest_state: String = p.progress.quests[id]
+			if q.is_empty() or quest_state == "abgegeben" or bool(q.get("neben", false)) != side:
+				continue
+			var prefix := GameData.text("nebenauftrag_ziel") if side else ""
+			if quest_state == "fertig":
+				var giver: Dictionary = npcs.get(q.get("abgeben_bei", ""), {name = "Auftraggeber"})
+				return prefix + "Zurück zu %s" % giver.name
+			for goal: Dictionary in q.get("ziele", []):
+				if not goal_done(p, goal):
+					return prefix + goal_text(p, goal)
 	return ""
 
 
 ## Zeichen über einem NPC: "!" = neuer Auftrag, "?" = hier etwas erledigen oder abgeben, "" = nichts.
 func npc_marker(p: PlayerState, npc_id: String) -> String:
+	return _marker(p, npc_id)[0]
+
+
+## Gehört das Zeichen über dem NPC zu einem Nebenauftrag? (Dann ist es blau statt gelb.)
+func npc_marker_side(p: PlayerState, npc_id: String) -> bool:
+	return _marker(p, npc_id)[1]
+
+
+## [Zeichen, Nebenauftrag?]. Hauptaufträge gehen vor: erst „?“ und „!“ der Geschichte, dann die der Nebenaufträge.
+func _marker(p: PlayerState, npc_id: String) -> Array:
 	if not npc_visible(p, npc_id):
-		return ""
+		return ["", false]
 	var all_quests := GameData.get_file("auftraege")
-	for id: String in all_quests:
-		var q: Dictionary = all_quests[id]
-		var quest_state := p.progress.quest_state(id)
-		if quest_state == "fertig" and q.get("abgeben_bei", "") == npc_id:
-			return "?"
-		if quest_state == "aktiv":
-			for goal: Dictionary in q.get("ziele", []):
-				if goal.get("bei", "") == npc_id and not goal_done(p, goal):
-					return "?"
-	for id: String in all_quests:
-		var q: Dictionary = all_quests[id]
-		if q.get("start_bei", "") == npc_id and p.progress.quest_state(id) == "neu" \
-				and (not q.has("voraussetzung") or p.progress.quest_state(q.voraussetzung) == "abgegeben"):
-			return "!"
-	return ""
+	for side: bool in [false, true]:
+		for id: String in all_quests:
+			var q: Dictionary = all_quests[id]
+			if bool(q.get("neben", false)) != side:
+				continue
+			var quest_state := p.progress.quest_state(id)
+			if quest_state == "fertig" and q.get("abgeben_bei", "") == npc_id:
+				return ["?", side]
+			if quest_state == "aktiv":
+				for goal: Dictionary in q.get("ziele", []):
+					if goal.get("bei", "") == npc_id and not goal_done(p, goal) and check(p, goal.get("wenn", {})):
+						return ["?", side]
+		for id: String in all_quests:
+			var q: Dictionary = all_quests[id]
+			if bool(q.get("neben", false)) == side and q.get("start_bei", "") == npc_id and p.progress.quest_state(id) == "neu" \
+					and (not q.has("voraussetzung") or p.progress.quest_state(q.voraussetzung) == "abgegeben"):
+				return ["!", side]
+	return ["", false]
 
 
 ## Aktive Aufträge werden "fertig", sobald alle Ziele erfüllt sind (und wieder "aktiv", falls nicht mehr).
@@ -1022,6 +1064,22 @@ func _turn_in_quest(p: PlayerState, id: String) -> void:
 	var reward_items: Dictionary = reward.get("gegenstaende", {})
 	for item_id: String in reward_items:
 		_give_item(p, item_id, int(reward_items[item_id]))
+
+
+## Gegenstand aus der Tasche benutzen (z. B. die Bürste an der Statue). Wo und was dann passiert, steht in
+## data/gegenstaende.json unter "benutzen": {"feld": [x, y], "radius": 3, "dialog": "…", "sonst": "Meldung"}.
+func _use_item(p: PlayerState, item_id: String) -> void:
+	var use: Dictionary = GameData.item(item_id).get("benutzen", {})
+	if use.is_empty() or p.in_dialog() or p.progress.item_count(item_id) <= 0:
+		return
+	var spot := Vector2(float(use.feld[0]), float(use.feld[1]))
+	if (spot - p.pos).length() > float(use.get("radius", 2.0)):
+		_say(p, use.get("sonst", GameData.text("benutzen_nicht_hier", [GameData.item_name(item_id)])))
+		return
+	p.path.clear()
+	p.use_target = ""
+	start_dialog(p, use.dialog)
+	progress_changed.emit(p.id)
 
 
 func _give_gold(p: PlayerState, amount: int) -> void:

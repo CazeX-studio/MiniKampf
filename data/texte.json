@@ -1,5 +1,10 @@
 {
 	"auftrag_neu": "Neuer Auftrag: %s",
+	"nebenauftrag_neu": "Neuer Nebenauftrag: %s",
+	"nebenauftrag": "Nebenauftrag",
+	"nebenauftrag_ziel": "Nebenbei: ",
+	"benutzen": "Benutzen",
+	"benutzen_nicht_hier": "Hier kannst du %s nicht benutzen.",
 	"auftrag_fertig": "Auftrag erfüllt: %s – zurück zum Auftraggeber!",
 	"auftrag_abgegeben": "Auftrag abgeschlossen: %s",
 	"gold": "+%d Gold",

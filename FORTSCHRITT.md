@@ -3,7 +3,7 @@
 Hier steht, was fertig ist, was als Nächstes kommt und welche Fragen offen sind.
 Wird nach jedem Arbeitsschritt aktualisiert.
 
-## Aktueller Stand (2026-10-20)
+## Aktueller Stand (2026-10-21)
 
 - **Kampf-Sandbox** (Lernprojekt 2): alle 11 Klassen, Element-Sechseck, Duette, Zähmen, Test-Dungeon Pilzhöhle
   mit Urbaum-Entscheidung, Kampfauswertung. Der Kampf ist in Regeln (`battle_state.gd`) und Anzeige (`combat.gd`) getrennt.
@@ -15,6 +15,9 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
+- **Neu (21.10.): Figuren und Nebenaufträge aus Sitzung 21** in Kreuzweg: Wirtin Hanne mit Gasthaus Wegrast, Vogt Edmar,
+  Steinmetz Quill, die Kinder Pip und Lotte, die Wache heißt jetzt Brom. Fünf Nebenaufträge mit **blauem „!“ und „?“**
+  (Hauptaufträge bleiben gelb). Siehe „Schritt 21“ unten, Test-Liste unter „Was du testen kannst“.
 - **Platzhalter:** Alle Texte der Hauptfiguren (Ye, Mira, Ren, Marv, Lene, Bingo, Gesandte …) stehen in `data/dialoge.json`
   und werden von Marco noch geschrieben (Anleitung in `data/LIESMICH.md`).
 - Selbst gewählte Zahlen und Passiven: Abschnitt „Vorläufige Werte (Feinschliff am Ende)“ unten.
@@ -232,6 +235,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 | 15 | Parieren/Ausweichen mit normaler Zone und Perfekt-Zone | erledigt |
 | 16 | Kreuzweg-Demo Schritt 8: Klassenwahl und Abreise | erledigt |
 | 17 | Kreuzweg-Demo Schritt 9: Feinschliff (Musik, Hintergründe, Namen, Durchlauf-Test) | eingebaut, Marco testet am Stück |
+| 21 | Kreuzweg nach Sitzung 21: neue Figuren und Nebenaufträge (blaues Zeichen) | eingebaut, Marco testet |
 
 ## Aufgaben der Runde 1
 
@@ -525,6 +529,42 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     „Wählen“ gibt es erst am Tag der Abreise bei Ye. Nach der Probestunde geht es zurück zu diesem Bildschirm.
   - Tests: Welt, Übergang, Klassenwahl (mit Gesandten-Bildschirm), Netz, kompletter Durchlauf: alles richtig.
     Neue Vorführ-Szene `tests/karte_auto.tscn` (Übersicht der Stadt für Bildschirmfotos).
+
+- **Schritt 21 – Neue Figuren und Nebenaufträge** (aus Sitzung 21, „Kreuzweg im Detail“ in design.md):
+  - **Nebenaufträge haben ein blaues „!“ und „?“** (Hauptaufträge bleiben gelb). Hat eine Figur beides, gilt das
+    gelbe Zeichen der Geschichte. Im Auftragsbuch steht davor **„◆ Nebenauftrag:“** in Blau, die Meldung heißt
+    „Neuer Nebenauftrag: …“. Oben bei „Ziel:“ steht immer zuerst die Geschichte; ein Nebenauftrag erscheint dort nur,
+    wenn in der Geschichte gerade nichts offen ist, mit „Nebenbei:“ davor.
+  - **Neue Figuren:** **Wirtin Hanne** vor dem neuen **Gasthaus „Wegrast“** (an der Weststraße), **Vogt Edmar** am Brunnen,
+    **Steinmetz Quill** vor der Statue der Fünf, die Kinder **Pip und Lotte** auf dem Marktplatz (Südwesten).
+    **Wache Holm heißt jetzt Torwache Brom** (Name aus Sitzung 21) und sagt „Da geht's nirgendwohin. Befehl ist Befehl.“
+  - **Die fünf Nebenaufträge** (jeder bringt nebenbei etwas bei):
+    - **Hannes Kater** (Hanne, gleich nach der Anmeldung in der Gilde): Lotte fragen, Kater Brösel in der Gasse neben
+      Bingos Laden finden und mit **E / Leertaste / „Reden“** ansprechen. Lernziel: laufen, reden, Aktions-Taste.
+    - **Glanz für die Fünf** (Quill, nach Ye's erstem Auftrag): Quill gibt eine **Bürste**. Direkt an der Statue in der
+      **Tasche auf „Benutzen“** tippen. Unter dem Moos: die weggemeißelte sechste Zeile („… und der sechs…“).
+      Lernziel: Gegenstände benutzen.
+    - **Ein Festmahl** (Hanne, nach dem Kater): 3 Wiesenkraut und 2 Wildfleisch auf den Kreuzwegfeldern am Stadtrand
+      sammeln. Die Sammelpunkte erscheinen erst mit dem Auftrag. Lernziel: Sammeln.
+    - **Fünf Farben** (Edmar, nach dem ersten Gruppenkampf): fünf Festlaternen an die leeren Pfähle rund um den Marktplatz
+      hängen (jede in der Farbe ihrer Region, sie leuchten danach auch am Tag). Dann Ye am Tor fragen:
+      „Fünf Farben. Schön. … Fehlt nur eine.“ Zurück zu Edmar.
+    - **Die Dunkelheit spielen** (Pip, gleich nach der Anmeldung): Du bist die Dunkelheit und verlierst. Danach fragt Lotte:
+      „Warum hat die Dunkelheit auf der Statue eigentlich kein Gesicht?“
+  - **„Essen für Brom“** aus Sitzung 21 gibt es schon: Das ist der Hauptauftrag „Ein Korb für die Wache“ (Lene schickt dich
+    mit dem Essen zu Brom, er erzählt vom Weg, danach kommt Mira). Er bleibt deshalb ein Hauptauftrag mit gelbem Zeichen.
+    Siehe offene Fragen.
+  - **Noch nicht eingebaut:** die Mitschüler **Tessa und Gorm** (in der Demo heißen die Novizen-Mitstreiter Ida, Bo und Tom;
+    siehe offene Fragen) und „Kreuzweg verändert sich mit der Story“ (Akt 2 und 3 gibt es in der Demo noch nicht).
+  - **Platzhalter:** alle Texte der neuen Figuren (Stil nach dem Leitfaden „Sprache der Figuren“). Belohnungen (10–20 Gold,
+    30–80 Erfahrung, ein Heiltrank beim Festmahl) sind **vorläufig, Feinschliff am Ende**.
+  - **Neue Bausteine** (in `data/LIESMICH.md` erklärt): Aufträge mit `"neben": true`, **Orte** zum Benutzen (Kater,
+    Laternenpfähle), Gegenstände mit **„Benutzen“** in der Tasche, Sammelpunkte und Ziel-Zeichen mit Bedingung,
+    Bedingung „oder“.
+  - **Tests:** neuer Teil im Welt-Test (blaues Zeichen, Hauptauftrag geht vor, Kater mit der Aktions-Taste, Bürste weit weg
+    und an der Statue, Laternen, Ye erst danach mit „?“). Der Computer-Spieler im **kompletten Durchlauf erledigt jetzt
+    auch alle fünf Nebenaufträge** (geschätzte Spielzeit 20–22 statt 18 Minuten). Alle bisherigen Tests laufen weiter,
+    auch Netz und Durchlauf zu zweit.
     sie mit. (Im fertigen Spiel ist der erste Abschluss der über den Auftrag.) Auch in design.md eingetragen.
 
 ## Fertig in Runde 1
@@ -552,6 +592,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 ## Was du testen kannst
 
 Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spiel startet jetzt mit einem Menü.
+
+**Neu: Figuren und Nebenaufträge aus Sitzung 21** (Kreuzweg-Demo → „Neu beginnen“)
+1. Nach der Anmeldung bei Lene: Haben Wirtin Hanne (vor dem Gasthaus Wegrast an der Weststraße) und Pip (Marktplatz)
+   ein **blaues „!“**? Ist es gut vom gelben „!“ der Geschichte zu unterscheiden?
+2. **Hannes Kater:** Lotte fragen, dann den schwarzen Kater neben Bingos Laden suchen und mit E / „Reden“ ansprechen.
+3. **Glanz für die Fünf** bei Quill (vor der Statue): Tasche (I) öffnen, bei der Bürste auf „Benutzen“ tippen –
+   erst weit weg (Hinweis), dann direkt an der Statue.
+4. **Fünf Farben** bei Edmar (am Brunnen, nach dem ersten Gruppenkampf): Laternen aufhängen, dann zu Ye ans Tor.
+5. Auftragsbuch (J): Stehen die Nebenaufträge mit blauem „◆ Nebenauftrag“ da? Ist oben bei „Ziel:“ immer klar,
+   was die Geschichte als Nächstes will?
 
 **Neu: Größere Stadt und Gesandten-Stände** (Kreuzweg-Demo → „Neu beginnen“)
 1. Lauf einmal durch die Stadt: Ist sie groß genug? Erkennst du die fünf Straßen gut?
@@ -728,6 +778,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 ## Als Nächstes (Vorschläge)
 
 - Deine Rückmeldungen aus dem Test der ersten Stunde am Stück einarbeiten (Schwierigkeit, Länge, unklare Stellen).
+- Rückmeldungen zu den neuen Figuren und Nebenaufträgen aus Sitzung 21 (Farbe, Brom, Tessa und Gorm).
 - Dialoge der Hauptfiguren: Marco schreibt sie; Platzhalter stehen in `data/dialoge.json`.
 - Rückmeldungen zur Pilzhöhle einarbeiten (Schwierigkeit, Zahlen).
 - Lernprojekt 4 „Zusammen spielen“ ist gebaut: deine Rückmeldungen aus dem Test mit Freunden einarbeiten.
@@ -749,6 +800,15 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
     Weiterreichen kostet den Zug.
   - Monsterkarten der Dungeon-Monster gibt es in der Sandbox noch nicht (Zähmen schon).
 
+
+- **Sitzung 21 in der Demo:**
+  - **Farbe der Nebenaufträge:** Ich habe **Blau** genommen, weil Grün schon für „erfüllt“ im Auftragsbuch und für deinen
+    eigenen Namen steht. Passt das?
+  - **„Essen für Brom“** ist in der Demo schon der Hauptauftrag „Ein Korb für die Wache“ (führt zu Mira). Soll er so
+    bleiben, oder möchtest du zusätzlich einen kleinen Nebenauftrag, z. B. Brom in der Festnacht einen Teller von Hanne bringen?
+  - **Tessa und Gorm:** In der Demo kämpfen drei Novizen mit (Ida, Bo, Tom). Sollen sie Tessa und Gorm heißen
+    (dann zu zweit statt zu dritt), oder bleiben Ida, Bo und Tom?
+  - Passen die Plätze (Wegrast an der Weststraße, Edmar am Brunnen, Quill vor der Statue, Kinder im Südwesten des Marktplatzes)?
 
 - **Kreuzweg-Demo:** Passen die Positionen (Gilde im Nordosten, Bingos Laden im Westen, die sechste,
   zugewachsene Straße nach Südosten, Gesandte an „ihren“ Straßen)?

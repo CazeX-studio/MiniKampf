@@ -39,7 +39,7 @@ var local_id := "spieler"
 var _ground: Node2D
 var _objects: Node2D
 var _characters := {}
-## Sammelpunkt-Ziel ("punkt:0") -> Grafik
+## Sammelpunkt-Ziel ("punkt:0") und Ort ("ort:0") -> Grafik
 var _pickup_nodes := {}
 ## Schmuck-Grafik -> Bedingung, wann sie zu sehen ist
 var _deco_nodes := {}
@@ -156,6 +156,8 @@ func _ready() -> void:
 		_add_prop(prop)
 	for i in state.pickups.size():
 		_add_pickup("punkt:%d" % i)
+	for i in state.places.size():
+		_add_pickup("ort:%d" % i)
 	for deco: Dictionary in state.decorations:
 		_add_decoration(deco)
 	for id: String in state.npcs:
@@ -266,6 +268,7 @@ func _sync() -> void:
 		var npc_view: WorldCharacter = _characters["npc:" + id]
 		npc_view.visible = state.npc_visible(local, id)
 		npc_view.marker = state.npc_marker(local, id)
+		npc_view.marker_side = state.npc_marker_side(local, id)
 		# Namen nur in der Nähe zeigen (Zeichen ! und ? bleiben immer sichtbar)
 		var distance := (Vector2(state.npcs[id].cell) - local.pos).length()
 		npc_view.set_name_alpha(clampf((NAME_FADE_END - distance) / (NAME_FADE_END - NAME_FADE_START), 0.0, 1.0))
@@ -628,17 +631,53 @@ func _draw_prop(node: Node2D, kind: String, prop: Dictionary) -> void:
 
 
 
-## Ein Sammelpunkt (z. B. Silberkraut): kleine leuchtende Pflanze.
+## Ein Sammelpunkt (z. B. Silberkraut: kleine leuchtende Pflanze) oder ein Ort zum Benutzen (Kater, Laternenhaken).
 func _add_pickup(target: String) -> void:
 	var node := Node2D.new()
 	node.position = cell_center(Vector2(state.target_cell(target)))
-	node.draw.connect(func() -> void: _draw_pickup(node))
+	var art: String
+	if target.begins_with("ort:"):
+		art = state.places[int(target.substr(4))].art
+	else:
+		art = state.pickups[int(target.substr(6))].item
+	node.draw.connect(func() -> void: _draw_pickup(node, art))
 	_objects.add_child(node)
 	_pickup_nodes[target] = node
 
 
-func _draw_pickup(node: Node2D) -> void:
+func _draw_pickup(node: Node2D, art: String) -> void:
 	var glow := 0.5 + 0.5 * sin(_time * 3.0 + node.position.x)
+	match art:
+		"kater":
+			# Hannes Kater: kleine schwarze Katze, der Schwanz wippt
+			node.draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, 0.45))
+			node.draw_circle(Vector2.ZERO, 12.0, Color(0, 0, 0, 0.3))
+			node.draw_set_transform_matrix(Transform2D.IDENTITY)
+			var tail := Vector2(16, -22 + sin(_time * 4.0) * 4.0)
+			node.draw_line(Vector2(8, -6), tail, Color("1c1c22"), 3.0)
+			node.draw_circle(Vector2(0, -7), 9.0, Color("1c1c22"))
+			node.draw_circle(Vector2(-8, -15), 6.5, Color("1c1c22"))
+			node.draw_colored_polygon(PackedVector2Array([Vector2(-13, -18), Vector2(-12, -26), Vector2(-8, -20)]), Color("1c1c22"))
+			node.draw_colored_polygon(PackedVector2Array([Vector2(-7, -20), Vector2(-4, -26), Vector2(-3, -17)]), Color("1c1c22"))
+			node.draw_circle(Vector2(-10, -16), 1.5, Color("d8f060"))
+			node.draw_circle(Vector2(-6, -16), 1.5, Color("d8f060"))
+			return
+		"laternenhaken":
+			# Leerer Laternenpfahl, an dem eine Festlaterne fehlt
+			node.draw_circle(Vector2(0, -58), 14.0, Color(1.0, 0.9, 0.6, 0.10 + 0.12 * glow))
+			node.draw_rect(Rect2(-2, -50, 4, 50), Color("3a2a1a"))
+			node.draw_rect(Rect2(-8, -68, 16, 3), Color("3a2a1a"))
+			node.draw_line(Vector2(0, -65), Vector2(0, -58), Color("6a6a6a"), 2.0)
+			node.draw_arc(Vector2(0, -56), 3.0, 0.0, PI, 8, Color("6a6a6a"), 2.0)
+			return
+		"wildfleisch":
+			# Vom Jäger bereitgelegtes Fleisch, in Tuch gewickelt
+			node.draw_circle(Vector2(0, -8), 16.0, Color(1.0, 0.9, 0.8, 0.10 + 0.10 * glow))
+			node.draw_set_transform(Vector2(0, -6), 0.0, Vector2(1.0, 0.6))
+			node.draw_circle(Vector2.ZERO, 10.0, Color("e8dcc0"))
+			node.draw_set_transform_matrix(Transform2D.IDENTITY)
+			node.draw_circle(Vector2(0, -8), 5.0, Color("a0483a"))
+			return
 	node.draw_circle(Vector2(0, -10), 16.0, Color(0.8, 1.0, 0.9, 0.12 + 0.12 * glow))
 	for i in 3:
 		var angle := -PI / 2 + (i - 1) * 0.6
@@ -754,6 +793,10 @@ func _build_ui() -> void:
 	_panel_text.custom_minimum_size = Vector2(570, 330)
 	_panel_text.add_theme_font_size_override("normal_font_size", 16)
 	_panel_text.add_theme_font_size_override("bold_font_size", 17)
+	# „Benutzen“ in der Tasche (z. B. die Bürste an der Statue)
+	_panel_text.meta_clicked.connect(func(meta: Variant) -> void:
+		_panel.visible = false
+		_send({type = "benutzen", gegenstand = str(meta)}))
 	panel_box.add_child(_panel_text)
 	var close := Button.new()
 	close.text = "Schließen"
@@ -1314,7 +1357,9 @@ func _fill_panel() -> void:
 				continue
 			var quest_state: String = p.progress.quests[id]
 			var color := "8affc1" if quest_state == "fertig" else ("a0a0a0" if quest_state == "abgegeben" else "ffffff")
-			lines.append("[b][color=#%s]%s[/color][/b]  (%s)" % [color, q.get("titel", id), GameData.text("stand_" + quest_state)])
+			# Nebenaufträge stehen mit blauem Zeichen da, damit sie sich von der Geschichte abheben
+			var tag := "[color=#5ab8ff]◆ %s:[/color] " % GameData.text("nebenauftrag") if q.get("neben", false) else ""
+			lines.append("%s[b][color=#%s]%s[/color][/b]  (%s)" % [tag, color, q.get("titel", id), GameData.text("stand_" + quest_state)])
 			if quest_state != "abgegeben":
 				lines.append(q.get("beschreibung", ""))
 				for goal: Dictionary in q.get("ziele", []):
@@ -1350,7 +1395,8 @@ func _fill_panel() -> void:
 		lines.append("")
 		for id: String in p.progress.items:
 			var item := GameData.item(id)
-			lines.append("[b]%d × %s[/b] – %s" % [p.progress.items[id], item.get("name", id), item.get("beschreibung", "")])
+			var use := "  [url=%s][color=#5ab8ff][%s][/color][/url]" % [id, GameData.text("benutzen")] if item.has("benutzen") else ""
+			lines.append("[b]%d × %s[/b] – %s%s" % [p.progress.items[id], item.get("name", id), item.get("beschreibung", ""), use])
 		if p.progress.items.is_empty():
 			lines.append(GameData.text("tasche_leer"))
 	_panel_text.text = "\n".join(lines)

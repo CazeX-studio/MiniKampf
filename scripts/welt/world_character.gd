@@ -10,6 +10,10 @@ var moving := false
 var facing := 1
 ## Zeichen über dem Kopf: "!" = neuer Auftrag, "?" = hier etwas erledigen, "" = nichts
 var marker := ""
+## Gehört das Zeichen zu einem Nebenauftrag? Dann ist es blau statt gelb.
+var marker_side := false
+const MARKER_COLOR := Color("ffd34d")
+const MARKER_SIDE_COLOR := Color("5ab8ff")
 ## Wie schnell die Steh-Animation läuft (Bilder pro Sekunde). NPCs stehen ruhiger als Spieler.
 var idle_fps := 6.0
 
@@ -79,7 +83,7 @@ func _draw() -> void:
 		var bob := sin(_time * 2.5) * 1.5
 		var pos := Vector2(-20, _head_y - 6 + bob)
 		draw_string_outline(font, pos, marker, HORIZONTAL_ALIGNMENT_CENTER, 40, 30, 7, Color.BLACK)
-		draw_string(font, pos, marker, HORIZONTAL_ALIGNMENT_CENTER, 40, 30, Color("ffd34d"))
+		draw_string(font, pos, marker, HORIZONTAL_ALIGNMENT_CENTER, 40, 30, MARKER_SIDE_COLOR if marker_side else MARKER_COLOR)
 
 
 ## Animation an einer anderen Stelle beginnen lassen (damit nicht alle Figuren gleichzeitig wippen).

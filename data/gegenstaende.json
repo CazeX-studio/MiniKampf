@@ -3,5 +3,10 @@
 	"heiltrank": {"name": "Heiltrank", "beschreibung": "Heilt im Kampf etwas Leben.", "preis": 15},
 	"sternensplitter": {"name": "Sternensplitter", "beschreibung": "Ein Splitter aus dem Sternenfall. Belohnung aus Dungeons. Er summt leise. (Bingo kauft ihn nicht an.)", "preis": 0},
 	"essenskorb": {"name": "Essenskorb", "beschreibung": "Brot, Käse und ein Krug Tee für die Wache am alten Südost-Weg.", "preis": 0},
+	"buerste": {"name": "Bürste", "beschreibung": "Eine harte Bürste von Steinmetz Quill. Damit putzt man die Statue der Fünf.", "preis": 0,
+		"benutzen": {"feld": [21.5, 21.5], "radius": 3.5, "dialog": "statue_putzen", "sonst": "Die Bürste ist für die Statue der Fünf auf dem Marktplatz. Stell dich direkt daneben."}},
+	"festlaterne": {"name": "Festlaterne", "beschreibung": "Eine Laterne für das Fest der fünf Wege, in der Farbe einer Region.", "preis": 0},
+	"wiesenkraut": {"name": "Wiesenkraut", "beschreibung": "Würziges Kraut von den Kreuzwegfeldern. Hanne braucht es fürs Festmahl.", "preis": 1},
+	"wildfleisch": {"name": "Wildfleisch", "beschreibung": "Ein Stück Fleisch, das der Jäger draußen für Hanne bereitgelegt hat.", "preis": 0},
 	"sternentafel": {"name": "Sternentafel", "beschreibung": "Spielfeld für Kreuzweg-Karten mit neun leuchtenden Feldern, angetrieben von einem Sternensplitter. Viel zu teuer.", "preis": 5000}
 }
