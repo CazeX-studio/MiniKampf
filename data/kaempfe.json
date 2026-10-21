@@ -93,7 +93,7 @@
 		"gruppe_staerke": 0.25,
 		"verloren_text": "Alles wird schwarz …",
 		"hinweise": {
-			"erster_zug": "Ein Sternenpanzer schützt den Sternenfresser: Normale Treffer prallen fast ab. Nur eine PERFEKTE PARADE erschüttert ihn – dann ist er kurz verwundbar und ihr könnt zuschlagen. Beeilt euch: Nach 10 Zügen explodiert der Splitter in seinem Bauch! Schild hoch, Schild runter!"
+			"erster_zug": "Ein Sternenpanzer schützt den Sternenfresser: Normale Treffer prallen fast ab. Nur eine PERFEKTE PARADE erschüttert ihn – dann ist er kurz verwundbar und ihr könnt zuschlagen. Achtung beim „Sternenschlund“: Wer ihn nicht PERFEKT pariert, wird verschlungen! Und beeilt euch: Nach 8 Zügen explodiert der Splitter in seinem Bauch! Schild hoch, Schild runter!"
 		}
 	}
 }

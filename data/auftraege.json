@@ -178,6 +178,18 @@
 		"abgeben_bei": "edmar",
 		"belohnung": {"gold": 20, "erfahrung": 80}
 	},
+	"brief_vom_tor": {
+		"titel": "Ein Brief vom Tor",
+		"neben": true,
+		"beschreibung": "Torwache Brom darf seinen Posten nicht verlassen. Er bittet dich, einen Brief zu Wirtin Hanne vor dem Gasthaus Wegrast zu bringen – und ihm zu sagen, was sie dazu meint.",
+		"start_bei": "wache",
+		"voraussetzung": "korb_fuer_die_wache",
+		"ziele": [
+			{"art": "gemerkt", "merken": "brief_abgegeben", "bei": "hanne", "text": "Den Brief zu Hanne bringen"}
+		],
+		"abgeben_bei": "wache",
+		"belohnung": {"gold": 10, "erfahrung": 60}
+	},
 	"dunkelheit_spielen": {
 		"titel": "Die Dunkelheit spielen",
 		"neben": true,

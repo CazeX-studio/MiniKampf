@@ -48,7 +48,7 @@ Abenteurergilde, Bingos Laden, sechs Straßen (die sechste nach Südosten ist zu
   (Festlaternen aufhängen); Pip und Lotte: „Die Dunkelheit spielen“.
 - **Nacht des Sternenfalls (Stufe 8–10):** Fest der fünf Wege bei Nacht mit Festlaternen, Marv fragt nach der Sternentafel,
   der Sternenfall verwandelt einen Feldschleim in den Sternenfresser (Boss mit Sternenpanzer: nur perfekte Paraden
-  öffnen ihn, nach 10 Zügen explodiert er). Sieg = Erfolg „Schild hoch, Schild runter“, Ren klaut den Splitter;
+  öffnen ihn, den „Sternenschlund“ muss man perfekt parieren, nach 8 Zügen explodiert er). Sieg = Erfolg „Schild hoch, Schild runter“, Ren klaut den Splitter;
   Niederlage = Ren rettet die Gruppe.
 - **Klassenwahl und Abreise:** Am Morgen nach dem Sternenfall öffnet Ye die Klassenwahl: alle 11 Klassen mit Rolle,
   Region, Lehrmeister, Mechanik, Fünfeck-Diagramm (Schaden, Schutz, Heilung, Unterstützung, Schwierigkeit), Ult-Vorschau

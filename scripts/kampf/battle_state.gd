@@ -628,11 +628,13 @@ func _enemy_turn(e: Fighter) -> void:
 		var targets: Array[Fighter] = []
 		if attack.get("all", false):
 			targets = allies()
+		elif attack.get("ziel", "") == "spieler":
+			targets = [pick_player_target()]
 		elif attack.kind == "melee":
 			targets = [pick_target()]
 		else:
 			targets = [pick_target(attack.get("back", false), true)]
-		await enemy_attack(e, targets, attack.base, attack.kind, attack.name)
+		await enemy_attack(e, targets, attack.base, attack.kind, attack.name, attack.get("toedlich", false))
 		e.step += 1
 		# Zeitbombe (Sternenfresser): nach so vielen eigenen Zügen stirbt die ganze Gruppe
 		if data.has("wipe_nach") and e.is_alive() and e.step >= int(data.wipe_nach):
@@ -691,8 +693,15 @@ func pick_target(prefer_back := false, anyone := false) -> Fighter:
 	return pick(back)
 
 
+## Ziel für Angriffe, die echte Spieler treffen sollen (Sternenschlund): ein Spieler, kein Mitstreiter des Computers.
+func pick_player_target() -> Fighter:
+	var players := allies().filter(func(h: Fighter) -> bool: return not computer.has(h) and h.reaction != "")
+	return pick(players) if not players.is_empty() else pick_target()
+
+
 ## Ein Gegner-Angriff mit Chance auf perfekte Reaktion.
-func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String, attack_name: String) -> void:
+## deadly: Ohne perfekte Reaktion ist das Ziel sofort besiegt (Sternenschlund des Sternenfressers).
+func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String, attack_name: String, deadly := false) -> void:
 	# Der Roboter fängt Angriffe auf den Verbündeten ab, den er beschützt
 	var targets: Array[Fighter] = []
 	var mechanic := hero("mechanic")
@@ -749,6 +758,10 @@ func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String
 			_last_crit = false
 			_last_eff = 1.0
 			skills.on_perfect_reaction(t, e)
+		elif deadly:
+			float_text(t, "Verschlungen!", Color("d0a0ff"), 78)
+			add_log("[color=#d0a0ff][b]%s wird vom %s verschlungen![/b][/color]" % [t.display_name, attack_name])
+			apply_damage(t, t.hp + t.shield_total() + 999, e, kind)
 		elif grade == REACT_NORMAL and t.reaction != "":
 			# Normal pariert oder ausgewichen: nur ein Teil des Schadens kommt an
 			float_text(t, "Pariert" if t.reaction == "parry" else "Ausgewichen", Color("cfe2ff"), 78)

@@ -293,6 +293,9 @@
 		"hinweis": "PLATZHALTER-TEXTE: Torwache Brom am zugewachsenen sechsten Weg (hieß vorher Holm, Name aus Sitzung 21).",
 		"einstieg": [
 			{"wenn": {"auftrag": "korb_fuer_die_wache", "stand": "aktiv"}, "knoten": "korb"},
+			{"wenn": {"auftrag": "brief_vom_tor", "stand": "fertig"}, "knoten": "brief_antwort"},
+			{"wenn": {"auftrag": "brief_vom_tor", "stand": "aktiv"}, "knoten": "brief_wartet"},
+			{"wenn": {"auftrag": "brief_vom_tor", "stand": "neu", "und": [{"auftrag": "korb_fuer_die_wache", "stand": "abgegeben"}]}, "knoten": "brief"},
 			{"knoten": "weg"}
 		],
 		"knoten": {
@@ -306,6 +309,18 @@
 			"wohin": {"wer": "Brom", "text": "Nirgendwohin. Eine alte Straße, zugewachsen. Befehl der Fünf: Niemand geht da lang.", "weiter": "wegschicken"},
 			"warum": {"wer": "Brom", "text": "Weil die Fünf es so wollen. Das war schon so, bevor ich Wache wurde. Mein Vater stand hier auch schon.", "weiter": "wegschicken"},
 			"wegschicken": {"wer": "Brom", "text": "Genug gefragt. Geh zurück in die Stadt, Novize. Hier gibt es nichts für dich.", "aktionen": [{"auftrag_starten": "leises_singen"}]},
+			"brief": {"wer": "Brom", "text": "Du schon wieder. … Hör mal. Ich darf hier nicht weg. Befehl ist Befehl.", "weiter": "brief2"},
+			"brief2": {"wer": "Brom", "text": "Bringst du das zu Hanne im Wegrast? Und … sag mir, was sie gesagt hat. Ganz genau.", "antworten": [
+				{"text": "Ein Liebesbrief?", "weiter": "brief3"},
+				{"text": "Mach ich.", "aktionen": [{"auftrag_starten": "brief_vom_tor"}, {"gegenstand": "brief", "anzahl": 1}]},
+				{"text": "Gerade nicht."}
+			]},
+			"brief3": {"wer": "Brom", "text": "Ein … Dienstschreiben. Sehr wichtig. Nicht lesen!", "aktionen": [{"auftrag_starten": "brief_vom_tor"}, {"gegenstand": "brief", "anzahl": 1}]},
+			"brief_wartet": {"wer": "Brom", "text": "Warst du schon bei ihr? Nein? Dann lauf! … Bitte."},
+			"brief_antwort": {"wer": "Brom", "text": "Und? Was hat sie gesagt?", "antworten": [
+				{"text": "„Komm am Festabend vorbei. Befehl ist Befehl.“", "weiter": "brief_ende"}
+			]},
+			"brief_ende": {"wer": "Brom", "text": "Sie … hat Ja gesagt? Dann muss ich am Fest jemanden finden, der für mich Wache steht. Danke, Novize. Wirklich.", "aktionen": [{"auftrag_abgeben": "brief_vom_tor"}]},
 			"weg": {"wer": "Brom", "text": "Da geht's nirgendwohin. Befehl ist Befehl."}
 		}
 	},
@@ -384,6 +399,7 @@
 	"hanne": {
 		"hinweis": "PLATZHALTER-TEXTE: Wirtin Hanne vor dem Gasthaus Wegrast (Nebenaufträge „Hannes Kater“ und „Ein Festmahl“). Herzlich, laut, weiß jedes Gerücht.",
 		"einstieg": [
+			{"wenn": {"auftrag": "brief_vom_tor", "stand": "aktiv", "nicht_gemerkt": "brief_abgegeben"}, "knoten": "brief"},
 			{"wenn": {"auftrag": "hannes_kater", "stand": "fertig"}, "knoten": "kater_zurueck"},
 			{"wenn": {"auftrag": "hannes_kater", "stand": "aktiv"}, "knoten": "kater_wartet"},
 			{"wenn": {"auftrag": "hannes_kater", "stand": "neu", "und": [{"auftrag": "ankunft", "stand": "abgegeben"}]}, "knoten": "kater"},
@@ -407,6 +423,8 @@
 			]},
 			"festmahl_wartet": {"wer": "Hanne", "text": "Drei Bund Wiesenkraut und zwei Stück Fleisch, Schätzchen. Die Felder liegen am Stadtrand, da, wo die Straßen rausführen."},
 			"festmahl_zurueck": {"wer": "Hanne", "text": "Riecht das gut! So wahr die fünf Wege, das wird ein Festmahl! Komm am Festabend vorbei, du kriegst die erste Schüssel.", "aktionen": [{"auftrag_abgeben": "festmahl"}]},
+			"brief": {"wer": "Hanne", "text": "Ein Brief? Für mich? Von … BROM? *liest* … Dieser alte Brummbär. Schreibt wie ein Wachbuch.", "weiter": "brief2"},
+			"brief2": {"wer": "Hanne", "text": "Sag ihm, er soll am Festabend vorbeikommen. Und sag ihm: Befehl ist Befehl.", "aktionen": [{"merken": "brief_abgegeben"}, {"gegenstand": "brief", "anzahl": -1}]},
 			"geruecht": {"wer": "Hanne", "text": "Weißt du, was man sich erzählt? Am alten Südost-Tor soll es nachts summen. Brom sagt, das ist der Wind. Pah!"}
 		}
 	},

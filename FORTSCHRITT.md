@@ -552,8 +552,10 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     - **Die Dunkelheit spielen** (Pip, gleich nach der Anmeldung): Du bist die Dunkelheit und verlierst. Danach fragt Lotte:
       „Warum hat die Dunkelheit auf der Statue eigentlich kein Gesicht?“
   - **„Essen für Brom“** aus Sitzung 21 gibt es schon: Das ist der Hauptauftrag „Ein Korb für die Wache“ (Lene schickt dich
-    mit dem Essen zu Brom, er erzählt vom Weg, danach kommt Mira). Er bleibt deshalb ein Hauptauftrag mit gelbem Zeichen.
-    Siehe offene Fragen.
+    mit dem Essen zu Brom, er erzählt vom Weg, danach kommt Mira). Er bleibt ein Hauptauftrag mit gelbem Zeichen.
+  - **Neu nach deinem Wunsch: „Ein Brief vom Tor“** (Brom, nach dem Korb): Brom darf seinen Posten nicht verlassen und gibt
+    dir einen Brief für **Hanne** („Ein … Dienstschreiben. Nicht lesen!“). Hanne: „Dieser alte Brummbär … Sag ihm, er soll am
+    Festabend vorbeikommen. Befehl ist Befehl.“ Zurück zu Brom mit ihrer Antwort. Platzhalter-Texte.
   - **Tessa und Gorm statt Ida, Bo und Tom** (deine Entscheidung vom 21.10.): Die Novizen-Mitstreiter heißen jetzt
     Tessa (übereifrig) und Gorm (ängstlich) und sind **zu zweit statt zu dritt** – im ersten Gruppenkampf, in den
     Probestunden und beim Sternenfresser. Beim Zusammenspielen füllen sie die Gruppe bis **drei** auf (zwei Spieler + einer
@@ -561,8 +563,10 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     - **Gruppenkampf neu abgestimmt**, weil einer weniger mitkämpft: Er wäre sonst viel schwerer geworden (8 statt 25 von 30
       Siegen). Jetzt hat die zweite Welle nur noch **zwei Rüpelkobolde** (vorher vier Gegner). Gemessen: 48 von 60 Siegen,
       also etwa so oft wie vorher (25 von 30). **Vorläufig, Feinschliff am Ende.**
-    - **Sternenfresser** wird mit zwei Mitstreitern eher etwas leichter (gemessen 22 von 60 statt vorher etwa 8 von 30).
-      Mehr Leben für ihn ändert daran kaum etwas, deshalb habe ich ihn gelassen – siehe offene Fragen.
+    - **Sternenfresser schwerer** (deine Entscheidung vom 21.10.): Neuer Angriff **„Sternenschlund“** – er trifft immer einen
+      Spieler (nie Tessa oder Gorm), wird einen Zug vorher angekündigt („Nur eine PERFEKTE Parade rettet dich!“), und wer
+      ihn nicht perfekt pariert, ist sofort besiegt. Dazu explodiert der Splitter jetzt **nach 8 statt 10 Zügen**.
+      Gemessen (Computer-Spieler pariert die Hälfte): **12 von 60 Siegen** (vorher 22 von 60). **Vorläufig, Feinschliff am Ende.**
   - **Noch nicht eingebaut:** „Kreuzweg verändert sich mit der Story“ (Akt 2 und 3 gibt es in der Demo noch nicht).
   - **Platzhalter:** alle Texte der neuen Figuren (Stil nach dem Leitfaden „Sprache der Figuren“). Belohnungen (10–20 Gold,
     30–80 Erfahrung, ein Heiltrank beim Festmahl) sind **vorläufig, Feinschliff am Ende**.
@@ -610,6 +614,8 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 4. **Fünf Farben** bei Edmar (am Brunnen, nach dem ersten Gruppenkampf): Laternen aufhängen, dann zu Ye ans Tor.
 5. Auftragsbuch (J): Stehen die Nebenaufträge mit blauem „◆ Nebenauftrag“ da? Ist oben bei „Ziel:“ immer klar,
    was die Geschichte als Nächstes will?
+6. Nach dem Korb für Brom: Hat er ein blaues „!“? Bring seinen Brief zu Hanne und ihre Antwort zurück.
+7. Sternenfresser: Kommt die Warnung vor dem „Sternenschlund“ rechtzeitig, und fühlt sich der Kampf jetzt „kaum schaffbar“ an?
 
 **Neu: Größere Stadt und Gesandten-Stände** (Kreuzweg-Demo → „Neu beginnen“)
 1. Lauf einmal durch die Stadt: Ist sie groß genug? Erkennst du die fünf Straßen gut?
@@ -810,15 +816,12 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 
 
 - **Sitzung 21 in der Demo:**
-  - **Farbe der Nebenaufträge:** Ich habe **Blau** genommen, weil Grün schon für „erfüllt“ im Auftragsbuch und für deinen
-    eigenen Namen steht. Passt das?
-  - **„Essen für Brom“** ist in der Demo schon der Hauptauftrag „Ein Korb für die Wache“ (führt zu Mira). Soll er so
-    bleiben, oder möchtest du zusätzlich einen kleinen Nebenauftrag, z. B. Brom in der Festnacht einen Teller von Hanne bringen?
+  - ~~Farbe der Nebenaufträge?~~ Entschieden 21.10.: Blau.
+  - ~~„Essen für Brom“?~~ Entschieden 21.10.: zusätzlich ein Nebenauftrag mit einem Brief – eingebaut als „Ein Brief vom Tor“.
   - ~~Tessa und Gorm?~~ Entschieden 21.10.: Tessa und Gorm, eingebaut.
   - Passen die Plätze (Wegrast an der Weststraße, Edmar am Brunnen, Quill vor der Statue, Kinder im Südwesten des Marktplatzes)?
 
 - **Kreuzweg-Demo:** Passen die Positionen (Gilde im Nordosten, Bingos Laden im Westen, die sechste,
   zugewachsene Straße nach Südosten, Gesandte an „ihren“ Straßen)?
 - **Sternenfresser:** Mit Heiltränken schafft der Computer ihn etwa jedes zweite Mal. Soll er schwerer werden?
-  Seit Tessa und Gorm (zu zweit) gewinnt der Computer-Spieler ohne Tränke etwa jedes dritte Mal (vorher jedes vierte).
-  design.md sagt „kaum schaffbar“. Vorschlag: kürzere Zeit bis zur Explosion (z. B. 8 statt 10 Züge).
+  → Entschieden 21.10.: schwerer. Eingebaut: „Sternenschlund“ (nur perfekte Parade rettet) und Explosion nach 8 Zügen.

@@ -195,9 +195,9 @@ const ENEMIES := {
 		attacks = [{name = "Übungsschwert", base = 7, kind = "melee"}]},
 	# Nacht des Sternenfalls (Kreuzweg-Demo): Ein Feldschleim hat einen Splitter gefressen
 	"sternenfresser": {name = "Der Sternenfresser", element = "Sternenkraft", hp = 240, tempo = 9, big = true,
-		panzer = 0.1, erschuettert = 2, wipe_nach = 10, wipe_text = "Der Splitter im Bauch des Sternenfressers explodiert!",
+		panzer = 0.1, erschuettert = 2, wipe_nach = 8, wipe_text = "Der Splitter im Bauch des Sternenfressers explodiert!",
 		attacks = [{name = "Sternenschlag", base = 28, kind = "melee"}, {name = "Splitterregen", base = 14, kind = "magic", all = true},
-			{name = "Sternenschlag", base = 28, kind = "melee"}, {name = "Leuchtender Biss", base = 20, kind = "melee"}]},
+			{name = "Sternenschlund", base = 28, kind = "melee", ziel = "spieler", toedlich = true}, {name = "Leuchtender Biss", base = 20, kind = "melee"}]},
 }
 
 ## Kämpfe zur Auswahl. Jede Welle ist eine Liste von Gegnern.
