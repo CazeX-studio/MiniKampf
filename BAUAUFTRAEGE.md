@@ -101,6 +101,19 @@ Status: offen / in Arbeit / fertig
 - **Schon da:** Bingos Laden in Kreuzweg verkauft Heiltränke (mit „Zu wenig Gold“). Offen sind die Grundmaterialien und die neuen Münzen.
 - **Status:** offen
 
+## Projekt 7: Tag und Nacht
+_Aus Marcos Entscheidung vom 22.10.2026: Tageszeit nach der echten Uhrzeit, nachts andere Monster und eigene Stimmung._
+
+### Schritt 1: Tageszeit nach der echten Uhrzeit
+- **Ziel:** Das Licht wechselt fließend zwischen Morgen, Tag, Abend und Nacht. Nachts ist die Welt dunkler, Laternen, Fenster und Fackeln leuchten stärker. Ein Testknopf stellt die Uhrzeit vor.
+- **So testest du es:** Mit dem Testknopf die Uhrzeit auf Abend und Nacht stellen: Die Welt wird langsam dunkler und die Lichter wirken stärker.
+- **Status:** offen
+
+### Schritt 2: Nachts andere Monster
+- **Ziel:** In der Wildnis stehen nachts andere Monster als tagsüber.
+- **So testest du es:** Testknopf auf Nacht: Auf dem Weg nach Grünwacht stehen andere Monster, auf Tag wieder die gewohnten.
+- **Status:** offen
+
 ## Später (wartet auf andere Teile des Spiels)
 - Taschen vom Schneider und Lagerfeuer-Essen (brauchen Berufe)
 - Marktstand-Gebühr (braucht den Markt)
@@ -108,4 +121,4 @@ Status: offen / in Arbeit / fertig
 - Testversion bis Stufe 20 mit Kauf (braucht Online-Konten)
 - Sternen-Glanz und Siegel-Zähler (braucht den Server)
 - Erste eigene Grafiken (wartet auf die Look-Bibel aus Thema 12)
-- Tag und Nacht in der Welt (wartet auf Marcos Entscheidungen: wie lang ein Tag ist und was sich nachts ändert; das Licht aus Projekt 1 ist die Grundlage)
+- Nachts geschlossene Läden und andere NPCs (Erweiterung von Tag und Nacht, Projekt 7)
