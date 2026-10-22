@@ -12,6 +12,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
   Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
   gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
+- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1 „Licht“ fertig (22.10.). Nächster Schritt: einheitliches Pixel-Paket.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -38,6 +39,26 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   und werden von Marco noch geschrieben (Anleitung in `data/LIESMICH.md`).
 - Selbst gewählte Zahlen und Passiven: Abschnitt „Vorläufige Werte (Feinschliff am Ende)“ unten.
 - Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
+
+## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
+
+- **Projekt 1, Schritt 1 – Licht wie bei Octopath Traveler** (22.10., fertig):
+  - Lichtquellen werfen jetzt einen **weichen, flackernden Lichtschein** auf Boden, Häuser und Figuren:
+    Laternen, Fackeln, Lagerfeuer, die Glut in der Schmiede, Leuchtpilze, Sternensplitter (Herz des Urbaums,
+    Rowans Grab, Splitter-Bär, Krater nach dem Sternenfall), der Silberhirsch und die leuchtenden Kräuter.
+    Nachts beim Fest leuchten die fünf Festlaternen in ihren Farben auf den Marktplatz.
+  - **Kreuzweg** ist tagsüber leicht abgedunkelt, damit das Licht wirkt. Neu: fünf **Straßenlaternen** an den Ecken
+    des Marktplatzes, vor Bingos Laden und am Gasthaus, eine **Fackel** bei der Torwache, und aus der Tür der
+    **Schmiede** leuchtet die Glut der Esse.
+  - **Pilzhöhle** ist dunkler als vorher; sechs **Wandfackeln** (am Eingang, zwischen den Hallen und bei der
+    Wurzelmutter) und die Leuchtpilze geben Licht.
+  - Alle Lichtarten (Farbe, Größe, Stärke, Flackern) stehen an einer Stelle: `scripts/welt/licht.gd`.
+    Laternen und Fackeln in Kreuzweg stehen in `data/kreuzweg.json` unter `lichter`, Wandfackeln in den Karten
+    als Zeichen `F` (`data/karten.json`).
+  - Noch ohne Licht: der Kampfbildschirm (auch der Kampf in der Pilzhöhle).
+  - **So testest du es:** Durch Kreuzweg laufen: Die Laternen am Marktplatz und die Fackel bei der Wache werfen
+    einen warmen Schein, aus der Schmiede glüht es. Am Fest-Abend leuchten die Festlaternen bunt. Dann in die
+    Pilzhöhle: Fackeln und Pilze werfen Licht in die dunkle Höhle, das Herz des Urbaums glüht lila.
 
 ## Aufgaben Lernprojekt 5 „Grünwacht“ (Fahrplan in `GRUENWACHT_PLAN.md`)
 

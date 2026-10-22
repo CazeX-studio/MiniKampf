@@ -11,7 +11,7 @@ Status: offen / in Arbeit / fertig
 ### Schritt 1: Licht wie bei Octopath Traveler
 - **Ziel:** Lichtquellen wie Fackeln, Laternen, leuchtende Sternensplitter und Glut, dazu ein leichtes Abdunkeln der Umgebung, damit das Licht wirkt.
 - **So testest du es:** Kreuzweg und die Pilzhöhle ansehen, die Lichter werfen einen Schein und die Splitter glühen.
-- **Status:** offen
+- **Status:** fertig (22.10.)
 
 ### Schritt 2: Einheitliches Pixel-Paket
 - **Ziel:** Ein einheitliches kostenloses Pixel-Paket (freie Lizenz) im Stil von Ragnarok und Octopath. Claude Code schlägt vorher zwei bis drei Pakete zur Auswahl vor und stellt nach Marcos Wahl alle Platzhalter darauf um.
