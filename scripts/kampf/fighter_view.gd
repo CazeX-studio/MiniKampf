@@ -115,11 +115,16 @@ var _home := Vector2.ZERO
 var _plate := Rect2()
 var _shader := ShaderMaterial.new()
 var _glow_color := Color.WHITE
+## Hält das Splitterlicht (Pilzhöhle, Vorbote): leuchtet selbst lila (wird von der Kampfanzeige gesetzt)
+var splitter_light := false
+var _halo: Node2D
 var _glow := 0.0
 var _flash := 0.0
 ## Lebenspunkte, die gerade angezeigt werden. Die Anzeige setzt sie im Takt der abgespielten Treffer,
 ## damit die Leiste erst sinkt, wenn der Treffer zu sehen ist (-1 = immer den echten Wert zeigen).
 var shown := -1
+## Licht des Ortes auf allen Figuren (Höhle dunkler, Nacht bläulich), siehe Backdrop.fighter_light
+static var light := Color.WHITE
 
 
 func setup(p_fighter: Fighter) -> void:
@@ -149,8 +154,18 @@ func setup(p_fighter: Fighter) -> void:
 	body.flip_h = fighter.is_ally()
 	body.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	body.material = _shader
-	body.self_modulate = look.get("tint", Color.WHITE)
+	body.self_modulate = look.get("tint", Color.WHITE) * light
 	add_child(body)
+
+	# Schein des Splitterlichts (nur sichtbar, solange die Figur es hält)
+	_halo = Node2D.new()
+	_halo.material = Fx.add_material()
+	_halo.visible = false
+	_halo.draw.connect(func() -> void:
+		var r := maxf(sprite_size.x, sprite_size.y) * (0.95 + 0.08 * sin(_time * 4.0))
+		var c := body.position + Vector2(0, -sprite_size.y * 0.45)
+		_halo.draw_texture_rect(Fx.glow_texture(), Rect2(c - Vector2(r, r), Vector2(r, r) * 2.0), false, Color(0.8, 0.6, 1.0, 0.55)))
+	add_child(_halo)
 
 	if fighter.big:
 		_plate = Rect2(Vector2(0, sprite_size.y + 8), BOSS_PLATE_SIZE)
@@ -186,6 +201,11 @@ func _process(delta: float) -> void:
 		outline = Color(COL_TARGET, 0.5 + 0.5 * sin(_time * 8.0))
 	elif _glow > 0.0:
 		outline = Color(_glow_color, _glow)
+	elif splitter_light:
+		outline = Color(Color("e0c8ff"), 0.6 + 0.3 * sin(_time * 4.0))
+	_halo.visible = splitter_light
+	if splitter_light:
+		_halo.queue_redraw()
 	_shader.set_shader_parameter("outline_color", outline)
 	_shader.set_shader_parameter("flash", _flash)
 	queue_redraw()

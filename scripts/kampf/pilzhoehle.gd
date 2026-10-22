@@ -387,6 +387,7 @@ func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 		"lantern":
 			darkness = maxi(darkness - 2, 0)
 			c.set_darkness(darkness * DARKNESS_STEP)
+			c.light_lantern(f)
 			c.burst(f, Color("ffd36b"), 160.0)
 			c.add_log("%s entzündet eine Laterne. Die Dunkelheit weicht." % f.display_name)
 		"pass_light":

@@ -83,7 +83,7 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
 - **Aktionen:** `{"effekt": "sternenfall"}` (Lichtblitz und Wackeln), `{"erfolg": "schild_hoch"}` (Erfolg freischalten).
 - **`kreuzweg.json` → `deko`:** Schmuck, der nur unter einer Bedingung zu sehen ist (`festlaterne`, `krater`).
   Der gemerkte Wert `nacht` färbt die Stadt dunkelblau.
-- **Kämpfe:** `hintergrund` (`wiese` = vor dem Stadttor, Standard; `wiese_nacht`; `marktplatz_nacht`; `gewoelbe`), `merken_immer` (wird auch bei Niederlage gemerkt), `erfolg` (bei Sieg), `gruppe_staerke` (Gruppenkampf beim Zusammenspielen: so viel mehr Leben für die Gegner je weiterem Spieler, z. B. 0.25 = +25 %), `kein_nochmal` (kein „Nochmal
+- **Kämpfe:** `hintergrund` (`wiese` = vor dem Stadttor, Standard; `wiese_nacht`; `marktplatz_nacht`; `gewoelbe`; `wald`; `pilzhoehle` = Höhle mit Leuchtpilzen und Fackeln), `merken_immer` (wird auch bei Niederlage gemerkt), `erfolg` (bei Sieg), `gruppe_staerke` (Gruppenkampf beim Zusammenspielen: so viel mehr Leben für die Gegner je weiterem Spieler, z. B. 0.25 = +25 %), `kein_nochmal` (kein „Nochmal
   versuchen“), `verloren_text` (Meldung bei Niederlage).
 - **Gegner** (in `scripts/kampf/sandbox.gd`): `panzer` (Schaden-Faktor, bis eine perfekte Parade ihn erschüttert),
   `erschuettert` (wie viele Züge offen), `wipe_nach` und `wipe_text` (nach so vielen Zügen verliert die Gruppe).
@@ -120,6 +120,10 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
 - **`ausgaenge`:** `{"bereich": [x, y, Breite, Höhe], "karte": "waldboden", "feld": [27, 12], "wenn": {…}}` – wer in den Bereich
   läuft, kommt auf die andere Karte an das Feld. Auch `kreuzweg.json` hat einen (Weststraße, erst nach der Klassenwahl).
 - **Aktion `{"reisen": "wipfelheim", "feld": [6, 15]}`** bringt einen auf eine andere Karte (z. B. der Seilaufzug als Ort).
+- **Lichter:** `"lichter": [{"art": "strassenlaterne", "feld": [x, y]}, {"art": "fackel", …}]` (in `kreuzweg.json` und
+  in jeder Karte) stellt eine Laterne oder Fackel hin, die einen Lichtschein wirft. In Höhlen gibt es dafür das Zeichen
+  `F` (Wandfackel). `licht` ist das Grundlicht der Karte: je dunkler, desto stärker wirken die Lichter.
+  Farbe, Größe und Flackern der Lichtarten stehen in `scripts/welt/licht.gd`.
 - **Deko `wegweiser`:** `"text": "Grünwacht|Kreuzweg"` = oben ein Schild nach links, darunter eins nach rechts.
 - **Ziel `{"art": "gemerkt", "merken": "besucht:wipfelheim"}`** ist erfüllt, sobald man die Karte einmal betreten hat.
 - **Bedingungen nach Klasse:** `{"klasse": "archer"}` (genau diese Klasse), `{"region": "Grünwacht"}` (Klasse gehört in
@@ -129,7 +133,7 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
   mit Name und Stufe auf der Karte; läuft man hinein oder tippt es an, beginnt der Kampf (mit der eigenen Klasse,
   Gruppenmitglieder in der Nähe kämpfen mit). Jeder Sieg bringt Erfahrung (12 × Stufe je Monster) und Gold (2 × Stufe),
   danach ist das Monster für einen eine Minute weg. Gegner-Kennungen stehen in `scripts/kampf/sandbox.gd` (ENEMIES).
-  `kampf_hintergrund` der Karte: Bild im Kampf (`wald`, `wiese`, `gewoelbe` …).
+  `kampf_hintergrund` der Karte: Bild im Kampf (`wald`, `wiese`, `gewoelbe`, `pilzhoehle` …).
 - **Dungeons** (seit Grünwacht Schritt 7): Eine Karte mit `"dungeon": "pilzhoehle"` benutzt in allen Kämpfen die
   Dungeon-Regeln (Mechaniken der Pilzhöhle). Gemerktes, das mit `lauf:` beginnt (z. B. `lauf:koenigin`), wird beim
   Betreten von außen gelöscht: So sind die Bosse bei jedem neuen Lauf wieder da, Entscheidungen bleiben bestehen.

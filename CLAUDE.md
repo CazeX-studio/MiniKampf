@@ -8,3 +8,15 @@
 - GitHub: Account `CazeX-studio`, Repo `CazeX-studio/MiniKampf`. Login läuft über die GitHub CLI (`gh`).
 - GDScript mit Typangaben, Tabs zum Einrücken, Kommentare und Texte im Spiel auf Deutsch.
 - Langfristiges Ziel: 2D-Story-MMO mit Holy-Trinity (Tank/Heiler/Schaden). Dieses Projekt ist der kleine Einstieg.
+
+## „Mach den nächsten Bauauftrag“
+
+Sagt Marco „Mach den nächsten Bauauftrag“ (oder ähnlich), dann:
+1. FORTSCHRITT.md kurz lesen, damit klar ist, was schon gebaut ist.
+2. In BAUAUFTRAEGE.md den nächsten Schritt mit „Status: offen“ nehmen (von oben nach unten, Abschnitt „Später“ auslassen). Ist er durch FORTSCHRITT.md schon erledigt, auf „fertig“ setzen und den nächsten nehmen.
+3. Status auf „in Arbeit“ setzen, den Schritt bauen. Die Beschlüsse in design.md (Repo Spieldesign) gelten.
+4. Committen (kurze deutsche Nachricht, z. B. „Bauauftrag: Geld-Anzeige“), Status in BAUAUFTRAEGE.md auf „fertig“ setzen, den Schritt in FORTSCHRITT.md eintragen (mit „So testest du es“), committen und pushen.
+   Außerdem im Google Doc „CazeX MMO – Brainstorming“ (Abschnitt „Bauaufträge-Entwurf“) den Status des Schritts auf „fertig“ setzen, damit Doc, BAUAUFTRAEGE.md und FORTSCHRITT.md immer dasselbe sagen. Genaue Schritte: Skill `.claude/skills/bauauftrag/SKILL.md`.
+5. Marco in 2–3 einfachen Sätzen sagen, was jetzt im Spiel geht und wie er es in Godot testet.
+
+Das gilt genauso in Claude Code in der Cloud (vom Handy): dort direkt im GitHub-Repo arbeiten, committen und pushen – Marco testet später am PC in Godot. Ist ein Schritt zu groß für eine Sitzung, ihn in BAUAUFTRAEGE.md in kleinere Schritte teilen und nur den ersten bauen.

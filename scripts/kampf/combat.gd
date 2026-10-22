@@ -22,6 +22,26 @@ const ROBOT_FEET_Y := 330.0
 const MONSTER_FEET_Y := 478.0
 const FIELD_BOTTOM := 528.0
 const VIGNETTE_SHADER := preload("res://shaders/vignette.gdshader")
+const DARKNESS_SHADER := preload("res://shaders/dunkelheit.gdshader")
+## Diese Elemente leuchten beim Treffer auf und tauchen das Feld kurz in ihr Licht (wie Zauber bei Octopath)
+const GLOWING_ELEMENTS: Array[String] = ["Feuer", "Blitz", "Licht", "Sternenkraft"]
+## Plätze für entzündete Laternen (Pilzhöhle, Vorbote): zwischen Gegnern und Helden
+const LANTERN_SPOTS: Array[Vector2] = [Vector2(600, 236), Vector2(610, 486), Vector2(520, 360), Vector2(680, 360)]
+## Halbmesser der Lichtkreise bei wenig bzw. fast völliger Dunkelheit
+const LIGHT_RADIUS_BRIGHT := 260.0
+const LIGHT_RADIUS_DARK := 95.0
+const MAX_DARK_ALPHA := 0.92
+## Kampfgefühl: Zeitlupe bei der perfekten Parade, Anhalten und Wackeln bei harten Treffern
+const SLOWMO_SPEED := 0.3
+const SLOWMO_SECONDS := 0.45
+const HIT_STOP_SECONDS := 0.08
+const SHAKE_SECONDS := 0.28
+const SHAKE_PIXELS := 9.0
+## Mehrere Schadenszahlen an derselben Figur kurz hintereinander: einzeln nacheinander aufploppen
+const FLOAT_STAGGER := 0.09
+const FLOAT_STACK_WINDOW := 0.3
+## Seitlicher Versatz der gestapelten Zahlen (erste Mitte, dann rechts, links …)
+const FLOAT_SPREAD: Array[float] = [0.0, 34.0, -34.0, 17.0]
 
 ## Fußpunkte der Gegner: Welle mit 4 Monstern bzw. Boss-Welle (Boss zuerst)
 const WAVE_SLOTS: Array[Vector2] = [Vector2(30, 300), Vector2(30, 476), Vector2(318, 300), Vector2(318, 476)]
@@ -78,6 +98,23 @@ var _rotate_hint: Label
 var _react_dim: ColorRect
 var _flash_rect: ColorRect
 var _dark_rect: ColorRect
+## Wie dunkel es gerade ist (0 bis MAX_DARK_ALPHA, wird weich angeglichen)
+var _darkness := 0.0
+## Entzündete Laternen auf dem Feld (Pilzhöhle)
+var _lanterns: Array[Node2D] = []
+var _light_time := 0.0
+var _backdrop: Backdrop
+## Wackeln: Restzeit und Stärke; Zeitlupe/Anhalten aktiv (Engine.time_scale ist verändert)
+var _shake_time := 0.0
+var _shake_power := 0.0
+## Geschwindigkeit vor Zeitlupe/Anhalten (Tests lassen das Spiel z. B. schneller laufen), wird danach wiederhergestellt.
+## Jede neue Zeitlupe bzw. jedes Anhalten bekommt eine Nummer; nur das jeweils letzte stellt die Geschwindigkeit zurück.
+var _base_time_scale := 1.0
+var _time_effect := 0
+var _time_effect_running := false
+var _slowmo_running := false
+## Letzte Schadenszahl je Figur: {fighter: [Zeitpunkt in ms, wie viele gerade gestapelt]}
+var _float_stack := {}
 
 
 func _ready() -> void:
@@ -220,6 +257,9 @@ func _show_hint(key: String) -> void:
 
 ## Beim Verlassen des Kampfes Verweise lösen, sonst bleiben die Teilnehmer im Speicher liegen.
 func _exit_tree() -> void:
+	if _time_effect_running:
+		Engine.time_scale = _base_time_scale
+		_time_effect_running = false
 	if state != null:
 		state.cleanup()
 
@@ -235,6 +275,8 @@ func _process(delta: float) -> void:
 	if _reacting:
 		_update_glint()
 		_ring_layer.queue_redraw()
+	_update_darkness(delta)
+	_update_shake(delta)
 
 
 # --- Ereignisse abspielen -----------------------------------------------------
@@ -307,7 +349,12 @@ func _play_event(event: Dictionary) -> void:
 		"row":
 			await move_to_row(event.f)
 		"darkness":
-			create_tween().tween_property(_dark_rect, "color:a", clampf(event.amount, 0.0, 0.92), 0.5)
+			var target := clampf(event.amount, 0.0, MAX_DARK_ALPHA)
+			create_tween().tween_property(self, "_darkness", target, 0.5)
+			if target <= 0.0:
+				_clear_lanterns()
+		"lantern":
+			_add_lantern()
 		"order_visible":
 			_order_box.visible = event.on
 		"hit_fx":
@@ -316,6 +363,15 @@ func _play_event(event: Dictionary) -> void:
 				var v := view(event.f)
 				v.hit_react()
 				Fx.spawn(_field, Fx.Kind.SPARKS, v.center(), Color("ffd9a0") if not event.crit else Color("ffe14d"), 70.0 if not event.crit else 110.0, 0.4)
+				if event.get("heavy", false):
+					_hit_stop()
+					_shake(SHAKE_PIXELS * (1.3 if event.crit else 1.0))
+				var element: String = event.get("element", "")
+				if element in GLOWING_ELEMENTS:
+					# Feuer, Blitz, Licht und Splitter leuchten: ein großer, weicher Schein über das Feld
+					var light_color := Elements.color(element)
+					Fx.spawn(_field, Fx.Kind.GLOW, v.center(), light_color, 340.0 if element != "Blitz" else 420.0, 0.55)
+					Fx.spawn(_field, Fx.Kind.GLOW, v.center(), light_color.lightened(0.4), 110.0, 0.35)
 		"heal_fx":
 			Geraeusche.play("heilung")
 			if has_view(event.f):
@@ -696,10 +752,21 @@ func _input(event: InputEvent) -> void:
 			Geraeusche.play("perfekt")
 			Fx.spawn(_field, Fx.Kind.RING, c, Color("6dff8a"), 150.0, 0.45)
 			Fx.spawn(_field, Fx.Kind.GLOW, c, Color("6dff8a"), 120.0, 0.4)
+			# Heller Funkenregen, ein kurzer weißer Blitz und ein Moment Zeitlupe
+			Fx.spawn(_field, Fx.Kind.SPARKS, c, Color("fff6c0"), 150.0, 0.6)
+			Fx.spawn(_field, Fx.Kind.GLOW, c, Color("ffffff"), 70.0, 0.25)
+			_flash_rect.color = Color(1, 1, 1, 0.22)
+			create_tween().tween_property(_flash_rect, "color:a", 0.0, 0.3)
+			_slow_motion()
 		BattleState.REACT_NORMAL:
-			_react_feedback = "Pariert!" if _react_target.reaction == "parry" else "Ausgewichen!"
-			Geraeusche.play("parade" if _react_target.reaction == "parry" else "wurf", 1.0 if _react_target.reaction == "parry" else 1.3)
+			var parry := _react_target.reaction == "parry"
+			_react_feedback = "Pariert!" if parry else "Ausgewichen!"
+			Geraeusche.play("parade" if parry else "wurf", 1.0 if parry else 1.3)
 			Fx.spawn(_field, Fx.Kind.RING, c, Color("9fd0ff"), 110.0, 0.35)
+			if parry:
+				# Kurzer Funkenblitz, wo die Klingen aufeinandertreffen
+				Fx.spawn(_field, Fx.Kind.SPARKS, c, Color("ffe2a0"), 90.0, 0.35)
+				Fx.spawn(_field, Fx.Kind.GLOW, c, Color("ffd9a0"), 50.0, 0.18)
 		_:
 			_react_feedback = "Zu früh!" if _react_press < _react_duration else "Zu spät!"
 
@@ -864,6 +931,117 @@ func burst(f: Fighter, color: Color, radius := 160.0) -> void:
 	Fx.spawn(_field, Fx.Kind.RING, v.center(), color.lightened(0.3), radius * 1.4, 0.6)
 
 
+## Dunkelheit und Lichtkreise: Je dunkler es ist, desto kleiner werden die Kreise um Laternen und Splitterlicht.
+func _update_darkness(delta: float) -> void:
+	_dark_rect.visible = _darkness > 0.005
+	if not _dark_rect.visible:
+		return
+	_light_time += delta
+	var t := clampf(_darkness / (Pilzhoehle.MAX_DARKNESS * Pilzhoehle.DARKNESS_STEP), 0.0, 1.0)
+	var radius := lerpf(LIGHT_RADIUS_BRIGHT, LIGHT_RADIUS_DARK, t)
+	var lights: Array[Vector4] = []
+	for i in _lanterns.size():
+		var flicker := 0.92 + 0.08 * sin(_light_time * 9.0 + i * 2.1)
+		var spot := _lanterns[i].position
+		lights.append(Vector4(spot.x, spot.y - 20.0, radius * flicker, 0.95))
+	# Wer das Splitterlicht hält, leuchtet selbst und steht in einem lila Lichtkreis
+	for f: Fighter in _views:
+		if f.light and f.is_alive() and lights.size() < 8:
+			var center := view(f).center()
+			var pulse := 0.9 + 0.1 * sin(_light_time * 4.0)
+			lights.append(Vector4(center.x, center.y + 20.0, radius * 0.9 * pulse, 1.0))
+	var material := _dark_rect.material as ShaderMaterial
+	material.set_shader_parameter("amount", _darkness)
+	material.set_shader_parameter("light_count", lights.size())
+	var packed: Array[Vector4] = lights.duplicate()
+	while packed.size() < 8:
+		packed.append(Vector4.ZERO)
+	material.set_shader_parameter("lights", packed)
+	for v: FighterView in _views.values():
+		v.splitter_light = v.fighter.light and v.fighter.is_alive()
+
+
+## Eine entzündete Laterne auf dem nächsten freien Platz (höchstens vier, danach brennt die älteste neu).
+func _add_lantern() -> void:
+	var spot := LANTERN_SPOTS[_lanterns.size() % LANTERN_SPOTS.size()]
+	if _lanterns.size() >= LANTERN_SPOTS.size():
+		var oldest: Node2D = _lanterns.pop_front()
+		oldest.queue_free()
+	var lantern := Node2D.new()
+	lantern.position = spot
+	lantern.z_index = 16
+	lantern.draw.connect(func() -> void:
+		lantern.draw_rect(Rect2(-2, -44, 4, 44), Color("3a2a1a"))
+		lantern.draw_rect(Rect2(-8, -4, 16, 4), Color("3a2a1a"))
+		lantern.draw_rect(Rect2(-7, -58, 14, 14), Color("ffd36b"))
+		lantern.draw_rect(Rect2(-9, -61, 18, 3), Color("3a2a1a")))
+	var glow := Node2D.new()
+	glow.material = Fx.add_material()
+	glow.draw.connect(func() -> void:
+		glow.draw_texture_rect(Fx.glow_texture(), Rect2(-60, -110, 120, 100), false, Color(1.0, 0.8, 0.4, 0.55)))
+	lantern.add_child(glow)
+	add_child(lantern)
+	_lanterns.append(lantern)
+	Fx.spawn(_field, Fx.Kind.GLOW, spot + Vector2(0, -50), Color("ffd36b"), 200.0, 0.7)
+
+
+## Der Vorbote ist besiegt: Die Laternen verlöschen langsam.
+func _clear_lanterns() -> void:
+	for lantern in _lanterns:
+		var tween := lantern.create_tween()
+		tween.tween_property(lantern, "modulate:a", 0.0, 1.2)
+		tween.tween_callback(lantern.queue_free)
+	_lanterns.clear()
+
+
+## Zeitlupe (perfekte Parade): Für einen Moment läuft alles langsamer. Die Dauer zählt in echter Zeit.
+func _slow_motion() -> void:
+	_slowmo_running = true
+	await _change_speed(SLOWMO_SPEED, SLOWMO_SECONDS)
+
+
+## Ändert die Spielgeschwindigkeit für eine Weile (echte Zeit) und stellt sie danach wieder her.
+func _change_speed(factor: float, seconds: float) -> void:
+	if not _time_effect_running:
+		_base_time_scale = Engine.time_scale
+	_time_effect_running = true
+	_time_effect += 1
+	var mine := _time_effect
+	Engine.time_scale = _base_time_scale * factor
+	await get_tree().create_timer(seconds, true, false, true).timeout
+	# Nur das zuletzt begonnene stellt zurück (ein späteres hat schon übernommen)
+	if mine == _time_effect and _time_effect_running:
+		Engine.time_scale = _base_time_scale
+		_time_effect_running = false
+		_slowmo_running = false
+
+
+## Harter Treffer: Das Bild hält einen Augenblick an (nicht während einer Zeitlupe).
+func _hit_stop() -> void:
+	if _slowmo_running:
+		return
+	await _change_speed(0.02, HIT_STOP_SECONDS)
+
+
+## Bildschirm wackeln: Feld und Hintergrund zittern kurz, schwächer werdend.
+func _shake(pixels: float) -> void:
+	_shake_power = maxf(_shake_power, pixels)
+	_shake_time = SHAKE_SECONDS
+
+
+func _update_shake(delta: float) -> void:
+	if _shake_time <= 0.0:
+		return
+	_shake_time = maxf(_shake_time - delta, 0.0)
+	var strength := _shake_power * _shake_time / SHAKE_SECONDS
+	var offset := Vector2(randf_range(-1.0, 1.0), randf_range(-1.0, 1.0)) * strength
+	if _shake_time <= 0.0:
+		offset = Vector2.ZERO
+		_shake_power = 0.0
+	_field.position = offset
+	_backdrop.position = offset
+
+
 ## Kurzer farbiger Lichtblitz über das ganze Bild (Ult, Festung).
 func screen_flash(color: Color) -> void:
 	_flash_rect.color = Color(color, 0.35)
@@ -883,23 +1061,44 @@ func move_to_row(f: Fighter) -> void:
 func float_text(f: Fighter, text: String, color: Color, offset := 0.0) -> void:
 	if not has_view(f):
 		return
+	var crit := text.begins_with("KRITISCH")
+	var damage := crit or (text.begins_with("-") and text.substr(1).is_valid_int())
 	var label := Label.new()
 	label.text = text
-	label.add_theme_font_size_override("font_size", 22)
-	label.add_theme_color_override("font_color", color)
-	label.add_theme_color_override("font_outline_color", Color.BLACK)
-	label.add_theme_constant_override("outline_size", 6)
+	# Kritische Treffer: groß, golden-orange, mit dickem Rand
+	label.add_theme_font_size_override("font_size", 38 if crit else 22)
+	label.add_theme_color_override("font_color", Color("ffb428") if crit else color)
+	label.add_theme_color_override("font_outline_color", Color("3a1400") if crit else Color.BLACK)
+	label.add_theme_constant_override("outline_size", 10 if crit else 6)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label.size = Vector2(300, 30)
+	label.size = Vector2(300, 48 if crit else 30)
+	label.pivot_offset = label.size * 0.5
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	label.z_index = 10
+	label.z_index = 11 if crit else 10
 	var v := view(f)
-	label.position = Vector2(v.center().x - 150, v.position.y + 10 + offset)
+	# Mehrere Schadenszahlen an derselben Figur kurz hintereinander: einzeln nacheinander, leicht versetzt
+	var delay := 0.0
+	if damage:
+		var now := Time.get_ticks_msec()
+		var stack: Array = _float_stack.get(f, [0, 0])
+		var count: int = stack[1] + 1 if now - int(stack[0]) < int(FLOAT_STACK_WINDOW * 1000.0) else 0
+		_float_stack[f] = [now, count]
+		delay = count * FLOAT_STAGGER
+		offset -= (count % 4) * 14.0
+	var spread: float = FLOAT_SPREAD[(_float_stack[f][1] if damage else 0) % FLOAT_SPREAD.size()]
+	label.position = Vector2(v.center().x - 150 + spread, v.position.y + 10 + offset)
 	_field.add_child(label)
 	var tween := create_tween()
+	if delay > 0.0:
+		label.modulate.a = 0.0
+		tween.tween_interval(delay)
+		tween.tween_property(label, "modulate:a", 1.0, 0.01)
+	# Aufploppen: kurz größer, dann normal
+	label.scale = Vector2(1.7, 1.7) if crit else Vector2(1.35, 1.35)
+	tween.tween_property(label, "scale", Vector2.ONE, 0.16).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tween.set_parallel()
-	tween.tween_property(label, "position:y", label.position.y - 45, 1.1)
-	tween.tween_property(label, "modulate:a", 0.0, 1.1).set_delay(0.4)
+	tween.tween_property(label, "position:y", label.position.y - (60.0 if crit else 45.0), 1.1)
+	tween.tween_property(label, "modulate:a", 0.0, 1.1).set_delay(0.5 if crit else 0.4)
 	tween.chain().tween_callback(label.queue_free)
 
 
@@ -932,7 +1131,12 @@ func _build_ui() -> void:
 	var backdrop := Backdrop.new()
 	if BattleRequest.active():
 		backdrop.style = BattleRequest.setup.get("hintergrund", "gewoelbe")
+	elif Sandbox.ENCOUNTERS.get(Sandbox.encounter, {}).get("dungeon", "") == "pilzhoehle":
+		backdrop.style = "pilzhoehle"
+	# Die Figuren bekommen das Licht des Ortes ab
+	FighterView.light = Backdrop.fighter_light(backdrop.style)
 	add_child(backdrop)
+	_backdrop = backdrop
 	add_child(_vignette(0.85))
 
 	_field = Control.new()
@@ -941,10 +1145,15 @@ func _build_ui() -> void:
 	add_child(_field)
 
 	# Dunkelheit (Vorbote in der Pilzhöhle)
+	# Dunkelheit (Vorbote in der Pilzhöhle): nur um Laternen und das Splitterlicht bleibt es hell
 	_dark_rect = ColorRect.new()
-	_dark_rect.color = Color(0.01, 0.0, 0.04, 0.0)
 	_dark_rect.size = Vector2(SCREEN.x, FIELD_BOTTOM)
 	_dark_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var dark_material := ShaderMaterial.new()
+	dark_material.shader = DARKNESS_SHADER
+	dark_material.set_shader_parameter("field_size", _dark_rect.size)
+	_dark_rect.material = dark_material
+	_dark_rect.visible = false
 	add_child(_dark_rect)
 
 	# Leichte Abdunklung auch über den Figuren, damit das Bild einen "Rahmen" bekommt

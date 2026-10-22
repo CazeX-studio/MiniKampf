@@ -78,6 +78,10 @@ static func from_data(p_id: String, data: Dictionary, legend: Dictionary) -> Wor
 		var cell := Vector2i(int(d.feld[0]), int(d.feld[1]))
 		m.props.append({kind = "stand", cell = cell, color = Color(d.get("farbe", "ffffff")), text = d.get("text", "")})
 		m.blocked[cell] = true
+	for d: Dictionary in data.get("lichter", []):
+		var cell := Vector2i(int(d.feld[0]), int(d.feld[1]))
+		m.props.append({kind = d.art, cell = cell})
+		m.blocked[cell] = true
 	for d: Dictionary in data.get("ausgaenge", []):
 		m.add_exit(d)
 	m.finish()

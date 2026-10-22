@@ -12,6 +12,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
   Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
   gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
+- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Nächster Schritt: Projekt 3 „Geld“, Bronze, Silber, Gold.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -38,6 +39,82 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   und werden von Marco noch geschrieben (Anleitung in `data/LIESMICH.md`).
 - Selbst gewählte Zahlen und Passiven: Abschnitt „Vorläufige Werte (Feinschliff am Ende)“ unten.
 - Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
+
+## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
+
+- **Projekt 1, Schritt 1 – Licht wie bei Octopath Traveler** (22.10., fertig):
+  - Lichtquellen werfen jetzt einen **weichen, flackernden Lichtschein** auf Boden, Häuser und Figuren:
+    Laternen, Fackeln, Lagerfeuer, die Glut in der Schmiede, Leuchtpilze, Sternensplitter (Herz des Urbaums,
+    Rowans Grab, Splitter-Bär, Krater nach dem Sternenfall), der Silberhirsch und die leuchtenden Kräuter.
+    Nachts beim Fest leuchten die fünf Festlaternen in ihren Farben auf den Marktplatz.
+  - **Kreuzweg** ist tagsüber leicht abgedunkelt, damit das Licht wirkt. Neu: fünf **Straßenlaternen** an den Ecken
+    des Marktplatzes, vor Bingos Laden und am Gasthaus, eine **Fackel** bei der Torwache, und aus der Tür der
+    **Schmiede** leuchtet die Glut der Esse.
+  - **Pilzhöhle** ist dunkler als vorher; sechs **Wandfackeln** (am Eingang, zwischen den Hallen und bei der
+    Wurzelmutter) und die Leuchtpilze geben Licht.
+  - Alle Lichtarten (Farbe, Größe, Stärke, Flackern) stehen an einer Stelle: `scripts/welt/licht.gd`.
+    Laternen und Fackeln in Kreuzweg stehen in `data/kreuzweg.json` unter `lichter`, Wandfackeln in den Karten
+    als Zeichen `F` (`data/karten.json`).
+  - Noch ohne Licht: der Kampfbildschirm (auch der Kampf in der Pilzhöhle).
+  - **So testest du es:** Durch Kreuzweg laufen: Die Laternen am Marktplatz und die Fackel bei der Wache werfen
+    einen warmen Schein, aus der Schmiede glüht es. Am Fest-Abend leuchten die Festlaternen bunt. Dann in die
+    Pilzhöhle: Fackeln und Pilze werfen Licht in die dunkle Höhle, das Herz des Urbaums glüht lila.
+
+- **Projekt 1, Schritt 2 – Pixel-Paket** (zurückgestellt): Flare gefällt dir nicht, gewünscht ist Pixel-Grafik wie bei
+  Octopath. Du schaust dich um (selbst zeichnen, KI als Vorlage oder Pixel-Künstler); das Thema hängt an der Look-Bibel
+  (Abendthema 12 im Brainstorm-Doc).
+
+- **Projekt 1, Schritt 3 – Licht im Kampf** (22.10., fertig):
+  - Die Figuren bekommen das **Licht des Ortes** ab: in Höhle und Gewölbe dunkler und leicht lila, nachts bläulich,
+    im Wald grünlich, auf der Wiese am Tag hell (`Backdrop.FIGHTER_LIGHT`).
+  - **Feuer-, Blitz-, Licht- und Splitter-Treffer leuchten auf**: Ein großer, weicher Schein in der Farbe des Elements
+    taucht das Feld kurz in sein Licht (wie die Zauber bei Octopath).
+  - Die **Pilzhöhle hat im Kampf einen eigenen Hintergrund**: Felswand, Wurzeln des Urbaums von der Decke, leuchtende
+    Riesenpilze, drei Wandfackeln und lila Sporen in der Luft (vorher das Gewölbe mit Lava-Brunnen). Gilt für
+    Sporenkönigin, Wurzelmutter/Vorbote, die Monster der Höhle und die Pilzhöhle in der Kampf-Sandbox.
+  - Schon vorher da: Fackeln im Gewölbe, eigener Hintergrund für die Fest-Nacht auf dem Marktplatz.
+  - **So testest du es:** Einen Kampf vor dem Stadttor, einen in der Pilzhöhle und den Sternenfresser in der Fest-Nacht
+    spielen: Jeder Kampf sieht aus wie sein Ort. Ein Feuerangriff (z. B. vom Glutwelpen) taucht das Feld kurz in
+    oranges Licht.
+
+- **Projekt 1, Schritt 4 – Licht als Mechanik in der Pilzhöhle** (22.10., fertig):
+  - Beim **Vorboten** ist die Dunkelheit keine gleichmäßige graue Schicht mehr: Das Feld wird dunkel, nur um
+    Lichtquellen bleiben **runde Lichtkreise** hell. Je dunkler es wird („Lichtfraß“), desto **kleiner werden die Kreise**.
+  - **„Laterne entzünden“** stellt eine echte Laterne zwischen Gegner und Helden aufs Feld (bis zu vier, danach brennt
+    die älteste neu), mit eigenem Lichtkreis. Ist der Vorbote besiegt, verlöschen die Laternen langsam.
+  - **„Das letzte Licht“:** Wer das Splitterlicht hält, **leuchtet lila** und steht in einem eigenen Lichtkreis. Beim
+    Weiterreichen wandert das Licht sichtbar zur nächsten Figur. So sieht man immer, wer sicher ist.
+  - Die Regeln sind gleich geblieben, nur die Anzeige ist neu.
+  - **So testest du es:** In der Pilzhöhle bis zum Vorboten kommen (oder in der Kampf-Sandbox „Pilzhöhle: nur Bosse“).
+    Eine Laterne entzünden und das Splitterlicht weiterreichen: Man sieht, wo Licht ist und wer sicher ist. Wartet man,
+    werden die Lichtkreise kleiner.
+
+- **Projekt 2, Schritt 1 – Parieren mit Klang und Funken** (22.10., fertig):
+  - **Neuer Parade-Klang:** knackiger Anschlag und Metall-Obertöne. Die **perfekte Parade** klingt heller, mit einem
+    klaren hohen Glockenton und dem Dreiklang nach oben.
+  - **Normale Parade:** kurzer Funkenblitz, wo die Klingen aufeinandertreffen.
+  - **Perfekte Parade:** heller Funkenregen, ein kurzer weißer Blitz über das Bild und ein **Moment Zeitlupe**
+    (knapp eine halbe Sekunde läuft alles langsamer).
+  - Die Klänge sind **selbst erzeugt** (`tools/sounds_erzeugen.gd`): Die Seiten mit freien Klang-Paketen (Kenney,
+    OpenGameArt) sind aus der Cloud-Umgebung gesperrt. Am PC kann man später z. B. „Impact Sounds“ von Kenney (CC0)
+    nehmen und die Dateien in `assets/sfx/` ersetzen.
+  - **So testest du es:** Im Kampf einmal normal und einmal perfekt parieren: Normal klirrt es mit Funken, perfekt
+    blitzt es hell, klingt höher und läuft kurz in Zeitlupe.
+
+- **Projekt 2, Schritt 2 – Harte Treffer** (22.10., fertig):
+  - Ein **harter Treffer** (kritisch oder mindestens ein Viertel des Lebens auf einmal) lässt das Bild für einen
+    Augenblick **anhalten**, danach **wackeln** Feld und Hintergrund kurz (bei kritischen Treffern stärker).
+    Die Leisten oben und unten wackeln nicht mit, damit man alles lesen kann.
+  - **So testest du es:** Einen starken Angriff ausführen (z. B. eine Ult) und einen Boss-Schlag einstecken: Das Bild
+    stockt kurz und wackelt.
+
+- **Projekt 2, Schritt 3 – Schadenszahlen** (22.10., fertig):
+  - **Kritische Treffer** erscheinen groß, golden-orange mit dickem Rand und ploppen auf.
+  - Alle Schadenszahlen ploppen kurz auf (erst größer, dann normal).
+  - **Mehrere Treffer** an derselben Figur kurz hintereinander erscheinen **einzeln nacheinander**, leicht versetzt
+    (erst Mitte, dann rechts, links …), statt übereinander. Welche Fähigkeiten mehrfach treffen, kommt aus Abendthema 13.
+  - **So testest du es:** Mit dem Bogenschützen „Schnellfeuer“ oder der Klingentänzerin „Tanz der 1000 Klingen“
+    angreifen und auf einen kritischen Treffer achten.
 
 ## Aufgaben Lernprojekt 5 „Grünwacht“ (Fahrplan in `GRUENWACHT_PLAN.md`)
 

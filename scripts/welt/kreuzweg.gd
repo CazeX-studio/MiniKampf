@@ -39,6 +39,24 @@ const NIGHT_COLOR := Color(0.45, 0.5, 0.78)
 ## Farben der fünf Festlaternen (eine pro Region)
 const LANTERN_COLORS: Array[Color] = [Color("b8b0ff"), Color("e0a060"), Color("ffb070"), Color("a8e088"), Color("ffb8d8")]
 
+## Welche Dinge leuchten: Art -> [Lichtart (siehe Licht.ARTEN), Höhe der Flamme über dem Boden]
+const PROP_LIGHTS := {
+	"lantern": ["laterne", Vector2(0, -60)],
+	"strassenlaterne": ["laterne", Vector2(0, -62)],
+	"fackel": ["fackel", Vector2(0, -44)],
+	"lagerfeuer": ["lagerfeuer", Vector2(0, -12)],
+	"riesenpilz": ["pilz", Vector2(0, -34)],
+}
+## Haus mit glühender Esse hinter der Tür
+const FORGE := "Schmiede"
+const PICKUP_LIGHTS := {
+	"urbaum_herz": ["splitter", Vector2(0, -40)],
+	"grab": ["splitter", Vector2(12, 0)],
+	"splittertier": ["splitter", Vector2(0, -22)],
+	"silberhirsch": ["silber", Vector2(0, -26)],
+	"hoehle": ["pilz", Vector2(0, -8)],
+}
+
 var state: WorldState
 ## Kennung des eigenen Spielers (beim Zusammenspielen vom Netz vergeben)
 var local_id := "spieler"
@@ -630,6 +648,10 @@ func _add_building(b: Dictionary) -> void:
 	else:
 		node.draw.connect(func() -> void: _draw_house(node, rect, b.height, b.color, b.roof, b.name))
 	_add_map_node(node)
+	if b.name == FORGE:
+		# Aus der Tür der Schmiede leuchtet die Glut der Esse
+		var d := cell_to_screen(Vector2(rect.position.x, rect.end.y)) - node.position
+		_add_light(node, "glut", d * 0.7 + Vector2(0, -6))
 
 
 func _draw_house(node: Node2D, rect: Rect2i, height: float, color: Color, roof: Color, label: String) -> void:
@@ -651,8 +673,10 @@ func _draw_house(node: Node2D, rect: Rect2i, height: float, color: Color, roof: 
 	# Tür und Fenster auf der vorderen Seite
 	var front := c - d
 	var door := d + front * 0.3
-	node.draw_colored_polygon(PackedVector2Array([door + Vector2(-8, 4), door + Vector2(8, 8), door + Vector2(8, -18), door + Vector2(-8, -22)]), Color("2a1c14"))
-	node.draw_circle(door + Vector2(0, -21), 8.0, Color("2a1c14"))
+	# In der Schmiede glüht hinter der Tür die Esse
+	var door_color := Color("c8582a").lightened(0.1 * sin(_time * 5.0)) if label == FORGE else Color("2a1c14")
+	node.draw_colored_polygon(PackedVector2Array([door + Vector2(-8, 4), door + Vector2(8, 8), door + Vector2(8, -18), door + Vector2(-8, -22)]), door_color)
+	node.draw_circle(door + Vector2(0, -21), 8.0, door_color)
 	for t: float in [0.62, 0.84]:
 		var w := d + front * t + Vector2(0, -height * 0.55)
 		node.draw_colored_polygon(PackedVector2Array([w + Vector2(-6, -7), w + Vector2(6, -4), w + Vector2(6, 7), w + Vector2(-6, 4)]), Color("f2d38a"))
@@ -708,6 +732,8 @@ func _add_prop(prop: Dictionary) -> void:
 	var kind: String = prop.kind
 	node.draw.connect(func() -> void: _draw_prop(node, kind, prop))
 	_add_map_node(node)
+	if PROP_LIGHTS.has(kind):
+		_add_light(node, PROP_LIGHTS[kind][0], PROP_LIGHTS[kind][1])
 
 
 func _draw_prop(node: Node2D, kind: String, prop: Dictionary) -> void:
@@ -799,6 +825,25 @@ func _draw_prop(node: Node2D, kind: String, prop: Dictionary) -> void:
 				node.draw_circle(Vector2(cos(a) * 12.0, sin(a) * 6.0 - 2.0), 4.0, Color("6a6a62"))
 			node.draw_colored_polygon(PackedVector2Array([Vector2(-7, -2), Vector2(0, -22 * flicker), Vector2(7, -2)]), Color("ff9a3c"))
 			node.draw_colored_polygon(PackedVector2Array([Vector2(-3, -2), Vector2(0, -12 * flicker), Vector2(3, -2)]), Color("ffe08a"))
+		"strassenlaterne":
+			# Laterne auf einem Pfahl (Kreuzweg)
+			node.draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, 0.45))
+			node.draw_circle(Vector2.ZERO, 10.0, Color(0, 0, 0, 0.3))
+			node.draw_set_transform_matrix(Transform2D.IDENTITY)
+			node.draw_rect(Rect2(-2.5, -54, 5, 54), Color("3a3330"))
+			node.draw_rect(Rect2(-6, -4, 12, 4), Color("3a3330"))
+			node.draw_circle(Vector2(0, -62), 13.0, Color(1.0, 0.82, 0.45, 0.22))
+			node.draw_rect(Rect2(-6, -70, 12, 14), Color("ffe2a0"))
+			node.draw_rect(Rect2(-8, -73, 16, 3), Color("3a3330"))
+			node.draw_rect(Rect2(-6, -56, 12, 2), Color("3a3330"))
+		"fackel":
+			# Fackel an einem Holzpfahl (Wache in Kreuzweg, Wände der Pilzhöhle)
+			var flame := 0.8 + 0.2 * sin(_time * 11.0 + node.position.x)
+			node.draw_rect(Rect2(-2.5, -36, 5, 36), Color("5a3a22"))
+			node.draw_rect(Rect2(-4, -40, 8, 6), Color("3a2a1a"))
+			node.draw_circle(Vector2(0, -46), 14.0, Color(1.0, 0.6, 0.2, 0.2 * flame))
+			node.draw_colored_polygon(PackedVector2Array([Vector2(-5, -40), Vector2(0, -40 - 16 * flame), Vector2(5, -40)]), Color("ff9a3c"))
+			node.draw_colored_polygon(PackedVector2Array([Vector2(-2.5, -40), Vector2(0, -40 - 9 * flame), Vector2(2.5, -40)]), Color("ffe08a"))
 		"lantern":
 			# Ye's Laterne an der Wand der Gilde (Hinweis auf den Klassenlosen)
 			node.draw_circle(Vector2(0, -60), 14.0, Color(1.0, 0.8, 0.4, 0.25))
@@ -819,6 +864,11 @@ func _add_pickup(target: String) -> void:
 	node.draw.connect(func() -> void: _draw_pickup(node, art))
 	_add_map_node(node)
 	_pickup_nodes[target] = node
+	if PICKUP_LIGHTS.has(art):
+		_add_light(node, PICKUP_LIGHTS[art][0], PICKUP_LIGHTS[art][1])
+	elif not FighterView.LOOKS.has(art) and art != "leer" and target.begins_with("punkt:"):
+		# Leuchtende Kräuter zum Einsammeln
+		_add_light(node, "kraut", Vector2(0, -8))
 	# Bosse in Dungeons: dieselbe Figur wie im Kampf, nur größer
 	if FighterView.LOOKS.has(art):
 		var look: Dictionary = FighterView.LOOKS[art]
@@ -1146,6 +1196,17 @@ func _add_decoration(deco: Dictionary) -> void:
 	node.draw.connect(func() -> void: _draw_decoration(node, art, index))
 	_add_map_node(node)
 	_deco_nodes[node] = deco.cond
+	if art == "festlaterne":
+		_add_light(node, "laterne", Vector2(0, -58), LANTERN_COLORS[index % LANTERN_COLORS.size()].lerp(Color("ffd38a"), 0.4))
+	elif art == "krater":
+		_add_light(node, "splitter", Vector2(0, -4))
+
+
+## Hängt einen Lichtschein an eine Grafik (verschwindet mit ihr, wenn sie unsichtbar wird).
+func _add_light(node: Node2D, art: String, offset: Vector2, color := Color(0, 0, 0, 0)) -> void:
+	var light := Licht.erzeugen(art, color)
+	light.position = offset
+	node.add_child(light)
 
 
 func _draw_decoration(node: Node2D, art: String, index: int) -> void:
