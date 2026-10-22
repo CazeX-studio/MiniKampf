@@ -35,17 +35,18 @@ Status: offen / in Arbeit / fertig
 - **Ziel:** Parieren mit knackigem Klang und kurzem Funkenblitz. Beim perfekten Parieren zusätzlich ein heller Ton und ein kleiner Zeitlupen-Moment. Klänge vorerst aus kostenlosen Paketen mit freier Lizenz.
 - **So testest du es:** Im Kampf normal und perfekt parieren, beides klingt und sieht unterschiedlich aus und fühlt sich gut an.
 - **Schon da:** Parade-Klirren und bei der perfekten Parade ein heller Dreiklang (selbst erzeugte Platzhalter, Schritt 19 in FORTSCHRITT.md). Offen sind Funkenblitz, Zeitlupe und Klänge aus einem freien Paket.
-- **Status:** offen
+- **Hinweis (22.10.):** Klänge neu selbst erzeugt (knackiger), weil die Seiten der freien Klang-Pakete aus der Cloud gesperrt sind. Ein freies Paket (z. B. Kenney „Impact Sounds“, CC0) kann später am PC eingesetzt werden.
+- **Status:** fertig (22.10.)
 
 ### Schritt 2: Harte Treffer spürbar machen
 - **Ziel:** Harte Treffer lassen das Bild für einen Augenblick anhalten, dazu wackelt der Bildschirm leicht.
 - **So testest du es:** Einen starken Angriff ausführen und einen harten Treffer einstecken, beides spürt man deutlich.
-- **Status:** offen
+- **Status:** fertig (22.10.)
 
 ### Schritt 3: Schadenszahlen
 - **Ziel:** Kritische Treffer erscheinen groß und farbig. Bei Mehrfach-Treffern ploppt jede Zahl einzeln schnell nacheinander auf. Welche Fähigkeiten mehrfach treffen, kommt später aus Abendthema 13.
 - **So testest du es:** Einen kritischen Treffer und einen Mehrfach-Angriff (z. B. Schnellfeuer) ansehen.
-- **Status:** offen
+- **Status:** fertig (22.10.)
 
 ## Projekt 3: Geld (Bronze, Silber, Gold)
 

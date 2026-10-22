@@ -12,7 +12,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
   Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
   gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
-- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Nächster Schritt: Projekt 2 „Kampfgefühl“, Parieren mit Klang und Funken.
+- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Nächster Schritt: Projekt 3 „Geld“, Bronze, Silber, Gold.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -88,6 +88,33 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - **So testest du es:** In der Pilzhöhle bis zum Vorboten kommen (oder in der Kampf-Sandbox „Pilzhöhle: nur Bosse“).
     Eine Laterne entzünden und das Splitterlicht weiterreichen: Man sieht, wo Licht ist und wer sicher ist. Wartet man,
     werden die Lichtkreise kleiner.
+
+- **Projekt 2, Schritt 1 – Parieren mit Klang und Funken** (22.10., fertig):
+  - **Neuer Parade-Klang:** knackiger Anschlag und Metall-Obertöne. Die **perfekte Parade** klingt heller, mit einem
+    klaren hohen Glockenton und dem Dreiklang nach oben.
+  - **Normale Parade:** kurzer Funkenblitz, wo die Klingen aufeinandertreffen.
+  - **Perfekte Parade:** heller Funkenregen, ein kurzer weißer Blitz über das Bild und ein **Moment Zeitlupe**
+    (knapp eine halbe Sekunde läuft alles langsamer).
+  - Die Klänge sind **selbst erzeugt** (`tools/sounds_erzeugen.gd`): Die Seiten mit freien Klang-Paketen (Kenney,
+    OpenGameArt) sind aus der Cloud-Umgebung gesperrt. Am PC kann man später z. B. „Impact Sounds“ von Kenney (CC0)
+    nehmen und die Dateien in `assets/sfx/` ersetzen.
+  - **So testest du es:** Im Kampf einmal normal und einmal perfekt parieren: Normal klirrt es mit Funken, perfekt
+    blitzt es hell, klingt höher und läuft kurz in Zeitlupe.
+
+- **Projekt 2, Schritt 2 – Harte Treffer** (22.10., fertig):
+  - Ein **harter Treffer** (kritisch oder mindestens ein Viertel des Lebens auf einmal) lässt das Bild für einen
+    Augenblick **anhalten**, danach **wackeln** Feld und Hintergrund kurz (bei kritischen Treffern stärker).
+    Die Leisten oben und unten wackeln nicht mit, damit man alles lesen kann.
+  - **So testest du es:** Einen starken Angriff ausführen (z. B. eine Ult) und einen Boss-Schlag einstecken: Das Bild
+    stockt kurz und wackelt.
+
+- **Projekt 2, Schritt 3 – Schadenszahlen** (22.10., fertig):
+  - **Kritische Treffer** erscheinen groß, golden-orange mit dickem Rand und ploppen auf.
+  - Alle Schadenszahlen ploppen kurz auf (erst größer, dann normal).
+  - **Mehrere Treffer** an derselben Figur kurz hintereinander erscheinen **einzeln nacheinander**, leicht versetzt
+    (erst Mitte, dann rechts, links …), statt übereinander. Welche Fähigkeiten mehrfach treffen, kommt aus Abendthema 13.
+  - **So testest du es:** Mit dem Bogenschützen „Schnellfeuer“ oder der Klingentänzerin „Tanz der 1000 Klingen“
+    angreifen und auf einen kritischen Treffer achten.
 
 ## Aufgaben Lernprojekt 5 „Grünwacht“ (Fahrplan in `GRUENWACHT_PLAN.md`)
 
