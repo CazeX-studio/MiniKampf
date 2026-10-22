@@ -105,12 +105,12 @@ Status: offen / in Arbeit / fertig
 _Aus Marcos Entscheidung vom 22.10.2026: Tageszeit nach der echten Uhrzeit, nachts andere Monster und eigene Stimmung._
 
 ### Schritt 1: Tageszeit nach der echten Uhrzeit
-- **Ziel:** Das Licht wechselt fließend zwischen Morgen, Tag, Abend und Nacht (Nacht von 21 bis 6 Uhr, dazwischen Dämmerung; die Fest-Nacht der Geschichte bleibt immer Nacht). Nachts ist die Welt dunkler, Laternen, Fenster und Fackeln leuchten stärker. Ein Testknopf stellt die Uhrzeit vor.
+- **Ziel:** Das Licht wechselt fließend zwischen Morgen, Tag, Abend und Nacht (Nacht von 21 bis 6 Uhr, dazwischen Dämmerung; die Fest-Nacht der Geschichte bleibt immer Nacht). Das Licht richtet sich nach der lokalen Uhrzeit des Spielers. Nachts ist die Welt dunkler, Laternen, Fenster und Fackeln leuchten stärker. Ein Testknopf stellt die Uhrzeit vor.
 - **So testest du es:** Mit dem Testknopf die Uhrzeit auf Abend und Nacht stellen: Die Welt wird langsam dunkler und die Lichter wirken stärker.
 - **Status:** offen
 
 ### Schritt 2: Nachts andere Monster
-- **Ziel:** In der Wildnis stehen nachts andere Monster als tagsüber.
+- **Ziel:** In der Wildnis stehen nachts andere Monster als tagsüber. Ob Nacht ist, bestimmt hier die Uhrzeit des Servers, damit alle am selben Ort dieselben Monster sehen.
 - **So testest du es:** Testknopf auf Nacht: Auf dem Weg nach Grünwacht stehen andere Monster, auf Tag wieder die gewohnten.
 - **Status:** offen
 
