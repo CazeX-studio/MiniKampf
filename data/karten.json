@@ -1,7 +1,7 @@
 {
 	"hinweis": "Karten außerhalb von Kreuzweg. Jede Karte ist ein Bild aus Zeichen (raster: eine Zeile pro Reihe, ein Zeichen pro Feld; links oben ist Feld [0, 0], x nach rechts, y nach unten). Was die Zeichen bedeuten, steht unter \"zeichen\". Häuser, Stände, NPCs, Orte und Schmuck wie in kreuzweg.json. ausgaenge: Wer in den Bereich [x, y, Breite, Höhe] läuft, kommt auf die Karte \"karte\" an das Feld \"feld\" (nur wenn \"wenn\" stimmt). Orte mit {\"reisen\": Karte, \"feld\": [x, y]} bringen einen beim Benutzen hin (Seilaufzug). monster: Monster in der Wildnis mit Feld, Gegnern (Kennungen aus scripts/kampf/sandbox.gd) und Stufe; kampf_hintergrund: Bild im Kampf.",
 	"zeichen": {
-		"hinweis": "Was die Zeichen in den Karten bedeuten. boden: wiese, waldboden, weg, platz, gestruepp, planken, bruecke, laub. gesperrt: dort kann man nicht laufen. ding: was dort steht (baum, busch, blumen, pilze, stein, riesenbaum, stamm, zielscheibe, lagerfeuer).",
+		"hinweis": "Was die Zeichen in den Karten bedeuten. boden: wiese, waldboden, weg, platz, gestruepp, planken, bruecke, laub. gesperrt: dort kann man nicht laufen. ding: was dort steht (baum, busch, blumen, pilze, stein, riesenbaum, stamm, zielscheibe, lagerfeuer, fackel).",
 		"~": {
 			"boden": "laub",
 			"gesperrt": true
@@ -85,6 +85,11 @@
 			"boden": "hoehle",
 			"gesperrt": true,
 			"ding": "wurzel"
+		},
+		"F": {
+			"boden": "fels",
+			"gesperrt": true,
+			"ding": "fackel"
 		}
 	},
 	"weg_gruenwacht": {
@@ -654,7 +659,7 @@
 	"pilzhoehle": {
 		"name": "Pilzhöhle unter dem Urbaum",
 		"grund": "hoehle",
-		"licht": "9a8cc0",
+		"licht": "6e6494",
 		"musik": "wald_nacht",
 		"dungeon": "pilzhoehle",
 		"kampf_hintergrund": "gewoelbe",
@@ -671,12 +676,12 @@
 			"XXXXXXXXXXXXXXXXXhhhhhXXXXXXXX",
 			"XPhhhhPXXXXXXXXXXhhhhhXXXXXXXX",
 			"XhhhWhhXXPhhhhhPXhhhhhXXXXXXXX",
-			"XhhhhhhXXhhhWhhhXhhhhhXhPhhhhX",
-			"XhWhhhhXXhhhhhhhXhhhhhXhhhhhhX",
-			"XhhhhhhXXhhhhhhhhhhhhhWhhhhhhh",
+			"XhhhhhhXXhhhWhhhXhhhhhFhPhhhhX",
+			"XhWhhhhXXhhhhhhhFhhhhhXhhhhhhF",
+			"XhhhhhhXFhhhhhhhhhhhhhWhhhhhhh",
 			"Xhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
-			"Xhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
-			"XhhhhhhXXhhhhhhhhhhWhhhhhhhhhX",
+			"Fhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+			"XhhhhhhXXhhhhhhhhhhWhhhhhhhhhF",
 			"XhhhhhhXXhhhhhhhXXXXXXXPhhhhPX",
 			"XhhhhWhXXhhhhWhhXXXXXXXXXXXXXX",
 			"XhhhhhhXXPhhhhhPXXXXXXXXXXXXXX",

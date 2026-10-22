@@ -220,6 +220,13 @@ func _build_map() -> void:
 		var cell := Vector2i(int(d.feld[0]), int(d.feld[1]))
 		props.append({kind = "stand", cell = cell, color = Color(d.get("farbe", "ffffff")), text = d.get("text", "")})
 		blocked[cell] = true
+	# Lichter (Straßenlaternen, Fackeln): werfen einen Schein, siehe Licht
+	for d: Dictionary in town.get("lichter", []):
+		var cell := Vector2i(int(d.feld[0]), int(d.feld[1]))
+		props.append({kind = d.art, cell = cell})
+		blocked[cell] = true
+	# Grundlicht: tagsüber leicht abgedunkelt, damit Lichter wirken
+	maps[KREUZWEG].light = Color(town.get("licht", "ffffff"))
 
 	# Bäume auf freiem Gras am Rand, nicht direkt neben Figuren, Ständen oder Sammelpunkten
 	var reserved: Array[Vector2i] = []

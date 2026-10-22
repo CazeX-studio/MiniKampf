@@ -45,6 +45,15 @@
 		{"art": "festlaterne", "feld": [19, 15], "wenn": {"oder": [{"gemerkt": "nacht"}, {"gemerkt": "laterne_nebelinseln"}]}},
 		{"art": "krater", "feld": [24, 22], "wenn": {"gemerkt": "sternenfall"}}
 	],
+	"licht": "d8d4e0",
+	"lichter": [
+		{"art": "strassenlaterne", "feld": [30, 20]},
+		{"art": "strassenlaterne", "feld": [14, 24]},
+		{"art": "strassenlaterne", "feld": [24, 30]},
+		{"art": "strassenlaterne", "feld": [12, 27]},
+		{"art": "strassenlaterne", "feld": [10, 16]},
+		{"art": "fackel", "feld": [29, 27]}
+	],
 	"staende": [
 		{"feld": [25, 11], "farbe": "b8b0ff", "text": "Arkanum"},
 		{"feld": [33, 19], "farbe": "e0a060", "text": "Messinghafen"},

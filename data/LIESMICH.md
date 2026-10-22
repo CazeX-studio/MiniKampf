@@ -120,6 +120,10 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
 - **`ausgaenge`:** `{"bereich": [x, y, Breite, Höhe], "karte": "waldboden", "feld": [27, 12], "wenn": {…}}` – wer in den Bereich
   läuft, kommt auf die andere Karte an das Feld. Auch `kreuzweg.json` hat einen (Weststraße, erst nach der Klassenwahl).
 - **Aktion `{"reisen": "wipfelheim", "feld": [6, 15]}`** bringt einen auf eine andere Karte (z. B. der Seilaufzug als Ort).
+- **Lichter:** `"lichter": [{"art": "strassenlaterne", "feld": [x, y]}, {"art": "fackel", …}]` (in `kreuzweg.json` und
+  in jeder Karte) stellt eine Laterne oder Fackel hin, die einen Lichtschein wirft. In Höhlen gibt es dafür das Zeichen
+  `F` (Wandfackel). `licht` ist das Grundlicht der Karte: je dunkler, desto stärker wirken die Lichter.
+  Farbe, Größe und Flackern der Lichtarten stehen in `scripts/welt/licht.gd`.
 - **Deko `wegweiser`:** `"text": "Grünwacht|Kreuzweg"` = oben ein Schild nach links, darunter eins nach rechts.
 - **Ziel `{"art": "gemerkt", "merken": "besucht:wipfelheim"}`** ist erfüllt, sobald man die Karte einmal betreten hat.
 - **Bedingungen nach Klasse:** `{"klasse": "archer"}` (genau diese Klasse), `{"region": "Grünwacht"}` (Klasse gehört in
