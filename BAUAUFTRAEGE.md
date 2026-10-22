@@ -1,15 +1,45 @@
 # Bauaufträge
 
-Kleine Bauaufträge für Claude Code, abgeleitet aus den Beschlüssen in design.md (Repo Spieldesign).
+Kleine Bauaufträge für Claude Code, übertragen aus dem Abschnitt „Bauaufträge-Entwurf (Stand 21.10.2026)“
+im Brainstorm-Doc „CazeX MMO – Brainstorming“. Die Beschlüsse in design.md (Repo Spieldesign) gelten.
 Sagt Marco „Mach den nächsten Bauauftrag“: kurz FORTSCHRITT.md prüfen, den nächsten offenen Schritt von oben nehmen, bauen, committen, Status auf „fertig“ setzen und in FORTSCHRITT.md eintragen.
 
 Status: offen / in Arbeit / fertig
 
-## Projekt 1: Geld (Bronze, Silber, Gold)
-_Aus den Beschlüssen vom 21.10.2026: Geld ist knapp, Währung Bronze, Silber, Gold._
+## Projekt 1: Aussehen
+
+### Schritt 1: Licht wie bei Octopath Traveler
+- **Ziel:** Lichtquellen wie Fackeln, Laternen, leuchtende Sternensplitter und Glut, dazu ein leichtes Abdunkeln der Umgebung, damit das Licht wirkt.
+- **So testest du es:** Kreuzweg und die Pilzhöhle ansehen, die Lichter werfen einen Schein und die Splitter glühen.
+- **Status:** offen
+
+### Schritt 2: Einheitliches Pixel-Paket
+- **Ziel:** Ein einheitliches kostenloses Pixel-Paket (freie Lizenz) im Stil von Ragnarok und Octopath. Claude Code schlägt vorher zwei bis drei Pakete zur Auswahl vor und stellt nach Marcos Wahl alle Platzhalter darauf um.
+- **So testest du es:** Durch Kreuzweg laufen und einen Kampf spielen, alles wirkt wie aus einem Guss.
+- **Status:** offen
+
+## Projekt 2: Kampfgefühl
+
+### Schritt 1: Parieren mit Klang und Funken
+- **Ziel:** Parieren mit knackigem Klang und kurzem Funkenblitz. Beim perfekten Parieren zusätzlich ein heller Ton und ein kleiner Zeitlupen-Moment. Klänge vorerst aus kostenlosen Paketen mit freier Lizenz.
+- **So testest du es:** Im Kampf normal und perfekt parieren, beides klingt und sieht unterschiedlich aus und fühlt sich gut an.
+- **Schon da:** Parade-Klirren und bei der perfekten Parade ein heller Dreiklang (selbst erzeugte Platzhalter, Schritt 19 in FORTSCHRITT.md). Offen sind Funkenblitz, Zeitlupe und Klänge aus einem freien Paket.
+- **Status:** offen
+
+### Schritt 2: Harte Treffer spürbar machen
+- **Ziel:** Harte Treffer lassen das Bild für einen Augenblick anhalten, dazu wackelt der Bildschirm leicht.
+- **So testest du es:** Einen starken Angriff ausführen und einen harten Treffer einstecken, beides spürt man deutlich.
+- **Status:** offen
+
+### Schritt 3: Schadenszahlen
+- **Ziel:** Kritische Treffer erscheinen groß und farbig. Bei Mehrfach-Treffern ploppt jede Zahl einzeln schnell nacheinander auf. Welche Fähigkeiten mehrfach treffen, kommt später aus Abendthema 13.
+- **So testest du es:** Einen kritischen Treffer und einen Mehrfach-Angriff (z. B. Schnellfeuer) ansehen.
+- **Status:** offen
+
+## Projekt 3: Geld (Bronze, Silber, Gold)
 
 ### Schritt 1: Geld speichern und anzeigen
-- **Ziel:** Geld wird als eine Zahl gespeichert und als Bronze, Silber und Gold angezeigt (100 Bronze = 1 Silber, 100 Silber = 1 Gold). Die Münznamen stehen an einer einzigen Stelle, damit man sie später leicht umbenennen kann.
+- **Ziel:** Geld wird als eine Zahl gespeichert und als Bronze, Silber und Gold angezeigt (z. B. 100 Bronze = 1 Silber, 100 Silber = 1 Gold). Die Münznamen stehen an einer einzigen Stelle.
 - **So testest du es:** Geld-Anzeige ansehen, per Testknopf Geld dazugeben und prüfen, ob die Münzen richtig umspringen.
 - **Status:** offen
 
@@ -19,8 +49,7 @@ _Aus den Beschlüssen vom 21.10.2026: Geld ist knapp, Währung Bronze, Silber, G
 - **Schon da:** Monster in der Wildnis geben bereits „etwas Gold“. Offen ist, die Beträge auf Bronze/Silber/Gold umzustellen und knapp zu halten.
 - **Status:** offen
 
-## Projekt 2: Tasche und Bank
-_Aus den Beschlüssen vom 21.10.2026: Tasche mit festen Plätzen, dieselbe Bank in jeder Stadt, Bankplätze gegen Gold._
+## Projekt 4: Tasche und Bank
 
 ### Schritt 1: Tasche mit 30 Plätzen
 - **Ziel:** Die Tasche hat 30 Plätze.
@@ -37,8 +66,7 @@ _Aus den Beschlüssen vom 21.10.2026: Tasche mit festen Plätzen, dieselbe Bank 
 - **So testest du es:** Erweiterung kaufen, das Geld sinkt, die Bank hat mehr Plätze.
 - **Status:** offen
 
-## Projekt 3: Gürtel und Tränke
-_Aus den Beschlüssen vom 21.10.2026: Gürtel ist die Grenze, ein Gürtel-Gegenstand pro Runde gratis, gemeinsame Wartezeit von 3 Runden für Tränke._
+## Projekt 5: Gürtel und Tränke
 
 ### Schritt 1: Vier Gürtelplätze
 - **Ziel:** Vier Gürtelplätze, jeder fasst einen kleinen Stapel (z. B. 5). Befüllen nur außerhalb des Kampfes.
@@ -51,12 +79,11 @@ _Aus den Beschlüssen vom 21.10.2026: Gürtel ist die Grenze, ein Gürtel-Gegens
 - **Status:** offen
 
 ### Schritt 3: Gemeinsame Trank-Wartezeit
-- **Ziel:** Nach einem Trank sind alle Tränke 3 Runden gesperrt, sichtbar am Gürtel.
+- **Ziel:** Gemeinsame Wartezeit von 3 Runden für alle Tränke, sichtbar am Gürtel.
 - **So testest du es:** Nach einem Trank sind alle Tränke 3 Runden gesperrt und zählen sichtbar herunter.
 - **Status:** offen
 
-## Projekt 4: Händler
-_Aus den Beschlüssen vom 21.10.2026: Grundmaterialien kauft man beim Händler für Gold._
+## Projekt 6: Händler
 
 ### Schritt 1: Händler verkauft Tränke und Grundmaterialien
 - **Ziel:** Ein Händler verkauft Heiltränke und Grundmaterialien (Garn, Öl, Leder) gegen Geld.
@@ -70,3 +97,4 @@ _Aus den Beschlüssen vom 21.10.2026: Grundmaterialien kauft man beim Händler f
 - Schriftrollen, Wiederbelebungs-Rolle und besondere Munition
 - Testversion bis Stufe 20 mit Kauf (braucht Online-Konten)
 - Sternen-Glanz und Siegel-Zähler (braucht den Server)
+- Erste eigene Grafiken (wartet auf die Look-Bibel aus Thema 12)
