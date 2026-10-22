@@ -66,7 +66,8 @@
 		"start_bei": "schreiberin",
 		"voraussetzung": "erster_gruppenkampf",
 		"ziele": [
-			{"art": "gemerkt", "merken": "probestunde_gemacht", "text": "An einer Probestunde teilnehmen (Gesandte an den fünf Straßen)"}
+			{"art": "gemerkt", "merken": "probestunde_gemacht", "text": "An einer Probestunde teilnehmen (Gesandte an den fünf Straßen)",
+				"wegweiser": ["gesandte_arkanum", "gesandte_messinghafen", "gesandte_glutoase", "gesandte_gruenwacht", "gesandte_nebelinseln"]}
 		],
 		"abgeben_bei": "schreiberin",
 		"belohnung": {"gold": 50, "erfahrung": 300}

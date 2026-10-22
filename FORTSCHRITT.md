@@ -3,7 +3,10 @@
 Hier steht, was fertig ist, was als Nächstes kommt und welche Fragen offen sind.
 Wird nach jedem Arbeitsschritt aktualisiert.
 
-## Aktueller Stand (2026-10-21)
+## Aktueller Stand (2026-10-22)
+
+- **Neu (22.10.): Marcos Rückmeldungen zur ersten Stadt eingebaut** – Einzelheiten unter „Fertig in Runde 2“ →
+  „Rückmeldungen vom 22.10.“, Test-Liste ganz oben unter „Was du testen kannst“.
 
 - **Kampf-Sandbox** (Lernprojekt 2): alle 11 Klassen, Element-Sechseck, Duette, Zähmen, Test-Dungeon Pilzhöhle
   mit Urbaum-Entscheidung, Kampfauswertung. Der Kampf ist in Regeln (`battle_state.gd`) und Anzeige (`combat.gd`) getrennt.
@@ -570,6 +573,31 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Fertig in Runde 2
 
+- **Rückmeldungen vom 22.10.:**
+  - **Kein Zurückspringen mehr:** Allein lief die Figur nach dem Anhalten zwischen zwei Feldern beim nächsten Klick erst
+    ein Stück zurück. Jetzt geht es direkt weiter. Beim Zusammenspielen bestimmt der Mitspieler seine Figur selbst und
+    meldet ihren Platz an den Gastgeber; solange sie läuft, wird sie nie mehr zurückgezogen.
+  - **NPCs kommen angelaufen:** Wer dich von selbst anspricht (Marv, Mira, Ren, Marv auf dem Fest und beim Abschied …),
+    taucht ein Stück entfernt auf, läuft zu dir (du wartest kurz), redet und geht danach an seinen Platz.
+  - **Gespräche:** Mit **F** geht der Text weiter, **F gedrückt halten** blättert schnell durch (hält bei Antworten an).
+    Antworten, die die **Hauptgeschichte** weiterbringen, tragen das gelbe **!** (neuer Auftrag) oder **?** (weiter/abgeben).
+    Antworten für Nebenaufträge bekommen kein Zeichen.
+  - **Wegweiser:** Ein gelber Pfeil und Ring zeigen, wohin du für die Hauptgeschichte musst (NPC, Kräuter …). Ist das
+    Ziel nicht im Bild, zeigt ein Pfeil am Bildrand die Richtung mit Entfernung. Liegt es auf einer anderen Karte,
+    zeigt er zum Ausgang dorthin.
+  - **Nichts mehr versteckt:** Namen, Sprechblasen und ! / ? liegen über Häusern und Bäumen. Häuser, Bäume, Stände und
+    Riesenbäume werden durchsichtig, wenn jemand dahinter steht.
+  - **Monster laufen herum:** Die Monster in der Wildnis laufen um ihren Platz herum und folgen dir, wenn du nah kommst.
+    Berühren (oder sie dich) = Kampf. Nach einem Kampf hast du 3 Sekunden Ruhe, damit nicht sofort der nächste beginnt.
+  - **Erster Gruppenkampf:** nur noch eine Welle.
+  - **Kritische Treffer:** dicke gelbe Zahl auf einem roten Stern (wie in Ragnarok).
+  - **Klingentänzerin:** Klingenschritt 9 statt 12, Ausfallschritt 13 statt 17, dafür trifft danach **jede schwebende
+    Klinge (bis 5) noch einmal** (je 2 Schaden). Die Klingen sieht man als kleine Schwerter um Zara kreisen.
+    Der alte Bonus (+5 % je Klinge) ist weg.
+  - **Sternenfresser:** Ohne perfekte Parade fällt man sofort, normal pariert kostet es 90 % des Lebens.
+  - **Tests:** Welt-Test um Marv/Mira/Ren-Herbeilaufen, Zeichen an Antworten, Wegweiser, laufende Monster und
+    „kein Zurücklaufen“ erweitert.
+
 - **Schritt 1 – Name:** Die Sternensängerin heißt jetzt überall **Vega** (Lyra ist Kaels Schwester).
 
 - **Schritt 2 – Fehlende Fähigkeiten und Entscheidung:**
@@ -915,6 +943,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spiel startet jetzt mit einem Menü.
 
+**Neu: Deine Rückmeldungen vom 22.10.** (Kreuzweg-Demo → „Neu beginnen“)
+1. Lauf mit WASD, halt zwischendurch an und klick dann irgendwohin: Läuft die Figur direkt los, ohne zurückzuspringen?
+2. Halte im Einleitungstext **F** gedrückt: Blättert er schnell durch? Haben bei Lene und Ye die richtigen Antworten ein gelbes ! oder ?
+3. Folge dem gelben Pfeil (auch dem am Bildrand): Führt er dich zu Lene, Ye, den Kräutern und später weiter?
+4. Nach dem Gruppenkampf (nur noch eine Welle): Kommt Marv angelaufen? In der Wildnis: Laufen die Monster herum,
+   und beginnt der Kampf, wenn du eins berührst? Achte auf kritische Treffer (gelbe Zahl auf rotem Stern).
+5. Probestunde bei Nalia (Klingentänzerin): Kreisen Schwerter um Zara und treffen sie nach? Beim Sternenfresser:
+   Ohne perfekte Parade fällst du sofort.
+
 **Neu: Grünwacht Schritt 11 – Feinschliff** (am besten Grünwacht einmal am Stück spielen)
 1. Die Wald-Musik: Passt sie zu Wipfelheim? Hörst du den Unterschied in der Pilzhöhle und nach dem Fällen des Urbaums?
 2. Stimmt die Länge? Fühlt sich die Region wie Stufe 15–20 an, oder kommst du zu schnell oder zu langsam voran?
@@ -1219,4 +1256,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 
 - **Kreuzweg-Demo:** Passen die Positionen (Gilde im Nordosten, Bingos Laden im Westen, die sechste,
   zugewachsene Straße nach Südosten, Gesandte an „ihren“ Straßen)?
-- **Sternenfresser:** Mit Heiltränken schafft der Computer ihn etwa jedes zweite Mal. Soll er schwerer werden?
+- **Sternenfresser:** Jetzt tödlich ohne perfekte Parade (22.10.). Ist er so noch fair genug?
+- **„2 Runden“ in der Wildnis (22.10.):** Monster in der Wildnis haben nur eine Welle. Ich habe den Gruppenkampf auf
+  eine Welle gekürzt und nach jedem Kampf 3 Sekunden Ruhe eingebaut (falls direkt danach ein zweiter Kampf losging).
+  Meintest du noch etwas anderes, z. B. die Grundausbildung (4 Lektionen) oder Fenns Prüfung (2 Teile)?

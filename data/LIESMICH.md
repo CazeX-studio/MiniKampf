@@ -140,3 +140,11 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
   Bosse sind Orte mit dem Bild des Gegners (`"art": "sporenkoenigin"`), Kämpfe mit `"begleiter"` füllen freie
   Plätze mit Ida, Bo und Tom.
 - **Stufen** (`stufen.json`): jetzt bis Stufe 20 (Kreuzweg 1–10, Weg nach Grünwacht 10–15, Grünwacht 15–20).
+
+## Seit den Rückmeldungen vom 22.10.
+
+- **Zeichen an Antworten:** Antworten, die einen Hauptauftrag (alle ohne `"neben": true`) beginnen, weiterbringen oder
+  einen Geschichts-Kampf starten, bekommen automatisch ein gelbes ! oder ?. Nichts dafür eintragen.
+- **Ziel-Feld `wegweiser`:** Liste von NPCs, zu deren nächstem der Wegweiser führt (z. B. die fünf Gesandten).
+  Sonst führt er zu `bei` bzw. zum Sammelpunkt.
+- **NPCs mit `anspringen`** sind erst zu sehen, wenn sie herbeilaufen (sie kommen von etwas weiter weg).

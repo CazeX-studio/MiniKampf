@@ -29,6 +29,8 @@ const REACT_NORMAL := 1
 const REACT_PERFECT := 2
 ## Normal pariert oder ausgewichen: so viel weniger Schaden
 const NORMAL_REACT_BLOCK := 0.25
+## Tödlicher Angriff (Sternenfresser) normal pariert: so viel vom vollen Leben geht verloren
+const DEADLY_PARRIED := 0.9
 ## Pro Stufe über 1 bekommt ein Held so viel mehr Leben und Mana (Novize in der Kreuzweg-Demo).
 const LEVEL_HP := 10
 const LEVEL_MANA := 4
@@ -434,6 +436,7 @@ func spawn_enemies(ids: Array) -> void:
 		e.passive = data.get("passive", false)
 		e.plate = data.get("panzer", 1.0)
 		e.stagger_length = data.get("erschuettert", 2)
+		e.deadly = data.get("toedlich", false)
 		if data.has("title"):
 			e.display_name = data.title
 		enemies.append(e)
@@ -832,6 +835,15 @@ func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String
 			_last_crit = false
 			_last_eff = 1.0
 			skills.on_perfect_reaction(t, e)
+		elif e.deadly:
+			# Tödlicher Angriff: normal pariert bleiben 10 % des Lebens übrig, sonst fällt das Ziel sofort
+			var parried := grade == REACT_NORMAL and t.reaction != ""
+			float_text(t, "Pariert – aber hart getroffen!" if parried else "TÖDLICH!", Color("cfe2ff") if parried else Color("ff4d4d"), 78)
+			_last_crit = false
+			_last_eff = 1.0
+			# Schilde helfen gegen diesen Angriff nicht
+			t.shields.clear()
+			apply_damage(t, roundi(t.max_hp * DEADLY_PARRIED) if parried else t.hp, e)
 		elif grade == REACT_NORMAL and t.reaction != "":
 			# Normal pariert oder ausgewichen: nur ein Teil des Schadens kommt an
 			float_text(t, "Pariert" if t.reaction == "parry" else "Ausgewichen", Color("cfe2ff"), 78)

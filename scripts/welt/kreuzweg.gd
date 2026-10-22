@@ -30,6 +30,14 @@ const STICK_RADIUS := 70.0
 const STICK_DEADZONE := 12.0
 const STICK_HOME := Vector2(170, 560)
 const NOTICE_SECONDS := 3.5
+## Dinge, die Figuren verdecken können, und welche Fläche sie über ihrem Fußpunkt bedecken (werden dann durchsichtig)
+const OCCLUDER_RECTS := {
+	"tree": Rect2(-26, -70, 52, 72), "stand": Rect2(-32, -64, 64, 66), "stamm": Rect2(-40, -160, 80, 162),
+	"riesenbaum": Rect2(-58, -272, 116, 274), "riesenpilz": Rect2(-36, -70, 72, 72),
+}
+## F gedrückt halten: erst nach dieser Pause, dann in diesem Takt weiterblättern (Sekunden)
+const SKIP_FIRST_DELAY := 0.35
+const SKIP_REPEAT := 0.12
 ## NPCs stehen ruhiger als Spieler (langsamere Steh-Animation)
 const NPC_IDLE_FPS := 2.0
 ## NPC-Namen: bis zu dieser Entfernung (Felder) voll sichtbar, ab der zweiten ganz ausgeblendet
@@ -79,6 +87,12 @@ var _camera: Camera2D
 var _marker := Vector2.ZERO
 var _marker_time := 0.0
 var _marker_node: Node2D
+## Wegweiser zum nächsten Ziel der Hauptgeschichte: Ring und Pfeil an der Stelle, Pfeil am Bildrand, wenn sie nicht zu sehen ist
+var _waypoint := Vector2i(-1, -1)
+var _waypoint_node: Node2D
+var _edge_arrow: Control
+## Häuser, Bäume und Stände, die durchsichtig werden, wenn jemand dahinter steht: {node, rect (Welt-Koordinaten)}
+var _occluders: Array[Dictionary] = []
 var _bot_timer := 2.0
 var _time := 0.0
 ## Beim "Neu beginnen" nicht mehr speichern
@@ -127,6 +141,8 @@ var _reconnect_label: Label
 var _skip_leave := false
 
 var _steer_sent := Vector2.ZERO
+## F gedrückt: Zeit bis zum nächsten automatischen „Weiter“ (-1 = F nicht gedrückt)
+var _skip_timer := -1.0
 var _touch_ui := false
 var _stick_layer: Control
 var _action_button: Button
@@ -183,6 +199,11 @@ func _ready() -> void:
 	add_child(_objects)
 	_build_map_view()
 
+	_waypoint_node = Node2D.new()
+	_waypoint_node.z_index = 15
+	_waypoint_node.draw.connect(_draw_waypoint)
+	add_child(_waypoint_node)
+
 	_camera = Camera2D.new()
 	_camera.zoom = Vector2(1.25, 1.25)
 	_camera.position_smoothing_enabled = true
@@ -213,6 +234,7 @@ func _build_map_view() -> void:
 		if is_instance_valid(node):
 			node.queue_free()
 	_map_nodes.clear()
+	_occluders.clear()
 	_pickup_nodes.clear()
 	_deco_nodes.clear()
 	for id: String in _characters.keys():
@@ -290,6 +312,7 @@ func _exit_tree() -> void:
 func _process(delta: float) -> void:
 	_time += delta
 	_update_steer()
+	_update_skip(delta)
 	if not Netz.online():
 		# Beim Zusammenspielen spielt der Gastgeber die Welt weiter (Netz), hier nur allein
 		_drive_bot(delta)
@@ -300,6 +323,9 @@ func _process(delta: float) -> void:
 	_update_chat()
 	_marker_time = maxf(_marker_time - delta, 0.0)
 	_marker_node.queue_redraw()
+	_waypoint_node.queue_redraw()
+	_edge_arrow.queue_redraw()
+	_update_occluders(delta)
 
 
 func local_player() -> PlayerState:
@@ -366,21 +392,50 @@ func _sync() -> void:
 	for i in state.monsters.size():
 		if _characters.has("monster:%d" % i):
 			var monster_view: WorldCharacter = _characters["monster:%d" % i]
+			var was_visible := monster_view.visible
 			monster_view.visible = state.can_use(local, "monster:%d" % i)
+			# Monster laufen herum (beim Zusammenspielen kommt ihr Platz nur ein paar Mal pro Sekunde: weich hinterher)
+			var wild: Dictionary = state.monsters[i]
+			var target := cell_center(wild.pos)
+			if Netz.online() and was_visible and monster_view.position.distance_to(target) < 80.0:
+				monster_view.position = monster_view.position.lerp(target, 0.25)
+			else:
+				monster_view.position = target
+			monster_view.moving = wild.moving
+			monster_view.facing = wild.facing
 			monster_view.set_name_color(_danger_color(state.monsters[i].stufe, local.progress.level))
 	for id: String in state.npcs:
 		if not _characters.has("npc:" + id):
 			continue
 		var npc_view: WorldCharacter = _characters["npc:" + id]
 		npc_view.visible = state.npc_visible(local, id)
+		_place_npc(npc_view, id, local)
 		npc_view.marker = state.npc_marker(local, id)
 		npc_view.marker_side = state.npc_marker_side(local, id)
 		# Namen nur in der Nähe zeigen (Zeichen ! und ? bleiben immer sichtbar)
 		var distance := (Vector2(state.npcs[id].cell) - local.pos).length()
 		npc_view.set_name_alpha(clampf((NAME_FADE_END - distance) / (NAME_FADE_END - NAME_FADE_START), 0.0, 1.0))
+	_waypoint = state.objective_cell(local)
 	var goal := state.objective(local)
 	_goal.text = "Ziel: " + goal if goal != "" else ""
 	_update_hud()
+
+
+## NPCs stehen an ihrem Platz – außer einer läuft gerade zum eigenen Spieler hin oder wieder zurück.
+func _place_npc(npc_view: WorldCharacter, id: String, local: PlayerState) -> void:
+	var walk := local.npc_walk
+	if walk.get("id", "") != id:
+		npc_view.position = cell_center(Vector2(state.npcs[id].cell))
+		npc_view.moving = false
+		return
+	var target := cell_center(walk.pos)
+	# Beim Zusammenspielen kommt der Platz nur ein paar Mal pro Sekunde: weich hinterherlaufen
+	if Netz.online() and npc_view.position.distance_to(target) < 80.0:
+		npc_view.position = npc_view.position.lerp(target, 0.35)
+	else:
+		npc_view.position = target
+	npc_view.moving = walk.phase != "reden"
+	npc_view.facing = walk.facing
 
 
 ## Der Testgefährte läuft ab und zu irgendwohin (wie ein Mitspieler).
@@ -466,21 +521,37 @@ func _action() -> void:
 		_send({type = "interact"})
 
 
+## F: im Gespräch weiter. Gedrückt halten blättert schnell durch, bis eine Antwort gewählt werden muss.
+func _update_skip(delta: float) -> void:
+	var typing := _chat_input != null and _chat_input.has_focus()
+	if typing or not Input.is_physical_key_pressed(KEY_F) or not local_player().in_dialog():
+		_skip_timer = -1.0
+		return
+	if _skip_timer < 0.0:
+		_skip_timer = SKIP_FIRST_DELAY
+		_send({type = "dialog_next"})
+		return
+	_skip_timer -= delta
+	if _skip_timer <= 0.0:
+		_skip_timer = SKIP_REPEAT
+		_send({type = "dialog_next"})
+
+
 ## Richtung aus Tasten und Steuerknopf; wird nur bei Änderung als Befehl geschickt.
 func _update_steer() -> void:
 	var dir := Vector2.ZERO
 	var typing := _chat_input != null and _chat_input.has_focus()
-	if not local_player().in_dialog():
-		if typing:
-			pass
-		elif Input.is_physical_key_pressed(KEY_A) or Input.is_physical_key_pressed(KEY_LEFT):
-			dir.x -= 1.0
-		if Input.is_physical_key_pressed(KEY_D) or Input.is_physical_key_pressed(KEY_RIGHT):
-			dir.x += 1.0
-		if Input.is_physical_key_pressed(KEY_W) or Input.is_physical_key_pressed(KEY_UP):
-			dir.y -= 1.0
-		if Input.is_physical_key_pressed(KEY_S) or Input.is_physical_key_pressed(KEY_DOWN):
-			dir.y += 1.0
+	if not local_player().in_dialog() and not local_player().awaiting_npc():
+		# Beim Schreiben im Chat laufen die Buchstaben nicht mit
+		if not typing:
+			if Input.is_physical_key_pressed(KEY_A) or Input.is_physical_key_pressed(KEY_LEFT):
+				dir.x -= 1.0
+			if Input.is_physical_key_pressed(KEY_D) or Input.is_physical_key_pressed(KEY_RIGHT):
+				dir.x += 1.0
+			if Input.is_physical_key_pressed(KEY_W) or Input.is_physical_key_pressed(KEY_UP):
+				dir.y -= 1.0
+			if Input.is_physical_key_pressed(KEY_S) or Input.is_physical_key_pressed(KEY_DOWN):
+				dir.y += 1.0
 		dir = dir.normalized()
 		if _stick_vec != Vector2.ZERO:
 			dir = _stick_vec
@@ -637,6 +708,73 @@ func _draw_tap_marker() -> void:
 		_marker_node.draw_set_transform_matrix(Transform2D.IDENTITY)
 
 
+## Wegweiser an der Zielstelle: leuchtender Ring am Boden und ein wippender Pfeil darüber.
+func _draw_waypoint() -> void:
+	if _waypoint == Vector2i(-1, -1) or local_player().in_dialog():
+		return
+	var pos := cell_center(Vector2(_waypoint))
+	var pulse := 0.5 + 0.5 * sin(_time * 4.0)
+	_waypoint_node.draw_set_transform(pos, 0.0, Vector2(1.0, 0.5))
+	_waypoint_node.draw_arc(Vector2.ZERO, 26.0 + 6.0 * pulse, 0, TAU, 32, Color(1.0, 0.85, 0.3, 0.5 + 0.4 * pulse), 4.0)
+	_waypoint_node.draw_set_transform_matrix(Transform2D.IDENTITY)
+	# Der Pfeil schwebt über dem Kopf des Ziels (über dem „!“ oder „?“)
+	var tip := pos + Vector2(0, -150 + sin(_time * 3.0) * 6.0)
+	var arrow := PackedVector2Array([tip, tip + Vector2(-14, -16), tip + Vector2(-6, -16), tip + Vector2(-6, -30),
+			tip + Vector2(6, -30), tip + Vector2(6, -16), tip + Vector2(14, -16)])
+	_waypoint_node.draw_colored_polygon(arrow, Color("ffd34d"))
+	arrow.append(tip)
+	_waypoint_node.draw_polyline(arrow, Color.BLACK, 2.0)
+
+
+## Liegt das Ziel außerhalb des Bildes, zeigt ein Pfeil am Rand die Richtung (mit Entfernung).
+func _draw_edge_arrow() -> void:
+	if _waypoint == Vector2i(-1, -1) or local_player().in_dialog():
+		return
+	var screen := get_viewport().get_canvas_transform() * cell_center(Vector2(_waypoint))
+	# Ist das Ziel im Bild zu sehen, reicht der Pfeil darüber
+	if Rect2(Vector2(30, 30), Vector2(1280 - 60, 720 - 60)).has_point(screen):
+		return
+	var area := Rect2(Vector2(70, 150), Vector2(1280 - 140, 720 - 230))
+	var center := area.get_center()
+	var dir := (screen - center).normalized()
+	# Schnittpunkt der Richtung mit dem Rand des Bereichs
+	var scale_x := (area.size.x * 0.5) / maxf(absf(dir.x), 0.001)
+	var scale_y := (area.size.y * 0.5) / maxf(absf(dir.y), 0.001)
+	var pos := center + dir * minf(scale_x, scale_y)
+	var tip := pos + dir * (18.0 + sin(_time * 4.0) * 4.0)
+	var side := Vector2(-dir.y, dir.x)
+	var points := PackedVector2Array([tip, pos - dir * 6.0 + side * 16.0, pos - dir * 6.0 - side * 16.0])
+	_edge_arrow.draw_circle(pos - dir * 6.0, 26.0, Color(0, 0, 0, 0.45))
+	_edge_arrow.draw_colored_polygon(points, Color("ffd34d"))
+	points.append(tip)
+	_edge_arrow.draw_polyline(points, Color.BLACK, 2.0)
+	var distance := roundi((Vector2(_waypoint) - local_player().pos).length())
+	var font := ThemeDB.fallback_font
+	var text_pos := pos - dir * 46.0 + Vector2(-40, 6)
+	_edge_arrow.draw_string_outline(font, text_pos, "%d m" % distance, HORIZONTAL_ALIGNMENT_CENTER, 80, 15, 4, Color.BLACK)
+	_edge_arrow.draw_string(font, text_pos, "%d m" % distance, HORIZONTAL_ALIGNMENT_CENTER, 80, 15, Color("ffd34d"))
+
+
+## Häuser, Bäume und Stände, hinter denen jemand steht, werden durchsichtig (Spieler, NPCs, Monster).
+func _update_occluders(delta: float) -> void:
+	var points: Array[Vector2] = []
+	for view: Node2D in _characters.values():
+		if is_instance_valid(view) and view.visible:
+			points.append(view.position)
+	for occ: Dictionary in _occluders:
+		var node: Node2D = occ.node
+		if not is_instance_valid(node):
+			continue
+		var rect: Rect2 = occ.rect
+		var hidden := false
+		for p in points:
+			# Nur wer hinter dem Ding steht (weiter oben auf dem Bildschirm) und von ihm bedeckt wird
+			if p.y < node.position.y and (rect.has_point(p + Vector2(0, -20)) or rect.has_point(p + Vector2(0, -50))):
+				hidden = true
+				break
+		node.modulate.a = move_toward(node.modulate.a, 0.4 if hidden else 1.0, delta * 4.0)
+
+
 ## Ein Haus (Wände, Satteldach, Tür, Fenster) oder die Statue, mit Namensschild.
 func _add_building(b: Dictionary) -> void:
 	var rect: Rect2i = b.rect
@@ -647,6 +785,12 @@ func _add_building(b: Dictionary) -> void:
 		node.draw.connect(func() -> void: _draw_statue(node, rect, b.height, b.color, b.name))
 	else:
 		node.draw.connect(func() -> void: _draw_house(node, rect, b.height, b.color, b.roof, b.name))
+		# Fläche, die das Haus samt Dach auf dem Bildschirm bedeckt
+		var top := cell_to_screen(Vector2(rect.position))
+		var left := cell_to_screen(Vector2(rect.position.x, rect.end.y))
+		var right := cell_to_screen(Vector2(rect.end.x, rect.position.y))
+		var roof_top: float = top.y - b.height - minf(rect.size.y, rect.size.x) * 9.0 - 30.0
+		_occluders.append({node = node, rect = Rect2(left.x - 8.0, roof_top, right.x - left.x + 16.0, node.position.y - roof_top)})
 	_add_map_node(node)
 	if b.name == FORGE:
 		# Aus der Tür der Schmiede leuchtet die Glut der Esse
@@ -732,6 +876,9 @@ func _add_prop(prop: Dictionary) -> void:
 	var kind: String = prop.kind
 	node.draw.connect(func() -> void: _draw_prop(node, kind, prop))
 	_add_map_node(node)
+	if OCCLUDER_RECTS.has(kind):
+		var r: Rect2 = OCCLUDER_RECTS[kind]
+		_occluders.append({node = node, rect = Rect2(node.position + r.position, r.size)})
 	if PROP_LIGHTS.has(kind):
 		_add_light(node, PROP_LIGHTS[kind][0], PROP_LIGHTS[kind][1])
 
@@ -1028,7 +1175,7 @@ func _build_ui() -> void:
 	root.theme = Combat.make_theme()
 	ui.add_child(root)
 
-	var hint := _label("Laufen: antippen / WASD / Steuerknopf · Reden: E oder Leertaste", 14, Color.WHITE)
+	var hint := _label("Laufen: antippen / WASD · Reden: E / Leertaste · Text weiter: F (halten = schnell)", 14, Color.WHITE)
 	hint.position = Vector2(16, 10)
 	root.add_child(hint)
 	_hud = _label("", 18, Color("f2c14e"))
@@ -1100,7 +1247,7 @@ func _build_ui() -> void:
 	_dialog_answers.add_theme_constant_override("separation", 4)
 	box.add_child(_dialog_answers)
 	_dialog_next = Button.new()
-	_dialog_next.text = GameData.text("weiter")
+	_dialog_next.text = GameData.text("weiter") + " (F)"
 	_dialog_next.custom_minimum_size = Vector2(160, 44)
 	_dialog_next.size_flags_horizontal = Control.SIZE_SHRINK_END
 	_dialog_next.add_theme_font_size_override("font_size", 17)
@@ -1154,6 +1301,13 @@ func _build_ui() -> void:
 	_shop_box = VBoxContainer.new()
 	_shop_box.add_theme_constant_override("separation", 6)
 	_shop_panel.add_child(_shop_box)
+
+	# Pfeil am Bildrand zum nächsten Ziel
+	_edge_arrow = Control.new()
+	_edge_arrow.size = Vector2(1280, 720)
+	_edge_arrow.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_edge_arrow.draw.connect(_draw_edge_arrow)
+	root.add_child(_edge_arrow)
 
 	# Kurze Meldungen oben in der Mitte („+30 Gold“, „Neuer Auftrag …“), über allen Fenstern
 	_notices = VBoxContainer.new()
@@ -1561,9 +1715,17 @@ func _update_dialog() -> void:
 	# Gemeinsame Szene: Stimmen zählen, wer spricht, wer zuschaut
 	var scene: Dictionary = view.get("szene", {})
 	var watching: bool = scene.get("rolle", "") == "zuschauen"
+	var markers: Array = view.get("zeichen", [])
 	for i in answers.size():
 		var button := Button.new()
 		button.text = "%d. %s" % [i + 1, answers[i]]
+		# Antworten, die die Hauptgeschichte weiterbringen, tragen das gelbe Zeichen wie die NPCs („!“ oder „?“)
+		var marker: String = markers[i] if i < markers.size() else ""
+		if marker != "":
+			button.text = "      " + button.text
+			var sign := _label(marker, 24, Color("ffd34d"))
+			sign.position = Vector2(12, 1)
+			button.add_child(sign)
 		if not scene.is_empty():
 			var votes: int = scene.stimmen[i]
 			if votes > 0:

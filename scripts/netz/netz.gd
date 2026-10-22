@@ -59,6 +59,10 @@ const EXTRAPOLATE_MAX := 0.6
 const SERVER_FPS := 30
 ## Diese Befehle führt ein Mitspieler sofort auch bei sich aus, damit die eigene Figur ohne Verzögerung läuft
 const PREDICTED := ["steer", "move", "talk", "use"]
+## So oft pro Sekunde meldet ein Mitspieler, wo seine Figur ist (solange sie läuft)
+const OWN_POS_RATE := 12.0
+## Steht die eigene Figur so lange und der Gastgeber sieht sie immer noch woanders, wird sie dorthin gesetzt (Sekunden)
+const OWN_RESYNC_SECONDS := 1.5
 ## Chat: so viele Zeichen höchstens pro Nachricht
 const CHAT_MAX_LENGTH := 120
 ## Chat: so viele Sekunden mindestens zwischen zwei Nachrichten eines Spielers (gegen Überfluten)
@@ -112,6 +116,9 @@ var _history := {}
 var _clock_offset := INF
 ## Mitspieler: seit wann die eigene Figur nicht mehr selbst läuft (Sekunden)
 var _own_idle := 0.0
+## Mitspieler: Zeit bis zur nächsten Platz-Meldung, und ob die letzte Meldung "läuft" war
+var _pos_timer := 0.0
+var _pos_sent_walking := false
 ## Gastgeber: wann jeder Spieler zuletzt geschrieben hat
 var _last_chat := {}
 ## Gastgeber: Namen der Mitspieler, die schon begrüßt wurden (Rückkehr aus einem Kampf zählt nicht als neu)
@@ -270,9 +277,12 @@ static func send(cmd: Dictionary) -> void:
 			if not _ready_to_send:
 				return
 			_instance._c_command.rpc_id(1, cmd)
-			# Laufen sofort selbst ausführen (der Gastgeber rechnet dasselbe und korrigiert nur, wenn es abweicht)
+			# Laufen sofort selbst ausführen; der Platz geht danach mit "pos" an den Gastgeber
 			if cmd.get("type", "") in PREDICTED:
 				world.apply_command(my_id, cmd)
+				# Gleich danach den Platz melden (auch wenn die Figur gar nicht losläuft, weil sie schon dort steht)
+				_instance._pos_sent_walking = true
+				_instance._pos_timer = 0.0
 
 
 ## Schickt eine Chat-Nachricht an alle in Kreuzweg.
@@ -405,6 +415,7 @@ func _process(delta: float) -> void:
 			_ping_timer = PING_SECONDS
 			_c_ping.rpc_id(1)
 		_move_mirror(delta)
+		_send_own_position(delta)
 
 
 # --- Spielstand-Sperre (mehrere Fenster auf einem PC) ---------------------------
@@ -439,6 +450,12 @@ func _send_snapshot() -> void:
 	for p: PlayerState in world.players.values():
 		list.append([p.id, p.display_name, p.look, p.pos, p.facing, p.is_walking(), p.map])
 	_s_snapshot.rpc(_clock(), list)
+	# Monster in der Wildnis laufen herum (gleiche Reihenfolge wie world.monsters)
+	var monster_list: Array = []
+	for m: Dictionary in world.monsters:
+		monster_list.append([m.pos, m.facing, m.moving])
+	if not monster_list.is_empty():
+		_s_monsters.rpc(monster_list)
 
 
 ## Schickt einem Mitspieler seinen eigenen Zustand (Gespräch, Laden, Fortschritt), wenn er sich geändert hat.
@@ -447,7 +464,8 @@ func _flush_own(id: String) -> void:
 	var p: PlayerState = world.players.get(id)
 	if peer <= 1 or p == null:
 		return
-	var data := {dialog = world.dialog_for_sync(p), shop = p.shop, progress = p.progress.to_dict(), feld = [p.cell.x, p.cell.y], karte = p.map}
+	var data := {dialog = world.dialog_for_sync(p), shop = p.shop, progress = p.progress.to_dict(), feld = [p.cell.x, p.cell.y], karte = p.map,
+			npc_walk = p.npc_walk}
 	var text := var_to_str(data)
 	if _sent_own.get(id, "") == text:
 		return
@@ -854,6 +872,19 @@ func _place_on_map(p: PlayerState, map_id: String, pos: Vector2) -> void:
 	_history.erase(p.id)
 
 
+## Wo die Monster in der Wildnis gerade sind (vom Gastgeber).
+@rpc("authority", "unreliable_ordered")
+func _s_monsters(list: Array) -> void:
+	if mode != Mode.CLIENT or world == null:
+		return
+	for i in mini(list.size(), world.monsters.size()):
+		var m: Dictionary = world.monsters[i]
+		var entry: Array = list[i]
+		m.pos = entry[0]
+		m.facing = entry[1]
+		m.moving = entry[2]
+
+
 ## Bewegt die Figuren im Spiegelbild: die eigene sofort (vorhergesagt), die anderen gleichmäßig etwas verzögert.
 func _move_mirror(delta: float) -> void:
 	var render_time := _clock() - _clock_offset - INTERP_DELAY
@@ -876,31 +907,35 @@ func _move_mirror(delta: float) -> void:
 		world.move_player(me, delta)
 
 
-## Eigene Figur: läuft sofort selbst. Weicht sie stark vom Gastgeber ab, wird sie zu ihm gezogen.
-func _correct_own(me: PlayerState, delta: float, sample: Dictionary) -> void:
+## Eigene Figur: läuft nur hier und meldet ihren Platz an den Gastgeber (der übernimmt ihn).
+## Während sie läuft, wird sie nie zurückgezogen – das war das „Zurückspringen“. Nur wenn sie steht und der
+## Gastgeber sie nach einer Weile immer noch ganz woanders sieht (er hat einen Sprung nicht angenommen), wird sie dorthin gesetzt.
+func _correct_own(me: PlayerState, delta: float, _sample: Dictionary) -> void:
 	me.remote_walking = false
 	world.move_player(me, delta)
 	var history: Array = _history[my_id]
-	var latest: Array = history[history.size() - 1]
-	var server_pos: Vector2 = latest[1]
-	var server_walking: bool = latest[3]
+	var server_pos: Vector2 = history[history.size() - 1][1]
 	if me.is_walking():
 		_own_idle = 0.0
-		if me.pos.distance_to(server_pos) > 3.0:
-			me.pos = server_pos
-			me.path.clear()
 	else:
 		_own_idle += delta
-		if _own_idle > 1.0 and server_walking:
-			# Der Gastgeber lässt die Figur laufen (z. B. nach einem Antippen, das hier nicht vorhergesagt wurde)
-			me.pos = sample.pos
-			me.facing = sample.facing
-			me.remote_walking = true
-		elif _own_idle > 0.5 and me.pos.distance_to(server_pos) > 0.05:
-			# Stehen geblieben: sanft auf den Platz, den der Gastgeber kennt
-			me.pos = me.pos.move_toward(server_pos, WorldState.WALK_SPEED * delta)
-			me.remote_walking = me.pos.distance_to(server_pos) > 0.3
+		if _own_idle > OWN_RESYNC_SECONDS and me.pos.distance_to(server_pos) > 1.0:
+			me.pos = server_pos
+			me.path.clear()
 	me.cell = Vector2i(me.pos.round())
+
+
+## Mitspieler: meldet den Platz der eigenen Figur, solange sie läuft, und einmal, wenn sie stehen bleibt.
+func _send_own_position(delta: float) -> void:
+	var me: PlayerState = world.players.get(my_id)
+	if me == null or not _ready_to_send:
+		return
+	_pos_timer -= delta
+	var walking := me.is_walking()
+	if (walking or _pos_sent_walking) and _pos_timer <= 0.0:
+		_pos_timer = 1.0 / OWN_POS_RATE
+		_pos_sent_walking = walking
+		_c_command.rpc_id(1, {type = "pos", pos = me.pos, karte = me.map, facing = me.facing, walking = walking})
 
 
 ## Platz einer Figur zu einem Zeitpunkt, zwischen zwei Berichten des Gastgebers verrechnet.
@@ -942,6 +977,7 @@ func _s_own(data: Dictionary) -> void:
 		_place_on_map(p, data.karte, Vector2(int(cell[0]), int(cell[1])))
 	p.dialog = data.get("dialog", {})
 	p.shop = data.get("shop", "")
+	p.npc_walk = data.get("npc_walk", {})
 	p.progress.load_dict(data.get("progress", {}))
 
 

@@ -54,7 +54,7 @@ const CLASSES := {
 	"blade": {
 		hero = "Zara", title = "Klingentänzerin", role = "Schaden", region = "Glutoase", color = Color("ff9a5c"),
 		hp = 100, mana = 50, tempo = 14, back = false, reaction = "parry",
-		mechanic = "Bis zu 5 schwebende Klingen (+5 % Schaden je Klinge). Schritt, Wirbel, Ausfall = Tanzfolge.",
+		mechanic = "Bis zu 5 schwebende Klingen, jede trifft nach Schritt und Ausfall noch einmal nach. Schritt, Wirbel, Ausfall = Tanzfolge.",
 		reaction_text = "Parieren: +1 Klinge",
 		ult = "Tanz der tausend Klingen · lädt durch Tanzfolgen und verbrauchte Klingen",
 	},
@@ -240,7 +240,7 @@ const ENEMIES := {
 		tame = {name = "Wasserstrahl", base = 10, kind = "ranged"}},
 	# Nacht des Sternenfalls (Kreuzweg-Demo): Ein Feldschleim hat einen Splitter gefressen
 	"sternenfresser": {name = "Der Sternenfresser", element = "Sternenkraft", hp = 240, tempo = 9, big = true,
-		panzer = 0.1, erschuettert = 2, wipe_nach = 10, wipe_text = "Der Splitter im Bauch des Sternenfressers explodiert!",
+		panzer = 0.1, erschuettert = 2, wipe_nach = 10, toedlich = true, wipe_text = "Der Splitter im Bauch des Sternenfressers explodiert!",
 		attacks = [{name = "Sternenschlag", base = 28, kind = "melee"}, {name = "Splitterregen", base = 14, kind = "magic", all = true},
 			{name = "Sternenschlag", base = 28, kind = "melee"}, {name = "Leuchtender Biss", base = 20, kind = "melee"}]},
 }

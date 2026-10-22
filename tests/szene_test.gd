@@ -153,9 +153,13 @@ func _test_star_night() -> void:
 	w.effect_requested.connect(func(id: String, effect: String) -> void: effects[id] = effects.get(id, []) + [effect])
 	var battles := []
 	w.group_battle_requested.connect(func(ids: Array, kampf: String) -> void: battles.append([ids, kampf]))
-	w.tick(0.05)
 	var a: PlayerState = w.players["a"]
 	var b: PlayerState = w.players["b"]
+	# Marv kommt erst angelaufen, dann spricht er die Gruppe an
+	for i in 100:
+		w.tick(0.05)
+		if a.in_dialog():
+			break
 	_check(a.in_dialog() and b.in_dialog() and a.dialog.has("szene"), "Marv spricht die Gruppe auf dem Fest gemeinsam an")
 	_check(b.progress.flags.has("angesprochen:marv_fest"), "Marv spricht danach niemanden aus der Gruppe noch einmal an")
 	# Durch das Gespräch: Antworten wählen und weiterblättern, bis der Kampf beginnt
@@ -182,7 +186,11 @@ func _test_star_night() -> void:
 	var b2 := w.add_player("b", "B", "elf_m", b_cell)
 	b2.progress.load_dict(b.progress.to_dict())
 	w.apply_command("b", {type = "kampf_ergebnis", kampf = "sternenfall", gewonnen = true})
-	w.tick(0.05)
+	# Ren kommt angelaufen, dann spricht sie beide an
+	for i in 100:
+		w.tick(0.05)
+		if a.in_dialog():
+			break
 	_check(a.in_dialog() and b2.in_dialog() and a.dialog.get("id", "") == "ren", "Alle zurück: Ren spricht beide zusammen an")
 	_check(w.dialog_view(b2).get("szene", {}).get("rolle", "") in ["spricht", "abstimmen"], "Beide stimmen in der Szene mit Ren ab")
 	_check(a.progress.flags.has("erfolg:schild_hoch") and b2.progress.flags.has("erfolg:schild_hoch"), "Beide haben den Erfolg „Schild hoch, Schild runter“")

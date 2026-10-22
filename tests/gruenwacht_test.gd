@@ -111,7 +111,9 @@ func _test_journey() -> void:
 	_walk(world, p, Vector2i(0, 22))
 	_check(p.map == "weg_gruenwacht", "Weststraße führt nach der Klassenwahl auf den Weg")
 
-	# Über den Weg in den Wald, mit dem Steuerknopf (freies Laufen nach links oben = Westen)
+	# Über den Weg in den Wald, mit dem Steuerknopf (freies Laufen nach links oben = Westen).
+	# Die Monster laufen herum; damit dieser Test nur das Laufen prüft, greifen sie hier nicht an.
+	p.safe_time = 1000.0
 	world.apply_command("a", {type = "steer", dir = Vector2(-0.5, -0.25)})
 	for i in 600:
 		world.tick(0.05)
@@ -346,6 +348,7 @@ func _test_fenn(choice: String) -> void:
 	var deer := _place_target(world, "waldboden", "silberhirsch")
 	_check(not world.can_use(p, deer), "Der Hirsch ist oben in Wipfelheim nicht zu sehen")
 	world.change_map(p, "waldboden", Vector2i(14, 12))
+	p.safe_time = 1000.0
 	_check(world.can_use(p, deer), "Der Silberhirsch steht im Wald")
 	world.apply_command("a", {type = "use", target = deer})
 	for i in 600:
@@ -398,7 +401,8 @@ func _test_tamer(kobalt_won: bool) -> void:
 	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "dialog_next"})
 	_check(not p.in_dialog() or p.dialog.id == "kobalt", "Esche ist fertig")
-	_tick(world, 1.0)
+	# Kobalt kommt angelaufen
+	_tick(world, 4.0)
 	_check(p.in_dialog() and p.dialog.id == "kobalt" and world.dialog_view(p).text.contains("Bachotter"), "Kobalt fordert heraus und nimmt den Bachotter")
 	world.apply_command("a", {type = "dialog_choose", index = 0})
 	_check(battles == ["kobalt_bachotter"], "Rivalenkampf beginnt")
@@ -512,8 +516,9 @@ func _test_story(side: String) -> void:
 	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "dialog_next"})
 	_check(p.progress.quest_state("veraenderte_tiere") == "abgegeben", "Auftrag abgegeben")
-	_check(world.npc_visible(p, "kael"), "Kael ist jetzt in Wipfelheim")
-	_tick(world, 1.0)
+	_check(world._npc_present(p, "kael"), "Kael ist jetzt in Wipfelheim")
+	# Kael kommt angelaufen
+	_tick(world, 4.0)
 	_check(p.in_dialog() and p.dialog.id == "kael", "Kael spricht einen an")
 	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "dialog_next"})
@@ -588,6 +593,8 @@ func _test_dungeon(choice: String) -> void:
 	_check(BattleRequest.prepare("pilz_urbaum", 20, 0, "blade") and BattleRequest.setup.helden.size() == 4 and BattleRequest.setup.dungeon == "pilzhoehle",
 			"Bosskampf: Ida, Bo und Tom helfen, Dungeon-Regeln gelten")
 	BattleRequest.kampf_id = ""
+	# Die Höhlenmonster laufen herum; hier geht es nur um den Weg zum Herz
+	p.safe_time = 1000.0
 	world.apply_command("a", {type = "use", target = heart})
 	_tick(world, 6.0)
 	_check(p.in_dialog() and p.dialog.id == "urbaum_herz", "Am Herz des Urbaums")
@@ -736,7 +743,8 @@ func _walk(world: WorldState, p: PlayerState, cell: Vector2i) -> void:
 	world.apply_command(p.id, {type = "move", cell = cell})
 	for i in 400:
 		world.tick(0.05)
-		if p.map != map or (not p.is_moving() and not p.in_dialog()) or p.in_dialog():
+		# Kommt jemand angelaufen (z. B. Marv), wird gewartet, bis er da ist und redet
+		if p.map != map or (not p.is_moving() and not p.in_dialog() and not p.awaiting_npc()) or p.in_dialog():
 			break
 
 

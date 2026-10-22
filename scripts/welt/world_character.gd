@@ -22,6 +22,8 @@ var _sprite: Sprite2D
 var _time := 0.0
 var _head_y := 0.0
 var _label: Label
+## Name, Zeichen und Sprechblase liegen über allem (auch über Häusern und Bäumen), damit man sie immer sieht
+var _overlay: Node2D
 var _bubble: PanelContainer
 var _bubble_time := 0.0
 
@@ -42,6 +44,10 @@ func setup(look: String, p_name: String, tint := Color.WHITE, name_color := Colo
 	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	_sprite.self_modulate = tint
 	add_child(_sprite)
+	_overlay = Node2D.new()
+	_overlay.z_index = 20
+	_overlay.draw.connect(_draw_overlay)
+	add_child(_overlay)
 
 	var label := Label.new()
 	_label = label
@@ -54,7 +60,7 @@ func setup(look: String, p_name: String, tint := Color.WHITE, name_color := Colo
 	label.size = Vector2(160, 20)
 	_head_y = -_sprite.texture.get_height() * SCALE - 24
 	label.position = Vector2(-80, _head_y)
-	add_child(label)
+	_overlay.add_child(label)
 
 
 func _process(delta: float) -> void:
@@ -71,6 +77,7 @@ func _process(delta: float) -> void:
 	_sprite.texture = frames[int(_time * (12.0 if anim == "run" else idle_fps)) % frames.size()]
 	_sprite.flip_h = facing < 0
 	queue_redraw()
+	_overlay.queue_redraw()
 
 
 func _draw() -> void:
@@ -78,12 +85,15 @@ func _draw() -> void:
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, 0.45))
 	draw_circle(Vector2.ZERO, 18.0, Color(0, 0, 0, 0.35))
 	draw_set_transform_matrix(Transform2D.IDENTITY)
+
+
+func _draw_overlay() -> void:
 	if marker != "":
 		var font := ThemeDB.fallback_font
 		var bob := sin(_time * 2.5) * 1.5
 		var pos := Vector2(-20, _head_y - 6 + bob)
-		draw_string_outline(font, pos, marker, HORIZONTAL_ALIGNMENT_CENTER, 40, 30, 7, Color.BLACK)
-		draw_string(font, pos, marker, HORIZONTAL_ALIGNMENT_CENTER, 40, 30, MARKER_SIDE_COLOR if marker_side else MARKER_COLOR)
+		_overlay.draw_string_outline(font, pos, marker, HORIZONTAL_ALIGNMENT_CENTER, 40, 30, 7, Color.BLACK)
+		_overlay.draw_string(font, pos, marker, HORIZONTAL_ALIGNMENT_CENTER, 40, 30, MARKER_SIDE_COLOR if marker_side else MARKER_COLOR)
 
 
 ## Animation an einer anderen Stelle beginnen lassen (damit nicht alle Figuren gleichzeitig wippen).
@@ -113,7 +123,7 @@ func say(text: String, seconds := 6.0) -> void:
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label.custom_minimum_size = Vector2(minf(220.0, 14.0 + text.length() * 7.5), 0)
 	_bubble.add_child(label)
-	add_child(_bubble)
+	_overlay.add_child(_bubble)
 	_bubble.reset_size()
 	_bubble.position = Vector2(-_bubble.size.x * 0.5, _head_y - _bubble.size.y - 4)
 	_bubble_time = seconds

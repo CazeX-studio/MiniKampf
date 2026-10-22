@@ -81,7 +81,7 @@ func _test_world() -> void:
 
 	# Marv in Wipfelheim gibt den Auftrag
 	world.change_map(p, "wipfelheim", Vector2i(21, 13))
-	_tick(world, 1.0)
+	_tick(world, 4.0)
 	_check(p.in_dialog() and p.dialog.id == "marv_gruenwacht", "Marv spricht einen an")
 	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "dialog_choose", index = 0})

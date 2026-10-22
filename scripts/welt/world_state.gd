@@ -8,6 +8,8 @@ extends RefCounted
 ##   {type = "talk", npc = "ye"}         zu einem NPC laufen und mit ihm reden
 ##   {type = "use", target = "punkt:0"}  zu etwas hinlaufen und es benutzen ("npc:ye" oder "punkt:Nummer")
 ##   {type = "steer", dir = Vector2}     frei laufen in eine Bildschirm-Richtung (Tasten, Steuerknopf), ZERO = stehen bleiben
+##   {type = "pos", pos = Vector2, karte = "…", facing = 1, walking = true}  beim Zusammenspielen: wo die Figur eines
+##                                       Mitspielers gerade ist (Mitspieler laufen bei sich selbst, der Gastgeber übernimmt den Platz)
 ##   {type = "interact"}                 das Nächste direkt nebenan benutzen (E, Leertaste, Aktions-Knopf)
 ##   {type = "start"}                    Stadt betreten (zeigt beim ersten Mal die Einleitung)
 ##   {type = "kampf_ergebnis", kampf = "…", gewonnen = true, traenke_benutzt = 1}  Ergebnis eines Kampfes (vom Kampfbildschirm)
@@ -48,6 +50,12 @@ const CENTER := Vector2i(22, 22)
 const PLAZA_RADIUS := 7.5
 ## Felder pro Sekunde
 const WALK_SPEED := 5.5
+## Beim Zusammenspielen: so weit darf ein Mitspieler zwischen zwei Platz-Meldungen höchstens gelaufen sein (Felder)
+const REMOTE_MAX_JUMP := 4.0
+## So schnell laufen NPCs, die einen ansprechen (Felder pro Sekunde)
+const NPC_WALK_SPEED := 6.0
+## So weit entfernt taucht ein NPC auf, der einen ansprechen will (Felder)
+const WALK_IN_DISTANCE := 8
 ## So nah muss man an etwas stehen, um es zu benutzen (in Feldern)
 const USE_RANGE := 1.6
 
@@ -75,6 +83,12 @@ var decorations: Array[Dictionary] = []
 var monsters: Array[Dictionary] = []
 ## So nah muss man einem Monster kommen, damit der Kampf beginnt (Felder)
 const MONSTER_TOUCH := 0.6
+## Monster laufen um ihren Platz herum (so weit, Felder) und folgen Spielern, die so nah herankommen (Felder)
+const MONSTER_RANGE := 2.0
+const MONSTER_CHASE := 2.5
+## Tempo der Monster (Felder pro Sekunde): beim Herumlaufen und wenn sie jemandem folgen
+const MONSTER_SPEED := 1.2
+const MONSTER_CHASE_SPEED := 2.4
 ## So lange bleibt ein besiegtes Monster für den Spieler weg (Sekunden)
 const MONSTER_RESPAWN := 60.0
 ## Spieler, deren Kampf gerade beginnt (bis das Ergebnis kommt oder sie gehen): Kennung -> true
@@ -122,7 +136,12 @@ func _init() -> void:
 		town_map.add_exit(d)
 	town_map.finish()
 	_add_things(KREUZWEG, town)
-	monsters = GameData.wild_monsters()
+	# Eigene Kopie: Die Monster laufen herum (pos, Ziel, Pause), die Daten aus den Karten bleiben unverändert
+	monsters = []
+	for m: Dictionary in GameData.wild_monsters():
+		var wild := m.duplicate()
+		wild.merge({pos = Vector2(m.feld), target = Vector2(m.feld), wait = randf_range(0.0, 2.0), moving = false, facing = 1})
+		monsters.append(wild)
 	var all_maps := GameData.get_file("karten")
 	var legend: Dictionary = all_maps.get("zeichen", {})
 	for id: String in all_maps:
@@ -324,6 +343,9 @@ func change_map(p: PlayerState, map_id: String, cell: Vector2i) -> void:
 				p.progress.flags.erase(flag)
 	p.map = map_id
 	p.cell = cell
+	# Wer gerade auf eine Karte kommt, wird nicht sofort von einem Monster angesprungen
+	p.safe_time = maxf(p.safe_time, 3.0)
+	p.npc_walk = {}
 	p.pos = Vector2(cell)
 	_say(p, GameData.text("karte_betreten", [m.title]))
 	# Für Aufträge wie „Reise nach Wipfelheim“
@@ -362,6 +384,9 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 	var p: PlayerState = players.get(player_id)
 	if p == null:
 		return
+	# Läuft gerade ein NPC auf den Spieler zu, wartet der Spieler (nur Stehenbleiben geht)
+	if p.awaiting_npc() and cmd.get("type", "") in ["move", "talk", "use", "interact"]:
+		return
 	match cmd.get("type", ""):
 		"move":
 			var target: Vector2i = cmd.cell
@@ -373,6 +398,8 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			_go_use(p, "npc:" + str(cmd.npc))
 		"use":
 			_go_use(p, str(cmd.target))
+		"pos":
+			_remote_position(p, cmd)
 		"steer":
 			var dir: Vector2 = cmd.dir
 			p.steer = screen_dir_to_cells(dir.limit_length(1.0)) if not p.in_dialog() else Vector2.ZERO
@@ -442,7 +469,7 @@ func target_cell(target: String) -> Vector2i:
 	if parts.size() == 2 and parts[0] == "ort" and int(parts[1]) < places.size():
 		return places[int(parts[1])].cell
 	if parts.size() == 2 and parts[0] == "monster" and int(parts[1]) < monsters.size():
-		return monsters[int(parts[1])].feld
+		return Vector2i(Vector2(monsters[int(parts[1])].pos).round())
 	return Vector2i(-1, -1)
 
 
@@ -463,7 +490,15 @@ func can_use(p: PlayerState, target: String) -> bool:
 
 
 ## Ist der NPC für diesen Spieler gerade da? (z. B. Ye erst in der Gilde, später am Stadttor; nur auf der eigenen Karte)
+## NPCs, die einen von sich aus ansprechen, sieht man erst, wenn sie herbeilaufen.
 func npc_visible(p: PlayerState, npc_id: String) -> bool:
+	if not _npc_present(p, npc_id):
+		return false
+	return npcs[npc_id].approach.is_empty() or p.progress.flags.has("angesprochen:" + npc_id) or p.npc_walk.get("id", "") == npc_id
+
+
+## Ist der NPC für diesen Spieler in der Geschichte gerade da (auch wenn er erst noch herbeiläuft)?
+func _npc_present(p: PlayerState, npc_id: String) -> bool:
 	return npcs.has(npc_id) and npcs[npc_id].map == p.map and check(p, npcs[npc_id].cond)
 
 
@@ -509,8 +544,9 @@ func _walk_to(p: PlayerState, target: Vector2i) -> void:
 	var path: Array[Vector2i] = []
 	if p.is_moving():
 		path.append(start)
-	elif p.pos != Vector2(p.cell):
-		# Zwischen zwei Feldern stehen geblieben (z. B. weil jemand dich angesprochen hat): erst zurück aufs Feld
+	elif p.pos != Vector2(p.cell) and route.size() < 2:
+		# Zwischen zwei Feldern stehen geblieben und das Ziel ist genau dieses Feld: noch das kleine Stück hin.
+		# (Sonst geht es direkt zum nächsten Feld des Weges – nicht erst zurück, das sah aus wie ein Zurückspringen.)
 		path.append(p.cell)
 	for i in range(1, route.size()):
 		path.append(route[i])
@@ -549,10 +585,15 @@ func _steer(p: PlayerState, delta: float) -> void:
 func tick(delta: float) -> void:
 	_time += delta
 	_tick_scenes(delta)
+	_move_monsters(delta)
 	for p: PlayerState in players.values():
-		move_player(p, delta)
+		p.safe_time = maxf(p.safe_time - delta, 0.0)
+		# Mitspieler laufen bei sich selbst und melden ihren Platz ("pos"), der Gastgeber bewegt sie nicht noch einmal
+		if not p.remote_driven:
+			move_player(p, delta)
 		_check_exits(p)
 		_check_monsters(p)
+		_move_npc_walk(p, delta)
 		_check_approach(p)
 		if not p.is_moving() and p.use_target != "":
 			var target := p.use_target
@@ -561,9 +602,30 @@ func tick(delta: float) -> void:
 				_use(p, target)
 
 
+## Platz eines Mitspielers übernehmen. Unmögliche Sprünge (zu weit, in ein Haus, andere Karte) werden nicht übernommen –
+## dann setzt der Mitspieler seine Figur selbst wieder dorthin, wo der Gastgeber sie kennt.
+func _remote_position(p: PlayerState, cmd: Dictionary) -> void:
+	p.remote_driven = true
+	var pos: Variant = cmd.get("pos")
+	if pos is Vector2 and str(cmd.get("karte", p.map)) == p.map and not p.awaiting_npc():
+		var cell := Vector2i((pos as Vector2).round())
+		if is_walkable(cell, p.map) and (pos as Vector2).distance_to(p.pos) <= REMOTE_MAX_JUMP:
+			p.pos = pos
+			p.cell = cell
+	p.facing = 1 if int(cmd.get("facing", p.facing)) >= 0 else -1
+	p.remote_walking = bool(cmd.get("walking", false))
+	if not p.remote_walking:
+		# Stehen geblieben: Ein angeklickter Weg ist zu Ende, jetzt wird benutzt, was angeklickt war
+		p.path.clear()
+
+
 ## Nur das Laufen eines Spielers (frei gesteuert oder einen Weg entlang), ohne Reden und Benutzen.
 ## Beim Zusammenspielen bewegt ein Mitspieler damit seine eigene Figur sofort, ohne auf den Gastgeber zu warten.
 func move_player(p: PlayerState, delta: float) -> void:
+	if p.awaiting_npc():
+		p.steer = Vector2.ZERO
+		p.path.clear()
+		return
 	if p.steer != Vector2.ZERO:
 		_steer(p, delta)
 	var step := WALK_SPEED * delta
@@ -643,9 +705,11 @@ func dialog_view(p: PlayerState) -> Dictionary:
 		return _scene_view(p, scenes[p.dialog.szene])
 	var node := _current_node(p)
 	var answers: Array[String] = []
-	for a in _visible_answers(p, node):
+	var visible := _visible_answers(p, node)
+	for a in visible:
 		answers.append(a.text)
-	return {wer = node.get("wer", ""), text = fill_text(p, node.get("text", "")), antworten = answers}
+	return {wer = node.get("wer", ""), text = fill_text(p, node.get("text", "")), antworten = answers,
+			zeichen = answer_markers(p, p.dialog.id, p.dialog.node, visible)}
 
 
 ## Gesprächszustand zum Verschicken an einen Mitspieler (in einer Szene mit fertiger Ansicht, weil das Spiegelbild
@@ -668,6 +732,97 @@ func _visible_answers(p: PlayerState, node: Dictionary) -> Array[Dictionary]:
 		if check(p, a.get("wenn", {})):
 			result.append(a)
 	return result
+
+
+## Zeichen vor den Antworten: "!" = beginnt einen Hauptauftrag, "?" = bringt die Hauptgeschichte weiter, "" = nichts.
+## Markiert wird nur die Antwort (bzw. die Antworten), die am direktesten weiterführt; Nebenaufträge nicht.
+func answer_markers(p: PlayerState, dialog_id: String, node_id: String, answers: Array[Dictionary]) -> Array[String]:
+	var values: Array[Dictionary] = []
+	var best := 0
+	for a in answers:
+		var v := _answer_value(p, dialog_id, a, {node_id: true}, 0)
+		values.append(v)
+		best = maxi(best, v.wert)
+	var result: Array[String] = []
+	for v in values:
+		result.append(v.zeichen if best > 0 and v.wert == best else "")
+	return result
+
+
+## Wie sehr eine Antwort die Hauptgeschichte weiterbringt: {wert, zeichen}. Weiterbringen zählt mehr als nur einen
+## Auftrag annehmen, und je früher im Gespräch es passiert, desto besser (Umwege über Fragen zählen weniger).
+func _answer_value(p: PlayerState, dialog_id: String, a: Dictionary, visited: Dictionary, depth: int) -> Dictionary:
+	var v := _actions_value(p, a.get("aktionen", []), depth)
+	if a.has("weiter"):
+		v = _better_value(v, _node_value(p, dialog_id, str(a.weiter), visited, depth + 1))
+	return v
+
+
+func _node_value(p: PlayerState, dialog_id: String, node_id: String, visited: Dictionary, depth: int) -> Dictionary:
+	if depth > 6 or visited.has(node_id):
+		return {wert = 0, zeichen = ""}
+	var seen := visited.duplicate()
+	seen[node_id] = true
+	var node: Dictionary = GameData.dialog(dialog_id).get("knoten", {}).get(node_id, {})
+	var v := _actions_value(p, node.get("aktionen", []), depth)
+	for a in _visible_answers(p, node):
+		v = _better_value(v, _answer_value(p, dialog_id, a, seen, depth))
+	if node.has("weiter"):
+		v = _better_value(v, _node_value(p, dialog_id, str(node.weiter), seen, depth + 1))
+	return v
+
+
+func _actions_value(p: PlayerState, actions: Array, depth: int) -> Dictionary:
+	var starts := false
+	var advances := false
+	for action: Dictionary in actions:
+		if action.has("auftrag_starten") and is_main_quest(str(action.auftrag_starten)) and p.progress.quest_state(action.auftrag_starten) == "neu":
+			starts = true
+		if action.has("auftrag_abgeben") and is_main_quest(str(action.auftrag_abgeben)) and p.progress.quest_state(action.auftrag_abgeben) in ["aktiv", "fertig"]:
+			advances = true
+		if action.has("kampf") and not _is_side_battle(str(action.kampf)):
+			advances = true
+		if action.has("szene"):
+			advances = true
+		if action.has("merken") and _is_open_goal_flag(p, str(action.merken)):
+			advances = true
+	if not starts and not advances:
+		return {wert = 0, zeichen = ""}
+	return {wert = (20 if advances else 10) - depth, zeichen = "!" if starts else "?"}
+
+
+func _better_value(a: Dictionary, b: Dictionary) -> Dictionary:
+	return b if b.wert > a.wert else a
+
+
+## Hauptaufträge sind alle, die nicht als "neben" markiert sind.
+func is_main_quest(id: String) -> bool:
+	var q := GameData.quest(id)
+	return not q.is_empty() and not q.get("neben", false)
+
+
+## Gehört dieser Kampf zu einem Nebenauftrag? (Dann bekommt die Antwort kein Zeichen.)
+func _is_side_battle(kampf_id: String) -> bool:
+	var all_quests := GameData.get_file("auftraege")
+	for id: String in all_quests:
+		var q = all_quests[id]
+		if not q is Dictionary or not q.get("neben", false):
+			continue
+		for goal: Dictionary in q.get("ziele", []):
+			if goal.get("kampf", "") == kampf_id:
+				return true
+	return false
+
+
+## Ist "flag" ein noch offenes Ziel eines aktiven Hauptauftrags?
+func _is_open_goal_flag(p: PlayerState, flag: String) -> bool:
+	for id: String in p.progress.quests:
+		if p.progress.quests[id] != "aktiv" or not is_main_quest(id):
+			continue
+		for goal: Dictionary in GameData.quest(id).get("ziele", []):
+			if goal.get("art", "") == "gemerkt" and goal.get("merken", "") == flag and not p.progress.flags.has(flag):
+				return true
+	return false
 
 
 func _dialog_next(p: PlayerState) -> void:
@@ -770,7 +925,7 @@ func _start_talk(p: PlayerState, npc_id: String, approach_flag := "") -> void:
 		var flag := "geredet:" + npc_id
 		var had_flag := other.progress.flags.has(flag)
 		other.progress.flags[flag] = true
-		if npc_visible(other, npc_id) and _entry_node(other, dialog_id) == entry:
+		if _npc_present(other, npc_id) and _entry_node(other, dialog_id) == entry:
 			voters.append(other.id)
 			if approach_flag != "":
 				other.progress.flags[approach_flag] = true
@@ -982,7 +1137,8 @@ func _scene_view(p: PlayerState, scene: Dictionary) -> Dictionary:
 	var node := _current_node(speaker)
 	var answers: Array[String] = []
 	var votes: Array[int] = []
-	for a in _visible_answers(speaker, node):
+	var visible := _visible_answers(speaker, node)
+	for a in visible:
 		answers.append(a.text)
 		votes.append(0)
 	for id: String in scene.votes:
@@ -994,6 +1150,7 @@ func _scene_view(p: PlayerState, scene: Dictionary) -> Dictionary:
 			open += 1
 	var role := "spricht" if p.id == speaker.id else ("abstimmen" if p.id in scene.voters else "zuschauen")
 	return {wer = node.get("wer", ""), text = fill_text(p, node.get("text", "")), antworten = answers,
+			zeichen = answer_markers(speaker, speaker.dialog.id, speaker.dialog.node, visible),
 			szene = {rolle = role, sprecher = speaker.display_name, stimmen = votes, meine = scene.votes.get(p.id, -1),
 				offen = open, zeit = ceili(scene.time_left), teilnehmer = _scene_members(scene).size()}}
 
@@ -1166,6 +1323,99 @@ func objective(p: PlayerState) -> String:
 	return ""
 
 
+## Wohin der Spieler für die Hauptgeschichte als Nächstes muss, als Feld auf seiner eigenen Karte – oder (-1, -1).
+## Liegt das Ziel auf einer anderen Karte, zeigt der Wegweiser zum Ausgang, der dorthin führt. Für den Wegweiser.
+func objective_cell(p: PlayerState) -> Vector2i:
+	var goal := objective_place(p)
+	if goal.is_empty():
+		return Vector2i(-1, -1)
+	if goal.karte == p.map:
+		return goal.feld
+	var exit := _exit_towards(p, str(goal.karte))
+	return exit
+
+
+## Ziel der Hauptgeschichte: {karte, feld} oder leer.
+func objective_place(p: PlayerState) -> Dictionary:
+	for id: String in p.progress.quests:
+		var q := GameData.quest(id)
+		var quest_state: String = p.progress.quests[id]
+		if q.is_empty() or quest_state == "abgegeben" or not is_main_quest(id):
+			continue
+		if quest_state == "fertig":
+			return _npc_goal(p, [q.get("abgeben_bei", "")])
+		for goal: Dictionary in q.get("ziele", []):
+			if goal_done(p, goal) or not check(p, goal.get("wenn", {})):
+				continue
+			if goal.art == "sammeln":
+				var herb := _nearest_pickup(p, str(goal.gegenstand))
+				if not herb.is_empty():
+					return herb
+			if goal.has("bei"):
+				return _npc_goal(p, [goal.bei])
+			if goal.has("wegweiser"):
+				return _npc_goal(p, goal.wegweiser)
+		return {}
+	# Kein Hauptauftrag offen: zum nächsten gelben „!“ auf dieser Karte
+	var best := {}
+	for id: String in npcs:
+		if npc_marker(p, id) == "!" and not npc_marker_side(p, id) \
+				and (best.is_empty() or (Vector2(npcs[id].cell) - p.pos).length() < (Vector2(best.feld) - p.pos).length()):
+			best = {karte = npcs[id].map, feld = npcs[id].cell}
+	return best
+
+
+## Der nächste der genannten NPCs, der für den Spieler gerade da ist (auch einer, der erst herbeiläuft).
+func _npc_goal(p: PlayerState, ids: Array) -> Dictionary:
+	var best := {}
+	for id: String in ids:
+		if not npcs.has(id) or not check(p, npcs[id].cond):
+			continue
+		var cell: Vector2i = npcs[id].cell
+		if p.npc_walk.get("id", "") == id:
+			cell = Vector2i(Vector2(p.npc_walk.pos).round())
+		var here: bool = npcs[id].map == p.map
+		if best.is_empty() or (here and (best.karte != p.map or (Vector2(cell) - p.pos).length() < (Vector2(best.feld) - p.pos).length())):
+			best = {karte = npcs[id].map, feld = cell}
+	return best
+
+
+## Der nächste Sammelpunkt dieses Gegenstands, den der Spieler noch nicht eingesammelt hat (lieber auf der eigenen Karte).
+func _nearest_pickup(p: PlayerState, item: String) -> Dictionary:
+	var best := {}
+	for i in pickups.size():
+		var pick: Dictionary = pickups[i]
+		if pick.item != item or p.progress.flags.has("gesammelt:punkt:%d" % i) or not check(p, pick.get("cond", {})):
+			continue
+		var here: bool = pick.map == p.map
+		if best.is_empty() or (here and (best.karte != p.map or (Vector2(pick.cell) - p.pos).length() < (Vector2(best.feld) - p.pos).length())):
+			best = {karte = pick.map, feld = pick.cell}
+	return best
+
+
+## Ausgang der eigenen Karte, über den man (auch über mehrere Karten hinweg) zur Zielkarte kommt, oder (-1, -1).
+func _exit_towards(p: PlayerState, target_map: String) -> Vector2i:
+	# Breitensuche über die Ausgänge aller Karten; gemerkt wird, über welchen Ausgang der eigenen Karte man losging
+	var first := {}
+	var queue: Array[String] = []
+	for e: Dictionary in get_map(p.map).exits:
+		if check(p, e.cond) and not first.has(e.karte) and e.karte != p.map:
+			first[e.karte] = e.rect.get_center()
+			queue.append(e.karte)
+	while not queue.is_empty():
+		var map_id: String = queue.pop_front()
+		if map_id == target_map:
+			var c: Vector2 = first[map_id]
+			return Vector2i(c.round())
+		if not maps.has(map_id):
+			continue
+		for e: Dictionary in get_map(map_id).exits:
+			if not first.has(e.karte) and e.karte != p.map:
+				first[e.karte] = first[map_id]
+				queue.append(e.karte)
+	return Vector2i(-1, -1)
+
+
 ## Zeichen über einem NPC: "!" = neuer Auftrag, "?" = hier etwas erledigen oder abgeben, "" = nichts.
 func npc_marker(p: PlayerState, npc_id: String) -> String:
 	return _marker(p, npc_id)[0]
@@ -1323,13 +1573,62 @@ func monster_here(p: PlayerState, index: int) -> bool:
 	return Time.get_unix_time_from_system() - beaten >= MONSTER_RESPAWN
 
 
-## Läuft der Spieler in ein Monster hinein, beginnt der Kampf.
+## Kann dieser Spieler gerade in einen Kampf mit einem Monster geraten?
+func _can_meet_monster(p: PlayerState) -> bool:
+	return not p.in_dialog() and not p.awaiting_npc() and p.shop == "" and not _fighting.has(p.id) \
+			and not waiting_for_group(p.id) and p.safe_time <= 0.0
+
+
+## Monster laufen ein Stück um ihren Platz herum und folgen Spielern, die nah herankommen (und sie sehen).
+func _move_monsters(delta: float) -> void:
+	for i in monsters.size():
+		var m: Dictionary = monsters[i]
+		var speed := MONSTER_SPEED
+		var chasing := false
+		for p: PlayerState in players.values():
+			if p.map == m.karte and monster_here(p, i) and _can_meet_monster(p) and p.pos.distance_to(m.pos) < MONSTER_CHASE \
+					and p.pos.distance_to(Vector2(m.feld)) < MONSTER_RANGE + 2.0:
+				m.target = p.pos
+				speed = MONSTER_CHASE_SPEED
+				chasing = true
+				break
+		if not chasing and m.wait > 0.0:
+			m.wait -= delta
+			m.moving = false
+			continue
+		var to: Vector2 = m.target - m.pos
+		if to.length() < 0.05:
+			m.wait = randf_range(1.0, 3.0)
+			m.target = _monster_spot(m)
+			m.moving = false
+			continue
+		var next: Vector2 = m.pos + to.normalized() * minf(speed * delta, to.length())
+		if is_walkable(Vector2i(next.round()), m.karte):
+			m.pos = next
+			m.moving = true
+			if absf(to.x - to.y) > 0.01:
+				m.facing = 1 if to.x - to.y > 0 else -1
+		else:
+			m.target = m.pos
+
+
+## Ein zufälliges freies Feld in der Nähe des Monster-Platzes.
+func _monster_spot(m: Dictionary) -> Vector2:
+	var r := int(MONSTER_RANGE)
+	for i in 10:
+		var cell: Vector2i = m.feld + Vector2i(randi_range(-r, r), randi_range(-r, r))
+		if is_walkable(cell, m.karte):
+			return Vector2(cell)
+	return Vector2(m.feld)
+
+
+## Läuft der Spieler in ein Monster hinein (oder das Monster in ihn), beginnt der Kampf.
 func _check_monsters(p: PlayerState) -> void:
-	if p.in_dialog() or p.shop != "" or _fighting.has(p.id) or waiting_for_group(p.id):
+	if not _can_meet_monster(p):
 		return
 	for i in monsters.size():
 		var m: Dictionary = monsters[i]
-		if m.karte == p.map and (Vector2(m.feld) - p.pos).length() < MONSTER_TOUCH and monster_here(p, i):
+		if m.karte == p.map and (m.pos - p.pos).length() < MONSTER_TOUCH and monster_here(p, i):
 			_start_wild(p, i)
 			return
 
@@ -1346,6 +1645,7 @@ func _start_wild(p: PlayerState, index: int) -> void:
 			ids.append(id)
 	for id in ids:
 		_fighting[id] = true
+		players[id].safe_time = 3.0
 		players[id].path.clear()
 		players[id].steer = Vector2.ZERO
 		players[id].use_target = ""
@@ -1361,21 +1661,112 @@ func _start_wild(p: PlayerState, index: int) -> void:
 
 # --- NPCs, die einen ansprechen ------------------------------------------------
 
-## Manche NPCs (z. B. Marv) sprechen dich von sich aus an, sobald du nah genug bist – einmal.
+## Manche NPCs (z. B. Marv) sprechen dich von sich aus an, sobald du nah genug an ihrem Platz bist – einmal.
+## Sie kommen von etwas weiter weg angelaufen, reden mit dir und gehen danach an ihren Platz.
 func _check_approach(p: PlayerState) -> void:
-	if p.in_dialog() or p.shop != "" or waiting_for_group(p.id):
+	if p.in_dialog() or p.shop != "" or waiting_for_group(p.id) or not p.npc_walk.is_empty():
 		return
 	for id: String in npcs:
 		var approach: Dictionary = npcs[id].approach
-		if approach.is_empty() or p.progress.flags.has("angesprochen:" + id) or not npc_visible(p, id) \
-				or not check(p, approach.get("wenn", {})):
+		if approach.is_empty() or p.progress.flags.has("angesprochen:" + id) or not _npc_present(p, id) or not check(p, approach.get("wenn", {})):
 			continue
 		if (Vector2(npcs[id].cell) - p.pos).length() <= float(approach.get("radius", 3)):
 			p.progress.flags["angesprochen:" + id] = true
 			p.use_target = ""
-			# Gruppenmitglieder in der Nähe erleben das mit (z. B. Marv auf dem Fest, Ren nach dem Sternenfresser)
-			_start_talk(p, id, "angesprochen:" + id)
+			p.path.clear()
+			p.steer = Vector2.ZERO
+			_start_walk_in(p, id)
 			return
+
+
+## Der NPC taucht ein Stück entfernt auf (auf der Seite seines Platzes) und läuft neben den Spieler.
+func _start_walk_in(p: PlayerState, npc_id: String) -> void:
+	var home: Vector2i = npcs[npc_id].cell
+	var dir := (Vector2(home) - p.pos).normalized()
+	if dir == Vector2.ZERO:
+		dir = Vector2(1, 0)
+	var start := _nearest_walkable(Vector2i((p.pos + dir * WALK_IN_DISTANCE).round()), p.map)
+	var goal := _free_neighbor(p.cell, start, p.map) if start != Vector2i(-1, -1) else Vector2i(-1, -1)
+	var route: Array[Vector2i] = []
+	if goal != Vector2i(-1, -1):
+		route = get_map(p.map).astar.get_id_path(start, goal)
+	if route.is_empty():
+		# Kein Weg: gleich reden (Gruppenmitglieder in der Nähe erleben das mit)
+		_start_talk(p, npc_id, "angesprochen:" + npc_id)
+		return
+	route.pop_front()
+	p.npc_walk = {id = npc_id, pos = Vector2(start), path = route, facing = 1, phase = "hin"}
+	# Gruppenmitglieder in der Nähe holt der NPC gleich mit ins Gespräch (sie lösen ihn nicht noch einmal aus)
+	for id: String in group_members.call(p.id):
+		var other: PlayerState = players.get(id)
+		if other != null and other != p and other.map == p.map and other.pos.distance_to(p.pos) <= SCENE_RANGE:
+			other.progress.flags["angesprochen:" + npc_id] = true
+
+
+## Freies Feld möglichst nah an "cell" (oder (-1, -1), wenn in der Nähe keins ist).
+func _nearest_walkable(cell: Vector2i, map_id: String) -> Vector2i:
+	for r in 4:
+		for y in range(-r, r + 1):
+			for x in range(-r, r + 1):
+				var c := cell + Vector2i(x, y)
+				if (absi(x) == r or absi(y) == r) and is_walkable(c, map_id):
+					return c
+	return Vector2i(-1, -1)
+
+
+## Bewegt einen herbeilaufenden NPC: hin, reden, zurück an seinen Platz.
+func _move_npc_walk(p: PlayerState, delta: float) -> void:
+	if p.npc_walk.is_empty():
+		return
+	var w := p.npc_walk
+	var npc: Dictionary = npcs.get(w.id, {})
+	if npc.is_empty() or npc.map != p.map:
+		p.npc_walk = {}
+		return
+	match w.phase:
+		"hin":
+			if _walk_along(w, delta):
+				w.phase = "reden"
+				w.facing = 1 if (p.pos.x - p.pos.y) > (w.pos.x - w.pos.y) else -1
+				# Gruppenmitglieder in der Nähe erleben das mit (z. B. Marv auf dem Fest, Ren nach dem Sternenfresser).
+				# Ist schon ein Gespräch im Gang (jemand aus der Gruppe war schneller), redet der NPC dort mit.
+				if not p.in_dialog():
+					_start_talk(p, w.id, "angesprochen:" + w.id)
+		"reden":
+			if not p.in_dialog():
+				# Zurück an den eigenen Platz (der Platz selbst ist besetzt, also erst daneben, dann drauf)
+				var from := Vector2i(Vector2(w.pos).round())
+				var beside := _free_neighbor(npc.cell, from, p.map)
+				var route: Array[Vector2i] = []
+				if beside != Vector2i(-1, -1) and is_walkable(from, p.map):
+					route = get_map(p.map).astar.get_id_path(from, beside)
+				if not route.is_empty():
+					route.pop_front()
+				route.append(npc.cell)
+				w.path = route
+				w.phase = "zurueck"
+		"zurueck":
+			if _walk_along(w, delta):
+				p.npc_walk = {}
+
+
+## Läuft den Weg eines NPCs weiter. true = angekommen.
+func _walk_along(w: Dictionary, delta: float) -> bool:
+	var step := NPC_WALK_SPEED * delta
+	var path: Array = w.path
+	while step > 0.0 and not path.is_empty():
+		var next := Vector2(path[0])
+		var to_next: Vector2 = next - w.pos
+		if absf(to_next.x - to_next.y) > 0.01:
+			w.facing = 1 if to_next.x - to_next.y > 0 else -1
+		if to_next.length() <= step:
+			step -= to_next.length()
+			w.pos = next
+			path.pop_front()
+		else:
+			w.pos += to_next.normalized() * step
+			step = 0.0
+	return path.is_empty()
 
 
 # --- Laden ----------------------------------------------------------------------

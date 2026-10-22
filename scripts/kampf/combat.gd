@@ -1058,6 +1058,17 @@ func move_to_row(f: Fighter) -> void:
 
 
 ## Schwebender Text über einer Figur (Schaden, Heilung, Hinweise).
+## Roter Stern hinter einer kritischen Schadenszahl.
+func _draw_crit_star(canvas: Control, center: Vector2) -> void:
+	var points := PackedVector2Array()
+	for i in 10:
+		var r := 30.0 if i % 2 == 0 else 13.0
+		points.append(center + Vector2.from_angle(-PI / 2 + TAU * i / 10.0) * Vector2(r * 1.3, r))
+	canvas.draw_colored_polygon(points, Color("d42a2a"))
+	points.append(points[0])
+	canvas.draw_polyline(points, Color("6a0e0e"), 2.0)
+
+
 func float_text(f: Fighter, text: String, color: Color, offset := 0.0) -> void:
 	if not has_view(f):
 		return
@@ -1065,9 +1076,16 @@ func float_text(f: Fighter, text: String, color: Color, offset := 0.0) -> void:
 	var damage := crit or (text.begins_with("-") and text.substr(1).is_valid_int())
 	var label := Label.new()
 	label.text = text
-	# Kritische Treffer: groß, golden-orange, mit dickem Rand
+	# Kritische Treffer wie in Ragnarok Online: dicke gelbe Zahl (ohne „KRITISCH“) auf einem roten Stern
+	if crit:
+		label.text = text.trim_prefix("KRITISCH").strip_edges().trim_prefix("-")
+		var star := Control.new()
+		star.show_behind_parent = true
+		star.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		star.draw.connect(func() -> void: _draw_crit_star(star, Vector2(150, 24)))
+		label.add_child(star)
 	label.add_theme_font_size_override("font_size", 38 if crit else 22)
-	label.add_theme_color_override("font_color", Color("ffb428") if crit else color)
+	label.add_theme_color_override("font_color", Color("ffe14d") if crit else color)
 	label.add_theme_color_override("font_outline_color", Color("3a1400") if crit else Color.BLACK)
 	label.add_theme_constant_override("outline_size", 10 if crit else 6)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

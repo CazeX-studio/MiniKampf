@@ -11,6 +11,8 @@ const ARMORS := {
 	"magic": {name = "Runenrüstung", info = "gegen Magie"},
 	"ranged": {name = "Schuppenpanzer", info = "gegen Fernkampf"},
 }
+## Klingentänzerin: Schaden jeder schwebenden Klinge, die nach Klingenschritt und Ausfallschritt nachtrifft
+const BLADE_HIT := 2
 ## Passende Rüstung fängt so viel Schaden ab, jede Härte zusätzlich HARD_STEP.
 const ARMOR_BLOCK := 0.4
 const HARD_STEP := 0.06
@@ -138,9 +140,9 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 		"blade":
 			var step := " (Tanzschritt %d/3)" % (f.dance.size() + 1)
 			list = [
-				{id = "step", name = "Klingenschritt", info = "12 Nahkampf, +1 Klinge" + step, target = "enemy"},
+				{id = "step", name = "Klingenschritt", info = "9 Nahkampf, jede Klinge trifft nach (je %d), +1 Klinge" % BLADE_HIT + step, target = "enemy"},
 				{id = "whirl", name = "Wirbel", info = "7 an alle, +1 Klinge · 8 Mana" + step, target = "none", mana = 8, cd = 1},
-				{id = "lunge", name = "Ausfallschritt", info = "17 Nahkampf · 6 Mana" + step, target = "enemy", mana = 6},
+				{id = "lunge", name = "Ausfallschritt", info = "13 Nahkampf, jede Klinge trifft nach · 6 Mana" + step, target = "enemy", mana = 6},
 				{id = "storm", name = "Klingensturm", info = "Verbraucht alle Klingen: %d Schaden" % (9 * f.blades), target = "enemy"},
 				{id = "ult", name = "Tanz der 1000 Klingen", info = "3× 10 an alle Gegner, 5 Klingen", target = "none"},
 			]
@@ -591,7 +593,8 @@ func _blade(f: Fighter, id: String, target: Fighter) -> void:
 		"step":
 			var mult := _dance_step(f, id)
 			c.lunge(f, target, 0.25)
-			c.hit(f, target, 12 * mult, "melee", element)
+			c.hit(f, target, 9 * mult, "melee", element)
+			_blade_follow_up(f, target, element)
 			_add_blades(f, 1)
 		"whirl":
 			var mult := _dance_step(f, id)
@@ -603,7 +606,8 @@ func _blade(f: Fighter, id: String, target: Fighter) -> void:
 		"lunge":
 			var mult := _dance_step(f, id)
 			c.lunge(f, target, 0.2)
-			c.hit(f, target, 17 * mult, "melee", element)
+			c.hit(f, target, 13 * mult, "melee", element)
+			_blade_follow_up(f, target, element)
 		"storm":
 			var count := f.blades
 			f.blades = 0
@@ -635,6 +639,16 @@ func _dance_step(f: Fighter, move: String) -> float:
 	c.float_text(f, "TANZFOLGE!", Color("ffd0a0"), -20)
 	c.add_log("[color=#ffb07a]Tanzfolge abgeschlossen![/color] Der letzte Schritt trifft härter.")
 	return 1.5
+
+
+## Passive "Klingenkranz": Nach Klingenschritt und Ausfallschritt trifft jede schwebende Klinge (bis zu 5) noch einmal.
+func _blade_follow_up(f: Fighter, target: Fighter, element: String) -> void:
+	for i in f.blades:
+		if not target.is_alive():
+			return
+		c.projectile_bg(f, target, Color("ffd0a0"), 0.12)
+		c.wait(0.1)
+		c.hit(f, target, BLADE_HIT, "melee", element)
 
 
 func _add_blades(f: Fighter, amount: int) -> void:
@@ -1185,9 +1199,6 @@ func on_perfect_reaction(h: Fighter, attacker: Fighter) -> void:
 
 ## Zusätzlicher Schaden durch Klassen-Passiven des Angreifers.
 func damage_bonus(attacker: Fighter) -> float:
-	if attacker.klass == "blade":
-		# Passive "Klingenkranz": jede Klinge +5 % Schaden
-		return 1.0 + 0.05 * attacker.blades
 	if attacker.owner != null and attacker == attacker.owner.active_monster and _bench_has(attacker.owner, "glutwelpe"):
 		return 1.15
 	return 1.0

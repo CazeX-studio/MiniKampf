@@ -114,6 +114,8 @@ var _time := 0.0
 var _home := Vector2.ZERO
 var _plate := Rect2()
 var _shader := ShaderMaterial.new()
+## Klingentänzerin: Schwerter, die vor der Figur schweben (die hinteren malt _draw unter der Figur)
+var _blades_front: Node2D
 var _glow_color := Color.WHITE
 ## Hält das Splitterlicht (Pilzhöhle, Vorbote): leuchtet selbst lila (wird von der Kampfanzeige gesetzt)
 var splitter_light := false
@@ -156,6 +158,10 @@ func setup(p_fighter: Fighter) -> void:
 	body.material = _shader
 	body.self_modulate = look.get("tint", Color.WHITE) * light
 	add_child(body)
+	if fighter.klass == "blade":
+		_blades_front = Node2D.new()
+		_blades_front.draw.connect(func() -> void: _draw_blades(_blades_front, true))
+		add_child(_blades_front)
 
 	# Schein des Splitterlichts (nur sichtbar, solange die Figur es hält)
 	_halo = Node2D.new()
@@ -209,6 +215,8 @@ func _process(delta: float) -> void:
 	_shader.set_shader_parameter("outline_color", outline)
 	_shader.set_shader_parameter("flash", _flash)
 	queue_redraw()
+	if _blades_front != null:
+		_blades_front.queue_redraw()
 
 
 func shown_hp() -> int:
@@ -325,6 +333,8 @@ func _draw() -> void:
 	if active:
 		draw_arc(Vector2.ZERO, sprite_size.x * 0.6, 0, TAU, 32, Color(COL_ULT, 0.6 + 0.4 * sin(_time * 6.0)), 6.0)
 	draw_set_transform_matrix(Transform2D.IDENTITY)
+	if _blades_front != null:
+		_draw_blades(self, false)
 
 	# Goldener Pfeil, wenn die Figur am Zug ist: bei Helden links daneben (wie die Hand in FF6),
 	# bei Gegnern über dem Kopf
@@ -344,6 +354,31 @@ func _draw() -> void:
 		draw_polyline(points, Color.BLACK, 2.0)
 
 	_draw_plate()
+
+
+## Schwebende Klingen der Klingentänzerin: kreisen um die Figur, vordere über, hintere unter ihr.
+func _draw_blades(canvas: CanvasItem, front: bool) -> void:
+	if shown_hp() <= 0:
+		return
+	var color := COL_BLADE
+	if fighter.star_turns > 0:
+		color = Color("fff3b0")
+	elif fighter.fire_turns > 0:
+		color = Color("ff7a3d")
+	for i in fighter.blades:
+		var angle := _time * 1.4 + TAU * i / float(Fighter.MAX_BLADES)
+		if (sin(angle) > 0.0) != front:
+			continue
+		var pos := body.position + Vector2(cos(angle) * sprite_size.x * 0.7, -sprite_size.y * 0.55 + sin(angle) * sprite_size.y * 0.14)
+		pos.y += sin(_time * 3.0 + i) * 4.0
+		canvas.draw_set_transform(pos, 0.25 * cos(angle) + PI, Vector2.ONE)
+		# Klinge (Spitze nach oben), Parierstange, Griff
+		canvas.draw_colored_polygon(PackedVector2Array([Vector2(-3, -12), Vector2(3, -12), Vector2(0, 16)]), Color("e8eef8"))
+		canvas.draw_line(Vector2(0, -12), Vector2(0, 14), color.lightened(0.4), 1.0)
+		canvas.draw_rect(Rect2(-7, -15, 14, 3), color)
+		canvas.draw_rect(Rect2(-1.5, -22, 3, 7), Color("6e4a2c"))
+		canvas.draw_circle(Vector2(0, -23), 2.5, color)
+	canvas.draw_set_transform_matrix(Transform2D.IDENTITY)
 
 
 func _draw_plate() -> void:
