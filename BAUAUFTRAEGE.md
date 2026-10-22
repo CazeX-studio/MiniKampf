@@ -16,7 +16,8 @@ Status: offen / in Arbeit / fertig
 ### Schritt 2: Einheitliches Pixel-Paket
 - **Ziel:** Ein einheitliches kostenloses Pixel-Paket (freie Lizenz) im Stil von Ragnarok und Octopath. Claude Code schlägt vorher zwei bis drei Pakete zur Auswahl vor und stellt nach Marcos Wahl alle Platzhalter darauf um.
 - **So testest du es:** Durch Kreuzweg laufen und einen Kampf spielen, alles wirkt wie aus einem Guss.
-- **Status:** offen
+- **Vorschläge (22.10.):** A) Flare (schräge Sicht wie jetzt, Ausrüstung sichtbar, CC-BY-SA), B) LPC-Figurenbaukasten (Sicht von oben, riesige Auswahl, CC-BY-SA/GPL/OGA-BY, Welt müsste umgebaut werden), C) Ninja Adventure (Sicht von oben, niedlich, CC0). Empfehlung Claude: A.
+- **Status:** in Arbeit (Vorschläge gemacht, wartet auf Marcos Wahl)
 
 ### Schritt 3: Licht im Kampf
 - **Ziel:** Der Kampf übernimmt das Grundlicht des Ortes (Höhle dunkel, Fest-Nacht bläulich, tagsüber hell). Im Gewölbe stehen Fackeln am Rand. Feuer-, Blitz-, Licht- und Splitter-Angriffe leuchten kurz auf (wie die Zauber bei Octopath Traveler).
