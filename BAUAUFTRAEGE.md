@@ -18,6 +18,16 @@ Status: offen / in Arbeit / fertig
 - **So testest du es:** Durch Kreuzweg laufen und einen Kampf spielen, alles wirkt wie aus einem Guss.
 - **Status:** offen
 
+### Schritt 3: Licht im Kampf
+- **Ziel:** Der Kampf übernimmt das Grundlicht des Ortes (Höhle dunkel, Fest-Nacht bläulich, tagsüber hell). Im Gewölbe stehen Fackeln am Rand. Feuer-, Blitz-, Licht- und Splitter-Angriffe leuchten kurz auf (wie die Zauber bei Octopath Traveler).
+- **So testest du es:** Einen Kampf in Kreuzweg, einen in der Pilzhöhle und einen in der Fest-Nacht spielen: Jeder Kampf sieht aus wie sein Ort, ein Feuerangriff taucht das Feld kurz in oranges Licht.
+- **Status:** offen
+
+### Schritt 4: Licht als Mechanik in der Pilzhöhle
+- **Ziel:** Beim Vorboten wird das Licht Teil der Anzeige: Bei „Lichtfraß“ schrumpfen die Lichtkreise sichtbar, „Laterne entzünden“ stellt eine echte Laterne mit Lichtkreis aufs Feld, wer das Splitterlicht hält („Das letzte Licht“), leuchtet lila, und beim Weiterreichen wandert das Licht sichtbar. Die Regeln bleiben gleich, nur die Anzeige ändert sich.
+- **So testest du es:** Gegen den Vorboten kämpfen, eine Laterne entzünden und das Splitterlicht weiterreichen: Man sieht immer, wo Licht ist und wer sicher ist.
+- **Status:** offen
+
 ## Projekt 2: Kampfgefühl
 
 ### Schritt 1: Parieren mit Klang und Funken
@@ -98,3 +108,4 @@ Status: offen / in Arbeit / fertig
 - Testversion bis Stufe 20 mit Kauf (braucht Online-Konten)
 - Sternen-Glanz und Siegel-Zähler (braucht den Server)
 - Erste eigene Grafiken (wartet auf die Look-Bibel aus Thema 12)
+- Tag und Nacht in der Welt (wartet auf Marcos Entscheidungen: wie lang ein Tag ist und was sich nachts ändert; das Licht aus Projekt 1 ist die Grundlage)
