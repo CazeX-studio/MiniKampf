@@ -105,7 +105,7 @@ Status: offen / in Arbeit / fertig
 _Aus Marcos Entscheidung vom 22.10.2026: Tageszeit nach der echten Uhrzeit, nachts andere Monster und eigene Stimmung._
 
 ### Schritt 1: Tageszeit nach der echten Uhrzeit
-- **Ziel:** Das Licht wechselt fließend zwischen Morgen, Tag, Abend und Nacht. Nachts ist die Welt dunkler, Laternen, Fenster und Fackeln leuchten stärker. Ein Testknopf stellt die Uhrzeit vor.
+- **Ziel:** Das Licht wechselt fließend zwischen Morgen, Tag, Abend und Nacht (Nacht von 21 bis 6 Uhr, dazwischen Dämmerung; die Fest-Nacht der Geschichte bleibt immer Nacht). Nachts ist die Welt dunkler, Laternen, Fenster und Fackeln leuchten stärker. Ein Testknopf stellt die Uhrzeit vor.
 - **So testest du es:** Mit dem Testknopf die Uhrzeit auf Abend und Nacht stellen: Die Welt wird langsam dunkler und die Lichter wirken stärker.
 - **Status:** offen
 
