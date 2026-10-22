@@ -111,6 +111,8 @@ var parry_base := 0
 
 var _events: Array[Dictionary] = []
 var _last_crit := false
+## Element des Treffers, der gerade verbucht wird (für das Aufleuchten von Feuer, Blitz, Licht und Sternenkraft)
+var _last_element := ""
 var _last_eff := 1.0
 ## Stufen der Helden, für die der Stufenabstand zu den Gegnern zählt
 var _gap_levels: Array[int] = []
@@ -238,6 +240,11 @@ func move_to_row(f: Fighter) -> void:
 ## Dunkelheit über dem Kampffeld (0 = hell, 1 = schwarz).
 func set_darkness(amount: float) -> void:
 	_emit({type = "darkness", amount = amount})
+
+
+## Eine Laterne wird entzündet (Pilzhöhle): Die Anzeige stellt sie mit Lichtkreis aufs Feld.
+func light_lantern(f: Fighter) -> void:
+	_emit({type = "lantern", f = f})
 
 
 func set_order_visible(on: bool) -> void:
@@ -888,6 +895,7 @@ func hit(attacker: Fighter, target: Fighter, base: float, kind: String, element 
 	if not target.is_alive():
 		return 0
 	var dmg := calc_damage(attacker, target, base, kind, element)
+	_last_element = element
 	var lost := apply_damage(target, dmg, attacker, kind)
 	if dungeon != null:
 		dungeon.on_hit(attacker, target, element, lost)
@@ -899,8 +907,10 @@ func hit(attacker: Fighter, target: Fighter, base: float, kind: String, element 
 func apply_damage(target: Fighter, amount: int, source: Fighter = null, kind := "") -> int:
 	var crit := _last_crit
 	var eff := _last_eff
+	var element := _last_element
 	_last_crit = false
 	_last_eff = 1.0
+	_last_element = ""
 	if not target.is_alive():
 		return 0
 	if dungeon != null and dungeon.absorbs(target, amount, source):
@@ -962,7 +972,7 @@ func apply_damage(target: Fighter, amount: int, source: Fighter = null, kind := 
 	elif eff < 1.0:
 		float_text(target, "Wenig effektiv …", Color(0.75, 0.75, 0.8), 52)
 	if on_field(target):
-		_emit({type = "hit_fx", f = target, crit = crit})
+		_emit({type = "hit_fx", f = target, crit = crit, element = element})
 
 	skills.after_damage(target, lost)
 	if not target.is_alive():

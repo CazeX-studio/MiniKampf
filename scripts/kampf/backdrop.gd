@@ -3,7 +3,7 @@ extends Control
 ## Hintergrund des Kampfbildschirms: ein dunkles Gewölbe aus den 0x72-Kacheln
 ## mit Fackeln, Lava-Brunnen, Lichtflecken und schwebendem Staub (Octopath-Stimmung).
 ## Andere Stile: "wiese" (vor dem Stadttor von Kreuzweg, Tag), "wiese_nacht" und "marktplatz_nacht" (Sternenfall),
-## "wald" (Grünwacht: Weg und Waldboden).
+## "wald" (Grünwacht: Weg und Waldboden), "pilzhoehle" (Höhle unter dem Urbaum mit Leuchtpilzen und Fackeln).
 
 const TILE_PATH := "res://assets/0x72_dungeontileset_ii/%s.png"
 ## Kacheln sind 16 Pixel groß und werden 4-fach vergrößert.
@@ -20,6 +20,17 @@ const AMBIENT := Color(0.5, 0.47, 0.62)
 const TORCH_COLUMNS: Array[int] = [2, 6, 13, 17]
 const FOUNTAIN_COLUMN := 10
 const PILLAR_COLUMNS: Array[int] = [4, 8, 12, 16]
+## Pilzhöhle: Riesenpilze an der Wand (Fuß) und Wandfackeln (x)
+const CAVE_MUSHROOMS: Array[Vector2] = [Vector2(80, 180), Vector2(330, 172), Vector2(575, 182), Vector2(985, 174), Vector2(1205, 180)]
+const CAVE_TORCHES: Array[float] = [205.0, 790.0, 1095.0]
+## Licht des Ortes auf den Figuren (wie das Grundlicht der Karte in der Welt)
+const FIGHTER_LIGHT := {
+	"gewoelbe": Color(0.86, 0.82, 0.92),
+	"pilzhoehle": Color(0.8, 0.74, 0.95),
+	"wiese_nacht": Color(0.74, 0.78, 0.98),
+	"marktplatz_nacht": Color(0.8, 0.8, 0.98),
+	"wald": Color(0.92, 0.98, 0.86),
+}
 
 var _tex := {}
 var _floor_pick: Array[String] = []
@@ -27,7 +38,7 @@ var _wall_pick: Array[String] = []
 var _time := 0.0
 var _lights: Node2D
 ## "gewoelbe", "wiese" oder "wiese_nacht" (vor dem Einhängen setzen)
-var style := "gewoelbe"  # oder "wiese", "wiese_nacht", "marktplatz_nacht", "wald"
+var style := "gewoelbe"  # oder "wiese", "wiese_nacht", "marktplatz_nacht", "wald", "pilzhoehle"
 var _stars: Array[Vector2] = []
 
 
@@ -77,7 +88,15 @@ func _tile(name: String, col: int, y: float, tint := AMBIENT) -> void:
 	draw_texture_rect(_t(name), Rect2(col * TILE, y, TILE, TILE), false, tint)
 
 
+## Wie stark das Licht des Ortes die Figuren färbt (Höhle dunkel und lila, Nacht bläulich, Wiese am Tag hell).
+static func fighter_light(p_style: String) -> Color:
+	return FIGHTER_LIGHT.get(p_style, Color.WHITE)
+
+
 func _draw() -> void:
+	if style == "pilzhoehle":
+		_draw_cave()
+		return
 	if style == "wald":
 		_draw_forest()
 		return
@@ -140,6 +159,9 @@ func _draw_torch(base: Vector2, seed_value: int) -> void:
 
 ## Lichtflecken (werden addiert und hellen die Szene auf).
 func _draw_lights() -> void:
+	if style == "pilzhoehle":
+		_draw_cave_lights()
+		return
 	if style == "wald":
 		_draw_forest_lights()
 		return
@@ -296,6 +318,74 @@ func _draw_meadow_lights(night: bool) -> void:
 		_lights.draw_texture_rect(glow, Rect2(Vector2(640, 150), Vector2(640, 430)), false, Color(1.0, 0.85, 0.6, 0.15))
 
 
+## Pilzhöhle unter dem Urbaum: Felswand, Wurzeln von oben, Höhlenboden, leuchtende Riesenpilze und Wandfackeln.
+func _draw_cave() -> void:
+	# Felswand: oben fast schwarz, nach unten etwas heller
+	for i in 12:
+		var t := float(i) / 11.0
+		draw_rect(Rect2(0, i * 15.0, 1280, 16), Color("0a0710").lerp(Color("261c32"), t))
+	# Felsbrocken in der Wand
+	for i in 18:
+		var x := float((i * 149) % 1340) - 30.0
+		var y := 70.0 + float((i * 41) % 80)
+		draw_circle(Vector2(x, y), 38.0 + float(i % 4) * 12.0, Color("1e1628") if i % 2 == 0 else Color("271e33"))
+	# Wurzeln des Urbaums hängen von der Decke
+	for i in 9:
+		var x := 60.0 + i * 150.0 + float((i * 37) % 40)
+		var length := 50.0 + float((i * 53) % 70)
+		draw_line(Vector2(x, 0), Vector2(x + 12, length), Color("3a2818"), 7.0)
+		draw_line(Vector2(x + 12, length), Vector2(x + 4, length + 26), Color("3a2818"), 4.0)
+	# Höhlenboden: Streifen, weiter vorne heller
+	for row in 22:
+		var t := float(row) / 21.0
+		draw_rect(Rect2(0, 186 + row * 16.0, 1280, 17), Color("1b1524").lerp(Color("30263c"), t))
+	# Steine, Moos und kleine Leuchtpilze (fester Zufall aus _floor_pick)
+	for i in _floor_pick.size():
+		var x := float((i * 97) % 1280)
+		var y := 200.0 + float((i * 53) % 320)
+		if i % 9 == 0:
+			draw_rect(Rect2(x, y - 5, 3, 5), Color("d8d0c0"))
+			draw_circle(Vector2(x + 1, y - 6), 4.0, Color(0.6, 0.45, 0.95).lightened(0.15 * sin(_time * 2.0 + i)))
+		elif i % 5 == 0:
+			draw_circle(Vector2(x, y), 6.0, Color("2a2234"))
+		else:
+			draw_rect(Rect2(x, y, 4, 4), Color("2c3a2a"))
+	for foot in CAVE_MUSHROOMS:
+		_draw_mushroom(foot)
+	for x in CAVE_TORCHES:
+		_draw_torch(Vector2(x, 128), int(x))
+
+
+## Leuchtender Riesenpilz: Stiel, Hut, helle Punkte, leichtes Pulsieren.
+func _draw_mushroom(foot: Vector2) -> void:
+	var pulse := 0.8 + 0.2 * sin(_time * 2.0 + foot.x * 0.01)
+	draw_rect(Rect2(foot.x - 7, foot.y - 46, 14, 46), Color("cfc6b4"))
+	draw_set_transform(foot + Vector2(0, -50), 0.0, Vector2(1.0, 0.5))
+	draw_circle(Vector2.ZERO, 38.0, Color(0.5, 0.32, 0.82).lightened(0.2 * pulse))
+	draw_set_transform_matrix(Transform2D.IDENTITY)
+	for i in 5:
+		draw_rect(Rect2(foot.x - 24 + i * 11.0, foot.y - 56 + (i % 2) * 6.0, 4, 4), Color(0.92, 0.88, 1.0, pulse))
+
+
+## Licht in der Pilzhöhle: lila Schein der Pilze, warme Fackeln, dazwischen Dunkelheit.
+func _draw_cave_lights() -> void:
+	var glow := Fx.glow_texture()
+	for foot in CAVE_MUSHROOMS:
+		var pulse := 0.8 + 0.2 * sin(_time * 2.0 + foot.x * 0.01)
+		var r := 170.0 * pulse
+		var center := foot + Vector2(0, -50)
+		_lights.draw_texture_rect(glow, Rect2(center - Vector2(r, r * 0.8), Vector2(r, r * 0.8) * 2.0), false, Color(0.55, 0.35, 1.0, 0.3 * pulse))
+	for x in CAVE_TORCHES:
+		var flicker := 0.85 + 0.15 * sin(_time * 11.0 + x) * sin(_time * 7.3 + x * 2.0)
+		var pos := Vector2(x, 118)
+		var r := 160.0 * flicker
+		_lights.draw_texture_rect(glow, Rect2(pos - Vector2(r, r), Vector2(r, r) * 2.0), false, Color(1.0, 0.55, 0.2, 0.3 * flicker))
+		_lights.draw_texture_rect(glow, Rect2(pos - Vector2(24, 24), Vector2(48, 48)), false, Color(1.0, 0.8, 0.4, 0.6 * flicker))
+	# Lichtkegel, in denen die Kämpfer stehen (schwach, die Höhle bleibt dunkel)
+	_lights.draw_texture_rect(glow, Rect2(Vector2(640, 170), Vector2(640, 410)), false, Color(1.0, 0.75, 0.5, 0.14))
+	_lights.draw_texture_rect(glow, Rect2(Vector2(0, 170), Vector2(640, 410)), false, Color(0.6, 0.4, 1.0, 0.16))
+
+
 ## Schwebender Staub im Licht (draußen: Pollen bei Tag, Glühwürmchen bei Nacht).
 func _add_dust() -> void:
 	var dust := CPUParticles2D.new()
@@ -314,7 +404,7 @@ func _add_dust() -> void:
 	dust.scale_amount_min = 2.0
 	dust.scale_amount_max = 4.0
 	var ramp := Gradient.new()
-	var tone := Color(1, 0.85, 0.6) if style == "gewoelbe" else (Color(0.8, 1.0, 0.5) if style in ["wiese_nacht", "wald"] else Color(1, 1, 0.85))
+	var tone := Color(0.8, 0.65, 1.0) if style == "pilzhoehle" else Color(1, 0.85, 0.6) if style == "gewoelbe" else (Color(0.8, 1.0, 0.5) if style in ["wiese_nacht", "wald"] else Color(1, 1, 0.85))
 	ramp.set_color(0, Color(tone, 0))
 	ramp.add_point(0.3, Color(tone, 0.45))
 	ramp.add_point(0.7, Color(tone, 0.35))

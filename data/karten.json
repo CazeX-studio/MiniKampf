@@ -662,7 +662,7 @@
 		"licht": "6e6494",
 		"musik": "wald_nacht",
 		"dungeon": "pilzhoehle",
-		"kampf_hintergrund": "gewoelbe",
+		"kampf_hintergrund": "pilzhoehle",
 		"start": [
 			27,
 			11
