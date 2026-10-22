@@ -31,6 +31,17 @@ const LANTERN_SPOTS: Array[Vector2] = [Vector2(600, 236), Vector2(610, 486), Vec
 const LIGHT_RADIUS_BRIGHT := 260.0
 const LIGHT_RADIUS_DARK := 95.0
 const MAX_DARK_ALPHA := 0.92
+## Kampfgefühl: Zeitlupe bei der perfekten Parade, Anhalten und Wackeln bei harten Treffern
+const SLOWMO_SPEED := 0.3
+const SLOWMO_SECONDS := 0.45
+const HIT_STOP_SECONDS := 0.08
+const SHAKE_SECONDS := 0.28
+const SHAKE_PIXELS := 9.0
+## Mehrere Schadenszahlen an derselben Figur kurz hintereinander: einzeln nacheinander aufploppen
+const FLOAT_STAGGER := 0.09
+const FLOAT_STACK_WINDOW := 0.3
+## Seitlicher Versatz der gestapelten Zahlen (erste Mitte, dann rechts, links …)
+const FLOAT_SPREAD: Array[float] = [0.0, 34.0, -34.0, 17.0]
 
 ## Fußpunkte der Gegner: Welle mit 4 Monstern bzw. Boss-Welle (Boss zuerst)
 const WAVE_SLOTS: Array[Vector2] = [Vector2(30, 300), Vector2(30, 476), Vector2(318, 300), Vector2(318, 476)]
@@ -92,6 +103,13 @@ var _darkness := 0.0
 ## Entzündete Laternen auf dem Feld (Pilzhöhle)
 var _lanterns: Array[Node2D] = []
 var _light_time := 0.0
+var _backdrop: Backdrop
+## Wackeln: Restzeit und Stärke; Zeitlupe/Anhalten aktiv (Engine.time_scale ist verändert)
+var _shake_time := 0.0
+var _shake_power := 0.0
+var _slow_until := 0
+## Letzte Schadenszahl je Figur: {fighter: [Zeitpunkt in ms, wie viele gerade gestapelt]}
+var _float_stack := {}
 
 
 func _ready() -> void:
@@ -234,6 +252,7 @@ func _show_hint(key: String) -> void:
 
 ## Beim Verlassen des Kampfes Verweise lösen, sonst bleiben die Teilnehmer im Speicher liegen.
 func _exit_tree() -> void:
+	Engine.time_scale = 1.0
 	if state != null:
 		state.cleanup()
 
@@ -250,6 +269,7 @@ func _process(delta: float) -> void:
 		_update_glint()
 		_ring_layer.queue_redraw()
 	_update_darkness(delta)
+	_update_shake(delta)
 
 
 # --- Ereignisse abspielen -----------------------------------------------------
@@ -336,6 +356,9 @@ func _play_event(event: Dictionary) -> void:
 				var v := view(event.f)
 				v.hit_react()
 				Fx.spawn(_field, Fx.Kind.SPARKS, v.center(), Color("ffd9a0") if not event.crit else Color("ffe14d"), 70.0 if not event.crit else 110.0, 0.4)
+				if event.get("heavy", false):
+					_hit_stop()
+					_shake(SHAKE_PIXELS * (1.3 if event.crit else 1.0))
 				var element: String = event.get("element", "")
 				if element in GLOWING_ELEMENTS:
 					# Feuer, Blitz, Licht und Splitter leuchten: ein großer, weicher Schein über das Feld
@@ -722,10 +745,21 @@ func _input(event: InputEvent) -> void:
 			Geraeusche.play("perfekt")
 			Fx.spawn(_field, Fx.Kind.RING, c, Color("6dff8a"), 150.0, 0.45)
 			Fx.spawn(_field, Fx.Kind.GLOW, c, Color("6dff8a"), 120.0, 0.4)
+			# Heller Funkenregen, ein kurzer weißer Blitz und ein Moment Zeitlupe
+			Fx.spawn(_field, Fx.Kind.SPARKS, c, Color("fff6c0"), 150.0, 0.6)
+			Fx.spawn(_field, Fx.Kind.GLOW, c, Color("ffffff"), 70.0, 0.25)
+			_flash_rect.color = Color(1, 1, 1, 0.22)
+			create_tween().tween_property(_flash_rect, "color:a", 0.0, 0.3)
+			_slow_motion()
 		BattleState.REACT_NORMAL:
-			_react_feedback = "Pariert!" if _react_target.reaction == "parry" else "Ausgewichen!"
-			Geraeusche.play("parade" if _react_target.reaction == "parry" else "wurf", 1.0 if _react_target.reaction == "parry" else 1.3)
+			var parry := _react_target.reaction == "parry"
+			_react_feedback = "Pariert!" if parry else "Ausgewichen!"
+			Geraeusche.play("parade" if parry else "wurf", 1.0 if parry else 1.3)
 			Fx.spawn(_field, Fx.Kind.RING, c, Color("9fd0ff"), 110.0, 0.35)
+			if parry:
+				# Kurzer Funkenblitz, wo die Klingen aufeinandertreffen
+				Fx.spawn(_field, Fx.Kind.SPARKS, c, Color("ffe2a0"), 90.0, 0.35)
+				Fx.spawn(_field, Fx.Kind.GLOW, c, Color("ffd9a0"), 50.0, 0.18)
 		_:
 			_react_feedback = "Zu früh!" if _react_press < _react_duration else "Zu spät!"
 
@@ -953,6 +987,45 @@ func _clear_lanterns() -> void:
 	_lanterns.clear()
 
 
+## Zeitlupe (perfekte Parade): Für einen Moment läuft alles langsamer. Die Dauer zählt in echter Zeit.
+func _slow_motion() -> void:
+	_slow_until = Time.get_ticks_msec() + int(SLOWMO_SECONDS * 1000.0)
+	Engine.time_scale = SLOWMO_SPEED
+	await get_tree().create_timer(SLOWMO_SECONDS, true, false, true).timeout
+	if Time.get_ticks_msec() >= _slow_until:
+		Engine.time_scale = 1.0
+
+
+## Harter Treffer: Das Bild hält einen Augenblick an (nicht während einer Zeitlupe).
+func _hit_stop() -> void:
+	if Time.get_ticks_msec() < _slow_until:
+		return
+	_slow_until = Time.get_ticks_msec() + int(HIT_STOP_SECONDS * 1000.0)
+	Engine.time_scale = 0.02
+	await get_tree().create_timer(HIT_STOP_SECONDS, true, false, true).timeout
+	if Time.get_ticks_msec() >= _slow_until:
+		Engine.time_scale = 1.0
+
+
+## Bildschirm wackeln: Feld und Hintergrund zittern kurz, schwächer werdend.
+func _shake(pixels: float) -> void:
+	_shake_power = maxf(_shake_power, pixels)
+	_shake_time = SHAKE_SECONDS
+
+
+func _update_shake(delta: float) -> void:
+	if _shake_time <= 0.0:
+		return
+	_shake_time = maxf(_shake_time - delta, 0.0)
+	var strength := _shake_power * _shake_time / SHAKE_SECONDS
+	var offset := Vector2(randf_range(-1.0, 1.0), randf_range(-1.0, 1.0)) * strength
+	if _shake_time <= 0.0:
+		offset = Vector2.ZERO
+		_shake_power = 0.0
+	_field.position = offset
+	_backdrop.position = offset
+
+
 ## Kurzer farbiger Lichtblitz über das ganze Bild (Ult, Festung).
 func screen_flash(color: Color) -> void:
 	_flash_rect.color = Color(color, 0.35)
@@ -972,23 +1045,44 @@ func move_to_row(f: Fighter) -> void:
 func float_text(f: Fighter, text: String, color: Color, offset := 0.0) -> void:
 	if not has_view(f):
 		return
+	var crit := text.begins_with("KRITISCH")
+	var damage := crit or (text.begins_with("-") and text.substr(1).is_valid_int())
 	var label := Label.new()
 	label.text = text
-	label.add_theme_font_size_override("font_size", 22)
-	label.add_theme_color_override("font_color", color)
-	label.add_theme_color_override("font_outline_color", Color.BLACK)
-	label.add_theme_constant_override("outline_size", 6)
+	# Kritische Treffer: groß, golden-orange, mit dickem Rand
+	label.add_theme_font_size_override("font_size", 38 if crit else 22)
+	label.add_theme_color_override("font_color", Color("ffb428") if crit else color)
+	label.add_theme_color_override("font_outline_color", Color("3a1400") if crit else Color.BLACK)
+	label.add_theme_constant_override("outline_size", 10 if crit else 6)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label.size = Vector2(300, 30)
+	label.size = Vector2(300, 48 if crit else 30)
+	label.pivot_offset = label.size * 0.5
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	label.z_index = 10
+	label.z_index = 11 if crit else 10
 	var v := view(f)
-	label.position = Vector2(v.center().x - 150, v.position.y + 10 + offset)
+	# Mehrere Schadenszahlen an derselben Figur kurz hintereinander: einzeln nacheinander, leicht versetzt
+	var delay := 0.0
+	if damage:
+		var now := Time.get_ticks_msec()
+		var stack: Array = _float_stack.get(f, [0, 0])
+		var count: int = stack[1] + 1 if now - int(stack[0]) < int(FLOAT_STACK_WINDOW * 1000.0) else 0
+		_float_stack[f] = [now, count]
+		delay = count * FLOAT_STAGGER
+		offset -= (count % 4) * 14.0
+	var spread: float = FLOAT_SPREAD[(_float_stack[f][1] if damage else 0) % FLOAT_SPREAD.size()]
+	label.position = Vector2(v.center().x - 150 + spread, v.position.y + 10 + offset)
 	_field.add_child(label)
 	var tween := create_tween()
+	if delay > 0.0:
+		label.modulate.a = 0.0
+		tween.tween_interval(delay)
+		tween.tween_property(label, "modulate:a", 1.0, 0.01)
+	# Aufploppen: kurz größer, dann normal
+	label.scale = Vector2(1.7, 1.7) if crit else Vector2(1.35, 1.35)
+	tween.tween_property(label, "scale", Vector2.ONE, 0.16).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tween.set_parallel()
-	tween.tween_property(label, "position:y", label.position.y - 45, 1.1)
-	tween.tween_property(label, "modulate:a", 0.0, 1.1).set_delay(0.4)
+	tween.tween_property(label, "position:y", label.position.y - (60.0 if crit else 45.0), 1.1)
+	tween.tween_property(label, "modulate:a", 0.0, 1.1).set_delay(0.5 if crit else 0.4)
 	tween.chain().tween_callback(label.queue_free)
 
 
@@ -1026,6 +1120,7 @@ func _build_ui() -> void:
 	# Die Figuren bekommen das Licht des Ortes ab
 	FighterView.light = Backdrop.fighter_light(backdrop.style)
 	add_child(backdrop)
+	_backdrop = backdrop
 	add_child(_vignette(0.85))
 
 	_field = Control.new()

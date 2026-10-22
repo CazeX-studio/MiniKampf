@@ -972,7 +972,9 @@ func apply_damage(target: Fighter, amount: int, source: Fighter = null, kind := 
 	elif eff < 1.0:
 		float_text(target, "Wenig effektiv …", Color(0.75, 0.75, 0.8), 52)
 	if on_field(target):
-		_emit({type = "hit_fx", f = target, crit = crit, element = element})
+		# Harter Treffer: kritisch oder mindestens ein Viertel des Lebens auf einmal (das Bild hält kurz an und wackelt)
+		var heavy := crit or lost * 4 >= target.max_hp
+		_emit({type = "hit_fx", f = target, crit = crit, element = element, heavy = heavy})
 
 	skills.after_damage(target, lost)
 	if not target.is_alive():

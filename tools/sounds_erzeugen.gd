@@ -16,7 +16,7 @@ func _initialize() -> void:
 		wurf = _swoosh(0.12, 0.6),
 		treffer = _thump(),
 		kritisch = _thump(1.4),
-		parade = _clang([880.0, 1320.0, 2090.0], 0.35),
+		parade = _clang(1250.0, 0.4),
 		perfekt = _perfect(),
 		zauber = _spell(),
 		heilung = _chime([784.0, 1175.0], 0.5),
@@ -53,21 +53,34 @@ func _thump(power := 1.0) -> PackedFloat32Array:
 	return out
 
 
-## Metallisches Klirren (Parade): mehrere Obertöne, schnell ausklingend.
-func _clang(freqs: Array, length: float) -> PackedFloat32Array:
+## Metallisches Klirren (Parade), knackig: ein harter Anschlag (Knacken) und schief zueinander liegende Obertöne
+## wie bei Metall, die schnell ausklingen. "base" = Grundton.
+func _clang(base: float, length: float) -> PackedFloat32Array:
 	var out := _empty(length)
+	# Verhältnisse der Obertöne eines angeschlagenen Metallstabs (nicht harmonisch, darum klingt es nach Metall)
+	var ratios := [1.0, 2.76, 5.4, 8.93]
+	var last := 0.0
 	for i in out.size():
 		var s := float(i) / RATE
 		var v := 0.0
-		for f: float in freqs:
-			v += sin(TAU * f * s) * exp(-s * (6.0 + f / 400.0))
-		out[i] = v / freqs.size() * 0.9 + _noise.randf_range(-1.0, 1.0) * exp(-s * 90.0) * 0.4
+		for k in ratios.size():
+			var f: float = base * ratios[k]
+			v += sin(TAU * f * s) * exp(-s * (9.0 + k * 7.0)) / (1.0 + k * 0.6)
+		# Anschlag: sehr kurzes, helles Rauschen (nur die schnellen Anteile, darum „knackig“)
+		var n := _noise.randf_range(-1.0, 1.0)
+		var click := (n - last) * exp(-s * 160.0)
+		last = n
+		out[i] = v * 0.55 + click * 0.6
 	return out
 
 
-## Perfekte Parade: Klirren und ein heller Dreiklang nach oben.
+## Perfekte Parade: helleres Klirren, ein klarer hoher Ton und ein Dreiklang nach oben.
 func _perfect() -> PackedFloat32Array:
-	var out := _clang([1046.0, 1568.0, 2350.0], 0.55)
+	var out := _clang(1568.0, 0.75)
+	# Klarer, hoher Glockenton, der etwas länger nachklingt
+	for i in out.size():
+		var s := float(i) / RATE
+		out[i] += sin(TAU * 3136.0 * s) * exp(-s * 5.0) * 0.22
 	var notes := [1046.0, 1318.0, 1568.0, 2093.0]
 	for n in notes.size():
 		var start := int((0.04 + n * 0.06) * RATE)
