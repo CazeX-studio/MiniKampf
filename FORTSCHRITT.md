@@ -12,7 +12,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
   Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
   gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
-- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1 „Licht“ fertig (22.10.). Nächster Schritt: einheitliches Pixel-Paket.
+- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Nächster Schritt: Projekt 2 „Kampfgefühl“, Parieren mit Klang und Funken.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -59,6 +59,35 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - **So testest du es:** Durch Kreuzweg laufen: Die Laternen am Marktplatz und die Fackel bei der Wache werfen
     einen warmen Schein, aus der Schmiede glüht es. Am Fest-Abend leuchten die Festlaternen bunt. Dann in die
     Pilzhöhle: Fackeln und Pilze werfen Licht in die dunkle Höhle, das Herz des Urbaums glüht lila.
+
+- **Projekt 1, Schritt 2 – Pixel-Paket** (zurückgestellt): Flare gefällt dir nicht, gewünscht ist Pixel-Grafik wie bei
+  Octopath. Du schaust dich um (selbst zeichnen, KI als Vorlage oder Pixel-Künstler); das Thema hängt an der Look-Bibel
+  (Abendthema 12 im Brainstorm-Doc).
+
+- **Projekt 1, Schritt 3 – Licht im Kampf** (22.10., fertig):
+  - Die Figuren bekommen das **Licht des Ortes** ab: in Höhle und Gewölbe dunkler und leicht lila, nachts bläulich,
+    im Wald grünlich, auf der Wiese am Tag hell (`Backdrop.FIGHTER_LIGHT`).
+  - **Feuer-, Blitz-, Licht- und Splitter-Treffer leuchten auf**: Ein großer, weicher Schein in der Farbe des Elements
+    taucht das Feld kurz in sein Licht (wie die Zauber bei Octopath).
+  - Die **Pilzhöhle hat im Kampf einen eigenen Hintergrund**: Felswand, Wurzeln des Urbaums von der Decke, leuchtende
+    Riesenpilze, drei Wandfackeln und lila Sporen in der Luft (vorher das Gewölbe mit Lava-Brunnen). Gilt für
+    Sporenkönigin, Wurzelmutter/Vorbote, die Monster der Höhle und die Pilzhöhle in der Kampf-Sandbox.
+  - Schon vorher da: Fackeln im Gewölbe, eigener Hintergrund für die Fest-Nacht auf dem Marktplatz.
+  - **So testest du es:** Einen Kampf vor dem Stadttor, einen in der Pilzhöhle und den Sternenfresser in der Fest-Nacht
+    spielen: Jeder Kampf sieht aus wie sein Ort. Ein Feuerangriff (z. B. vom Glutwelpen) taucht das Feld kurz in
+    oranges Licht.
+
+- **Projekt 1, Schritt 4 – Licht als Mechanik in der Pilzhöhle** (22.10., fertig):
+  - Beim **Vorboten** ist die Dunkelheit keine gleichmäßige graue Schicht mehr: Das Feld wird dunkel, nur um
+    Lichtquellen bleiben **runde Lichtkreise** hell. Je dunkler es wird („Lichtfraß“), desto **kleiner werden die Kreise**.
+  - **„Laterne entzünden“** stellt eine echte Laterne zwischen Gegner und Helden aufs Feld (bis zu vier, danach brennt
+    die älteste neu), mit eigenem Lichtkreis. Ist der Vorbote besiegt, verlöschen die Laternen langsam.
+  - **„Das letzte Licht“:** Wer das Splitterlicht hält, **leuchtet lila** und steht in einem eigenen Lichtkreis. Beim
+    Weiterreichen wandert das Licht sichtbar zur nächsten Figur. So sieht man immer, wer sicher ist.
+  - Die Regeln sind gleich geblieben, nur die Anzeige ist neu.
+  - **So testest du es:** In der Pilzhöhle bis zum Vorboten kommen (oder in der Kampf-Sandbox „Pilzhöhle: nur Bosse“).
+    Eine Laterne entzünden und das Splitterlicht weiterreichen: Man sieht, wo Licht ist und wer sicher ist. Wartet man,
+    werden die Lichtkreise kleiner.
 
 ## Aufgaben Lernprojekt 5 „Grünwacht“ (Fahrplan in `GRUENWACHT_PLAN.md`)
 

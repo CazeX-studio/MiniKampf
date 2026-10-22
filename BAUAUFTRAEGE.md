@@ -22,12 +22,12 @@ Status: offen / in Arbeit / fertig
 ### Schritt 3: Licht im Kampf
 - **Ziel:** Der Kampf übernimmt das Grundlicht des Ortes (Höhle dunkel, Fest-Nacht bläulich, tagsüber hell). Im Gewölbe stehen Fackeln am Rand. Feuer-, Blitz-, Licht- und Splitter-Angriffe leuchten kurz auf (wie die Zauber bei Octopath Traveler).
 - **So testest du es:** Einen Kampf in Kreuzweg, einen in der Pilzhöhle und einen in der Fest-Nacht spielen: Jeder Kampf sieht aus wie sein Ort, ein Feuerangriff taucht das Feld kurz in oranges Licht.
-- **Status:** offen
+- **Status:** fertig (22.10.)
 
 ### Schritt 4: Licht als Mechanik in der Pilzhöhle
 - **Ziel:** Beim Vorboten wird das Licht Teil der Anzeige: Bei „Lichtfraß“ schrumpfen die Lichtkreise sichtbar, „Laterne entzünden“ stellt eine echte Laterne mit Lichtkreis aufs Feld, wer das Splitterlicht hält („Das letzte Licht“), leuchtet lila, und beim Weiterreichen wandert das Licht sichtbar. Die Regeln bleiben gleich, nur die Anzeige ändert sich.
 - **So testest du es:** Gegen den Vorboten kämpfen, eine Laterne entzünden und das Splitterlicht weiterreichen: Man sieht immer, wo Licht ist und wer sicher ist.
-- **Status:** offen
+- **Status:** fertig (22.10.)
 
 ## Projekt 2: Kampfgefühl
 
