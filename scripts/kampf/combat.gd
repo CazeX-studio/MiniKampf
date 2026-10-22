@@ -108,6 +108,8 @@ var _backdrop: Backdrop
 var _shake_time := 0.0
 var _shake_power := 0.0
 var _slow_until := 0
+## Geschwindigkeit vor Zeitlupe/Anhalten (Tests lassen das Spiel z. B. schneller laufen), wird danach wiederhergestellt
+var _base_time_scale := 1.0
 ## Letzte Schadenszahl je Figur: {fighter: [Zeitpunkt in ms, wie viele gerade gestapelt]}
 var _float_stack := {}
 
@@ -252,7 +254,8 @@ func _show_hint(key: String) -> void:
 
 ## Beim Verlassen des Kampfes Verweise lösen, sonst bleiben die Teilnehmer im Speicher liegen.
 func _exit_tree() -> void:
-	Engine.time_scale = 1.0
+	if Time.get_ticks_msec() < _slow_until:
+		Engine.time_scale = _base_time_scale
 	if state != null:
 		state.cleanup()
 
@@ -989,22 +992,25 @@ func _clear_lanterns() -> void:
 
 ## Zeitlupe (perfekte Parade): Für einen Moment läuft alles langsamer. Die Dauer zählt in echter Zeit.
 func _slow_motion() -> void:
+	if Time.get_ticks_msec() >= _slow_until:
+		_base_time_scale = Engine.time_scale
 	_slow_until = Time.get_ticks_msec() + int(SLOWMO_SECONDS * 1000.0)
-	Engine.time_scale = SLOWMO_SPEED
+	Engine.time_scale = _base_time_scale * SLOWMO_SPEED
 	await get_tree().create_timer(SLOWMO_SECONDS, true, false, true).timeout
 	if Time.get_ticks_msec() >= _slow_until:
-		Engine.time_scale = 1.0
+		Engine.time_scale = _base_time_scale
 
 
 ## Harter Treffer: Das Bild hält einen Augenblick an (nicht während einer Zeitlupe).
 func _hit_stop() -> void:
 	if Time.get_ticks_msec() < _slow_until:
 		return
+	_base_time_scale = Engine.time_scale
 	_slow_until = Time.get_ticks_msec() + int(HIT_STOP_SECONDS * 1000.0)
-	Engine.time_scale = 0.02
+	Engine.time_scale = _base_time_scale * 0.02
 	await get_tree().create_timer(HIT_STOP_SECONDS, true, false, true).timeout
 	if Time.get_ticks_msec() >= _slow_until:
-		Engine.time_scale = 1.0
+		Engine.time_scale = _base_time_scale
 
 
 ## Bildschirm wackeln: Feld und Hintergrund zittern kurz, schwächer werdend.
