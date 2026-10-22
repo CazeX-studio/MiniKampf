@@ -107,9 +107,12 @@ var _backdrop: Backdrop
 ## Wackeln: Restzeit und Stärke; Zeitlupe/Anhalten aktiv (Engine.time_scale ist verändert)
 var _shake_time := 0.0
 var _shake_power := 0.0
-var _slow_until := 0
-## Geschwindigkeit vor Zeitlupe/Anhalten (Tests lassen das Spiel z. B. schneller laufen), wird danach wiederhergestellt
+## Geschwindigkeit vor Zeitlupe/Anhalten (Tests lassen das Spiel z. B. schneller laufen), wird danach wiederhergestellt.
+## Jede neue Zeitlupe bzw. jedes Anhalten bekommt eine Nummer; nur das jeweils letzte stellt die Geschwindigkeit zurück.
 var _base_time_scale := 1.0
+var _time_effect := 0
+var _time_effect_running := false
+var _slowmo_running := false
 ## Letzte Schadenszahl je Figur: {fighter: [Zeitpunkt in ms, wie viele gerade gestapelt]}
 var _float_stack := {}
 
@@ -254,8 +257,9 @@ func _show_hint(key: String) -> void:
 
 ## Beim Verlassen des Kampfes Verweise lösen, sonst bleiben die Teilnehmer im Speicher liegen.
 func _exit_tree() -> void:
-	if Time.get_ticks_msec() < _slow_until:
+	if _time_effect_running:
 		Engine.time_scale = _base_time_scale
+		_time_effect_running = false
 	if state != null:
 		state.cleanup()
 
@@ -992,25 +996,31 @@ func _clear_lanterns() -> void:
 
 ## Zeitlupe (perfekte Parade): Für einen Moment läuft alles langsamer. Die Dauer zählt in echter Zeit.
 func _slow_motion() -> void:
-	if Time.get_ticks_msec() >= _slow_until:
+	_slowmo_running = true
+	await _change_speed(SLOWMO_SPEED, SLOWMO_SECONDS)
+
+
+## Ändert die Spielgeschwindigkeit für eine Weile (echte Zeit) und stellt sie danach wieder her.
+func _change_speed(factor: float, seconds: float) -> void:
+	if not _time_effect_running:
 		_base_time_scale = Engine.time_scale
-	_slow_until = Time.get_ticks_msec() + int(SLOWMO_SECONDS * 1000.0)
-	Engine.time_scale = _base_time_scale * SLOWMO_SPEED
-	await get_tree().create_timer(SLOWMO_SECONDS, true, false, true).timeout
-	if Time.get_ticks_msec() >= _slow_until:
+	_time_effect_running = true
+	_time_effect += 1
+	var mine := _time_effect
+	Engine.time_scale = _base_time_scale * factor
+	await get_tree().create_timer(seconds, true, false, true).timeout
+	# Nur das zuletzt begonnene stellt zurück (ein späteres hat schon übernommen)
+	if mine == _time_effect and _time_effect_running:
 		Engine.time_scale = _base_time_scale
+		_time_effect_running = false
+		_slowmo_running = false
 
 
 ## Harter Treffer: Das Bild hält einen Augenblick an (nicht während einer Zeitlupe).
 func _hit_stop() -> void:
-	if Time.get_ticks_msec() < _slow_until:
+	if _slowmo_running:
 		return
-	_base_time_scale = Engine.time_scale
-	_slow_until = Time.get_ticks_msec() + int(HIT_STOP_SECONDS * 1000.0)
-	Engine.time_scale = _base_time_scale * 0.02
-	await get_tree().create_timer(HIT_STOP_SECONDS, true, false, true).timeout
-	if Time.get_ticks_msec() >= _slow_until:
-		Engine.time_scale = _base_time_scale
+	await _change_speed(0.02, HIT_STOP_SECONDS)
 
 
 ## Bildschirm wackeln: Feld und Hintergrund zittern kurz, schwächer werdend.
