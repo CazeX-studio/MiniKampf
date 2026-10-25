@@ -361,8 +361,8 @@ func _sync() -> void:
 		view.position = cell_center(p.pos)
 		view.moving = p.is_walking()
 		view.facing = p.facing
-		# Wer auf einer anderen Karte steht, ist hier nicht zu sehen
-		view.visible = p.map == local.map
+		# Wer auf einer anderen Karte steht, ist hier nicht zu sehen. Im Dungeon sieht man nur die eigene Gruppe.
+		view.visible = p.map == local.map and (id == local_id or state.get_map(p.map).dungeon == "" or Netz.in_my_group(id))
 	# Mitspieler, die gegangen sind (oder gerade kämpfen), verschwinden
 	for id: String in _characters.keys():
 		if not id.begins_with("npc:") and not id.begins_with("monster:") and not state.players.has(id):

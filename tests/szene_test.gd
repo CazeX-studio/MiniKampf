@@ -10,6 +10,7 @@ func _initialize() -> void:
 	_test_result_rules()
 	_test_scene()
 	_test_scene_battle()
+	_test_solo_quests()
 	_test_star_night()
 	_test_boss_scaling()
 	print("Szenen: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
@@ -36,6 +37,8 @@ func _near(w: WorldState, center: Vector2i, skip: Array) -> Vector2i:
 
 func _test_scene() -> void:
 	var w := WorldState.new()
+	# Die Regeln gemeinsamer Szenen gelten im Dungeon; hier werden sie mit Lene in der Stadt geprüft
+	w.scenes_everywhere = true
 	var lene: Vector2i = w.npcs["schreiberin"].cell
 	var used: Array = []
 	var ids := ["a", "b", "c", "fern"]
@@ -97,6 +100,7 @@ func _test_scene() -> void:
 
 	# Zeit läuft ab: die abgegebenen Stimmen zählen
 	var w2 := WorldState.new()
+	w2.scenes_everywhere = true
 	used.clear()
 	for id: String in ["x", "y"]:
 		var cell := _near(w2, lene, used)
@@ -119,6 +123,33 @@ func _test_scene() -> void:
 
 
 ## Ein Kampf aus einer Szene: mit mehreren Abstimmenden ein Gruppenkampf, sonst wie bisher einzeln.
+## Seit dem Playtest 25.10.: Außerhalb von Dungeons macht jeder seine Aufträge für sich. Bei Kämpfen mit
+## "gruppe": true (z. B. das veränderte Tier) hilft die Gruppe mit, aber nur der Auftraggeber kommt weiter.
+func _test_solo_quests() -> void:
+	var w := WorldState.new()
+	var lene: Vector2i = w.npcs["schreiberin"].cell
+	var used: Array = []
+	for id: String in ["a", "b"]:
+		var cell := _near(w, lene, used)
+		used.append(cell)
+		w.add_player(id, id.to_upper(), "elf_m", cell).progress.quests["ankunft"] = "aktiv"
+	w.group_members = func(_id: String) -> Array: return ["a", "b"]
+	w.group_leader = func(_id: String) -> String: return "a"
+	w.apply_command("a", {type = "talk", npc = "schreiberin"})
+	_tick_until(w, func() -> bool: return w.players["a"].in_dialog())
+	_check(w.players["a"].in_dialog() and not w.players["b"].in_dialog() and not w.players["a"].dialog.has("szene"),
+			"In der Stadt redet jeder für sich, auch in einer Gruppe")
+	var battles := []
+	w.group_battle_requested.connect(func(ids: Array, kampf: String) -> void: battles.append([ids, kampf]))
+	w.players["a"].dialog = {}
+	w.run_actions(w.players["a"], [{kampf = "splitterbaer"}])
+	_check(battles == [[["a", "b"], "splitterbaer"]], "Das veränderte Tier: Die Gruppe in der Nähe kämpft mit")
+	w.apply_command("b", {type = "kampf_ergebnis", kampf = "splitterbaer", gewonnen = true})
+	w.apply_command("a", {type = "kampf_ergebnis", kampf = "splitterbaer", gewonnen = true})
+	_check(w.players["a"].progress.flags.has("tier_besiegt") and not w.players["b"].progress.flags.has("tier_besiegt"),
+			"Nur wer den Auftrag hat, kommt weiter; der Helfer bekommt Erfahrung")
+
+
 func _test_scene_battle() -> void:
 	var w := WorldState.new()
 	w.add_player("a", "A", "elf_m", WorldState.start_cell())
@@ -138,6 +169,7 @@ func _test_scene_battle() -> void:
 ## nach dem Kampf wartet Ren, bis alle zurück sind, und spricht dann alle zusammen an.
 func _test_star_night() -> void:
 	var w := WorldState.new()
+	w.scenes_everywhere = true
 	var marv: Vector2i = w.npcs["marv_fest"].cell
 	var used: Array = []
 	for id: String in ["a", "b", "z"]:

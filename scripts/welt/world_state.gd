@@ -93,6 +93,12 @@ const MONSTER_CHASE_SPEED := 2.4
 const MONSTER_RESPAWN := 60.0
 ## Spieler, deren Kampf gerade beginnt (bis das Ergebnis kommt oder sie gehen): Kennung -> true
 var _fighting := {}
+## Gruppenmitglieder, die bei einem fremden Geschichts-Kampf nur mithelfen: Kennung -> Kampf
+var _helpers := {}
+## Nur für Tests der Szenen-Regeln: gemeinsame Szenen auch außerhalb von Dungeons
+var scenes_everywhere := false
+## So viel der Erfahrung eines Kampfes bekommt, wer nur mithilft
+const HELPER_XP := 0.5
 ## Zufall für Monsterkarten als Beute (Tests setzen einen festen Startwert)
 var card_rng := RandomNumberGenerator.new()
 
@@ -430,7 +436,11 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			_fighting.erase(p.id)
 			for monster_id: String in cmd.get("gezaehmt", []):
 				_add_to_pack(p, monster_id, true)
-			_battle_result(p, str(cmd.get("kampf", "")), bool(cmd.get("gewonnen", false)))
+			if _helpers.get(p.id, "") == str(cmd.get("kampf", "")):
+				# Hat nur mitgeholfen: Erfahrung und Gold, aber kein Fortschritt in fremden Aufträgen
+				_helper_result(p, str(cmd.get("kampf", "")), bool(cmd.get("gewonnen", false)))
+			else:
+				_battle_result(p, str(cmd.get("kampf", "")), bool(cmd.get("gewonnen", false)))
 			_back_from_battle(p.id)
 		"karten_ergebnis":
 			_card_result(p, str(cmd.get("gegner", "")), bool(cmd.get("gewonnen", false)), bool(cmd.get("unentschieden", false)))
@@ -915,7 +925,9 @@ func _start_talk(p: PlayerState, npc_id: String, approach_flag := "") -> void:
 	var dialog_id: String = npcs[npc_id].dialog
 	var entry := _entry_node(p, dialog_id)
 	var partners: Array[PlayerState] = []
-	for id: String in group_members.call(p.id):
+	# Gemeinsame Szenen gibt es nur im Dungeon; sonst macht jeder seine Aufträge für sich (Playtest 25.10.)
+	var shared := get_map(p.map).dungeon != "" or scenes_everywhere
+	for id: String in group_members.call(p.id) if shared else []:
 		var other: PlayerState = players.get(id)
 		if other != null and other != p and not other.in_dialog() and other.shop == "" and other.map == p.map \
 				and other.pos.distance_to(p.pos) <= SCENE_RANGE:
@@ -1226,7 +1238,7 @@ func run_actions(p: PlayerState, actions: Array) -> void:
 		if action.has("erfolg"):
 			_unlock(p, action.erfolg)
 		if action.has("kampf"):
-			battle_requested.emit(p.id, action.kampf)
+			_start_story_battle(p, str(action.kampf))
 		if action.has("ruf"):
 			# {"ruf": "jaeger", "wert": 10}: Ruf bei einer Gruppe (Jäger, Zähmer …), sichtbar unter „Werte“
 			change_reputation(p, str(action.ruf), int(action.get("wert", 0)))
@@ -1574,6 +1586,9 @@ func _add_to_pack(p: PlayerState, monster_id: String, tamed := false) -> void:
 
 ## Steht das Monster für diesen Spieler gerade da? (Nach einem Sieg ist es eine Weile weg.)
 func monster_here(p: PlayerState, index: int) -> bool:
+	# Im Dungeon kommen besiegte Monster in diesem Durchgang nicht wieder
+	if get_map(monsters[index].karte).dungeon != "" and p.progress.flags.has("lauf:besiegt:monster:%d" % index):
+		return false
 	var beaten := float(p.progress.flags.get("besiegt:monster:%d" % index, -INF))
 	return Time.get_unix_time_from_system() - beaten >= MONSTER_RESPAWN
 
@@ -1636,6 +1651,46 @@ func _check_monsters(p: PlayerState) -> void:
 		if m.karte == p.map and (m.pos - p.pos).length() < MONSTER_TOUCH and monster_here(p, i):
 			_start_wild(p, i)
 			return
+
+
+## Kampf aus einem Gespräch (Auftrag). Kämpfe mit "gruppe": true (z. B. das veränderte Tier) können
+## Gruppenmitglieder in der Nähe mitmachen; sie helfen nur mit und bekommen keinen Auftrags-Fortschritt.
+func _start_story_battle(p: PlayerState, kampf_id: String) -> void:
+	if not GameData.battle(kampf_id).get("gruppe", false):
+		battle_requested.emit(p.id, kampf_id)
+		return
+	var ids: Array[String] = [p.id]
+	for id: String in group_members.call(p.id):
+		var other: PlayerState = players.get(id)
+		if other != null and other != p and other.map == p.map and not other.in_dialog() and other.shop == "" \
+				and not _fighting.has(id) and other.pos.distance_to(p.pos) <= SCENE_RANGE:
+			ids.append(id)
+	if ids.size() == 1:
+		battle_requested.emit(p.id, kampf_id)
+		return
+	for id in ids:
+		_fighting[id] = true
+		players[id].path.clear()
+		players[id].steer = Vector2.ZERO
+		players[id].use_target = ""
+		if id != p.id:
+			# Im Dungeon ist es ein gemeinsamer Durchgang: Dort zählt der Sieg für alle wie ihr eigener
+			if get_map(p.map).dungeon == "":
+				_helpers[id] = kampf_id
+			notice.emit(id, GameData.text("geschichte_gruppe", [p.display_name]))
+	group_battle_requested.emit(ids, kampf_id)
+
+
+## Ergebnis für jemanden, der bei einem fremden Geschichts-Kampf nur mitgeholfen hat.
+func _helper_result(p: PlayerState, kampf_id: String, won: bool) -> void:
+	_helpers.erase(p.id)
+	var battle: Dictionary = GameData.battle(kampf_id)
+	if won:
+		_say(p, GameData.text("kampf_gewonnen", [battle.get("name", kampf_id)]))
+		_give_xp(p, roundi(int(battle.get("erfahrung", 0)) * HELPER_XP))
+	else:
+		_say(p, GameData.text("geholfen_verloren"))
+	progress_changed.emit(p.id)
 
 
 ## Kampf gegen ein Monster: allein oder mit den Gruppenmitgliedern in der Nähe (wie bei gemeinsamen Szenen).
@@ -1701,8 +1756,8 @@ func _start_walk_in(p: PlayerState, npc_id: String) -> void:
 		return
 	route.pop_front()
 	p.npc_walk = {id = npc_id, pos = Vector2(start), path = route, facing = 1, phase = "hin"}
-	# Gruppenmitglieder in der Nähe holt der NPC gleich mit ins Gespräch (sie lösen ihn nicht noch einmal aus)
-	for id: String in group_members.call(p.id):
+	# Im Dungeon holt der NPC Gruppenmitglieder in der Nähe gleich mit ins Gespräch (sie lösen ihn nicht noch einmal aus)
+	for id: String in group_members.call(p.id) if get_map(p.map).dungeon != "" or scenes_everywhere else []:
 		var other: PlayerState = players.get(id)
 		if other != null and other != p and other.map == p.map and other.pos.distance_to(p.pos) <= SCENE_RANGE:
 			other.progress.flags["angesprochen:" + npc_id] = true
@@ -1904,6 +1959,8 @@ func _wild_result(p: PlayerState, kampf_id: String, battle: Dictionary, won: boo
 	if won:
 		_say(p, GameData.text("kampf_gewonnen", [battle.get("name", kampf_id)]))
 		p.progress.flags["besiegt:monster:%d" % int(kampf_id.substr(5))] = Time.get_unix_time_from_system()
+		if get_map(monsters[int(kampf_id.substr(5))].karte).dungeon != "":
+			p.progress.flags["lauf:besiegt:monster:%d" % int(kampf_id.substr(5))] = true
 		_give_gold(p, int(battle.get("gold", 0)))
 		_give_xp(p, int(battle.get("erfahrung", 0)))
 		# Mit etwas Glück eine Monsterkarte (nur wer schon eine Sternentafel hat, sammelt Karten)

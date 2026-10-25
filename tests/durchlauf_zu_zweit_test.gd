@@ -83,11 +83,11 @@ func _run() -> void:
 	_check(_done.size() == 2, "Beide sehen am Ende den Abspann")
 	for id in IDS:
 		_check(_final.has(id) and _final[id].flags.has("klasse"), "Spieler %s hat eine Klasse gewählt" % id.to_upper())
-	_check("gruppenkampf" in _group_battles, "Der Gruppenkampf bei Ye war ein gemeinsamer Kampf")
+	_check(not "gruppenkampf" in _group_battles, "Aufträge macht jeder für sich: Den Gruppenkampf bei Ye kämpft jeder selbst")
 	# War einer schon weiter (er schaut bei Marv nur zu), kämpft jeder für sich – das ist richtig so
 	_check("sternenfall" in _group_battles or _solo_names.count("sternenfall") == 2,
 			"Sternenfresser: gemeinsam, oder jeder für sich, wenn einer in der Geschichte schon weiter war")
-	_check(_scenes_seen.size() >= 5, "Viele gemeinsame Szenen (%d verschiedene Gespräche)" % _scenes_seen.size())
+	_check(_scenes_seen.is_empty(), "Außerhalb von Dungeons gibt es keine gemeinsamen Szenen (%d gesehen)" % _scenes_seen.size())
 	_check(_final.size() == 2 and _final.a.flags.has("ren_getroffen") and _final.b.flags.has("ren_getroffen"), "Beide haben Ren getroffen")
 	print("\nGemeinsame Kämpfe: %s · allein: %d · gemeinsame Gespräche: %s · uneinige Abstimmungen: %d" % [
 		", ".join(_group_battles), _solo_battles, ", ".join(_scenes_seen.keys()), _votes_split])

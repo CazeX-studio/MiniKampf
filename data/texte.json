@@ -22,6 +22,8 @@
 	"wild_ansage": "%s greift an!",
 	"wild_ansage_mehrere": "%s greifen an!",
 	"wild_gruppe": "%s wird angegriffen – du kämpfst mit!",
+	"geschichte_gruppe": "%s kämpft – du hilfst mit! (Für deine eigenen Aufträge zählt das nicht.)",
+	"geholfen_verloren": "Verloren … Beim nächsten Mal klappt es.",
 	"wild_verloren": "Du kommst am Rand der Karte wieder zu dir. Ruh dich kurz aus.",
 	"nebenauftrag_neu": "Neuer Nebenauftrag: %s",
 	"nebenauftrag": "Nebenauftrag",
