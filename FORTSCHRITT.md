@@ -3,7 +3,13 @@
 Hier steht, was fertig ist, was als Nächstes kommt und welche Fragen offen sind.
 Wird nach jedem Arbeitsschritt aktualisiert.
 
-## Aktueller Stand (2026-10-22)
+## Aktueller Stand (2026-10-25)
+
+- **Neu (25.10.): Playtest-Rückmeldungen Teil 1 eingebaut** (Liste im Brainstorm-Doc unter „Testtag-Notizen“):
+  Fehler (Ye-Laternen, Silberhirsch, Pilzhöhle), Parier-Tutorial, Abwarten für alle, Aufträge allein und Dungeon nur für die Gruppe,
+  Nebenauftrag-Wegweiser 1-2-3, Auftragsbuch-Reiter, Monster-Stall und Rudel-Fenster, Kobalt hinter seinem Monster,
+  Passive und Reaktion als Kästchen im Kampf. **Noch offen:** Tasche mit Kästchen und Ziehen, Klasse erst beim Lehrer
+  lernen, Kael auf einer anderen Plattform, größeres Grünwacht.
 
 - **Neu (22.10.): Marcos Rückmeldungen zur ersten Stadt eingebaut** – Einzelheiten unter „Fertig in Runde 2“ →
   „Rückmeldungen vom 22.10.“, Test-Liste ganz oben unter „Was du testen kannst“.
@@ -942,6 +948,13 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 ## Was du testen kannst
 
 Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spiel startet jetzt mit einem Menü.
+
+**Neu: Playtest 25.10. Teil 1**
+1. Grundausbildung bei Ye, Lektion 3: Hält das Spiel im hellgrünen und dann im grünen Bereich an und erklärt die Paraden? Danach zwei Übungsversuche, ohne dass du angreifst.
+2. In jedem Kampf gibt es den Knopf „Abwarten“. Unten rechts stehen Kästchen mit der Passiven deiner Klasse und ob du parieren oder ausweichen kannst.
+3. Nimm zwei Nebenaufträge an: Siehst du blaue Wegweiser mit 1 und 2? Hat das Auftragsbuch die Reiter Offen, Abgeschlossen, Erfolge?
+4. Zu zweit (Gruppe): Redet jeder in der Stadt für sich? Kämpft die Gruppe beim veränderten Tier zusammen? Im Dungeon seht ihr nur euch.
+5. Als Zähmer: Taste R öffnet das Rudel. Mit vollem Gepäck (6) geht ein gezähmtes Monster in den Stall, und das Spiel fragt nach einem Tausch. Kobalt steht im Kampf hinter seinem Monster und schießt mit der Schleuder.
 
 **Neu: Deine Rückmeldungen vom 22.10.** (Kreuzweg-Demo → „Neu beginnen“)
 1. Lauf mit WASD, halt zwischendurch an und klick dann irgendwohin: Läuft die Figur direkt los, ohne zurückzuspringen?

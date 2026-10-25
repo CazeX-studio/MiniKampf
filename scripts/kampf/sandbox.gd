@@ -255,6 +255,23 @@ const ENEMIES := {
 			{name = "Sternenschlag", base = 28, kind = "melee"}, {name = "Leuchtender Biss", base = 20, kind = "melee"}]},
 }
 
+## Passive jeder Klasse für die Anzeige im Kampf (Kästchen unten). Die Regeln stehen in skills.gd.
+const PASSIVES := {
+	"tank": {name = "Umwandlung", info = "Die Hälfte des Schadens geht auf Mana statt Leben."},
+	"mechanic": {name = "Wartung", info = "Solange Fritz lebt, repariert sich der Roboter jeden Zug um 5."},
+	"smith": {name = "Härtung", info = "Passende Rüstung fängt 40 % ab, jede Härte (bis 5) noch einmal 6 %."},
+	"archer": {name = "Ruhige Hand", info = "In der hinteren Reihe 20 % öfter kritisch."},
+	"blade": {name = "Klingenkranz", info = "Nach Klingenschritt und Ausfallschritt trifft jede Klinge (bis 5) noch einmal."},
+	"twilight": {name = "Überladen", info = "Am Rand der Leiste: 1,6-facher Schaden, aber Rückstoß."},
+	"tamer": {name = "Rudel", info = "Zwei Monster unterstützen; ab Stufe 15 helfen sie jeden Zug mit."},
+	"ritualist": {name = "Blutvorrat", info = "Heilen kostet erst den Blutvorrat, dann eigenes Leben."},
+	"quartermaster": {name = "Karren", info = "Waren aus dem Karren, bezahlt mit Gold."},
+	"kunoichi": {name = "Siegel", info = "Zwei Element-Siegel auf einem Gegner ergeben eine Kombination."},
+	"singer": {name = "Sternbilder", info = "Ungenutzte Sternbilder verblassen nach 2 Zügen."},
+	"novize": {name = "Novize", info = "Noch keine Klasse: Schlag, Kraftschlag, Erste Hilfe."},
+}
+
+
 ## Kämpfe zur Auswahl. Jede Welle ist eine Liste von Gegnern.
 const ENCOUNTERS := {
 	"monster": {name = "Monstergruppe", info = "4 Monster: Feuer, Wasser, Pflanze, Wind",

@@ -81,6 +81,9 @@ var _react_target: Fighter
 var _react_feedback := ""
 ## Ob das Aufblitzen zu Beginn des Zeitfensters schon gezeigt wurde.
 var _react_glint := false
+## Kästchen mit Passiver und Reaktion (unten rechts) und für wen sie gerade gelten
+var _passive_box: HBoxContainer
+var _passive_key := ""
 ## Paradeschule: welcher erklärte Schritt gerade läuft (0 = normale Parade, 1 = perfekte, -1 = keiner),
 ## ob die Zeit gerade angehalten ist, wann genau, und wie lange insgesamt angehalten wurde (echte Sekunden)
 var _guided := -1
@@ -313,6 +316,7 @@ func _play_event(event: Dictionary) -> void:
 			_turn_label.text = event.text
 		"turn":
 			_current = event.f
+			_update_passives()
 			if _current == null:
 				_clear_actions()
 			refresh()
@@ -1134,6 +1138,62 @@ func move_to_row(f: Fighter) -> void:
 
 
 ## Schwebender Text über einer Figur (Schaden, Heilung, Hinweise).
+## Kästchen unten rechts: die Passive der Klasse (hell, wenn sie gerade wirkt) und ob die Figur parieren,
+## ausweichen oder gar nicht reagieren kann. Gilt für den Helden am Zug, sonst für den eigenen.
+func _update_passives() -> void:
+	var f: Fighter = _current if _current != null and _current.is_hero else (state.heroes[0] if not state.heroes.is_empty() else null)
+	if f == null or not Sandbox.PASSIVES.has(f.klass):
+		return
+	var passive: Dictionary = Sandbox.PASSIVES[f.klass]
+	var active := _passive_active(f)
+	var key := "%s|%s|%s|%s" % [f.display_name, f.klass, f.reaction, active]
+	if key == _passive_key:
+		return
+	_passive_key = key
+	for child in _passive_box.get_children():
+		child.queue_free()
+	_passive_box.add_child(_info_box("✦ " + passive.name, passive.info, Color("f2c14e") if active else Color(0.75, 0.7, 0.55, 0.6), active))
+	var reaction: Array = {"parry": ["⛨ Parieren", Color("9fd0ff")], "dodge": ["➶ Ausweichen", Color("8affc1")]}.get(f.reaction, ["✕ Keine Reaktion", Color(0.7, 0.7, 0.75)])
+	var reaction_info: String = Sandbox.CLASSES.get(f.klass, {}).get("reaction_text", "")
+	_passive_box.add_child(_info_box(reaction[0], reaction_info, reaction[1], f.reaction != ""))
+
+
+## Wirkt die Passive gerade? (z. B. Ruhige Hand nur in der hinteren Reihe, Klingenkranz nur mit Klingen)
+func _passive_active(f: Fighter) -> bool:
+	match f.klass:
+		"archer":
+			return f.back_row
+		"blade":
+			return f.blades > 0
+		"twilight":
+			return absi(f.balance) >= Fighter.MAX_BALANCE
+		"tamer":
+			return int(f.get_meta("stufe", 1)) >= Sandbox.SUPPORT_LEVEL
+	return true
+
+
+func _info_box(text: String, info: String, color: Color, bright: bool) -> PanelContainer:
+	var box := PanelContainer.new()
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(color, 0.18 if bright else 0.06)
+	style.border_color = Color(color, 0.95 if bright else 0.45)
+	style.set_border_width_all(2)
+	style.set_corner_radius_all(3)
+	style.content_margin_left = 8
+	style.content_margin_right = 8
+	style.content_margin_top = 2
+	style.content_margin_bottom = 2
+	box.add_theme_stylebox_override("panel", style)
+	box.tooltip_text = info
+	box.mouse_filter = Control.MOUSE_FILTER_PASS
+	var label := Label.new()
+	label.text = text
+	label.add_theme_font_size_override("font_size", 14)
+	label.add_theme_color_override("font_color", Color.WHITE if bright else Color(1, 1, 1, 0.6))
+	box.add_child(label)
+	return box
+
+
 ## Roter Stern hinter einer kritischen Schadenszahl.
 func _draw_crit_star(canvas: Control, center: Vector2) -> void:
 	var points := PackedVector2Array()
@@ -1319,6 +1379,13 @@ func _build_ui() -> void:
 	_log.add_theme_font_size_override("bold_font_size", 13)
 	add_child(_log)
 
+	# Passive und Reaktion der Figur am Zug (bzw. der eigenen) als Kästchen rechts unten
+	_passive_box = HBoxContainer.new()
+	_passive_box.position = Vector2(760, 530)
+	_passive_box.size = Vector2(506, 28)
+	_passive_box.alignment = BoxContainer.ALIGNMENT_END
+	_passive_box.add_theme_constant_override("separation", 6)
+	add_child(_passive_box)
 	_turn_label = Label.new()
 	_turn_label.position = Vector2(444, 532)
 	_turn_label.size = Vector2(820, 26)
