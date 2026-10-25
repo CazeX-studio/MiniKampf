@@ -27,13 +27,12 @@
 			},
 			{
 				"name": "Lektion 3: Parieren",
-				"ansage": "Ye nimmt ein Übungsschwert: „Schild hoch, Schild runter.“",
+				"ansage": "Ye nimmt ein Übungsschwert: „Heute greifst du nicht an. Heute lernst du parieren.“",
 				"gegner": ["uebungs_ye"],
-				"erlaubt": ["schlag", "kraftschlag", "erste_hilfe"],
-				"ziel_paraden": 2,
+				"erlaubt": ["abwarten"],
+				"paradeschule": true,
 				"hinweise": {
-					"erster_zug": "Jetzt bin ich dran. Mich kannst du nicht besiegen. Ziel: zweimal PERFEKT parieren. Mach einfach deinen Zug und warte auf meinen Angriff.",
-					"erste_reaktion": "Jetzt greife ich an! Ein Ring schließt sich um dich, oben läuft ein Balken. Tippe (oder drücke die Leertaste), wenn der Strich im hellgrünen Feld ist: normale Parade, 25 % weniger Schaden. Triffst du die schmale grüne Mitte, wenn der Ring den inneren Kreis erreicht: PERFEKT – kein Schaden. Für diese Lektion zählen nur perfekte Paraden. Übrigens: Als Novize lernt jeder das Parieren. Später hängt es von deiner Klasse ab – manche parieren, manche weichen aus, manche haben gar keine Reaktion."
+					"erste_reaktion": "Wir lernen jetzt das Parieren. Es gibt zwei Arten: die normale Parade und die perfekte. Du greifst dabei nicht an, schau nur auf mich. Wenn ich angreife, schließt sich ein Ring um dich, und oben läuft ein Strich über eine Leiste. Beim ersten Angriff halte ich den Strich im hellgrünen Bereich an, beim zweiten in der grünen Mitte. Danach übst du zweimal allein. Übrigens: Als Novize lernt jeder das Parieren. Später hängt es von deiner Klasse ab – manche parieren, manche weichen aus, manche haben gar keine Reaktion."
 				}
 			},
 			{

@@ -259,11 +259,19 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 			list.append_array(c.dungeon.extra_abilities(f))
 		var row_name := "Nach vorne" if f.back_row else "Nach hinten"
 		list.append({id = "row", name = row_name, info = "Reihe wechseln (kostet den Zug)", target = "none"})
-	# Grundausbildung: nur die Fähigkeiten, die die Lektion schon erlaubt
+	# Abwarten können alle (beim Zähmer wartet das Monster, er selbst handelt trotzdem)
+	if f.is_hero or is_pet(f):
+		list.append(wait_ability())
+	# Grundausbildung: nur die Fähigkeiten, die die Lektion schon erlaubt (Abwarten geht immer)
 	var allowed: Array = c.setup.get("erlaubt", [])
 	if not allowed.is_empty() and f.is_hero:
-		list = list.filter(func(ab: Dictionary) -> bool: return ab.id in allowed)
+		list = list.filter(func(ab: Dictionary) -> bool: return ab.id in allowed or ab.id == "abwarten")
 	return list
+
+
+## Abwarten: für alle Klassen gleich (design.md, 25.10.).
+func wait_ability() -> Dictionary:
+	return {id = "abwarten", name = "Abwarten", info = "Zug aussetzen: weniger Schaden bis zum nächsten Zug, etwas Mana, früher wieder dran", target = "none"}
 
 
 ## Kann die Fähigkeit gerade benutzt werden? Gibt "" zurück oder den Grund, warum nicht.

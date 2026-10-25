@@ -31,6 +31,13 @@ const REACT_PERFECT := 2
 const NORMAL_REACT_BLOCK := 0.25
 ## Tödlicher Angriff (Sternenfresser) normal pariert: so viel vom vollen Leben geht verloren
 const DEADLY_PARRIED := 0.9
+## Abwarten (für alle Klassen): so viel Schaden kommt noch an, so viel Mana gibt es (Anteil vom Höchstwert),
+## und um diesen Anteil eines Zuges ist man früher wieder dran. Vorläufige Werte.
+const WAIT_DAMAGE := 0.67
+const WAIT_MANA := 0.15
+const WAIT_HASTE := 0.35
+## Paradeschule (Lektion 3): so viele Angriffe von Ye – zwei mit Erklärung, dann zwei Übungsversuche
+const PARRY_SCHOOL_ATTACKS := 4
 ## Pro Stufe über 1 bekommt ein Held so viel mehr Leben und Mana (Novize in der Kreuzweg-Demo).
 const LEVEL_HP := 10
 const LEVEL_MANA := 4
@@ -110,6 +117,8 @@ var computer := {}
 var first_done := false
 ## Langer Lernkampf (setup.phasen): perfekte Paraden zu Beginn der aktuellen Phase
 var parry_base := 0
+## Paradeschule: so oft hat Ye in dieser Lektion schon angegriffen
+var parry_attempts := 0
 
 var _events: Array[Dictionary] = []
 var _last_crit := false
@@ -402,6 +411,8 @@ func _apply_phase(index: int) -> void:
 	var phase: Dictionary = setup.phasen[index]
 	setup.erlaubt = phase.get("erlaubt", [])
 	setup.ziel_paraden = int(phase.get("ziel_paraden", 0))
+	setup.paradeschule = phase.get("paradeschule", false)
+	parry_attempts = 0
 	setup.zuerst = phase.get("zuerst", "")
 	setup.hinweise = phase.get("hinweise", {})
 	setup.ansage = phase.get("ansage", "")
@@ -570,6 +581,9 @@ func _battle_loop() -> void:
 			else:
 				await _enemy_turn(f)
 		f.next_time += f.turn_delay()
+		# Wer abgewartet hat, ist etwas früher wieder dran
+		if f.waiting:
+			f.next_time -= f.turn_delay() * WAIT_HASTE
 		current = null
 		_emit({type = "turn", f = null})
 		if await _check_end():
@@ -585,6 +599,7 @@ func _begin_turn(f: Fighter) -> void:
 	f.vuln_turns = maxi(f.vuln_turns - 1, 0)
 	f.blind_turns = maxi(f.blind_turns - 1, 0)
 	f.stagger_turns = maxi(f.stagger_turns - 1, 0)
+	f.waiting = false
 	if f.max_mana > 0:
 		f.mana = mini(f.mana + MANA_REGEN, f.max_mana)
 	skills.begin_turn(f)
@@ -601,6 +616,10 @@ func _check_end() -> bool:
 	var cleared := alive(enemies).is_empty()
 	# Paraden-Lektion: gewonnen, sobald der Spieler oft genug perfekt pariert hat
 	var parries_needed := int(setup.get("ziel_paraden", 0))
+	# Paradeschule: nach zwei erklärten Paraden und zwei Übungsversuchen ist die Lektion vorbei, egal wie sie liefen
+	if setup.get("paradeschule", false) and not lost and parry_attempts >= PARRY_SCHOOL_ATTACKS:
+		add_log("[color=#8affc1][b]Übung beendet – jetzt kennst du beide Paraden![/b][/color]")
+		cleared = true
 	if parries_needed > 0 and not lost and heroes[0].stat_perfect - parry_base >= parries_needed:
 		add_log("[color=#8affc1][b]%d perfekte Paraden – Lektion bestanden![/b][/color]" % parries_needed)
 		cleared = true
@@ -652,6 +671,11 @@ func ask_choice(title: String, options: Array[Dictionary]) -> String:
 # --- Spieler-Zug --------------------------------------------------------------
 
 func _player_turn(f: Fighter) -> void:
+	# Paradeschule: Der Spieler greift nicht an, er wartet auf Yes Angriff
+	if setup.get("paradeschule", false) and f == heroes[0]:
+		wait(0.5)
+		execute(f, skills.wait_ability(), null)
+		return
 	while true:
 		await _flush()
 		var command: Dictionary = await controller.choose_action(f)
@@ -680,6 +704,14 @@ func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 	if ab.has("cd"):
 		f.cooldowns[id] = ab.cd + 1
 
+	if id == "abwarten":
+		f.waiting = true
+		if f.max_mana > 0:
+			f.mana = mini(f.mana + roundi(f.max_mana * WAIT_MANA), f.max_mana)
+		add_log("%s wartet ab." % f.display_name)
+		float_text(f, "Abwarten", Color("cfe2ff"))
+		refresh()
+		return
 	if id == "row":
 		f.back_row = not f.back_row
 		add_log("%s wechselt nach %s." % [f.display_name, f.row_name()])
@@ -814,6 +846,8 @@ func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String
 		wait(duration)
 	else:
 		await _flush()
+		if setup.get("paradeschule", false) and focus == heroes[0]:
+			parry_attempts += 1
 		var answer: Variant = await controller.react(e, focus, duration)
 		# Ältere Steuerer antworten mit ja/nein (ja = perfekt)
 		grade = (REACT_PERFECT if answer else REACT_NONE) if answer is bool else int(answer)
@@ -875,6 +909,8 @@ func calc_damage(attacker: Fighter, target: Fighter, base: float, kind: String, 
 			dmg *= BACK_ROW_MELEE
 		if target.back_row:
 			dmg *= BACK_ROW_MELEE
+	if target.waiting:
+		dmg *= WAIT_DAMAGE
 	if target.def_buff_turns > 0 and not star:
 		dmg *= DEF_BUFF
 	if attacker.blind_turns > 0:

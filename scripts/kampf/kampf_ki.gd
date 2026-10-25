@@ -15,7 +15,8 @@ func _init(p_seed: int) -> void:
 func choose(rules: Skills, f: Fighter) -> Dictionary:
 	var options: Array[Dictionary] = []
 	for ab in rules.abilities(f):
-		if rules.blocked_reason(f, ab) != "":
+		# Abwarten nimmt der Computer nicht (er soll mitkämpfen)
+		if rules.blocked_reason(f, ab) != "" or ab.id == "abwarten":
 			continue
 		if ab.target == "choice":
 			for choice: Dictionary in ab.choices:

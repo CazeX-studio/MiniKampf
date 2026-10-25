@@ -77,6 +77,13 @@ var _react_target: Fighter
 var _react_feedback := ""
 ## Ob das Aufblitzen zu Beginn des Zeitfensters schon gezeigt wurde.
 var _react_glint := false
+## Paradeschule: welcher erklärte Schritt gerade läuft (0 = normale Parade, 1 = perfekte, -1 = keiner),
+## ob die Zeit gerade angehalten ist, wann genau, und wie lange insgesamt angehalten wurde (echte Sekunden)
+var _guided := -1
+var _guided_frozen := false
+var _guided_at := 0.0
+var _react_paused := 0.0
+var _guided_time_scale := 1.0
 ## Computer-Spieler für Novizen-Mitstreiter und schon gezeigte Erklär-Fenster
 var _ki := KampfKI.new(randi())
 var _hints_shown := {}
@@ -273,6 +280,7 @@ func _process(delta: float) -> void:
 			_turn_time = -1.0
 			_time_up()
 	if _reacting:
+		_update_guided()
 		_update_glint()
 		_ring_layer.queue_redraw()
 	_update_darkness(delta)
@@ -685,6 +693,10 @@ func react(attacker: Fighter, target: Fighter, duration: float) -> int:
 			Geraeusche.play("parade")
 		return grade
 	await _show_hint("erste_reaktion")
+	# Paradeschule: Die ersten beiden Angriffe halten an der richtigen Stelle an und erklären sie
+	_guided = state.parry_attempts - 1 if state.setup.get("paradeschule", false) and state.parry_attempts <= 2 else -1
+	_guided_frozen = false
+	_react_paused = 0.0
 	_react_target = target
 	_react_duration = duration
 	_react_press = -1.0
@@ -726,7 +738,33 @@ func _grade(t: float) -> int:
 
 
 func _react_time() -> float:
-	return (Time.get_ticks_usec() - _react_start) / 1_000_000.0
+	if _guided_frozen:
+		return _guided_at
+	return (Time.get_ticks_usec() - _react_start) / 1_000_000.0 - _react_paused
+
+
+## Paradeschule: Zeitpunkt, an dem die Zeit anhält (im hellgrünen Bereich bzw. genau in der grünen Mitte).
+func _guided_stop() -> float:
+	return _react_duration - REACT_EARLY * 0.6 if _guided == 0 else _react_duration
+
+
+## Paradeschule: Zeit anhalten, sobald der Strich die Stelle erreicht, und erst mit dem Tastendruck weiterlaufen lassen.
+func _update_guided() -> void:
+	if _guided < 0 or _guided_frozen or _react_press >= 0.0 or _react_time() < _guided_stop():
+		return
+	_guided_frozen = true
+	_guided_at = _guided_stop()
+	_guided_time_scale = Engine.time_scale
+	Engine.time_scale = 0.0
+
+
+func _end_guided_pause() -> void:
+	if not _guided_frozen:
+		return
+	# Die Uhr läuft genau dort weiter, wo sie angehalten hat
+	_guided_frozen = false
+	_react_paused = (Time.get_ticks_usec() - _react_start) / 1_000_000.0 - _guided_at
+	Engine.time_scale = _guided_time_scale if _guided_time_scale > 0.0 else 1.0
 
 
 func _input(event: InputEvent) -> void:
@@ -744,7 +782,12 @@ func _input(event: InputEvent) -> void:
 	get_viewport().set_input_as_handled()
 	if _react_press >= 0.0:
 		return
-	_react_press = _react_time()
+	# Paradeschule: vor dem Anhalten zählt kein Tippen, beim Anhalten geht es mit dem Tippen weiter
+	if _guided >= 0 and not _guided_frozen:
+		return
+	var at_stop := _react_time()
+	_end_guided_pause()
+	_react_press = at_stop if _guided >= 0 else _react_time()
 	var c := view(_react_target).center()
 	match _grade(_react_press):
 		BattleState.REACT_PERFECT:
@@ -853,6 +896,31 @@ func _draw_ring() -> void:
 	var font := ThemeDB.fallback_font
 	_ring_layer.draw_string_outline(font, Vector2(340, 94), text, HORIZONTAL_ALIGNMENT_CENTER, 600, 26, 8, Color.BLACK)
 	_ring_layer.draw_string(font, Vector2(340, 94), text, HORIZONTAL_ALIGNMENT_CENTER, 600, 26, color)
+	_draw_parry_school(bar, font)
+
+
+## Paradeschule: Erklärung unter der Leiste, solange die Zeit angehalten ist; bei den Übungsversuchen ein Zähler.
+func _draw_parry_school(bar: Rect2, font: Font) -> void:
+	if not state.setup.get("paradeschule", false):
+		return
+	var lines: PackedStringArray = []
+	if _guided_frozen and _guided == 0:
+		lines = ["Halt! Der Strich steht im hellgrünen Bereich.", "Das ist die NORMALE Parade: Du bekommst 25 % weniger Schaden.",
+				"Drück jetzt die Leertaste (oder tippe)."]
+	elif _guided_frozen and _guided == 1:
+		lines = ["Halt! Jetzt steht der Strich in der schmalen grünen Mitte –", "genau wenn der Ring den Kreis berührt.",
+				"Das ist die PERFEKTE Parade: gar kein Schaden.", "Drück jetzt die Leertaste (oder tippe)!"]
+	elif _guided < 0 and state.parry_attempts > 2:
+		lines = ["Übungsversuch %d von %d – jetzt allein!" % [state.parry_attempts - 2, BattleState.PARRY_SCHOOL_ATTACKS - 2]]
+	if lines.is_empty():
+		return
+	# Unter den Figuren, damit Ring und Figuren frei bleiben
+	var box := Rect2(bar.position.x - 140, 360, bar.size.x + 280, 14 + lines.size() * 28)
+	_ring_layer.draw_rect(box, Color(0.04, 0.05, 0.11, 0.92))
+	_ring_layer.draw_rect(box, Color(0.85, 0.72, 0.45, 0.8), false, 2.0)
+	for i in lines.size():
+		var pos := box.position + Vector2(0, 32 + i * 28)
+		_ring_layer.draw_string(font, pos, lines[i], HORIZONTAL_ALIGNMENT_CENTER, box.size.x, 20, Color.WHITE)
 
 
 ## Position eines Zeitpunkts auf der Zeitleiste.
