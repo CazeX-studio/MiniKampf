@@ -172,7 +172,8 @@ func _add_things(map_id: String, data: Dictionary) -> void:
 		pickups.append({item = d.gegenstand, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), map = map_id, cond = d.get("wenn", {})})
 	for d: Dictionary in data.get("orte", []):
 		places.append({art = d.art, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), map = map_id, cond = d.get("wenn", {}),
-				dialog = d.get("dialog", ""), actions = d.get("aktionen", []), text = d.get("meldung", "")})
+				dialog = d.get("dialog", ""), actions = d.get("aktionen", []), text = d.get("meldung", ""),
+				entry = d.get("zutritt_wenn", {}), locked_text = d.get("zutritt_meldung", "")})
 
 
 # --- Karte ----------------------------------------------------------------------
@@ -657,6 +658,10 @@ func _use(p: PlayerState, target: String) -> void:
 		_start_talk(p, npc_id)
 	elif target.begins_with("ort:"):
 		var place: Dictionary = places[int(target.substr(4))]
+		# Manche Orte sieht man immer, betreten kann man sie aber erst später (z. B. die Pilzhöhle nach dem Auftrag)
+		if not check(p, place.entry):
+			_say(p, place.locked_text)
+			return
 		if place.text != "":
 			_say(p, place.text)
 		if place.dialog != "":

@@ -127,11 +127,11 @@
 	"ye_tor": {
 		"hinweis": "PLATZHALTER-TEXTE: Ye am Stadttor (Grundausbildung). Marco schreibt die Dialoge der Hauptfiguren noch.",
 		"einstieg": [
+			{"wenn": {"auftrag": "fuenf_farben", "stand": "aktiv", "nicht_gemerkt": "ye_laternen", "und": [{"gemerkt": "laterne_arkanum"}, {"gemerkt": "laterne_messinghafen"}, {"gemerkt": "laterne_glutoase"}, {"gemerkt": "laterne_gruenwacht"}, {"gemerkt": "laterne_nebelinseln"}]}, "knoten": "laternen"},
 			{"wenn": {"auftrag": "abreise", "stand": "aktiv", "nicht_gemerkt": "klasse_gewaehlt"}, "knoten": "wahl"},
 			{"wenn": {"auftrag": "abreise", "stand": "aktiv", "gemerkt": "klasse_gewaehlt"}, "knoten": "abschied"},
 			{"wenn": {"auftrag": "abreise", "stand": "abgegeben", "und": [{"auftrag": "nach_gruenwacht", "stand": "neu"}]}, "knoten": "noch_da"},
 			{"wenn": {"auftrag": "nach_gruenwacht", "stand": "aktiv"}, "knoten": "westen"},
-			{"wenn": {"auftrag": "fuenf_farben", "stand": "aktiv", "nicht_gemerkt": "ye_laternen", "und": [{"gemerkt": "laterne_arkanum"}, {"gemerkt": "laterne_messinghafen"}, {"gemerkt": "laterne_glutoase"}, {"gemerkt": "laterne_gruenwacht"}, {"gemerkt": "laterne_nebelinseln"}]}, "knoten": "laternen"},
 			{"wenn": {"auftrag": "grundausbildung", "stand": "neu"}, "knoten": "morgen"},
 			{"wenn": {"auftrag": "grundausbildung", "stand": "aktiv"}, "knoten": "uebung"},
 			{"wenn": {"auftrag": "grundausbildung", "stand": "fertig"}, "knoten": "abschluss"},

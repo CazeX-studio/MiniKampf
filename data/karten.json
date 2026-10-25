@@ -600,7 +600,16 @@
 					18
 				],
 				"meldung": "Du kriechst zwischen den Wurzeln hinab in die Dunkelheit.",
-				"wenn": {
+				"aktionen": [
+					{
+						"reisen": "pilzhoehle",
+						"feld": [
+							27,
+							11
+						]
+					}
+				],
+				"zutritt_wenn": {
 					"oder": [
 						{
 							"auftrag": "der_urbaum",
@@ -616,15 +625,7 @@
 						}
 					]
 				},
-				"aktionen": [
-					{
-						"reisen": "pilzhoehle",
-						"feld": [
-							27,
-							11
-						]
-					}
-				]
+				"zutritt_meldung": "Dichte Wurzeln versperren den Eingang. Hier unten ist es noch zu gefährlich. Vielleicht weiß Ysolde mehr."
 			},
 			{
 				"art": "splittertier",
@@ -643,8 +644,8 @@
 			{
 				"art": "silberhirsch",
 				"feld": [
-					3,
-					24
+					1,
+					16
 				],
 				"dialog": "silberhirsch",
 				"wenn": {

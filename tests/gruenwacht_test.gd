@@ -570,7 +570,11 @@ func _test_dungeon(choice: String) -> void:
 	p.progress.level = 19
 	var door := _place_target(world, "waldboden", "hoehle")
 	world.change_map(p, "waldboden", Vector2i(14, 12))
-	_check(not world.can_use(p, door), "Ohne Auftrag kein Weg in die Pilzhöhle")
+	_check(world.can_use(p, door), "Der Eingang der Pilzhöhle ist immer zu sehen")
+	p.safe_time = 1000.0
+	world.apply_command("a", {type = "use", target = door})
+	_tick(world, 6.0)
+	_check(p.map == "waldboden", "Ohne Auftrag kein Weg in die Pilzhöhle")
 	p.progress.quests["der_urbaum"] = "aktiv"
 	world.apply_command("a", {type = "use", target = door})
 	for i in 400:

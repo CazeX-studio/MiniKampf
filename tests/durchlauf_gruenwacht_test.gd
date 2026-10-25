@@ -297,7 +297,8 @@ func _edges(map_id: String) -> Array:
 			result.append([e.karte, {feld = rect.position + rect.size / 2}])
 	for i in world.places.size():
 		var place: Dictionary = world.places[i]
-		if place.map != map_id or not world.check(p, place.cond):
+		# Verschlossene Eingänge (z. B. die Pilzhöhle vor dem Auftrag) zählen nicht als Weg
+		if place.map != map_id or not world.check(p, place.cond) or not world.check(p, place.entry):
 			continue
 		for action: Dictionary in place.actions:
 			if action.has("reisen"):

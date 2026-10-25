@@ -761,6 +761,10 @@ func _update_occluders(delta: float) -> void:
 	for view: Node2D in _characters.values():
 		if is_instance_valid(view) and view.visible:
 			points.append(view.position)
+	# Orte und Sammelpunkte (z. B. der Silberhirsch) sollen auch nicht hinter Bäumen verschwinden
+	for node: Node2D in _pickup_nodes.values():
+		if is_instance_valid(node) and node.visible:
+			points.append(node.position)
 	for occ: Dictionary in _occluders:
 		var node: Node2D = occ.node
 		if not is_instance_valid(node):
