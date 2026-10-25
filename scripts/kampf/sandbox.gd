@@ -206,8 +206,8 @@ const ENEMIES := {
 		absicht = "Läuft hin und her: Ein schneller Schuss streift nur. Erst den Bogen spannen!"},
 	# Rivale Kobalt selbst: steht hinter seinem Monster und schießt mit der Schleuder wie der Spieler.
 	# trainer = man kann ihn nicht angreifen; der Kampf ist gewonnen, wenn sein Monster fällt.
-	"kobalt": {name = "Rivale Kobalt", element = "", hp = 999, tempo = 8, trainer = true,
-		attacks = [{name = "Schleuder", base = 6, kind = "ranged"}]},
+	"kobalt": {name = "Rivale Kobalt", element = "", hp = 999, tempo = 6, trainer = true,
+		attacks = [{name = "Schleuder", base = 3, kind = "ranged"}]},
 	# Rivale Kobalt (Esches Neffe): nimmt immer das Start-Monster, das deins schlägt. Werte vorläufig.
 	"kobalts_moosling": {name = "Kobalts Moosling", element = "Pflanze", hp = 120, tempo = 8,
 		attacks = [{name = "Rankenschlag", base = 14, kind = "melee"}, {name = "Dornenpeitsche", base = 8, kind = "magic", all = true}]},
