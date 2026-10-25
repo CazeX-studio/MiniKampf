@@ -448,6 +448,15 @@ func _test_feedback_22_10() -> void:
 	_check(battles == ["wild:0"], "Monster berührt: Kampf beginnt")
 	_check(GameData.battle("gruppenkampf").wellen.size() == 1, "Gruppenkampf hat nur noch eine Welle")
 
+	# Playtest 25.10.: Nebenaufträge haben blaue Wegweiser mit Nummer
+	var w2 := WorldState.new()
+	var q := w2.add_player("q", "Q", "elf_m", WorldState.start_cell())
+	q.progress.quests = {"dunkelheit_spielen": "aktiv", "fuenf_farben": "aktiv"}
+	var sides := w2.side_objectives(q)
+	_check(sides.size() == 2 and sides[0].nummer == 1 and sides[0].feld == w2.npcs.pip.cell and sides[1].nummer == 2,
+			"Zwei Nebenaufträge: Wegweiser 1 (Pip) und 2 (Laternenhaken)")
+	_check(w2.side_number(q, "fuenf_farben") == 2, "Im Auftragsbuch steht dieselbe Nummer")
+
 
 func _test_side_quests() -> void:
 	var world := WorldState.new()

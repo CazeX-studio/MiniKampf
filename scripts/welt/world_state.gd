@@ -1359,20 +1359,7 @@ func objective_place(p: PlayerState) -> Dictionary:
 		var quest_state: String = p.progress.quests[id]
 		if q.is_empty() or quest_state == "abgegeben" or not is_main_quest(id):
 			continue
-		if quest_state == "fertig":
-			return _npc_goal(p, [q.get("abgeben_bei", "")])
-		for goal: Dictionary in q.get("ziele", []):
-			if goal_done(p, goal) or not check(p, goal.get("wenn", {})):
-				continue
-			if goal.art == "sammeln":
-				var herb := _nearest_pickup(p, str(goal.gegenstand))
-				if not herb.is_empty():
-					return herb
-			if goal.has("bei"):
-				return _npc_goal(p, [goal.bei])
-			if goal.has("wegweiser"):
-				return _npc_goal(p, goal.wegweiser)
-		return {}
+		return _quest_place(p, id)
 	# Kein Hauptauftrag offen: zum nächsten gelben „!“ auf dieser Karte
 	var best := {}
 	for id: String in npcs:
@@ -1380,6 +1367,61 @@ func objective_place(p: PlayerState) -> Dictionary:
 				and (best.is_empty() or (Vector2(npcs[id].cell) - p.pos).length() < (Vector2(best.feld) - p.pos).length()):
 			best = {karte = npcs[id].map, feld = npcs[id].cell}
 	return best
+
+
+## Wohin man für diesen (laufenden) Auftrag als Nächstes muss: {karte, feld} oder leer.
+func _quest_place(p: PlayerState, id: String) -> Dictionary:
+	var q := GameData.quest(id)
+	if p.progress.quest_state(id) == "fertig":
+		return _npc_goal(p, [q.get("abgeben_bei", "")])
+	for goal: Dictionary in q.get("ziele", []):
+		if goal_done(p, goal) or not check(p, goal.get("wenn", {})):
+			continue
+		if goal.art == "sammeln":
+			var herb := _nearest_pickup(p, str(goal.gegenstand))
+			if not herb.is_empty():
+				return herb
+		if goal.has("bei"):
+			return _npc_goal(p, [goal.bei])
+		if goal.has("wegweiser"):
+			return _npc_goal(p, goal.wegweiser)
+		if goal.art == "gemerkt":
+			# Ein Ort, der das Ziel erfüllt (z. B. ein Laternenhaken)
+			for place: Dictionary in places:
+				if check(p, place.cond) and place.actions.any(func(a: Dictionary) -> bool: return a.get("merken", "") == goal.merken):
+					return {karte = place.map, feld = place.cell}
+	return {}
+
+
+## Wegweiser der Nebenaufträge: [{nummer, feld}] auf der eigenen Karte (oder der Ausgang dorthin).
+## Die Nummer ist die Reihenfolge, in der man die laufenden Nebenaufträge angenommen hat (wie im Auftragsbuch).
+func side_objectives(p: PlayerState) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	var number := 0
+	for id: String in p.progress.quests:
+		var quest_state: String = p.progress.quests[id]
+		if is_main_quest(id) or GameData.quest(id).is_empty() or not quest_state in ["aktiv", "fertig"]:
+			continue
+		number += 1
+		var goal := _quest_place(p, id)
+		if goal.is_empty():
+			continue
+		var cell: Vector2i = goal.feld if goal.karte == p.map else _exit_towards(p, str(goal.karte))
+		if cell != Vector2i(-1, -1):
+			result.append({nummer = number, feld = cell})
+	return result
+
+
+## Nummer eines laufenden Nebenauftrags (wie bei den Wegweisern), 0 = keiner.
+func side_number(p: PlayerState, quest_id: String) -> int:
+	var number := 0
+	for id: String in p.progress.quests:
+		if is_main_quest(id) or GameData.quest(id).is_empty() or not p.progress.quests[id] in ["aktiv", "fertig"]:
+			continue
+		number += 1
+		if id == quest_id:
+			return number
+	return 0
 
 
 ## Der nächste der genannten NPCs, der für den Spieler gerade da ist (auch einer, der erst herbeiläuft).

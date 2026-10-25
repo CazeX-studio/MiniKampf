@@ -30,6 +30,8 @@ const STICK_RADIUS := 70.0
 const STICK_DEADZONE := 12.0
 const STICK_HOME := Vector2(170, 560)
 const NOTICE_SECONDS := 3.5
+## Farbe der Nebenaufträge (wie das blaue „!“ und „?“)
+const SIDE_COLOR := Color("5ab8ff")
 ## Dinge, die Figuren verdecken können, und welche Fläche sie über ihrem Fußpunkt bedecken (werden dann durchsichtig)
 const OCCLUDER_RECTS := {
 	"tree": Rect2(-26, -70, 52, 72), "stand": Rect2(-32, -64, 64, 66), "stamm": Rect2(-40, -160, 80, 162),
@@ -89,6 +91,11 @@ var _marker_time := 0.0
 var _marker_node: Node2D
 ## Wegweiser zum nächsten Ziel der Hauptgeschichte: Ring und Pfeil an der Stelle, Pfeil am Bildrand, wenn sie nicht zu sehen ist
 var _waypoint := Vector2i(-1, -1)
+## Wegweiser der Nebenaufträge (blau, mit Nummer): [{nummer, feld}]
+var _side_waypoints: Array[Dictionary] = []
+## Auftragsbuch: welcher Reiter offen ist ("offen", "fertig", "erfolge")
+var _quest_tab := "offen"
+var _quest_tabs: HBoxContainer
 var _waypoint_node: Node2D
 var _edge_arrow: Control
 ## Häuser, Bäume und Stände, die durchsichtig werden, wenn jemand dahinter steht: {node, rect (Welt-Koordinaten)}
@@ -416,6 +423,7 @@ func _sync() -> void:
 		var distance := (Vector2(state.npcs[id].cell) - local.pos).length()
 		npc_view.set_name_alpha(clampf((NAME_FADE_END - distance) / (NAME_FADE_END - NAME_FADE_START), 0.0, 1.0))
 	_waypoint = state.objective_cell(local)
+	_side_waypoints = state.side_objectives(local)
 	var goal := state.objective(local)
 	_goal.text = "Ziel: " + goal if goal != "" else ""
 	_update_hud()
@@ -709,8 +717,21 @@ func _draw_tap_marker() -> void:
 
 
 ## Wegweiser an der Zielstelle: leuchtender Ring am Boden und ein wippender Pfeil darüber.
+## Nebenaufträge bekommen einen kleineren blauen Wegweiser mit ihrer Nummer.
 func _draw_waypoint() -> void:
-	if _waypoint == Vector2i(-1, -1) or local_player().in_dialog():
+	if local_player().in_dialog():
+		return
+	var font := ThemeDB.fallback_font
+	for side: Dictionary in _side_waypoints:
+		var spot := cell_center(Vector2(side.feld))
+		_waypoint_node.draw_set_transform(spot, 0.0, Vector2(1.0, 0.5))
+		_waypoint_node.draw_arc(Vector2.ZERO, 22.0, 0, TAU, 32, Color(SIDE_COLOR, 0.8), 3.0)
+		_waypoint_node.draw_set_transform_matrix(Transform2D.IDENTITY)
+		var badge := spot + Vector2(22 * (side.nummer % 2 * 2 - 1), -150 + sin(_time * 3.0 + side.nummer) * 5.0)
+		_waypoint_node.draw_circle(badge, 14.0, SIDE_COLOR)
+		_waypoint_node.draw_arc(badge, 14.0, 0, TAU, 24, Color.BLACK, 2.0)
+		_waypoint_node.draw_string(font, badge + Vector2(-14, 7), str(side.nummer), HORIZONTAL_ALIGNMENT_CENTER, 28, 20, Color.WHITE)
+	if _waypoint == Vector2i(-1, -1):
 		return
 	var pos := cell_center(Vector2(_waypoint))
 	var pulse := 0.5 + 0.5 * sin(_time * 4.0)
@@ -726,11 +747,21 @@ func _draw_waypoint() -> void:
 	_waypoint_node.draw_polyline(arrow, Color.BLACK, 2.0)
 
 
-## Liegt das Ziel außerhalb des Bildes, zeigt ein Pfeil am Rand die Richtung (mit Entfernung).
+## Liegt ein Ziel außerhalb des Bildes, zeigt ein Pfeil am Rand die Richtung (Hauptgeschichte gelb mit Entfernung,
+## Nebenaufträge blau mit ihrer Nummer).
 func _draw_edge_arrow() -> void:
-	if _waypoint == Vector2i(-1, -1) or local_player().in_dialog():
+	# Über offenen Fenstern (Auftragsbuch, Laden) keine Pfeile
+	if local_player().in_dialog() or _panel.visible or _shop_panel.visible:
 		return
-	var screen := get_viewport().get_canvas_transform() * cell_center(Vector2(_waypoint))
+	for side: Dictionary in _side_waypoints:
+		_draw_one_edge_arrow(side.feld, SIDE_COLOR, str(side.nummer), 0.75)
+	if _waypoint != Vector2i(-1, -1):
+		var distance := roundi((Vector2(_waypoint) - local_player().pos).length())
+		_draw_one_edge_arrow(_waypoint, Color("ffd34d"), "%d m" % distance, 1.0)
+
+
+func _draw_one_edge_arrow(target_cell: Vector2i, color: Color, label: String, size: float) -> void:
+	var screen := get_viewport().get_canvas_transform() * cell_center(Vector2(target_cell))
 	# Ist das Ziel im Bild zu sehen, reicht der Pfeil darüber
 	if Rect2(Vector2(30, 30), Vector2(1280 - 60, 720 - 60)).has_point(screen):
 		return
@@ -741,18 +772,17 @@ func _draw_edge_arrow() -> void:
 	var scale_x := (area.size.x * 0.5) / maxf(absf(dir.x), 0.001)
 	var scale_y := (area.size.y * 0.5) / maxf(absf(dir.y), 0.001)
 	var pos := center + dir * minf(scale_x, scale_y)
-	var tip := pos + dir * (18.0 + sin(_time * 4.0) * 4.0)
-	var side := Vector2(-dir.y, dir.x)
+	var tip := pos + dir * (18.0 + sin(_time * 4.0) * 4.0) * size
+	var side := Vector2(-dir.y, dir.x) * size
 	var points := PackedVector2Array([tip, pos - dir * 6.0 + side * 16.0, pos - dir * 6.0 - side * 16.0])
-	_edge_arrow.draw_circle(pos - dir * 6.0, 26.0, Color(0, 0, 0, 0.45))
-	_edge_arrow.draw_colored_polygon(points, Color("ffd34d"))
+	_edge_arrow.draw_circle(pos - dir * 6.0, 26.0 * size, Color(0, 0, 0, 0.45))
+	_edge_arrow.draw_colored_polygon(points, color)
 	points.append(tip)
 	_edge_arrow.draw_polyline(points, Color.BLACK, 2.0)
-	var distance := roundi((Vector2(_waypoint) - local_player().pos).length())
 	var font := ThemeDB.fallback_font
-	var text_pos := pos - dir * 46.0 + Vector2(-40, 6)
-	_edge_arrow.draw_string_outline(font, text_pos, "%d m" % distance, HORIZONTAL_ALIGNMENT_CENTER, 80, 15, 4, Color.BLACK)
-	_edge_arrow.draw_string(font, text_pos, "%d m" % distance, HORIZONTAL_ALIGNMENT_CENTER, 80, 15, Color("ffd34d"))
+	var text_pos := pos - dir * 46.0 * size + Vector2(-40, 6)
+	_edge_arrow.draw_string_outline(font, text_pos, label, HORIZONTAL_ALIGNMENT_CENTER, 80, 15, 4, Color.BLACK)
+	_edge_arrow.draw_string(font, text_pos, label, HORIZONTAL_ALIGNMENT_CENTER, 80, 15, color)
 
 
 ## Häuser, Bäume und Stände, hinter denen jemand steht, werden durchsichtig (Spieler, NPCs, Monster).
@@ -1270,6 +1300,21 @@ func _build_ui() -> void:
 	_panel.add_child(panel_box)
 	_panel_title = _label("", 22, Color("f2c14e"))
 	panel_box.add_child(_panel_title)
+	# Reiter im Auftragsbuch: Offen, Abgeschlossen, Erfolge
+	_quest_tabs = HBoxContainer.new()
+	_quest_tabs.add_theme_constant_override("separation", 6)
+	for tab: Array in [["offen", "Offen"], ["fertig", "Abgeschlossen"], ["erfolge", "Erfolge"]]:
+		var tab_button := Button.new()
+		tab_button.text = tab[1]
+		tab_button.toggle_mode = true
+		tab_button.custom_minimum_size = Vector2(150, 34)
+		tab_button.focus_mode = Control.FOCUS_NONE
+		tab_button.set_meta("tab", tab[0])
+		tab_button.pressed.connect(func() -> void:
+			_quest_tab = tab[0]
+			_fill_panel())
+		_quest_tabs.add_child(tab_button)
+	panel_box.add_child(_quest_tabs)
 	_panel_text = RichTextLabel.new()
 	_panel_text.bbcode_enabled = true
 	_panel_text.custom_minimum_size = Vector2(570, 330)
@@ -1886,33 +1931,41 @@ func _toggle_panel(mode: String) -> void:
 func _fill_panel() -> void:
 	var p := local_player()
 	var lines: PackedStringArray = []
+	_quest_tabs.visible = _panel_mode == "auftraege"
+	for tab_button: Button in _quest_tabs.get_children():
+		tab_button.button_pressed = tab_button.get_meta("tab") == _quest_tab
 	if _panel_mode == "auftraege":
 		_panel_title.text = GameData.text("auftragsbuch")
-		for id: String in p.progress.quests:
-			var q := GameData.quest(id)
-			if q.is_empty():
-				continue
-			var quest_state: String = p.progress.quests[id]
-			var color := "8affc1" if quest_state == "fertig" else ("a0a0a0" if quest_state == "abgegeben" else "ffffff")
-			# Nebenaufträge stehen mit blauem Zeichen da, damit sie sich von der Geschichte abheben
-			var tag := "[color=#5ab8ff]◆ %s:[/color] " % GameData.text("nebenauftrag") if q.get("neben", false) else ""
-			lines.append("%s[b][color=#%s]%s[/color][/b]  (%s)" % [tag, color, q.get("titel", id), GameData.text("stand_" + quest_state)])
-			if quest_state != "abgegeben":
-				lines.append(q.get("beschreibung", ""))
-				for goal: Dictionary in q.get("ziele", []):
-					lines.append("  • " + state.goal_text(p, goal))
-			lines.append("")
-		if lines.is_empty():
-			lines.append(GameData.text("auftragsbuch_leer"))
-		# Erfolge
-		var achievements := GameData.get_file("erfolge")
-		var unlocked: PackedStringArray = []
-		for id: String in achievements:
-			if id != "hinweis" and p.progress.flags.has("erfolg:" + id):
-				unlocked.append("[color=#f2c14e]★ %s[/color] – %s" % [achievements[id].name, achievements[id].beschreibung])
-		if not unlocked.is_empty():
-			lines.append("[b]%s[/b]" % GameData.text("erfolge"))
-			lines.append_array(unlocked)
+		if _quest_tab == "erfolge":
+			var achievements := GameData.get_file("erfolge")
+			for id: String in achievements:
+				if id != "hinweis" and p.progress.flags.has("erfolg:" + id):
+					lines.append("[color=#f2c14e]★ %s[/color] – %s" % [achievements[id].name, achievements[id].beschreibung])
+			if lines.is_empty():
+				lines.append("Noch keine Erfolge.")
+		else:
+			# Offen: laufende Aufträge, Hauptgeschichte zuerst. Abgeschlossen: abgegebene.
+			var done_tab := _quest_tab == "fertig"
+			for main: bool in [true, false]:
+				for id: String in p.progress.quests:
+					var q := GameData.quest(id)
+					var quest_state: String = p.progress.quests[id]
+					if q.is_empty() or (quest_state == "abgegeben") != done_tab or (not q.get("neben", false)) != main:
+						continue
+					var color := "8affc1" if quest_state == "fertig" else ("a0a0a0" if quest_state == "abgegeben" else "ffffff")
+					# Nebenaufträge stehen mit blauem Zeichen und ihrer Wegweiser-Nummer da
+					var tag := ""
+					if q.get("neben", false):
+						var number := state.side_number(p, id)
+						tag = "[color=#5ab8ff]%s %s:[/color] " % ["(%d)" % number if number > 0 else "◆", GameData.text("nebenauftrag")]
+					lines.append("%s[b][color=#%s]%s[/color][/b]  (%s)" % [tag, color, q.get("titel", id), GameData.text("stand_" + quest_state)])
+					if not done_tab:
+						lines.append(q.get("beschreibung", ""))
+						for goal: Dictionary in q.get("ziele", []):
+							lines.append("  • " + state.goal_text(p, goal))
+					lines.append("")
+			if lines.is_empty():
+				lines.append(GameData.text("auftragsbuch_leer") if not done_tab else "Noch nichts abgeschlossen.")
 	elif _panel_mode == "werte":
 		_panel_title.text = GameData.text("werte")
 		var klasse := str(p.progress.flags.get("klasse", ""))
