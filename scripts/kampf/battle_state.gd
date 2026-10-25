@@ -88,6 +88,8 @@ var heroes: Array[Fighter] = []
 ## Begleiter auf dem Feld (Roboter, kämpfendes Monster)
 var companions: Array[Fighter] = []
 var enemies: Array[Fighter] = []
+## Trainer der Gegner-Monster (Rivale Kobalt): handeln mit, zählen aber nicht als Gegner (nicht angreifbar)
+var trainers: Array[Fighter] = []
 var current: Fighter
 var battle_over := false
 var won := false
@@ -313,6 +315,7 @@ func _create_heroes() -> void:
 			h = Fighter.new(spec.get("name", data.hero), id, data.title, true, data.hp + LEVEL_HP * level_bonus, data.tempo, data.color)
 			h.max_mana = data.mana + LEVEL_MANA * level_bonus if data.mana > 0 else 0
 		h.look = spec.get("aussehen", "")
+		h.set_meta("stufe", level_bonus + 1)
 		h.mana = data.get("start_mana", h.max_mana)
 		h.reaction = spec.get("reaktion", data.reaction)
 		h.back_row = data.back
@@ -352,6 +355,7 @@ func _create_heroes() -> void:
 	var tamer := hero("tamer")
 	if tamer != null:
 		add_companion(tamer.active_monster)
+		show_supporters(tamer)
 
 
 func add_companion(f: Fighter) -> void:
@@ -359,6 +363,16 @@ func add_companion(f: Fighter) -> void:
 	f.on_bench = false
 	_emit({type = "spawn", f = f, place = "robot" if f.klass == "robot" else "monster", index = 0, hp = f.hp})
 	f.next_time = now + f.turn_delay() * zufall_range(0.3, 1.0)
+
+
+## Die Unterstützer des Zähmers stehen sichtbar auf dem Feld (man kann sie nicht angreifen, sie sind „auf der Bank“).
+func show_supporters(tamer: Fighter) -> void:
+	for m in tamer.monsters:
+		if m != tamer.active_monster:
+			_emit({type = "despawn", f = m})
+	var supporters := skills.supporters(tamer)
+	for i in supporters.size():
+		_emit({type = "spawn", f = supporters[i], place = "support", index = i, hp = supporters[i].hp})
 
 
 func remove_companion(f: Fighter) -> void:
@@ -424,9 +438,12 @@ func _apply_phase(index: int) -> void:
 
 ## Ersetzt alle Gegner durch neue (Kennungen aus Sandbox.ENEMIES).
 func spawn_enemies(ids: Array) -> void:
-	for e in enemies:
+	for e in enemies + trainers:
 		_emit({type = "despawn", f = e})
 	enemies.clear()
+	trainers.clear()
+	var with_trainer := ids.any(func(id: String) -> bool: return Sandbox.ENEMIES[id].get("trainer", false))
+	var slot := 0
 	# Gruppenkampf: Bosse wie der Sternenfresser haben mehr Leben, je mehr Spieler mitkämpfen (setup.gegner_leben)
 	var hp_scale: float = Sandbox.HP_SCALE[heroes.size() - 1] * float(setup.get("gegner_leben", 1.0))
 	# Monster in der Wildnis haben eine Stufe (setup.gegner_stufe): mehr Leben und härtere Treffer
@@ -450,9 +467,17 @@ func spawn_enemies(ids: Array) -> void:
 		e.deadly = data.get("toedlich", false)
 		if data.has("title"):
 			e.display_name = data.title
+		if data.get("trainer", false):
+			# Der Trainer steht hinten, sein Monster vorne; angreifen kann man ihn nicht
+			e.trainer = true
+			trainers.append(e)
+			_emit({type = "spawn", f = e, place = "trainer", index = 0, hp = e.hp})
+			e.next_time = now + e.turn_delay() * zufall_range(0.4, 1.0)
+			continue
 		enemies.append(e)
 		e.intent = skills.enemy_intent(e)
-		_emit({type = "spawn", f = e, place = "boss_wave" if has_big else "wave", index = i, hp = e.hp})
+		_emit({type = "spawn", f = e, place = "boss_wave" if has_big else "wave", index = slot + (2 if with_trainer else 0), hp = e.hp})
+		slot += 1
 		e.next_time = now + e.turn_delay() * zufall_range(0.2, 1.0)
 
 
@@ -481,6 +506,7 @@ func all_fighters() -> Array[Fighter]:
 	result.append_array(heroes)
 	result.append_array(companions)
 	result.append_array(enemies)
+	result.append_array(trainers)
 	return result
 
 

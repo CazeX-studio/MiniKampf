@@ -99,6 +99,8 @@ var _helpers := {}
 var scenes_everywhere := false
 ## So viel der Erfahrung eines Kampfes bekommt, wer nur mithilft
 const HELPER_XP := 0.5
+## So nah muss man bei Tilda stehen, um den Monster-Stall zu benutzen (Felder)
+const STALL_RANGE := 3.0
 ## Zufall für Monsterkarten als Beute (Tests setzen einen festen Startwert)
 var card_rng := RandomNumberGenerator.new()
 
@@ -446,6 +448,8 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			_card_result(p, str(cmd.get("gegner", "")), bool(cmd.get("gewonnen", false)), bool(cmd.get("unentschieden", false)))
 		"benutzen":
 			_use_item(p, str(cmd.get("gegenstand", "")))
+		"rudel":
+			_pack_command(p, cmd)
 		"kaufen":
 			_buy(p, str(cmd.get("gegenstand", "")))
 		"verkaufen":
@@ -1606,21 +1610,77 @@ func change_reputation(p: PlayerState, group: String, amount: int) -> void:
 
 # --- Rudel des Zähmers -------------------------------------------------------------
 
-## Ein Monster kommt ins Rudel (Start-Monster von Esche oder in der Wildnis gezähmt). Höchstens Sandbox.MAX_MONSTERS.
+## Ein Monster kommt ins Rudel (Start-Monster von Esche oder in der Wildnis gezähmt). Mitnehmen kann man höchstens
+## Sandbox.MAX_MONSTERS; ist das Gepäck voll, geht es automatisch in den Stall bei Tilda (man kann es gleich tauschen).
 func _add_to_pack(p: PlayerState, monster_id: String, tamed := false) -> void:
 	if not Sandbox.MONSTERS.has(monster_id) and not Sandbox.ENEMIES.has(monster_id):
 		return
 	var pack: Array = p.progress.flags.get("monster", []).duplicate()
-	var name: String = Sandbox.MONSTERS.get(monster_id, Sandbox.ENEMIES.get(monster_id, {})).name
+	var name: String = monster_name(monster_id)
+	if tamed:
+		p.progress.flags["erstes_zaehmen"] = true
 	if pack.size() >= Sandbox.MAX_MONSTERS:
-		_say(p, GameData.text("rudel_voll", [name]))
+		var stall: Array = p.progress.flags.get("stall", []).duplicate()
+		stall.append(monster_id)
+		p.progress.flags["stall"] = stall
+		# Merken, damit die Stadt gleich anbietet, es gegen eins aus dem Gepäck zu tauschen
+		p.progress.flags["stall_neu"] = stall.size() - 1
+		_say(p, GameData.text("rudel_stall", [name]))
+		_update_quests(p)
+		progress_changed.emit(p.id)
 		return
 	pack.append(monster_id)
 	p.progress.flags["monster"] = pack
-	if tamed:
-		p.progress.flags["erstes_zaehmen"] = true
 	_say(p, GameData.text("rudel_neu", [name]))
 	_update_quests(p)
+	progress_changed.emit(p.id)
+
+
+static func monster_name(monster_id: String) -> String:
+	return str(Sandbox.MONSTERS.get(monster_id, Sandbox.ENEMIES.get(monster_id, {name = monster_id})).name)
+
+
+## Steht der Spieler bei Tilda? (Nur dort kann man Monster in den Stall bringen oder holen.)
+func at_stall(p: PlayerState) -> bool:
+	return npcs.has("tilda") and npcs.tilda.map == p.map and (Vector2(npcs.tilda.cell) - p.pos).length() <= STALL_RANGE
+
+
+## Rudel ordnen und den Stall benutzen:
+##   {type = "rudel", aktion = "hoch", index}       Monster im Gepäck eins nach vorne (Platz 1 kämpft, 2 und 3 unterstützen)
+##   {type = "rudel", aktion = "ablegen", index}    Monster aus dem Gepäck in den Stall (nur bei Tilda, eins bleibt immer)
+##   {type = "rudel", aktion = "holen", index}      Monster aus dem Stall mitnehmen (nur bei Tilda, wenn Platz ist)
+##   {type = "rudel", aktion = "tauschen", index}   das eben gezähmte Monster aus dem Stall gegen dieses im Gepäck tauschen (überall)
+##   {type = "rudel", aktion = "behalten"}          das eben gezähmte Monster bleibt im Stall
+func _pack_command(p: PlayerState, cmd: Dictionary) -> void:
+	var pack: Array = p.progress.flags.get("monster", []).duplicate()
+	var stall: Array = p.progress.flags.get("stall", []).duplicate()
+	var index := int(cmd.get("index", -1))
+	match str(cmd.get("aktion", "")):
+		"hoch":
+			if index > 0 and index < pack.size():
+				var moved: String = pack[index]
+				pack[index] = pack[index - 1]
+				pack[index - 1] = moved
+		"ablegen":
+			if at_stall(p) and index >= 0 and index < pack.size() and pack.size() > 1:
+				stall.append(pack[index])
+				pack.remove_at(index)
+		"holen":
+			if at_stall(p) and index >= 0 and index < stall.size() and pack.size() < Sandbox.MAX_MONSTERS:
+				pack.append(stall[index])
+				stall.remove_at(index)
+		"tauschen":
+			var fresh := int(p.progress.flags.get("stall_neu", -1))
+			if fresh >= 0 and fresh < stall.size() and index >= 0 and index < pack.size():
+				var out: String = pack[index]
+				pack[index] = stall[fresh]
+				stall[fresh] = out
+				_say(p, GameData.text("rudel_getauscht", [monster_name(pack[index]), monster_name(out)]))
+			p.progress.flags.erase("stall_neu")
+		"behalten":
+			p.progress.flags.erase("stall_neu")
+	p.progress.flags["monster"] = pack
+	p.progress.flags["stall"] = stall
 	progress_changed.emit(p.id)
 
 

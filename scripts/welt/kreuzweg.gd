@@ -96,6 +96,12 @@ var _side_waypoints: Array[Dictionary] = []
 ## Auftragsbuch: welcher Reiter offen ist ("offen", "fertig", "erfolge")
 var _quest_tab := "offen"
 var _quest_tabs: HBoxContainer
+## Rudel-Fenster des Zähmers (Gepäck ordnen, Stall bei Tilda, gleich nach dem Zähmen tauschen)
+var _pack_panel: PanelContainer
+var _pack_box: VBoxContainer
+var _pack_button: Button
+var _pack_open := false
+var _pack_shown := ""
 var _waypoint_node: Node2D
 var _edge_arrow: Control
 ## Häuser, Bäume und Stände, die durchsichtig werden, wenn jemand dahinter steht: {node, rect (Welt-Koordinaten)}
@@ -327,6 +333,7 @@ func _process(delta: float) -> void:
 	_sync()
 	_update_dialog()
 	_update_shop()
+	_update_pack()
 	_update_chat()
 	_marker_time = maxf(_marker_time - delta, 0.0)
 	_marker_node.queue_redraw()
@@ -497,6 +504,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_toggle_panel("tasche")
 		elif key == KEY_C:
 			_toggle_panel("werte")
+		elif key == KEY_R and _is_tamer():
+			_pack_open = not _pack_open
 		elif key == KEY_ESCAPE and local_player().shop != "":
 			_send({type = "laden_zu"})
 		elif key == KEY_ESCAPE and _player_menu != null and _player_menu.visible:
@@ -1243,6 +1252,26 @@ func _build_ui() -> void:
 		button.pressed.connect(info[2])
 		root.add_child(button)
 		_buttons.append(button)
+	# Nur für Zähmer: Rudel-Fenster
+	_pack_button = Button.new()
+	_pack_button.text = "Rudel (R)"
+	_pack_button.size = Vector2(110, 44)
+	_pack_button.position = Vector2(x - 118, 12)
+	_pack_button.add_theme_font_size_override("font_size", 15)
+	_pack_button.focus_mode = Control.FOCUS_NONE
+	_pack_button.pressed.connect(func() -> void: _pack_open = not _pack_open)
+	_pack_button.visible = false
+	root.add_child(_pack_button)
+	_buttons.append(_pack_button)
+	_pack_panel = _framed_panel()
+	_pack_panel.position = Vector2(330, 80)
+	_pack_panel.custom_minimum_size = Vector2(620, 0)
+	_pack_panel.visible = false
+	root.add_child(_pack_panel)
+	_buttons.append(_pack_panel)
+	_pack_box = VBoxContainer.new()
+	_pack_box.add_theme_constant_override("separation", 5)
+	_pack_panel.add_child(_pack_box)
 
 
 	# Handy: Steuerknopf (unten links, erscheint unter dem Daumen) und Aktions-Knopf (unten rechts)
@@ -1827,6 +1856,80 @@ func _scene_status(scene: Dictionary, answer_count: int) -> Control:
 
 
 ## Ladenfenster: wird neu aufgebaut, sobald sich Laden, Gold oder Tasche ändern.
+func _is_tamer() -> bool:
+	return str(local_player().progress.flags.get("klasse", "")) == "tamer" and local_player().progress.flags.has("monster")
+
+
+## Rudel-Fenster: Platz 1 kämpft, 2 und 3 unterstützen (sichtbar im Kampf), 4 bis 6 zum Tauschen. Bei Tilda: Stall.
+## Nach dem Zähmen mit vollem Gepäck geht es von selbst auf und bietet den Tausch an.
+func _update_pack() -> void:
+	var p := local_player()
+	var tamer := _is_tamer()
+	_pack_button.visible = tamer
+	var fresh := int(p.progress.flags.get("stall_neu", -1))
+	var show := tamer and (_pack_open or fresh >= 0) and not p.in_dialog()
+	var pack: Array = p.progress.flags.get("monster", [])
+	var stall: Array = p.progress.flags.get("stall", [])
+	var key := "" if not show else "%s|%s|%d|%s" % [str(pack), str(stall), fresh, str(state.at_stall(p))]
+	if key == _pack_shown:
+		return
+	_pack_shown = key
+	_pack_panel.visible = show
+	for child in _pack_box.get_children():
+		child.queue_free()
+	if not show:
+		return
+	_pack_box.add_child(_label("Dein Rudel (%d / %d)" % [pack.size(), Sandbox.MAX_MONSTERS], 22, Color("f2c14e")))
+	if fresh >= 0 and fresh < stall.size():
+		_pack_box.add_child(_label("%s ist im Stall. Gegen eins aus dem Gepäck tauschen?" % WorldState.monster_name(stall[fresh]), 17, Color("8fd36b")))
+	else:
+		_pack_box.add_child(_label("Platz 1 kämpft, 2 und 3 unterstützen im Kampf, 4 bis 6 kannst du einwechseln.", 15, Color(1, 1, 1, 0.75)))
+	for i in pack.size():
+		var role := "kämpft" if i == 0 else ("unterstützt" if i < Sandbox.MONSTERS_IN_FIGHT else "zum Tauschen")
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 6)
+		var name_label := _label("%d. %s  (%s)" % [i + 1, WorldState.monster_name(pack[i]), role], 16, Color.WHITE)
+		name_label.custom_minimum_size = Vector2(330, 0)
+		row.add_child(name_label)
+		if fresh >= 0:
+			row.add_child(_small_button("Tauschen", func() -> void: _send({type = "rudel", aktion = "tauschen", index = i})))
+		else:
+			if i > 0:
+				row.add_child(_small_button("Nach vorn", func() -> void: _send({type = "rudel", aktion = "hoch", index = i})))
+			if state.at_stall(p) and pack.size() > 1:
+				row.add_child(_small_button("In den Stall", func() -> void: _send({type = "rudel", aktion = "ablegen", index = i})))
+		_pack_box.add_child(row)
+	if fresh >= 0:
+		_pack_box.add_child(_small_button("Im Stall lassen", func() -> void: _send({type = "rudel", aktion = "behalten"})))
+	elif state.at_stall(p):
+		_pack_box.add_child(_label("Stall bei Tilda (%d)" % stall.size(), 18, Color("9fe8ff")))
+		for i in stall.size():
+			var row := HBoxContainer.new()
+			var name_label := _label(WorldState.monster_name(stall[i]), 16, Color.WHITE)
+			name_label.custom_minimum_size = Vector2(330, 0)
+			row.add_child(name_label)
+			if pack.size() < Sandbox.MAX_MONSTERS:
+				row.add_child(_small_button("Mitnehmen", func() -> void: _send({type = "rudel", aktion = "holen", index = i})))
+			_pack_box.add_child(row)
+	elif not stall.is_empty():
+		_pack_box.add_child(_label("Im Stall bei Tilda warten noch %d Monster." % stall.size(), 15, Color(1, 1, 1, 0.75)))
+	var close := _small_button("Schließen", func() -> void: _pack_open = false)
+	close.size_flags_horizontal = Control.SIZE_SHRINK_END
+	close.visible = fresh < 0
+	_pack_box.add_child(close)
+	_pack_panel.reset_size()
+
+
+func _small_button(text: String, action: Callable) -> Button:
+	var button := Button.new()
+	button.text = text
+	button.custom_minimum_size = Vector2(120, 34)
+	button.add_theme_font_size_override("font_size", 14)
+	button.focus_mode = Control.FOCUS_NONE
+	button.pressed.connect(action)
+	return button
+
+
 func _update_shop() -> void:
 	var p := local_player()
 	var key := "" if p.shop == "" else "%s|%d|%s" % [p.shop, p.progress.gold, str(p.progress.items)]

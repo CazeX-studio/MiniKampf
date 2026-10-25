@@ -338,8 +338,7 @@ func blocked_reason(f: Fighter, ab: Dictionary) -> String:
 			if f.wares.get("heiltrank", 0) <= 0:
 				return "Keine Tränke mehr"
 		"tame":
-			if f.monsters.size() >= Sandbox.MAX_MONSTERS:
-				return "Kein Platz (%d Monster)" % Sandbox.MAX_MONSTERS
+			# Bei vollem Gepäck geht das neue Monster nach dem Kampf in den Stall
 			if valid_targets(f, ab).is_empty():
 				return "Kein Monster geschwächt"
 		"comet":
@@ -736,7 +735,9 @@ func _tamer(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 			var next := _monster(f, ab.choice)
 			c.remove_companion(m)
 			f.active_monster = next
+			c._emit({type = "despawn", f = next})
 			c.add_companion(next)
+			c.show_supporters(f)
 			next.next_time = c.now + next.turn_delay() * 0.5
 			c.burst(next, Elements.color(next.element), 100.0)
 			c.add_log("%s: „%s, zurück! %s, du bist dran!“" % [f.display_name, m.display_name, next.display_name])
@@ -1124,6 +1125,8 @@ func _execute_duet(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 ## Klassen-Mechaniken zu Beginn des eigenen Zuges.
 func begin_turn(f: Fighter) -> void:
 	match f.klass:
+		"tamer":
+			_support_actions(f)
 		"tank":
 			if f.fortress:
 				f.fortress = false
@@ -1274,6 +1277,37 @@ func on_death(target: Fighter) -> void:
 		_:
 			if is_pet(target):
 				c.add_log("%s muss ein anderes Monster schicken (Wechsel)." % target.owner.display_name)
+
+
+## Unterstützer des Zähmers: die anderen Monster unter den ersten drei (sie stehen sichtbar auf dem Feld).
+func supporters(tamer: Fighter) -> Array[Fighter]:
+	var result: Array[Fighter] = []
+	for i in mini(tamer.monsters.size(), Sandbox.MONSTERS_IN_FIGHT):
+		var m := tamer.monsters[i]
+		if m != tamer.active_monster and m.is_alive():
+			result.append(m)
+	return result.slice(0, Sandbox.MONSTERS_IN_FIGHT - 1)
+
+
+## Ab Stufe 15: Jeder Unterstützer hilft zu Beginn des Zähmer-Zugs mit einer kleinen Aktion.
+func _support_actions(f: Fighter) -> void:
+	if int(f.get_meta("stufe", 1)) < Sandbox.SUPPORT_LEVEL:
+		return
+	var active := f.active_monster
+	for s in supporters(f):
+		match s.klass:
+			"moosling":
+				if active != null and active.is_alive():
+					active.shields[s] = active.shields.get(s, 0) + 6
+					c.float_text(active, "Schild +6 (%s)" % s.display_name, Color("6fa8ff"), 30)
+			"bachotter":
+				if active != null and active.is_alive():
+					c.heal(s, active, 6)
+			_:
+				var enemy := c.next_enemy()
+				if enemy != null:
+					c.projectile_bg(s, enemy, Elements.color(s.element), 0.25)
+					c.hit(s, enemy, 5, "ranged", s.element)
 
 
 func _bench_has(tamer: Fighter, id: String) -> bool:

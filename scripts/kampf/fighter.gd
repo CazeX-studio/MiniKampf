@@ -136,6 +136,8 @@ var stagger_length := 2
 var deadly := false
 ## Abwarten: bis zum nächsten eigenen Zug weniger Schaden (und danach früher wieder dran)
 var waiting := false
+## Trainer eines Gegner-Monsters (Rivale Kobalt): kämpft mit, kann aber nicht angegriffen werden
+var trainer := false
 
 
 func _init(p_name: String, p_klass: String, p_title: String, p_hero: bool, p_hp: int, p_tempo: int, p_color: Color) -> void:

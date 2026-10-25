@@ -6,7 +6,7 @@ extends SceneTree
 ## Mit welcher Stufe man den Kampf im normalen Ablauf erreicht
 const LEVELS := {
 	"sternenfall": 8,
-	"grundausbildung": 2, "gruppenkampf": 4,
+	"grundausbildung": 2, "gruppenkampf": 4, "kobalt_glutwelpe": 11, "kobalt2_bachotter": 20,
 	"probe:tank": 5, "probe:twilight": 5, "probe:mechanic": 5, "probe:quartermaster": 5, "probe:smith": 5,
 	"probe:blade": 5, "probe:singer": 5, "probe:archer": 5, "probe:tamer": 5, "probe:ritualist": 5, "probe:kunoichi": 5,
 	"fenns_pruefung": 11,

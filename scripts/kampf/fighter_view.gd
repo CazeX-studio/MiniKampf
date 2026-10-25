@@ -32,6 +32,8 @@ const LOOKS := {
 	"moosling": {sprite = "swampy", scale = 3.5, tint = Color(0.75, 1.0, 0.65)},
 	"glutwelpe": {sprite = "imp", scale = 3.5, tint = Color(1.0, 0.8, 0.6)},
 	"bachotter": {sprite = "wogol", scale = 3.5, tint = Color(0.6, 0.85, 1.0)},
+	# Rivale Kobalt (steht hinter seinem Monster)
+	"kobalt": {sprite = "elf_m", scale = 4.0, tint = Color(0.75, 0.85, 1.0)},
 	# Gegner
 	"glutkobold": {sprite = "chort", scale = 4.0},
 	"sumpfschleim": {sprite = "swampy", scale = 5.0, tint = Color(0.55, 0.75, 1.0)},
@@ -116,6 +118,8 @@ var _plate := Rect2()
 var _shader := ShaderMaterial.new()
 ## Klingentänzerin: Schwerter, die vor der Figur schweben (die hinteren malt _draw unter der Figur)
 var _blades_front: Node2D
+## Unterstützer des Zähmers: kleine Figur mit Namen darunter statt Schild mit Leisten
+var _compact := false
 var _glow_color := Color.WHITE
 ## Hält das Splitterlicht (Pilzhöhle, Vorbote): leuchtet selbst lila (wird von der Kampfanzeige gesetzt)
 var splitter_light := false
@@ -143,7 +147,9 @@ func setup(p_fighter: Fighter) -> void:
 			_frames[anim] = frames
 
 	var texture: Texture2D = _frames.idle[0]
-	var pixel_scale: float = look.scale
+	# Unterstützer des Zähmers (auf der Bank): kleiner, ohne Namensschild
+	_compact = fighter.owner != null and fighter.on_bench
+	var pixel_scale: float = look.scale * (0.7 if _compact else 1.0)
 	sprite_size = texture.get_size() * pixel_scale
 	_home = Vector2(sprite_size.x * 0.5 + 8.0, sprite_size.y)
 
@@ -173,7 +179,10 @@ func setup(p_fighter: Fighter) -> void:
 		_halo.draw_texture_rect(Fx.glow_texture(), Rect2(c - Vector2(r, r), Vector2(r, r) * 2.0), false, Color(0.8, 0.6, 1.0, 0.55)))
 	add_child(_halo)
 
-	if fighter.big:
+	if _compact:
+		_plate = Rect2()
+		size = Vector2(sprite_size.x + 16.0, sprite_size.y + 18.0)
+	elif fighter.big:
 		_plate = Rect2(Vector2(0, sprite_size.y + 8), BOSS_PLATE_SIZE)
 		size = _plate.end
 	elif fighter.owner != null:
@@ -383,6 +392,10 @@ func _draw_blades(canvas: CanvasItem, front: bool) -> void:
 
 func _draw_plate() -> void:
 	var font := ThemeDB.fallback_font
+	if _compact:
+		draw_string_outline(font, Vector2(_home.x - 60, sprite_size.y + 14), fighter.display_name + " (hilft)", HORIZONTAL_ALIGNMENT_CENTER, 120, 11, 4, Color.BLACK)
+		draw_string(font, Vector2(_home.x - 60, sprite_size.y + 14), fighter.display_name + " (hilft)", HORIZONTAL_ALIGNMENT_CENTER, 120, 11, Color("cfe8c0"))
+		return
 	var box := StyleBoxFlat.new()
 	box.bg_color = COL_PLATE
 	box.set_corner_radius_all(4)
@@ -412,6 +425,9 @@ func _draw_plate() -> void:
 			tag = "Splitter"
 	draw_string(font, Vector2(x0, y + 16), tag, HORIZONTAL_ALIGNMENT_RIGHT, w, 11, tag_color)
 
+	if fighter.trainer:
+		draw_string(font, Vector2(x0, y + 32), "Trainer – nicht angreifbar", HORIZONTAL_ALIGNMENT_LEFT, w, 11, Color(1, 1, 1, 0.7))
+		return
 	var hp_ratio := float(shown_hp()) / fighter.max_hp
 	_draw_bar(Rect2(x0, y + 21, w, 13), hp_ratio, COL_HP if hp_ratio > 0.3 else COL_HP_LOW, "%d / %d" % [shown_hp(), fighter.max_hp])
 

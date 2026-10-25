@@ -46,6 +46,10 @@ const FLOAT_SPREAD: Array[float] = [0.0, 34.0, -34.0, 17.0]
 ## Fußpunkte der Gegner: Welle mit 4 Monstern bzw. Boss-Welle (Boss zuerst)
 const WAVE_SLOTS: Array[Vector2] = [Vector2(30, 300), Vector2(30, 476), Vector2(318, 300), Vector2(318, 476)]
 const BOSS_SLOTS: Array[Vector2] = [Vector2(40, 400), Vector2(330, 290), Vector2(330, 462)]
+## Trainer (Rivale Kobalt) steht hinter seinem Monster
+const TRAINER_FEET := Vector2(60, 400)
+## Unterstützer des Zähmers: neben dem kämpfenden Monster
+const SUPPORT_FEET: Array[Vector2] = [Vector2(520, 405), Vector2(650, 405)]
 
 ## Zeitfenster der normalen Reaktion in Sekunden (vor bzw. nach dem Treffer).
 const REACT_EARLY := 0.25
@@ -406,6 +410,10 @@ func _feet(f: Fighter, place: String, index: int) -> Vector2:
 			return Vector2(COMPANION_X, MONSTER_FEET_Y)
 		"boss_wave":
 			return BOSS_SLOTS[index]
+		"trainer":
+			return TRAINER_FEET
+		"support":
+			return SUPPORT_FEET[index]
 	return WAVE_SLOTS[index]
 
 

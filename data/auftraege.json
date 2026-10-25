@@ -303,10 +303,10 @@
 		"titel": "Kobalts Revanche",
 		"neben": true,
 		"gebiet": "gruenwacht",
-		"beschreibung": "Kobalt hat trainiert und will eine Revanche – mit zwei Monstern.",
+		"beschreibung": "Kobalt hat trainiert und will eine Revanche – sein Monster ist viel stärker geworden.",
 		"start_bei": "kobalt",
 		"start_wenn": {"klasse": "tamer"},
-		"voraussetzung": "tildas_unterricht",
+		"voraussetzung": "der_urbaum",
 		"ziele": [
 			{"art": "gemerkt", "merken": "kobalt_revanche_gekaempft", "bei": "kobalt", "text": "Die Revanche gegen Kobalt"}
 		],

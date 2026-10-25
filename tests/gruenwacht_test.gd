@@ -435,9 +435,21 @@ func _test_tamer(kobalt_won: bool) -> void:
 	_check(p.progress.quest_state("tildas_unterricht") == "abgegeben" and p.progress.flags.has("klasse_gelernt"), "Tilda: Du bist jetzt Zähmer")
 	for i in 5:
 		world.apply_command("a", {type = "kampf_ergebnis", kampf = "wild:0", gewonnen = true, gezaehmt = ["steinkroete"]})
-	_check(p.progress.flags.monster.size() == Sandbox.MAX_MONSTERS, "Rudel höchstens 5 Monster")
+	_check(p.progress.flags.monster.size() == Sandbox.MAX_MONSTERS, "Höchstens 6 Monster im Gepäck")
+	_check(p.progress.flags.get("stall", []) == ["steinkroete"] and int(p.progress.flags.get("stall_neu", -1)) == 0,
+			"Gepäck voll: Das gezähmte Monster geht in den Stall, Tausch wird angeboten")
+	world.apply_command("a", {type = "rudel", aktion = "tauschen", index = 1})
+	_check(p.progress.flags.monster[1] == "steinkroete" and p.progress.flags.stall == ["windfalke"] and not p.progress.flags.has("stall_neu"),
+			"Gleich getauscht: die Steinkröte kommt mit, der Windfalke wartet im Stall")
+	world.apply_command("a", {type = "rudel", aktion = "hoch", index = 1})
+	_check(p.progress.flags.monster[0] == "steinkroete", "„Nach vorn“: Platz 1 kämpft")
+	world.apply_command("a", {type = "rudel", aktion = "ablegen", index = 2})
+	var near_tilda := world.at_stall(p)
+	_check(p.progress.flags.monster.size() == (5 if near_tilda else 6), "In den Stall bringen geht nur bei Tilda")
 
-	# Schritt 10: Kobalts Revanche mit zwei Monstern (blauer Nebenauftrag nach Tildas Unterricht)
+	# Schritt 10: Kobalts Revanche (blauer Nebenauftrag, seit dem Playtest 25.10. erst nach dem Dungeon)
+	_check(world.npc_marker(p, "kobalt") == "", "Vor dem Dungeon will Kobalt noch keine Revanche")
+	p.progress.quests["der_urbaum"] = "abgegeben"
 	_check(world.npc_marker(p, "kobalt") == "!" and world.npc_marker_side(p, "kobalt"), "Kobalt will eine Revanche (blaues „!“)")
 	p.progress.flags["angesprochen:marv_gruenwacht"] = true  # Marv soll hier nicht dazwischenreden
 	world.apply_command("a", {type = "talk", npc = "kobalt"})
@@ -450,7 +462,8 @@ func _test_tamer(kobalt_won: bool) -> void:
 	world.apply_command("a", {type = "talk", npc = "kobalt"})
 	_tick(world, 3.0)
 	world.apply_command("a", {type = "dialog_choose", index = 0})
-	_check(battles.back() == "kobalt2_bachotter" and GameData.battle("kobalt2_bachotter").wellen[0].size() == 2, "Revanche: Bachotter und Glutwelpe")
+	_check(battles.back() == "kobalt2_bachotter" and GameData.battle("kobalt2_bachotter").wellen[0] == ["kobalts_bachotter", "kobalt"],
+			"Revanche: nur ein Monster (Bachotter), Kobalt steht dahinter")
 	world.apply_command("a", {type = "kampf_ergebnis", kampf = "kobalt2_bachotter", gewonnen = kobalt_won})
 	_check(p.progress.quest_state("kobalts_revanche") == "fertig", "Revanche gekämpft (%s)" % ("Sieg" if kobalt_won else "Niederlage"))
 	world.apply_command("a", {type = "talk", npc = "kobalt"})

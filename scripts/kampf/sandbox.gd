@@ -138,7 +138,13 @@ const MONSTERS := {
 }
 const MONSTER_ORDER: Array[String] = ["moosling", "glutwelpe", "bachotter"]
 ## So viele Monster kann der Zähmer höchstens dabeihaben (3 Start-Monster + 2 gezähmte).
-const MAX_MONSTERS := 5
+## So viele Monster nimmt der Zähmer mit (3 im Kampf: eins kämpft, 2 unterstützen; 3 zum Tauschen).
+## Weitere warten im Stall bei Tilda (design.md, 25.10.)
+const MAX_MONSTERS := 6
+## So viele Monster stehen im Kampf auf dem Feld (das aktive und die Unterstützer)
+const MONSTERS_IN_FIGHT := 3
+## Ab dieser Stufe helfen die Unterstützer jeden Zug des Zähmers mit einer kleinen Aktion
+const SUPPORT_LEVEL := 15
 
 const ROBOT := {name = "Zahnrad", hp = 130, tempo = 9}
 
@@ -198,6 +204,10 @@ const ENEMIES := {
 		absicht = "Steht still. Aus der hinteren Reihe trifft deine ruhige Hand öfter kritisch."},
 	"laufscheibe": {name = "Laufende Scheibe", element = "", hp = 60, tempo = 1, passive = true, resist = 0.3,
 		absicht = "Läuft hin und her: Ein schneller Schuss streift nur. Erst den Bogen spannen!"},
+	# Rivale Kobalt selbst: steht hinter seinem Monster und schießt mit der Schleuder wie der Spieler.
+	# trainer = man kann ihn nicht angreifen; der Kampf ist gewonnen, wenn sein Monster fällt.
+	"kobalt": {name = "Rivale Kobalt", element = "", hp = 999, tempo = 8, trainer = true,
+		attacks = [{name = "Schleuder", base = 6, kind = "ranged"}]},
 	# Rivale Kobalt (Esches Neffe): nimmt immer das Start-Monster, das deins schlägt. Werte vorläufig.
 	"kobalts_moosling": {name = "Kobalts Moosling", element = "Pflanze", hp = 120, tempo = 8,
 		attacks = [{name = "Rankenschlag", base = 14, kind = "melee"}, {name = "Dornenpeitsche", base = 8, kind = "magic", all = true}]},
