@@ -82,6 +82,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     (danach zeigt der Kampf wie bisher die Figur der Klasse). Beim Zusammenspielen ist sie die erste wählbare Figur.
   - In der Welt wird sie 2-fach, im Kampf 3-fach vergrößert (die alten Figuren 3- und 4-fach, weil sie kleiner gezeichnet sind).
   - Neue Figuren gehen genauso: Bilder mit demselben Namensmuster in `assets/figuren/` legen, das Spiel findet sie selbst.
+  - **Beschluss (27.10.):** Vega wird später das Aussehen der **Sternensängerin** (vielleicht danach eine Figur der
+    Geschichte). Vorerst bleibt sie die Spielfigur als Novize, damit du ihre Animationen testen kannst.
   - **So testest du es:** Spiel starten: Du läufst als Vega durch Kreuzweg. Einen Kampf bei Ye beginnen: Vega steht
     rechts und schaut zum Gegner, beim Treffer kneift sie die Augen zu.
 
