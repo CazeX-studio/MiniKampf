@@ -51,6 +51,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **Vega: Kampf-Animationen** (26.10.):
+  - Aus Marcos zweitem Bildblatt: **Angriff** (6 Bilder, mit blauem Sternen-Geschoss), **Fallen** (6 Bilder),
+    **Parieren** (4 Bilder, mit blauem Schild-Bogen) und **Sieg** (4 Bilder, Jubeln). Getroffen gab es schon.
+  - Wann was läuft: Angriff bei jedem Schlag und beim Wirken einer Fähigkeit (das Geschoss erscheint genau beim
+    Aufprall), Parieren bei jeder gelungenen Parade (normal oder perfekt), Fallen, wenn ihr Leben auf 0 sinkt
+    (sie bleibt liegen), Sieg nach einem gewonnenen Kampf, bis der Sieg-Bildschirm kommt.
+  - Figuren ohne diese Bilder (alle anderen) verhalten sich wie bisher.
+  - **So testest du es:** In der Kreuzweg-Demo einen Kampf beginnen: Schlagen, eine Parade schaffen, den Kampf
+    gewinnen (Vega jubelt). Zum Fallen: einen Kampf verlieren.
+
 - **Erste eigene Figur: Vega** (26.10.):
   - Marcos Bildblatt (4 × Stehen, 4 × Laufen, 1 × Getroffen) ist in Einzelbilder zerlegt, auf 47 × 44 Pixel
     verkleinert (gemeinsame Fußlinie, damit nichts hüpft), mit gemeinsamer Farbpalette und ohne rote Ränder.

@@ -81,7 +81,11 @@ const LOOKS := {
 	"wilde_glutwelpe": {sprite = "imp", scale = 3.5, tint = Color(1.0, 0.8, 0.6)},
 	"wilder_bachotter": {sprite = "wogol", scale = 3.5, tint = Color(0.6, 0.85, 1.0)},
 }
-const ANIM_FPS := {"idle": 6.0, "run": 12.0, "hit": 8.0}
+## Bilder pro Sekunde. attack, death, parry und victory haben bisher nur eigene Figuren (z. B. Vega);
+## fehlen sie, nimmt die Anzeige wie bisher run bzw. hit.
+const ANIM_FPS := {"idle": 6.0, "run": 12.0, "hit": 8.0, "attack": 10.0, "death": 8.0, "parry": 12.0, "victory": 6.0}
+## Diese Animationen laufen einmal durch und bleiben auf dem letzten Bild stehen (die anderen wiederholen sich)
+const ANIM_ONCE := ["attack", "death", "parry", "hit"]
 
 const PLATE_W := 168.0
 const PLATE_H_HERO := 74.0
@@ -114,6 +118,8 @@ var sprite_size: Vector2
 var _frames := {}
 var _anim := "idle"
 var _anim_time := 0.0
+## Eigene Geschwindigkeit der laufenden Animation (0 = ANIM_FPS), z. B. damit der Angriff genau beim Aufprall trifft
+var _anim_fps := 0.0
 var _hold := 0.0
 var _time := 0.0
 var _home := Vector2.ZERO
@@ -204,15 +210,25 @@ func _process(delta: float) -> void:
 		_hold -= delta
 		if _hold <= 0.0:
 			_set_anim("idle")
+	var alive := shown_hp() > 0
+	if not alive and _frames.has("death") and _anim != "death":
+		_set_anim("death")
+		_hold = 0.0
 	var anim := _anim if _frames.has(_anim) else "idle"
-	if shown_hp() <= 0:
+	if not alive and not _frames.has("death"):
 		anim = "hit" if _frames.has("hit") else "idle"
 	var frames: Array = _frames[anim]
-	body.texture = frames[int(_anim_time * ANIM_FPS[anim]) % frames.size()]
+	var index := int(_anim_time * (_anim_fps if _anim_fps > 0.0 else ANIM_FPS[anim]))
+	index = mini(index, frames.size() - 1) if anim in ANIM_ONCE else index % frames.size()
+	var texture: Texture2D = frames[index]
+	if body.texture != texture:
+		body.texture = texture
+		# Bilder einer Animation können unterschiedlich groß sein (z. B. mit Geschoss): Füße bleiben auf dem Boden
+		body.offset = Vector2(0, -texture.get_height() * 0.5)
 
-	# Besiegte Figuren werden grau und durchsichtig
-	var alive := shown_hp() > 0
-	body.modulate = Color.WHITE if alive else Color(0.45, 0.45, 0.5, 0.55)
+	# Besiegte Figuren werden grau und durchsichtig (mit eigener Fall-Animation nur etwas dunkler, sobald sie liegen)
+	var dead_look := Color(0.75, 0.75, 0.8, 0.9) if _frames.has("death") else Color(0.45, 0.45, 0.5, 0.55)
+	body.modulate = Color.WHITE if alive or (anim == "death" and index < frames.size() - 1) else dead_look
 
 	var outline := Color(0, 0, 0, 0)
 	if targetable:
@@ -283,15 +299,38 @@ func _gui_input(event: InputEvent) -> void:
 # --- Animationen ----------------------------------------------------------------
 
 func _set_anim(anim: String) -> void:
+	if _anim == "death" and shown_hp() <= 0:
+		return
 	if _anim != anim:
 		_anim = anim
 		_anim_time = 0.0
+		_anim_fps = 0.0
 
 
-## Spielt eine Animation für "seconds" Sekunden, danach wieder stehen.
-func play(anim: String, seconds: float) -> void:
+## Spielt eine Animation für "seconds" Sekunden, danach wieder stehen. fps > 0: eigene Geschwindigkeit.
+func play(anim: String, seconds: float, fps := 0.0) -> void:
 	_set_anim(anim)
+	_anim_time = 0.0
+	_anim_fps = fps
 	_hold = seconds
+
+
+## Hat diese Figur eine eigene Animation (z. B. "attack")?
+func has_anim(anim: String) -> bool:
+	return _frames.has(anim)
+
+
+## Erfolgreiche Parade (nur Figuren mit eigener Parier-Animation).
+func parry_pose() -> void:
+	if has_anim("parry") and shown_hp() > 0:
+		play("parry", 0.5)
+
+
+## Jubeln nach einem Sieg (nur Figuren mit eigener Sieges-Animation, solange sie stehen).
+func cheer() -> void:
+	if has_anim("victory") and shown_hp() > 0:
+		_set_anim("victory")
+		_hold = 0.0
 
 
 ## Mitte der Figur (im Koordinatensystem des Kampffelds).
@@ -330,7 +369,11 @@ func lunge(target_point: Vector2, duration: float) -> void:
 	var hit_offset := toward - Vector2(dir * (sprite_size.x * 0.5 + 34.0), 0)
 	var windup := duration * 0.35
 	z_index = 6
-	play("run", duration + 0.3)
+	if has_anim("attack"):
+		# Das Geschoss (4. Bild) erscheint genau beim Aufprall
+		play("attack", duration + 0.3, 3.5 / maxf(duration, 0.1))
+	else:
+		play("run", duration + 0.3)
 	var tween := create_tween()
 	tween.tween_property(body, "position", _home + Vector2(-dir * 18.0, 0), windup).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	tween.tween_property(body, "position", _home + hit_offset, duration - windup).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
@@ -342,7 +385,10 @@ func lunge(target_point: Vector2, duration: float) -> void:
 
 ## Kleiner Hüpfer beim Wirken einer Fähigkeit.
 func cast_hop() -> void:
-	play("run", 0.3)
+	if has_anim("attack"):
+		play("attack", 0.7)
+	else:
+		play("run", 0.3)
 	var tween := create_tween()
 	tween.tween_property(body, "position", _home + Vector2(0, -14), 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tween.tween_property(body, "position", _home, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)

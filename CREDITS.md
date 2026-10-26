@@ -11,7 +11,7 @@ Sie sind Platzhalter, bis eigene Grafiken (oder ein Pixel-Künstler) da sind.
 
 | Figur | Herkunft | Benutzt für |
 |-------|----------|-------------|
-| Vega (`vega_*`) | Von Marco mit KI-Hilfe erstellt (26.10.2026), von Claude Code zugeschnitten, verkleinert und gesäubert | Eigene Spielfigur (Welt und Kampf als Novize), wählbar beim Zusammenspielen |
+| Vega (`vega_*`) | Von Marco mit KI-Hilfe erstellt (26.10.2026, zwei Bildblätter), von Claude Code zugeschnitten, verkleinert und gesäubert | Eigene Spielfigur (Welt und Kampf als Novize, mit Angriff, Parade, Fallen und Sieg), wählbar beim Zusammenspielen |
 
 Die Einzelbilder liegen in `assets/0x72_dungeontileset_ii/`. Da itch.io automatische
 Downloads blockiert, stammen die Dateien aus einer unveränderten Kopie der Einzelbilder
