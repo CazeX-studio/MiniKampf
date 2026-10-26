@@ -400,6 +400,10 @@ func _play_event(event: Dictionary) -> void:
 			if not event.aborted:
 				if event.won and state.dungeon != null and Sandbox.pilz_choice != "":
 					SaveGame.set_flag(PILZ_CHOICE_FLAG, Sandbox.pilz_choice)
+				if event.won:
+					for f: Fighter in state.heroes:
+						if _views.has(f):
+							view(f).cheer()
 				_show_end_screen(event.won)
 
 
@@ -684,6 +688,13 @@ func _on_fighter_tapped(target: Fighter) -> void:
 ## Zeigt den schrumpfenden Ring und die Zeitleiste. Gibt die Reaktion zurück:
 ## 0 = verpasst, 1 = normal pariert/ausgewichen (normale Zone), 2 = perfekt (schmale Zone in der Mitte).
 func react(attacker: Fighter, target: Fighter, duration: float) -> int:
+	var grade := await _react_grade(attacker, target, duration)
+	if grade != BattleState.REACT_NONE and target.reaction == "parry":
+		view(target).parry_pose()
+	return grade
+
+
+func _react_grade(attacker: Fighter, target: Fighter, duration: float) -> int:
 	_seq += 1
 	var seq := _seq
 	# Mitspieler: Er pariert auf seinem Gerät, hier kommt nur das Ergebnis an
