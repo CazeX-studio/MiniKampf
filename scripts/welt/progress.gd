@@ -6,6 +6,7 @@ extends RefCounted
 ## Kästchen in der Tasche (Projekt 4: Tasche mit 30 Plätzen)
 const BAG_SIZE := 30
 
+## Geld in Bronze (Anzeige als Bronze, Silber, Gold: siehe geld.gd)
 var gold := 0
 ## Gegenstand -> Anzahl
 var items := {}

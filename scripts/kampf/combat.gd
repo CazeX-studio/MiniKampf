@@ -1564,7 +1564,7 @@ func _reward_text() -> String:
 	if int(reward.get("erfahrung", 0)) > 0:
 		parts.append("+%d Erfahrung" % int(reward.erfahrung))
 	if int(reward.get("gold", 0)) > 0:
-		parts.append("+%d Gold" % int(reward.gold))
+		parts.append("+%s" % Geld.text(int(reward.gold)))
 	if str(reward.get("karte", "")) != "":
 		parts.append("Karte: %s" % KartenSpiel.card(str(reward.karte)).name)
 	for level: int in reward.get("stufen", []):

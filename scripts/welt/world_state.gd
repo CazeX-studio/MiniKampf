@@ -17,6 +17,7 @@ extends RefCounted
 ##   {type = "dialog_choose", index = 0} im Gespräch eine Antwort wählen
 ##   {type = "szene_verlassen"}          eine gemeinsame Szene verlassen (Zusammenspielen)
 ##   {type = "kaufen", gegenstand = "…"} / {type = "verkaufen", gegenstand = "…"} / {type = "laden_zu"}  im geöffneten Laden
+##   {type = "test_geld", bronze = 75}  Testknopf: Geld dazugeben (nur im Godot-Editor)
 ##   {type = "karten_ergebnis", gegner = "marv", gewonnen = true, unentschieden = false}  Ende einer Partie Kreuzweg-Karten
 ## Auf eine andere Karte kommt man über Ausgänge am Rand (hineinlaufen) oder über Orte mit der Aktion "reisen" (Seilaufzug).
 ## Monster in der Wildnis ("monster:<Nummer>", aus data/karten.json): hineinlaufen oder antippen startet den Kampf.
@@ -456,6 +457,11 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			_card_result(p, str(cmd.get("gegner", "")), bool(cmd.get("gewonnen", false)), bool(cmd.get("unentschieden", false)))
 		"benutzen":
 			_use_item(p, str(cmd.get("gegenstand", "")))
+		"test_geld":
+			# Testknopf in der Tasche (nur beim Ausprobieren im Godot-Editor, nicht im fertigen Spiel)
+			if OS.is_debug_build():
+				_give_gold(p, clampi(int(cmd.get("bronze", 0)), 0, 1000000))
+				progress_changed.emit(p.id)
 		"tasche_tauschen":
 			p.progress.move_slot(int(cmd.get("von", -1)), int(cmd.get("nach", -1)))
 			progress_changed.emit(p.id)
@@ -1603,7 +1609,7 @@ func _use_item(p: PlayerState, item_id: String) -> void:
 func _give_gold(p: PlayerState, amount: int) -> void:
 	p.progress.gold += amount
 	if not _rewards_shown:
-		_say(p, GameData.text("gold", [amount]))
+		_say(p, GameData.text("gold", [Geld.text(amount)]))
 
 
 func _give_xp(p: PlayerState, amount: int) -> void:
@@ -1991,10 +1997,10 @@ func _buy(p: PlayerState, item_id: String) -> void:
 		if ware.gegenstand != item_id:
 			continue
 		if p.progress.gold < ware.preis:
-			_say(p, GameData.text("zu_wenig_gold", [GameData.item_name(item_id), ware.preis]))
+			_say(p, GameData.text("zu_wenig_gold", [GameData.item_name(item_id), Geld.text(ware.preis)]))
 			return
 		p.progress.gold -= ware.preis
-		_say(p, GameData.text("gold_weg", [ware.preis]))
+		_say(p, GameData.text("gold_weg", [Geld.text(ware.preis)]))
 		_give_item(p, item_id, 1)
 		_update_quests(p)
 		progress_changed.emit(p.id)

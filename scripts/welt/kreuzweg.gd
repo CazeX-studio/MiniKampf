@@ -1366,6 +1366,9 @@ func _build_ui() -> void:
 	_panel_text.add_theme_font_size_override("bold_font_size", 17)
 	# „Benutzen“ in der Tasche (z. B. die Bürste an der Statue)
 	_panel_text.meta_clicked.connect(func(meta: Variant) -> void:
+		if str(meta).begins_with("testgeld:"):
+			_send({type = "test_geld", bronze = int(str(meta).trim_prefix("testgeld:"))})
+			return
 		_panel.visible = false
 		_send({type = "benutzen", gegenstand = str(meta)}))
 	panel_box.add_child(_panel_text)
@@ -1957,13 +1960,13 @@ func _update_shop() -> void:
 	if p.shop == "":
 		return
 	var shop: Dictionary = GameData.get_file("laeden").get(p.shop, {})
-	var title := _label("%s  ·  %d Gold" % [shop.get("name", p.shop), p.progress.gold], 22, Color("f2c14e"))
+	var title := _label("%s  ·  %s" % [shop.get("name", p.shop), Geld.text(p.progress.gold)], 22, Color("f2c14e"))
 	_shop_box.add_child(title)
 	_shop_box.add_child(_label(GameData.text("laden_kaufen"), 17, Color("9fe8ff")))
 	for ware in state.shop_wares(p.shop):
 		var item := GameData.item(ware.gegenstand)
 		var row := _shop_row("%s – %s" % [item.get("name", ware.gegenstand), item.get("beschreibung", "")],
-				"%s · %d Gold" % [GameData.text("laden_kaufen"), ware.preis])
+				"%s · %s" % [GameData.text("laden_kaufen"), Geld.text(ware.preis)])
 		row.button.pressed.connect(func() -> void: _send({type = "kaufen", gegenstand = ware.gegenstand}))
 		if p.progress.gold < ware.preis:
 			row.button.modulate = Color(1, 1, 1, 0.5)
@@ -1976,7 +1979,7 @@ func _update_shop() -> void:
 			continue
 		any = true
 		var row := _shop_row("%d × %s" % [p.progress.items[item_id], GameData.item_name(item_id)],
-				"%s · %d Gold" % [GameData.text("laden_verkaufen"), price])
+				"%s · %s" % [GameData.text("laden_verkaufen"), Geld.text(price)])
 		row.button.pressed.connect(func() -> void: _send({type = "verkaufen", gegenstand = item_id}))
 		_shop_box.add_child(row.box)
 	if not any:
@@ -2013,7 +2016,7 @@ func _update_hud() -> void:
 	var progress := local_player().progress
 	var xp_span := progress.xp_range()
 	var xp_text := GameData.text("hud_max") if xp_span.y < 0 else GameData.text("hud_erfahrung", [progress.xp, xp_span.y])
-	_hud.text = GameData.text("hud", [progress.level, xp_text, progress.gold])
+	_hud.text = GameData.text("hud", [progress.level, xp_text, Geld.text(progress.gold)])
 	if _panel.visible:
 		_fill_panel()
 
@@ -2131,7 +2134,12 @@ func _fill_panel() -> void:
 	else:
 		_panel_title.text = GameData.text("tasche")
 		var slots := _fill_bag(p)
-		lines.append("[b]Gold: %d[/b]" % p.progress.gold)
+		var money := "[b]%s: %s[/b]" % [GameData.text("geld"), Geld.bbcode(p.progress.gold)]
+		if OS.is_debug_build():
+			# Testknöpfe: Geld dazugeben, um das Umspringen der Münzen zu prüfen
+			for bronze: int in [75, 9900]:
+				money += "  [url=testgeld:%d][color=#5ab8ff][%s: +%s][/color][/url]" % [bronze, GameData.text("test_geld"), Geld.text(bronze)]
+		lines.append(money)
 		var picked := str(slots[_bag_selected]) if _bag_selected >= 0 and _bag_selected < slots.size() else ""
 		if picked != "":
 			var item := GameData.item(picked)
