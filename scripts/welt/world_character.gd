@@ -3,8 +3,9 @@ extends Node2D
 ## Anzeige einer Figur in der Stadt (Spieler oder NPC): Pixel-Figur, Schatten, Name.
 ## Liest nur Daten, die Spiellogik steht in WorldState.
 
-const SPRITE_PATH := "res://assets/0x72_dungeontileset_ii/%s_%s_anim_f%d.png"
 const SCALE := 3.0
+## Eigene Figuren (assets/figuren/) sind größer gezeichnet und werden nur 2-fach vergrößert
+const OWN_SCALE := 2.0
 
 var moving := false
 var facing := 1
@@ -32,13 +33,14 @@ func setup(look: String, p_name: String, tint := Color.WHITE, name_color := Colo
 	for anim: String in ["idle", "run"]:
 		var frames: Array[Texture2D] = []
 		var i := 0
-		while ResourceLoader.exists(SPRITE_PATH % [look, anim, i]):
-			frames.append(load(SPRITE_PATH % [look, anim, i]))
+		while ResourceLoader.exists(FighterView.sprite_path(look, anim, i)):
+			frames.append(load(FighterView.sprite_path(look, anim, i)))
 			i += 1
 		_frames[anim] = frames
 	_sprite = Sprite2D.new()
 	_sprite.texture = _frames.idle[0]
-	_sprite.scale = Vector2(SCALE, SCALE)
+	var scale_factor := OWN_SCALE if FighterView.is_own_sprite(look) else SCALE
+	_sprite.scale = Vector2(scale_factor, scale_factor)
 	_sprite.centered = true
 	_sprite.offset = Vector2(0, -_sprite.texture.get_height() * 0.5)
 	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -58,7 +60,7 @@ func setup(look: String, p_name: String, tint := Color.WHITE, name_color := Colo
 	label.add_theme_constant_override("outline_size", 5)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.size = Vector2(160, 20)
-	_head_y = -_sprite.texture.get_height() * SCALE - 24
+	_head_y = -_sprite.texture.get_height() * _sprite.scale.y - 24
 	label.position = Vector2(-80, _head_y)
 	_overlay.add_child(label)
 

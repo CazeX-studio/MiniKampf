@@ -7,6 +7,9 @@ extends Control
 signal tapped(fighter: Fighter)
 
 const SPRITE_PATH := "res://assets/0x72_dungeontileset_ii/%s_%s_anim_f%d.png"
+## Eigene Figuren (z. B. Vega) liegen in assets/figuren/ und gehen vor dem 0x72-Paket.
+## Sie sind größer gezeichnet (etwa 44 statt 28 Pixel hoch) und werden deshalb weniger stark vergrößert.
+const OWN_SPRITE_PATH := "res://assets/figuren/%s_%s_anim_f%d.png"
 const FIGHTER_SHADER := preload("res://shaders/fighter.gdshader")
 
 ## Welche Pixel-Figur zu welcher Klasse gehört (Platzhalter aus dem 0x72-Paket).
@@ -140,8 +143,8 @@ func setup(p_fighter: Fighter) -> void:
 	for anim: String in ANIM_FPS:
 		var frames: Array[Texture2D] = []
 		var i := 0
-		while ResourceLoader.exists(SPRITE_PATH % [look.sprite, anim, i]):
-			frames.append(load(SPRITE_PATH % [look.sprite, anim, i]))
+		while ResourceLoader.exists(sprite_path(look.sprite, anim, i)):
+			frames.append(load(sprite_path(look.sprite, anim, i)))
 			i += 1
 		if not frames.is_empty():
 			_frames[anim] = frames
@@ -238,11 +241,24 @@ func shown_hp() -> int:
 static func look_data(key: String) -> Dictionary:
 	if LOOKS.has(key):
 		return LOOKS[key]
+	if ResourceLoader.exists(OWN_SPRITE_PATH % [key, "idle", 0]):
+		return {sprite = key, scale = 3.0}
 	return {sprite = key, scale = 4.0} if ResourceLoader.exists(SPRITE_PATH % [key, "idle", 0]) else LOOKS["novize"]
 
 
+## Datei eines Einzelbilds: erst bei den eigenen Figuren nachsehen, sonst im 0x72-Paket.
+static func sprite_path(sprite: String, anim: String, frame: int) -> String:
+	var own := OWN_SPRITE_PATH % [sprite, anim, frame]
+	return own if ResourceLoader.exists(OWN_SPRITE_PATH % [sprite, "idle", 0]) else SPRITE_PATH % [sprite, anim, frame]
+
+
+## Ist das eine eigene Figur aus assets/figuren/?
+static func is_own_sprite(sprite: String) -> bool:
+	return ResourceLoader.exists(OWN_SPRITE_PATH % [sprite, "idle", 0])
+
+
 static func portrait(klass: String) -> Texture2D:
-	return load(SPRITE_PATH % [look_data(klass).sprite, "idle", 0])
+	return load(sprite_path(look_data(klass).sprite, "idle", 0))
 
 
 static func tint(klass: String) -> Color:

@@ -55,7 +55,7 @@ func _ready() -> void:
 	var look_title := _label("Deine Figur:", 20, Color.WHITE)
 	look_title.position = Vector2(300, 250)
 	add_child(look_title)
-	_look = maxi(Netz.LOOKS.find(saved.get("figur", "elf_m")), 0)
+	_look = maxi(Netz.LOOKS.find(saved.get("figur", "vega")), 0)
 	var prev := _small_button("<", Vector2(470, 245), func() -> void: _change_look(-1))
 	add_child(prev)
 	var next := _small_button(">", Vector2(690, 245), func() -> void: _change_look(1))

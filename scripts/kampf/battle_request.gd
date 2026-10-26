@@ -16,6 +16,8 @@ static var return_scene := "res://scenes/kreuzweg.tscn"
 ## Gruppenkampf beim Zusammenspielen: {bid, seed, mine = eigener Held (Nummer), owners = [Spieler je Held, "" = Computer]}.
 ## Leer = allein.
 static var group := {}
+## Aussehen der eigenen Figur, solange sie als Novize kämpft ("" = Novize aus dem 0x72-Paket)
+static var player_look := ""
 
 
 static func active() -> bool:
@@ -48,7 +50,8 @@ static func prepare(id: String, level: int, potions := 0, own_class := "", own_m
 		return false
 	# Probestunde: Der Spieler spielt kurz eine richtige Klasse (Ult schon teilweise geladen)
 	var klasse := fighting_class(data, own_class)
-	var player := {klasse = klasse, name = "Du", aussehen = "novize" if klasse == "novize" else "", stufe = level,
+	var novice_look := player_look if player_look != "" else "novize"
+	var player := {klasse = klasse, name = "Du", aussehen = novice_look if klasse == "novize" else "", stufe = level,
 			ult = float(data.get("ult_start", 0))}
 	if data.get("eigene_klasse", false):
 		player["macht"] = hero_power(level)

@@ -8,6 +8,8 @@ extends Node2D
 ## echter Mitspieler beim Gastgeber an, und die Welt hier ist die des Gastgebers bzw. ihr Spiegelbild.
 ## Alle Texte stehen in res://data (siehe data/LIESMICH.md).
 
+## Eigene Spielfigur beim Alleinspielen (Bilder in assets/figuren/)
+const PLAYER_LOOK := "vega"
 const TILE_W := 64.0
 const TILE_H := 32.0
 const BOT_ID := "gefaehrte"
@@ -195,7 +197,7 @@ func _ready() -> void:
 		state.fix_position(local)
 		Netz.enter_world(local)
 	else:
-		local = state.add_player(local_id, "Du", "elf_m", WorldState.start_cell())
+		local = state.add_player(local_id, "Du", PLAYER_LOOK, WorldState.start_cell())
 		SaveGame.load_into(local)
 		state.fix_position(local)
 		state.add_player(BOT_ID, "Testgefährte", "lizard_f", WorldState.start_cell() + Vector2i(-1, 0))
@@ -2191,6 +2193,7 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 	if player_id != local_id:
 		return
 	var progress := local_player().progress
+	BattleRequest.player_look = local_player().look
 	if BattleRequest.prepare(kampf_id, progress.level, progress.item_count("heiltrank"), progress.battle_class(),
 			progress.flags.get("monster", [])):
 		SaveGame.save(local_player())

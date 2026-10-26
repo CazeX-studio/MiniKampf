@@ -51,6 +51,17 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **Erste eigene Figur: Vega** (26.10.):
+  - Marcos Bildblatt (4 × Stehen, 4 × Laufen, 1 × Getroffen) ist in Einzelbilder zerlegt, auf 47 × 44 Pixel
+    verkleinert (gemeinsame Fußlinie, damit nichts hüpft), mit gemeinsamer Farbpalette und ohne rote Ränder.
+    Die Bilder liegen in `assets/figuren/` (`vega_idle_anim_f0.png` usw.).
+  - Vega ist jetzt **deine Spielfigur**: beim Alleinspielen in der Welt und im Kampf, solange du Novize bist
+    (danach zeigt der Kampf wie bisher die Figur der Klasse). Beim Zusammenspielen ist sie die erste wählbare Figur.
+  - In der Welt wird sie 2-fach, im Kampf 3-fach vergrößert (die alten Figuren 3- und 4-fach, weil sie kleiner gezeichnet sind).
+  - Neue Figuren gehen genauso: Bilder mit demselben Namensmuster in `assets/figuren/` legen, das Spiel findet sie selbst.
+  - **So testest du es:** Spiel starten: Du läufst als Vega durch Kreuzweg. Einen Kampf bei Ye beginnen: Vega steht
+    rechts und schaut zum Gegner, beim Treffer kneift sie die Augen zu.
+
 - **Projekt 0, Schritt 4 – Grünwacht größer** (26.10., fertig):
   - **Weg nach Grünwacht, Waldboden und Wipfelheim sind um die Hälfte größer** (Faktor 1,5 in beide Richtungen):
     Weg 60 × 20 statt 40 × 13 Felder, Waldboden 45 × 39 statt 30 × 26, Wipfelheim 48 × 42 statt 32 × 28.
