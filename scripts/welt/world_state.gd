@@ -103,6 +103,10 @@ const HELPER_XP := 0.5
 const STALL_RANGE := 3.0
 ## Zufall für Monsterkarten als Beute (Tests setzen einen festen Startwert)
 var card_rng := RandomNumberGenerator.new()
+## Belohnung wurde schon am Ende des Kampfes gezeigt: Erfahrung, Gold, Karte und Stufe hier ohne Meldung
+var _rewards_shown := false
+## Karte, die am Kampfende schon gezeigt wurde ("" = keine, "?" = hier selbst auswürfeln)
+var _shown_card := "?"
 
 ## --- Gemeinsame Szenen (Zusammenspielen, Lernprojekt 4 Schritt 5) ---
 ## Spricht ein Gruppenmitglied eine Figur an, erleben Mitglieder in der Nähe das Gespräch mit. Bei Antworten stimmen alle
@@ -438,11 +442,15 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			_fighting.erase(p.id)
 			for monster_id: String in cmd.get("gezaehmt", []):
 				_add_to_pack(p, monster_id, true)
+			_rewards_shown = bool(cmd.get("belohnung_gezeigt", false))
+			_shown_card = str(cmd.get("karte", "")) if cmd.has("karte") else "?"
 			if _helpers.get(p.id, "") == str(cmd.get("kampf", "")):
 				# Hat nur mitgeholfen: Erfahrung und Gold, aber kein Fortschritt in fremden Aufträgen
 				_helper_result(p, str(cmd.get("kampf", "")), bool(cmd.get("gewonnen", false)))
 			else:
 				_battle_result(p, str(cmd.get("kampf", "")), bool(cmd.get("gewonnen", false)))
+			_rewards_shown = false
+			_shown_card = "?"
 			_back_from_battle(p.id)
 		"karten_ergebnis":
 			_card_result(p, str(cmd.get("gegner", "")), bool(cmd.get("gewonnen", false)), bool(cmd.get("unentschieden", false)))
@@ -1594,14 +1602,17 @@ func _use_item(p: PlayerState, item_id: String) -> void:
 
 func _give_gold(p: PlayerState, amount: int) -> void:
 	p.progress.gold += amount
-	_say(p, GameData.text("gold", [amount]))
+	if not _rewards_shown:
+		_say(p, GameData.text("gold", [amount]))
 
 
 func _give_xp(p: PlayerState, amount: int) -> void:
 	var reached := p.progress.add_xp(amount)
-	_say(p, GameData.text("erfahrung", [amount]))
+	if not _rewards_shown:
+		_say(p, GameData.text("erfahrung", [amount]))
 	for level in reached:
-		_say(p, GameData.text("stufe", [level, Grundwerte.growth_text()]))
+		if not _rewards_shown:
+			_say(p, GameData.text("stufe", [level, Grundwerte.growth_text()]))
 		if level == 2:
 			_say(p, GameData.text("werte_tipp"))
 
@@ -1811,7 +1822,8 @@ func _helper_result(p: PlayerState, kampf_id: String, won: bool) -> void:
 	_helpers.erase(p.id)
 	var battle: Dictionary = GameData.battle(kampf_id)
 	if won:
-		_say(p, GameData.text("kampf_gewonnen", [battle.get("name", kampf_id)]))
+		if not _rewards_shown:
+			_say(p, GameData.text("kampf_gewonnen", [battle.get("name", kampf_id)]))
 		_give_xp(p, roundi(int(battle.get("erfahrung", 0)) * HELPER_XP))
 	else:
 		_say(p, GameData.text("geholfen_verloren"))
@@ -2022,7 +2034,8 @@ func _battle_result(p: PlayerState, kampf_id: String, won: bool) -> void:
 		_update_quests(p)
 		progress_changed.emit(p.id)
 		return
-	_say(p, GameData.text("kampf_gewonnen", [battle.get("name", kampf_id)]))
+	if not _rewards_shown:
+		_say(p, GameData.text("kampf_gewonnen", [battle.get("name", kampf_id)]))
 	if battle.has("merken"):
 		p.progress.flags[battle.merken] = true
 	if battle.has("erfolg"):
@@ -2043,7 +2056,8 @@ func add_card(p: PlayerState, card_id: String) -> void:
 	var cards: Dictionary = p.progress.flags.get("karten", {}).duplicate()
 	cards[card_id] = int(cards.get(card_id, 0)) + 1
 	p.progress.flags["karten"] = cards
-	_say(p, GameData.text("karte_neu", [KartenSpiel.card(card_id).name]))
+	if not (_rewards_shown and _shown_card != "?"):
+		_say(p, GameData.text("karte_neu", [KartenSpiel.card(card_id).name]))
 
 
 ## Mit der Sternentafel kommen die Startkarten (beim ersten Spiel).
@@ -2080,9 +2094,38 @@ func _card_result(p: PlayerState, opponent: String, won: bool, draw: bool) -> vo
 
 ## Monster in der Wildnis: Jeder Sieg bringt Erfahrung und etwas Gold, das Monster ist dann eine Weile weg.
 ## Bei einer Niederlage wacht man am Start der Karte wieder auf.
+## Was ein Sieg in diesem Kampf bringt, für die Anzeige am Kampfende: {erfahrung, gold, karte, stufen}.
+## roll_card: die Monsterkarte schon jetzt auswürfeln (nur wer die Welt selbst führt, also allein oder als Gastgeber).
+func battle_reward(p: PlayerState, kampf_id: String, roll_card: bool) -> Dictionary:
+	var battle: Dictionary = GameData.battle(kampf_id)
+	var reward := {erfahrung = 0, gold = 0, karte = "", stufen = []}
+	if battle.is_empty():
+		return reward
+	if battle.get("wild", false):
+		reward.erfahrung = int(battle.get("erfahrung", 0))
+		reward.gold = int(battle.get("gold", 0))
+		var drop: Array = GameData.wild_monsters()[int(kampf_id.substr(5))].gegner
+		if roll_card and p.progress.item_count("sternentafel") > 0 \
+				and card_rng.randf() < float(GameData.get_file("kartenspiel").get("beute", 0.0)):
+			reward.karte = str(drop[card_rng.randi() % drop.size()])
+	elif _helpers.get(p.id, "") == kampf_id:
+		reward.erfahrung = roundi(int(battle.get("erfahrung", 0)) * HELPER_XP)
+	elif not p.progress.flags.has("kampf_gewonnen:" + kampf_id):
+		reward.erfahrung = int(battle.get("erfahrung", 0))
+	# Welche Stufen damit erreicht werden
+	var table := GameData.level_xp()
+	var level := p.progress.level
+	var xp: int = p.progress.xp + int(reward.erfahrung)
+	while level < table.size() and xp >= int(table[level]):
+		level += 1
+		reward.stufen.append(level)
+	return reward
+
+
 func _wild_result(p: PlayerState, kampf_id: String, battle: Dictionary, won: bool) -> void:
 	if won:
-		_say(p, GameData.text("kampf_gewonnen", [battle.get("name", kampf_id)]))
+		if not _rewards_shown:
+			_say(p, GameData.text("kampf_gewonnen", [battle.get("name", kampf_id)]))
 		p.progress.flags["besiegt:monster:%d" % int(kampf_id.substr(5))] = Time.get_unix_time_from_system()
 		if get_map(monsters[int(kampf_id.substr(5))].karte).dungeon != "":
 			p.progress.flags["lauf:besiegt:monster:%d" % int(kampf_id.substr(5))] = true
@@ -2090,7 +2133,10 @@ func _wild_result(p: PlayerState, kampf_id: String, battle: Dictionary, won: boo
 		_give_xp(p, int(battle.get("erfahrung", 0)))
 		# Mit etwas Glück eine Monsterkarte (nur wer schon eine Sternentafel hat, sammelt Karten)
 		var drop: Array = GameData.wild_monsters()[int(kampf_id.substr(5))].gegner
-		if p.progress.item_count("sternentafel") > 0 and card_rng.randf() < float(GameData.get_file("kartenspiel").get("beute", 0.0)):
+		if _shown_card != "?":
+			if _shown_card != "":
+				add_card(p, _shown_card)
+		elif p.progress.item_count("sternentafel") > 0 and card_rng.randf() < float(GameData.get_file("kartenspiel").get("beute", 0.0)):
 			add_card(p, str(drop[card_rng.randi() % drop.size()]))
 	else:
 		_say(p, GameData.text("wild_verloren"))

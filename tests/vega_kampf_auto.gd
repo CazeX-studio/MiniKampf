@@ -1,16 +1,19 @@
 extends Node
-## Nur für Bildschirmfotos: Vegas Kampf-Animationen (Angriff, Parade, Sieg, Fallen) im echten Kampfbildschirm.
+## Nur für Bildschirmfotos: Vegas Kampf-Animationen im echten Kampfbildschirm (Fernangriff, Parade beim Treffer,
+## Sieg und Fallen) und der Sieg-Bildschirm mit Belohnung.
 ## Die Bilder landen im Ordner aus der Umgebungsvariable FOTO_ORDNER (sonst user://).
 
 var _t := 0.0
 var _step := 0
 var _combat: Node
 var _vega: FighterView
+var _enemy: Fighter
 
 
 func _ready() -> void:
 	BattleRequest.player_look = "vega"
 	BattleRequest.prepare("wild:0", 10, 2, "")
+	BattleRequest.reward = {erfahrung = 120, gold = 20, karte = "", stufen = [11]}
 	_combat = load("res://scenes/kampf.tscn").instantiate()
 	add_child(_combat)
 
@@ -21,14 +24,19 @@ func _process(delta: float) -> void:
 		[1.5, func() -> void:
 			for f: Fighter in _combat.state.heroes:
 				_vega = _combat.view(f)
-			_vega.parry_pose()],
-		[1.62, func() -> void: _shot("parade")],
-		[2.6, func() -> void: _vega.play("attack", 1.0, 10.0)],
-		[2.95, func() -> void: _shot("angriff")],
-		[3.5, func() -> void: _vega.cheer()],
-		[3.7, func() -> void: _shot("sieg")],
-		[4.0, func() -> void: _vega.shown = 0],
-		[5.5, func() -> void:
+			_enemy = _combat.state.enemies[0]
+			_vega.parry_pose()
+			_vega.hit_react()],
+		[1.75, func() -> void: _shot("parade")],
+		[2.6, func() -> void: _combat.lunge(_vega.fighter, _enemy, 0.25)],
+		[2.75, func() -> void: _shot("angriff_ausholen")],
+		[3.02, func() -> void: _shot("angriff_geschoss")],
+		[4.0, func() -> void: _vega.cheer()],
+		[4.4, func() -> void: _shot("sieg")],
+		[5.0, func() -> void: _combat._show_end_screen(true)],
+		[5.3, func() -> void: _shot("auswertung")],
+		[5.4, func() -> void: _vega.shown = 0],
+		[6.6, func() -> void:
 			_shot("gefallen")
 			get_tree().quit()],
 	]

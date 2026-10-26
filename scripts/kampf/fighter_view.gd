@@ -118,8 +118,10 @@ var sprite_size: Vector2
 var _frames := {}
 var _anim := "idle"
 var _anim_time := 0.0
-## Eigene Geschwindigkeit der laufenden Animation (0 = ANIM_FPS), z. B. damit der Angriff genau beim Aufprall trifft
+## Eigene Geschwindigkeit der laufenden Animation (0 = ANIM_FPS)
 var _anim_fps := 0.0
+## Eigene Zeitpunkte je Bild (leer = gleichmäßig), z. B. damit das Geschoss genau beim Loslassen erscheint
+var _anim_times: Array[float] = []
 var _hold := 0.0
 var _time := 0.0
 var _home := Vector2.ZERO
@@ -219,6 +221,8 @@ func _process(delta: float) -> void:
 		anim = "hit" if _frames.has("hit") else "idle"
 	var frames: Array = _frames[anim]
 	var index := int(_anim_time * (_anim_fps if _anim_fps > 0.0 else ANIM_FPS[anim]))
+	if not _anim_times.is_empty() and anim == _anim:
+		index = maxi(_anim_times.filter(func(t: float) -> bool: return t <= _anim_time).size() - 1, 0)
 	index = mini(index, frames.size() - 1) if anim in ANIM_ONCE else index % frames.size()
 	var texture: Texture2D = frames[index]
 	if body.texture != texture:
@@ -305,6 +309,7 @@ func _set_anim(anim: String) -> void:
 		_anim = anim
 		_anim_time = 0.0
 		_anim_fps = 0.0
+		_anim_times = []
 
 
 ## Spielt eine Animation für "seconds" Sekunden, danach wieder stehen. fps > 0: eigene Geschwindigkeit.
@@ -312,6 +317,7 @@ func play(anim: String, seconds: float, fps := 0.0) -> void:
 	_set_anim(anim)
 	_anim_time = 0.0
 	_anim_fps = fps
+	_anim_times = []
 	_hold = seconds
 
 
@@ -320,10 +326,30 @@ func has_anim(anim: String) -> bool:
 	return _frames.has(anim)
 
 
-## Erfolgreiche Parade (nur Figuren mit eigener Parier-Animation).
+## Fernangriff (Figuren mit eigener Angriffs-Animation): ausholen, bei "release" Sekunden das Geschoss loslassen
+## (4. Bild), danach ausschwingen. Die Figur bleibt an ihrem Platz und macht nur einen kleinen Schritt nach vorn.
+func cast_attack(release: float) -> void:
+	_set_anim("attack")
+	_anim_time = 0.0
+	_anim_fps = 0.0
+	_anim_times = [0.0, release * 0.3, release * 0.65, release, release + 0.35, release + 0.5]
+	_hold = release + 0.75
+	var dir := -1.0 if fighter.is_ally() else 1.0
+	var tween := create_tween()
+	tween.tween_property(body, "position", _home + Vector2(dir * 10.0, 0), release).set_trans(Tween.TRANS_SINE)
+	tween.tween_interval(0.35)
+	tween.tween_property(body, "position", _home, 0.3).set_trans(Tween.TRANS_SINE)
+
+
+## Erfolgreiche Parade (nur Figuren mit eigener Parier-Animation). Läuft schon eine, wird sie nicht neu gestartet.
 func parry_pose() -> void:
-	if has_anim("parry") and shown_hp() > 0:
-		play("parry", 0.5)
+	if has_anim("parry") and shown_hp() > 0 and not parrying():
+		play("parry", 0.75, 7.0)
+
+
+## Hält die Figur gerade die Parier-Pose?
+func parrying() -> bool:
+	return _anim == "parry" and _hold > 0.0
 
 
 ## Jubeln nach einem Sieg (nur Figuren mit eigener Sieges-Animation, solange sie stehen).
@@ -345,7 +371,9 @@ func home_feet() -> Vector2:
 
 ## Weißes Aufblitzen und kurzes Zurückweichen, wenn die Figur getroffen wird.
 func hit_react() -> void:
-	play("hit", 0.35)
+	# Bei einer Parade bleibt die Parier-Pose stehen (sonst würde sie vom Getroffen-Bild verdeckt)
+	if not parrying():
+		play("hit", 0.35)
 	var away := 1.0 if fighter.is_ally() else -1.0
 	var tween := create_tween()
 	tween.tween_method(func(v: float) -> void: _flash = v, 1.0, 0.0, 0.25)

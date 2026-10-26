@@ -10,6 +10,8 @@ extends Control
 signal _action_chosen(command: Dictionary)
 signal _choice_made(id: String)
 
+## So lange freuen sich die Helden nach einem Sieg, bevor die Auswertung erscheint (zwei Runden der Sieges-Animation)
+const VICTORY_POSE := 1.4
 const SCREEN := Vector2(1280, 720)
 ## Kampfbildschirm wie Final Fantasy 6: Gegner links, Helden rechts in zwei Reihen.
 const FRONT_X := 740.0
@@ -401,9 +403,11 @@ func _play_event(event: Dictionary) -> void:
 				if event.won and state.dungeon != null and Sandbox.pilz_choice != "":
 					SaveGame.set_flag(PILZ_CHOICE_FLAG, Sandbox.pilz_choice)
 				if event.won:
+					# Kurz freuen, bevor die Auswertung kommt
 					for f: Fighter in state.heroes:
 						if _views.has(f):
 							view(f).cheer()
+					await wait(VICTORY_POSE)
 				_show_end_screen(event.won)
 
 
@@ -812,6 +816,8 @@ func _input(event: InputEvent) -> void:
 	_end_guided_pause()
 	_react_press = at_stop if _guided >= 0 else _react_time()
 	var c := view(_react_target).center()
+	if _grade(_react_press) != BattleState.REACT_NONE and _react_target.reaction == "parry":
+		view(_react_target).parry_pose()
 	match _grade(_react_press):
 		BattleState.REACT_PERFECT:
 			_react_feedback = "PERFEKT!"
@@ -961,6 +967,15 @@ func wait(seconds: float) -> void:
 ## Der Aufprall ist genau nach "duration" Sekunden, dort erscheint ein Hieb.
 func lunge(f: Fighter, target: Fighter, duration: float) -> void:
 	var target_view := view(target)
+	# Figuren mit eigener Angriffs-Animation (z. B. Vega) greifen aus der Ferne an: ausholen, Geschoss, Treffer
+	if view(f).has_anim("attack"):
+		var release := maxf(duration, 0.4)
+		view(f).cast_attack(release)
+		await wait(release)
+		await projectile(f, target, Color("7ac8ff"), 0.22)
+		if is_instance_valid(target_view):
+			Fx.spawn(_field, Fx.Kind.SPARKS, target_view.center(), Color("bfe6ff"), 60.0, 0.3)
+		return
 	await view(f).lunge(target_view.home_feet(), duration)
 	if is_instance_valid(target_view):
 		Fx.spawn(_field, Fx.Kind.SLASH, target_view.center(), Color("fff4d6"), 46.0, 0.25)
@@ -1539,6 +1554,23 @@ func add_log(text: String) -> void:
 
 # --- Auswertung ---------------------------------------------------------------
 
+## Belohnung des Sieges in einer Zeile (Erfahrung, Gold, Monsterkarte, neue Stufe). "" = nichts.
+func _reward_text() -> String:
+	var reward := BattleRequest.reward
+	if not BattleRequest.active() or reward.is_empty():
+		return ""
+	var parts: PackedStringArray = []
+	if int(reward.get("erfahrung", 0)) > 0:
+		parts.append("+%d Erfahrung" % int(reward.erfahrung))
+	if int(reward.get("gold", 0)) > 0:
+		parts.append("+%d Gold" % int(reward.gold))
+	if str(reward.get("karte", "")) != "":
+		parts.append("Karte: %s" % KartenSpiel.card(str(reward.karte)).name)
+	for level: int in reward.get("stufen", []):
+		parts.append("Stufe %d erreicht!" % level)
+	return ("Belohnung: " + "  ·  ".join(parts)) if not parts.is_empty() else ""
+
+
 func _show_end_screen(won: bool) -> void:
 	var shade := ColorRect.new()
 	shade.color = Color(0, 0, 0, 0.82)
@@ -1564,11 +1596,23 @@ func _show_end_screen(won: bool) -> void:
 	sub.size = Vector2(SCREEN.x, 30)
 	sub.position = Vector2(0, 112)
 	shade.add_child(sub)
+	var reward_text := _reward_text() if won else ""
+	if reward_text != "":
+		var reward := Label.new()
+		reward.text = reward_text
+		reward.add_theme_font_size_override("font_size", 22)
+		reward.add_theme_color_override("font_color", Color("8affc1"))
+		reward.add_theme_color_override("font_outline_color", Color.BLACK)
+		reward.add_theme_constant_override("outline_size", 4)
+		reward.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		reward.size = Vector2(SCREEN.x, 32)
+		reward.position = Vector2(0, 142)
+		shade.add_child(reward)
 
 	# Tabelle: eine Zeile pro Klasse (Begleiter zählen beim Besitzer mit)
 	var grid := GridContainer.new()
 	grid.columns = 8
-	grid.position = Vector2(110, 160)
+	grid.position = Vector2(110, 190)
 	grid.add_theme_constant_override("h_separation", 26)
 	grid.add_theme_constant_override("v_separation", 10)
 	shade.add_child(grid)
