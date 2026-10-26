@@ -232,8 +232,12 @@ func _ready() -> void:
 	_camera.reset_smoothing()
 	# Zurück aus einem Kampf: Ergebnis verbuchen (Erfahrung, Aufträge)
 	if not BattleRequest.result.is_empty():
-		_send({type = "kampf_ergebnis", kampf = BattleRequest.result.kampf, gewonnen = BattleRequest.result.gewonnen,
-				traenke_benutzt = BattleRequest.result.get("traenke_benutzt", 0), gezaehmt = BattleRequest.result.get("gezaehmt", [])})
+		var cmd := {type = "kampf_ergebnis", kampf = BattleRequest.result.kampf, gewonnen = BattleRequest.result.gewonnen,
+				traenke_benutzt = BattleRequest.result.get("traenke_benutzt", 0), gezaehmt = BattleRequest.result.get("gezaehmt", []),
+				belohnung_gezeigt = BattleRequest.result.get("belohnung_gezeigt", false)}
+		if BattleRequest.result.has("karte"):
+			cmd["karte"] = BattleRequest.result.karte
+		_send(cmd)
 		BattleRequest.result = {}
 	# Zurück von einer Partie Kreuzweg-Karten: Ergebnis verbuchen
 	if not KartenTisch.ergebnis.is_empty():
@@ -2188,12 +2192,22 @@ func _reputation_lines(p: PlayerState, lines: PackedStringArray) -> void:
 				"■".repeat(filled), "■".repeat(10 - filled), word])
 
 
+## Belohnung für den Sieg-Bildschirm. Die Monsterkarte wird schon jetzt ausgewürfelt, wenn diese Welt die echte ist
+## (allein spielen); beim Zusammenspielen würfelt der Server danach und meldet sie wie bisher.
+func _prepare_reward(kampf_id: String) -> void:
+	var roll := not Netz.online()
+	BattleRequest.reward = state.battle_reward(local_player(), kampf_id, roll)
+	if roll:
+		BattleRequest.reward["karte_gewuerfelt"] = true
+
+
 ## Ein Kampf beginnt (z. B. eine Lektion bei Ye): speichern und zum Kampfbildschirm wechseln.
 func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 	if player_id != local_id:
 		return
 	var progress := local_player().progress
 	BattleRequest.player_look = local_player().look
+	_prepare_reward(kampf_id)
 	if BattleRequest.prepare(kampf_id, progress.level, progress.item_count("heiltrank"), progress.battle_class(),
 			progress.flags.get("monster", [])):
 		SaveGame.save(local_player())
@@ -2201,7 +2215,8 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 
 
 ## Gruppenkampf beginnt (Netz hat den Kampf schon vorbereitet): speichern und zum Kampfbildschirm.
-func _on_group_battle(_kampf_id: String) -> void:
+func _on_group_battle(kampf_id: String) -> void:
+	_prepare_reward(kampf_id)
 	SaveGame.save(local_player())
 	get_tree().change_scene_to_file.call_deferred("res://scenes/kampf.tscn")
 

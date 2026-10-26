@@ -51,6 +51,19 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **Kampfende und Vegas Animationen nachgebessert** (27.10., Marcos Rückmeldung):
+  - **Siegespose nach jedem gewonnenen Kampf:** Die Helden freuen sich 1,4 Sekunden (zwei Runden Jubeln), erst dann
+    kommt die Auswertung. Die Dauer steht in `combat.gd` unter `VICTORY_POSE`.
+  - **Belohnung auf dem Sieg-Bildschirm:** Unter „SIEG!“ steht jetzt z. B. „Belohnung: +120 Erfahrung · +20 Gold ·
+    Karte: Moosling · Stufe 11 erreicht!“. Nach dem Kampf meldet die Welt das nicht noch einmal. Beim Zusammenspielen
+    stehen Erfahrung und Gold auch dort; eine Monsterkarte würfelt dort weiter der Server und meldet sie nach dem Kampf.
+  - **Parade sichtbar:** Vega hebt den Schild-Bogen genau beim Tastendruck, und der Treffer danach verdeckt die Pose
+    nicht mehr (vorher sah man nur das kurze Zurückzucken).
+  - **Fernangriff statt Rammen:** Vega bleibt an ihrem Platz, macht einen kleinen Schritt, holt in drei Bildern aus,
+    lässt das Sternen-Geschoss los, das zum Gegner fliegt, und schwingt danach aus. Alle 6 Bilder sind zu sehen.
+  - **So testest du es:** Einen Kampf gewinnen: Vega jubelt kurz, dann steht die Belohnung oben. Eine Parade schaffen:
+    der blaue Bogen ist zu sehen. „Schlag“ benutzen: Sie greift aus der Ferne mit dem Geschoss an.
+
 - **Vega: Kampf-Animationen** (26.10.):
   - Aus Marcos zweitem Bildblatt: **Angriff** (6 Bilder, mit blauem Sternen-Geschoss), **Fallen** (6 Bilder),
     **Parieren** (4 Bilder, mit blauem Schild-Bogen) und **Sieg** (4 Bilder, Jubeln). Getroffen gab es schon.
@@ -69,6 +82,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     (danach zeigt der Kampf wie bisher die Figur der Klasse). Beim Zusammenspielen ist sie die erste wählbare Figur.
   - In der Welt wird sie 2-fach, im Kampf 3-fach vergrößert (die alten Figuren 3- und 4-fach, weil sie kleiner gezeichnet sind).
   - Neue Figuren gehen genauso: Bilder mit demselben Namensmuster in `assets/figuren/` legen, das Spiel findet sie selbst.
+  - **Beschluss (27.10.):** Vega wird später das Aussehen der **Sternensängerin** (vielleicht danach eine Figur der
+    Geschichte). Vorerst bleibt sie die Spielfigur als Novize, damit du ihre Animationen testen kannst.
   - **So testest du es:** Spiel starten: Du läufst als Vega durch Kreuzweg. Einen Kampf bei Ye beginnen: Vega steht
     rechts und schaut zum Gegner, beim Treffer kneift sie die Augen zu.
 

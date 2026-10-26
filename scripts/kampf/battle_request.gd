@@ -16,6 +16,8 @@ static var return_scene := "res://scenes/kreuzweg.tscn"
 ## Gruppenkampf beim Zusammenspielen: {bid, seed, mine = eigener Held (Nummer), owners = [Spieler je Held, "" = Computer]}.
 ## Leer = allein.
 static var group := {}
+## Was ein Sieg bringt (WorldState.battle_reward), für die Anzeige am Kampfende. Leer = nichts anzeigen.
+static var reward := {}
 ## Aussehen der eigenen Figur, solange sie als Novize kämpft ("" = Novize aus dem 0x72-Paket)
 static var player_look := ""
 
@@ -157,6 +159,12 @@ static func _make_setup(id: String, data: Dictionary, heroes: Array, phases: Arr
 ## Der Kampf ist vorbei: Ergebnis für die Welt merken.
 static func finish(won: bool, potions_used := 0, tamed: Array = []) -> void:
 	result = {kampf = kampf_id, gewonnen = won, traenke_benutzt = used_before + potions_used, gezaehmt = tamed}
+	# Die Belohnung stand schon auf dem Sieg-Bildschirm: Die Welt meldet sie nicht noch einmal
+	if won and not reward.is_empty():
+		result["belohnung_gezeigt"] = true
+		if reward.has("karte_gewuerfelt"):
+			result["karte"] = reward.karte
+	reward = {}
 	used_before = 0
 	kampf_id = ""
 	setup = {}
