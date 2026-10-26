@@ -21,7 +21,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
   Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
   gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
-- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Nächster Schritt: Projekt 3 „Geld“, Bronze, Silber, Gold.
+- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Projekt 3 Schritt 1 (Geld als Bronze, Silber, Gold) fertig (27.10.). Nächster Schritt: Projekt 3 Schritt 2, Monster lassen wenig Geld fallen.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -50,6 +50,21 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
+
+- **Projekt 3, Schritt 1 – Geld als Bronze, Silber und Gold** (27.10., fertig):
+  - Geld ist weiter **eine einzige Zahl** (in Bronze) und wird überall als Münzen angezeigt: 100 Bronze = 1 Silber,
+    100 Silber = 1 Gold, z. B. „1 Gold 23 Silber 45 Bronze“. Leere Münzen werden weggelassen („1 Silber“ statt „0 Gold 1 Silber 0 Bronze“).
+  - Zu sehen oben links neben Stufe und Erfahrung, in der Tasche (farbig: Gold gelb, Silber grau, Bronze kupfer), im
+    Laden (Preise und eigenes Geld), in den kurzen Meldungen („+25 Bronze“) und auf dem Sieg-Bildschirm.
+  - **Die Münznamen stehen nur an einer Stelle:** `data/texte.json` unter `"muenzen"`. Wer sie umbenennen will, ändert nur dort.
+  - **Alle bisherigen Beträge zählen jetzt als Bronze** (z. B. Auftrags-Belohnung 25 → 25 Bronze, Heiltrank 15 Bronze,
+    Sternentafel 50 Silber bzw. 6 Silber für Heimkehrer; Bingos Sätze sind angepasst). Geld ist damit knapp. Die
+    Beträge stimmen wir in Schritt 2 ab. Alte Spielstände funktionieren weiter.
+  - **Testknöpfe** in der Tasche: „[Test: +75 Bronze]“ und „[Test: +99 Silber]“. Sie erscheinen nur beim Ausprobieren
+    im Godot-Editor, nicht im fertigen Spiel. Die Münzrechnung prüft `tests/geld_test.gd`.
+  - **So testest du es:** Spiel in Godot starten, mit I die Tasche öffnen. Zweimal „+75 Bronze“ anklicken: aus
+    75 Bronze wird 1 Silber 50 Bronze. Dann „+99 Silber“: es springt auf Gold. Oben links steht derselbe Betrag.
+    Bei Bingo einen Heiltrank kaufen: der Preis steht als „15 Bronze“ da und das Geld sinkt richtig.
 
 - **Vegas Animationen, zweite Runde** (27.10., Marcos Test im Browser):
   - **Kein Schuss mehr beim Blocken:** Nach einer perfekten Parade gab es einen kleinen „Hüpfer“, der bei Vega die
