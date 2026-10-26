@@ -1175,8 +1175,8 @@
 			"kael": {
 				"name": "Kael",
 				"feld": [
-					19,
-					13
+					4,
+					12
 				],
 				"aussehen": "lizard_m",
 				"farbe": "c0a0a0",
@@ -1189,6 +1189,8 @@
 				"anspringen": {
 					"radius": 5,
 					"wenn": {
+						"auftrag": "der_fremde",
+						"stand": "aktiv",
 						"nicht_gemerkt": "kael_getroffen"
 					}
 				}

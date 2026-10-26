@@ -176,6 +176,16 @@ func _next_goal() -> void:
 	if p.progress.quest_state("tildas_unterricht") == "aktiv":
 		_grind()
 		return
+	# Figuren ohne Zeichen, die erst herbeilaufen, wenn man nah ist (z. B. Kael): dem Wegweiser folgen
+	var place := world.objective_place(p)
+	if not place.is_empty():
+		if str(place.karte) != p.map:
+			_travel(str(place.karte))
+			return
+		var cell := Vector2i(place.feld)
+		if Vector2(cell).distance_to(p.pos) > 3.0:
+			world.apply_command("spieler", {type = "move", cell = world._free_neighbor(cell, p.cell, p.map)})
+			return
 	if _talk_marked("!", false) or _talk_marked("?", true) or _talk_marked("!", true):
 		return
 	var candidates: Array[String] = []

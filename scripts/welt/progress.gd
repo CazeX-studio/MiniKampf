@@ -23,6 +23,15 @@ func quest_state(id: String) -> String:
 	return quests.get(id, "neu")
 
 
+## Mit welcher Klasse man kämpft: erst nachdem man sie beim Lehrmeister gelernt hat ("klasse_gelernt"),
+## vorher als Novize (""). Klassen ohne Lehrmeister im Spiel ("lernen_bei" in data/klassen.json) gleich nach der Wahl.
+func battle_class() -> String:
+	var klasse := str(flags.get("klasse", ""))
+	if klasse == "" or flags.has("klasse_gelernt"):
+		return klasse
+	return "" if GameData.get_file("klassen").get(klasse, {}).has("lernen_bei") else klasse
+
+
 func item_count(id: String) -> int:
 	return items.get(id, 0)
 

@@ -1,5 +1,5 @@
 {
-	"hinweis": "Klassenwahl-Bildschirm: Lehrmeister (aus design.md), Werte 0–5 für das Diagramm (VORLÄUFIG, Feinschliff am Ende) und eine kurze Ult-Vorschau. Rolle, Region, Mechanik und Reaktion kommen aus scripts/kampf/sandbox.gd.",
+	"hinweis": "Klassenwahl-Bildschirm: Lehrmeister (aus design.md), Werte 0–5 für das Diagramm (VORLÄUFIG, Feinschliff am Ende) und eine kurze Ult-Vorschau. „lernen_bei“: bei dieser Figur lernt man die Klasse (bis dahin kämpft man als Novize); Klassen ohne „lernen_bei“ kämpfen gleich nach der Wahl mit ihrer Klasse, weil ihre Region noch fehlt. Rolle, Region, Mechanik und Reaktion kommen aus scripts/kampf/sandbox.gd.",
 	"wohin": {"Arkanum": "ins Arkanum", "Messinghafen": "nach Messinghafen", "Glutoase": "in die Glutoase", "Grünwacht": "nach Grünwacht", "Nebelinseln": "auf die Nebelinseln"},
 	"reihenfolge": ["tank", "mechanic", "smith", "archer", "blade", "twilight", "tamer", "ritualist", "quartermaster", "kunoichi", "singer"],
 	"tank": {
@@ -18,6 +18,7 @@
 		"ult_vorschau": "Meisterstück: Du schmiedest der ganzen Gruppe Rüstung – Schild und Abwehr für alle, du selbst bist voll gehärtet."
 	},
 	"archer": {
+		"lernen_bei": "fenn",
 		"lehrmeister": "Pfadmeister Fenn",
 		"werte": {"schaden": 5, "schutz": 1, "heilung": 0, "unterstuetzung": 1, "schwierigkeit": 2},
 		"ult_vorschau": "Jägerpfeil: ein einziger, gewaltiger Schuss auf ein Ziel."
@@ -33,6 +34,7 @@
 		"ult_vorschau": "Sonnenfinsternis: Licht oder Schatten trifft jeden Gegner dort, wo er am schwächsten ist – je weiter deine Leiste ausschlägt, desto stärker."
 	},
 	"tamer": {
+		"lernen_bei": "esche",
 		"lehrmeister": "Rudelmeisterin Tilda",
 		"werte": {"schaden": 4, "schutz": 2, "heilung": 1, "unterstuetzung": 2, "schwierigkeit": 4},
 		"ult_vorschau": "Rudelruf: Alle deine Monster greifen gleichzeitig an, jedes mit seinem Element."

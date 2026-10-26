@@ -51,6 +51,7 @@
 	"auftragsbuch_leer": "Noch keine Aufträge. Sprich mit den Leuten in der Stadt!",
 	"tasche": "Tasche",
 	"tasche_leer": "Die Tasche ist leer.",
+	"werte_noch_novize": "Du hast den Weg %s gewählt, kämpfst aber noch als Novize. Die Klasse lernst du bei %s.",
 	"tasche_tipp": "Klick auf einen Gegenstand zeigt, was er ist. Ziehen und Ablegen verschiebt ihn in ein anderes Kästchen.",
 	"stand_aktiv": "läuft",
 	"stand_fertig": "erfüllt – abgeben!",

@@ -8,8 +8,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Neu (25.10.): Playtest-Rückmeldungen Teil 1 eingebaut** (Liste im Brainstorm-Doc unter „Testtag-Notizen“):
   Fehler (Ye-Laternen, Silberhirsch, Pilzhöhle), Parier-Tutorial, Abwarten für alle, Aufträge allein und Dungeon nur für die Gruppe,
   Nebenauftrag-Wegweiser 1-2-3, Auftragsbuch-Reiter, Monster-Stall und Rudel-Fenster, Kobalt hinter seinem Monster,
-  Passive und Reaktion als Kästchen im Kampf. **Neu (26.10.):** Tasche mit Kästchen und Ziehen (Projekt 0, Schritt 1).
-  **Noch offen:** Klasse erst beim Lehrer lernen, Kael auf einer anderen Plattform, größeres Grünwacht.
+  Passive und Reaktion als Kästchen im Kampf. **Neu (26.10.):** Tasche mit Kästchen und Ziehen (Projekt 0, Schritt 1), Klasse erst beim Lehrmeister (Schritt 2),
+  Kael auf der Westplattform (Schritt 3). **Noch offen:** größeres Grünwacht (Schritt 4).
 
 - **Neu (22.10.): Marcos Rückmeldungen zur ersten Stadt eingebaut** – Einzelheiten unter „Fertig in Runde 2“ →
   „Rückmeldungen vom 22.10.“, Test-Liste ganz oben unter „Was du testen kannst“.
@@ -50,6 +50,33 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
+
+- **Projekt 0, Schritt 3 – Kael kommt auf einer anderen Plattform dazu** (26.10., fertig):
+  - Kael steht nicht mehr neben Ysolde. Nach den leuchtenden Tieren sagt Ysolde: Auf der **Westplattform beim
+    Seilaufzug** treibt sich ein Fremder herum. Neuer kleiner Auftrag **„Ein Fremder in Wipfelheim“**, der Wegweiser
+    zeigt hinüber.
+  - Kommt man auf der Westplattform in seine Nähe, **läuft Kael auf einen zu** und spricht einen an. Danach geht es
+    weiter wie bisher (das leere Grab). Kael bleibt danach auf der Westplattform stehen.
+  - Ältere Spielstände (Tiere schon erledigt, Kael noch nicht getroffen) bekommen den Auftrag bei Ysolde („!“).
+  - **So testest du es:** Grünwacht bis nach den leuchtenden Tieren spielen und bei Ysolde abgeben. Dem Wegweiser
+    über die Brücke zur Westplattform folgen: Kael läuft auf dich zu.
+
+- **Projekt 0, Schritt 2 – Klasse erst beim Lehrmeister lernen** (26.10., fertig):
+  - Bei Ye wählt man nur noch seinen Weg. Bogenschützen und Zähmer bekommen beim Abschied den Auftrag
+    **„Beim Lehrmeister lernen“** und kämpfen **bis dahin als Novize** (auch gegen die Monster auf dem Weg).
+  - Nach dem Gespräch mit Ysolde zeigt der Wegweiser zum Lehrmeister:
+    **Bogenschütze → Pfadmeister Fenn.** Wer die Prüfung der drei Ziele besteht, ist Bogenschütze.
+    (Die Scheiben-Lektionen selbst schießt man schon mit dem Bogen, das ist ja der Unterricht.)
+    **Zähmer → Professor Esche.** Mit dem ersten Monster ist man Zähmer (sonst ginge Tildas Zähm-Unterricht nicht).
+  - Unter **Werte (C)** steht bis dahin: „Du hast den Weg … gewählt, kämpfst aber noch als Novize.“
+  - Die **anderen Klassen** kämpfen wie bisher gleich nach der Wahl mit ihrer Klasse, weil ihre Region und ihr
+    Lehrmeister noch fehlen (Beschluss vom 21.10.). Kommt ihre Region dazu, reicht in `data/klassen.json` ein Eintrag
+    `lernen_bei`.
+  - Alte Spielstände: Wer schon in Grünwacht ist und die Klasse noch nicht beim Lehrmeister gelernt hat, kämpft
+    jetzt ebenfalls als Novize, bis Fenn bzw. Esche erledigt sind.
+  - **So testest du es:** „Neu beginnen“, bis zur Klassenwahl spielen und Bogenschütze (oder Zähmer) wählen. Auf dem
+    Weg nach Grünwacht kämpft man als Novize (Schlag, Kraftschlag, Erste Hilfe). In Wipfelheim erst zu Ysolde, dann
+    führt der Wegweiser zu Fenn (bzw. Esche). Nach der Prüfung (bzw. dem ersten Monster) kämpft man mit der Klasse.
 
 - **Projekt 0, Schritt 1 – Tasche wie in klassischen Spielen** (26.10., fertig):
   - Die Tasche (I) zeigt jetzt **30 Kästchen** (3 Reihen à 10). In jedem liegt ein Gegenstand mit **kleinem Bild**

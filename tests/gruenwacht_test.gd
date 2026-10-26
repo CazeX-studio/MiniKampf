@@ -189,7 +189,17 @@ func _test_old_save() -> void:
 
 
 ## Andere Klassen dürfen auch nach Grünwacht (Entscheidung 21.10.).
+## Bogenschütze und Zähmer lernen ihre Klasse erst beim Lehrmeister (Playtest 25.10.), die anderen kämpfen gleich mit ihrer.
 func _test_classes() -> void:
+	var start_quest: Array = [{"auftrag_starten": "klasse_lernen", "wenn": {"oder": [{"klasse": "archer"}, {"klasse": "tamer"}]}}]
+	for klasse: String in ["archer", "tamer", "ritualist"]:
+		var world := WorldState.new()
+		var p := world.add_player("a", "Test", "elf_m", Vector2i(6, 15))
+		p.progress.flags["klasse"] = klasse
+		world.run_actions(p, start_quest)
+		var learns := klasse != "ritualist"
+		_check((p.progress.quest_state("klasse_lernen") == "aktiv") == learns, "%s: Auftrag „Beim Lehrmeister lernen“ nur mit Lehrmeister" % klasse)
+		_check(p.progress.battle_class() == ("" if learns else klasse), "%s: Klasse im Kampf vor dem Lehrmeister" % klasse)
 	for klasse: String in ["tamer", "ritualist"]:
 		var world := WorldState.new()
 		var p := world.add_player("a", "Test", "elf_m", Vector2i(6, 15))
@@ -326,9 +336,13 @@ func _test_fenn(choice: String) -> void:
 	world.battle_requested.connect(func(_id: String, kampf: String) -> void: battles.append(kampf))
 	var p := world.add_player("a", "Test", "elf_m", Vector2i(6, 15))
 	p.progress.flags["klasse"] = "archer"
+	p.progress.flags["klasse_bestaetigt"] = true
 	p.progress.quests["nach_gruenwacht"] = "abgegeben"
+	p.progress.quests["klasse_lernen"] = "aktiv"
 	p.progress.level = 12
 	world.change_map(p, "wipfelheim", Vector2i(16, 5))
+	_check(p.progress.battle_class() == "", "Bogenschütze vor Fenns Prüfung: kämpft noch als Novize")
+	_check(world.objective(p).contains("Fenn"), "Ziel: zu Pfadmeister Fenn")
 	_check(world.npc_marker(p, "fenn") == "!", "Fenn hat ein „!“ für den Bogenschützen")
 	var other := world.add_player("b", "Zähmer", "elf_f", Vector2i(6, 15))
 	other.progress.flags["klasse"] = "tamer"
@@ -368,6 +382,7 @@ func _test_fenn(choice: String) -> void:
 	_tick(world, 4.0)
 	world.apply_command("a", {type = "dialog_next"})
 	_check(p.progress.quest_state("fenns_pruefung") == "abgegeben" and p.progress.flags.has("klasse_gelernt"), "Prüfung bestanden (%s)" % choice)
+	_check(p.progress.quest_state("klasse_lernen") == "abgegeben" and p.progress.battle_class() == "archer", "Klasse bei Fenn gelernt: kämpft jetzt als Bogenschütze")
 	if choice == "verschonen":
 		_check(p.progress.flags.has("erfolg:jaeger_schiesst_nicht"), "Erfolg „Ein Jäger weiß, wann er nicht schießt“")
 	else:
@@ -387,8 +402,10 @@ func _test_tamer(kobalt_won: bool) -> void:
 	var p := world.add_player("a", "Test", "elf_m", Vector2i(6, 15))
 	p.progress.flags["klasse"] = "tamer"
 	p.progress.quests["nach_gruenwacht"] = "abgegeben"
+	p.progress.quests["klasse_lernen"] = "aktiv"
 	p.progress.level = 13
 	world.change_map(p, "wipfelheim", Vector2i(14, 22))
+	_check(p.progress.battle_class() == "" and world.objective(p).contains("Esche"), "Zähmer vor Esche: noch Novize, Ziel Esche")
 	_check(world.npc_marker(p, "esche") == "!" and world.npc_marker(p, "fenn") == "", "Zähmer: „!“ bei Esche, nicht bei Fenn")
 	world.apply_command("a", {type = "talk", npc = "esche"})
 	_tick(world, 3.0)
@@ -398,6 +415,7 @@ func _test_tamer(kobalt_won: bool) -> void:
 	_check(answers.size() == 4 and str(answers[1]).begins_with("Glutwelpe"), "Esche zeigt die drei Start-Monster")
 	world.apply_command("a", {type = "dialog_choose", index = 1})
 	_check(p.progress.flags.get("monster", []) == ["glutwelpe"] and p.progress.item_count("schleuder") == 1, "Glutwelpe gewählt, Schleuder bekommen")
+	_check(p.progress.quest_state("klasse_lernen") == "abgegeben" and p.progress.battle_class() == "tamer", "Klasse bei Esche gelernt: kämpft jetzt als Zähmer")
 	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "dialog_next"})
 	_check(not p.in_dialog() or p.dialog.id == "kobalt", "Esche ist fertig")
@@ -527,17 +545,28 @@ func _test_story(side: String) -> void:
 	_tick(world, 2.0)
 	_check(world.dialog_view(p).text.contains("Ein Tier weniger" if side == "jaeger" else "nicht getötet"), "Ysolde reagiert auf die Entscheidung")
 	world.apply_command("a", {type = "dialog_next"})
-	world.apply_command("a", {type = "dialog_next"})
+	if side == "zaehmer":
+		world.apply_command("a", {type = "dialog_next"})
 	_check(p.progress.quest_state("veraenderte_tiere") == "abgegeben", "Auftrag abgegeben")
+	_check(p.in_dialog() and world.dialog_view(p).text.contains("Westplattform"), "Ysolde schickt einen zur Westplattform")
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.quest_state("der_fremde") == "aktiv", "Auftrag „Ein Fremder in Wipfelheim“")
 	_check(world._npc_present(p, "kael"), "Kael ist jetzt in Wipfelheim")
-	# Kael kommt angelaufen
+	# Kael steht nicht neben Ysolde und spricht einen dort nicht an
+	_check((Vector2(world.npcs.kael.cell) - Vector2(world.npcs.ysolde.cell)).length() > 8.0, "Kael steht weit weg von Ysolde")
 	_tick(world, 4.0)
-	_check(p.in_dialog() and p.dialog.id == "kael", "Kael spricht einen an")
+	_check(not p.in_dialog(), "Bei Ysolde spricht Kael einen nicht an")
+	_check(world.objective_cell(p) != Vector2i(-1, -1), "Wegweiser zeigt zum Fremden")
+	# Über die Brücke zur Westplattform: Kael kommt angelaufen
+	_walk(world, p, Vector2i(8, 14))
+	_tick(world, 4.0)
+	_check(p.in_dialog() and p.dialog.id == "kael", "Auf der Westplattform kommt Kael angelaufen und spricht einen an")
 	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "dialog_choose", index = 0})
 	world.apply_command("a", {type = "dialog_next"})
 	_check(p.progress.flags.has("kael_getroffen") and world.dialog_view(p).text.contains("leer"), "Kael: Rowans Grab ist leer")
+	_check(p.progress.quest_state("der_fremde") == "abgegeben", "Der Fremde ist Kael: Auftrag erledigt")
 	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "talk", npc = "ysolde"})
 	_tick(world, 2.0)
@@ -563,7 +592,7 @@ func _test_story(side: String) -> void:
 	world.apply_command("a", {type = "dialog_choose", index = 0})
 	_check(scenes == ["erinnerung:rowan"] and p.progress.quest_state("das_leere_grab") == "fertig", "Splitter berührt: Erinnerung öffnet sich")
 	p.progress.flags["angesprochen:marv_gruenwacht"] = true
-	world.change_map(p, "wipfelheim", Vector2i(20, 14))
+	world.change_map(p, "wipfelheim", Vector2i(6, 13))
 	world.apply_command("a", {type = "talk", npc = "kael"})
 	_tick(world, 2.0)
 	world.apply_command("a", {type = "dialog_next"})

@@ -2076,13 +2076,14 @@ func _fill_panel() -> void:
 					if not done_tab:
 						lines.append(q.get("beschreibung", ""))
 						for goal: Dictionary in q.get("ziele", []):
-							lines.append("  • " + state.goal_text(p, goal))
+							if state.goal_shown(p, goal):
+								lines.append("  • " + state.goal_text(p, goal))
 					lines.append("")
 			if lines.is_empty():
 				lines.append(GameData.text("auftragsbuch_leer") if not done_tab else "Noch nichts abgeschlossen.")
 	elif _panel_mode == "werte":
 		_panel_title.text = GameData.text("werte")
-		var klasse := str(p.progress.flags.get("klasse", ""))
+		var klasse := p.progress.battle_class()
 		if p.progress.flags.has("klasse_bestaetigt") and Sandbox.CLASSES.has(klasse):
 			# Nach der Klassenwahl: Werte der eigenen Klasse (so kämpft man in der Wildnis)
 			var data: Dictionary = Sandbox.CLASSES[klasse]
@@ -2105,6 +2106,12 @@ func _fill_panel() -> void:
 			_panel_text.text = "\n".join(lines)
 			return
 		var stats := Grundwerte.for_level(p.progress.level)
+		var chosen := str(p.progress.flags.get("klasse", ""))
+		if p.progress.flags.has("klasse_bestaetigt") and Sandbox.CLASSES.has(chosen):
+			# Klasse gewählt, aber noch nicht beim Lehrmeister gelernt: noch Novize
+			lines.append("[color=#f2c14e]%s[/color]" % GameData.text("werte_noch_novize", [Sandbox.CLASSES[chosen].title,
+					GameData.get_file("klassen").get(chosen, {}).get("lehrmeister", "?")]))
+			lines.append("")
 		lines.append("[b]Stufe %d[/b]" % p.progress.level)
 		lines.append("")
 		for key: String in Grundwerte.NAMES:
@@ -2184,7 +2191,7 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 	if player_id != local_id:
 		return
 	var progress := local_player().progress
-	if BattleRequest.prepare(kampf_id, progress.level, progress.item_count("heiltrank"), str(progress.flags.get("klasse", "")),
+	if BattleRequest.prepare(kampf_id, progress.level, progress.item_count("heiltrank"), progress.battle_class(),
 			progress.flags.get("monster", [])):
 		SaveGame.save(local_player())
 		get_tree().change_scene_to_file.call_deferred("res://scenes/kampf.tscn")
