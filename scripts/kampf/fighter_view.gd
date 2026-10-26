@@ -83,7 +83,7 @@ const LOOKS := {
 }
 ## Bilder pro Sekunde. attack, death, parry und victory haben bisher nur eigene Figuren (z. B. Vega);
 ## fehlen sie, nimmt die Anzeige wie bisher run bzw. hit.
-const ANIM_FPS := {"idle": 6.0, "run": 12.0, "hit": 8.0, "attack": 10.0, "death": 8.0, "parry": 12.0, "victory": 6.0}
+const ANIM_FPS := {"idle": 6.0, "run": 12.0, "hit": 8.0, "attack": 8.0, "death": 6.0, "parry": 6.0, "victory": 5.0}
 ## Diese Animationen laufen einmal durch und bleiben auf dem letzten Bild stehen (die anderen wiederholen sich)
 const ANIM_ONCE := ["attack", "death", "parry", "hit"]
 
@@ -332,19 +332,19 @@ func cast_attack(release: float) -> void:
 	_set_anim("attack")
 	_anim_time = 0.0
 	_anim_fps = 0.0
-	_anim_times = [0.0, release * 0.3, release * 0.65, release, release + 0.35, release + 0.5]
-	_hold = release + 0.75
+	_anim_times = [0.0, release * 0.33, release * 0.66, release, release + 0.3, release + 0.6]
+	_hold = release + 0.95
 	var dir := -1.0 if fighter.is_ally() else 1.0
 	var tween := create_tween()
 	tween.tween_property(body, "position", _home + Vector2(dir * 10.0, 0), release).set_trans(Tween.TRANS_SINE)
-	tween.tween_interval(0.35)
-	tween.tween_property(body, "position", _home, 0.3).set_trans(Tween.TRANS_SINE)
+	tween.tween_interval(0.6)
+	tween.tween_property(body, "position", _home, 0.35).set_trans(Tween.TRANS_SINE)
 
 
 ## Erfolgreiche Parade (nur Figuren mit eigener Parier-Animation). Läuft schon eine, wird sie nicht neu gestartet.
 func parry_pose() -> void:
 	if has_anim("parry") and shown_hp() > 0 and not parrying():
-		play("parry", 0.75, 7.0)
+		play("parry", 0.95)
 
 
 ## Hält die Figur gerade die Parier-Pose?
@@ -413,10 +413,18 @@ func lunge(target_point: Vector2, duration: float) -> void:
 
 ## Kleiner Hüpfer beim Wirken einer Fähigkeit.
 func cast_hop() -> void:
+	# Während einer Parade bleibt die Parier-Pose stehen (z. B. Freude über die perfekte Parade)
+	if parrying():
+		return
 	if has_anim("attack"):
-		play("attack", 0.7)
-	else:
-		play("run", 0.3)
+		# Eigene Figuren heben nur den Stab (die ersten drei Angriffs-Bilder, ohne Geschoss)
+		_set_anim("attack")
+		_anim_time = 0.0
+		_anim_fps = 0.0
+		_anim_times = [0.0, 0.2, 0.4, 99.0]
+		_hold = 0.9
+		return
+	play("run", 0.3)
 	var tween := create_tween()
 	tween.tween_property(body, "position", _home + Vector2(0, -14), 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tween.tween_property(body, "position", _home, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)

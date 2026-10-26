@@ -10,8 +10,9 @@ extends Control
 signal _action_chosen(command: Dictionary)
 signal _choice_made(id: String)
 
-## So lange freuen sich die Helden nach einem Sieg, bevor die Auswertung erscheint (zwei Runden der Sieges-Animation)
-const VICTORY_POSE := 1.4
+## So lange freuen sich die Helden nach einem Sieg, bevor die Auswertung erscheint (drei Runden der Sieges-Animation).
+## Danach jubeln sie hinter der halb durchsichtigen Auswertung weiter.
+const VICTORY_POSE := 2.4
 const SCREEN := Vector2(1280, 720)
 ## Kampfbildschirm wie Final Fantasy 6: Gegner links, Helden rechts in zwei Reihen.
 const FRONT_X := 740.0
@@ -969,7 +970,7 @@ func lunge(f: Fighter, target: Fighter, duration: float) -> void:
 	var target_view := view(target)
 	# Figuren mit eigener Angriffs-Animation (z. B. Vega) greifen aus der Ferne an: ausholen, Geschoss, Treffer
 	if view(f).has_anim("attack"):
-		var release := maxf(duration, 0.4)
+		var release := maxf(duration, 0.6)
 		view(f).cast_attack(release)
 		await wait(release)
 		await projectile(f, target, Color("7ac8ff"), 0.22)
@@ -1573,14 +1574,19 @@ func _reward_text() -> String:
 
 func _show_end_screen(won: bool) -> void:
 	var shade := ColorRect.new()
-	shade.color = Color(0, 0, 0, 0.82)
+	shade.color = Color(0, 0, 0, 0.62 if won else 0.82)
 	shade.size = SCREEN
 	shade.z_index = 30
 	add_child(shade)
+	# Sanft einblenden, damit man die feiernde Gruppe noch sieht
+	shade.modulate.a = 0.0
+	create_tween().tween_property(shade, "modulate:a", 1.0, 0.5)
 	var title := Label.new()
 	title.text = "SIEG!" if won else "NIEDERLAGE"
 	title.add_theme_font_size_override("font_size", 52)
 	title.add_theme_color_override("font_color", Color("6dff8a") if won else Color("ff6b6b"))
+	title.add_theme_color_override("font_outline_color", Color.BLACK)
+	title.add_theme_constant_override("outline_size", 8)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.size = Vector2(SCREEN.x, 70)
 	title.position = Vector2(0, 40)
@@ -1592,6 +1598,8 @@ func _show_end_screen(won: bool) -> void:
 		sub.text += (" · Urbaum gefällt" if Sandbox.pilz_choice == "faellen" else " · Urbaum gerettet") + " · Belohnung: Sternensplitter"
 	sub.add_theme_font_size_override("font_size", 18)
 	sub.add_theme_color_override("font_color", Color("f2c14e"))
+	sub.add_theme_color_override("font_outline_color", Color.BLACK)
+	sub.add_theme_constant_override("outline_size", 4)
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	sub.size = Vector2(SCREEN.x, 30)
 	sub.position = Vector2(0, 112)
@@ -1612,7 +1620,7 @@ func _show_end_screen(won: bool) -> void:
 	# Tabelle: eine Zeile pro Klasse (Begleiter zählen beim Besitzer mit)
 	var grid := GridContainer.new()
 	grid.columns = 8
-	grid.position = Vector2(110, 190)
+	grid.position = Vector2(110, 320)
 	grid.add_theme_constant_override("h_separation", 26)
 	grid.add_theme_constant_override("v_separation", 10)
 	shade.add_child(grid)
@@ -1646,7 +1654,7 @@ func _show_end_screen(won: bool) -> void:
 	hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.6))
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	hint.size = Vector2(SCREEN.x, 50)
-	hint.position = Vector2(0, 470)
+	hint.position = Vector2(0, 492)
 	shade.add_child(hint)
 
 	if BattleRequest.active():
@@ -1695,4 +1703,6 @@ func _cell(text: String, color: Color, font_size: int) -> Label:
 	label.text = text
 	label.add_theme_font_size_override("font_size", font_size)
 	label.add_theme_color_override("font_color", color)
+	label.add_theme_color_override("font_outline_color", Color.BLACK)
+	label.add_theme_constant_override("outline_size", 4)
 	return label

@@ -51,6 +51,19 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **Vegas Animationen, zweite Runde** (27.10., Marcos Test im Browser):
+  - **Kein Schuss mehr beim Blocken:** Nach einer perfekten Parade gab es einen kleinen „Hüpfer“, der bei Vega die
+    Schuss-Animation abspielte. Jetzt bleibt die Parier-Pose stehen. Bei Zaubern (z. B. Erste Hilfe) hebt sie nur den
+    Stab (die ersten drei Angriffs-Bilder, ohne Geschoss).
+  - **Langsamer:** Angriff etwa 1,1 Sekunden (Ausholen in drei Bildern, Geschoss, Ausschwingen), Parade etwa
+    0,7 Sekunden, Jubeln und Fallen gemächlicher.
+  - **Siegespose länger und sichtbar:** 2,4 Sekunden Jubeln, dann blendet die Auswertung sanft und halb durchsichtig
+    ein. Die Tabelle steht weiter unten, die Gruppe jubelt oben sichtbar weiter.
+  - Neues Prüf-Werkzeug `tests/vega_ablauf_auto.tscn`: spielt einen echten Kampf mit Vega und schreibt mit, welche
+    Animation sie wann zeigt.
+  - **Hinweis zum Browser:** GitHub hält die Seite bis zu 10 Minuten im Zwischenspeicher. Wenn etwas „wie vorher“
+    aussieht: Seite mit Strg+F5 (am Handy: Tab schließen und neu öffnen) laden.
+
 - **Kampfende und Vegas Animationen nachgebessert** (27.10., Marcos Rückmeldung):
   - **Siegespose nach jedem gewonnenen Kampf:** Die Helden freuen sich 1,4 Sekunden (zwei Runden Jubeln), erst dann
     kommt die Auswertung. Die Dauer steht in `combat.gd` unter `VICTORY_POSE`.
