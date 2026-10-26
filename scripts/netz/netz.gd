@@ -72,8 +72,8 @@ const CHAT_HISTORY := 30
 const MAX_PLAYERS := 4
 ## So oft pro Sekunde schickt der Gastgeber, wo alle stehen
 const SNAPSHOT_RATE := 15.0
-## Diese Figuren kann man sich aussuchen (Namen aus dem 0x72-Paket)
-const LOOKS: Array[String] = ["elf_m", "elf_f", "knight_m", "knight_f", "wizzard_m", "wizzard_f", "lizard_m", "lizard_f"]
+## Diese Figuren kann man sich aussuchen (eigene Figuren aus assets/figuren/, sonst Namen aus dem 0x72-Paket)
+const LOOKS: Array[String] = ["vega", "elf_m", "elf_f", "knight_m", "knight_f", "wizzard_m", "wizzard_f", "lizard_m", "lizard_f"]
 
 static var mode := Mode.OFFLINE
 ## Die Welt: beim Gastgeber die echte, bei Mitspielern das Spiegelbild. Offline: null.
@@ -81,7 +81,7 @@ static var world: WorldState
 ## Kennung des eigenen Spielers in der Welt ("p1" = Gastgeber)
 static var my_id := ""
 static var my_name := ""
-static var my_look := "elf_m"
+static var my_look := "vega"
 static var _instance: Netz
 ## Die letzten Chat-Nachrichten: {id, name, text}
 static var chat_log: Array[Dictionary] = []
@@ -664,7 +664,7 @@ func _on_group_battle(ids: Array, kampf_id: String) -> void:
 	for id: String in ids:
 		var p: PlayerState = world.players[id]
 		members.append({name = p.display_name, stufe = p.progress.level, traenke = p.progress.item_count("heiltrank"), aussehen = p.look,
-				klasse = str(p.progress.flags.get("klasse", "")), monster = p.progress.flags.get("monster", [])})
+				klasse = p.progress.battle_class(), monster = p.progress.flags.get("monster", [])})
 	var setup := BattleRequest.build_group(kampf_id, members)
 	if setup.is_empty():
 		return

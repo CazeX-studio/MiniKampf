@@ -80,8 +80,8 @@ func _test_world() -> void:
 	_check(world.shop_wares("bingo").filter(func(w: Dictionary) -> bool: return w.gegenstand == "sternentafel")[0].preis == 5000, "In Akt 1 bleibt sie zu teuer")
 
 	# Marv in Wipfelheim gibt den Auftrag
-	world.change_map(p, "wipfelheim", Vector2i(21, 13))
-	_tick(world, 4.0)
+	world.change_map(p, "wipfelheim", Vector2i(32, 20))
+	_tick(world, 8.0)
 	_check(p.in_dialog() and p.dialog.id == "marv_gruenwacht", "Marv spricht einen an")
 	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "dialog_choose", index = 0})
@@ -92,7 +92,7 @@ func _test_world() -> void:
 	# Bei Bingo in Kreuzweg kaufen
 	world.change_map(p, "kreuzweg", Vector2i(10, 31))
 	world.apply_command("a", {type = "talk", npc = "bingo"})
-	_tick(world, 3.0)
+	_tick(world, 6.0)
 	_check(p.dialog.get("node", "") == "heimkehr", "Bingo begrüßt Heimkehrer")
 	world.apply_command("a", {type = "dialog_choose", index = 1})
 	world.apply_command("a", {type = "kaufen", gegenstand = "sternentafel"})
@@ -100,26 +100,26 @@ func _test_world() -> void:
 	world.apply_command("a", {type = "laden_zu"})
 
 	# Die eine Partie mit Marv
-	world.change_map(p, "wipfelheim", Vector2i(21, 14))
+	world.change_map(p, "wipfelheim", Vector2i(32, 21))
 	world.apply_command("a", {type = "talk", npc = "marv_gruenwacht"})
-	_tick(world, 2.0)
+	_tick(world, 5.0)
 	_check(p.dialog.get("node", "") == "tafel_da", "Marv sieht die Tafel")
 	world.apply_command("a", {type = "dialog_choose", index = 0})
 	_check(scenes == ["kartenspiel:marv"] and p.progress.flags.get("karten", {}).size() == 7, "Partie beginnt, 7 Startkarten")
 	world.apply_command("a", {type = "karten_ergebnis", gegner = "marv", gewonnen = true})
 	_check(p.progress.flags.has("gespielt:marv") and p.progress.quest_state("marvs_partie") == "fertig", "Partie gespielt")
 	world.apply_command("a", {type = "talk", npc = "marv_gruenwacht"})
-	_tick(world, 2.0)
+	_tick(world, 5.0)
 	world.apply_command("a", {type = "dialog_next"})
 	_check(p.progress.flags.has("erfolg:marv_hatte_zeit"), "Erfolg „Marv hatte Zeit“")
 	world.apply_command("a", {type = "talk", npc = "marv_gruenwacht"})
-	_tick(world, 2.0)
+	_tick(world, 5.0)
 	_check(world.dialog_view(p).text.contains("Eichhörnchen"), "Danach nur noch Ausreden")
 	world.apply_command("a", {type = "dialog_next"})
 
 	# Oma Hagebutte: Karte beim ersten Sieg
 	world.apply_command("a", {type = "talk", npc = "oma_hagebutte"})
-	_tick(world, 4.0)
+	_tick(world, 8.0)
 	world.apply_command("a", {type = "dialog_choose", index = 0})
 	_check(scenes.back() == "kartenspiel:oma_hagebutte", "Partie gegen Oma Hagebutte")
 	var gold := p.progress.gold
@@ -129,7 +129,7 @@ func _test_world() -> void:
 	_check(int(p.progress.flags.karten.get("wilder_moosling", 0)) == 1, "Die Karte gibt es nur beim ersten Sieg")
 	_check(p.progress.quest_state("omas_herausforderung") == "fertig", "Nebenauftrag „Omas Herausforderung“ erfüllt")
 	world.apply_command("a", {type = "talk", npc = "oma_hagebutte"})
-	_tick(world, 4.0)
+	_tick(world, 8.0)
 	_check(world.dialog_view(p).text.contains("vierzig Jahren!"), "Oma ist geschlagen")
 	world.apply_command("a", {type = "dialog_next"})
 	_check(p.progress.quest_state("omas_herausforderung") == "abgegeben", "Omas Herausforderung abgegeben")

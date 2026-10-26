@@ -1,7 +1,7 @@
 {
 	"start": {"feld": [22, 40], "dialog": "ankunft", "nur_wenn_nicht_gemerkt": "angekommen"},
 	"ausgaenge": [
-		{"bereich": [0, 21, 1, 3], "karte": "weg_gruenwacht", "feld": [37, 6], "wenn": {"gemerkt": "klasse_bestaetigt"}}
+		{"bereich": [0, 21, 1, 3], "karte": "weg_gruenwacht", "feld": [56, 9], "wenn": {"gemerkt": "klasse_bestaetigt"}}
 	],
 	"npcs": {
 		"ye": {"name": "Ausbilder Ye", "feld": [29, 15], "aussehen": "wizzard_m", "farbe": "ccdbf2", "dialog": "ye", "wenn": {"nicht_gemerkt": "ausbildung_morgen"}},

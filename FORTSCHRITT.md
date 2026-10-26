@@ -3,13 +3,13 @@
 Hier steht, was fertig ist, was als Nächstes kommt und welche Fragen offen sind.
 Wird nach jedem Arbeitsschritt aktualisiert.
 
-## Aktueller Stand (2026-10-25)
+## Aktueller Stand (2026-10-26)
 
 - **Neu (25.10.): Playtest-Rückmeldungen Teil 1 eingebaut** (Liste im Brainstorm-Doc unter „Testtag-Notizen“):
   Fehler (Ye-Laternen, Silberhirsch, Pilzhöhle), Parier-Tutorial, Abwarten für alle, Aufträge allein und Dungeon nur für die Gruppe,
   Nebenauftrag-Wegweiser 1-2-3, Auftragsbuch-Reiter, Monster-Stall und Rudel-Fenster, Kobalt hinter seinem Monster,
-  Passive und Reaktion als Kästchen im Kampf. **Noch offen:** Tasche mit Kästchen und Ziehen, Klasse erst beim Lehrer
-  lernen, Kael auf einer anderen Plattform, größeres Grünwacht.
+  Passive und Reaktion als Kästchen im Kampf. **Neu (26.10.):** Tasche mit Kästchen und Ziehen (Projekt 0, Schritt 1), Klasse erst beim Lehrmeister (Schritt 2),
+  Kael auf der Westplattform (Schritt 3), größeres Grünwacht (Schritt 4). **Projekt 0 ist damit fertig.**
 
 - **Neu (22.10.): Marcos Rückmeldungen zur ersten Stadt eingebaut** – Einzelheiten unter „Fertig in Runde 2“ →
   „Rückmeldungen vom 22.10.“, Test-Liste ganz oben unter „Was du testen kannst“.
@@ -21,7 +21,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
   Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
   gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
-- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Nächster Schritt: Projekt 3 „Geld“, Bronze, Silber, Gold.
+- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Nächster Schritt: Projekt 3 „Geld“, Bronze, Silber, Gold.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -50,6 +50,71 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
+
+- **Erste eigene Figur: Vega** (26.10.):
+  - Marcos Bildblatt (4 × Stehen, 4 × Laufen, 1 × Getroffen) ist in Einzelbilder zerlegt, auf 47 × 44 Pixel
+    verkleinert (gemeinsame Fußlinie, damit nichts hüpft), mit gemeinsamer Farbpalette und ohne rote Ränder.
+    Die Bilder liegen in `assets/figuren/` (`vega_idle_anim_f0.png` usw.).
+  - Vega ist jetzt **deine Spielfigur**: beim Alleinspielen in der Welt und im Kampf, solange du Novize bist
+    (danach zeigt der Kampf wie bisher die Figur der Klasse). Beim Zusammenspielen ist sie die erste wählbare Figur.
+  - In der Welt wird sie 2-fach, im Kampf 3-fach vergrößert (die alten Figuren 3- und 4-fach, weil sie kleiner gezeichnet sind).
+  - Neue Figuren gehen genauso: Bilder mit demselben Namensmuster in `assets/figuren/` legen, das Spiel findet sie selbst.
+  - **So testest du es:** Spiel starten: Du läufst als Vega durch Kreuzweg. Einen Kampf bei Ye beginnen: Vega steht
+    rechts und schaut zum Gegner, beim Treffer kneift sie die Augen zu.
+
+- **Projekt 0, Schritt 4 – Grünwacht größer** (26.10., fertig):
+  - **Weg nach Grünwacht, Waldboden und Wipfelheim sind um die Hälfte größer** (Faktor 1,5 in beide Richtungen):
+    Weg 60 × 20 statt 40 × 13 Felder, Waldboden 45 × 39 statt 30 × 26, Wipfelheim 48 × 42 statt 32 × 28.
+  - Plattformen, Brücken und Wege sind breiter. Bäume, Büsche, Pilze, Steine und Zielscheiben bleiben einzeln und
+    **rücken auseinander**, statt größer zu werden. Häuser behalten ihre Größe, stehen aber weiter auseinander.
+  - Figuren, Monster, Orte (Seilaufzug, Grab, Hirsch, Bienenstock, Höhleneingang), Ausgänge und Wegweiser sind
+    mitgewandert. Wie nah man einer Figur kommen muss, bis sie auf einen zuläuft (Kael, Kobalt, Marv), ist mitgewachsen.
+  - Die Pilzhöhle ist gleich geblieben (ist ein Dungeon und war nicht zu eng).
+  - Wer schon in Grünwacht gespeichert hat, steht nach dem Laden an derselben Stelle der größeren Karte.
+  - Ist es zu groß oder noch zu klein: Bescheid sagen, dann passe ich die Karten nach.
+  - **So testest du es:** Von Kreuzweg über den Weg nach Grünwacht, durch den Wald und mit dem Seilaufzug nach
+    Wipfelheim laufen: Es fühlt sich weiter an, nichts klemmt, keine Figur steht zu dicht an einer anderen.
+
+- **Projekt 0, Schritt 3 – Kael kommt auf einer anderen Plattform dazu** (26.10., fertig):
+  - Kael steht nicht mehr neben Ysolde. Nach den leuchtenden Tieren sagt Ysolde: Auf der **Westplattform beim
+    Seilaufzug** treibt sich ein Fremder herum. Neuer kleiner Auftrag **„Ein Fremder in Wipfelheim“**, der Wegweiser
+    zeigt hinüber.
+  - Kommt man auf der Westplattform in seine Nähe, **läuft Kael auf einen zu** und spricht einen an. Danach geht es
+    weiter wie bisher (das leere Grab). Kael bleibt danach auf der Westplattform stehen.
+  - Ältere Spielstände (Tiere schon erledigt, Kael noch nicht getroffen) bekommen den Auftrag bei Ysolde („!“).
+  - **So testest du es:** Grünwacht bis nach den leuchtenden Tieren spielen und bei Ysolde abgeben. Dem Wegweiser
+    über die Brücke zur Westplattform folgen: Kael läuft auf dich zu.
+
+- **Projekt 0, Schritt 2 – Klasse erst beim Lehrmeister lernen** (26.10., fertig):
+  - Bei Ye wählt man nur noch seinen Weg. Bogenschützen und Zähmer bekommen beim Abschied den Auftrag
+    **„Beim Lehrmeister lernen“** und kämpfen **bis dahin als Novize** (auch gegen die Monster auf dem Weg).
+  - Nach dem Gespräch mit Ysolde zeigt der Wegweiser zum Lehrmeister:
+    **Bogenschütze → Pfadmeister Fenn.** Wer die Prüfung der drei Ziele besteht, ist Bogenschütze.
+    (Die Scheiben-Lektionen selbst schießt man schon mit dem Bogen, das ist ja der Unterricht.)
+    **Zähmer → Professor Esche.** Mit dem ersten Monster ist man Zähmer (sonst ginge Tildas Zähm-Unterricht nicht).
+  - Unter **Werte (C)** steht bis dahin: „Du hast den Weg … gewählt, kämpfst aber noch als Novize.“
+  - Die **anderen Klassen** kämpfen wie bisher gleich nach der Wahl mit ihrer Klasse, weil ihre Region und ihr
+    Lehrmeister noch fehlen (Beschluss vom 21.10.). Kommt ihre Region dazu, reicht in `data/klassen.json` ein Eintrag
+    `lernen_bei`.
+  - Alte Spielstände: Wer schon in Grünwacht ist und die Klasse noch nicht beim Lehrmeister gelernt hat, kämpft
+    jetzt ebenfalls als Novize, bis Fenn bzw. Esche erledigt sind.
+  - **So testest du es:** „Neu beginnen“, bis zur Klassenwahl spielen und Bogenschütze (oder Zähmer) wählen. Auf dem
+    Weg nach Grünwacht kämpft man als Novize (Schlag, Kraftschlag, Erste Hilfe). In Wipfelheim erst zu Ysolde, dann
+    führt der Wegweiser zu Fenn (bzw. Esche). Nach der Prüfung (bzw. dem ersten Monster) kämpft man mit der Klasse.
+
+- **Projekt 0, Schritt 1 – Tasche wie in klassischen Spielen** (26.10., fertig):
+  - Die Tasche (I) zeigt jetzt **30 Kästchen** (3 Reihen à 10). In jedem liegt ein Gegenstand mit **kleinem Bild**
+    und **Anzahl** unten rechts (z. B. „3“ bei drei Heiltränken).
+  - Gegenstände lassen sich per **Ziehen und Ablegen** verschieben, mit der Maus oder am Handy mit dem Finger.
+    Auf ein belegtes Kästchen gezogen, tauschen die beiden die Plätze. Die Reihenfolge wird im Spielstand gemerkt
+    (auch zusammen online). Neue Gegenstände kommen ins erste freie Kästchen.
+  - **Klick auf ein Kästchen** zeigt unten Name, Anzahl und Beschreibung, bei der Bürste auch „Benutzen“.
+  - Die Bilder sind gezeichnete Platzhalter (Trank, Kraut, Splitter, Wabe, Schleuder, Korb, Bürste, Laterne, Fleisch,
+    Sternentafel), festgelegt in `data/gegenstaende.json` unter `bild`. Mehr als 30 Gegenstände passen trotzdem hinein
+    (dann kommen Kästchen dazu); die feste Grenze mit Hinweis „Tasche voll“ kommt mit Projekt 4.
+  - **So testest du es:** Mit I die Tasche öffnen, einen Gegenstand in ein anderes Kästchen ziehen, Tasche schließen
+    und wieder öffnen: Er liegt noch dort. Auch nach Speichern und neu Laden. Einen Gegenstand anklicken: Unten
+    steht, was er ist.
 
 - **Projekt 1, Schritt 1 – Licht wie bei Octopath Traveler** (22.10., fertig):
   - Lichtquellen werfen jetzt einen **weichen, flackernden Lichtschein** auf Boden, Häuser und Figuren:

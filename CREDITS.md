@@ -7,6 +7,12 @@ Sie sind Platzhalter, bis eigene Grafiken (oder ein Pixel-Künstler) da sind.
 |-------|-----|--------|--------|-------------|
 | 16x16 DungeonTileset II (Version 1.3) | Robert (0x72) | https://0x72.itch.io/dungeontileset-ii | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) (gemeinfrei, Nennung freiwillig) | Helden, Gegner, Wände, Boden, Banner, Säulen, Lava-Brunnen |
 
+**Eigene Figuren** (von CazeX Studio, keine fremde Lizenz) liegen in `assets/figuren/`:
+
+| Figur | Herkunft | Benutzt für |
+|-------|----------|-------------|
+| Vega (`vega_*`) | Von Marco mit KI-Hilfe erstellt (26.10.2026), von Claude Code zugeschnitten, verkleinert und gesäubert | Eigene Spielfigur (Welt und Kampf als Novize), wählbar beim Zusammenspielen |
+
 Die Einzelbilder liegen in `assets/0x72_dungeontileset_ii/`. Da itch.io automatische
 Downloads blockiert, stammen die Dateien aus einer unveränderten Kopie der Einzelbilder
 im öffentlichen Repository https://github.com/benc-uk/super-dungeon-delve

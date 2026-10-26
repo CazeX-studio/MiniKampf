@@ -203,6 +203,7 @@
 		"abgeben_bei": "ysolde",
 		"belohnung": {"gold": 50, "erfahrung": 100}
 	},
+	"klasse_lernen": {"titel": "Beim Lehrmeister lernen", "voraussetzung": "abreise", "beschreibung": "Du hast deinen Weg gewählt, aber noch kämpfst du als Novize. Deine Klasse lernst du erst bei deinem Lehrmeister in Wipfelheim. Sprich vorher mit Ysolde.", "ziele": [{"art": "gemerkt", "merken": "klasse_gelernt", "wegweiser": ["fenn"], "nur_wenn": {"klasse": "archer"}, "wenn": {"auftrag": "nach_gruenwacht", "stand": "abgegeben", "und": [{"auftrag": "fenns_pruefung", "stand": "neu"}]}, "text": "Bei Pfadmeister Fenn die Prüfung der drei Ziele bestehen"}, {"art": "gemerkt", "merken": "klasse_gelernt", "wegweiser": ["esche"], "nur_wenn": {"klasse": "tamer"}, "wenn": {"auftrag": "nach_gruenwacht", "stand": "abgegeben", "und": [{"auftrag": "esches_monster", "stand": "neu"}]}, "text": "Bei Professor Esche dein erstes Monster holen"}], "abgeben_bei": "ysolde", "belohnung": {"erfahrung": 100}},
 	"fenns_pruefung": {
 		"titel": "Die Prüfung der drei Ziele",
 		"beschreibung": "Pfadmeister Fenn prüft jeden Bogenschützen mit drei Zielen: stehende Scheiben, laufende Scheiben – und ein drittes Ziel im Wald.",
@@ -253,6 +254,7 @@
 		"abgeben_bei": "ysolde",
 		"belohnung": {"gold": 50, "erfahrung": 900}
 	},
+	"der_fremde": {"titel": "Ein Fremder in Wipfelheim", "start_bei": "ysolde", "start_wenn": {"nicht_gemerkt": "kael_getroffen"}, "voraussetzung": "veraenderte_tiere", "beschreibung": "Auf der Westplattform beim Seilaufzug treibt sich ein Fremder herum. Ysolde will wissen, wer das ist.", "ziele": [{"art": "gemerkt", "merken": "kael_getroffen", "bei": "kael", "text": "Auf der Westplattform (beim Seilaufzug) nach dem Fremden sehen"}], "abgeben_bei": "ysolde", "belohnung": {"erfahrung": 150}},
 	"das_leere_grab": {
 		"titel": "Das leere Grab",
 		"beschreibung": "Kael sagt, das Grab von Ysoldes Bruder Rowan liegt unten im Wald – und es ist leer. Sieh es dir an.",

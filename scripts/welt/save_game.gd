@@ -8,13 +8,18 @@ const DEFAULT_PATH := "user://spielstand.json"
 static var path := DEFAULT_PATH
 ## Version 2: Ankunft in Kreuzweg (Schritt 2). Ältere Spielstände passen nicht mehr und werden ignoriert.
 const VERSION := 2
+## Stand der Karten: 2 = Grünwacht ist um die Hälfte größer (Playtest 25.10.). Ältere Felder dort werden umgerechnet.
+const MAP_LAYOUT := 2
+const GROWN_MAPS := ["weg_gruenwacht", "waldboden", "wipfelheim"]
+const GROWTH := 1.5
 
 
 static func save(p: PlayerState) -> void:
 	var file := FileAccess.open(path, FileAccess.WRITE)
 	if file == null:
 		return
-	file.store_string(JSON.stringify({version = VERSION, progress = p.progress.to_dict(), karte = p.map, feld = [p.cell.x, p.cell.y]}, "\t"))
+	file.store_string(JSON.stringify({version = VERSION, karten_stand = MAP_LAYOUT, progress = p.progress.to_dict(), karte = p.map,
+			feld = [p.cell.x, p.cell.y]}, "\t"))
 
 
 ## Lädt einen gespeicherten Stand in den Spieler. Gibt false zurück, wenn es keinen gibt.
@@ -30,6 +35,9 @@ static func load_into(p: PlayerState) -> bool:
 	var cell: Array = data.get("feld", [])
 	if cell.size() == 2:
 		p.cell = Vector2i(int(cell[0]), int(cell[1]))
+		# Gespeichert, bevor Grünwacht größer wurde: Feld auf die neue Karte umrechnen
+		if int(data.get("karten_stand", 1)) < MAP_LAYOUT and p.map in GROWN_MAPS:
+			p.cell = Vector2i(ceili(p.cell.x * GROWTH), ceili(p.cell.y * GROWTH))
 		p.pos = Vector2(p.cell)
 	return true
 

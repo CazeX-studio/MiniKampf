@@ -8,6 +8,8 @@ extends Node2D
 ## echter Mitspieler beim Gastgeber an, und die Welt hier ist die des Gastgebers bzw. ihr Spiegelbild.
 ## Alle Texte stehen in res://data (siehe data/LIESMICH.md).
 
+## Eigene Spielfigur beim Alleinspielen (Bilder in assets/figuren/)
+const PLAYER_LOOK := "vega"
 const TILE_W := 64.0
 const TILE_H := 32.0
 const BOT_ID := "gefaehrte"
@@ -125,6 +127,9 @@ var _panel: PanelContainer
 var _panel_title: Label
 var _panel_text: RichTextLabel
 var _panel_mode := ""
+## Kästchen der Tasche (Raster im Taschen-Fenster) und das gerade angeklickte Kästchen
+var _bag_grid: GridContainer
+var _bag_selected := -1
 var _shop_panel: PanelContainer
 var _shop_box: VBoxContainer
 ## Was im Ladenfenster gerade angezeigt wird (zum Neuaufbau bei Änderungen)
@@ -192,7 +197,7 @@ func _ready() -> void:
 		state.fix_position(local)
 		Netz.enter_world(local)
 	else:
-		local = state.add_player(local_id, "Du", "elf_m", WorldState.start_cell())
+		local = state.add_player(local_id, "Du", PLAYER_LOOK, WorldState.start_cell())
 		SaveGame.load_into(local)
 		state.fix_position(local)
 		state.add_player(BOT_ID, "Testgefährte", "lizard_f", WorldState.start_cell() + Vector2i(-1, 0))
@@ -1344,6 +1349,12 @@ func _build_ui() -> void:
 			_fill_panel())
 		_quest_tabs.add_child(tab_button)
 	panel_box.add_child(_quest_tabs)
+	# Tasche: Kästchen mit Bild und Anzahl, per Ziehen und Ablegen umsortieren
+	_bag_grid = GridContainer.new()
+	_bag_grid.columns = 10
+	_bag_grid.add_theme_constant_override("h_separation", 4)
+	_bag_grid.add_theme_constant_override("v_separation", 4)
+	panel_box.add_child(_bag_grid)
 	_panel_text = RichTextLabel.new()
 	_panel_text.bbcode_enabled = true
 	_panel_text.custom_minimum_size = Vector2(570, 330)
@@ -2035,6 +2046,8 @@ func _fill_panel() -> void:
 	var p := local_player()
 	var lines: PackedStringArray = []
 	_quest_tabs.visible = _panel_mode == "auftraege"
+	_bag_grid.visible = _panel_mode == "tasche"
+	_panel_text.custom_minimum_size.y = 150.0 if _panel_mode == "tasche" else 330.0
 	for tab_button: Button in _quest_tabs.get_children():
 		tab_button.button_pressed = tab_button.get_meta("tab") == _quest_tab
 	if _panel_mode == "auftraege":
@@ -2065,13 +2078,14 @@ func _fill_panel() -> void:
 					if not done_tab:
 						lines.append(q.get("beschreibung", ""))
 						for goal: Dictionary in q.get("ziele", []):
-							lines.append("  • " + state.goal_text(p, goal))
+							if state.goal_shown(p, goal):
+								lines.append("  • " + state.goal_text(p, goal))
 					lines.append("")
 			if lines.is_empty():
 				lines.append(GameData.text("auftragsbuch_leer") if not done_tab else "Noch nichts abgeschlossen.")
 	elif _panel_mode == "werte":
 		_panel_title.text = GameData.text("werte")
-		var klasse := str(p.progress.flags.get("klasse", ""))
+		var klasse := p.progress.battle_class()
 		if p.progress.flags.has("klasse_bestaetigt") and Sandbox.CLASSES.has(klasse):
 			# Nach der Klassenwahl: Werte der eigenen Klasse (so kämpft man in der Wildnis)
 			var data: Dictionary = Sandbox.CLASSES[klasse]
@@ -2094,6 +2108,12 @@ func _fill_panel() -> void:
 			_panel_text.text = "\n".join(lines)
 			return
 		var stats := Grundwerte.for_level(p.progress.level)
+		var chosen := str(p.progress.flags.get("klasse", ""))
+		if p.progress.flags.has("klasse_bestaetigt") and Sandbox.CLASSES.has(chosen):
+			# Klasse gewählt, aber noch nicht beim Lehrmeister gelernt: noch Novize
+			lines.append("[color=#f2c14e]%s[/color]" % GameData.text("werte_noch_novize", [Sandbox.CLASSES[chosen].title,
+					GameData.get_file("klassen").get(chosen, {}).get("lehrmeister", "?")]))
+			lines.append("")
 		lines.append("[b]Stufe %d[/b]" % p.progress.level)
 		lines.append("")
 		for key: String in Grundwerte.NAMES:
@@ -2106,14 +2126,17 @@ func _fill_panel() -> void:
 		lines.append("[color=#a0a0a0]%s[/color]" % GameData.text("werte_spaeter"))
 	else:
 		_panel_title.text = GameData.text("tasche")
+		var slots := _fill_bag(p)
 		lines.append("[b]Gold: %d[/b]" % p.progress.gold)
-		lines.append("")
-		for id: String in p.progress.items:
-			var item := GameData.item(id)
-			var use := "  [url=%s][color=#5ab8ff][%s][/color][/url]" % [id, GameData.text("benutzen")] if item.has("benutzen") else ""
-			lines.append("[b]%d × %s[/b] – %s%s" % [p.progress.items[id], item.get("name", id), item.get("beschreibung", ""), use])
-		if p.progress.items.is_empty():
+		var picked := str(slots[_bag_selected]) if _bag_selected >= 0 and _bag_selected < slots.size() else ""
+		if picked != "":
+			var item := GameData.item(picked)
+			var use := "  [url=%s][color=#5ab8ff][%s][/color][/url]" % [picked, GameData.text("benutzen")] if item.has("benutzen") else ""
+			lines.append("[b]%d × %s[/b] – %s%s" % [p.progress.item_count(picked), item.get("name", picked), item.get("beschreibung", ""), use])
+		elif p.progress.items.is_empty():
 			lines.append(GameData.text("tasche_leer"))
+		else:
+			lines.append("[color=#a0a0a0]%s[/color]" % GameData.text("tasche_tipp"))
 		# Kreuzweg-Karten (Sammlung)
 		var cards: Dictionary = p.progress.flags.get("karten", {})
 		if not cards.is_empty():
@@ -2123,6 +2146,27 @@ func _fill_panel() -> void:
 			lines.append("")
 			lines.append("[b]Kreuzweg-Karten (%d):[/b] %s" % [names.size(), ", ".join(names)])
 	_panel_text.text = "\n".join(lines)
+
+
+## Füllt die Kästchen der Tasche. Die Kästchen bleiben dieselben, damit Ziehen und Ablegen nicht abbricht.
+func _fill_bag(p: PlayerState) -> Array:
+	var slots := p.progress.bag_slots()
+	while _bag_grid.get_child_count() < slots.size():
+		var slot := BagSlot.new()
+		slot.index = _bag_grid.get_child_count()
+		slot.moved.connect(func(from: int, to: int) -> void:
+			if _bag_selected == from:
+				_bag_selected = to
+			_send({type = "tasche_tauschen", von = from, nach = to})
+			_fill_panel())
+		slot.picked.connect(func(index: int) -> void:
+			_bag_selected = index
+			_fill_panel())
+		_bag_grid.add_child(slot)
+	for slot: BagSlot in _bag_grid.get_children():
+		var id := str(slots[slot.index]) if slot.index < slots.size() else ""
+		slot.show_item(id, p.progress.item_count(id), slot.index == _bag_selected)
+	return slots
 
 
 ## Ruf bei den Gruppen der Regionen als kleine Leiste (nur Gruppen, bei denen man schon Ruf hat).
@@ -2149,7 +2193,8 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 	if player_id != local_id:
 		return
 	var progress := local_player().progress
-	if BattleRequest.prepare(kampf_id, progress.level, progress.item_count("heiltrank"), str(progress.flags.get("klasse", "")),
+	BattleRequest.player_look = local_player().look
+	if BattleRequest.prepare(kampf_id, progress.level, progress.item_count("heiltrank"), progress.battle_class(),
 			progress.flags.get("monster", [])):
 		SaveGame.save(local_player())
 		get_tree().change_scene_to_file.call_deferred("res://scenes/kampf.tscn")

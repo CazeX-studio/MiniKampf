@@ -11,7 +11,7 @@ Nach jeder Zeile außer der letzten in einer Gruppe kommt ein Komma.
 | `karten.json` | Alle Karten außer Kreuzweg (Weg nach Grünwacht, Waldboden, Wipfelheim) als Bild aus Zeichen, mit Häusern, NPCs, Orten und Ausgängen |
 | `dialoge.json` | Gespräche: wer spricht, was, Antwortmöglichkeiten, was danach passiert |
 | `auftraege.json` | Aufträge: Titel, Beschreibung, Ziele, Belohnung |
-| `gegenstaende.json` | Gegenstände: Name, Beschreibung, Preis |
+| `gegenstaende.json` | Gegenstände: Name, Beschreibung, Preis, Bild in der Tasche (`"bild": {"form": "trank", "farbe": "d94848"}`, Formen: trank, kraut, splitter, wabe, schleuder, korb, buerste, laterne, fleisch, tafel) |
 | `stufen.json` | Erfahrung, die für Stufe 1 bis 10 nötig ist |
 | `kaempfe.json` | Kämpfe aus der Stadt (Lektionen, Gruppenkampf): Gegner, erlaubte Fähigkeiten, Erklärungen, Erfahrung |
 | `laeden.json` | Läden: welche Waren, wie viel der Händler beim Ankauf zahlt |
@@ -148,3 +148,14 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
 - **Ziel-Feld `wegweiser`:** Liste von NPCs, zu deren nächstem der Wegweiser führt (z. B. die fünf Gesandten).
   Sonst führt er zu `bei` bzw. zum Sammelpunkt.
 - **NPCs mit `anspringen`** sind erst zu sehen, wenn sie herbeilaufen (sie kommen von etwas weiter weg).
+
+## Seit dem Playtest 25.10. (Projekt 0)
+
+- **Tasche mit Kästchen:** Die Reihenfolge der Gegenstände steht im Spielstand unter `slots` (ein Gegenstand pro Kästchen).
+  Das Bild jedes Gegenstands steht in `gegenstaende.json` unter `bild` (siehe oben).
+- **Klasse beim Lehrmeister lernen:** In `klassen.json` sagt `lernen_bei` (z. B. `"fenn"`), bei wem man die Klasse lernt.
+  Bis der Lehrmeister `{"merken": "klasse_gelernt"}` ausführt, kämpft man als Novize. Klassen ohne `lernen_bei`
+  kämpfen gleich nach der Wahl mit ihrer Klasse (ihre Region gibt es noch nicht).
+- **Aktion mit Bedingung:** Jede Aktion darf `"wenn"` haben, z. B. `{"auftrag_starten": "klasse_lernen", "wenn": {"klasse": "archer"}}`.
+- **Ziel nur für manche:** `"nur_wenn"` an einem Ziel blendet es sonst ganz aus (im Auftragsbuch, beim „Ziel:“ und beim Wegweiser).
+  `"wenn"` am Ziel gilt jetzt auch für das „Ziel:“ oben links.

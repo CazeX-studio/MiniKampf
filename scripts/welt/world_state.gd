@@ -448,6 +448,9 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			_card_result(p, str(cmd.get("gegner", "")), bool(cmd.get("gewonnen", false)), bool(cmd.get("unentschieden", false)))
 		"benutzen":
 			_use_item(p, str(cmd.get("gegenstand", "")))
+		"tasche_tauschen":
+			p.progress.move_slot(int(cmd.get("von", -1)), int(cmd.get("nach", -1)))
+			progress_changed.emit(p.id)
 		"rudel":
 			_pack_command(p, cmd)
 		"kaufen":
@@ -1219,6 +1222,9 @@ func run_actions(p: PlayerState, actions: Array) -> void:
 	if actions.is_empty():
 		return
 	for action: Dictionary in actions:
+		# {"wenn": {…}, …}: diese Aktion nur, wenn die Bedingung stimmt (z. B. nur für eine Klasse)
+		if action.has("wenn") and not check(p, action.wenn):
+			continue
 		if action.has("auftrag_starten"):
 			_start_quest(p, action.auftrag_starten)
 		if action.has("auftrag_abgeben"):
@@ -1310,6 +1316,23 @@ func goal_done(p: PlayerState, goal: Dictionary) -> bool:
 	return true
 
 
+## Wartet ein laufender Auftrag nur (alle offenen Ziele gelten gerade nicht, z. B. „Beim Lehrmeister lernen“, während
+## Fenns Prüfung läuft)? Dann zeigen „Ziel:“ und Wegweiser zum nächsten Auftrag.
+func _quest_waiting(p: PlayerState, id: String) -> bool:
+	if p.progress.quest_state(id) != "aktiv":
+		return false
+	for goal: Dictionary in GameData.quest(id).get("ziele", []):
+		if not goal_done(p, goal) and goal_shown(p, goal) and check(p, goal.get("wenn", {})):
+			return false
+	return true
+
+
+## Gilt dieses Ziel für den Spieler? "nur_wenn" blendet ein Ziel ganz aus (z. B. nur für Bogenschützen),
+## "wenn" gibt nur an, wann Ziel-Anzeige und Wegweiser dorthin zeigen.
+func goal_shown(p: PlayerState, goal: Dictionary) -> bool:
+	return check(p, goal.get("nur_wenn", {}))
+
+
 ## Fortschritt eines Ziels als Text, z. B. "Silberkraut 2 / 3".
 func goal_text(p: PlayerState, goal: Dictionary) -> String:
 	match goal.art:
@@ -1339,7 +1362,7 @@ func objective(p: PlayerState) -> String:
 				var giver: Dictionary = npcs.get(q.get("abgeben_bei", ""), {name = "Auftraggeber"})
 				return prefix + "Zurück zu %s" % giver.name
 			for goal: Dictionary in q.get("ziele", []):
-				if not goal_done(p, goal):
+				if not goal_done(p, goal) and goal_shown(p, goal) and check(p, goal.get("wenn", {})):
 					return prefix + goal_text(p, goal)
 	return ""
 
@@ -1361,7 +1384,7 @@ func objective_place(p: PlayerState) -> Dictionary:
 	for id: String in p.progress.quests:
 		var q := GameData.quest(id)
 		var quest_state: String = p.progress.quests[id]
-		if q.is_empty() or quest_state == "abgegeben" or not is_main_quest(id):
+		if q.is_empty() or quest_state == "abgegeben" or not is_main_quest(id) or _quest_waiting(p, id):
 			continue
 		return _quest_place(p, id)
 	# Kein Hauptauftrag offen: zum nächsten gelben „!“ auf dieser Karte
@@ -1379,7 +1402,7 @@ func _quest_place(p: PlayerState, id: String) -> Dictionary:
 	if p.progress.quest_state(id) == "fertig":
 		return _npc_goal(p, [q.get("abgeben_bei", "")])
 	for goal: Dictionary in q.get("ziele", []):
-		if goal_done(p, goal) or not check(p, goal.get("wenn", {})):
+		if goal_done(p, goal) or not goal_shown(p, goal) or not check(p, goal.get("wenn", {})):
 			continue
 		if goal.art == "sammeln":
 			var herb := _nearest_pickup(p, str(goal.gegenstand))
@@ -1504,7 +1527,7 @@ func _marker(p: PlayerState, npc_id: String) -> Array:
 				return ["?", side]
 			if quest_state == "aktiv":
 				for goal: Dictionary in q.get("ziele", []):
-					if goal.get("bei", "") == npc_id and not goal_done(p, goal) and check(p, goal.get("wenn", {})):
+					if goal.get("bei", "") == npc_id and not goal_done(p, goal) and goal_shown(p, goal) and check(p, goal.get("wenn", {})):
 						return ["?", side]
 		for id: String in all_quests:
 			var q: Dictionary = all_quests[id]

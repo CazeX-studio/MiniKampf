@@ -8,27 +8,27 @@ Status: offen / in Arbeit / fertig
 
 ## Projekt 0: Playtest 25.10. (Rest) – kommt vor allen anderen
 
-Teil 1 ist gebaut (siehe FORTSCHRITT.md). Die Details stehen im Brainstorm-Doc unter „Testtag-Notizen“ → „Playtest 25.10.2026“.
+Teil 1 ist gebaut (siehe FORTSCHRITT.md). Schritte 1–4 fertig (26.10.). Die Details stehen im Brainstorm-Doc unter „Testtag-Notizen“ → „Playtest 25.10.2026“.
 
 ### Schritt 1: Tasche wie in klassischen Spielen
 - **Ziel:** Die Tasche zeigt Kästchen, in jedem liegt ein Gegenstand mit Bild und Anzahl. Gegenstände lassen sich per Ziehen und Ablegen verschieben (die Reihenfolge wird gemerkt). Passt zu Projekt 4 (Tasche und Bank).
 - **So testest du es:** Mit I die Tasche öffnen, einen Gegenstand in ein anderes Kästchen ziehen, Tasche schließen und wieder öffnen: Er liegt noch dort.
-- **Status:** offen
+- **Status:** fertig (26.10.)
 
 ### Schritt 2: Klasse erst beim Lehrmeister lernen
 - **Ziel:** Am Ende von Kreuzweg wählt man nur die Klasse und bekommt einen Auftrag, der zum Lehrmeister in der Region führt. Erst dort lernt man die Klasse (bis dahin kämpft man als Novize). Gilt für alle Klassen, Grünwacht zuerst (Fenn, Tilda).
 - **So testest du es:** Neu beginnen, bis zur Klassenwahl spielen, eine Grünwacht-Klasse wählen: Der Wegweiser führt zum Lehrmeister, erst nach dem Gespräch dort kämpft man mit der Klasse.
-- **Status:** offen
+- **Status:** fertig (26.10.; Bogenschütze bei Fenn, Zähmer bei Esche; die anderen Klassen kämpfen wie bisher gleich mit ihrer Klasse, bis es ihre Region gibt)
 
 ### Schritt 3: Kael kommt auf einer anderen Plattform dazu
 - **Ziel:** Kael steht nicht mehr direkt neben Ysolde. Ein kleiner Auftrag schickt einen auf eine andere Plattform in Wipfelheim, dort kommt Kael angelaufen und spricht einen an.
 - **So testest du es:** Nach den veränderten Tieren dem Wegweiser folgen: Kael läuft auf der anderen Plattform zu dir.
-- **Status:** offen
+- **Status:** fertig (26.10.; Westplattform beim Seilaufzug, Auftrag „Ein Fremder in Wipfelheim“ von Ysolde)
 
 ### Schritt 4: Grünwacht größer
 - **Ziel:** Weg nach Grünwacht, Waldboden und Wipfelheim werden größer und weniger eng (mehr Platz zwischen Bäumen, Figuren und Orten). Monster, Orte und Wegweiser passen sich an, die automatischen Durchläufe laufen weiter.
 - **So testest du es:** Durch den Wald und Wipfelheim laufen: Es fühlt sich weiter an, nichts klemmt, keine Figur steht zu dicht an einer anderen.
-- **Status:** offen
+- **Status:** fertig (26.10.; alle drei Karten um die Hälfte größer, Pilzhöhle unverändert)
 
 ## Projekt 1: Aussehen
 
