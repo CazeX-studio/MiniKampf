@@ -11,7 +11,7 @@ Nach jeder Zeile außer der letzten in einer Gruppe kommt ein Komma.
 | `karten.json` | Alle Karten außer Kreuzweg (Weg nach Grünwacht, Waldboden, Wipfelheim) als Bild aus Zeichen, mit Häusern, NPCs, Orten und Ausgängen |
 | `dialoge.json` | Gespräche: wer spricht, was, Antwortmöglichkeiten, was danach passiert |
 | `auftraege.json` | Aufträge: Titel, Beschreibung, Ziele, Belohnung |
-| `gegenstaende.json` | Gegenstände: Name, Beschreibung, Preis |
+| `gegenstaende.json` | Gegenstände: Name, Beschreibung, Preis, Bild in der Tasche (`"bild": {"form": "trank", "farbe": "d94848"}`, Formen: trank, kraut, splitter, wabe, schleuder, korb, buerste, laterne, fleisch, tafel) |
 | `stufen.json` | Erfahrung, die für Stufe 1 bis 10 nötig ist |
 | `kaempfe.json` | Kämpfe aus der Stadt (Lektionen, Gruppenkampf): Gegner, erlaubte Fähigkeiten, Erklärungen, Erfahrung |
 | `laeden.json` | Läden: welche Waren, wie viel der Händler beim Ankauf zahlt |

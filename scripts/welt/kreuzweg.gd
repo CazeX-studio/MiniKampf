@@ -125,6 +125,9 @@ var _panel: PanelContainer
 var _panel_title: Label
 var _panel_text: RichTextLabel
 var _panel_mode := ""
+## Kästchen der Tasche (Raster im Taschen-Fenster) und das gerade angeklickte Kästchen
+var _bag_grid: GridContainer
+var _bag_selected := -1
 var _shop_panel: PanelContainer
 var _shop_box: VBoxContainer
 ## Was im Ladenfenster gerade angezeigt wird (zum Neuaufbau bei Änderungen)
@@ -1344,6 +1347,12 @@ func _build_ui() -> void:
 			_fill_panel())
 		_quest_tabs.add_child(tab_button)
 	panel_box.add_child(_quest_tabs)
+	# Tasche: Kästchen mit Bild und Anzahl, per Ziehen und Ablegen umsortieren
+	_bag_grid = GridContainer.new()
+	_bag_grid.columns = 10
+	_bag_grid.add_theme_constant_override("h_separation", 4)
+	_bag_grid.add_theme_constant_override("v_separation", 4)
+	panel_box.add_child(_bag_grid)
 	_panel_text = RichTextLabel.new()
 	_panel_text.bbcode_enabled = true
 	_panel_text.custom_minimum_size = Vector2(570, 330)
@@ -2035,6 +2044,8 @@ func _fill_panel() -> void:
 	var p := local_player()
 	var lines: PackedStringArray = []
 	_quest_tabs.visible = _panel_mode == "auftraege"
+	_bag_grid.visible = _panel_mode == "tasche"
+	_panel_text.custom_minimum_size.y = 150.0 if _panel_mode == "tasche" else 330.0
 	for tab_button: Button in _quest_tabs.get_children():
 		tab_button.button_pressed = tab_button.get_meta("tab") == _quest_tab
 	if _panel_mode == "auftraege":
@@ -2106,14 +2117,17 @@ func _fill_panel() -> void:
 		lines.append("[color=#a0a0a0]%s[/color]" % GameData.text("werte_spaeter"))
 	else:
 		_panel_title.text = GameData.text("tasche")
+		var slots := _fill_bag(p)
 		lines.append("[b]Gold: %d[/b]" % p.progress.gold)
-		lines.append("")
-		for id: String in p.progress.items:
-			var item := GameData.item(id)
-			var use := "  [url=%s][color=#5ab8ff][%s][/color][/url]" % [id, GameData.text("benutzen")] if item.has("benutzen") else ""
-			lines.append("[b]%d × %s[/b] – %s%s" % [p.progress.items[id], item.get("name", id), item.get("beschreibung", ""), use])
-		if p.progress.items.is_empty():
+		var picked := str(slots[_bag_selected]) if _bag_selected >= 0 and _bag_selected < slots.size() else ""
+		if picked != "":
+			var item := GameData.item(picked)
+			var use := "  [url=%s][color=#5ab8ff][%s][/color][/url]" % [picked, GameData.text("benutzen")] if item.has("benutzen") else ""
+			lines.append("[b]%d × %s[/b] – %s%s" % [p.progress.item_count(picked), item.get("name", picked), item.get("beschreibung", ""), use])
+		elif p.progress.items.is_empty():
 			lines.append(GameData.text("tasche_leer"))
+		else:
+			lines.append("[color=#a0a0a0]%s[/color]" % GameData.text("tasche_tipp"))
 		# Kreuzweg-Karten (Sammlung)
 		var cards: Dictionary = p.progress.flags.get("karten", {})
 		if not cards.is_empty():
@@ -2123,6 +2137,27 @@ func _fill_panel() -> void:
 			lines.append("")
 			lines.append("[b]Kreuzweg-Karten (%d):[/b] %s" % [names.size(), ", ".join(names)])
 	_panel_text.text = "\n".join(lines)
+
+
+## Füllt die Kästchen der Tasche. Die Kästchen bleiben dieselben, damit Ziehen und Ablegen nicht abbricht.
+func _fill_bag(p: PlayerState) -> Array:
+	var slots := p.progress.bag_slots()
+	while _bag_grid.get_child_count() < slots.size():
+		var slot := BagSlot.new()
+		slot.index = _bag_grid.get_child_count()
+		slot.moved.connect(func(from: int, to: int) -> void:
+			if _bag_selected == from:
+				_bag_selected = to
+			_send({type = "tasche_tauschen", von = from, nach = to})
+			_fill_panel())
+		slot.picked.connect(func(index: int) -> void:
+			_bag_selected = index
+			_fill_panel())
+		_bag_grid.add_child(slot)
+	for slot: BagSlot in _bag_grid.get_children():
+		var id := str(slots[slot.index]) if slot.index < slots.size() else ""
+		slot.show_item(id, p.progress.item_count(id), slot.index == _bag_selected)
+	return slots
 
 
 ## Ruf bei den Gruppen der Regionen als kleine Leiste (nur Gruppen, bei denen man schon Ruf hat).

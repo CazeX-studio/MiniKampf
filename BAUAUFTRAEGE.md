@@ -13,7 +13,7 @@ Teil 1 ist gebaut (siehe FORTSCHRITT.md). Die Details stehen im Brainstorm-Doc u
 ### Schritt 1: Tasche wie in klassischen Spielen
 - **Ziel:** Die Tasche zeigt Kästchen, in jedem liegt ein Gegenstand mit Bild und Anzahl. Gegenstände lassen sich per Ziehen und Ablegen verschieben (die Reihenfolge wird gemerkt). Passt zu Projekt 4 (Tasche und Bank).
 - **So testest du es:** Mit I die Tasche öffnen, einen Gegenstand in ein anderes Kästchen ziehen, Tasche schließen und wieder öffnen: Er liegt noch dort.
-- **Status:** offen
+- **Status:** fertig (26.10.)
 
 ### Schritt 2: Klasse erst beim Lehrmeister lernen
 - **Ziel:** Am Ende von Kreuzweg wählt man nur die Klasse und bekommt einen Auftrag, der zum Lehrmeister in der Region führt. Erst dort lernt man die Klasse (bis dahin kämpft man als Novize). Gilt für alle Klassen, Grünwacht zuerst (Fenn, Tilda).

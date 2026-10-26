@@ -448,6 +448,9 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			_card_result(p, str(cmd.get("gegner", "")), bool(cmd.get("gewonnen", false)), bool(cmd.get("unentschieden", false)))
 		"benutzen":
 			_use_item(p, str(cmd.get("gegenstand", "")))
+		"tasche_tauschen":
+			p.progress.move_slot(int(cmd.get("von", -1)), int(cmd.get("nach", -1)))
+			progress_changed.emit(p.id)
 		"rudel":
 			_pack_command(p, cmd)
 		"kaufen":

@@ -3,13 +3,13 @@
 Hier steht, was fertig ist, was als Nächstes kommt und welche Fragen offen sind.
 Wird nach jedem Arbeitsschritt aktualisiert.
 
-## Aktueller Stand (2026-10-25)
+## Aktueller Stand (2026-10-26)
 
 - **Neu (25.10.): Playtest-Rückmeldungen Teil 1 eingebaut** (Liste im Brainstorm-Doc unter „Testtag-Notizen“):
   Fehler (Ye-Laternen, Silberhirsch, Pilzhöhle), Parier-Tutorial, Abwarten für alle, Aufträge allein und Dungeon nur für die Gruppe,
   Nebenauftrag-Wegweiser 1-2-3, Auftragsbuch-Reiter, Monster-Stall und Rudel-Fenster, Kobalt hinter seinem Monster,
-  Passive und Reaktion als Kästchen im Kampf. **Noch offen:** Tasche mit Kästchen und Ziehen, Klasse erst beim Lehrer
-  lernen, Kael auf einer anderen Plattform, größeres Grünwacht.
+  Passive und Reaktion als Kästchen im Kampf. **Neu (26.10.):** Tasche mit Kästchen und Ziehen (Projekt 0, Schritt 1).
+  **Noch offen:** Klasse erst beim Lehrer lernen, Kael auf einer anderen Plattform, größeres Grünwacht.
 
 - **Neu (22.10.): Marcos Rückmeldungen zur ersten Stadt eingebaut** – Einzelheiten unter „Fertig in Runde 2“ →
   „Rückmeldungen vom 22.10.“, Test-Liste ganz oben unter „Was du testen kannst“.
@@ -50,6 +50,20 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
+
+- **Projekt 0, Schritt 1 – Tasche wie in klassischen Spielen** (26.10., fertig):
+  - Die Tasche (I) zeigt jetzt **30 Kästchen** (3 Reihen à 10). In jedem liegt ein Gegenstand mit **kleinem Bild**
+    und **Anzahl** unten rechts (z. B. „3“ bei drei Heiltränken).
+  - Gegenstände lassen sich per **Ziehen und Ablegen** verschieben, mit der Maus oder am Handy mit dem Finger.
+    Auf ein belegtes Kästchen gezogen, tauschen die beiden die Plätze. Die Reihenfolge wird im Spielstand gemerkt
+    (auch zusammen online). Neue Gegenstände kommen ins erste freie Kästchen.
+  - **Klick auf ein Kästchen** zeigt unten Name, Anzahl und Beschreibung, bei der Bürste auch „Benutzen“.
+  - Die Bilder sind gezeichnete Platzhalter (Trank, Kraut, Splitter, Wabe, Schleuder, Korb, Bürste, Laterne, Fleisch,
+    Sternentafel), festgelegt in `data/gegenstaende.json` unter `bild`. Mehr als 30 Gegenstände passen trotzdem hinein
+    (dann kommen Kästchen dazu); die feste Grenze mit Hinweis „Tasche voll“ kommt mit Projekt 4.
+  - **So testest du es:** Mit I die Tasche öffnen, einen Gegenstand in ein anderes Kästchen ziehen, Tasche schließen
+    und wieder öffnen: Er liegt noch dort. Auch nach Speichern und neu Laden. Einen Gegenstand anklicken: Unten
+    steht, was er ist.
 
 - **Projekt 1, Schritt 1 – Licht wie bei Octopath Traveler** (22.10., fertig):
   - Lichtquellen werfen jetzt einen **weichen, flackernden Lichtschein** auf Boden, Häuser und Figuren:
