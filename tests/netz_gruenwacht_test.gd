@@ -27,7 +27,7 @@ func _process(delta: float) -> bool:
 				Netz.join("localhost", "Waldläufer", "elf_f")
 				# Spielstand: Klasse gewählt, auf dem Weg kurz vor dem Wald
 				var file := FileAccess.open(SAVE, FileAccess.WRITE)
-				file.store_string(JSON.stringify({version = SaveGame.VERSION, karte = "weg_gruenwacht", feld = [3, 6],
+				file.store_string(JSON.stringify({version = SaveGame.VERSION, karte = "weg_gruenwacht", feld = [5, 9],
 						progress = {level = 10, flags = {"angekommen": true, "klasse": "archer", "klasse_bestaetigt": true},
 							quests = {nach_gruenwacht = "aktiv"}}}))
 				file.close()
@@ -49,7 +49,7 @@ func _process(delta: float) -> bool:
 				_check(town.local_player().map == "weg_gruenwacht" and town._shown_map == "weg_gruenwacht",
 						"Mitspieler kommt auf dem Weg nach Grünwacht an (Karte aus dem Spielstand)")
 				_check(not town._characters.has("npc:hanne"), "Figuren aus Kreuzweg sind hier nicht zu sehen")
-				town._send({type = "move", cell = Vector2i(0, 6)})
+				town._send({type = "move", cell = Vector2i(0, 9)})
 				_step = 3
 				_time = 0.0
 		3:

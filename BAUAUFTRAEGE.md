@@ -8,7 +8,7 @@ Status: offen / in Arbeit / fertig
 
 ## Projekt 0: Playtest 25.10. (Rest) – kommt vor allen anderen
 
-Teil 1 ist gebaut (siehe FORTSCHRITT.md). Die Details stehen im Brainstorm-Doc unter „Testtag-Notizen“ → „Playtest 25.10.2026“.
+Teil 1 ist gebaut (siehe FORTSCHRITT.md). Schritte 1–4 fertig (26.10.). Die Details stehen im Brainstorm-Doc unter „Testtag-Notizen“ → „Playtest 25.10.2026“.
 
 ### Schritt 1: Tasche wie in klassischen Spielen
 - **Ziel:** Die Tasche zeigt Kästchen, in jedem liegt ein Gegenstand mit Bild und Anzahl. Gegenstände lassen sich per Ziehen und Ablegen verschieben (die Reihenfolge wird gemerkt). Passt zu Projekt 4 (Tasche und Bank).
@@ -28,7 +28,7 @@ Teil 1 ist gebaut (siehe FORTSCHRITT.md). Die Details stehen im Brainstorm-Doc u
 ### Schritt 4: Grünwacht größer
 - **Ziel:** Weg nach Grünwacht, Waldboden und Wipfelheim werden größer und weniger eng (mehr Platz zwischen Bäumen, Figuren und Orten). Monster, Orte und Wegweiser passen sich an, die automatischen Durchläufe laufen weiter.
 - **So testest du es:** Durch den Wald und Wipfelheim laufen: Es fühlt sich weiter an, nichts klemmt, keine Figur steht zu dicht an einer anderen.
-- **Status:** offen
+- **Status:** fertig (26.10.; alle drei Karten um die Hälfte größer, Pilzhöhle unverändert)
 
 ## Projekt 1: Aussehen
 

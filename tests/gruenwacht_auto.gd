@@ -5,24 +5,24 @@ extends "res://scripts/welt/kreuzweg.gd"
 ## Die Bilder landen im Ordner aus der Umgebungsvariable FOTO_ORDNER (sonst user://).
 
 const SPOTS := [
-	["weg_osten", "weg_gruenwacht", Vector2i(36, 6)],
-	["weg_mitte", "weg_gruenwacht", Vector2i(19, 5)],
-	["weg_westen", "weg_gruenwacht", Vector2i(4, 6)],
-	["waldboden_pfad", "waldboden", Vector2i(23, 13)],
-	["waldboden_aufzug", "waldboden", Vector2i(15, 13)],
-	["wipfelheim_ankunft", "wipfelheim", Vector2i(6, 15)],
-	["wipfelheim_halle", "wipfelheim", Vector2i(16, 15)],
-	["wipfelheim_fenn", "wipfelheim", Vector2i(16, 5)],
-	["wipfelheim_tilda", "wipfelheim", Vector2i(26, 15)],
-	["wipfelheim_esche", "wipfelheim", Vector2i(16, 24)],
-	["wipfelheim_marv", "wipfelheim", Vector2i(21, 14)],
+	["weg_osten", "weg_gruenwacht", Vector2i(54, 9)],
+	["weg_mitte", "weg_gruenwacht", Vector2i(29, 8)],
+	["weg_westen", "weg_gruenwacht", Vector2i(6, 9)],
+	["waldboden_pfad", "waldboden", Vector2i(35, 20)],
+	["waldboden_aufzug", "waldboden", Vector2i(23, 20)],
+	["wipfelheim_ankunft", "wipfelheim", Vector2i(9, 23)],
+	["wipfelheim_halle", "wipfelheim", Vector2i(24, 23)],
+	["wipfelheim_fenn", "wipfelheim", Vector2i(24, 8)],
+	["wipfelheim_tilda", "wipfelheim", Vector2i(39, 23)],
+	["wipfelheim_esche", "wipfelheim", Vector2i(24, 36)],
+	["wipfelheim_marv", "wipfelheim", Vector2i(32, 21)],
 	["kreuzweg_westen", "kreuzweg", Vector2i(4, 22)],
-	["waldboden_hirsch", "waldboden", Vector2i(5, 23)],
-	["waldboden_hoehle", "waldboden", Vector2i(10, 17)],
+	["waldboden_hirsch", "waldboden", Vector2i(8, 35)],
+	["waldboden_hoehle", "waldboden", Vector2i(15, 26)],
 	["hoehle_eingang", "pilzhoehle", Vector2i(25, 11)],
 	["hoehle_koenigin", "pilzhoehle", Vector2i(14, 12)],
 	["hoehle_urbaum", "pilzhoehle", Vector2i(6, 12)],
-	["wipfelheim_bluete", "wipfelheim", Vector2i(10, 14)],
+	["wipfelheim_bluete", "wipfelheim", Vector2i(15, 21)],
 ]
 
 var _t := 0.0
@@ -31,7 +31,7 @@ var _index := -1
 
 func _ready() -> void:
 	var file := FileAccess.open(SaveGame.path, FileAccess.WRITE)
-	file.store_string(JSON.stringify({version = SaveGame.VERSION, karte = "weg_gruenwacht", feld = [37, 6],
+	file.store_string(JSON.stringify({version = SaveGame.VERSION, karte = "weg_gruenwacht", feld = [56, 9],
 			progress = {level = 10, flags = {"angekommen": true, "klasse": "archer", "klasse_bestaetigt": true,
 				"angesprochen:marv_gruenwacht": true, "fenn_ziele": true}, quests = {nach_gruenwacht = "aktiv", fenns_pruefung = "aktiv", der_urbaum = "aktiv"}}}))
 	file.close()

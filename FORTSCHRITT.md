@@ -9,7 +9,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   Fehler (Ye-Laternen, Silberhirsch, Pilzhöhle), Parier-Tutorial, Abwarten für alle, Aufträge allein und Dungeon nur für die Gruppe,
   Nebenauftrag-Wegweiser 1-2-3, Auftragsbuch-Reiter, Monster-Stall und Rudel-Fenster, Kobalt hinter seinem Monster,
   Passive und Reaktion als Kästchen im Kampf. **Neu (26.10.):** Tasche mit Kästchen und Ziehen (Projekt 0, Schritt 1), Klasse erst beim Lehrmeister (Schritt 2),
-  Kael auf der Westplattform (Schritt 3). **Noch offen:** größeres Grünwacht (Schritt 4).
+  Kael auf der Westplattform (Schritt 3), größeres Grünwacht (Schritt 4). **Projekt 0 ist damit fertig.**
 
 - **Neu (22.10.): Marcos Rückmeldungen zur ersten Stadt eingebaut** – Einzelheiten unter „Fertig in Runde 2“ →
   „Rückmeldungen vom 22.10.“, Test-Liste ganz oben unter „Was du testen kannst“.
@@ -21,7 +21,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
   Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
   gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
-- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Nächster Schritt: Projekt 3 „Geld“, Bronze, Silber, Gold.
+- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Nächster Schritt: Projekt 3 „Geld“, Bronze, Silber, Gold.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -50,6 +50,19 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
+
+- **Projekt 0, Schritt 4 – Grünwacht größer** (26.10., fertig):
+  - **Weg nach Grünwacht, Waldboden und Wipfelheim sind um die Hälfte größer** (Faktor 1,5 in beide Richtungen):
+    Weg 60 × 20 statt 40 × 13 Felder, Waldboden 45 × 39 statt 30 × 26, Wipfelheim 48 × 42 statt 32 × 28.
+  - Plattformen, Brücken und Wege sind breiter. Bäume, Büsche, Pilze, Steine und Zielscheiben bleiben einzeln und
+    **rücken auseinander**, statt größer zu werden. Häuser behalten ihre Größe, stehen aber weiter auseinander.
+  - Figuren, Monster, Orte (Seilaufzug, Grab, Hirsch, Bienenstock, Höhleneingang), Ausgänge und Wegweiser sind
+    mitgewandert. Wie nah man einer Figur kommen muss, bis sie auf einen zuläuft (Kael, Kobalt, Marv), ist mitgewachsen.
+  - Die Pilzhöhle ist gleich geblieben (ist ein Dungeon und war nicht zu eng).
+  - Wer schon in Grünwacht gespeichert hat, steht nach dem Laden an derselben Stelle der größeren Karte.
+  - Ist es zu groß oder noch zu klein: Bescheid sagen, dann passe ich die Karten nach.
+  - **So testest du es:** Von Kreuzweg über den Weg nach Grünwacht, durch den Wald und mit dem Seilaufzug nach
+    Wipfelheim laufen: Es fühlt sich weiter an, nichts klemmt, keine Figur steht zu dicht an einer anderen.
 
 - **Projekt 0, Schritt 3 – Kael kommt auf einer anderen Plattform dazu** (26.10., fertig):
   - Kael steht nicht mehr neben Ysolde. Nach den leuchtenden Tieren sagt Ysolde: Auf der **Westplattform beim

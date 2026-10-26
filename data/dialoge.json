@@ -182,7 +182,7 @@
 			"noch_da": {"wer": "Ye", "text": "Du bist ja noch da. Grünwacht liegt im Westen. Folge der Weststraße hinaus.", "aktionen": [{"auftrag_starten": "nach_gruenwacht"}]},
 			"westen": {"wer": "Ye", "text": "Die Weststraße hinaus, dann durch den Wald. Schild hoch, Schild runter."},
 			"abschied2": {"wer": "Ye", "text": "Schild hoch, Schild runter. Vergiss das nie. Und … komm irgendwann zurück. Die Laterne an der Gilde wartet.", "antworten": [
-				{"text": "Leb wohl, Ye.", "aktionen": [{"merken": "klasse_bestaetigt"}, {"auftrag_abgeben": "abreise"}, {"auftrag_starten": "nach_gruenwacht"}, {"auftrag_starten": "klasse_lernen", "wenn": {"oder": [{"klasse": "archer"}, {"klasse": "tamer"}]}}, {"reisen": "weg_gruenwacht", "feld": [37, 6]}, {"szene": "abspann"}]}
+				{"text": "Leb wohl, Ye.", "aktionen": [{"merken": "klasse_bestaetigt"}, {"auftrag_abgeben": "abreise"}, {"auftrag_starten": "nach_gruenwacht"}, {"auftrag_starten": "klasse_lernen", "wenn": {"oder": [{"klasse": "archer"}, {"klasse": "tamer"}]}}, {"reisen": "weg_gruenwacht", "feld": [56, 9]}, {"szene": "abspann"}]}
 			]}
 		}
 	},
