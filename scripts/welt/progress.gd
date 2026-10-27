@@ -13,6 +13,9 @@ var gold := 0
 var items := {}
 ## Reihenfolge in der Tasche: ein Gegenstand pro Kästchen ("" = leer). Wird über bag_slots() aufgeräumt.
 var slots: Array = []
+## Beute nach einem Sieg, die nicht mehr in die Tasche gepasst hat: Gegenstand -> Anzahl.
+## Sie wartet im Beute-Fenster, bis man sie nimmt (nach dem Wegwerfen von etwas anderem) oder liegen lässt.
+var loot := {}
 var xp := 0
 var level := 1
 ## Auftrag -> "aktiv", "fertig" oder "abgegeben" (nicht drin = "neu")
@@ -115,11 +118,15 @@ func xp_range() -> Vector2i:
 
 
 func to_dict() -> Dictionary:
-	return {gold = gold, items = items, slots = bag_slots().duplicate(), xp = xp, level = level, quests = quests, flags = flags}
+	return {gold = gold, items = items, slots = bag_slots().duplicate(), beute = loot, xp = xp, level = level, quests = quests, flags = flags}
 
 
 func load_dict(data: Dictionary) -> void:
 	gold = int(data.get("gold", 0))
+	loot = {}
+	var saved_loot: Dictionary = data.get("beute", {})
+	for id: String in saved_loot:
+		loot[id] = int(saved_loot[id])
 	xp = int(data.get("xp", 0))
 	level = int(data.get("level", 1))
 	quests = data.get("quests", {})

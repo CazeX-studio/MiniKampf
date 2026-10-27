@@ -130,6 +130,12 @@ var _panel_mode := ""
 ## Kästchen der Tasche (Raster im Taschen-Fenster) und das gerade angeklickte Kästchen
 var _bag_grid: GridContainer
 var _bag_selected := -1
+## Gegenstand, bei dem gerade „Wirklich wegwerfen?“ gefragt wird ("" = keine Frage)
+var _discard_ask := ""
+## Beute-Fenster: Beute nach einem Sieg, die nicht mehr in die Tasche gepasst hat
+var _loot_panel: PanelContainer
+var _loot_box: VBoxContainer
+var _loot_shown := ""
 var _shop_panel: PanelContainer
 var _shop_box: VBoxContainer
 ## Was im Ladenfenster gerade angezeigt wird (zum Neuaufbau bei Änderungen)
@@ -342,6 +348,7 @@ func _process(delta: float) -> void:
 	_sync()
 	_update_dialog()
 	_update_shop()
+	_update_loot()
 	_update_pack()
 	_update_chat()
 	_marker_time = maxf(_marker_time - delta, 0.0)
@@ -769,7 +776,7 @@ func _draw_waypoint() -> void:
 ## Nebenaufträge blau mit ihrer Nummer).
 func _draw_edge_arrow() -> void:
 	# Über offenen Fenstern (Auftragsbuch, Laden) keine Pfeile
-	if local_player().in_dialog() or _panel.visible or _shop_panel.visible:
+	if local_player().in_dialog() or _panel.visible or _shop_panel.visible or _loot_panel.visible:
 		return
 	for side: Dictionary in _side_waypoints:
 		_draw_one_edge_arrow(side.feld, SIDE_COLOR, str(side.nummer), 0.75)
@@ -1366,8 +1373,19 @@ func _build_ui() -> void:
 	_panel_text.add_theme_font_size_override("bold_font_size", 17)
 	# „Benutzen“ in der Tasche (z. B. die Bürste an der Statue)
 	_panel_text.meta_clicked.connect(func(meta: Variant) -> void:
-		if str(meta) == "testtasche":
-			_send({type = "test_tasche"})
+		var link := str(meta)
+		if link == "testtasche" or link == "testbeute":
+			_send({type = "test_tasche" if link == "testtasche" else "test_beute"})
+			return
+		if link.begins_with("wegwerfen:"):
+			_discard_ask = link.trim_prefix("wegwerfen:")
+			_fill_panel()
+			return
+		if link == "wegwerfen_ja" or link == "wegwerfen_nein":
+			if link == "wegwerfen_ja":
+				_send({type = "wegwerfen", gegenstand = _discard_ask})
+			_discard_ask = ""
+			_fill_panel()
 			return
 		if str(meta).begins_with("testgeld:"):
 			_send({type = "test_geld", bronze = int(str(meta).trim_prefix("testgeld:"))})
@@ -1400,6 +1418,17 @@ func _build_ui() -> void:
 	_shop_box = VBoxContainer.new()
 	_shop_box.add_theme_constant_override("separation", 6)
 	_shop_panel.add_child(_shop_box)
+
+	# Beute-Fenster rechts neben der Tasche
+	_loot_panel = _framed_panel()
+	_loot_panel.position = Vector2(950, 130)
+	_loot_panel.size = Vector2(320, 0)
+	_loot_panel.visible = false
+	root.add_child(_loot_panel)
+	_buttons.append(_loot_panel)
+	_loot_box = VBoxContainer.new()
+	_loot_box.add_theme_constant_override("separation", 6)
+	_loot_panel.add_child(_loot_box)
 
 	# Pfeil am Bildrand zum nächsten Ziel
 	_edge_arrow = Control.new()
@@ -1997,6 +2026,51 @@ func _update_shop() -> void:
 	_shop_panel.reset_size()
 
 
+## Beute-Fenster: zeigt Beute, die nach einem Sieg nicht mehr in die Tasche gepasst hat.
+## „Nehmen“ geht, sobald in der Tasche Platz ist; „Liegen lassen“ gibt sie auf.
+func _update_loot() -> void:
+	var p := local_player()
+	var loot := p.progress.loot
+	var key := "" if loot.is_empty() else "%s|%s" % [str(loot), str(p.progress.items)]
+	if key == _loot_shown:
+		return
+	_loot_shown = key
+	_loot_panel.visible = not loot.is_empty()
+	for child in _loot_box.get_children():
+		child.queue_free()
+	if loot.is_empty():
+		return
+	_loot_box.add_child(_label(GameData.text("beute"), 22, Color("f2c14e")))
+	var hint := _label(GameData.text("beute_erklaerung"), 14, Color(1, 1, 1, 0.75))
+	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	hint.custom_minimum_size = Vector2(290, 0)
+	_loot_box.add_child(hint)
+	for item_id: String in loot:
+		var row := HBoxContainer.new()
+		var icon := BagSlot.new()
+		icon.show_item(item_id, int(loot[item_id]), false)
+		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		row.add_child(icon)
+		var name_label := _label(GameData.item_name(item_id), 15, Color.WHITE)
+		name_label.custom_minimum_size = Vector2(120, 0)
+		name_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		row.add_child(name_label)
+		var take := _small_button(GameData.text("beute_nehmen"), func() -> void: _send({type = "beute_nehmen", gegenstand = item_id}))
+		take.custom_minimum_size = Vector2(90, 34)
+		take.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		if not p.progress.has_room(item_id):
+			take.modulate = Color(1, 1, 1, 0.5)
+		row.add_child(take)
+		_loot_box.add_child(row)
+	var buttons := HBoxContainer.new()
+	buttons.add_child(_small_button(GameData.text("beute_tasche"), func() -> void:
+		if not (_panel.visible and _panel_mode == "tasche"):
+			_toggle_panel("tasche")))
+	buttons.add_child(_small_button(GameData.text("beute_lassen"), func() -> void: _send({type = "beute_lassen"})))
+	_loot_box.add_child(buttons)
+	_loot_panel.reset_size()
+
+
 ## Eine Zeile im Laden: Text links, Knopf rechts. Gibt {box, button} zurück.
 func _shop_row(text: String, button_text: String) -> Dictionary:
 	var box := HBoxContainer.new()
@@ -2148,13 +2222,20 @@ func _fill_panel() -> void:
 		if used >= Progress.BAG_SIZE:
 			places = "[color=#ff8a7a]%s[/color]" % places
 		if OS.is_debug_build():
-			places += "  [url=testtasche][color=#5ab8ff][%s][/color][/url]" % GameData.text("test_tasche_fuellen")
+			for test: Array in [["testtasche", "test_tasche_fuellen"], ["testbeute", "test_beute"]]:
+				places += "  [url=%s][color=#5ab8ff][%s][/color][/url]" % [test[0], GameData.text(test[1])]
 		lines.append(places)
 		var picked := str(slots[_bag_selected]) if _bag_selected >= 0 and _bag_selected < slots.size() else ""
 		if picked != "":
 			var item := GameData.item(picked)
 			var use := "  [url=%s][color=#5ab8ff][%s][/color][/url]" % [picked, GameData.text("benutzen")] if item.has("benutzen") else ""
+			if state.can_discard(p, picked):
+				use += "  [url=wegwerfen:%s][color=#ff8a7a][%s][/color][/url]" % [picked, GameData.text("wegwerfen")]
 			lines.append("[b]%d × %s[/b] – %s%s" % [p.progress.item_count(picked), item.get("name", picked), item.get("beschreibung", ""), use])
+			if _discard_ask == picked:
+				lines.append("[color=#ff8a7a]%s[/color]  [url=wegwerfen_ja][color=#ff8a7a][%s][/color][/url]  [url=wegwerfen_nein][color=#5ab8ff][%s][/color][/url]" % [
+						GameData.text("wegwerfen_frage", [p.progress.item_count(picked), item.get("name", picked)]),
+						GameData.text("wegwerfen_ja"), GameData.text("wegwerfen_nein")])
 		elif p.progress.items.is_empty():
 			lines.append(GameData.text("tasche_leer"))
 		else:
@@ -2183,6 +2264,7 @@ func _fill_bag(p: PlayerState) -> Array:
 			_fill_panel())
 		slot.picked.connect(func(index: int) -> void:
 			_bag_selected = index
+			_discard_ask = ""
 			_fill_panel())
 		_bag_grid.add_child(slot)
 	for slot: BagSlot in _bag_grid.get_children():

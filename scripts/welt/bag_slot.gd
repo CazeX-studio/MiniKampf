@@ -132,6 +132,13 @@ static func draw_icon(node: CanvasItem, c: Vector2, form: String, color: Color) 
 			for x in 3:
 				for y in 3:
 					node.draw_rect(Rect2(c + Vector2(-13 + x * 9, -11 + y * 8), Vector2(7, 6)), color)
+		"ruestung":
+			# Brustpanzer: Rumpf mit Schulterstücken
+			node.draw_rect(Rect2(c + Vector2(-10, -10), Vector2(20, 24)), dark)
+			node.draw_rect(Rect2(c + Vector2(-9, -9), Vector2(18, 22)), color)
+			node.draw_rect(Rect2(c + Vector2(-16, -12), Vector2(9, 8)), color.lightened(0.15))
+			node.draw_rect(Rect2(c + Vector2(7, -12), Vector2(9, 8)), color.lightened(0.15))
+			node.draw_line(c + Vector2(0, -8), c + Vector2(0, 12), dark, 2.0)
 		"stein":
 			node.draw_circle(c + Vector2(0, 3), 11.0, dark)
 			node.draw_circle(c + Vector2(-1, 1), 10.0, color)
