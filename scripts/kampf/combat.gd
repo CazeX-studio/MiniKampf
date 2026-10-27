@@ -34,6 +34,11 @@ const LANTERN_SPOTS: Array[Vector2] = [Vector2(600, 236), Vector2(610, 486), Vec
 ## Halbmesser der Lichtkreise bei wenig bzw. fast völliger Dunkelheit
 const LIGHT_RADIUS_BRIGHT := 260.0
 const LIGHT_RADIUS_DARK := 95.0
+## Kampfmenü links: [Kennung, Name, Symbol aus assets/ui/]
+const COMMANDS: Array[Array] = [
+	["angriff", "Angriff", "schwert"], ["faehigkeiten", "Fähigkeiten", "wirbel"], ["gegenstaende", "Gegenstände", "tasche"],
+	["verteidigen", "Verteidigen", "schild"], ["fliehen", "Fliehen", "pfeil"],
+]
 const MAX_DARK_ALPHA := 0.92
 ## Kampfgefühl: Zeitlupe bei der perfekten Parade, Anhalten und Wackeln bei harten Treffern
 const SLOWMO_SPEED := 0.3
@@ -111,6 +116,9 @@ var _ring_layer: Control
 var _order_box: HBoxContainer
 var _turn_label: Label
 var _grid: GridContainer
+var _commands := {}
+## Wer gerade im Kampfmenü auswählt (für Angriff, Gegenstände, Verteidigen)
+var _menu_fighter: Fighter
 var _log: RichTextLabel
 var _rotate_hint: Label
 var _react_dim: ColorRect
@@ -527,7 +535,7 @@ func choose_option(title: String, options: Array[Dictionary]) -> String:
 	for option in options:
 		var info: String = option.get("info", "")
 		var button := _action_button(option.name if info == "" else "%s\n%s" % [option.name, info])
-		button.custom_minimum_size.x = 404
+		button.custom_minimum_size.x = 380
 		button.pressed.connect(func() -> void: _choice_made.emit(option.id))
 		_grid.add_child(button)
 	_number_buttons()
@@ -546,13 +554,19 @@ func _first_player() -> String:
 	return ""
 
 
-func _show_actions(f: Fighter) -> void:
+func _show_actions(f: Fighter, category := "faehigkeiten") -> void:
 	_clear_actions()
+	_menu_fighter = f
+	_set_commands(category)
 	if f.display_name == "Du" or (not _group.is_empty() and _owner(f) == ""):
 		_turn_label.text = "Du bist am Zug"
 	else:
 		_turn_label.text = "%s (%s) ist am Zug" % [f.display_name, f.class_title]
 	var list := state.skills.abilities(f)
+	if category == "gegenstaende":
+		list = list.filter(func(ab: Dictionary) -> bool: return ab.id == "trank")
+		if list.is_empty():
+			_turn_label.text = "Keine Gegenstände für den Kampf in der Tasche"
 	# Mehr als 8 Knöpfe (z. B. mit Dungeon-Aktionen): kleiner, damit 3 Reihen passen
 	var compact := list.size() > 8
 	for ab in list:
@@ -582,7 +596,7 @@ func _show_actions(f: Fighter) -> void:
 func _action_button(text: String) -> Button:
 	var button := Button.new()
 	button.text = text
-	button.custom_minimum_size = Vector2(198, 60)
+	button.custom_minimum_size = Vector2(186, 60)
 	button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	button.add_theme_font_size_override("font_size", 13)
 	return button
@@ -1357,32 +1371,31 @@ func _build_ui() -> void:
 		row_label.add_theme_constant_override("outline_size", 4)
 		add_child(row_label)
 
-	# Zugleiste oben
+	# Zugleiste oben: Rahmen mit den Bildern der nächsten Figuren, die Figur am Zug leuchtet golden
+	var order_panel := PanelContainer.new()
+	order_panel.position = Vector2(6, 4)
+	order_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	order_panel.add_theme_stylebox_override("panel", _order_panel_style())
+	add_child(order_panel)
+	var order_row := HBoxContainer.new()
+	order_row.add_theme_constant_override("separation", 8)
+	order_panel.add_child(order_row)
 	var order_title := Label.new()
 	order_title.text = "Nächste\nZüge"
-	order_title.position = Vector2(14, 14)
+	order_title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	order_title.add_theme_font_size_override("font_size", 14)
-	order_title.add_theme_color_override("font_outline_color", Color.BLACK)
-	order_title.add_theme_constant_override("outline_size", 4)
-	add_child(order_title)
+	order_title.add_theme_color_override("font_color", Color("f3ead8"))
+	order_row.add_child(order_title)
 	_order_box = HBoxContainer.new()
-	_order_box.position = Vector2(80, 10)
 	_order_box.add_theme_constant_override("separation", 6)
-	add_child(_order_box)
+	order_row.add_child(_order_box)
 
 	var menu := Button.new()
 	menu.text = GameData.text("aufgeben") if BattleRequest.active() else "Auswahl"
 	menu.position = Vector2(1170, 16)
 	menu.size = Vector2(96, 44)
 	menu.add_theme_font_size_override("font_size", 16)
-	if BattleRequest.active():
-		menu.pressed.connect(func() -> void:
-			# Gruppenkampf: Die anderen kämpfen weiter, für die eigene Figur entscheidet ab jetzt der Gastgeber
-			if not _group.is_empty():
-				Netz.battle_leave()
-			_back_to_world(false))
-	else:
-		menu.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/auswahl.tscn"))
+	menu.pressed.connect(_flee)
 	add_child(menu)
 
 	# Untere Leiste: Kampf-Log links, Fähigkeiten rechts
@@ -1395,8 +1408,8 @@ func _build_ui() -> void:
 	_log = RichTextLabel.new()
 	_log.bbcode_enabled = true
 	_log.scroll_following = true
-	_log.position = Vector2(10, 534)
-	_log.size = Vector2(420, 180)
+	_log.position = Vector2(16, 540)
+	_log.size = Vector2(300, 168)
 	_log.add_theme_font_size_override("normal_font_size", 13)
 	_log.add_theme_font_size_override("bold_font_size", 13)
 	add_child(_log)
@@ -1409,15 +1422,39 @@ func _build_ui() -> void:
 	_passive_box.add_theme_constant_override("separation", 6)
 	add_child(_passive_box)
 	_turn_label = Label.new()
-	_turn_label.position = Vector2(444, 532)
-	_turn_label.size = Vector2(820, 26)
+	_turn_label.position = Vector2(492, 532)
+	_turn_label.size = Vector2(500, 26)
 	_turn_label.add_theme_font_size_override("font_size", 19)
 	_turn_label.add_theme_color_override("font_color", Color("f2c14e"))
 	add_child(_turn_label)
 
+	# Kampfmenü links (wie im UI-Entwurf): Angriff, Fähigkeiten, Gegenstände, Verteidigen, Fliehen
+	var command_panel := PanelContainer.new()
+	command_panel.position = Vector2(322, 536)
+	command_panel.size = Vector2(160, 176)
+	add_child(command_panel)
+	var command_box := VBoxContainer.new()
+	command_box.add_theme_constant_override("separation", 1)
+	command_panel.add_child(command_box)
+	for entry: Array in COMMANDS:
+		var button := Button.new()
+		button.text = entry[1]
+		button.icon = UiStil.symbol(entry[2])
+		button.add_theme_constant_override("icon_max_width", 22)
+		button.theme_type_variation = &"Menueintrag"
+		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		button.toggle_mode = true
+		button.focus_mode = Control.FOCUS_NONE
+		button.custom_minimum_size = Vector2(0, 28)
+		button.add_theme_font_size_override("font_size", 15)
+		button.disabled = true
+		button.pressed.connect(_on_command.bind(str(entry[0])))
+		command_box.add_child(button)
+		_commands[entry[0]] = button
+
 	_grid = GridContainer.new()
 	_grid.columns = 4
-	_grid.position = Vector2(444, 562)
+	_grid.position = Vector2(492, 562)
 	_grid.add_theme_constant_override("h_separation", 8)
 	_grid.add_theme_constant_override("v_separation", 8)
 	add_child(_grid)
@@ -1449,6 +1486,15 @@ func _build_ui() -> void:
 	_update_rotate_hint()
 
 
+## Rahmen der Zugleiste: das kleine Fenster aus dem UI-Set mit wenig Innenrand.
+func _order_panel_style() -> StyleBoxTexture:
+	var style: StyleBoxTexture = UI_THEME.get_stylebox("panel", "PanelContainer").duplicate()
+	style.set_content_margin_all(6)
+	style.content_margin_left = 12
+	style.content_margin_right = 10
+	return style
+
+
 func _vignette(strength: float) -> ColorRect:
 	var rect := ColorRect.new()
 	rect.size = Vector2(SCREEN.x, FIELD_BOTTOM)
@@ -1476,6 +1522,51 @@ func _clear_actions() -> void:
 		if child is Button:
 			child.disabled = true
 		child.queue_free()
+	_set_commands("")
+
+
+## Kampfmenü: "" = gesperrt (nicht am Zug), sonst ist der Eintrag mit dieser Kennung ausgewählt.
+func _set_commands(selected: String) -> void:
+	for id: String in _commands:
+		var button: Button = _commands[id]
+		button.disabled = selected == ""
+		button.set_pressed_no_signal(id == selected)
+
+
+## Ein Eintrag im Kampfmenü wurde gewählt.
+func _on_command(id: String) -> void:
+	var f := _menu_fighter
+	if f == null:
+		return
+	var list := state.skills.abilities(f)
+	match id:
+		"angriff":
+			# Der erste Eintrag jeder Klasse ist ihr Grundangriff: gleich das Ziel wählen lassen
+			_on_ability_pressed(f, list[0])
+		"verteidigen":
+			# Verteidigen = Abwarten (weniger Schaden bis zum nächsten Zug)
+			for ab in list:
+				if ab.id == "abwarten":
+					_clear_actions()
+					_action_chosen.emit({ab = ab, target = null})
+					return
+			_show_actions(f)
+		"fliehen":
+			_flee()
+		_:
+			_cancel_targeting()
+			_show_actions(f, id)
+
+
+## Fliehen bzw. Aufgeben: zurück in die Welt (in der Sandbox zur Auswahl).
+func _flee() -> void:
+	if not BattleRequest.active():
+		get_tree().change_scene_to_file("res://scenes/auswahl.tscn")
+		return
+	# Gruppenkampf: Die anderen kämpfen weiter, für die eigene Figur entscheidet ab jetzt der Gastgeber
+	if not _group.is_empty():
+		Netz.battle_leave()
+	_back_to_world(false)
 
 
 func refresh() -> void:
@@ -1487,37 +1578,30 @@ func refresh() -> void:
 	var order := state.peek_order(8)
 	for i in order.size():
 		var f := order[i]
+		# Kästchen aus dem UI-Set mit dem Bild der Figur, darunter klein der Name
 		var chip := PanelContainer.new()
-		var style := StyleBoxFlat.new()
-		style.bg_color = Color(f.color.darkened(0.7), 0.9)
-		style.set_corner_radius_all(4)
-		style.border_color = f.color if i > 0 else Color("f2c14e")
-		style.set_border_width_all(2 if i > 0 else 4)
-		style.content_margin_left = 4
-		style.content_margin_right = 4
-		chip.add_theme_stylebox_override("panel", style)
-		chip.custom_minimum_size = Vector2(118, 56)
-		var row := HBoxContainer.new()
-		row.add_theme_constant_override("separation", 2)
-		chip.add_child(row)
-		# Kleines Bild der Figur
+		chip.add_theme_stylebox_override("panel", UiStil.feld_stil(i == 0))
+		chip.custom_minimum_size = Vector2(66, 66)
+		chip.tooltip_text = f.display_name
 		var portrait := TextureRect.new()
 		portrait.texture = FighterView.portrait(f.look_key())
 		portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		portrait.custom_minimum_size = Vector2(24, 48)
 		portrait.texture_filter = FighterView.filter_fuer(portrait.texture)
 		portrait.flip_h = f.is_ally()
 		portrait.self_modulate = FighterView.tint(f.look_key())
-		row.add_child(portrait)
+		chip.add_child(portrait)
 		var label := Label.new()
-		label.text = ("JETZT\n" if i == 0 else "") + f.display_name
+		label.text = f.display_name
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+		label.size_flags_vertical = Control.SIZE_SHRINK_END
 		label.clip_text = true
-		label.add_theme_font_size_override("font_size", 12)
-		row.add_child(label)
+		label.add_theme_font_size_override("font_size", 10)
+		label.add_theme_color_override("font_color", Color("f2c14e") if i == 0 else Color.WHITE)
+		label.add_theme_color_override("font_outline_color", Color.BLACK)
+		label.add_theme_constant_override("outline_size", 4)
+		chip.add_child(label)
 		_order_box.add_child(chip)
 
 
@@ -1527,42 +1611,31 @@ func add_log(text: String) -> void:
 
 # --- Auswertung ---------------------------------------------------------------
 
-## Belohnung des Sieges in einer Zeile (Erfahrung, Gold, Monsterkarte, neue Stufe). "" = nichts.
-func _reward_text() -> String:
-	var reward := BattleRequest.reward
-	if not BattleRequest.active() or reward.is_empty():
-		return ""
-	var parts: PackedStringArray = []
-	if int(reward.get("erfahrung", 0)) > 0:
-		parts.append("+%d Erfahrung" % int(reward.erfahrung))
-	if int(reward.get("gold", 0)) > 0:
-		parts.append("+%d Gold" % int(reward.gold))
-	if str(reward.get("karte", "")) != "":
-		parts.append("Karte: %s" % KartenSpiel.card(str(reward.karte)).name)
-	for level: int in reward.get("stufen", []):
-		parts.append("Stufe %d erreicht!" % level)
-	return ("Belohnung: " + "  ·  ".join(parts)) if not parts.is_empty() else ""
-
-
 func _show_end_screen(won: bool) -> void:
 	var shade := ColorRect.new()
-	shade.color = Color(0, 0, 0, 0.62 if won else 0.82)
+	shade.color = Color(0, 0, 0, 0.55 if won else 0.78)
 	shade.size = SCREEN
 	shade.z_index = 30
 	add_child(shade)
 	# Sanft einblenden, damit man die feiernde Gruppe noch sieht
 	shade.modulate.a = 0.0
 	create_tween().tween_property(shade, "modulate:a", 1.0, 0.5)
+
+	# Fenster wie im UI-Entwurf: Banner, großer Titel, Auswertung, Belohnung, Tabelle, Knöpfe
+	var window := PanelContainer.new()
+	window.position = Vector2(140, 110)
+	window.size = Vector2(1000, 0)
+	shade.add_child(window)
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 10)
+	window.add_child(box)
 	var title := Label.new()
 	title.text = "SIEG!" if won else "NIEDERLAGE"
-	title.add_theme_font_size_override("font_size", 52)
-	title.add_theme_color_override("font_color", Color("6dff8a") if won else Color("ff6b6b"))
+	title.add_theme_font_size_override("font_size", 44)
+	title.add_theme_color_override("font_color", Color("f2c14e") if won else Color("ff6b6b"))
 	title.add_theme_color_override("font_outline_color", Color.BLACK)
-	title.add_theme_constant_override("outline_size", 8)
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.size = Vector2(SCREEN.x, 70)
-	title.position = Vector2(0, 40)
-	shade.add_child(title)
+	title.add_theme_constant_override("outline_size", 6)
+	box.add_child(UiStil.titel_mit_banner(title))
 
 	var sub := Label.new()
 	sub.text = "Kampfauswertung · %d Züge · Welle %d von %d · %s" % [state.turns, state.wave + 1, state.waves.size(), _battle_name()]
@@ -1570,35 +1643,23 @@ func _show_end_screen(won: bool) -> void:
 		sub.text += (" · Urbaum gefällt" if Sandbox.pilz_choice == "faellen" else " · Urbaum gerettet") + " · Belohnung: Sternensplitter"
 	sub.add_theme_font_size_override("font_size", 18)
 	sub.add_theme_color_override("font_color", Color("f2c14e"))
-	sub.add_theme_color_override("font_outline_color", Color.BLACK)
-	sub.add_theme_constant_override("outline_size", 4)
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	sub.size = Vector2(SCREEN.x, 30)
-	sub.position = Vector2(0, 112)
-	shade.add_child(sub)
-	var reward_text := _reward_text() if won else ""
-	if reward_text != "":
-		var reward := Label.new()
-		reward.text = reward_text
-		reward.add_theme_font_size_override("font_size", 22)
-		reward.add_theme_color_override("font_color", Color("8affc1"))
-		reward.add_theme_color_override("font_outline_color", Color.BLACK)
-		reward.add_theme_constant_override("outline_size", 4)
-		reward.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		reward.size = Vector2(SCREEN.x, 32)
-		reward.position = Vector2(0, 142)
-		shade.add_child(reward)
+	box.add_child(sub)
+	if won:
+		var rewards := _reward_row()
+		if rewards.get_child_count() > 0:
+			box.add_child(rewards)
 
 	# Tabelle: eine Zeile pro Klasse (Begleiter zählen beim Besitzer mit)
 	var grid := GridContainer.new()
 	grid.columns = 8
-	grid.position = Vector2(110, 320)
+	grid.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	grid.add_theme_constant_override("h_separation", 26)
-	grid.add_theme_constant_override("v_separation", 10)
-	shade.add_child(grid)
+	grid.add_theme_constant_override("v_separation", 8)
+	box.add_child(grid)
 	var headers := ["Klasse", "Rolle", "Schaden", "Heilung", "Abgewehrt", "Erlitten", "Perfekt", "Ults"]
 	for text: String in headers:
-		grid.add_child(_cell(text, Color("f2c14e"), 18))
+		grid.add_child(_cell(text, Color("f2c14e"), 17))
 	var best := {}
 	for key in ["dmg", "heal", "blocked"]:
 		best[key] = 0
@@ -1611,63 +1672,82 @@ func _show_end_screen(won: bool) -> void:
 		var name_text := "%s (%s)" % [h.class_title, h.display_name]
 		if not h.is_alive():
 			name_text += " †"
-		grid.add_child(_cell(name_text, h.color.lightened(0.2), 18))
-		grid.add_child(_cell(data.role, Sandbox.ROLE_COLORS[data.role], 18))
-		grid.add_child(_cell(str(h.stat_damage), Color("ffe14d") if h.stat_damage == best.dmg and best.dmg > 0 else Color.WHITE, 20))
-		grid.add_child(_cell(str(h.stat_heal), Color("6dff8a") if h.stat_heal == best.heal and best.heal > 0 else Color.WHITE, 20))
-		grid.add_child(_cell(str(h.stat_blocked), Color("6fa8ff") if h.stat_blocked == best.blocked and best.blocked > 0 else Color.WHITE, 20))
-		grid.add_child(_cell(str(h.stat_taken), Color.WHITE, 20))
-		grid.add_child(_cell(str(h.stat_perfect), Color.WHITE, 20))
-		grid.add_child(_cell(str(h.stat_ults), Color.WHITE, 20))
+		grid.add_child(_cell(name_text, h.color.lightened(0.2), 17))
+		grid.add_child(_cell(data.role, Sandbox.ROLE_COLORS[data.role], 17))
+		grid.add_child(_cell(str(h.stat_damage), Color("ffe14d") if h.stat_damage == best.dmg and best.dmg > 0 else Color.WHITE, 19))
+		grid.add_child(_cell(str(h.stat_heal), Color("6dff8a") if h.stat_heal == best.heal and best.heal > 0 else Color.WHITE, 19))
+		grid.add_child(_cell(str(h.stat_blocked), Color("6fa8ff") if h.stat_blocked == best.blocked and best.blocked > 0 else Color.WHITE, 19))
+		grid.add_child(_cell(str(h.stat_taken), Color.WHITE, 19))
+		grid.add_child(_cell(str(h.stat_perfect), Color.WHITE, 19))
+		grid.add_child(_cell(str(h.stat_ults), Color.WHITE, 19))
 
 	var hint := Label.new()
 	hint.text = "Abgewehrt = Schaden, der durch Schilde, Rüstung, Mana, Parieren, Ausweichen oder Rauch nicht angekommen ist.\nRoboter und Monster zählen bei Mechaniker und Zähmer mit (was der Roboter einsteckt, zählt als abgewehrt)."
-	hint.add_theme_font_size_override("font_size", 14)
+	hint.add_theme_font_size_override("font_size", 13)
 	hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.6))
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	hint.size = Vector2(SCREEN.x, 50)
-	hint.position = Vector2(0, 492)
-	shade.add_child(hint)
+	box.add_child(hint)
 
+	var buttons := HBoxContainer.new()
+	buttons.alignment = BoxContainer.ALIGNMENT_CENTER
+	buttons.add_theme_constant_override("separation", 30)
+	box.add_child(buttons)
 	if BattleRequest.active():
-		_world_buttons(shade, won)
+		_world_buttons(buttons, won)
 		return
-	var again := Button.new()
-	again.text = "Nochmal (gleiches Team)"
-	again.add_theme_font_size_override("font_size", 22)
-	again.size = Vector2(330, 72)
-	again.position = Vector2(290, 560)
-	again.pressed.connect(func() -> void: get_tree().reload_current_scene())
-	shade.add_child(again)
-	var change := Button.new()
-	change.text = "Team ändern"
-	change.add_theme_font_size_override("font_size", 22)
-	change.size = Vector2(330, 72)
-	change.position = Vector2(660, 560)
-	change.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/auswahl.tscn"))
-	shade.add_child(change)
+	buttons.add_child(_end_button("Nochmal (gleiches Team)", func() -> void: get_tree().reload_current_scene()))
+	buttons.add_child(_end_button("Team ändern", func() -> void: get_tree().change_scene_to_file("res://scenes/auswahl.tscn")))
+
+
+## Belohnung des Sieges als Reihe mit Symbolen (Erfahrung, Gold, Karte, neue Stufe).
+func _reward_row() -> HBoxContainer:
+	var row := HBoxContainer.new()
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.add_theme_constant_override("separation", 26)
+	var reward := BattleRequest.reward
+	if not BattleRequest.active() or reward.is_empty():
+		return row
+	var parts: Array[Array] = []
+	if int(reward.get("erfahrung", 0)) > 0:
+		parts.append(["kristall", "+%d Erfahrung" % int(reward.erfahrung)])
+	if int(reward.get("gold", 0)) > 0:
+		parts.append(["gold", "+%d Gold" % int(reward.gold)])
+	if str(reward.get("karte", "")) != "":
+		parts.append(["schluessel", "Karte: %s" % KartenSpiel.card(str(reward.karte)).name])
+	for level: int in reward.get("stufen", []):
+		parts.append(["pfeil", "Stufe %d erreicht!" % level])
+	for part in parts:
+		var item := HBoxContainer.new()
+		item.add_theme_constant_override("separation", 6)
+		var icon := TextureRect.new()
+		icon.texture = UiStil.symbol(part[0])
+		icon.custom_minimum_size = Vector2(28, 28)
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		item.add_child(icon)
+		item.add_child(_cell(part[1], Color("8affc1"), 21))
+		row.add_child(item)
+	return row
+
+
+func _end_button(text: String, callback: Callable) -> Button:
+	var button := Button.new()
+	button.text = text
+	button.add_theme_font_size_override("font_size", 21)
+	button.custom_minimum_size = Vector2(320, 60)
+	button.pressed.connect(callback)
+	return button
 
 
 ## Knöpfe am Ende eines Kampfes aus der Kreuzweg-Demo: zurück in die Stadt, bei Niederlage auch nochmal.
-func _world_buttons(shade: Control, won: bool) -> void:
-	var back := Button.new()
-	back.text = GameData.text("zurueck_kreuzweg")
-	back.add_theme_font_size_override("font_size", 22)
-	back.size = Vector2(330, 72)
-	back.position = Vector2(660 if not won and not state.setup.get("kein_nochmal", false) else 475, 560)
-	back.pressed.connect(func() -> void: _back_to_world(won))
-	shade.add_child(back)
-	var retry: bool = not won and not state.setup.get("kein_nochmal", false)
-	if retry:
-		var again := Button.new()
-		again.text = GameData.text("nochmal")
-		again.add_theme_font_size_override("font_size", 22)
-		again.size = Vector2(330, 72)
-		again.position = Vector2(290, 560)
-		again.pressed.connect(func() -> void:
+func _world_buttons(buttons: Control, won: bool) -> void:
+	if not won and not state.setup.get("kein_nochmal", false):
+		buttons.add_child(_end_button(GameData.text("nochmal"), func() -> void:
 			BattleRequest.retry(_potions_used(), state.wave)
-			get_tree().reload_current_scene())
-		shade.add_child(again)
+			get_tree().reload_current_scene()))
+	var back := _end_button(GameData.text("zurueck_kreuzweg"), func() -> void: _back_to_world(won))
+	back.theme_type_variation = &"KnopfGold"
+	buttons.add_child(back)
 
 
 func _cell(text: String, color: Color, font_size: int) -> Label:

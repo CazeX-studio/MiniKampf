@@ -21,7 +21,8 @@ func _process(delta: float) -> void:
 			p.progress.gold = 42
 			for id: String in ["heiltrank", "kraut", "honigwabe", "sternensplitter"]:
 				p.progress.add_item(id, 2)
-			p.progress.quests["ankunft"] = "offen"],
+			p.progress.quests["ankunft"] = "aktiv"
+			p.progress.quests["erster_auftrag"] = "fertig"],
 		[1.0, func() -> void:
 			_on_notice(local_id, GameData.text("gold", [20]))
 			_on_notice(local_id, GameData.text("gegenstand", [1, "Heiltrank"]))

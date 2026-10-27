@@ -110,6 +110,10 @@ const COL_GOLD := Color("f2c14e")
 const COL_BLADE := Color("ffb07a")
 const COL_HARD := Color("ff9a5c")
 const COL_TARGET := Color(0.4, 1.0, 1.0)
+## Leisten mit Füllung aus dem UI-Set: Farbe (als Hex) -> Bild in assets/ui/
+const BAR_FILLS := {"4cc46a": "fuellung_gruen", "e0533d": "fuellung_rot", "4a8cf0": "fuellung_blau"}
+
+static var _fills := {}
 
 var fighter: Fighter
 ## Ist gerade am Zug (goldener Rahmen und Pfeil).
@@ -529,19 +533,15 @@ func _draw_plate() -> void:
 		draw_string_outline(font, Vector2(_home.x - 60, sprite_size.y + 14), fighter.display_name + " (hilft)", HORIZONTAL_ALIGNMENT_CENTER, 120, 11, 4, Color.BLACK)
 		draw_string(font, Vector2(_home.x - 60, sprite_size.y + 14), fighter.display_name + " (hilft)", HORIZONTAL_ALIGNMENT_CENTER, 120, 11, Color("cfe8c0"))
 		return
-	var box := StyleBoxFlat.new()
-	box.bg_color = COL_PLATE
-	box.set_corner_radius_all(4)
-	if active:
-		box.border_color = COL_ULT
-		box.set_border_width_all(2)
-	elif targetable:
+	# Schild aus dem UI-Set: Feld mit Goldrand, golden leuchtend für die Figur am Zug
+	draw_style_box(UiStil.feld_stil(active), _plate.grow(4))
+	if targetable:
+		var box := StyleBoxFlat.new()
+		box.draw_center = false
+		box.set_corner_radius_all(4)
 		box.border_color = Color(COL_TARGET, 0.4 + 0.6 * (0.5 + 0.5 * sin(_time * 8.0)))
 		box.set_border_width_all(3)
-	else:
-		box.border_color = Color(0.75, 0.7, 0.55, 0.35)
-		box.set_border_width_all(1)
-	draw_style_box(box, _plate)
+		draw_style_box(box, _plate.grow(5))
 
 	var x0 := _plate.position.x + 7.0
 	var w := _plate.size.x - 14.0
@@ -695,9 +695,17 @@ func _draw_enemy_details(font: Font, x0: float, y: float, w: float) -> void:
 
 func _draw_bar(rect: Rect2, ratio: float, color: Color, text: String) -> void:
 	draw_rect(rect.grow(1), Color(0, 0, 0, 0.7))
-	draw_rect(Rect2(rect.position, Vector2(rect.size.x * clampf(ratio, 0, 1), rect.size.y)), color)
-	# Heller Streifen oben, damit die Leiste etwas plastisch wirkt
-	draw_rect(Rect2(rect.position, Vector2(rect.size.x * clampf(ratio, 0, 1), 2)), Color(1, 1, 1, 0.25))
+	var fill := Rect2(rect.position, Vector2(rect.size.x * clampf(ratio, 0, 1), rect.size.y))
+	# Leben und Mana mit den Füllungen aus dem UI-Set, alles andere einfarbig
+	var texture := BAR_FILLS.get(color.to_html(false), "") as String
+	if texture != "" and fill.size.x >= 4.0:
+		draw_style_box(_fill_style(texture), fill)
+	else:
+		draw_rect(fill, color)
+		# Heller Streifen oben, damit die Leiste etwas plastisch wirkt
+		draw_rect(Rect2(rect.position, Vector2(fill.size.x, 2)), Color(1, 1, 1, 0.25))
+	# Feiner Goldrand wie beim Balken aus dem UI-Set
+	draw_rect(rect.grow(1), Color(0.85, 0.66, 0.3, 0.75), false, 1.0)
 	if text != "":
 		var font_size := 10 if rect.size.y < 12 else 11
 		draw_string_outline(ThemeDB.fallback_font, rect.position + Vector2(4, rect.size.y - 1.5), text, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 6, font_size, 3, Color(0, 0, 0, 0.8))
@@ -712,3 +720,15 @@ func _draw_pips(origin: Vector2, filled: int, count: int, color: Color) -> void:
 			draw_circle(c, 4, color)
 		else:
 			draw_arc(c, 4, 0, TAU, 12, Color(color, 0.5), 1.5)
+
+
+static func _fill_style(texture: String) -> StyleBoxTexture:
+	if not _fills.has(texture):
+		var style := StyleBoxTexture.new()
+		style.texture = load("res://assets/ui/%s.png" % texture)
+		style.texture_margin_left = 4
+		style.texture_margin_right = 4
+		style.texture_margin_top = 3
+		style.texture_margin_bottom = 3
+		_fills[texture] = style
+	return _fills[texture]

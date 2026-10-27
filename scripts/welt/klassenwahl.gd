@@ -165,11 +165,13 @@ func _build() -> void:
 	var yes := Button.new()
 	yes.text = "Ja"
 	yes.custom_minimum_size = Vector2(150, 50)
+	yes.theme_type_variation = &"KnopfGold"
 	yes.pressed.connect(_choose)
 	row.add_child(yes)
 	var no := Button.new()
 	no.text = "Noch nicht"
 	no.custom_minimum_size = Vector2(150, 50)
+	no.theme_type_variation = &"KnopfRot"
 	no.pressed.connect(func() -> void: _confirm.visible = false)
 	row.add_child(no)
 

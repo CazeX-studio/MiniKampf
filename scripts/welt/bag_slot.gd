@@ -10,10 +10,6 @@ signal moved(from: int, to: int)
 signal picked(index: int)
 
 const SIZE := 52.0
-const SLOT := preload("res://assets/ui/feld.png")
-const SLOT_SELECTED := preload("res://assets/ui/feld_aktiv.png")
-
-static var _styles := {}
 
 var index := 0
 var item_id := ""
@@ -32,6 +28,39 @@ func show_item(id: String, amount: int, is_selected: bool) -> void:
 	selected = is_selected
 	tooltip_text = GameData.item_name(id) if id != "" else ""
 	queue_redraw()
+
+
+## Infofenster wie im UI-Entwurf: Bild im Kästchen, Name, Beschreibung und Preis.
+func _make_custom_tooltip(_for_text: String) -> Object:
+	if item_id == "":
+		return null
+	var item := GameData.item(item_id)
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 6)
+	var head := HBoxContainer.new()
+	head.add_theme_constant_override("separation", 10)
+	box.add_child(head)
+	var icon := BagSlot.new()
+	icon.show_item(item_id, 1, false)
+	head.add_child(icon)
+	var title := Label.new()
+	title.text = item.get("name", item_id)
+	title.add_theme_font_size_override("font_size", 20)
+	title.add_theme_color_override("font_color", Color("f2c14e"))
+	head.add_child(title)
+	var text := Label.new()
+	text.text = item.get("beschreibung", "")
+	text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	text.custom_minimum_size = Vector2(260, 0)
+	text.add_theme_font_size_override("font_size", 15)
+	box.add_child(text)
+	if int(item.get("preis", 0)) > 0:
+		var price := Label.new()
+		price.text = "Wert: %d Gold" % int(item.preis)
+		price.add_theme_font_size_override("font_size", 13)
+		price.add_theme_color_override("font_color", Color(1, 1, 1, 0.6))
+		box.add_child(price)
+	return box
 
 
 func _gui_input(event: InputEvent) -> void:
@@ -61,18 +90,9 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	moved.emit(int(data.tasche), index)
 
 
-static func _slot_style(is_selected: bool) -> StyleBoxTexture:
-	if not _styles.has(is_selected):
-		var style := StyleBoxTexture.new()
-		style.texture = SLOT_SELECTED if is_selected else SLOT
-		style.set_texture_margin_all(12)
-		_styles[is_selected] = style
-	return _styles[is_selected]
-
-
 func _draw() -> void:
 	# Kästchen aus dem UI-Set: normal oder golden leuchtend, wenn ausgewählt
-	draw_style_box(_slot_style(selected), Rect2(Vector2.ZERO, size))
+	draw_style_box(UiStil.feld_stil(selected), Rect2(Vector2.ZERO, size))
 	if item_id == "":
 		return
 	var look: Dictionary = GameData.item(item_id).get("bild", {})

@@ -141,6 +141,13 @@ var _panel_text: RichTextLabel
 var _panel_mode := ""
 ## Kästchen der Tasche (Raster im Taschen-Fenster) und das gerade angeklickte Kästchen
 var _bag_grid: GridContainer
+var _bag_footer: HBoxContainer
+var _quest_view: HBoxContainer
+var _quest_list: VBoxContainer
+var _quest_detail: RichTextLabel
+## Im Auftragsbuch ausgewählter Auftrag ("" = der erste der Liste)
+var _quest_selected := ""
+var _stats_head: HBoxContainer
 var _bag_selected := -1
 var _shop_panel: PanelContainer
 var _shop_box: VBoxContainer
@@ -1260,24 +1267,30 @@ func _build_ui() -> void:
 		_build_chat(root)
 		_build_group(root)
 
-	var x := 1170.0
-	for info: Array in [["Menü", 96, _go_menu], ["Tasche (I)", 120, _toggle_panel.bind("tasche")], ["Werte (C)", 116, _toggle_panel.bind("werte")],
-			["Aufträge (J)", 140, _toggle_panel.bind("auftraege")], [GameData.text("neu_beginnen"), 140, _restart]]:
+	# Schnellleiste oben rechts wie im UI-Entwurf: Symbol mit Taste, Name als Hinweis beim Darüberfahren
+	var x := 1270.0
+	for info: Array in [["", "zahnrad", "Menü", 56, _go_menu], ["I", "tasche", "Tasche (I)", 72, _toggle_panel.bind("tasche")],
+			["C", "schild", "Werte (C)", 72, _toggle_panel.bind("werte")], ["J", "ausrufe", "Aufträge (J)", 72, _toggle_panel.bind("auftraege")],
+			[GameData.text("neu_beginnen"), "", GameData.text("neu_beginnen"), 140, _restart]]:
 		var button := Button.new()
 		button.text = info[0]
-		button.size = Vector2(info[1], 44)
-		x -= 0.0 if info[0] == "Menü" else info[1] + 8.0
-		button.position = Vector2(x, 12)
+		if info[1] != "":
+			button.icon = UiStil.symbol(info[1])
+			button.add_theme_constant_override("icon_max_width", 26)
+		button.tooltip_text = info[2]
+		button.size = Vector2(info[3], 46)
+		x -= info[3] + 8.0
+		button.position = Vector2(x + 8.0, 10)
 		button.add_theme_font_size_override("font_size", 15)
 		button.focus_mode = Control.FOCUS_NONE
-		button.pressed.connect(info[2])
+		button.pressed.connect(info[4])
 		root.add_child(button)
 		_buttons.append(button)
 	# Nur für Zähmer: Rudel-Fenster
 	_pack_button = Button.new()
 	_pack_button.text = "Rudel (R)"
 	_pack_button.size = Vector2(110, 44)
-	_pack_button.position = Vector2(x - 118, 12)
+	_pack_button.position = Vector2(x - 110, 10)
 	_pack_button.add_theme_font_size_override("font_size", 15)
 	_pack_button.focus_mode = Control.FOCUS_NONE
 	_pack_button.pressed.connect(func() -> void: _pack_open = not _pack_open)
@@ -1333,6 +1346,10 @@ func _build_ui() -> void:
 	_dialog_next = Button.new()
 	_dialog_next.text = GameData.text("weiter") + " (F)"
 	_dialog_next.custom_minimum_size = Vector2(160, 44)
+	# Weiter-Pfeil wie im UI-Entwurf
+	_dialog_next.icon = UiStil.symbol("pfeil")
+	_dialog_next.icon_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_dialog_next.add_theme_constant_override("icon_max_width", 22)
 	_dialog_next.size_flags_horizontal = Control.SIZE_SHRINK_END
 	_dialog_next.add_theme_font_size_override("font_size", 17)
 	_dialog_next.focus_mode = Control.FOCUS_NONE
@@ -1341,8 +1358,8 @@ func _build_ui() -> void:
 
 	# Fenster für Auftragsbuch und Tasche
 	_panel = _framed_panel()
-	_panel.position = Vector2(340, 90)
-	_panel.size = Vector2(600, 440)
+	_panel.position = Vector2(295, 84)
+	_panel.size = Vector2(690, 460)
 	_panel.visible = false
 	root.add_child(_panel)
 	_buttons.append(_panel)
@@ -1366,9 +1383,32 @@ func _build_ui() -> void:
 			_fill_panel())
 		_quest_tabs.add_child(tab_button)
 	panel_box.add_child(_quest_tabs)
+	# Auftragsbuch wie im UI-Entwurf: Liste links, Einzelheiten des gewählten Auftrags rechts
+	_quest_view = HBoxContainer.new()
+	_quest_view.add_theme_constant_override("separation", 12)
+	panel_box.add_child(_quest_view)
+	var quest_scroll := ScrollContainer.new()
+	quest_scroll.custom_minimum_size = Vector2(250, 330)
+	quest_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_quest_view.add_child(quest_scroll)
+	_quest_list = VBoxContainer.new()
+	_quest_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_quest_list.add_theme_constant_override("separation", 4)
+	quest_scroll.add_child(_quest_list)
+	_quest_detail = RichTextLabel.new()
+	_quest_detail.bbcode_enabled = true
+	_quest_detail.custom_minimum_size = Vector2(400, 330)
+	_quest_detail.add_theme_font_size_override("normal_font_size", 15)
+	_quest_detail.add_theme_font_size_override("bold_font_size", 16)
+	_quest_view.add_child(_quest_detail)
+	# Werte wie im UI-Entwurf: Bild der Figur im Goldrahmen, daneben Stufe, Erfahrung und Leisten
+	_stats_head = HBoxContainer.new()
+	_stats_head.add_theme_constant_override("separation", 16)
+	panel_box.add_child(_stats_head)
 	# Tasche: Kästchen mit Bild und Anzahl, per Ziehen und Ablegen umsortieren
 	_bag_grid = GridContainer.new()
 	_bag_grid.columns = 10
+	_bag_grid.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	_bag_grid.add_theme_constant_override("h_separation", 4)
 	_bag_grid.add_theme_constant_override("v_separation", 4)
 	panel_box.add_child(_bag_grid)
@@ -1382,6 +1422,10 @@ func _build_ui() -> void:
 		_panel.visible = false
 		_send({type = "benutzen", gegenstand = str(meta)}))
 	panel_box.add_child(_panel_text)
+	# Fußzeile der Tasche: links das Gold, rechts belegte Plätze
+	_bag_footer = HBoxContainer.new()
+	_bag_footer.add_theme_constant_override("separation", 6)
+	panel_box.add_child(_bag_footer)
 	var close := Button.new()
 	close.text = "Schließen"
 	close.custom_minimum_size = Vector2(140, 40)
@@ -2086,45 +2130,27 @@ func _toggle_panel(mode: String) -> void:
 func _fill_panel() -> void:
 	var p := local_player()
 	var lines: PackedStringArray = []
+	var quest_list := _panel_mode == "auftraege" and _quest_tab != "erfolge"
 	_quest_tabs.visible = _panel_mode == "auftraege"
+	_quest_view.visible = quest_list
+	_panel_text.visible = not quest_list
+	_stats_head.visible = _panel_mode == "werte"
 	_bag_grid.visible = _panel_mode == "tasche"
-	_panel_text.custom_minimum_size.y = 150.0 if _panel_mode == "tasche" else 330.0
+	_bag_footer.visible = _panel_mode == "tasche"
+	_panel_text.custom_minimum_size.y = {"tasche": 120.0, "werte": 220.0}.get(_panel_mode, 330.0)
 	for tab_button: Button in _quest_tabs.get_children():
 		tab_button.button_pressed = tab_button.get_meta("tab") == _quest_tab
 	if _panel_mode == "auftraege":
 		_panel_title.text = GameData.text("auftragsbuch")
-		if _quest_tab == "erfolge":
-			var achievements := GameData.get_file("erfolge")
-			for id: String in achievements:
-				if id != "hinweis" and p.progress.flags.has("erfolg:" + id):
-					lines.append("[color=#f2c14e]★ %s[/color] – %s" % [achievements[id].name, achievements[id].beschreibung])
-			if lines.is_empty():
-				lines.append("Noch keine Erfolge.")
-		else:
-			# Offen: laufende Aufträge, Hauptgeschichte zuerst. Abgeschlossen: abgegebene.
-			var done_tab := _quest_tab == "fertig"
-			for main: bool in [true, false]:
-				for id: String in p.progress.quests:
-					var q := GameData.quest(id)
-					var quest_state: String = p.progress.quests[id]
-					if q.is_empty() or (quest_state == "abgegeben") != done_tab or (not q.get("neben", false)) != main:
-						continue
-					var color := "8affc1" if quest_state == "fertig" else ("a0a0a0" if quest_state == "abgegeben" else "ffffff")
-					# Nebenaufträge stehen mit blauem Zeichen und ihrer Wegweiser-Nummer da
-					# Hauptaufträge: rotes „!“ (läuft) oder lila „?“ (erfüllt, zurück zum Auftraggeber)
-					var tag := "" if quest_state == "abgegeben" else UiStil.bild("frage" if quest_state == "fertig" else "ausrufe") + " "
-					if q.get("neben", false):
-						var number := state.side_number(p, id)
-						tag = "[color=#5ab8ff]%s %s:[/color] " % ["(%d)" % number if number > 0 else "◆", GameData.text("nebenauftrag")]
-					lines.append("%s[b][color=#%s]%s[/color][/b]  (%s)" % [tag, color, q.get("titel", id), GameData.text("stand_" + quest_state)])
-					if not done_tab:
-						lines.append(q.get("beschreibung", ""))
-						for goal: Dictionary in q.get("ziele", []):
-							if state.goal_shown(p, goal):
-								lines.append("  • " + state.goal_text(p, goal))
-					lines.append("")
-			if lines.is_empty():
-				lines.append(GameData.text("auftragsbuch_leer") if not done_tab else "Noch nichts abgeschlossen.")
+		if quest_list:
+			_fill_quests(p, _quest_tab == "fertig")
+			return
+		var achievements := GameData.get_file("erfolge")
+		for id: String in achievements:
+			if id != "hinweis" and p.progress.flags.has("erfolg:" + id):
+				lines.append("%s [color=#f2c14e]%s[/color] – %s" % [UiStil.bild("kristall"), achievements[id].name, achievements[id].beschreibung])
+		if lines.is_empty():
+			lines.append("Noch keine Erfolge.")
 	elif _panel_mode == "werte":
 		_panel_title.text = GameData.text("werte")
 		var klasse := p.progress.battle_class()
@@ -2132,11 +2158,7 @@ func _fill_panel() -> void:
 			# Nach der Klassenwahl: Werte der eigenen Klasse (so kämpft man in der Wildnis)
 			var data: Dictionary = Sandbox.CLASSES[klasse]
 			var bonus := p.progress.level - 1
-			lines.append("[b]%s · Stufe %d[/b]" % [data.title, p.progress.level])
-			lines.append("")
-			lines.append(UiStil.bild("trank") + " [b]Leben: %d[/b]" % (data.hp + BattleState.LEVEL_HP * bonus))
-			if data.mana > 0:
-				lines.append(UiStil.bild("wirbel") + " [b]Mana: %d[/b]" % (data.mana + BattleState.LEVEL_MANA * bonus))
+			_fill_stats_head(p, data.title, data.hp + BattleState.LEVEL_HP * bonus, data.mana + BattleState.LEVEL_MANA * bonus if data.mana > 0 else 0)
 			lines.append(UiStil.bild("pfeil") + " [b]Tempo: %d[/b]" % data.tempo)
 			lines.append(UiStil.bild("schwert") + " [b]Stärke: %d %%[/b] (Schaden und Heilung)" % roundi(BattleRequest.hero_power(p.progress.level) * 100))
 			if klasse == "tamer":
@@ -2150,16 +2172,15 @@ func _fill_panel() -> void:
 			_panel_text.text = "\n".join(lines)
 			return
 		var stats := Grundwerte.for_level(p.progress.level)
+		_fill_stats_head(p, "Novize", stats.leben, stats.mana)
 		var chosen := str(p.progress.flags.get("klasse", ""))
 		if p.progress.flags.has("klasse_bestaetigt") and Sandbox.CLASSES.has(chosen):
 			# Klasse gewählt, aber noch nicht beim Lehrmeister gelernt: noch Novize
 			lines.append("[color=#f2c14e]%s[/color]" % GameData.text("werte_noch_novize", [Sandbox.CLASSES[chosen].title,
 					GameData.get_file("klassen").get(chosen, {}).get("lehrmeister", "?")]))
 			lines.append("")
-		lines.append("[b]Stufe %d[/b]" % p.progress.level)
-		lines.append("")
-		for key: String in Grundwerte.NAMES:
-			lines.append("[b]%s: %d[/b]" % [Grundwerte.NAMES[key], stats[key]])
+		lines.append(UiStil.bild("schwert") + " [b]%s: %d[/b]     " % [Grundwerte.NAMES.angriff, stats.angriff]
+				+ UiStil.bild("pfeil") + " [b]%s: %d[/b]" % [Grundwerte.NAMES.tempo, stats.tempo])
 		lines.append("")
 		lines.append(GameData.text("werte_naechste", [Grundwerte.growth_text()]))
 		lines.append("")
@@ -2169,7 +2190,7 @@ func _fill_panel() -> void:
 	else:
 		_panel_title.text = GameData.text("tasche")
 		var slots := _fill_bag(p)
-		lines.append("%s [b]Gold: %d[/b]" % [UiStil.bild("gold", 22), p.progress.gold])
+		_fill_bag_footer(p, slots)
 		var picked := str(slots[_bag_selected]) if _bag_selected >= 0 and _bag_selected < slots.size() else ""
 		if picked != "":
 			var item := GameData.item(picked)
@@ -2188,6 +2209,155 @@ func _fill_panel() -> void:
 			lines.append("")
 			lines.append("[b]Kreuzweg-Karten (%d):[/b] %s" % [names.size(), ", ".join(names)])
 	_panel_text.text = "\n".join(lines)
+
+
+## Auftragsbuch: links die Liste (Hauptaufträge zuerst), rechts der gewählte Auftrag.
+func _fill_quests(p: PlayerState, done_tab: bool) -> void:
+	for child in _quest_list.get_children():
+		child.queue_free()
+	var ids: Array[String] = []
+	for main: bool in [true, false]:
+		for id: String in p.progress.quests:
+			var q := GameData.quest(id)
+			if q.is_empty() or (p.progress.quests[id] == "abgegeben") != done_tab or (not q.get("neben", false)) != main:
+				continue
+			ids.append(id)
+	if not ids.has(_quest_selected):
+		_quest_selected = ids[0] if not ids.is_empty() else ""
+	for id in ids:
+		var q := GameData.quest(id)
+		var quest_state: String = p.progress.quests[id]
+		var button := Button.new()
+		button.theme_type_variation = &"Menueintrag"
+		button.toggle_mode = true
+		button.button_pressed = id == _quest_selected
+		button.focus_mode = Control.FOCUS_NONE
+		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		button.custom_minimum_size = Vector2(236, 50)
+		button.add_theme_font_size_override("font_size", 14)
+		button.add_theme_constant_override("icon_max_width", 22)
+		button.icon = UiStil.symbol({"fertig": "frage", "abgegeben": "kaestchen_an"}.get(quest_state, "ausrufe"))
+		button.text = "%s\n%s" % [q.get("titel", id), _quest_kind(p, id)]
+		if q.get("neben", false):
+			button.add_theme_color_override("font_color", SIDE_COLOR)
+		button.pressed.connect(func() -> void:
+			_quest_selected = id
+			_fill_panel())
+		_quest_list.add_child(button)
+	if ids.is_empty():
+		_quest_detail.text = GameData.text("auftragsbuch_leer") if not done_tab else "Noch nichts abgeschlossen."
+		return
+	_quest_detail.text = _quest_details(p, _quest_selected)
+
+
+## „Hauptauftrag“ oder „Nebenauftrag (2)“ mit Wegweiser-Nummer.
+func _quest_kind(p: PlayerState, id: String) -> String:
+	if not GameData.quest(id).get("neben", false):
+		return "Hauptauftrag"
+	var number := state.side_number(p, id)
+	return GameData.text("nebenauftrag") + (" (%d)" % number if number > 0 else "")
+
+
+## Rechte Seite im Auftragsbuch: Titel, Art, Beschreibung, Ziele mit Häkchen und die Belohnung mit Symbolen.
+func _quest_details(p: PlayerState, id: String) -> String:
+	var q := GameData.quest(id)
+	var quest_state: String = p.progress.quests[id]
+	var lines: PackedStringArray = []
+	lines.append("[font_size=21][color=#f2c14e]%s[/color][/font_size]" % q.get("titel", id))
+	lines.append("[color=#a0a0a0]%s · %s[/color]" % [_quest_kind(p, id), GameData.text("stand_" + quest_state)])
+	lines.append("")
+	lines.append(q.get("beschreibung", ""))
+	if quest_state != "abgegeben":
+		lines.append("")
+		for goal: Dictionary in q.get("ziele", []):
+			if state.goal_shown(p, goal):
+				var done := quest_state == "fertig" or state.goal_done(p, goal)
+				lines.append("%s %s" % [UiStil.bild("kaestchen_an" if done else "kaestchen", 18), state.goal_text(p, goal)])
+	var reward: Dictionary = q.get("belohnung", {})
+	if not reward.is_empty():
+		lines.append("")
+		lines.append("[color=#f2c14e][b]Belohnung[/b][/color]")
+		var parts: PackedStringArray = []
+		if int(reward.get("gold", 0)) > 0:
+			parts.append("%s %d Gold" % [UiStil.bild("gold", 22), int(reward.gold)])
+		if int(reward.get("erfahrung", 0)) > 0:
+			parts.append("%s %d Erfahrung" % [UiStil.bild("kristall", 22), int(reward.erfahrung)])
+		var items: Dictionary = reward.get("gegenstaende", {})
+		for item_id: String in items:
+			parts.append("%s %d × %s" % [UiStil.bild("tasche", 22), int(items[item_id]), GameData.item_name(item_id)])
+		lines.append("     ".join(parts))
+	return "\n".join(lines)
+
+
+## Kopf der Werte: Bild der eigenen Figur im Goldrahmen, Name, Stufe, Erfahrung, Leben und Mana als Leisten.
+func _fill_stats_head(p: PlayerState, title: String, hp: int, mana: int) -> void:
+	for child in _stats_head.get_children():
+		child.queue_free()
+	var frame := PanelContainer.new()
+	frame.add_theme_stylebox_override("panel", UiStil.feld_stil(true))
+	frame.custom_minimum_size = Vector2(120, 120)
+	var portrait := TextureRect.new()
+	portrait.texture = FighterView.portrait(p.look if p.look != "" else "novize")
+	portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	portrait.texture_filter = FighterView.filter_fuer(portrait.texture)
+	frame.add_child(portrait)
+	_stats_head.add_child(frame)
+	var right := VBoxContainer.new()
+	right.add_theme_constant_override("separation", 6)
+	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_stats_head.add_child(right)
+	right.add_child(_label("%s · %s · Stufe %d" % [p.display_name, title, p.progress.level], 18, Color("f3ead8")))
+	var xp_span := p.progress.xp_range()
+	if xp_span.y > 0:
+		right.add_child(_stat_bar("Erfahrung", p.progress.xp - xp_span.x, xp_span.y - xp_span.x, "gruen",
+				"%d / %d" % [p.progress.xp, xp_span.y]))
+	right.add_child(_stat_bar("Leben", hp, hp, "rot", "%d / %d" % [hp, hp]))
+	if mana > 0:
+		right.add_child(_stat_bar("Mana", mana, mana, "blau", "%d / %d" % [mana, mana]))
+
+
+## Eine Zeile mit Name, Leiste aus dem UI-Set (Füllung rot, blau oder grün) und Zahl.
+func _stat_bar(name: String, value: int, max_value: int, fill: String, text: String) -> HBoxContainer:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	var label := _label(name, 16, Color("f3ead8"))
+	label.custom_minimum_size.x = 90
+	row.add_child(label)
+	var bar := ProgressBar.new()
+	bar.show_percentage = false
+	bar.max_value = maxi(max_value, 1)
+	bar.value = value
+	bar.custom_minimum_size = Vector2(250, 22)
+	bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	bar.add_theme_stylebox_override("fill", UiStil.fuellung(fill))
+	row.add_child(bar)
+	row.add_child(_label(text, 15, Color.WHITE))
+	return row
+
+
+## Fußzeile der Tasche wie im UI-Entwurf: Münze und Gold links, Tasche und belegte Plätze rechts.
+func _fill_bag_footer(p: PlayerState, slots: Array) -> void:
+	for child in _bag_footer.get_children():
+		child.queue_free()
+	var used := 0
+	for id in slots:
+		if str(id) != "":
+			used += 1
+	for part: Array in [["gold", "Gold: %d" % p.progress.gold], [], ["tasche", "%d / %d" % [used, slots.size()]]]:
+		if part.is_empty():
+			var spacer := Control.new()
+			spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			_bag_footer.add_child(spacer)
+			continue
+		var icon := TextureRect.new()
+		icon.texture = UiStil.symbol(part[0])
+		icon.custom_minimum_size = Vector2(26, 26)
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		_bag_footer.add_child(icon)
+		_bag_footer.add_child(_label(part[1], 18, Color("f3ead8")))
 
 
 ## Füllt die Kästchen der Tasche. Die Kästchen bleiben dieselben, damit Ziehen und Ablegen nicht abbricht.

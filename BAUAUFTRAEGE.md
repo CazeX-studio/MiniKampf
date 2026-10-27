@@ -218,6 +218,34 @@ _Aus Marcos Entscheidung vom 27.10.2026: Die Welt bleibt in Rautenansicht und wi
 - **So testest du es:** Grünwacht durchspielen: alles wie vorher, im neuen Aussehen.
 - **Status:** offen
 
+## Projekt 10: Oberfläche nach Marcos UI-Entwurf (27.10.)
+
+Grundlage: Marcos Asterfall-UI-Set (zwei Bildblätter in `tools/vorlagen/ui/`) und der Entwurf mit Auftragsbuch, Tasche,
+Werten, Zugleiste, Kampfmenü, Sieg-Fenster und Meldungen. Look überall eingebaut und Meldungen mit Rahmen: fertig (27.10.).
+
+### Schritt 1: Kampf nach Entwurf
+- **Ziel:** Zugleiste mit Bildern in Goldfeldern, Namensschilder mit Goldrahmen und Leisten aus dem Set, Kampfmenü links
+  (Angriff, Fähigkeiten, Gegenstände, Verteidigen, Fliehen) neben den Fähigkeiten.
+- **So testest du es:** Einen Kampf beginnen: „Angriff“ lässt gleich ein Ziel wählen, „Verteidigen“ wartet ab, „Gegenstände“ zeigt nur Tränke.
+- **Status:** fertig (27.10.)
+
+### Schritt 2: Sieg-Fenster und Gegenstands-Infofenster
+- **Ziel:** Sieg-Fenster mit Banner, Belohnung mit Symbolen und goldenem Knopf; Infofenster beim Darüberfahren über einem Gegenstand.
+- **So testest du es:** Einen Kampf gewinnen; in der Tasche mit der Maus über einen Gegenstand fahren.
+- **Status:** fertig (27.10.)
+
+### Schritt 3: Auftragsbuch, Werte und Tasche nach Entwurf
+- **Ziel:** Auftragsbuch mit Liste links und Einzelheiten rechts (Häkchen, Belohnung), Werte mit Bild der Figur und Leisten,
+  Tasche mit Gold und belegten Plätzen unten, Schnellleiste mit Symbolen, goldene und rote Knöpfe.
+- **So testest du es:** J, C und I drücken und die drei Fenster ansehen.
+- **Status:** fertig (27.10.; Reiter mit Gegenstandsarten in der Tasche fehlen noch, weil Gegenstände noch keine Art haben)
+
+### Schritt 4: Teile vom Art Designer einsetzen
+- **Ziel:** Element- und Fähigkeits-Symbole, Fliehen-Symbol, Bildlaufleiste, Trennlinie, Ruf-Leiste mit 10 Feldern,
+  Weiter-Dreieck, Pergament-Sprechblase, Bilderrahmen und Auftrags-Bändchen einbauen (Prompt am 27.10. an Marco gegeben).
+- **So testest du es:** Kampf, Werte (Ruf) und Auftragsbuch ansehen: überall die neuen Symbole.
+- **Status:** offen (wartet auf das dritte Bildblatt)
+
 ## Später (wartet auf andere Teile des Spiels)
 - Taschen vom Schneider und Lagerfeuer-Essen (brauchen Berufe)
 - Marktstand-Gebühr (braucht den Markt)

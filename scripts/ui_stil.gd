@@ -9,6 +9,32 @@ const BANNER := preload("res://assets/ui/banner.png")
 const MELDUNG_RAHMEN := {gold = "meldung_gold", gruen = "meldung_gruen", lila = "meldung_lila"}
 
 static var _rahmen := {}
+static var _felder := {}
+
+
+## Füllung einer Leiste aus dem UI-Set: "rot", "blau" oder "gruen".
+static func fuellung(farbe: String) -> StyleBoxTexture:
+	var key := "fuellung_" + farbe
+	if not _felder.has(key):
+		var style := StyleBoxTexture.new()
+		style.texture = load(PFAD % key)
+		style.texture_margin_left = 6
+		style.texture_margin_right = 6
+		style.texture_margin_top = 5
+		style.texture_margin_bottom = 5
+		_felder[key] = style
+	return _felder[key]
+
+
+## Kästchen aus dem UI-Set (Tasche, Zugleiste): normal oder golden leuchtend.
+static func feld_stil(aktiv: bool) -> StyleBoxTexture:
+	if not _felder.has(aktiv):
+		var style := StyleBoxTexture.new()
+		style.texture = load(PFAD % ("feld_aktiv" if aktiv else "feld"))
+		style.set_texture_margin_all(12)
+		style.set_content_margin_all(5)
+		_felder[aktiv] = style
+	return _felder[aktiv]
 
 
 ## Eines der 12 Symbole (gold, kristall, trank, schwert, schild, wirbel, tasche, schluessel,

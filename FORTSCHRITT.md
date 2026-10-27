@@ -51,6 +51,25 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **Oberfläche nach Marcos UI-Entwurf** (27.10., Projekt 10, Schritte 1–3):
+  - **Kampf:** Zugleiste im Rahmen mit Bildern in Goldfeldern (wer dran ist, leuchtet). Namensschilder mit Goldrahmen,
+    Leben und Mana mit den Füllungen aus dem Set. Neues **Kampfmenü** links: „Angriff“ wählt gleich den Grundangriff,
+    „Fähigkeiten“ zeigt alles wie bisher, „Gegenstände“ nur Tränke, „Verteidigen“ = Abwarten, „Fliehen“ = Aufgeben.
+  - **Sieg-Fenster** mit Banner, großem „SIEG!“, Belohnung mit Symbolen und goldenem „Zurück“-Knopf.
+  - **Infofenster** beim Darüberfahren über einem Gegenstand (Bild, Name, Beschreibung, Wert).
+  - **Auftragsbuch:** Liste links („!“ läuft, „?“ erfüllt), rechts der gewählte Auftrag mit Häkchen bei erledigten Zielen und Belohnung.
+  - **Werte:** Bild deiner Figur im Goldrahmen, daneben Erfahrung, Leben und Mana als Leisten.
+  - **Tasche:** unten Gold und belegte Plätze (z. B. 4 / 30).
+  - **Schnellleiste** oben rechts mit Symbolen (Aufträge, Werte, Tasche, Menü); der Name steht beim Darüberfahren.
+  - Goldene und rote Knöpfe (z. B. „Ja“ und „Noch nicht“ bei der Klassenwahl).
+  - Noch offen (Schritt 4): Teile, die der Art Designer gerade zeichnet (Element-Symbole, Ruf-Leiste, Bildlaufleiste …).
+  - **So testest du es:**
+    1. Einen Kampf beginnen: oben die Zugleiste mit Bildern, unten links das Kampfmenü. „Angriff“ antippen, dann den Gegner.
+    2. „Gegenstände“ antippen: nur der Heiltrank steht da. „Verteidigen“: deine Figur wartet ab.
+    3. Den Kampf gewinnen: Sieg-Fenster mit Banner, Belohnung mit Münze und Kristall, goldener Knopf.
+    4. J drücken: Aufträge links, Einzelheiten rechts. C drücken: dein Bild mit Leisten. I drücken: Gold und Plätze unten.
+    5. In der Tasche mit der Maus über einen Gegenstand fahren: das Infofenster erscheint.
+
 - **UI-Set Teil 2: Symbole, Banner und Meldungs-Rahmen** (27.10.):
   - **Meldungen** oben in der Mitte haben jetzt Rahmen mit Ranken und ein Symbol: Gold = goldener Rahmen mit Münze,
     Gegenstände = grün mit Tasche, Erfahrung, Stufe und Erfolge = lila mit Kristall, neuer Auftrag = „!“, Auftrag

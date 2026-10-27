@@ -14,6 +14,8 @@
 [ext_resource type="Texture2D" path="res://assets/ui/feld_aktiv.png" id="12"]
 [ext_resource type="Texture2D" path="res://assets/ui/reiter.png" id="13"]
 [ext_resource type="Texture2D" path="res://assets/ui/reiter_aktiv.png" id="14"]
+[ext_resource type="Texture2D" path="res://assets/ui/knopf_gold.png" id="15"]
+[ext_resource type="Texture2D" path="res://assets/ui/knopf_rot.png" id="16"]
 
 [sub_resource type="StyleBoxTexture" id="fenster"]
 texture = ExtResource("1")
@@ -150,6 +152,69 @@ content_margin_top = 8.0
 content_margin_right = 16.0
 content_margin_bottom = 6.0
 
+[sub_resource type="StyleBoxTexture" id="menue_aktiv"]
+texture = ExtResource("15")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+content_margin_left = 10.0
+content_margin_top = 2.0
+content_margin_right = 10.0
+content_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxEmpty" id="menue_leer"]
+content_margin_left = 10.0
+content_margin_top = 2.0
+content_margin_right = 10.0
+content_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id="knopf_gold"]
+texture = ExtResource("15")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+content_margin_left = 10.0
+content_margin_top = 2.0
+content_margin_right = 10.0
+content_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id="knopf_rot"]
+texture = ExtResource("16")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+content_margin_left = 10.0
+content_margin_top = 2.0
+content_margin_right = 10.0
+content_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id="knopf_gold_hover"]
+texture = ExtResource("15")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+content_margin_left = 10.0
+content_margin_top = 2.0
+content_margin_right = 10.0
+content_margin_bottom = 2.0
+modulate_color = Color(1.2, 1.15, 1.05, 1)
+
+[sub_resource type="StyleBoxTexture" id="knopf_rot_hover"]
+texture = ExtResource("16")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+content_margin_left = 10.0
+content_margin_top = 2.0
+content_margin_right = 10.0
+content_margin_bottom = 2.0
+modulate_color = Color(1.25, 1.1, 1.1, 1)
+
 [resource]
 Button/colors/font_color = Color(0.953, 0.918, 0.847, 1)
 Button/colors/font_hover_color = Color(1, 0.906, 0.659, 1)
@@ -163,6 +228,31 @@ Button/styles/pressed = SubResource("knopf_gedrueckt")
 Button/styles/hover_pressed = SubResource("knopf_gedrueckt")
 Button/styles/disabled = SubResource("knopf_aus")
 Button/styles/focus = SubResource("knopf_fokus")
+KnopfGold/base_type = &"Button"
+KnopfGold/colors/font_color = Color(1, 0.95, 0.82, 1)
+KnopfGold/colors/font_hover_color = Color(1, 1, 1, 1)
+KnopfGold/styles/normal = SubResource("knopf_gold")
+KnopfGold/styles/hover = SubResource("knopf_gold_hover")
+KnopfGold/styles/pressed = SubResource("knopf_gedrueckt")
+KnopfRot/base_type = &"Button"
+KnopfRot/colors/font_color = Color(1, 0.92, 0.88, 1)
+KnopfRot/colors/font_hover_color = Color(1, 1, 1, 1)
+KnopfRot/styles/normal = SubResource("knopf_rot")
+KnopfRot/styles/hover = SubResource("knopf_rot_hover")
+KnopfRot/styles/pressed = SubResource("knopf_gedrueckt")
+Menueintrag/base_type = &"Button"
+Menueintrag/colors/font_color = Color(0.953, 0.918, 0.847, 1)
+Menueintrag/colors/font_hover_color = Color(1, 0.906, 0.659, 1)
+Menueintrag/colors/font_pressed_color = Color(1, 0.906, 0.659, 1)
+Menueintrag/colors/font_hover_pressed_color = Color(1, 0.906, 0.659, 1)
+Menueintrag/colors/font_disabled_color = Color(0.75, 0.76, 0.8, 0.45)
+Menueintrag/constants/h_separation = 10
+Menueintrag/styles/normal = SubResource("menue_leer")
+Menueintrag/styles/hover = SubResource("knopf_hover")
+Menueintrag/styles/pressed = SubResource("menue_aktiv")
+Menueintrag/styles/hover_pressed = SubResource("menue_aktiv")
+Menueintrag/styles/disabled = SubResource("menue_leer")
+Menueintrag/styles/focus = SubResource("leer")
 Reiter/base_type = &"Button"
 Reiter/colors/font_pressed_color = Color(1, 0.906, 0.659, 1)
 Reiter/styles/normal = SubResource("reiter")
