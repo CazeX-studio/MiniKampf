@@ -51,6 +51,22 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **Asterfall-UI-Set eingebaut** (27.10., Marcos zwei Bildblätter):
+  - Fenster, Knöpfe (normal, darüber, gedrückt, gesperrt), Balken, Häkchen, Eingabefelder, Reiter und der
+    Lautstärke-Regler haben jetzt überall den neuen Look: dunkelblau mit Goldrand. Das gilt für das ganze Spiel
+    (Einstellung im Projekt, Datei `assets/ui/asterfall_theme.tres`).
+  - Die Kästchen in der Tasche sind die neuen Felder, das ausgewählte leuchtet golden.
+  - Werkzeug: `tools/ui_zuschneiden.gd` schneidet die Teile aus `tools/vorlagen/ui/` aus, entfernt das Magenta und
+    verkleinert sie. Ergebnis in `assets/ui/`. Schon bereit, aber noch nicht benutzt: 12 Symbole (`symbol_*.png`),
+    Banner, Ranke, Pergament, rote und goldene Knöpfe, Meldungs-Rahmen in Grün, Gold und Lila.
+  - Bunte Kästchen, die etwas bedeuten (Zugleiste, Karten, Klassen-Karten), sind absichtlich so geblieben.
+  - **So testest du es:**
+    1. Spiel starten: Die drei großen Knöpfe im Startmenü und „Musik“ haben Goldrahmen, der Lautstärke-Regler einen Gold-Diamanten.
+    2. Mit der Maus über einen Knopf fahren: Er leuchtet golden. Draufklicken: Er wird kurz dunkler.
+    3. In der Kreuzweg-Demo mit I die Tasche öffnen: Fenster mit Goldecken, Kästchen mit Goldrand, das angeklickte leuchtet.
+    4. Einen Kampf beginnen: Die untere Leiste ist ein Goldrahmen-Fenster, die Fähigkeiten sind Goldrahmen-Knöpfe.
+    5. Aufträge (J) und Werte (C) öffnen: Auch diese Fenster haben den neuen Rahmen.
+
 - **Erste eigene Monster** (27.10., Marcos Bildblätter):
   - **Feldschleim, Wiesenkobold, Rüpelkobold und Der Sternenfresser** sind eingebaut und ersetzen die alten Platzhalter.
     Werkzeug: `tools/monster_bilder.py` (stellt das Karomuster frei, erkennt die Reihen, richtet an den Füßen aus).

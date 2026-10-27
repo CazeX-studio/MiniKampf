@@ -70,6 +70,7 @@ func _add_button(text: String, pos: Vector2, scene: String) -> void:
 	button.text = text
 	button.position = pos
 	button.size = Vector2(380, 140)
+	button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	button.add_theme_font_size_override("font_size", 22)
 	button.pressed.connect(func() -> void: get_tree().change_scene_to_file(scene))
 	add_child(button)

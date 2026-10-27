@@ -1422,15 +1422,8 @@ func _label(text: String, font_size: int, color: Color) -> Label:
 
 
 func _framed_panel() -> PanelContainer:
-	var panel := PanelContainer.new()
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color(0.04, 0.05, 0.11, 0.95)
-	style.border_color = Color(0.85, 0.72, 0.45, 0.8)
-	style.set_border_width_all(2)
-	style.set_corner_radius_all(4)
-	style.set_content_margin_all(14)
-	panel.add_theme_stylebox_override("panel", style)
-	return panel
+	# Rahmen kommt aus dem UI-Theme (assets/ui/asterfall_theme.tres)
+	return PanelContainer.new()
 
 
 ## Schmuck in der Stadt (Festlaternen, Krater des Sternenfalls).

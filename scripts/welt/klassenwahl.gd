@@ -76,12 +76,6 @@ func _build() -> void:
 
 	# Rechts: Einzelheiten der gewählten Klasse
 	var panel := PanelContainer.new()
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color(0.04, 0.05, 0.11, 0.92)
-	style.border_color = Color(0.85, 0.72, 0.45, 0.7)
-	style.set_border_width_all(2)
-	style.set_corner_radius_all(4)
-	panel.add_theme_stylebox_override("panel", style)
 	panel.position = Vector2(352, 66)
 	panel.size = Vector2(900, 640)
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -152,7 +146,6 @@ func _build() -> void:
 
 	# Nachfrage vor der Wahl
 	_confirm = PanelContainer.new()
-	_confirm.add_theme_stylebox_override("panel", style)
 	_confirm.position = Vector2(440, 260)
 	_confirm.size = Vector2(400, 0)
 	_confirm.visible = false

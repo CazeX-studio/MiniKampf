@@ -26,6 +26,7 @@ const MONSTER_FEET_Y := 478.0
 const FIELD_BOTTOM := 528.0
 const VIGNETTE_SHADER := preload("res://shaders/vignette.gdshader")
 const DARKNESS_SHADER := preload("res://shaders/dunkelheit.gdshader")
+const UI_THEME := preload("res://assets/ui/asterfall_theme.tres")
 ## Diese Elemente leuchten beim Treffer auf und tauchen das Feld kurz in ihr Licht (wie Zauber bei Octopath)
 const GLOWING_ELEMENTS: Array[String] = ["Feuer", "Blitz", "Licht", "Sternenkraft"]
 ## Plätze für entzündete Laternen (Pilzhöhle, Vorbote): zwischen Gegnern und Helden
@@ -237,13 +238,6 @@ func _show_hint(key: String) -> void:
 		return
 	_hints_shown[seen] = true
 	var panel := PanelContainer.new()
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color(0.04, 0.05, 0.11, 0.96)
-	style.border_color = Color("8affc1")
-	style.set_border_width_all(2)
-	style.set_corner_radius_all(4)
-	style.set_content_margin_all(16)
-	panel.add_theme_stylebox_override("panel", style)
 	panel.position = Vector2(300, 150)
 	panel.size = Vector2(680, 0)
 	panel.z_index = 40
@@ -1393,11 +1387,6 @@ func _build_ui() -> void:
 
 	# Untere Leiste: Kampf-Log links, Fähigkeiten rechts
 	var bottom := Panel.new()
-	var bottom_style := StyleBoxFlat.new()
-	bottom_style.bg_color = Color(0.03, 0.03, 0.07, 0.96)
-	bottom_style.border_color = Color(0.85, 0.7, 0.4, 0.6)
-	bottom_style.border_width_top = 2
-	bottom.add_theme_stylebox_override("panel", bottom_style)
 	bottom.position = Vector2(0, FIELD_BOTTOM)
 	bottom.size = Vector2(SCREEN.x, SCREEN.y - FIELD_BOTTOM)
 	bottom.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -1471,33 +1460,10 @@ func _vignette(strength: float) -> ColorRect:
 	return rect
 
 
-## Menü-Optik im Stil von Octopath: dunkelblaue Felder mit feinem goldenen Rand.
+## Menü-Optik: das Asterfall-UI-Set (dunkelblaue Rahmen mit Goldrand). Gilt auch spielweit
+## über die Projekteinstellung gui/theme/custom; hier nur für Stellen, die es ausdrücklich setzen.
 static func make_theme() -> Theme:
-	var t := Theme.new()
-	var states := {
-		"normal": [Color(0.06, 0.07, 0.15, 0.95), Color(0.85, 0.72, 0.45, 0.55)],
-		"hover": [Color(0.1, 0.12, 0.24, 0.95), Color(1.0, 0.85, 0.5, 0.9)],
-		"pressed": [Color(0.16, 0.14, 0.08, 0.95), Color(1.0, 0.85, 0.5, 1.0)],
-		"disabled": [Color(0.05, 0.05, 0.08, 0.85), Color(0.5, 0.5, 0.55, 0.25)],
-		"focus": [Color(0, 0, 0, 0), Color(1.0, 0.85, 0.5, 0.6)],
-	}
-	for state: String in states:
-		var box := StyleBoxFlat.new()
-		box.bg_color = states[state][0]
-		box.border_color = states[state][1]
-		box.set_border_width_all(1 if state == "normal" else 2)
-		box.set_corner_radius_all(3)
-		box.content_margin_left = 8
-		box.content_margin_right = 8
-		box.draw_center = state != "focus"
-		if state != "focus":
-			box.shadow_color = Color(0, 0, 0, 0.4)
-			box.shadow_size = 3
-		t.set_stylebox(state, "Button", box)
-	t.set_color("font_color", "Button", Color("f3ead8"))
-	t.set_color("font_hover_color", "Button", Color.WHITE)
-	t.set_color("font_disabled_color", "Button", Color(1, 1, 1, 0.35))
-	return t
+	return UI_THEME
 
 
 func _update_rotate_hint() -> void:

@@ -1,0 +1,189 @@
+[gd_resource type="Theme" load_steps=24 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/ui/fenster_klein.png" id="1"]
+[ext_resource type="Texture2D" path="res://assets/ui/knopf.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/ui/knopf_hover.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/ui/knopf_gedrueckt.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/ui/knopf_aus.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/ui/balken.png" id="6"]
+[ext_resource type="Texture2D" path="res://assets/ui/fuellung_gruen.png" id="7"]
+[ext_resource type="Texture2D" path="res://assets/ui/kaestchen.png" id="8"]
+[ext_resource type="Texture2D" path="res://assets/ui/kaestchen_an.png" id="9"]
+[ext_resource type="Texture2D" path="res://assets/ui/regler_griff.png" id="10"]
+[ext_resource type="Texture2D" path="res://assets/ui/feld.png" id="11"]
+[ext_resource type="Texture2D" path="res://assets/ui/feld_aktiv.png" id="12"]
+[ext_resource type="Texture2D" path="res://assets/ui/reiter.png" id="13"]
+[ext_resource type="Texture2D" path="res://assets/ui/reiter_aktiv.png" id="14"]
+
+[sub_resource type="StyleBoxTexture" id="fenster"]
+texture = ExtResource("1")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+content_margin_left = 14.0
+content_margin_top = 14.0
+content_margin_right = 14.0
+content_margin_bottom = 14.0
+
+[sub_resource type="StyleBoxTexture" id="tooltip"]
+texture = ExtResource("1")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+content_margin_left = 10.0
+content_margin_top = 8.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="knopf"]
+texture = ExtResource("2")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+content_margin_left = 10.0
+content_margin_top = 2.0
+content_margin_right = 10.0
+content_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id="knopf_hover"]
+texture = ExtResource("3")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+content_margin_left = 10.0
+content_margin_top = 2.0
+content_margin_right = 10.0
+content_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id="knopf_gedrueckt"]
+texture = ExtResource("4")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+content_margin_left = 10.0
+content_margin_top = 2.0
+content_margin_right = 10.0
+content_margin_bottom = 2.0
+modulate_color = Color(0.78, 0.78, 0.82, 1)
+
+[sub_resource type="StyleBoxTexture" id="knopf_aus"]
+texture = ExtResource("5")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+content_margin_left = 10.0
+content_margin_top = 2.0
+content_margin_right = 10.0
+content_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxEmpty" id="leer"]
+
+[sub_resource type="StyleBoxTexture" id="knopf_fokus"]
+texture = ExtResource("3")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+draw_center = false
+
+[sub_resource type="StyleBoxTexture" id="balken"]
+texture = ExtResource("6")
+texture_margin_left = 12.0
+texture_margin_top = 8.0
+texture_margin_right = 12.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="fuellung"]
+texture = ExtResource("7")
+texture_margin_left = 6.0
+texture_margin_top = 5.0
+texture_margin_right = 6.0
+texture_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id="eingabe"]
+texture = ExtResource("11")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="eingabe_aktiv"]
+texture = ExtResource("12")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="reiter"]
+texture = ExtResource("13")
+texture_margin_left = 20.0
+texture_margin_top = 14.0
+texture_margin_right = 20.0
+texture_margin_bottom = 10.0
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="reiter_aktiv"]
+texture = ExtResource("14")
+texture_margin_left = 20.0
+texture_margin_top = 14.0
+texture_margin_right = 20.0
+texture_margin_bottom = 10.0
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 6.0
+
+[resource]
+Button/colors/font_color = Color(0.953, 0.918, 0.847, 1)
+Button/colors/font_hover_color = Color(1, 0.906, 0.659, 1)
+Button/colors/font_pressed_color = Color(0.949, 0.757, 0.306, 1)
+Button/colors/font_hover_pressed_color = Color(0.949, 0.757, 0.306, 1)
+Button/colors/font_focus_color = Color(0.953, 0.918, 0.847, 1)
+Button/colors/font_disabled_color = Color(0.75, 0.76, 0.8, 0.6)
+Button/styles/normal = SubResource("knopf")
+Button/styles/hover = SubResource("knopf_hover")
+Button/styles/pressed = SubResource("knopf_gedrueckt")
+Button/styles/hover_pressed = SubResource("knopf_gedrueckt")
+Button/styles/disabled = SubResource("knopf_aus")
+Button/styles/focus = SubResource("knopf_fokus")
+CheckBox/icons/checked = ExtResource("9")
+CheckBox/icons/unchecked = ExtResource("8")
+CheckBox/styles/normal = SubResource("leer")
+CheckBox/styles/hover = SubResource("leer")
+CheckBox/styles/pressed = SubResource("leer")
+CheckBox/styles/hover_pressed = SubResource("leer")
+CheckBox/styles/focus = SubResource("leer")
+HSlider/icons/grabber = ExtResource("10")
+HSlider/icons/grabber_highlight = ExtResource("10")
+LineEdit/styles/normal = SubResource("eingabe")
+LineEdit/styles/focus = SubResource("eingabe_aktiv")
+Panel/styles/panel = SubResource("fenster")
+PanelContainer/styles/panel = SubResource("fenster")
+PopupMenu/styles/panel = SubResource("tooltip")
+PopupPanel/styles/panel = SubResource("fenster")
+ProgressBar/styles/background = SubResource("balken")
+ProgressBar/styles/fill = SubResource("fuellung")
+TabBar/styles/tab_hovered = SubResource("reiter")
+TabBar/styles/tab_selected = SubResource("reiter_aktiv")
+TabBar/styles/tab_unselected = SubResource("reiter")
+TabContainer/styles/tab_hovered = SubResource("reiter")
+TabContainer/styles/tab_selected = SubResource("reiter_aktiv")
+TabContainer/styles/tab_unselected = SubResource("reiter")
+TooltipPanel/styles/panel = SubResource("tooltip")
