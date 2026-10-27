@@ -25,6 +25,11 @@ var idle_fps := 6.0
 
 var _frames := {}
 var _sprite: Sprite2D
+## Fein gezeichnete Bilder sind so viel höher aufgelöst als die normalen (siehe tools/vega_laufbilder.py)
+const FEIN_FAKTOR := 3.0
+## Vergrößerung und Bildhöhe der normalen Bilder; fein gezeichnete Bilder (höher aufgelöst) werden passend verkleinert
+var _base_scale := 1.0
+var _base_height := 1.0
 var _time := 0.0
 var _head_y := 0.0
 var _label: Label
@@ -46,6 +51,8 @@ func setup(look: String, p_name: String, tint := Color.WHITE, name_color := Colo
 	_sprite.texture = _frames.idle[0]
 	var scale_factor := OWN_SCALE if FighterView.is_own_sprite(look) else SCALE
 	_sprite.scale = Vector2(scale_factor, scale_factor)
+	_base_scale = scale_factor
+	_base_height = _sprite.texture.get_height()
 	_sprite.centered = true
 	_sprite.offset = Vector2(0, -_sprite.texture.get_height() * 0.5)
 	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -90,6 +97,11 @@ func _process(delta: float) -> void:
 	var frames: Array = _frames[anim]
 	_sprite.texture = frames[int(_time * fps) % frames.size()]
 	_sprite.offset = Vector2(0, -_sprite.texture.get_height() * 0.5)
+	# Fein gezeichnete Bilder (z. B. Vegas Laufbilder in dreifacher Auflösung): gleich groß, aber weich verkleinert
+	var fein := _sprite.texture.get_height() > _base_height * 1.5
+	var groesse := _base_scale / FEIN_FAKTOR if fein else _base_scale
+	_sprite.scale = Vector2(groesse, groesse)
+	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS if fein else CanvasItem.TEXTURE_FILTER_NEAREST
 	_sprite.flip_h = facing < 0
 	queue_redraw()
 	_overlay.queue_redraw()

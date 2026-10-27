@@ -2,7 +2,8 @@
 
 Das Blatt hat 4 Reihen mit je 6 Bildern: Stehen nach vorne, Laufen nach vorne, Stehen nach hinten, Laufen nach hinten
 (jeweils schräg nach rechts; nach links spiegelt das Spiel). Jedes Bild wird freigestellt (der weiche Schein fällt weg),
-an den Füßen ausgerichtet und auf die Größe der bisherigen Vega-Bilder verkleinert.
+an den Füßen ausgerichtet und in dreifacher Auflösung der bisherigen Vega-Bilder gespeichert (das Spiel zeigt sie
+weich verkleinert in derselben Größe, dadurch bleiben die Einzelheiten aus Marcos Bildern erhalten).
 Ergebnis: assets/figuren/vega_<idle|run>_<vorn|hinten>_anim_f<0-5>.png
 Aufruf: python3 tools/vega_laufbilder.py   (braucht numpy, scipy und Pillow)
 """
@@ -16,8 +17,8 @@ WURZEL = Path(__file__).resolve().parent.parent
 BLATT = WURZEL / "tools" / "vorlagen" / "vega_laufen.png"
 ZIEL = WURZEL / "assets" / "figuren"
 REIHEN = ["idle_vorn", "run_vorn", "idle_hinten", "run_hinten"]
-## So hoch ist Vega in den bisherigen Bildern (Pixel, ohne Rand), damit sie gleich groß bleibt
-ZIEL_HOEHE = 42
+## So hoch ist Vega in den bisherigen Bildern (Pixel, ohne Rand) mal 3: gleiche Größe im Spiel, aber feiner
+ZIEL_HOEHE = 42 * 3
 
 
 def main():

@@ -54,6 +54,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Projekt 9, Schritt 4: Vega läuft in vier Richtungen** (27.10., nur im Baukasten-Testfeld):
   - Marcos Blatt mit 24 Bildern ist zerlegt (`tools/vega_laufbilder.py`): Stehen und Laufen schräg nach vorne
     und schräg nach hinten, jeweils 6 Bilder, an den Füßen ausgerichtet und so groß wie die bisherigen Vega-Bilder.
+  - **Feiner dargestellt (Marcos Wunsch):** Die Laufbilder liegen in dreifacher Auflösung vor und werden weich
+    verkleinert wie Häuser und Bäume, statt grob vergrößert. Dadurch sieht Vega aus wie auf Marcos Bildern.
   - Läuft Vega auf dem Bildschirm nach unten, sieht man ihr Gesicht, nach oben ihren Rücken. Nach links werden die
     Bilder gespiegelt. Bleibt sie stehen, schaut sie weiter in die letzte Richtung.
   - Die Brücke liegt jetzt genau auf den Feldern, über die man läuft.
