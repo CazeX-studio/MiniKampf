@@ -145,6 +145,53 @@ _Aus Marcos Entscheidung vom 22.10.2026: Tageszeit nach der echten Uhrzeit, nach
 - **So testest du es:** Testknopf auf Nacht: Auf dem Weg nach Grünwacht stehen andere Monster, auf Tag wieder die gewohnten.
 - **Status:** offen
 
+## Projekt 8: Monsterkarten und Kartenalbum (Beschluss 27.10.)
+
+### Schritt 1: Kartenalbum
+- **Ziel:** Eigenes Menü (Taste K und Knopf oben) mit einer Seite pro Region. Feste Plätze für jedes Monster der Region, fehlende Karten nur als dunkler Umriss, Zähler „Grünwacht: 5 / 12“, doppelte Karten mit Anzahl. Die Textzeile unten in der Tasche entfällt.
+- **So testest du es:** Mit K das Album öffnen, zwischen den Seiten blättern; gesammelte Karten sind zu sehen, fehlende als Umriss, der Zähler stimmt.
+- **Status:** offen
+
+### Schritt 2: Karten aktivieren
+- **Ziel:** Eine gefundene Karte fällt als „unbekannte Monsterkarte“ in die Tasche (bei voller Tasche ins Beute-Fenster). „Aktivieren“ dreht sie mit einem kleinen Aufdeck-Moment um, danach liegt sie im Album und die Tasche ist wieder frei.
+- **So testest du es:** Monster besiegen, bis eine Karte kommt, in der Tasche „Aktivieren“ wählen: Die Karte dreht sich um und steht im Album.
+- **Status:** offen
+
+### Schritt 3: Monster-Infos im Album
+- **Ziel:** Schon die erste Karte eines Monsters zeigt im Album sein Element und seine Schwäche.
+- **So testest du es:** Im Album eine Karte anklicken: Element und Schwäche stehen dabei, bei fehlenden Karten nicht.
+- **Status:** offen
+
+### Schritt 4: Besitzeffekte
+- **Ziel:** Jede Karte im Album gibt einen kleinen dauerhaften Bonus (z. B. +1 Angriff), der im Kampf wirkt. Doppelte zählen nicht mehrfach. Im Album und unter „Werte (C)“ steht, was die Karten zusammen bringen. Vorerst nur Werte, die es im Kampf schon gibt (Leben, Mana, Angriff, Tempo); Verteidigung kommt mit der Ausrüstung dazu.
+- **So testest du es:** Werte (C) ansehen, eine neue Karte aktivieren: Der Wert steigt um den Bonus der Karte.
+- **Status:** offen
+
+### Schritt 5: Deck für Kreuzweg-Karten wählen
+- **Ziel:** Im Album wählt man die 5 Karten, mit denen man bei Kreuzweg-Karten antritt.
+- **So testest du es:** Im Album 5 Karten markieren, gegen Marv spielen: Genau diese Karten sind auf der Hand.
+- **Status:** offen
+
+### Schritt 6: Doppelte Karten bei Bingo verkaufen
+- **Ziel:** Bingo kauft doppelte Karten für ein paar Bronze. Die letzte Karte einer Sorte bleibt immer im Album.
+- **So testest du es:** Mit einer doppelten Karte zu Bingo gehen, sie verkaufen: Das Geld steigt, im Album steht eine weniger.
+- **Status:** offen
+
+### Schritt 7: Belohnung für eine volle Seite
+- **Ziel:** Wer alle Karten einer Region hat, bekommt eine Belohnung (Titel, besonderer Kartenrücken oder Extra-Platz in der Tasche; welche genau, entscheidet Marco).
+- **So testest du es:** Per Testknopf alle Karten einer Region geben: Die Belohnung erscheint mit einer Meldung.
+- **Status:** offen
+
+### Schritt 8: Marv kommentiert neue Karten
+- **Ziel:** Hat man eine Karte, die Marv noch nicht gesehen hat, spricht er einen darauf an („Ooooh, die hab ich noch nicht!“).
+- **So testest du es:** Eine neue Karte aktivieren und in Kreuzweg zu Marv gehen.
+- **Status:** offen
+
+### Schritt 9: Karten verbessern bis +10
+- **Ziel:** Karten lassen sich bis +10 verbessern, jede Stufe stärkt den Besitzeffekt (und später den Sockel).
+- **So testest du es:** Eine Karte verbessern: Sie zeigt „+1“, der Bonus unter „Werte (C)“ steigt.
+- **Status:** wartet auf Marcos Entscheidung (womit verbessert wird, siehe Offene Fragen in design.md)
+
 ## Später (wartet auf andere Teile des Spiels)
 - Taschen vom Schneider und Lagerfeuer-Essen (brauchen Berufe)
 - Marktstand-Gebühr (braucht den Markt)
@@ -153,3 +200,4 @@ _Aus Marcos Entscheidung vom 22.10.2026: Tageszeit nach der echten Uhrzeit, nach
 - Sternen-Glanz und Siegel-Zähler (braucht den Server)
 - Erste eigene Grafiken (wartet auf die Look-Bibel aus Thema 12)
 - Nachts geschlossene Läden und andere NPCs (Erweiterung von Tag und Nacht, Projekt 7)
+- Monsterkarten sockeln (braucht die Ausrüstung) und Karten mit Freunden tauschen (braucht den Server)
