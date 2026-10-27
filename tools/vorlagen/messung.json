@@ -1,0 +1,506 @@
+{
+	"gilde": {
+		"groesse": [
+			457,
+			414
+		],
+		"flaeche": [
+			7,
+			7
+		],
+		"fuss": [
+			239,
+			297
+		]
+	},
+	"wegrast": {
+		"groesse": [
+			388,
+			283
+		],
+		"flaeche": [
+			5,
+			6
+		],
+		"fuss": [
+			189,
+			194
+		]
+	},
+	"haus_klein": {
+		"groesse": [
+			253,
+			221
+		],
+		"flaeche": [
+			3,
+			4
+		],
+		"fuss": [
+			121,
+			161
+		]
+	},
+	"haus_mittel": {
+		"groesse": [
+			266,
+			273
+		],
+		"flaeche": [
+			4,
+			4
+		],
+		"fuss": [
+			128,
+			207
+		]
+	},
+	"marktstand_rot": {
+		"groesse": [
+			216,
+			173
+		],
+		"flaeche": [
+			4,
+			2
+		],
+		"fuss": [
+			98,
+			122
+		]
+	},
+	"marktstand_blau": {
+		"groesse": [
+			199,
+			184
+		],
+		"flaeche": [
+			4,
+			1
+		],
+		"fuss": [
+			102,
+			142
+		]
+	},
+	"bingos_stand": {
+		"groesse": [
+			426,
+			225
+		],
+		"flaeche": [
+			4,
+			9
+		],
+		"fuss": [
+			205,
+			119
+		]
+	},
+	"brunnen": {
+		"groesse": [
+			254,
+			215
+		],
+		"flaeche": [
+			4,
+			4
+		],
+		"fuss": [
+			127,
+			148
+		]
+	},
+	"statue_der_fuenf": {
+		"groesse": [
+			409,
+			378
+		],
+		"flaeche": [
+			7,
+			6
+		],
+		"fuss": [
+			208,
+			270
+		]
+	},
+	"torbogen": {
+		"groesse": [
+			241,
+			301
+		],
+		"flaeche": [
+			6,
+			1
+		],
+		"fuss": [
+			125,
+			244
+		]
+	},
+	"sechstes_tor": {
+		"groesse": [
+			252,
+			308
+		],
+		"flaeche": [
+			5,
+			3
+		],
+		"fuss": [
+			130,
+			241
+		]
+	},
+	"bruecke": {
+		"groesse": [
+			377,
+			232
+		],
+		"flaeche": [
+			5,
+			5
+		],
+		"fuss": [
+			167,
+			148
+		]
+	},
+	"mauer": {
+		"groesse": [
+			305,
+			217
+		],
+		"flaeche": [
+			5,
+			1
+		],
+		"fuss": [
+			198,
+			167
+		]
+	},
+	"pavillon_messinghafen": {
+		"groesse": [
+			256,
+			278
+		],
+		"flaeche": [
+			4,
+			4
+		],
+		"fuss": [
+			130,
+			212
+		]
+	},
+	"pavillon_glutoase": {
+		"groesse": [
+			248,
+			282
+		],
+		"flaeche": [
+			4,
+			4
+		],
+		"fuss": [
+			124,
+			216
+		]
+	},
+	"pavillon_gruenwacht": {
+		"groesse": [
+			256,
+			282
+		],
+		"flaeche": [
+			4,
+			4
+		],
+		"fuss": [
+			130,
+			216
+		]
+	},
+	"pavillon_arkanum": {
+		"groesse": [
+			276,
+			290
+		],
+		"flaeche": [
+			4,
+			4
+		],
+		"fuss": [
+			144,
+			224
+		]
+	},
+	"pavillon_nebelinseln": {
+		"groesse": [
+			279,
+			285
+		],
+		"flaeche": [
+			5,
+			4
+		],
+		"fuss": [
+			130,
+			211
+		]
+	},
+	"laterne": {
+		"groesse": [
+			71,
+			177
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			28,
+			159
+		]
+	},
+	"fackelschale": {
+		"groesse": [
+			87,
+			143
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			44,
+			125
+		]
+	},
+	"banner": {
+		"groesse": [
+			71,
+			177
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			24,
+			160
+		]
+	},
+	"bank": {
+		"groesse": [
+			132,
+			102
+		],
+		"flaeche": [
+			1,
+			3
+		],
+		"fuss": [
+			68,
+			69
+		]
+	},
+	"fass": {
+		"groesse": [
+			70,
+			89
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			36,
+			72
+		]
+	},
+	"kiste": {
+		"groesse": [
+			87,
+			83
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			43,
+			65
+		]
+	},
+	"zaun": {
+		"groesse": [
+			105,
+			89
+		],
+		"flaeche": [
+			1,
+			3
+		],
+		"fuss": [
+			47,
+			56
+		]
+	},
+	"wegweiser": {
+		"groesse": [
+			71,
+			134
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			28,
+			116
+		]
+	},
+	"auftragsbrett": {
+		"groesse": [
+			119,
+			139
+		],
+		"flaeche": [
+			3,
+			1
+		],
+		"fuss": [
+			58,
+			106
+		]
+	},
+	"mauerruine": {
+		"groesse": [
+			135,
+			104
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			70,
+			70
+		]
+	},
+	"baum": {
+		"groesse": [
+			173,
+			227
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			94,
+			193
+		]
+	},
+	"baum_herbst": {
+		"groesse": [
+			188,
+			228
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			94,
+			195
+		]
+	},
+	"tanne": {
+		"groesse": [
+			157,
+			216
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			78,
+			180
+		]
+	},
+	"tanne_gross": {
+		"groesse": [
+			185,
+			264
+		],
+		"flaeche": [
+			3,
+			3
+		],
+		"fuss": [
+			92,
+			214
+		]
+	},
+	"busch": {
+		"groesse": [
+			118,
+			102
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			59,
+			67
+		]
+	},
+	"busch_bluete": {
+		"groesse": [
+			119,
+			100
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			56,
+			66
+		]
+	},
+	"blumen": {
+		"groesse": [
+			125,
+			83
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			65,
+			64
+		]
+	},
+	"grasbueschel": {
+		"groesse": [
+			111,
+			86
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			56,
+			53
+		]
+	}
+}

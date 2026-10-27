@@ -21,7 +21,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
   Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
   gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
-- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Neu: Projekt 9 „Kreuzweg im Baukasten“, Schritt 1 (Testfeld) fertig (27.10.), Schritt 2 wartet auf Marcos Bilder. Nächster Schritt: Projekt 3 „Geld“, Bronze, Silber, Gold.
+- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Neu: Projekt 9 „Kreuzweg im Baukasten“, Schritt 1 (Testfeld) und Schritt 2 (Marcos Bilder) fertig (27.10.). Nächster Schritt: Projekt 3 „Geld“, Bronze, Silber, Gold.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -50,6 +50,20 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
+
+- **Projekt 9, Schritt 2: Echte Bilder im Baukasten** (27.10.):
+  - Marcos sieben Bildblätter (Boden, Gebäude, Markt, Besonderes, Pavillons, Kleinkram, Pflanzen) sind zerlegt:
+    **44 Teile**, freigestellt (auch das mitgemalte Karomuster), auf Spielgröße verkleinert, jedes mit Grundfläche und Fußpunkt.
+    Werkzeug: `tools/baukasten_zuschneiden.py`, die Original-Blätter liegen in `tools/vorlagen/`.
+  - **Das Testfeld ist neu aufgebaut, angelehnt an Kreuzweg aus design.md:** Marktplatz mit Brunnen, Statue der Fünf,
+    Splitterkreis, Marktständen und Bingos Stand, Abenteurergilde mit Auftragsbrett, Gasthaus Wegrast, Wohnhäuser,
+    Gesandten-Hof mit den fünf Pavillons, Torbogen mit Mauer im Norden, das zugewucherte **sechste Tor** am Ende des
+    Weges nach links, Bach mit Brücke im Süden, Bäume, Büsche, Blumen.
+  - Laternen, Feuerschalen und die Laternen an Gilde, Wegrast, Bingos Stand und einem Wohnhaus leuchten nachts.
+  - Neu: **+ / −** (oder Knöpfe „Figur +“/„Figur −“) ändert die Größe von Vega (50–100 %, Start 70 %), damit du den Maßstab ausprobieren kannst.
+  - **So testest du es:** Startmenü → „Baukasten-Testfeld“. Über den Platz zur Gilde, zum sechsten Tor (links) und durch
+    den Torbogen (oben) laufen, über die Brücke (unten) gehen, N für Tag/Nacht, + / − für die Figurgröße. Sag mir, welche
+    Größe passt und ob dir etwas zu groß oder zu klein vorkommt.
 
 - **Projekt 9, Schritt 1: Baukasten-Testfeld** (27.10.):
   - Neu im Startmenü: **„Baukasten-Testfeld“**. Ein kleiner Marktplatz in Rautenansicht, diesmal nicht im Code gezeichnet,

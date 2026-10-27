@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6pkkcem2qxom"
-path="res://.godot/imported/haus_gross.png-068424199d3bb9f0d23f22bb3668e2e0.ctex"
+uid="uid://5nl0wxonjd78"
+path="res://.godot/imported/pavillon_arkanum.png-a9f8bc3cd83c0dc44a71e54c9de9e162.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/baukasten/objekte/haus_gross.png"
-dest_files=["res://.godot/imported/haus_gross.png-068424199d3bb9f0d23f22bb3668e2e0.ctex"]
+source_file="res://assets/baukasten/objekte/pavillon_arkanum.png"
+dest_files=["res://.godot/imported/pavillon_arkanum.png-a9f8bc3cd83c0dc44a71e54c9de9e162.ctex"]
 
 [params]
 

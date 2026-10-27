@@ -6,13 +6,16 @@ extends Node2D
 
 const TILE_W := 64.0
 const TILE_H := 32.0
-## Bilder sind halb so groß gezeichnet und werden doppelt so groß gezeigt (scharfe Pixel)
-const MASSSTAB := 2.0
+## Die Bilder haben schon Spielgröße (ein Feld = 64 x 32 Pixel). Ein Teil kann mit "massstab" vergrößert werden
+## (die alten Platzhalter sind halb so groß gezeichnet und haben massstab 2).
+const MASSSTAB := 1.0
 const WALK_SPEED := 5.5
 const PLAYER_LOOK := "vega"
 const NIGHT_COLOR := Color(0.45, 0.5, 0.78)
-## Fläche, die die Spielfigur auf dem Bildschirm ungefähr bedeckt (über ihrem Fußpunkt)
-const PLAYER_RECT := Rect2(-18, -84, 36, 86)
+## Fläche, die die Spielfigur in voller Größe auf dem Bildschirm ungefähr bedeckt (über ihrem Fußpunkt)
+const PLAYER_RECT := Rect2(-24, -128, 48, 130)
+## Größe der Spielfigur im Testfeld (Tasten + und -), um den Maßstab zur Welt auszuprobieren
+const FIGUR_GROESSEN: Array[float] = [0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 ## So durchsichtig werden Dinge, hinter denen die Figur steht
 const FADE_ALPHA := 0.45
 const ASSET_PATH := "res://assets/baukasten/"
@@ -29,6 +32,8 @@ var _pos := Vector2.ZERO
 var _path: Array[Vector2] = []
 var _night := true
 var _grid := false
+var _figur_stufe := 2
+var _hint: Label
 
 var _ground: Node2D
 var _flat: Node2D
@@ -54,7 +59,7 @@ func _ready() -> void:
 	add_child(_modulate)
 	_ground = Node2D.new()
 	_ground.z_index = -10
-	_ground.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_ground.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	_ground.draw.connect(_draw_ground)
 	add_child(_ground)
 	# Flache Dinge (Brücke, Blumen, Splitterkreis) liegen auf dem Boden, Figuren laufen darüber
@@ -78,6 +83,7 @@ func _ready() -> void:
 	_player = WorldCharacter.new()
 	_player.setup(PLAYER_LOOK, "Du")
 	_holder.add_child(_player)
+	_set_figur(_figur_stufe)
 
 	_grid_node = Node2D.new()
 	_grid_node.z_index = 50
@@ -89,6 +95,7 @@ func _ready() -> void:
 	_camera.position_smoothing_enabled = true
 	add_child(_camera)
 	_build_hud()
+	_set_figur(_figur_stufe)
 	_set_night(true)
 	_update_player()
 	_camera.position = cell_to_screen(_pos)
@@ -133,6 +140,8 @@ func _add_object(o: Dictionary) -> void:
 	var d: Dictionary = _teile.objekte[teil]
 	var flaeche: Array = d.get("flaeche", [1, 1])
 	var rect := Rect2i(Vector2i(o.feld[0], o.feld[1]), Vector2i(flaeche[0], flaeche[1]))
+	if o.get("gespiegelt", false):
+		rect.size = Vector2i(flaeche[1], flaeche[0])
 	var tex: Texture2D = load(ASSET_PATH + d.bild)
 	if tex == null:
 		push_warning("Baukasten: Bild fehlt: %s" % d.bild)
@@ -142,18 +151,37 @@ func _add_object(o: Dictionary) -> void:
 	# Sortierpunkt: die vorderste Ecke der Grundfläche
 	node.position = cell_to_screen(Vector2(rect.end))
 	var center := cell_to_screen(Vector2(rect.position) + Vector2(rect.size) * 0.5) - node.position
-	# Der Fußpunkt (unten in der Mitte, fuss_y Pixel über dem unteren Rand) steht auf der Mitte der Grundfläche
-	var fuss_y: float = d.get("fuss_y", (rect.size.x + rect.size.y) * 4)
+	var massstab: float = d.get("massstab", MASSSTAB)
+	var gespiegelt: bool = o.get("gespiegelt", false)
+	# Der Fußpunkt (fuss = Pixel im Bild, sonst unten in der Mitte, fuss_y Pixel über dem Rand) steht auf der Mitte der Grundfläche
+	var fuss := Vector2(tex.get_width() * 0.5, tex.get_height() - float(d.get("fuss_y", (rect.size.x + rect.size.y) * 8.0 / massstab)))
+	if d.has("fuss"):
+		fuss = Vector2(d.fuss[0], d.fuss[1])
+	if gespiegelt:
+		# Gespiegelt steht das Teil quer (Breite und Tiefe tauschen), z. B. ein Tor an einer anderen Straße
+		fuss.x = tex.get_width() - fuss.x
 	var sprite := Sprite2D.new()
 	sprite.texture = tex
 	sprite.centered = false
-	sprite.scale = Vector2(MASSSTAB, MASSSTAB)
-	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	sprite.position = center - Vector2(tex.get_width() * 0.5, tex.get_height() - fuss_y) * MASSSTAB
+	sprite.flip_h = gespiegelt
+	sprite.scale = Vector2(massstab, massstab)
+	# Pixel-Platzhalter bleiben scharf, die gemalten Bilder werden weich verkleinert
+	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST if massstab >= 2.0 else CanvasItem.TEXTURE_FILTER_LINEAR
+	sprite.position = center - fuss * massstab
 	node.add_child(sprite)
+	var lichter: Array = d.get("lichter", []).duplicate()
 	if d.has("licht"):
-		var licht := Licht.erzeugen(d.licht.art)
-		licht.position = center + Vector2(0, -float(d.licht.get("hoehe", 0)))
+		lichter.append({art = d.licht.art, hoehe = d.licht.get("hoehe", 0)})
+	for l: Dictionary in lichter:
+		var licht := Licht.erzeugen(l.art)
+		if l.has("bild"):
+			# Licht an einer Stelle im Bild (z. B. Laterne an der Hauswand)
+			var px := Vector2(l.bild[0], l.bild[1])
+			if gespiegelt:
+				px.x = tex.get_width() - px.x
+			licht.position = sprite.position + px * massstab
+		else:
+			licht.position = center + Vector2(0, -float(l.get("hoehe", 0)))
 		node.add_child(licht)
 		_lights.append(licht)
 	(_flat if flach else _sorted).add_child(node)
@@ -166,10 +194,12 @@ func _add_object(o: Dictionary) -> void:
 		var frei: Array = d.get("frei", [])
 		for y in rect.size.y:
 			for x in rect.size.x:
-				if not [x, y] in frei and not [float(x), float(y)] in frei:
+				# Bei gespiegelten Teilen sind die freien Felder ebenfalls getauscht
+				var f := [y, x] if o.get("gespiegelt", false) else [x, y]
+				if not f in frei and not [float(f[0]), float(f[1])] in frei:
 					_blocked[rect.position + Vector2i(x, y)] = true
 	_objekte.append({name = teil, node = node, rect = rect, flach = flach,
-			bild = Rect2(node.position + sprite.position, tex.get_size() * MASSSTAB)})
+			bild = Rect2(node.position + sprite.position, tex.get_size() * massstab)})
 
 
 ## Warnt, wenn zwei stehende Dinge auf demselben Feld stehen oder etwas über den Rand ragt (Fehler in der Datei).
@@ -245,14 +275,15 @@ func _build_hud() -> void:
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	layer.add_child(root)
 	var hint := Label.new()
-	hint.text = "Baukasten-Testfeld · Laufen: WASD, Pfeiltasten oder Klicken/Antippen\nN: Tag/Nacht · G: Raster · Esc: zurück"
+	_hint = hint
 	hint.add_theme_font_size_override("font_size", 16)
 	hint.add_theme_color_override("font_outline_color", Color.BLACK)
 	hint.add_theme_constant_override("outline_size", 5)
 	hint.position = Vector2(16, 12)
 	root.add_child(hint)
 	var buttons: Array = [["Tag/Nacht", func() -> void: _set_night(not _night)],
-			["Raster", func() -> void: _toggle_grid()], ["Zurück", _go_menu]]
+			["Raster", func() -> void: _toggle_grid()], ["Figur +", func() -> void: _set_figur(_figur_stufe + 1)],
+			["Figur −", func() -> void: _set_figur(_figur_stufe - 1)], ["Zurück", _go_menu]]
 	for i in buttons.size():
 		var b := Button.new()
 		b.text = buttons[i][0]
@@ -262,6 +293,14 @@ func _build_hud() -> void:
 		b.focus_mode = Control.FOCUS_NONE
 		b.pressed.connect(buttons[i][1])
 		root.add_child(b)
+
+
+func _set_figur(stufe: int) -> void:
+	_figur_stufe = clampi(stufe, 0, FIGUR_GROESSEN.size() - 1)
+	var g := FIGUR_GROESSEN[_figur_stufe]
+	_player.scale = Vector2(g, g)
+	if _hint != null:
+		_hint.text = "Baukasten-Testfeld · Laufen: WASD, Pfeiltasten oder Klicken/Antippen\nN: Tag/Nacht · G: Raster · +/−: Figurgröße (jetzt %d %%) · Esc: zurück" % roundi(g * 100.0)
 
 
 func _set_night(on: bool) -> void:
@@ -291,6 +330,10 @@ func _unhandled_input(event: InputEvent) -> void:
 				_toggle_grid()
 			KEY_ESCAPE:
 				_go_menu()
+			KEY_EQUAL, KEY_PLUS, KEY_KP_ADD:
+				_set_figur(_figur_stufe + 1)
+			KEY_MINUS, KEY_KP_SUBTRACT:
+				_set_figur(_figur_stufe - 1)
 	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		walk_to(screen_to_cell(get_global_mouse_position()))
 
@@ -377,7 +420,8 @@ func _face(move: Vector2) -> void:
 ## Dinge, hinter denen sie steht und die sie verdecken, werden durchsichtig.
 func _update_player() -> void:
 	var screen := cell_to_screen(_pos)
-	var area := Rect2(screen + PLAYER_RECT.position, PLAYER_RECT.size)
+	var g := FIGUR_GROESSEN[_figur_stufe]
+	var area := Rect2(screen + PLAYER_RECT.position * g, PLAYER_RECT.size * g)
 	var low := -INF
 	var high := INF
 	for o: Dictionary in _objekte:

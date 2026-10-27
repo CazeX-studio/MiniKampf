@@ -2,69 +2,58 @@
 
 Die Welt wird in Rautenansicht aus Einzelbildern zusammengesetzt, wie aus Bausteinen.
 Ausprobieren kannst du das im Startmenü unter **„Baukasten-Testfeld“**.
-Alle Bilder liegen in `assets/baukasten/`. Im Moment sind das Platzhalter, die Claude gemalt hat
-(`tools/baukasten_platzhalter.py`). **Ein echtes Bild ersetzt einfach den Platzhalter mit demselben Namen.**
 
-## Regeln für neue Bilder
+## Woher die Bilder kommen
 
-1. **Durchsichtiger Hintergrund** (PNG), ein Teil pro Bild, nichts ragt aus einem anderen Teil heraus.
-2. **Gleiche Größe wie der Platzhalter.** Ein Feld (Raute) ist im Bild **32 × 16 Pixel** groß.
-   Im Spiel wird alles doppelt so groß gezeigt, damit die Pixel scharf bleiben.
-   Ein Haus auf 3 × 3 Feldern ist also etwa 96 Pixel breit.
-   Ist ein KI-Bild größer, schneidet Claude es zu und verkleinert es (wie bei Vega).
-3. **Licht von links oben**, bei allen Teilen gleich.
-4. **Tageslicht ohne eingemaltes Leuchten.** Nacht, Laternenschein, Fackeln und Splitter-Glühen macht das Spiel.
-   So reicht ein Satz Bilder für Tag, Festnacht und Sternenfall.
-   (Ein hell gemaltes Laternenglas oder Fenster ist in Ordnung.)
-5. **Fußpunkt unten in der Mitte.** Bei großen Teilen (Haus, Stand, Statue) ist die Grundfläche als Raute mit im Bild.
-   Bei schmalen Teilen (Laterne, Baum, Banner) steht der Fuß am unteren Rand.
+1. Marco lässt Bildblätter von ChatGPT malen (Stil-Vorgabe und Prompts: siehe Chat vom 27.10.,
+   kurz: Pixel-Art wie Octopath, isometrisch, Licht von links oben, Tageslicht, durchsichtiger Hintergrund,
+   ein Teil pro Platz, keine Texte).
+2. Die Blätter liegen unverändert in `tools/vorlagen/` (gebaeude, markt, besonderes, pavillons, kleinkram, pflanzen, boden).
+3. `tools/baukasten_zuschneiden.py` stellt die Teile frei (auch ein mitgemaltes Karomuster), schneidet sie aus,
+   verkleinert sie auf Spielgröße und legt sie in `assets/baukasten/objekte/` und `assets/baukasten/boden/`.
+   Es misst auch die ungefähre Grundfläche und den Fußpunkt (`tools/vorlagen/messung.json`).
+4. In `data/baukasten_teile.json` stehen pro Teil Grundfläche, Fußpunkt, Licht usw. (von Claude geprüft und angepasst).
 
-## Boden (`assets/baukasten/boden/`)
+Ein neues Blatt oder ein besseres Bild: Datei in `tools/vorlagen/` ersetzen, Werkzeug laufen lassen, im Testfeld mit **G** prüfen.
 
-Jede Bodenart als Raute mit 32 × 16 Pixeln. Gibt es mehrere Bilder (`gras_1`, `gras_2`), wechselt das Spiel sie ab,
-damit der Boden nicht wie ein Muster aussieht.
+## Größen
 
-| Bild | Was |
-|------|-----|
-| gras_1, gras_2 | Wiese |
-| pflaster_1, pflaster_2 | Straße |
-| platz | Marktplatz (anderes Pflaster) |
-| erde | Erdweg, Erdflecken |
-| wasser_1, wasser_2 | Wasser (nicht begehbar) |
+- Ein Feld (Raute) ist im Spiel **64 × 32 Pixel**. Die Bilder haben schon Spielgröße.
+- Jedes Blatt hat einen eigenen Maßstab im Werkzeug, damit die Blätter zueinander passen
+  (z. B. Häuser 0,6, Kleinkram 0,38, Bäume 0,44).
+- Die Spielfigur steht im Testfeld auf 70 %. Mit **+** und **−** lässt sich ausprobieren, welche Größe zur Welt passt.
 
-**Noch nicht da:** Übergänge (Gras zu Pflaster, Ufer). Das kommt in einem späteren Schritt.
+## Die Teile
 
-## Gegenstände (`assets/baukasten/objekte/`)
+| Gruppe | Teile |
+|--------|-------|
+| Boden | gras_1, gras_2, pflaster_1, pflaster_2, platz, erde, wasser_1, wasser_2 |
+| Gebäude | gilde (7×7 Felder), wegrast (5×6), haus_klein (3×4), haus_mittel (4×4) |
+| Markt | marktstand_rot, marktstand_blau (3×2), bingos_stand (7×3), brunnen (4×4) |
+| Besonderes | statue_der_fuenf (6×6), torbogen (6×1, Mitte begehbar), sechstes_tor (6×1), bruecke (flach, begehbar), mauer (8×1) |
+| Gesandten-Hof | pavillon_messinghafen, _glutoase, _gruenwacht, _arkanum, _nebelinseln (je 4×4) |
+| Kleinkram | laterne, fackelschale (leuchten nachts), banner, bank, fass, kiste, zaun, wegweiser, auftragsbrett, mauerruine |
+| Pflanzen | baum, baum_herbst, tanne, tanne_gross, busch, busch_bluete, blumen und grasbueschel (flach) |
+| Noch Platzhalter | splitterkreis (lila Einschlagstelle) |
 
-| Bild | Grundfläche (Felder) | Was |
-|------|----------------------|-----|
-| haus_gross | 3 × 3 | Fachwerkhaus (Gilde, Wegrast) |
-| haus_klein | 2 × 2 | Wohnhaus |
-| marktstand_rot, marktstand_blau | 2 × 1 | Marktstand mit Plane |
-| statue_der_fuenf | 2 × 2 | Statue der Fünf |
-| torbogen | 3 × 1 | Torbogen, in der Mitte begehbar |
-| bruecke | 1 × 3 | Brücke (flach, begehbar) |
-| splitterkreis | 2 × 2 | leuchtender Kreis auf dem Platz (flach) |
-| laterne, fackelschale | 1 | leuchten nachts |
-| banner, wegweiser, bank, fass, kiste, zaun, mauer | 1 | Kleinkram |
-| baum, tanne, busch | 1 | Pflanzen |
-| blumen | 1 | flach, man läuft darüber |
+**Noch nicht da:** Übergänge (Gras zu Pflaster, Ufer), der Krater nach dem Sternenfall, Laufbilder in vier Richtungen.
 
 ## Die zwei Datendateien
 
-- `data/baukasten_teile.json`: Welche Teile es gibt, wie groß sie sind, ob man darauf laufen kann, ob sie leuchten.
-  - `flaeche`: Grundfläche in Feldern
+- `data/baukasten_teile.json`: Welche Teile es gibt.
+  - `flaeche`: Grundfläche in Feldern (darauf kann man nicht laufen)
+  - `fuss`: die Mitte der Grundfläche im Bild (Pixel von links oben)
   - `flach`: liegt auf dem Boden, Figuren laufen darüber
   - `begehbar` / `blockiert`: ob man darauf laufen kann
   - `frei`: Felder eines Teils, die begehbar bleiben (Torbogen)
-  - `licht`: Lichtart und Höhe in Pixeln
-  - `fuss_y`: wie viele Pixel über dem unteren Bildrand der Fuß steht
+  - `licht` (Höhe über dem Boden) oder `lichter` (Stellen im Bild, z. B. Laternen an der Hauswand)
+  - `massstab`: nur für die alten Pixel-Platzhalter (2)
 - `data/baukasten_testfeld.json`: Das Testfeld. Boden als Zeichen-Raster (`.` Gras, `#` Pflaster, `o` Platz, `e` Erde, `~` Wasser),
-  dazu die Gegenstände mit ihrem Feld.
+  dazu die Gegenstände mit ihrem Feld. `"gespiegelt": true` stellt ein Teil quer (z. B. das sechste Tor am Weg nach links).
 
 ## Im Testfeld prüfen
 
 - **G** (oder Knopf „Raster“): zeigt die Felder. Gesperrte Felder sind rot, Grundflächen gelb, deine Figur grün.
-  So sieht man sofort, ob ein neues Bild auf seiner Grundfläche steht.
 - **N** (oder Knopf „Tag/Nacht“): Tag und Nacht umschalten.
+- **+ / −**: Größe der Spielfigur.
 - Steht man hinter einem Haus oder Baum, wird es halb durchsichtig.

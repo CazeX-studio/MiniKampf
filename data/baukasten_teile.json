@@ -1,5 +1,5 @@
 {
-	"_hinweis": "Alle Teile des Baukastens. Bilder liegen in assets/baukasten/ und werden doppelt so groß gezeigt. Regeln für neue Bilder: data/BAUKASTEN.md.",
+	"_hinweis": "Alle Teile des Baukastens. Bilder liegen in assets/baukasten/, erstellt mit tools/baukasten_zuschneiden.py aus Marcos Bildblättern. fuss = Mitte der Grundfläche im Bild (Pixel). Regeln: data/BAUKASTEN.md.",
 	"boden": {
 		".": {
 			"name": "Gras",
@@ -37,56 +37,487 @@
 		}
 	},
 	"objekte": {
-		"haus_gross": {
-			"bild": "objekte/haus_gross.png",
+		"gilde": {
+			"bild": "objekte/gilde.png",
 			"flaeche": [
-				3,
-				3
+				7,
+				7
+			],
+			"fuss": [
+				239,
+				297
+			],
+			"lichter": [
+				{
+					"art": "laterne",
+					"bild": [
+						220,
+						315
+					]
+				},
+				{
+					"art": "laterne",
+					"bild": [
+						312,
+						280
+					]
+				}
+			]
+		},
+		"wegrast": {
+			"bild": "objekte/wegrast.png",
+			"flaeche": [
+				5,
+				6
+			],
+			"fuss": [
+				189,
+				194
+			],
+			"lichter": [
+				{
+					"art": "laterne",
+					"bild": [
+						107,
+						223
+					]
+				}
 			]
 		},
 		"haus_klein": {
 			"bild": "objekte/haus_klein.png",
 			"flaeche": [
-				2,
-				2
+				3,
+				4
+			],
+			"fuss": [
+				121,
+				161
+			],
+			"lichter": [
+				{
+					"art": "laterne",
+					"bild": [
+						20,
+						160
+					]
+				}
+			]
+		},
+		"haus_mittel": {
+			"bild": "objekte/haus_mittel.png",
+			"flaeche": [
+				4,
+				4
+			],
+			"fuss": [
+				128,
+				207
 			]
 		},
 		"marktstand_rot": {
 			"bild": "objekte/marktstand_rot.png",
 			"flaeche": [
-				2,
-				1
+				3,
+				2
+			],
+			"fuss": [
+				100,
+				125
 			]
 		},
 		"marktstand_blau": {
 			"bild": "objekte/marktstand_blau.png",
 			"flaeche": [
-				2,
-				1
+				3,
+				2
+			],
+			"fuss": [
+				100,
+				135
+			]
+		},
+		"bingos_stand": {
+			"bild": "objekte/bingos_stand.png",
+			"flaeche": [
+				7,
+				3
+			],
+			"fuss": [
+				213,
+				160
+			],
+			"lichter": [
+				{
+					"art": "laterne",
+					"bild": [
+						130,
+						90
+					]
+				},
+				{
+					"art": "laterne",
+					"bild": [
+						180,
+						95
+					]
+				}
+			]
+		},
+		"brunnen": {
+			"bild": "objekte/brunnen.png",
+			"flaeche": [
+				4,
+				4
+			],
+			"fuss": [
+				127,
+				148
 			]
 		},
 		"statue_der_fuenf": {
 			"bild": "objekte/statue_der_fuenf.png",
 			"flaeche": [
-				2,
-				2
+				6,
+				6
+			],
+			"fuss": [
+				205,
+				270
 			]
 		},
 		"torbogen": {
 			"bild": "objekte/torbogen.png",
 			"flaeche": [
-				3,
+				6,
 				1
+			],
+			"fuss": [
+				125,
+				244
 			],
 			"frei": [
 				[
 					1,
 					0
+				],
+				[
+					2,
+					0
+				],
+				[
+					3,
+					0
+				],
+				[
+					4,
+					0
 				]
+			]
+		},
+		"sechstes_tor": {
+			"bild": "objekte/sechstes_tor.png",
+			"flaeche": [
+				6,
+				1
+			],
+			"fuss": [
+				130,
+				241
+			]
+		},
+		"bruecke": {
+			"bild": "objekte/bruecke.png",
+			"flaeche": [
+				2,
+				5
+			],
+			"fuss": [
+				240,
+				125
+			],
+			"flach": true,
+			"begehbar": true
+		},
+		"mauer": {
+			"bild": "objekte/mauer.png",
+			"flaeche": [
+				8,
+				1
+			],
+			"fuss": [
+				150,
+				143
+			]
+		},
+		"laterne": {
+			"bild": "objekte/laterne.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				28,
+				159
+			],
+			"licht": {
+				"art": "laterne",
+				"hoehe": 114
+			}
+		},
+		"fackelschale": {
+			"bild": "objekte/fackelschale.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				44,
+				125
+			],
+			"licht": {
+				"art": "fackel",
+				"hoehe": 105
+			}
+		},
+		"banner": {
+			"bild": "objekte/banner.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				24,
+				160
+			]
+		},
+		"fass": {
+			"bild": "objekte/fass.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				36,
+				72
+			]
+		},
+		"kiste": {
+			"bild": "objekte/kiste.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				43,
+				65
+			]
+		},
+		"wegweiser": {
+			"bild": "objekte/wegweiser.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				28,
+				116
+			]
+		},
+		"bank": {
+			"bild": "objekte/bank.png",
+			"flaeche": [
+				1,
+				2
+			],
+			"fuss": [
+				66,
+				72
+			]
+		},
+		"zaun": {
+			"bild": "objekte/zaun.png",
+			"flaeche": [
+				1,
+				2
+			],
+			"fuss": [
+				52,
+				62
+			]
+		},
+		"auftragsbrett": {
+			"bild": "objekte/auftragsbrett.png",
+			"flaeche": [
+				2,
+				1
+			],
+			"fuss": [
+				60,
+				110
+			]
+		},
+		"mauerruine": {
+			"bild": "objekte/mauerruine.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				70,
+				70
+			]
+		},
+		"blumen": {
+			"bild": "objekte/blumen.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				65,
+				64
+			],
+			"flach": true,
+			"blockiert": false
+		},
+		"grasbueschel": {
+			"bild": "objekte/grasbueschel.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				56,
+				53
+			],
+			"flach": true,
+			"blockiert": false
+		},
+		"pavillon_messinghafen": {
+			"bild": "objekte/pavillon_messinghafen.png",
+			"flaeche": [
+				4,
+				4
+			],
+			"fuss": [
+				130,
+				212
+			]
+		},
+		"pavillon_glutoase": {
+			"bild": "objekte/pavillon_glutoase.png",
+			"flaeche": [
+				4,
+				4
+			],
+			"fuss": [
+				124,
+				216
+			]
+		},
+		"pavillon_gruenwacht": {
+			"bild": "objekte/pavillon_gruenwacht.png",
+			"flaeche": [
+				4,
+				4
+			],
+			"fuss": [
+				130,
+				216
+			]
+		},
+		"pavillon_arkanum": {
+			"bild": "objekte/pavillon_arkanum.png",
+			"flaeche": [
+				4,
+				4
+			],
+			"fuss": [
+				144,
+				224
+			]
+		},
+		"pavillon_nebelinseln": {
+			"bild": "objekte/pavillon_nebelinseln.png",
+			"flaeche": [
+				4,
+				4
+			],
+			"fuss": [
+				146,
+				219
+			]
+		},
+		"baum": {
+			"bild": "objekte/baum.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				94,
+				193
+			]
+		},
+		"baum_herbst": {
+			"bild": "objekte/baum_herbst.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				94,
+				195
+			]
+		},
+		"tanne": {
+			"bild": "objekte/tanne.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				78,
+				180
+			]
+		},
+		"tanne_gross": {
+			"bild": "objekte/tanne_gross.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				92,
+				214
+			]
+		},
+		"busch": {
+			"bild": "objekte/busch.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				59,
+				67
+			]
+		},
+		"busch_bluete": {
+			"bild": "objekte/busch_bluete.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				56,
+				66
 			]
 		},
 		"splitterkreis": {
 			"bild": "objekte/splitterkreis.png",
+			"massstab": 2,
 			"flaeche": [
 				2,
 				2
@@ -98,75 +529,6 @@
 				"art": "splitter",
 				"hoehe": 0
 			}
-		},
-		"bruecke": {
-			"bild": "objekte/bruecke.png",
-			"flaeche": [
-				1,
-				3
-			],
-			"flach": true,
-			"begehbar": true
-		},
-		"laterne": {
-			"bild": "objekte/laterne.png",
-			"fuss_y": 3,
-			"licht": {
-				"art": "laterne",
-				"hoehe": 80
-			}
-		},
-		"fackelschale": {
-			"bild": "objekte/fackelschale.png",
-			"fuss_y": 2,
-			"licht": {
-				"art": "fackel",
-				"hoehe": 48
-			}
-		},
-		"banner": {
-			"bild": "objekte/banner.png",
-			"fuss_y": 3
-		},
-		"baum": {
-			"bild": "objekte/baum.png",
-			"fuss_y": 4
-		},
-		"tanne": {
-			"bild": "objekte/tanne.png",
-			"fuss_y": 4
-		},
-		"busch": {
-			"bild": "objekte/busch.png",
-			"fuss_y": 3
-		},
-		"blumen": {
-			"bild": "objekte/blumen.png",
-			"fuss_y": 6,
-			"flach": true,
-			"blockiert": false
-		},
-		"bank": {
-			"bild": "objekte/bank.png",
-			"fuss_y": 6
-		},
-		"fass": {
-			"bild": "objekte/fass.png",
-			"fuss_y": 3
-		},
-		"kiste": {
-			"bild": "objekte/kiste.png"
-		},
-		"zaun": {
-			"bild": "objekte/zaun.png",
-			"fuss_y": 8
-		},
-		"mauer": {
-			"bild": "objekte/mauer.png"
-		},
-		"wegweiser": {
-			"bild": "objekte/wegweiser.png",
-			"fuss_y": 2
 		}
 	}
 }

@@ -195,7 +195,7 @@ _Aus Marcos Entscheidung vom 27.10.2026: Die Welt bleibt in Rautenansicht und wi
 ### Schritt 2: Echte Bilder einsetzen
 - **Ziel:** Marcos Bildblätter (KI-Vorlagen nach `data/BAUKASTEN.md`) zuschneiden, verkleinern und die Platzhalter ersetzen.
 - **So testest du es:** Im Testfeld sieht alles aus wie auf Marcos Bild, jedes Teil steht sauber auf seinem Feld (Raster mit G).
-- **Status:** offen (wartet auf Marcos Bilder)
+- **Status:** fertig (27.10.; 44 Teile aus 7 Bildblättern, Testfeld nach Kreuzweg aus design.md neu aufgebaut; Splitterkreis noch Platzhalter)
 
 ### Schritt 3: Übergänge und Ufer
 - **Ziel:** Weiche Übergänge zwischen Gras, Pflaster und Erde, Ufer am Wasser, damit der Boden nicht kariert wirkt.

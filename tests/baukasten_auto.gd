@@ -25,12 +25,20 @@ func _process(delta: float) -> void:
 		[2.4, func() -> void:
 			_toggle_grid()
 			_set_night(true)
-			place_player(Vector2i(3, 13))],
+			place_player(Vector2i(6, 22))],
 		[3.4, func() -> void: _foto("hinter_haus")],
-		[3.6, func() -> void: place_player(Vector2i(11, 4))],
+		[3.6, func() -> void: place_player(Vector2i(20, 3))],
 		[4.6, func() -> void: _foto("torbogen")],
-		[4.8, func() -> void: walk_to(Vector2i(11, 23))],
-		[9.6, func() -> void:
+		[4.8, func() -> void: place_player(Vector2i(4, 20))],
+		[5.8, func() -> void: _foto("sechstes_tor")],
+		[6.0, func() -> void:
+			_toggle_grid()
+			place_player(Vector2i(20, 34))],
+		[7.0, func() -> void: _foto("raster_bruecke")],
+		[7.2, func() -> void:
+			_toggle_grid()
+			walk_to(Vector2i(21, 43))],
+		[11.0, func() -> void:
 			print("Nach dem Klick-Weg: ", Vector2i(_pos.floor()))
 			_foto("bruecke")
 			get_tree().quit()],
