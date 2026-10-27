@@ -46,7 +46,8 @@ func setup(look: String, p_name: String, tint := Color.WHITE, name_color := Colo
 		_frames[anim] = frames
 	_sprite = Sprite2D.new()
 	_sprite.texture = _frames.idle[0]
-	var scale_factor := OWN_SCALE if FighterView.is_own_sprite(look) else SCALE
+	# Eigene Figuren: im Verhältnis wie im Kampf (Vega hat dort 3.0, in der Welt 2.0)
+	var scale_factor: float = FighterView.look_data(look).scale * OWN_SCALE / 3.0 if FighterView.is_own_sprite(look) else SCALE
 	_base_scale = scale_factor
 	scale_factor /= FighterView.fein_faktor(_sprite.texture)
 	_sprite.scale = Vector2(scale_factor, scale_factor)

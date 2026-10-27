@@ -57,11 +57,14 @@ const LOOKS := {
 	"knoten_hinten": {sprite = "ice_zombie", scale = 4.0, tint = Color(1.0, 0.95, 0.7)},
 	"vorbote": {sprite = "necromancer", scale = 6.5, tint = Color(0.45, 0.38, 0.65)},
 	# Vor dem Stadttor (Grundausbildung)
-	"feldschleim": {sprite = "swampy", scale = 4.0, tint = Color(0.7, 1.0, 0.7)},
-	"wiesenkobold": {sprite = "goblin", scale = 4.0},
-	"ruepelkobold": {sprite = "goblin", scale = 5.5, tint = Color(1.0, 0.7, 0.6)},
+	# Eigene Monster aus Marcos Bildblättern (tools/monster_bilder.py): fein gezeichnet, Größe 1.0.
+	# "angriffe": welcher Angriff (Name aus Sandbox.ENEMIES) welche Animation zeigt, sonst "attack" bzw. "wurf".
+	"feldschleim": {sprite = "feldschleim", scale = 1.0},
+	"wiesenkobold": {sprite = "wiesenkobold", scale = 1.0, angriffe = {"Steinwurf": "wurf"}},
+	"ruepelkobold": {sprite = "ruepelkobold", scale = 1.0},
 	"uebungs_ye": {sprite = "wizzard_m", scale = 4.0, tint = Color(0.8, 0.86, 0.95)},
-	"sternenfresser": {sprite = "swampy", scale = 7.0, tint = Color(0.85, 0.8, 1.0)},
+	"sternenfresser": {sprite = "sternenfresser", scale = 1.0,
+		angriffe = {"Leuchtender Biss": "attack2", "Splitterregen": "spezial"}},
 	# Fenns Prüfung (Platzhalter-Bilder: Strohpuppen)
 	"zielscheibe": {sprite = "zombie", scale = 4.0, tint = Color(1.0, 0.88, 0.55)},
 	"laufscheibe": {sprite = "goblin", scale = 4.0, tint = Color(1.0, 0.9, 0.6)},
@@ -83,9 +86,11 @@ const LOOKS := {
 }
 ## Bilder pro Sekunde. attack, death, parry und victory haben bisher nur eigene Figuren (z. B. Vega);
 ## fehlen sie, nimmt die Anzeige wie bisher run bzw. hit.
-const ANIM_FPS := {"idle": 6.0, "run": 12.0, "hit": 8.0, "attack": 8.0, "death": 6.0, "parry": 6.0, "victory": 5.0}
+## attack2, wurf und spezial: weitere Angriffe eigener Monster (siehe "angriffe" in LOOKS).
+const ANIM_FPS := {"idle": 6.0, "run": 12.0, "hit": 8.0, "attack": 8.0, "death": 6.0, "parry": 6.0, "victory": 5.0,
+		"attack2": 8.0, "wurf": 8.0, "spezial": 6.0}
 ## Diese Animationen laufen einmal durch und bleiben auf dem letzten Bild stehen (die anderen wiederholen sich)
-const ANIM_ONCE := ["attack", "death", "parry", "hit"]
+const ANIM_ONCE := ["attack", "death", "parry", "hit", "attack2", "wurf", "spezial"]
 
 const PLATE_W := 168.0
 const PLATE_H_HERO := 74.0
@@ -339,6 +344,23 @@ func has_anim(anim: String) -> bool:
 	return _frames.has(anim)
 
 
+## Welche Animation ein Angriff zeigt (Monster mit eigenen Bildern): aus "angriffe" in LOOKS, sonst "standard".
+## "" = keine passende Animation.
+func anim_for(attack_name: String, standard: String) -> String:
+	var anim: String = look_data(fighter.look_key()).get("angriffe", {}).get(attack_name, standard)
+	if has_anim(anim):
+		return anim
+	return standard if has_anim(standard) else ""
+
+
+## Angriff am Platz (Monster: Wurf, Splitterregen): das 4. Bild nach "release" Sekunden.
+## Treffen mehrere Geschosse gleichzeitig, startet die Animation nur einmal.
+func strike(anim: String, release: float) -> void:
+	if _anim == anim and _hold > 0.0:
+		return
+	play(anim, release + 0.6, 3.5 / maxf(release, 0.1))
+
+
 ## Fernangriff (Figuren mit eigener Angriffs-Animation): ausholen, bei "release" Sekunden das Geschoss loslassen
 ## (4. Bild), danach ausschwingen. Die Figur bleibt an ihrem Platz und macht nur einen kleinen Schritt nach vorn.
 func cast_attack(release: float) -> void:
@@ -404,15 +426,15 @@ func glow(color: Color, seconds := 0.7) -> void:
 
 ## Angriff: kurz ausholen, auf das Ziel zustürmen und zurückkehren.
 ## Der Aufprall ist genau nach "duration" Sekunden (wichtig fürs Parieren).
-func lunge(target_point: Vector2, duration: float) -> void:
+func lunge(target_point: Vector2, duration: float, anim := "attack") -> void:
 	var toward := target_point - home_feet()
 	var dir := signf(toward.x) if toward.x != 0.0 else 1.0
 	var hit_offset := toward - Vector2(dir * (sprite_size.x * 0.5 + 34.0), 0)
 	var windup := duration * 0.35
 	z_index = 6
-	if has_anim("attack"):
-		# Das Geschoss (4. Bild) erscheint genau beim Aufprall
-		play("attack", duration + 0.3, 3.5 / maxf(duration, 0.1))
+	if has_anim(anim):
+		# Das 4. Bild (Treffer bzw. Geschoss) erscheint genau beim Aufprall
+		play(anim, duration + 0.3, 3.5 / maxf(duration, 0.1))
 	else:
 		play("run", duration + 0.3)
 	var tween := create_tween()

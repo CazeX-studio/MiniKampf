@@ -36,6 +36,9 @@ im öffentlichen Repository https://github.com/benc-uk/super-dungeon-delve
 | Sturmkobold / Funkenwicht / Schattenhexe | ice_zombie / skelet / necromancer |
 | Steinwächter (Boss) | ogre |
 
+**Eigene Monster** (von Marco mit KI-Hilfe erstellt, 27.10.2026, Blätter in `tools/vorlagen/`, zerlegt mit `tools/monster_bilder.py`):
+Feldschleim, Wiesenkobold, Rüpelkobold, Der Sternenfresser. Sie ersetzen die Platzhalter swampy und goblin.
+
 **Baukasten (eigene Grafiken von CazeX Studio):** Alle Bilder in `assets/baukasten/` hat Marco mit KI-Hilfe (ChatGPT) erstellt (27.10.2026, sieben Bildblätter in `tools/vorlagen/`), Claude Code hat sie mit `tools/baukasten_zuschneiden.py` freigestellt, ausgeschnitten und verkleinert. Dazu ein achtes Blatt mit Splitterkreis, Kratern und Sternsplitter (roter Schimmer am Rand entfernt).
 
 Selbst gemacht (im Code gezeichnet): Fackeln, Licht- und Leuchteffekte, Staub,

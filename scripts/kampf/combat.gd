@@ -342,6 +342,11 @@ func _play_event(event: Dictionary) -> void:
 			_cast(event.f, event.ult)
 		"projectile":
 			Geraeusche.play("wurf")
+			# Monster mit eigenen Bildern zeigen beim Werfen oder Zaubern ihre Animation
+			if has_view(event.from) and not event.from.is_ally():
+				var wurf := view(event.from).anim_for(event.get("name", ""), "wurf")
+				if wurf != "":
+					view(event.from).strike(wurf, event.duration * 0.3)
 			if event.blocking:
 				await projectile(event.from, event.to, event.color, event.duration)
 			else:
@@ -350,10 +355,10 @@ func _play_event(event: Dictionary) -> void:
 		"lunge":
 			Geraeusche.play("schlag")
 			if event.blocking:
-				await lunge(event.f, event.target, event.duration)
+				await lunge(event.f, event.target, event.duration, event.get("name", ""))
 			else:
 				await _attack_hint(event.target)
-				lunge(event.f, event.target, event.duration)
+				lunge(event.f, event.target, event.duration, event.get("name", ""))
 		"wait":
 			await wait(event.seconds)
 		"burst":
@@ -966,10 +971,11 @@ func wait(seconds: float) -> void:
 
 ## Figur holt aus, stürmt auf das Ziel zu und kehrt zurück.
 ## Der Aufprall ist genau nach "duration" Sekunden, dort erscheint ein Hieb.
-func lunge(f: Fighter, target: Fighter, duration: float) -> void:
+func lunge(f: Fighter, target: Fighter, duration: float, attack_name := "") -> void:
 	var target_view := view(target)
-	# Figuren mit eigener Angriffs-Animation (z. B. Vega) greifen aus der Ferne an: ausholen, Geschoss, Treffer
-	if view(f).has_anim("attack"):
+	# Helden mit eigener Angriffs-Animation (z. B. Vega) greifen aus der Ferne an: ausholen, Geschoss, Treffer.
+	# Monster mit eigenen Bildern stürmen wie bisher vor und zeigen dabei ihre Angriffs-Animation.
+	if f.is_ally() and view(f).has_anim("attack"):
 		var release := maxf(duration, 0.6)
 		view(f).cast_attack(release)
 		await wait(release)
@@ -977,7 +983,7 @@ func lunge(f: Fighter, target: Fighter, duration: float) -> void:
 		if is_instance_valid(target_view):
 			Fx.spawn(_field, Fx.Kind.SPARKS, target_view.center(), Color("bfe6ff"), 60.0, 0.3)
 		return
-	await view(f).lunge(target_view.home_feet(), duration)
+	await view(f).lunge(target_view.home_feet(), duration, view(f).anim_for(attack_name, "attack"))
 	if is_instance_valid(target_view):
 		Fx.spawn(_field, Fx.Kind.SLASH, target_view.center(), Color("fff4d6"), 46.0, 0.25)
 

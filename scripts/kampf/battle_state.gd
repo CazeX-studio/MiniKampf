@@ -213,12 +213,14 @@ func projectile(from: Fighter, to: Fighter, color: Color, duration := 0.3) -> vo
 
 
 ## Wie projectile, aber die Anzeige macht sofort weiter (mehrere Geschosse gleichzeitig).
-func projectile_bg(from: Fighter, to: Fighter, color: Color, duration := 0.3) -> void:
-	_emit({type = "projectile", from = from, to = to, color = color, duration = duration, blocking = false})
+## attack_name: Name des Angriffs, damit die Anzeige die passende Animation zeigen kann (z. B. Steinwurf).
+func projectile_bg(from: Fighter, to: Fighter, color: Color, duration := 0.3, attack_name := "") -> void:
+	_emit({type = "projectile", from = from, to = to, color = color, duration = duration, blocking = false,
+			name = attack_name})
 
 
-func lunge(f: Fighter, target: Fighter, duration: float, blocking := true) -> void:
-	_emit({type = "lunge", f = f, target = target, duration = duration, blocking = blocking})
+func lunge(f: Fighter, target: Fighter, duration: float, blocking := true, attack_name := "") -> void:
+	_emit({type = "lunge", f = f, target = target, duration = duration, blocking = blocking, name = attack_name})
 
 
 ## Kurze Pause in der Anzeige.
@@ -861,10 +863,10 @@ func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String
 	var focus: Fighter = reactors[0] if not reactors.is_empty() else targets[0]
 	var duration := zufall_range(0.75, 1.15)
 	if kind == "melee":
-		lunge(e, focus, duration, false)
+		lunge(e, focus, duration, false, attack_name)
 	else:
 		for t in targets:
-			projectile_bg(e, t, Elements.color(e.element), duration)
+			projectile_bg(e, t, Elements.color(e.element), duration, attack_name)
 
 	# Reaktion: 0 = verpasst, 1 = normal pariert/ausgewichen (25 % weniger Schaden), 2 = perfekt (Treffer abgewehrt + Klassen-Effekt)
 	var grade := REACT_NONE

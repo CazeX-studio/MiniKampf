@@ -51,6 +51,18 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **Erste eigene Monster** (27.10., Marcos Bildblätter):
+  - **Feldschleim, Wiesenkobold, Rüpelkobold und Der Sternenfresser** sind eingebaut und ersetzen die alten Platzhalter.
+    Werkzeug: `tools/monster_bilder.py` (stellt das Karomuster frei, erkennt die Reihen, richtet an den Füßen aus).
+  - Jedes Monster hat Stehen, Angriff, Getroffen und Fallen. Der Wiesenkobold wirft beim **Steinwurf** wirklich,
+    der Sternenfresser hat eigene Bilder für **Leuchtender Biss** und **Splitterregen** und zerfließt am Ende zu einer
+    Pfütze mit dem Splitter.
+  - Größen: Schleim klein, Kobold etwa zwei Drittel von Vega, Rüpelkobold etwas größer als Vega, Sternenfresser riesig.
+  - Monster stürmen beim Nahkampf wie bisher vor, das Treffer-Bild kommt genau beim Aufprall (wichtig fürs Parieren).
+  - Marcos zweiter Wiesenkobold (`tools/vorlagen/wiesenkobold_b.png`) ist aufbewahrt, aber nicht eingebaut.
+  - **So testest du es:** Editor → „Akt Kreuzweg“ und bis zum ersten Gruppenkampf spielen (Kobolde und Schleim),
+    oder die Nacht des Sternenfalls (Sternenfresser).
+
 - **Projekt 9, Schritt 3: Übergänge zwischen den Böden** (27.10.):
   - Die Bodenkacheln hatten einen dunklen Rand, dadurch sah alles kariert aus. Der Rand ist jetzt abgeschnitten.
   - Wo zwei Böden aneinanderstoßen, ragt der „stärkere“ mit einem ausgefransten, weichen Rand ins Nachbarfeld:
