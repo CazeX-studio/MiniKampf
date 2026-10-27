@@ -35,6 +35,7 @@ func _ready() -> void:
 	_add_button("Kampf-Sandbox\nAlle 11 Klassen, Pilzhöhle, Auswertung", Vector2(40, 300), "res://scenes/auswahl.tscn")
 	_add_button("Kreuzweg-Demo\nDie erste Stunde als Novize", Vector2(450, 300), "res://scenes/kreuzweg.tscn")
 	_add_button("Zusammen spielen\nMit bis zu 4 Spielern in Kreuzweg", Vector2(860, 300), "res://scenes/zusammen.tscn")
+	_add_button("Baukasten-Testfeld\nRautenansicht aus Einzelbildern", Vector2(40, 470), "res://scenes/baukasten_test.tscn")
 
 	# Server ohne Grafik: Godot --headless --path . -- --server
 	if "--server" in OS.get_cmdline_user_args():

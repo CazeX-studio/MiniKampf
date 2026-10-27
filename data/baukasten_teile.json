@@ -1,0 +1,172 @@
+{
+	"_hinweis": "Alle Teile des Baukastens. Bilder liegen in assets/baukasten/ und werden doppelt so groß gezeigt. Regeln für neue Bilder: data/BAUKASTEN.md.",
+	"boden": {
+		".": {
+			"name": "Gras",
+			"bilder": [
+				"boden/gras_1.png",
+				"boden/gras_2.png"
+			]
+		},
+		"#": {
+			"name": "Pflaster",
+			"bilder": [
+				"boden/pflaster_1.png",
+				"boden/pflaster_2.png"
+			]
+		},
+		"o": {
+			"name": "Marktplatz",
+			"bilder": [
+				"boden/platz.png"
+			]
+		},
+		"e": {
+			"name": "Erde",
+			"bilder": [
+				"boden/erde.png"
+			]
+		},
+		"~": {
+			"name": "Wasser",
+			"bilder": [
+				"boden/wasser_1.png",
+				"boden/wasser_2.png"
+			],
+			"begehbar": false
+		}
+	},
+	"objekte": {
+		"haus_gross": {
+			"bild": "objekte/haus_gross.png",
+			"flaeche": [
+				3,
+				3
+			]
+		},
+		"haus_klein": {
+			"bild": "objekte/haus_klein.png",
+			"flaeche": [
+				2,
+				2
+			]
+		},
+		"marktstand_rot": {
+			"bild": "objekte/marktstand_rot.png",
+			"flaeche": [
+				2,
+				1
+			]
+		},
+		"marktstand_blau": {
+			"bild": "objekte/marktstand_blau.png",
+			"flaeche": [
+				2,
+				1
+			]
+		},
+		"statue_der_fuenf": {
+			"bild": "objekte/statue_der_fuenf.png",
+			"flaeche": [
+				2,
+				2
+			]
+		},
+		"torbogen": {
+			"bild": "objekte/torbogen.png",
+			"flaeche": [
+				3,
+				1
+			],
+			"frei": [
+				[
+					1,
+					0
+				]
+			]
+		},
+		"splitterkreis": {
+			"bild": "objekte/splitterkreis.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"flach": true,
+			"blockiert": false,
+			"fuss_y": 12,
+			"licht": {
+				"art": "splitter",
+				"hoehe": 0
+			}
+		},
+		"bruecke": {
+			"bild": "objekte/bruecke.png",
+			"flaeche": [
+				1,
+				3
+			],
+			"flach": true,
+			"begehbar": true
+		},
+		"laterne": {
+			"bild": "objekte/laterne.png",
+			"fuss_y": 3,
+			"licht": {
+				"art": "laterne",
+				"hoehe": 80
+			}
+		},
+		"fackelschale": {
+			"bild": "objekte/fackelschale.png",
+			"fuss_y": 2,
+			"licht": {
+				"art": "fackel",
+				"hoehe": 48
+			}
+		},
+		"banner": {
+			"bild": "objekte/banner.png",
+			"fuss_y": 3
+		},
+		"baum": {
+			"bild": "objekte/baum.png",
+			"fuss_y": 4
+		},
+		"tanne": {
+			"bild": "objekte/tanne.png",
+			"fuss_y": 4
+		},
+		"busch": {
+			"bild": "objekte/busch.png",
+			"fuss_y": 3
+		},
+		"blumen": {
+			"bild": "objekte/blumen.png",
+			"fuss_y": 6,
+			"flach": true,
+			"blockiert": false
+		},
+		"bank": {
+			"bild": "objekte/bank.png",
+			"fuss_y": 6
+		},
+		"fass": {
+			"bild": "objekte/fass.png",
+			"fuss_y": 3
+		},
+		"kiste": {
+			"bild": "objekte/kiste.png"
+		},
+		"zaun": {
+			"bild": "objekte/zaun.png",
+			"fuss_y": 8
+		},
+		"mauer": {
+			"bild": "objekte/mauer.png"
+		},
+		"wegweiser": {
+			"bild": "objekte/wegweiser.png",
+			"fuss_y": 2
+		}
+	}
+}

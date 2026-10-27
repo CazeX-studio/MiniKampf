@@ -3,7 +3,7 @@
 Hier steht, was fertig ist, was als Nächstes kommt und welche Fragen offen sind.
 Wird nach jedem Arbeitsschritt aktualisiert.
 
-## Aktueller Stand (2026-10-26)
+## Aktueller Stand (2026-10-27)
 
 - **Neu (25.10.): Playtest-Rückmeldungen Teil 1 eingebaut** (Liste im Brainstorm-Doc unter „Testtag-Notizen“):
   Fehler (Ye-Laternen, Silberhirsch, Pilzhöhle), Parier-Tutorial, Abwarten für alle, Aufträge allein und Dungeon nur für die Gruppe,
@@ -21,7 +21,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
   Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
   gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
-- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Nächster Schritt: Projekt 3 „Geld“, Bronze, Silber, Gold.
+- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Neu: Projekt 8 „Kreuzweg im Baukasten“, Schritt 1 (Testfeld) fertig (27.10.), Schritt 2 wartet auf Marcos Bilder. Nächster Schritt: Projekt 3 „Geld“, Bronze, Silber, Gold.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -50,6 +50,21 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
+
+- **Projekt 8, Schritt 1: Baukasten-Testfeld** (27.10.):
+  - Neu im Startmenü: **„Baukasten-Testfeld“**. Ein kleiner Marktplatz in Rautenansicht, diesmal nicht im Code gezeichnet,
+    sondern aus **Einzelbildern** zusammengesetzt: 8 Bodenbilder und 21 Gegenstände (Häuser, Marktstände, Statue der Fünf,
+    Torbogen, Brücke, Laternen, Fackelschalen, Banner, Bäume, Tannen, Büsche, Blumen, Bank, Fass, Kiste, Zaun, Mauer,
+    Wegweiser, Splitterkreis). Die Bilder sind Platzhalter von Claude und werden später durch echte Bilder mit gleichem
+    Namen ersetzt.
+  - Welche Teile es gibt und wo sie stehen, steht in `data/baukasten_teile.json` und `data/baukasten_testfeld.json`.
+    Die Regeln für neue Bilder (Größe, Fußpunkt, Tageslicht) stehen in `data/BAUKASTEN.md`.
+  - Laufen mit Tasten oder Klicken/Antippen (der Weg führt um Hindernisse und über die Brücke). Steht man hinter
+    einem Haus oder Baum, wird es halb durchsichtig. Nachts leuchten Laternen, Fackeln und der Splitterkreis.
+  - Prüf-Werkzeug `tests/baukasten_auto.tscn` macht Bildschirmfotos (Nacht, Tag, Raster, hinter dem Haus, Torbogen, Brücke).
+  - **So testest du es:** Startmenü → „Baukasten-Testfeld“. Herumlaufen und hinter das große Haus links gehen,
+    über die Brücke unten laufen, **N** für Tag/Nacht, **G** für das Raster (rot = gesperrt, gelb = Grundfläche).
+    Achte darauf, ob dir die Größen passen (Vega ist im Vergleich zu den Häusern noch recht groß).
 
 - **Vegas Animationen, zweite Runde** (27.10., Marcos Test im Browser):
   - **Kein Schuss mehr beim Blocken:** Nach einer perfekten Parade gab es einen kleinen „Hüpfer“, der bei Vega die

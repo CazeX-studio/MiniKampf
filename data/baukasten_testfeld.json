@@ -1,0 +1,567 @@
+{
+	"_hinweis": "Testfeld für den Baukasten (Rautenansicht). Boden: eine Zeile pro Reihe, ein Zeichen pro Feld (siehe 'boden' in baukasten_teile.json). Objekte: Teil-Name und das Feld oben (kleinste x und y) der Grundfläche. Mehr in data/BAUKASTEN.md.",
+	"start": [
+		12,
+		14
+	],
+	"boden": [
+		"...........##...........",
+		"...........##...........",
+		"...........##...........",
+		"...........##...........",
+		"...........##...........",
+		"....ee.....##...........",
+		".....e.....##...........",
+		"...........##...........",
+		"........oooooooo........",
+		"........oooooooo........",
+		"........oooooooo........",
+		"########oooooooo########",
+		"########oooooooo########",
+		"........oooooooo........",
+		"......eeoooooooo........",
+		"........oooooooo........",
+		"...........##.....ee....",
+		"...........##......e....",
+		"...........##...........",
+		"...~~~~~~~~~~~~~~~......",
+		"...~~~~~~~~~~~~~~~......",
+		"...~~~~~~~~~~~~~~~......",
+		"...........##...........",
+		"...........##..........."
+	],
+	"objekte": [
+		{
+			"teil": "splitterkreis",
+			"feld": [
+				11,
+				11
+			]
+		},
+		{
+			"teil": "statue_der_fuenf",
+			"feld": [
+				9,
+				9
+			]
+		},
+		{
+			"teil": "fackelschale",
+			"feld": [
+				14,
+				9
+			]
+		},
+		{
+			"teil": "fackelschale",
+			"feld": [
+				9,
+				14
+			]
+		},
+		{
+			"teil": "torbogen",
+			"feld": [
+				10,
+				2
+			]
+		},
+		{
+			"teil": "mauer",
+			"feld": [
+				8,
+				1
+			]
+		},
+		{
+			"teil": "mauer",
+			"feld": [
+				14,
+				1
+			]
+		},
+		{
+			"teil": "mauer",
+			"feld": [
+				15,
+				2
+			]
+		},
+		{
+			"teil": "mauer",
+			"feld": [
+				7,
+				2
+			]
+		},
+		{
+			"teil": "laterne",
+			"feld": [
+				10,
+				4
+			]
+		},
+		{
+			"teil": "laterne",
+			"feld": [
+				13,
+				6
+			]
+		},
+		{
+			"teil": "laterne",
+			"feld": [
+				10,
+				17
+			]
+		},
+		{
+			"teil": "laterne",
+			"feld": [
+				13,
+				17
+			]
+		},
+		{
+			"teil": "laterne",
+			"feld": [
+				4,
+				10
+			]
+		},
+		{
+			"teil": "laterne",
+			"feld": [
+				6,
+				13
+			]
+		},
+		{
+			"teil": "laterne",
+			"feld": [
+				17,
+				10
+			]
+		},
+		{
+			"teil": "laterne",
+			"feld": [
+				19,
+				13
+			]
+		},
+		{
+			"teil": "banner",
+			"feld": [
+				15,
+				7
+			]
+		},
+		{
+			"teil": "banner",
+			"feld": [
+				7,
+				15
+			]
+		},
+		{
+			"teil": "banner",
+			"feld": [
+				16,
+				15
+			]
+		},
+		{
+			"teil": "banner",
+			"feld": [
+				7,
+				8
+			]
+		},
+		{
+			"teil": "haus_gross",
+			"feld": [
+				2,
+				14
+			]
+		},
+		{
+			"teil": "haus_klein",
+			"feld": [
+				3,
+				8
+			]
+		},
+		{
+			"teil": "haus_gross",
+			"feld": [
+				17,
+				2
+			]
+		},
+		{
+			"teil": "haus_klein",
+			"feld": [
+				20,
+				6
+			]
+		},
+		{
+			"teil": "marktstand_rot",
+			"feld": [
+				16,
+				16
+			]
+		},
+		{
+			"teil": "marktstand_rot",
+			"feld": [
+				17,
+				8
+			]
+		},
+		{
+			"teil": "marktstand_blau",
+			"feld": [
+				20,
+				9
+			]
+		},
+		{
+			"teil": "fass",
+			"feld": [
+				19,
+				8
+			]
+		},
+		{
+			"teil": "fass",
+			"feld": [
+				16,
+				9
+			]
+		},
+		{
+			"teil": "kiste",
+			"feld": [
+				22,
+				10
+			]
+		},
+		{
+			"teil": "kiste",
+			"feld": [
+				19,
+				11
+			]
+		},
+		{
+			"teil": "bank",
+			"feld": [
+				8,
+				6
+			]
+		},
+		{
+			"teil": "bank",
+			"feld": [
+				15,
+				13
+			]
+		},
+		{
+			"teil": "wegweiser",
+			"feld": [
+				13,
+				13
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				1,
+				1
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				3,
+				1
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				1,
+				4
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				21,
+				1
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				22,
+				4
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				0,
+				20
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				1,
+				22
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				22,
+				22
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				20,
+				20
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				16,
+				22
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				6,
+				22
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				9,
+				23
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				5,
+				3
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				6,
+				9
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				2,
+				12
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				15,
+				18
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				18,
+				17
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				21,
+				18
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				7,
+				5
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				17,
+				5
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				9,
+				17
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				4,
+				12
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				8,
+				4
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				16,
+				4
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				14,
+				17
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				20,
+				16
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				1,
+				17
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				5,
+				11
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				9,
+				6
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				14,
+				5
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				16,
+				12
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				7,
+				16
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				17,
+				19
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				5,
+				17
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				20,
+				4
+			]
+		},
+		{
+			"teil": "zaun",
+			"feld": [
+				2,
+				13
+			]
+		},
+		{
+			"teil": "zaun",
+			"feld": [
+				3,
+				13
+			]
+		},
+		{
+			"teil": "zaun",
+			"feld": [
+				4,
+				13
+			]
+		},
+		{
+			"teil": "zaun",
+			"feld": [
+				5,
+				13
+			]
+		},
+		{
+			"teil": "bruecke",
+			"feld": [
+				11,
+				19
+			]
+		},
+		{
+			"teil": "bruecke",
+			"feld": [
+				12,
+				19
+			]
+		}
+	]
+}

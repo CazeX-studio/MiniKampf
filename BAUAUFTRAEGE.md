@@ -140,6 +140,40 @@ _Aus Marcos Entscheidung vom 22.10.2026: Tageszeit nach der echten Uhrzeit, nach
 - **So testest du es:** Testknopf auf Nacht: Auf dem Weg nach Grünwacht stehen andere Monster, auf Tag wieder die gewohnten.
 - **Status:** offen
 
+## Projekt 8: Kreuzweg im Baukasten
+_Aus Marcos Entscheidung vom 27.10.2026: Die Welt bleibt in Rautenansicht und wird aus Einzelbildern zusammengesetzt (Vorbild: Marcos Bild vom Kreuzweg-Marktplatz bei Nacht). Bild-Regeln in `data/BAUKASTEN.md`._
+
+### Schritt 1: Baukasten-Testfeld
+- **Ziel:** Ein kleiner Marktplatz aus Platzhalter-Bildern (Boden, Häuser, Stände, Statue, Torbogen, Brücke, Laternen, Bäume, Kleinkram). Man kann laufen, Häuser werden durchsichtig, wenn man dahinter steht, Laternen und Fackeln leuchten nachts. Welche Teile es gibt und wo sie stehen, steht in Datendateien, nicht im Code.
+- **So testest du es:** Im Startmenü „Baukasten-Testfeld“: herumlaufen, über die Brücke gehen, hinter ein Haus laufen, mit N Tag und Nacht umschalten, mit G das Raster ansehen.
+- **Status:** fertig (27.10.)
+
+### Schritt 2: Echte Bilder einsetzen
+- **Ziel:** Marcos Bildblätter (KI-Vorlagen nach `data/BAUKASTEN.md`) zuschneiden, verkleinern und die Platzhalter ersetzen.
+- **So testest du es:** Im Testfeld sieht alles aus wie auf Marcos Bild, jedes Teil steht sauber auf seinem Feld (Raster mit G).
+- **Status:** offen (wartet auf Marcos Bilder)
+
+### Schritt 3: Übergänge und Ufer
+- **Ziel:** Weiche Übergänge zwischen Gras, Pflaster und Erde, Ufer am Wasser, damit der Boden nicht kariert wirkt.
+- **So testest du es:** Im Testfeld an Straßenrand und Fluss entlanglaufen: keine harten Kanten mehr.
+- **Status:** offen
+
+### Schritt 4: Figuren in vier Richtungen
+- **Ziel:** Vega (dann alle Figuren) läuft schräg nach oben und unten mit eigenen Bildern statt nur seitlich.
+- **So testest du es:** Im Testfeld in alle Richtungen laufen: Vega schaut immer in Laufrichtung.
+- **Status:** offen (wartet auf Laufbilder)
+
+### Schritt 5: Kreuzweg aus dem Baukasten
+- **Ziel:** Die echte Stadt Kreuzweg wird aus den Baukasten-Teilen aufgebaut (Plan nach design.md: Marktplatz, Gilde, Wegrast, Gesandten-Hof, Bingos Stand, sechstes Tor). Figuren, Aufträge und Geschichte bleiben, wie sie sind.
+- **So testest du es:** Die Kreuzweg-Demo spielen: Alles ist wie vorher, sieht aber aus wie im Testfeld.
+- **Offene Fragen an Marco:** Stadtform (rund mit sechs Straßen oder Kreuzung wie auf dem Bild), Statue (fünf Figuren laut design.md), lila Kreis (Einschlagstelle?), Brunnen, welches Gebäude wo steht.
+- **Status:** offen
+
+### Schritt 6: Grünwacht aus dem Baukasten
+- **Ziel:** Weg nach Grünwacht, Waldboden, Wipfelheim und Pilzhöhle ebenso umstellen (braucht eigene Wald-Teile).
+- **So testest du es:** Grünwacht durchspielen: alles wie vorher, im neuen Aussehen.
+- **Status:** offen
+
 ## Später (wartet auf andere Teile des Spiels)
 - Taschen vom Schneider und Lagerfeuer-Essen (brauchen Berufe)
 - Marktstand-Gebühr (braucht den Markt)

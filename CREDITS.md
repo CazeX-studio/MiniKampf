@@ -36,6 +36,8 @@ im öffentlichen Repository https://github.com/benc-uk/super-dungeon-delve
 | Sturmkobold / Funkenwicht / Schattenhexe | ice_zombie / skelet / necromancer |
 | Steinwächter (Boss) | ogre |
 
+Selbst gemacht (Platzhalter von Claude Code, `tools/baukasten_platzhalter.py`): alle Bilder in `assets/baukasten/` (Baukasten-Testfeld).
+
 Selbst gemacht (im Code gezeichnet): Fackeln, Licht- und Leuchteffekte, Staub,
 Randabdunklung, Reaktions-Ring und Zeitleiste.
 
