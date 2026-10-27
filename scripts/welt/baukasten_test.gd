@@ -50,7 +50,7 @@ var _pos := Vector2.ZERO
 var _path: Array[Vector2] = []
 var _night := true
 var _grid := false
-var _figur_stufe := 2
+var _figur_stufe := 3
 var _hint: Label
 
 var _ground: Node2D

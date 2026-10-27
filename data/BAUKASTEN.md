@@ -21,7 +21,7 @@ Ein neues Blatt oder ein besseres Bild: Datei in `tools/vorlagen/` ersetzen, Wer
 - Ein Feld (Raute) ist im Spiel **64 × 32 Pixel**. Die Bilder haben schon Spielgröße.
 - Jedes Blatt hat einen eigenen Maßstab im Werkzeug, damit die Blätter zueinander passen
   (z. B. Häuser 0,6, Kleinkram 0,38, Bäume 0,44).
-- Die Spielfigur steht im Testfeld auf 70 %. Mit **+** und **−** lässt sich ausprobieren, welche Größe zur Welt passt.
+- Die Spielfigur steht im Testfeld auf 80 % (Marcos Wahl vom 27.10.). Mit **+** und **−** lässt sich ausprobieren, welche Größe zur Welt passt.
 
 ## Die Teile
 
