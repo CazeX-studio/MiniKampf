@@ -6,26 +6,30 @@
 			"bilder": [
 				"boden/gras_1.png",
 				"boden/gras_2.png"
-			]
+			],
+			"vorrang": 4
 		},
 		"#": {
 			"name": "Pflaster",
 			"bilder": [
 				"boden/pflaster_1.png",
 				"boden/pflaster_2.png"
-			]
+			],
+			"vorrang": 2
 		},
 		"o": {
 			"name": "Marktplatz",
 			"bilder": [
 				"boden/platz.png"
-			]
+			],
+			"vorrang": 1
 		},
 		"e": {
 			"name": "Erde",
 			"bilder": [
 				"boden/erde.png"
-			]
+			],
+			"vorrang": 3
 		},
 		"~": {
 			"name": "Wasser",
@@ -33,7 +37,8 @@
 				"boden/wasser_1.png",
 				"boden/wasser_2.png"
 			],
-			"begehbar": false
+			"begehbar": false,
+			"vorrang": 0
 		}
 	},
 	"objekte": {

@@ -200,7 +200,7 @@ _Aus Marcos Entscheidung vom 27.10.2026: Die Welt bleibt in Rautenansicht und wi
 ### Schritt 3: Übergänge und Ufer
 - **Ziel:** Weiche Übergänge zwischen Gras, Pflaster und Erde, Ufer am Wasser, damit der Boden nicht kariert wirkt.
 - **So testest du es:** Im Testfeld an Straßenrand und Fluss entlanglaufen: keine harten Kanten mehr.
-- **Status:** offen
+- **Status:** fertig (27.10.; ausgefranste Ränder nach Vorrang Gras > Erde > Pflaster > Platz > Wasser, Uferschatten im Wasser, dunkle Kachelränder entfernt)
 
 ### Schritt 4: Figuren in vier Richtungen
 - **Ziel:** Vega (dann alle Figuren) läuft schräg nach oben und unten mit eigenen Bildern statt nur seitlich.

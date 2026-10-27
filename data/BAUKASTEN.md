@@ -36,7 +36,10 @@ Ein neues Blatt oder ein besseres Bild: Datei in `tools/vorlagen/` ersetzen, Wer
 | Pflanzen | baum, baum_herbst, tanne, tanne_gross, busch, busch_bluete, blumen und grasbueschel (flach) |
 | Sternenfall | splitterkreis (3×3, vor dem Fest), krater_frisch (4×4, Festnacht), krater_spaet (4×4, umzäunt, Wochen danach), sternsplitter (1×1, leuchtet) |
 
-**Noch nicht da:** Übergänge (Gras zu Pflaster, Ufer).
+**Übergänge:** Das Spiel macht sie selbst, es braucht keine eigenen Bilder. Jede Bodenart hat in `data/baukasten_teile.json`
+einen `vorrang` (Gras 4, Erde 3, Pflaster 2, Platz 1, Wasser 0). Der Boden mit mehr Vorrang ragt mit einem ausgefransten,
+weichen Rand ins Nachbarfeld (Gras wächst über das Pflaster), am Wasser liegt zusätzlich ein dunkler Uferschatten.
+Weite, Fransen und Weichheit stehen oben in `scripts/welt/baukasten_test.gd` (RAND_WEITE, RAND_FRANSEN, RAND_WEICH).
 
 **Vega in vier Richtungen:** Das Blatt `tools/vorlagen/vega_laufen.png` zerlegt `tools/vega_laufbilder.py` in
 `assets/figuren/vega_<idle|run>_<vorn|hinten>_anim_f0–5.png`. Nach links spiegelt das Spiel die Bilder.

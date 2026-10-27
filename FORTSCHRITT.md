@@ -51,6 +51,14 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **Projekt 9, Schritt 3: Übergänge zwischen den Böden** (27.10.):
+  - Die Bodenkacheln hatten einen dunklen Rand, dadurch sah alles kariert aus. Der Rand ist jetzt abgeschnitten.
+  - Wo zwei Böden aneinanderstoßen, ragt der „stärkere“ mit einem ausgefransten, weichen Rand ins Nachbarfeld:
+    Gras wächst über Erde, Pflaster und Platz, Erde über Pflaster, Pflaster über den Marktplatz. Auch an Ecken.
+  - Am Bach gibt es ein Ufer: Gras ragt ins Wasser, darunter liegt ein dunkler Schatten.
+  - Das Spiel macht die Übergänge selbst aus den vorhandenen Bodenbildern, es braucht keine neuen Bilder.
+  - **So testest du es:** Editor → Baukasten-Testfeld: an den Straßenrändern, am Marktplatz und am Bach entlanglaufen.
+
 - **Neues Startmenü mit Editor** (27.10., Marcos Wunsch):
   - Das Startmenü hat jetzt drei Kacheln: **Kreuzweg-Demo**, **Zusammen spielen** und **Editor**.
   - Im **Editor** liegen die Werkzeuge zum schnellen Testen: **Baukasten-Testfeld** (die neue Karte, vorerst nur hier),

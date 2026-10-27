@@ -19,6 +19,8 @@ WURZEL = Path(__file__).resolve().parent.parent
 VORLAGEN = WURZEL / "tools" / "vorlagen"
 ZIEL = WURZEL / "assets" / "baukasten"
 TW, TH = 64, 32
+## Bodenrauten: so viel vom Rand weglassen (Anteil), damit der dunkle Rand der gemalten Kacheln verschwindet
+BODEN_RAND = 0.07
 
 # Blatt -> Maßstab (Spielpixel pro Bildpixel) und Teile mit ungefährer Mitte im Blatt.
 # Die Maßstäbe sind so gewählt, dass die Blätter zueinander passen (Häuser, Stände, Kleinkram, Bäume).
@@ -124,12 +126,13 @@ def messen(teil):
 
 
 def boden_teil(a, sl, lab, i):
-	"""Bodenraute: nur die Oberseite (ohne Dicke), genau 64 x 32, mit Rautenmaske."""
+	"""Bodenraute: nur die Oberseite (ohne Dicke und ohne dunklen Rand), genau 64 x 32, mit Rautenmaske."""
 	stueck = a[sl].copy()
 	stueck[lab[sl] != i, 3] = 0
 	bild = Image.fromarray(stueck)
 	breite = bild.width
-	oben = bild.crop((0, 0, breite, breite // 2)).resize((TW, TH), Image.LANCZOS)
+	rx, ry = breite * BODEN_RAND, breite / 2 * BODEN_RAND
+	oben = bild.crop((round(rx), round(ry), round(breite - rx), round(breite / 2 - ry))).resize((TW, TH), Image.LANCZOS)
 	maske = Image.new("L", (TW, TH), 0)
 	from PIL import ImageDraw
 	ImageDraw.Draw(maske).polygon([(TW / 2, 0), (TW, TH / 2), (TW / 2, TH), (0, TH / 2)], fill=255)

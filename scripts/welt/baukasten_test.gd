@@ -21,6 +21,18 @@ const STUFEN: Array[String] = ["vor dem Fest", "Nacht des Sternenfalls", "Wochen
 ## So durchsichtig werden Dinge, hinter denen die Figur steht
 const FADE_ALPHA := 0.45
 const ASSET_PATH := "res://assets/baukasten/"
+## Übergänge zwischen Böden: Der Boden mit mehr "vorrang" (data/baukasten_teile.json) ragt mit einem unregelmäßigen,
+## weichen Rand ins Nachbarfeld (Gras wächst über das Pflaster, am Wasser entsteht ein Ufer).
+## Kanten (gerade Nachbarn) und Ecken (schräge Nachbarn), in Feldern
+const KANTEN: Array[Vector2i] = [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
+const ECKEN: Array[Vector2i] = [Vector2i(1, 1), Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 1)]
+## Wie weit der Rand ins Feld ragt (Anteil eines Feldes), wie stark er ausfranst und wie weich er ausläuft
+const RAND_WEITE := 0.3
+const RAND_FRANSEN := 0.2
+const RAND_WEICH := 0.07
+## Am Ufer liegt im Wasser ein dunkler Schatten etwas weiter als der Rand
+const UFER_WEITE := 0.5
+const UFER_SCHATTEN := Color(0.0, 0.03, 0.08, 0.45)
 
 var _teile: Dictionary
 var _size := Vector2i.ZERO
@@ -50,6 +62,8 @@ var _player: WorldCharacter
 var _camera: Camera2D
 var _modulate: CanvasModulate
 var _ground_colors := {}
+## Fertige Randbilder für Übergänge: "Bild|Richtung|Weite" -> ImageTexture
+var _rand_bilder := {}
 
 
 func _ready() -> void:
@@ -249,6 +263,100 @@ func _draw_ground() -> void:
 					top + Vector2(0, TILE_H), top + Vector2(-TILE_W * 0.5, TILE_H * 0.5)])
 			_ground.draw_colored_polygon(diamond, _base_color(tex))
 			_ground.draw_texture_rect(tex, Rect2(top - Vector2(TILE_W * 0.5, 0), Vector2(TILE_W, TILE_H)), false)
+	# Danach die Übergänge (über allen Bodenfeldern, damit kein Nachbar sie wieder verdeckt)
+	for y in _size.y:
+		for x in _size.x:
+			_draw_uebergaenge(Vector2i(x, y))
+
+
+## Bild eines Bodenfeldes (jedes Feld nimmt immer dasselbe, aber zufällig wirkende Bild).
+func _boden_bild(cell: Vector2i) -> Texture2D:
+	var bilder: Array = _ground_def(cell).get("bilder", [])
+	if bilder.is_empty():
+		return null
+	return load(ASSET_PATH + bilder[(cell.x * 7 + cell.y * 13 + cell.x * cell.y) % bilder.size()])
+
+
+## Ränder der Nachbarn mit mehr Vorrang in dieses Feld malen.
+func _draw_uebergaenge(cell: Vector2i) -> void:
+	var mein := _ground_def(cell)
+	if mein.is_empty():
+		return
+	var rang: int = mein.get("vorrang", 0)
+	var rect := Rect2(cell_to_screen(Vector2(cell)) - Vector2(TILE_W * 0.5, 0), Vector2(TILE_W, TILE_H))
+	var wasser: bool = not mein.get("begehbar", true)
+	var richtungen: Array[Vector2i] = []
+	for d in KANTEN:
+		if _ground_def(cell + d).get("vorrang", 0) > rang:
+			richtungen.append(d)
+	for d in ECKEN:
+		# Eine Ecke nur, wenn die beiden Kanten daneben nicht schon denselben Boden zeigen
+		var art := _ground_char(cell + d)
+		if _ground_def(cell + d).get("vorrang", 0) > rang and _ground_char(cell + Vector2i(d.x, 0)) != art \
+				and _ground_char(cell + Vector2i(0, d.y)) != art:
+			richtungen.append(d)
+	# Erst der Uferschatten im Wasser, dann die Ränder
+	if wasser:
+		for d in richtungen:
+			if _ground_def(cell + d).get("begehbar", true):
+				_ground.draw_texture_rect(_rand(_boden_bild(cell + d), d, UFER_WEITE), rect, false, UFER_SCHATTEN)
+	for d in richtungen:
+		_ground.draw_texture_rect(_rand(_boden_bild(cell + d), d, RAND_WEITE), rect, false)
+
+
+func _ground_char(cell: Vector2i) -> String:
+	if cell.x < 0 or cell.y < 0 or cell.x >= _size.x or cell.y >= _size.y:
+		return ""
+	return _rows[cell.y][cell.x]
+
+
+## Randbild: das Bodenbild des Nachbarn, das zur Kante (oder Ecke) d hin sichtbar ist und nach innen unregelmäßig ausläuft.
+func _rand(tex: Texture2D, d: Vector2i, weite: float) -> Texture2D:
+	var key := "%s|%d,%d|%.2f" % [tex.resource_path, d.x, d.y, weite]
+	if _rand_bilder.has(key):
+		return _rand_bilder[key]
+	var img := tex.get_image()
+	img.decompress()
+	img.convert(Image.FORMAT_RGBA8)
+	var w := img.get_width()
+	var h := img.get_height()
+	for py in h:
+		for px in w:
+			# Lage im Feld: u entlang x (0 oben links … 1 unten rechts), v entlang y
+			var sx := (px + 0.5) / w * TILE_W - TILE_W * 0.5
+			var sy := (py + 0.5) / h * TILE_H
+			var u := (sx / (TILE_W * 0.5) + sy / (TILE_H * 0.5)) * 0.5
+			var v := (sy / (TILE_H * 0.5) - sx / (TILE_W * 0.5)) * 0.5
+			var du := 1.0 - u if d.x > 0 else u
+			var dv := 1.0 - v if d.y > 0 else v
+			var abstand := du if d.y == 0 else (dv if d.x == 0 else Vector2(du, dv).length())
+			var fransen := (_rauschen(px, py, d) - 0.5) * RAND_FRANSEN
+			var a := clampf((weite + fransen - abstand) / RAND_WEICH, 0.0, 1.0)
+			var c := img.get_pixel(px, py)
+			c.a *= a
+			img.set_pixel(px, py, c)
+	var fertig := ImageTexture.create_from_image(img)
+	_rand_bilder[key] = fertig
+	return fertig
+
+
+## Weiches, festes Rauschen (gleiches Feld = gleicher Rand), damit die Kante wie Grasbüschel oder Erdbrocken ausfranst.
+func _rauschen(px: int, py: int, d: Vector2i) -> float:
+	var gx := px / 4.0
+	var gy := py / 2.0
+	var x0 := floori(gx)
+	var y0 := floori(gy)
+	var fx := gx - x0
+	var fy := gy - y0
+	var a := lerpf(_zufall(x0, y0, d), _zufall(x0 + 1, y0, d), fx)
+	var b := lerpf(_zufall(x0, y0 + 1, d), _zufall(x0 + 1, y0 + 1, d), fx)
+	return lerpf(a, b, fy)
+
+
+func _zufall(x: int, y: int, d: Vector2i) -> float:
+	var n := x * 374761393 + y * 668265263 + (d.x + 2) * 2147483 + (d.y + 2) * 1442695
+	n = (n ^ (n >> 13)) * 1274126177
+	return float((n ^ (n >> 16)) & 0xffff) / 65535.0
 
 
 func _base_color(tex: Texture2D) -> Color:
