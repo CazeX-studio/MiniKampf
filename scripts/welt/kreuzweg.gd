@@ -148,6 +148,7 @@ var _quest_detail: RichTextLabel
 ## Im Auftragsbuch ausgewählter Auftrag ("" = der erste der Liste)
 var _quest_selected := ""
 var _stats_head: HBoxContainer
+var _rep_box: VBoxContainer
 var _bag_selected := -1
 var _shop_panel: PanelContainer
 var _shop_box: VBoxContainer
@@ -1346,8 +1347,8 @@ func _build_ui() -> void:
 	_dialog_next = Button.new()
 	_dialog_next.text = GameData.text("weiter") + " (F)"
 	_dialog_next.custom_minimum_size = Vector2(160, 44)
-	# Weiter-Pfeil wie im UI-Entwurf
-	_dialog_next.icon = UiStil.symbol("pfeil")
+	# Weiter-Dreieck wie im UI-Entwurf
+	_dialog_next.icon = UiStil.symbol("weiter")
 	_dialog_next.icon_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_dialog_next.add_theme_constant_override("icon_max_width", 22)
 	_dialog_next.size_flags_horizontal = Control.SIZE_SHRINK_END
@@ -1367,6 +1368,7 @@ func _build_ui() -> void:
 	_panel.add_child(panel_box)
 	_panel_title = _label("", 22, Color("f2c14e"))
 	panel_box.add_child(UiStil.titel_mit_banner(_panel_title))
+	panel_box.add_child(UiStil.trennlinie())
 	# Reiter im Auftragsbuch: Offen, Abgeschlossen, Erfolge
 	_quest_tabs = HBoxContainer.new()
 	_quest_tabs.add_theme_constant_override("separation", 6)
@@ -1405,6 +1407,10 @@ func _build_ui() -> void:
 	_stats_head = HBoxContainer.new()
 	_stats_head.add_theme_constant_override("separation", 16)
 	panel_box.add_child(_stats_head)
+	# Ruf bei den Gruppen als Leiste mit Feldern (nur nach der Klassenwahl)
+	_rep_box = VBoxContainer.new()
+	_rep_box.add_theme_constant_override("separation", 4)
+	panel_box.add_child(_rep_box)
 	# Tasche: Kästchen mit Bild und Anzahl, per Ziehen und Ablegen umsortieren
 	_bag_grid = GridContainer.new()
 	_bag_grid.columns = 10
@@ -2135,6 +2141,9 @@ func _fill_panel() -> void:
 	_quest_view.visible = quest_list
 	_panel_text.visible = not quest_list
 	_stats_head.visible = _panel_mode == "werte"
+	_rep_box.visible = _panel_mode == "werte"
+	for child in _rep_box.get_children():
+		child.queue_free()
 	_bag_grid.visible = _panel_mode == "tasche"
 	_bag_footer.visible = _panel_mode == "tasche"
 	_panel_text.custom_minimum_size.y = {"tasche": 120.0, "werte": 220.0}.get(_panel_mode, 330.0)
@@ -2166,7 +2175,7 @@ func _fill_panel() -> void:
 				for id: String in p.progress.flags.get("monster", []):
 					pack.append(Sandbox.MONSTERS.get(id, Sandbox.ENEMIES.get(id, {name = id})).name)
 				lines.append("[b]Rudel:[/b] %s" % (", ".join(pack) if not pack.is_empty() else GameData.text("rudel_leer")))
-			_reputation_lines(p, lines)
+			_reputation_lines(p)
 			lines.append("")
 			lines.append(GameData.text("werte_klasse", [BattleState.LEVEL_HP, BattleState.LEVEL_MANA, roundi(BattleRequest.HERO_POWER_PER_LEVEL * 100)]))
 			_panel_text.text = "\n".join(lines)
@@ -2237,7 +2246,8 @@ func _fill_quests(p: PlayerState, done_tab: bool) -> void:
 		button.custom_minimum_size = Vector2(236, 50)
 		button.add_theme_font_size_override("font_size", 14)
 		button.add_theme_constant_override("icon_max_width", 22)
-		button.icon = UiStil.symbol({"fertig": "frage", "abgegeben": "kaestchen_an"}.get(quest_state, "ausrufe"))
+		var marker := "band_rolle" if q.get("neben", false) else "band_ausrufe"
+		button.icon = UiStil.symbol({"fertig": "frage", "abgegeben": "kaestchen_an"}.get(quest_state, marker))
 		button.text = "%s\n%s" % [q.get("titel", id), _quest_kind(p, id)]
 		if q.get("neben", false):
 			button.add_theme_color_override("font_color", SIDE_COLOR)
@@ -2295,7 +2305,7 @@ func _fill_stats_head(p: PlayerState, title: String, hp: int, mana: int) -> void
 	for child in _stats_head.get_children():
 		child.queue_free()
 	var frame := PanelContainer.new()
-	frame.add_theme_stylebox_override("panel", UiStil.feld_stil(true))
+	frame.add_theme_stylebox_override("panel", UiStil.bilderrahmen())
 	frame.custom_minimum_size = Vector2(120, 120)
 	var portrait := TextureRect.new()
 	portrait.texture = FighterView.portrait(p.look if p.look != "" else "novize")
@@ -2381,23 +2391,31 @@ func _fill_bag(p: PlayerState) -> Array:
 	return slots
 
 
-## Ruf bei den Gruppen der Regionen als kleine Leiste (nur Gruppen, bei denen man schon Ruf hat).
-## Links rot (abgelehnt), Mitte grau (neutral), rechts grün (geschätzt).
-func _reputation_lines(p: PlayerState, lines: PackedStringArray) -> void:
+## Ruf bei den Gruppen der Regionen als Leiste aus dem UI-Set (nur Gruppen, bei denen man schon Ruf hat).
+## 11 Felder: wenig grüne Felder = abgelehnt, die Hälfte = neutral, alle = geschätzt.
+func _reputation_lines(p: PlayerState) -> void:
 	var shown := false
 	for key: String in p.progress.flags:
 		if not key.begins_with("ruf:"):
 			continue
 		if not shown:
-			lines.append("")
-			lines.append("[b]Ruf[/b]")
+			_rep_box.add_child(_label("Ruf", 17, Color("f2c14e")))
 			shown = true
 		var value := int(p.progress.flags[key])
-		var filled := roundi((value + WorldState.REPUTATION_MAX) / float(WorldState.REPUTATION_MAX) * 5.0)
-		var color := "6dff8a" if value > 20 else ("ff7070" if value < -20 else "c8c8c8")
+		var cells := UiStil.RUF_ZELLEN.size() - 1
+		var filled := roundi((value + WorldState.REPUTATION_MAX) / float(2 * WorldState.REPUTATION_MAX) * cells)
+		var color := Color("6dff8a") if value > 20 else (Color("ff7070") if value < -20 else Color("c8c8c8"))
 		var word := GameData.text("ruf_gut" if value > 20 else ("ruf_schlecht" if value < -20 else "ruf_neutral"))
-		lines.append("%s  [color=#%s]%s[/color][color=#555555]%s[/color]  %s" % [GameData.text("ruf_" + key.substr(4)), color,
-				"■".repeat(filled), "■".repeat(10 - filled), word])
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 10)
+		var name_label := _label(GameData.text("ruf_" + key.substr(4)), 15, Color("f3ead8"))
+		name_label.custom_minimum_size.x = 210
+		row.add_child(name_label)
+		row.add_child(UiStil.ruf_leiste(filled))
+		row.add_child(_label(word, 15, color))
+		_rep_box.add_child(row)
+	if shown:
+		_rep_box.add_child(UiStil.trennlinie())
 
 
 ## Belohnung für den Sieg-Bildschirm. Die Monsterkarte wird schon jetzt ausgewürfelt, wenn diese Welt die echte ist

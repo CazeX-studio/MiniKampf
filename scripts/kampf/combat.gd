@@ -37,7 +37,7 @@ const LIGHT_RADIUS_DARK := 95.0
 ## Kampfmenü links: [Kennung, Name, Symbol aus assets/ui/]
 const COMMANDS: Array[Array] = [
 	["angriff", "Angriff", "schwert"], ["faehigkeiten", "Fähigkeiten", "wirbel"], ["gegenstaende", "Gegenstände", "tasche"],
-	["verteidigen", "Verteidigen", "schild"], ["fliehen", "Fliehen", "pfeil"],
+	["verteidigen", "Verteidigen", "sanduhr"], ["fliehen", "Fliehen", "fliehen"],
 ]
 const MAX_DARK_ALPHA := 0.92
 ## Kampfgefühl: Zeitlupe bei der perfekten Parade, Anhalten und Wackeln bei harten Treffern
@@ -587,9 +587,49 @@ func _show_actions(f: Fighter, category := "faehigkeiten") -> void:
 			button.add_theme_color_override("font_color", Color("ffa8e0"))
 		elif reason == "" and ab.has("dungeon"):
 			button.add_theme_color_override("font_color", Color("9fe8ff"))
+		button.icon = UiStil.symbol(_skill_icon(f, ab))
+		button.add_theme_constant_override("icon_max_width", 26)
 		button.pressed.connect(_on_ability_pressed.bind(f, ab))
 		_grid.add_child(button)
 	_number_buttons()
+
+
+## Symbol für einen Fähigkeits-Knopf (aus dem UI-Set), grob nach Art der Fähigkeit.
+func _skill_icon(f: Fighter, ab: Dictionary) -> String:
+	var id := str(ab.id)
+	var info := (str(ab.get("info", "")) + " " + str(ab.name)).to_lower()
+	if id == "ult":
+		return "ult"
+	if ab.has("duet"):
+		return "sternenkraft"
+	match id:
+		"trank":
+			return "trank"
+		"abwarten":
+			return "sanduhr"
+		"row":
+			return "tausch"
+		"tame":
+			return "pfote"
+	if f.klass in ["mechanic", "robot"]:
+		return "werkzeug"
+	if f.klass == "tamer":
+		return "pfote"
+	if "heil" in info:
+		return "heilen"
+	if "schild" in info or ab.get("target", "") in ["ally", "ally_hero"]:
+		return "schildblock"
+	if f.klass == "archer" or "fernkampf" in info:
+		return "bogen"
+	if "an alle" in info:
+		return "klingenwirbel"
+	if "magie" in info or "licht" in info or "schatten" in info or "zauber" in info:
+		return "magie"
+	if "stoß" in info or "stich" in info or "schritt" in info:
+		return "stich"
+	if ab.get("target", "") == "none":
+		return "schildblock"
+	return "hieb"
 
 
 ## Eine Entscheidung mit mehreren Möglichkeiten (z. B. nach dem Dungeon). Gibt die Kennung zurück.

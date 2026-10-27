@@ -244,7 +244,7 @@ Werten, Zugleiste, Kampfmenü, Sieg-Fenster und Meldungen. Look überall eingeba
 - **Ziel:** Element- und Fähigkeits-Symbole, Fliehen-Symbol, Bildlaufleiste, Trennlinie, Ruf-Leiste mit 10 Feldern,
   Weiter-Dreieck, Pergament-Sprechblase, Bilderrahmen und Auftrags-Bändchen einbauen (Prompt am 27.10. an Marco gegeben).
 - **So testest du es:** Kampf, Werte (Ruf) und Auftragsbuch ansehen: überall die neuen Symbole.
-- **Status:** offen (wartet auf das dritte Bildblatt)
+- **Status:** fertig (27.10.; Gegenstandsarten-Symbole liegen bereit, Reiter in der Tasche erst, wenn Gegenstände eine Art haben)
 
 ## Später (wartet auf andere Teile des Spiels)
 - Taschen vom Schneider und Lagerfeuer-Essen (brauchen Berufe)

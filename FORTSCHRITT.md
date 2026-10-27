@@ -51,6 +51,22 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **UI-Set Teil 3: drittes Bildblatt eingebaut** (27.10., Projekt 10, Schritt 4):
+  - **Kampf:** Jede Fähigkeit hat ein Symbol (Hieb, Stich, Wirbel, Heilen, Schild, Bogen, Magie, Pfote, Werkzeug,
+    Sanduhr, Reihe wechseln, Ult). Gegner zeigen ihr Element als Symbol neben dem Namen. Im Kampfmenü:
+    Sanduhr bei „Verteidigen“, laufende Figur bei „Fliehen“.
+  - **Auftragsbuch:** rotes Bändchen mit „!“ für Hauptaufträge, mit Schriftrolle für Nebenaufträge.
+  - **Werte:** Bilderrahmen um deine Figur, **Ruf als Leiste mit grünen Feldern** (wenige = abgelehnt, halb = neutral, viele = geschätzt).
+  - **Trennlinie** mit Diamant unter den Fenstertiteln, **goldene Bildlaufleiste** überall.
+  - **Dialog:** goldenes Weiter-Dreieck am „Weiter“-Knopf. **Chat-Sprechblasen** sind jetzt Pergament mit Spitze.
+  - Bereit, aber noch nicht benutzt: Symbole für Helm, Rüstung, Kräuter, Schriftrolle, Paket, „mehr“ (für Reiter in der Tasche, sobald Gegenstände eine Art haben).
+  - **So testest du es:**
+    1. Einen Kampf beginnen: Die Fähigkeiten haben Symbole, der Gegner hat sein Element-Symbol neben dem Namen.
+    2. J drücken: Vor den Aufträgen hängen rote Bändchen („!“ oder Schriftrolle).
+    3. Als Bogenschütze oder Zähmer C drücken: Bilderrahmen um deine Figur und Ruf-Leisten mit grünen Feldern.
+    4. Mit jemandem reden: Am „Weiter“-Knopf ist ein goldenes Dreieck.
+    5. Beim Zusammenspielen etwas in den Chat schreiben: Die Sprechblase ist aus Pergament.
+
 - **Oberfläche nach Marcos UI-Entwurf** (27.10., Projekt 10, Schritte 1–3):
   - **Kampf:** Zugleiste im Rahmen mit Bildern in Goldfeldern (wer dran ist, leuchtet). Namensschilder mit Goldrahmen,
     Leben und Mana mit den Füllungen aus dem Set. Neues **Kampfmenü** links: „Angriff“ wählt gleich den Grundangriff,

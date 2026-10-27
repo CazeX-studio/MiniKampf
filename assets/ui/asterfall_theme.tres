@@ -16,6 +16,8 @@
 [ext_resource type="Texture2D" path="res://assets/ui/reiter_aktiv.png" id="14"]
 [ext_resource type="Texture2D" path="res://assets/ui/knopf_gold.png" id="15"]
 [ext_resource type="Texture2D" path="res://assets/ui/knopf_rot.png" id="16"]
+[ext_resource type="Texture2D" path="res://assets/ui/bildlauf.png" id="17"]
+[ext_resource type="Texture2D" path="res://assets/ui/bildlauf_griff.png" id="18"]
 
 [sub_resource type="StyleBoxTexture" id="fenster"]
 texture = ExtResource("1")
@@ -215,6 +217,32 @@ content_margin_right = 10.0
 content_margin_bottom = 2.0
 modulate_color = Color(1.25, 1.1, 1.1, 1)
 
+[sub_resource type="StyleBoxTexture" id="bildlauf"]
+texture = ExtResource("17")
+texture_margin_top = 14.0
+texture_margin_bottom = 14.0
+content_margin_left = 9.0
+content_margin_right = 9.0
+
+[sub_resource type="StyleBoxTexture" id="bildlauf_griff"]
+texture = ExtResource("18")
+texture_margin_top = 10.0
+texture_margin_bottom = 10.0
+content_margin_left = 7.0
+content_margin_right = 7.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="bildlauf_griff_hell"]
+texture = ExtResource("18")
+texture_margin_top = 10.0
+texture_margin_bottom = 10.0
+content_margin_left = 7.0
+content_margin_right = 7.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+modulate_color = Color(1.25, 1.2, 1.1, 1)
+
 [resource]
 Button/colors/font_color = Color(0.953, 0.918, 0.847, 1)
 Button/colors/font_hover_color = Color(1, 0.906, 0.659, 1)
@@ -283,3 +311,8 @@ TabContainer/styles/tab_hovered = SubResource("reiter")
 TabContainer/styles/tab_selected = SubResource("reiter_aktiv")
 TabContainer/styles/tab_unselected = SubResource("reiter")
 TooltipPanel/styles/panel = SubResource("tooltip")
+VScrollBar/styles/scroll = SubResource("bildlauf")
+VScrollBar/styles/scroll_focus = SubResource("bildlauf")
+VScrollBar/styles/grabber = SubResource("bildlauf_griff")
+VScrollBar/styles/grabber_highlight = SubResource("bildlauf_griff_hell")
+VScrollBar/styles/grabber_pressed = SubResource("bildlauf_griff_hell")

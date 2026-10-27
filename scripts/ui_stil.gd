@@ -8,7 +8,58 @@ const BANNER := preload("res://assets/ui/banner.png")
 ## Meldungs-Rahmen: Name der Farbe -> Bild. Rechts sitzen Ranken, darum dort mehr Rand.
 const MELDUNG_RAHMEN := {gold = "meldung_gold", gruen = "meldung_gruen", lila = "meldung_lila"}
 
+const RUF_LEISTE := preload("res://assets/ui/ruf_leiste.png")
+const RUF_FELD := preload("res://assets/ui/ruf_feld.png")
+const TRENNLINIE := preload("res://assets/ui/trennlinie.png")
+## Ränder der 11 Felder in ruf_leiste.png (x in Pixeln, das erste Feld ist etwas breiter)
+const RUF_ZELLEN: Array[int] = [18, 48, 72, 96, 120, 144, 168, 192, 217, 241, 265, 289]
+## Element (wie in Elements) -> Symbol
+const ELEMENT_SYMBOLE := {
+	"Feuer": "feuer", "Erde": "erde", "Pflanze": "pflanze", "Blitz": "blitz", "Wasser": "wasser", "Wind": "wind",
+	"Licht": "licht", "Schatten": "schatten", "Sternenkraft": "sternenkraft",
+}
+
 static var _rahmen := {}
+static var _symbole := {}
+
+
+## Ruf-Leiste aus dem UI-Set mit 0 bis 11 grünen Feldern (die Mitte, 5–6 Felder, ist neutral).
+static func ruf_leiste(gefuellt: int) -> Control:
+	var leiste := Control.new()
+	leiste.custom_minimum_size = Vector2(RUF_LEISTE.get_size())
+	leiste.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	leiste.draw.connect(func() -> void:
+		leiste.draw_texture(RUF_LEISTE, Vector2.ZERO)
+		for i in clampi(gefuellt, 0, RUF_ZELLEN.size() - 1):
+			var x0 := RUF_ZELLEN[i] + 1
+			var x1 := RUF_ZELLEN[i + 1] - 1
+			leiste.draw_texture_rect(RUF_FELD, Rect2(x0, 6, x1 - x0, 18), false))
+	return leiste
+
+
+## Goldene Trennlinie mit Diamant, mittig.
+static func trennlinie() -> TextureRect:
+	var linie := TextureRect.new()
+	linie.texture = TRENNLINIE
+	linie.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+	linie.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return linie
+
+
+## Symbol eines Elements ("" wenn es keins gibt).
+static func element_symbol(element: String) -> Texture2D:
+	return symbol(ELEMENT_SYMBOLE[element]) if ELEMENT_SYMBOLE.has(element) else null
+
+
+## Rahmen fürs Bild der eigenen Figur (Werte).
+static func bilderrahmen() -> StyleBoxTexture:
+	if not _felder.has("bilderrahmen"):
+		var style := StyleBoxTexture.new()
+		style.texture = load(PFAD % "bilderrahmen")
+		style.set_texture_margin_all(18)
+		style.set_content_margin_all(8)
+		_felder["bilderrahmen"] = style
+	return _felder["bilderrahmen"]
 static var _felder := {}
 
 
@@ -40,8 +91,11 @@ static func feld_stil(aktiv: bool) -> StyleBoxTexture:
 ## Eines der 12 Symbole (gold, kristall, trank, schwert, schild, wirbel, tasche, schluessel,
 ## zahnrad, ausrufe, frage, pfeil) oder ein anderes Bild aus assets/ui/.
 static func symbol(name: String) -> Texture2D:
-	var path := PFAD % ("symbol_" + name)
-	return load(path if ResourceLoader.exists(path) else PFAD % name)
+	# Festhalten, damit ein nur gezeichnetes Bild (draw_texture) nicht gleich wieder freigegeben wird
+	if not _symbole.has(name):
+		var path := PFAD % ("symbol_" + name)
+		_symbole[name] = load(path if ResourceLoader.exists(path) else PFAD % name)
+	return _symbole[name]
 
 
 ## Symbol mitten im Text eines RichTextLabel (BBCode).

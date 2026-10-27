@@ -20,6 +20,7 @@ var marker := ""
 var marker_side := false
 const MARKER_COLOR := Color("ffd34d")
 const MARKER_SIDE_COLOR := Color("5ab8ff")
+const BUBBLE := preload("res://assets/ui/sprechblase.png")
 ## Wie schnell die Steh-Animation läuft (Bilder pro Sekunde). NPCs stehen ruhiger als Spieler.
 var idle_fps := 6.0
 
@@ -80,7 +81,7 @@ func _process(delta: float) -> void:
 	if _bubble != null:
 		_bubble_time -= delta
 		_bubble.modulate.a = clampf(_bubble_time, 0.0, 1.0)
-		_bubble.position = Vector2(-_bubble.size.x * 0.5, _head_y - _bubble.size.y - 4)
+		_bubble.position = Vector2(-18, _head_y - _bubble.size.y + 6)
 		if _bubble_time <= 0.0:
 			_bubble.queue_free()
 			_bubble = null
@@ -135,10 +136,17 @@ func say(text: String, seconds := 6.0) -> void:
 	if _bubble != null:
 		_bubble.queue_free()
 	_bubble = PanelContainer.new()
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color(1, 1, 1, 0.92)
-	style.set_corner_radius_all(8)
-	style.set_content_margin_all(6)
+	# Pergament-Sprechblase aus dem UI-Set, die Spitze unten links zeigt auf den Kopf
+	var style := StyleBoxTexture.new()
+	style.texture = BUBBLE
+	style.texture_margin_left = 22
+	style.texture_margin_right = 14
+	style.texture_margin_top = 12
+	style.texture_margin_bottom = 26
+	style.content_margin_left = 12
+	style.content_margin_right = 12
+	style.content_margin_top = 8
+	style.content_margin_bottom = 22
 	_bubble.add_theme_stylebox_override("panel", style)
 	var label := Label.new()
 	label.text = text
@@ -149,7 +157,7 @@ func say(text: String, seconds := 6.0) -> void:
 	_bubble.add_child(label)
 	_overlay.add_child(_bubble)
 	_bubble.reset_size()
-	_bubble.position = Vector2(-_bubble.size.x * 0.5, _head_y - _bubble.size.y - 4)
+	_bubble.position = Vector2(-18, _head_y - _bubble.size.y + 6)
 	_bubble_time = seconds
 
 

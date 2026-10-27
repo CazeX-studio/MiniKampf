@@ -22,7 +22,8 @@ func _process(delta: float) -> void:
 			for id: String in ["heiltrank", "kraut", "honigwabe", "sternensplitter"]:
 				p.progress.add_item(id, 2)
 			p.progress.quests["ankunft"] = "aktiv"
-			p.progress.quests["erster_auftrag"] = "fertig"],
+			p.progress.quests["erster_auftrag"] = "fertig"
+			p.progress.quests["hannes_kater"] = "aktiv"],
 		[1.0, func() -> void:
 			_on_notice(local_id, GameData.text("gold", [20]))
 			_on_notice(local_id, GameData.text("gegenstand", [1, "Heiltrank"]))
@@ -35,13 +36,23 @@ func _process(delta: float) -> void:
 		[5.0, func() -> void: _shot("tasche")],
 		[5.2, func() -> void: _toggle_panel("auftraege")],
 		[5.6, func() -> void: _shot("auftraege")],
-		[5.8, func() -> void: _toggle_panel("werte")],
+		[5.8, func() -> void:
+			# Nach der Klassenwahl mit Ruf bei beiden Gruppen
+			p.progress.flags["klasse"] = "archer"
+			p.progress.flags["klasse_bestaetigt"] = true
+			p.progress.flags["klasse_gelernt"] = true
+			p.progress.flags["ruf:jaeger"] = 40
+			p.progress.flags["ruf:zaehmer"] = 0
+			_toggle_panel("werte")],
 		[6.2, func() -> void: _shot("werte")],
 		[6.4, func() -> void:
 			_panel.visible = false
+			_characters[local_id].say("Hallo! Treffen wir uns am Brunnen?")],
+		[6.8, func() -> void: _shot("sprechblase")],
+		[6.9, func() -> void:
 			p.shop = "bingo"
 			_shop_shown = ""],
-		[7.0, func() -> void:
+		[7.4, func() -> void:
 			_shot("laden")
 			get_tree().quit()],
 	]

@@ -557,6 +557,11 @@ func _draw_plate() -> void:
 		elif fighter.passive:
 			tag = "Splitter"
 	draw_string(font, Vector2(x0, y + 16), tag, HORIZONTAL_ALIGNMENT_RIGHT, w, 11, tag_color)
+	# Element-Symbol aus dem UI-Set links neben dem Element-Namen
+	var element_icon := UiStil.element_symbol(fighter.element) if not fighter.is_hero else null
+	if element_icon != null:
+		var tag_width := font.get_string_size(tag, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x
+		draw_texture_rect(element_icon, Rect2(x0 + w - tag_width - 17, y + 3, 16, 16), false)
 
 	if fighter.trainer:
 		draw_string(font, Vector2(x0, y + 32), "Trainer – nicht angreifbar", HORIZONTAL_ALIGNMENT_LEFT, w, 11, Color(1, 1, 1, 0.7))

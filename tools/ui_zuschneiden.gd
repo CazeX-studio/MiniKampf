@@ -36,6 +36,17 @@ const TEILE := {
 	meldung_lila = ["asterfall_ui_kit", Rect2i(586, 874, 319, 104), 0.5],
 	banner = ["asterfall_ui_kit", Rect2i(21, 682, 135, 233), 0.5],
 	ranke_gross = ["asterfall_ui_kit", Rect2i(164, 682, 185, 229), 0.5],
+	# Dritter Bogen: Bildlaufleiste, Trennlinie, Ruf-Leiste, Sprechblase, Bilderrahmen, Auftrags-Bändchen.
+	bildlauf = ["asterfall_ui_extras2", Rect2i(1215, 237, 51, 326), 1.0 / 3.0],
+	bildlauf_griff = ["asterfall_ui_extras2", Rect2i(1290, 348, 42, 176), 1.0 / 3.0],
+	trennlinie = ["asterfall_ui_extras2", Rect2i(37, 555, 881, 53), 1.0 / 3.0],
+	ruf_leiste = ["asterfall_ui_extras2", Rect2i(37, 633, 902, 86), 1.0 / 3.0],
+	ruf_feld = ["asterfall_ui_extras2", Rect2i(970, 637, 78, 77), 1.0 / 3.0],
+	sprechblase = ["asterfall_ui_extras2", Rect2i(260, 754, 706, 240), 1.0 / 3.0],
+	weiter = ["asterfall_ui_extras2", Rect2i(92, 812, 72, 52), 1.0 / 3.0],
+	bilderrahmen = ["asterfall_ui_extras2", Rect2i(1157, 614, 339, 324), 1.0 / 3.0],
+	band_ausrufe = ["asterfall_ui_extras2", Rect2i(894, 380, 119, 155), 1.0 / 3.0],
+	band_rolle = ["asterfall_ui_extras2", Rect2i(1043, 379, 120, 156), 1.0 / 3.0],
 }
 
 ## Symbole: alle mittig in ein gleich großes Feld (120 x 120 im Bogen, 40 x 40 im Spiel).
@@ -55,6 +66,21 @@ const SYMBOLE := {
 }
 const SYMBOL_FELD := 120
 const SYMBOL_GROESSE := 40
+## Symbole aus dem dritten Bogen: Elemente, Fähigkeiten, Gegenstandsarten. Einige haben lose Funken,
+## darum sind die Rechtecke großzügig. Feld 150 x 150 im Bogen, ebenfalls 40 x 40 im Spiel.
+const SYMBOLE_2 := {
+	feuer = Rect2i(30, 45, 100, 135), erde = Rect2i(155, 45, 120, 135), pflanze = Rect2i(295, 45, 115, 135),
+	blitz = Rect2i(435, 40, 100, 145), wasser = Rect2i(565, 45, 95, 135), wind = Rect2i(685, 45, 130, 135),
+	licht = Rect2i(828, 45, 135, 135), schatten = Rect2i(982, 45, 125, 135), sternenkraft = Rect2i(1135, 40, 120, 145),
+	hieb = Rect2i(30, 225, 115, 115), stich = Rect2i(148, 225, 100, 115), klingenwirbel = Rect2i(252, 225, 108, 115),
+	heilen = Rect2i(365, 225, 100, 115), schildblock = Rect2i(470, 225, 112, 115), bogen = Rect2i(580, 225, 92, 115),
+	magie = Rect2i(668, 225, 88, 115), pfote = Rect2i(750, 225, 95, 115), werkzeug = Rect2i(846, 225, 106, 115),
+	fliehen = Rect2i(955, 225, 118, 115), sanduhr = Rect2i(1092, 225, 80, 115), tausch = Rect2i(1295, 225, 105, 115),
+	ult = Rect2i(1400, 222, 118, 122),
+	helm = Rect2i(42, 375, 108, 130), ruestung = Rect2i(165, 375, 128, 130), kraeuter = Rect2i(305, 375, 110, 132),
+	rolle = Rect2i(412, 375, 130, 130), paket = Rect2i(556, 375, 118, 130), mehr = Rect2i(700, 410, 105, 70),
+}
+const SYMBOL_FELD_2 := 150
 
 var _boegen := {}
 
@@ -66,13 +92,20 @@ func _initialize() -> void:
 		var bild := _ausschneiden(teil[0], teil[1])
 		_speichern(name, bild, teil[2])
 	for name: String in SYMBOLE:
-		var stueck := _ausschneiden("asterfall_ui_extras", SYMBOLE[name])
-		var feld := Image.create_empty(SYMBOL_FELD, SYMBOL_FELD, false, Image.FORMAT_RGBA8)
-		feld.fill(RAND_DUNKEL)
-		var pos := (Vector2i(SYMBOL_FELD, SYMBOL_FELD) - stueck.get_size()) / 2
-		feld.blit_rect(stueck, Rect2i(Vector2i.ZERO, stueck.get_size()), pos)
-		_speichern("symbol_" + name, feld, float(SYMBOL_GROESSE) / SYMBOL_FELD)
+		_symbol(name, "asterfall_ui_extras", SYMBOLE[name], SYMBOL_FELD)
+	for name: String in SYMBOLE_2:
+		_symbol(name, "asterfall_ui_extras2", SYMBOLE_2[name], SYMBOL_FELD_2)
 	quit()
+
+
+## Symbol mittig in ein gleich großes Feld setzen und auf Spielgröße verkleinern.
+func _symbol(name: String, bogen: String, rect: Rect2i, groesse: int) -> void:
+	var stueck := _ausschneiden(bogen, rect)
+	var feld := Image.create_empty(groesse, groesse, false, Image.FORMAT_RGBA8)
+	feld.fill(RAND_DUNKEL)
+	var pos := (Vector2i(groesse, groesse) - stueck.get_size()) / 2
+	feld.blit_rect(stueck, Rect2i(Vector2i.ZERO, stueck.get_size()), pos)
+	_speichern("symbol_" + name, feld, float(SYMBOL_GROESSE) / groesse)
 
 
 func _bogen(name: String) -> Image:
