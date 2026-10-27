@@ -152,7 +152,7 @@ func _test_journey() -> void:
 	_check(p.in_dialog() and p.dialog.id == "ysolde", "Gespräch mit Ysolde")
 	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "dialog_choose", index = 0})
-	_check(p.progress.quest_state("nach_gruenwacht") == "abgegeben" and p.progress.gold == gold + 50, "Auftrag abgegeben, 50 Gold")
+	_check(p.progress.quest_state("nach_gruenwacht") == "abgegeben" and p.progress.gold == gold + 500, "Auftrag abgegeben, 5 Silber")
 	var answers: Array = world.dialog_view(p).antworten
 	_check("Wo finde ich Pfadmeister Fenn?" in answers, "Bogenschütze fragt nach Fenn")
 	_check(not "Wo finde ich Professor Esche?" in answers and not "Meine Klasse lernt man nicht hier." in answers, "Keine Fragen anderer Klassen")

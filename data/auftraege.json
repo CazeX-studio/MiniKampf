@@ -27,7 +27,7 @@
 			{"art": "gemerkt", "merken": "schmiedin_bescheid", "bei": "schmiedin", "text": "Schmiedin Marta Bescheid sagen"}
 		],
 		"abgeben_bei": "ye",
-		"belohnung": {"gold": 25, "erfahrung": 70, "gegenstaende": {"heiltrank": 1}}
+		"belohnung": {"gold": 250, "erfahrung": 70, "gegenstaende": {"heiltrank": 1}}
 	},
 	"grundausbildung": {
 		"titel": "Grundausbildung",
@@ -38,7 +38,7 @@
 			{"art": "kampf", "kampf": "grundausbildung", "bei": "ye_tor", "text": "Den Übungskampf bei Ye bestehen"}
 		],
 		"abgeben_bei": "ye_tor",
-		"belohnung": {"gold": 20, "erfahrung": 100}
+		"belohnung": {"gold": 200, "erfahrung": 100}
 	},
 	"erster_gruppenkampf": {
 		"titel": "Der erste Gruppenkampf",
@@ -49,7 +49,7 @@
 			{"art": "kampf", "kampf": "gruppenkampf", "bei": "ye_tor", "text": "Kobolde mit Ida, Bo und Tom vertreiben"}
 		],
 		"abgeben_bei": "ye_tor",
-		"belohnung": {"gold": 30, "erfahrung": 100, "gegenstaende": {"heiltrank": 2}}
+		"belohnung": {"gold": 300, "erfahrung": 100, "gegenstaende": {"heiltrank": 2}}
 	},
 	"marvs_traum": {
 		"titel": "Marvs großer Traum",
@@ -70,7 +70,7 @@
 				"wegweiser": ["gesandte_arkanum", "gesandte_messinghafen", "gesandte_glutoase", "gesandte_gruenwacht", "gesandte_nebelinseln"]}
 		],
 		"abgeben_bei": "schreiberin",
-		"belohnung": {"gold": 50, "erfahrung": 300}
+		"belohnung": {"gold": 500, "erfahrung": 300}
 	},
 	"korb_fuer_die_wache": {
 		"titel": "Ein Korb für die Wache",
@@ -134,7 +134,7 @@
 			{"art": "gemerkt", "merken": "kater_gefunden", "text": "Den Kater in der Gasse neben Bingos Laden finden (E / Leertaste)"}
 		],
 		"abgeben_bei": "hanne",
-		"belohnung": {"gold": 10, "erfahrung": 40}
+		"belohnung": {"gold": 100, "erfahrung": 40}
 	},
 	"festmahl": {
 		"titel": "Ein Festmahl",
@@ -147,7 +147,7 @@
 			{"art": "sammeln", "gegenstand": "wildfleisch", "anzahl": 2}
 		],
 		"abgeben_bei": "hanne",
-		"belohnung": {"gold": 20, "erfahrung": 80, "gegenstaende": {"heiltrank": 1}}
+		"belohnung": {"gold": 200, "erfahrung": 80, "gegenstaende": {"heiltrank": 1}}
 	},
 	"glanz_fuer_die_fuenf": {
 		"titel": "Glanz für die Fünf",
@@ -159,7 +159,7 @@
 			{"art": "gemerkt", "merken": "statue_geputzt", "text": "Die Statue mit der Bürste putzen (Tasche → Benutzen)"}
 		],
 		"abgeben_bei": "quill",
-		"belohnung": {"gold": 15, "erfahrung": 60}
+		"belohnung": {"gold": 150, "erfahrung": 60}
 	},
 	"fuenf_farben": {
 		"titel": "Fünf Farben",
@@ -177,7 +177,7 @@
 				"wenn": {"gemerkt": "laterne_arkanum", "und": [{"gemerkt": "laterne_messinghafen"}, {"gemerkt": "laterne_glutoase"}, {"gemerkt": "laterne_gruenwacht"}, {"gemerkt": "laterne_nebelinseln"}]}}
 		],
 		"abgeben_bei": "edmar",
-		"belohnung": {"gold": 20, "erfahrung": 80}
+		"belohnung": {"gold": 200, "erfahrung": 80}
 	},
 	"dunkelheit_spielen": {
 		"titel": "Die Dunkelheit spielen",
@@ -201,7 +201,7 @@
 			{"art": "reden", "npc": "ysolde", "bei": "ysolde"}
 		],
 		"abgeben_bei": "ysolde",
-		"belohnung": {"gold": 50, "erfahrung": 100}
+		"belohnung": {"gold": 500, "erfahrung": 100}
 	},
 	"klasse_lernen": {"titel": "Beim Lehrmeister lernen", "voraussetzung": "abreise", "beschreibung": "Du hast deinen Weg gewählt, aber noch kämpfst du als Novize. Deine Klasse lernst du erst bei deinem Lehrmeister in Wipfelheim. Sprich vorher mit Ysolde.", "ziele": [{"art": "gemerkt", "merken": "klasse_gelernt", "wegweiser": ["fenn"], "nur_wenn": {"klasse": "archer"}, "wenn": {"auftrag": "nach_gruenwacht", "stand": "abgegeben", "und": [{"auftrag": "fenns_pruefung", "stand": "neu"}]}, "text": "Bei Pfadmeister Fenn die Prüfung der drei Ziele bestehen"}, {"art": "gemerkt", "merken": "klasse_gelernt", "wegweiser": ["esche"], "nur_wenn": {"klasse": "tamer"}, "wenn": {"auftrag": "nach_gruenwacht", "stand": "abgegeben", "und": [{"auftrag": "esches_monster", "stand": "neu"}]}, "text": "Bei Professor Esche dein erstes Monster holen"}], "abgeben_bei": "ysolde", "belohnung": {"erfahrung": 100}},
 	"fenns_pruefung": {
@@ -215,7 +215,7 @@
 			{"art": "gemerkt", "merken": "pruefung_hirsch", "text": "Das dritte Ziel: den Silberhirsch im Wald aufspüren (Westen)"}
 		],
 		"abgeben_bei": "fenn",
-		"belohnung": {"gold": 60, "erfahrung": 500}
+		"belohnung": {"gold": 600, "erfahrung": 500}
 	},
 	"esches_monster": {
 		"titel": "Professor Esches Monster",
@@ -228,7 +228,7 @@
 			{"art": "gemerkt", "merken": "kobalt_gekaempft", "bei": "kobalt", "text": "Gegen Kobalt antreten"}
 		],
 		"abgeben_bei": "esche",
-		"belohnung": {"gold": 40, "erfahrung": 300}
+		"belohnung": {"gold": 400, "erfahrung": 300}
 	},
 	"tildas_unterricht": {
 		"titel": "Tildas Unterricht",
@@ -240,7 +240,7 @@
 			{"art": "gemerkt", "merken": "erstes_zaehmen", "text": "Ein Monster auf dem Weg oder im Wald zähmen"}
 		],
 		"abgeben_bei": "tilda",
-		"belohnung": {"gold": 60, "erfahrung": 500}
+		"belohnung": {"gold": 600, "erfahrung": 500}
 	},
 	"veraenderte_tiere": {
 		"titel": "Leuchtende Tiere",
@@ -252,7 +252,7 @@
 			{"art": "gemerkt", "merken": "tier_besiegt", "text": "Das veränderte Tier im Nordosten des Waldbodens finden"}
 		],
 		"abgeben_bei": "ysolde",
-		"belohnung": {"gold": 50, "erfahrung": 900}
+		"belohnung": {"gold": 500, "erfahrung": 900}
 	},
 	"der_fremde": {"titel": "Ein Fremder in Wipfelheim", "start_bei": "ysolde", "start_wenn": {"nicht_gemerkt": "kael_getroffen"}, "voraussetzung": "veraenderte_tiere", "beschreibung": "Auf der Westplattform beim Seilaufzug treibt sich ein Fremder herum. Ysolde will wissen, wer das ist.", "ziele": [{"art": "gemerkt", "merken": "kael_getroffen", "bei": "kael", "text": "Auf der Westplattform (beim Seilaufzug) nach dem Fremden sehen"}], "abgeben_bei": "ysolde", "belohnung": {"erfahrung": 150}},
 	"das_leere_grab": {
@@ -263,7 +263,7 @@
 			{"art": "gemerkt", "merken": "erinnerung_rowan", "text": "Rowans Grab im Nordwesten des Waldbodens finden"}
 		],
 		"abgeben_bei": "kael",
-		"belohnung": {"gold": 40, "erfahrung": 800}
+		"belohnung": {"gold": 400, "erfahrung": 800}
 	},
 	"der_urbaum": {
 		"titel": "Der Splitter im Urbaum",
@@ -274,7 +274,7 @@
 			{"art": "gemerkt", "merken": "urbaum_entschieden", "text": "Am Herz des Urbaums entscheiden"}
 		],
 		"abgeben_bei": "ysolde",
-		"belohnung": {"gold": 150, "erfahrung": 1600}
+		"belohnung": {"gold": 1500, "erfahrung": 1600}
 	},
 	"die_wahrheit": {
 		"titel": "Die Wahrheit über Rowan",
@@ -285,7 +285,7 @@
 			{"art": "gemerkt", "merken": "wahrheit_entschieden", "bei": "ysolde", "text": "Ysolde und Kael vor Dornfeders Halle gegenüberstellen"}
 		],
 		"abgeben_bei": "ysolde",
-		"belohnung": {"gold": 100, "erfahrung": 1200}
+		"belohnung": {"gold": 1000, "erfahrung": 1200}
 	},
 	"marvs_partie": {
 		"titel": "Marvs Partie",
@@ -313,7 +313,7 @@
 			{"art": "gemerkt", "merken": "kobalt_revanche_gekaempft", "bei": "kobalt", "text": "Die Revanche gegen Kobalt"}
 		],
 		"abgeben_bei": "kobalt",
-		"belohnung": {"gold": 80, "erfahrung": 300}
+		"belohnung": {"gold": 800, "erfahrung": 300}
 	},
 	"omas_herausforderung": {
 		"titel": "Oma Hagebuttes Herausforderung",
@@ -327,7 +327,7 @@
 			{"art": "gemerkt", "merken": "karten_sieg:oma_hagebutte", "bei": "oma_hagebutte", "text": "Oma Hagebutte bei Kreuzweg-Karten schlagen"}
 		],
 		"abgeben_bei": "oma_hagebutte",
-		"belohnung": {"gold": 60, "erfahrung": 300}
+		"belohnung": {"gold": 600, "erfahrung": 300}
 	},
 	"bienenstock": {
 		"titel": "Der verrückte Bienenstock",
@@ -340,6 +340,6 @@
 			{"art": "gemerkt", "merken": "bienen_beobachtet", "text": "Den Bienenstock im Südosten des Waldbodens untersuchen"}
 		],
 		"abgeben_bei": "esche",
-		"belohnung": {"gold": 30, "erfahrung": 250, "gegenstaende": {"honigwabe": 2}}
+		"belohnung": {"gold": 300, "erfahrung": 250, "gegenstaende": {"honigwabe": 2}}
 	}
 }

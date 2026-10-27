@@ -75,9 +75,9 @@ func _test_world() -> void:
 	p.progress.flags["klasse"] = "archer"
 	p.progress.flags["klasse_bestaetigt"] = true
 	p.progress.quests["nach_gruenwacht"] = "abgegeben"
-	p.progress.gold = 700
-	_check(world.shop_wares("bingo_heimkehr").filter(func(w: Dictionary) -> bool: return w.gegenstand == "sternentafel")[0].preis == 600, "Heimkehrer-Preis: 600 Gold")
-	_check(world.shop_wares("bingo").filter(func(w: Dictionary) -> bool: return w.gegenstand == "sternentafel")[0].preis == 5000, "In Akt 1 bleibt sie zu teuer")
+	p.progress.gold = 7000
+	_check(world.shop_wares("bingo_heimkehr").filter(func(w: Dictionary) -> bool: return w.gegenstand == "sternentafel")[0].preis == 6000, "Heimkehrer-Preis: 60 Silber")
+	_check(world.shop_wares("bingo").filter(func(w: Dictionary) -> bool: return w.gegenstand == "sternentafel")[0].preis == 50000, "In Akt 1 bleibt sie zu teuer")
 
 	# Marv in Wipfelheim gibt den Auftrag
 	world.change_map(p, "wipfelheim", Vector2i(32, 20))
@@ -96,7 +96,7 @@ func _test_world() -> void:
 	_check(p.dialog.get("node", "") == "heimkehr", "Bingo begrüßt Heimkehrer")
 	world.apply_command("a", {type = "dialog_choose", index = 1})
 	world.apply_command("a", {type = "kaufen", gegenstand = "sternentafel"})
-	_check(p.progress.item_count("sternentafel") == 1 and p.progress.gold == 100, "Sternentafel für 600 Gold gekauft")
+	_check(p.progress.item_count("sternentafel") == 1 and p.progress.gold == 1000, "Sternentafel für 60 Silber gekauft")
 	world.apply_command("a", {type = "laden_zu"})
 
 	# Die eine Partie mit Marv
@@ -124,7 +124,7 @@ func _test_world() -> void:
 	_check(scenes.back() == "kartenspiel:oma_hagebutte", "Partie gegen Oma Hagebutte")
 	var gold := p.progress.gold
 	world.apply_command("a", {type = "karten_ergebnis", gegner = "oma_hagebutte", gewonnen = true})
-	_check(int(p.progress.flags.karten.get("wilder_moosling", 0)) == 1 and p.progress.gold == gold + 40, "Sieg: Moosling-Karte und Gold")
+	_check(int(p.progress.flags.karten.get("wilder_moosling", 0)) == 1 and p.progress.gold == gold + 20, "Sieg: Moosling-Karte und Geld")
 	world.apply_command("a", {type = "karten_ergebnis", gegner = "oma_hagebutte", gewonnen = true})
 	_check(int(p.progress.flags.karten.get("wilder_moosling", 0)) == 1, "Die Karte gibt es nur beim ersten Sieg")
 	_check(p.progress.quest_state("omas_herausforderung") == "fertig", "Nebenauftrag „Omas Herausforderung“ erfüllt")

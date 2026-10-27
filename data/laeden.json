@@ -4,7 +4,7 @@
 		"name": "Bingos Laden",
 		"hinweis": "Nach der Rückkehr aus Grünwacht: Heimkehrer-Preis für die Sternentafel.",
 		"waren": ["heiltrank", "sternentafel"],
-		"preise": {"sternentafel": 600},
+		"preise": {"sternentafel": 6000},
 		"ankauf": 0.5
 	},
 	"bingo": {

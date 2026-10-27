@@ -69,9 +69,17 @@ static func wild_monsters() -> Array[Dictionary]:
 	return result
 
 
-## Erfahrung und Gold für einen Sieg über Monster in der Wildnis (jedes Mal, nicht nur beim ersten Sieg).
+## Erfahrung und Geld für einen Sieg über Monster in der Wildnis (jedes Mal, nicht nur beim ersten Sieg).
 const WILD_XP_PER_LEVEL := 12
-const WILD_GOLD_PER_LEVEL := 2
+## Geld ist knapp (design.md): jedes Monster gibt 1 Bronze, dazu 1 Bronze je 5 Stufen
+## (Stufe 10 = 3, Stufe 15 = 4, Stufe 20 = 5 Bronze). Ein Heiltrank kostet etwa so viel wie 6 bis 8 Monster.
+const WILD_BRONZE := 1
+const WILD_LEVELS_PER_BRONZE := 5
+
+
+## Bronze, das ein einzelnes Monster dieser Stufe in der Wildnis fallen lässt.
+static func wild_bronze(stufe: int) -> int:
+	return WILD_BRONZE + stufe / WILD_LEVELS_PER_BRONZE
 
 
 ## Ein Kampf aus data/kaempfe.json. "probe:<klasse>" = Probestunde mit dieser Klasse
@@ -88,7 +96,7 @@ static func battle(id: String) -> Dictionary:
 			names.append(Sandbox.ENEMIES[enemy].name)
 		return {name = "%s (Stufe %d)" % [" und ".join(names), m.stufe], ansage = text("wild_ansage" if names.size() == 1 else "wild_ansage_mehrere", [" und ".join(names)]),
 				wellen = [m.gegner], gegner_stufe = m.stufe, eigene_klasse = true, wild = true, hintergrund = m.hintergrund,
-				erfahrung = WILD_XP_PER_LEVEL * m.stufe * m.gegner.size(), gold = WILD_GOLD_PER_LEVEL * m.stufe * m.gegner.size(),
+				erfahrung = WILD_XP_PER_LEVEL * m.stufe * m.gegner.size(), gold = wild_bronze(m.stufe) * m.gegner.size(),
 				dungeon = m.dungeon, entscheidung_in_der_welt = true}
 	var all := get_file("kaempfe")
 	if not id.begins_with("probe:"):

@@ -213,7 +213,7 @@
 			],
 			"spielweise": "zufall",
 			"belohnung": {
-				"gold": 20
+				"gold": 10
 			}
 		},
 		"oma_hagebutte": {
@@ -227,7 +227,7 @@
 			],
 			"spielweise": "schlau",
 			"belohnung": {
-				"gold": 40,
+				"gold": 20,
 				"karte": "wilder_moosling"
 			}
 		}
