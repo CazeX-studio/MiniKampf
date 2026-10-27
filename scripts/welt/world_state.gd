@@ -17,7 +17,7 @@ extends RefCounted
 ##   {type = "dialog_choose", index = 0} im Gespräch eine Antwort wählen
 ##   {type = "szene_verlassen"}          eine gemeinsame Szene verlassen (Zusammenspielen)
 ##   {type = "kaufen", gegenstand = "…"} / {type = "verkaufen", gegenstand = "…"} / {type = "laden_zu"}  im geöffneten Laden
-##   {type = "test_geld", bronze = 75}  Testknopf: Geld dazugeben (nur im Godot-Editor)
+##   {type = "test_geld", bronze = 75} / {type = "test_tasche"}  Testknöpfe: Geld dazugeben, Tasche füllen (nur im Godot-Editor)
 ##   {type = "karten_ergebnis", gegner = "marv", gewonnen = true, unentschieden = false}  Ende einer Partie Kreuzweg-Karten
 ## Auf eine andere Karte kommt man über Ausgänge am Rand (hineinlaufen) oder über Orte mit der Aktion "reisen" (Seilaufzug).
 ## Monster in der Wildnis ("monster:<Nummer>", aus data/karten.json): hineinlaufen oder antippen startet den Kampf.
@@ -462,6 +462,15 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			if OS.is_debug_build():
 				_give_gold(p, clampi(int(cmd.get("bronze", 0)), 0, 1000000))
 				progress_changed.emit(p.id)
+		"test_tasche":
+			# Testknopf in der Tasche: alle freien Kästchen mit Testkieseln füllen (nur im Godot-Editor)
+			if OS.is_debug_build():
+				var n := 1
+				while p.progress.used_slots() < Progress.BAG_SIZE:
+					if not p.progress.items.has("testkiesel_%d" % n):
+						p.progress.add_item("testkiesel_%d" % n, 1)
+					n += 1
+				progress_changed.emit(p.id)
 		"tasche_tauschen":
 			p.progress.move_slot(int(cmd.get("von", -1)), int(cmd.get("nach", -1)))
 			progress_changed.emit(p.id)
@@ -701,6 +710,9 @@ func _use(p: PlayerState, target: String) -> void:
 		progress_changed.emit(p.id)
 	else:
 		var pickup: Dictionary = pickups[int(target.substr(6))]
+		if not p.progress.has_room(pickup.item):
+			_say(p, GameData.text("tasche_voll", [GameData.item_name(pickup.item)]))
+			return
 		p.progress.flags["gesammelt:" + target] = true
 		_give_item(p, pickup.item, 1)
 		_update_quests(p)
@@ -1623,10 +1635,15 @@ func _give_xp(p: PlayerState, amount: int) -> void:
 			_say(p, GameData.text("werte_tipp"))
 
 
+## Gegenstände aus Aufträgen und Gesprächen kommen auch bei voller Tasche hinein (in ein Extra-Kästchen),
+## damit die Geschichte nie hängen bleibt. Sammeln und Kaufen prüfen vorher selbst, ob Platz ist.
 func _give_item(p: PlayerState, item_id: String, count: int) -> void:
+	var room := p.progress.has_room(item_id)
 	p.progress.add_item(item_id, count)
 	if count > 0:
 		_say(p, GameData.text("gegenstand", [count, GameData.item_name(item_id)]))
+		if not room:
+			_say(p, GameData.text("tasche_uebervoll"))
 	else:
 		_say(p, GameData.text("gegenstand_weg", [-count, GameData.item_name(item_id)]))
 
@@ -1998,6 +2015,9 @@ func _buy(p: PlayerState, item_id: String) -> void:
 			continue
 		if p.progress.gold < ware.preis:
 			_say(p, GameData.text("zu_wenig_gold", [GameData.item_name(item_id), Geld.text(ware.preis)]))
+			return
+		if not p.progress.has_room(item_id):
+			_say(p, GameData.text("tasche_voll", [GameData.item_name(item_id)]))
 			return
 		p.progress.gold -= ware.preis
 		_say(p, GameData.text("gold_weg", [Geld.text(ware.preis)]))

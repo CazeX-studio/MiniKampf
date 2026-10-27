@@ -132,6 +132,10 @@ static func draw_icon(node: CanvasItem, c: Vector2, form: String, color: Color) 
 			for x in 3:
 				for y in 3:
 					node.draw_rect(Rect2(c + Vector2(-13 + x * 9, -11 + y * 8), Vector2(7, 6)), color)
+		"stein":
+			node.draw_circle(c + Vector2(0, 3), 11.0, dark)
+			node.draw_circle(c + Vector2(-1, 1), 10.0, color)
+			node.draw_circle(c + Vector2(-4, -2), 3.5, color.lightened(0.3))
 		_:
 			# Unbekannt: kleines Säckchen
 			node.draw_circle(c + Vector2(0, 4), 12.0, color)

@@ -37,6 +37,31 @@ func _initialize() -> void:
 	var direct := Progress.new()
 	direct.items = {heiltrank = 3}
 	failed += _check("Direkt gesetzt", direct.bag_slots()[0], "heiltrank")
+	# Grenze: 30 Sorten passen hinein, mehr vom Gleichen immer
+	var full := Progress.new()
+	for i in Progress.BAG_SIZE:
+		full.add_item("testkiesel_%d" % (i + 1), 1)
+	failed += _check("30 Plätze belegt", full.used_slots(), 30)
+	failed += _check("Neue Sorte passt nicht", full.has_room("kraut"), false)
+	failed += _check("Mehr vom Gleichen passt", full.has_room("testkiesel_3"), true)
+	failed += _check("Testkiesel hat Namen", GameData.item_name("testkiesel_7"), "Testkiesel 7")
+	# In der Welt: voll -> nicht kaufen; Testknopf füllt; Auftrags-Geschenk kommt trotzdem (Extra-Kästchen)
+	var world := WorldState.new()
+	var w := world.add_player("a", "Test", "elf_m", WorldState.start_cell())
+	w.progress.gold = 1000
+	world.apply_command("a", {type = "test_tasche"})
+	failed += _check("Testknopf füllt die Tasche", w.progress.used_slots(), 30)
+	w.shop = "bingo"
+	world.apply_command("a", {type = "kaufen", gegenstand = "heiltrank"})
+	failed += _check("Volle Tasche: kein Kauf", w.progress.item_count("heiltrank"), 0)
+	failed += _check("Volle Tasche: Geld bleibt", w.progress.gold, 1000)
+	world.run_actions(w, [{gegenstand = "buerste"}])
+	failed += _check("Geschenk kommt trotzdem", w.progress.item_count("buerste"), 1)
+	failed += _check("Extra-Kästchen", w.progress.bag_slots().size(), 31)
+	world.apply_command("a", {type = "verkaufen", gegenstand = "testkiesel_1"})
+	failed += _check("Verkauft: Testkiesel weg", w.progress.item_count("testkiesel_1"), 0)
+	failed += _check("Verkauft: 1 Bronze", w.progress.gold, 1001)
+	failed += _check("Wieder 30 Kästchen", w.progress.bag_slots().size(), 30)
 	print("Tasche: %s" % ("alles richtig" if failed == 0 else "%d Fehler" % failed))
 	quit(failed)
 

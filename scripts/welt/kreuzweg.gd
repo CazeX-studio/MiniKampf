@@ -1366,6 +1366,9 @@ func _build_ui() -> void:
 	_panel_text.add_theme_font_size_override("bold_font_size", 17)
 	# „Benutzen“ in der Tasche (z. B. die Bürste an der Statue)
 	_panel_text.meta_clicked.connect(func(meta: Variant) -> void:
+		if str(meta) == "testtasche":
+			_send({type = "test_tasche"})
+			return
 		if str(meta).begins_with("testgeld:"):
 			_send({type = "test_geld", bronze = int(str(meta).trim_prefix("testgeld:"))})
 			return
@@ -2140,6 +2143,13 @@ func _fill_panel() -> void:
 			for bronze: int in [75, 9900]:
 				money += "  [url=testgeld:%d][color=#5ab8ff][%s: +%s][/color][/url]" % [bronze, GameData.text("test_geld"), Geld.text(bronze)]
 		lines.append(money)
+		var used := p.progress.used_slots()
+		var places := GameData.text("tasche_plaetze", [used, Progress.BAG_SIZE])
+		if used >= Progress.BAG_SIZE:
+			places = "[color=#ff8a7a]%s[/color]" % places
+		if OS.is_debug_build():
+			places += "  [url=testtasche][color=#5ab8ff][%s][/color][/url]" % GameData.text("test_tasche_fuellen")
+		lines.append(places)
 		var picked := str(slots[_bag_selected]) if _bag_selected >= 0 and _bag_selected < slots.size() else ""
 		if picked != "":
 			var item := GameData.item(picked)

@@ -29,6 +29,11 @@ static func quest(id: String) -> Dictionary:
 
 
 static func item(id: String) -> Dictionary:
+	# Testkiesel zum Füllen der Tasche: "testkiesel_1", "testkiesel_2" … teilen sich einen Eintrag
+	if id.begins_with("testkiesel_"):
+		var pebble: Dictionary = get_file("gegenstaende").get("testkiesel", {}).duplicate()
+		pebble.name = "%s %s" % [pebble.get("name", "Testkiesel"), id.trim_prefix("testkiesel_")]
+		return pebble
 	return get_file("gegenstaende").get(id, {name = id, beschreibung = ""})
 
 
