@@ -16,7 +16,7 @@ Handy quer halten. Jeder Push auf `main` baut die Web-Version automatisch neu
 2. **Importieren** → `C:\GameDev\MiniKampf\project.godot` wählen
 3. **F5** startet das Spiel
 
-Das Spiel startet mit einem **Menü**: Kampf-Sandbox, Kreuzweg-Demo oder Zusammen spielen.
+Das Spiel startet mit einem **Menü**: Kreuzweg-Demo, Zusammen spielen oder **Editor** (Baukasten-Testfeld, Vega-Animationen, Kampf-Sandbox und die Demo ab Akt Kreuzweg oder Akt Grünwacht mit eigenem Spielstand).
 
 ## Kreuzweg-Demo (Lernprojekt 3, Fahrplan in `KREUZWEG_PLAN.md`)
 
@@ -171,6 +171,9 @@ Felsregen → **Kettenzug** (reißt jemanden von hinten nach vorne). Unter 30 % 
 ## Aufbau
 
 - `scenes/menu.tscn` + `scripts/menu.gd` – Startmenü (Startszene)
+- `scenes/editor.tscn` + `scripts/editor.gd` – Editor: Werkzeuge zum Testen und Demo ab einem Akt
+- `scenes/vega_test.tscn` + `scripts/kampf/vega_test.gd` – Vega-Animationen im kleinen Testkampf
+- `scenes/baukasten_test.tscn` + `scripts/welt/baukasten_test.gd` – Baukasten-Testfeld (Regeln in `data/BAUKASTEN.md`)
 - `scenes/kreuzweg.tscn` + `scripts/welt/` – Kreuzweg-Demo: `world_state.gd` (Logik: Laufen, Gespräche, Aufträge, Belohnungen),
   `player_state.gd` + `progress.gd` (Spieler und Fortschritt), `game_data.gd` (liest `data/`), `save_game.gd` (Speichern),
   `kreuzweg.gd` (Anzeige und Eingabe), `world_character.gd` (Figur)

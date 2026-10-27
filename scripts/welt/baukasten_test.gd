@@ -300,7 +300,7 @@ func _build_hud() -> void:
 	var buttons: Array = [["Tag/Nacht", func() -> void: _set_night(not _night)],
 			["Raster", func() -> void: _toggle_grid()], ["Figur +", func() -> void: _set_figur(_figur_stufe + 1)],
 			["Figur −", func() -> void: _set_figur(_figur_stufe - 1)], ["Geschichte", func() -> void: set_stufe(_stufe + 1)],
-			["Zurück", _go_menu]]
+			["Editor", _go_menu]]
 	for i in buttons.size():
 		var b := Button.new()
 		b.text = buttons[i][0]
@@ -322,7 +322,7 @@ func _set_figur(stufe: int) -> void:
 func _update_hint() -> void:
 	if _hint != null:
 		_hint.text = ("Baukasten-Testfeld · Laufen: WASD, Pfeiltasten oder Klicken/Antippen\nN: Tag/Nacht · G: Raster · "
-				+ "+/−: Figurgröße (jetzt %d %%) · K: Geschichte (jetzt: %s) · Esc: zurück") % [
+				+ "+/−: Figurgröße (jetzt %d %%) · K: Geschichte (jetzt: %s) · Esc: Editor") % [
 				roundi(FIGUR_GROESSEN[_figur_stufe] * 100.0), STUFEN[_stufe]]
 
 
@@ -361,7 +361,7 @@ func _toggle_grid() -> void:
 
 
 func _go_menu() -> void:
-	get_tree().change_scene_to_file("res://scenes/menu.tscn")
+	get_tree().change_scene_to_file("res://scenes/editor.tscn")
 
 
 # --- Laufen ---------------------------------------------------------------------

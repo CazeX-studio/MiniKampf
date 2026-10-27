@@ -1,5 +1,5 @@
 extends Control
-## Startmenü: Auswahl zwischen den Lernprojekten.
+## Startmenü: Demo spielen, zusammen spielen oder Werkzeuge zum Testen (Editor).
 
 const SCREEN := Vector2(1280, 720)
 
@@ -32,17 +32,17 @@ func _ready() -> void:
 	sub.position = Vector2(0, 180)
 	add_child(sub)
 
-	_add_button("Kampf-Sandbox\nAlle 11 Klassen, Pilzhöhle, Auswertung", Vector2(40, 300), "res://scenes/auswahl.tscn")
-	_add_button("Kreuzweg-Demo\nDie erste Stunde als Novize", Vector2(450, 300), "res://scenes/kreuzweg.tscn")
-	_add_button("Zusammen spielen\nMit bis zu 4 Spielern in Kreuzweg", Vector2(860, 300), "res://scenes/zusammen.tscn")
-	_add_button("Baukasten-Testfeld\nRautenansicht aus Einzelbildern", Vector2(40, 470), "res://scenes/baukasten_test.tscn")
+	_add_button("Kreuzweg-Demo\nDie erste Stunde als Novize", Vector2(40, 300), "res://scenes/kreuzweg.tscn")
+	_add_button("Zusammen spielen\nMit bis zu 4 Spielern in Kreuzweg", Vector2(450, 300), "res://scenes/zusammen.tscn")
+	_add_button("Editor\nTesten: Baukasten, Vega, Sandbox, Akte", Vector2(860, 300), "res://scenes/editor.tscn")
 
 	# Server ohne Grafik: Godot --headless --path . -- --server
 	if "--server" in OS.get_cmdline_user_args():
 		_start_server.call_deferred()
 	else:
-		# Wer ins Menü zurückkommt (z. B. vom Abspann), spielt wieder allein
+		# Wer ins Menü zurückkommt (z. B. vom Abspann), spielt wieder allein und mit dem normalen Spielstand
 		Netz.stop()
+		SaveGame.path = SaveGame.DEFAULT_PATH
 
 	# Musik an/aus (überall auch mit Taste M)
 	var music := Button.new()

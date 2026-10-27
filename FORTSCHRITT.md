@@ -51,6 +51,17 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **Neues Startmenü mit Editor** (27.10., Marcos Wunsch):
+  - Das Startmenü hat jetzt drei Kacheln: **Kreuzweg-Demo**, **Zusammen spielen** und **Editor**.
+  - Im **Editor** liegen die Werkzeuge zum schnellen Testen: **Baukasten-Testfeld** (die neue Karte, vorerst nur hier),
+    **Vega-Animationen** (kleiner Testkampf: Knöpfe für Stehen, Laufen, Getroffen, Parade, Angriff, Fallen, Sieg,
+    dazu Zeitlupe) und die **Kampf-Sandbox**.
+  - **Demo testen ab einem Akt:** „Akt Kreuzweg“ (von vorne als Novize) und „Akt Grünwacht“ (als Bogenschütze oder
+    Monster-Zähmer, Stufe 10, auf dem Weg nach Grünwacht). Diese Tests haben einen **eigenen Spielstand**
+    (`spielstand_editor.json`), dein normaler Spielstand bleibt unberührt. Zurück im Menü gilt wieder der normale.
+  - **So testest du es:** Startmenü → Editor → „Akt Grünwacht – Als Monster-Zähmer“: Du stehst auf dem Weg nach
+    Grünwacht. Danach im Menü „Kreuzweg-Demo“: Dein alter Spielstand ist noch da.
+
 - **Vega überall fein gezeichnet** (27.10., Marcos neue Kampfbilder):
   - Marcos zwei Kampf-Blätter sind zerlegt (`tools/vega_kampfbilder.py`): Stehen, Laufen, Getroffen, Parade mit
     blauem Sternenbogen, Angriff mit Sternen-Geschoss im 4. Bild, Fallen (sie stürzt nach vorne und bleibt liegen) und Sieg.
