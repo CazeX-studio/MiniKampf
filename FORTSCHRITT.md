@@ -51,6 +51,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **Vega überall fein gezeichnet** (27.10., Marcos neue Kampfbilder):
+  - Marcos zwei Kampf-Blätter sind zerlegt (`tools/vega_kampfbilder.py`): Stehen, Laufen, Getroffen, Parade mit
+    blauem Sternenbogen, Angriff mit Sternen-Geschoss im 4. Bild, Fallen (sie stürzt nach vorne und bleibt liegen) und Sieg.
+    Gleiche Bildzahl wie vorher, damit Geschoss, Parade und Treffer zeitlich weiter passen.
+  - Alle Vega-Bilder liegen jetzt in dreifacher Auflösung vor und werden weich verkleinert, im Kampf, in der Zugleiste,
+    in der Kreuzweg-Demo, beim Zusammenspielen und im Testfeld. Größe wie vorher, nur sauberer.
+  - Der leuchtende Umriss (Ziel wählen, Fähigkeit) ist bei den feinen Bildern gleich dick wie vorher.
+  - **So testest du es:** In der Kreuzweg-Demo einen Kampf spielen: Vega steht sauber gezeichnet da, holt mit dem Stab
+    aus und schießt den Stern, bei einer Parade erscheint der blaue Bogen, nach dem Sieg jubelt sie.
+
 - **Projekt 9, Schritt 4: Vega läuft in vier Richtungen** (27.10., nur im Baukasten-Testfeld):
   - Marcos Blatt mit 24 Bildern ist zerlegt (`tools/vega_laufbilder.py`): Stehen und Laufen schräg nach vorne
     und schräg nach hinten, jeweils 6 Bilder, an den Füßen ausgerichtet und so groß wie die bisherigen Vega-Bilder.

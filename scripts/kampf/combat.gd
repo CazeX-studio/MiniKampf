@@ -1534,7 +1534,7 @@ func refresh() -> void:
 		portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		portrait.custom_minimum_size = Vector2(24, 48)
-		portrait.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		portrait.texture_filter = FighterView.filter_fuer(portrait.texture)
 		portrait.flip_h = f.is_ally()
 		portrait.self_modulate = FighterView.tint(f.look_key())
 		row.add_child(portrait)

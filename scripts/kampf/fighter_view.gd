@@ -160,7 +160,7 @@ func setup(p_fighter: Fighter) -> void:
 	var texture: Texture2D = _frames.idle[0]
 	# Unterstützer des Zähmers (auf der Bank): kleiner, ohne Namensschild
 	_compact = fighter.owner != null and fighter.on_bench
-	var pixel_scale: float = look.scale * (0.7 if _compact else 1.0)
+	var pixel_scale: float = look.scale * (0.7 if _compact else 1.0) / fein_faktor(texture)
 	sprite_size = texture.get_size() * pixel_scale
 	_home = Vector2(sprite_size.x * 0.5 + 8.0, sprite_size.y)
 
@@ -171,8 +171,10 @@ func setup(p_fighter: Fighter) -> void:
 	body.offset = Vector2(0, -texture.get_height() * 0.5)
 	body.position = _home
 	body.flip_h = fighter.is_ally()
-	body.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	body.texture_filter = filter_fuer(texture)
 	body.material = _shader
+	# Der leuchtende Umriss bleibt bei fein gezeichneten Bildern gleich dick
+	_shader.set_shader_parameter("outline_width", fein_faktor(texture))
 	body.self_modulate = look.get("tint", Color.WHITE) * light
 	add_child(body)
 	if fighter.klass == "blade":
@@ -270,6 +272,17 @@ static func look_data(key: String) -> Dictionary:
 static func sprite_path(sprite: String, anim: String, frame: int) -> String:
 	var own := OWN_SPRITE_PATH % [sprite, anim, frame]
 	return own if ResourceLoader.exists(OWN_SPRITE_PATH % [sprite, "idle", 0]) else SPRITE_PATH % [sprite, anim, frame]
+
+
+## Fein gezeichnete Bilder (z. B. Vega aus Marcos Bildblättern) sind dreimal so hoch aufgelöst wie die Pixel-Bilder.
+## Sie werden um diesen Faktor kleiner und weich dargestellt, damit sie gleich groß, aber sauber aussehen.
+static func fein_faktor(texture: Texture2D) -> float:
+	return 3.0 if texture != null and texture.get_height() > 80 else 1.0
+
+
+## Passende Bildglättung: Pixel-Bilder scharf, fein gezeichnete Bilder weich.
+static func filter_fuer(texture: Texture2D) -> CanvasItem.TextureFilter:
+	return CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS if fein_faktor(texture) > 1.0 else CanvasItem.TEXTURE_FILTER_NEAREST
 
 
 ## Ist das eine eigene Figur aus assets/figuren/?
