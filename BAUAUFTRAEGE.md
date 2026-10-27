@@ -205,7 +205,7 @@ _Aus Marcos Entscheidung vom 27.10.2026: Die Welt bleibt in Rautenansicht und wi
 ### Schritt 4: Figuren in vier Richtungen
 - **Ziel:** Vega (dann alle Figuren) läuft schräg nach oben und unten mit eigenen Bildern statt nur seitlich.
 - **So testest du es:** Im Testfeld in alle Richtungen laufen: Vega schaut immer in Laufrichtung.
-- **Status:** offen (wartet auf Laufbilder)
+- **Status:** fertig für Vega im Testfeld (27.10.; 24 Bilder: Stehen und Laufen nach vorne und hinten, nach links gespiegelt; in der Kreuzweg-Demo und für andere Figuren noch nicht)
 
 ### Schritt 5: Kreuzweg aus dem Baukasten
 - **Ziel:** Die echte Stadt Kreuzweg wird aus den Baukasten-Teilen aufgebaut (Plan nach design.md: Marktplatz, Gilde, Wegrast, Gesandten-Hof, Bingos Stand, sechstes Tor). Figuren, Aufträge und Geschichte bleiben, wie sie sind.

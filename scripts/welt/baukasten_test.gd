@@ -89,6 +89,7 @@ func _ready() -> void:
 	_sorted.add_child(_holder)
 	_player = WorldCharacter.new()
 	_player.setup(PLAYER_LOOK, "Du")
+	_player.richtungen = true
 	_holder.add_child(_player)
 	_set_figur(_figur_stufe)
 
@@ -459,6 +460,10 @@ func _face(move: Vector2) -> void:
 	var screen_x := move.x - move.y
 	if absf(screen_x) > 0.001:
 		_player.facing = 1 if screen_x > 0 else -1
+	# Nach oben auf dem Bildschirm = vom Betrachter weg (Bilder von hinten)
+	var screen_y := move.x + move.y
+	if absf(screen_y) > 0.001:
+		_player.hinten = screen_y < 0
 
 
 ## Figur richtig einsortieren: Steht sie vor einem Ding, wird sie danach gemalt, sonst davor.

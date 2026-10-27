@@ -36,7 +36,10 @@ Ein neues Blatt oder ein besseres Bild: Datei in `tools/vorlagen/` ersetzen, Wer
 | Pflanzen | baum, baum_herbst, tanne, tanne_gross, busch, busch_bluete, blumen und grasbueschel (flach) |
 | Sternenfall | splitterkreis (3×3, vor dem Fest), krater_frisch (4×4, Festnacht), krater_spaet (4×4, umzäunt, Wochen danach), sternsplitter (1×1, leuchtet) |
 
-**Noch nicht da:** Übergänge (Gras zu Pflaster, Ufer), Laufbilder in vier Richtungen.
+**Noch nicht da:** Übergänge (Gras zu Pflaster, Ufer).
+
+**Vega in vier Richtungen:** Das Blatt `tools/vorlagen/vega_laufen.png` zerlegt `tools/vega_laufbilder.py` in
+`assets/figuren/vega_<idle|run>_<vorn|hinten>_anim_f0–5.png`. Nach links spiegelt das Spiel die Bilder.
 
 ## Die zwei Datendateien
 

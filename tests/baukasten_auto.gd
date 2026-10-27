@@ -47,9 +47,13 @@ func _process(delta: float) -> void:
 		[8.7, func() -> void:
 			_toggle_grid()
 			walk_to(Vector2i(32, 62))],
+		[9.6, func() -> void: _foto("laufen_vorn")],
 		[13.5, func() -> void:
 			print("Nach dem Klick-Weg: ", Vector2i(_pos.floor()))
 			_foto("bruecke")
+			walk_to(Vector2i(32, 50))],
+		[14.6, func() -> void:
+			_foto("laufen_hinten")
 			get_tree().quit()],
 	]
 	while _step < plan.size() and _t >= plan[_step][0]:

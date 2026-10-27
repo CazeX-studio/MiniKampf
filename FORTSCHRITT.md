@@ -51,6 +51,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **Projekt 9, Schritt 4: Vega läuft in vier Richtungen** (27.10., nur im Baukasten-Testfeld):
+  - Marcos Blatt mit 24 Bildern ist zerlegt (`tools/vega_laufbilder.py`): Stehen und Laufen schräg nach vorne
+    und schräg nach hinten, jeweils 6 Bilder, an den Füßen ausgerichtet und so groß wie die bisherigen Vega-Bilder.
+  - Läuft Vega auf dem Bildschirm nach unten, sieht man ihr Gesicht, nach oben ihren Rücken. Nach links werden die
+    Bilder gespiegelt. Bleibt sie stehen, schaut sie weiter in die letzte Richtung.
+  - Die Brücke liegt jetzt genau auf den Feldern, über die man läuft.
+  - In der Kreuzweg-Demo und beim Zusammenspielen läuft Vega noch wie bisher seitlich (kommt, wenn Kreuzweg auf den Baukasten umzieht).
+  - **So testest du es:** Im Baukasten-Testfeld mit den Pfeiltasten in alle vier Richtungen laufen und stehen bleiben.
+
 - **Baukasten-Testfeld weiter** (27.10., Marcos Rückmeldung „zu gequetscht“):
   - Die Karte ist jetzt **64 × 64 Felder** statt 46 × 46. Der Marktplatz ist größer (24 × 24), um Splitterkreis und
     Krater bleibt ein **freier Ring** von drei bis vier Feldern, nur vier Feuerschalen stehen an den Ecken.

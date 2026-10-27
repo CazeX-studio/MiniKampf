@@ -9,6 +9,11 @@ const OWN_SCALE := 2.0
 
 var moving := false
 var facing := 1
+## Laufbilder in vier Richtungen benutzen (wenn die Figur sie hat): schräg nach vorne oder nach hinten,
+## links/rechts über facing. Vorerst nur im Baukasten-Testfeld eingeschaltet.
+var richtungen := false
+## Läuft bzw. schaut die Figur nach hinten (vom Betrachter weg)?
+var hinten := false
 ## Zeichen über dem Kopf: "!" = neuer Auftrag, "?" = hier etwas erledigen, "" = nichts
 var marker := ""
 ## Gehört das Zeichen zu einem Nebenauftrag? Dann ist es blau statt gelb.
@@ -30,7 +35,7 @@ var _bubble_time := 0.0
 
 
 func setup(look: String, p_name: String, tint := Color.WHITE, name_color := Color.WHITE) -> void:
-	for anim: String in ["idle", "run"]:
+	for anim: String in ["idle", "run", "idle_vorn", "run_vorn", "idle_hinten", "run_hinten"]:
 		var frames: Array[Texture2D] = []
 		var i := 0
 		while ResourceLoader.exists(FighterView.sprite_path(look, anim, i)):
@@ -75,8 +80,16 @@ func _process(delta: float) -> void:
 			_bubble.queue_free()
 			_bubble = null
 	var anim := "run" if moving and _frames.run.size() > 0 else "idle"
+	var fps := 12.0 if anim == "run" else idle_fps
+	if richtungen:
+		var gerichtet := anim + ("_hinten" if hinten else "_vorn")
+		if _frames[gerichtet].size() > 0:
+			anim = gerichtet
+			# Die Richtungsbilder haben 6 statt 4 Bilder pro Bewegung
+			fps = 10.0 if moving else idle_fps
 	var frames: Array = _frames[anim]
-	_sprite.texture = frames[int(_time * (12.0 if anim == "run" else idle_fps)) % frames.size()]
+	_sprite.texture = frames[int(_time * fps) % frames.size()]
+	_sprite.offset = Vector2(0, -_sprite.texture.get_height() * 0.5)
 	_sprite.flip_h = facing < 0
 	queue_redraw()
 	_overlay.queue_redraw()
