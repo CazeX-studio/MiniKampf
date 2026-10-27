@@ -83,7 +83,7 @@ Teil 1 ist gebaut (siehe FORTSCHRITT.md). Schritte 1–4 fertig (26.10.). Die De
 - **Ziel:** Besiegte Monster geben einen kleinen Geldbetrag, damit Geld knapp bleibt.
 - **So testest du es:** Monster besiegen, das Geld steigt um einen kleinen Betrag.
 - **Schon da:** Monster in der Wildnis geben bereits „etwas Gold“. Offen ist, die Beträge auf Bronze/Silber/Gold umzustellen und knapp zu halten.
-- **Status:** offen
+- **Status:** fertig (27.10.; Monster 3–5 Bronze, Aufträge ein paar Silber, Heiltrank 25 Bronze)
 
 ## Projekt 4: Tasche und Bank
 

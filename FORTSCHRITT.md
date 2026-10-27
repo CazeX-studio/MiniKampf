@@ -21,7 +21,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
   Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
   gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
-- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Projekt 3 Schritt 1 (Geld als Bronze, Silber, Gold) fertig (27.10.). Nächster Schritt: Projekt 3 Schritt 2, Monster lassen wenig Geld fallen.
+- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Projekt 3 „Geld“ fertig (27.10.: Bronze, Silber, Gold und knappe Beträge). Nächster Schritt: Projekt 4 Schritt 1, Tasche mit 30 Plätzen.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -50,6 +50,25 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
+
+- **Projekt 3, Schritt 2 – Monster lassen wenig Geld fallen** (27.10., fertig):
+  - **Richtwert:** Ein Monster bringt ein paar Bronze, ein Auftrag ein paar Silber, und ein Heiltrank kostet etwa so
+    viel wie 6 bis 8 Monster.
+  - **Monster in der Wildnis:** jedes Monster 1 Bronze, dazu 1 Bronze je 5 Stufen. Auf dem Weg nach Grünwacht
+    (Stufe 10–14) sind das 3 Bronze, im Wald (15–19) 4 Bronze, auf Stufe 20 5 Bronze. Zwei Monster geben das Doppelte.
+    Vorher waren es 2 × Stufe (z. B. 30 statt jetzt 4). Einstellbar in `scripts/welt/game_data.gd` (`WILD_BRONZE`,
+    `WILD_LEVELS_PER_BRONZE`).
+  - **Aufträge zehnmal so viel wie vorher:** z. B. „Die Stadt kennenlernen“ 2 Silber 50 Bronze, „Der Weg nach
+    Grünwacht“ 5 Silber, „Der Splitter im Urbaum“ 15 Silber.
+  - **Preise:** Heiltrank 25 Bronze (Bingo kauft ihn für 12 Bronze zurück). Sternentafel 5 Gold in Akt 1
+    (absichtlich unbezahlbar), für Heimkehrer 60 Silber. Bingos Sätze sind angepasst. Kräuter und Honigwaben
+    verkaufen sich weiter für ein paar Bronze.
+  - **Kreuzweg-Karten:** Sieg gegen Marv 10 Bronze, gegen Oma Hagebutte 20 Bronze (gibt es bei jedem Sieg, darum klein).
+  - **Was man insgesamt hat** (nachgerechnet mit dem Durchlauf-Test, nur Hauptaufträge): am Ende von Kreuzweg etwa
+    19 Silber, am Ende von Grünwacht etwa 60 bis 70 Silber. Mit den Nebenaufträgen reicht es also für die Sternentafel.
+  - **So testest du es:** Auf dem Weg nach Grünwacht ein Monster besiegen: Auf dem Sieg-Bildschirm steht z. B.
+    „+3 Bronze“, oben links steigt das Geld um genau so viel. Einen Auftrag abgeben: es gibt ein paar Silber.
+    Bei Bingo kostet der Heiltrank 25 Bronze.
 
 - **Projekt 3, Schritt 1 – Geld als Bronze, Silber und Gold** (27.10., fertig):
   - Geld ist weiter **eine einzige Zahl** (in Bronze) und wird überall als Münzen angezeigt: 100 Bronze = 1 Silber,
@@ -1331,7 +1350,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
   Zähmen (unter 50 % Leben, Chance = fehlendes Leben, halbes Leben auf der Bank, höchstens 5 Monster).
 - **Grünwacht (Schritt 2):** Monster-Werte (Rindenbär, Windfalke, Donnerhirsch, Steinkröte, Sporenling, wilde
   Start-Monster), Stufen-Wachstum (Helden +5 % Stärke, Monster +9 % Leben und +6 % Schaden je Stufe), Erfahrung
-  (12 × Stufe je Monster), Gold (2 × Stufe), eine Minute bis ein Monster wiederkommt, Erfahrungstabelle bis Stufe 20.
+  (12 × Stufe je Monster), Geld (seit 27.10.: 1 Bronze + 1 je 5 Stufen pro Monster), eine Minute bis ein Monster wiederkommt, Erfahrungstabelle bis Stufe 20.
 - **Stufenabstand:** 6 % weniger Schaden und 8 % härtere Treffer pro Stufe unter dem Gegner, höchstens 5 Stufen.
 - **Grünwacht (Schritt 9–11):** Kartenwerte von Kreuzweg-Karten, Kobalts Revanche (zwei Monster, Leben ×1,4),
   Bienenschwarm, Erfahrung der Hauptaufträge (siehe Schritt 11), die drei Wald-Musikstücke.
