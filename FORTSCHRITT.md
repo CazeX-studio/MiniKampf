@@ -51,6 +51,14 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **Baukasten-Testfeld weiter** (27.10., Marcos Rückmeldung „zu gequetscht“):
+  - Die Karte ist jetzt **64 × 64 Felder** statt 46 × 46. Der Marktplatz ist größer (24 × 24), um Splitterkreis und
+    Krater bleibt ein **freier Ring** von drei bis vier Feldern, nur vier Feuerschalen stehen an den Ecken.
+  - Gebäude, Stände und Pavillons stehen mit Abstand zueinander, Bäume und Büsche halten zwei Felder Abstand zu Straßen,
+    Häusern und zueinander.
+  - **So testest du es:** Im Baukasten-Testfeld über den Marktplatz laufen und mit K die Geschichte umschalten:
+    Rund um den Krater ist Platz für eine Gruppe.
+
 - **Baukasten: Splitterkreis und Krater** (27.10.):
   - Marcos achtes Blatt ist eingesetzt: Splitterkreis (ersetzt den Platzhalter), frischer Krater, umzäunter Krater
     und der gefallene Sternsplitter. Der rote Schimmer am Rand der KI-Bilder ist entfernt.
