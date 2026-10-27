@@ -21,7 +21,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
   Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
   gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
-- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Neu: Projekt 8 „Kreuzweg im Baukasten“, Schritt 1 (Testfeld) fertig (27.10.), Schritt 2 wartet auf Marcos Bilder. Nächster Schritt: Projekt 3 „Geld“, Bronze, Silber, Gold.
+- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Neu: Projekt 9 „Kreuzweg im Baukasten“, Schritt 1 (Testfeld) fertig (27.10.), Schritt 2 wartet auf Marcos Bilder. Nächster Schritt: Projekt 3 „Geld“, Bronze, Silber, Gold.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -51,7 +51,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
-- **Projekt 8, Schritt 1: Baukasten-Testfeld** (27.10.):
+- **Projekt 9, Schritt 1: Baukasten-Testfeld** (27.10.):
   - Neu im Startmenü: **„Baukasten-Testfeld“**. Ein kleiner Marktplatz in Rautenansicht, diesmal nicht im Code gezeichnet,
     sondern aus **Einzelbildern** zusammengesetzt: 8 Bodenbilder und 21 Gegenstände (Häuser, Marktstände, Statue der Fünf,
     Torbogen, Brücke, Laternen, Fackelschalen, Banner, Bäume, Tannen, Büsche, Blumen, Bank, Fass, Kiste, Zaun, Mauer,

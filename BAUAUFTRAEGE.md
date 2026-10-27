@@ -140,7 +140,51 @@ _Aus Marcos Entscheidung vom 22.10.2026: Tageszeit nach der echten Uhrzeit, nach
 - **So testest du es:** Testknopf auf Nacht: Auf dem Weg nach Grünwacht stehen andere Monster, auf Tag wieder die gewohnten.
 - **Status:** offen
 
-## Projekt 8: Kreuzweg im Baukasten
+## Projekt 8: Monsterkarten und Kartenalbum
+_Aus Marcos Beschluss vom 27.10.2026 (Brainstorm-Doc)._
+
+### Schritt 1: Kartenalbum
+- **Ziel:** Eigenes Menü (Taste K) mit einer Seite pro Region: feste Plätze, fehlende Karten als dunkler Umriss, Zähler wie „Grünwacht: 5 / 12“, doppelte Karten mit Anzahl.
+- **So testest du es:** Mit K das Album öffnen und blättern, gesammelte Karten sind zu sehen, fehlende als Umriss, der Zähler stimmt.
+- **Status:** offen
+
+### Schritt 2: Karten aktivieren
+- **Ziel:** Eine gefundene Karte fällt als „unbekannte Monsterkarte“ in die Tasche (bei voller Tasche ins Beute-Fenster). Aktivieren dreht sie mit einem kleinen Aufdeck-Moment um, danach liegt sie im Album und die Tasche ist frei.
+- **So testest du es:** Eine Karte bekommen, in der Tasche aktivieren, sie dreht sich um und steht im Album.
+- **Status:** offen
+
+### Schritt 3: Monster-Infos im Album
+- **Ziel:** Schon die erste Karte zeigt Element und Schwäche des Monsters.
+- **So testest du es:** Im Album eine Karte anklicken, Element und Schwäche stehen dabei.
+- **Status:** offen
+
+### Schritt 4: Besitzeffekte
+- **Ziel:** Jede Karte im Album gibt einen kleinen dauerhaften Bonus, der zum Monster passt (z. B. Rindenbär +1 Leben, Windfalke +1 Tempo), Doppelte zählen nicht mehrfach; vorerst nur Werte, die es im Kampf schon gibt, Verteidigung kommt mit der Ausrüstung.
+- **So testest du es:** Werte (C) ansehen, eine neue Karte aktivieren, der Wert steigt.
+- **Status:** offen
+
+### Schritt 5: Deck für Kreuzweg-Karten im Album wählen (5 Karten)
+- **So testest du es:** 5 Karten markieren, gegen Marv spielen, genau diese sind auf der Hand.
+- **Status:** offen
+
+### Schritt 6: Doppelte Karten bei Bingo verkaufen, die letzte einer Sorte bleibt immer
+- **So testest du es:** Eine doppelte Karte verkaufen, das Geld steigt, im Album steht eine weniger.
+- **Status:** offen
+
+### Schritt 7: Belohnung für eine volle Seite (Titel, Kartenrücken oder Extra-Platz in der Tasche, Marco entscheidet)
+- **So testest du es:** Per Testknopf alle Karten einer Region geben, die Belohnung erscheint.
+- **Status:** offen
+
+### Schritt 8: Marv kommentiert neue Karten („Ooooh, die hab ich noch nicht!“)
+- **So testest du es:** Neue Karte aktivieren und zu Marv gehen.
+- **Status:** offen
+
+### Schritt 9: Karten verbessern bis +10 mit einer doppelten Karte derselben Sorte plus etwas Gold; bis +4 klappt es immer, ab +5 kann es misslingen (Marco, 27.10.; bei einem Fehlschlag bleibt die Karte auf ihrer Stufe, nur doppelte Karte und Gold sind weg)
+- **Ziel:** Jede Stufe stärkt den Besitzeffekt und später den Sockel.
+- **So testest du es:** Eine Karte verbessern, sie zeigt +1, der Bonus steigt, ab +5 klappt es manchmal nicht.
+- **Status:** offen
+
+## Projekt 9: Kreuzweg im Baukasten
 _Aus Marcos Entscheidung vom 27.10.2026: Die Welt bleibt in Rautenansicht und wird aus Einzelbildern zusammengesetzt (Vorbild: Marcos Bild vom Kreuzweg-Marktplatz bei Nacht). Bild-Regeln in `data/BAUKASTEN.md`._
 
 ### Schritt 1: Baukasten-Testfeld
