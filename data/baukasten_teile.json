@@ -517,17 +517,75 @@
 		},
 		"splitterkreis": {
 			"bild": "objekte/splitterkreis.png",
-			"massstab": 2,
 			"flaeche": [
-				2,
-				2
+				3,
+				3
+			],
+			"fuss": [
+				176,
+				102
 			],
 			"flach": true,
 			"blockiert": false,
-			"fuss_y": 12,
 			"licht": {
 				"art": "splitter",
 				"hoehe": 0
+			}
+		},
+		"krater_frisch": {
+			"bild": "objekte/krater_frisch.png",
+			"flaeche": [
+				4,
+				4
+			],
+			"fuss": [
+				170,
+				109
+			],
+			"flach": true,
+			"blockiert": false,
+			"lichter": [
+				{
+					"art": "splitter",
+					"bild": [
+						175,
+						95
+					]
+				},
+				{
+					"art": "glut",
+					"bild": [
+						150,
+						110
+					]
+				}
+			]
+		},
+		"krater_spaet": {
+			"bild": "objekte/krater_spaet.png",
+			"flaeche": [
+				4,
+				4
+			],
+			"fuss": [
+				182,
+				101
+			],
+			"flach": true
+		},
+		"sternsplitter": {
+			"bild": "objekte/sternsplitter.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				83,
+				74
+			],
+			"licht": {
+				"art": "splitter",
+				"hoehe": 30
 			}
 		}
 	}

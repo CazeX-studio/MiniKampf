@@ -16,6 +16,8 @@ const NIGHT_COLOR := Color(0.45, 0.5, 0.78)
 const PLAYER_RECT := Rect2(-24, -128, 48, 130)
 ## Größe der Spielfigur im Testfeld (Tasten + und -), um den Maßstab zur Welt auszuprobieren
 const FIGUR_GROESSEN: Array[float] = [0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+## Stand der Geschichte (Taste K): Teile mit "nur_stufe" erscheinen nur in diesen Stufen (Splitterkreis, Krater …)
+const STUFEN: Array[String] = ["vor dem Fest", "Nacht des Sternenfalls", "Wochen danach"]
 ## So durchsichtig werden Dinge, hinter denen die Figur steht
 const FADE_ALPHA := 0.45
 const ASSET_PATH := "res://assets/baukasten/"
@@ -24,6 +26,10 @@ var _teile: Dictionary
 var _size := Vector2i.ZERO
 var _rows: PackedStringArray
 var _blocked := {}
+## Gesperrte Felder von Teilen, die es nur in der gerade gezeigten Stufe der Geschichte gibt
+var _stufe_blocked := {}
+var _stufe := 0
+var _start := Vector2i.ZERO
 ## Ein Eintrag pro Gegenstand: {name, node, rect (Felder), bild (Bildschirm-Fläche), flach}
 var _objekte: Array[Dictionary] = []
 var _lights: Array[Licht] = []
@@ -53,7 +59,8 @@ func _ready() -> void:
 	_rows = PackedStringArray(feld.get("boden", []))
 	_size = Vector2i(_rows[0].length() if _rows.size() > 0 else 0, _rows.size())
 	var start: Array = feld.get("start", [0, 0])
-	_pos = Vector2(start[0], start[1]) + Vector2(0.5, 0.5)
+	_start = Vector2i(start[0], start[1])
+	_pos = Vector2(_start) + Vector2(0.5, 0.5)
 
 	_modulate = CanvasModulate.new()
 	add_child(_modulate)
@@ -96,6 +103,7 @@ func _ready() -> void:
 	add_child(_camera)
 	_build_hud()
 	_set_figur(_figur_stufe)
+	set_stufe(0)
 	_set_night(true)
 	_update_player()
 	_camera.position = cell_to_screen(_pos)
@@ -127,7 +135,7 @@ func _ground_def(cell: Vector2i) -> Dictionary:
 
 
 func is_walkable(cell: Vector2i) -> bool:
-	return not _ground_def(cell).is_empty() and not _blocked.has(cell)
+	return not _ground_def(cell).is_empty() and not _blocked.has(cell) and not _stufe_blocked.has(cell)
 
 
 # --- Aufbau ---------------------------------------------------------------------
@@ -185,6 +193,8 @@ func _add_object(o: Dictionary) -> void:
 		node.add_child(licht)
 		_lights.append(licht)
 	(_flat if flach else _sorted).add_child(node)
+	var stufen: Array = o.get("nur_stufe", [])
+	var zellen: Array[Vector2i] = []
 	if d.get("begehbar", false):
 		# Brücke und Ähnliches: darauf kann man laufen, auch wenn darunter Wasser ist
 		for y in rect.size.y:
@@ -197,8 +207,11 @@ func _add_object(o: Dictionary) -> void:
 				# Bei gespiegelten Teilen sind die freien Felder ebenfalls getauscht
 				var f := [y, x] if o.get("gespiegelt", false) else [x, y]
 				if not f in frei and not [float(f[0]), float(f[1])] in frei:
-					_blocked[rect.position + Vector2i(x, y)] = true
-	_objekte.append({name = teil, node = node, rect = rect, flach = flach,
+					zellen.append(rect.position + Vector2i(x, y))
+	if stufen.is_empty():
+		for cell in zellen:
+			_blocked[cell] = true
+	_objekte.append({name = teil, node = node, rect = rect, flach = flach, stufen = stufen, zellen = zellen,
 			bild = Rect2(node.position + sprite.position, tex.get_size() * massstab)})
 
 
@@ -206,7 +219,7 @@ func _add_object(o: Dictionary) -> void:
 func _check_overlaps() -> void:
 	var used := {}
 	for o: Dictionary in _objekte:
-		if o.flach:
+		if o.flach or not o.stufen.is_empty():
 			continue
 		var rect: Rect2i = o.rect
 		for y in range(rect.position.y, rect.end.y):
@@ -253,10 +266,12 @@ func _draw_grid() -> void:
 			var top := cell_to_screen(Vector2(x, y))
 			var diamond := PackedVector2Array([top, top + Vector2(TILE_W * 0.5, TILE_H * 0.5),
 					top + Vector2(0, TILE_H), top + Vector2(-TILE_W * 0.5, TILE_H * 0.5), top])
-			if _blocked.has(Vector2i(x, y)):
+			if _blocked.has(Vector2i(x, y)) or _stufe_blocked.has(Vector2i(x, y)):
 				_grid_node.draw_colored_polygon(diamond.slice(0, 4), Color(1, 0.2, 0.2, 0.25))
 			_grid_node.draw_polyline(diamond, Color(1, 1, 1, 0.15), 1.0)
 	for o: Dictionary in _objekte:
+		if not (o.node as Node2D).visible:
+			continue
 		var r: Rect2i = o.rect
 		_grid_node.draw_polyline(PackedVector2Array([cell_to_screen(Vector2(r.position)),
 				cell_to_screen(Vector2(r.end.x, r.position.y)), cell_to_screen(Vector2(r.end)),
@@ -283,7 +298,8 @@ func _build_hud() -> void:
 	root.add_child(hint)
 	var buttons: Array = [["Tag/Nacht", func() -> void: _set_night(not _night)],
 			["Raster", func() -> void: _toggle_grid()], ["Figur +", func() -> void: _set_figur(_figur_stufe + 1)],
-			["Figur −", func() -> void: _set_figur(_figur_stufe - 1)], ["Zurück", _go_menu]]
+			["Figur −", func() -> void: _set_figur(_figur_stufe - 1)], ["Geschichte", func() -> void: set_stufe(_stufe + 1)],
+			["Zurück", _go_menu]]
 	for i in buttons.size():
 		var b := Button.new()
 		b.text = buttons[i][0]
@@ -299,8 +315,36 @@ func _set_figur(stufe: int) -> void:
 	_figur_stufe = clampi(stufe, 0, FIGUR_GROESSEN.size() - 1)
 	var g := FIGUR_GROESSEN[_figur_stufe]
 	_player.scale = Vector2(g, g)
+	_update_hint()
+
+
+func _update_hint() -> void:
 	if _hint != null:
-		_hint.text = "Baukasten-Testfeld · Laufen: WASD, Pfeiltasten oder Klicken/Antippen\nN: Tag/Nacht · G: Raster · +/−: Figurgröße (jetzt %d %%) · Esc: zurück" % roundi(g * 100.0)
+		_hint.text = ("Baukasten-Testfeld · Laufen: WASD, Pfeiltasten oder Klicken/Antippen\nN: Tag/Nacht · G: Raster · "
+				+ "+/−: Figurgröße (jetzt %d %%) · K: Geschichte (jetzt: %s) · Esc: zurück") % [
+				roundi(FIGUR_GROESSEN[_figur_stufe] * 100.0), STUFEN[_stufe]]
+
+
+## Stand der Geschichte zeigen: Splitterkreis vor dem Fest, frischer Krater in der Festnacht (immer Nacht), später der umzäunte Krater.
+func set_stufe(stufe: int) -> void:
+	_stufe = posmod(stufe, STUFEN.size())
+	_stufe_blocked.clear()
+	for o: Dictionary in _objekte:
+		if o.stufen.is_empty():
+			continue
+		var da: bool = _stufe in o.stufen or float(_stufe) in o.stufen
+		(o.node as Node2D).visible = da
+		if da:
+			for cell: Vector2i in o.zellen:
+				_stufe_blocked[cell] = true
+	if _stufe == 1:
+		_set_night(true)
+	# Steht die Figur jetzt in etwas drin, geht sie zum Start
+	if not is_walkable(Vector2i(_pos.floor())):
+		place_player(_start)
+	_update_hint()
+	if _grid_node != null:
+		_grid_node.queue_redraw()
 
 
 func _set_night(on: bool) -> void:
@@ -328,6 +372,8 @@ func _unhandled_input(event: InputEvent) -> void:
 				_set_night(not _night)
 			KEY_G:
 				_toggle_grid()
+			KEY_K:
+				set_stufe(_stufe + 1)
 			KEY_ESCAPE:
 				_go_menu()
 			KEY_EQUAL, KEY_PLUS, KEY_KP_ADD:
@@ -428,6 +474,8 @@ func _update_player() -> void:
 		if o.flach:
 			continue
 		var node: Node2D = o.node
+		if not node.visible:
+			continue
 		var behind := false
 		if (o.bild as Rect2).intersects(area):
 			var rect: Rect2i = o.rect

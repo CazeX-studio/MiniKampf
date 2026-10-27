@@ -18,27 +18,36 @@ func _process(delta: float) -> void:
 	_t += delta
 	var plan: Array = [
 		[0.6, func() -> void: _foto("nacht")],
-		[0.8, func() -> void: _set_night(false)],
-		[1.4, func() -> void: _foto("tag")],
-		[1.6, func() -> void: _toggle_grid()],
-		[2.2, func() -> void: _foto("raster")],
-		[2.4, func() -> void:
+		[0.9, func() -> void:
+			set_stufe(1)
+			place_player(Vector2i(21, 27))],
+		[1.3, func() -> void: _foto("krater_frisch")],
+		[1.5, func() -> void: set_stufe(2)],
+		[1.9, func() -> void:
+			_foto("krater_spaet")
+			set_stufe(0)
+			place_player(Vector2i(21, 31))],
+		[2.45, func() -> void: _set_night(false)],
+		[2.9, func() -> void: _foto("tag")],
+		[3.1, func() -> void: _toggle_grid()],
+		[3.7, func() -> void: _foto("raster")],
+		[3.9, func() -> void:
 			_toggle_grid()
 			_set_night(true)
 			place_player(Vector2i(6, 22))],
-		[3.4, func() -> void: _foto("hinter_haus")],
-		[3.6, func() -> void: place_player(Vector2i(20, 3))],
-		[4.6, func() -> void: _foto("torbogen")],
-		[4.8, func() -> void: place_player(Vector2i(4, 20))],
-		[5.8, func() -> void: _foto("sechstes_tor")],
-		[6.0, func() -> void:
+		[4.9, func() -> void: _foto("hinter_haus")],
+		[5.1, func() -> void: place_player(Vector2i(20, 3))],
+		[6.1, func() -> void: _foto("torbogen")],
+		[6.3, func() -> void: place_player(Vector2i(4, 20))],
+		[7.3, func() -> void: _foto("sechstes_tor")],
+		[7.5, func() -> void:
 			_toggle_grid()
 			place_player(Vector2i(20, 34))],
-		[7.0, func() -> void: _foto("raster_bruecke")],
-		[7.2, func() -> void:
+		[8.5, func() -> void: _foto("raster_bruecke")],
+		[8.7, func() -> void:
 			_toggle_grid()
 			walk_to(Vector2i(21, 43))],
-		[11.0, func() -> void:
+		[12.5, func() -> void:
 			print("Nach dem Klick-Weg: ", Vector2i(_pos.floor()))
 			_foto("bruecke")
 			get_tree().quit()],

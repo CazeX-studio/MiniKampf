@@ -1,5 +1,5 @@
 {
-	"_hinweis": "Testfeld für den Baukasten (Rautenansicht), angelehnt an Kreuzweg aus design.md. Boden: eine Zeile pro Reihe, ein Zeichen pro Feld (siehe 'boden' in baukasten_teile.json). Objekte: Teil-Name und das Feld oben (kleinste x und y) der Grundfläche; 'gespiegelt' stellt ein Teil quer. Mehr in data/BAUKASTEN.md.",
+	"_hinweis": "Testfeld für den Baukasten (Rautenansicht), angelehnt an Kreuzweg aus design.md. Boden: eine Zeile pro Reihe, ein Zeichen pro Feld (siehe 'boden' in baukasten_teile.json). Objekte: Teil-Name und das Feld oben (kleinste x und y) der Grundfläche; 'gespiegelt' stellt ein Teil quer. Mehr in data/BAUKASTEN.md. 'nur_stufe': Teil gibt es nur in diesen Stufen der Geschichte (0 vor dem Fest, 1 Nacht des Sternenfalls, 2 Wochen danach; Taste K im Testfeld).",
 	"start": [
 		21,
 		31
@@ -63,8 +63,11 @@
 		{
 			"teil": "splitterkreis",
 			"feld": [
-				17,
-				23
+				16,
+				22
+			],
+			"nur_stufe": [
+				0
 			]
 		},
 		{
@@ -759,6 +762,36 @@
 			"feld": [
 				11,
 				34
+			]
+		},
+		{
+			"teil": "krater_frisch",
+			"feld": [
+				16,
+				22
+			],
+			"nur_stufe": [
+				1
+			]
+		},
+		{
+			"teil": "krater_spaet",
+			"feld": [
+				16,
+				22
+			],
+			"nur_stufe": [
+				2
+			]
+		},
+		{
+			"teil": "sternsplitter",
+			"feld": [
+				20,
+				26
+			],
+			"nur_stufe": [
+				1
 			]
 		}
 	]

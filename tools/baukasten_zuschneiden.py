@@ -39,16 +39,22 @@ BLAETTER = {
 	"pflanzen": {"massstab": 0.44, "teile": {
 		"baum": (230, 340), "baum_herbst": (670, 340), "tanne": (1100, 360), "tanne_gross": (1520, 300),
 		"busch": (230, 740), "busch_bluete": (680, 740), "blumen": (1100, 760), "grasbueschel": (1540, 760)}},
+	"splitter": {"massstab": 0.41, "roter_rand": True, "teile": {
+		"splitterkreis": (440, 230), "krater_frisch": (1320, 260), "krater_spaet": (680, 650), "sternsplitter": (1460, 690)}},
 	"boden": {"boden": True, "teile": {
 		"gras_1": (274, 190), "gras_2": (820, 190), "pflaster_1": (1360, 190), "pflaster_2": (1896, 190),
 		"platz": (274, 510), "erde": (820, 510), "wasser_1": (1360, 510), "wasser_2": (1896, 510)}},
 }
 
 
-def freistellen(bild):
+def freistellen(bild, roter_rand=False):
 	"""RGBA-Feld mit echtem Hintergrund; ein mitgemaltes Karomuster wird entfernt, graue Schatten darauf halb durchsichtig."""
 	a = np.array(bild.convert("RGBA")).astype(np.int16)
 	if bild.mode == "RGBA" and a[..., 3].min() == 0:
+		if roter_rand:
+			# Nur bei Blättern mit rotem Schimmer am Rand: halbdurchsichtige, stark rote Pixel entfernen
+			r, g, b, alpha = a[..., 0], a[..., 1], a[..., 2], a[..., 3]
+			a[(r > g + 80) & (r > b + 40) & (alpha < 255), 3] = 0
 		return a.astype(np.uint8)
 	rgb = a[..., :3]
 	hoch, tief = rgb.max(-1), rgb.min(-1)
@@ -135,7 +141,7 @@ def boden_teil(a, sl, lab, i):
 def main():
 	messung = {}
 	for blatt, info in BLAETTER.items():
-		a = freistellen(Image.open(VORLAGEN / f"{blatt}.png"))
+		a = freistellen(Image.open(VORLAGEN / f"{blatt}.png"), info.get("roter_rand", False))
 		lab, stuecke = teile_finden(a, info.get("schnitt", []))
 		for name, punkt in info["teile"].items():
 			i, sl = naechstes(stuecke, punkt)

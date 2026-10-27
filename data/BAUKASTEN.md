@@ -8,7 +8,7 @@ Ausprobieren kannst du das im Startmenü unter **„Baukasten-Testfeld“**.
 1. Marco lässt Bildblätter von ChatGPT malen (Stil-Vorgabe und Prompts: siehe Chat vom 27.10.,
    kurz: Pixel-Art wie Octopath, isometrisch, Licht von links oben, Tageslicht, durchsichtiger Hintergrund,
    ein Teil pro Platz, keine Texte).
-2. Die Blätter liegen unverändert in `tools/vorlagen/` (gebaeude, markt, besonderes, pavillons, kleinkram, pflanzen, boden).
+2. Die Blätter liegen unverändert in `tools/vorlagen/` (gebaeude, markt, besonderes, pavillons, kleinkram, pflanzen, boden, splitter).
 3. `tools/baukasten_zuschneiden.py` stellt die Teile frei (auch ein mitgemaltes Karomuster), schneidet sie aus,
    verkleinert sie auf Spielgröße und legt sie in `assets/baukasten/objekte/` und `assets/baukasten/boden/`.
    Es misst auch die ungefähre Grundfläche und den Fußpunkt (`tools/vorlagen/messung.json`).
@@ -34,9 +34,9 @@ Ein neues Blatt oder ein besseres Bild: Datei in `tools/vorlagen/` ersetzen, Wer
 | Gesandten-Hof | pavillon_messinghafen, _glutoase, _gruenwacht, _arkanum, _nebelinseln (je 4×4) |
 | Kleinkram | laterne, fackelschale (leuchten nachts), banner, bank, fass, kiste, zaun, wegweiser, auftragsbrett, mauerruine |
 | Pflanzen | baum, baum_herbst, tanne, tanne_gross, busch, busch_bluete, blumen und grasbueschel (flach) |
-| Noch Platzhalter | splitterkreis (lila Einschlagstelle) |
+| Sternenfall | splitterkreis (3×3, vor dem Fest), krater_frisch (4×4, Festnacht), krater_spaet (4×4, umzäunt, Wochen danach), sternsplitter (1×1, leuchtet) |
 
-**Noch nicht da:** Übergänge (Gras zu Pflaster, Ufer), der Krater nach dem Sternenfall, Laufbilder in vier Richtungen.
+**Noch nicht da:** Übergänge (Gras zu Pflaster, Ufer), Laufbilder in vier Richtungen.
 
 ## Die zwei Datendateien
 
@@ -50,10 +50,12 @@ Ein neues Blatt oder ein besseres Bild: Datei in `tools/vorlagen/` ersetzen, Wer
   - `massstab`: nur für die alten Pixel-Platzhalter (2)
 - `data/baukasten_testfeld.json`: Das Testfeld. Boden als Zeichen-Raster (`.` Gras, `#` Pflaster, `o` Platz, `e` Erde, `~` Wasser),
   dazu die Gegenstände mit ihrem Feld. `"gespiegelt": true` stellt ein Teil quer (z. B. das sechste Tor am Weg nach links).
+  `"nur_stufe"`: das Teil gibt es nur in diesen Stufen der Geschichte (0 vor dem Fest, 1 Nacht des Sternenfalls, 2 Wochen danach).
 
 ## Im Testfeld prüfen
 
 - **G** (oder Knopf „Raster“): zeigt die Felder. Gesperrte Felder sind rot, Grundflächen gelb, deine Figur grün.
 - **N** (oder Knopf „Tag/Nacht“): Tag und Nacht umschalten.
 - **+ / −**: Größe der Spielfigur.
+- **K** (oder Knopf „Geschichte“): Stand der Geschichte umschalten (Splitterkreis → frischer Krater mit Splitter, immer Nacht → umzäunter Krater).
 - Steht man hinter einem Haus oder Baum, wird es halb durchsichtig.

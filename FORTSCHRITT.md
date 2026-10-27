@@ -51,6 +51,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **Baukasten: Splitterkreis und Krater** (27.10.):
+  - Marcos achtes Blatt ist eingesetzt: Splitterkreis (ersetzt den Platzhalter), frischer Krater, umzäunter Krater
+    und der gefallene Sternsplitter. Der rote Schimmer am Rand der KI-Bilder ist entfernt.
+  - Neu: **Stand der Geschichte** im Testfeld. Taste **K** (oder Knopf „Geschichte“) schaltet um:
+    „vor dem Fest“ (Splitterkreis) → „Nacht des Sternenfalls“ (frischer Krater mit leuchtenden Splittern, immer Nacht)
+    → „Wochen danach“ (umzäunter Krater, man kann nicht hinein). So zeigt die Welt später den Fortschritt der Geschichte.
+  - **So testest du es:** Im Baukasten-Testfeld zum Marktplatz laufen und K drücken: Der Kreis wird zum Krater,
+    dann zum umzäunten Krater, dann wieder zum Kreis.
+
 - **Projekt 9, Schritt 2: Echte Bilder im Baukasten** (27.10.):
   - Marcos sieben Bildblätter (Boden, Gebäude, Markt, Besonderes, Pavillons, Kleinkram, Pflanzen) sind zerlegt:
     **44 Teile**, freigestellt (auch das mitgemalte Karomuster), auf Spielgröße verkleinert, jedes mit Grundfläche und Fußpunkt.

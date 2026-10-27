@@ -502,5 +502,61 @@
 			56,
 			53
 		]
+	},
+	"splitterkreis": {
+		"groesse": [
+			352,
+			168
+		],
+		"flaeche": [
+			4,
+			4
+		],
+		"fuss": [
+			176,
+			102
+		]
+	},
+	"krater_frisch": {
+		"groesse": [
+			355,
+			191
+		],
+		"flaeche": [
+			5,
+			5
+		],
+		"fuss": [
+			170,
+			109
+		]
+	},
+	"krater_spaet": {
+		"groesse": [
+			378,
+			183
+		],
+		"flaeche": [
+			5,
+			5
+		],
+		"fuss": [
+			182,
+			101
+		]
+	},
+	"sternsplitter": {
+		"groesse": [
+			147,
+			107
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			83,
+			74
+		]
 	}
 }
