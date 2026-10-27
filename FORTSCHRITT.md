@@ -21,7 +21,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
   Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
   gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
-- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Projekt 3 „Geld“ fertig (27.10.: Bronze, Silber, Gold und knappe Beträge). Projekt 4 Schritt 1 (Tasche mit 30 Plätzen) fertig (27.10.). Nächster Schritt: Projekt 4 Schritt 2, Bank.
+- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Projekt 3 „Geld“ fertig (27.10.: Bronze, Silber, Gold und knappe Beträge). Projekt 4 Schritt 1 (Tasche mit 30 Plätzen) und Schritt 1b (Wegwerfen und Beute-Fenster) fertig (27.10.). Nächster Schritt: Projekt 4 Schritt 2, Bank.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -50,6 +50,25 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
+
+- **Projekt 4, Schritt 1b – Wegwerfen und Beute-Fenster** (27.10., fertig, Marcos Wunsch):
+  - **Wegwerfen:** In der Tasche einen Gegenstand anklicken, dann „[Wegwerfen]“. Es kommt die Frage „Wirklich 3 ×
+    Heiltrank wegwerfen? Das ist dann weg.“ mit „Ja, wegwerfen“ und „Nein“. Weggeworfen wird das ganze Kästchen.
+  - **Nicht wegwerfen** lassen sich Gegenstände der Geschichte (alles ohne Preis, z. B. Bürste, Schleuder,
+    Sternensplitter) und was ein laufender Auftrag noch braucht (z. B. Silberkraut für „Die Stadt kennenlernen“).
+    Dort gibt es den Knopf gar nicht. So kann kein Auftrag hängen bleiben.
+  - **Beute-Fenster:** Passt Beute nach einem Sieg nicht mehr in die Tasche, geht sie nicht verloren. Rechts neben
+    der Tasche erscheint das Fenster „Beute“ mit dem Fund und „Nehmen“ (grau, solange kein Platz ist), dazu
+    „Tasche öffnen“ und „Liegen lassen“. Die Beute wartet, bis man sie nimmt oder liegen lässt, auch über Speichern
+    und Laden hinweg.
+  - Was in die Tasche passt, kommt wie bisher direkt hinein. Gegenstände aus Aufträgen kommen immer hinein.
+  - **Noch offen:** Monster lassen bisher keine Gegenstände fallen (nur Geld und Monsterkarten). Das Beute-Fenster
+    ist dafür vorbereitet. Was Monster fallen lassen, kommt mit der Ausrüstung später. Zum Ausprobieren gibt es den
+    Testknopf „[Test: Beute]“, der eine Testrüstung als Beute gibt.
+  - Beschluss steht in design.md (Geld, Tasche und Bank).
+  - **So testest du es:** Spiel in Godot starten, mit I die Tasche öffnen, „Test: Tasche füllen“ und dann „Test:
+    Beute“ anklicken. Rechts erscheint das Beute-Fenster mit der Testrüstung, „Nehmen“ ist grau. Einen Testkiesel
+    anklicken, „Wegwerfen“ und „Ja, wegwerfen“ wählen. Jetzt „Nehmen“: die Rüstung liegt in der Tasche.
 
 - **Projekt 4, Schritt 1 – Tasche mit 30 Plätzen** (27.10., fertig):
   - Die Tasche hat **30 Plätze**. Jede Sorte Gegenstand braucht einen Platz, mehr vom Gleichen liegt im selben

@@ -92,6 +92,11 @@ Teil 1 ist gebaut (siehe FORTSCHRITT.md). Schritte 1–4 fertig (26.10.). Die De
 - **So testest du es:** Gegenstände aufheben, bis die Tasche voll ist, danach erscheint ein Hinweis.
 - **Status:** fertig (27.10.; Sammeln und Kaufen klappen bei voller Tasche nicht, Geschenke aus Aufträgen kommen trotzdem hinein)
 
+### Schritt 1b: Wegwerfen und Beute-Fenster
+- **Ziel:** Gegenstände lassen sich aus der Tasche wegwerfen (mit Nachfrage; nicht bei Gegenständen der Geschichte oder für laufende Aufträge). Passt Beute nach einem Sieg nicht mehr in die Tasche, wartet sie im Beute-Fenster: erst etwas wegwerfen, dann nehmen, oder liegen lassen. (Marcos Wunsch vom 27.10.)
+- **So testest du es:** Tasche füllen, Beute bekommen, das Beute-Fenster erscheint. Etwas wegwerfen, dann die Beute nehmen.
+- **Status:** fertig (27.10.; Monster lassen noch keine Gegenstände fallen, darum vorerst Testknopf „Test: Beute“)
+
 ### Schritt 2: Bank, die überall dasselbe enthält
 - **Ziel:** Jede Bankstelle zeigt dieselben eingelagerten Sachen.
 - **So testest du es:** Etwas einlagern und wieder herausholen, an zwei Bankstellen prüfen, dass beide dasselbe zeigen.
