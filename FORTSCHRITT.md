@@ -21,7 +21,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
   Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
   gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
-- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Projekt 3 „Geld“ fertig (27.10.: Bronze, Silber, Gold und knappe Beträge). Nächster Schritt: Projekt 4 Schritt 1, Tasche mit 30 Plätzen.
+- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Projekt 3 „Geld“ fertig (27.10.: Bronze, Silber, Gold und knappe Beträge). Projekt 4 Schritt 1 (Tasche mit 30 Plätzen) fertig (27.10.). Nächster Schritt: Projekt 4 Schritt 2, Bank.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -50,6 +50,22 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
+
+- **Projekt 4, Schritt 1 – Tasche mit 30 Plätzen** (27.10., fertig):
+  - Die Tasche hat **30 Plätze**. Jede Sorte Gegenstand braucht einen Platz, mehr vom Gleichen liegt im selben
+    Kästchen (5 Kräuter = 1 Platz). Unter dem Geld steht „Plätze: 12 / 30“, bei voller Tasche in Rot.
+  - **Bei voller Tasche:** Sammeln (z. B. Kräuter) und Kaufen gehen nicht. Es erscheint „Tasche voll! Für … ist kein
+    Platz. Verkauf etwas bei Bingo, um Platz zu machen.“ Der Sammelpunkt bleibt da, man kann später wiederkommen,
+    beim Kauf wird kein Geld abgezogen.
+  - **Geschenke aus Aufträgen und Gesprächen kommen trotzdem hinein** (in ein Extra-Kästchen, dazu der Hinweis
+    „Deine Tasche ist übervoll!“), damit die Geschichte nie hängen bleibt. Wird ein Platz frei, rückt der Gegenstand nach.
+  - **Testknopf** in der Tasche: „[Test: Tasche füllen]“ füllt alle freien Plätze mit grauen Testkieseln (nur beim
+    Ausprobieren im Godot-Editor). Bingo kauft jeden Kiesel für 1 Bronze, so wird die Tasche wieder leer.
+  - Wegwerfen gibt es noch nicht (Platz macht man vorerst durch Verkaufen). Mehr Plätze kommen später durch Taschen
+    vom Schneider (Abschnitt „Später“).
+  - **So testest du es:** Spiel in Godot starten, mit I die Tasche öffnen, „Test: Tasche füllen“ anklicken: alle
+    30 Plätze sind belegt. Ein Kraut in Kreuzweg aufheben: „Tasche voll!“ erscheint. Bei Bingo einen Heiltrank kaufen
+    wollen: geht nicht, das Geld bleibt. Einen Testkiesel verkaufen, dann klappt es wieder.
 
 - **Projekt 3, Schritt 2 – Monster lassen wenig Geld fallen** (27.10., fertig):
   - **Richtwert:** Ein Monster bringt ein paar Bronze, ein Auftrag ein paar Silber, und ein Heiltrank kostet etwa so

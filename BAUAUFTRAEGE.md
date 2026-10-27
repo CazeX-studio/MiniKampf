@@ -90,7 +90,7 @@ Teil 1 ist gebaut (siehe FORTSCHRITT.md). Schritte 1–4 fertig (26.10.). Die De
 ### Schritt 1: Tasche mit 30 Plätzen
 - **Ziel:** Die Tasche hat 30 Plätze.
 - **So testest du es:** Gegenstände aufheben, bis die Tasche voll ist, danach erscheint ein Hinweis.
-- **Status:** offen
+- **Status:** fertig (27.10.; Sammeln und Kaufen klappen bei voller Tasche nicht, Geschenke aus Aufträgen kommen trotzdem hinein)
 
 ### Schritt 2: Bank, die überall dasselbe enthält
 - **Ziel:** Jede Bankstelle zeigt dieselben eingelagerten Sachen.
