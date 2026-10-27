@@ -51,6 +51,23 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **UI-Set Teil 2: Symbole, Banner und Meldungs-Rahmen** (27.10.):
+  - **Meldungen** oben in der Mitte haben jetzt Rahmen mit Ranken und ein Symbol: Gold = goldener Rahmen mit Münze,
+    Gegenstände = grün mit Tasche, Erfahrung, Stufe und Erfolge = lila mit Kristall, neuer Auftrag = „!“, Auftrag
+    erfüllt = „?“, abgegeben = Häkchen, Kampf gewonnen = Schwert. Orts- und andere Texte bleiben einfache Zeilen.
+  - **Banner:** Tasche, Auftragsbuch, Werte und Laden haben das rote Banner oben links am Titel.
+  - **Auftragsbuch:** Die Reiter (Offen, Abgeschlossen, Erfolge) sind die neuen Reiter, der aktive ist rot.
+    Hauptaufträge haben ein rotes „!“ bzw. ein lila „?“ vor dem Namen.
+  - **Münze:** neben „Gold“ in der Tasche und auf den Kaufen- und Verkaufen-Knöpfen im Laden.
+  - **Werte nach der Klassenwahl:** Symbole vor Leben (Trank), Mana (Wirbel), Tempo (Pfeil) und Stärke (Schwert).
+  - Bausteine liegen in `scripts/ui_stil.gd`, Fototest: `tests/ui_auto.tscn`.
+  - **So testest du es:**
+    1. „Neu beginnen“ und mit Lene sprechen: Der neue Auftrag erscheint als Meldung mit goldenem Rahmen und rotem „!“.
+    2. Einen Kampf gewinnen: Gold (Münze), Erfahrung (lila Kristall) und „Geschafft“ (grün, Schwert) erscheinen mit Rahmen.
+    3. Mit J das Auftragsbuch öffnen: Banner oben links, rote Reiter, „!“ vor dem Auftrag.
+    4. Mit I die Tasche öffnen: Münze vor „Gold“.
+    5. Bei Bingo den Laden öffnen: Banner am Titel, Münzen auf den Knöpfen.
+
 - **Asterfall-UI-Set eingebaut** (27.10., Marcos zwei Bildblätter):
   - Fenster, Knöpfe (normal, darüber, gedrückt, gesperrt), Balken, Häkchen, Eingabefelder, Reiter und der
     Lautstärke-Regler haben jetzt überall den neuen Look: dunkelblau mit Goldrand. Das gilt für das ganze Spiel

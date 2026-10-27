@@ -34,6 +34,17 @@ const STICK_HOME := Vector2(170, 560)
 const NOTICE_SECONDS := 3.5
 ## Farbe der Nebenaufträge (wie das blaue „!“ und „?“)
 const SIDE_COLOR := Color("5ab8ff")
+## Meldungen mit Rahmen: [Vorlage in data/texte.json, Rahmenfarbe, Symbol]. Reihenfolge zählt
+## („+%d Gold“ und „+%d Erfahrung“ vor „+%d %s“ für Gegenstände).
+const NOTICE_STYLES: Array[Array] = [
+	["gold", "gold", "gold"], ["gold_weg", "gold", "gold"], ["zu_wenig_gold", "gold", "gold"],
+	["erfahrung", "lila", "kristall"], ["stufe", "lila", "kristall"], ["erfolg", "lila", "kristall"],
+	["gegenstand", "gruen", "tasche"], ["gegenstand_weg", "gruen", "tasche"],
+	["auftrag_neu", "gold", "ausrufe"], ["nebenauftrag_neu", "gold", "ausrufe"],
+	["auftrag_fertig", "gold", "frage"], ["auftrag_abgegeben", "gruen", "kaestchen_an"],
+	["kampf_gewonnen", "gruen", "schwert"], ["karten_sieg", "gruen", "schwert"], ["karte_neu", "lila", "schluessel"],
+	["rudel_neu", "gruen", "schild"], ["ruf_aenderung", "lila", "schild"],
+]
 ## Dinge, die Figuren verdecken können, und welche Fläche sie über ihrem Fußpunkt bedecken (werden dann durchsichtig)
 const OCCLUDER_RECTS := {
 	"tree": Rect2(-26, -70, 52, 72), "stand": Rect2(-32, -64, 64, 66), "stamm": Rect2(-40, -160, 80, 162),
@@ -123,6 +134,7 @@ var _info: Label
 var _hud: Label
 var _goal: Label
 var _notices: VBoxContainer
+var _notice_patterns: Array[Array] = []
 var _panel: PanelContainer
 var _panel_title: Label
 var _panel_text: RichTextLabel
@@ -1337,7 +1349,7 @@ func _build_ui() -> void:
 	var panel_box := VBoxContainer.new()
 	_panel.add_child(panel_box)
 	_panel_title = _label("", 22, Color("f2c14e"))
-	panel_box.add_child(_panel_title)
+	panel_box.add_child(UiStil.titel_mit_banner(_panel_title))
 	# Reiter im Auftragsbuch: Offen, Abgeschlossen, Erfolge
 	_quest_tabs = HBoxContainer.new()
 	_quest_tabs.add_theme_constant_override("separation", 6)
@@ -1346,6 +1358,7 @@ func _build_ui() -> void:
 		tab_button.text = tab[1]
 		tab_button.toggle_mode = true
 		tab_button.custom_minimum_size = Vector2(150, 34)
+		tab_button.theme_type_variation = &"Reiter"
 		tab_button.focus_mode = Control.FOCUS_NONE
 		tab_button.set_meta("tab", tab[0])
 		tab_button.pressed.connect(func() -> void:
@@ -1951,7 +1964,7 @@ func _update_shop() -> void:
 		return
 	var shop: Dictionary = GameData.get_file("laeden").get(p.shop, {})
 	var title := _label("%s  ·  %d Gold" % [shop.get("name", p.shop), p.progress.gold], 22, Color("f2c14e"))
-	_shop_box.add_child(title)
+	_shop_box.add_child(UiStil.titel_mit_banner(title))
 	_shop_box.add_child(_label(GameData.text("laden_kaufen"), 17, Color("9fe8ff")))
 	for ware in state.shop_wares(p.shop):
 		var item := GameData.item(ware.gegenstand)
@@ -1998,6 +2011,9 @@ func _shop_row(text: String, button_text: String) -> Dictionary:
 	button.custom_minimum_size = Vector2(190, 40)
 	button.add_theme_font_size_override("font_size", 15)
 	button.focus_mode = Control.FOCUS_NONE
+	button.icon = UiStil.symbol("gold")
+	button.expand_icon = false
+	button.add_theme_constant_override("icon_max_width", 22)
 	box.add_child(button)
 	return {box = box, button = button}
 
@@ -2014,14 +2030,42 @@ func _update_hud() -> void:
 func _on_notice(player_id: String, text: String) -> void:
 	if player_id != local_id:
 		return
-	var label := _label(text, 20, Color("fff3b0"))
-	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label.custom_minimum_size = Vector2(500, 0)
+	var label: Control
+	var kind := _notice_kind(text)
+	if kind.is_empty():
+		label = _label(text, 20, Color("fff3b0"))
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		label.custom_minimum_size = Vector2(500, 0)
+	else:
+		label = UiStil.meldung(text, kind[0], kind[1])
 	_notices.add_child(label)
 	var tween := create_tween()
 	tween.tween_interval(NOTICE_SECONDS)
 	tween.tween_property(label, "modulate:a", 0.0, 0.6)
 	tween.tween_callback(label.queue_free)
+
+
+## Welcher Rahmen und welches Symbol zu einer Meldung passen. Die Meldungen kommen als fertiger Text
+## (auch übers Netz), darum wird am Text erkannt, aus welcher Vorlage in data/texte.json er stammt.
+## Leer = einfache Textzeile wie bisher (z. B. Ortsnamen).
+func _notice_kind(text: String) -> Array:
+	if _notice_patterns.is_empty():
+		for entry: Array in NOTICE_STYLES:
+			var regex := RegEx.new()
+			var template := GameData.text(entry[0])
+			regex.compile("(?s)^" + _escape_regex(template).replace("%d", "-?\\d+").replace("%s", ".+") + "$")
+			_notice_patterns.append([regex, entry[1], entry[2]])
+	for pattern: Array in _notice_patterns:
+		if pattern[0].search(text):
+			return [pattern[1], pattern[2]]
+	return []
+
+
+static func _escape_regex(template: String) -> String:
+	var out := ""
+	for c in template:
+		out += "\\" + c if c in ".^$*+?()[]{}|\\" else c
+	return out
 
 
 ## Automatisch speichern, sobald sich der Fortschritt des eigenen Spielers ändert.
@@ -2067,7 +2111,8 @@ func _fill_panel() -> void:
 						continue
 					var color := "8affc1" if quest_state == "fertig" else ("a0a0a0" if quest_state == "abgegeben" else "ffffff")
 					# Nebenaufträge stehen mit blauem Zeichen und ihrer Wegweiser-Nummer da
-					var tag := ""
+					# Hauptaufträge: rotes „!“ (läuft) oder lila „?“ (erfüllt, zurück zum Auftraggeber)
+					var tag := "" if quest_state == "abgegeben" else UiStil.bild("frage" if quest_state == "fertig" else "ausrufe") + " "
 					if q.get("neben", false):
 						var number := state.side_number(p, id)
 						tag = "[color=#5ab8ff]%s %s:[/color] " % ["(%d)" % number if number > 0 else "◆", GameData.text("nebenauftrag")]
@@ -2089,11 +2134,11 @@ func _fill_panel() -> void:
 			var bonus := p.progress.level - 1
 			lines.append("[b]%s · Stufe %d[/b]" % [data.title, p.progress.level])
 			lines.append("")
-			lines.append("[b]Leben: %d[/b]" % (data.hp + BattleState.LEVEL_HP * bonus))
+			lines.append(UiStil.bild("trank") + " [b]Leben: %d[/b]" % (data.hp + BattleState.LEVEL_HP * bonus))
 			if data.mana > 0:
-				lines.append("[b]Mana: %d[/b]" % (data.mana + BattleState.LEVEL_MANA * bonus))
-			lines.append("[b]Tempo: %d[/b]" % data.tempo)
-			lines.append("[b]Stärke: %d %%[/b] (Schaden und Heilung)" % roundi(BattleRequest.hero_power(p.progress.level) * 100))
+				lines.append(UiStil.bild("wirbel") + " [b]Mana: %d[/b]" % (data.mana + BattleState.LEVEL_MANA * bonus))
+			lines.append(UiStil.bild("pfeil") + " [b]Tempo: %d[/b]" % data.tempo)
+			lines.append(UiStil.bild("schwert") + " [b]Stärke: %d %%[/b] (Schaden und Heilung)" % roundi(BattleRequest.hero_power(p.progress.level) * 100))
 			if klasse == "tamer":
 				var pack: PackedStringArray = []
 				for id: String in p.progress.flags.get("monster", []):
@@ -2124,7 +2169,7 @@ func _fill_panel() -> void:
 	else:
 		_panel_title.text = GameData.text("tasche")
 		var slots := _fill_bag(p)
-		lines.append("[b]Gold: %d[/b]" % p.progress.gold)
+		lines.append("%s [b]Gold: %d[/b]" % [UiStil.bild("gold", 22), p.progress.gold])
 		var picked := str(slots[_bag_selected]) if _bag_selected >= 0 and _bag_selected < slots.size() else ""
 		if picked != "":
 			var item := GameData.item(picked)
