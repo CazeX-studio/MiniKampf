@@ -163,7 +163,7 @@ _Aus Marcos Entscheidung vom 22.10.2026: Tageszeit nach der echten Uhrzeit, nach
 - **Status:** offen
 
 ### Schritt 4: Besitzeffekte
-- **Ziel:** Jede Karte im Album gibt einen kleinen dauerhaften Bonus (z. B. +1 Angriff), der im Kampf wirkt. Doppelte zählen nicht mehrfach. Im Album und unter „Werte (C)“ steht, was die Karten zusammen bringen. Vorerst nur Werte, die es im Kampf schon gibt (Leben, Mana, Angriff, Tempo); Verteidigung kommt mit der Ausrüstung dazu.
+- **Ziel:** Jede Karte im Album gibt einen kleinen dauerhaften Bonus, der zum Monster passt (z. B. Rindenbär +1 Leben, Windfalke +1 Tempo) und im Kampf wirkt. Doppelte zählen nicht mehrfach. Im Album und unter „Werte (C)“ steht, was die Karten zusammen bringen. Vorerst nur Werte, die es im Kampf schon gibt (Leben, Mana, Angriff, Tempo); Verteidigung kommt mit der Ausrüstung dazu.
 - **So testest du es:** Werte (C) ansehen, eine neue Karte aktivieren: Der Wert steigt um den Bonus der Karte.
 - **Status:** offen
 
@@ -188,9 +188,9 @@ _Aus Marcos Entscheidung vom 22.10.2026: Tageszeit nach der echten Uhrzeit, nach
 - **Status:** offen
 
 ### Schritt 9: Karten verbessern bis +10
-- **Ziel:** Karten lassen sich bis +10 verbessern, jede Stufe stärkt den Besitzeffekt (und später den Sockel).
-- **So testest du es:** Eine Karte verbessern: Sie zeigt „+1“, der Bonus unter „Werte (C)“ steigt.
-- **Status:** wartet auf Marcos Entscheidung (womit verbessert wird, siehe Offene Fragen in design.md)
+- **Ziel:** Karten lassen sich bis +10 verbessern, mit einer doppelten Karte derselben Sorte plus etwas Gold. Bis +4 klappt es immer, ab +5 kann es misslingen. Jede Stufe stärkt den Besitzeffekt (und später den Sockel). (Beschluss 27.10.; was beim Fehlschlag passiert, ist noch offen, Vorschlag: Karte bleibt auf ihrer Stufe, nur doppelte Karte und Gold sind weg.)
+- **So testest du es:** Eine Karte verbessern: Sie zeigt „+1“, der Bonus unter „Werte (C)“ steigt, eine doppelte Karte und etwas Gold sind weg. Ab +5 klappt es manchmal nicht.
+- **Status:** offen
 
 ## Später (wartet auf andere Teile des Spiels)
 - Taschen vom Schneider und Lagerfeuer-Essen (brauchen Berufe)
