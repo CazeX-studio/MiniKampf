@@ -2043,7 +2043,7 @@ func _small_button(text: String, action: Callable) -> Button:
 
 func _update_shop() -> void:
 	var p := local_player()
-	var key := "" if p.shop == "" else "%s|%d|%s" % [p.shop, p.progress.gold, str(p.progress.items)]
+	var key := "" if p.shop == "" else "%s|%d|%s|%s" % [p.shop, p.progress.gold, str(p.progress.items), str(p.progress.bank)]
 	if key == _shop_shown:
 		return
 	_shop_shown = key
@@ -2053,6 +2053,10 @@ func _update_shop() -> void:
 	if p.shop == "":
 		return
 	var shop: Dictionary = GameData.get_file("laeden").get(p.shop, {})
+	if shop.get("bank", false):
+		_fill_bank(p)
+		_add_shop_close()
+		return
 	var title := _label("%s  ·  %s" % [shop.get("name", p.shop), Geld.text(p.progress.gold)], 22, Color("f2c14e"))
 	_shop_box.add_child(UiStil.titel_mit_banner(title))
 	_shop_box.add_child(_label(GameData.text("laden_kaufen"), 17, Color("9fe8ff")))
@@ -2077,6 +2081,10 @@ func _update_shop() -> void:
 		_shop_box.add_child(row.box)
 	if not any:
 		_shop_box.add_child(_label(GameData.text("laden_nichts_verkaufen"), 15, Color(1, 1, 1, 0.6)))
+	_add_shop_close()
+
+
+func _add_shop_close() -> void:
 	var close := Button.new()
 	close.text = GameData.text("schliessen")
 	close.custom_minimum_size = Vector2(140, 40)
@@ -2085,6 +2093,42 @@ func _update_shop() -> void:
 	close.pressed.connect(func() -> void: _send({type = "laden_zu"}))
 	_shop_box.add_child(close)
 	_shop_panel.reset_size()
+
+
+## Bankfenster (im Ladenfenster): links was in der Tasche ist (Einlagern), darunter was in der Bank liegt (Abholen).
+## Jede Bankstelle zeigt dieselbe Bank.
+func _fill_bank(p: PlayerState) -> void:
+	var title := _label(GameData.text("bank_titel"), 22, Color("f2c14e"))
+	_shop_box.add_child(UiStil.titel_mit_banner(title))
+	# Beide Listen in einem Bereich mit Bildlaufleiste (Tasche 30 und Bank 20 Plätze passen nicht auf einmal)
+	var scroll := ScrollContainer.new()
+	scroll.custom_minimum_size = Vector2(690, 400)
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_shop_box.add_child(scroll)
+	var list := VBoxContainer.new()
+	scroll.add_child(list)
+	list.add_child(_label(GameData.text("bank_tasche"), 17, Color("9fe8ff")))
+	if p.progress.items.is_empty():
+		list.add_child(_label(GameData.text("bank_tasche_leer"), 15, Color(1, 1, 1, 0.6)))
+	for item_id: String in p.progress.bag_slots():
+		if item_id == "":
+			continue
+		var row := _shop_row("%d × %s" % [p.progress.item_count(item_id), GameData.item_name(item_id)], GameData.text("bank_einlagern"))
+		row.button.icon = null
+		row.button.pressed.connect(func() -> void: _send({type = "einlagern", gegenstand = item_id}))
+		if not p.progress.bank_has_room(item_id):
+			row.button.modulate = Color(1, 1, 1, 0.5)
+		list.add_child(row.box)
+	list.add_child(_label(GameData.text("bank_inhalt", [p.progress.bank.size(), p.progress.bank_size]), 17, Color("9fe8ff")))
+	if p.progress.bank.is_empty():
+		list.add_child(_label(GameData.text("bank_leer"), 15, Color(1, 1, 1, 0.6)))
+	for item_id: String in p.progress.bank:
+		var row := _shop_row("%d × %s" % [int(p.progress.bank[item_id]), GameData.item_name(item_id)], GameData.text("bank_abholen"))
+		row.button.icon = null
+		row.button.pressed.connect(func() -> void: _send({type = "abholen", gegenstand = item_id}))
+		if not p.progress.has_room(item_id):
+			row.button.modulate = Color(1, 1, 1, 0.5)
+		list.add_child(row.box)
 
 
 ## Beute-Fenster: zeigt Beute, die nach einem Sieg nicht mehr in die Tasche gepasst hat.

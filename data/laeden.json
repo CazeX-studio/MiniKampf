@@ -7,6 +7,11 @@
 		"preise": {"sternentafel": 6000},
 		"ankauf": 0.5
 	},
+	"bank": {
+		"name": "Bank",
+		"hinweis": "Die Bank: dieselben eingelagerten Sachen an jeder Bankstelle (wie die Kafra in Ragnarok). Plätze: Progress.BANK_START.",
+		"bank": true
+	},
 	"bingo": {
 		"name": "Bingos Laden",
 		"waren": ["heiltrank", "sternentafel"],

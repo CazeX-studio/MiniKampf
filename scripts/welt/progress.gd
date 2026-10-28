@@ -6,6 +6,8 @@ extends RefCounted
 ## Kästchen in der Tasche (Projekt 4: Tasche mit 30 Plätzen). Jede Sorte Gegenstand braucht ein Kästchen,
 ## mehr vom Gleichen liegt im selben Kästchen.
 const BAG_SIZE := 30
+## Plätze in der Bank zu Beginn (Projekt 4). Jede Sorte Gegenstand braucht einen Platz, wie in der Tasche.
+const BANK_START := 20
 
 ## Geld in Bronze (Anzeige als Bronze, Silber, Gold: siehe geld.gd)
 var gold := 0
@@ -16,6 +18,10 @@ var slots: Array = []
 ## Beute nach einem Sieg, die nicht mehr in die Tasche gepasst hat: Gegenstand -> Anzahl.
 ## Sie wartet im Beute-Fenster, bis man sie nimmt (nach dem Wegwerfen von etwas anderem) oder liegen lässt.
 var loot := {}
+## Bank (Projekt 4): Gegenstand -> Anzahl. Dieselbe Bank an jeder Bankstelle, gespeichert mit dem Spielstand.
+var bank := {}
+## Plätze in der Bank (später gegen Gold erweiterbar)
+var bank_size := BANK_START
 var xp := 0
 var level := 1
 ## Auftrag -> "aktiv", "fertig" oder "abgegeben" (nicht drin = "neu")
@@ -89,6 +95,31 @@ func bag_slots() -> Array:
 	return slots
 
 
+## Ganzen Stapel aus der Tasche in die Bank legen. Gibt die Anzahl zurück (0 = ging nicht).
+func deposit(id: String) -> int:
+	var count := item_count(id)
+	if count <= 0 or not bank_has_room(id):
+		return 0
+	bank[id] = int(bank.get(id, 0)) + count
+	add_item(id, -count)
+	return count
+
+
+## Ganzen Stapel aus der Bank in die Tasche holen. Gibt die Anzahl zurück (0 = ging nicht).
+func withdraw(id: String) -> int:
+	var count := int(bank.get(id, 0))
+	if count <= 0 or not has_room(id):
+		return 0
+	bank.erase(id)
+	add_item(id, count)
+	return count
+
+
+## Passt dieser Gegenstand noch in die Bank? Mehr vom Gleichen passt immer.
+func bank_has_room(id: String) -> bool:
+	return bank.has(id) or bank.size() < bank_size
+
+
 ## Tauscht zwei Kästchen der Tasche (Ziehen und Ablegen). Ein leeres Ziel-Kästchen ist einfach ein Verschieben.
 func move_slot(from: int, to: int) -> void:
 	bag_slots()
@@ -118,7 +149,8 @@ func xp_range() -> Vector2i:
 
 
 func to_dict() -> Dictionary:
-	return {gold = gold, items = items, slots = bag_slots().duplicate(), beute = loot, xp = xp, level = level, quests = quests, flags = flags}
+	return {gold = gold, items = items, slots = bag_slots().duplicate(), beute = loot, bank = bank, bank_plaetze = bank_size,
+			xp = xp, level = level, quests = quests, flags = flags}
 
 
 func load_dict(data: Dictionary) -> void:
@@ -127,6 +159,11 @@ func load_dict(data: Dictionary) -> void:
 	var saved_loot: Dictionary = data.get("beute", {})
 	for id: String in saved_loot:
 		loot[id] = int(saved_loot[id])
+	bank = {}
+	var saved_bank: Dictionary = data.get("bank", {})
+	for id: String in saved_bank:
+		bank[id] = int(saved_bank[id])
+	bank_size = int(data.get("bank_plaetze", BANK_START))
 	xp = int(data.get("xp", 0))
 	level = int(data.get("level", 1))
 	quests = data.get("quests", {})

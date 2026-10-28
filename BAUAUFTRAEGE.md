@@ -100,7 +100,7 @@ Teil 1 ist gebaut (siehe FORTSCHRITT.md). Schritte 1–4 fertig (26.10.). Die De
 ### Schritt 2: Bank, die überall dasselbe enthält
 - **Ziel:** Jede Bankstelle zeigt dieselben eingelagerten Sachen.
 - **So testest du es:** Etwas einlagern und wieder herausholen, an zwei Bankstellen prüfen, dass beide dasselbe zeigen.
-- **Status:** offen
+- **Status:** fertig (28.10.; Bankstellen: Bankhüterin Ilse in Kreuzweg neben der Gilde, Bankhüter Tamm in Wipfelheim; 20 Plätze, ganze Stapel einlagern und abholen)
 
 ### Schritt 3: Bankplätze gegen Gold erweitern
 - **Ziel:** Man kann mehr Bankplätze kaufen.

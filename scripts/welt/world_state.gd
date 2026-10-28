@@ -16,6 +16,7 @@ extends RefCounted
 ##   {type = "dialog_next"}              im Gespräch weiter (wenn es keine Antworten gibt)
 ##   {type = "dialog_choose", index = 0} im Gespräch eine Antwort wählen
 ##   {type = "szene_verlassen"}          eine gemeinsame Szene verlassen (Zusammenspielen)
+##   {type = "einlagern", gegenstand = "…"} / {type = "abholen", gegenstand = "…"}  an einer Bankstelle (Bank geöffnet)
 ##   {type = "kaufen", gegenstand = "…"} / {type = "verkaufen", gegenstand = "…"} / {type = "laden_zu"}  im geöffneten Laden
 ##   {type = "wegwerfen", gegenstand = "…"}  alle Stück eines Gegenstands aus der Tasche wegwerfen
 ##   {type = "beute_nehmen", gegenstand = "…"} / {type = "beute_lassen"}  Beute, die nicht in die Tasche gepasst hat
@@ -496,6 +497,10 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			_sell(p, str(cmd.get("gegenstand", "")))
 		"laden_zu":
 			p.shop = ""
+		"einlagern":
+			_bank_move(p, str(cmd.get("gegenstand", "")), true)
+		"abholen":
+			_bank_move(p, str(cmd.get("gegenstand", "")), false)
 		"szene_verlassen":
 			_leave_scene(p)
 		"dialog_next":
@@ -2090,6 +2095,34 @@ func _buy(p: PlayerState, item_id: String) -> void:
 		_update_quests(p)
 		progress_changed.emit(p.id)
 		return
+
+
+## Ist gerade eine Bank geöffnet (Laden mit "bank": true in data/laeden.json)?
+func bank_open(p: PlayerState) -> bool:
+	return p.shop != "" and GameData.get_file("laeden").get(p.shop, {}).get("bank", false)
+
+
+## Ganzen Stapel einlagern (to_bank) oder abholen. Alle Bankstellen teilen sich dieselbe Bank (Progress.bank).
+func _bank_move(p: PlayerState, item_id: String, to_bank: bool) -> void:
+	if not bank_open(p) or item_id == "":
+		return
+	var name := GameData.item_name(item_id)
+	if to_bank:
+		var count := p.progress.deposit(item_id)
+		if count <= 0:
+			if p.progress.item_count(item_id) > 0:
+				_say(p, GameData.text("bank_voll", [name]))
+			return
+		_say(p, GameData.text("bank_eingelagert", [count, name]))
+	else:
+		var count := p.progress.withdraw(item_id)
+		if count <= 0:
+			if int(p.progress.bank.get(item_id, 0)) > 0:
+				_say(p, GameData.text("tasche_voll", [name]))
+			return
+		_say(p, GameData.text("bank_abgeholt", [count, name]))
+	_update_quests(p)
+	progress_changed.emit(p.id)
 
 
 func _sell(p: PlayerState, item_id: String) -> void:

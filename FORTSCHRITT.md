@@ -21,7 +21,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
   Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
   gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
-- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Projekt 3 „Geld“ fertig (27.10.: Bronze, Silber, Gold und knappe Beträge; am 28.10. in main übernommen). Projekt 4 Schritt 1 (Tasche mit 30 Plätzen) und „Wegwerfen und Beute-Fenster“ fertig (27.10., am 28.10. übernommen). Projekt 9 „Kreuzweg im Baukasten“: Schritt 1–4 fertig (27.10.). Projekt 10 „Oberfläche nach Marcos UI-Entwurf“ fertig (27.10.). Nächster Schritt: Projekt 4 Schritt 2 „Bank, die überall dasselbe enthält“.
+- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Projekt 3 „Geld“ fertig (27.10.: Bronze, Silber, Gold und knappe Beträge; am 28.10. in main übernommen). Projekt 4 Schritt 1 (Tasche mit 30 Plätzen) und „Wegwerfen und Beute-Fenster“ fertig (27.10., am 28.10. übernommen). Projekt 9 „Kreuzweg im Baukasten“: Schritt 1–4 fertig (27.10.). Projekt 10 „Oberfläche nach Marcos UI-Entwurf“ fertig (27.10.). Projekt 4 Schritt 2 (Bank) fertig (28.10.). Nächster Schritt: Projekt 4 Schritt 3 „Bankplätze gegen Gold erweitern“.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -50,6 +50,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
+
+- **Projekt 4, Schritt 2: Bank, die überall dasselbe enthält** (28.10.):
+  - Zwei Bankstellen: **Bankhüterin Ilse** in Kreuzweg (rechts neben Lene an der Gilde) und **Bankhüter Tamm** in
+    Wipfelheim (rechts neben Ysolde). Beide öffnen dieselbe Bank (wie die Kafra in Ragnarok).
+  - Bankfenster: oben die Tasche mit „Einlagern“, unten die Bank mit „Abholen“, jeweils der ganze Stapel.
+    Die Bank hat 20 Plätze (eine Sorte pro Platz, wie in der Tasche). Volle Bank oder volle Tasche: Meldung, nichts geht verloren.
+  - Die Bank wird mit dem Spielstand gespeichert und beim Zusammenspielen mitgeschickt.
+  - Texte der Bankhüter sind Platzhalter (`data/dialoge.json`, „bank“). Neue Prüfung `tests/bank_test.gd`.
+  - **So testest du es:** In Kreuzweg mit Ilse reden, „Meine Bank öffnen“, einen Heiltrank einlagern. In Wipfelheim
+    (Editor → „Akt Grünwacht“) bei Tamm nachsehen: Der Heiltrank liegt dort. Abholen, er ist wieder in der Tasche.
 
 - **Start-Monster Moosling, Glutwelpe und Bachotter** (28.10., Marcos Bildblätter):
   - Eingebaut für den Zähmer (eigenes Team und Bank), für Kobalts Monster (etwas größer und dunkler) und die wilden

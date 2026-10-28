@@ -30,6 +30,7 @@
 			"wenn": {"gemerkt": "sternenfall_kampf_vorbei", "nicht_gemerkt": "ren_getroffen"}, "anspringen": {"radius": 16}},
 		"marv_abschied": {"name": "Marv", "feld": [20, 34], "aussehen": "elf_m", "farbe": "ffb070", "dialog": "marv_abschied",
 			"wenn": {"gemerkt": "abreise_angekuendigt"}, "anspringen": {"radius": 5}},
+		"bank_kreuzweg": {"name": "Bankhüterin Ilse", "feld": [34, 14], "aussehen": "elf_f", "farbe": "c8d8ff", "dialog": "bank"},
 		"hanne": {"name": "Wirtin Hanne", "feld": [7, 20], "aussehen": "knight_f", "farbe": "ffd0c0", "dialog": "hanne"},
 		"edmar": {"name": "Vogt Edmar", "feld": [26, 18], "aussehen": "wizzard_m", "farbe": "f0d890", "dialog": "edmar"},
 		"quill": {"name": "Steinmetz Quill", "feld": [20, 24], "aussehen": "knight_m", "farbe": "c8c0b0", "dialog": "quill"},

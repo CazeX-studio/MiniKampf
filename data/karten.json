@@ -1166,6 +1166,16 @@
 			}
 		],
 		"npcs": {
+			"bank_wipfelheim": {
+				"name": "Bankhüter Tamm",
+				"feld": [
+					27,
+					21
+				],
+				"aussehen": "wizzard_m",
+				"farbe": "c8d8ff",
+				"dialog": "bank"
+			},
 			"ysolde": {
 				"name": "Ysolde Dornfeder",
 				"feld": [
