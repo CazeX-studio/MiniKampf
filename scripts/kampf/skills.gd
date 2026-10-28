@@ -223,7 +223,9 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 				{id = "erste_hilfe", name = "Erste Hilfe", info = "Heilt %d · 12 Mana" % roundi(NOVIZE.erste_hilfe * f.power), target = "ally", mana = 12, cd = 2},
 			]
 			if f.wares.has("heiltrank"):
-				list.append({id = "trank", name = "Heiltrank (%d)" % f.wares.heiltrank, info = "Heilt %d · aus deiner Tasche" % roundi(NOVIZE.trank * f.power), target = "ally"})
+				var free := "gratis, du bist noch dran" if not f.belt_free_used else "kostet den Zug"
+				list.append({id = "trank", name = "Heiltrank (%d)" % f.wares.heiltrank, info = "Heilt %d · Gürtel: %s" % [roundi(NOVIZE.trank * f.power), free],
+						target = "ally", guertel = true})
 		"singer":
 			var lullaby_info := "Heilt 24, +1 Schutz-Sternbild · 8 Mana"
 			if f.res_def >= Fighter.MAX_RES:

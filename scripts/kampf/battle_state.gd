@@ -704,11 +704,20 @@ func _player_turn(f: Fighter) -> void:
 		wait(0.5)
 		execute(f, skills.wait_ability(), null)
 		return
+	f.belt_free_used = false
 	while true:
 		await _flush()
 		var command: Dictionary = await controller.choose_action(f)
 		if is_valid(f, command.ab, command.target):
 			execute(f, command.ab, command.target)
+			# Gürtel: der erste Gürtel-Gegenstand im Zug ist gratis, man ist danach noch einmal dran
+			if command.ab.get("guertel", false) and not f.belt_free_used and f.is_alive() and not battle_over \
+					and not alive(enemies).is_empty():
+				f.belt_free_used = true
+				float_text(f, "Gratis – noch dran!", Color("f2c14e"))
+				status("%s ist noch einmal dran (Gürtel gratis)." % f.display_name)
+				refresh()
+				continue
 			return
 
 

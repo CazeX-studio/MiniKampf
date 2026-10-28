@@ -21,7 +21,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
   Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
   gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
-- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Projekt 3 „Geld“ fertig (27.10.: Bronze, Silber, Gold und knappe Beträge; am 28.10. in main übernommen). Projekt 4 Schritt 1 (Tasche mit 30 Plätzen) und „Wegwerfen und Beute-Fenster“ fertig (27.10., am 28.10. übernommen). Projekt 9 „Kreuzweg im Baukasten“: Schritt 1–4 fertig (27.10.). Projekt 10 „Oberfläche nach Marcos UI-Entwurf“ fertig (27.10.). Projekt 4 „Tasche und Bank“ fertig (28.10.). Projekt 5 Schritt 1 (Gürtel) fertig (28.10.). Nächster Schritt: Projekt 5 Schritt 2 „Ein Gürtel-Gegenstand pro Runde gratis“.
+- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Projekt 3 „Geld“ fertig (27.10.: Bronze, Silber, Gold und knappe Beträge; am 28.10. in main übernommen). Projekt 4 Schritt 1 (Tasche mit 30 Plätzen) und „Wegwerfen und Beute-Fenster“ fertig (27.10., am 28.10. übernommen). Projekt 9 „Kreuzweg im Baukasten“: Schritt 1–4 fertig (27.10.). Projekt 10 „Oberfläche nach Marcos UI-Entwurf“ fertig (27.10.). Projekt 4 „Tasche und Bank“ fertig (28.10.). Projekt 5 Schritt 1 und 2 (Gürtel, ein Trank pro Zug gratis) fertig (28.10.). Nächster Schritt: Projekt 5 Schritt 3 „Gemeinsame Trank-Wartezeit“.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -50,6 +50,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
+
+- **Projekt 5, Schritt 2: Ein Gürtel-Gegenstand pro Zug gratis** (28.10.):
+  - Im Kampf ist der **erste Trank im eigenen Zug gratis**: Danach ist man noch einmal dran („Gratis – noch dran!“).
+    Ein zweiter Trank im selben Zug beendet den Zug. Der Knopf zeigt „Gürtel: gratis, du bist noch dran“ bzw. „kostet den Zug“.
+  - **Der Gürtel ist jetzt die Grenze:** In den Kampf kommen nur die Tränke vom Gürtel, nicht mehr die aus der Tasche.
+  - Damit niemand ohne Tränke dasteht: Neue Tränke (Belohnungen, Kauf bei Bingo) hängen sich von selbst an den Gürtel,
+    solange dort Platz ist. Alte Spielstände bekommen ihre Tränke beim Laden an den Gürtel.
+  - Verkaufen bei Bingo geht auch mit Tränken am Gürtel. Neue Prüfung `tests/guertel_kampf_test.gd`.
+  - **So testest du es:** Einen Kampf beginnen, „Heiltrank“ wählen: Du bist gleich noch einmal dran und kannst angreifen.
+    Trinkst du stattdessen einen zweiten Trank, ist danach der Gegner dran.
 
 - **Projekt 5, Schritt 1: Vier Gürtelplätze** (28.10.):
   - In der Tasche (I) hängt unten der **Gürtel** mit vier Plätzen (dein gemalter Gürtel, leere Plätze als blasse Lederschlaufe).

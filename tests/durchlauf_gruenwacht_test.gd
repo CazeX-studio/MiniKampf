@@ -356,7 +356,7 @@ func _play_battle(kampf_id: String) -> void:
 	while true:
 		tries += 1
 		var flags := p.progress.flags
-		BattleRequest.prepare(kampf_id, p.progress.level, p.progress.item_count("heiltrank"), str(flags.get("klasse", "")),
+		BattleRequest.prepare(kampf_id, p.progress.level, p.progress.potion_count("heiltrank"), str(flags.get("klasse", "")),
 				flags.get("monster", []))
 		var node: Node = harness.new()
 		node.start_seed = _rng.randi()

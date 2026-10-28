@@ -180,7 +180,7 @@ func _handle_battles() -> bool:
 		var members: Array = []
 		for id in group_ids:
 			var p: PlayerState = world.players[id]
-			members.append({name = p.display_name, stufe = p.progress.level, traenke = p.progress.item_count("heiltrank")})
+			members.append({name = p.display_name, stufe = p.progress.level, traenke = p.progress.potion_count("heiltrank")})
 			_battle[id] = ""
 		var setup := BattleRequest.build_group(group_kampf, members)
 		world.add_battle_group(group_ids)
@@ -207,7 +207,7 @@ func _handle_battles() -> bool:
 		_battle[id] = ""
 		var p: PlayerState = world.players[id]
 		for tries in 5:
-			BattleRequest.prepare(b, p.progress.level, p.progress.item_count("heiltrank"))
+			BattleRequest.prepare(b, p.progress.level, p.progress.potion_count("heiltrank"))
 			var won := await _fight(BattleRequest.setup)
 			_solo_battles += 1
 			_solo_names.append(b)

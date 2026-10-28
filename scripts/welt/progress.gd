@@ -115,12 +115,25 @@ func belt_count(id: String) -> int:
 	return n
 
 
-## Tränke für den Kampf: Gürtel und Tasche zusammen (bis Schritt 2 „nur der Gürtel zählt“ kommt).
+## Tränke für den Kampf: nur was am Gürtel hängt (Projekt 5, „der Gürtel ist die Grenze“).
 func potion_count(id: String) -> int:
+	return belt_count(id)
+
+
+## Tasche und Gürtel zusammen (z. B. zum Verkaufen).
+func total_count(id: String) -> int:
 	return item_count(id) + belt_count(id)
 
 
-## Im Kampf verbrauchte Tränke abziehen: zuerst vom Gürtel, dann aus der Tasche.
+## Gegenstände wegnehmen (Verkaufen, Aufträge): zuerst aus der Tasche, dann vom Gürtel.
+func remove_item(id: String, count: int) -> void:
+	var from_bag := mini(count, item_count(id))
+	add_item(id, -from_bag)
+	if count - from_bag > 0:
+		use_potions(id, count - from_bag)
+
+
+## Im Kampf verbrauchte Tränke abziehen: zuerst vom Gürtel, dann (falls nötig) aus der Tasche.
 func use_potions(id: String, count: int) -> void:
 	for entry: Dictionary in belt:
 		if count <= 0:
@@ -258,4 +271,10 @@ func load_dict(data: Dictionary) -> void:
 	slots = []
 	for id: Variant in data.get("slots", []):
 		slots.append(str(id))
+	# Alter Spielstand ohne Gürtel: Tränke aus der Tasche kommen an den Gürtel, damit man im Kampf nicht ohne dasteht
+	if not data.has("guertel"):
+		for id: String in items.keys():
+			if belt_allowed(id):
+				while belt_put(id) > 0:
+					pass
 	bag_slots()

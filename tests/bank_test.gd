@@ -18,18 +18,18 @@ func _initialize() -> void:
 	p.progress.items = {heiltrank = 3, kraut = 5}
 	# Ohne geöffnete Bank geht nichts
 	world.apply_command("spieler", {type = "einlagern", gegenstand = "heiltrank"})
-	_check(p.progress.item_count("heiltrank") == 3 and p.progress.bank.is_empty(), "Ohne Bank kann man nichts einlagern")
+	_check(p.progress.total_count("heiltrank") == 3 and p.progress.bank.is_empty(), "Ohne Bank kann man nichts einlagern")
 	# Bankstelle in Kreuzweg
 	_check(world.npcs.has("bank_kreuzweg") and world.npcs.has("bank_wipfelheim"), "Bankstellen in Kreuzweg und Wipfelheim")
 	p.shop = "bank"
 	world.apply_command("spieler", {type = "einlagern", gegenstand = "heiltrank"})
-	_check(p.progress.item_count("heiltrank") == 0 and int(p.progress.bank.get("heiltrank", 0)) == 3, "3 Heiltränke eingelagert")
+	_check(p.progress.total_count("heiltrank") == 0 and int(p.progress.bank.get("heiltrank", 0)) == 3, "3 Heiltränke eingelagert")
 	world.apply_command("spieler", {type = "laden_zu"})
 	# Andere Bankstelle: dieselbe Bank
 	p.shop = "bank"
 	_check(int(p.progress.bank.get("heiltrank", 0)) == 3, "Zweite Bankstelle zeigt dieselben Heiltränke")
 	world.apply_command("spieler", {type = "abholen", gegenstand = "heiltrank"})
-	_check(p.progress.item_count("heiltrank") == 3 and not p.progress.bank.has("heiltrank"), "Heiltränke wieder abgeholt")
+	_check(p.progress.total_count("heiltrank") == 3 and not p.progress.bank.has("heiltrank"), "Heiltränke wieder abgeholt")
 	# Volle Bank
 	p.progress.bank = {}
 	for i in Progress.BANK_START:

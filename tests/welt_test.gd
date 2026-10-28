@@ -139,7 +139,7 @@ func _test_building_blocks() -> void:
 	_talk(world, p, "ye")
 	world.apply_command("a", {type = "dialog_choose", index = 0})
 	_check(p.progress.quest_state("erster_auftrag") == "abgegeben", "Auftrag ist abgegeben")
-	_check(p.progress.gold == 250 and p.progress.item_count("heiltrank") == 1 and p.progress.item_count("kraut") == 0,
+	_check(p.progress.gold == 250 and p.progress.total_count("heiltrank") == 1 and p.progress.item_count("kraut") == 0,
 		"Belohnung: 25 Gold und ein Heiltrank, die Kräuter sind weg")
 	_check(p.progress.xp == 100 and p.progress.level == 2, "100 Erfahrung = Stufe 2")
 	_check(notices.any(func(n: String) -> bool: return n.begins_with("Stufe 2 erreicht!") and n.contains("Leben +7")), "Meldung „Stufe 2 erreicht!“ mit neuen Werten kommt")
@@ -177,7 +177,7 @@ func _test_building_blocks() -> void:
 	world.apply_command("a", {type = "dialog_choose", index = 0})
 	_check(p.progress.quest_state("erster_gruppenkampf") == "abgegeben", "Gruppenkampf abgegeben")
 	_check(p.progress.xp == 700 and p.progress.level == 5, "Nach der Grundausbildung: Stufe 5 (700 Erfahrung)")
-	_check(p.progress.item_count("heiltrank") == 3 and p.progress.gold == 750, "Belohnungen: 3 Heiltränke, 7 Silber 50 Bronze")
+	_check(p.progress.total_count("heiltrank") == 3 and p.progress.gold == 750, "Belohnungen: 3 Heiltränke, 7 Silber 50 Bronze")
 	world.apply_command("a", {type = "dialog_next"})
 	_check(not p.in_dialog() and world.objective(p) == "", "Grundausbildung vorbei, kein offenes Ziel")
 
@@ -220,11 +220,11 @@ func _test_building_blocks() -> void:
 	_check(not p.in_dialog() and p.shop == "bingo", "Bingos Laden ist offen")
 	var gold := p.progress.gold
 	world.apply_command("a", {type = "kaufen", gegenstand = "heiltrank"})
-	_check(p.progress.gold == gold - 25 and p.progress.item_count("heiltrank") == 4, "Heiltrank für 25 Bronze gekauft")
+	_check(p.progress.gold == gold - 25 and p.progress.total_count("heiltrank") == 4, "Heiltrank für 25 Bronze gekauft")
 	world.apply_command("a", {type = "kaufen", gegenstand = "sternentafel"})
 	_check(p.progress.item_count("sternentafel") == 0 and p.progress.gold == gold - 25, "Sternentafel ist zu teuer")
 	world.apply_command("a", {type = "verkaufen", gegenstand = "heiltrank"})
-	_check(p.progress.gold == gold - 25 + 12 and p.progress.item_count("heiltrank") == 3, "Heiltrank für 12 Bronze verkauft")
+	_check(p.progress.gold == gold - 25 + 12 and p.progress.total_count("heiltrank") == 3, "Heiltrank für 12 Bronze verkauft")
 	world.apply_command("a", {type = "laden_zu"})
 	_check(p.shop == "", "Laden geschlossen")
 	_talk(world, p, "bingo")

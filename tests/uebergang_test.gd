@@ -17,6 +17,8 @@ func _run() -> void:
 	p.progress.xp = 100
 	p.progress.level = 2
 	p.progress.items = {heiltrank = 2}
+	# Tränke für den Kampf hängen am Gürtel
+	p.progress.belt_put("heiltrank")
 	SaveGame.save(p)
 
 	change_scene_to_file("res://scenes/kreuzweg.tscn")
@@ -44,7 +46,7 @@ func _run() -> void:
 	local = town.local_player()
 	_check(local.progress.flags.has("kampf_gewonnen:grundausbildung"), "Übungskampf zählt als bestanden")
 	_check(local.progress.xp == 400, "300 Erfahrung für den ersten Sieg")
-	_check(local.progress.item_count("heiltrank") == 1, "Getrunkener Heiltrank fehlt in der Tasche")
+	_check(local.progress.total_count("heiltrank") == 1, "Getrunkener Heiltrank fehlt am Gürtel")
 	_check((Vector2(local.cell) - Vector2(20, 38)).length() < 3.0, "Spieler steht noch bei Ye")
 	SaveGame.delete()
 	print("Übergang Stadt/Kampf: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))

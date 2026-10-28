@@ -2095,12 +2095,17 @@ func _update_shop() -> void:
 		_shop_box.add_child(row.box)
 	_shop_box.add_child(_label(GameData.text("laden_verkaufen"), 17, Color("9fe8ff")))
 	var any := false
-	for item_id: String in p.progress.items:
+	# Verkaufen aus Tasche und Gürtel (Tränke hängen meist am Gürtel)
+	var sellable: Array = p.progress.items.keys()
+	for entry: Dictionary in p.progress.belt:
+		if entry.has("id") and not entry.id in sellable:
+			sellable.append(entry.id)
+	for item_id: String in sellable:
 		var price := state.sell_price(p.shop, item_id)
 		if price <= 0:
 			continue
 		any = true
-		var row := _shop_row("%d × %s" % [p.progress.items[item_id], GameData.item_name(item_id)],
+		var row := _shop_row("%d × %s" % [p.progress.total_count(item_id), GameData.item_name(item_id)],
 				"%s · %s" % [GameData.text("laden_verkaufen"), Geld.text(price)], item_id)
 		row.button.pressed.connect(func() -> void: _send({type = "verkaufen", gegenstand = item_id}))
 		_shop_box.add_child(row.box)

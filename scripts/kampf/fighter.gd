@@ -136,6 +136,8 @@ var stagger_length := 2
 var deadly := false
 ## Abwarten: bis zum nächsten eigenen Zug weniger Schaden (und danach früher wieder dran)
 var waiting := false
+## Gürtel (Projekt 5): Hat die Figur in diesem Zug schon ihren gratis Gürtel-Gegenstand benutzt?
+var belt_free_used := false
 ## Trainer eines Gegner-Monsters (Rivale Kobalt): kämpft mit, kann aber nicht angegriffen werden
 var trainer := false
 

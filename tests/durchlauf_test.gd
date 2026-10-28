@@ -176,7 +176,7 @@ func _play_battle(kampf_id: String) -> void:
 	var tries := 0
 	while true:
 		tries += 1
-		BattleRequest.prepare(kampf_id, p.progress.level, p.progress.item_count("heiltrank"))
+		BattleRequest.prepare(kampf_id, p.progress.level, p.progress.potion_count("heiltrank"))
 		var node: Node = harness.new()
 		node.start_seed = _rng.randi()
 		node.setup = BattleRequest.setup

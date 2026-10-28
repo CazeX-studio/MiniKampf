@@ -117,7 +117,7 @@ Teil 1 ist gebaut (siehe FORTSCHRITT.md). Schritte 1–4 fertig (26.10.). Die De
 ### Schritt 2: Ein Gürtel-Gegenstand pro Runde gratis
 - **Ziel:** Im Kampf ist ein Gürtel-Gegenstand pro Runde gratis, jeder weitere kostet den Zug.
 - **So testest du es:** Trank nehmen und in derselben Runde noch angreifen, ein zweiter Gegenstand beendet den Zug.
-- **Status:** offen
+- **Status:** fertig (28.10.; „Runde“ = eigener Zug; im Kampf zählen nur noch Tränke am Gürtel, neue Tränke hängen sich von selbst an den Gürtel)
 
 ### Schritt 3: Gemeinsame Trank-Wartezeit
 - **Ziel:** Gemeinsame Wartezeit von 3 Runden für alle Tränke, sichtbar am Gürtel.

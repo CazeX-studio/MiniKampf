@@ -1668,9 +1668,16 @@ func _give_xp(p: PlayerState, amount: int) -> void:
 ## damit die Geschichte nie hängen bleibt. Sammeln und Kaufen prüfen vorher selbst, ob Platz ist.
 func _give_item(p: PlayerState, item_id: String, count: int) -> void:
 	var room := p.progress.has_room(item_id)
-	p.progress.add_item(item_id, count)
+	if count < 0:
+		p.progress.remove_item(item_id, -count)
+	else:
+		p.progress.add_item(item_id, count)
 	if count > 0:
 		_say(p, GameData.text("gegenstand", [count, GameData.item_name(item_id)]))
+		# Neue Tränke hängen von selbst am Gürtel, solange dort Platz ist (sonst bleiben sie in der Tasche)
+		if Progress.belt_allowed(item_id):
+			while p.progress.belt_put(item_id) > 0:
+				pass
 		if not room:
 			_say(p, GameData.text("tasche_uebervoll"))
 	else:
@@ -2188,7 +2195,7 @@ func _bank_expand(p: PlayerState) -> void:
 
 
 func _sell(p: PlayerState, item_id: String) -> void:
-	if p.shop == "" or p.progress.item_count(item_id) <= 0:
+	if p.shop == "" or p.progress.total_count(item_id) <= 0:
 		return
 	var price := sell_price(p.shop, item_id)
 	if price <= 0:

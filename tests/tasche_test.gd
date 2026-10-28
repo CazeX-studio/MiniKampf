@@ -32,7 +32,9 @@ func _initialize() -> void:
 	var old := Progress.new()
 	old.load_dict({items = {heiltrank = 2, kraut = 1}})
 	failed += _check("Alter Spielstand", old.bag_slots().slice(0, 2).size(), 2)
-	failed += _check("Alter Spielstand ohne Lücke", old.bag_slots().count(""), Progress.BAG_SIZE - 2)
+	# Die Heiltränke kommen dabei an den Gürtel (alter Spielstand ohne Gürtel), in der Tasche bleibt das Kraut
+	failed += _check("Alter Spielstand ohne Lücke", old.bag_slots().count(""), Progress.BAG_SIZE - 1)
+	failed += _check("Alter Spielstand: Tränke am Gürtel", old.belt_count("heiltrank"), 2)
 	# Gegenstände direkt gesetzt (wie in manchen Tests): trotzdem in der Tasche
 	var direct := Progress.new()
 	direct.items = {heiltrank = 3}
@@ -53,7 +55,7 @@ func _initialize() -> void:
 	failed += _check("Testknopf füllt die Tasche", w.progress.used_slots(), 30)
 	w.shop = "bingo"
 	world.apply_command("a", {type = "kaufen", gegenstand = "heiltrank"})
-	failed += _check("Volle Tasche: kein Kauf", w.progress.item_count("heiltrank"), 0)
+	failed += _check("Volle Tasche: kein Kauf", w.progress.total_count("heiltrank"), 0)
 	failed += _check("Volle Tasche: Geld bleibt", w.progress.gold, 1000)
 	world.run_actions(w, [{gegenstand = "buerste"}])
 	failed += _check("Geschenk kommt trotzdem", w.progress.item_count("buerste"), 1)
