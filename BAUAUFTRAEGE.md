@@ -277,7 +277,7 @@ _Am 28.10. geteilt: Kofis Kopf-Blatt kam zuerst._
 - **Status:** in Arbeit (28.10.2026: Kopfwechsel gebaut, 1 von 5 Köpfen da: Mira (Novizin) mit rotem Zopf. Ein neues Blatt einbauen: Datei nach `tools/vorlagen/<name>_kopf.png`, Eintrag in `WEITERE_KOEPFE` in `tools/kopf_koerper.py`, Werkzeug laufen lassen.)
 
 ### Schritt 3: Novizen-Körper männlich und weiblich
-- **Ziel:** Ein gemeinsamer Novizen-Körper je Geschlecht für alle sechs; Schal- und Schildfarbe färbt das Spiel pro Figur.
+- **Ziel:** Ein gemeinsamer Novizen-Körper je Geschlecht für alle sechs; Schal- und Schildfarbe färbt das Spiel pro Figur. Prompt: Spieldesign/GRAFIK_AUFTRAG.md (B8), Kopf als grünes Oval, keine Haut sichtbar.
 - **So testest du es:** Alle sechs Novizen laufen und kämpfen mit demselben Körper, aber eigenem Kopf und eigener Farbe.
 - **Status:** offen
 
