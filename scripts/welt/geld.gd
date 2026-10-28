@@ -32,6 +32,20 @@ static func text(amount: int) -> String:
 	return ("−" if amount < 0 else "") + " ".join(parts)
 
 
+## Münzbilder (assets/gegenstaende/muenze_gold, _silber, _bronze), von groß nach klein wie split().
+const MUENZ_BILDER := ["muenze_gold", "muenze_silber", "muenze_bronze"]
+
+
+## Wie text(), aber mit gemalten Münzen statt Münznamen für RichTextLabel, z. B. „1 [Gold] 23 [Silber] 45 [Bronze]“.
+static func bbcode_muenzen(amount: int, groesse := 20) -> String:
+	var coins := split(amount)
+	var parts: PackedStringArray = []
+	for i in coins.size():
+		if coins[i] > 0 or (i == coins.size() - 1 and parts.is_empty()):
+			parts.append("%d [img=%d]res://assets/gegenstaende/%s.png[/img]" % [coins[i], groesse, MUENZ_BILDER[i]])
+	return ("−" if amount < 0 else "") + "  ".join(parts)
+
+
 ## Wie text(), aber mit Münzfarben für RichTextLabel (Gold gelb, Silber hellgrau, Bronze kupfer).
 static func bbcode(amount: int) -> String:
 	const FARBEN := ["f2c14e", "c8ced6", "d08a4e"]

@@ -2446,7 +2446,7 @@ func _quest_details(p: PlayerState, id: String) -> String:
 		lines.append("[color=#f2c14e][b]Belohnung[/b][/color]")
 		var parts: PackedStringArray = []
 		if int(reward.get("gold", 0)) > 0:
-			parts.append("%s %s" % [UiStil.bild("gold", 22), Geld.text(int(reward.gold))])
+			parts.append("+%s" % Geld.bbcode_muenzen(int(reward.gold), 22))
 		if int(reward.get("erfahrung", 0)) > 0:
 			parts.append("%s %d Erfahrung" % [UiStil.bild("kristall", 22), int(reward.erfahrung)])
 		var items: Dictionary = reward.get("gegenstaende", {})
@@ -2503,7 +2503,7 @@ func _stat_bar(name: String, value: int, max_value: int, fill: String, text: Str
 	return row
 
 
-## Fußzeile der Tasche wie im UI-Entwurf: Münze und Gold links, Tasche und belegte Plätze rechts.
+## Fußzeile der Tasche wie im UI-Entwurf: Geld mit gemalten Münzen links, Tasche und belegte Plätze rechts.
 func _fill_bag_footer(p: PlayerState, slots: Array) -> void:
 	for child in _bag_footer.get_children():
 		child.queue_free()
@@ -2513,6 +2513,21 @@ func _fill_bag_footer(p: PlayerState, slots: Array) -> void:
 			var spacer := Control.new()
 			spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			_bag_footer.add_child(spacer)
+			continue
+		if part[0] == "gold":
+			# Geld mit gemalten Münzen: „1 [Gold] 23 [Silber] 45 [Bronze]“
+			var money := RichTextLabel.new()
+			money.bbcode_enabled = true
+			money.fit_content = true
+			money.autowrap_mode = TextServer.AUTOWRAP_OFF
+			money.scroll_active = false
+			money.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			money.add_theme_font_size_override("normal_font_size", 18)
+			money.add_theme_color_override("default_color", Color("f3ead8"))
+			money.add_theme_color_override("font_outline_color", Color.BLACK)
+			money.add_theme_constant_override("outline_size", 5)
+			money.text = Geld.bbcode_muenzen(p.progress.gold, 22)
+			_bag_footer.add_child(money)
 			continue
 		var icon := TextureRect.new()
 		icon.texture = UiStil.symbol(part[0])

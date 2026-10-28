@@ -40,7 +40,7 @@ im öffentlichen Repository https://github.com/benc-uk/super-dungeon-delve
 **Eigene Monster** (von Marco mit KI-Hilfe erstellt, 27.10.2026, Blätter in `tools/vorlagen/`, zerlegt mit `tools/monster_bilder.py`):
 Feldschleim, Wiesenkobold, Kieselkobold, Rüpelkobold, Der Sternenfresser (27./28.10.) sowie die Start-Monster Moosling, Glutwelpe und Bachotter (28.10.). Sie ersetzen die Platzhalter swampy, goblin, imp und wogol.
 
-**Gegenstands-Symbole** (von Marco mit KI-Hilfe erstellt, 28.10.2026, Blatt `tools/vorlagen/gegenstaende.png`, zerlegt mit `tools/gegenstand_bilder.py`): alle Bilder in `assets/gegenstaende/`.
+**Gegenstands-Symbole** (von Marco mit KI-Hilfe erstellt, 28.10.2026, Blätter `tools/vorlagen/gegenstaende.png` und `gegenstaende_2.png` (Münzen, Tränke, Gürtel), zerlegt mit `tools/gegenstand_bilder.py`): alle Bilder in `assets/gegenstaende/`.
 
 **Baukasten (eigene Grafiken von CazeX Studio):** Alle Bilder in `assets/baukasten/` hat Marco mit KI-Hilfe (ChatGPT) erstellt (27.10.2026, sieben Bildblätter in `tools/vorlagen/`), Claude Code hat sie mit `tools/baukasten_zuschneiden.py` freigestellt, ausgeschnitten und verkleinert. Dazu ein achtes Blatt mit Splitterkreis, Kratern und Sternsplitter (roter Schimmer am Rand entfernt).
 

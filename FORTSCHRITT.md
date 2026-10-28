@@ -51,6 +51,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **Münzen, Tränke und Gürtel als Bilder** (28.10., Marcos zweites Symbol-Blatt):
+  - Ausgeschnitten mit `tools/gegenstand_bilder.py` nach `assets/gegenstaende/`: Gold-, Silber- und Bronzemünze,
+    Münzstapel, großer Heiltrank, Manatrank, großer Manatrank, Elixier, Gürtel, leerer Gürtelplatz.
+  - **Geld mit Münzen:** Die Tasche zeigt das Geld jetzt als „1 (Gold) 23 (Silber) 45 (Bronze)“ mit den gemalten Münzen,
+    ebenso die Belohnung im Auftragsbuch. Überall, wo vorher die einzelne Münze aus dem UI-Set war (Meldungen, Laden-Knöpfe),
+    steht jetzt der Münzstapel.
+  - Die Tränke und der Gürtel liegen bereit für Projekt 5 (Gürtel und Tränke).
+  - **So testest du es:** Tasche öffnen (I) und „Test +99 Silber“ drücken: Unten links springen die Münzen um.
+
 - **Projekt 4, Schritt 3: Bankplätze gegen Gold erweitern** (28.10.):
   - Im Bankfenster steht oben „Bank erweitern: +10 Plätze“ mit Preis. Die Preise steigen: 50 Silber, 1 Gold, 2 Gold,
     4 Gold. Danach ist die Bank mit 60 Plätzen voll ausgebaut. Preise und Plätze stehen in `data/laeden.json` („bank“).

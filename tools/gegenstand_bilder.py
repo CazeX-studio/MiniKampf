@@ -1,4 +1,4 @@
-"""Schneidet das Blatt mit den Gegenstands-Symbolen (tools/vorlagen/gegenstaende.png) in einzelne Bilder.
+"""Schneidet die Blätter mit den Gegenstands-Symbolen (tools/vorlagen/gegenstaende*.png) in einzelne Bilder.
 
 Das Blatt hat pinken Hintergrund (Auftrag B6 in Spieldesign/GRAFIK_AUFTRAG.md). Jedes Symbol wird freigestellt,
 quadratisch zugeschnitten und auf 96 × 96 Pixel verkleinert (das Spiel zeigt es weich verkleinert im Taschen-Kästchen).
@@ -16,20 +16,29 @@ WURZEL = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(WURZEL / "tools"))
 from monster_bilder import freistellen  # noqa: E402
 
-BLATT = WURZEL / "tools" / "vorlagen" / "gegenstaende.png"
 ZIEL = WURZEL / "assets" / "gegenstaende"
 GROESSE = 96
 # Reihen von oben nach unten, je von links nach rechts
-REIHEN = [
+BLAETTER = {"gegenstaende": [
 	["heiltrank", "kraut", "wiesenkraut", "wildfleisch", "honigwabe"],
 	["sternensplitter", "schleuder", "buerste", "essenskorb", "festschuessel"],
 	["festlaterne_arkanum", "festlaterne_messinghafen", "festlaterne_glutoase", "festlaterne_gruenwacht",
 		"festlaterne_nebelinseln", "sternentafel", "monsterkarte"],
-]
+], "gegenstaende_2": [
+	# Münzen (für die Geld-Anzeige), Tränke und der Gürtel (Projekt 5)
+	["muenze_gold", "muenze_silber", "muenze_bronze", "muenzen"],
+	["heiltrank_gross", "manatrank", "manatrank_gross", "elixier"],
+	["guertel", "guertel_platz"],
+]}
 
 
 def main():
-	a = freistellen(Image.open(BLATT))
+	for blatt, reihen in BLAETTER.items():
+		zerlegen(blatt, reihen)
+
+
+def zerlegen(blatt, namen_reihen):
+	a = freistellen(Image.open(WURZEL / "tools" / "vorlagen" / f"{blatt}.png"))
 	fest = a[..., 3] > 40
 	lab, _ = ndimage.label(ndimage.binary_dilation(fest, iterations=2))
 	lab[~fest] = 0
@@ -52,7 +61,7 @@ def main():
 			ziel[lab == i] = naechst[0]
 	gross.sort(key=lambda g: (g[1][0].start + g[1][0].stop) / 2)
 	reihen, start = [], 0
-	for namen in REIHEN:
+	for namen in namen_reihen:
 		reihe = sorted(gross[start:start + len(namen)], key=lambda g: g[1][1].start)
 		reihen.append(list(zip(namen, reihe)))
 		start += len(namen)

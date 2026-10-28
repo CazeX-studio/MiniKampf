@@ -90,10 +90,16 @@ static func feld_stil(aktiv: bool) -> StyleBoxTexture:
 
 ## Eines der 12 Symbole (gold, kristall, trank, schwert, schild, wirbel, tasche, schluessel,
 ## zahnrad, ausrufe, frage, pfeil) oder ein anderes Bild aus assets/ui/.
+const MUENZSTAPEL := "res://assets/gegenstaende/muenzen.png"
+
+
 static func symbol(name: String) -> Texture2D:
 	# Festhalten, damit ein nur gezeichnetes Bild (draw_texture) nicht gleich wieder freigegeben wird
 	if not _symbole.has(name):
 		var path := PFAD % ("symbol_" + name)
+		# Geld: der gemalte Münzstapel (Marcos Blatt) statt der einzelnen Münze aus dem UI-Set
+		if name == "gold" and ResourceLoader.exists(MUENZSTAPEL):
+			path = MUENZSTAPEL
 		_symbole[name] = load(path if ResourceLoader.exists(path) else PFAD % name)
 	return _symbole[name]
 
