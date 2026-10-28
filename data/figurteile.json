@@ -888,6 +888,86 @@
 			"richtung": "seite",
 			"winkel": -0.0
 		},
+		"idle_hinten_f0": {
+			"hals": [
+				50.2,
+				44.2
+			],
+			"richtung": "hinten",
+			"winkel": -0.1
+		},
+		"idle_hinten_f1": {
+			"hals": [
+				48.4,
+				43.4
+			],
+			"richtung": "hinten",
+			"winkel": -0.4
+		},
+		"idle_hinten_f2": {
+			"hals": [
+				48.2,
+				44.0
+			],
+			"richtung": "hinten",
+			"winkel": -0.4
+		},
+		"idle_hinten_f3": {
+			"hals": [
+				48.3,
+				44.1
+			],
+			"richtung": "hinten",
+			"winkel": -1.0
+		},
+		"idle_hinten_f4": {
+			"hals": [
+				49.3,
+				43.2
+			],
+			"richtung": "hinten",
+			"winkel": -0.3
+		},
+		"idle_vorn_f0": {
+			"hals": [
+				53.3,
+				46.5
+			],
+			"richtung": "vorn",
+			"winkel": -0.2
+		},
+		"idle_vorn_f1": {
+			"hals": [
+				51.6,
+				46.3
+			],
+			"richtung": "vorn",
+			"winkel": 0.8
+		},
+		"idle_vorn_f2": {
+			"hals": [
+				50.4,
+				46.3
+			],
+			"richtung": "vorn",
+			"winkel": 1.9
+		},
+		"idle_vorn_f3": {
+			"hals": [
+				51.1,
+				47.4
+			],
+			"richtung": "vorn",
+			"winkel": 1.4
+		},
+		"idle_vorn_f4": {
+			"hals": [
+				51.2,
+				46.4
+			],
+			"richtung": "vorn",
+			"winkel": 1.3
+		},
 		"parry_f0": {
 			"hals": [
 				93.3,
@@ -951,6 +1031,86 @@
 			],
 			"richtung": "seite",
 			"winkel": -0.0
+		},
+		"run_hinten_f0": {
+			"hals": [
+				30.5,
+				44.0
+			],
+			"richtung": "hinten",
+			"winkel": 1.2
+		},
+		"run_hinten_f1": {
+			"hals": [
+				28.7,
+				46.2
+			],
+			"richtung": "hinten",
+			"winkel": -0.1
+		},
+		"run_hinten_f2": {
+			"hals": [
+				33.6,
+				43.5
+			],
+			"richtung": "hinten",
+			"winkel": 0.5
+		},
+		"run_hinten_f3": {
+			"hals": [
+				33.2,
+				44.4
+			],
+			"richtung": "hinten",
+			"winkel": -0.7
+		},
+		"run_hinten_f4": {
+			"hals": [
+				28.5,
+				45.3
+			],
+			"richtung": "hinten",
+			"winkel": 0.3
+		},
+		"run_vorn_f0": {
+			"hals": [
+				70.5,
+				48.3
+			],
+			"richtung": "vorn",
+			"winkel": 0.4
+		},
+		"run_vorn_f1": {
+			"hals": [
+				68.2,
+				48.4
+			],
+			"richtung": "vorn",
+			"winkel": 1.3
+		},
+		"run_vorn_f2": {
+			"hals": [
+				66.4,
+				48.1
+			],
+			"richtung": "vorn",
+			"winkel": 1.3
+		},
+		"run_vorn_f3": {
+			"hals": [
+				64.6,
+				46.3
+			],
+			"richtung": "vorn",
+			"winkel": 1.4
+		},
+		"run_vorn_f4": {
+			"hals": [
+				54.5,
+				47.3
+			],
+			"richtung": "vorn",
+			"winkel": 0.3
 		},
 		"victory_f0": {
 			"hals": [

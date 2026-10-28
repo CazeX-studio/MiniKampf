@@ -30,7 +30,10 @@ DATEN = WURZEL / "data" / "figurteile.json"
 KOERPER = {"novize_m": "Novize (m)", "novize_w": "Novizin (w)"}
 ## Abweichende Reihen einzelner Blätter (sonst wie Kofi): Körper -> Blatt -> Reihen
 REIHEN = {
-	"novize_m": {"kampf_b": [[("attack", 6)], [("death", 6)], [("victory", 4), ("cast", 3)]]},
+	"novize_m": {
+		"kampf_b": [[("attack", 6)], [("death", 6)], [("victory", 4), ("cast", 3)]],
+		"welt": [[("idle_vorn", 5), ("run_vorn", 5)], [("idle_hinten", 5), ("run_hinten", 5)]],
+	},
 }
 ## Mit dieser Animation wird jedes weitere Blatt auf die Größe von Blatt 1 gebracht (aufrecht stehend, Kopf frei)
 GROESSE_VON = {"kampf_a": "idle", "kampf_b": "cast", "welt": "idle_vorn"}

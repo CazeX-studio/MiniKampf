@@ -58,7 +58,7 @@ func _koerper_pruefen(koerper: String) -> int:
 	var fehler := 0
 	for kopf: String in FigurTeile.koepfe(koerper):
 		FigurTeile.kopf = kopf
-		for anim: String in ["idle", "run", "hit", "parry", "attack", "death", "victory", "cast"]:
+		for anim: String in ["idle", "run", "hit", "parry", "attack", "death", "victory", "cast", "idle_vorn", "run_vorn", "idle_hinten", "run_hinten"]:
 			if not ResourceLoader.exists(FighterView.sprite_path(koerper, anim, 0)):
 				continue
 			var t := FigurTeile.bild(koerper, anim, 0)
