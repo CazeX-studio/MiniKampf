@@ -3,7 +3,7 @@
 	"sternensplitter": {"bild": {"form": "splitter", "farbe": "b48cff"}, "name": "Sternensplitter", "beschreibung": "Ein Splitter des Siegels. Er summt leise. Belohnung für einen abgeschlossenen Dungeon.", "preis": 0},
 	"schleuder": {"bild": {"form": "schleuder", "farbe": "8a5a32"}, "name": "Schleuder", "beschreibung": "Von Professor Esche. Zähmer schießen damit im Kampf kleine Steine (Fähigkeit „Schleuder“).", "preis": 0},
 	"kraut": {"bild": {"form": "kraut", "farbe": "9fd6b0"}, "name": "Silberkraut", "beschreibung": "Ein Heilkraut, das zwischen den Pflastersteinen wächst.", "preis": 2},
-	"heiltrank": {"bild": {"form": "trank", "farbe": "d94848"}, "name": "Heiltrank", "beschreibung": "Heilt im Kampf etwas Leben.", "preis": 25},
+	"heiltrank": {"bild": {"form": "trank", "farbe": "d94848"}, "guertel": true, "name": "Heiltrank", "beschreibung": "Heilt im Kampf etwas Leben.", "preis": 25},
 	"sternensplitter": {"bild": {"form": "splitter", "farbe": "b48cff"}, "name": "Sternensplitter", "beschreibung": "Ein Splitter aus dem Sternenfall. Belohnung aus Dungeons. Er summt leise. (Bingo kauft ihn nicht an.)", "preis": 0},
 	"essenskorb": {"bild": {"form": "korb", "farbe": "a8743e"}, "name": "Essenskorb", "beschreibung": "Brot, Käse und ein Krug Tee für die Wache am alten Südost-Weg.", "preis": 0},
 	"festschuessel": {"bild": {"form": "korb", "farbe": "c8643e"}, "name": "Festschüssel", "beschreibung": "Eine Schüssel Eintopf vom Festmahl, noch warm. Für Torwache Brom.", "preis": 0},

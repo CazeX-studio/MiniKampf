@@ -112,7 +112,7 @@ Teil 1 ist gebaut (siehe FORTSCHRITT.md). Schritte 1–4 fertig (26.10.). Die De
 ### Schritt 1: Vier Gürtelplätze
 - **Ziel:** Vier Gürtelplätze, jeder fasst einen kleinen Stapel (z. B. 5). Befüllen nur außerhalb des Kampfes.
 - **So testest du es:** Heiltränke auf den Gürtel legen, im Kampf lässt sich der Gürtel nicht umräumen.
-- **Status:** offen
+- **Status:** fertig (28.10.; Gürtel unter der Tasche, nur Heiltränke, Stapel bis 5; im Kampf zählen Gürtel und Tasche zusammen, verbraucht wird zuerst vom Gürtel – dass nur der Gürtel zählt, kommt mit Schritt 2)
 
 ### Schritt 2: Ein Gürtel-Gegenstand pro Runde gratis
 - **Ziel:** Im Kampf ist ein Gürtel-Gegenstand pro Runde gratis, jeder weitere kostet den Zug.

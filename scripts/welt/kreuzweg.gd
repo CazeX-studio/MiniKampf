@@ -142,6 +142,7 @@ var _panel_mode := ""
 ## Kästchen der Tasche (Raster im Taschen-Fenster) und das gerade angeklickte Kästchen
 var _bag_grid: GridContainer
 var _bag_footer: HBoxContainer
+var _belt_row: HBoxContainer
 var _bag_tests: HBoxContainer
 var _quest_view: HBoxContainer
 var _quest_list: VBoxContainer
@@ -1426,6 +1427,25 @@ func _build_ui() -> void:
 	_bag_grid.add_theme_constant_override("h_separation", 4)
 	_bag_grid.add_theme_constant_override("v_separation", 4)
 	panel_box.add_child(_bag_grid)
+	# Gürtel (Projekt 5): vier Plätze unter der Tasche, Klick legt den Stapel zurück in die Tasche
+	_belt_row = HBoxContainer.new()
+	_belt_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	_belt_row.add_theme_constant_override("separation", 4)
+	var belt_icon := TextureRect.new()
+	belt_icon.texture = BagSlot.icon_texture("guertel")
+	belt_icon.custom_minimum_size = Vector2(56, 40)
+	belt_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	belt_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	belt_icon.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	belt_icon.tooltip_text = GameData.text("guertel_hinweis")
+	_belt_row.add_child(belt_icon)
+	for i in Progress.BELT_SLOTS:
+		var belt_slot := BagSlot.new()
+		belt_slot.index = i
+		belt_slot.belt = true
+		belt_slot.picked.connect(func(index: int) -> void: _send({type = "guertel_nehmen", platz = index}))
+		_belt_row.add_child(belt_slot)
+	panel_box.add_child(_belt_row)
 	_panel_text = RichTextLabel.new()
 	_panel_text.bbcode_enabled = true
 	_panel_text.custom_minimum_size = Vector2(570, 330)
@@ -1436,6 +1456,10 @@ func _build_ui() -> void:
 		var link := str(meta)
 		if link == "testtasche" or link == "testbeute":
 			_send({type = "test_tasche" if link == "testtasche" else "test_beute"})
+			return
+		if link.begins_with("guertel:"):
+			_send({type = "guertel_ablegen", gegenstand = link.trim_prefix("guertel:")})
+			_fill_panel()
 			return
 		if link.begins_with("wegwerfen:"):
 			_discard_ask = link.trim_prefix("wegwerfen:")
@@ -2295,6 +2319,7 @@ func _fill_panel() -> void:
 		child.queue_free()
 	_bag_grid.visible = _panel_mode == "tasche"
 	_bag_footer.visible = _panel_mode == "tasche"
+	_belt_row.visible = _panel_mode == "tasche"
 	_bag_tests.visible = _panel_mode == "tasche"
 	_panel_text.custom_minimum_size.y = {"tasche": 120.0, "werte": 220.0}.get(_panel_mode, 330.0)
 	for tab_button: Button in _quest_tabs.get_children():
@@ -2350,10 +2375,16 @@ func _fill_panel() -> void:
 		_panel_title.text = GameData.text("tasche")
 		var slots := _fill_bag(p)
 		_fill_bag_footer(p, slots)
+		for belt_slot in _belt_row.get_children():
+			if belt_slot is BagSlot:
+				var entry: Dictionary = p.progress.belt[belt_slot.index]
+				belt_slot.show_item(str(entry.get("id", "")), int(entry.get("anzahl", 0)), false)
 		var picked := str(slots[_bag_selected]) if _bag_selected >= 0 and _bag_selected < slots.size() else ""
 		if picked != "":
 			var item := GameData.item(picked)
 			var use := "  [url=%s][color=#5ab8ff][%s][/color][/url]" % [picked, GameData.text("benutzen")] if item.has("benutzen") else ""
+			if Progress.belt_allowed(picked):
+				use += "  [url=guertel:%s][color=#f2c14e][%s][/color][/url]" % [picked, GameData.text("guertel_ablegen")]
 			if state.can_discard(p, picked):
 				use += "  [url=wegwerfen:%s][color=#ff8a7a][%s][/color][/url]" % [picked, GameData.text("wegwerfen")]
 			lines.append("[b]%d × %s[/b] – %s%s" % [p.progress.item_count(picked), item.get("name", picked), item.get("beschreibung", ""), use])
@@ -2617,7 +2648,7 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 	var progress := local_player().progress
 	BattleRequest.player_look = local_player().look
 	_prepare_reward(kampf_id)
-	if BattleRequest.prepare(kampf_id, progress.level, progress.item_count("heiltrank"), progress.battle_class(),
+	if BattleRequest.prepare(kampf_id, progress.level, progress.potion_count("heiltrank"), progress.battle_class(),
 			progress.flags.get("monster", [])):
 		SaveGame.save(local_player())
 		get_tree().change_scene_to_file.call_deferred("res://scenes/kampf.tscn")

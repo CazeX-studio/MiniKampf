@@ -235,7 +235,9 @@ func _draw_diagram() -> void:
 func _trial() -> void:
 	var progress: Dictionary = SaveGame.read_progress()
 	var level := int(progress.get("level", 1))
-	var potions := int(progress.get("items", {}).get("heiltrank", 0))
+	var saved := Progress.new()
+	saved.load_dict(progress)
+	var potions := saved.potion_count("heiltrank")
 	if BattleRequest.prepare("probe:" + _selected, level, potions):
 		BattleRequest.return_scene = "res://scenes/klassenwahl.tscn"
 		get_tree().change_scene_to_file("res://scenes/kampf.tscn")

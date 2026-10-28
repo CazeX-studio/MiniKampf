@@ -17,6 +17,7 @@ extends RefCounted
 ##   {type = "dialog_choose", index = 0} im Gespräch eine Antwort wählen
 ##   {type = "szene_verlassen"}          eine gemeinsame Szene verlassen (Zusammenspielen)
 ##   {type = "einlagern", gegenstand = "…"} / {type = "abholen", gegenstand = "…"}  an einer Bankstelle (Bank geöffnet)
+##   {type = "guertel_ablegen", gegenstand = "…"} / {type = "guertel_nehmen", platz = 0}  Trank an den Gürtel bzw. zurück
 ##   {type = "bank_erweitern"}           an einer Bankstelle mehr Bankplätze kaufen
 ##   {type = "kaufen", gegenstand = "…"} / {type = "verkaufen", gegenstand = "…"} / {type = "laden_zu"}  im geöffneten Laden
 ##   {type = "wegwerfen", gegenstand = "…"}  alle Stück eines Gegenstands aus der Tasche wegwerfen
@@ -441,9 +442,11 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 				start_dialog(p, start.dialog)
 		"kampf_ergebnis":
 			# Im Kampf getrunkene Heiltränke sind weg (auch bei einer Niederlage)
-			var used := mini(int(cmd.get("traenke_benutzt", 0)), p.progress.item_count("heiltrank"))
+			var used := mini(int(cmd.get("traenke_benutzt", 0)), p.progress.potion_count("heiltrank"))
 			if used > 0:
-				_give_item(p, "heiltrank", -used)
+				# Zuerst vom Gürtel, dann aus der Tasche
+				p.progress.use_potions("heiltrank", used)
+				progress_changed.emit(p.id)
 			_fighting.erase(p.id)
 			for monster_id: String in cmd.get("gezaehmt", []):
 				_add_to_pack(p, monster_id, true)
@@ -468,6 +471,10 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 				progress_changed.emit(p.id)
 		"wegwerfen":
 			_discard(p, str(cmd.get("gegenstand", "")))
+		"guertel_ablegen":
+			_belt_put(p, str(cmd.get("gegenstand", "")))
+		"guertel_nehmen":
+			_belt_take(p, int(cmd.get("platz", -1)))
 		"beute_nehmen":
 			_take_loot(p, str(cmd.get("gegenstand", "")))
 		"beute_lassen":
@@ -2098,6 +2105,30 @@ func _buy(p: PlayerState, item_id: String) -> void:
 		_update_quests(p)
 		progress_changed.emit(p.id)
 		return
+
+
+## Gürtel (Projekt 5): nur außerhalb des Kampfes; Kämpfe laufen auf eigenem Bildschirm, die Welt nimmt dann keine
+## Befehle der Tasche an. Im Gespräch oder Laden geht es auch nicht, damit nichts durcheinanderkommt.
+func _belt_put(p: PlayerState, item_id: String) -> void:
+	if p.in_dialog() or item_id == "" or not Progress.belt_allowed(item_id):
+		return
+	var moved := p.progress.belt_put(item_id)
+	if moved <= 0:
+		if p.progress.item_count(item_id) > 0:
+			_say(p, GameData.text("guertel_voll", [GameData.item_name(item_id)]))
+		return
+	_say(p, GameData.text("guertel_angehaengt", [moved, GameData.item_name(item_id)]))
+	progress_changed.emit(p.id)
+
+
+func _belt_take(p: PlayerState, slot: int) -> void:
+	if p.in_dialog() or slot < 0 or slot >= p.progress.belt.size() or p.progress.belt[slot].is_empty():
+		return
+	var id: String = p.progress.belt[slot].id
+	if p.progress.belt_take(slot) <= 0:
+		_say(p, GameData.text("guertel_zurueck_voll", [GameData.item_name(id)]))
+		return
+	progress_changed.emit(p.id)
 
 
 ## Ist gerade eine Bank geöffnet (Laden mit "bank": true in data/laeden.json)?

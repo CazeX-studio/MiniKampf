@@ -6,6 +6,10 @@ extends RefCounted
 ## Kästchen in der Tasche (Projekt 4: Tasche mit 30 Plätzen). Jede Sorte Gegenstand braucht ein Kästchen,
 ## mehr vom Gleichen liegt im selben Kästchen.
 const BAG_SIZE := 30
+## Gürtel (Projekt 5): so viele Plätze, jeder fasst einen kleinen Stapel einer Sorte.
+## Nur Gegenstände mit "guertel": true in data/gegenstaende.json (Tränke). Befüllt wird nur außerhalb des Kampfes.
+const BELT_SLOTS := 4
+const BELT_STACK := 5
 ## Plätze in der Bank zu Beginn (Projekt 4). Jede Sorte Gegenstand braucht einen Platz, wie in der Tasche.
 const BANK_START := 20
 
@@ -22,6 +26,8 @@ var loot := {}
 var bank := {}
 ## Plätze in der Bank (später gegen Gold erweiterbar)
 var bank_size := BANK_START
+## Gürtel: BELT_SLOTS Plätze, je {id, anzahl} oder leer ({}). Was am Gürtel hängt, ist nicht mehr in der Tasche.
+var belt: Array = [{}, {}, {}, {}]
 var xp := 0
 var level := 1
 ## Auftrag -> "aktiv", "fertig" oder "abgegeben" (nicht drin = "neu")
@@ -95,6 +101,78 @@ func bag_slots() -> Array:
 	return slots
 
 
+## Darf dieser Gegenstand an den Gürtel?
+static func belt_allowed(id: String) -> bool:
+	return GameData.item(id).get("guertel", false)
+
+
+## Wie viele davon am Gürtel hängen.
+func belt_count(id: String) -> int:
+	var n := 0
+	for entry: Dictionary in belt:
+		if entry.get("id", "") == id:
+			n += int(entry.anzahl)
+	return n
+
+
+## Tränke für den Kampf: Gürtel und Tasche zusammen (bis Schritt 2 „nur der Gürtel zählt“ kommt).
+func potion_count(id: String) -> int:
+	return item_count(id) + belt_count(id)
+
+
+## Im Kampf verbrauchte Tränke abziehen: zuerst vom Gürtel, dann aus der Tasche.
+func use_potions(id: String, count: int) -> void:
+	for entry: Dictionary in belt:
+		if count <= 0:
+			return
+		if entry.get("id", "") == id:
+			var taken := mini(count, int(entry.anzahl))
+			entry.anzahl -= taken
+			count -= taken
+			if int(entry.anzahl) <= 0:
+				entry.clear()
+	if count > 0:
+		add_item(id, -mini(count, item_count(id)))
+
+
+## Aus der Tasche an den Gürtel hängen: füllt einen angefangenen Platz derselben Sorte bis BELT_STACK auf,
+## sonst einen leeren Platz. Gibt die Anzahl zurück (0 = ging nicht).
+func belt_put(id: String) -> int:
+	var have := item_count(id)
+	if have <= 0 or not belt_allowed(id):
+		return 0
+	var slot := -1
+	for i in belt.size():
+		if belt[i].get("id", "") == id and int(belt[i].anzahl) < BELT_STACK:
+			slot = i
+			break
+	if slot < 0:
+		for i in belt.size():
+			if belt[i].is_empty():
+				slot = i
+				break
+	if slot < 0:
+		return 0
+	var now := int(belt[slot].get("anzahl", 0))
+	var moved := mini(have, BELT_STACK - now)
+	belt[slot] = {id = id, anzahl = now + moved}
+	add_item(id, -moved)
+	return moved
+
+
+## Einen Gürtelplatz zurück in die Tasche legen. Gibt die Anzahl zurück (0 = ging nicht, z. B. Tasche voll).
+func belt_take(slot: int) -> int:
+	if slot < 0 or slot >= belt.size() or belt[slot].is_empty():
+		return 0
+	var id: String = belt[slot].id
+	if not has_room(id):
+		return 0
+	var count := int(belt[slot].anzahl)
+	add_item(id, count)
+	belt[slot] = {}
+	return count
+
+
 ## Ganzen Stapel aus der Tasche in die Bank legen. Gibt die Anzahl zurück (0 = ging nicht).
 func deposit(id: String) -> int:
 	var count := item_count(id)
@@ -149,7 +227,7 @@ func xp_range() -> Vector2i:
 
 
 func to_dict() -> Dictionary:
-	return {gold = gold, items = items, slots = bag_slots().duplicate(), beute = loot, bank = bank, bank_plaetze = bank_size,
+	return {gold = gold, items = items, slots = bag_slots().duplicate(), beute = loot, bank = bank, bank_plaetze = bank_size, guertel = belt,
 			xp = xp, level = level, quests = quests, flags = flags}
 
 
@@ -164,6 +242,11 @@ func load_dict(data: Dictionary) -> void:
 	for id: String in saved_bank:
 		bank[id] = int(saved_bank[id])
 	bank_size = int(data.get("bank_plaetze", BANK_START))
+	belt = []
+	var saved_belt: Array = data.get("guertel", [])
+	for i in BELT_SLOTS:
+		var entry: Dictionary = saved_belt[i] if i < saved_belt.size() and saved_belt[i] is Dictionary else {}
+		belt.append({id = str(entry.id), anzahl = int(entry.anzahl)} if entry.has("id") and int(entry.get("anzahl", 0)) > 0 else {})
 	xp = int(data.get("xp", 0))
 	level = int(data.get("level", 1))
 	quests = data.get("quests", {})
