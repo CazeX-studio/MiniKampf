@@ -22,6 +22,9 @@ const GESICHT := {
 	"wurf": "entschlossen", "victory": "freude", "cast": "augen_zu",
 }
 
+## So viel Platz (Pixel) bekommen Körper-Blätter oben und an den Seiten für den Kopf
+const RAND := 24
+
 ## Gilt für alle Figuren, die Teile haben (Umschalter in Editor → Figuren-Animationen)
 static var art := Art.GANZ
 ## Gewählter Kopf bei KOPFBLATT ("" = der eigene Kopf der Figur), siehe koepfe()
@@ -58,7 +61,10 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 	var ergebnis := koerper
 	if not info.get("ganz", false):
 		# Erst der Kopf, dann der Körper darüber: Halstuch und Schwert liegen vor dem Kopf
-		ergebnis = Image.create_empty(koerper.get_width(), koerper.get_height(), false, Image.FORMAT_RGBA8)
+		# Körper-Blätter: oben und seitlich Platz lassen, damit ein großer oder geneigter Kopf nicht abgeschnitten wird
+		# (die Füße bleiben unten in der Mitte, dort richtet das Spiel die Figur aus)
+		var rand := RAND if _alle()[figur].get("_nur_teile", false) else 0
+		ergebnis = Image.create_empty(koerper.get_width() + 2 * rand, koerper.get_height() + rand, false, Image.FORMAT_RGBA8)
 		var kopf_bild: Image
 		var ecke: Vector2i
 		if art_jetzt == Art.TEILE:
@@ -71,11 +77,18 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 			if not punkte.has(variante):
 				variante = "%s_normal" % info.richtung
 			kopf_bild = _bild_laden(KOPF % [kopf_id, variante])
-			var punkt: Array = punkte[variante]
-			ecke = Vector2i(roundi(info.hals[0] - punkt[0]), roundi(info.hals[1] - punkt[1]))
+			var punkt := Vector2(punkte[variante][0], punkte[variante][1])
+			var winkel: float = info.get("winkel", 0.0)
+			if kopf_bild != null and absf(winkel) > 1.0:
+				# Geneigter Kopf (Körper-Blätter mit länglichem Oval): um den Halspunkt drehen
+				var radius := ceili(maxf(maxf(punkt.length(), (Vector2(kopf_bild.get_size()) - punkt).length()),
+						maxf(Vector2(kopf_bild.get_width() - punkt.x, punkt.y).length(), Vector2(punkt.x, kopf_bild.get_height() - punkt.y).length())))
+				kopf_bild = _drehen(kopf_bild, punkt, winkel, radius)
+				punkt = Vector2(radius, radius)
+			ecke = Vector2i(roundi(info.hals[0] - punkt.x), roundi(info.hals[1] - punkt.y)) + Vector2i(rand, rand)
 		if kopf_bild != null:
 			ergebnis.blend_rect(kopf_bild, Rect2i(Vector2i.ZERO, kopf_bild.get_size()), ecke)
-		ergebnis.blend_rect(koerper, Rect2i(Vector2i.ZERO, koerper.get_size()), Vector2i.ZERO)
+		ergebnis.blend_rect(koerper, Rect2i(Vector2i.ZERO, koerper.get_size()), Vector2i(rand, rand))
 	ergebnis.generate_mipmaps()
 	var textur := ImageTexture.create_from_image(ergebnis)
 	_cache[schluessel] = textur
@@ -101,6 +114,43 @@ static func gesicht(anim: String, frame: int) -> String:
 	if anim == "death":
 		return "schmerz" if frame < 2 else "augen_zu"
 	return GESICHT.get(anim, "normal")
+
+
+## Bild um einen Punkt drehen (Grad, im Uhrzeigersinn). Ergebnis: Quadrat mit Seite 2 * radius + 1, der Punkt in der Mitte.
+static func _drehen(bild: Image, punkt: Vector2, winkel: float, radius: int) -> Image:
+	var seite := 2 * radius + 1
+	var ziel := Image.create_empty(seite, seite, false, Image.FORMAT_RGBA8)
+	var c := cos(deg_to_rad(winkel))
+	var s := sin(deg_to_rad(winkel))
+	var w := bild.get_width()
+	var h := bild.get_height()
+	for y in seite:
+		for x in seite:
+			# Rückwärts drehen: welcher Punkt des Kopfbildes landet hier?
+			var dx := float(x - radius)
+			var dy := float(y - radius)
+			var qx := dx * c + dy * s + punkt.x
+			var qy := -dx * s + dy * c + punkt.y
+			if qx < -1.0 or qy < -1.0 or qx > w or qy > h:
+				continue
+			# Weich zwischen den vier Nachbarpunkten mischen
+			var x0 := floori(qx)
+			var y0 := floori(qy)
+			var fx := qx - x0
+			var fy := qy - y0
+			var summe := Color(0, 0, 0, 0)
+			for oy in 2:
+				for ox in 2:
+					var px := x0 + ox
+					var py := y0 + oy
+					if px < 0 or py < 0 or px >= w or py >= h:
+						continue
+					var g := (fx if ox == 1 else 1.0 - fx) * (fy if oy == 1 else 1.0 - fy)
+					var farbe := bild.get_pixel(px, py)
+					summe += Color(farbe.r * farbe.a, farbe.g * farbe.a, farbe.b * farbe.a, farbe.a) * g
+			if summe.a > 0.003:
+				ziel.set_pixel(x, y, Color(summe.r / summe.a, summe.g / summe.a, summe.b / summe.a, summe.a))
+	return ziel
 
 
 static func _bild_laden(pfad: String) -> Image:

@@ -21,7 +21,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
   Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
   gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
-- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Projekt 3 „Geld“ fertig (27.10.: Bronze, Silber, Gold und knappe Beträge; am 28.10. in main übernommen). Projekt 4 Schritt 1 (Tasche mit 30 Plätzen) und „Wegwerfen und Beute-Fenster“ fertig (27.10., am 28.10. übernommen). Projekt 9 „Kreuzweg im Baukasten“: Schritt 1–4 fertig (27.10.). Projekt 10 „Oberfläche nach Marcos UI-Entwurf“ fertig (27.10.). Projekt 4 „Tasche und Bank“ fertig (28.10.). Projekt 5 Schritt 1 und 2 (Gürtel, ein Trank pro Zug gratis) fertig (28.10.). Projekt 11 Schritt 1 (Probe mit Kofi: Kopf und Körper getrennt) und Schritt 2a (Kofis Kopf-Blatt) fertig (28.10.), Schritt 2b in Arbeit (Kopfwechsel, 1 von 5 Köpfen). Schritt 3 in Arbeit (Körper männlich und weiblich, je Blatt 1 von 3). Nächster Schritt: Projekt 5 Schritt 3 „Gemeinsame Trank-Wartezeit“.
+- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Projekt 3 „Geld“ fertig (27.10.: Bronze, Silber, Gold und knappe Beträge; am 28.10. in main übernommen). Projekt 4 Schritt 1 (Tasche mit 30 Plätzen) und „Wegwerfen und Beute-Fenster“ fertig (27.10., am 28.10. übernommen). Projekt 9 „Kreuzweg im Baukasten“: Schritt 1–4 fertig (27.10.). Projekt 10 „Oberfläche nach Marcos UI-Entwurf“ fertig (27.10.). Projekt 4 „Tasche und Bank“ fertig (28.10.). Projekt 5 Schritt 1 und 2 (Gürtel, ein Trank pro Zug gratis) fertig (28.10.). Projekt 11 Schritt 1 (Probe mit Kofi: Kopf und Körper getrennt) und Schritt 2a (Kofis Kopf-Blatt) fertig (28.10.), Schritt 2b in Arbeit (Kopfwechsel, 1 von 5 Köpfen). Schritt 3 in Arbeit (Körper männlich Blatt 1–2, weiblich Blatt 1, Kopf neigt sich mit). Nächster Schritt: Projekt 5 Schritt 3 „Gemeinsame Trank-Wartezeit“.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -50,6 +50,17 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
+
+- **Projekt 11, Schritt 3 (Teil 2): Blatt 2 männlich, Kopf neigt sich mit** (28.10., Blatt `tools/vorlagen/novize_m_kampf_b.png`):
+  - Angriff (6 Bilder), Fallen (6), Sieg (4) und Fähigkeit wirken (3 statt 4, so kam das Blatt) sind eingebaut.
+  - **Der Kopf neigt sich jetzt mit:** Das Werkzeug liest an den länglichen grünen Ovalen ab, wie schräg der Kopf ist
+    (beim Ausholen nach vorne, beim Zurückfallen nach hinten, im Liegen fast waagerecht), und das Spiel dreht den
+    gewählten Kopf genauso um den Hals. Gemessen wird nur am freien Rand des Ovals, weil das Halstuch unten etwas verdeckt.
+    Blatt 1 hat noch runde Kreise, dort bleibt der Kopf gerade.
+  - Blatt 2 war etwas größer gezeichnet als Blatt 1: Das Werkzeug gleicht das an (gemessen vom Oval bis zu den Füßen).
+  - Körper-Bilder bekommen oben und seitlich etwas Platz, damit ein großer oder geneigter Kopf nicht abgeschnitten wird.
+  - **So testest du es:** Editor → „Figuren-Animationen“ → „Körper: Novize (m)“, dann Angriff, Fallen, Sieg und Fähigkeit
+    drücken, mit „Kopf: …“ zwischen Kofi und Mira wechseln. Am besten mit Zeitlupe.
 
 - **Projekt 11, Schritt 3 (Teil 1): Novizen-Körper, erstes Blatt** (28.10., Blätter `tools/vorlagen/novize_m_kampf_a.png` und `novize_w_kampf_a.png`):
   - Marcos erste Körper-Blätter (männlich und weiblich, Kampf: Stehen, Laufen, Getroffen, Parade) sind eingebaut, mit grünem Oval statt Kopf.
