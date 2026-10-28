@@ -53,6 +53,106 @@
 				},
 				"name": "Novize m1"
 			},
+			"m2": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_geneigt": [
+						43.5,
+						53
+					],
+					"hinten_normal": [
+						43.5,
+						54
+					],
+					"seite_augen_zu": [
+						41.8,
+						63
+					],
+					"seite_entschlossen": [
+						41.8,
+						63
+					],
+					"seite_freude": [
+						42.8,
+						63
+					],
+					"seite_normal": [
+						41.8,
+						63
+					],
+					"seite_schmerz": [
+						41.8,
+						63
+					],
+					"vorn_augen_zu": [
+						31.2,
+						63
+					],
+					"vorn_freude": [
+						32.2,
+						63
+					],
+					"vorn_normal": [
+						32.2,
+						63
+					],
+					"vorn_schmerz": [
+						32.2,
+						64
+					]
+				},
+				"name": "Novize m2"
+			},
+			"m3": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_geneigt": [
+						46.1,
+						57
+					],
+					"hinten_normal": [
+						47.1,
+						57
+					],
+					"seite_augen_zu": [
+						43.7,
+						66
+					],
+					"seite_entschlossen": [
+						42.7,
+						66
+					],
+					"seite_freude": [
+						42.7,
+						66
+					],
+					"seite_normal": [
+						43.7,
+						66
+					],
+					"seite_schmerz": [
+						43.7,
+						66
+					],
+					"vorn_augen_zu": [
+						34.8,
+						65
+					],
+					"vorn_freude": [
+						34.8,
+						65
+					],
+					"vorn_normal": [
+						34.8,
+						65
+					],
+					"vorn_schmerz": [
+						34.8,
+						65
+					]
+				},
+				"name": "Novize m3"
+			},
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
@@ -102,6 +202,106 @@
 					]
 				},
 				"name": "Novizin w1"
+			},
+			"w2": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_geneigt": [
+						49.8,
+						57
+					],
+					"hinten_normal": [
+						45.8,
+						57
+					],
+					"seite_augen_zu": [
+						42.8,
+						69
+					],
+					"seite_entschlossen": [
+						41.8,
+						70
+					],
+					"seite_freude": [
+						43.8,
+						69
+					],
+					"seite_normal": [
+						42.8,
+						69
+					],
+					"seite_schmerz": [
+						41.8,
+						69
+					],
+					"vorn_augen_zu": [
+						34.8,
+						68
+					],
+					"vorn_freude": [
+						33.8,
+						67
+					],
+					"vorn_normal": [
+						35.8,
+						68
+					],
+					"vorn_schmerz": [
+						36.8,
+						68
+					]
+				},
+				"name": "Novizin w2"
+			},
+			"w3": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_geneigt": [
+						51.3,
+						59
+					],
+					"hinten_normal": [
+						51.3,
+						60
+					],
+					"seite_augen_zu": [
+						49.4,
+						67
+					],
+					"seite_entschlossen": [
+						48.4,
+						67
+					],
+					"seite_freude": [
+						48.4,
+						67
+					],
+					"seite_normal": [
+						48.4,
+						67
+					],
+					"seite_schmerz": [
+						48.4,
+						67
+					],
+					"vorn_augen_zu": [
+						34.1,
+						69
+					],
+					"vorn_freude": [
+						34.1,
+						69
+					],
+					"vorn_normal": [
+						35.1,
+						69
+					],
+					"vorn_schmerz": [
+						34.1,
+						69
+					]
+				},
+				"name": "Novizin w3"
 			}
 		},
 		"attack_f0": {
@@ -681,6 +881,106 @@
 				},
 				"name": "Novize m1"
 			},
+			"m2": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_geneigt": [
+						43.5,
+						53
+					],
+					"hinten_normal": [
+						43.5,
+						54
+					],
+					"seite_augen_zu": [
+						41.8,
+						63
+					],
+					"seite_entschlossen": [
+						41.8,
+						63
+					],
+					"seite_freude": [
+						42.8,
+						63
+					],
+					"seite_normal": [
+						41.8,
+						63
+					],
+					"seite_schmerz": [
+						41.8,
+						63
+					],
+					"vorn_augen_zu": [
+						31.2,
+						63
+					],
+					"vorn_freude": [
+						32.2,
+						63
+					],
+					"vorn_normal": [
+						32.2,
+						63
+					],
+					"vorn_schmerz": [
+						32.2,
+						64
+					]
+				},
+				"name": "Novize m2"
+			},
+			"m3": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_geneigt": [
+						46.1,
+						57
+					],
+					"hinten_normal": [
+						47.1,
+						57
+					],
+					"seite_augen_zu": [
+						43.7,
+						66
+					],
+					"seite_entschlossen": [
+						42.7,
+						66
+					],
+					"seite_freude": [
+						42.7,
+						66
+					],
+					"seite_normal": [
+						43.7,
+						66
+					],
+					"seite_schmerz": [
+						43.7,
+						66
+					],
+					"vorn_augen_zu": [
+						34.8,
+						65
+					],
+					"vorn_freude": [
+						34.8,
+						65
+					],
+					"vorn_normal": [
+						34.8,
+						65
+					],
+					"vorn_schmerz": [
+						34.8,
+						65
+					]
+				},
+				"name": "Novize m3"
+			},
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
@@ -730,6 +1030,106 @@
 					]
 				},
 				"name": "Novizin w1"
+			},
+			"w2": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_geneigt": [
+						49.8,
+						57
+					],
+					"hinten_normal": [
+						45.8,
+						57
+					],
+					"seite_augen_zu": [
+						42.8,
+						69
+					],
+					"seite_entschlossen": [
+						41.8,
+						70
+					],
+					"seite_freude": [
+						43.8,
+						69
+					],
+					"seite_normal": [
+						42.8,
+						69
+					],
+					"seite_schmerz": [
+						41.8,
+						69
+					],
+					"vorn_augen_zu": [
+						34.8,
+						68
+					],
+					"vorn_freude": [
+						33.8,
+						67
+					],
+					"vorn_normal": [
+						35.8,
+						68
+					],
+					"vorn_schmerz": [
+						36.8,
+						68
+					]
+				},
+				"name": "Novizin w2"
+			},
+			"w3": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_geneigt": [
+						51.3,
+						59
+					],
+					"hinten_normal": [
+						51.3,
+						60
+					],
+					"seite_augen_zu": [
+						49.4,
+						67
+					],
+					"seite_entschlossen": [
+						48.4,
+						67
+					],
+					"seite_freude": [
+						48.4,
+						67
+					],
+					"seite_normal": [
+						48.4,
+						67
+					],
+					"seite_schmerz": [
+						48.4,
+						67
+					],
+					"vorn_augen_zu": [
+						34.1,
+						69
+					],
+					"vorn_freude": [
+						34.1,
+						69
+					],
+					"vorn_normal": [
+						35.1,
+						69
+					],
+					"vorn_schmerz": [
+						34.1,
+						69
+					]
+				},
+				"name": "Novizin w3"
 			}
 		},
 		"_name": "Novize (m)",
@@ -1204,6 +1604,106 @@
 				},
 				"name": "Novize m1"
 			},
+			"m2": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_geneigt": [
+						43.5,
+						53
+					],
+					"hinten_normal": [
+						43.5,
+						54
+					],
+					"seite_augen_zu": [
+						41.8,
+						63
+					],
+					"seite_entschlossen": [
+						41.8,
+						63
+					],
+					"seite_freude": [
+						42.8,
+						63
+					],
+					"seite_normal": [
+						41.8,
+						63
+					],
+					"seite_schmerz": [
+						41.8,
+						63
+					],
+					"vorn_augen_zu": [
+						31.2,
+						63
+					],
+					"vorn_freude": [
+						32.2,
+						63
+					],
+					"vorn_normal": [
+						32.2,
+						63
+					],
+					"vorn_schmerz": [
+						32.2,
+						64
+					]
+				},
+				"name": "Novize m2"
+			},
+			"m3": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_geneigt": [
+						46.1,
+						57
+					],
+					"hinten_normal": [
+						47.1,
+						57
+					],
+					"seite_augen_zu": [
+						43.7,
+						66
+					],
+					"seite_entschlossen": [
+						42.7,
+						66
+					],
+					"seite_freude": [
+						42.7,
+						66
+					],
+					"seite_normal": [
+						43.7,
+						66
+					],
+					"seite_schmerz": [
+						43.7,
+						66
+					],
+					"vorn_augen_zu": [
+						34.8,
+						65
+					],
+					"vorn_freude": [
+						34.8,
+						65
+					],
+					"vorn_normal": [
+						34.8,
+						65
+					],
+					"vorn_schmerz": [
+						34.8,
+						65
+					]
+				},
+				"name": "Novize m3"
+			},
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
@@ -1253,6 +1753,106 @@
 					]
 				},
 				"name": "Novizin w1"
+			},
+			"w2": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_geneigt": [
+						49.8,
+						57
+					],
+					"hinten_normal": [
+						45.8,
+						57
+					],
+					"seite_augen_zu": [
+						42.8,
+						69
+					],
+					"seite_entschlossen": [
+						41.8,
+						70
+					],
+					"seite_freude": [
+						43.8,
+						69
+					],
+					"seite_normal": [
+						42.8,
+						69
+					],
+					"seite_schmerz": [
+						41.8,
+						69
+					],
+					"vorn_augen_zu": [
+						34.8,
+						68
+					],
+					"vorn_freude": [
+						33.8,
+						67
+					],
+					"vorn_normal": [
+						35.8,
+						68
+					],
+					"vorn_schmerz": [
+						36.8,
+						68
+					]
+				},
+				"name": "Novizin w2"
+			},
+			"w3": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_geneigt": [
+						51.3,
+						59
+					],
+					"hinten_normal": [
+						51.3,
+						60
+					],
+					"seite_augen_zu": [
+						49.4,
+						67
+					],
+					"seite_entschlossen": [
+						48.4,
+						67
+					],
+					"seite_freude": [
+						48.4,
+						67
+					],
+					"seite_normal": [
+						48.4,
+						67
+					],
+					"seite_schmerz": [
+						48.4,
+						67
+					],
+					"vorn_augen_zu": [
+						34.1,
+						69
+					],
+					"vorn_freude": [
+						34.1,
+						69
+					],
+					"vorn_normal": [
+						35.1,
+						69
+					],
+					"vorn_schmerz": [
+						34.1,
+						69
+					]
+				},
+				"name": "Novizin w3"
 			}
 		},
 		"_name": "Novizin (w)",

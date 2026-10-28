@@ -50,7 +50,7 @@ GANZ = {"kofi": ["death_f4", "death_f5"]}
 EIGENER_KOPF = {"kofi": "m1"}
 ## Weitere Köpfe aus Kopf-Blättern (tools/vorlagen/<kennung>_kopf.png), die auf den Körper der Figur passen.
 ## Sie werden mit derselben Größe wie die Köpfe der Figur verkleinert.
-WEITERE_KOEPFE = {"kofi": ["w1"]}
+WEITERE_KOEPFE = {"kofi": ["w1", "m2", "m3", "w2", "w3"]}
 
 
 def kopf_name(kennung):

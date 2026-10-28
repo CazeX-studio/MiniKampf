@@ -274,7 +274,7 @@ _Am 28.10. geteilt: Kofis Kopf-Blatt kam zuerst._
 #### Schritt 2b: Kopf-Blätter der anderen fünf Novizen
 - **Ziel:** Die fünf übrigen Kopf-Blätter einbauen und im Editor zwischen den Köpfen wechseln (auf Kofis Körper).
 - **So testest du es:** Im Editor zwischen den sechs Köpfen wechseln, der Körper bleibt gleich.
-- **Status:** in Arbeit (28.10.2026: Kopfwechsel gebaut, 1 von 5 Köpfen da: Novizin w1 (roter Zopf). Köpfe sind namenlos: m1 = Kofis Kopf, weitere heißen m2, m3, w2, w3. Ein neues Blatt einbauen: Datei nach `tools/vorlagen/<kennung>_kopf.png`, Kennung in `WEITERE_KOEPFE` in `tools/kopf_koerper.py`, Werkzeug laufen lassen, danach `tools/koerper_blatt.py`.)
+- **Status:** fertig (28.10.2026: alle sechs Köpfe da: m1 (Kofis Kopf), m2, m3, w1, w2, w3; bei „Figur erstellen“ je nach Geschlecht wählbar. Weitere Köpfe: Datei `tools/vorlagen/<kennung>_kopf.png`, Kennung in `WEITERE_KOEPFE` in `tools/kopf_koerper.py`, dann `tools/kopf_koerper.py` und `tools/koerper_blatt.py` laufen lassen.)
 
 ### Schritt 3: Novizen-Körper männlich und weiblich
 - **Ziel:** Ein gemeinsamer Novizen-Körper je Geschlecht für alle sechs; Schal- und Schildfarbe färbt das Spiel pro Figur. Prompt: Spieldesign/GRAFIK_AUFTRAG.md (B8), Kopf als grünes Oval, keine Haut sichtbar.

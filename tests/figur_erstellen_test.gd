@@ -25,7 +25,7 @@ func _init() -> void:
 	FigurTeile.kopf = ""
 
 	# Nur Köpfe des passenden Geschlechts
-	if FigurTeile.passende_koepfe("novize_m") != ["m1"] or FigurTeile.passende_koepfe("novize_w") != ["w1"]:
+	if FigurTeile.passende_koepfe("novize_m") != ["m1", "m2", "m3"] or FigurTeile.passende_koepfe("novize_w") != ["w1", "w2", "w3"]:
 		print("FEHLER: passende Köpfe falsch: %s / %s" % [FigurTeile.passende_koepfe("novize_m"), FigurTeile.passende_koepfe("novize_w")])
 		fehler += 1
 	if FigurTeile.standardkopf("kofi") != "m1":
