@@ -27,7 +27,7 @@ TEILE = WURZEL / "assets" / "teile"
 DATEN = WURZEL / "data" / "figurteile.json"
 
 ## Körper -> Name im Editor. Die Blätter sind aufgebaut wie Kofis (siehe FIGUREN["kofi"] in figur_bilder.py).
-KOERPER = {"novize_m": "Novize (m)"}
+KOERPER = {"novize_m": "Novize (m)", "novize_w": "Novizin (w)"}
 ## Von dieser Figur kommen die Köpfe (alle Köpfe sind auf ihre Größe gebracht)
 KOPF_QUELLE = "kofi"
 ## So weit unter der sichtbaren Unterkante des Ovals sitzt der Hals (Pixel)

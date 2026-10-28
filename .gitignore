@@ -16,3 +16,4 @@ desktop.ini
 
 # Ergebnisse der automatischen Testkämpfe
 tests/ergebnis_*.txt
+__pycache__/

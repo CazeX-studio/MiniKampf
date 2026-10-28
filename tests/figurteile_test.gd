@@ -40,16 +40,28 @@ func _init() -> void:
 		print("FEHLER: Kofi sollte mindestens zwei Köpfe haben")
 		fehler += 1
 	# Novizen-Körper (grüner Platzhalter): immer zusammengesetzt, mit jedem Kopf, ohne grüne Reste
-	if not FigurTeile.koerper_liste().has("novize_m"):
-		print("FEHLER: Novizen-Körper fehlt")
-		fehler += 1
 	FigurTeile.art = FigurTeile.Art.GANZ
-	for kopf: String in FigurTeile.koepfe("novize_m"):
+	for koerper: String in ["novize_m", "novize_w"]:
+		if not FigurTeile.koerper_liste().has(koerper):
+			print("FEHLER: Körper %s fehlt" % koerper)
+			fehler += 1
+		fehler += _koerper_pruefen(koerper)
+	FigurTeile.kopf = ""
+	if FigurTeile.bild("kofi", "idle", 0) != null:
+		print("FEHLER: bei „ganz“ darf nichts zusammengesetzt werden")
+		fehler += 1
+	print("figurteile_test: %s" % ("OK" if fehler == 0 else "%d Fehler" % fehler))
+	quit(1 if fehler > 0 else 0)
+
+
+func _koerper_pruefen(koerper: String) -> int:
+	var fehler := 0
+	for kopf: String in FigurTeile.koepfe(koerper):
 		FigurTeile.kopf = kopf
 		for anim: String in ["idle", "run", "hit", "parry"]:
-			var t := FigurTeile.bild("novize_m", anim, 0)
+			var t := FigurTeile.bild(koerper, anim, 0)
 			if t == null:
-				print("FEHLER: novize_m %s ohne Bild (Kopf %s)" % [anim, kopf])
+				print("FEHLER: %s %s ohne Bild (Kopf %s)" % [koerper, anim, kopf])
 				fehler += 1
 				continue
 			var im := t.get_image()
@@ -60,11 +72,6 @@ func _init() -> void:
 					if c.a > 0.5 and c.g > c.r + 0.3 and c.g > c.b + 0.3:
 						gruen += 1
 			if gruen > 3:
-				print("FEHLER: novize_m %s hat %d grüne Punkte (Kopf %s)" % [anim, gruen, kopf])
+				print("FEHLER: %s %s hat %d grüne Punkte (Kopf %s)" % [koerper, anim, gruen, kopf])
 				fehler += 1
-	FigurTeile.kopf = ""
-	if FigurTeile.bild("kofi", "idle", 0) != null:
-		print("FEHLER: bei „ganz“ darf nichts zusammengesetzt werden")
-		fehler += 1
-	print("figurteile_test: %s" % ("OK" if fehler == 0 else "%d Fehler" % fehler))
-	quit(1 if fehler > 0 else 0)
+	return fehler
