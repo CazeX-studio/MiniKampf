@@ -168,7 +168,7 @@ func setup(p_fighter: Fighter) -> void:
 		var frames: Array[Texture2D] = []
 		var i := 0
 		while ResourceLoader.exists(sprite_path(look.sprite, anim, i)):
-			frames.append(load(sprite_path(look.sprite, anim, i)))
+			frames.append(einzelbild(look.sprite, anim, i))
 			i += 1
 		if not frames.is_empty():
 			_frames[anim] = frames
@@ -288,6 +288,12 @@ static func look_data(key: String) -> Dictionary:
 static func sprite_path(sprite: String, anim: String, frame: int) -> String:
 	var own := OWN_SPRITE_PATH % [sprite, anim, frame]
 	return own if ResourceLoader.exists(OWN_SPRITE_PATH % [sprite, "idle", 0]) else SPRITE_PATH % [sprite, anim, frame]
+
+
+## Ein Einzelbild laden; Figuren mit Kopf und Körper (Projekt 11) werden je nach FigurTeile.art zusammengesetzt.
+static func einzelbild(sprite: String, anim: String, frame: int) -> Texture2D:
+	var teile := FigurTeile.bild(sprite, anim, frame)
+	return teile if teile != null else load(sprite_path(sprite, anim, frame))
 
 
 ## Fein gezeichnete Bilder (z. B. Vega aus Marcos Bildblättern) sind dreimal so hoch aufgelöst wie die Pixel-Bilder.

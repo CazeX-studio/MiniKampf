@@ -4,6 +4,7 @@ extends Node
 ## Der Kampf selbst läuft nicht weiter (es geht nur ums Anschauen). Zeitlupe hilft, einzelne Bilder zu prüfen.
 
 const ZEITLUPE := 0.3
+const ART_NAMEN: Array[String] = ["Bilder: ganz", "Bilder: aus Teilen", "Bilder: Standardkopf"]
 
 var _combat: Node
 var _vega: FighterView
@@ -24,6 +25,7 @@ func _ready() -> void:
 
 func _exit_tree() -> void:
 	Engine.time_scale = 1.0
+	_slow = false
 	BattleRequest.kampf_id = ""
 	BattleRequest.result = {}
 	BattleRequest.player_look = ""
@@ -78,6 +80,14 @@ func _build_buttons() -> void:
 		Engine.time_scale = ZEITLUPE if _slow else 1.0
 		_slow_button.text = "Zeitlupe: an" if _slow else "Zeitlupe: aus")
 	box.add_child(_slow_button)
+	# Projekt 11: Kopf und Körper getrennt (nur für Figuren, die schon zerlegt sind, z. B. Kofi)
+	if FigurTeile.hat_teile(FigurWahl.gewaehlt()):
+		var teile := _small(ART_NAMEN[FigurTeile.art])
+		teile.tooltip_text = "Ganz: fertige Bilder. Aus Teilen: Körper + eigener Kopf.\nStandardkopf: immer derselbe Kopf (so wird es mit wählbaren Köpfen)."
+		teile.pressed.connect(func() -> void:
+			FigurTeile.art = ((FigurTeile.art + 1) % ART_NAMEN.size()) as FigurTeile.Art
+			get_tree().reload_current_scene())
+		box.add_child(teile)
 	var back := _small("Zurück zum Editor")
 	back.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/editor.tscn"))
 	box.add_child(back)

@@ -259,13 +259,13 @@ _Aus Marcos Entscheidung vom 28.10.2026: Spielfiguren werden aus Kopf und Körpe
 
 ### Schritt 1: Probe mit Kofi
 - **Ziel:** Kofis fertige Bilder in Kopf und Körper zerlegen (Kopf pro Bild ausschneiden, Ankerpunkt am Hals merken) und im Spiel wieder zusammensetzen. Zeigt, ob das mit KI-Bildern sauber klappt, bevor neue Blätter bestellt werden.
-- **So testest du es:** Im Editor bei „Figuren-Animationen“ Kofi ansehen: Er sieht aus wie vorher, Kopf und Körper sind aber getrennte Teile (Knopf „Teile zeigen“).
-- **Status:** offen
+- **So testest du es:** Im Editor bei „Figuren-Animationen“ Kofi ansehen: Er sieht aus wie vorher, Kopf und Körper sind aber getrennte Teile (Knopf „Bilder: ganz / aus Teilen / Standardkopf“).
+- **Status:** fertig (28.10.2026: 46 von 49 Bildern getrennt, liegend und Parade-Anfang bleiben ganz)
 
 ### Schritt 2: Kopf-Blätter der sechs Novizen
-- **Ziel:** Pro Novize ein Kopf-Blatt (Kopf schräg vorne, seitlich, schräg hinten; Gesichter normal, Schmerz, Freude, Augen zu). Prompt bekommt Marco nach Schritt 1.
+- **Ziel:** Pro Novize ein Kopf-Blatt (Kopf schräg vorne, seitlich, schräg hinten; Gesichter normal, Schmerz, Freude, Augen zu). Prompt steht in Spieldesign/GRAFIK_AUFTRAG.md (B7).
 - **So testest du es:** Im Editor zwischen den sechs Köpfen wechseln, der Körper bleibt gleich.
-- **Status:** offen (wartet auf Schritt 1)
+- **Status:** offen (wartet auf Marcos Kopf-Blätter)
 
 ### Schritt 3: Novizen-Körper männlich und weiblich
 - **Ziel:** Ein gemeinsamer Novizen-Körper je Geschlecht für alle sechs; Schal- und Schildfarbe färbt das Spiel pro Figur.

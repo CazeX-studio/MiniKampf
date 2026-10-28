@@ -42,7 +42,7 @@ func setup(look: String, p_name: String, tint := Color.WHITE, name_color := Colo
 		var frames: Array[Texture2D] = []
 		var i := 0
 		while ResourceLoader.exists(FighterView.sprite_path(look, anim, i)):
-			frames.append(load(FighterView.sprite_path(look, anim, i)))
+			frames.append(FighterView.einzelbild(look, anim, i))
 			i += 1
 		_frames[anim] = frames
 	_sprite = Sprite2D.new()
