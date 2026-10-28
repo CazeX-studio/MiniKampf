@@ -36,7 +36,7 @@ REIHEN = {
 	},
 	"novize_w": {
 		"kampf_b": [[("attack", 6)], [("death", 6)], [("victory", 4), ("cast", 3)]],
-		"welt": [[("idle_vorn", 5), ("run_vorn", 5)], [("idle_hinten", 5), ("run_hinten", 5)]],
+		"welt": [[("idle_vorn", 6), ("run_vorn", 5)], [("idle_hinten", 6), ("run_hinten", 5)]],
 	},
 }
 ## Mit dieser Animation wird jedes weitere Blatt auf die Größe von Blatt 1 gebracht (aufrecht stehend, Kopf frei)
