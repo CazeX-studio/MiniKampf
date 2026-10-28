@@ -20,7 +20,7 @@ func _initialize() -> void:
 	var gold := p.progress.gold
 	world.apply_command("a", {type = "kampf_ergebnis", kampf = "wild:0", gewonnen = true, belohnung_gezeigt = true, karte = ""})
 	_check(p.progress.gold == gold + reward.gold and p.progress.level == 11, "Belohnung kommt trotzdem an")
-	_check(not notes.any(func(t: String) -> bool: return t.contains("Erfahrung") or t.contains("Gold") or t.contains("Stufe")),
+	_check(not notes.any(func(t: String) -> bool: return t.contains("Erfahrung") or t.contains("Gold") or t.contains("Silber") or t.contains("Bronze") or t.contains("Stufe")),
 			"Keine doppelte Meldung nach dem Kampf: %s" % [notes])
 	# Ohne Anzeige am Kampfende (z. B. alter Weg): Meldungen wie bisher
 	notes.clear()

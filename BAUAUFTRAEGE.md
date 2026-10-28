@@ -77,7 +77,7 @@ Teil 1 ist gebaut (siehe FORTSCHRITT.md). Schritte 1–4 fertig (26.10.). Die De
 ### Schritt 1: Geld speichern und anzeigen
 - **Ziel:** Geld wird als eine Zahl gespeichert und als Bronze, Silber und Gold angezeigt (z. B. 100 Bronze = 1 Silber, 100 Silber = 1 Gold). Die Münznamen stehen an einer einzigen Stelle.
 - **So testest du es:** Geld-Anzeige ansehen, per Testknopf Geld dazugeben und prüfen, ob die Münzen richtig umspringen.
-- **Status:** offen
+- **Status:** fertig (28.10.; gespeichert in Bronze, Münznamen in `scripts/welt/geld.gd`; die bisherigen Beträge gelten jetzt als Bronze, das Abstimmen kommt mit Schritt 2)
 
 ### Schritt 2: Monster lassen wenig Geld fallen
 - **Ziel:** Besiegte Monster geben einen kleinen Geldbetrag, damit Geld knapp bleibt.

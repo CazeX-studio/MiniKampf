@@ -16,6 +16,7 @@ extends RefCounted
 ##   {type = "dialog_next"}              im Gespräch weiter (wenn es keine Antworten gibt)
 ##   {type = "dialog_choose", index = 0} im Gespräch eine Antwort wählen
 ##   {type = "szene_verlassen"}          eine gemeinsame Szene verlassen (Zusammenspielen)
+##   {type = "testgeld", betrag = 1234}   Geld dazugeben (nur in der Godot-Testversion, für den Geld-Test)
 ##   {type = "kaufen", gegenstand = "…"} / {type = "verkaufen", gegenstand = "…"} / {type = "laden_zu"}  im geöffneten Laden
 ##   {type = "karten_ergebnis", gegner = "marv", gewonnen = true, unentschieden = false}  Ende einer Partie Kreuzweg-Karten
 ## Auf eine andere Karte kommt man über Ausgänge am Rand (hineinlaufen) oder über Orte mit der Aktion "reisen" (Seilaufzug).
@@ -467,6 +468,11 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			_sell(p, str(cmd.get("gegenstand", "")))
 		"laden_zu":
 			p.shop = ""
+		"testgeld":
+			# Nur zum Testen (Testknopf in der Tasche, nur in der Godot-Testversion)
+			if OS.is_debug_build():
+				_give_gold(p, int(cmd.get("betrag", 0)))
+				progress_changed.emit(p.id)
 		"szene_verlassen":
 			_leave_scene(p)
 		"dialog_next":
@@ -1603,7 +1609,7 @@ func _use_item(p: PlayerState, item_id: String) -> void:
 func _give_gold(p: PlayerState, amount: int) -> void:
 	p.progress.gold += amount
 	if not _rewards_shown:
-		_say(p, GameData.text("gold", [amount]))
+		_say(p, GameData.text("gold", [Geld.text(amount)]))
 
 
 func _give_xp(p: PlayerState, amount: int) -> void:
@@ -1991,10 +1997,10 @@ func _buy(p: PlayerState, item_id: String) -> void:
 		if ware.gegenstand != item_id:
 			continue
 		if p.progress.gold < ware.preis:
-			_say(p, GameData.text("zu_wenig_gold", [GameData.item_name(item_id), ware.preis]))
+			_say(p, GameData.text("zu_wenig_gold", [GameData.item_name(item_id), Geld.text(ware.preis)]))
 			return
 		p.progress.gold -= ware.preis
-		_say(p, GameData.text("gold_weg", [ware.preis]))
+		_say(p, GameData.text("gold_weg", [Geld.text(ware.preis)]))
 		_give_item(p, item_id, 1)
 		_update_quests(p)
 		progress_changed.emit(p.id)

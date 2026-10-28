@@ -32,6 +32,8 @@ const STICK_RADIUS := 70.0
 const STICK_DEADZONE := 12.0
 const STICK_HOME := Vector2(170, 560)
 const NOTICE_SECONDS := 3.5
+## Testknopf in der Tasche: so viel Geld (in Bronze) gibt er dazu
+const TESTGELD := 4567
 ## Farbe der Nebenaufträge (wie das blaue „!“ und „?“)
 const SIDE_COLOR := Color("5ab8ff")
 ## Meldungen mit Rahmen: [Vorlage in data/texte.json, Rahmenfarbe, Symbol]. Reihenfolge zählt
@@ -2013,13 +2015,13 @@ func _update_shop() -> void:
 	if p.shop == "":
 		return
 	var shop: Dictionary = GameData.get_file("laeden").get(p.shop, {})
-	var title := _label("%s  ·  %d Gold" % [shop.get("name", p.shop), p.progress.gold], 22, Color("f2c14e"))
+	var title := _label("%s  ·  %s" % [shop.get("name", p.shop), Geld.text(p.progress.gold)], 22, Color("f2c14e"))
 	_shop_box.add_child(UiStil.titel_mit_banner(title))
 	_shop_box.add_child(_label(GameData.text("laden_kaufen"), 17, Color("9fe8ff")))
 	for ware in state.shop_wares(p.shop):
 		var item := GameData.item(ware.gegenstand)
 		var row := _shop_row("%s – %s" % [item.get("name", ware.gegenstand), item.get("beschreibung", "")],
-				"%s · %d Gold" % [GameData.text("laden_kaufen"), ware.preis])
+				"%s · %s" % [GameData.text("laden_kaufen"), Geld.text(ware.preis)])
 		row.button.pressed.connect(func() -> void: _send({type = "kaufen", gegenstand = ware.gegenstand}))
 		if p.progress.gold < ware.preis:
 			row.button.modulate = Color(1, 1, 1, 0.5)
@@ -2032,7 +2034,7 @@ func _update_shop() -> void:
 			continue
 		any = true
 		var row := _shop_row("%d × %s" % [p.progress.items[item_id], GameData.item_name(item_id)],
-				"%s · %d Gold" % [GameData.text("laden_verkaufen"), price])
+				"%s · %s" % [GameData.text("laden_verkaufen"), Geld.text(price)])
 		row.button.pressed.connect(func() -> void: _send({type = "verkaufen", gegenstand = item_id}))
 		_shop_box.add_child(row.box)
 	if not any:
@@ -2072,7 +2074,7 @@ func _update_hud() -> void:
 	var progress := local_player().progress
 	var xp_span := progress.xp_range()
 	var xp_text := GameData.text("hud_max") if xp_span.y < 0 else GameData.text("hud_erfahrung", [progress.xp, xp_span.y])
-	_hud.text = GameData.text("hud", [progress.level, xp_text, progress.gold])
+	_hud.text = GameData.text("hud", [progress.level, xp_text, Geld.text(progress.gold)])
 	if _panel.visible:
 		_fill_panel()
 
@@ -2290,7 +2292,7 @@ func _quest_details(p: PlayerState, id: String) -> String:
 		lines.append("[color=#f2c14e][b]Belohnung[/b][/color]")
 		var parts: PackedStringArray = []
 		if int(reward.get("gold", 0)) > 0:
-			parts.append("%s %d Gold" % [UiStil.bild("gold", 22), int(reward.gold)])
+			parts.append("%s %s" % [UiStil.bild("gold", 22), Geld.text(int(reward.gold))])
 		if int(reward.get("erfahrung", 0)) > 0:
 			parts.append("%s %d Erfahrung" % [UiStil.bild("kristall", 22), int(reward.erfahrung)])
 		var items: Dictionary = reward.get("gegenstaende", {})
@@ -2355,7 +2357,7 @@ func _fill_bag_footer(p: PlayerState, slots: Array) -> void:
 	for id in slots:
 		if str(id) != "":
 			used += 1
-	for part: Array in [["gold", "Gold: %d" % p.progress.gold], [], ["tasche", "%d / %d" % [used, slots.size()]]]:
+	for part: Array in [["gold", Geld.text(p.progress.gold)], [], ["tasche", "%d / %d" % [used, slots.size()]]]:
 		if part.is_empty():
 			var spacer := Control.new()
 			spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -2368,6 +2370,12 @@ func _fill_bag_footer(p: PlayerState, slots: Array) -> void:
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		_bag_footer.add_child(icon)
 		_bag_footer.add_child(_label(part[1], 18, Color("f3ead8")))
+		if part[0] == "gold" and OS.is_debug_build():
+			# Testknopf (nur in der Godot-Testversion): Geld dazugeben, um das Umspringen der Münzen zu sehen
+			var test := _small_button("Test +%s" % Geld.text(TESTGELD), func() -> void:
+				_send({type = "testgeld", betrag = TESTGELD})
+				_fill_panel())
+			_bag_footer.add_child(test)
 
 
 ## Füllt die Kästchen der Tasche. Die Kästchen bleiben dieselben, damit Ziehen und Ablegen nicht abbricht.
