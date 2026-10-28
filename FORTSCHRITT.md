@@ -51,6 +51,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **Gemalte Gegenstands-Symbole** (28.10., Marcos Bildblatt):
+  - 17 Symbole (Heiltrank, Silberkraut, Wiesenkraut, Wildfleisch, Honigwabe, Sternensplitter, Schleuder, Bürste,
+    Essenskorb, Festschüssel, fünf Festlaternen, Sternentafel, verdeckte Monsterkarte) liegen in `assets/gegenstaende/`,
+    ausgeschnitten mit `tools/gegenstand_bilder.py`.
+  - Zu sehen in der Tasche, im Infofenster beim Darüberfahren, im Laden und in der Bank (neben jeder Zeile).
+    Gegenstände ohne Bild (Testkiesel, Testrüstung) werden weiter gezeichnet.
+  - Die Festlaterne zeigt vorerst die glutrote Laterne; die anderen vier Farben liegen bereit. Die Monsterkarte wartet aufs Kartenalbum.
+  - **So testest du es:** Tasche öffnen (I): Alle Gegenstände haben ihr gemaltes Bild. Bei Bingo und an der Bank stehen die Bilder neben den Zeilen.
+
 - **Projekt 4, Schritt 2: Bank, die überall dasselbe enthält** (28.10.):
   - Zwei Bankstellen: **Bankhüterin Ilse** in Kreuzweg (rechts neben Lene an der Gilde) und **Bankhüter Tamm** in
     Wipfelheim (rechts neben Ysolde). Beide öffnen dieselbe Bank (wie die Kafra in Ragnarok).

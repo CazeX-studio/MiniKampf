@@ -2063,7 +2063,7 @@ func _update_shop() -> void:
 	for ware in state.shop_wares(p.shop):
 		var item := GameData.item(ware.gegenstand)
 		var row := _shop_row("%s – %s" % [item.get("name", ware.gegenstand), item.get("beschreibung", "")],
-				"%s · %s" % [GameData.text("laden_kaufen"), Geld.text(ware.preis)])
+				"%s · %s" % [GameData.text("laden_kaufen"), Geld.text(ware.preis)], ware.gegenstand)
 		row.button.pressed.connect(func() -> void: _send({type = "kaufen", gegenstand = ware.gegenstand}))
 		if p.progress.gold < ware.preis:
 			row.button.modulate = Color(1, 1, 1, 0.5)
@@ -2076,7 +2076,7 @@ func _update_shop() -> void:
 			continue
 		any = true
 		var row := _shop_row("%d × %s" % [p.progress.items[item_id], GameData.item_name(item_id)],
-				"%s · %s" % [GameData.text("laden_verkaufen"), Geld.text(price)])
+				"%s · %s" % [GameData.text("laden_verkaufen"), Geld.text(price)], item_id)
 		row.button.pressed.connect(func() -> void: _send({type = "verkaufen", gegenstand = item_id}))
 		_shop_box.add_child(row.box)
 	if not any:
@@ -2113,7 +2113,7 @@ func _fill_bank(p: PlayerState) -> void:
 	for item_id: String in p.progress.bag_slots():
 		if item_id == "":
 			continue
-		var row := _shop_row("%d × %s" % [p.progress.item_count(item_id), GameData.item_name(item_id)], GameData.text("bank_einlagern"))
+		var row := _shop_row("%d × %s" % [p.progress.item_count(item_id), GameData.item_name(item_id)], GameData.text("bank_einlagern"), item_id)
 		row.button.icon = null
 		row.button.pressed.connect(func() -> void: _send({type = "einlagern", gegenstand = item_id}))
 		if not p.progress.bank_has_room(item_id):
@@ -2123,7 +2123,7 @@ func _fill_bank(p: PlayerState) -> void:
 	if p.progress.bank.is_empty():
 		list.add_child(_label(GameData.text("bank_leer"), 15, Color(1, 1, 1, 0.6)))
 	for item_id: String in p.progress.bank:
-		var row := _shop_row("%d × %s" % [int(p.progress.bank[item_id]), GameData.item_name(item_id)], GameData.text("bank_abholen"))
+		var row := _shop_row("%d × %s" % [int(p.progress.bank[item_id]), GameData.item_name(item_id)], GameData.text("bank_abholen"), item_id)
 		row.button.icon = null
 		row.button.pressed.connect(func() -> void: _send({type = "abholen", gegenstand = item_id}))
 		if not p.progress.has_room(item_id):
@@ -2177,12 +2177,21 @@ func _update_loot() -> void:
 
 
 ## Eine Zeile im Laden: Text links, Knopf rechts. Gibt {box, button} zurück.
-func _shop_row(text: String, button_text: String) -> Dictionary:
+func _shop_row(text: String, button_text: String, item_id := "") -> Dictionary:
 	var box := HBoxContainer.new()
+	# Symbol des Gegenstands vor der Zeile (gemalte Bilder aus assets/gegenstaende/)
+	var tex := BagSlot.icon_texture(item_id) if item_id != "" else null
+	if tex != null:
+		var icon := TextureRect.new()
+		icon.texture = tex
+		icon.custom_minimum_size = Vector2(36, 36)
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		box.add_child(icon)
 	var label := Label.new()
 	label.text = text
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	label.custom_minimum_size = Vector2(470, 0)
+	label.custom_minimum_size = Vector2(430, 0)
 	label.add_theme_font_size_override("font_size", 15)
 	box.add_child(label)
 	var button := Button.new()

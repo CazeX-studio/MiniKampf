@@ -2,7 +2,8 @@ class_name BagSlot
 extends Control
 ## Ein Kästchen der Tasche: zeigt einen Gegenstand mit Bild und Anzahl.
 ## Gegenstände lassen sich per Ziehen und Ablegen in ein anderes Kästchen verschieben (Maus oder Finger).
-## Das Bild kommt aus data/gegenstaende.json unter "bild": {"form": "trank", "farbe": "d94848"}.
+## Das Bild ist assets/gegenstaende/<Gegenstand>.png (oder "datei" unter "bild" in data/gegenstaende.json);
+## gibt es keins, wird es gezeichnet: "bild": {"form": "trank", "farbe": "d94848"}.
 
 ## Ein Gegenstand wurde von Kästchen "from" auf Kästchen "to" gezogen.
 signal moved(from: int, to: int)
@@ -17,9 +18,15 @@ var count := 0
 var selected := false
 
 
+## Geladene Symbole: Gegenstand -> Bild (null = keins)
+static var _icons := {}
+
+
 func _init() -> void:
 	custom_minimum_size = Vector2(SIZE, SIZE)
 	mouse_filter = Control.MOUSE_FILTER_STOP
+	# Gemalte Symbole weich verkleinern (die gezeichneten Platzhalter sehen damit genauso aus)
+	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 
 
 func show_item(id: String, amount: int, is_selected: bool) -> void:
@@ -95,14 +102,30 @@ func _draw() -> void:
 	draw_style_box(UiStil.feld_stil(selected), Rect2(Vector2.ZERO, size))
 	if item_id == "":
 		return
-	var look: Dictionary = GameData.item(item_id).get("bild", {})
-	draw_icon(self, size * 0.5 + Vector2(0, -2), str(look.get("form", "")), Color(str(look.get("farbe", "c8c8c8"))))
+	var tex := icon_texture(item_id)
+	if tex != null:
+		# Gemaltes Symbol, weich verkleinert mit etwas Rand im Kästchen
+		var rect := Rect2(Vector2(5, 5), size - Vector2(10, 10))
+		draw_texture_rect(tex, rect, false)
+	else:
+		var look: Dictionary = GameData.item(item_id).get("bild", {})
+		draw_icon(self, size * 0.5 + Vector2(0, -2), str(look.get("form", "")), Color(str(look.get("farbe", "c8c8c8"))))
 	if count > 1:
 		var font := ThemeDB.fallback_font
 		var text := str(count)
 		var pos := Vector2(size.x - 4 - font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 14).x, size.y - 4)
 		draw_string_outline(font, pos, text, HORIZONTAL_ALIGNMENT_LEFT, -1, 14, 4, Color.BLACK)
 		draw_string(font, pos, text, HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color.WHITE)
+
+
+## Gemaltes Symbol eines Gegenstands (assets/gegenstaende/, erstellt mit tools/gegenstand_bilder.py), null = keins.
+static func icon_texture(id: String) -> Texture2D:
+	# Festhalten, damit ein nur gezeichnetes Bild (draw_texture) nicht gleich wieder freigegeben wird
+	if not _icons.has(id):
+		var datei: String = GameData.item(id).get("bild", {}).get("datei", id)
+		var path := "res://assets/gegenstaende/%s.png" % datei
+		_icons[id] = load(path) if ResourceLoader.exists(path) else null
+	return _icons[id]
 
 
 ## Kleines gezeichnetes Bild eines Gegenstands (Platzhalter, bis es echte Grafiken gibt).

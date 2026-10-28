@@ -9,7 +9,7 @@
 	"festschuessel": {"bild": {"form": "korb", "farbe": "c8643e"}, "name": "Festschüssel", "beschreibung": "Eine Schüssel Eintopf vom Festmahl, noch warm. Für Torwache Brom.", "preis": 0},
 	"buerste": {"bild": {"form": "buerste", "farbe": "7a4f2c"}, "name": "Bürste", "beschreibung": "Eine harte Bürste von Steinmetz Quill. Damit putzt man die Statue der Fünf.", "preis": 0,
 		"benutzen": {"feld": [21.5, 21.5], "radius": 3.5, "dialog": "statue_putzen", "sonst": "Die Bürste ist für die Statue der Fünf auf dem Marktplatz. Stell dich direkt daneben."}},
-	"festlaterne": {"bild": {"form": "laterne", "farbe": "f2c14e"}, "name": "Festlaterne", "beschreibung": "Eine Laterne für das Fest der fünf Wege, in der Farbe einer Region.", "preis": 0},
+	"festlaterne": {"bild": {"form": "laterne", "farbe": "f2c14e", "datei": "festlaterne_glutoase"}, "name": "Festlaterne", "beschreibung": "Eine Laterne für das Fest der fünf Wege, in der Farbe einer Region.", "preis": 0},
 	"wiesenkraut": {"bild": {"form": "kraut", "farbe": "6dbb4a"}, "name": "Wiesenkraut", "beschreibung": "Würziges Kraut von den Kreuzwegfeldern. Hanne braucht es fürs Festmahl.", "preis": 1},
 	"wildfleisch": {"bild": {"form": "fleisch", "farbe": "b5524a"}, "name": "Wildfleisch", "beschreibung": "Ein Stück Fleisch, das der Jäger draußen für Hanne bereitgelegt hat.", "preis": 0},
 	"sternentafel": {"bild": {"form": "tafel", "farbe": "7ac8ff"}, "name": "Sternentafel", "beschreibung": "Spielfeld für Kreuzweg-Karten mit neun leuchtenden Feldern, angetrieben von einem Sternensplitter. Viel zu teuer.", "preis": 50000},
