@@ -5,8 +5,11 @@ extends RefCounted
 
 var id: String
 var display_name: String
-## Welche Pixel-Figur gezeigt wird (Name aus dem 0x72-Paket)
+## Welche Figur gezeigt wird: eigene Figur („kofi“), zusammengesetzt aus „Figur erstellen“ („novize_w+mira“)
+## oder ein Name aus dem 0x72-Paket
 var look: String
+## Name aus „Figur erstellen“ (steht über der Figur); "" = display_name zeigen
+var figur_name := ""
 ## Karte, auf der der Spieler gerade steht (Kennung, siehe WorldState.maps)
 var map := "kreuzweg"
 ## Feld, auf dem der Spieler gerade steht

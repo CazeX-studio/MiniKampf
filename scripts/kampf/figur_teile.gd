@@ -33,13 +33,24 @@ static var _daten := {}
 static var _cache := {}
 
 
+## Körper einer zusammengesetzten Figur: „novize_w+mira“ -> „novize_w“ (andere Namen bleiben, wie sie sind).
+static func koerper_von(look: String) -> String:
+	return look.get_slice("+", 0)
+
+
 ## Hat die Figur zerlegte Teile?
 static func hat_teile(figur: String) -> bool:
-	return _alle().has(figur)
+	return _alle().has(koerper_von(figur))
 
 
 ## Einzelbild einer Figur je nach eingestellter Art; null = kein Bild (dann gilt das ganze Bild).
+## figur kann auch „Körper+Kopf“ sein (z. B. „novize_w+mira“, so speichert „Figur erstellen“ das Aussehen):
+## dann gilt dieser Kopf statt des im Editor gewählten.
 static func bild(figur: String, anim: String, frame: int) -> Texture2D:
+	var kopf_wahl := kopf
+	if "+" in figur:
+		kopf_wahl = figur.get_slice("+", 1)
+		figur = koerper_von(figur)
 	if not hat_teile(figur):
 		return null
 	# Körper-Blätter (grüner Platzhalter statt Kopf) werden immer zusammengesetzt
@@ -49,7 +60,7 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 	var info: Dictionary = _alle()[figur].get("%s_f%d" % [anim, frame], {})
 	if info.is_empty():
 		return null
-	var kopf_id := kopf if koepfe(figur).has(kopf) else figur
+	var kopf_id := kopf_wahl if koepfe(figur).has(kopf_wahl) else figur
 	if not koepfe(figur).has(kopf_id) and not koepfe(figur).is_empty():
 		kopf_id = koepfe(figur).keys()[0]
 	var schluessel := "%s/%s/%d/%d/%s" % [figur, anim, frame, art_jetzt, kopf_id]
@@ -106,7 +117,7 @@ static func koerper_liste() -> Dictionary:
 
 ## Alle Köpfe, die auf den Körper der Figur passen: Kopf-Name -> {name, hals}.
 static func koepfe(figur: String) -> Dictionary:
-	return _alle().get(figur, {}).get("_koepfe", {})
+	return _alle().get(koerper_von(figur), {}).get("_koepfe", {})
 
 
 ## Gesicht zu einem Bild: beim Fallen erst Schmerz, dann Augen zu.

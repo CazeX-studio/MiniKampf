@@ -279,13 +279,15 @@ func shown_hp() -> int:
 static func look_data(key: String) -> Dictionary:
 	if LOOKS.has(key):
 		return LOOKS[key]
-	if ResourceLoader.exists(OWN_SPRITE_PATH % [key, "idle", 0]):
+	if ResourceLoader.exists(OWN_SPRITE_PATH % [FigurTeile.koerper_von(key), "idle", 0]):
 		return {sprite = key, scale = 3.0}
 	return {sprite = key, scale = 4.0} if ResourceLoader.exists(SPRITE_PATH % [key, "idle", 0]) else LOOKS["novize"]
 
 
 ## Datei eines Einzelbilds: erst bei den eigenen Figuren nachsehen, sonst im 0x72-Paket.
+## Bei zusammengesetzten Figuren („novize_w+mira“, siehe FigurTeile) zählt nur der Körper.
 static func sprite_path(sprite: String, anim: String, frame: int) -> String:
+	sprite = FigurTeile.koerper_von(sprite)
 	var own := OWN_SPRITE_PATH % [sprite, anim, frame]
 	return own if ResourceLoader.exists(OWN_SPRITE_PATH % [sprite, "idle", 0]) else SPRITE_PATH % [sprite, anim, frame]
 
@@ -309,7 +311,7 @@ static func filter_fuer(texture: Texture2D) -> CanvasItem.TextureFilter:
 
 ## Ist das eine eigene Figur aus assets/figuren/?
 static func is_own_sprite(sprite: String) -> bool:
-	return ResourceLoader.exists(OWN_SPRITE_PATH % [sprite, "idle", 0])
+	return ResourceLoader.exists(OWN_SPRITE_PATH % [FigurTeile.koerper_von(sprite), "idle", 0])
 
 
 static func portrait(klass: String) -> Texture2D:

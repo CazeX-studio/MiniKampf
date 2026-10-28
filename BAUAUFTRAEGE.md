@@ -289,7 +289,7 @@ _Am 28.10. geteilt: Kofis Kopf-Blatt kam zuerst._
 ### Schritt 5: Figur erstellen
 - **Ziel:** Zu Spielbeginn Kopf (einer der sechs) und Geschlecht wählen, Namen eingeben (design.md: „Charakter erstellen“). Später kommen Frisuren dazu (Ideen-Parkplatz).
 - **So testest du es:** Neues Spiel: Figur zusammenstellen, sie läuft so durch Kreuzweg.
-- **Status:** offen
+- **Status:** fertig (28.10.2026: Körper männlich/weiblich, Kopf blättern, Name; gespeichert im Spielstand. Wählbar sind die Köpfe, die es schon gibt: Kofi und Mira. Frisuren kommen später.)
 
 ### Schritt 6: Körper der übrigen Klassen
 - **Ziel:** Die übrigen neun Klassen je männlich und weiblich, Region für Region.

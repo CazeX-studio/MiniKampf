@@ -18,8 +18,12 @@ static func save(p: PlayerState) -> void:
 	var file := FileAccess.open(path, FileAccess.WRITE)
 	if file == null:
 		return
-	file.store_string(JSON.stringify({version = VERSION, karten_stand = MAP_LAYOUT, progress = p.progress.to_dict(), karte = p.map,
-			feld = [p.cell.x, p.cell.y]}, "\t"))
+	var data := {version = VERSION, karten_stand = MAP_LAYOUT, progress = p.progress.to_dict(), karte = p.map,
+			feld = [p.cell.x, p.cell.y]}
+	# Figur aus „Figur erstellen“ (Projekt 11)
+	if p.figur_name != "":
+		data["figur"] = {aussehen = p.look, name = p.figur_name}
+	file.store_string(JSON.stringify(data, "\t"))
 
 
 ## Lädt einen gespeicherten Stand in den Spieler. Gibt false zurück, wenn es keinen gibt.
@@ -30,6 +34,10 @@ static func load_into(p: PlayerState) -> bool:
 	if not data is Dictionary or int(data.get("version", 0)) < VERSION:
 		return false
 	p.progress.load_dict(data.get("progress", {}))
+	var figur: Dictionary = data.get("figur", {})
+	if figur.has("aussehen"):
+		p.look = str(figur.aussehen)
+		p.figur_name = str(figur.get("name", ""))
 	# Ältere Spielstände kennen nur Kreuzweg
 	p.map = str(data.get("karte", "kreuzweg"))
 	var cell: Array = data.get("feld", [])
@@ -67,6 +75,11 @@ static func _read() -> Dictionary:
 		return {}
 	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
 	return data if data is Dictionary else {}
+
+
+## Gibt es schon einen Spielstand (sonst beginnt ein neues Spiel mit „Figur erstellen“)?
+static func exists() -> bool:
+	return FileAccess.file_exists(path)
 
 
 static func delete() -> void:

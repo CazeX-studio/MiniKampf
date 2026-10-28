@@ -21,7 +21,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
   Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
   gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
-- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Projekt 3 „Geld“ fertig (27.10.: Bronze, Silber, Gold und knappe Beträge; am 28.10. in main übernommen). Projekt 4 Schritt 1 (Tasche mit 30 Plätzen) und „Wegwerfen und Beute-Fenster“ fertig (27.10., am 28.10. übernommen). Projekt 9 „Kreuzweg im Baukasten“: Schritt 1–4 fertig (27.10.). Projekt 10 „Oberfläche nach Marcos UI-Entwurf“ fertig (27.10.). Projekt 4 „Tasche und Bank“ fertig (28.10.). Projekt 5 Schritt 1 und 2 (Gürtel, ein Trank pro Zug gratis) fertig (28.10.). Projekt 11 Schritt 1 (Probe mit Kofi: Kopf und Körper getrennt) und Schritt 2a (Kofis Kopf-Blatt) fertig (28.10.), Schritt 2b in Arbeit (Kopfwechsel, 1 von 5 Köpfen). Schritt 3 fertig (beide Novizen-Körper, Kopf neigt sich mit). Nächster Schritt: Projekt 5 Schritt 3 „Gemeinsame Trank-Wartezeit“.
+- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Projekt 3 „Geld“ fertig (27.10.: Bronze, Silber, Gold und knappe Beträge; am 28.10. in main übernommen). Projekt 4 Schritt 1 (Tasche mit 30 Plätzen) und „Wegwerfen und Beute-Fenster“ fertig (27.10., am 28.10. übernommen). Projekt 9 „Kreuzweg im Baukasten“: Schritt 1–4 fertig (27.10.). Projekt 10 „Oberfläche nach Marcos UI-Entwurf“ fertig (27.10.). Projekt 4 „Tasche und Bank“ fertig (28.10.). Projekt 5 Schritt 1 und 2 (Gürtel, ein Trank pro Zug gratis) fertig (28.10.). Projekt 11 Schritt 1 (Probe mit Kofi: Kopf und Körper getrennt) und Schritt 2a (Kofis Kopf-Blatt) fertig (28.10.), Schritt 2b in Arbeit (Kopfwechsel, 1 von 5 Köpfen). Schritt 3 fertig (beide Novizen-Körper, Kopf neigt sich mit). Schritt 5 „Figur erstellen“ fertig (28.10.). Nächster Schritt: Projekt 5 Schritt 3 „Gemeinsame Trank-Wartezeit“.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -50,6 +50,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
+
+- **Projekt 11, Schritt 5: Figur erstellen** (28.10.):
+  - Neuer Bildschirm vor einem neuen Spiel: **Körper** (männlich/weiblich), **Kopf** (mit ◀ ▶ blättern, jetzt Kofi und Mira)
+    und **Name**. Links laufen vier Vorschauen mit: in der Welt, Laufen, im Kampf, Angriff.
+  - Die Figur wird im Spielstand gespeichert (als „Körper+Kopf“, z. B. `novize_w+mira`), über ihr steht ihr Name.
+    Im Kampf und in der Zugleiste ist es dieselbe Figur. Ältere Spielstände ohne Figur spielen weiter wie bisher.
+  - Jeder Kopf passt auf jeden Körper. Soll es wie bei Ragnarok feste Köpfe je Geschlecht geben, ist das schnell umgestellt.
+  - **So testest du es:** Menü → „Kreuzweg-Demo“ (nur wenn es noch keinen Spielstand gibt, sonst oben „Neu beginnen“)
+    oder Editor → „Akt Kreuzweg“: Figur zusammenstellen, Namen eingeben, „Los geht's“. Du läufst mit ihr durch Kreuzweg.
+    „Neu beginnen“ führt jetzt auch zurück zu „Figur erstellen“.
 
 - **Projekt 11, Schritt 3 (Teil 5): Blatt 3 weiblich (Welt)** (28.10., Blatt `tools/vorlagen/novize_w_welt.png`):
   - Stehen (6 Bilder) und Laufen (5 Bilder) schräg von vorne und von hinten. **Beide Novizen-Körper sind damit komplett.**

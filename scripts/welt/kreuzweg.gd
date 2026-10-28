@@ -224,6 +224,11 @@ func _ready() -> void:
 		Netz.enter_world(local)
 	else:
 		local = state.add_player(local_id, "Du", FigurWahl.gewaehlt(), WorldState.start_cell())
+		# Neues Spiel nach „Figur erstellen“: diese Figur nehmen (sie wird mit dem Spielstand gespeichert)
+		if not FigurWahl.neue_figur.is_empty():
+			local.look = FigurWahl.neue_figur.aussehen
+			local.figur_name = FigurWahl.neue_figur.name
+			FigurWahl.neue_figur = {}
 		SaveGame.load_into(local)
 		state.fix_position(local)
 		# Begleiter: die andere eigene Figur (im Editor wählbar)
@@ -404,7 +409,8 @@ func _sync() -> void:
 		if not _characters.has(id):
 			var view := WorldCharacter.new()
 			var is_local := id == local_id
-			view.setup(p.look, p.display_name, Color.WHITE, Color("8affc1") if is_local else Color.WHITE)
+			view.setup(p.look, p.figur_name if p.figur_name != "" else p.display_name, Color.WHITE,
+					Color("8affc1") if is_local else Color.WHITE)
 			_objects.add_child(view)
 			_characters[id] = view
 		var view: WorldCharacter = _characters[id]
@@ -1887,7 +1893,11 @@ func _on_net_lost() -> void:
 func _restart() -> void:
 	_no_save = true
 	SaveGame.delete()
-	get_tree().reload_current_scene()
+	# Allein: von vorne heißt auch eine neue Figur erstellen
+	if Netz.online():
+		get_tree().reload_current_scene()
+	else:
+		get_tree().change_scene_to_file("res://scenes/figur_erstellen.tscn")
 
 
 ## Steuerknopf und Aktions-Knopf nur auf Geräten mit Touchscreen zeigen.

@@ -32,7 +32,9 @@ func _ready() -> void:
 	sub.position = Vector2(0, 180)
 	add_child(sub)
 
-	_add_button("Kreuzweg-Demo\nDie erste Stunde als Novize", Vector2(40, 300), "res://scenes/kreuzweg.tscn")
+	# Neues Spiel (noch kein Spielstand): erst die Figur erstellen (geprüft beim Drücken, der Spielstand-Pfad wird unten gesetzt)
+	_add_button("Kreuzweg-Demo\nDie erste Stunde als Novize", Vector2(40, 300), "",
+			func() -> String: return "res://scenes/kreuzweg.tscn" if SaveGame.exists() else "res://scenes/figur_erstellen.tscn")
 	_add_button("Zusammen spielen\nMit bis zu 4 Spielern in Kreuzweg", Vector2(450, 300), "res://scenes/zusammen.tscn")
 	_add_button("Editor\nTesten: Baukasten, Vega, Sandbox, Akte", Vector2(860, 300), "res://scenes/editor.tscn")
 
@@ -43,6 +45,7 @@ func _ready() -> void:
 		# Wer ins Menü zurückkommt (z. B. vom Abspann), spielt wieder allein und mit dem normalen Spielstand
 		Netz.stop()
 		SaveGame.path = SaveGame.DEFAULT_PATH
+		FigurErstellen.zurueck_zu = "res://scenes/menu.tscn"
 
 	# Musik an/aus (überall auch mit Taste M)
 	var music := Button.new()
@@ -65,12 +68,14 @@ func _start_server() -> void:
 		get_tree().quit(1)
 
 
-func _add_button(text: String, pos: Vector2, scene: String) -> void:
+## ziel_von: wenn gesetzt, bestimmt es erst beim Drücken, wohin es geht (statt scene).
+func _add_button(text: String, pos: Vector2, scene: String, ziel_von := Callable()) -> void:
 	var button := Button.new()
 	button.text = text
 	button.position = pos
 	button.size = Vector2(380, 140)
 	button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	button.add_theme_font_size_override("font_size", 22)
-	button.pressed.connect(func() -> void: get_tree().change_scene_to_file(scene))
+	button.pressed.connect(func() -> void:
+		get_tree().change_scene_to_file(ziel_von.call() if ziel_von.is_valid() else scene))
 	add_child(button)

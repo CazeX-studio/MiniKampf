@@ -32,7 +32,7 @@ func _ready() -> void:
 	_button("Kampf-Sandbox\nAlle 11 Klassen, Pilzhöhle", Vector2(860, 210), func() -> void: _go("res://scenes/auswahl.tscn"))
 
 	_label("Demo testen (eigener Spielstand, dein normaler bleibt unberührt)", 22, Color("f2c14e"), Vector2(40, 380), 1200)
-	_button("Akt Kreuzweg\nVon vorne als Novize", Vector2(40, 420), _start_kreuzweg)
+	_button("Akt Kreuzweg\nVon vorne, mit Figur erstellen", Vector2(40, 420), _start_kreuzweg)
 	_button("Akt Grünwacht\nAls Bogenschütze", Vector2(450, 420), func() -> void: _start_gruenwacht("archer"))
 	_button("Akt Grünwacht\nAls Monster-Zähmer", Vector2(860, 420), func() -> void: _start_gruenwacht("tamer"))
 
@@ -66,11 +66,12 @@ func _go(scene: String) -> void:
 	get_tree().change_scene_to_file(scene)
 
 
-## Kreuzweg von vorne, mit leerem Editor-Spielstand.
+## Kreuzweg von vorne, mit leerem Editor-Spielstand: erst „Figur erstellen“, dann geht es los.
 func _start_kreuzweg() -> void:
 	SaveGame.path = EDITOR_SAVE
 	SaveGame.delete()
-	_go("res://scenes/kreuzweg.tscn")
+	FigurErstellen.zurueck_zu = "res://scenes/editor.tscn"
+	_go("res://scenes/figur_erstellen.tscn")
 
 
 ## Grünwacht: Akt 1 gilt als geschafft, Klasse gewählt; der Abschied bei Ye wird durchgespielt,
