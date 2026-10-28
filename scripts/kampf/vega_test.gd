@@ -4,7 +4,7 @@ extends Node
 ## Der Kampf selbst läuft nicht weiter (es geht nur ums Anschauen). Zeitlupe hilft, einzelne Bilder zu prüfen.
 
 const ZEITLUPE := 0.3
-const ART_NAMEN: Array[String] = ["Bilder: ganz", "Bilder: aus Teilen", "Bilder: Standardkopf"]
+const ART_NAMEN: Array[String] = ["Bilder: ganz", "Bilder: aus Teilen", "Bilder: neuer Kopf"]
 
 var _combat: Node
 var _vega: FighterView
@@ -83,7 +83,7 @@ func _build_buttons() -> void:
 	# Projekt 11: Kopf und Körper getrennt (nur für Figuren, die schon zerlegt sind, z. B. Kofi)
 	if FigurTeile.hat_teile(FigurWahl.gewaehlt()):
 		var teile := _small(ART_NAMEN[FigurTeile.art])
-		teile.tooltip_text = "Ganz: fertige Bilder. Aus Teilen: Körper + eigener Kopf.\nStandardkopf: immer derselbe Kopf (so wird es mit wählbaren Köpfen)."
+		teile.tooltip_text = "Ganz: fertige Bilder. Aus Teilen: Körper + alter Kopf.\nNeuer Kopf: Kopf aus dem Kopf-Blatt mit passendem Gesicht (so wird es mit wählbaren Köpfen)."
 		teile.pressed.connect(func() -> void:
 			FigurTeile.art = ((FigurTeile.art + 1) % ART_NAMEN.size()) as FigurTeile.Art
 			get_tree().reload_current_scene())

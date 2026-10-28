@@ -263,7 +263,16 @@ _Aus Marcos Entscheidung vom 28.10.2026: Spielfiguren werden aus Kopf und Körpe
 - **Status:** fertig (28.10.2026: 46 von 49 Bildern getrennt, liegend und Parade-Anfang bleiben ganz)
 
 ### Schritt 2: Kopf-Blätter der sechs Novizen
+_Am 28.10. geteilt: Kofis Kopf-Blatt kam zuerst._
 - **Ziel:** Pro Novize ein Kopf-Blatt (Kopf schräg vorne, seitlich, schräg hinten; Gesichter normal, Schmerz, Freude, Augen zu). Prompt steht in Spieldesign/GRAFIK_AUFTRAG.md (B7).
+
+#### Schritt 2a: Kofis Kopf-Blatt
+- **Ziel:** Kofis Kopf-Blatt einbauen: Köpfe ausschneiden, in jedem Bild den Kopf finden und tauschen, Gesicht passend zur Bewegung (Schmerz beim Treffer, entschlossen beim Angriff, Freude beim Sieg, Augen zu bei Fähigkeit und Fallen).
+- **So testest du es:** Editor → „Figur: Kofi“ → „Figuren-Animationen“ → Knopf auf „Bilder: neuer Kopf“: Kofi trägt die Köpfe aus dem Blatt.
+- **Status:** fertig (28.10.2026)
+
+#### Schritt 2b: Kopf-Blätter der anderen fünf Novizen
+- **Ziel:** Die fünf übrigen Kopf-Blätter einbauen und im Editor zwischen den Köpfen wechseln (auf Kofis Körper).
 - **So testest du es:** Im Editor zwischen den sechs Köpfen wechseln, der Körper bleibt gleich.
 - **Status:** offen (wartet auf Marcos Kopf-Blätter)
 

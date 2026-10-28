@@ -1,19 +1,26 @@
 class_name FigurTeile
 extends RefCounted
 ## Figuren wie bei Ragnarok (Projekt 11): Körper und Kopf sind getrennte Bilder und werden im Spiel zusammengesetzt.
-## Die Teile erzeugt tools/kopf_koerper.py aus den fertigen Bildern (assets/teile/koerper, assets/teile/kopf),
-## die Ankerpunkte stehen in data/figurteile.json. Bilder ohne Trennung (z. B. liegend) bleiben ganz.
-## Später kommt hier die Wahl von Kopf/Frisur dazu; jetzt gibt es zum Prüfen drei Arten (siehe Art).
+## Die Teile erzeugt tools/kopf_koerper.py aus den fertigen Bildern und dem Kopf-Blatt der Figur:
+## assets/teile/koerper (Körper ohne Kopf), assets/teile/kopf (der alte Kopf jedes Bildes) und
+## assets/teile/koepfe (die Köpfe aus dem Kopf-Blatt, je Richtung und Gesicht). Die Stellen stehen in data/figurteile.json.
+## Bilder ohne Trennung (liegend) bleiben ganz. Später kommt hier die Wahl des Kopfes dazu.
 
 enum Art {
 	GANZ, ## die fertigen Bilder aus assets/figuren (wie bisher)
-	TEILE, ## Körper + eigener Kopf des Bildes (muss genauso aussehen wie GANZ)
-	STANDARDKOPF, ## Körper + immer derselbe Kopf je Blickrichtung (so wird es mit wählbaren Köpfen)
+	TEILE, ## Körper + alter Kopf des Bildes (muss genauso aussehen wie GANZ)
+	KOPFBLATT, ## Körper + Kopf aus dem Kopf-Blatt mit passendem Gesicht (so wird es mit wählbaren Köpfen)
 }
 
 const DATEN := "res://data/figurteile.json"
 const KOERPER := "res://assets/teile/koerper/%s_%s_f%d.png"
-const KOPF := "res://assets/teile/kopf/%s_%s_f%d.png"
+const ALTER_KOPF := "res://assets/teile/kopf/%s_%s_f%d.png"
+const KOPF := "res://assets/teile/koepfe/%s_%s_%s.png"
+## Gesicht je Animation (seitlich); fehlt ein Gesicht in einer Richtung, gilt „normal“
+const GESICHT := {
+	"hit": "schmerz", "parry": "entschlossen", "attack": "entschlossen", "attack2": "entschlossen",
+	"wurf": "entschlossen", "victory": "freude", "cast": "augen_zu",
+}
 
 ## Gilt für alle Figuren, die Teile haben (Umschalter in Editor → Figuren-Animationen)
 static var art := Art.GANZ
@@ -30,38 +37,43 @@ static func hat_teile(figur: String) -> bool:
 static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 	if art == Art.GANZ or not hat_teile(figur):
 		return null
-	var name := "%s_f%d" % [anim, frame]
-	var info: Dictionary = _alle()[figur].get(name, {})
+	var info: Dictionary = _alle()[figur].get("%s_f%d" % [anim, frame], {})
 	if info.is_empty():
 		return null
-	var schluessel := "%s/%s/%d" % [figur, name, art]
+	var schluessel := "%s/%s/%d/%d" % [figur, anim, frame, art]
 	if _cache.has(schluessel):
 		return _cache[schluessel]
 	var koerper := _bild_laden(KOERPER % [figur, anim, frame])
 	if koerper == null:
 		return null
+	var ergebnis := koerper
 	if not info.get("ganz", false):
-		var kopf_name := name if art == Art.TEILE else _standardkopf(anim)
-		var kopf_info: Dictionary = _alle()[figur].get(kopf_name, info)
-		var kopf := _bild_laden(KOPF % [figur, kopf_name.rsplit("_f", true, 1)[0], int(kopf_name.rsplit("_f", true, 1)[1])])
+		# Erst der Kopf, dann der Körper darüber: Halstuch und Schwert liegen vor dem Kopf
+		ergebnis = Image.create_empty(koerper.get_width(), koerper.get_height(), false, Image.FORMAT_RGBA8)
+		var kopf: Image
+		var ecke: Array
+		if art == Art.TEILE:
+			kopf = _bild_laden(ALTER_KOPF % [figur, anim, frame])
+			ecke = info.alt
+		else:
+			kopf = _bild_laden(KOPF % [figur, info.richtung, gesicht(anim, frame)])
+			if kopf == null:
+				kopf = _bild_laden(KOPF % [figur, info.richtung, "normal"])
+			ecke = info.kopf
 		if kopf != null:
-			var hals: Array = info.hals
-			var anker: Array = kopf_info.anker
-			var ziel := Vector2i(roundi(hals[0] - anker[0]), roundi(hals[1] - anker[1]))
-			koerper.blend_rect(kopf, Rect2i(Vector2i.ZERO, kopf.get_size()), ziel)
-	koerper.generate_mipmaps()
-	var textur := ImageTexture.create_from_image(koerper)
+			ergebnis.blend_rect(kopf, Rect2i(Vector2i.ZERO, kopf.get_size()), Vector2i(int(ecke[0]), int(ecke[1])))
+		ergebnis.blend_rect(koerper, Rect2i(Vector2i.ZERO, koerper.get_size()), Vector2i.ZERO)
+	ergebnis.generate_mipmaps()
+	var textur := ImageTexture.create_from_image(ergebnis)
 	_cache[schluessel] = textur
 	return textur
 
 
-## Kopf, der bei „Standardkopf“ immer benutzt wird: das erste Stehbild der passenden Blickrichtung.
-static func _standardkopf(anim: String) -> String:
-	if anim.ends_with("_vorn"):
-		return "idle_vorn_f0"
-	if anim.ends_with("_hinten"):
-		return "idle_hinten_f0"
-	return "idle_f0"
+## Gesicht zu einem Bild: beim Fallen erst Schmerz, dann Augen zu.
+static func gesicht(anim: String, frame: int) -> String:
+	if anim == "death":
+		return "schmerz" if frame < 2 else "augen_zu"
+	return GESICHT.get(anim, "normal")
 
 
 static func _bild_laden(pfad: String) -> Image:

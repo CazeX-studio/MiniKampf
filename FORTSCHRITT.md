@@ -21,7 +21,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
   Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
   gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
-- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Projekt 3 „Geld“ fertig (27.10.: Bronze, Silber, Gold und knappe Beträge; am 28.10. in main übernommen). Projekt 4 Schritt 1 (Tasche mit 30 Plätzen) und „Wegwerfen und Beute-Fenster“ fertig (27.10., am 28.10. übernommen). Projekt 9 „Kreuzweg im Baukasten“: Schritt 1–4 fertig (27.10.). Projekt 10 „Oberfläche nach Marcos UI-Entwurf“ fertig (27.10.). Projekt 4 „Tasche und Bank“ fertig (28.10.). Projekt 5 Schritt 1 und 2 (Gürtel, ein Trank pro Zug gratis) fertig (28.10.). Projekt 11 Schritt 1 (Probe mit Kofi: Kopf und Körper getrennt) fertig (28.10.). Nächster Schritt: Projekt 5 Schritt 3 „Gemeinsame Trank-Wartezeit“.
+- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Projekt 3 „Geld“ fertig (27.10.: Bronze, Silber, Gold und knappe Beträge; am 28.10. in main übernommen). Projekt 4 Schritt 1 (Tasche mit 30 Plätzen) und „Wegwerfen und Beute-Fenster“ fertig (27.10., am 28.10. übernommen). Projekt 9 „Kreuzweg im Baukasten“: Schritt 1–4 fertig (27.10.). Projekt 10 „Oberfläche nach Marcos UI-Entwurf“ fertig (27.10.). Projekt 4 „Tasche und Bank“ fertig (28.10.). Projekt 5 Schritt 1 und 2 (Gürtel, ein Trank pro Zug gratis) fertig (28.10.). Projekt 11 Schritt 1 (Probe mit Kofi: Kopf und Körper getrennt) und Schritt 2a (Kofis Kopf-Blatt) fertig (28.10.). Nächster Schritt: Projekt 5 Schritt 3 „Gemeinsame Trank-Wartezeit“.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -51,6 +51,22 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **Projekt 11, Schritt 2a: Kofis Kopf-Blatt** (28.10., Blatt `tools/vorlagen/kofi_kopf.png`):
+  - Die elf Köpfe aus Marcos Blatt (seitlich 5 Gesichter, schräg vorne 4, schräg hinten 2) sind ausgeschnitten und auf
+    Spielgröße gebracht (`assets/teile/koepfe/`). Das Werkzeug `tools/kopf_koerper.py` sucht jetzt in jedem Bild,
+    wo der Kopf sitzt, indem es den neuen Kopf darüberlegt. Das ist viel genauer als vorher (die alte Halserkennung
+    hatte Hautglanz für das gelbe Halstuch gehalten und den Kopf oft nur an den Haaren abgeschnitten).
+  - **Gesicht passend zur Bewegung:** Schmerz beim Getroffen-Werden und am Anfang des Fallens, entschlossen bei Angriff
+    und Parade, Freude beim Sieg, Augen zu bei „Fähigkeit wirken“ und am Ende des Fallens. Sieg und Fähigkeit nehmen den
+    Kopf „schräg vorne“, weil Kofi dort zum Betrachter schaut.
+  - Erst kommt der Kopf, dann der Körper darüber: Halstuch und Schwert liegen vor dem Kopf, der Halsansatz verschwindet im Tuch.
+  - **Grenzen dieser Probe:** Der neue Kopf ist immer gerade, auch wenn Kofi sich vorbeugt (z. B. beim Fallen oder bei der
+    Fähigkeit). An zwei, drei Stellen schaut noch ein Rest der alten Haare hervor. Die zwei liegenden Bilder bleiben ganz.
+    Bei den neuen Körpern ohne Kopf (Schritt 3) fällt das alles weg.
+  - **So testest du es:** Editor → „Figur: Kofi“ → „Figuren-Animationen“ → Knopf „Bilder: …“ bis „neuer Kopf“ drücken.
+    Dann alle Knöpfe durchprobieren (Getroffen, Angriff, Sieg, Fähigkeit, Fallen), am besten mit Zeitlupe.
+    Die Einstellung gilt bis zum Neustart auch in der Demo.
+
 - **Projekt 11, Schritt 1: Probe mit Kofi – Kopf und Körper getrennt** (28.10.):
   - Kofis 49 Bilder sind in **Körper** und **Kopf** zerlegt (`assets/teile/`), mit einem Ankerpunkt am Hals
     (`data/figurteile.json`). Das Spiel setzt sie wieder zusammen. Werkzeug: `tools/kopf_koerper.py`.
@@ -61,8 +77,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     (immer derselbe Kopf je Blickrichtung) wirkt er beim Laufen und Kämpfen etwas steifer, weil der Kopf nicht mehr
     mitwackelt und kein Gesicht mehr zieht – genau dafür gibt es in Schritt 2 eigene Kopf-Blätter mit Gesichtern.
   - **So testest du es:** Editor → „Figur: Kofi“ → „Figuren-Animationen“: Der neue Knopf „Bilder: ganz / aus Teilen /
-    Standardkopf“ schaltet um. „Aus Teilen“ muss genauso aussehen wie „ganz“. Bei „Standardkopf“ sitzt immer derselbe Kopf
-    auf dem Körper. Die Einstellung gilt bis zum Neustart auch in der Demo (Akt Kreuzweg).
+    Standardkopf“ schaltet um. „Aus Teilen“ muss genauso aussehen wie „ganz“. („Standardkopf“ ist seit Schritt 2a
+    „neuer Kopf“.) Die Einstellung gilt bis zum Neustart auch in der Demo (Akt Kreuzweg).
 
 - **Kofi, der erste Novize** (28.10., Marcos drei Bildblätter):
   - Kofi ist eingebaut wie Vega: Welt in vier Richtungen, Kampf mit Stehen, Laufen, Getroffen, Parade mit Schild,

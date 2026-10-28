@@ -28,9 +28,9 @@ func _init() -> void:
 			if abweichung > 0:
 				print("FEHLER: kofi %s_f%d weicht an %d Punkten ab" % [anim, i, abweichung])
 				fehler += 1
-			FigurTeile.art = FigurTeile.Art.STANDARDKOPF
+			FigurTeile.art = FigurTeile.Art.KOPFBLATT
 			if FigurTeile.bild("kofi", anim, i) == null:
-				print("FEHLER: kein Standardkopf-Bild für %s_f%d" % [anim, i])
+				print("FEHLER: kein Bild mit neuem Kopf für %s_f%d" % [anim, i])
 				fehler += 1
 			i += 1
 	FigurTeile.art = FigurTeile.Art.GANZ
