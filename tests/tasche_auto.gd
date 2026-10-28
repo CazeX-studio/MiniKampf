@@ -17,7 +17,7 @@ func _process(delta: float) -> void:
 		[0.5, func() -> void:
 			p.dialog = {}
 			p.progress.flags["angekommen"] = true
-			p.progress.gold = 42
+			p.progress.gold = 12345
 			for id: String in ["heiltrank", "kraut", "wiesenkraut", "honigwabe", "sternensplitter", "schleuder", "essenskorb",
 					"buerste", "festlaterne", "wildfleisch", "sternentafel"]:
 				p.progress.add_item(id, 3 if id == "heiltrank" else 1)

@@ -1,7 +1,7 @@
 extends SceneTree
 ## Spielt die ganze erste Stunde der Kreuzweg-Demo am Stück durch – ohne Grafik, aber mit echten Kämpfen.
 ## Ein Computer-Spieler folgt den Zeichen (! und ?), dem Ziel-Hinweis und redet sonst mit allen.
-## Gibt eine Übersicht aus: wann welcher Auftrag fertig war, Stufe, Gold, Kämpfe und eine geschätzte Spielzeit.
+## Gibt eine Übersicht aus: wann welcher Auftrag fertig war, Stufe, Geld, Kämpfe und eine geschätzte Spielzeit.
 ## Aufruf: Godot --headless --path . --script res://tests/durchlauf_test.gd   (optional: -- <Startwert>)
 
 const MAX_ACTIONS := 4000
@@ -43,8 +43,8 @@ func _run() -> void:
 		for id: String in p.progress.quests:
 			if p.progress.quests[id] == "abgegeben" and not done_quests.has(id):
 				done_quests[id] = true
-				print("%5.1f min  Auftrag „%s“ fertig  –  Stufe %d (%d Erfahrung), %d Gold" % [
-					_seconds / 60.0, GameData.quest(id).get("titel", id), p.progress.level, p.progress.xp, p.progress.gold])
+				print("%5.1f min  Auftrag „%s“ fertig  –  Stufe %d (%d Erfahrung), %s" % [
+					_seconds / 60.0, GameData.quest(id).get("titel", id), p.progress.level, p.progress.xp, Geld.text(p.progress.gold)])
 		if _pending_battle != "":
 			await _play_battle(_pending_battle)
 			_pending_battle = ""
@@ -86,7 +86,7 @@ func _run() -> void:
 	print("\nKämpfe:")
 	for line in _battle_log:
 		print("  " + line)
-	print("\nEnde: Stufe %d, %d Erfahrung, %d Gold, Tasche %s" % [p.progress.level, p.progress.xp, p.progress.gold, p.progress.items])
+	print("\nEnde: Stufe %d, %d Erfahrung, %s, Tasche %s" % [p.progress.level, p.progress.xp, Geld.text(p.progress.gold), p.progress.items])
 	print("Geschätzte Spielzeit: %d Minuten (%d Dialogzeilen, %d eigene Kampfzüge, Laufwege)" % [
 		int(_seconds / 60.0), _lines, _battle_turns])
 	print("Durchlauf: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))

@@ -3,14 +3,19 @@ extends RefCounted
 ## Fortschritt eines Spielers: Gold, Tasche, Erfahrung und Stufe, Aufträge, Gemerktes.
 ## Nur Daten und Regeln, keine Grafik. Lässt sich als Dictionary speichern und wieder laden.
 
-## Kästchen in der Tasche (Projekt 4: Tasche mit 30 Plätzen)
+## Kästchen in der Tasche (Projekt 4: Tasche mit 30 Plätzen). Jede Sorte Gegenstand braucht ein Kästchen,
+## mehr vom Gleichen liegt im selben Kästchen.
 const BAG_SIZE := 30
 
+## Geld in Bronze (Anzeige als Bronze, Silber, Gold: siehe geld.gd)
 var gold := 0
 ## Gegenstand -> Anzahl
 var items := {}
 ## Reihenfolge in der Tasche: ein Gegenstand pro Kästchen ("" = leer). Wird über bag_slots() aufgeräumt.
 var slots: Array = []
+## Beute nach einem Sieg, die nicht mehr in die Tasche gepasst hat: Gegenstand -> Anzahl.
+## Sie wartet im Beute-Fenster, bis man sie nimmt (nach dem Wegwerfen von etwas anderem) oder liegen lässt.
+var loot := {}
 var xp := 0
 var level := 1
 ## Auftrag -> "aktiv", "fertig" oder "abgegeben" (nicht drin = "neu")
@@ -36,6 +41,16 @@ func item_count(id: String) -> int:
 	return items.get(id, 0)
 
 
+## Belegte Kästchen in der Tasche.
+func used_slots() -> int:
+	return items.size()
+
+
+## Passt dieser Gegenstand noch in die Tasche? Mehr vom Gleichen passt immer.
+func has_room(id: String) -> bool:
+	return items.has(id) or items.size() < BAG_SIZE
+
+
 func add_item(id: String, count: int) -> void:
 	items[id] = item_count(id) + count
 	if items[id] <= 0:
@@ -43,7 +58,7 @@ func add_item(id: String, count: int) -> void:
 	bag_slots()
 
 
-## Die Kästchen der Tasche (BAG_SIZE Stück, mehr wenn nötig): Leere Gegenstände fliegen raus,
+## Die Kästchen der Tasche (BAG_SIZE Stück; nur wenn ein Auftrag trotz voller Tasche etwas gibt, kurz mehr): Leere Gegenstände fliegen raus,
 ## neue kommen ins erste freie Kästchen. Die Reihenfolge bleibt sonst, wie der Spieler sie gelegt hat.
 func bag_slots() -> Array:
 	var seen := {}
@@ -63,6 +78,14 @@ func bag_slots() -> Array:
 			slots.append(id)
 		else:
 			slots[free] = id
+	# Gegenstände aus Extra-Kästchen rücken in frei gewordene Kästchen nach, leere Extra-Kästchen verschwinden
+	for i in range(BAG_SIZE, slots.size()):
+		var free := slots.find("")
+		if slots[i] != "" and free >= 0 and free < BAG_SIZE:
+			slots[free] = slots[i]
+			slots[i] = ""
+	while slots.size() > BAG_SIZE and slots.back() == "":
+		slots.pop_back()
 	return slots
 
 
@@ -95,11 +118,15 @@ func xp_range() -> Vector2i:
 
 
 func to_dict() -> Dictionary:
-	return {gold = gold, items = items, slots = bag_slots().duplicate(), xp = xp, level = level, quests = quests, flags = flags}
+	return {gold = gold, items = items, slots = bag_slots().duplicate(), beute = loot, xp = xp, level = level, quests = quests, flags = flags}
 
 
 func load_dict(data: Dictionary) -> void:
 	gold = int(data.get("gold", 0))
+	loot = {}
+	var saved_loot: Dictionary = data.get("beute", {})
+	for id: String in saved_loot:
+		loot[id] = int(saved_loot[id])
 	xp = int(data.get("xp", 0))
 	level = int(data.get("level", 1))
 	quests = data.get("quests", {})

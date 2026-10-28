@@ -93,7 +93,7 @@ func _run() -> void:
 		", ".join(_group_battles), _solo_battles, ", ".join(_scenes_seen.keys()), _votes_split])
 	for id: String in _final:
 		var progress: Progress = _final[id]
-		print("Spieler %s: Stufe %d, %d Gold, Klasse %s" % [id.to_upper(), progress.level, progress.gold, progress.flags.get("klasse", "-")])
+		print("Spieler %s: Stufe %d, %s, Klasse %s" % [id.to_upper(), progress.level, Geld.text(progress.gold), progress.flags.get("klasse", "-")])
 	print("Durchlauf zu zweit: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)
 

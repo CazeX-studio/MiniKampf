@@ -3,7 +3,7 @@
 	"sternensplitter": {"bild": {"form": "splitter", "farbe": "b48cff"}, "name": "Sternensplitter", "beschreibung": "Ein Splitter des Siegels. Er summt leise. Belohnung für einen abgeschlossenen Dungeon.", "preis": 0},
 	"schleuder": {"bild": {"form": "schleuder", "farbe": "8a5a32"}, "name": "Schleuder", "beschreibung": "Von Professor Esche. Zähmer schießen damit im Kampf kleine Steine (Fähigkeit „Schleuder“).", "preis": 0},
 	"kraut": {"bild": {"form": "kraut", "farbe": "9fd6b0"}, "name": "Silberkraut", "beschreibung": "Ein Heilkraut, das zwischen den Pflastersteinen wächst.", "preis": 2},
-	"heiltrank": {"bild": {"form": "trank", "farbe": "d94848"}, "name": "Heiltrank", "beschreibung": "Heilt im Kampf etwas Leben.", "preis": 15},
+	"heiltrank": {"bild": {"form": "trank", "farbe": "d94848"}, "name": "Heiltrank", "beschreibung": "Heilt im Kampf etwas Leben.", "preis": 25},
 	"sternensplitter": {"bild": {"form": "splitter", "farbe": "b48cff"}, "name": "Sternensplitter", "beschreibung": "Ein Splitter aus dem Sternenfall. Belohnung aus Dungeons. Er summt leise. (Bingo kauft ihn nicht an.)", "preis": 0},
 	"essenskorb": {"bild": {"form": "korb", "farbe": "a8743e"}, "name": "Essenskorb", "beschreibung": "Brot, Käse und ein Krug Tee für die Wache am alten Südost-Weg.", "preis": 0},
 	"festschuessel": {"bild": {"form": "korb", "farbe": "c8643e"}, "name": "Festschüssel", "beschreibung": "Eine Schüssel Eintopf vom Festmahl, noch warm. Für Torwache Brom.", "preis": 0},
@@ -12,5 +12,7 @@
 	"festlaterne": {"bild": {"form": "laterne", "farbe": "f2c14e"}, "name": "Festlaterne", "beschreibung": "Eine Laterne für das Fest der fünf Wege, in der Farbe einer Region.", "preis": 0},
 	"wiesenkraut": {"bild": {"form": "kraut", "farbe": "6dbb4a"}, "name": "Wiesenkraut", "beschreibung": "Würziges Kraut von den Kreuzwegfeldern. Hanne braucht es fürs Festmahl.", "preis": 1},
 	"wildfleisch": {"bild": {"form": "fleisch", "farbe": "b5524a"}, "name": "Wildfleisch", "beschreibung": "Ein Stück Fleisch, das der Jäger draußen für Hanne bereitgelegt hat.", "preis": 0},
-	"sternentafel": {"bild": {"form": "tafel", "farbe": "7ac8ff"}, "name": "Sternentafel", "beschreibung": "Spielfeld für Kreuzweg-Karten mit neun leuchtenden Feldern, angetrieben von einem Sternensplitter. Viel zu teuer.", "preis": 5000}
+	"sternentafel": {"bild": {"form": "tafel", "farbe": "7ac8ff"}, "name": "Sternentafel", "beschreibung": "Spielfeld für Kreuzweg-Karten mit neun leuchtenden Feldern, angetrieben von einem Sternensplitter. Viel zu teuer.", "preis": 50000},
+	"testkiesel": {"bild": {"form": "stein", "farbe": "9a9a9a"}, "name": "Testkiesel", "beschreibung": "Nur zum Ausprobieren, füllt die Tasche. Bingo kauft ihn für 1 Bronze.", "preis": 2},
+	"testruestung": {"bild": {"form": "ruestung", "farbe": "8fa3b8"}, "name": "Testrüstung", "beschreibung": "Nur zum Ausprobieren: Beute wie nach einem Sieg. Bingo kauft sie für 20 Bronze.", "preis": 40}
 }

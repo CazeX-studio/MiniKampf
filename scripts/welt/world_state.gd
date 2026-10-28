@@ -17,6 +17,9 @@ extends RefCounted
 ##   {type = "dialog_choose", index = 0} im Gespräch eine Antwort wählen
 ##   {type = "szene_verlassen"}          eine gemeinsame Szene verlassen (Zusammenspielen)
 ##   {type = "kaufen", gegenstand = "…"} / {type = "verkaufen", gegenstand = "…"} / {type = "laden_zu"}  im geöffneten Laden
+##   {type = "wegwerfen", gegenstand = "…"}  alle Stück eines Gegenstands aus der Tasche wegwerfen
+##   {type = "beute_nehmen", gegenstand = "…"} / {type = "beute_lassen"}  Beute, die nicht in die Tasche gepasst hat
+##   {type = "test_geld", bronze = 75} / {type = "test_tasche"} / {type = "test_beute"}  Testknöpfe (nur im Godot-Editor)
 ##   {type = "karten_ergebnis", gegner = "marv", gewonnen = true, unentschieden = false}  Ende einer Partie Kreuzweg-Karten
 ## Auf eine andere Karte kommt man über Ausgänge am Rand (hineinlaufen) oder über Orte mit der Aktion "reisen" (Seilaufzug).
 ## Monster in der Wildnis ("monster:<Nummer>", aus data/karten.json): hineinlaufen oder antippen startet den Kampf.
@@ -456,6 +459,32 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			_card_result(p, str(cmd.get("gegner", "")), bool(cmd.get("gewonnen", false)), bool(cmd.get("unentschieden", false)))
 		"benutzen":
 			_use_item(p, str(cmd.get("gegenstand", "")))
+		"test_geld":
+			# Testknopf in der Tasche (nur beim Ausprobieren im Godot-Editor, nicht im fertigen Spiel)
+			if OS.is_debug_build():
+				_give_gold(p, clampi(int(cmd.get("bronze", 0)), 0, 1000000))
+				progress_changed.emit(p.id)
+		"wegwerfen":
+			_discard(p, str(cmd.get("gegenstand", "")))
+		"beute_nehmen":
+			_take_loot(p, str(cmd.get("gegenstand", "")))
+		"beute_lassen":
+			p.progress.loot.clear()
+			progress_changed.emit(p.id)
+		"test_beute":
+			# Testknopf in der Tasche: Beute wie nach einem Sieg (nur im Godot-Editor)
+			if OS.is_debug_build():
+				give_loot(p, {testruestung = 1})
+				progress_changed.emit(p.id)
+		"test_tasche":
+			# Testknopf in der Tasche: alle freien Kästchen mit Testkieseln füllen (nur im Godot-Editor)
+			if OS.is_debug_build():
+				var n := 1
+				while p.progress.used_slots() < Progress.BAG_SIZE:
+					if not p.progress.items.has("testkiesel_%d" % n):
+						p.progress.add_item("testkiesel_%d" % n, 1)
+					n += 1
+				progress_changed.emit(p.id)
 		"tasche_tauschen":
 			p.progress.move_slot(int(cmd.get("von", -1)), int(cmd.get("nach", -1)))
 			progress_changed.emit(p.id)
@@ -695,6 +724,9 @@ func _use(p: PlayerState, target: String) -> void:
 		progress_changed.emit(p.id)
 	else:
 		var pickup: Dictionary = pickups[int(target.substr(6))]
+		if not p.progress.has_room(pickup.item):
+			_say(p, GameData.text("tasche_voll", [GameData.item_name(pickup.item)]))
+			return
 		p.progress.flags["gesammelt:" + target] = true
 		_give_item(p, pickup.item, 1)
 		_update_quests(p)
@@ -1603,7 +1635,7 @@ func _use_item(p: PlayerState, item_id: String) -> void:
 func _give_gold(p: PlayerState, amount: int) -> void:
 	p.progress.gold += amount
 	if not _rewards_shown:
-		_say(p, GameData.text("gold", [amount]))
+		_say(p, GameData.text("gold", [Geld.text(amount)]))
 
 
 func _give_xp(p: PlayerState, amount: int) -> void:
@@ -1617,12 +1649,68 @@ func _give_xp(p: PlayerState, amount: int) -> void:
 			_say(p, GameData.text("werte_tipp"))
 
 
+## Gegenstände aus Aufträgen und Gesprächen kommen auch bei voller Tasche hinein (in ein Extra-Kästchen),
+## damit die Geschichte nie hängen bleibt. Sammeln und Kaufen prüfen vorher selbst, ob Platz ist.
 func _give_item(p: PlayerState, item_id: String, count: int) -> void:
+	var room := p.progress.has_room(item_id)
 	p.progress.add_item(item_id, count)
 	if count > 0:
 		_say(p, GameData.text("gegenstand", [count, GameData.item_name(item_id)]))
+		if not room:
+			_say(p, GameData.text("tasche_uebervoll"))
 	else:
 		_say(p, GameData.text("gegenstand_weg", [-count, GameData.item_name(item_id)]))
+
+
+## Beute nach einem Sieg: Was in die Tasche passt, kommt hinein. Der Rest wartet im Beute-Fenster
+## (Progress.loot), bis man Platz gemacht hat oder ihn liegen lässt. So geht kein Fund verloren, ohne dass man es merkt.
+func give_loot(p: PlayerState, items: Dictionary) -> void:
+	var waiting := false
+	for item_id: String in items:
+		var count := int(items[item_id])
+		if count <= 0:
+			continue
+		if p.progress.has_room(item_id) and not p.progress.loot.has(item_id):
+			_give_item(p, item_id, count)
+		else:
+			p.progress.loot[item_id] = int(p.progress.loot.get(item_id, 0)) + count
+			waiting = true
+	if waiting:
+		_say(p, GameData.text("beute_kein_platz"))
+
+
+func _take_loot(p: PlayerState, item_id: String) -> void:
+	if not p.progress.loot.has(item_id):
+		return
+	if not p.progress.has_room(item_id):
+		_say(p, GameData.text("tasche_voll", [GameData.item_name(item_id)]))
+		return
+	_give_item(p, item_id, int(p.progress.loot[item_id]))
+	p.progress.loot.erase(item_id)
+	progress_changed.emit(p.id)
+
+
+## Darf man das wegwerfen? Nicht: Gegenstände der Geschichte (ohne Preis, z. B. Bürste, Sternensplitter)
+## und was ein laufender Auftrag noch braucht (sonst bliebe der Auftrag hängen).
+func can_discard(p: PlayerState, item_id: String) -> bool:
+	if p.progress.item_count(item_id) <= 0 or int(GameData.item(item_id).get("preis", 0)) <= 0:
+		return false
+	for quest_id: String in p.progress.quests:
+		if p.progress.quest_state(quest_id) == "abgegeben":
+			continue
+		for goal: Dictionary in GameData.quest(quest_id).get("ziele", []):
+			if goal.get("art", "") == "sammeln" and goal.get("gegenstand", "") == item_id:
+				return false
+	return true
+
+
+func _discard(p: PlayerState, item_id: String) -> void:
+	if not can_discard(p, item_id):
+		return
+	var count := p.progress.item_count(item_id)
+	p.progress.add_item(item_id, -count)
+	_say(p, GameData.text("weggeworfen", [count, GameData.item_name(item_id)]))
+	progress_changed.emit(p.id)
 
 
 # --- Ruf ------------------------------------------------------------------------------
@@ -1991,10 +2079,13 @@ func _buy(p: PlayerState, item_id: String) -> void:
 		if ware.gegenstand != item_id:
 			continue
 		if p.progress.gold < ware.preis:
-			_say(p, GameData.text("zu_wenig_gold", [GameData.item_name(item_id), ware.preis]))
+			_say(p, GameData.text("zu_wenig_gold", [GameData.item_name(item_id), Geld.text(ware.preis)]))
+			return
+		if not p.progress.has_room(item_id):
+			_say(p, GameData.text("tasche_voll", [GameData.item_name(item_id)]))
 			return
 		p.progress.gold -= ware.preis
-		_say(p, GameData.text("gold_weg", [ware.preis]))
+		_say(p, GameData.text("gold_weg", [Geld.text(ware.preis)]))
 		_give_item(p, item_id, 1)
 		_update_quests(p)
 		progress_changed.emit(p.id)

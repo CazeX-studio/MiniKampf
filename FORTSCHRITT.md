@@ -21,7 +21,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
   Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
   gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
-- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Neu: Projekt 9 „Kreuzweg im Baukasten“, Schritt 1 (Testfeld) und Schritt 2 (Marcos Bilder) fertig (27.10.). Nächster Schritt: Projekt 3 „Geld“, Bronze, Silber, Gold.
+- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Projekt 3 „Geld“ fertig (27.10.: Bronze, Silber, Gold und knappe Beträge; am 28.10. in main übernommen). Projekt 4 Schritt 1 (Tasche mit 30 Plätzen) und „Wegwerfen und Beute-Fenster“ fertig (27.10., am 28.10. übernommen). Projekt 9 „Kreuzweg im Baukasten“: Schritt 1–4 fertig (27.10.). Projekt 10 „Oberfläche nach Marcos UI-Entwurf“ fertig (27.10.). Nächster Schritt: Projekt 4 Schritt 2 „Bank, die überall dasselbe enthält“.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -240,6 +240,74 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - **So testest du es:** Startmenü → „Baukasten-Testfeld“. Herumlaufen und hinter das große Haus links gehen,
     über die Brücke unten laufen, **N** für Tag/Nacht, **G** für das Raster (rot = gesperrt, gelb = Grundfläche).
     Achte darauf, ob dir die Größen passen (Vega ist im Vergleich zu den Häusern noch recht groß).
+- **Projekt 4, Schritt 1b – Wegwerfen und Beute-Fenster** (27.10., fertig, Marcos Wunsch):
+  - **Wegwerfen:** In der Tasche einen Gegenstand anklicken, dann „[Wegwerfen]“. Es kommt die Frage „Wirklich 3 ×
+    Heiltrank wegwerfen? Das ist dann weg.“ mit „Ja, wegwerfen“ und „Nein“. Weggeworfen wird das ganze Kästchen.
+  - **Nicht wegwerfen** lassen sich Gegenstände der Geschichte (alles ohne Preis, z. B. Bürste, Schleuder,
+    Sternensplitter) und was ein laufender Auftrag noch braucht (z. B. Silberkraut für „Die Stadt kennenlernen“).
+    Dort gibt es den Knopf gar nicht. So kann kein Auftrag hängen bleiben.
+  - **Beute-Fenster:** Passt Beute nach einem Sieg nicht mehr in die Tasche, geht sie nicht verloren. Rechts neben
+    der Tasche erscheint das Fenster „Beute“ mit dem Fund und „Nehmen“ (grau, solange kein Platz ist), dazu
+    „Tasche öffnen“ und „Liegen lassen“. Die Beute wartet, bis man sie nimmt oder liegen lässt, auch über Speichern
+    und Laden hinweg.
+  - Was in die Tasche passt, kommt wie bisher direkt hinein. Gegenstände aus Aufträgen kommen immer hinein.
+  - **Noch offen:** Monster lassen bisher keine Gegenstände fallen (nur Geld und Monsterkarten). Das Beute-Fenster
+    ist dafür vorbereitet. Was Monster fallen lassen, kommt mit der Ausrüstung später. Zum Ausprobieren gibt es den
+    Testknopf „[Test: Beute]“, der eine Testrüstung als Beute gibt.
+  - Beschluss steht in design.md (Geld, Tasche und Bank).
+  - **So testest du es:** Spiel in Godot starten, mit I die Tasche öffnen, „Test: Tasche füllen“ und dann „Test:
+    Beute“ anklicken. Rechts erscheint das Beute-Fenster mit der Testrüstung, „Nehmen“ ist grau. Einen Testkiesel
+    anklicken, „Wegwerfen“ und „Ja, wegwerfen“ wählen. Jetzt „Nehmen“: die Rüstung liegt in der Tasche.
+
+- **Projekt 4, Schritt 1 – Tasche mit 30 Plätzen** (27.10., fertig):
+  - Die Tasche hat **30 Plätze**. Jede Sorte Gegenstand braucht einen Platz, mehr vom Gleichen liegt im selben
+    Kästchen (5 Kräuter = 1 Platz). Unter dem Geld steht „Plätze: 12 / 30“, bei voller Tasche in Rot.
+  - **Bei voller Tasche:** Sammeln (z. B. Kräuter) und Kaufen gehen nicht. Es erscheint „Tasche voll! Für … ist kein
+    Platz. Verkauf etwas bei Bingo, um Platz zu machen.“ Der Sammelpunkt bleibt da, man kann später wiederkommen,
+    beim Kauf wird kein Geld abgezogen.
+  - **Geschenke aus Aufträgen und Gesprächen kommen trotzdem hinein** (in ein Extra-Kästchen, dazu der Hinweis
+    „Deine Tasche ist übervoll!“), damit die Geschichte nie hängen bleibt. Wird ein Platz frei, rückt der Gegenstand nach.
+  - **Testknopf** in der Tasche: „[Test: Tasche füllen]“ füllt alle freien Plätze mit grauen Testkieseln (nur beim
+    Ausprobieren im Godot-Editor). Bingo kauft jeden Kiesel für 1 Bronze, so wird die Tasche wieder leer.
+  - Wegwerfen gibt es noch nicht (Platz macht man vorerst durch Verkaufen). Mehr Plätze kommen später durch Taschen
+    vom Schneider (Abschnitt „Später“).
+  - **So testest du es:** Spiel in Godot starten, mit I die Tasche öffnen, „Test: Tasche füllen“ anklicken: alle
+    30 Plätze sind belegt. Ein Kraut in Kreuzweg aufheben: „Tasche voll!“ erscheint. Bei Bingo einen Heiltrank kaufen
+    wollen: geht nicht, das Geld bleibt. Einen Testkiesel verkaufen, dann klappt es wieder.
+
+- **Projekt 3, Schritt 2 – Monster lassen wenig Geld fallen** (27.10., fertig):
+  - **Richtwert:** Ein Monster bringt ein paar Bronze, ein Auftrag ein paar Silber, und ein Heiltrank kostet etwa so
+    viel wie 6 bis 8 Monster.
+  - **Monster in der Wildnis:** jedes Monster 1 Bronze, dazu 1 Bronze je 5 Stufen. Auf dem Weg nach Grünwacht
+    (Stufe 10–14) sind das 3 Bronze, im Wald (15–19) 4 Bronze, auf Stufe 20 5 Bronze. Zwei Monster geben das Doppelte.
+    Vorher waren es 2 × Stufe (z. B. 30 statt jetzt 4). Einstellbar in `scripts/welt/game_data.gd` (`WILD_BRONZE`,
+    `WILD_LEVELS_PER_BRONZE`).
+  - **Aufträge zehnmal so viel wie vorher:** z. B. „Die Stadt kennenlernen“ 2 Silber 50 Bronze, „Der Weg nach
+    Grünwacht“ 5 Silber, „Der Splitter im Urbaum“ 15 Silber.
+  - **Preise:** Heiltrank 25 Bronze (Bingo kauft ihn für 12 Bronze zurück). Sternentafel 5 Gold in Akt 1
+    (absichtlich unbezahlbar), für Heimkehrer 60 Silber. Bingos Sätze sind angepasst. Kräuter und Honigwaben
+    verkaufen sich weiter für ein paar Bronze.
+  - **Kreuzweg-Karten:** Sieg gegen Marv 10 Bronze, gegen Oma Hagebutte 20 Bronze (gibt es bei jedem Sieg, darum klein).
+  - **Was man insgesamt hat** (nachgerechnet mit dem Durchlauf-Test, nur Hauptaufträge): am Ende von Kreuzweg etwa
+    19 Silber, am Ende von Grünwacht etwa 60 bis 70 Silber. Mit den Nebenaufträgen reicht es also für die Sternentafel.
+  - **So testest du es:** Auf dem Weg nach Grünwacht ein Monster besiegen: Auf dem Sieg-Bildschirm steht z. B.
+    „+3 Bronze“, oben links steigt das Geld um genau so viel. Einen Auftrag abgeben: es gibt ein paar Silber.
+    Bei Bingo kostet der Heiltrank 25 Bronze.
+
+- **Projekt 3, Schritt 1 – Geld als Bronze, Silber und Gold** (27.10., fertig):
+  - Geld ist weiter **eine einzige Zahl** (in Bronze) und wird überall als Münzen angezeigt: 100 Bronze = 1 Silber,
+    100 Silber = 1 Gold, z. B. „1 Gold 23 Silber 45 Bronze“. Leere Münzen werden weggelassen („1 Silber“ statt „0 Gold 1 Silber 0 Bronze“).
+  - Zu sehen oben links neben Stufe und Erfahrung, in der Tasche (farbig: Gold gelb, Silber grau, Bronze kupfer), im
+    Laden (Preise und eigenes Geld), in den kurzen Meldungen („+25 Bronze“) und auf dem Sieg-Bildschirm.
+  - **Die Münznamen stehen nur an einer Stelle:** `data/texte.json` unter `"muenzen"`. Wer sie umbenennen will, ändert nur dort.
+  - **Alle bisherigen Beträge zählen jetzt als Bronze** (z. B. Auftrags-Belohnung 25 → 25 Bronze, Heiltrank 15 Bronze,
+    Sternentafel 50 Silber bzw. 6 Silber für Heimkehrer; Bingos Sätze sind angepasst). Geld ist damit knapp. Die
+    Beträge stimmen wir in Schritt 2 ab. Alte Spielstände funktionieren weiter.
+  - **Testknöpfe** in der Tasche: „[Test: +75 Bronze]“ und „[Test: +99 Silber]“. Sie erscheinen nur beim Ausprobieren
+    im Godot-Editor, nicht im fertigen Spiel. Die Münzrechnung prüft `tests/geld_test.gd`.
+  - **So testest du es:** Spiel in Godot starten, mit I die Tasche öffnen. Zweimal „+75 Bronze“ anklicken: aus
+    75 Bronze wird 1 Silber 50 Bronze. Dann „+99 Silber“: es springt auf Gold. Oben links steht derselbe Betrag.
+    Bei Bingo einen Heiltrank kaufen: der Preis steht als „15 Bronze“ da und das Geld sinkt richtig.
 
 - **Vegas Animationen, zweite Runde** (27.10., Marcos Test im Browser):
   - **Kein Schuss mehr beim Blocken:** Nach einer perfekten Parade gab es einen kleinen „Hüpfer“, der bei Vega die
@@ -1506,7 +1574,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
   Zähmen (unter 50 % Leben, Chance = fehlendes Leben, halbes Leben auf der Bank, höchstens 5 Monster).
 - **Grünwacht (Schritt 2):** Monster-Werte (Rindenbär, Windfalke, Donnerhirsch, Steinkröte, Sporenling, wilde
   Start-Monster), Stufen-Wachstum (Helden +5 % Stärke, Monster +9 % Leben und +6 % Schaden je Stufe), Erfahrung
-  (12 × Stufe je Monster), Gold (2 × Stufe), eine Minute bis ein Monster wiederkommt, Erfahrungstabelle bis Stufe 20.
+  (12 × Stufe je Monster), Geld (seit 27.10.: 1 Bronze + 1 je 5 Stufen pro Monster), eine Minute bis ein Monster wiederkommt, Erfahrungstabelle bis Stufe 20.
 - **Stufenabstand:** 6 % weniger Schaden und 8 % härtere Treffer pro Stufe unter dem Gegner, höchstens 5 Stufen.
 - **Grünwacht (Schritt 9–11):** Kartenwerte von Kreuzweg-Karten, Kobalts Revanche (zwei Monster, Leben ×1,4),
   Bienenschwarm, Erfahrung der Hauptaufträge (siehe Schritt 11), die drei Wald-Musikstücke.

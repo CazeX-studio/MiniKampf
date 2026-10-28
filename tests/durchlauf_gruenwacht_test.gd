@@ -3,7 +3,7 @@ extends SceneTree
 ## Abspann „Ende von Grünwacht“ – ohne Grafik, aber mit echten Kämpfen. Ein Computer-Spieler folgt den Zeichen (! und ?)
 ## auf allen Karten, geht zu den Orten der Aufträge, reist zwischen den Karten und kämpft gegen Monster, wenn er für einen
 ## Kampf zu schwach war. Einmal je Klasse: Bogenschütze, Zähmer und eine Klasse aus einer anderen Region.
-## Gibt eine Übersicht aus: wann welcher Auftrag fertig war, Stufe, Gold, Kämpfe und eine geschätzte Spielzeit.
+## Gibt eine Übersicht aus: wann welcher Auftrag fertig war, Stufe, Geld, Kämpfe und eine geschätzte Spielzeit.
 ## Aufruf: Godot --headless --path . --script res://tests/durchlauf_gruenwacht_test.gd   (optional: -- <Klasse>)
 
 const MAX_ACTIONS := 6000
@@ -13,7 +13,7 @@ const SECONDS_PER_TURN := 6.0
 ## Stand am Ende von Akt 1 (aus tests/durchlauf_test.gd)
 const START_LEVEL := 10
 const START_XP := 3030
-const START_GOLD := 190
+const START_GOLD := 1900
 const CLASSES := ["archer", "tamer", "blade"]
 
 var world: WorldState
@@ -89,8 +89,8 @@ func _play_region(klasse: String) -> void:
 		for id: String in p.progress.quests:
 			if p.progress.quests[id] == "abgegeben" and not done_quests.has(id):
 				done_quests[id] = true
-				print("%5.1f min  Auftrag „%s“ fertig  –  Stufe %d, %d Gold" % [
-					_seconds / 60.0, GameData.quest(id).get("titel", id), p.progress.level, p.progress.gold])
+				print("%5.1f min  Auftrag „%s“ fertig  –  Stufe %d, %s" % [
+					_seconds / 60.0, GameData.quest(id).get("titel", id), p.progress.level, Geld.text(p.progress.gold)])
 		if _pending_battle != "":
 			var kampf := _pending_battle
 			_pending_battle = ""
@@ -130,7 +130,7 @@ func _play_region(klasse: String) -> void:
 	print("Kämpfe (ohne Monster der Wildnis):")
 	for line in _battle_log:
 		print("  " + line)
-	print("Ende: Stufe %d, %d Gold, Tasche %s" % [p.progress.level, p.progress.gold, p.progress.items])
+	print("Ende: Stufe %d, %s, Tasche %s" % [p.progress.level, Geld.text(p.progress.gold), p.progress.items])
 	print("Geschätzte Spielzeit: %d Minuten (%d Dialogzeilen, %d eigene Kampfzüge, Laufwege)" % [
 		int(_seconds / 60.0), _lines, _battle_turns])
 

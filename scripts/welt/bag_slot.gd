@@ -56,7 +56,7 @@ func _make_custom_tooltip(_for_text: String) -> Object:
 	box.add_child(text)
 	if int(item.get("preis", 0)) > 0:
 		var price := Label.new()
-		price.text = "Wert: %d Gold" % int(item.preis)
+		price.text = "Wert: %s" % Geld.text(int(item.preis))
 		price.add_theme_font_size_override("font_size", 13)
 		price.add_theme_color_override("font_color", Color(1, 1, 1, 0.6))
 		box.add_child(price)
@@ -164,6 +164,17 @@ static func draw_icon(node: CanvasItem, c: Vector2, form: String, color: Color) 
 			for x in 3:
 				for y in 3:
 					node.draw_rect(Rect2(c + Vector2(-13 + x * 9, -11 + y * 8), Vector2(7, 6)), color)
+		"ruestung":
+			# Brustpanzer: Rumpf mit Schulterstücken
+			node.draw_rect(Rect2(c + Vector2(-10, -10), Vector2(20, 24)), dark)
+			node.draw_rect(Rect2(c + Vector2(-9, -9), Vector2(18, 22)), color)
+			node.draw_rect(Rect2(c + Vector2(-16, -12), Vector2(9, 8)), color.lightened(0.15))
+			node.draw_rect(Rect2(c + Vector2(7, -12), Vector2(9, 8)), color.lightened(0.15))
+			node.draw_line(c + Vector2(0, -8), c + Vector2(0, 12), dark, 2.0)
+		"stein":
+			node.draw_circle(c + Vector2(0, 3), 11.0, dark)
+			node.draw_circle(c + Vector2(-1, 1), 10.0, color)
+			node.draw_circle(c + Vector2(-4, -2), 3.5, color.lightened(0.3))
 		_:
 			# Unbekannt: kleines Säckchen
 			node.draw_circle(c + Vector2(0, 4), 12.0, color)

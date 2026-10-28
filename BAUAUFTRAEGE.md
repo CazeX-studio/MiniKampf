@@ -77,20 +77,25 @@ Teil 1 ist gebaut (siehe FORTSCHRITT.md). Schritte 1–4 fertig (26.10.). Die De
 ### Schritt 1: Geld speichern und anzeigen
 - **Ziel:** Geld wird als eine Zahl gespeichert und als Bronze, Silber und Gold angezeigt (z. B. 100 Bronze = 1 Silber, 100 Silber = 1 Gold). Die Münznamen stehen an einer einzigen Stelle.
 - **So testest du es:** Geld-Anzeige ansehen, per Testknopf Geld dazugeben und prüfen, ob die Münzen richtig umspringen.
-- **Status:** offen
+- **Status:** fertig (27.10.; bisherige Beträge zählen jetzt als Bronze, die Feinabstimmung kommt mit Schritt 2)
 
 ### Schritt 2: Monster lassen wenig Geld fallen
 - **Ziel:** Besiegte Monster geben einen kleinen Geldbetrag, damit Geld knapp bleibt.
 - **So testest du es:** Monster besiegen, das Geld steigt um einen kleinen Betrag.
 - **Schon da:** Monster in der Wildnis geben bereits „etwas Gold“. Offen ist, die Beträge auf Bronze/Silber/Gold umzustellen und knapp zu halten.
-- **Status:** offen
+- **Status:** fertig (27.10.; Monster 3–5 Bronze, Aufträge ein paar Silber, Heiltrank 25 Bronze)
 
 ## Projekt 4: Tasche und Bank
 
 ### Schritt 1: Tasche mit 30 Plätzen
 - **Ziel:** Die Tasche hat 30 Plätze.
 - **So testest du es:** Gegenstände aufheben, bis die Tasche voll ist, danach erscheint ein Hinweis.
-- **Status:** offen
+- **Status:** fertig (27.10.; Sammeln und Kaufen klappen bei voller Tasche nicht, Geschenke aus Aufträgen kommen trotzdem hinein)
+
+### Schritt 1b: Wegwerfen und Beute-Fenster
+- **Ziel:** Gegenstände lassen sich aus der Tasche wegwerfen (mit Nachfrage; nicht bei Gegenständen der Geschichte oder für laufende Aufträge). Passt Beute nach einem Sieg nicht mehr in die Tasche, wartet sie im Beute-Fenster: erst etwas wegwerfen, dann nehmen, oder liegen lassen. (Marcos Wunsch vom 27.10.)
+- **So testest du es:** Tasche füllen, Beute bekommen, das Beute-Fenster erscheint. Etwas wegwerfen, dann die Beute nehmen.
+- **Status:** fertig (27.10.; Monster lassen noch keine Gegenstände fallen, darum vorerst Testknopf „Test: Beute“)
 
 ### Schritt 2: Bank, die überall dasselbe enthält
 - **Ziel:** Jede Bankstelle zeigt dieselben eingelagerten Sachen.
@@ -140,48 +145,51 @@ _Aus Marcos Entscheidung vom 22.10.2026: Tageszeit nach der echten Uhrzeit, nach
 - **So testest du es:** Testknopf auf Nacht: Auf dem Weg nach Grünwacht stehen andere Monster, auf Tag wieder die gewohnten.
 - **Status:** offen
 
-## Projekt 8: Monsterkarten und Kartenalbum
-_Aus Marcos Beschluss vom 27.10.2026 (Brainstorm-Doc)._
+## Projekt 8: Monsterkarten und Kartenalbum (Beschluss 27.10.)
 
 ### Schritt 1: Kartenalbum
-- **Ziel:** Eigenes Menü (Taste K) mit einer Seite pro Region: feste Plätze, fehlende Karten als dunkler Umriss, Zähler wie „Grünwacht: 5 / 12“, doppelte Karten mit Anzahl.
-- **So testest du es:** Mit K das Album öffnen und blättern, gesammelte Karten sind zu sehen, fehlende als Umriss, der Zähler stimmt.
+- **Ziel:** Eigenes Menü (Taste K und Knopf oben) mit einer Seite pro Region. Feste Plätze für jedes Monster der Region, fehlende Karten nur als dunkler Umriss, Zähler „Grünwacht: 5 / 12“, doppelte Karten mit Anzahl. Die Textzeile unten in der Tasche entfällt.
+- **So testest du es:** Mit K das Album öffnen, zwischen den Seiten blättern; gesammelte Karten sind zu sehen, fehlende als Umriss, der Zähler stimmt.
 - **Status:** offen
 
 ### Schritt 2: Karten aktivieren
-- **Ziel:** Eine gefundene Karte fällt als „unbekannte Monsterkarte“ in die Tasche (bei voller Tasche ins Beute-Fenster). Aktivieren dreht sie mit einem kleinen Aufdeck-Moment um, danach liegt sie im Album und die Tasche ist frei.
-- **So testest du es:** Eine Karte bekommen, in der Tasche aktivieren, sie dreht sich um und steht im Album.
+- **Ziel:** Eine gefundene Karte fällt als „unbekannte Monsterkarte“ in die Tasche (bei voller Tasche ins Beute-Fenster). „Aktivieren“ dreht sie mit einem kleinen Aufdeck-Moment um, danach liegt sie im Album und die Tasche ist wieder frei.
+- **So testest du es:** Monster besiegen, bis eine Karte kommt, in der Tasche „Aktivieren“ wählen: Die Karte dreht sich um und steht im Album.
 - **Status:** offen
 
 ### Schritt 3: Monster-Infos im Album
-- **Ziel:** Schon die erste Karte zeigt Element und Schwäche des Monsters.
-- **So testest du es:** Im Album eine Karte anklicken, Element und Schwäche stehen dabei.
+- **Ziel:** Schon die erste Karte eines Monsters zeigt im Album sein Element und seine Schwäche.
+- **So testest du es:** Im Album eine Karte anklicken: Element und Schwäche stehen dabei, bei fehlenden Karten nicht.
 - **Status:** offen
 
 ### Schritt 4: Besitzeffekte
-- **Ziel:** Jede Karte im Album gibt einen kleinen dauerhaften Bonus, der zum Monster passt (z. B. Rindenbär +1 Leben, Windfalke +1 Tempo), Doppelte zählen nicht mehrfach; vorerst nur Werte, die es im Kampf schon gibt, Verteidigung kommt mit der Ausrüstung.
-- **So testest du es:** Werte (C) ansehen, eine neue Karte aktivieren, der Wert steigt.
+- **Ziel:** Jede Karte im Album gibt einen kleinen dauerhaften Bonus, der zum Monster passt (z. B. Rindenbär +1 Leben, Windfalke +1 Tempo) und im Kampf wirkt. Doppelte zählen nicht mehrfach. Im Album und unter „Werte (C)“ steht, was die Karten zusammen bringen. Vorerst nur Werte, die es im Kampf schon gibt (Leben, Mana, Angriff, Tempo); Verteidigung kommt mit der Ausrüstung dazu.
+- **So testest du es:** Werte (C) ansehen, eine neue Karte aktivieren: Der Wert steigt um den Bonus der Karte.
 - **Status:** offen
 
-### Schritt 5: Deck für Kreuzweg-Karten im Album wählen (5 Karten)
-- **So testest du es:** 5 Karten markieren, gegen Marv spielen, genau diese sind auf der Hand.
+### Schritt 5: Deck für Kreuzweg-Karten wählen
+- **Ziel:** Im Album wählt man die 5 Karten, mit denen man bei Kreuzweg-Karten antritt.
+- **So testest du es:** Im Album 5 Karten markieren, gegen Marv spielen: Genau diese Karten sind auf der Hand.
 - **Status:** offen
 
-### Schritt 6: Doppelte Karten bei Bingo verkaufen, die letzte einer Sorte bleibt immer
-- **So testest du es:** Eine doppelte Karte verkaufen, das Geld steigt, im Album steht eine weniger.
+### Schritt 6: Doppelte Karten bei Bingo verkaufen
+- **Ziel:** Bingo kauft doppelte Karten für ein paar Bronze. Die letzte Karte einer Sorte bleibt immer im Album.
+- **So testest du es:** Mit einer doppelten Karte zu Bingo gehen, sie verkaufen: Das Geld steigt, im Album steht eine weniger.
 - **Status:** offen
 
-### Schritt 7: Belohnung für eine volle Seite (Titel, Kartenrücken oder Extra-Platz in der Tasche, Marco entscheidet)
-- **So testest du es:** Per Testknopf alle Karten einer Region geben, die Belohnung erscheint.
+### Schritt 7: Belohnung für eine volle Seite
+- **Ziel:** Wer alle Karten einer Region hat, bekommt eine Belohnung (Titel, besonderer Kartenrücken oder Extra-Platz in der Tasche; welche genau, entscheidet Marco).
+- **So testest du es:** Per Testknopf alle Karten einer Region geben: Die Belohnung erscheint mit einer Meldung.
 - **Status:** offen
 
-### Schritt 8: Marv kommentiert neue Karten („Ooooh, die hab ich noch nicht!“)
-- **So testest du es:** Neue Karte aktivieren und zu Marv gehen.
+### Schritt 8: Marv kommentiert neue Karten
+- **Ziel:** Hat man eine Karte, die Marv noch nicht gesehen hat, spricht er einen darauf an („Ooooh, die hab ich noch nicht!“).
+- **So testest du es:** Eine neue Karte aktivieren und in Kreuzweg zu Marv gehen.
 - **Status:** offen
 
-### Schritt 9: Karten verbessern bis +10 mit einer doppelten Karte derselben Sorte plus etwas Gold; bis +4 klappt es immer, ab +5 kann es misslingen (Marco, 27.10.; bei einem Fehlschlag bleibt die Karte auf ihrer Stufe, nur doppelte Karte und Gold sind weg)
-- **Ziel:** Jede Stufe stärkt den Besitzeffekt und später den Sockel.
-- **So testest du es:** Eine Karte verbessern, sie zeigt +1, der Bonus steigt, ab +5 klappt es manchmal nicht.
+### Schritt 9: Karten verbessern bis +10
+- **Ziel:** Karten lassen sich bis +10 verbessern, mit einer doppelten Karte derselben Sorte plus etwas Gold. Bis +4 klappt es immer, ab +5 kann es misslingen. Jede Stufe stärkt den Besitzeffekt (und später den Sockel). Bei einem Fehlschlag bleibt die Karte auf ihrer Stufe, nur die doppelte Karte und das Gold sind weg. (Beschluss 27.10.)
+- **So testest du es:** Eine Karte verbessern: Sie zeigt „+1“, der Bonus unter „Werte (C)“ steigt, eine doppelte Karte und etwas Gold sind weg. Ab +5 klappt es manchmal nicht.
 - **Status:** offen
 
 ## Projekt 9: Kreuzweg im Baukasten
@@ -254,3 +262,4 @@ Werten, Zugleiste, Kampfmenü, Sieg-Fenster und Meldungen. Look überall eingeba
 - Sternen-Glanz und Siegel-Zähler (braucht den Server)
 - Erste eigene Grafiken (wartet auf die Look-Bibel aus Thema 12)
 - Nachts geschlossene Läden und andere NPCs (Erweiterung von Tag und Nacht, Projekt 7)
+- Monsterkarten sockeln (braucht die Ausrüstung) und Karten mit Freunden tauschen (braucht den Server)
