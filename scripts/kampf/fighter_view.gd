@@ -313,7 +313,7 @@ static func is_own_sprite(sprite: String) -> bool:
 
 
 static func portrait(klass: String) -> Texture2D:
-	return load(sprite_path(look_data(klass).sprite, "idle", 0))
+	return einzelbild(look_data(klass).sprite, "idle", 0)
 
 
 static func tint(klass: String) -> Color:

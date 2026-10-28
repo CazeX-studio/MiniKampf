@@ -624,5 +624,200 @@
 			],
 			"richtung": "vorn"
 		}
+	},
+	"novize_m": {
+		"_koepfe": {
+			"kofi": {
+				"hals": {
+					"hinten_geneigt": [
+						33.7,
+						54
+					],
+					"hinten_normal": [
+						34.7,
+						53
+					],
+					"seite_augen_zu": [
+						39.2,
+						60
+					],
+					"seite_entschlossen": [
+						38.2,
+						58
+					],
+					"seite_freude": [
+						39.2,
+						58
+					],
+					"seite_normal": [
+						38.2,
+						59
+					],
+					"seite_schmerz": [
+						39.2,
+						58
+					],
+					"vorn_augen_zu": [
+						35.0,
+						56
+					],
+					"vorn_freude": [
+						35.0,
+						56
+					],
+					"vorn_normal": [
+						35.0,
+						57
+					],
+					"vorn_schmerz": [
+						34.0,
+						56
+					]
+				},
+				"name": "Kofi"
+			},
+			"mira": {
+				"hals": {
+					"hinten_geneigt": [
+						39.3,
+						45
+					],
+					"hinten_normal": [
+						38.3,
+						46
+					],
+					"seite_augen_zu": [
+						37.3,
+						58
+					],
+					"seite_entschlossen": [
+						37.3,
+						58
+					],
+					"seite_freude": [
+						37.3,
+						57
+					],
+					"seite_normal": [
+						37.3,
+						57
+					],
+					"seite_schmerz": [
+						37.3,
+						57
+					],
+					"vorn_augen_zu": [
+						34.2,
+						53
+					],
+					"vorn_freude": [
+						35.2,
+						53
+					],
+					"vorn_normal": [
+						36.2,
+						53
+					],
+					"vorn_schmerz": [
+						36.2,
+						53
+					]
+				},
+				"name": "Mira"
+			}
+		},
+		"_name": "Novize (m)",
+		"_nur_teile": true,
+		"hit_f0": {
+			"hals": [
+				32.0,
+				46
+			],
+			"richtung": "seite"
+		},
+		"idle_f0": {
+			"hals": [
+				65.0,
+				47
+			],
+			"richtung": "seite"
+		},
+		"idle_f1": {
+			"hals": [
+				63.5,
+				47
+			],
+			"richtung": "seite"
+		},
+		"idle_f2": {
+			"hals": [
+				60.0,
+				47
+			],
+			"richtung": "seite"
+		},
+		"idle_f3": {
+			"hals": [
+				61.5,
+				47
+			],
+			"richtung": "seite"
+		},
+		"parry_f0": {
+			"hals": [
+				93.5,
+				47
+			],
+			"richtung": "seite"
+		},
+		"parry_f1": {
+			"hals": [
+				93.0,
+				48
+			],
+			"richtung": "seite"
+		},
+		"parry_f2": {
+			"hals": [
+				93.5,
+				49
+			],
+			"richtung": "seite"
+		},
+		"parry_f3": {
+			"hals": [
+				99.0,
+				48
+			],
+			"richtung": "seite"
+		},
+		"run_f0": {
+			"hals": [
+				97.5,
+				48
+			],
+			"richtung": "seite"
+		},
+		"run_f1": {
+			"hals": [
+				101.5,
+				49
+			],
+			"richtung": "seite"
+		},
+		"run_f2": {
+			"hals": [
+				99.0,
+				49
+			],
+			"richtung": "seite"
+		},
+		"run_f3": {
+			"hals": [
+				100.5,
+				50
+			],
+			"richtung": "seite"
+		}
 	}
 }

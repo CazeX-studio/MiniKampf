@@ -37,13 +37,19 @@ static func hat_teile(figur: String) -> bool:
 
 ## Einzelbild einer Figur je nach eingestellter Art; null = kein Bild (dann gilt das ganze Bild).
 static func bild(figur: String, anim: String, frame: int) -> Texture2D:
-	if art == Art.GANZ or not hat_teile(figur):
+	if not hat_teile(figur):
+		return null
+	# Körper-Blätter (grüner Platzhalter statt Kopf) werden immer zusammengesetzt
+	var art_jetzt := Art.KOPFBLATT if _alle()[figur].get("_nur_teile", false) else art
+	if art_jetzt == Art.GANZ:
 		return null
 	var info: Dictionary = _alle()[figur].get("%s_f%d" % [anim, frame], {})
 	if info.is_empty():
 		return null
 	var kopf_id := kopf if koepfe(figur).has(kopf) else figur
-	var schluessel := "%s/%s/%d/%d/%s" % [figur, anim, frame, art, kopf_id]
+	if not koepfe(figur).has(kopf_id) and not koepfe(figur).is_empty():
+		kopf_id = koepfe(figur).keys()[0]
+	var schluessel := "%s/%s/%d/%d/%s" % [figur, anim, frame, art_jetzt, kopf_id]
 	if _cache.has(schluessel):
 		return _cache[schluessel]
 	var koerper := _bild_laden(KOERPER % [figur, anim, frame])
@@ -55,7 +61,7 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 		ergebnis = Image.create_empty(koerper.get_width(), koerper.get_height(), false, Image.FORMAT_RGBA8)
 		var kopf_bild: Image
 		var ecke: Vector2i
-		if art == Art.TEILE:
+		if art_jetzt == Art.TEILE:
 			kopf_bild = _bild_laden(ALTER_KOPF % [figur, anim, frame])
 			ecke = Vector2i(int(info.alt[0]), int(info.alt[1]))
 		else:
@@ -74,6 +80,15 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 	var textur := ImageTexture.create_from_image(ergebnis)
 	_cache[schluessel] = textur
 	return textur
+
+
+## Körper aus Körper-Blättern (mit grünem Platzhalter statt Kopf), z. B. der Novizen-Körper: Name -> Anzeigename.
+static func koerper_liste() -> Dictionary:
+	var liste := {}
+	for figur: String in _alle():
+		if _alle()[figur].get("_nur_teile", false):
+			liste[figur] = _alle()[figur].get("_name", figur)
+	return liste
 
 
 ## Alle Köpfe, die auf den Körper der Figur passen: Kopf-Name -> {name, hals}.

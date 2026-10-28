@@ -39,7 +39,30 @@ func _init() -> void:
 	if FigurTeile.koepfe("kofi").size() < 2:
 		print("FEHLER: Kofi sollte mindestens zwei Köpfe haben")
 		fehler += 1
+	# Novizen-Körper (grüner Platzhalter): immer zusammengesetzt, mit jedem Kopf, ohne grüne Reste
+	if not FigurTeile.koerper_liste().has("novize_m"):
+		print("FEHLER: Novizen-Körper fehlt")
+		fehler += 1
 	FigurTeile.art = FigurTeile.Art.GANZ
+	for kopf: String in FigurTeile.koepfe("novize_m"):
+		FigurTeile.kopf = kopf
+		for anim: String in ["idle", "run", "hit", "parry"]:
+			var t := FigurTeile.bild("novize_m", anim, 0)
+			if t == null:
+				print("FEHLER: novize_m %s ohne Bild (Kopf %s)" % [anim, kopf])
+				fehler += 1
+				continue
+			var im := t.get_image()
+			var gruen := 0
+			for y in im.get_height():
+				for x in im.get_width():
+					var c := im.get_pixel(x, y)
+					if c.a > 0.5 and c.g > c.r + 0.3 and c.g > c.b + 0.3:
+						gruen += 1
+			if gruen > 3:
+				print("FEHLER: novize_m %s hat %d grüne Punkte (Kopf %s)" % [anim, gruen, kopf])
+				fehler += 1
+	FigurTeile.kopf = ""
 	if FigurTeile.bild("kofi", "idle", 0) != null:
 		print("FEHLER: bei „ganz“ darf nichts zusammengesetzt werden")
 		fehler += 1
