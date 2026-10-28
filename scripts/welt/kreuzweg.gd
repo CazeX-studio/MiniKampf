@@ -2043,7 +2043,8 @@ func _small_button(text: String, action: Callable) -> Button:
 
 func _update_shop() -> void:
 	var p := local_player()
-	var key := "" if p.shop == "" else "%s|%d|%s|%s" % [p.shop, p.progress.gold, str(p.progress.items), str(p.progress.bank)]
+	var key := "" if p.shop == "" else "%s|%d|%s|%s|%d" % [p.shop, p.progress.gold, str(p.progress.items), str(p.progress.bank),
+			p.progress.bank_size]
 	if key == _shop_shown:
 		return
 	_shop_shown = key
@@ -2098,11 +2099,21 @@ func _add_shop_close() -> void:
 ## Bankfenster (im Ladenfenster): links was in der Tasche ist (Einlagern), darunter was in der Bank liegt (Abholen).
 ## Jede Bankstelle zeigt dieselbe Bank.
 func _fill_bank(p: PlayerState) -> void:
-	var title := _label(GameData.text("bank_titel"), 22, Color("f2c14e"))
+	var title := _label("%s  ·  %s" % [GameData.text("bank_titel"), Geld.text(p.progress.gold)], 22, Color("f2c14e"))
 	_shop_box.add_child(UiStil.titel_mit_banner(title))
+	# Mehr Bankplätze kaufen (Preise steigen, siehe data/laeden.json)
+	var next := state.bank_expansion(p)
+	if next.is_empty():
+		_shop_box.add_child(_label(GameData.text("bank_ausgebaut"), 15, Color(1, 1, 1, 0.6)))
+	else:
+		var row := _shop_row(GameData.text("bank_erweitern", [next.plaetze]), GameData.text("bank_erweitern_knopf", [Geld.text(next.preis)]))
+		row.button.pressed.connect(func() -> void: _send({type = "bank_erweitern"}))
+		if p.progress.gold < next.preis:
+			row.button.modulate = Color(1, 1, 1, 0.5)
+		_shop_box.add_child(row.box)
 	# Beide Listen in einem Bereich mit Bildlaufleiste (Tasche 30 und Bank 20 Plätze passen nicht auf einmal)
 	var scroll := ScrollContainer.new()
-	scroll.custom_minimum_size = Vector2(690, 400)
+	scroll.custom_minimum_size = Vector2(690, 360)
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	_shop_box.add_child(scroll)
 	var list := VBoxContainer.new()

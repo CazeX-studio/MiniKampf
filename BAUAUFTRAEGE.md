@@ -105,7 +105,7 @@ Teil 1 ist gebaut (siehe FORTSCHRITT.md). Schritte 1–4 fertig (26.10.). Die De
 ### Schritt 3: Bankplätze gegen Gold erweitern
 - **Ziel:** Man kann mehr Bankplätze kaufen.
 - **So testest du es:** Erweiterung kaufen, das Geld sinkt, die Bank hat mehr Plätze.
-- **Status:** offen
+- **Status:** fertig (28.10.; an jeder Bankstelle: +10 Plätze für 50 Silber, 1 Gold, 2 Gold, 4 Gold, dann voll ausgebaut mit 60 Plätzen; Preise in data/laeden.json)
 
 ## Projekt 5: Gürtel und Tränke
 

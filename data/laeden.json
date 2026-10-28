@@ -10,7 +10,9 @@
 	"bank": {
 		"name": "Bank",
 		"hinweis": "Die Bank: dieselben eingelagerten Sachen an jeder Bankstelle (wie die Kafra in Ragnarok). Plätze: Progress.BANK_START.",
-		"bank": true
+		"bank": true,
+		"erweiterung_hinweis": "Bankplätze kaufen: jede Erweiterung bringt so viele Plätze, die Preise (in Bronze) steigen; ist die Liste zu Ende, ist die Bank voll ausgebaut.",
+		"erweiterung": {"plaetze": 10, "preise": [5000, 10000, 20000, 40000]}
 	},
 	"bingo": {
 		"name": "Bingos Laden",

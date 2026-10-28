@@ -17,6 +17,7 @@ extends RefCounted
 ##   {type = "dialog_choose", index = 0} im Gespräch eine Antwort wählen
 ##   {type = "szene_verlassen"}          eine gemeinsame Szene verlassen (Zusammenspielen)
 ##   {type = "einlagern", gegenstand = "…"} / {type = "abholen", gegenstand = "…"}  an einer Bankstelle (Bank geöffnet)
+##   {type = "bank_erweitern"}           an einer Bankstelle mehr Bankplätze kaufen
 ##   {type = "kaufen", gegenstand = "…"} / {type = "verkaufen", gegenstand = "…"} / {type = "laden_zu"}  im geöffneten Laden
 ##   {type = "wegwerfen", gegenstand = "…"}  alle Stück eines Gegenstands aus der Tasche wegwerfen
 ##   {type = "beute_nehmen", gegenstand = "…"} / {type = "beute_lassen"}  Beute, die nicht in die Tasche gepasst hat
@@ -501,6 +502,8 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			_bank_move(p, str(cmd.get("gegenstand", "")), true)
 		"abholen":
 			_bank_move(p, str(cmd.get("gegenstand", "")), false)
+		"bank_erweitern":
+			_bank_expand(p)
 		"szene_verlassen":
 			_leave_scene(p)
 		"dialog_next":
@@ -2122,6 +2125,34 @@ func _bank_move(p: PlayerState, item_id: String, to_bank: bool) -> void:
 			return
 		_say(p, GameData.text("bank_abgeholt", [count, name]))
 	_update_quests(p)
+	progress_changed.emit(p.id)
+
+
+## Nächste Bank-Erweiterung: {plaetze, preis}; leer = voll ausgebaut. Preise und Plätze in data/laeden.json ("bank").
+func bank_expansion(p: PlayerState) -> Dictionary:
+	var info: Dictionary = GameData.get_file("laeden").get("bank", {}).get("erweiterung", {})
+	var prices: Array = info.get("preise", [])
+	var step := int(info.get("plaetze", 10))
+	var done := (p.progress.bank_size - Progress.BANK_START) / maxi(step, 1)
+	if done >= prices.size():
+		return {}
+	return {plaetze = step, preis = int(prices[done])}
+
+
+func _bank_expand(p: PlayerState) -> void:
+	if not bank_open(p):
+		return
+	var next := bank_expansion(p)
+	if next.is_empty():
+		_say(p, GameData.text("bank_ausgebaut"))
+		return
+	if p.progress.gold < next.preis:
+		_say(p, GameData.text("zu_wenig_gold", [GameData.text("bank_erweitern", [next.plaetze]), Geld.text(next.preis)]))
+		return
+	p.progress.gold -= next.preis
+	p.progress.bank_size += next.plaetze
+	_say(p, GameData.text("gold_weg", [Geld.text(next.preis)]))
+	_say(p, GameData.text("bank_erweitert", [p.progress.bank_size]))
 	progress_changed.emit(p.id)
 
 
