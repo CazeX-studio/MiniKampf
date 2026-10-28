@@ -30,13 +30,64 @@ MONSTER = {
 	"sternenfresser": {"hoehe": 170, "reihen": [("idle", 4), ("attack", 6), ("attack2", 5), ("spezial", 5), ("hit", 1),
 		("death", 7)]},
 }
+# Monster mit festen Ausschnitten (wenn sich Bilder berühren oder aus mehreren Blättern stammen):
+# Animation -> Liste von Ausschnitten (x0, y0, x1, y1) im Blatt. Ein Ausschnitt kann auch (Blatt, x0, y0, x1, y1, Faktor)
+# sein: Bild aus einem anderen Blatt, Faktor gleicht die Größe an. "stehen_boxen" je Blatt: Stehen dort (zum Angleichen).
+B = "glutwelpe_bachotter"
+BOX_MONSTER = {
+	"moosling": {"hoehe": 56, "blatt": "moosling", "anims": {
+		"idle": [(75, 40, 240, 190), (270, 40, 440, 190), (460, 40, 620, 190), (640, 40, 830, 190)],
+		"attack": [(34, 220, 200, 380), (220, 220, 410, 380), (410, 220, 700, 380), (700, 220, 1118, 380),
+			(1132, 220, 1318, 380), (1334, 220, 1512, 380)],
+		"attack2": [(34, 418, 232, 562), (248, 418, 432, 562), (438, 418, 624, 562), (624, 418, 1164, 562),
+			(1176, 418, 1342, 562), (1352, 418, 1512, 562)],
+		"hit": [(54, 606, 260, 752)],
+		"death": [(365, 606, 540, 752), (552, 606, 700, 752), (706, 606, 900, 752), (914, 606, 1216, 752)],
+		"victory": [(72, 768, 240, 982), (284, 768, 460, 982), (492, 768, 692, 982), (726, 768, 910, 982)]}},
+	"glutwelpe": {"hoehe": 60, "blatt": "glutwelpe", "stehen_boxen": {B: [(36, 40, 192, 200), (206, 40, 345, 200),
+			(355, 40, 516, 200), (531, 40, 690, 200)]}, "anims": {
+		"idle": [(38, 40, 218, 200), (234, 40, 400, 200), (412, 40, 584, 200), (604, 40, 780, 200)],
+		# Glutbiss aus dem gemeinsamen Blatt (Marcos Wahl): ducken, Sprung, Sprung, Biss, landen, stehen
+		"attack": [(B, 20, 230, 180, 392), (B, 180, 230, 368, 392), (B, 180, 230, 368, 392), (B, 368, 230, 560, 392),
+			(B, 562, 230, 740, 392), (B, 562, 230, 740, 392)],
+		"spezial": [(32, 418, 230, 598), (240, 418, 470, 598), (470, 418, 760, 598), (760, 418, 1040, 598),
+			(1062, 418, 1256, 598), (1288, 418, 1468, 598)],
+		"hit": [(40, 640, 226, 758)],
+		"death": [(304, 640, 480, 758), (552, 640, 732, 758), (790, 640, 974, 758), (1038, 640, 1216, 758)],
+		"victory": [(34, 800, 236, 970), (282, 800, 480, 970), (530, 800, 714, 970), (750, 800, 928, 970)]}},
+	"bachotter": {"hoehe": 64, "blatt": "bachotter", "stehen_boxen": {B: [(836, 50, 978, 210), (978, 50, 1103, 210),
+			(1103, 50, 1236, 210), (1243, 50, 1362, 210)]}, "anims": {
+		"idle": [(58, 30, 190, 195), (218, 30, 373, 195), (409, 30, 553, 195), (580, 30, 738, 195)],
+		"attack": [(34, 225, 186, 385), (186, 225, 364, 385), (378, 225, 550, 385), (574, 225, 1136, 385),
+			(1145, 225, 1314, 385), (1319, 225, 1490, 385)],
+		"wurf": [(34, 225, 186, 385), (186, 225, 364, 385), (378, 225, 550, 385), (574, 225, 1136, 385),
+			(1145, 225, 1314, 385), (1319, 225, 1490, 385)],
+		"spezial": [(43, 412, 200, 582), (221, 412, 378, 582), (398, 412, 551, 582), (575, 412, 1178, 582),
+			(1182, 412, 1333, 582), (1347, 412, 1503, 582)],
+		"hit": [(52, 600, 213, 772)],
+		# Fallen aus dem gemeinsamen Blatt, das dritte Bild als Einzelbild (Marcos Wahl)
+		"death": [(B, 788, 620, 908, 782), (B, 919, 620, 1045, 782),
+			("bachotter_fallen_einzeln", 380, 430, 1190, 770, 0.31), (B, 1324, 620, 1526, 782)],
+		"victory": [(50, 800, 175, 975), (221, 800, 368, 975), (394, 800, 541, 975), (594, 800, 737, 975),
+			(773, 800, 927, 975)]}},
+}
 ## Diese Animationen werden an der Rückseite (links unten) ausgerichtet, weil sich das Monster nach vorne streckt
 AN_DER_RUECKSEITE = ["attack", "attack2", "wurf", "spezial", "death"]
 
 
 def freistellen(bild):
-	"""Hintergrund (helles Grau/Weiß, auch als Karomuster, mit dem Rand verbunden) wird ganz durchsichtig."""
+	"""Hintergrund (helles Grau/Weiß, auch als Karomuster, oder Pink, mit dem Rand verbunden) wird ganz durchsichtig."""
 	a = np.array(bild.convert("RGBA")).astype(np.int16)
+	r, g, b = a[..., 0], a[..., 1], a[..., 2]
+	if r[2, 2] > 200 and b[2, 2] > 200 and g[2, 2] < 60:
+		# Pinker Hintergrund: Pink weg, rosa Ränder (Mischfarbe mit dem Hintergrund) werden entfärbt
+		pink = (r > 170) & (b > 170) & (g < 110) & (np.abs(r - b) < 70)
+		# Schatten unter den Füßen (dunkles Lila) fallen auch weg, das Spiel malt eigene
+		pink |= (r > 80) & (b > 80) & (g < 50) & (np.abs(r - b) < 60) & (r > g + 60)
+		a[pink, 3] = 0
+		rand = ndimage.binary_dilation(pink, iterations=2) & ~pink & (r > g + 40) & (b > g + 40)
+		a[rand, 3] = 0
+		return a.astype(np.uint8)
 	if bild.mode == "RGBA" and a[..., 3].min() == 0:
 		return a.astype(np.uint8)
 	rgb = a[..., :3]
@@ -121,7 +172,10 @@ def zerlegen(name, info):
 		else:
 			anims[anim] = stuecke
 	stehen = np.median([fuss(t, False)[2] for t in anims["idle"]])
-	massstab = info["hoehe"] * 3 / stehen
+	speichern(name, anims, info["hoehe"] * 3 / stehen)
+
+
+def speichern(name, anims, massstab):
 	for alt in ZIEL.glob(f"{name}_*_anim_f*.png"):
 		alt.unlink()
 	for anim, stuecke in anims.items():
@@ -143,10 +197,47 @@ def zerlegen(name, info):
 	print(f"{name}: " + ", ".join(f"{k} {len(v)}" for k, v in anims.items()))
 
 
+def box_hoehe(a, box):
+	x0, y0, x1, y1 = box
+	return fuss(a[y0:y1, x0:x1], False)[2]
+
+
+def zerlegen_boxen(name, info):
+	blaetter = {}
+
+	def blatt(n):
+		if n not in blaetter:
+			blaetter[n] = freistellen(Image.open(VORLAGEN / f"{n}.png"))
+		return blaetter[n]
+	haupt = info["blatt"]
+	stehen = np.median([box_hoehe(blatt(haupt), b) for b in info["anims"]["idle"]])
+	# Andere Blätter: Faktor aus dem Stehen dort
+	angleich = {n: stehen / np.median([box_hoehe(blatt(n), b) for b in boxen])
+		for n, boxen in info.get("stehen_boxen", {}).items()}
+	anims = {}
+	for anim, boxen in info["anims"].items():
+		stuecke = []
+		for b in boxen:
+			n, faktor = haupt, 1.0
+			if isinstance(b[0], str):
+				n, b, faktor = b[0], b[1:5], (b[5] if len(b) > 5 else angleich.get(b[0], 1.0))
+			x0, y0, x1, y1 = b
+			teil = blatt(n)[y0:y1, x0:x1].copy()
+			if faktor != 1.0:
+				bild = Image.fromarray(teil)
+				teil = np.array(bild.resize((round(bild.width * faktor), round(bild.height * faktor)), Image.LANCZOS))
+			stuecke.append(teil)
+		anims[anim] = stuecke
+	speichern(name, anims, info["hoehe"] * 3 / stehen)
+
+
 def main():
-	namen = sys.argv[1:] or list(MONSTER)
+	namen = sys.argv[1:] or list(MONSTER) + list(BOX_MONSTER)
 	for name in namen:
-		zerlegen(name, MONSTER[name])
+		if name in BOX_MONSTER:
+			zerlegen_boxen(name, BOX_MONSTER[name])
+		else:
+			zerlegen(name, MONSTER[name])
 
 
 if __name__ == "__main__":

@@ -27,14 +27,17 @@ const LOOKS := {
 	"singer": {sprite = "elf_f", scale = 4.0},
 	# Novizen (Kreuzweg-Demo): der Spieler und die Mitstreiter
 	"novize": {sprite = "elf_m", scale = 4.0},
+	# Vega: eigene, fein gezeichnete Figur; fern = greift aus der Ferne an (ausholen, Geschoss)
+	"vega": {sprite = "vega", scale = 3.0, fern = true},
 	# Mitschüler aus design.md: Tessa (übereifrig) und Gorm (ängstlich), Platzhalter bis zu eigenen Bildern
 	"novize_tessa": {sprite = "elf_f", scale = 4.0, tint = Color(1.0, 0.88, 0.8)},
 	"novize_gorm": {sprite = "knight_m", scale = 4.0, tint = Color(0.85, 0.95, 0.85)},
 	# Begleiter
 	"robot": {sprite = "big_zombie", scale = 2.5, tint = Color(0.72, 0.82, 1.0)},
-	"moosling": {sprite = "swampy", scale = 3.5, tint = Color(0.75, 1.0, 0.65)},
-	"glutwelpe": {sprite = "imp", scale = 3.5, tint = Color(1.0, 0.8, 0.6)},
-	"bachotter": {sprite = "wogol", scale = 3.5, tint = Color(0.6, 0.85, 1.0)},
+	# Start-Monster aus Marcos Bildblättern (tools/monster_bilder.py)
+	"moosling": {sprite = "moosling", scale = 1.0, angriffe = {"Dornenpeitsche": "attack2"}},
+	"glutwelpe": {sprite = "glutwelpe", scale = 1.0, angriffe = {"Funkenregen": "spezial"}},
+	"bachotter": {sprite = "bachotter", scale = 1.0, angriffe = {"Wasserstrahl": "wurf", "Welle": "spezial"}},
 	# Rivale Kobalt (steht hinter seinem Monster)
 	"kobalt": {sprite = "elf_m", scale = 4.0, tint = Color(0.75, 0.85, 1.0)},
 	# Gegner
@@ -72,18 +75,19 @@ const LOOKS := {
 	"splitterbaer": {sprite = "ogre", scale = 5.5, tint = Color(0.85, 0.8, 1.0)},
 	"bienenschwarm": {sprite = "imp", scale = 3.5, tint = Color(1.0, 0.9, 0.35)},
 	# Kobalts Monster
-	"kobalts_moosling": {sprite = "swampy", scale = 4.0, tint = Color(0.6, 0.9, 0.5)},
-	"kobalts_glutwelpe": {sprite = "imp", scale = 4.0, tint = Color(1.0, 0.65, 0.45)},
-	"kobalts_bachotter": {sprite = "wogol", scale = 4.0, tint = Color(0.45, 0.7, 1.0)},
+	# Kobalts Monster: dieselben Bilder, etwas größer und dunkler gefärbt
+	"kobalts_moosling": {sprite = "moosling", scale = 1.15, tint = Color(0.8, 0.95, 0.75), angriffe = {"Dornenpeitsche": "attack2"}},
+	"kobalts_glutwelpe": {sprite = "glutwelpe", scale = 1.15, tint = Color(1.0, 0.82, 0.75), angriffe = {"Funkenregen": "spezial"}},
+	"kobalts_bachotter": {sprite = "bachotter", scale = 1.15, tint = Color(0.8, 0.88, 1.0), angriffe = {"Wasserstrahl": "wurf", "Welle": "spezial"}},
 	# Grünwacht
 	"rindenbaer": {sprite = "ogre", scale = 4.5, tint = Color(0.75, 0.62, 0.45)},
 	"windfalke": {sprite = "imp", scale = 4.0, tint = Color(0.85, 0.95, 1.0)},
 	"donnerhirsch": {sprite = "chort", scale = 4.5, tint = Color(1.0, 0.92, 0.55)},
 	"steinkroete": {sprite = "swampy", scale = 5.0, tint = Color(0.7, 0.68, 0.6)},
 	"waldsporenling": {sprite = "muddy", scale = 4.0, tint = Color(0.75, 1.0, 0.65)},
-	"wilder_moosling": {sprite = "swampy", scale = 3.5, tint = Color(0.75, 1.0, 0.65)},
-	"wilde_glutwelpe": {sprite = "imp", scale = 3.5, tint = Color(1.0, 0.8, 0.6)},
-	"wilder_bachotter": {sprite = "wogol", scale = 3.5, tint = Color(0.6, 0.85, 1.0)},
+	"wilder_moosling": {sprite = "moosling", scale = 1.0, angriffe = {"Dornenpeitsche": "attack2"}},
+	"wilde_glutwelpe": {sprite = "glutwelpe", scale = 1.0, angriffe = {"Funkenregen": "spezial"}},
+	"wilder_bachotter": {sprite = "bachotter", scale = 1.0, angriffe = {"Wasserstrahl": "wurf", "Welle": "spezial"}},
 }
 ## Bilder pro Sekunde. attack, death, parry und victory haben bisher nur eigene Figuren (z. B. Vega);
 ## fehlen sie, nimmt die Anzeige wie bisher run bzw. hit.

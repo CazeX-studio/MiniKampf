@@ -1021,9 +1021,9 @@ func wait(seconds: float) -> void:
 ## Der Aufprall ist genau nach "duration" Sekunden, dort erscheint ein Hieb.
 func lunge(f: Fighter, target: Fighter, duration: float, attack_name := "") -> void:
 	var target_view := view(target)
-	# Helden mit eigener Angriffs-Animation (z. B. Vega) greifen aus der Ferne an: ausholen, Geschoss, Treffer.
+	# Helden mit „fern“ in LOOKS (z. B. Vega) greifen aus der Ferne an: ausholen, Geschoss, Treffer.
 	# Monster mit eigenen Bildern stürmen wie bisher vor und zeigen dabei ihre Angriffs-Animation.
-	if f.is_ally() and view(f).has_anim("attack"):
+	if f.is_ally() and view(f).has_anim("attack") and FighterView.look_data(f.look_key()).get("fern", false):
 		var release := maxf(duration, 0.6)
 		view(f).cast_attack(release)
 		await wait(release)

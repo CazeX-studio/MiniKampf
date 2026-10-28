@@ -51,6 +51,17 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **Start-Monster Moosling, Glutwelpe und Bachotter** (28.10., Marcos Bildblätter):
+  - Eingebaut für den Zähmer (eigenes Team und Bank), für Kobalts Monster (etwas größer und dunkler) und die wilden
+    Varianten in Grünwacht. Jedes hat Stehen, zwei Angriffe, Getroffen, Fallen und Freude nach dem Sieg.
+  - Moosling: Rankenschlag und Dornenpeitsche. Glutwelpe: Glutbiss (aus dem gemeinsamen Blatt, wie gewünscht) und
+    Funkenregen. Bachotter: Wasserstrahl und Welle, Fallen aus dem gemeinsamen Blatt mit dem Einzelbild als drittem Bild.
+  - Der pinke Hintergrund und die Schatten unter den Füßen werden entfernt. Bilder, die sich berühren, schneidet
+    `tools/monster_bilder.py` jetzt mit festen Ausschnitten.
+  - Nur Vega greift als Heldin aus der Ferne an; die Monster des Zähmers stürmen beim Angriff vor.
+  - **So testest du es:** Editor → „Akt Grünwacht – Als Monster-Zähmer“, bei Professor Esche ein Monster holen und gegen
+    Kobalt kämpfen.
+
 - **Marcos Entscheidungen vom 28.10. eingebaut:**
   - **Tessa und Gorm statt Ida, Bo und Tom:** Die beiden Mitschüler helfen im ersten Gruppenkampf, in den Probestunden,
     in der Nacht des Sternenfalls und in der Pilzhöhle. Die Gruppe ist allein jetzt drei statt vier stark
