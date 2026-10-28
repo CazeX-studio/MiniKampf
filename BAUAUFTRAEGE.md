@@ -279,7 +279,7 @@ _Am 28.10. geteilt: Kofis Kopf-Blatt kam zuerst._
 ### Schritt 3: Novizen-Körper männlich und weiblich
 - **Ziel:** Ein gemeinsamer Novizen-Körper je Geschlecht für alle sechs; Schal- und Schildfarbe färbt das Spiel pro Figur. Prompt: Spieldesign/GRAFIK_AUFTRAG.md (B8), Kopf als grünes Oval, keine Haut sichtbar.
 - **So testest du es:** Alle sechs Novizen laufen und kämpfen mit demselben Körper, aber eigenem Kopf und eigener Farbe.
-- **Status:** in Arbeit (28.10.2026: beide Körper komplett (je drei Blätter); Köpfe von Kofi und Mira passen, der Kopf neigt sich mit dem Körper. Fehlen: Einfärben von Halstuch und Schildrand.)
+- **Status:** fertig (28.10.2026: beide Körper komplett, je drei Blätter; Kopf neigt sich mit. Einfärben entfällt: Marco hat entschieden, dass alle Novizen gleich aussehen.)
 
 ### Schritt 4: Körper der Grünwacht-Klassen
 - **Ziel:** Bogenschütze und Monster-Zähmer, je männlich und weiblich. Beim Lernen der Klasse wechselt der Körper, der Kopf bleibt.
