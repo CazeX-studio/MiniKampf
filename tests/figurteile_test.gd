@@ -29,10 +29,16 @@ func _init() -> void:
 				print("FEHLER: kofi %s_f%d weicht an %d Punkten ab" % [anim, i, abweichung])
 				fehler += 1
 			FigurTeile.art = FigurTeile.Art.KOPFBLATT
-			if FigurTeile.bild("kofi", anim, i) == null:
-				print("FEHLER: kein Bild mit neuem Kopf für %s_f%d" % [anim, i])
-				fehler += 1
+			for kopf: String in FigurTeile.koepfe("kofi"):
+				FigurTeile.kopf = kopf
+				if FigurTeile.bild("kofi", anim, i) == null:
+					print("FEHLER: kein Bild mit Kopf %s für %s_f%d" % [kopf, anim, i])
+					fehler += 1
+			FigurTeile.kopf = ""
 			i += 1
+	if FigurTeile.koepfe("kofi").size() < 2:
+		print("FEHLER: Kofi sollte mindestens zwei Köpfe haben")
+		fehler += 1
 	FigurTeile.art = FigurTeile.Art.GANZ
 	if FigurTeile.bild("kofi", "idle", 0) != null:
 		print("FEHLER: bei „ganz“ darf nichts zusammengesetzt werden")

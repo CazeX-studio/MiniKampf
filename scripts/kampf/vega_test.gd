@@ -88,6 +88,16 @@ func _build_buttons() -> void:
 			FigurTeile.art = ((FigurTeile.art + 1) % ART_NAMEN.size()) as FigurTeile.Art
 			get_tree().reload_current_scene())
 		box.add_child(teile)
+		# Kopf wechseln (nur bei „neuer Kopf“): alle Köpfe aus Kopf-Blättern, die auf diesen Körper passen
+		var koepfe := FigurTeile.koepfe(FigurWahl.gewaehlt())
+		if FigurTeile.art == FigurTeile.Art.KOPFBLATT and koepfe.size() > 1:
+			var ids: Array = koepfe.keys()
+			var jetzt: String = FigurTeile.kopf if koepfe.has(FigurTeile.kopf) else FigurWahl.gewaehlt()
+			var kopf_knopf := _small("Kopf: %s" % koepfe[jetzt].name)
+			kopf_knopf.pressed.connect(func() -> void:
+				FigurTeile.kopf = ids[(ids.find(jetzt) + 1) % ids.size()]
+				get_tree().reload_current_scene())
+			box.add_child(kopf_knopf)
 	var back := _small("Zurück zum Editor")
 	back.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/editor.tscn"))
 	box.add_child(back)

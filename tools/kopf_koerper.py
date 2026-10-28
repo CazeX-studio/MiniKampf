@@ -39,23 +39,29 @@ KOPF_BLATT = [
 VORBILD = {"seite": "idle_f0", "vorn": "idle_vorn_f0", "hinten": "idle_hinten_f0"}
 ## Figur -> Erkennungsfarbe des Halstuchs (bleibt immer beim Körper)
 TUCH = {
-	"kofi": lambda r, g, b: (r > 150) & (g > 90) & (b < 90) & (r - b > 100),
+	"kofi": lambda r, g, b: (r > 120) & (g > r * 0.55) & (b < r * 0.3),
 }
 ## Diese Animationen schauen eher nach vorne als zur Seite (Sieg, Fähigkeit mit der Hand auf der Brust)
 RICHTUNG = {"victory": "vorn", "cast": "vorn"}
 ## Diese Bilder bleiben immer ganz (liegend: ein aufrechter Kopf passt dort nicht)
 GANZ = {"kofi": ["death_f4", "death_f5"]}
+## Weitere Köpfe aus Kopf-Blättern (tools/vorlagen/<kopf>_kopf.png), die auf den Körper der Figur passen.
+## Sie werden mit derselben Größe wie die Köpfe der Figur verkleinert. Name = wie er im Editor heißt.
+WEITERE_KOEPFE = {
+	"kofi": {"novizin_2": "Novizin 2"},
+}
+NAMEN = {"kofi": "Kofi"}
 ## Passt ein Kopf so viel schlechter als im Vorbild, gilt er als nicht gefunden
 SCHLECHTER = 2.6
 
 
-def koepfe_schneiden(figur):
-	"""Köpfe des Blatts in voller Größe."""
-	a = freistellen(Image.open(VORLAGEN / f"{figur}_kopf.png"))
+def koepfe_schneiden(kopf_id):
+	"""Köpfe des Blatts tools/vorlagen/<kopf_id>_kopf.png in voller Größe."""
+	a = freistellen(Image.open(VORLAGEN / f"{kopf_id}_kopf.png"))
 	ziel, reihen = bilder_finden(a, [])
 	erwartet = [len(namen) for _, namen in KOPF_BLATT]
 	if [len(r) for r in reihen] != erwartet:
-		raise SystemExit(f"{figur}_kopf: Reihen {[len(r) for r in reihen]}, erwartet {erwartet}")
+		raise SystemExit(f"{kopf_id}_kopf: Reihen {[len(r) for r in reihen]}, erwartet {erwartet}")
 	koepfe = {}
 	for (richtung, namen), reihe in zip(KOPF_BLATT, reihen):
 		for name, (i, _) in zip(namen, reihe):
@@ -67,6 +73,26 @@ def kinn(kopf):
 	"""Unterste Reihe, die noch mindestens halb so breit ist wie der Kopf (darunter: schmaler Halsansatz)."""
 	breite = (kopf[..., 3] > 128).sum(1)
 	return int(np.where(breite > breite.max() * 0.5)[0].max())
+
+
+def hals(kopf):
+	"""Halspunkt eines Kopfes: Mitte der untersten Hautreihen (Haut = deutlich anders als die Haarfarbe oben,
+	warm und hell genug, kein Haarband). So sitzen Köpfe mit Zopf oder langen Haaren trotzdem richtig auf dem Hals."""
+	fest = kopf[..., 3] > 128
+	farbe = kopf[..., :3].astype(int)
+	ys = np.where(fest.any(1))[0]
+	oben = fest.copy()
+	oben[ys.min() + max(2, (ys.max() - ys.min()) // 5):] = False
+	haar = np.median(farbe[oben], 0)
+	r, g, b = farbe[..., 0], farbe[..., 1], farbe[..., 2]
+	haut = fest & (np.abs(farbe - haar).sum(-1) > 110) & (r > 110) & (g >= r * 0.52) & (b < g) & (r > b + 55)
+	# Nur das größte Hautstück (Gesicht mit Hals, Mund und Augen geschlossen), kleine Flecken wie ein Haarband zählen nicht
+	haut = ndimage.binary_closing(haut, iterations=3) & fest
+	lab, n = ndimage.label(haut)
+	haut = lab == (int(np.argmax(ndimage.sum(haut, lab, range(1, n + 1)))) + 1)
+	hy, hx = np.where(haut)
+	unten = hy.max()
+	return [round(float(hx[hy >= unten - 3].mean()), 1), int(unten + 1)]
 
 
 def verkleinern(kopf, faktor):
@@ -114,7 +140,7 @@ def main():
 			m = re.match(rf"{figur}_(.+)_anim_f(\d+)\.png", pfad.name)
 			bilder[f"{m.group(1)}_f{int(m.group(2))}"] = np.array(Image.open(pfad).convert("RGBA"))
 		# Größe je Richtung: der Faktor, mit dem der normale Kopf am besten auf das Stehbild passt
-		koepfe, guete = {}, {}
+		koepfe, guete, faktoren = {}, {}, {}
 		for richtung, vorbild in VORBILD.items():
 			beste = None
 			for faktor in np.arange(0.20, 0.36, 0.01):
@@ -122,6 +148,7 @@ def main():
 				if beste is None or wert < beste[0]:
 					beste = (wert, faktor)
 			guete[richtung] = beste[0]
+			faktoren[richtung] = beste[1]
 			for name, kopf in gross.items():
 				if name.startswith(richtung + "_"):
 					koepfe[name] = verkleinern(kopf, beste[1])
@@ -130,9 +157,23 @@ def main():
 			(TEILE / ordner).mkdir(parents=True, exist_ok=True)
 			for alt in (TEILE / ordner).glob(f"{figur}_*.png"):
 				alt.unlink()
-		for name, kopf in koepfe.items():
-			Image.fromarray(kopf).save(TEILE / "koepfe" / f"{figur}_{name}.png")
-		eintrag = {}
+		alle_koepfe = {}
+		for kopf_id, kopf_name in [(figur, NAMEN.get(figur, figur))] + list(WEITERE_KOEPFE.get(figur, {}).items()):
+			for alt in (TEILE / "koepfe").glob(f"{kopf_id}_*.png"):
+				alt.unlink()
+			teile = koepfe if kopf_id == figur else {
+				name: verkleinern(k, faktoren[name.split("_")[0]]) for name, k in koepfe_schneiden(kopf_id).items()}
+			punkte = {}
+			for name, kopf in teile.items():
+				Image.fromarray(kopf).save(TEILE / "koepfe" / f"{kopf_id}_{name}.png")
+				# Halspunkt am normalen Kopf der Richtung messen, die anderen Gesichter daran ausrichten
+				# (sie sind fast gleich, nur das Gesicht ändert sich), damit der Kopf beim Gesichtswechsel nicht springt
+				normal = teile[name.split("_")[0] + "_normal"]
+				punkt = hals(normal)
+				_, dx, dy = suchen(normal, kopf)
+				punkte[name] = [round(punkt[0] - dx, 1), int(punkt[1] - dy)]
+			alle_koepfe[kopf_id] = {"name": kopf_name, "hals": punkte}
+		eintrag = {"_koepfe": alle_koepfe}
 		for name, bild in bilder.items():
 			richtung = richtung_von(name.rsplit("_f", 1)[0])
 			kopf = koepfe[f"{richtung}_normal"]
@@ -155,7 +196,12 @@ def main():
 			farbe = bild[..., :3].astype(int)
 			r, g, b = farbe[..., 0], farbe[..., 1], farbe[..., 2]
 			hoch, tief = farbe.max(-1), farbe.min(-1)
-			flaeche &= ~TUCH[figur](r, g, b) & ~((hoch - tief < 35) & (hoch > 120)) & (bild[..., 3] > 0)
+			# Halstuch: nur das größte zusammenhängende Stück in Tuchfarbe (Hautglanz im Gesicht zählt nicht)
+			tuch = TUCH[figur](r, g, b) & (bild[..., 3] > 60)
+			lab, n = ndimage.label(tuch, structure=np.ones((3, 3)))
+			if n > 0:
+				tuch = lab == (int(np.argmax(ndimage.sum(tuch, lab, range(1, n + 1)))) + 1)
+			flaeche &= ~tuch & ~((hoch - tief < 35) & (hoch > 120)) & (bild[..., 3] > 0)
 			alt = bild.copy()
 			alt[~flaeche, 3] = 0
 			koerper = bild.copy()
@@ -163,13 +209,16 @@ def main():
 			ys, xs = np.where(flaeche)
 			Image.fromarray(koerper).save(TEILE / "koerper" / f"{figur}_{name}.png")
 			Image.fromarray(alt[ys.min():ys.max() + 1, xs.min():xs.max() + 1]).save(TEILE / "kopf" / f"{figur}_{name}.png")
-			eintrag[name] = {"alt": [int(xs.min()), int(ys.min())], "kopf": [int(x), int(y)], "richtung": richtung}
+			punkt = alle_koepfe[figur]["hals"][f"{richtung}_normal"]
+			eintrag[name] = {"alt": [int(xs.min()), int(ys.min())], "hals": [round(x + punkt[0], 1), y + punkt[1]],
+					"richtung": richtung}
 		daten[figur] = eintrag
 		ganz = [k for k, v in eintrag.items() if v.get("ganz")]
-		print(f"{figur}: {len(bilder)} Bilder, {len(bilder) - len(ganz)} getrennt, ganz geblieben: {ganz}")
+		print(f"{figur}: Köpfe {list(alle_koepfe)}; {len(bilder)} Bilder, {len(bilder) - len(ganz)} getrennt, ganz geblieben: {ganz}")
 	daten["_hinweis"] = ("Kopf und Körper der Figuren (Projekt 11), erzeugt mit tools/kopf_koerper.py. Pro Bild: alt = linke obere "
-			"Ecke des alten Kopfes (assets/teile/kopf), kopf = linke obere Ecke des neuen Kopfes (assets/teile/koepfe), "
-			"richtung = seite/vorn/hinten; ganz = Bild nicht getrennt (z. B. liegend).")
+			"Ecke des alten Kopfes (assets/teile/kopf), hals = Halspunkt im Bild, auf den jeder Kopf gesetzt wird, "
+			"richtung = seite/vorn/hinten; ganz = Bild nicht getrennt (z. B. liegend). _koepfe = alle Köpfe, "
+			"die auf diesen Körper passen (assets/teile/koepfe), mit Halspunkt je Richtung und Gesicht.")
 	DATEN.write_text(json.dumps(daten, ensure_ascii=False, indent="\t", sort_keys=True))
 
 

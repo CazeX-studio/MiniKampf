@@ -12,6 +12,7 @@ Sie sind Platzhalter, bis eigene Grafiken (oder ein Pixel-Künstler) da sind.
 | Figur | Herkunft | Benutzt für |
 |-------|----------|-------------|
 | Vega (`vega_*`) | Von Marco mit KI-Hilfe erstellt (26.10.2026, zwei Bildblätter), von Claude Code zugeschnitten, verkleinert und gesäubert | Eigene Spielfigur (Welt und Kampf als Novize, mit Angriff, Parade, Fallen und Sieg), wählbar beim Zusammenspielen. Dazu Laufbilder nach vorne und hinten (27.10., `tools/vorlagen/vega_laufen.png`) und neue, fein gezeichnete Kampfbilder (27.10., `tools/vorlagen/vega_kampf_a.png` und `vega_kampf_b.png`, zerlegt mit `tools/vega_kampfbilder.py`) |
+| Novizin 2 (Kopf, `assets/teile/koepfe/novizin_2_*`) | Von Marco mit KI-Hilfe erstellt (28.10.2026, Kopf-Blatt `tools/vorlagen/novizin_2_kopf.png`), eingebaut mit `tools/kopf_koerper.py` | Zweiter Novizen-Kopf, im Editor auf Kofis Körper wählbar |
 | Kofi (`kofi_*`) | Von Marco mit KI-Hilfe erstellt (28.10.2026, drei Bildblätter in `tools/vorlagen/`), zerlegt mit `tools/figur_bilder.py`; dazu ein Kopf-Blatt (28.10., `tools/vorlagen/kofi_kopf.png`, Köpfe getauscht mit `tools/kopf_koerper.py`) | Erster der sechs Novizen, als Figur und Begleiter wählbar |
 | Asterfall-UI-Set (`assets/ui/`) | Von Marco mit KI-Hilfe erstellt (27.10.2026, zwei Bildblätter in `tools/vorlagen/ui/`), von Claude Code zugeschnitten, freigestellt und verkleinert (`tools/ui_zuschneiden.gd`) | Fenster, Knöpfe, Balken, Häkchen, Reiter, Taschen-Felder, Symbole im ganzen Spiel |
 

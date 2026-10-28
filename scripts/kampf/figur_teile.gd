@@ -15,7 +15,7 @@ enum Art {
 const DATEN := "res://data/figurteile.json"
 const KOERPER := "res://assets/teile/koerper/%s_%s_f%d.png"
 const ALTER_KOPF := "res://assets/teile/kopf/%s_%s_f%d.png"
-const KOPF := "res://assets/teile/koepfe/%s_%s_%s.png"
+const KOPF := "res://assets/teile/koepfe/%s_%s.png"  # Kopf, Richtung_Gesicht
 ## Gesicht je Animation (seitlich); fehlt ein Gesicht in einer Richtung, gilt „normal“
 const GESICHT := {
 	"hit": "schmerz", "parry": "entschlossen", "attack": "entschlossen", "attack2": "entschlossen",
@@ -24,6 +24,8 @@ const GESICHT := {
 
 ## Gilt für alle Figuren, die Teile haben (Umschalter in Editor → Figuren-Animationen)
 static var art := Art.GANZ
+## Gewählter Kopf bei KOPFBLATT ("" = der eigene Kopf der Figur), siehe koepfe()
+static var kopf := ""
 static var _daten := {}
 static var _cache := {}
 
@@ -40,7 +42,8 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 	var info: Dictionary = _alle()[figur].get("%s_f%d" % [anim, frame], {})
 	if info.is_empty():
 		return null
-	var schluessel := "%s/%s/%d/%d" % [figur, anim, frame, art]
+	var kopf_id := kopf if koepfe(figur).has(kopf) else figur
+	var schluessel := "%s/%s/%d/%d/%s" % [figur, anim, frame, art, kopf_id]
 	if _cache.has(schluessel):
 		return _cache[schluessel]
 	var koerper := _bild_laden(KOERPER % [figur, anim, frame])
@@ -50,23 +53,32 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 	if not info.get("ganz", false):
 		# Erst der Kopf, dann der Körper darüber: Halstuch und Schwert liegen vor dem Kopf
 		ergebnis = Image.create_empty(koerper.get_width(), koerper.get_height(), false, Image.FORMAT_RGBA8)
-		var kopf: Image
-		var ecke: Array
+		var kopf_bild: Image
+		var ecke: Vector2i
 		if art == Art.TEILE:
-			kopf = _bild_laden(ALTER_KOPF % [figur, anim, frame])
-			ecke = info.alt
+			kopf_bild = _bild_laden(ALTER_KOPF % [figur, anim, frame])
+			ecke = Vector2i(int(info.alt[0]), int(info.alt[1]))
 		else:
-			kopf = _bild_laden(KOPF % [figur, info.richtung, gesicht(anim, frame)])
-			if kopf == null:
-				kopf = _bild_laden(KOPF % [figur, info.richtung, "normal"])
-			ecke = info.kopf
-		if kopf != null:
-			ergebnis.blend_rect(kopf, Rect2i(Vector2i.ZERO, kopf.get_size()), Vector2i(int(ecke[0]), int(ecke[1])))
+			# Der Kopf wird mit seinem Halspunkt auf den Halspunkt des Bildes gesetzt
+			var punkte: Dictionary = koepfe(figur)[kopf_id].hals
+			var variante := "%s_%s" % [info.richtung, gesicht(anim, frame)]
+			if not punkte.has(variante):
+				variante = "%s_normal" % info.richtung
+			kopf_bild = _bild_laden(KOPF % [kopf_id, variante])
+			var punkt: Array = punkte[variante]
+			ecke = Vector2i(roundi(info.hals[0] - punkt[0]), roundi(info.hals[1] - punkt[1]))
+		if kopf_bild != null:
+			ergebnis.blend_rect(kopf_bild, Rect2i(Vector2i.ZERO, kopf_bild.get_size()), ecke)
 		ergebnis.blend_rect(koerper, Rect2i(Vector2i.ZERO, koerper.get_size()), Vector2i.ZERO)
 	ergebnis.generate_mipmaps()
 	var textur := ImageTexture.create_from_image(ergebnis)
 	_cache[schluessel] = textur
 	return textur
+
+
+## Alle Köpfe, die auf den Körper der Figur passen: Kopf-Name -> {name, hals}.
+static func koepfe(figur: String) -> Dictionary:
+	return _alle().get(figur, {}).get("_koepfe", {})
 
 
 ## Gesicht zu einem Bild: beim Fallen erst Schmerz, dann Augen zu.

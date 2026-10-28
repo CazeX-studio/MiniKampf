@@ -1,14 +1,114 @@
 {
-	"_hinweis": "Kopf und Körper der Figuren (Projekt 11), erzeugt mit tools/kopf_koerper.py. Pro Bild: alt = linke obere Ecke des alten Kopfes (assets/teile/kopf), kopf = linke obere Ecke des neuen Kopfes (assets/teile/koepfe), richtung = seite/vorn/hinten; ganz = Bild nicht getrennt (z. B. liegend).",
+	"_hinweis": "Kopf und Körper der Figuren (Projekt 11), erzeugt mit tools/kopf_koerper.py. Pro Bild: alt = linke obere Ecke des alten Kopfes (assets/teile/kopf), hals = Halspunkt im Bild, auf den jeder Kopf gesetzt wird, richtung = seite/vorn/hinten; ganz = Bild nicht getrennt (z. B. liegend). _koepfe = alle Köpfe, die auf diesen Körper passen (assets/teile/koepfe), mit Halspunkt je Richtung und Gesicht.",
 	"kofi": {
+		"_koepfe": {
+			"kofi": {
+				"hals": {
+					"hinten_geneigt": [
+						33.7,
+						54
+					],
+					"hinten_normal": [
+						34.7,
+						53
+					],
+					"seite_augen_zu": [
+						39.2,
+						60
+					],
+					"seite_entschlossen": [
+						38.2,
+						58
+					],
+					"seite_freude": [
+						39.2,
+						58
+					],
+					"seite_normal": [
+						38.2,
+						59
+					],
+					"seite_schmerz": [
+						39.2,
+						58
+					],
+					"vorn_augen_zu": [
+						35.0,
+						56
+					],
+					"vorn_freude": [
+						35.0,
+						56
+					],
+					"vorn_normal": [
+						35.0,
+						57
+					],
+					"vorn_schmerz": [
+						34.0,
+						56
+					]
+				},
+				"name": "Kofi"
+			},
+			"novizin_2": {
+				"hals": {
+					"hinten_geneigt": [
+						39.3,
+						45
+					],
+					"hinten_normal": [
+						38.3,
+						46
+					],
+					"seite_augen_zu": [
+						37.3,
+						58
+					],
+					"seite_entschlossen": [
+						37.3,
+						58
+					],
+					"seite_freude": [
+						37.3,
+						57
+					],
+					"seite_normal": [
+						37.3,
+						57
+					],
+					"seite_schmerz": [
+						37.3,
+						57
+					],
+					"vorn_augen_zu": [
+						34.2,
+						53
+					],
+					"vorn_freude": [
+						35.2,
+						53
+					],
+					"vorn_normal": [
+						36.2,
+						53
+					],
+					"vorn_schmerz": [
+						36.2,
+						53
+					]
+				},
+				"name": "Novizin 2"
+			}
+		},
 		"attack_f0": {
 			"alt": [
 				121,
 				0
 			],
-			"kopf": [
-				124,
-				2
+			"hals": [
+				162.2,
+				61
 			],
 			"richtung": "seite"
 		},
@@ -17,9 +117,9 @@
 				127,
 				1
 			],
-			"kopf": [
-				130,
-				2
+			"hals": [
+				168.2,
+				61
 			],
 			"richtung": "seite"
 		},
@@ -28,9 +128,9 @@
 				146,
 				9
 			],
-			"kopf": [
-				149,
-				9
+			"hals": [
+				187.2,
+				68
 			],
 			"richtung": "seite"
 		},
@@ -39,9 +139,9 @@
 				161,
 				8
 			],
-			"kopf": [
-				164,
-				8
+			"hals": [
+				202.2,
+				67
 			],
 			"richtung": "seite"
 		},
@@ -50,9 +150,9 @@
 				157,
 				8
 			],
-			"kopf": [
-				160,
-				9
+			"hals": [
+				198.2,
+				68
 			],
 			"richtung": "seite"
 		},
@@ -61,9 +161,9 @@
 				124,
 				1
 			],
-			"kopf": [
-				127,
-				2
+			"hals": [
+				165.2,
+				61
 			],
 			"richtung": "seite"
 		},
@@ -72,9 +172,9 @@
 				21,
 				0
 			],
-			"kopf": [
-				24,
-				1
+			"hals": [
+				59.0,
+				58
 			],
 			"richtung": "vorn"
 		},
@@ -83,9 +183,9 @@
 				26,
 				6
 			],
-			"kopf": [
-				28,
-				5
+			"hals": [
+				63.0,
+				62
 			],
 			"richtung": "vorn"
 		},
@@ -94,9 +194,9 @@
 				26,
 				5
 			],
-			"kopf": [
-				28,
-				4
+			"hals": [
+				63.0,
+				61
 			],
 			"richtung": "vorn"
 		},
@@ -105,9 +205,9 @@
 				27,
 				1
 			],
-			"kopf": [
-				30,
-				4
+			"hals": [
+				65.0,
+				61
 			],
 			"richtung": "vorn"
 		},
@@ -116,9 +216,9 @@
 				68,
 				0
 			],
-			"kopf": [
-				71,
-				0
+			"hals": [
+				109.2,
+				59
 			],
 			"richtung": "seite"
 		},
@@ -127,9 +227,9 @@
 				91,
 				14
 			],
-			"kopf": [
-				94,
-				15
+			"hals": [
+				132.2,
+				74
 			],
 			"richtung": "seite"
 		},
@@ -138,9 +238,9 @@
 				128,
 				33
 			],
-			"kopf": [
-				131,
-				33
+			"hals": [
+				169.2,
+				92
 			],
 			"richtung": "seite"
 		},
@@ -149,9 +249,9 @@
 				137,
 				32
 			],
-			"kopf": [
-				139,
-				32
+			"hals": [
+				177.2,
+				91
 			],
 			"richtung": "seite"
 		},
@@ -166,9 +266,9 @@
 				4,
 				0
 			],
-			"kopf": [
-				7,
-				-1
+			"hals": [
+				45.2,
+				58
 			],
 			"richtung": "seite"
 		},
@@ -177,9 +277,9 @@
 				22,
 				0
 			],
-			"kopf": [
-				25,
-				0
+			"hals": [
+				63.2,
+				59
 			],
 			"richtung": "seite"
 		},
@@ -188,9 +288,9 @@
 				24,
 				1
 			],
-			"kopf": [
-				26,
-				0
+			"hals": [
+				64.2,
+				59
 			],
 			"richtung": "seite"
 		},
@@ -199,9 +299,9 @@
 				24,
 				0
 			],
-			"kopf": [
-				27,
-				0
+			"hals": [
+				65.2,
+				59
 			],
 			"richtung": "seite"
 		},
@@ -210,9 +310,9 @@
 				21,
 				0
 			],
-			"kopf": [
-				24,
-				0
+			"hals": [
+				62.2,
+				59
 			],
 			"richtung": "seite"
 		},
@@ -221,9 +321,9 @@
 				17,
 				1
 			],
-			"kopf": [
-				20,
-				1
+			"hals": [
+				54.7,
+				54
 			],
 			"richtung": "hinten"
 		},
@@ -232,9 +332,9 @@
 				17,
 				1
 			],
-			"kopf": [
-				20,
-				1
+			"hals": [
+				54.7,
+				54
 			],
 			"richtung": "hinten"
 		},
@@ -243,9 +343,9 @@
 				18,
 				1
 			],
-			"kopf": [
-				21,
-				2
+			"hals": [
+				55.7,
+				55
 			],
 			"richtung": "hinten"
 		},
@@ -254,9 +354,9 @@
 				29,
 				0
 			],
-			"kopf": [
-				31,
-				0
+			"hals": [
+				65.7,
+				53
 			],
 			"richtung": "hinten"
 		},
@@ -265,9 +365,9 @@
 				19,
 				0
 			],
-			"kopf": [
-				20,
-				0
+			"hals": [
+				55.0,
+				57
 			],
 			"richtung": "vorn"
 		},
@@ -276,9 +376,9 @@
 				16,
 				1
 			],
-			"kopf": [
-				19,
-				1
+			"hals": [
+				54.0,
+				58
 			],
 			"richtung": "vorn"
 		},
@@ -287,9 +387,9 @@
 				17,
 				0
 			],
-			"kopf": [
-				18,
-				1
+			"hals": [
+				53.0,
+				58
 			],
 			"richtung": "vorn"
 		},
@@ -298,9 +398,9 @@
 				32,
 				1
 			],
-			"kopf": [
-				33,
-				2
+			"hals": [
+				68.0,
+				59
 			],
 			"richtung": "vorn"
 		},
@@ -309,9 +409,9 @@
 				65,
 				1
 			],
-			"kopf": [
-				68,
-				1
+			"hals": [
+				106.2,
+				60
 			],
 			"richtung": "seite"
 		},
@@ -320,9 +420,9 @@
 				63,
 				1
 			],
-			"kopf": [
-				65,
-				1
+			"hals": [
+				103.2,
+				60
 			],
 			"richtung": "seite"
 		},
@@ -331,9 +431,9 @@
 				63,
 				2
 			],
-			"kopf": [
-				65,
-				2
+			"hals": [
+				103.2,
+				61
 			],
 			"richtung": "seite"
 		},
@@ -342,9 +442,9 @@
 				69,
 				0
 			],
-			"kopf": [
-				71,
-				0
+			"hals": [
+				109.2,
+				59
 			],
 			"richtung": "seite"
 		},
@@ -353,9 +453,9 @@
 				60,
 				0
 			],
-			"kopf": [
-				63,
-				0
+			"hals": [
+				101.2,
+				59
 			],
 			"richtung": "seite"
 		},
@@ -364,9 +464,9 @@
 				60,
 				2
 			],
-			"kopf": [
-				63,
-				2
+			"hals": [
+				101.2,
+				61
 			],
 			"richtung": "seite"
 		},
@@ -375,9 +475,9 @@
 				61,
 				0
 			],
-			"kopf": [
-				64,
-				0
+			"hals": [
+				102.2,
+				59
 			],
 			"richtung": "seite"
 		},
@@ -386,9 +486,9 @@
 				55,
 				0
 			],
-			"kopf": [
-				57,
-				1
+			"hals": [
+				95.2,
+				60
 			],
 			"richtung": "seite"
 		},
@@ -397,9 +497,9 @@
 				49,
 				3
 			],
-			"kopf": [
-				52,
-				3
+			"hals": [
+				86.7,
+				56
 			],
 			"richtung": "hinten"
 		},
@@ -408,9 +508,9 @@
 				47,
 				1
 			],
-			"kopf": [
-				50,
-				1
+			"hals": [
+				84.7,
+				54
 			],
 			"richtung": "hinten"
 		},
@@ -419,9 +519,9 @@
 				49,
 				2
 			],
-			"kopf": [
-				51,
-				1
+			"hals": [
+				85.7,
+				54
 			],
 			"richtung": "hinten"
 		},
@@ -430,9 +530,9 @@
 				42,
 				0
 			],
-			"kopf": [
-				44,
-				0
+			"hals": [
+				78.7,
+				53
 			],
 			"richtung": "hinten"
 		},
@@ -441,9 +541,9 @@
 				39,
 				2
 			],
-			"kopf": [
-				42,
-				4
+			"hals": [
+				77.0,
+				61
 			],
 			"richtung": "vorn"
 		},
@@ -452,9 +552,9 @@
 				48,
 				2
 			],
-			"kopf": [
-				49,
-				4
+			"hals": [
+				84.0,
+				61
 			],
 			"richtung": "vorn"
 		},
@@ -463,9 +563,9 @@
 				44,
 				3
 			],
-			"kopf": [
-				46,
-				6
+			"hals": [
+				81.0,
+				63
 			],
 			"richtung": "vorn"
 		},
@@ -474,9 +574,9 @@
 				34,
 				0
 			],
-			"kopf": [
-				36,
-				3
+			"hals": [
+				71.0,
+				60
 			],
 			"richtung": "vorn"
 		},
@@ -485,9 +585,9 @@
 				28,
 				19
 			],
-			"kopf": [
-				31,
-				21
+			"hals": [
+				66.0,
+				78
 			],
 			"richtung": "vorn"
 		},
@@ -496,9 +596,9 @@
 				19,
 				21
 			],
-			"kopf": [
-				22,
-				21
+			"hals": [
+				57.0,
+				78
 			],
 			"richtung": "vorn"
 		},
@@ -507,9 +607,9 @@
 				23,
 				17
 			],
-			"kopf": [
-				26,
-				20
+			"hals": [
+				61.0,
+				77
 			],
 			"richtung": "vorn"
 		},
@@ -518,9 +618,9 @@
 				27,
 				20
 			],
-			"kopf": [
-				30,
-				22
+			"hals": [
+				65.0,
+				79
 			],
 			"richtung": "vorn"
 		}
