@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://x1mt2mi7olgp"
-path="res://.godot/imported/kofi_vorn_normal.png-e8b34766448f3677763ec7a891e602ec.ctex"
+uid="uid://xdrqkjkgxh1b"
+path="res://.godot/imported/w1_seite_entschlossen.png-43dab0186d6f2d59d7e8523324482b2d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/teile/koepfe/kofi_vorn_normal.png"
-dest_files=["res://.godot/imported/kofi_vorn_normal.png-e8b34766448f3677763ec7a891e602ec.ctex"]
+source_file="res://assets/teile/koepfe/w1_seite_entschlossen.png"
+dest_files=["res://.godot/imported/w1_seite_entschlossen.png-43dab0186d6f2d59d7e8523324482b2d.ctex"]
 
 [params]
 

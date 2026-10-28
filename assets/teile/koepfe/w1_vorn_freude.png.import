@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bq50e3ehrnadw"
-path="res://.godot/imported/kofi_seite_freude.png-455fd9f238ea43bd642a250731f02d2e.ctex"
+uid="uid://bf7itnpnwu64g"
+path="res://.godot/imported/w1_vorn_freude.png-a66997521f1fe3be35182c99aae7a908.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/teile/koepfe/kofi_seite_freude.png"
-dest_files=["res://.godot/imported/kofi_seite_freude.png-455fd9f238ea43bd642a250731f02d2e.ctex"]
+source_file="res://assets/teile/koepfe/w1_vorn_freude.png"
+dest_files=["res://.godot/imported/w1_vorn_freude.png-a66997521f1fe3be35182c99aae7a908.ctex"]
 
 [params]
 

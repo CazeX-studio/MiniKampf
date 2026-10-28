@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bfboa030gbrcx"
-path="res://.godot/imported/kofi_hinten_geneigt.png-54407df4a85710333aba843c8868eac1.ctex"
+uid="uid://dtmgmcud2rwgg"
+path="res://.godot/imported/w1_vorn_schmerz.png-4028fe355dc47c3b1cc469a572933612.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/teile/koepfe/kofi_hinten_geneigt.png"
-dest_files=["res://.godot/imported/kofi_hinten_geneigt.png-54407df4a85710333aba843c8868eac1.ctex"]
+source_file="res://assets/teile/koepfe/w1_vorn_schmerz.png"
+dest_files=["res://.godot/imported/w1_vorn_schmerz.png-4028fe355dc47c3b1cc469a572933612.ctex"]
 
 [params]
 

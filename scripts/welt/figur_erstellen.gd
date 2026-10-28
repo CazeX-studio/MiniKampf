@@ -1,7 +1,7 @@
 class_name FigurErstellen
 extends Control
-## Figur erstellen (Projekt 11, Schritt 5): Zu Beginn eines neuen Spiels Körper (männlich/weiblich) und Kopf wählen und
-## einen Namen eingeben. Die Figur wird als „Körper+Kopf“ gespeichert (z. B. „novize_w+mira“, siehe FigurTeile).
+## Figur erstellen (Projekt 11, Schritt 5): Zu Beginn eines neuen Spiels männlich oder weiblich wählen (daraus folgt der
+## Körper), einen passenden Kopf (Novize m1, m2 … / Novizin w1, w2 …) und einen Namen eingeben. Die Figur wird als „Körper+Kopf“ gespeichert (z. B. „novize_w+mira“, siehe FigurTeile).
 ## Später kommen Frisuren dazu (Ideen-Parkplatz in design.md).
 
 const SCREEN := Vector2(1280, 720)
@@ -34,7 +34,6 @@ func _ready() -> void:
 	shade.size = SCREEN
 	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(shade)
-	_kopf = FigurTeile.koepfe(_koerper).keys()[0]
 
 	var titel := _label("Figur erstellen", 44, Color("f2c14e"), Vector2(0, 24), SCREEN.x)
 	titel.add_theme_color_override("font_outline_color", Color.BLACK)
@@ -60,7 +59,7 @@ func _ready() -> void:
 	box.add_theme_constant_override("separation", 12)
 	panel.add_child(box)
 
-	box.add_child(_ueberschrift("Körper"))
+	box.add_child(_ueberschrift("Geschlecht"))
 	var reihe := HBoxContainer.new()
 	reihe.add_theme_constant_override("separation", 8)
 	box.add_child(reihe)
@@ -134,19 +133,22 @@ func aussehen() -> String:
 
 func _waehle_koerper(k: String) -> void:
 	_koerper = k
+	# Neuer Körper: der erste Kopf dieses Geschlechts
+	_kopf = FigurTeile.passende_koepfe(k)[0]
 	for name: String in _koerper_knoepfe:
 		_koerper_knoepfe[name].button_pressed = name == k
 	_aktualisieren()
 
 
 func _blaettern(schritt: int) -> void:
-	var ids: Array = FigurTeile.koepfe(_koerper).keys()
+	var ids: Array = FigurTeile.passende_koepfe(_koerper)
 	_kopf = ids[(ids.find(_kopf) + schritt + ids.size()) % ids.size()]
 	_aktualisieren()
 
 
 func _aktualisieren() -> void:
-	_kopf_text.text = FigurTeile.koepfe(_koerper)[_kopf].name
+	var ids: Array = FigurTeile.passende_koepfe(_koerper)
+	_kopf_text.text = "%s  (%d/%d)" % [FigurTeile.koepfe(_koerper)[_kopf].name, ids.find(_kopf) + 1, ids.size()]
 	_bilder.clear()
 	for v: Array in VORSCHAU:
 		var bilder: Array = []

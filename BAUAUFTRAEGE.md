@@ -274,7 +274,7 @@ _Am 28.10. geteilt: Kofis Kopf-Blatt kam zuerst._
 #### Schritt 2b: Kopf-Blätter der anderen fünf Novizen
 - **Ziel:** Die fünf übrigen Kopf-Blätter einbauen und im Editor zwischen den Köpfen wechseln (auf Kofis Körper).
 - **So testest du es:** Im Editor zwischen den sechs Köpfen wechseln, der Körper bleibt gleich.
-- **Status:** in Arbeit (28.10.2026: Kopfwechsel gebaut, 1 von 5 Köpfen da: Mira (Novizin) mit rotem Zopf. Ein neues Blatt einbauen: Datei nach `tools/vorlagen/<name>_kopf.png`, Eintrag in `WEITERE_KOEPFE` in `tools/kopf_koerper.py`, Werkzeug laufen lassen.)
+- **Status:** in Arbeit (28.10.2026: Kopfwechsel gebaut, 1 von 5 Köpfen da: Novizin w1 (roter Zopf). Köpfe sind namenlos: m1 = Kofis Kopf, weitere heißen m2, m3, w2, w3. Ein neues Blatt einbauen: Datei nach `tools/vorlagen/<kennung>_kopf.png`, Kennung in `WEITERE_KOEPFE` in `tools/kopf_koerper.py`, Werkzeug laufen lassen, danach `tools/koerper_blatt.py`.)
 
 ### Schritt 3: Novizen-Körper männlich und weiblich
 - **Ziel:** Ein gemeinsamer Novizen-Körper je Geschlecht für alle sechs; Schal- und Schildfarbe färbt das Spiel pro Figur. Prompt: Spieldesign/GRAFIK_AUFTRAG.md (B8), Kopf als grünes Oval, keine Haut sichtbar.
@@ -287,9 +287,9 @@ _Am 28.10. geteilt: Kofis Kopf-Blatt kam zuerst._
 - **Status:** offen
 
 ### Schritt 5: Figur erstellen
-- **Ziel:** Zu Spielbeginn Kopf (einer der sechs) und Geschlecht wählen, Namen eingeben (design.md: „Charakter erstellen“). Später kommen Frisuren dazu (Ideen-Parkplatz).
+- **Ziel:** Zu Spielbeginn Geschlecht wählen (daraus folgt der Körper), einen passenden Kopf (namenlos: m1, w1 …) wählen, Namen eingeben (design.md: „Charakter erstellen“). Später kommen Frisuren dazu (Ideen-Parkplatz).
 - **So testest du es:** Neues Spiel: Figur zusammenstellen, sie läuft so durch Kreuzweg.
-- **Status:** fertig (28.10.2026: Körper männlich/weiblich, Kopf blättern, Name; gespeichert im Spielstand. Wählbar sind die Köpfe, die es schon gibt: Kofi und Mira. Frisuren kommen später.)
+- **Status:** fertig (28.10.2026: Körper männlich/weiblich, Kopf blättern, Name; gespeichert im Spielstand. Wählbar sind die Köpfe, die es schon gibt: Novize m1 und Novizin w1, je nach Geschlecht. Frisuren kommen später.)
 
 ### Schritt 6: Körper der übrigen Klassen
 - **Ziel:** Die übrigen neun Klassen je männlich und weiblich, Region für Region.

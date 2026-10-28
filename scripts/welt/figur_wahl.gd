@@ -6,7 +6,8 @@ extends RefCounted
 const DATEI := "user://figur.json"
 ## Eigene Figuren aus Marcos Bildblättern (assets/figuren/)
 const FIGUREN: Array[String] = ["vega", "kofi"]
-const NAMEN := {"vega": "Vega", "kofi": "Kofi"}
+## Novizen sind namenlos (Novize m1 = der Kopf von Kofis Blättern), den Namen gibt der Spieler
+const NAMEN := {"vega": "Vega", "kofi": "Novize m1"}
 ## Gerade in „Figur erstellen“ zusammengestellt: {aussehen = "novize_w+mira", name = "…"}; Kreuzweg übernimmt sie beim Start
 static var neue_figur := {}
 

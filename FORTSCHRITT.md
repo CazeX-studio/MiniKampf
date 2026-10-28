@@ -51,6 +51,13 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **Figur erstellen nach Marcos Rückmeldung** (28.10.):
+  - Man wählt **männlich oder weiblich**, daraus folgt der Körper, und es gibt nur Köpfe dieses Geschlechts.
+  - Die Köpfe sind **namenlos**: „Novize m1“ (der Kopf aus Kofis Blatt) und „Novizin w1“ (der rote Zopf, vorher „Mira“).
+    Weitere Köpfe heißen m2, m3 … und w2, w3 … und erscheinen von selbst bei „Figur erstellen“. Damit gibt es auch keine
+    zweite Mira mehr. Im Editor heißt die Kofi-Figur jetzt „Novize m1“.
+  - **So testest du es:** Editor → „Akt Kreuzweg“: „Männlich“ zeigt Novize m1, „Weiblich“ Novizin w1.
+
 - **Projekt 11, Schritt 5: Figur erstellen** (28.10.):
   - Neuer Bildschirm vor einem neuen Spiel: **Körper** (männlich/weiblich), **Kopf** (mit ◀ ▶ blättern, jetzt Kofi und Mira)
     und **Name**. Links laufen vier Vorschauen mit: in der Welt, Laufen, im Kampf, Angriff.
@@ -1748,9 +1755,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 
 ## Offene Fragen an Marco
 
-- **Zweimal Mira (28.10.):** Die neue Novizin mit dem roten Zopf heißt Mira. In der Geschichte gibt es aber schon die
-  Vorgängerin Mira (Sternensängerin, trifft man am zugewachsenen Weg, wird in der Glutoase krank). Soll eine der beiden
-  anders heißen, oder ist die Novizin absichtlich dieselbe Mira (dann wäre sie keine Spielfigur, sondern die Vorgängerin)?
+- ~~**Zweimal Mira (28.10.):**~~ Erledigt (28.10.): Die Novizen-Köpfe sind namenlos (Novize m1, Novizin w1 …), den Namen gibt der Spieler. Mira bleibt die Vorgängerin.
 
 - **Grünwacht Schritt 11 (entschieden 21.10.):** Die Stufe soll mehr zählen → eingebaut (Stufenabstand, siehe
   „Nach deinem Test-Feedback“ bei Schritt 11). Der Zähmer bleibt allein schwächer; seine Monster bekommen später

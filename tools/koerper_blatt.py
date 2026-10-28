@@ -28,6 +28,8 @@ DATEN = WURZEL / "data" / "figurteile.json"
 
 ## Körper -> Name im Editor. Die Blätter sind aufgebaut wie Kofis (siehe FIGUREN["kofi"] in figur_bilder.py).
 KOERPER = {"novize_m": "Novize (m)", "novize_w": "Novizin (w)"}
+## Geschlecht des Körpers: bei „Figur erstellen“ passen nur Köpfe desselben Geschlechts
+GESCHLECHT = {"novize_m": "m", "novize_w": "w"}
 ## Abweichende Reihen einzelner Blätter (sonst wie Kofi): Körper -> Blatt -> Reihen
 REIHEN = {
 	"novize_m": {
@@ -150,7 +152,8 @@ def main():
 		(TEILE / "koerper").mkdir(parents=True, exist_ok=True)
 		for alt in (TEILE / "koerper").glob(f"{koerper}_*.png"):
 			alt.unlink()
-		eintrag = {"_nur_teile": True, "_name": KOERPER[koerper], "_koepfe": daten[KOPF_QUELLE]["_koepfe"]}
+		eintrag = {"_nur_teile": True, "_name": KOERPER[koerper], "_geschlecht": GESCHLECHT[koerper],
+				"_koepfe": daten[KOPF_QUELLE]["_koepfe"]}
 		for anim, bilder in anims.items():
 			for n in range(len(bilder)):
 				bild = np.array(Image.open(WURZEL / "assets" / "figuren" / f"{koerper}_{anim}_anim_f{n}.png").convert("RGBA"))

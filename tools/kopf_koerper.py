@@ -45,12 +45,19 @@ TUCH = {
 RICHTUNG = {"victory": "vorn", "cast": "vorn"}
 ## Diese Bilder bleiben immer ganz (liegend: ein aufrechter Kopf passt dort nicht)
 GANZ = {"kofi": ["death_f4", "death_f5"]}
-## Weitere Köpfe aus Kopf-Blättern (tools/vorlagen/<kopf>_kopf.png), die auf den Körper der Figur passen.
-## Sie werden mit derselben Größe wie die Köpfe der Figur verkleinert. Name = wie er im Editor heißt.
-WEITERE_KOEPFE = {
-	"kofi": {"mira": "Mira"},
-}
-NAMEN = {"kofi": "Kofi"}
+## Köpfe sind namenlos und nach Geschlecht nummeriert (m1, m2 … / w1, w2 …), den Namen gibt der Spieler.
+## Der eigene Kopf der Figur (aus ihrem Kopf-Blatt <figur>_kopf.png) bekommt diese Kennung:
+EIGENER_KOPF = {"kofi": "m1"}
+## Weitere Köpfe aus Kopf-Blättern (tools/vorlagen/<kennung>_kopf.png), die auf den Körper der Figur passen.
+## Sie werden mit derselben Größe wie die Köpfe der Figur verkleinert.
+WEITERE_KOEPFE = {"kofi": ["w1"]}
+
+
+def kopf_name(kennung):
+	"""Anzeigename eines Kopfes: „Novize m1“ bzw. „Novizin w1“."""
+	return ("Novizin " if kennung.startswith("w") else "Novize ") + kennung
+
+
 ## Passt ein Kopf so viel schlechter als im Vorbild, gilt er als nicht gefunden
 SCHLECHTER = 2.6
 
@@ -158,10 +165,11 @@ def main():
 			for alt in (TEILE / ordner).glob(f"{figur}_*.png"):
 				alt.unlink()
 		alle_koepfe = {}
-		for kopf_id, kopf_name in [(figur, NAMEN.get(figur, figur))] + list(WEITERE_KOEPFE.get(figur, {}).items()):
+		eigener = EIGENER_KOPF.get(figur, figur)
+		for kopf_id in [eigener] + WEITERE_KOEPFE.get(figur, []):
 			for alt in (TEILE / "koepfe").glob(f"{kopf_id}_*.png"):
 				alt.unlink()
-			teile = koepfe if kopf_id == figur else {
+			teile = koepfe if kopf_id == eigener else {
 				name: verkleinern(k, faktoren[name.split("_")[0]]) for name, k in koepfe_schneiden(kopf_id).items()}
 			punkte = {}
 			for name, kopf in teile.items():
@@ -172,8 +180,8 @@ def main():
 				punkt = hals(normal)
 				_, dx, dy = suchen(normal, kopf)
 				punkte[name] = [round(punkt[0] - dx, 1), int(punkt[1] - dy)]
-			alle_koepfe[kopf_id] = {"name": kopf_name, "hals": punkte}
-		eintrag = {"_koepfe": alle_koepfe}
+			alle_koepfe[kopf_id] = {"name": kopf_name(kopf_id), "geschlecht": kopf_id[0], "hals": punkte}
+		eintrag = {"_koepfe": alle_koepfe, "_eigener_kopf": eigener}
 		for name, bild in bilder.items():
 			richtung = richtung_von(name.rsplit("_f", 1)[0])
 			kopf = koepfe[f"{richtung}_normal"]
@@ -209,16 +217,17 @@ def main():
 			ys, xs = np.where(flaeche)
 			Image.fromarray(koerper).save(TEILE / "koerper" / f"{figur}_{name}.png")
 			Image.fromarray(alt[ys.min():ys.max() + 1, xs.min():xs.max() + 1]).save(TEILE / "kopf" / f"{figur}_{name}.png")
-			punkt = alle_koepfe[figur]["hals"][f"{richtung}_normal"]
+			punkt = alle_koepfe[eigener]["hals"][f"{richtung}_normal"]
 			eintrag[name] = {"alt": [int(xs.min()), int(ys.min())], "hals": [round(x + punkt[0], 1), y + punkt[1]],
 					"richtung": richtung}
 		daten[figur] = eintrag
-		ganz = [k for k, v in eintrag.items() if v.get("ganz")]
+		ganz = [k for k, v in eintrag.items() if isinstance(v, dict) and v.get("ganz")]
 		print(f"{figur}: Köpfe {list(alle_koepfe)}; {len(bilder)} Bilder, {len(bilder) - len(ganz)} getrennt, ganz geblieben: {ganz}")
 	daten["_hinweis"] = ("Kopf und Körper der Figuren (Projekt 11), erzeugt mit tools/kopf_koerper.py. Pro Bild: alt = linke obere "
 			"Ecke des alten Kopfes (assets/teile/kopf), hals = Halspunkt im Bild, auf den jeder Kopf gesetzt wird, "
-			"richtung = seite/vorn/hinten; ganz = Bild nicht getrennt (z. B. liegend). _koepfe = alle Köpfe, "
-			"die auf diesen Körper passen (assets/teile/koepfe), mit Halspunkt je Richtung und Gesicht.")
+			"richtung = seite/vorn/hinten; ganz = Bild nicht getrennt (z. B. liegend). _koepfe = alle Köpfe (m1, w1 …), "
+			"die auf diesen Körper passen (assets/teile/koepfe), mit Geschlecht und Halspunkt je Richtung und Gesicht; "
+			"_eigener_kopf = der Kopf, mit dem die Figur gezeichnet wurde.")
 	DATEN.write_text(json.dumps(daten, ensure_ascii=False, indent="\t", sort_keys=True))
 
 

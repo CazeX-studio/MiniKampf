@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c54ph1w8x61dp"
-path="res://.godot/imported/mira_seite_schmerz.png-d375547295bcd2a10600556731886686.ctex"
+uid="uid://d4ey0iw3as2ky"
+path="res://.godot/imported/m1_hinten_geneigt.png-622154cbf365428466dfa799ca169b84.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/teile/koepfe/mira_seite_schmerz.png"
-dest_files=["res://.godot/imported/mira_seite_schmerz.png-d375547295bcd2a10600556731886686.ctex"]
+source_file="res://assets/teile/koepfe/m1_hinten_geneigt.png"
+dest_files=["res://.godot/imported/m1_hinten_geneigt.png-622154cbf365428466dfa799ca169b84.ctex"]
 
 [params]
 

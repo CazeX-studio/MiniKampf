@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dey6a3dmusvn1"
-path="res://.godot/imported/mira_seite_normal.png-f95305e67eeacf5ea535a714ded6165a.ctex"
+uid="uid://b6wnxtsa1a8kd"
+path="res://.godot/imported/m1_seite_entschlossen.png-57e52b237c63920c6c002f6e5ff44671.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/teile/koepfe/mira_seite_normal.png"
-dest_files=["res://.godot/imported/mira_seite_normal.png-f95305e67eeacf5ea535a714ded6165a.ctex"]
+source_file="res://assets/teile/koepfe/m1_seite_entschlossen.png"
+dest_files=["res://.godot/imported/m1_seite_entschlossen.png-57e52b237c63920c6c002f6e5ff44671.ctex"]
 
 [params]
 

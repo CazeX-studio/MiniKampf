@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2dgsapfxw3wv"
-path="res://.godot/imported/kofi_seite_normal.png-39d33d2b0bb1223a08088fa408664919.ctex"
+uid="uid://dl415xy17vudc"
+path="res://.godot/imported/m1_seite_augen_zu.png-2b5cc4ba980200bf260e19aba9a909d8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/teile/koepfe/kofi_seite_normal.png"
-dest_files=["res://.godot/imported/kofi_seite_normal.png-39d33d2b0bb1223a08088fa408664919.ctex"]
+source_file="res://assets/teile/koepfe/m1_seite_augen_zu.png"
+dest_files=["res://.godot/imported/m1_seite_augen_zu.png-2b5cc4ba980200bf260e19aba9a909d8.ctex"]
 
 [params]
 

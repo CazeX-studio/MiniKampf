@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dcuf0ygk1letg"
-path="res://.godot/imported/kofi_seite_schmerz.png-6b9c6224cc9a2121dedaba331298d9e0.ctex"
+uid="uid://85qnr3uvdang"
+path="res://.godot/imported/m1_seite_freude.png-2bf169dbf5f11f155a4467c38ec70240.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/teile/koepfe/kofi_seite_schmerz.png"
-dest_files=["res://.godot/imported/kofi_seite_schmerz.png-6b9c6224cc9a2121dedaba331298d9e0.ctex"]
+source_file="res://assets/teile/koepfe/m1_seite_freude.png"
+dest_files=["res://.godot/imported/m1_seite_freude.png-2bf169dbf5f11f155a4467c38ec70240.ctex"]
 
 [params]
 

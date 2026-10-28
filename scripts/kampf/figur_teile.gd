@@ -60,9 +60,7 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 	var info: Dictionary = _alle()[figur].get("%s_f%d" % [anim, frame], {})
 	if info.is_empty():
 		return null
-	var kopf_id := kopf_wahl if koepfe(figur).has(kopf_wahl) else figur
-	if not koepfe(figur).has(kopf_id) and not koepfe(figur).is_empty():
-		kopf_id = koepfe(figur).keys()[0]
+	var kopf_id := kopf_wahl if koepfe(figur).has(kopf_wahl) else standardkopf(figur)
 	var schluessel := "%s/%s/%d/%d/%s" % [figur, anim, frame, art_jetzt, kopf_id]
 	if _cache.has(schluessel):
 		return _cache[schluessel]
@@ -112,6 +110,26 @@ static func koerper_liste() -> Dictionary:
 	for figur: String in _alle():
 		if _alle()[figur].get("_nur_teile", false):
 			liste[figur] = _alle()[figur].get("_name", figur)
+	return liste
+
+
+## Kopf, wenn keiner gewählt ist: der eigene Kopf der Figur (Kofi: m1), sonst der erste passende.
+static func standardkopf(figur: String) -> String:
+	var daten: Dictionary = _alle().get(koerper_von(figur), {})
+	if daten.has("_eigener_kopf"):
+		return daten._eigener_kopf
+	var passend := passende_koepfe(figur)
+	return passend[0] if not passend.is_empty() else ""
+
+
+## Köpfe, die bei „Figur erstellen“ zum Körper passen (gleiches Geschlecht), in Reihenfolge m1, m2 …
+static func passende_koepfe(figur: String) -> Array:
+	var geschlecht: String = _alle().get(koerper_von(figur), {}).get("_geschlecht", "")
+	var liste: Array = []
+	for id: String in koepfe(figur):
+		if geschlecht == "" or koepfe(figur)[id].get("geschlecht", "") == geschlecht:
+			liste.append(id)
+	liste.sort()
 	return liste
 
 

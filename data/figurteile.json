@@ -1,8 +1,10 @@
 {
-	"_hinweis": "Kopf und Körper der Figuren (Projekt 11), erzeugt mit tools/kopf_koerper.py. Pro Bild: alt = linke obere Ecke des alten Kopfes (assets/teile/kopf), hals = Halspunkt im Bild, auf den jeder Kopf gesetzt wird, richtung = seite/vorn/hinten; ganz = Bild nicht getrennt (z. B. liegend). _koepfe = alle Köpfe, die auf diesen Körper passen (assets/teile/koepfe), mit Halspunkt je Richtung und Gesicht.",
+	"_hinweis": "Kopf und Körper der Figuren (Projekt 11), erzeugt mit tools/kopf_koerper.py. Pro Bild: alt = linke obere Ecke des alten Kopfes (assets/teile/kopf), hals = Halspunkt im Bild, auf den jeder Kopf gesetzt wird, richtung = seite/vorn/hinten; ganz = Bild nicht getrennt (z. B. liegend). _koepfe = alle Köpfe (m1, w1 …), die auf diesen Körper passen (assets/teile/koepfe), mit Geschlecht und Halspunkt je Richtung und Gesicht; _eigener_kopf = der Kopf, mit dem die Figur gezeichnet wurde.",
 	"kofi": {
+		"_eigener_kopf": "m1",
 		"_koepfe": {
-			"kofi": {
+			"m1": {
+				"geschlecht": "m",
 				"hals": {
 					"hinten_geneigt": [
 						33.7,
@@ -49,9 +51,10 @@
 						56
 					]
 				},
-				"name": "Kofi"
+				"name": "Novize m1"
 			},
-			"mira": {
+			"w1": {
+				"geschlecht": "w",
 				"hals": {
 					"hinten_geneigt": [
 						39.3,
@@ -98,7 +101,7 @@
 						53
 					]
 				},
-				"name": "Mira"
+				"name": "Novizin w1"
 			}
 		},
 		"attack_f0": {
@@ -626,8 +629,10 @@
 		}
 	},
 	"novize_m": {
+		"_geschlecht": "m",
 		"_koepfe": {
-			"kofi": {
+			"m1": {
+				"geschlecht": "m",
 				"hals": {
 					"hinten_geneigt": [
 						33.7,
@@ -674,9 +679,10 @@
 						56
 					]
 				},
-				"name": "Kofi"
+				"name": "Novize m1"
 			},
-			"mira": {
+			"w1": {
+				"geschlecht": "w",
 				"hals": {
 					"hinten_geneigt": [
 						39.3,
@@ -723,7 +729,7 @@
 						53
 					]
 				},
-				"name": "Mira"
+				"name": "Novizin w1"
 			}
 		},
 		"_name": "Novize (m)",
@@ -1146,8 +1152,10 @@
 		}
 	},
 	"novize_w": {
+		"_geschlecht": "w",
 		"_koepfe": {
-			"kofi": {
+			"m1": {
+				"geschlecht": "m",
 				"hals": {
 					"hinten_geneigt": [
 						33.7,
@@ -1194,9 +1202,10 @@
 						56
 					]
 				},
-				"name": "Kofi"
+				"name": "Novize m1"
 			},
-			"mira": {
+			"w1": {
+				"geschlecht": "w",
 				"hals": {
 					"hinten_geneigt": [
 						39.3,
@@ -1243,7 +1252,7 @@
 						53
 					]
 				},
-				"name": "Mira"
+				"name": "Novizin w1"
 			}
 		},
 		"_name": "Novizin (w)",
