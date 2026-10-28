@@ -56,7 +56,7 @@ func _make_custom_tooltip(_for_text: String) -> Object:
 	box.add_child(text)
 	if int(item.get("preis", 0)) > 0:
 		var price := Label.new()
-		price.text = "Wert: %s" % Geld.text(int(item.preis))
+		price.text = "Wert: %d Gold" % int(item.preis)
 		price.add_theme_font_size_override("font_size", 13)
 		price.add_theme_color_override("font_color", Color(1, 1, 1, 0.6))
 		box.add_child(price)

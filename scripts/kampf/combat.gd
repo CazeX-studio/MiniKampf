@@ -1751,7 +1751,7 @@ func _reward_row() -> HBoxContainer:
 	if int(reward.get("erfahrung", 0)) > 0:
 		parts.append(["kristall", "+%d Erfahrung" % int(reward.erfahrung)])
 	if int(reward.get("gold", 0)) > 0:
-		parts.append(["gold", "+" + Geld.text(int(reward.gold))])
+		parts.append(["gold", "+%d Gold" % int(reward.gold)])
 	if str(reward.get("karte", "")) != "":
 		parts.append(["schluessel", "Karte: %s" % KartenSpiel.card(str(reward.karte)).name])
 	for level: int in reward.get("stufen", []):

@@ -3,7 +3,7 @@
 Hier steht, was fertig ist, was als Nächstes kommt und welche Fragen offen sind.
 Wird nach jedem Arbeitsschritt aktualisiert.
 
-## Aktueller Stand (2026-10-28)
+## Aktueller Stand (2026-10-27)
 
 - **Neu (25.10.): Playtest-Rückmeldungen Teil 1 eingebaut** (Liste im Brainstorm-Doc unter „Testtag-Notizen“):
   Fehler (Ye-Laternen, Silberhirsch, Pilzhöhle), Parier-Tutorial, Abwarten für alle, Aufträge allein und Dungeon nur für die Gruppe,
@@ -21,7 +21,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Zusammen spielen** (Lernprojekt 4, Plan in `ZUSAMMEN_PLAN.md`): **alle 8 Schritte eingebaut**, Marco testet.
   Bis zu 4 Spieler übers Internet (Online-Server bei Render, Frankfurt): zusammen laufen, Chat, Gruppen, Geschichte
   gemeinsam mit Abstimmung, gemeinsamer Kampf, Nacht des Sternenfalls zusammen, Wiederverbinden nach einem Abbruch.
-- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Neu: Projekt 9 „Kreuzweg im Baukasten“, Schritt 1 (Testfeld) und Schritt 2 (Marcos Bilder) fertig (27.10.). Projekt 3 Schritt 1 (Bronze, Silber, Gold) fertig (28.10.). Nächster Schritt: Projekt 3 Schritt 2 „Monster lassen wenig Geld fallen“.
+- **Bauaufträge** (`BAUAUFTRAEGE.md`): Projekt 1 Schritt 1, 3 und 4 (Licht in Welt, Kampf und Pilzhöhle) fertig (22.10.), Schritt 2 (Pixel-Paket) zurückgestellt. Projekt 2 „Kampfgefühl“ (Parieren, harte Treffer, Schadenszahlen) fertig (22.10.). Projekt 0 (Playtest 25.10.) fertig (26.10.). Neu: Projekt 9 „Kreuzweg im Baukasten“, Schritt 1 (Testfeld) und Schritt 2 (Marcos Bilder) fertig (27.10.). Nächster Schritt: Projekt 3 „Geld“, Bronze, Silber, Gold.
 - **Als Nächstes:** Marcos Rückmeldungen zur ersten Stunde am Stück: Teil 1 fertig (Schritt 18: Grundwerte, langer Lernkampf, schwerere Kämpfe); Schritt 19: Kampf-Geräusche, Schritt 20: größere Stadt mit Ständen und Gesandten-Bildschirm. Alle Punkte aus dem Test sind eingebaut. Außerdem Schritt 1 von
   „Zusammen spielen“ testen. Marcos Entscheidungen vom 20.10. stehen in `ZUSAMMEN_PLAN.md`. Schritt 2
   (Online-Server) ist vorbereitet: Marco legt nach `SERVER_ANLEITUNG.md` ein kostenloses Konto bei Render an.
@@ -50,19 +50,6 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
-
-- **Projekt 3, Schritt 1: Geld als Bronze, Silber und Gold** (28.10.):
-  - Geld ist weiter eine einzige Zahl (in Bronze) und wird überall als Münzen angezeigt: 100 Bronze = 1 Silber,
-    100 Silber = 1 Gold, z. B. „1 Gold 23 Silber 45 Bronze“. Münzen mit 0 fallen weg.
-  - Die Münznamen und die Umrechnung stehen an einer einzigen Stelle: `scripts/welt/geld.gd`.
-  - Überall umgestellt: Anzeige oben links, Tasche, Läden (Preise, „Zu wenig Geld“), Meldungen, Belohnungen nach
-    Kämpfen und Aufträgen, Wert eines Gegenstands.
-  - **Testknopf** in der Tasche (nur in der Godot-Testversion, nicht in der Web-Version): „Test +45 Silber 67 Bronze“.
-  - Die bisherigen Beträge gelten jetzt als Bronze (aus „190 Gold“ wird „1 Silber 90 Bronze“). Die Beträge selbst
-    stimmt Schritt 2 ab (Monster lassen wenig Geld fallen).
-  - Neue Prüfung `tests/geld_test.gd`.
-  - **So testest du es:** In der Kreuzweg-Demo die Tasche öffnen (I), ein paarmal den Testknopf drücken: Bei
-    100 Bronze springt es auf Silber um, bei 100 Silber auf Gold. Oben links steht derselbe Betrag.
 
 - **Start-Monster Moosling, Glutwelpe und Bachotter** (28.10., Marcos Bildblätter):
   - Eingebaut für den Zähmer (eigenes Team und Bank), für Kobalts Monster (etwas größer und dunkler) und die wilden
