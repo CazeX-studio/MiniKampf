@@ -28,13 +28,25 @@ func _ready() -> void:
 
 	_label("Werkzeuge", 22, Color("f2c14e"), Vector2(40, 170), 400)
 	_button("Baukasten-Testfeld\nNeue Karte aus Einzelbildern", Vector2(40, 210), func() -> void: _go("res://scenes/baukasten_test.tscn"))
-	_button("Vega-Animationen\nKleiner Testkampf", Vector2(450, 210), func() -> void: _go("res://scenes/vega_test.tscn"))
+	_button("Figuren-Animationen\nKleiner Testkampf", Vector2(450, 210), func() -> void: _go("res://scenes/vega_test.tscn"))
 	_button("Kampf-Sandbox\nAlle 11 Klassen, Pilzhöhle", Vector2(860, 210), func() -> void: _go("res://scenes/auswahl.tscn"))
 
 	_label("Demo testen (eigener Spielstand, dein normaler bleibt unberührt)", 22, Color("f2c14e"), Vector2(40, 380), 1200)
 	_button("Akt Kreuzweg\nVon vorne als Novize", Vector2(40, 420), _start_kreuzweg)
 	_button("Akt Grünwacht\nAls Bogenschütze", Vector2(450, 420), func() -> void: _start_gruenwacht("archer"))
 	_button("Akt Grünwacht\nAls Monster-Zähmer", Vector2(860, 420), func() -> void: _start_gruenwacht("tamer"))
+
+	# Eigene Figur für die Demo und die Animationen (die andere läuft als Begleiter mit)
+	var figur := Button.new()
+	figur.position = Vector2(40, 610)
+	figur.size = Vector2(300, 50)
+	figur.add_theme_font_size_override("font_size", 18)
+	var zeigen := func() -> void: figur.text = "Figur: %s (wechseln)" % FigurWahl.NAMEN[FigurWahl.gewaehlt()]
+	zeigen.call()
+	figur.pressed.connect(func() -> void:
+		FigurWahl.waehlen(FigurWahl.begleiter())
+		zeigen.call())
+	add_child(figur)
 
 	var back := Button.new()
 	back.text = "Zurück zum Menü"

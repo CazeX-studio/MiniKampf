@@ -37,6 +37,8 @@ im öffentlichen Repository https://github.com/benc-uk/super-dungeon-delve
 | Sturmkobold / Funkenwicht / Schattenhexe | ice_zombie / skelet / necromancer |
 | Steinwächter (Boss) | ogre |
 
+| Kofi (`kofi_*`) | Von Marco mit KI-Hilfe erstellt (28.10.2026, drei Bildblätter in `tools/vorlagen/`), zerlegt mit `tools/figur_bilder.py` | Erster der sechs Novizen, als Figur und Begleiter wählbar |
+
 **Eigene Monster** (von Marco mit KI-Hilfe erstellt, 27.10.2026, Blätter in `tools/vorlagen/`, zerlegt mit `tools/monster_bilder.py`):
 Feldschleim, Wiesenkobold, Kieselkobold, Rüpelkobold, Der Sternenfresser (27./28.10.) sowie die Start-Monster Moosling, Glutwelpe und Bachotter (28.10.). Sie ersetzen die Platzhalter swampy, goblin, imp und wogol.
 

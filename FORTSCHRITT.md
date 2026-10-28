@@ -51,6 +51,17 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **Kofi, der erste Novize** (28.10., Marcos drei Bildblätter):
+  - Kofi ist eingebaut wie Vega: Welt in vier Richtungen, Kampf mit Stehen, Laufen, Getroffen, Parade mit Schild,
+    Schwerthieb (Nahkampf), Fallen, Sieg und neu „Fähigkeit wirken“ (Hand auf die Brust bei Erster Hilfe).
+    Werkzeug für alle spielbaren Figuren: `tools/figur_bilder.py`.
+  - **Figur wählen:** Im Editor unten links „Figur: Vega / Kofi (wechseln)“. Die gewählte Figur spielt man allein in der
+    Demo, im Baukasten-Testfeld und bei „Figuren-Animationen“; die andere läuft als **Begleiter** mit (statt des alten
+    Testgefährten). Beim Zusammenspielen ist Kofi als Figur wählbar.
+  - **So testest du es:** Editor → „Figur: Kofi“ → „Figuren-Animationen“: alle Knöpfe durchprobieren. Dann „Akt Kreuzweg“:
+    Du spielst Kofi, Vega läuft neben dir.
+- **Beschluss: Figuren wie bei Ragnarok** (Kopf und Körper getrennt) ist als **Projekt 11** geplant (6 Schritte, Probe mit Kofi zuerst).
+
 - **Projekt 5, Schritt 2: Ein Gürtel-Gegenstand pro Zug gratis** (28.10.):
   - Im Kampf ist der **erste Trank im eigenen Zug gratis**: Danach ist man noch einmal dran („Gratis – noch dran!“).
     Ein zweiter Trank im selben Zug beendet den Zug. Der Knopf zeigt „Gürtel: gratis, du bist noch dran“ bzw. „kostet den Zug“.

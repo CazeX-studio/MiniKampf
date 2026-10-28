@@ -29,6 +29,8 @@ const LOOKS := {
 	"novize": {sprite = "elf_m", scale = 4.0},
 	# Vega: eigene, fein gezeichnete Figur; fern = greift aus der Ferne an (ausholen, Geschoss)
 	"vega": {sprite = "vega", scale = 3.0, fern = true},
+	# Kofi: erster der sechs Novizen (Schwert und Schild, Nahkampf), Bilder aus tools/figur_bilder.py
+	"kofi": {sprite = "kofi", scale = 3.0},
 	# Mitschüler aus design.md: Tessa (übereifrig) und Gorm (ängstlich), Platzhalter bis zu eigenen Bildern
 	"novize_tessa": {sprite = "elf_f", scale = 4.0, tint = Color(1.0, 0.88, 0.8)},
 	"novize_gorm": {sprite = "knight_m", scale = 4.0, tint = Color(0.85, 0.95, 0.85)},
@@ -93,9 +95,9 @@ const LOOKS := {
 ## fehlen sie, nimmt die Anzeige wie bisher run bzw. hit.
 ## attack2, wurf und spezial: weitere Angriffe eigener Monster (siehe "angriffe" in LOOKS).
 const ANIM_FPS := {"idle": 6.0, "run": 12.0, "hit": 8.0, "attack": 8.0, "death": 6.0, "parry": 6.0, "victory": 5.0,
-		"attack2": 8.0, "wurf": 8.0, "spezial": 6.0}
+		"attack2": 8.0, "wurf": 8.0, "spezial": 6.0, "cast": 6.0}
 ## Diese Animationen laufen einmal durch und bleiben auf dem letzten Bild stehen (die anderen wiederholen sich)
-const ANIM_ONCE := ["attack", "death", "parry", "hit", "attack2", "wurf", "spezial"]
+const ANIM_ONCE := ["attack", "death", "parry", "hit", "attack2", "wurf", "spezial", "cast"]
 
 const PLATE_W := 168.0
 const PLATE_H_HERO := 74.0
@@ -459,6 +461,10 @@ func lunge(target_point: Vector2, duration: float, anim := "attack") -> void:
 func cast_hop() -> void:
 	# Während einer Parade bleibt die Parier-Pose stehen (z. B. Freude über die perfekte Parade)
 	if parrying():
+		return
+	if has_anim("cast"):
+		# Eigene Figur mit Zauber-Pose (z. B. Kofi: Hand auf die Brust bei Erster Hilfe)
+		play("cast", 0.9)
 		return
 	if has_anim("attack"):
 		# Eigene Figuren heben nur den Stab (die ersten drei Angriffs-Bilder, ohne Geschoss)

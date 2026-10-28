@@ -254,6 +254,39 @@ Werten, Zugleiste, Kampfmenü, Sieg-Fenster und Meldungen. Look überall eingeba
 - **So testest du es:** Kampf, Werte (Ruf) und Auftragsbuch ansehen: überall die neuen Symbole.
 - **Status:** fertig (27.10.; Gegenstandsarten-Symbole liegen bereit, Reiter in der Tasche erst, wenn Gegenstände eine Art haben)
 
+## Projekt 11: Figuren wie bei Ragnarok (Kopf und Körper getrennt)
+_Aus Marcos Entscheidung vom 28.10.2026: Spielfiguren werden aus Kopf und Körper zusammengesetzt. Jede Klasse hat einen männlichen und einen weiblichen Körper (Kleidung, Waffe, alle Bewegungen), der Kopf (Gesicht, Haut, Haare) liegt darüber und bleibt beim Klassenwechsel gleich. Erste Figur: Kofi._
+
+### Schritt 1: Probe mit Kofi
+- **Ziel:** Kofis fertige Bilder in Kopf und Körper zerlegen (Kopf pro Bild ausschneiden, Ankerpunkt am Hals merken) und im Spiel wieder zusammensetzen. Zeigt, ob das mit KI-Bildern sauber klappt, bevor neue Blätter bestellt werden.
+- **So testest du es:** Im Editor bei „Figuren-Animationen“ Kofi ansehen: Er sieht aus wie vorher, Kopf und Körper sind aber getrennte Teile (Knopf „Teile zeigen“).
+- **Status:** offen
+
+### Schritt 2: Kopf-Blätter der sechs Novizen
+- **Ziel:** Pro Novize ein Kopf-Blatt (Kopf schräg vorne, seitlich, schräg hinten; Gesichter normal, Schmerz, Freude, Augen zu). Prompt bekommt Marco nach Schritt 1.
+- **So testest du es:** Im Editor zwischen den sechs Köpfen wechseln, der Körper bleibt gleich.
+- **Status:** offen (wartet auf Schritt 1)
+
+### Schritt 3: Novizen-Körper männlich und weiblich
+- **Ziel:** Ein gemeinsamer Novizen-Körper je Geschlecht für alle sechs; Schal- und Schildfarbe färbt das Spiel pro Figur.
+- **So testest du es:** Alle sechs Novizen laufen und kämpfen mit demselben Körper, aber eigenem Kopf und eigener Farbe.
+- **Status:** offen
+
+### Schritt 4: Körper der Grünwacht-Klassen
+- **Ziel:** Bogenschütze und Monster-Zähmer, je männlich und weiblich. Beim Lernen der Klasse wechselt der Körper, der Kopf bleibt.
+- **So testest du es:** In Grünwacht die Klasse lernen: Die Figur trägt danach die Klassenkleidung.
+- **Status:** offen
+
+### Schritt 5: Figur erstellen
+- **Ziel:** Zu Spielbeginn Kopf (einer der sechs) und Geschlecht wählen, Namen eingeben (design.md: „Charakter erstellen“). Später kommen Frisuren dazu (Ideen-Parkplatz).
+- **So testest du es:** Neues Spiel: Figur zusammenstellen, sie läuft so durch Kreuzweg.
+- **Status:** offen
+
+### Schritt 6: Körper der übrigen Klassen
+- **Ziel:** Die übrigen neun Klassen je männlich und weiblich, Region für Region.
+- **So testest du es:** Jede Klasse in der Kampf-Sandbox mit eigenem Körper ansehen.
+- **Status:** offen
+
 ## Später (wartet auf andere Teile des Spiels)
 - Taschen vom Schneider und Lagerfeuer-Essen (brauchen Berufe)
 - Marktstand-Gebühr (braucht den Markt)

@@ -73,7 +73,7 @@ const MAX_PLAYERS := 4
 ## So oft pro Sekunde schickt der Gastgeber, wo alle stehen
 const SNAPSHOT_RATE := 15.0
 ## Diese Figuren kann man sich aussuchen (eigene Figuren aus assets/figuren/, sonst Namen aus dem 0x72-Paket)
-const LOOKS: Array[String] = ["vega", "elf_m", "elf_f", "knight_m", "knight_f", "wizzard_m", "wizzard_f", "lizard_m", "lizard_f"]
+const LOOKS: Array[String] = ["vega", "kofi", "elf_m", "elf_f", "knight_m", "knight_f", "wizzard_m", "wizzard_f", "lizard_m", "lizard_f"]
 
 static var mode := Mode.OFFLINE
 ## Die Welt: beim Gastgeber die echte, bei Mitspielern das Spiegelbild. Offline: null.

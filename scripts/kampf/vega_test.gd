@@ -1,5 +1,6 @@
 extends Node
-## Vega-Animationen (Editor): ein kleiner Testkampf, in dem man jede Animation von Vega per Knopf abspielen kann.
+## Figuren-Animationen (Editor): ein kleiner Testkampf, in dem man jede Animation der gewählten eigenen Figur
+## (Vega, Kofi …, siehe FigurWahl) per Knopf abspielen kann.
 ## Der Kampf selbst läuft nicht weiter (es geht nur ums Anschauen). Zeitlupe hilft, einzelne Bilder zu prüfen.
 
 const ZEITLUPE := 0.3
@@ -12,7 +13,7 @@ var _slow_button: Button
 
 
 func _ready() -> void:
-	BattleRequest.player_look = "vega"
+	BattleRequest.player_look = FigurWahl.gewaehlt()
 	BattleRequest.prepare("wild:0", 10, 2, "")
 	# Falls der Kampf doch endet: zurück in den Editor, nichts wird verbucht
 	BattleRequest.return_scene = "res://scenes/editor.tscn"
@@ -51,7 +52,7 @@ func _build_buttons() -> void:
 	box.add_theme_constant_override("separation", 6)
 	panel.add_child(box)
 	var title := Label.new()
-	title.text = "Vega-Animationen"
+	title.text = "%s-Animationen" % FigurWahl.NAMEN[FigurWahl.gewaehlt()]
 	title.add_theme_color_override("font_color", Color("f2c14e"))
 	box.add_child(title)
 	var actions: Array = [
@@ -62,6 +63,7 @@ func _build_buttons() -> void:
 		["Angriff", func() -> void: _combat.lunge(_vega.fighter, _enemy, 0.6)],
 		["Fallen", func() -> void: _vega.shown = 0],
 		["Sieg", func() -> void: _vega.cheer()],
+		["Fähigkeit", func() -> void: _vega.cast_hop()],
 	]
 	for a: Array in actions:
 		var b := _small(a[0])

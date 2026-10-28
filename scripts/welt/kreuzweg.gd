@@ -8,8 +8,6 @@ extends Node2D
 ## echter Mitspieler beim Gastgeber an, und die Welt hier ist die des Gastgebers bzw. ihr Spiegelbild.
 ## Alle Texte stehen in res://data (siehe data/LIESMICH.md).
 
-## Eigene Spielfigur beim Alleinspielen (Bilder in assets/figuren/)
-const PLAYER_LOOK := "vega"
 const TILE_W := 64.0
 const TILE_H := 32.0
 const BOT_ID := "gefaehrte"
@@ -225,10 +223,12 @@ func _ready() -> void:
 		state.fix_position(local)
 		Netz.enter_world(local)
 	else:
-		local = state.add_player(local_id, "Du", PLAYER_LOOK, WorldState.start_cell())
+		local = state.add_player(local_id, "Du", FigurWahl.gewaehlt(), WorldState.start_cell())
 		SaveGame.load_into(local)
 		state.fix_position(local)
-		state.add_player(BOT_ID, "Testgefährte", "lizard_f", WorldState.start_cell() + Vector2i(-1, 0))
+		# Begleiter: die andere eigene Figur (im Editor wählbar)
+		var buddy := FigurWahl.begleiter()
+		state.add_player(BOT_ID, FigurWahl.NAMEN.get(buddy, "Testgefährte"), buddy, WorldState.start_cell() + Vector2i(-1, 0))
 
 	_ground = Node2D.new()
 	_ground.z_index = -10

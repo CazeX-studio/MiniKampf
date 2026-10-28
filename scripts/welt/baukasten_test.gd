@@ -10,7 +10,6 @@ const TILE_H := 32.0
 ## (die alten Platzhalter sind halb so groß gezeichnet und haben massstab 2).
 const MASSSTAB := 1.0
 const WALK_SPEED := 5.5
-const PLAYER_LOOK := "vega"
 const NIGHT_COLOR := Color(0.45, 0.5, 0.78)
 ## Fläche, die die Spielfigur in voller Größe auf dem Bildschirm ungefähr bedeckt (über ihrem Fußpunkt)
 const PLAYER_RECT := Rect2(-24, -128, 48, 130)
@@ -102,7 +101,7 @@ func _ready() -> void:
 	_holder = Node2D.new()
 	_sorted.add_child(_holder)
 	_player = WorldCharacter.new()
-	_player.setup(PLAYER_LOOK, "Du")
+	_player.setup(FigurWahl.gewaehlt(), "Du")
 	_player.richtungen = true
 	_holder.add_child(_player)
 	_set_figur(_figur_stufe)
