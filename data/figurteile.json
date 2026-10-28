@@ -1248,6 +1248,126 @@
 		},
 		"_name": "Novizin (w)",
 		"_nur_teile": true,
+		"attack_f0": {
+			"hals": [
+				119.5,
+				62.2
+			],
+			"richtung": "seite",
+			"winkel": 13.2
+		},
+		"attack_f1": {
+			"hals": [
+				124.2,
+				62.8
+			],
+			"richtung": "seite",
+			"winkel": 8.3
+		},
+		"attack_f2": {
+			"hals": [
+				137.9,
+				63.3
+			],
+			"richtung": "seite",
+			"winkel": 10.5
+		},
+		"attack_f3": {
+			"hals": [
+				134.3,
+				61.2
+			],
+			"richtung": "seite",
+			"winkel": 8.5
+		},
+		"attack_f4": {
+			"hals": [
+				135.1,
+				63.4
+			],
+			"richtung": "seite",
+			"winkel": 12.3
+		},
+		"attack_f5": {
+			"hals": [
+				114.2,
+				61.2
+			],
+			"richtung": "seite",
+			"winkel": 6.7
+		},
+		"cast_f0": {
+			"hals": [
+				45.0,
+				39.3
+			],
+			"richtung": "vorn",
+			"winkel": 19.3
+		},
+		"cast_f1": {
+			"hals": [
+				44.1,
+				39.0
+			],
+			"richtung": "vorn",
+			"winkel": 21.6
+		},
+		"cast_f2": {
+			"hals": [
+				44.2,
+				38.9
+			],
+			"richtung": "vorn",
+			"winkel": 25.0
+		},
+		"death_f0": {
+			"hals": [
+				71.4,
+				34.9
+			],
+			"richtung": "seite",
+			"winkel": -35.9
+		},
+		"death_f1": {
+			"hals": [
+				99.8,
+				40.2
+			],
+			"richtung": "seite",
+			"winkel": 11.2
+		},
+		"death_f2": {
+			"hals": [
+				120.6,
+				55.1
+			],
+			"richtung": "seite",
+			"winkel": 10.6
+		},
+		"death_f3": {
+			"hals": [
+				128.8,
+				68.1
+			],
+			"richtung": "seite",
+			"winkel": 24.2
+		},
+		"death_f4": {
+			"hals": [
+				144.2,
+				82.1
+			],
+			"richtung": "seite",
+			"winkel": 35.1
+		},
+		"death_f5": {
+			"hals": [
+				98.6,
+				79.7
+			],
+			"richtung": "seite",
+			"winkel": 90.0
+		},
 		"hit_f0": {
 			"hals": [
 				29.3,
@@ -1351,6 +1471,38 @@
 			],
 			"richtung": "seite",
 			"winkel": -0.0
+		},
+		"victory_f0": {
+			"hals": [
+				54.4,
+				74.4
+			],
+			"richtung": "vorn",
+			"winkel": -6.0
+		},
+		"victory_f1": {
+			"hals": [
+				52.3,
+				73.3
+			],
+			"richtung": "vorn",
+			"winkel": -4.5
+		},
+		"victory_f2": {
+			"hals": [
+				55.0,
+				73.4
+			],
+			"richtung": "vorn",
+			"winkel": -3.7
+		},
+		"victory_f3": {
+			"hals": [
+				54.4,
+				74.2
+			],
+			"richtung": "vorn",
+			"winkel": 3.2
 		}
 	}
 }

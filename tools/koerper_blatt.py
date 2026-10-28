@@ -34,6 +34,10 @@ REIHEN = {
 		"kampf_b": [[("attack", 6)], [("death", 6)], [("victory", 4), ("cast", 3)]],
 		"welt": [[("idle_vorn", 5), ("run_vorn", 5)], [("idle_hinten", 5), ("run_hinten", 5)]],
 	},
+	"novize_w": {
+		"kampf_b": [[("attack", 6)], [("death", 6)], [("victory", 4), ("cast", 3)]],
+		"welt": [[("idle_vorn", 5), ("run_vorn", 5)], [("idle_hinten", 5), ("run_hinten", 5)]],
+	},
 }
 ## Mit dieser Animation wird jedes weitere Blatt auf die Größe von Blatt 1 gebracht (aufrecht stehend, Kopf frei)
 GROESSE_VON = {"kampf_a": "idle", "kampf_b": "cast", "welt": "idle_vorn"}
@@ -96,8 +100,14 @@ def neigung(bild, platz, rund=False):
 	ys, xs = np.where(frei)
 	mitte, lang, kurz, achse = ellipse(xs.astype(float), ys.astype(float))
 	unten = achse / np.linalg.norm(achse)
-	if rund or lang / kurz < LAENGLICH:
+	if rund:
 		unten = np.array([0.0, 1.0])
+	elif lang / kurz < LAENGLICH:
+		# Messung unsicher (Oval stark verdeckt): bei einer liegenden Figur (viel breiter als hoch) liegt auch der Kopf,
+		# mit dem Hals zum Körper hin, sonst gilt er als gerade
+		fy, fx = np.where(bild[..., 3] > 128)
+		liegt = (fx.max() - fx.min()) > 1.8 * (fy.max() - fy.min())
+		unten = np.array([1.0, 0.0]) if liegt else np.array([0.0, 1.0])
 	# „Unten“ zeigt zum Körper (Schwerpunkt der übrigen Bildpunkte)
 	ky, kx = np.where((bild[..., 3] > 128) & ~platz)
 	if np.dot(np.array([kx.mean(), ky.mean()]) - mitte, unten) < 0:
