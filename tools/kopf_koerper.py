@@ -48,7 +48,7 @@ GANZ = {"kofi": ["death_f4", "death_f5"]}
 ## Weitere Köpfe aus Kopf-Blättern (tools/vorlagen/<kopf>_kopf.png), die auf den Körper der Figur passen.
 ## Sie werden mit derselben Größe wie die Köpfe der Figur verkleinert. Name = wie er im Editor heißt.
 WEITERE_KOEPFE = {
-	"kofi": {"novizin_2": "Novizin 2"},
+	"kofi": {"mira": "Mira"},
 }
 NAMEN = {"kofi": "Kofi"}
 ## Passt ein Kopf so viel schlechter als im Vorbild, gilt er als nicht gefunden

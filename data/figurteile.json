@@ -51,7 +51,7 @@
 				},
 				"name": "Kofi"
 			},
-			"novizin_2": {
+			"mira": {
 				"hals": {
 					"hinten_geneigt": [
 						39.3,
@@ -98,7 +98,7 @@
 						53
 					]
 				},
-				"name": "Novizin 2"
+				"name": "Mira"
 			}
 		},
 		"attack_f0": {

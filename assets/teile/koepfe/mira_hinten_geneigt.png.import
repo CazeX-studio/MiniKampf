@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://eg3ow4r241uf"
-path="res://.godot/imported/novizin_2_vorn_schmerz.png-0cdd6ccc2b8aeddcab3384e828fe8566.ctex"
+uid="uid://blhck120v0v7d"
+path="res://.godot/imported/mira_hinten_geneigt.png-3b6fca1fcbb47ad8a17b14922e53ba4b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/teile/koepfe/novizin_2_vorn_schmerz.png"
-dest_files=["res://.godot/imported/novizin_2_vorn_schmerz.png-0cdd6ccc2b8aeddcab3384e828fe8566.ctex"]
+source_file="res://assets/teile/koepfe/mira_hinten_geneigt.png"
+dest_files=["res://.godot/imported/mira_hinten_geneigt.png-3b6fca1fcbb47ad8a17b14922e53ba4b.ctex"]
 
 [params]
 

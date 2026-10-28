@@ -51,7 +51,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
-- **Projekt 11, Schritt 2b (Teil 1): Kopf wechseln, zweiter Kopf „Novizin 2“** (28.10., Blatt `tools/vorlagen/novizin_2_kopf.png`):
+- **Projekt 11, Schritt 2b (Teil 1): Kopf wechseln, zweiter Kopf: Mira** (Name von Marco, 28.10.) (28.10., Blatt `tools/vorlagen/mira_kopf.png`):
   - Jeder Kopf hat jetzt einen **Halspunkt** (unterste Stelle des Halses), und das Spiel setzt ihn genau auf den Hals des
     Körpers. Deshalb passt auch ein Kopf mit Zopf oder langen Haaren auf Kofis Körper. Weitere Köpfe werden genauso groß
     verkleinert wie Kofis Kopf.
@@ -1701,6 +1701,10 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Hinten angestellt: Schnellsätze und Emotes (Vorschläge im Ideen-Parkplatz von design.md).
 
 ## Offene Fragen an Marco
+
+- **Zweimal Mira (28.10.):** Die neue Novizin mit dem roten Zopf heißt Mira. In der Geschichte gibt es aber schon die
+  Vorgängerin Mira (Sternensängerin, trifft man am zugewachsenen Weg, wird in der Glutoase krank). Soll eine der beiden
+  anders heißen, oder ist die Novizin absichtlich dieselbe Mira (dann wäre sie keine Spielfigur, sondern die Vorgängerin)?
 
 - **Grünwacht Schritt 11 (entschieden 21.10.):** Die Stufe soll mehr zählen → eingebaut (Stufenabstand, siehe
   „Nach deinem Test-Feedback“ bei Schritt 11). Der Zähmer bleibt allein schwächer; seine Monster bekommen später

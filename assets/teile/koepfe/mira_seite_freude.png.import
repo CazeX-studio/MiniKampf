@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brmb5en3x88ol"
-path="res://.godot/imported/novizin_2_seite_augen_zu.png-34ec136f1bb923a2bc77d870714d9e42.ctex"
+uid="uid://bm3k4g6egtbi1"
+path="res://.godot/imported/mira_seite_freude.png-f1261b3f437691eb1029a9914d9ce950.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/teile/koepfe/novizin_2_seite_augen_zu.png"
-dest_files=["res://.godot/imported/novizin_2_seite_augen_zu.png-34ec136f1bb923a2bc77d870714d9e42.ctex"]
+source_file="res://assets/teile/koepfe/mira_seite_freude.png"
+dest_files=["res://.godot/imported/mira_seite_freude.png-f1261b3f437691eb1029a9914d9ce950.ctex"]
 
 [params]
 
