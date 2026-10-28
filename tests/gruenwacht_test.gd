@@ -648,8 +648,8 @@ func _test_dungeon(choice: String) -> void:
 	_check(not world.can_use(p, queen) and world.can_use(p, mother), "Königin besiegt, die Wurzelmutter wartet")
 	_fight_place(world, p, mother, "pilz_urbaum", true)
 	_check(world.can_use(p, heart), "Das Herz des Urbaums liegt frei")
-	_check(BattleRequest.prepare("pilz_urbaum", 20, 0, "blade") and BattleRequest.setup.helden.size() == 4 and BattleRequest.setup.dungeon == "pilzhoehle",
-			"Bosskampf: Ida, Bo und Tom helfen, Dungeon-Regeln gelten")
+	_check(BattleRequest.prepare("pilz_urbaum", 20, 0, "blade") and BattleRequest.setup.helden.size() == 3 and BattleRequest.setup.dungeon == "pilzhoehle",
+			"Bosskampf: Tessa und Gorm helfen, Dungeon-Regeln gelten")
 	BattleRequest.kampf_id = ""
 	# Die Höhlenmonster laufen herum; hier geht es nur um den Weg zum Herz
 	p.safe_time = 1000.0

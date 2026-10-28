@@ -24,6 +24,8 @@ ZIEL = WURZEL / "assets" / "figuren"
 MONSTER = {
 	"feldschleim": {"hoehe": 52, "reihen": [("idle", 4), ("attack", 6), ("hit", 1), ("death", 4)]},
 	"wiesenkobold": {"hoehe": 86, "reihen": [("idle", 4), ("attack", 6), ("wurf", 6), ("hit+death", 5)]},
+	"kieselkobold": {"vorlage": "wiesenkobold_b", "hoehe": 80, "reihen": [("idle", 7), ("attack", 6), ("wurf", 6),
+		("hit+death", 6)]},
 	"ruepelkobold": {"hoehe": 140, "schnitte": [(772, 280, 570)], "reihen": [("idle", 4), ("attack", 6), ("hit", 1), ("death", 5)]},
 	"sternenfresser": {"hoehe": 170, "reihen": [("idle", 4), ("attack", 6), ("attack2", 5), ("spezial", 5), ("hit", 1),
 		("death", 7)]},
@@ -105,7 +107,7 @@ def fuss(teil, rueckseite):
 
 
 def zerlegen(name, info):
-	a = freistellen(Image.open(VORLAGEN / f"{name}.png"))
+	a = freistellen(Image.open(VORLAGEN / f"{info.get('vorlage', name)}.png"))
 	ziel, reihen = bilder_finden(a, info.get("schnitte", []))
 	erwartet = [n for _, n in info["reihen"]]
 	if [len(r) for r in reihen] != erwartet:

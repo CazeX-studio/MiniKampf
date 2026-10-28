@@ -152,11 +152,11 @@
 			"abschluss": {"wer": "Ye", "text": "Vier Lektionen am Stück, und du stehst noch. Nicht schlecht für einen Novizen.", "antworten": [
 				{"text": "Danke, Ye.", "weiter": "gruppe", "aktionen": [{"auftrag_abgeben": "grundausbildung"}]}
 			]},
-			"gruppe": {"wer": "Ye", "text": "Allein kommt da draußen niemand weit. Ida, Bo und Tom sind auch Novizen. Kobolde treiben sich auf der Übungswiese herum – vertreibt sie zusammen.", "antworten": [
+			"gruppe": {"wer": "Ye", "text": "Allein kommt da draußen niemand weit. Tessa und Gorm sind auch Novizen. Kobolde treiben sich auf der Übungswiese herum – vertreibt sie zusammen.", "antworten": [
 				{"text": "Wir schaffen das!", "aktionen": [{"auftrag_starten": "erster_gruppenkampf"}, {"kampf": "gruppenkampf"}]},
 				{"text": "Gleich.", "aktionen": [{"auftrag_starten": "erster_gruppenkampf"}]}
 			]},
-			"gruppe_wartet": {"wer": "Ye", "text": "Ida, Bo und Tom warten auf dich.", "antworten": [
+			"gruppe_wartet": {"wer": "Ye", "text": "Tessa und Gorm warten auf dich.", "antworten": [
 				{"text": "Los geht's!", "aktionen": [{"kampf": "gruppenkampf"}]},
 				{"text": "Gleich."}
 			]},
@@ -278,10 +278,20 @@
 	"wache": {
 		"hinweis": "PLATZHALTER-TEXTE: Torwache Brom am zugewachsenen sechsten Weg (hieß vorher Holm, Name aus Sitzung 21).",
 		"einstieg": [
+			{"wenn": {"auftrag": "essen_fuer_brom", "stand": "aktiv"}, "knoten": "festessen"},
 			{"wenn": {"auftrag": "korb_fuer_die_wache", "stand": "aktiv"}, "knoten": "korb"},
 			{"knoten": "weg"}
 		],
 		"knoten": {
+			"festessen": {"wer": "Brom", "text": "Novize? Heute, am Festabend? … Ist das Hannes Eintopf? Den riech ich drei Straßen weit.", "antworten": [
+				{"text": "Von Hanne. Damit du nicht leer ausgehst.", "weiter": "festessen2", "aktionen": [{"merken": "brom_festessen"}, {"gegenstand": "festschuessel", "anzahl": -1}, {"auftrag_abgeben": "essen_fuer_brom"}]}
+			]},
+			"festessen2": {"wer": "Brom", "text": "Danke. Weißt du … heute Nacht ist das Summen hinter den Dornen anders. Lauter. Fast wie ein Lied.", "antworten": [
+				{"text": "Ein Lied?", "weiter": "festessen3"},
+				{"text": "Das ist bestimmt nur der Wind.", "weiter": "festessen_wind"}
+			]},
+			"festessen3": {"wer": "Brom", "text": "Fünf Töne, immer wieder. Und dann eine Pause, als würde einer fehlen. … Iss du lieber auch was. Und erzähl keinem, dass ich das gesagt hab."},
+			"festessen_wind": {"wer": "Brom", "text": "Ja. Der Wind. Das sag ich mir auch jeden Abend."},
 			"korb": {"wer": "Brom", "text": "Halt! Hier geht's nicht weiter. … Moment. Ist das ein Essenskorb? Von Lene?", "antworten": [
 				{"text": "Ja, für dich.", "weiter": "danke", "aktionen": [{"merken": "korb_abgegeben"}, {"gegenstand": "essenskorb", "anzahl": -1}, {"auftrag_abgeben": "korb_fuer_die_wache"}]}
 			]},
@@ -331,7 +341,7 @@
 			"zeit": {"wer": "Marv", "text": "Macht nichts! Irgendwann spielen wir, ganz besti–", "weiter": "stern"},
 			"stern": {"wer": "Erzähler", "text": "Plötzlich wird es taghell. Ein Stern fällt. Dann noch einer. Und noch einer.", "aktionen": [{"effekt": "sternenfall"}, {"merken": "sternenfall"}, {"auftrag_starten": "sternenfall"}], "weiter": "einschlag"},
 			"einschlag": {"wer": "Erzähler", "text": "Ein Splitter schlägt mitten auf dem Marktplatz ein. Ein Feldschleim kriecht heran – und verschlingt ihn. Er wächst. Und wächst.", "weiter": "ye"},
-			"ye": {"wer": "Ye", "text": "Novizen! Ida, Bo, Tom – und du! Zu mir! Schild hoch, Schild runter!", "antworten": [
+			"ye": {"wer": "Ye", "text": "Novizen! Tessa, Gorm – und du! Zu mir! Schild hoch, Schild runter!", "antworten": [
 				{"text": "Los!", "aktionen": [{"kampf": "sternenfall"}]}
 			]}
 		}
@@ -370,6 +380,8 @@
 	"hanne": {
 		"hinweis": "PLATZHALTER-TEXTE: Wirtin Hanne vor dem Gasthaus Wegrast (Nebenaufträge „Hannes Kater“ und „Ein Festmahl“). Herzlich, laut, weiß jedes Gerücht.",
 		"einstieg": [
+			{"wenn": {"auftrag": "essen_fuer_brom", "stand": "aktiv"}, "knoten": "brom_wartet"},
+			{"wenn": {"auftrag": "essen_fuer_brom", "stand": "neu", "gemerkt": "nacht", "und": [{"auftrag": "leises_singen", "stand": "abgegeben"}]}, "knoten": "brom"},
 			{"wenn": {"auftrag": "hannes_kater", "stand": "fertig"}, "knoten": "kater_zurueck"},
 			{"wenn": {"auftrag": "hannes_kater", "stand": "aktiv"}, "knoten": "kater_wartet"},
 			{"wenn": {"auftrag": "hannes_kater", "stand": "neu", "und": [{"auftrag": "ankunft", "stand": "abgegeben"}]}, "knoten": "kater"},
@@ -379,6 +391,12 @@
 			{"knoten": "geruecht"}
 		],
 		"knoten": {
+			"brom": {"wer": "Hanne", "text": "Schätzchen, gut, dass du da bist! Alle feiern, nur der arme Brom steht wieder allein am alten Südost-Tor.", "weiter": "brom2"},
+			"brom2": {"wer": "Hanne", "text": "Ich hab ihm eine Schüssel vom Festmahl aufgehoben. Bringst du sie ihm, solange sie noch warm ist?", "antworten": [
+				{"text": "Klar, ich bring sie hin.", "aktionen": [{"gegenstand": "festschuessel", "anzahl": 1}, {"auftrag_starten": "essen_fuer_brom"}]},
+				{"text": "Erst will ich das Fest sehen."}
+			]},
+			"brom_wartet": {"wer": "Hanne", "text": "Die Schüssel wird kalt, Schätzchen! Brom steht am alten Südost-Tor."},
 			"kater": {"wer": "Hanne", "text": "Ach, ein neues Gesicht! Willkommen im Wegrast, Schätzchen! Sag mal … hast du einen schwarzen Kater gesehen?", "weiter": "kater2"},
 			"kater2": {"wer": "Hanne", "text": "Brösel ist wieder ausgebüxt! Frag doch Pip und Lotte, die Kinder auf dem Marktplatz sehen alles.", "antworten": [
 				{"text": "Ich halte die Augen offen.", "aktionen": [{"auftrag_starten": "hannes_kater"}]},

@@ -194,6 +194,10 @@ const ENEMIES := {
 	"wiesenkobold": {name = "Wiesenkobold", element = "Erde", hp = 44, tempo = 12,
 		attacks = [{name = "Stockhieb", base = 9, kind = "melee"}, {name = "Steinwurf", base = 8, kind = "ranged"}],
 		tame = {name = "Stockhieb", base = 9, kind = "melee"}},
+	# Marcos zweiter Kobold: flinker als der Wiesenkobold, wirft Kiesel
+	"kieselkobold": {name = "Kieselkobold", element = "Erde", hp = 40, tempo = 13,
+		attacks = [{name = "Kieselwurf", base = 8, kind = "ranged"}, {name = "Knüppelhieb", base = 9, kind = "melee"}],
+		tame = {name = "Knüppelhieb", base = 9, kind = "melee"}},
 	"ruepelkobold": {name = "Rüpelkobold", element = "Feuer", hp = 110, tempo = 9,
 		attacks = [{name = "Keulenschlag", base = 21, kind = "melee"}],
 		tame = {name = "Keulenschlag", base = 13, kind = "melee"}},

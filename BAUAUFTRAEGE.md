@@ -210,7 +210,7 @@ _Aus Marcos Entscheidung vom 27.10.2026: Die Welt bleibt in Rautenansicht und wi
 ### Schritt 5: Kreuzweg aus dem Baukasten
 - **Ziel:** Die echte Stadt Kreuzweg wird aus den Baukasten-Teilen aufgebaut (Plan nach design.md: Marktplatz, Gilde, Wegrast, Gesandten-Hof, Bingos Stand, sechstes Tor). Figuren, Aufträge und Geschichte bleiben, wie sie sind.
 - **So testest du es:** Die Kreuzweg-Demo spielen: Alles ist wie vorher, sieht aber aus wie im Testfeld.
-- **Offene Fragen an Marco:** Stadtform (rund mit sechs Straßen oder Kreuzung wie auf dem Bild), Statue (fünf Figuren laut design.md), lila Kreis (Einschlagstelle?), Brunnen, welches Gebäude wo steht.
+- **Entschieden (28.10.):** rund mit Ringstraße und sechs Toren. Norden: sechstes Tor hinter der Statue; Süden: Glutoase und Haupteingang; Westen: Grünwacht; Nordwesten Arkanum, Nordosten Nebelinseln, Osten Messinghafen (siehe design.md „Kreuzweg im Detail“).
 - **Status:** offen
 
 ### Schritt 6: Grünwacht aus dem Baukasten
@@ -249,7 +249,7 @@ Werten, Zugleiste, Kampfmenü, Sieg-Fenster und Meldungen. Look überall eingeba
 ## Später (wartet auf andere Teile des Spiels)
 - Taschen vom Schneider und Lagerfeuer-Essen (brauchen Berufe)
 - Marktstand-Gebühr (braucht den Markt)
-- Schriftrollen, Wiederbelebungs-Rolle und besondere Munition
+- Schriftrollen (auch „Licht im Dunkeln“, beschlossen 28.10.), Wiederbelebungs-Rolle und besondere Munition
 - Testversion bis Stufe 20 mit Kauf (braucht Online-Konten)
 - Sternen-Glanz und Siegel-Zähler (braucht den Server)
 - Erste eigene Grafiken (wartet auf die Look-Bibel aus Thema 12)

@@ -6,6 +6,7 @@
 	"heiltrank": {"bild": {"form": "trank", "farbe": "d94848"}, "name": "Heiltrank", "beschreibung": "Heilt im Kampf etwas Leben.", "preis": 15},
 	"sternensplitter": {"bild": {"form": "splitter", "farbe": "b48cff"}, "name": "Sternensplitter", "beschreibung": "Ein Splitter aus dem Sternenfall. Belohnung aus Dungeons. Er summt leise. (Bingo kauft ihn nicht an.)", "preis": 0},
 	"essenskorb": {"bild": {"form": "korb", "farbe": "a8743e"}, "name": "Essenskorb", "beschreibung": "Brot, Käse und ein Krug Tee für die Wache am alten Südost-Weg.", "preis": 0},
+	"festschuessel": {"bild": {"form": "korb", "farbe": "c8643e"}, "name": "Festschüssel", "beschreibung": "Eine Schüssel Eintopf vom Festmahl, noch warm. Für Torwache Brom.", "preis": 0},
 	"buerste": {"bild": {"form": "buerste", "farbe": "7a4f2c"}, "name": "Bürste", "beschreibung": "Eine harte Bürste von Steinmetz Quill. Damit putzt man die Statue der Fünf.", "preis": 0,
 		"benutzen": {"feld": [21.5, 21.5], "radius": 3.5, "dialog": "statue_putzen", "sonst": "Die Bürste ist für die Statue der Fünf auf dem Marktplatz. Stell dich direkt daneben."}},
 	"festlaterne": {"bild": {"form": "laterne", "farbe": "f2c14e"}, "name": "Festlaterne", "beschreibung": "Eine Laterne für das Fest der fünf Wege, in der Farbe einer Region.", "preis": 0},

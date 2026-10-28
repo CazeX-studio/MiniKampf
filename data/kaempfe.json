@@ -49,40 +49,36 @@
 	},
 	"gruppenkampf": {
 		"name": "Erster Gruppenkampf",
-		"ansage": "Kobolde überfallen die Übungswiese! Ida, Bo und Tom kämpfen mit dir.",
+		"ansage": "Kobolde überfallen die Übungswiese! Tessa und Gorm kämpfen mit dir.",
 		"begleiter": [
-			{"name": "Ida", "aussehen": "novize_ida"},
-			{"name": "Bo", "aussehen": "novize_bo"},
-			{"name": "Tom", "aussehen": "novize_tom"}
+			{"name": "Tessa", "aussehen": "novize_tessa"}, {"name": "Gorm", "aussehen": "novize_gorm"}
 		],
-		"wellen": [["wiesenkobold", "ruepelkobold", "wiesenkobold", "feldschleim"]],
+		"wellen": [["wiesenkobold", "ruepelkobold", "kieselkobold", "feldschleim"]],
 		"erlaubt": ["schlag", "kraftschlag", "erste_hilfe", "row", "trank"],
 		"erfahrung": 100,
 		"hinweise": {
-			"erster_zug": "Ida, Bo und Tom sind auch Novizen und handeln selbst. Zusammen seid ihr stärker: Heilt euch gegenseitig mit „Erste Hilfe“ und nehmt euch zuerst die schwachen Kobolde vor."
+			"erster_zug": "Tessa und Gorm sind auch Novizen und handeln selbst. Zusammen seid ihr stärker: Heilt euch gegenseitig mit „Erste Hilfe“ und nehmt euch zuerst die schwachen Kobolde vor."
 		}
 	},
 	"probestunde": {
-		"hinweis": "Vorlage für alle Probestunden („probe:<klasse>“, z. B. probe:archer). Der Spieler spielt die Klasse (Ult zu 60 % voll), Ida und Bo helfen.",
-		"ansage": "Probestunde auf der Übungswiese: Ida und Bo helfen dir, vier Übungsgegner warten.",
+		"hinweis": "Vorlage für alle Probestunden („probe:<klasse>“, z. B. probe:archer). Der Spieler spielt die Klasse (Ult zu 60 % voll), Tessa und Gorm helfen.",
+		"ansage": "Probestunde auf der Übungswiese: Tessa und Gorm helfen dir, vier Übungsgegner warten.",
 		"begleiter": [
-			{"name": "Ida", "aussehen": "novize_ida"},
-			{"name": "Bo", "aussehen": "novize_bo"}
+			{"name": "Tessa", "aussehen": "novize_tessa"},
+			{"name": "Gorm", "aussehen": "novize_gorm"}
 		],
 		"wellen": [["wiesenkobold", "feldschleim", "wiesenkobold", "ruepelkobold"]],
 		"ult_start": 60,
 		"merken": "probestunde_gemacht",
 		"erfahrung": 40,
-		"hinweis_vorlage": "Probestunde: %s (Rolle: %s)\n%s\nReaktion: %s.\nUlt: %s. Sie ist schon zu 60 %% voll – lade sie mit der typischen Aktion deiner Klasse auf und probier sie aus! Ida und Bo (Novizen) helfen dir."
+		"hinweis_vorlage": "Probestunde: %s (Rolle: %s)\n%s\nReaktion: %s.\nUlt: %s. Sie ist schon zu 60 %% voll – lade sie mit der typischen Aktion deiner Klasse auf und probier sie aus! Tessa und Gorm (Novizen) helfen dir."
 	},
 	"sternenfall": {
 		"gruppe": true,
 		"name": "Nacht des Sternenfalls: Der Sternenfresser",
-		"ansage": "Der Sternenfresser erhebt sich auf dem Marktplatz! Ida, Bo und Tom stehen dir bei.",
+		"ansage": "Der Sternenfresser erhebt sich auf dem Marktplatz! Tessa und Gorm stehen dir bei.",
 		"begleiter": [
-			{"name": "Ida", "aussehen": "novize_ida"},
-			{"name": "Bo", "aussehen": "novize_bo"},
-			{"name": "Tom", "aussehen": "novize_tom"}
+			{"name": "Tessa", "aussehen": "novize_tessa"}, {"name": "Gorm", "aussehen": "novize_gorm"}
 		],
 		"wellen": [["sternenfresser"]],
 		"hintergrund": "marktplatz_nacht",
@@ -145,8 +141,8 @@
 	"kobalt_glutwelpe": {"name": "Rivalenkampf: Kobalts Glutwelpe", "klasse": "tamer", "eigene_klasse": true, "ansage": "Kobalt: „Mein Glutwelpe gegen deins! Los!“", "wellen": [["kobalts_glutwelpe", "kobalt"]], "gegner_stufe": 12, "hintergrund": "wald", "erfahrung": 250, "gegner_leben": 3.6, "merken_immer": "kobalt_gekaempft", "merken": "kobalt_sieg", "erfolg": "rivale_kobalt", "verloren_text": "Kobalt jubelt. Eine Niederlage ist kein Spielende – du kannst weitermachen."},
 	"kobalt_bachotter": {"name": "Rivalenkampf: Kobalts Bachotter", "klasse": "tamer", "eigene_klasse": true, "ansage": "Kobalt: „Mein Bachotter gegen deins! Los!“", "wellen": [["kobalts_bachotter", "kobalt"]], "gegner_stufe": 12, "hintergrund": "wald", "erfahrung": 250, "gegner_leben": 3.6, "merken_immer": "kobalt_gekaempft", "merken": "kobalt_sieg", "erfolg": "rivale_kobalt", "verloren_text": "Kobalt jubelt. Eine Niederlage ist kein Spielende – du kannst weitermachen."},
 	"splitterbaer": {"gruppe": true, "name": "Das veränderte Tier", "eigene_klasse": true, "ansage": "Der Splitter-Rindenbär brüllt und stürzt sich auf dich!", "wellen": [["splitterbaer"]], "gegner_stufe": 17, "gegner_leben": 2.5, "hintergrund": "wald", "erfahrung": 600, "merken": "tier_besiegt", "verloren_text": "Der Bär ist zu stark. Ruh dich aus und versuch es noch einmal."},
-	"pilz_koenigin": {"gruppe": true, "name": "Pilzhöhle: Die Sporenkönigin", "eigene_klasse": true, "dungeon": "pilzhoehle", "entscheidung_in_der_welt": true, "ansage": "Die Sporenkönigin erhebt sich aus einem Teppich aus Pilzen. Ida, Bo und Tom sind dir gefolgt!", "begleiter": [{"name": "Ida", "aussehen": "novize_ida"}, {"name": "Bo", "aussehen": "novize_bo"}, {"name": "Tom", "aussehen": "novize_tom"}], "wellen": [["sporenkoenigin", "sporenling", "sporenling"]], "gegner_stufe": 20, "hintergrund": "pilzhoehle", "erfahrung": 800, "merken": "lauf:koenigin", "verloren_text": "Die Sporen nehmen dir die Luft. Du kommst am Eingang der Höhle wieder zu dir.", "zurueck_zum_start": true, "gegner_leben": 3.8},
-	"pilz_urbaum": {"gruppe": true, "name": "Pilzhöhle: Die Wurzelmutter", "eigene_klasse": true, "dungeon": "pilzhoehle", "entscheidung_in_der_welt": true, "ansage": "Der Urbaum selbst bewegt sich. Seine Wurzeln greifen nach euch!", "begleiter": [{"name": "Ida", "aussehen": "novize_ida"}, {"name": "Bo", "aussehen": "novize_bo"}, {"name": "Tom", "aussehen": "novize_tom"}], "wellen": [["wurzelmutter", "knoten_vorne", "knoten_hinten"]], "gegner_stufe": 20, "hintergrund": "pilzhoehle", "erfahrung": 1500, "merken": "lauf:urbaum", "verloren_text": "Die Wurzeln ziehen dich unter die Erde … Du kommst am Eingang der Höhle wieder zu dir.", "zurueck_zum_start": true, "gegner_leben": 0.6, "verschlingen_zuege": 4},
+	"pilz_koenigin": {"gruppe": true, "name": "Pilzhöhle: Die Sporenkönigin", "eigene_klasse": true, "dungeon": "pilzhoehle", "entscheidung_in_der_welt": true, "ansage": "Die Sporenkönigin erhebt sich aus einem Teppich aus Pilzen. Tessa und Gorm sind dir gefolgt!", "begleiter": [{"name": "Tessa", "aussehen": "novize_tessa"}, {"name": "Gorm", "aussehen": "novize_gorm"}], "wellen": [["sporenkoenigin", "sporenling", "sporenling"]], "gegner_stufe": 20, "hintergrund": "pilzhoehle", "erfahrung": 800, "merken": "lauf:koenigin", "verloren_text": "Die Sporen nehmen dir die Luft. Du kommst am Eingang der Höhle wieder zu dir.", "zurueck_zum_start": true, "gegner_leben": 3.8},
+	"pilz_urbaum": {"gruppe": true, "name": "Pilzhöhle: Die Wurzelmutter", "eigene_klasse": true, "dungeon": "pilzhoehle", "entscheidung_in_der_welt": true, "ansage": "Der Urbaum selbst bewegt sich. Seine Wurzeln greifen nach euch!", "begleiter": [{"name": "Tessa", "aussehen": "novize_tessa"}, {"name": "Gorm", "aussehen": "novize_gorm"}], "wellen": [["wurzelmutter", "knoten_vorne", "knoten_hinten"]], "gegner_stufe": 20, "hintergrund": "pilzhoehle", "erfahrung": 1500, "merken": "lauf:urbaum", "verloren_text": "Die Wurzeln ziehen dich unter die Erde … Du kommst am Eingang der Höhle wieder zu dir.", "zurueck_zum_start": true, "gegner_leben": 0.6, "verschlingen_zuege": 4},
 	"kobalt2_moosling": {"name": "Kobalts Revanche", "klasse": "tamer", "eigene_klasse": true, "ansage": "Kobalt: „Ich hab trainiert! Jetzt ist mein Monster viel stärker!“", "wellen": [["kobalts_moosling", "kobalt"]], "gegner_stufe": 19, "gegner_leben": 5.0, "hintergrund": "wald", "erfahrung": 500, "merken_immer": "kobalt_revanche_gekaempft", "merken": "kobalt_revanche_sieg", "verloren_text": "Kobalt jubelt schon wieder. Versuch es noch einmal!"},
 	"kobalt2_glutwelpe": {"name": "Kobalts Revanche", "klasse": "tamer", "eigene_klasse": true, "ansage": "Kobalt: „Ich hab trainiert! Jetzt ist mein Monster viel stärker!“", "wellen": [["kobalts_glutwelpe", "kobalt"]], "gegner_stufe": 19, "gegner_leben": 5.0, "hintergrund": "wald", "erfahrung": 500, "merken_immer": "kobalt_revanche_gekaempft", "merken": "kobalt_revanche_sieg", "verloren_text": "Kobalt jubelt schon wieder. Versuch es noch einmal!"},
 	"kobalt2_bachotter": {"name": "Kobalts Revanche", "klasse": "tamer", "eigene_klasse": true, "ansage": "Kobalt: „Ich hab trainiert! Jetzt ist mein Monster viel stärker!“", "wellen": [["kobalts_bachotter", "kobalt"]], "gegner_stufe": 19, "gegner_leben": 5.0, "hintergrund": "wald", "erfahrung": 500, "merken_immer": "kobalt_revanche_gekaempft", "merken": "kobalt_revanche_sieg", "verloren_text": "Kobalt jubelt schon wieder. Versuch es noch einmal!"},

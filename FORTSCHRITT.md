@@ -51,6 +51,19 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
 
+- **Marcos Entscheidungen vom 28.10. eingebaut:**
+  - **Tessa und Gorm statt Ida, Bo und Tom:** Die beiden Mitschüler helfen im ersten Gruppenkampf, in den Probestunden,
+    in der Nacht des Sternenfalls und in der Pilzhöhle. Die Gruppe ist allein jetzt drei statt vier stark
+    (beim Zusammenspielen füllen sie bis höchstens drei auf). Platzhalter-Figuren, bis es eigene Bilder gibt.
+  - **Neuer Nebenauftrag „Essen für Brom“ (Festnacht):** In der Festnacht hat Wirtin Hanne ein blaues „!“. Sie gibt dir
+    eine Festschüssel für Brom am alten Südost-Tor. Er erzählt, dass das Summen heute wie ein Lied mit fünf Tönen klingt.
+    Belohnung: 10 Gold, 60 Erfahrung.
+  - **Kieselkobold:** Marcos zweiter Kobold ist jetzt ein eigenes Monster (Erde, flinker, Kieselwurf und Knüppelhieb)
+    und kämpft im ersten Gruppenkampf mit.
+  - Kreuzweg rund mit sechs Toren und die Schriftrolle „Licht im Dunkeln“ stehen in design.md und warten auf ihren Bauauftrag.
+  - **So testest du es:** Editor → „Akt Kreuzweg“. Im ersten Gruppenkampf kämpfen Tessa und Gorm mit dir gegen
+    Wiesenkobold, Kieselkobold, Rüpelkobold und Feldschleim. In der Festnacht zuerst zu Hanne, dann zu Brom.
+
 - **UI-Set Teil 3: drittes Bildblatt eingebaut** (27.10., Projekt 10, Schritt 4):
   - **Kampf:** Jede Fähigkeit hat ein Symbol (Hieb, Stich, Wirbel, Heilen, Schild, Bogen, Magie, Pfote, Werkzeug,
     Sanduhr, Reihe wechseln, Ult). Gegner zeigen ihr Element als Symbol neben dem Namen. Im Kampfmenü:

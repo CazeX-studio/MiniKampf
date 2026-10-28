@@ -27,9 +27,9 @@ const LOOKS := {
 	"singer": {sprite = "elf_f", scale = 4.0},
 	# Novizen (Kreuzweg-Demo): der Spieler und die Mitstreiter
 	"novize": {sprite = "elf_m", scale = 4.0},
-	"novize_ida": {sprite = "elf_f", scale = 4.0, tint = Color(0.85, 0.95, 1.0)},
-	"novize_bo": {sprite = "lizard_m", scale = 4.0, tint = Color(1.0, 0.9, 0.75)},
-	"novize_tom": {sprite = "knight_m", scale = 4.0, tint = Color(0.9, 1.0, 0.85)},
+	# Mitschüler aus design.md: Tessa (übereifrig) und Gorm (ängstlich), Platzhalter bis zu eigenen Bildern
+	"novize_tessa": {sprite = "elf_f", scale = 4.0, tint = Color(1.0, 0.88, 0.8)},
+	"novize_gorm": {sprite = "knight_m", scale = 4.0, tint = Color(0.85, 0.95, 0.85)},
 	# Begleiter
 	"robot": {sprite = "big_zombie", scale = 2.5, tint = Color(0.72, 0.82, 1.0)},
 	"moosling": {sprite = "swampy", scale = 3.5, tint = Color(0.75, 1.0, 0.65)},
@@ -62,6 +62,7 @@ const LOOKS := {
 	"feldschleim": {sprite = "feldschleim", scale = 1.0},
 	"wiesenkobold": {sprite = "wiesenkobold", scale = 1.0, angriffe = {"Steinwurf": "wurf"}},
 	"ruepelkobold": {sprite = "ruepelkobold", scale = 1.0},
+	"kieselkobold": {sprite = "kieselkobold", scale = 1.0, angriffe = {"Kieselwurf": "wurf"}},
 	"uebungs_ye": {sprite = "wizzard_m", scale = 4.0, tint = Color(0.8, 0.86, 0.95)},
 	"sternenfresser": {sprite = "sternenfresser", scale = 1.0,
 		angriffe = {"Leuchtender Biss": "attack2", "Splitterregen": "spezial"}},
