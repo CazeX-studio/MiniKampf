@@ -284,7 +284,7 @@ _Am 28.10. geteilt: Kofis Kopf-Blatt kam zuerst._
 ### Schritt 4: Körper der Grünwacht-Klassen
 - **Ziel:** Bogenschütze und Monster-Zähmer, je männlich und weiblich. Beim Lernen der Klasse wechselt der Körper, der Kopf bleibt.
 - **So testest du es:** In Grünwacht die Klasse lernen: Die Figur trägt danach die Klassenkleidung.
-- **Status:** offen
+- **Status:** offen (29.10.2026: Prompts B9 in Spieldesign/GRAFIK_AUFTRAG.md bei Marco. Erster Bogenschützen-Versuch zu düster und realistisch, zweiter mit festem Kopf statt grünem Oval; Marco entscheidet: Kopf durch Oval ersetzen lassen oder als Grünwacht-NPC nehmen.)
 
 ### Schritt 5: Figur erstellen
 - **Ziel:** Zu Spielbeginn Geschlecht wählen (daraus folgt der Körper), einen passenden Kopf (namenlos: m1, w1 …) wählen, Namen eingeben (design.md: „Charakter erstellen“). Später kommen Frisuren dazu (Ideen-Parkplatz).
