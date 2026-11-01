@@ -296,6 +296,53 @@ _Am 28.10. geteilt: Kofis Kopf-Blatt kam zuerst._
 - **So testest du es:** Jede Klasse in der Kampf-Sandbox mit eigenem Körper ansehen.
 - **Status:** offen
 
+## Projekt 12: Grünwacht nachbessern (Beschluss 29.10.)
+
+### Schritt 1: Zähmer lernt bei Tilda, Esche gibt das erste Monster
+- **Ziel:** Nach der Klassenwahl führt der Auftrag zu Rudelmeisterin Tilda, sie lehrt das Zähmen und schickt einen zu Professor Esche. Dort wählt man das erste Monster (Glutwelpe, Moosling oder Bachotter).
+- **So testest du es:** Neu beginnen, Monster-Zähmer wählen, dem Wegweiser zu Tilda folgen, danach zu Esche, das Monster wählen und als Zähmer kämpfen.
+- **Status:** offen
+
+## Projekt 13: Aussehen nach Variante C „Ragnarok plus“ (Beschluss 29.10.)
+
+### Schritt 0: Im Stil bleiben (kommt vor allem anderen)
+- **Ziel:** LOOK.md als einzige Quelle für den Look (Farbpalette, Figurgröße in Pixeln, Umrisslinie, Licht von oben links, Schattenstufen, Blickwinkel), die Farbpalette als Datei mit automatischer Prüfung jedes neuen Bildes, ein Ordner mit zwei bis drei Referenzbildern, die Marco abnimmt, ein fester Stil-Block, der wörtlich in jeden Bild-Prompt kommt, eine immer gleiche Nachbearbeitung für KI-Bilder (Größe, Palette, Umriss) und vor jedem Einbauen ein Vergleichsbild für Marcos Abnahme. Ohne Marcos Ja kommt kein Bild ins Spiel.
+- **So testest du es:** LOOK.md lesen, ein Testbild mit falschen Farben einbauen lassen, die Prüfung meldet es, und das Vergleichsbild erscheint vor dem Einbauen.
+- **Status:** fertig (01.11.2026: LOOK.md, `data/look_palette.json`, `tools/look_pruefen.py` mit pruefen/nachbearbeiten/vergleich/palette, Referenzbilder in `tools/referenz/` als Vorschlag; Marcos Ja zu den drei Referenzbildern fehlt noch. Dazu MONSTER.md und NPC.md angelegt, Fahrplan Schritt 0.2.)
+
+### Schritt 1: Regeln festschreiben
+- **Ziel:** Den Stil-Block in GRAFIK_AUFTRAG.md erweitern: Körper ohne Waffe (Hand greift ins Leere), Köpfe ohne Hut und gleich groß, feste Farbflächen (Hauptfarbe, Zweitfarbe, Metall, Leder, Haut) mit wenigen festen Farbtönen, Platz am Rücken.
+- **So testest du es:** GRAFIK_AUFTRAG.md lesen, die Regeln stehen verständlich drin.
+- **Status:** offen
+
+### Schritt 2: Vorhandene Bilder prüfen
+- **Ziel:** Sind Waffen in die Novizen-Körper und Kofis Bilder eingemalt? Passen die Farbflächen? Kurze Liste, was neu gezeichnet oder angepasst werden muss (der Schild der Novizen bleibt am Körper).
+- **So testest du es:** Die Liste lesen.
+- **Status:** offen (erste Bestandsaufnahme der Farben steht schon in LOOK.md, Abschnitt 11)
+
+### Schritt 3: Waffe als eigenes Teil
+- **Ziel:** Pro Bild ein Handpunkt, die Waffe hängt dort und bewegt sich mit. Probe mit dem Kurzschwert des Novizen.
+- **So testest du es:** Mit dem Novizen laufen und kämpfen, das Schwert sitzt immer in der Hand.
+- **Status:** offen
+
+### Schritt 4: Kopfbedeckung und Rückenteil als Schichten
+- **Ziel:** Ein Probe-Hut über dem Kopf, ein Probe-Umhang hinter dem Körper.
+- **So testest du es:** Hut und Umhang an- und ablegen, beide sitzen in allen Richtungen und Bewegungen richtig.
+- **Status:** offen
+
+### Schritt 5: Umfärben
+- **Ziel:** Das Spiel tauscht die festen Farbtöne eines Klassen-Körpers gegen eine andere Palette (Probe: Set der Vulkanschmiede in Glutrot und Schwarz). Novizen werden nicht umgefärbt.
+- **So testest du es:** Im Editor eine Farbpalette wählen, der Körper färbt sich sauber um.
+- **Status:** offen (braucht einen Klassen-Körper nach den neuen Regeln, sonst Probe an einem Platzhalter)
+
+### Schritt 6: Aussehen-Plätze
+- **Ziel:** Werte und Aussehen getrennt, ein Fenster zum Auswählen von Hut, Rückenteil und Waffen-Aussehen, im Spielstand gespeichert.
+- **So testest du es:** Ein anderes Aussehen wählen, die Werte bleiben gleich, nach dem Neustart ist das Aussehen noch da.
+- **Status:** offen
+
+### Testtag Aussehen
+- Marco prüft, ob alles einheitlich aussieht. Erst danach werden die Klassen-Körper nach den neuen Regeln gezeichnet (Projekt 11, Schritte 4 und 6, Bogenschütze neu).
+
 ## Später (wartet auf andere Teile des Spiels)
 - Taschen vom Schneider und Lagerfeuer-Essen (brauchen Berufe)
 - Marktstand-Gebühr (braucht den Markt)

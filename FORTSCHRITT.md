@@ -3,7 +3,11 @@
 Hier steht, was fertig ist, was als Nächstes kommt und welche Fragen offen sind.
 Wird nach jedem Arbeitsschritt aktualisiert.
 
-## Aktueller Stand (2026-10-27)
+## Aktueller Stand (2026-10-27, ergänzt 01.11.)
+
+- **Neu (01.11.): Fahrplan zur Demo, Phase 0** (Brainstorm-Doc „Fahrplan zur Demo“): design.md ist auf Stand
+  (Schritt 0.1). Die drei Regel-Dateien **LOOK.md**, **MONSTER.md** und **NPC.md** sind angelegt, dazu die
+  Bild-Prüfung (Projekt 13, Schritt 0). Als Nächstes Schritt 0.3 (Bildaufträge in GRAFIK_AUFTRAG.md).
 
 - **Neu (25.10.): Playtest-Rückmeldungen Teil 1 eingebaut** (Liste im Brainstorm-Doc unter „Testtag-Notizen“):
   Fehler (Ye-Laternen, Silberhirsch, Pilzhöhle), Parier-Tutorial, Abwarten für alle, Aufträge allein und Dungeon nur für die Gruppe,
@@ -50,6 +54,25 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - Web-Version: **https://cazex-studio.github.io/MiniKampf/** (wird nach jedem Push automatisch neu gebaut).
 
 ## Bauaufträge (Liste in `BAUAUFTRAEGE.md`)
+
+- **Projekt 13, Schritt 0: Im Stil bleiben** (01.11., Fahrplan zur Demo Schritt 0.2):
+  - **LOOK.md** ist die einzige Quelle für den Look: die sechs Regeln, Grundstil, Blickwinkel, Licht von links oben,
+    Schattenstufen, Größen in Pixeln (an den Bildern im Spiel gemessen), Farben, Umriss, Variante C, der feste
+    Stil-Block (wörtlich aus GRAFIK_AUFTRAG.md) und eine erste Bestandsaufnahme der Bilder im Spiel.
+  - **Farbpalette** `data/look_palette.json`: 64 Farben aus den Referenzbildern plus je fünf Stufen für jedes Element,
+    jede Region, Haut und Metall.
+  - **Werkzeug** `tools/look_pruefen.py`: `pruefen` (Hintergrund, Farben, Umriss, Größe), `nachbearbeiten` (immer
+    gleich: Hintergrund, Zuschnitt, Größe, fremde Farben auf die Palette), `vergleich` (neues Bild neben den
+    Referenzbildern in Spielgröße, hell und dunkel), `palette` (Palette neu aus den Referenzbildern).
+  - **Referenzbilder** (Vorschlag, wartet auf Marcos Ja): Novize m1 (Kofi), die Abenteurergilde, der Moosling.
+  - Dazu **MONSTER.md** (Monster-Regelblatt mit allen Steckbriefen und Familien der Demo) und **NPC.md**
+    (NPC-Regelblatt mit allen Steckbriefen für Kreuzweg, Grünwacht und Glutoase). Beide melden am Ende, was im Spiel
+    noch anders ist (z. B. die Kobolde auf den Kreuzwegfeldern, der alte Spruch von Ye).
+  - **So testest du es:** LOOK.md lesen. Dann im Ordner MiniKampf in der Eingabeaufforderung
+    `python tools/look_pruefen.py pruefen assets/figuren/kofi_idle_anim_f0.png` (passt) und
+    `python tools/look_pruefen.py pruefen assets/figuren/sternenfresser_idle_anim_f0.png` (meldet fremde Farben).
+    `python tools/look_pruefen.py vergleich assets/baukasten/objekte/wegrast.png` legt das Vergleichsbild nach
+    `tools/vergleich/`. Oder einfach Claude Code bitten: „Prüf dieses Bild gegen LOOK.md.“
 
 - **Projekt 11, Schritt 2b: alle sechs Novizen-Köpfe** (28.10., Blätter `tools/vorlagen/m2_kopf.png`, `m3_kopf.png`, `w2_kopf.png`, `w3_kopf.png`):
   - Neu: Novize m2 (schwarze Haare), Novize m3 (hellbraune Haare), Novizin w2 (schwarzer Zopf), Novizin w3 (lockiger Zopf).

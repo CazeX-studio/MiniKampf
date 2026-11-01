@@ -1,0 +1,214 @@
+# LOOK.md – wie Asterfall aussieht
+
+> **Die einzige Quelle für den Look.** Alles, was gezeichnet, bestellt oder eingebaut wird, richtet sich nur nach
+> dieser Datei. Beschlossen am 29.10.2026 (Sitzung 26, „Im Stil bleiben“), angelegt am 01.11.2026 (Projekt 13, Schritt 0).
+> Ändern darf sie nur, wer einen Beschluss von Marco hat. Wo sie und `design.md` (Repo Spieldesign) sich
+> widersprechen, gilt design.md, und die Abweichung wird Marco gemeldet.
+>
+> Zugehörige Dateien: `data/look_palette.json` (Farbpalette und Grenzwerte), `tools/look_pruefen.py` (Prüfung,
+> Nachbearbeitung, Vergleichsbild), `tools/referenz/` (Referenzbilder). Für Monster gilt zusätzlich `MONSTER.md`,
+> für Figuren der Welt `NPC.md`. Die Bildaufträge stehen in `Spieldesign/GRAFIK_AUFTRAG.md`.
+>
+> Ältere Entwürfe: `Spieldesign/art/STYLE_GUIDE.md` (Version 0.4, „zur Prüfung“) bleibt als Sammlung stehen. Wo er
+> etwas anderes sagt, gilt LOOK.md.
+
+---
+
+## 1. Die sechs Regeln (beschlossen 29.10.)
+
+1. **Eine Look-Datei als einzige Quelle:** diese Datei.
+2. **Feste Farbpalette als Datei mit automatischer Prüfung:** `data/look_palette.json`. Claude Code prüft jedes neue
+   Bild mit `python3 tools/look_pruefen.py pruefen BILD`. Farben außerhalb der Palette werden gemeldet oder bei der
+   Nachbearbeitung auf die nächste Palettenfarbe gesetzt.
+3. **Referenzbilder** („so soll es aussehen“): zwei bis drei Bilder, die Marco abgenommen hat, in `tools/referenz/`.
+   Sie kommen bei jedem neuen Bild-Prompt mit.
+4. **Fester Stil-Block** in jedem Prompt, wörtlich gleich, nie umformuliert (Abschnitt 9). Nur Marco ändert ihn.
+5. **Gleiche Nachbearbeitung** aller KI-Bilder: `python3 tools/look_pruefen.py nachbearbeiten BILD --art ART`
+   (Hintergrund sauber durchsichtig, eng zuschneiden, auf Spielgröße bringen, fremde Farben auf die Palette setzen).
+6. **Abnahme durch Marco per Vergleichsbild:** `python3 tools/look_pruefen.py vergleich BILD --art ART` legt das
+   neue Bild in Spielgröße neben die Referenzbilder, auf hellem und dunklem Grund. **Ohne Marcos Ja kommt kein Bild
+   ins Spiel.**
+
+### Ablauf für jedes neue Bild
+
+1. Bildauftrag aus GRAFIK_AUFTRAG.md nehmen (Stil-Block wörtlich, Referenzbilder anhängen).
+2. Fertiges Bild nach `tools/vorlagen/` legen, zuschneiden wie bisher (Werkzeuge in `tools/`).
+3. `nachbearbeiten`, dann `pruefen`. Meldet die Prüfung etwas, das Bild neu bestellen oder Marco die Abweichung zeigen.
+4. `vergleich` bauen und Marco zeigen. Erst nach seinem Ja einbauen.
+
+---
+
+## 2. Grundstil
+
+- **Pixel-Art** wie Octopath Traveler und Ragnarok Online: warm, detailreich, klare dunkle Umrisse, leicht
+  düster-episch, mittelalterliche Fantasy.
+- **Figuren im Chibi-Verhältnis:** großer Kopf, etwa 3 Kopflängen hoch, freundliche, ausdrucksstarke Gesichter.
+  Vorbild sind die sechs Novizen-Köpfe und Kofi.
+- **Klassen-Körper im Novizen-Stil:** gleiche niedliche Proportionen, warme Farben, klare Umrisse (der erste
+  Bogenschützen-Versuch war zu düster und zu realistisch).
+- **Tageslicht und neutrale Farben** in jedem Bild. Kein eingemaltes Glühen, kein Lichtschein, keine Lichtkegel.
+  Nacht, Leuchten und Zauber-Effekte macht das Spiel (Licht wie bei Octopath: Glühen, Fackeln, Tiefe).
+- **Durchsichtiger Hintergrund**, kein gemaltes Karomuster, kein Farbverlauf, keine Schatten-Wolke dahinter.
+- **Keine Texte, Zahlen, Rahmen oder Beschriftungen** im Bild.
+
+## 3. Blickwinkel
+
+| Wo | Blickwinkel |
+|---|---|
+| **Welt** | Rautenansicht von schräg oben (2:1, ein Feld ist eine Raute **64 × 32 Pixel**). Figuren schräg von vorne rechts oder schräg von hinten rechts (nach links spiegelt das Spiel). Gebäude von der Ecke gesehen. |
+| **Kampf** | Seitlich wie in Final Fantasy 6. Jede Figur und jedes Monster schaut nach **rechts** (das Spiel spiegelt die Gegner). |
+
+## 4. Licht und Schatten
+
+- **Licht immer von links oben.**
+- **Schattenstufen:** höchstens fünf Stufen pro Farbfläche: zwei dunklere (Schatten), die Grundfarbe, zwei hellere
+  (Licht). So baut auch die Palette ihre Farbstufen (Abschnitt 6).
+- Bodenschatten unter Figuren und Monstern macht das Spiel, nicht das Bild.
+
+## 5. Größen in Pixeln (gemessen an den Bildern im Spiel, 01.11.)
+
+Die Bilddateien sind fein gezeichnet und größer als auf dem Bildschirm; das Spiel verkleinert sie weich.
+Bildschirm heißt hier: bei 1280 × 720.
+
+| Art | In der Bilddatei | Kampf | Welt |
+|---|---|---|---|
+| **Spielfigur** (Kopf und Körper zusammen, Stehen) | etwa **127 Pixel** hoch (je nach Bewegung 90 bis 170) | gleich groß (127) | zwei Drittel (etwa 85), im Baukasten-Testfeld davon 80 % (etwa 68) |
+| **Kopf** (Projekt 11) | **54 bis 66 Pixel**, alle Köpfe gleich groß und an derselben Stelle | wie die Figur | wie die Figur |
+| **Monster** | dreimal so groß wie auf dem Bildschirm | ein Drittel der Datei | – |
+| **Baukasten-Teile** | Spielgröße, ein Feld 64 × 32; Maßstab pro Blatt im Werkzeug (Häuser 0,6, Kleinkram 0,38, Bäume 0,44) | – | gleich groß |
+
+**Monster-Größen auf dem Bildschirm (Kampf), nach MONSTER.md:**
+
+| Größe | Höhe auf dem Bildschirm | Höhe in der Datei | Beispiele |
+|---|---|---|---|
+| klein | etwa 50–65 | etwa 150–200 | Schleim, Käfer, Hase, Moosling (57) |
+| mittel | etwa 80–100 | etwa 240–300 | Wolf, Echse, Fuchs, Wiesenkobold (86) |
+| groß | etwa 120–150 | etwa 360–450 | Bär, Golem, Sandwurm |
+| Boss | ab etwa 170 | ab etwa 510 | Sternenfresser (172) |
+
+Die Werte für „mittel“ und „groß“ sind Startwerte (es gibt erst wenige Monster in diesen Größen) und werden beim
+ersten Blatt jeder Größe per Vergleichsbild mit Marco festgelegt.
+
+## 6. Farben
+
+- **Palette:** `data/look_palette.json`, Feld `farben`. Sie besteht aus
+  - den Farben der Referenzbilder (64 Farben, gebaut mit `python3 tools/look_pruefen.py palette`),
+  - je fünf Farbstufen für jedes Element, jede Region, Hauttöne und Metall (Feld `farbstufen`),
+  - Schwarz und Weiß.
+- **Grenzwerte der Prüfung** (Feld `grenzen`): Eine Farbe gilt als „passend“, wenn sie höchstens 40 vom nächsten
+  Palettenton entfernt ist (Abstand im Farbraum). Höchstens 10 % der Pixel eines Bildes dürfen außerhalb liegen.
+  Die Bilder im Spiel sind verkleinerte KI-Bilder mit weichen Übergängen, deshalb gibt es diesen Spielraum.
+- **Farben der Regionen** (aus design.md, Grundfarben in `farbstufen`):
+
+  | Ort | Farben |
+  |---|---|
+  | Kreuzweg | warmes Fachwerk (Braun), rote Ziegel, heller Putz, graues Pflaster, Banner in Dunkelrot |
+  | Grünwacht | Grüntöne, Erdbraun, Rinde, Moos |
+  | Glutoase | Sandgelb, Orange, Glutrot, Lehm |
+  | Messinghafen | Messing, Kupfer, Braun |
+  | Arkanum | Blau, Violett, Silber |
+  | Nebelinseln | Rosa, Weiß, Nebelgrau, Rot |
+  | Immernacht | tiefes Blau, Laternen-Gold (später) |
+
+- **Akzentfarben der Elemente** (für Monster, siehe MONSTER.md): Feuer rot-orange, Erde braun, Pflanze grün,
+  Blitz gelb, Wasser blau, Wind hell-türkis, Licht gold-weiß, Schatten dunkles Indigo, Sternenkraft (Splitter) lila.
+  Blau in der Anzeige bleibt trotzdem nur für Nebenaufträge, die Akzentfarbe gilt nur am Monster selbst.
+- **Feste Farbflächen für Variante C** (Klassen-Körper und Figuren-Baukasten): **Hauptfarbe, Zweitfarbe, Metall,
+  Leder, Haut.** Jede Fläche nur aus wenigen festen Farbtönen, damit das Spiel sie sauber umfärben kann
+  (Rüstungs-Sets, später Färbemittel, Kleidung pro Region).
+- **Novizen werden nicht umgefärbt.** Umfärben gibt es erst mit Rüstung und Klasse (Beschluss 28./29.10.).
+
+## 7. Umrisslinie
+
+- **Farbe:** fast schwarz (#000000 bis etwa #1d1714), bei warmen Teilen darf sie ins Dunkelbraune gehen.
+- **Dicke in der Bilddatei:** Figuren und Monster etwa **4 bis 5 Pixel**, Baukasten-Teile etwa **2 Pixel**.
+- **Prüfung:** Mindestens die Hälfte der Randpixel eines Bildes muss dunkel sein (Helligkeit höchstens 70 von 255).
+  Flache Bodenteile (Rauten) brauchen keinen Umriss.
+
+## 8. Aussehen nach Variante C „Ragnarok plus“ (beschlossen 29.10.)
+
+- Der **Körper zeigt die Klasse.** Sichtbar und tauschbar sind **Kopfbedeckung**, **Rückenteil** (Umhang, Köcher,
+  Flügel) und **Waffe**. Rüstung und Sets zeigen sich über **Umfärben des Körpers**. Ganze Outfits im Shop nur selten.
+- **Regeln für Bilder:**
+  - Körper werden **ohne Waffe** gezeichnet, die Hand greift ins Leere (die Waffe kommt als eigenes Teil dazu,
+    pro Bild ein Handpunkt). Ausnahme: Der Schild der Novizen bleibt am Körper.
+  - **Köpfe ohne Hut**, alle Köpfe gleich groß und an derselben Stelle.
+  - **Feste Farbflächen** (Abschnitt 6).
+  - **Platz am Rücken** frei lassen, damit Umhang, Köcher oder Flügel dahinter passen.
+- **Aussehen-Plätze** sind getrennt von den Werten.
+- **Waffen-Familien** mit je einer Grundhaltung: Stab, Hammer, Klinge, Bogen, Instrument, Laterne. Der Novize trägt
+  ein Kurzschwert als eigenes Teil.
+- **Reihenfolge:** Regeln und Prüfen, Probe am Novizen (Hut, Umhang, Umfärbung), Testtag Aussehen, erst dann
+  Klassen-Körper.
+
+## 9. Der feste Stil-Block
+
+Dieser Text kommt **wörtlich** in jeden Bild-Prompt (in ChatGPT als Projekt-Anweisung, siehe
+`Spieldesign/GRAFIK_AUFTRAG.md`, Teil A). Er wird nie umformuliert. Ändern darf ihn nur Marco; dann wird er hier und
+in GRAFIK_AUFTRAG.md gleichzeitig geändert. Stand: GRAFIK_AUFTRAG.md Teil A vom 27.10.2026.
+
+```
+Du malst Grafiken für „Asterfall“, ein düster-episches 2D-Fantasy-Rollenspiel (MMO) von CazeX Studio. Halte dich bei JEDEM Bild an diese Regeln, auch wenn ich sie in einer Nachricht nicht wiederhole.
+
+STIL
+- Hochwertige Pixel-Art wie Octopath Traveler und Ragnarok Online: warm, detailreich, klare dunkle Umrisse, leicht düster-episch, mittelalterliche Fantasy.
+- Figuren im Chibi-Verhältnis wie die angehängte Vega (großer Kopf, etwa 3 Kopflängen hoch), freundliche, ausdrucksstarke Gesichter.
+- Licht immer von links oben.
+- TAGESLICHT und neutrale Farben. KEIN Glühen, KEIN Lichtschein um Figuren oder Dinge, keine Lichtkegel auf dem Boden. Nacht, Leuchten und Zauber-Effekte macht das Spiel. (Ausnahme: wenn ich ausdrücklich einen Effekt im Bild verlange, z. B. ein Geschoss.)
+
+AUFBAU JEDES BILDES
+- Echter durchsichtiger Hintergrund (PNG mit Transparenz). KEIN gemaltes Karomuster, kein Farbverlauf, keine Schatten-Wolke dahinter.
+- Sprite-Sheet: mehrere Bilder in Reihen, mit viel Abstand. Nichts berührt oder überlappt sich.
+- Keine Texte, Zahlen, Rahmen oder Beschriftungen.
+- In einer Reihe sind alle Bilder gleich groß, die Figur hat in jedem Bild dieselbe Größe und die Füße stehen immer auf derselben Höhe.
+- Animationen sind in sich geschlossen: Das letzte Bild geht nahtlos ins erste über (außer bei Angriff, Getroffen und Fallen).
+
+ZWEI ANSICHTEN
+1. WELT: isometrisch von schräg oben (2:1, Bodenfelder sind Rauten, doppelt so breit wie hoch). Figuren sieht man schräg von vorne rechts oder schräg von hinten rechts. Gebäude sieht man von der Ecke.
+2. KAMPF: seitlich wie in Final Fantasy 6. Jede Figur und jedes Monster schaut nach RECHTS.
+
+FARBWELTEN DER REGIONEN
+- Kreuzweg (Startstadt): warmes Fachwerk, rote Ziegel, graues Pflaster, Banner in Dunkelrot.
+- Messinghafen: Messing, Kupfer, Braun, Zahnräder, Dampf, Hafen.
+- Glutoase: Sandgelb, Orange, Glutrot, Wüste und Vulkan, Schmieden.
+- Grünwacht: Grüntöne, Erdbraun, Urwald, Dorf in Baumkronen.
+- Arkanum: Blau, Violett, Silber, Türme auf schwebenden Felsen.
+- Nebelinseln: Rosa, Weiß, Nebelgrau, Rot, japanisch inspiriert, Schreine.
+- Immernacht (geheim, später): dunkles Blau, Laternen statt Sterne.
+
+Wenn ich ein Vorbild-Bild anhänge, übernimm Gesicht, Haare, Kleidung, Waffe und Farben exakt und ändere nur die Pose.
+```
+
+Hinweis: Projekt 13, Schritt 1 erweitert den Stil-Block um die Regeln von Variante C (Abschnitt 8). Das passiert erst
+mit Marcos Ja zum neuen Wortlaut.
+
+## 10. Referenzbilder
+
+Liegen in `tools/referenz/` und in `data/look_palette.json` (Feld `referenzbilder`).
+
+| Datei | Was | Status |
+|---|---|---|
+| `figur_novize_m1.png` | Novize m1 (Kofi), Stehen im Kampf | **Vorschlag**, wartet auf Marcos Ja |
+| `baukasten_gilde.png` | Abenteurergilde in Kreuzweg | **Vorschlag**, wartet auf Marcos Ja |
+| `monster_moosling.png` | Moosling, Stehen im Kampf | **Vorschlag**, wartet auf Marcos Ja |
+
+Sobald Marco Ja sagt: in `data/look_palette.json` `"referenzen_abgenommen": true` setzen. Will er andere Bilder,
+die Dateien tauschen und `python3 tools/look_pruefen.py palette` laufen lassen (baut die Palette neu).
+
+## 11. Stand der Bilder im Spiel (Prüfung vom 01.11.)
+
+Erste Bestandsaufnahme mit `tools/look_pruefen.py`. Die genaue Liste, was neu gezeichnet oder angepasst werden muss,
+ist Projekt 13, Schritt 2.
+
+- **Passen fast ganz:** Kofi und die Novizen-Körper, Moosling, die drei Kobolde, Vega, die meisten Baukasten-Teile.
+- **Markierfarbe:** Die ganzen Novizen-Bilder in `assets/figuren/novize_*` enthalten reines Grün (#00f000) als
+  Markierfarbe und fallen deshalb durch. Die Körper-Teile in `assets/teile/koerper/`, aus denen das Spiel die Novizen
+  zusammensetzt, passen.
+- **Weichen in den Farben deutlich ab:** Sternenfresser (kräftiges Pink und Lila), Feldschleim, Glutwelpe (sehr
+  kräftiges Orange).
+- **Erwartete Ausnahmen:** Bilder mit eingemaltem Effekt (Wasserstrahl und Welle des Bachotters, Vegas Parade) und
+  die leuchtenden Story-Teile im Baukasten (Splitterkreis, Krater, Sternsplitter) haben fremde Farben oder einen
+  hellen Rand. Effekte sind laut Stil-Block erlaubt, wenn sie ausdrücklich bestellt sind.
+- **Kleinere Abweichungen:** Kopf m3 hat einen helleren Umriss als die anderen Köpfe; einige Köpfe von w2 und w3
+  sind 71–73 statt höchstens 70 Pixel hoch; einzelne Angriffsbilder der Kobolde haben einen etwas helleren Rand.
+- Ob Kofis und die Novizen-Bilder Schwert und Schild eingemalt haben (Regel „Körper ohne Waffe“), prüft Schritt 2.
