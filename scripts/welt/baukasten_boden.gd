@@ -57,7 +57,7 @@ static func gesperrte_felder(o: Dictionary, teile: Dictionary) -> Array[Vector2i
 	var zellen: Array[Vector2i] = []
 	if d.get("begehbar", false) or not d.get("blockiert", true):
 		return zellen
-	var frei: Array = d.get("frei", [])
+	var frei: Array = [] if o.get("geschlossen", false) else d.get("frei", [])
 	for y in rect.size.y:
 		for x in rect.size.x:
 			# Bei gespiegelten Teilen sind die freien Felder ebenfalls getauscht

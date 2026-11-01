@@ -353,6 +353,36 @@
 			"aussehen": "elf_f",
 			"farbe": "c0e8ff",
 			"dialog": "lotte"
+		},
+		"torwache_nebelinseln": {
+			"name": "Torwache",
+			"feld": [
+				2,
+				5
+			],
+			"aussehen": "knight_m",
+			"farbe": "b0c8d8",
+			"dialog": "torwache_nebelinseln"
+		},
+		"torwache_arkanum": {
+			"name": "Torwache",
+			"feld": [
+				31,
+				3
+			],
+			"aussehen": "knight_m",
+			"farbe": "c4b0d8",
+			"dialog": "torwache_arkanum"
+		},
+		"torwache_messinghafen": {
+			"name": "Torwache",
+			"feld": [
+				61,
+				31
+			],
+			"aussehen": "knight_m",
+			"farbe": "d8c8a0",
+			"dialog": "torwache_messinghafen"
 		}
 	},
 	"deko": [

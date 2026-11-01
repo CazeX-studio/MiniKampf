@@ -132,6 +132,9 @@ Alltagsfarben, zum Fest ein Halstuch in einer der fünf Farben.
 - **Torwache Brom:** Neben · Tag und Nacht am sechsten Tor · Wache, Auftrag „Essen für Brom“, erzählt vom Summen ·
   „Da geht's nirgendwohin. Befehl ist Befehl.“, weiß selbst nicht, warum er dort steht · ruhig, überrascht · Körper
   Wache, alter Helm, gähnt.
+- **Torwachen (Nebelinseln, Arkanum, Messinghafen):** Volk · Tag und Nacht an ihrem Tor · halten Spieler auf, solange der
+  Weg nicht frei ist · knapp und dienstlich, sprechen jeden mit „Halt, Novize!“ an · kein Porträt · Körper Wache, je Tor
+  eine eigene Farbe.
 - **Steinmetz Quill:** Neben · Tag an der Statue / Nacht zu Hause, nicht zu sehen · Auftrag „Glanz für die Fünf“,
   leiser erster Hinweis · nachdenklich, findet, die Gesichter sehen „nicht nach Sieg aus“ · ruhig, traurig · Körper
   Handwerker, Schürze voller Steinstaub, Meißel.

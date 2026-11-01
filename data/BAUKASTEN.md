@@ -63,7 +63,7 @@ Weite, Fransen und Weichheit stehen oben in `scripts/welt/baukasten_test.gd` (RA
   - `licht` (Höhe über dem Boden) oder `lichter` (Stellen im Bild, z. B. Laternen an der Hauswand)
   - `massstab`: nur für die alten Pixel-Platzhalter (2)
 - `data/baukasten_testfeld.json`: Das Testfeld. Boden als Zeichen-Raster (`.` Gras, `:` Blumenwiese, `#` Pflaster, `o` Platz, `e` Erde, `~` Wasser),
-  dazu die Gegenstände mit ihrem Feld. `"gespiegelt": true` stellt ein Teil quer (z. B. das sechste Tor am Weg nach links).
+  dazu die Gegenstände mit ihrem Feld. `"gespiegelt": true` stellt ein Teil quer (z. B. das sechste Tor am Weg nach links). `"geschlossen": true` sperrt auch die freien Felder eines Teils (z. B. ein Tor, durch das man nicht darf).
   `"nur_stufe"`: das Teil gibt es nur in diesen Stufen der Geschichte (0 vor dem Fest, 1 Nacht des Sternenfalls, 2 Wochen danach).
 
 ## Im Testfeld prüfen

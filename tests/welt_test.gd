@@ -29,6 +29,9 @@ func _test_steering() -> void:
 				if world.tile_at(Vector2i(x, y)) in [WorldState.Tile.ROAD, WorldState.Tile.OVERGROWN, WorldState.Tile.PLAZA]:
 					on_road = true
 	_check(not on_road, "Kein Haus steht auf oder direkt an Straße oder Marktplatz")
+	for tor: Vector2i in [Vector2i(32, 1), Vector2i(63, 31), Vector2i(0, 5)]:
+		_check(not world.is_walkable(tor), "Gesperrtes Tor lässt niemanden durch")
+	_check(world.npcs.has("torwache_arkanum"), "Wache am gesperrten Tor")
 	_check((Vector2(world.npcs.wache.cell) - Vector2(46, 41)).length() > 5.0, "Die Wache steht nicht direkt an der Schmiede")
 
 	# Nach oben steuern: Der Spieler läuft auf dem Bildschirm nach oben (Feld x und y werden kleiner)

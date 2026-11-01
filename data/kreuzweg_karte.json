@@ -152,7 +152,8 @@
 			"feld": [
 				29,
 				1
-			]
+			],
+			"geschlossen": true
 		},
 		{
 			"teil": "brunnen",
@@ -1531,7 +1532,8 @@
 				63,
 				29
 			],
-			"gespiegelt": true
+			"gespiegelt": true,
+			"geschlossen": true
 		},
 		{
 			"teil": "torbogen",
@@ -1539,7 +1541,8 @@
 				0,
 				3
 			],
-			"gespiegelt": true
+			"gespiegelt": true,
+			"geschlossen": true
 		},
 		{
 			"teil": "sechstes_tor",

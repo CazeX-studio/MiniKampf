@@ -276,6 +276,9 @@
 			"region": {"wer": "Mei", "text": "Nebel, Schreine, Wesen aus alten Sagen. Und ein Schrein, über den man nicht spricht.", "weiter": "hallo"}
 		}
 	},
+	"torwache_nebelinseln": {"hinweis": "PLATZHALTER-TEXTE: Torwache am Tor nach den Nebelinseln, hält Spieler auf, solange der Weg nicht gebaut ist.", "einstieg": [{"knoten": "halt"}], "knoten": {"halt": {"wer": "Torwache", "text": "Halt, Novize! Der Weg zu den Nebelinseln ist noch nicht frei. Hier kommt gerade niemand durch."}}},
+	"torwache_arkanum": {"hinweis": "PLATZHALTER-TEXTE: Torwache am Tor nach Arkanum, hält Spieler auf, solange der Weg nicht gebaut ist.", "einstieg": [{"knoten": "halt"}], "knoten": {"halt": {"wer": "Torwache", "text": "Halt, Novize! Nach Arkanum geht es noch nicht. Der Weg ist nicht frei, Befehl vom Vogt."}}},
+	"torwache_messinghafen": {"hinweis": "PLATZHALTER-TEXTE: Torwache am Tor nach Messinghafen, hält Spieler auf, solange der Weg nicht gebaut ist.", "einstieg": [{"knoten": "halt"}], "knoten": {"halt": {"wer": "Torwache", "text": "Halt, Novize! Der Weg nach Messinghafen ist noch nicht frei. Komm später wieder."}}},
 	"wache": {
 		"hinweis": "PLATZHALTER-TEXTE: Torwache Brom am zugewachsenen sechsten Weg (hieß vorher Holm, Name aus Sitzung 21).",
 		"einstieg": [
