@@ -5,6 +5,12 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 01.11.)
 
+- **Neu (01.11.): Hirschtal-Monster und Startbildschirm:** Sieben weitere Familien (Wildschwein, Ranke, Krabbe, Vogel, Wolf,
+  Geist, Hirsch) und 19 Arten liegen als Bilder in `assets/figuren/`, dazu die Vögel- und Wölfe-Arten für Wachtwald,
+  Tiefwurzel und Pilzhöhle. Sie kämpfen noch nicht mit. Ausnahme: Windfalke, Sporenwolf und Donnerhirsch waren schon in
+  Kämpfen und haben jetzt ihr echtes Bild statt des Platzhalters. Das Spiel startet mit dem neuen Logo; nach Taste oder Klick
+  rückt es nach oben und das Menü erscheint. **So testest du es (in der Demo):** 1. Spiel starten, Logo ansehen.
+  2. Taste drücken, das Menü blendet ein. 3. Vom Abspann zurück ins Menü: Der Titel kommt nicht noch einmal.
 - **Neu (01.11.): Kreuzweg-Monster, Rastplatz und Hirschtal:** Die sechs Familien (Schleim, Hase, Käfer, Blütenwesen,
   Schwarm, Igel) und elf Arten liegen als fertige Bilder in `assets/figuren/` (Werkzeug `tools/familien_bilder.py`,
   Schattenskarabäus aus dem nachbestellten Blatt). Sie sind im Spiel bekannt, kämpfen aber noch nicht mit: Die Kobolde

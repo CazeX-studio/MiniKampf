@@ -2,6 +2,16 @@ extends Control
 ## Startmenü: Demo spielen, zusammen spielen oder Werkzeuge zum Testen (Editor).
 
 const SCREEN := Vector2(1280, 720)
+const LOGO_GROSS := Rect2(140, 110, 1000, 400)
+const LOGO_KLEIN := Rect2(330, 24, 620, 248)
+
+## Der Titelbildschirm kommt nur beim Spielstart, nicht bei der Rückkehr ins Menü
+static var titel_gesehen := false
+
+var _logo: TextureRect
+var _inhalt: Control
+var _hinweis: Label
+var _titel_offen := false
 
 
 func _ready() -> void:
@@ -14,23 +24,17 @@ func _ready() -> void:
 	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(shade)
 
-	var title := Label.new()
-	title.text = "Asterfall"
-	title.add_theme_font_size_override("font_size", 64)
-	title.add_theme_color_override("font_color", Color("f2c14e"))
-	title.add_theme_color_override("font_outline_color", Color.BLACK)
-	title.add_theme_constant_override("outline_size", 10)
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.size = Vector2(SCREEN.x, 90)
-	title.position = Vector2(0, 90)
-	add_child(title)
-	var sub := Label.new()
-	sub.text = "Arbeitstitel · Lernprojekte von CazeX Studio"
-	sub.add_theme_font_size_override("font_size", 20)
-	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	sub.size = Vector2(SCREEN.x, 30)
-	sub.position = Vector2(0, 180)
-	add_child(sub)
+	_inhalt = Control.new()
+	_inhalt.size = SCREEN
+	add_child(_inhalt)
+	_logo = TextureRect.new()
+	_logo.texture = load("res://assets/ui/logo.png")
+	_logo.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_logo.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	_logo.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_logo.position = LOGO_KLEIN.position
+	_logo.size = LOGO_KLEIN.size
+	add_child(_logo)
 
 	# Neues Spiel (noch kein Spielstand): erst die Figur erstellen (geprüft beim Drücken, der Spielstand-Pfad wird unten gesetzt)
 	_add_button("Kreuzweg-Demo\nDie erste Stunde als Novize", Vector2(40, 300), "",
@@ -56,10 +60,54 @@ func _ready() -> void:
 	music.pressed.connect(func() -> void:
 		Musik.toggle()
 		music.text = "Musik: an (M)" if Musik.enabled else "Musik: aus (M)")
-	add_child(music)
+	_inhalt.add_child(music)
 	var volume := Musik.make_slider(220.0)
 	volume.position = Vector2(470, 535)
-	add_child(volume)
+	_inhalt.add_child(volume)
+
+	if not titel_gesehen and not "--server" in OS.get_cmdline_user_args():
+		_titel_zeigen()
+
+
+func _titel_zeigen() -> void:
+	_titel_offen = true
+	_inhalt.visible = false
+	_logo.position = LOGO_GROSS.position
+	_logo.size = LOGO_GROSS.size
+	_logo.modulate.a = 0.0
+	create_tween().tween_property(_logo, "modulate:a", 1.0, 1.0)
+	_hinweis = Label.new()
+	_hinweis.text = "Taste drücken oder klicken"
+	_hinweis.add_theme_font_size_override("font_size", 24)
+	_hinweis.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_hinweis.size = Vector2(SCREEN.x, 36)
+	_hinweis.position = Vector2(0, 560)
+	add_child(_hinweis)
+	var blinken := _hinweis.create_tween().set_loops()
+	blinken.tween_property(_hinweis, "modulate:a", 0.35, 0.9)
+	blinken.tween_property(_hinweis, "modulate:a", 1.0, 0.9)
+
+
+func _input(event: InputEvent) -> void:
+	if not _titel_offen or not event.is_pressed() or event.is_echo():
+		return
+	if event is InputEventKey or event is InputEventMouseButton or event is InputEventScreenTouch:
+		get_viewport().set_input_as_handled()
+		titel_schliessen()
+
+
+## Vom Titel zum Menü: das Logo rückt nach oben, die Knöpfe blenden ein
+func titel_schliessen() -> void:
+	_titel_offen = false
+	titel_gesehen = true
+	_hinweis.queue_free()
+	_inhalt.modulate.a = 0.0
+	_inhalt.visible = true
+	var uebergang := create_tween().set_parallel()
+	uebergang.tween_property(_logo, "modulate:a", 1.0, 0.2)
+	uebergang.tween_property(_logo, "position", LOGO_KLEIN.position, 0.4).set_trans(Tween.TRANS_SINE)
+	uebergang.tween_property(_logo, "size", LOGO_KLEIN.size, 0.4).set_trans(Tween.TRANS_SINE)
+	uebergang.tween_property(_inhalt, "modulate:a", 1.0, 0.4)
 
 
 func _start_server() -> void:
@@ -78,4 +126,4 @@ func _add_button(text: String, pos: Vector2, scene: String, ziel_von := Callable
 	button.add_theme_font_size_override("font_size", 22)
 	button.pressed.connect(func() -> void:
 		get_tree().change_scene_to_file(ziel_von.call() if ziel_von.is_valid() else scene))
-	add_child(button)
+	_inhalt.add_child(button)
