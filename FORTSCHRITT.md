@@ -5,6 +5,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 01.11.)
 
+- **Nächster Schritt:** D1 der „Demo-Reihenfolge“ in `BAUAUFTRAEGE.md` (36 Bauschritte und 4 Testtage bis zum Abschluss der Demo).
+
 - **Neu (01.11.): Alle Bilder von Grünwacht und Glutoase zugeschnitten:** 18 Monster-Familien mit 30 Arten, 7 Boss-Blätter (Pilzhöhle und
   Vulkanschmiede), 111 Baukasten-Teile (`gw_`, `go_`, `vs_`) und 11 neue Böden. Rindenbär, Steinkröte, Sporenling, Splitterbär, Leuchtmotte,
   Wurzelkriecher, Sporenkönigin, Sporenknospe, Wurzelmutter und Der Vorbote zeigen im Kampf jetzt die neuen Bilder. Die übrigen Monster haben Bilder,

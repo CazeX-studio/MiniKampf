@@ -6,6 +6,68 @@ Sagt Marco „Mach den nächsten Bauauftrag“: kurz FORTSCHRITT.md prüfen, den
 
 Status: offen / in Arbeit / fertig
 
+## Demo-Reihenfolge (Stand 01.11.2026)
+
+Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D12“: **Diese Liste gilt zuerst.** Den obersten offenen Punkt nehmen, die Einzelheiten stehen beim genannten Projekt oder im Brainstorm-Doc unter „Fahrplan zur Demo“. T-Punkte sind Testtage: Dort hält Claude an, nennt Marco, was zu testen ist, und baut erst nach seiner Rückmeldung weiter. Braucht ein Punkt Bilder, die noch nicht da sind, wird er mit Platzhalter gebaut oder übersprungen, und Marco bekommt den fertigen Prompt.
+
+### Vorbereitung
+
+- **D1:** Bildaufträge für alles, was noch fehlt, in GRAFIK_AUFTRAG.md schreiben: acht NPC-Grundkörper, Körper der fünf Demo-Klassen nach dem neuen Stil, Kurzschwert, Probe-Hut und Probe-Umhang. (neu) – Status: offen
+
+### Aussehen
+
+- **D2:** Regeln festschreiben, Bilder prüfen, Kurzschwert als eigenes Teil. (Fahrplan A.1, Projekt 13 Schritt 1–3) – Status: offen
+- **D3:** Hut und Rückenteil als Schicht, Umfärben, Aussehen-Plätze. (Fahrplan A.2, Projekt 13 Schritt 4–6) – Status: offen
+- **T1:** Testtag Aussehen (Marco). – Status: offen
+
+### Kampfgefühl
+
+- **D4:** Werte für Waffen und Rüstung. (K.1) – Status: offen
+- **D5:** Mana nur durch Handeln, Hinsetzen, Lagerfeuer. (K.2) – Status: offen
+- **D6:** Fähigkeiten-Baum und feste Leiste mit 6 Plätzen. (K.3) – Status: offen
+- **D7:** Effekt-Liste als feste Bausteine. (K.4) – Status: offen
+- **D8:** Novize und die Bäume der fünf Demo-Klassen. (K.5) – Status: offen
+- **D9:** Eigene Bewegungen pro Fähigkeit, filmische Ult. (K.6) – Status: offen
+- **T2:** Testtag Kampfgefühl (Marco). – Status: offen
+
+### Kreuzweg und Grünwacht rund machen
+
+- **D10:** Liste aus dem Playtest 25.10. prüfen, Fehlendes bauen. (1.1) – Status: offen
+- **D11:** Zähmer lernt bei Tilda, Esche gibt das erste Monster. (1.2, Projekt 12) – Status: offen
+- **D12:** Gemeinsame Trank-Wartezeit. (1.3, Projekt 5 Schritt 3) – Status: offen
+- **D13:** Händler, in Grünwacht die Kräuterhändlerin. (1.4, Projekt 6) – Status: offen
+- **D14:** Tag und Nacht nach der Uhrzeit, nachts andere Monster. (1.5, Projekt 7) – Status: offen
+- **D15:** Kartenalbum, Teil 1: Album, Karten aktivieren, Monster-Infos. (1.6, Projekt 8 Schritt 1–3) – Status: offen
+- **D16:** Kartenalbum, Teil 2: Besitzeffekte, Deck, doppelte Karten verkaufen. (1.6, Projekt 8 Schritt 4–6) – Status: offen
+- **D17:** Kartenalbum, Teil 3: Belohnung volle Seite, Marv, Karten bis +10. (1.6, Projekt 8 Schritt 7–9) – Status: offen
+- **D18:** Körper für Bogenschütze und Monster-Zähmer einbauen (braucht Marcos Bilder). (1.8, Projekt 11 Schritt 4) – Status: offen
+- **D19:** Figuren-Baukasten mit den acht Grundkörpern einbauen (braucht Marcos Bilder). (neu, NPC.md) – Status: offen
+- **D20:** Kreuzweg nach Sitzung 30: Hatta, Zeichen über Diensten, Figuren tags und nachts, Ye mit Regenschirm. (1.9) – Status: offen
+- **D21:** Grünwacht-Figuren nach Steckbrief: Salbei, Borko, Ysolde nachts, Oma Hagebutte. (1.10) – Status: offen
+- **D22:** Monster nach Regelblatt in Kreuzwegfeldern, Hirschtal, Wachtwald, Tiefwurzel und Pilzhöhle, dazu die Spezialbewegungen der Pilzhöhlen-Bosse. (1.11) – Status: offen
+- **T3:** Testtag 1 (Marco): Kreuzweg und Grünwacht komplett, allein und in der Gruppe, dazu der Sternenfresser. – Status: offen
+
+### Glutoase
+
+- **D23:** Aschensteppe mit Rastplatz, dann Palmenrast. (2.1) – Status: offen
+- **D24:** Stadt Glutoase als Terrassenstadt. (2.2) – Status: offen
+- **D25:** Körper der drei Glutoase-Klassen einbauen (braucht Marcos Bilder). (2.11, Rest; die Wüsten- und Schmiede-Teile liegen schon bereit) – Status: offen
+- **D26:** Klassen lernen in der Glutoase. (2.3) – Status: offen
+- **D27:** Glutoase-Figuren nach Steckbrief, Rastplatz-Händler. (2.13, vorgezogen) – Status: offen
+- **D28:** Geschichte Teil 1: Kochende Brunnen, Miras Lied. (2.4) – Status: offen
+- **D29:** Geschichte Teil 2: Tanz mit der Pause, Rivalenkampf gegen Kael. (2.5) – Status: offen
+- **D30:** Glutgrat über den Bergpfad. (2.6) – Status: offen
+- **D31:** Monster nach Regelblatt in Aschensteppe, Palmenrast und Glutgrat. (2.12, vorgezogen) – Status: offen
+- **D32:** Vulkanschmiede Teil 1: drei Abschnitte, Lava-Takt, Monster, Kampf-Hintergrund. (2.7) – Status: offen
+- **D33:** Vulkanschmiede Teil 2: Hammerbrüder. (2.8) – Status: offen
+- **D34:** Vulkanschmiede Teil 3: Kettenschmied. (2.9) – Status: offen
+- **D35:** Ende der Glutoase: Entscheidung um Miras Splitter. (2.10) – Status: offen
+
+### Demo abschließen
+
+- **D36:** Bilder für das Web verkleinern, Ladezeit prüfen, von Marco offene Punkte aus FORTSCHRITT.md einsammeln, Demo-Seite vorbereiten. (neu) – Status: offen
+- **T4:** Testtag 2 (Marco): die ganze Demo von Kreuzweg bis zum Ende der Glutoase. – Status: offen
+
 ## Projekt 0: Playtest 25.10. (Rest) – kommt vor allen anderen
 
 Teil 1 ist gebaut (siehe FORTSCHRITT.md). Schritte 1–4 fertig (26.10.). Die Details stehen im Brainstorm-Doc unter „Testtag-Notizen“ → „Playtest 25.10.2026“.
