@@ -219,6 +219,7 @@ _Aus Marcos Entscheidung vom 27.10.2026: Die Welt bleibt in Rautenansicht und wi
 - **Ziel:** Die echte Stadt Kreuzweg wird aus den Baukasten-Teilen aufgebaut (Plan nach design.md: Marktplatz, Gilde, Wegrast, Gesandten-Hof, Bingos Stand, sechstes Tor). Figuren, Aufträge und Geschichte bleiben, wie sie sind.
 - **So testest du es:** Die Kreuzweg-Demo spielen: Alles ist wie vorher, sieht aber aus wie im Testfeld.
 - **Entschieden (28.10.):** rund mit Ringstraße und sechs Toren. Norden: sechstes Tor hinter der Statue; Süden: Glutoase und Haupteingang; Westen: Grünwacht; Nordwesten Arkanum, Nordosten Nebelinseln, Osten Messinghafen (siehe design.md „Kreuzweg im Detail“).
+- **Geändert (01.11.):** Die Tore folgen dem Kreis der Städte: Süden Glutoase, Westen Grünwacht, Nordwesten Nebelinseln, Norden Arkanum, Osten Messinghafen, Südosten sechstes Tor.
 - **Status:** fertig (01.11.2026)
 
 ### Schritt 6: Grünwacht aus dem Baukasten

@@ -3,7 +3,8 @@ extends "res://scripts/welt/kreuzweg.gd"
 
 const STELLEN := [["ankunft", Vector2i(31, 62)], ["suedtor", Vector2i(32, 47)], ["marktplatz", Vector2i(31, 28)],
 		["gilde", Vector2i(14, 46)], ["wegrast", Vector2i(12, 29)], ["bingo", Vector2i(36, 17)], ["bank", Vector2i(38, 9)],
-		["hof", Vector2i(52, 31)], ["schmiede", Vector2i(44, 44)], ["nordtor", Vector2i(32, 5)]]
+		["hof", Vector2i(52, 31)], ["schmiede", Vector2i(44, 44)], ["nordtor", Vector2i(32, 5)],
+		["ostor", Vector2i(60, 32)], ["nebeltor", Vector2i(3, 6)], ["sechstes", Vector2i(60, 54)], ["suedostweg", Vector2i(48, 48)]]
 
 
 func _ready() -> void:

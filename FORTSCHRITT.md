@@ -8,7 +8,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Neu (01.11.): Kreuzweg aus dem Baukasten** (Projekt 9, Schritt 5): Die echte Stadt steht jetzt aus den Baukasten-Teilen
   (`data/kreuzweg_karte.json`), alle Figuren, Aufträge und Orte sind umgezogen (`data/kreuzweg.json`). Figuren werden wie
   im Testfeld gezeichnet (80 %), Häuser werden nur durchsichtig, wenn die eigene Figur wirklich dahinter steht. Das Tor nach
-  Grünwacht liegt an der Weststraße, das sechste Tor mit Brom und Mira am Ostende (Texte: „Südost-Weg hinter der Schmiede“).
+  Die Tore folgen dem Kreis der Städte: Süden Glutoase, Westen Grünwacht, Nordwesten Nebelinseln, Norden Arkanum, Osten Messinghafen, Südosten das sechste Tor mit Brom und Mira (Südost-Weg hinter der Schmiede). Nur Glutoase und Grünwacht führen schon hinaus.
   Die Bank und die Schmiede sind neu hingestellt, dazu Festbühne und Übungsplatz neben der Gilde.
   **So testest du es (in der Demo):** 1. Neues Spiel: Ankunft an der Brücke, Weg zur Gilde. 2. Hinter ein Haus laufen.
   3. Marktplatz, Bingos Stand, Bank und Gesandten-Hof besuchen. 4. In der Festnacht: Lichter und Krater ansehen.

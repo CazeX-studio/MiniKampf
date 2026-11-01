@@ -220,8 +220,8 @@
 		"wache": {
 			"name": "Torwache Brom",
 			"feld": [
-				58,
-				30
+				60,
+				52
 			],
 			"aussehen": "knight_m",
 			"farbe": "b0b8c8",
@@ -230,8 +230,8 @@
 		"mira": {
 			"name": "Mira",
 			"feld": [
-				55,
-				33
+				57,
+				55
 			],
 			"aussehen": "elf_f",
 			"farbe": "fff0c0",
