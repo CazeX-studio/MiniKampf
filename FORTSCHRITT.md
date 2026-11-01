@@ -64,7 +64,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - **Werkzeug** `tools/look_pruefen.py`: `pruefen` (Hintergrund, Farben, Umriss, Größe), `nachbearbeiten` (immer
     gleich: Hintergrund, Zuschnitt, Größe, fremde Farben auf die Palette), `vergleich` (neues Bild neben den
     Referenzbildern in Spielgröße, hell und dunkel), `palette` (Palette neu aus den Referenzbildern).
-  - **Referenzbilder** (Vorschlag, wartet auf Marcos Ja): Novize m1 (Kofi), die Abenteurergilde, der Moosling.
+  - **Referenzbilder** (von Marco am 01.11. abgenommen): Vega für Figuren, die Abenteurergilde für Gebäude, der
+    Moosling für Monster. Marco hat außerdem entschieden: Der Stil bleibt so wie jetzt (keine grobe Pixel-Art).
   - Dazu **MONSTER.md** (Monster-Regelblatt mit allen Steckbriefen und Familien der Demo) und **NPC.md**
     (NPC-Regelblatt mit allen Steckbriefen für Kreuzweg, Grünwacht und Glutoase). Beide melden am Ende, was im Spiel
     noch anders ist (z. B. die Kobolde auf den Kreuzwegfeldern, der alte Spruch von Ye).

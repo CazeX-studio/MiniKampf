@@ -40,10 +40,14 @@
 
 ## 2. Grundstil
 
+- **Entschieden 01.11.: Wir bleiben beim jetzigen Stil** („A: so wie jetzt“): fein gemalte Bilder im Pixel-Look,
+  im Spiel weich verkleinert. Keine Umstellung auf grobe, echte Pixel-Art (Probe B und C: Gesichter und Farben
+  leiden, und alle vorhandenen Bilder müssten neu bestellt werden). Die Mischung ist: Figuren und Monster niedlich
+  wie in Ragnarok, Häuser detailreich wie in Octopath, Licht und Stimmung macht das Spiel.
 - **Pixel-Art** wie Octopath Traveler und Ragnarok Online: warm, detailreich, klare dunkle Umrisse, leicht
   düster-episch, mittelalterliche Fantasy.
 - **Figuren im Chibi-Verhältnis:** großer Kopf, etwa 3 Kopflängen hoch, freundliche, ausdrucksstarke Gesichter.
-  Vorbild sind die sechs Novizen-Köpfe und Kofi.
+  Muster ist Vega (Referenzbild), dazu passen die sechs Novizen-Köpfe und Kofi.
 - **Klassen-Körper im Novizen-Stil:** gleiche niedliche Proportionen, warme Farben, klare Umrisse (der erste
   Bogenschützen-Versuch war zu düster und zu realistisch).
 - **Tageslicht und neutrale Farben** in jedem Bild. Kein eingemaltes Glühen, kein Lichtschein, keine Lichtkegel.
@@ -188,12 +192,16 @@ Liegen in `tools/referenz/` und in `data/look_palette.json` (Feld `referenzbilde
 
 | Datei | Was | Status |
 |---|---|---|
-| `figur_novize_m1.png` | Novize m1 (Kofi), Stehen im Kampf | **Vorschlag**, wartet auf Marcos Ja |
-| `baukasten_gilde.png` | Abenteurergilde in Kreuzweg | **Vorschlag**, wartet auf Marcos Ja |
-| `monster_moosling.png` | Moosling, Stehen im Kampf | **Vorschlag**, wartet auf Marcos Ja |
+| `figur_vega.png` | Vega, Stehen im Kampf (Muster für Figuren) | **abgenommen** von Marco (01.11.) |
+| `baukasten_gilde.png` | Abenteurergilde in Kreuzweg (Muster für Gebäude) | **abgenommen** von Marco (01.11.) |
+| `monster_moosling.png` | Moosling, Stehen im Kampf (Muster für Monster) | **abgenommen** von Marco (01.11.) |
 
-Sobald Marco Ja sagt: in `data/look_palette.json` `"referenzen_abgenommen": true` setzen. Will er andere Bilder,
-die Dateien tauschen und `python3 tools/look_pruefen.py palette` laufen lassen (baut die Palette neu).
+Hinweis zu Vega: Sie hat ihren Stab eingemalt. Sie ist das Muster für den **Stil** (Gesicht, Farben, Umriss,
+Proportionen), nicht für den Aufbau eines Körpers; dort gilt „Körper ohne Waffe“ (Abschnitt 8).
+
+Marco hat die drei am 01.11. abgenommen (`"referenzen_abgenommen": true` in `data/look_palette.json`). Sollen später
+andere Bilder Muster werden: nur mit Marcos Ja die Dateien tauschen und `python3 tools/look_pruefen.py palette`
+laufen lassen (baut die Palette neu).
 
 ## 11. Stand der Bilder im Spiel (Prüfung vom 01.11.)
 

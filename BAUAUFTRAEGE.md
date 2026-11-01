@@ -308,7 +308,7 @@ _Am 28.10. geteilt: Kofis Kopf-Blatt kam zuerst._
 ### Schritt 0: Im Stil bleiben (kommt vor allem anderen)
 - **Ziel:** LOOK.md als einzige Quelle für den Look (Farbpalette, Figurgröße in Pixeln, Umrisslinie, Licht von oben links, Schattenstufen, Blickwinkel), die Farbpalette als Datei mit automatischer Prüfung jedes neuen Bildes, ein Ordner mit zwei bis drei Referenzbildern, die Marco abnimmt, ein fester Stil-Block, der wörtlich in jeden Bild-Prompt kommt, eine immer gleiche Nachbearbeitung für KI-Bilder (Größe, Palette, Umriss) und vor jedem Einbauen ein Vergleichsbild für Marcos Abnahme. Ohne Marcos Ja kommt kein Bild ins Spiel.
 - **So testest du es:** LOOK.md lesen, ein Testbild mit falschen Farben einbauen lassen, die Prüfung meldet es, und das Vergleichsbild erscheint vor dem Einbauen.
-- **Status:** fertig (01.11.2026: LOOK.md, `data/look_palette.json`, `tools/look_pruefen.py` mit pruefen/nachbearbeiten/vergleich/palette, Referenzbilder in `tools/referenz/` als Vorschlag; Marcos Ja zu den drei Referenzbildern fehlt noch. Dazu MONSTER.md und NPC.md angelegt, Fahrplan Schritt 0.2.)
+- **Status:** fertig (01.11.2026: LOOK.md, `data/look_palette.json`, `tools/look_pruefen.py` mit pruefen/nachbearbeiten/vergleich/palette, Referenzbilder in `tools/referenz/`: Vega, Gilde und Moosling, von Marco am 01.11. abgenommen; Stil bleibt wie jetzt. Dazu MONSTER.md und NPC.md angelegt, Fahrplan Schritt 0.2.)
 
 ### Schritt 1: Regeln festschreiben
 - **Ziel:** Den Stil-Block in GRAFIK_AUFTRAG.md erweitern: Körper ohne Waffe (Hand greift ins Leere), Köpfe ohne Hut und gleich groß, feste Farbflächen (Hauptfarbe, Zweitfarbe, Metall, Leder, Haut) mit wenigen festen Farbtönen, Platz am Rücken.
