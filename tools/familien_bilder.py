@@ -75,14 +75,71 @@ ARTEN = {
 		"faerben": (10, 48, 0.15, 44, 1.2, 1.08)},
 	"kronhirsch": {"familie": "hirsche", "blatt": 2, "stehen": 2, "bewegung": 3, "bewegung_mass": 1.6, "zusatz": (0.72, 0.08),
 		"faerben": (10, 48, 0.15, 165, 0.3, 1.2)},
+	# Grünwacht
+	"rindenbaer": {"familie": "baeren", "blatt": 2, "stehen": 0, "bewegung": 1, "zusatz": (0.42, 0.22), "bewegung_mass": 1.2},
+	"splitterbaer": {"familie": "baeren", "blatt": 2, "stehen": 2, "bewegung": 3, "zusatz": (0.42, 0.2), "bewegung_mass": 1.2,
+		"faerben": (0, 360, 0, 262, 1, 0.62, 0.3)},
+	"steinkroete": {"familie": "kroeten", "blatt": 2, "stehen": 0, "bewegung": 1, "zusatz": (0.45, 0.14),
+		"faerben": (45, 90, 0.2, 36, 1.0, 0.9)},
+	"oasenkroete": {"familie": "kroeten", "blatt": 2, "stehen": 2, "bewegung": 3, "zusatz": (0.5, 0.06),
+		"faerben": (45, 90, 0.2, 190, 1.0, 0.9)},
+	"waldsporenling": {"familie": "pilze", "blatt": 2, "stehen": 0, "bewegung": 1,
+		"faerben": (0, 30, 0.45, 80, 0.8, 1.0)},
+	"schatzpilzling": {"familie": "pilze", "blatt": 2, "stehen": 2, "bewegung": 3, "zusatz": (0.5, 0.1),
+		"faerben": (0, 30, 0.45, 80, 0.8, 1.0)},
+	"funkenmarder": {"familie": "marder", "blatt": 2, "stehen": 0, "bewegung": 1, "zusatz": (0.16, 0.42),
+		"faerben": (0, 40, 0.3, 24, 1.1, 1.15)},
+	"wipfelluchs": {"familie": "katzen", "blatt": 2, "stehen": 0, "bewegung": 1, "zusatz": (0.72, 0.08)},
+	"sonnenloewe": {"familie": "katzen", "blatt": 2, "stehen": 2, "bewegung": 3, "zusatz": (0.72, 0.3)},
+	"sumpfschnapper": {"familie": "schildkroeten", "blatt": 2, "stehen": 0, "bewegung": 1, "zusatz": (0.42, 0.34)},
+	"moosgolem": {"familie": "golems", "blatt": 2, "stehen": 0, "bewegung": 1, "zusatz": (0.5, 0.14)},
+	"obsidiangolem": {"familie": "golems", "blatt": 2, "stehen": 2, "bewegung": 3, "zusatz": (0.5, 0.14),
+		"faerben": (0, 360, 0, 258, 1, 0.5, 0.25)},
+	"moderfalter": {"familie": "falter", "blatt": 2, "stehen": 0, "bewegung": 1,
+		"faerben": (0, 360, 0, 248, 1, 0.55, 0.45)},
+	"leuchtmotte": {"familie": "falter", "blatt": 2, "stehen": 2, "bewegung": 3,
+		"faerben": (0, 360, 0, 44, 1, 1.12, 0.3)},
+	"aschefalter": {"familie": "falter", "blatt": 3, "stehen": 0, "bewegung": 1,
+		"faerben": (0, 360, 0, 20, 1, 0.8, 0.15)},
+	"sandwurm": {"familie": "wuermer", "blatt": 2, "stehen": 0, "bewegung": 1, "zusatz": (0.4, 0.3)},
+	"wurzelkriecher": {"familie": "wuermer", "blatt": 2, "stehen": 2, "bewegung": 3, "hoehe": 80, "zusatz": (0.4, 0.3)},
+	# Glutoase
+	"steppenhyaene": {"familie": "hyaenen", "blatt": 2, "stehen": 0, "bewegung": 1, "zusatz": (0.4, 0.15)},
+	"funkenechse": {"familie": "echsen", "blatt": 2, "stehen": 0, "bewegung": 1, "zusatz": (0.55, 0.2),
+		"faerben": (15, 45, 0.2, 44, 1.2, 1.1)},
+	"feuerechse": {"familie": "echsen", "blatt": 2, "stehen": 2, "bewegung": 3, "zusatz": (0.55, 0.2),
+		"faerben": (15, 45, 0.2, 24, 1.5, 1.05)},
+	"glutsalamander": {"familie": "echsen", "blatt": 3, "stehen": 0, "bewegung": 1,
+		"faerben": (15, 45, 0.2, 8, 1.5, 0.9)},
+	"aschefuchs": {"familie": "fuechse", "blatt": 2, "stehen": 0, "bewegung": 1, "zusatz": (0.16, 0.4),
+		"faerben": (10, 40, 0.4, 8, 1.1, 0.75)},
+	"glasskorpion": {"familie": "skorpione", "blatt": 2, "stehen": 0, "bewegung": 1, "zusatz": (0.42, 0.56), "zusatz_mass": 0.62},
+	"schlackenbock": {"familie": "boecke", "blatt": 2, "stehen": 0, "bewegung": 1, "zusatz": (0.6, 0.1)},
+	"glutfledermaus": {"familie": "fledermaeuse", "blatt": 2, "stehen": 0, "bewegung": 1,
+		"faerben": (0, 40, 0.15, 14, 1.8, 1.05, 0.55)},
+	"gewitterwyvern": {"familie": "wyvern", "blatt": 2, "stehen": 0, "bewegung": 1, "zusatz": (0.42, 0.14),
+		"faerben": (0, 360, 0, 245, 1, 0.8, 0.22)},
+	"ambossknecht": {"familie": "automaten", "blatt": 2, "stehen": 0, "bewegung": 1, "zusatz": (0.5, 0.0)},
+	"messingwaechter": {"familie": "automaten", "blatt": 2, "stehen": 2, "bewegung": 3, "zusatz": (0.5, 0.04),
+		"faerben": (0, 70, 0.1, 42, 1.5, 1.25)},
+	"magmaschnecke": {"familie": "schnecken", "blatt": 2, "stehen": 0, "bewegung": 1, "zusatz": (0.36, 0.36),
+		"faerben": (0, 50, 0.08, 26, 1.8, 1.1)},
+	"schlackenkriecher": {"familie": "schnecken", "blatt": 2, "stehen": 2, "bewegung": 3, "zusatz": (0.36, 0.36)},
 }
 # Familien ohne Angabe sind klein (HOEHE)
-FAMILIEN_HOEHE = {"ranken": 84, "voegel": 84, "woelfe": 84, "geister": 84, "wildschweine": 84, "hirsche": 140}
+FAMILIEN_HOEHE = {"ranken": 84, "voegel": 84, "woelfe": 84, "geister": 84, "wildschweine": 84, "hirsche": 140, "baeren": 120, "katzen": 100,
+	"golems": 120, "wyvern": 120, "wuermer": 100, "automaten": 100, "schnecken": 64, "hyaenen": 84, "echsen": 84, "fuechse": 84,
+	"skorpione": 84, "boecke": 84, "schildkroeten": 84}
 # Der Grundkörper jeder Familie ist selbst ein Monster
 GRUNDKOERPER = {"schleim": "schleime", "hase": "hasen", "kaefer": "kaefer", "bluetenwesen": "bluetenwesen",
 	"schwarm": "schwaerme", "igel": "igel", "wildschwein": "wildschweine", "ranke": "ranken", "krabbe": "krabben",
-	"vogel": "voegel", "wolf": "woelfe", "geist": "geister", "hirsch": "hirsche"}
+	"vogel": "voegel", "wolf": "woelfe", "geist": "geister", "hirsch": "hirsche", "baer": "baeren", "kroete": "kroeten", "pilz": "pilze", "marder": "marder",
+	"katze": "katzen", "schildkroete": "schildkroeten", "golem": "golems", "falter": "falter", "wurm": "wuermer", "hyaene": "hyaenen",
+	"echse": "echsen", "fuchs": "fuechse", "skorpion": "skorpione", "bock": "boecke", "fledermaus": "fledermaeuse", "wyvern": "wyvern",
+	"automat": "automaten", "schnecke": "schnecken"}
 # Eingemalte Bewegungslinien fallen weg (Auftrag: ohne Effekte): Blatt -> kleinste Teilgröße, ab welcher Höhe im Blatt
+# Blätter mit dichtem Schleier im Hintergrund: Ab dieser Deckkraft zählt ein Pixel zum Motiv
+HOHE_KANTE = {"hyaenen_2": 235}
 KRUMEN = {"igel_1": (500, 0), "bluetenwesen_2": (300, 740), "bluetenwesen_3": (300, 0), "ranken_1": (300, 0)}
 
 
@@ -91,11 +148,14 @@ def holen(blatt):
 	if bild.mode == "RGBA":
 		# Dunkler Schein ums Motiv: nur der feste Kern bleibt
 		a = np.array(bild).copy()
-		kern = a[..., 3] >= 128
+		kern = a[..., 3] >= (HOHE_KANTE.get(blatt, 128))
 		if blatt == "geister_1":
 			# Der Körper ist halb durchsichtig gemalt: innen füllen
 			kern = ndimage.binary_fill_holes(kern)
 		a[..., 3] = np.where(kern, 255, 0)
+		if blatt == "automaten_2":
+			# Weiß gebliebene Löcher in Zahnrad und Amboss
+			a[a[..., :3].min(-1) > 228, 3] = 0
 		return a
 	a = mb.freistellen(bild).copy()
 	if blatt == "schwaerme_2":
@@ -154,6 +214,21 @@ def reihen(blatt):
 					neu.append(g)
 			r[:] = neu
 		rr = [rr[0], rr[1] + rr[2]]
+	if blatt in ("marder_2", "boecke_2"):
+		# Sprünge liegen höher als die Reihe: oben Zusatzteil und Art, unten die Bewegung
+		alle = [g for r in rr for g in r]
+		oben = sorted([g for g in alle if g[1][0].stop < a.shape[0] * 0.55], key=mitte_x)
+		rr = [oben, sorted([g for g in alle if g[1][0].stop >= a.shape[0] * 0.55], key=mitte_x)]
+	if blatt == "katzen_2":
+		# Die beiden Ohrbüschel sind ein Zusatzteil
+		rr[0].sort(key=mitte_x)
+		ziel[ziel == rr[0][1][0]] = rr[0][0][0]
+		rr[0].pop(1)
+	if blatt == "fledermaeuse_2":
+		# Die beiden Flügel sind ein Zusatzteil
+		rr[0].sort(key=mitte_x)
+		ziel[ziel == rr[0][1][0]] = rr[0][0][0]
+		rr[0].pop(1)
 	if blatt == "voegel_3":
 		# Die beiden Eulenaugen sind ein Zusatzteil
 		rr[2].sort(key=mitte_x)
@@ -221,7 +296,7 @@ def art_bauen(name, info):
 	grund = reihen(f"{info['familie']}_1")
 	bl = reihen(f"{info['familie']}_{info['blatt']}")
 	stehen = np.median([mb.fuss(t, False)[2] for t in grund[0]])
-	art_h = mb.fuss(bl[info["stehen"]][1], False)[2]
+	art_h = mb.fuss(bl[info["stehen"]][-1], False)[2]
 	f = stehen / art_h
 	anims = dict(zip(["idle", "attack", "hit", "death"], grund))
 	for anim, stuecke in anims.items():

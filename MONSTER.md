@@ -336,4 +336,4 @@ Beim Anlegen gegen das Spiel geprüft. Nichts davon ist geändert, Marco entsche
    Bildauftrags-Entwurf vom 01.11. (oben markiert). Bitte bestätigen.
 3. **Werte-Tabelle** nach Rolle und Stufe fehlt noch (Regel 5); sie entsteht beim Bau der Monster.
 4. Die **Pilzhöhlen-Monster** und viele Gegner im Spiel nutzen noch Platzhalter-Bilder aus einem fremden Paket
-   (`assets/0x72_dungeontileset_ii`), sie bekommen ihre Bilder über die Familien-Blätter.
+   (`assets/0x72_dungeontileset_ii`), sie bekommen ihre Bilder über die Familien-Blätter. **Stand 01.11.:** Pilzhöhlen-Monster und -Bosse haben ihre Bilder.

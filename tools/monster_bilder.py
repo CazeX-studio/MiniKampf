@@ -29,6 +29,15 @@ MONSTER = {
 	"ruepelkobold": {"hoehe": 140, "schnitte": [(772, 280, 570)], "reihen": [("idle", 4), ("attack", 6), ("hit", 1), ("death", 5)]},
 	"sternenfresser": {"hoehe": 170, "reihen": [("idle", 4), ("attack", 6), ("attack2", 5), ("spezial", 5), ("hit", 1),
 		("death", 7)]},
+	# Bosse: Pilzhöhle und Vulkanschmiede
+	"sporenknospe": {"hoehe": 70, "reihen": [("idle", 4), ("attack", 6), ("hit", 1), ("spezial", 6), ("death", 4)]},
+	"sporenkoenigin": {"loecher": True, "hoehe": 170, "reihen": [("idle", 4), ("attack", 6), ("hit", 1), ("spezial", 5), ("death", 4)]},
+	"wurzelmutter": {"loecher": True, "hoehe": 190, "reihen": [("idle", 4), ("attack", 6), ("hit", 1), ("spezial", 6), ("death", 4)]},
+	"vorbote": {"loecher": True, "hoehe": 190, "reihen": [("idle", 4), ("attack", 6), ("hit", 1), ("spezial", 6), ("death", 4)]},
+	# Zwei Brüder pro Bild: "gruppen" fasst die Teile einer Reihe an den größten Lücken zusammen
+	"hammerbrueder": {"hoehe": 150, "gruppen": True, "reihen": [("idle", 3), ("attack", 6), ("hit", 1), ("spezial", 6), ("death", 4)]},
+	"kettenschmied_1": {"hoehe": 170, "reihen": [("idle", 4), ("attack", 6), ("hit", 1), ("spezial", 6), ("death", 4)]},
+	"kettenschmied_2": {"hoehe": 170, "reihen": [("idle", 4), ("attack", 6), ("hit", 1), ("spezial", 6), ("death", 4)]},
 }
 # Monster mit festen Ausschnitten (wenn sich Bilder berühren oder aus mehreren Blättern stammen):
 # Animation -> Liste von Ausschnitten (x0, y0, x1, y1) im Blatt. Ein Ausschnitt kann auch (Blatt, x0, y0, x1, y1, Faktor)
@@ -157,10 +166,33 @@ def fuss(teil, rueckseite):
 	return x, unten, unten - ys.min()
 
 
+def gruppieren(ziel, reihe, anzahl):
+	"""Fasst die Teile einer Reihe zu „anzahl“ Bildern zusammen, getrennt an den größten Lücken."""
+	luecken = sorted(range(len(reihe) - 1), key=lambda i: reihe[i][1][1].stop - reihe[i + 1][1][1].start)
+	trenn = sorted(luecken[:anzahl - 1])
+	neu, start = [], 0
+	for ende in trenn + [len(reihe) - 1]:
+		for g in reihe[start + 1:ende + 1]:
+			ziel[ziel == g[0]] = reihe[start][0]
+		neu.append(reihe[start])
+		start = ende + 1
+	return neu
+
+
 def zerlegen(name, info):
 	a = freistellen(Image.open(VORLAGEN / f"{info.get('vorlage', name)}.png"))
+	if info.get("loecher"):
+		# Weiße Löcher zwischen den Ästen oder im Schatten-Körper
+		r = a[..., :3].astype(np.int16)
+		hoch, tief = r.max(-1), r.min(-1)
+		ll, ln = ndimage.label((hoch - tief < 16) & (tief > 205) & (a[..., 3] > 0))
+		if ln:
+			g = ndimage.sum(ll > 0, ll, range(1, ln + 1))
+			a[np.isin(ll, [i + 1 for i in range(ln) if g[i] >= 25]), 3] = 0
 	ziel, reihen = bilder_finden(a, info.get("schnitte", []))
 	erwartet = [n for _, n in info["reihen"]]
+	if info.get("gruppen"):
+		reihen = [gruppieren(ziel, r, n) for r, n in zip(reihen, erwartet)]
 	if [len(r) for r in reihen] != erwartet:
 		raise SystemExit(f"{name}: Reihen {[len(r) for r in reihen]}, erwartet {erwartet}")
 	anims = {}

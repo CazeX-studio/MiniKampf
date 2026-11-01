@@ -47,6 +47,96 @@
 				"boden/blumenwiese_2.png"
 			],
 			"vorrang": 5
+		},
+		"w": {
+			"name": "Waldboden",
+			"bilder": [
+				"boden/gw_waldboden_1.png",
+				"boden/gw_waldboden_2.png"
+			],
+			"vorrang": 5
+		},
+		"m": {
+			"name": "Moos",
+			"bilder": [
+				"boden/gw_moos_1.png",
+				"boden/gw_moos_2.png"
+			],
+			"vorrang": 6
+		},
+		"r": {
+			"name": "Wurzelboden",
+			"bilder": [
+				"boden/gw_wurzelboden_1.png",
+				"boden/gw_wurzelboden_2.png"
+			],
+			"vorrang": 5
+		},
+		"l": {
+			"name": "Laub",
+			"bilder": [
+				"boden/gw_laub_1.png",
+				"boden/gw_laub_2.png"
+			],
+			"vorrang": 6
+		},
+		"p": {
+			"name": "Planken",
+			"bilder": [
+				"boden/gw_planken_1.png",
+				"boden/gw_planken_2.png"
+			],
+			"vorrang": 3
+		},
+		"b": {
+			"begehbar": false,
+			"name": "Bach",
+			"bilder": [
+				"boden/gw_bach_1.png",
+				"boden/gw_bach_2.png"
+			],
+			"vorrang": 0
+		},
+		"s": {
+			"name": "Sand",
+			"bilder": [
+				"boden/go_sand_1.png",
+				"boden/go_sand_2.png"
+			],
+			"vorrang": 4
+		},
+		"L": {
+			"name": "Lehmpflaster",
+			"bilder": [
+				"boden/go_lehm_1.png",
+				"boden/go_lehm_2.png"
+			],
+			"vorrang": 2
+		},
+		"g": {
+			"name": "Oasengras",
+			"bilder": [
+				"boden/go_gras_1.png",
+				"boden/go_gras_2.png"
+			],
+			"vorrang": 5
+		},
+		"t": {
+			"begehbar": false,
+			"name": "Oasenwasser",
+			"bilder": [
+				"boden/go_wasser_1.png",
+				"boden/go_wasser_2.png"
+			],
+			"vorrang": 0
+		},
+		"i": {
+			"name": "Schmiedestein",
+			"bilder": [
+				"boden/vs_stein_1.png",
+				"boden/vs_stein_2.png"
+			],
+			"vorrang": 2
 		}
 	},
 	"objekte": {
@@ -1166,6 +1256,1249 @@
 			"fuss": [
 				36,
 				118
+			]
+		},
+		"gw_plattform_rund": {
+			"bild": "objekte/gw_plattform_rund.png",
+			"flaeche": [
+				4,
+				3
+			],
+			"fuss": [
+				122,
+				195
+			]
+		},
+		"gw_plattform_eckig": {
+			"bild": "objekte/gw_plattform_eckig.png",
+			"flaeche": [
+				2,
+				3
+			],
+			"fuss": [
+				100,
+				114
+			]
+		},
+		"gw_haengebruecke": {
+			"bild": "objekte/gw_haengebruecke.png",
+			"flaeche": [
+				1,
+				2
+			],
+			"fuss": [
+				54,
+				75
+			]
+		},
+		"gw_haengebruecke_lang": {
+			"bild": "objekte/gw_haengebruecke_lang.png",
+			"flaeche": [
+				1,
+				4
+			],
+			"fuss": [
+				81,
+				84
+			]
+		},
+		"gw_gelaender": {
+			"bild": "objekte/gw_gelaender.png",
+			"flaeche": [
+				1,
+				2
+			],
+			"fuss": [
+				33,
+				59
+			]
+		},
+		"gw_strickleiter": {
+			"bild": "objekte/gw_strickleiter.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				21,
+				86
+			]
+		},
+		"gw_seilaufzug": {
+			"bild": "objekte/gw_seilaufzug.png",
+			"flaeche": [
+				1,
+				3
+			],
+			"fuss": [
+				76,
+				115
+			]
+		},
+		"gw_gasthaus": {
+			"bild": "objekte/gw_gasthaus.png",
+			"flaeche": [
+				5,
+				5
+			],
+			"fuss": [
+				160,
+				140
+			]
+		},
+		"gw_bank": {
+			"bild": "objekte/gw_bank.png",
+			"flaeche": [
+				3,
+				4
+			],
+			"fuss": [
+				127,
+				154
+			]
+		},
+		"gw_stand_salbei": {
+			"bild": "objekte/gw_stand_salbei.png",
+			"flaeche": [
+				2,
+				3
+			],
+			"fuss": [
+				68,
+				91
+			]
+		},
+		"gw_esches_huette": {
+			"bild": "objekte/gw_esches_huette.png",
+			"flaeche": [
+				2,
+				5
+			],
+			"fuss": [
+				124,
+				140
+			]
+		},
+		"gw_tildas_stall": {
+			"bild": "objekte/gw_tildas_stall.png",
+			"flaeche": [
+				3,
+				6
+			],
+			"fuss": [
+				132,
+				118
+			]
+		},
+		"gw_wohnbaumhaus": {
+			"bild": "objekte/gw_wohnbaumhaus.png",
+			"flaeche": [
+				4,
+				1
+			],
+			"fuss": [
+				73,
+				163
+			]
+		},
+		"gw_urbaum": {
+			"bild": "objekte/gw_urbaum.png",
+			"flaeche": [
+				5,
+				5
+			],
+			"fuss": [
+				185,
+				158
+			]
+		},
+		"gw_grosse_wurzel": {
+			"bild": "objekte/gw_grosse_wurzel.png",
+			"flaeche": [
+				1,
+				4
+			],
+			"fuss": [
+				82,
+				72
+			]
+		},
+		"gw_hoehleneingang": {
+			"bild": "objekte/gw_hoehleneingang.png",
+			"flaeche": [
+				4,
+				2
+			],
+			"fuss": [
+				111,
+				73
+			]
+		},
+		"gw_leuchtpilze_klein": {
+			"bild": "objekte/gw_leuchtpilze_klein.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				32,
+				32
+			]
+		},
+		"gw_leuchtpilze_mittel": {
+			"bild": "objekte/gw_leuchtpilze_mittel.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				42,
+				29
+			]
+		},
+		"gw_leuchtpilze_gross": {
+			"bild": "objekte/gw_leuchtpilze_gross.png",
+			"flaeche": [
+				1,
+				3
+			],
+			"fuss": [
+				72,
+				64
+			]
+		},
+		"gw_zielscheibe": {
+			"bild": "objekte/gw_zielscheibe.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				18,
+				52
+			]
+		},
+		"gw_zielscheibe_haengend": {
+			"bild": "objekte/gw_zielscheibe_haengend.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				21,
+				48
+			]
+		},
+		"gw_zielscheibe_tier": {
+			"bild": "objekte/gw_zielscheibe_tier.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				36,
+				53
+			]
+		},
+		"gw_pfadmarke": {
+			"bild": "objekte/gw_pfadmarke.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				25,
+				65
+			]
+		},
+		"gw_baumtor": {
+			"bild": "objekte/gw_baumtor.png",
+			"flaeche": [
+				2,
+				3
+			],
+			"fuss": [
+				90,
+				59
+			]
+		},
+		"gw_pfad_tiefwurzel": {
+			"bild": "objekte/gw_pfad_tiefwurzel.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				63,
+				55
+			]
+		},
+		"gw_bruecken_laterne": {
+			"bild": "objekte/gw_bruecken_laterne.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				22,
+				52
+			]
+		},
+		"gw_pilzkoerbe": {
+			"bild": "objekte/gw_pilzkoerbe.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				38,
+				32
+			]
+		},
+		"gw_kraeuterkisten": {
+			"bild": "objekte/gw_kraeuterkisten.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				44,
+				33
+			]
+		},
+		"gw_jagdtrophaee": {
+			"bild": "objekte/gw_jagdtrophaee.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				32,
+				49
+			]
+		},
+		"gw_baumstumpf": {
+			"bild": "objekte/gw_baumstumpf.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				18,
+				25
+			]
+		},
+		"gw_farn": {
+			"bild": "objekte/gw_farn.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				23,
+				22
+			]
+		},
+		"gw_rowans_grab": {
+			"bild": "objekte/gw_rowans_grab.png",
+			"flaeche": [
+				1,
+				2
+			],
+			"fuss": [
+				57,
+				38
+			]
+		},
+		"gw_bienenstock": {
+			"bild": "objekte/gw_bienenstock.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				28,
+				34
+			]
+		},
+		"gw_laubbaum": {
+			"bild": "objekte/gw_laubbaum.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				66,
+				121
+			]
+		},
+		"gw_jaegerpfad": {
+			"bild": "objekte/gw_jaegerpfad.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				38,
+				50
+			],
+			"flach": true,
+			"begehbar": true
+		},
+		"gw_hochsitz": {
+			"bild": "objekte/gw_hochsitz.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				66,
+				113
+			]
+		},
+		"gw_lichtung": {
+			"bild": "objekte/gw_lichtung.png",
+			"flaeche": [
+				2,
+				3
+			],
+			"fuss": [
+				142,
+				100
+			],
+			"flach": true,
+			"begehbar": true
+		},
+		"gw_fallenmarke": {
+			"bild": "objekte/gw_fallenmarke.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				26,
+				64
+			]
+		},
+		"gw_steinkreis": {
+			"bild": "objekte/gw_steinkreis.png",
+			"flaeche": [
+				3,
+				3
+			],
+			"fuss": [
+				95,
+				65
+			],
+			"flach": true,
+			"begehbar": true
+		},
+		"gw_dunkler_baum": {
+			"bild": "objekte/gw_dunkler_baum.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				62,
+				109
+			]
+		},
+		"gw_wurzelbruecke": {
+			"bild": "objekte/gw_wurzelbruecke.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				35,
+				79
+			]
+		},
+		"gw_wurzelhoehle": {
+			"bild": "objekte/gw_wurzelhoehle.png",
+			"flaeche": [
+				3,
+				3
+			],
+			"fuss": [
+				92,
+				107
+			]
+		},
+		"gw_splitterkristall_klein": {
+			"bild": "objekte/gw_splitterkristall_klein.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				29,
+				42
+			]
+		},
+		"gw_splitterkristall_gross": {
+			"bild": "objekte/gw_splitterkristall_gross.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				63,
+				95
+			]
+		},
+		"gw_verdorrter_baum": {
+			"bild": "objekte/gw_verdorrter_baum.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				63,
+				99
+			]
+		},
+		"gw_nebelboden": {
+			"bild": "objekte/gw_nebelboden.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				64,
+				48
+			],
+			"flach": true,
+			"begehbar": true
+		},
+		"gw_wurzelwand": {
+			"bild": "objekte/gw_wurzelwand.png",
+			"flaeche": [
+				1,
+				2
+			],
+			"fuss": [
+				34,
+				99
+			]
+		},
+		"gw_pilzboden": {
+			"bild": "objekte/gw_pilzboden.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				64,
+				59
+			],
+			"flach": true,
+			"begehbar": true
+		},
+		"gw_lichtlaterne": {
+			"bild": "objekte/gw_lichtlaterne.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				28,
+				72
+			]
+		},
+		"gw_wurzelsplitter": {
+			"bild": "objekte/gw_wurzelsplitter.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				65,
+				70
+			]
+		},
+		"go_terrassenkante": {
+			"bild": "objekte/go_terrassenkante.png",
+			"flaeche": [
+				2,
+				1
+			],
+			"fuss": [
+				128,
+				112
+			]
+		},
+		"go_treppe": {
+			"bild": "objekte/go_treppe.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				68,
+				80
+			]
+		},
+		"go_treppe_ecke": {
+			"bild": "objekte/go_treppe_ecke.png",
+			"flaeche": [
+				3,
+				1
+			],
+			"fuss": [
+				52,
+				78
+			]
+		},
+		"go_brunnen": {
+			"bild": "objekte/go_brunnen.png",
+			"flaeche": [
+				4,
+				4
+			],
+			"fuss": [
+				130,
+				132
+			]
+		},
+		"go_tanzplatz": {
+			"bild": "objekte/go_tanzplatz.png",
+			"flaeche": [
+				5,
+				5
+			],
+			"fuss": [
+				160,
+				108
+			],
+			"flach": true,
+			"begehbar": true
+		},
+		"go_basar_a": {
+			"bild": "objekte/go_basar_a.png",
+			"flaeche": [
+				3,
+				2
+			],
+			"fuss": [
+				70,
+				140
+			]
+		},
+		"go_basar_b": {
+			"bild": "objekte/go_basar_b.png",
+			"flaeche": [
+				2,
+				3
+			],
+			"fuss": [
+				84,
+				142
+			]
+		},
+		"go_krankenzelt": {
+			"bild": "objekte/go_krankenzelt.png",
+			"flaeche": [
+				3,
+				4
+			],
+			"fuss": [
+				106,
+				101
+			]
+		},
+		"go_karawanenplatz": {
+			"bild": "objekte/go_karawanenplatz.png",
+			"flaeche": [
+				4,
+				4
+			],
+			"fuss": [
+				130,
+				78
+			]
+		},
+		"go_lehmhaus_gross": {
+			"bild": "objekte/go_lehmhaus_gross.png",
+			"flaeche": [
+				4,
+				5
+			],
+			"fuss": [
+				146,
+				200
+			]
+		},
+		"go_lehmhaus_klein": {
+			"bild": "objekte/go_lehmhaus_klein.png",
+			"flaeche": [
+				3,
+				3
+			],
+			"fuss": [
+				90,
+				149
+			]
+		},
+		"go_gasthaus": {
+			"bild": "objekte/go_gasthaus.png",
+			"flaeche": [
+				6,
+				5
+			],
+			"fuss": [
+				172,
+				225
+			]
+		},
+		"go_bank": {
+			"bild": "objekte/go_bank.png",
+			"flaeche": [
+				4,
+				4
+			],
+			"fuss": [
+				129,
+				157
+			]
+		},
+		"go_tareks_laden": {
+			"bild": "objekte/go_tareks_laden.png",
+			"flaeche": [
+				4,
+				3
+			],
+			"fuss": [
+				96,
+				150
+			]
+		},
+		"go_clan_werkstatt": {
+			"bild": "objekte/go_clan_werkstatt.png",
+			"flaeche": [
+				4,
+				5
+			],
+			"fuss": [
+				156,
+				161
+			]
+		},
+		"go_esse": {
+			"bild": "objekte/go_esse.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				59,
+				110
+			]
+		},
+		"go_amboss": {
+			"bild": "objekte/go_amboss.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				28,
+				56
+			]
+		},
+		"go_wassertrog": {
+			"bild": "objekte/go_wassertrog.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				36,
+				59
+			]
+		},
+		"go_werkzeugwand": {
+			"bild": "objekte/go_werkzeugwand.png",
+			"flaeche": [
+				3,
+				1
+			],
+			"fuss": [
+				50,
+				73
+			]
+		},
+		"go_brakkus_werkstatt": {
+			"bild": "objekte/go_brakkus_werkstatt.png",
+			"flaeche": [
+				4,
+				6
+			],
+			"fuss": [
+				154,
+				123
+			]
+		},
+		"go_hadraks_schmiede": {
+			"bild": "objekte/go_hadraks_schmiede.png",
+			"flaeche": [
+				5,
+				8
+			],
+			"fuss": [
+				201,
+				158
+			]
+		},
+		"go_kettenamboss": {
+			"bild": "objekte/go_kettenamboss.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				62,
+				80
+			]
+		},
+		"go_schmiede_zu": {
+			"bild": "objekte/go_schmiede_zu.png",
+			"flaeche": [
+				4,
+				1
+			],
+			"fuss": [
+				66,
+				67
+			]
+		},
+		"go_schmiede_offen": {
+			"bild": "objekte/go_schmiede_offen.png",
+			"flaeche": [
+				4,
+				1
+			],
+			"fuss": [
+				65,
+				65
+			]
+		},
+		"go_bergpfad": {
+			"bild": "objekte/go_bergpfad.png",
+			"flaeche": [
+				1,
+				2
+			],
+			"fuss": [
+				56,
+				74
+			]
+		},
+		"go_tor_steppe": {
+			"bild": "objekte/go_tor_steppe.png",
+			"flaeche": [
+				6,
+				1
+			],
+			"fuss": [
+				126,
+				74
+			]
+		},
+		"go_tor_duerrewald": {
+			"bild": "objekte/go_tor_duerrewald.png",
+			"flaeche": [
+				6,
+				1
+			],
+			"fuss": [
+				126,
+				74
+			]
+		},
+		"go_aufzug_unten": {
+			"bild": "objekte/go_aufzug_unten.png",
+			"flaeche": [
+				4,
+				2
+			],
+			"fuss": [
+				94,
+				124
+			]
+		},
+		"go_aufzug_oben": {
+			"bild": "objekte/go_aufzug_oben.png",
+			"flaeche": [
+				4,
+				2
+			],
+			"fuss": [
+				95,
+				126
+			]
+		},
+		"go_sonnensegel": {
+			"bild": "objekte/go_sonnensegel.png",
+			"flaeche": [
+				4,
+				1
+			],
+			"fuss": [
+				66,
+				112
+			]
+		},
+		"go_palme_gross": {
+			"bild": "objekte/go_palme_gross.png",
+			"flaeche": [
+				1,
+				2
+			],
+			"fuss": [
+				63,
+				114
+			]
+		},
+		"go_palme_klein": {
+			"bild": "objekte/go_palme_klein.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				24,
+				43
+			]
+		},
+		"go_tonkruege": {
+			"bild": "objekte/go_tonkruege.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				30,
+				37
+			]
+		},
+		"go_teppiche": {
+			"bild": "objekte/go_teppiche.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				22,
+				27
+			]
+		},
+		"go_kohlesaecke": {
+			"bild": "objekte/go_kohlesaecke.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				48,
+				30
+			]
+		},
+		"go_fackel": {
+			"bild": "objekte/go_fackel.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				22,
+				87
+			]
+		},
+		"go_tanzlaterne": {
+			"bild": "objekte/go_tanzlaterne.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				26,
+				81
+			]
+		},
+		"go_steppengras": {
+			"bild": "objekte/go_steppengras.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				64,
+				58
+			],
+			"flach": true,
+			"begehbar": true
+		},
+		"go_gras_zu_sand": {
+			"bild": "objekte/go_gras_zu_sand.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				62,
+				56
+			],
+			"flach": true,
+			"begehbar": true
+		},
+		"go_trockenbusch": {
+			"bild": "objekte/go_trockenbusch.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				27,
+				40
+			]
+		},
+		"go_felsbrocken": {
+			"bild": "objekte/go_felsbrocken.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				64,
+				48
+			]
+		},
+		"go_karawanenspur": {
+			"bild": "objekte/go_karawanenspur.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				30,
+				48
+			],
+			"flach": true,
+			"begehbar": true
+		},
+		"go_verlassener_wagen": {
+			"bild": "objekte/go_verlassener_wagen.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				58,
+				72
+			]
+		},
+		"go_duene": {
+			"bild": "objekte/go_duene.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				112,
+				68
+			]
+		},
+		"go_duenenkamm": {
+			"bild": "objekte/go_duenenkamm.png",
+			"flaeche": [
+				1,
+				2
+			],
+			"fuss": [
+				54,
+				44
+			]
+		},
+		"go_wasserstelle": {
+			"bild": "objekte/go_wasserstelle.png",
+			"flaeche": [
+				3,
+				5
+			],
+			"fuss": [
+				140,
+				144
+			]
+		},
+		"go_kakteen": {
+			"bild": "objekte/go_kakteen.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				26,
+				41
+			]
+		},
+		"go_ruine": {
+			"bild": "objekte/go_ruine.png",
+			"flaeche": [
+				3,
+				3
+			],
+			"fuss": [
+				110,
+				90
+			]
+		},
+		"go_sternenduene": {
+			"bild": "objekte/go_sternenduene.png",
+			"flaeche": [
+				3,
+				3
+			],
+			"fuss": [
+				150,
+				96
+			]
+		},
+		"go_erkaltete_lava": {
+			"bild": "objekte/go_erkaltete_lava.png",
+			"flaeche": [
+				1,
+				2
+			],
+			"fuss": [
+				78,
+				53
+			],
+			"flach": true,
+			"begehbar": true
+		},
+		"go_lavarinne": {
+			"bild": "objekte/go_lavarinne.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				32,
+				56
+			]
+		},
+		"go_felsgrat": {
+			"bild": "objekte/go_felsgrat.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				62,
+				89
+			]
+		},
+		"go_heisse_quelle": {
+			"bild": "objekte/go_heisse_quelle.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				62,
+				43
+			]
+		},
+		"go_obsidian": {
+			"bild": "objekte/go_obsidian.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				24,
+				33
+			]
+		},
+		"go_kraterrand": {
+			"bild": "objekte/go_kraterrand.png",
+			"flaeche": [
+				1,
+				6
+			],
+			"fuss": [
+				116,
+				29
+			]
+		},
+		"vs_eisenwand": {
+			"bild": "objekte/vs_eisenwand.png",
+			"flaeche": [
+				1,
+				2
+			],
+			"fuss": [
+				29,
+				105
+			]
+		},
+		"vs_esse": {
+			"bild": "objekte/vs_esse.png",
+			"flaeche": [
+				3,
+				3
+			],
+			"fuss": [
+				94,
+				149
+			]
+		},
+		"vs_kettenwinde": {
+			"bild": "objekte/vs_kettenwinde.png",
+			"flaeche": [
+				1,
+				3
+			],
+			"fuss": [
+				71,
+				93
+			]
+		},
+		"vs_kettenbruecke": {
+			"bild": "objekte/vs_kettenbruecke.png",
+			"flaeche": [
+				1,
+				3
+			],
+			"fuss": [
+				63,
+				108
+			],
+			"flach": true,
+			"begehbar": true
+		},
+		"vs_anker": {
+			"bild": "objekte/vs_anker.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				54,
+				138
+			]
+		},
+		"vs_kuehlbecken": {
+			"bild": "objekte/vs_kuehlbecken.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				62,
+				83
 			]
 		}
 	}

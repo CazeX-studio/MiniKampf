@@ -68,7 +68,7 @@ func _process(delta: float) -> bool:
 				_check(false, "Alle %d Mitspieler sind in Kreuzweg" % _count)
 				return _finish()
 		1:
-			if Netz.group.get("members", []).size() == _count + 1 and _t > 3.0:
+			if Netz.group.get("members", []).size() == _count + 1 and _t > 12.0:
 				_check(true, "Gruppe mit %d Spielern steht" % (_count + 1))
 				var greetings := 0
 				for entry in Netz.chat_log:
