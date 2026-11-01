@@ -13,8 +13,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - **So testest du es:** Grünwacht bis zum Wald spielen, Rindenbär oder Steinkröte haben neue Bilder; in der Kampf-Sandbox „Pilzhöhle: nur Bosse“ wählen.
 - **Neu (01.11.): Grünwacht aus dem Baukasten** (Projekt 9, Schritt 6): Weg nach Grünwacht, Waldboden, Wipfelheim und Pilzhöhle
   stehen jetzt aus den gemalten Teilen. Figuren, Monster, Orte, Aufträge und Wege bleiben auf ihren Feldern. Werkzeug: `tools/gruenwacht_karten.py`.
-  - Geändert gegenüber vorher: Der Koch-Stand steht vor dem Gasthaus (Feld 12,22), die Bank nördlich von Bankhüter Tamm, Dornfeders Halle ein Feld weiter westlich.
-  - Dornfeders Halle hat noch kein eigenes Bild (vorläufig ein Wohnbaumhaus mit Namen).
+  - Geändert gegenüber vorher: Der Koch-Stand steht vor dem Gasthaus (Feld 12,22), die Bank östlich von Bankhüter Tamm, Dornfeders Halle ein Feld weiter westlich und schmaler, dafür tiefer.
+  - Dornfeders Halle hat ihr eigenes Bild (Marcos Blatt `tools/vorlagen/gruenwacht_halle.png`).
   - **So testest du es:**
     1. Von Kreuzweg nach Westen über den Weg nach Grünwacht bis Wipfelheim gehen.
     2. In Wipfelheim Gasthaus, Halle, Bank, Labor und Stall ansehen und hinter Häuser laufen (sie werden durchsichtig).

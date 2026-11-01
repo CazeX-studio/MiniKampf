@@ -375,6 +375,8 @@ BLAETTER.update({'gruenwacht_g2': {'massstab': 0.3,
                            'go_wasser_1': (1111, 704),
                            'go_wasser_2': (1552, 704)}},
  'schmiede_v1a': {'boden': True, 'teile': {'vs_stein_1': (443, 476), 'vs_stein_2': (1330, 476)}}})
+BLAETTER["gruenwacht_halle"] = {"massstab": 0.2, "kern": True, "look": True, "massstaebe": {"gw_dornfeders_halle": 0.2},
+	"teile": {"gw_dornfeders_halle": (720, 540)}}
 
 
 def freistellen(bild, roter_rand=False):

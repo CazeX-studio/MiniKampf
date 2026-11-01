@@ -203,8 +203,8 @@ def wipfelheim():
 	k, r = Karte("wipfelheim"), random.Random(13)
 	boden = ["".join("p" if k.zeichen(x, y) in "#-OZ" else "m" for x in range(k.b)) for y in range(k.h)]
 	k.setzen("gw_gasthaus", 9, 17, "Baumhaus-Gasthaus")
-	k.setzen("gw_wohnbaumhaus", 23, 15, "Dornfeders Halle")
-	k.setzen("gw_bank", 26, 17, "Bank")
+	k.setzen("gw_dornfeders_halle", 22, 15, "Dornfeders Halle")
+	k.setzen("gw_bank", 28, 18, "Bank")
 	k.setzen("gw_esches_huette", 26, 33, "Esches Labor")
 	k.setzen("gw_tildas_stall", 42, 16, "Monster-Stall")
 	k.setzen("gw_wohnbaumhaus", 39, 15)

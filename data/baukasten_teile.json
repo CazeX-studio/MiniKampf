@@ -2500,6 +2500,17 @@
 				62,
 				83
 			]
+		},
+		"gw_dornfeders_halle": {
+			"bild": "objekte/gw_dornfeders_halle.png",
+			"flaeche": [
+				3,
+				5
+			],
+			"fuss": [
+				142,
+				147
+			]
 		}
 	}
 }

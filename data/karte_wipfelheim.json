@@ -53,9 +53,9 @@
 			"name": "Baumhaus-Gasthaus"
 		},
 		{
-			"teil": "gw_wohnbaumhaus",
+			"teil": "gw_dornfeders_halle",
 			"feld": [
-				23,
+				22,
 				15
 			],
 			"name": "Dornfeders Halle"
@@ -63,8 +63,8 @@
 		{
 			"teil": "gw_bank",
 			"feld": [
-				26,
-				17
+				28,
+				18
 			],
 			"name": "Bank"
 		},

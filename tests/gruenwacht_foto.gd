@@ -3,7 +3,7 @@ extends "res://scripts/welt/kreuzweg.gd"
 
 const STELLEN := [["rast", "weg_gruenwacht", Vector2i(30, 7)], ["waldweg", "weg_gruenwacht", Vector2i(14, 9)],
 		["aufzug", "waldboden", Vector2i(20, 19)], ["urbaum", "waldboden", Vector2i(18, 28)], ["wald", "waldboden", Vector2i(36, 18)],
-		["gasthaus", "wipfelheim", Vector2i(12, 24)], ["halle", "wipfelheim", Vector2i(24, 20)], ["fenn", "wipfelheim", Vector2i(26, 6)],
+		["gasthaus", "wipfelheim", Vector2i(12, 24)], ["halle", "wipfelheim", Vector2i(26, 23)], ["fenn", "wipfelheim", Vector2i(26, 6)],
 		["stall", "wipfelheim", Vector2i(41, 22)], ["labor", "wipfelheim", Vector2i(24, 35)],
 		["hoehle", "pilzhoehle", Vector2i(27, 11)], ["koenigin", "pilzhoehle", Vector2i(13, 12)]]
 

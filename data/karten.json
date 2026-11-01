@@ -875,10 +875,10 @@
 			{
 				"name": "Dornfeders Halle",
 				"feld": [
-					23,
+					22,
 					15,
-					4,
-					3
+					3,
+					5
 				],
 				"hoehe": 50,
 				"farbe": "6a4a30",
