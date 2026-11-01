@@ -71,7 +71,7 @@ func _test_world() -> void:
 	var world := WorldState.new()
 	var scenes: Array[String] = []
 	world.scene_requested.connect(func(_id: String, scene: String) -> void: scenes.append(scene))
-	var p := world.add_player("a", "Test", "elf_m", Vector2i(10, 31))
+	var p := world.add_player("a", "Test", "elf_m", Vector2i(37, 17))
 	p.progress.flags["klasse"] = "archer"
 	p.progress.flags["klasse_bestaetigt"] = true
 	p.progress.quests["nach_gruenwacht"] = "abgegeben"
@@ -90,7 +90,7 @@ func _test_world() -> void:
 	_check(world.objective(p).contains("Sternentafel") or world.objective(p) == "", "Ziel: Sternentafel kaufen")
 
 	# Bei Bingo in Kreuzweg kaufen
-	world.change_map(p, "kreuzweg", Vector2i(10, 31))
+	world.change_map(p, "kreuzweg", Vector2i(37, 17))
 	world.apply_command("a", {type = "talk", npc = "bingo"})
 	_tick(world, 6.0)
 	_check(p.dialog.get("node", "") == "heimkehr", "Bingo begrüßt Heimkehrer")

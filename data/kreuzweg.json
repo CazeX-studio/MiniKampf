@@ -1,88 +1,660 @@
 {
-	"start": {"feld": [22, 40], "dialog": "ankunft", "nur_wenn_nicht_gemerkt": "angekommen"},
+	"start": {
+		"feld": [
+			32,
+			63
+		],
+		"dialog": "ankunft",
+		"nur_wenn_nicht_gemerkt": "angekommen"
+	},
 	"ausgaenge": [
-		{"bereich": [0, 21, 1, 3], "karte": "weg_gruenwacht", "feld": [56, 9], "wenn": {"gemerkt": "klasse_bestaetigt"}}
+		{
+			"bereich": [
+				0,
+				31,
+				1,
+				2
+			],
+			"karte": "weg_gruenwacht",
+			"feld": [
+				56,
+				9
+			],
+			"wenn": {
+				"gemerkt": "klasse_bestaetigt"
+			}
+		}
 	],
 	"npcs": {
-		"ye": {"name": "Ausbilder Ye", "feld": [29, 15], "aussehen": "wizzard_m", "farbe": "ccdbf2", "dialog": "ye", "wenn": {"nicht_gemerkt": "ausbildung_morgen"}},
-		"ye_tor": {"name": "Ausbilder Ye", "feld": [20, 38], "aussehen": "wizzard_m", "farbe": "ccdbf2", "dialog": "ye_tor", "wenn": {"gemerkt": "ausbildung_morgen"}},
-		"schreiberin": {"name": "Schreiberin Lene", "feld": [32, 15], "aussehen": "wizzard_f", "farbe": "ffe0b0", "dialog": "schreiberin"},
-		"schmiedin": {"name": "Schmiedin Marta", "feld": [35, 29], "aussehen": "knight_f", "farbe": "ffc8a0", "dialog": "schmiedin"},
-		"bingo": {"name": "Handelsherr Bingo", "feld": [10, 33], "aussehen": "knight_m", "farbe": "ffd36b", "dialog": "bingo"},
-		"marv": {"name": "Marv", "feld": [20, 34], "aussehen": "elf_m", "farbe": "ffb070", "dialog": "marv",
-			"wenn": {"und": [{"auftrag": "erster_gruppenkampf", "stand": "abgegeben"}, {"auftrag": "fest", "stand": "neu"}]}, "anspringen": {"radius": 5}},
-		"gesandte_arkanum": {"name": "Magistra Ilwen", "feld": [24, 12], "aussehen": "wizzard_f", "farbe": "b8b0ff", "dialog": "gesandte_arkanum",
-			"wenn": {"und": [{"auftrag": "erster_gruppenkampf", "stand": "abgegeben"}, {"auftrag": "fest", "stand": "neu"}]}},
-		"gesandte_messinghafen": {"name": "Tüftler Pim", "feld": [32, 20], "aussehen": "knight_m", "farbe": "e0a060", "dialog": "gesandte_messinghafen",
-			"wenn": {"und": [{"auftrag": "erster_gruppenkampf", "stand": "abgegeben"}, {"auftrag": "fest", "stand": "neu"}]}},
-		"gesandte_glutoase": {"name": "Feuertänzerin Nalia", "feld": [26, 31], "aussehen": "lizard_f", "farbe": "ffb070", "dialog": "gesandte_glutoase",
-			"wenn": {"und": [{"auftrag": "erster_gruppenkampf", "stand": "abgegeben"}, {"auftrag": "fest", "stand": "neu"}]}},
-		"gesandte_gruenwacht": {"name": "Fährtenleser Aske", "feld": [12, 18], "aussehen": "elf_m", "farbe": "a8e088", "dialog": "gesandte_gruenwacht",
-			"wenn": {"und": [{"auftrag": "erster_gruppenkampf", "stand": "abgegeben"}, {"auftrag": "fest", "stand": "neu"}]}},
-		"gesandte_nebelinseln": {"name": "Schreindienerin Mei", "feld": [17, 14], "aussehen": "elf_f", "farbe": "ffb8d8", "dialog": "gesandte_nebelinseln",
-			"wenn": {"und": [{"auftrag": "erster_gruppenkampf", "stand": "abgegeben"}, {"auftrag": "fest", "stand": "neu"}]}},
-		"wache": {"name": "Torwache Brom", "feld": [28, 28], "aussehen": "knight_m", "farbe": "b0b8c8", "dialog": "wache"},
-		"mira": {"name": "Mira", "feld": [26, 33], "aussehen": "elf_f", "farbe": "fff0c0", "dialog": "mira",
-			"wenn": {"auftrag": "leises_singen", "stand": "aktiv"}, "anspringen": {"radius": 7}},
-		"marv_fest": {"name": "Marv", "feld": [26, 24], "aussehen": "elf_m", "farbe": "ffb070", "dialog": "marv_fest",
-			"wenn": {"gemerkt": "nacht", "nicht_gemerkt": "sternenfall"}, "anspringen": {"radius": 5}},
-		"ren": {"name": "???", "feld": [24, 26], "aussehen": "elf_f", "farbe": "b090ff", "dialog": "ren",
-			"wenn": {"gemerkt": "sternenfall_kampf_vorbei", "nicht_gemerkt": "ren_getroffen"}, "anspringen": {"radius": 16}},
-		"marv_abschied": {"name": "Marv", "feld": [20, 34], "aussehen": "elf_m", "farbe": "ffb070", "dialog": "marv_abschied",
-			"wenn": {"gemerkt": "abreise_angekuendigt"}, "anspringen": {"radius": 5}},
-		"bank_kreuzweg": {"name": "Bankhüterin Ilse", "feld": [34, 14], "aussehen": "elf_f", "farbe": "c8d8ff", "dialog": "bank"},
-		"hanne": {"name": "Wirtin Hanne", "feld": [7, 20], "aussehen": "knight_f", "farbe": "ffd0c0", "dialog": "hanne"},
-		"edmar": {"name": "Vogt Edmar", "feld": [26, 18], "aussehen": "wizzard_m", "farbe": "f0d890", "dialog": "edmar"},
-		"quill": {"name": "Steinmetz Quill", "feld": [20, 24], "aussehen": "knight_m", "farbe": "c8c0b0", "dialog": "quill"},
-		"pip": {"name": "Pip", "feld": [17, 26], "aussehen": "elf_m", "farbe": "ffe8a0", "dialog": "pip"},
-		"lotte": {"name": "Lotte", "feld": [19, 26], "aussehen": "elf_f", "farbe": "c0e8ff", "dialog": "lotte"}
+		"ye": {
+			"name": "Ausbilder Ye",
+			"feld": [
+				13,
+				45
+			],
+			"aussehen": "wizzard_m",
+			"farbe": "ccdbf2",
+			"dialog": "ye",
+			"wenn": {
+				"nicht_gemerkt": "ausbildung_morgen"
+			}
+		},
+		"ye_tor": {
+			"name": "Ausbilder Ye",
+			"feld": [
+				29,
+				61
+			],
+			"aussehen": "wizzard_m",
+			"farbe": "ccdbf2",
+			"dialog": "ye_tor",
+			"wenn": {
+				"gemerkt": "ausbildung_morgen"
+			}
+		},
+		"schreiberin": {
+			"name": "Schreiberin Lene",
+			"feld": [
+				15,
+				45
+			],
+			"aussehen": "wizzard_f",
+			"farbe": "ffe0b0",
+			"dialog": "schreiberin"
+		},
+		"schmiedin": {
+			"name": "Schmiedin Marta",
+			"feld": [
+				44,
+				42
+			],
+			"aussehen": "knight_f",
+			"farbe": "ffc8a0",
+			"dialog": "schmiedin"
+		},
+		"bingo": {
+			"name": "Handelsherr Bingo",
+			"feld": [
+				37,
+				15
+			],
+			"aussehen": "knight_m",
+			"farbe": "ffd36b",
+			"dialog": "bingo"
+		},
+		"marv": {
+			"name": "Marv",
+			"feld": [
+				30,
+				46
+			],
+			"aussehen": "elf_m",
+			"farbe": "ffb070",
+			"dialog": "marv",
+			"wenn": {
+				"und": [
+					{
+						"auftrag": "erster_gruppenkampf",
+						"stand": "abgegeben"
+					},
+					{
+						"auftrag": "fest",
+						"stand": "neu"
+					}
+				]
+			},
+			"anspringen": {
+				"radius": 5
+			}
+		},
+		"gesandte_arkanum": {
+			"name": "Magistra Ilwen",
+			"feld": [
+				51,
+				35
+			],
+			"aussehen": "wizzard_f",
+			"farbe": "b8b0ff",
+			"dialog": "gesandte_arkanum",
+			"wenn": {
+				"und": [
+					{
+						"auftrag": "erster_gruppenkampf",
+						"stand": "abgegeben"
+					},
+					{
+						"auftrag": "fest",
+						"stand": "neu"
+					}
+				]
+			}
+		},
+		"gesandte_messinghafen": {
+			"name": "Tüftler Pim",
+			"feld": [
+				49,
+				28
+			],
+			"aussehen": "knight_m",
+			"farbe": "e0a060",
+			"dialog": "gesandte_messinghafen",
+			"wenn": {
+				"und": [
+					{
+						"auftrag": "erster_gruppenkampf",
+						"stand": "abgegeben"
+					},
+					{
+						"auftrag": "fest",
+						"stand": "neu"
+					}
+				]
+			}
+		},
+		"gesandte_glutoase": {
+			"name": "Feuertänzerin Nalia",
+			"feld": [
+				55,
+				28
+			],
+			"aussehen": "lizard_f",
+			"farbe": "ffb070",
+			"dialog": "gesandte_glutoase",
+			"wenn": {
+				"und": [
+					{
+						"auftrag": "erster_gruppenkampf",
+						"stand": "abgegeben"
+					},
+					{
+						"auftrag": "fest",
+						"stand": "neu"
+					}
+				]
+			}
+		},
+		"gesandte_gruenwacht": {
+			"name": "Fährtenleser Aske",
+			"feld": [
+				61,
+				28
+			],
+			"aussehen": "elf_m",
+			"farbe": "a8e088",
+			"dialog": "gesandte_gruenwacht",
+			"wenn": {
+				"und": [
+					{
+						"auftrag": "erster_gruppenkampf",
+						"stand": "abgegeben"
+					},
+					{
+						"auftrag": "fest",
+						"stand": "neu"
+					}
+				]
+			}
+		},
+		"gesandte_nebelinseln": {
+			"name": "Schreindienerin Mei",
+			"feld": [
+				58,
+				35
+			],
+			"aussehen": "elf_f",
+			"farbe": "ffb8d8",
+			"dialog": "gesandte_nebelinseln",
+			"wenn": {
+				"und": [
+					{
+						"auftrag": "erster_gruppenkampf",
+						"stand": "abgegeben"
+					},
+					{
+						"auftrag": "fest",
+						"stand": "neu"
+					}
+				]
+			}
+		},
+		"wache": {
+			"name": "Torwache Brom",
+			"feld": [
+				58,
+				30
+			],
+			"aussehen": "knight_m",
+			"farbe": "b0b8c8",
+			"dialog": "wache"
+		},
+		"mira": {
+			"name": "Mira",
+			"feld": [
+				55,
+				33
+			],
+			"aussehen": "elf_f",
+			"farbe": "fff0c0",
+			"dialog": "mira",
+			"wenn": {
+				"auftrag": "leises_singen",
+				"stand": "aktiv"
+			},
+			"anspringen": {
+				"radius": 7
+			}
+		},
+		"marv_fest": {
+			"name": "Marv",
+			"feld": [
+				30,
+				28
+			],
+			"aussehen": "elf_m",
+			"farbe": "ffb070",
+			"dialog": "marv_fest",
+			"wenn": {
+				"gemerkt": "nacht",
+				"nicht_gemerkt": "sternenfall"
+			},
+			"anspringen": {
+				"radius": 5
+			}
+		},
+		"ren": {
+			"name": "???",
+			"feld": [
+				34,
+				28
+			],
+			"aussehen": "elf_f",
+			"farbe": "b090ff",
+			"dialog": "ren",
+			"wenn": {
+				"gemerkt": "sternenfall_kampf_vorbei",
+				"nicht_gemerkt": "ren_getroffen"
+			},
+			"anspringen": {
+				"radius": 16
+			}
+		},
+		"marv_abschied": {
+			"name": "Marv",
+			"feld": [
+				30,
+				46
+			],
+			"aussehen": "elf_m",
+			"farbe": "ffb070",
+			"dialog": "marv_abschied",
+			"wenn": {
+				"gemerkt": "abreise_angekuendigt"
+			},
+			"anspringen": {
+				"radius": 5
+			}
+		},
+		"bank_kreuzweg": {
+			"name": "Bankhüterin Ilse",
+			"feld": [
+				38,
+				8
+			],
+			"aussehen": "elf_f",
+			"farbe": "c8d8ff",
+			"dialog": "bank"
+		},
+		"hanne": {
+			"name": "Wirtin Hanne",
+			"feld": [
+				10,
+				28
+			],
+			"aussehen": "knight_f",
+			"farbe": "ffd0c0",
+			"dialog": "hanne"
+		},
+		"edmar": {
+			"name": "Vogt Edmar",
+			"feld": [
+				33,
+				36
+			],
+			"aussehen": "wizzard_m",
+			"farbe": "f0d890",
+			"dialog": "edmar"
+		},
+		"quill": {
+			"name": "Steinmetz Quill",
+			"feld": [
+				27,
+				25
+			],
+			"aussehen": "knight_m",
+			"farbe": "c8c0b0",
+			"dialog": "quill"
+		},
+		"pip": {
+			"name": "Pip",
+			"feld": [
+				29,
+				26
+			],
+			"aussehen": "elf_m",
+			"farbe": "ffe8a0",
+			"dialog": "pip"
+		},
+		"lotte": {
+			"name": "Lotte",
+			"feld": [
+				30,
+				26
+			],
+			"aussehen": "elf_f",
+			"farbe": "c0e8ff",
+			"dialog": "lotte"
+		}
 	},
 	"deko": [
-		{"art": "wegweiser", "feld": [2, 19], "text": "Grünwacht|", "wenn": {"gemerkt": "klasse_bestaetigt"}},
-		{"art": "festlaterne", "feld": [24, 15], "wenn": {"oder": [{"gemerkt": "nacht"}, {"gemerkt": "laterne_arkanum"}]}},
-		{"art": "festlaterne", "feld": [29, 24], "wenn": {"oder": [{"gemerkt": "nacht"}, {"gemerkt": "laterne_messinghafen"}]}},
-		{"art": "festlaterne", "feld": [20, 29], "wenn": {"oder": [{"gemerkt": "nacht"}, {"gemerkt": "laterne_glutoase"}]}},
-		{"art": "festlaterne", "feld": [15, 20], "wenn": {"oder": [{"gemerkt": "nacht"}, {"gemerkt": "laterne_gruenwacht"}]}},
-		{"art": "festlaterne", "feld": [19, 15], "wenn": {"oder": [{"gemerkt": "nacht"}, {"gemerkt": "laterne_nebelinseln"}]}},
-		{"art": "krater", "feld": [24, 22], "wenn": {"gemerkt": "sternenfall"}}
+		{
+			"art": "wegweiser",
+			"feld": [
+				6,
+				30
+			],
+			"text": "Grünwacht|",
+			"wenn": {
+				"gemerkt": "klasse_bestaetigt"
+			}
+		},
+		{
+			"art": "festlaterne",
+			"feld": [
+				29,
+				24
+			],
+			"wenn": {
+				"oder": [
+					{
+						"gemerkt": "nacht"
+					},
+					{
+						"gemerkt": "laterne_arkanum"
+					}
+				]
+			}
+		},
+		{
+			"art": "festlaterne",
+			"feld": [
+				36,
+				24
+			],
+			"wenn": {
+				"oder": [
+					{
+						"gemerkt": "nacht"
+					},
+					{
+						"gemerkt": "laterne_messinghafen"
+					}
+				]
+			}
+		},
+		{
+			"art": "festlaterne",
+			"feld": [
+				36,
+				36
+			],
+			"wenn": {
+				"oder": [
+					{
+						"gemerkt": "nacht"
+					},
+					{
+						"gemerkt": "laterne_glutoase"
+					}
+				]
+			}
+		},
+		{
+			"art": "festlaterne",
+			"feld": [
+				27,
+				35
+			],
+			"wenn": {
+				"oder": [
+					{
+						"gemerkt": "nacht"
+					},
+					{
+						"gemerkt": "laterne_gruenwacht"
+					}
+				]
+			}
+		},
+		{
+			"art": "festlaterne",
+			"feld": [
+				29,
+				29
+			],
+			"wenn": {
+				"oder": [
+					{
+						"gemerkt": "nacht"
+					},
+					{
+						"gemerkt": "laterne_nebelinseln"
+					}
+				]
+			}
+		}
 	],
 	"licht": "d8d4e0",
-	"lichter": [
-		{"art": "strassenlaterne", "feld": [30, 20]},
-		{"art": "strassenlaterne", "feld": [14, 24]},
-		{"art": "strassenlaterne", "feld": [24, 30]},
-		{"art": "strassenlaterne", "feld": [12, 27]},
-		{"art": "strassenlaterne", "feld": [10, 16]},
-		{"art": "fackel", "feld": [29, 27]}
-	],
-	"staende": [
-		{"feld": [25, 11], "farbe": "b8b0ff", "text": "Arkanum"},
-		{"feld": [33, 19], "farbe": "e0a060", "text": "Messinghafen"},
-		{"feld": [25, 32], "farbe": "ffb070", "text": "Glutoase"},
-		{"feld": [11, 19], "farbe": "a8e088", "text": "Grünwacht"},
-		{"feld": [18, 13], "farbe": "ffb8d8", "text": "Nebelinseln"}
-	],
 	"sammelpunkte": [
-		{"gegenstand": "kraut", "feld": [16, 16]},
-		{"gegenstand": "kraut", "feld": [20, 28]},
-		{"gegenstand": "kraut", "feld": [18, 30]},
-		{"gegenstand": "wiesenkraut", "feld": [4, 41], "wenn": {"auftrag": "festmahl", "stand": "aktiv"}},
-		{"gegenstand": "wiesenkraut", "feld": [16, 42], "wenn": {"auftrag": "festmahl", "stand": "aktiv"}},
-		{"gegenstand": "wiesenkraut", "feld": [38, 5], "wenn": {"auftrag": "festmahl", "stand": "aktiv"}},
-		{"gegenstand": "wildfleisch", "feld": [6, 2], "wenn": {"auftrag": "festmahl", "stand": "aktiv"}},
-		{"gegenstand": "wildfleisch", "feld": [41, 17], "wenn": {"auftrag": "festmahl", "stand": "aktiv"}}
+		{
+			"gegenstand": "kraut",
+			"feld": [
+				24,
+				16
+			]
+		},
+		{
+			"gegenstand": "kraut",
+			"feld": [
+				18,
+				46
+			]
+		},
+		{
+			"gegenstand": "kraut",
+			"feld": [
+				14,
+				30
+			]
+		},
+		{
+			"gegenstand": "wiesenkraut",
+			"feld": [
+				3,
+				41
+			],
+			"wenn": {
+				"auftrag": "festmahl",
+				"stand": "aktiv"
+			}
+		},
+		{
+			"gegenstand": "wiesenkraut",
+			"feld": [
+				18,
+				47
+			],
+			"wenn": {
+				"auftrag": "festmahl",
+				"stand": "aktiv"
+			}
+		},
+		{
+			"gegenstand": "wiesenkraut",
+			"feld": [
+				46,
+				4
+			],
+			"wenn": {
+				"auftrag": "festmahl",
+				"stand": "aktiv"
+			}
+		},
+		{
+			"gegenstand": "wildfleisch",
+			"feld": [
+				6,
+				3
+			],
+			"wenn": {
+				"auftrag": "festmahl",
+				"stand": "aktiv"
+			}
+		},
+		{
+			"gegenstand": "wildfleisch",
+			"feld": [
+				48,
+				18
+			],
+			"wenn": {
+				"auftrag": "festmahl",
+				"stand": "aktiv"
+			}
+		}
 	],
 	"orte": [
-		{"art": "kater", "feld": [12, 31], "dialog": "kater", "wenn": {"auftrag": "hannes_kater", "stand": "aktiv", "nicht_gemerkt": "kater_gefunden"}},
-		{"art": "laternenhaken", "feld": [24, 15], "wenn": {"auftrag": "fuenf_farben", "stand": "aktiv", "nicht_gemerkt": "laterne_arkanum"},
-			"meldung": "Du hängst die violette Laterne des Arkanums auf.", "aktionen": [{"merken": "laterne_arkanum"}, {"gegenstand": "festlaterne", "anzahl": -1}]},
-		{"art": "laternenhaken", "feld": [29, 24], "wenn": {"auftrag": "fuenf_farben", "stand": "aktiv", "nicht_gemerkt": "laterne_messinghafen"},
-			"meldung": "Du hängst die kupferne Laterne von Messinghafen auf.", "aktionen": [{"merken": "laterne_messinghafen"}, {"gegenstand": "festlaterne", "anzahl": -1}]},
-		{"art": "laternenhaken", "feld": [20, 29], "wenn": {"auftrag": "fuenf_farben", "stand": "aktiv", "nicht_gemerkt": "laterne_glutoase"},
-			"meldung": "Du hängst die glutrote Laterne der Glutoase auf.", "aktionen": [{"merken": "laterne_glutoase"}, {"gegenstand": "festlaterne", "anzahl": -1}]},
-		{"art": "laternenhaken", "feld": [15, 20], "wenn": {"auftrag": "fuenf_farben", "stand": "aktiv", "nicht_gemerkt": "laterne_gruenwacht"},
-			"meldung": "Du hängst die grüne Laterne der Grünwacht auf.", "aktionen": [{"merken": "laterne_gruenwacht"}, {"gegenstand": "festlaterne", "anzahl": -1}]},
-		{"art": "laternenhaken", "feld": [19, 15], "wenn": {"auftrag": "fuenf_farben", "stand": "aktiv", "nicht_gemerkt": "laterne_nebelinseln"},
-			"meldung": "Du hängst die rosa Laterne der Nebelinseln auf.", "aktionen": [{"merken": "laterne_nebelinseln"}, {"gegenstand": "festlaterne", "anzahl": -1}]}
+		{
+			"art": "kater",
+			"feld": [
+				16,
+				33
+			],
+			"dialog": "kater",
+			"wenn": {
+				"auftrag": "hannes_kater",
+				"stand": "aktiv",
+				"nicht_gemerkt": "kater_gefunden"
+			}
+		},
+		{
+			"art": "laternenhaken",
+			"feld": [
+				29,
+				24
+			],
+			"wenn": {
+				"auftrag": "fuenf_farben",
+				"stand": "aktiv",
+				"nicht_gemerkt": "laterne_arkanum"
+			},
+			"meldung": "Du hängst die violette Laterne des Arkanums auf.",
+			"aktionen": [
+				{
+					"merken": "laterne_arkanum"
+				},
+				{
+					"gegenstand": "festlaterne",
+					"anzahl": -1
+				}
+			]
+		},
+		{
+			"art": "laternenhaken",
+			"feld": [
+				36,
+				24
+			],
+			"wenn": {
+				"auftrag": "fuenf_farben",
+				"stand": "aktiv",
+				"nicht_gemerkt": "laterne_messinghafen"
+			},
+			"meldung": "Du hängst die kupferne Laterne von Messinghafen auf.",
+			"aktionen": [
+				{
+					"merken": "laterne_messinghafen"
+				},
+				{
+					"gegenstand": "festlaterne",
+					"anzahl": -1
+				}
+			]
+		},
+		{
+			"art": "laternenhaken",
+			"feld": [
+				36,
+				36
+			],
+			"wenn": {
+				"auftrag": "fuenf_farben",
+				"stand": "aktiv",
+				"nicht_gemerkt": "laterne_glutoase"
+			},
+			"meldung": "Du hängst die glutrote Laterne der Glutoase auf.",
+			"aktionen": [
+				{
+					"merken": "laterne_glutoase"
+				},
+				{
+					"gegenstand": "festlaterne",
+					"anzahl": -1
+				}
+			]
+		},
+		{
+			"art": "laternenhaken",
+			"feld": [
+				27,
+				35
+			],
+			"wenn": {
+				"auftrag": "fuenf_farben",
+				"stand": "aktiv",
+				"nicht_gemerkt": "laterne_gruenwacht"
+			},
+			"meldung": "Du hängst die grüne Laterne der Grünwacht auf.",
+			"aktionen": [
+				{
+					"merken": "laterne_gruenwacht"
+				},
+				{
+					"gegenstand": "festlaterne",
+					"anzahl": -1
+				}
+			]
+		},
+		{
+			"art": "laternenhaken",
+			"feld": [
+				29,
+				29
+			],
+			"wenn": {
+				"auftrag": "fuenf_farben",
+				"stand": "aktiv",
+				"nicht_gemerkt": "laterne_nebelinseln"
+			},
+			"meldung": "Du hängst die rosa Laterne der Nebelinseln auf.",
+			"aktionen": [
+				{
+					"merken": "laterne_nebelinseln"
+				},
+				{
+					"gegenstand": "festlaterne",
+					"anzahl": -1
+				}
+			]
+		}
 	]
 }

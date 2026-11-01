@@ -50,8 +50,8 @@ enum Tile { GRASS, ROAD, PLAZA, OVERGROWN, FOREST, PLANKS, BRIDGE, CANOPY, CAVE,
 ## Kennung der Stadt Kreuzweg (dort beginnt das Spiel)
 const KREUZWEG := "kreuzweg"
 
-const SIZE := Vector2i(44, 44)
-const CENTER := Vector2i(22, 22)
+const SIZE := Vector2i(64, 66)
+const CENTER := Vector2i(32, 32)
 ## Halbmesser des runden Marktplatzes (in Feldern)
 const PLAZA_RADIUS := 7.5
 ## Felder pro Sekunde
@@ -196,107 +196,30 @@ func _add_things(map_id: String, data: Dictionary) -> void:
 
 # --- Karte ----------------------------------------------------------------------
 
-## Kreuzweg: Marktplatz mit der Statue der Fünf in der Mitte, sechs Straßen nach draußen.
-## Die sechste (nach Südosten) ist zugewachsen und endet in Gestrüpp.
+## Kreuzweg: aus dem Baukasten (data/kreuzweg_karte.json). Boden und Teile bestimmen, wo man laufen kann.
 func _build_map() -> void:
 	var town := GameData.get_file("kreuzweg")
-
-	# Marktplatz (rund)
-	for y in SIZE.y:
-		for x in SIZE.x:
-			if (Vector2(x, y) - Vector2(CENTER)).length() <= PLAZA_RADIUS:
-				tiles[y][x] = Tile.PLAZA
-	# Fünf benutzte Straßen, drei Felder breit (Norden, Süden, Osten, Westen, Nordwesten)
-	for i in SIZE.x:
-		for w in [-1, 0, 1]:
-			_road(Vector2i(CENTER.x + w, i))
-			_road(Vector2i(i, CENTER.y + w))
-	for k in range(0, CENTER.x):
-		_road(Vector2i(k, k))
-		_road(Vector2i(k + 1, k))
-		_road(Vector2i(k, k + 1))
-	# Die sechste Straße nach Südosten: zugewachsen, in der Mitte versperrt Gestrüpp den Weg
-	for k in range(CENTER.x + 6, SIZE.x):
-		_set_tile(Vector2i(k, k), Tile.OVERGROWN)
-		_set_tile(Vector2i(k, k - 1), Tile.OVERGROWN)
-		_set_tile(Vector2i(k - 1, k), Tile.OVERGROWN)
-	for cell: Vector2i in [Vector2i(34, 34), Vector2i(34, 33), Vector2i(33, 34), Vector2i(35, 35), Vector2i(35, 34),
-			Vector2i(34, 35), Vector2i(36, 35), Vector2i(35, 36), Vector2i(33, 32), Vector2i(32, 33)]:
-		props.append({kind = "bush", cell = cell})
-		blocked[cell] = true
-
-	# Statue der Fünf in der Mitte
-	_building("Statue der Fünf", Rect2i(21, 21, 2, 2), 46.0, Color("b8b0a0"), "statue")
-	# Wichtige Häuser
-	_building("Abenteurergilde", Rect2i(27, 9, 6, 4), 64.0, Color("8a5a3c"), "haus", Color("7a2f2a"))
-	_building("Bingos Laden", Rect2i(8, 28, 4, 4), 48.0, Color("a07a3a"), "haus", Color("3f6a8a"))
-	_building("Schmiede", Rect2i(33, 25, 4, 3), 42.0, Color("6a5048"), "haus", Color("3c3c44"))
-	_building("Wohnhaus", Rect2i(14, 8, 4, 3), 40.0, Color("7a6a5a"), "haus", Color("8a4a2a"))
-	_building("Gasthaus Wegrast", Rect2i(6, 17, 4, 3), 46.0, Color("8a6a48"), "haus", Color("5a6a3a"))
-	# Weitere Wohnhäuser ohne Namen
-	var houses := [
-		[Rect2i(14, 4, 3, 3), Color("8a7a62"), Color("6a3a2a")], [Rect2i(35, 8, 4, 3), Color("75685a"), Color("4a5a3a")],
-		[Rect2i(37, 13, 3, 3), Color("8c7458"), Color("7a2f2a")], [Rect2i(3, 14, 3, 3), Color("80705e"), Color("3f5a6a")],
-		[Rect2i(13, 35, 4, 3), Color("7c6c58"), Color("8a4a2a")], [Rect2i(4, 36, 3, 3), Color("8a7a62"), Color("5a3a4a")],
-		[Rect2i(27, 37, 3, 3), Color("75685a"), Color("6a3a2a")], [Rect2i(38, 30, 3, 3), Color("8c7458"), Color("3f5a6a")],
-		[Rect2i(13, 28, 3, 3), Color("80705e"), Color("7a2f2a")], [Rect2i(27, 2, 3, 3), Color("7c6c58"), Color("4a5a3a")],
-	]
-	for h: Array in houses:
-		_building("", h[0], 34.0, h[1], "haus", h[2])
-	props.append({kind = "lantern", cell = Vector2i(28, 13)})
-	# Brunnen und Blumen
-	props.append({kind = "well", cell = Vector2i(25, 19)})
-	blocked[Vector2i(25, 19)] = true
-	for b: Dictionary in buildings:
-		if b.art == "haus":
-			var spot := Vector2i(b.rect.position.x - 1, b.rect.end.y - 1)
-			if tile_at(spot) == Tile.GRASS:
-				props.append({kind = "flowers", cell = spot})
-
-	# Stände der Gesandten an ihren Straßen
-	for d: Dictionary in town.get("staende", []):
-		var cell := Vector2i(int(d.feld[0]), int(d.feld[1]))
-		props.append({kind = "stand", cell = cell, color = Color(d.get("farbe", "ffffff")), text = d.get("text", "")})
-		blocked[cell] = true
-	# Lichter (Straßenlaternen, Fackeln): werfen einen Schein, siehe Licht
-	for d: Dictionary in town.get("lichter", []):
-		var cell := Vector2i(int(d.feld[0]), int(d.feld[1]))
-		props.append({kind = d.art, cell = cell})
-		blocked[cell] = true
-	# Grundlicht: tagsüber leicht abgedunkelt, damit Lichter wirken
+	var karte := GameData.get_file("kreuzweg_karte")
+	var teile := GameData.get_file("baukasten_teile")
+	maps[KREUZWEG].baukasten = karte
 	maps[KREUZWEG].light = Color(town.get("licht", "ffffff"))
-
-	# Bäume auf freiem Gras am Rand, nicht direkt neben Figuren, Ständen oder Sammelpunkten
-	var reserved: Array[Vector2i] = []
-	for id: String in town.get("npcs", {}):
-		var f: Array = town.npcs[id].feld
-		reserved.append(Vector2i(int(f[0]), int(f[1])))
-	for d: Dictionary in town.get("sammelpunkte", []) + town.get("deko", []) + town.get("orte", []):
-		reserved.append(Vector2i(int(d.feld[0]), int(d.feld[1])))
-	var rng := RandomNumberGenerator.new()
-	rng.seed = 6
-	for i in 160:
-		var cell := Vector2i(rng.randi_range(0, SIZE.x - 1), rng.randi_range(0, SIZE.y - 1))
-		if tiles[cell.y][cell.x] != Tile.GRASS or blocked.has(cell) or (cell - CENTER).length() < 10.0:
-			continue
-		if reserved.any(func(r: Vector2i) -> bool: return (r - cell).length() < 2.5):
-			continue
-		props.append({kind = "tree", cell = cell})
-		blocked[cell] = true
-
-
-func _road(cell: Vector2i) -> void:
-	if tile_at(cell) == Tile.GRASS:
-		_set_tile(cell, Tile.ROAD)
-
-
-func _set_tile(cell: Vector2i, tile: Tile) -> void:
-	if in_bounds(cell):
-		tiles[cell.y][cell.x] = tile
-
-
-func _building(p_name: String, rect: Rect2i, height: float, color: Color, art := "haus", roof := Color("6a3a2a")) -> void:
-	maps[KREUZWEG].add_building(p_name, rect, height, color, art, roof)
+	var rows: Array = karte.get("boden", [])
+	for y in rows.size():
+		var line: String = rows[y]
+		for x in line.length():
+			var sign_def: Dictionary = teile.boden.get(line[x], {})
+			tiles[y][x] = Tile.GRASS
+			if not sign_def.get("begehbar", true):
+				blocked[Vector2i(x, y)] = true
+	for o: Dictionary in karte.get("objekte", []):
+		if teile.objekte[o.teil].get("begehbar", false):
+			var rect := BaukastenBoden.grundflaeche(o, teile)
+			for y in rect.size.y:
+				for x in rect.size.x:
+					blocked.erase(rect.position + Vector2i(x, y))
+		elif not o.has("wenn"):
+			for cell: Vector2i in BaukastenBoden.gesperrte_felder(o, teile):
+				blocked[cell] = true
 
 
 ## Die Karte mit dieser Kennung (unbekannte Kennung: Kreuzweg).

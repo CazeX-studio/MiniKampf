@@ -11,7 +11,7 @@ func _initialize() -> void:
 
 func _run() -> void:
 	# Spielstand: erster Auftrag erledigt, Ye wartet am Stadttor
-	var p := PlayerState.new("spieler", "Du", "elf_m", Vector2i(22, 36))
+	var p := PlayerState.new("spieler", "Du", "elf_m", Vector2i(31, 60))
 	p.progress.quests = {ankunft = "abgegeben", zu_ye = "abgegeben", erster_auftrag = "abgegeben"}
 	p.progress.flags = {angekommen = true, gilde_angemeldet = true, ausbildung_morgen = true}
 	p.progress.xp = 100
@@ -47,7 +47,7 @@ func _run() -> void:
 	_check(local.progress.flags.has("kampf_gewonnen:grundausbildung"), "Übungskampf zählt als bestanden")
 	_check(local.progress.xp == 400, "300 Erfahrung für den ersten Sieg")
 	_check(local.progress.total_count("heiltrank") == 1, "Getrunkener Heiltrank fehlt am Gürtel")
-	_check((Vector2(local.cell) - Vector2(20, 38)).length() < 3.0, "Spieler steht noch bei Ye")
+	_check((Vector2(local.cell) - Vector2(29, 61)).length() < 3.0, "Spieler steht noch bei Ye")
 	SaveGame.delete()
 	print("Übergang Stadt/Kampf: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)

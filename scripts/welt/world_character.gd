@@ -23,6 +23,8 @@ const MARKER_SIDE_COLOR := Color("5ab8ff")
 const BUBBLE := preload("res://assets/ui/sprechblase.png")
 ## Wie schnell die Steh-Animation läuft (Bilder pro Sekunde). NPCs stehen ruhiger als Spieler.
 var idle_fps := 6.0
+## Abstand zwischen Sortierpunkt und gemalter Figur (siehe versetzen)
+var versatz := 0.0
 
 var _frames := {}
 var _sprite: Sprite2D
@@ -107,7 +109,7 @@ func _process(delta: float) -> void:
 
 func _draw() -> void:
 	# Schatten unter den Füßen
-	draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, 0.45))
+	draw_set_transform(Vector2(0, versatz), 0.0, Vector2(1.0, 0.45))
 	draw_circle(Vector2.ZERO, 18.0, Color(0, 0, 0, 0.35))
 	draw_set_transform_matrix(Transform2D.IDENTITY)
 
@@ -119,6 +121,13 @@ func _draw_overlay() -> void:
 		var pos := Vector2(-20, _head_y - 6 + bob)
 		_overlay.draw_string_outline(font, pos, marker, HORIZONTAL_ALIGNMENT_CENTER, 40, 30, 7, Color.BLACK)
 		_overlay.draw_string(font, pos, marker, HORIZONTAL_ALIGNMENT_CENTER, 40, 30, MARKER_SIDE_COLOR if marker_side else MARKER_COLOR)
+
+
+## Sortierung und Bild trennen: Die Figur wird als stünde sie um dy weiter oben einsortiert, gemalt aber an der alten Stelle.
+func versetzen(dy: float) -> void:
+	versatz = dy
+	_sprite.position.y = dy
+	_overlay.position.y = dy
 
 
 ## Animation an einer anderen Stelle beginnen lassen (damit nicht alle Figuren gleichzeitig wippen).

@@ -94,7 +94,7 @@ func _test_journey() -> void:
 	var p := world.add_player("a", "Test", "elf_m", Vector2i(2, 22))
 
 	# Vor der Klassenwahl führt die Weststraße nirgendwohin
-	_walk(world, p, Vector2i(0, 22))
+	_walk(world, p, Vector2i(0, 31))
 	_check(p.map == "kreuzweg", "Vor der Klassenwahl bleibt man in Kreuzweg")
 
 	# Abschied von Ye: Abspann, danach steht man auf dem Weg, der Auftrag läuft
@@ -112,9 +112,9 @@ func _test_journey() -> void:
 
 	# Zurück nach Kreuzweg und wieder hinaus geht auch
 	_walk(world, p, Vector2i(59, 9))
-	_check(p.map == "kreuzweg" and p.cell == Vector2i(2, 22), "Nach Osten zurück nach Kreuzweg")
+	_check(p.map == "kreuzweg" and p.cell == Vector2i(3, 31), "Nach Osten zurück nach Kreuzweg")
 	_check(notes.has("– Kreuzweg –"), "Meldung beim Betreten einer Karte")
-	_walk(world, p, Vector2i(0, 22))
+	_walk(world, p, Vector2i(0, 31))
 	_check(p.map == "weg_gruenwacht", "Weststraße führt nach der Klassenwahl auf den Weg")
 
 	# Über den Weg in den Wald, mit dem Steuerknopf (freies Laufen nach links oben = Westen).

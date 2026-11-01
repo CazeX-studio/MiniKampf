@@ -58,7 +58,7 @@ func _play_region(klasse: String) -> void:
 	_pending_scene = ""
 	_min_level = 0
 	world = WorldState.new()
-	p = world.add_player("spieler", "Du", "elf_m", Vector2i(10, 31))
+	p = world.add_player("spieler", "Du", "elf_m", Vector2i(37, 17))
 	world.battle_requested.connect(func(_id: String, kampf: String) -> void: _pending_battle = kampf)
 	world.scene_requested.connect(func(_id: String, scene: String) -> void: _pending_scene = scene)
 	# Stand am Ende von Akt 1: alle Aufträge davor erledigt, Klasse gewählt, Abschied bei Ye

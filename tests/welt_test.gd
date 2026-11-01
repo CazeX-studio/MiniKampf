@@ -17,7 +17,7 @@ func _initialize() -> void:
 
 func _test_steering() -> void:
 	var world := WorldState.new()
-	var p := world.add_player("a", "Test", "elf_m", Vector2i(22, 38))
+	var p := world.add_player("a", "Test", "elf_m", Vector2i(32, 46))
 
 	# Kein Haus steht auf oder direkt an einer Straße oder dem Marktplatz (ein Feld Abstand)
 	var on_road := false
@@ -29,7 +29,7 @@ func _test_steering() -> void:
 				if world.tile_at(Vector2i(x, y)) in [WorldState.Tile.ROAD, WorldState.Tile.OVERGROWN, WorldState.Tile.PLAZA]:
 					on_road = true
 	_check(not on_road, "Kein Haus steht auf oder direkt an Straße oder Marktplatz")
-	_check((Vector2(world.npcs.wache.cell) - Vector2(33, 25)).length() > 5.0, "Die Wache steht nicht direkt an der Schmiede")
+	_check((Vector2(world.npcs.wache.cell) - Vector2(46, 41)).length() > 5.0, "Die Wache steht nicht direkt an der Schmiede")
 
 	# Nach oben steuern: Der Spieler läuft auf dem Bildschirm nach oben (Feld x und y werden kleiner)
 	var start := p.pos
@@ -53,20 +53,20 @@ func _test_steering() -> void:
 	world.apply_command("a", {type = "steer", dir = Vector2.ZERO})
 
 	# Neben Ye stellen und "Aktion": Das Gespräch beginnt
-	var b := world.add_player("b", "Test 2", "elf_m", Vector2i(29, 16))
+	var b := world.add_player("b", "Test 2", "elf_m", Vector2i(13, 46))
 	world.apply_command("b", {type = "interact"})
 	_tick(world, 0.1)
 	_check(b.in_dialog(), "Aktions-Taste neben Ye startet das Gespräch")
 	# Weit weg: nichts passiert
-	world.apply_command("a", {type = "move", cell = Vector2i(6, 22)})
+	world.apply_command("a", {type = "move", cell = Vector2i(33, 42)})
 	_tick(world, 6.0)
 	world.apply_command("a", {type = "interact"})
 	_tick(world, 0.1)
 	_check(not p.in_dialog(), "Aktions-Taste ohne etwas in der Nähe macht nichts")
 	# Klicken zum Hinlaufen geht weiterhin
-	world.apply_command("a", {type = "move", cell = Vector2i(22, 30)})
+	world.apply_command("a", {type = "move", cell = Vector2i(32, 50)})
 	_tick(world, 5.0)
-	_check(p.cell == Vector2i(22, 30), "Klicken zum Hinlaufen funktioniert weiter")
+	_check(p.cell == Vector2i(32, 50), "Klicken zum Hinlaufen funktioniert weiter")
 
 
 func _test_building_blocks() -> void:
@@ -183,7 +183,7 @@ func _test_building_blocks() -> void:
 
 	# Marv: erst nach der Grundausbildung da, spricht einen von sich aus an
 	_check(world.check(p, world.npcs.marv.cond) and not world.npc_visible(p, "marv"), "Marv ist nach der Grundausbildung unterwegs (noch nicht zu sehen)")
-	world.apply_command("a", {type = "move", cell = Vector2i(22, 32)})
+	world.apply_command("a", {type = "move", cell = Vector2i(31, 48)})
 	var marv_came := false
 	var marv_waited := false
 	for i in 300:
@@ -192,7 +192,7 @@ func _test_building_blocks() -> void:
 			marv_came = marv_came or world.npc_visible(p, "marv")
 			# Während Marv herläuft, wartet man
 			var before := p.pos
-			world.apply_command("a", {type = "move", cell = Vector2i(22, 20)})
+			world.apply_command("a", {type = "move", cell = Vector2i(30, 42)})
 			world.tick(0.05)
 			marv_waited = p.pos == before
 		if p.in_dialog():
@@ -210,7 +210,7 @@ func _test_building_blocks() -> void:
 	_tick(world, 6.0)
 	_check(p.npc_walk.is_empty() and world.npc_visible(p, "marv"), "Marv geht danach an seinen Platz und bleibt dort")
 	_check(world.npc_marker(p, "bingo") == "?", "Zeichen ? über Bingo")
-	world.apply_command("a", {type = "move", cell = Vector2i(22, 28)})
+	world.apply_command("a", {type = "move", cell = Vector2i(31, 44)})
 	_tick(world, 3.0)
 	_check(not p.in_dialog(), "Marv spricht einen nur einmal von selbst an")
 
@@ -309,8 +309,8 @@ func _test_building_blocks() -> void:
 	_check(p.progress.flags.has("nacht") and p.progress.quest_state("fest") == "aktiv", "Es wird Nacht, das Fest beginnt")
 	_check(not world.npc_visible(p, "gesandte_glutoase") and not world.npc_visible(p, "marv") and world.check(p, world.npcs.marv_fest.cond),
 		"Die Gesandten sind abgereist, Marv ist auf dem Fest")
-	world.apply_command("a", {type = "move", cell = Vector2i(22, 26)})
-	_tick(world, 10.0)
+	world.apply_command("a", {type = "move", cell = Vector2i(31, 30)})
+	_tick(world, 14.0)
 	_check(p.in_dialog() and world.dialog_view(p).wer == "Marv", "Marv spricht dich auf dem Fest an")
 	world.apply_command("a", {type = "dialog_choose", index = 0})
 	world.apply_command("a", {type = "dialog_choose", index = 1})
@@ -345,7 +345,7 @@ func _test_building_blocks() -> void:
 	_check(not p.progress.flags.has("nacht") and p.progress.quest_state("abreise") == "aktiv", "Es ist Morgen, die Abreise steht an")
 	_check(not world.npc_visible(p, "gesandte_arkanum") and not world.npc_visible(p, "marv") and world.check(p, world.npcs.marv_abschied.cond),
 		"Gesandte bleiben fort, Marv wartet zum Abschied")
-	world.apply_command("a", {type = "move", cell = Vector2i(22, 32)})
+	world.apply_command("a", {type = "move", cell = Vector2i(31, 48)})
 	_tick(world, 10.0)
 	_check(p.in_dialog() and world.dialog_view(p).text.contains("Du gehst"), "Marv will dich nicht gehen lassen")
 	world.apply_command("a", {type = "dialog_choose", index = 0})
@@ -371,7 +371,7 @@ func _test_building_blocks() -> void:
 
 	# Sieg (eigene Welt): Erfolg, und Ren klaut den Splitter
 	var w2 := WorldState.new()
-	var q := w2.add_player("q", "Sieger", "elf_m", Vector2i(24, 28))
+	var q := w2.add_player("q", "Sieger", "elf_m", Vector2i(33, 30))
 	q.progress.flags = {"nacht": true, "sternenfall": true}
 	q.progress.quests = {"sternenfall": "aktiv"}
 	var achievements: Array[String] = []
@@ -479,7 +479,7 @@ func _test_side_quests() -> void:
 	_talk(world, p, "lotte")
 	world.apply_command("a", {type = "dialog_next"})
 	_check(p.progress.flags.has("kater_spur"), "Lotte hat den Kater gesehen")
-	world.apply_command("a", {type = "move", cell = Vector2i(12, 30)})
+	world.apply_command("a", {type = "move", cell = Vector2i(16, 32)})
 	_tick(world, 15.0)
 	world.apply_command("a", {type = "interact"})
 	_tick(world, 0.2)
@@ -500,11 +500,11 @@ func _test_side_quests() -> void:
 	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "dialog_choose", index = 0})
 	_check(p.progress.item_count("buerste") == 1, "Bürste von Quill bekommen")
-	world.apply_command("a", {type = "move", cell = Vector2i(10, 22)})
+	world.apply_command("a", {type = "move", cell = Vector2i(33, 47)})
 	_tick(world, 15.0)
 	world.apply_command("a", {type = "benutzen", gegenstand = "buerste"})
 	_check(not p.in_dialog() and notices[-1].contains("Statue"), "Bürste weit weg von der Statue: nur ein Hinweis")
-	world.apply_command("a", {type = "move", cell = Vector2i(20, 22)})
+	world.apply_command("a", {type = "move", cell = Vector2i(26, 24)})
 	_tick(world, 15.0)
 	world.apply_command("a", {type = "benutzen", gegenstand = "buerste"})
 	_check(p.in_dialog() and world.dialog_view(p).wer == "Statue der Fünf", "Bürste an der Statue benutzt")

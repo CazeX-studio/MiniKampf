@@ -27,6 +27,8 @@ var music := "stadt"
 var music_if: Dictionary = {}
 ## Dungeon-Regeln für Kämpfe auf dieser Karte ("pilzhoehle") oder "" (normale Karte)
 var dungeon := ""
+## Karte aus dem Baukasten: Inhalt von data/kreuzweg_karte.json ({boden, objekte}), sonst leer (gemalt aus tiles und Häusern)
+var baukasten: Dictionary = {}
 
 var astar := AStarGrid2D.new()
 

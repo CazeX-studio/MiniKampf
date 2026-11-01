@@ -70,6 +70,9 @@ const PROP_LIGHTS := {
 }
 ## Haus mit glühender Esse hinter der Tür
 const FORGE := "Schmiede"
+## Größe der Figuren auf Baukasten-Karten (wie im Testfeld ausprobiert)
+const BAUKASTEN_FIGUR := 0.8
+const BAUKASTEN_FIGUR_RECT := Rect2(-24, -128, 48, 130)
 const PICKUP_LIGHTS := {
 	"urbaum_herz": ["splitter", Vector2(0, -40)],
 	"grab": ["splitter", Vector2(12, 0)],
@@ -194,6 +197,7 @@ var _stick_index := -1
 var _stick_origin := Vector2.ZERO
 var _stick_vec := Vector2.ZERO
 var _stick_moved := false
+var _figur_groesse := 1.0
 
 
 func _ready() -> void:
@@ -296,6 +300,9 @@ func _build_map_view() -> void:
 		if id.begins_with("npc:") or id.begins_with("monster:"):
 			_characters.erase(id)
 	var m := state.get_map(local.map)
+	_figur_groesse = BAUKASTEN_FIGUR if not m.baukasten.is_empty() else 1.0
+	if not m.baukasten.is_empty():
+		_add_baukasten(m.baukasten)
 	for b: Dictionary in m.buildings:
 		_add_building(b)
 	for prop: Dictionary in m.props:
@@ -319,6 +326,7 @@ func _build_map_view() -> void:
 		# Jeder NPC beginnt an einer anderen Stelle der Animation, damit nicht alle im Gleichtakt wippen
 		view.time_offset(randf() * 4.0)
 		view.position = cell_center(Vector2(npc.cell))
+		view.scale = Vector2(_figur_groesse, _figur_groesse)
 		view.facing = 1
 		_add_map_node(view)
 		_characters["npc:" + id] = view
@@ -350,6 +358,45 @@ static func _danger_color(monster_level: int, player_level: int) -> Color:
 	if diff <= 4:
 		return Color("ffb050")
 	return Color("ff6060")
+
+
+## Baukasten-Karte aufbauen: Boden, flache Teile, stehende Teile (nach Tiefe sortiert) mit Namensschildern.
+func _add_baukasten(karte: Dictionary) -> void:
+	var teile := GameData.get_file("baukasten_teile")
+	var boden := BaukastenBoden.new()
+	boden.setup(teile, PackedStringArray(karte.get("boden", [])))
+	add_child(boden)
+	_map_nodes.append(boden)
+	var flach := Node2D.new()
+	flach.z_index = -5
+	add_child(flach)
+	_map_nodes.append(flach)
+	for o: Dictionary in karte.get("objekte", []):
+		var fertig := BaukastenBoden.teil_bauen(o, teile)
+		if fertig.is_empty():
+			continue
+		var node: Node2D = fertig.node
+		if fertig.flach:
+			flach.add_child(node)
+		else:
+			_add_map_node(node)
+			_occluders.append({node = node, rect = fertig.bild, feld = fertig.rect})
+		if o.has("wenn"):
+			_deco_nodes[node] = o.wenn
+		if o.has("name"):
+			_add_schild(node, o.name, (fertig.oben as Vector2) - node.position)
+
+
+func _add_schild(node: Node2D, text: String, oben: Vector2) -> void:
+	var schild := Label.new()
+	schild.text = text
+	schild.add_theme_font_size_override("font_size", 14)
+	schild.add_theme_color_override("font_outline_color", Color.BLACK)
+	schild.add_theme_constant_override("outline_size", 5)
+	schild.position = oben + Vector2(-90, -8)
+	schild.size = Vector2(180, 20)
+	schild.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	node.add_child(schild)
 
 
 func _add_map_node(node: Node2D) -> void:
@@ -399,6 +446,10 @@ func _send(cmd: Dictionary) -> void:
 
 ## Überträgt den Zustand der Spieler auf ihre Figuren.
 func _sync() -> void:
+	for view: Node2D in _characters.values():
+		if is_instance_valid(view) and view.versatz != 0.0:
+			view.position.y += view.versatz
+			view.versetzen(0.0)
 	var local := local_player()
 	if local.map != _shown_map:
 		_build_map_view()
@@ -417,6 +468,7 @@ func _sync() -> void:
 		if id != local_id and Netz.online():
 			view.set_name_color(GROUP_NAME_COLOR if Netz.in_my_group(id) else Color.WHITE)
 		view.position = cell_center(p.pos)
+		view.scale = Vector2(_figur_groesse, _figur_groesse)
 		view.moving = p.is_walking()
 		view.facing = p.facing
 		# Wer auf einer anderen Karte steht, ist hier nicht zu sehen. Im Dungeon sieht man nur die eigene Gruppe.
@@ -478,6 +530,7 @@ func _sync() -> void:
 	var goal := state.objective(local)
 	_goal.text = "Ziel: " + goal if goal != "" else ""
 	_update_hud()
+	_figuren_sortieren()
 
 
 ## NPCs stehen an ihrem Platz – außer einer läuft gerade zum eigenen Spieler hin oder wieder zurück.
@@ -718,6 +771,8 @@ func _show_marker(pos: Vector2) -> void:
 
 func _draw_ground() -> void:
 	var m := state.get_map(_shown_map)
+	if not m.baukasten.is_empty():
+		return
 	for y in m.size.y:
 		for x in m.size.x:
 			var cell := Vector2i(x, y)
@@ -839,7 +894,60 @@ func _draw_one_edge_arrow(target_cell: Vector2i, color: Color, label: String, si
 
 
 ## Häuser, Bäume und Stände, hinter denen jemand steht, werden durchsichtig (Spieler, NPCs, Monster).
+## Fläche, die eine Figur auf einer Baukasten-Karte bedeckt (über ihrem Fußpunkt).
+func _figur_flaeche(screen: Vector2) -> Rect2:
+	return Rect2(screen + BAUKASTEN_FIGUR_RECT.position * _figur_groesse, BAUKASTEN_FIGUR_RECT.size * _figur_groesse)
+
+
+## Steht die Figur (Feld-Position) vor diesem Baukasten-Teil?
+static func _vor_teil(c: Vector2, feld: Rect2i) -> bool:
+	return c.x >= feld.end.x or c.y >= feld.end.y
+
+
+## Große Teile reichen über viele Bildschirmzeilen: Die Figuren werden nach den Feldern einsortiert, nicht nur nach der Höhe.
+func _figuren_sortieren() -> void:
+	if state.get_map(_shown_map).baukasten.is_empty():
+		return
+	for view: Node2D in _characters.values():
+		if not is_instance_valid(view) or not view.visible:
+			continue
+		var screen: Vector2 = view.position
+		var c := _feld_von(screen)
+		var flaeche := _figur_flaeche(screen)
+		var low := -INF
+		var high := INF
+		for occ: Dictionary in _occluders:
+			var node: Node2D = occ.node
+			if occ.has("feld") and node.visible and (occ.rect as Rect2).intersects(flaeche):
+				if _vor_teil(c, occ.feld):
+					low = maxf(low, node.position.y + 1.0)
+				else:
+					high = minf(high, node.position.y - 1.0)
+		var key := screen.y
+		if low <= high:
+			key = clampf(key, low, high)
+		elif low > -INF:
+			key = low
+		view.position.y = key
+		view.versetzen(screen.y - key)
+
+
+func _feld_von(screen: Vector2) -> Vector2:
+	return Vector2(screen.x / TILE_W + screen.y / TILE_H, screen.y / TILE_H - screen.x / TILE_W)
+
+
 func _update_occluders(delta: float) -> void:
+	var baukasten := not state.get_map(_shown_map).baukasten.is_empty()
+	if baukasten:
+		# Nur die eigene Figur macht Dinge durchsichtig, und nur, wenn sie wirklich dahinter steht
+		var screen := cell_center(local_player().pos)
+		var flaeche := _figur_flaeche(screen)
+		var c := _feld_von(screen)
+		for occ: Dictionary in _occluders:
+			var node: Node2D = occ.node
+			var hinter: bool = (occ.rect as Rect2).intersects(flaeche) and not _vor_teil(c, occ.feld)
+			node.modulate.a = move_toward(node.modulate.a, 0.45 if hinter else 1.0, delta * 4.0)
+		return
 	var points: Array[Vector2] = []
 	for view: Node2D in _characters.values():
 		if is_instance_valid(view) and view.visible:
