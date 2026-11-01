@@ -12,7 +12,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 
 ### Vorbereitung
 
-- **D1:** Bildaufträge für alles, was noch fehlt, in GRAFIK_AUFTRAG.md schreiben: acht NPC-Grundkörper, Körper der fünf Demo-Klassen nach dem neuen Stil, Kurzschwert, Probe-Hut und Probe-Umhang. (neu) – Status: offen
+- **D1:** Bildaufträge für alles, was noch fehlt, in GRAFIK_AUFTRAG.md schreiben: acht NPC-Grundkörper, Körper der fünf Demo-Klassen nach dem neuen Stil, Kurzschwert, Probe-Hut und Probe-Umhang. (neu) – Status: fertig (01.11.2026, 116 Blätter in GRAFIK_AUFTRAG.md Teil D, dazu Haupt- und Nebenfiguren)
 
 ### Aussehen
 
