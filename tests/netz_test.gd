@@ -33,6 +33,8 @@ func _start() -> void:
 	SaveGame.delete()
 	# Der Gastgeber steht selbst in der Stadt (wie in kreuzweg.gd)
 	Netz.world.add_player(Netz.my_id, Netz.my_name, Netz.my_look, WorldState.start_cell())
+	# Gemeinsame Szenen gibt es sonst nur im Dungeon, hier prüfen wir sie in der Stadt
+	Netz.world.scenes_everywhere = true
 	_pid = OS.create_process(OS.get_executable_path(),
 			["--headless", "--path", ProjectSettings.globalize_path("res://"), "--script", "res://tests/netz_mitspieler.gd"])
 	_check(_pid > 0, "Mitspieler-Programm startet")
