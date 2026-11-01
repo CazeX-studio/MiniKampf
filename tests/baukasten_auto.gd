@@ -67,6 +67,13 @@ func _process(delta: float) -> void:
 			_set_night(true)],
 		[18.1, func() -> void:
 			_foto("kreuzweg_neu_ost_nacht")
+			_set_night(false)
+			place_player(Vector2i(22, 104))],
+		[19.1, func() -> void:
+			_foto("rastplatz")
+			place_player(Vector2i(42, 104))],
+		[20.1, func() -> void:
+			_foto("hirschtal")
 			get_tree().quit()],
 	]
 	while _step < plan.size() and _t >= plan[_step][0]:

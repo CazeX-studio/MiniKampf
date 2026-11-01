@@ -5,6 +5,14 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 01.11.)
 
+- **Neu (01.11.): Kreuzweg-Monster, Rastplatz und Hirschtal:** Die sechs Familien (Schleim, Hase, Käfer, Blütenwesen,
+  Schwarm, Igel) und elf Arten liegen als fertige Bilder in `assets/figuren/` (Werkzeug `tools/familien_bilder.py`,
+  Schattenskarabäus aus dem nachbestellten Blatt). Sie sind im Spiel bekannt, kämpfen aber noch nicht mit: Die Kobolde
+  bleiben, bis MONSTER.md Teil 4 entschieden ist. Ausnahme: Der Glimmerkäfer der Pilzhöhle hat jetzt sein echtes Bild statt
+  des Platzhalters. Rastplatz (R1) und Hirschtal (Z2) stehen als 11 neue Teile im Baukasten, zu sehen auf dem neuen
+  Wiesenstück im Süden des Testfelds. **So testest du es (in der Demo):** 1. Im Testfeld nach Süden laufen.
+  2. Lagerfeuer, Zelt, Bank und Stand ansehen. 3. Jägerhütte und Waldrand ansehen, bei Nacht leuchten Laterne und Glut.
+  4. Über Holzbrücke und Bachsteine gehen. 5. In der Pilzhöhle den Glimmerkäfer ansehen.
 - **Neu (01.11.): Kreuzweg-Bilder eingebaut:** Die Blätter K1–K5, K7, K8, Z1a und Z1b plus die neuen geraden
   Mauerstücke (K1b) sind von Marco abgenommen und stehen im Baukasten: 28 Teile und die Blumenwiese. Im Testfeld
   stehen sie südlich der bisherigen Fläche. Die echte Stadt Kreuzweg kommt erst mit Projekt 9, Schritt 5.

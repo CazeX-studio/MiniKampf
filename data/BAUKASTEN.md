@@ -40,6 +40,8 @@ Ein neues Blatt oder ein besseres Bild: Datei in `tools/vorlagen/` ersetzen, Wer
 | Kreuzweg: Markt und Hof | wegelaterne (leuchtet nachts), festbuehne, strohpuppe, zielscheibe, waffenstaender, feuerstelle (Feuer macht das Spiel, noch nicht eingebaut) |
 | Kreuzweg: Kleinkram | blumenkasten, festlaternen (von vorne gemalt, nur quer über eine Straße), dornenranken |
 | Kreuzwegfelder | Boden blumenwiese_1, _2 (Zeichen `:`, am besten kleine Flecken), steg (flach, begehbar, Wasser fest eingemalt), heuballen |
+| Rastplatz | lagerfeuer (Glut), haendlerstand, holzbank, zelt |
+| Hirschtal | waldrand, bach_steine (flach, begehbar, Wasser fest eingemalt), holzbruecke (flach, begehbar), jaegerhuette (Laterne), baumstamm, dornengebuesch, geweih_wegweiser |
 | Sternenfall | splitterkreis (3×3, vor dem Fest), krater_frisch (4×4, Festnacht), krater_spaet (4×4, umzäunt, Wochen danach), sternsplitter (1×1, leuchtet) |
 
 **Übergänge:** Das Spiel macht sie selbst, es braucht keine eigenen Bilder. Jede Bodenart hat in `data/baukasten_teile.json`

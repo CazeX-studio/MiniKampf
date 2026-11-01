@@ -950,5 +950,159 @@
 			43,
 			56
 		]
+	},
+	"lagerfeuer": {
+		"groesse": [
+			114,
+			65
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			54,
+			32
+		]
+	},
+	"haendlerstand": {
+		"groesse": [
+			183,
+			125
+		],
+		"flaeche": [
+			2,
+			4
+		],
+		"fuss": [
+			91,
+			76
+		]
+	},
+	"holzbank": {
+		"groesse": [
+			143,
+			77
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			54,
+			44
+		]
+	},
+	"zelt": {
+		"groesse": [
+			217,
+			149
+		],
+		"flaeche": [
+			4,
+			3
+		],
+		"fuss": [
+			99,
+			92
+		]
+	},
+	"waldrand": {
+		"groesse": [
+			304,
+			162
+		],
+		"flaeche": [
+			3,
+			6
+		],
+		"fuss": [
+			154,
+			89
+		]
+	},
+	"bach_steine": {
+		"groesse": [
+			146,
+			70
+		],
+		"flaeche": [
+			1,
+			2
+		],
+		"fuss": [
+			62,
+			45
+		]
+	},
+	"holzbruecke": {
+		"groesse": [
+			149,
+			79
+		],
+		"flaeche": [
+			1,
+			3
+		],
+		"fuss": [
+			71,
+			46
+		]
+	},
+	"jaegerhuette": {
+		"groesse": [
+			246,
+			177
+		],
+		"flaeche": [
+			4,
+			4
+		],
+		"fuss": [
+			129,
+			112
+		]
+	},
+	"baumstamm": {
+		"groesse": [
+			176,
+			75
+		],
+		"flaeche": [
+			2,
+			3
+		],
+		"fuss": [
+			84,
+			34
+		]
+	},
+	"dornengebuesch": {
+		"groesse": [
+			104,
+			60
+		],
+		"flaeche": [
+			1,
+			2
+		],
+		"fuss": [
+			63,
+			34
+		]
+	},
+	"geweih_wegweiser": {
+		"groesse": [
+			79,
+			135
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			36,
+			118
+		]
 	}
 }

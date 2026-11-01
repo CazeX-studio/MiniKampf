@@ -71,6 +71,13 @@ BLAETTER = {
 	"kreuzwegfelder_z1a": {"boden": True, "teile": {"blumenwiese_1": (545, 355), "blumenwiese_2": (1630, 355)}},
 	"kreuzwegfelder_z1b": {"massstab": 0.2, "look": True, "massstaebe": {"heuballen": 0.17}, "teile": {
 		"steg": (711, 391), "heuballen": (1683, 391)}},
+	# Rastplatz und Hirschtal. "kern": durchsichtig gespeichertes Blatt mit farbigem Saum, nur der feste Kern bleibt.
+	"weg_r1": {"massstab": 0.3, "kern": True, "look": True, "massstaebe": {"holzbank": 0.4}, "teile": {
+		"lagerfeuer": (480, 270), "haendlerstand": (1120, 210), "holzbank": (455, 690), "zelt": (1170, 620)}},
+	"weg_z2": {"massstab": 0.3, "look": True, "massstaebe": {"waldrand": 0.42, "jaegerhuette": 0.33, "baumstamm": 0.35,
+		"geweih_wegweiser": 0.45}, "teile": {
+		"waldrand": (450, 190), "bach_steine": (275, 515), "holzbruecke": (755, 510), "jaegerhuette": (1380, 280),
+		"baumstamm": (335, 760), "dornengebuesch": (850, 760), "geweih_wegweiser": (1225, 710)}},
 }
 
 
@@ -114,6 +121,13 @@ def saum_entfernen(bild):
 	a[(alpha < 128) & (r > g + 80) & (r > b + 40), 3] = 0
 	a[ndimage.binary_fill_holes(a[..., 3] >= 128), 3] = 255
 	return a.astype(np.uint8)
+
+
+def kern_behalten(bild):
+	"""Durchsichtig gespeichertes Blatt: alles Halbdurchsichtige außen fliegt raus, das Innere wird ganz deckend."""
+	a = np.array(bild.convert("RGBA")).copy()
+	a[..., 3] = np.where(ndimage.binary_fill_holes(a[..., 3] >= 128), 255, 0)
+	return a
 
 
 def stein_angleichen(a, faktor):
@@ -192,7 +206,10 @@ def main():
 	for blatt in namen:
 		info = BLAETTER[blatt]
 		bild = Image.open(VORLAGEN / f"{blatt}.png")
-		a = saum_entfernen(bild) if info.get("saum") else freistellen(bild, info.get("roter_rand", False))
+		if info.get("kern"):
+			a = kern_behalten(bild)
+		else:
+			a = saum_entfernen(bild) if info.get("saum") else freistellen(bild, info.get("roter_rand", False))
 		if info.get("stein"):
 			a = stein_angleichen(a, info["stein"])
 		lab, stuecke = teile_finden(a, info.get("schnitt", []))
