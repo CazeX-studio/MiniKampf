@@ -7,8 +7,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 - **Nächster Schritt:** D2 der „Demo-Reihenfolge“ in `BAUAUFTRAEGE.md` (35 Bauschritte und 4 Testtage bis zum Abschluss der Demo).
 
-- **Neu (01.11.): D1 Bildaufträge für die Figuren:** 116 Prompts in `Spieldesign/GRAFIK_AUFTRAG.md` Teil D und auf der Seite „Asterfall Bildaufträge“: Probe am Novizen, fünf Klassen, Baukasten, 21 Nebenfiguren und 19 Hauptfiguren. Die Haupt- und Nebenfiguren waren noch nicht eingeplant: Sie sind im Spiel bisher Platzhalter.
-  - **Von Marco zu entscheiden:** Der Sternensänger bekommt in den Prompts auch einen männlichen Körper, und Kobalt nutzt den Körper des Zähmers.
+- **Neu (01.11.): D1 Bildaufträge für die Figuren:** 113 Prompts in `Spieldesign/GRAFIK_AUFTRAG.md` Teil D und auf der Seite „Asterfall Bildaufträge“: Probe am Novizen, fünf Klassen, Baukasten, 21 Nebenfiguren und 19 Hauptfiguren. Die Haupt- und Nebenfiguren waren noch nicht eingeplant: Sie sind im Spiel bisher Platzhalter.
+  - **Von Marco zu entscheiden:** Kobalt nutzt in den Prompts den Körper des Zähmers. Die Sternensängerin gibt es vorerst nur weiblich (Marco, 01.11.).
   - **So testest du es:** Die Seite öffnen, bei „Figuren: Probe“ einen Prompt kopieren und das Bild erzeugen.
 
 - **Neu (01.11.): Alle Bilder von Grünwacht und Glutoase zugeschnitten:** 18 Monster-Familien mit 30 Arten, 7 Boss-Blätter (Pilzhöhle und
