@@ -5,7 +5,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 01.11.)
 
-- **Neu (01.11.): Alle Bilder von Grünwacht und Glutoase zugeschnitten:** 18 Monster-Familien mit 31 Arten, 7 Boss-Blätter (Pilzhöhle und
+- **Neu (01.11.): Alle Bilder von Grünwacht und Glutoase zugeschnitten:** 18 Monster-Familien mit 30 Arten, 7 Boss-Blätter (Pilzhöhle und
   Vulkanschmiede), 111 Baukasten-Teile (`gw_`, `go_`, `vs_`) und 11 neue Böden. Rindenbär, Steinkröte, Sporenling, Splitterbär, Leuchtmotte,
   Wurzelkriecher, Sporenkönigin, Sporenknospe, Wurzelmutter und Der Vorbote zeigen im Kampf jetzt die neuen Bilder. Die übrigen Monster haben Bilder,
   stehen aber noch in keinem Kampf. Die Karten von Grünwacht und Glutoase sind noch nicht umgebaut (Projekt 9 Schritt 6), der Kampf-Hintergrund der
