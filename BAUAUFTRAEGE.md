@@ -225,7 +225,7 @@ _Aus Marcos Entscheidung vom 27.10.2026: Die Welt bleibt in Rautenansicht und wi
 ### Schritt 6: Grünwacht aus dem Baukasten
 - **Ziel:** Weg nach Grünwacht, Waldboden, Wipfelheim und Pilzhöhle ebenso umstellen (braucht eigene Wald-Teile).
 - **So testest du es:** Grünwacht durchspielen: alles wie vorher, im neuen Aussehen.
-- **Status:** offen
+- **Status:** fertig (01.11.2026)
 
 ## Projekt 10: Oberfläche nach Marcos UI-Entwurf (27.10.)
 

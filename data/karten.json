@@ -256,7 +256,8 @@
 				],
 				"text": "Wipfelheim|Kreuzweg"
 			}
-		]
+		],
+		"baukasten": "karte_weg_gruenwacht"
 	},
 	"waldboden": {
 		"name": "Waldboden unter Wipfelheim",
@@ -675,7 +676,8 @@
 					"nicht_gemerkt": "pruefung_hirsch"
 				}
 			}
-		]
+		],
+		"baukasten": "karte_waldboden"
 	},
 	"pilzhoehle": {
 		"name": "Pilzhöhle unter dem Urbaum",
@@ -810,7 +812,8 @@
 					"nicht_gemerkt": "lauf:splitter"
 				}
 			}
-		]
+		],
+		"baukasten": "karte_pilzhoehle"
 	},
 	"wipfelheim": {
 		"name": "Wipfelheim",
@@ -910,7 +913,7 @@
 			{
 				"feld": [
 					12,
-					18
+					22
 				],
 				"farbe": "c8a060",
 				"text": "Koch-Stand"
@@ -1160,7 +1163,7 @@
 				"art": "leer",
 				"feld": [
 					12,
-					18
+					22
 				],
 				"dialog": "koch_stand"
 			}
@@ -1280,6 +1283,7 @@
 					"radius": 6
 				}
 			}
-		}
+		},
+		"baukasten": "karte_wipfelheim"
 	}
 }

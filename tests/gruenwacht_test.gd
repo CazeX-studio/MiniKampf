@@ -570,7 +570,7 @@ func _test_story(side: String) -> void:
 	_check(not p.in_dialog(), "Bei Ysolde spricht Kael einen nicht an")
 	_check(world.objective_cell(p) != Vector2i(-1, -1), "Wegweiser zeigt zum Fremden")
 	# Über die Brücke zur Westplattform: Kael kommt angelaufen
-	_walk(world, p, Vector2i(12, 21))
+	_walk(world, p, Vector2i(12, 23))
 	_tick(world, 6.0)
 	_check(p.in_dialog() and p.dialog.id == "kael", "Auf der Westplattform kommt Kael angelaufen und spricht einen an")
 	world.apply_command("a", {type = "dialog_next"})

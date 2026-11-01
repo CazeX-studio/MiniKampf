@@ -1,0 +1,537 @@
+{
+	"boden": [
+		"mmmmmwwwwwwwwwwwwwwwwwwwwl....rw............................",
+		"mmmmmwwwwwwwwwwwwwwwwrwwwl....ww............................",
+		"wmmmmwwwwwwwwwwwwwwwwwwwwl.lllww............................",
+		"mmmmmwwwwwwwwwrwwwwwwwwwwllll.ww............................",
+		"lllllwwwwwwwrrwwwrwwmmmmmwwwwwww............................",
+		"wlwllwwwwwwwwwwwrwwwmmmmmwwwwwrww...........................",
+		"lllllwwwwwwwwwwwwweeeeeeeeeeeeeeeeeeee......................",
+		"lllllwwwwrwwwwwwwweeeeeeeeeeeeeeeeeeee......................",
+		"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+		"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+		"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+		"eeeeeeeeeeeeeeeeeewwwwww..www.........eeeeeeeeeeeeeeeeeeeeee",
+		"wwwwwwwwwwwwrwwwwwwwwllwwmm.................................",
+		"wwwwwrwwwwwwrwwwwwwwlllllmm.................................",
+		"wwwwwwwwrwwwwwwwwwwwlwlllmw..w..............................",
+		"wwwwwwwwwwwwwwwwwwwwwllwwm.wmm..............................",
+		"wwwwwwwwwwwwwwwwwwwwwwwwww.www..............................",
+		"wwwwwwwwwwwwwwwwwwwwwwww..w.................................",
+		"wwwwwwwwwwwwwwwwwwwwwwwwwwwww...............................",
+		"wwwwwrwwwwwwwwwwwwwwwwwwwwwww..............................."
+	],
+	"objekte": [
+		{
+			"teil": "zelt",
+			"feld": [
+				33,
+				0
+			]
+		},
+		{
+			"teil": "holzbank",
+			"feld": [
+				26,
+				3
+			]
+		},
+		{
+			"teil": "jaegerhuette",
+			"feld": [
+				10,
+				13
+			]
+		},
+		{
+			"teil": "baumstamm",
+			"feld": [
+				22,
+				12
+			]
+		},
+		{
+			"teil": "waldrand",
+			"feld": [
+				2,
+				0
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				6,
+				0
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				9,
+				0
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				14,
+				0
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				21,
+				0
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				24,
+				0
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				54,
+				0
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_klein",
+			"feld": [
+				0,
+				2
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_klein",
+			"feld": [
+				9,
+				2
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				18,
+				2
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				5,
+				3
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				18,
+				3
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				20,
+				3
+			]
+		},
+		{
+			"teil": "lagerfeuer",
+			"feld": [
+				29,
+				3
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				33,
+				3
+			]
+		},
+		{
+			"teil": "mauerruine",
+			"feld": [
+				35,
+				3
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				41,
+				3
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				51,
+				3
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				57,
+				3
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_klein",
+			"feld": [
+				0,
+				5
+			]
+		},
+		{
+			"teil": "dornengebuesch",
+			"feld": [
+				8,
+				5
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				51,
+				5
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_klein",
+			"feld": [
+				20,
+				12
+			]
+		},
+		{
+			"teil": "dornengebuesch",
+			"feld": [
+				24,
+				12
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				2,
+				14
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				9,
+				14
+			]
+		},
+		{
+			"teil": "dornengebuesch",
+			"feld": [
+				14,
+				14
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				21,
+				14
+			]
+		},
+		{
+			"teil": "dornengebuesch",
+			"feld": [
+				26,
+				14
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				29,
+				14
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				41,
+				14
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				57,
+				14
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_klein",
+			"feld": [
+				20,
+				15
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				23,
+				15
+			]
+		},
+		{
+			"teil": "dornengebuesch",
+			"feld": [
+				24,
+				15
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				27,
+				15
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				50,
+				15
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				57,
+				15
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				5,
+				17
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				8,
+				17
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				14,
+				17
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				15,
+				17
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				18,
+				17
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				23,
+				17
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				26,
+				17
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				27,
+				17
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				30,
+				17
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				32,
+				17
+			]
+		},
+		{
+			"teil": "mauerruine",
+			"feld": [
+				38,
+				17
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				48,
+				17
+			]
+		},
+		{
+			"teil": "dornengebuesch",
+			"feld": [
+				0,
+				18
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				3,
+				18
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				8,
+				18
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				9,
+				18
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_klein",
+			"feld": [
+				11,
+				18
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				14,
+				18
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				18,
+				18
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				21,
+				18
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				23,
+				18
+			]
+		},
+		{
+			"teil": "dornengebuesch",
+			"feld": [
+				26,
+				18
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				33,
+				18
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				36,
+				18
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				44,
+				18
+			]
+		},
+		{
+			"teil": "mauerruine",
+			"feld": [
+				50,
+				18
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				42,
+				0
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				45,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				59,
+				0
+			]
+		},
+		{
+			"teil": "baum_herbst",
+			"feld": [
+				44,
+				14
+			]
+		},
+		{
+			"teil": "baum_herbst",
+			"feld": [
+				57,
+				18
+			]
+		}
+	]
+}

@@ -58,6 +58,9 @@ static func from_data(p_id: String, data: Dictionary, legend: Dictionary) -> Wor
 	m.music = data.get("musik", "stadt")
 	m.music_if = data.get("musik_wenn", {})
 	m.dungeon = data.get("dungeon", "")
+	# Karte aus dem Baukasten: Das Raster bestimmt weiter, wo man laufen kann, gezeichnet werden die Teile
+	if data.has("baukasten"):
+		m.baukasten = GameData.get_file(data.baukasten)
 	var start: Array = data.get("start", [1, 1])
 	m.start = Vector2i(int(start[0]), int(start[1]))
 	for y in raster.size():
@@ -70,15 +73,18 @@ static func from_data(p_id: String, data: Dictionary, legend: Dictionary) -> Wor
 			m.tiles[y][x] = _tile_of(sign_def.get("boden", ground))
 			if sign_def.get("gesperrt", false):
 				m.blocked[cell] = true
-			if sign_def.has("ding"):
+			if sign_def.has("ding") and m.baukasten.is_empty():
 				m.props.append({kind = sign_def.ding, cell = cell})
 	for d: Dictionary in data.get("haeuser", []):
 		var r: Array = d.feld
 		m.add_building(d.get("name", ""), Rect2i(int(r[0]), int(r[1]), int(r[2]), int(r[3])), float(d.get("hoehe", 40)),
 				Color(d.get("farbe", "7a6a5a")), d.get("art", "haus"), Color(d.get("dach", "6a3a2a")))
+	if not m.baukasten.is_empty():
+		m.buildings.clear()
 	for d: Dictionary in data.get("staende", []):
 		var cell := Vector2i(int(d.feld[0]), int(d.feld[1]))
-		m.props.append({kind = "stand", cell = cell, color = Color(d.get("farbe", "ffffff")), text = d.get("text", "")})
+		if m.baukasten.is_empty():
+			m.props.append({kind = "stand", cell = cell, color = Color(d.get("farbe", "ffffff")), text = d.get("text", "")})
 		m.blocked[cell] = true
 	for d: Dictionary in data.get("lichter", []):
 		var cell := Vector2i(int(d.feld[0]), int(d.feld[1]))
@@ -86,6 +92,11 @@ static func from_data(p_id: String, data: Dictionary, legend: Dictionary) -> Wor
 		m.blocked[cell] = true
 	for d: Dictionary in data.get("ausgaenge", []):
 		m.add_exit(d)
+	var teile := GameData.get_file("baukasten_teile")
+	for o: Dictionary in m.baukasten.get("objekte", []):
+		if not teile.objekte[o.teil].get("begehbar", false):
+			for cell: Vector2i in BaukastenBoden.gesperrte_felder(o, teile):
+				m.blocked[cell] = true
 	m.finish()
 	return m
 

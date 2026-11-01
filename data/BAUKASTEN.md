@@ -73,3 +73,7 @@ Weite, Fransen und Weichheit stehen oben in `scripts/welt/baukasten_test.gd` (RA
 - **+ / −**: Größe der Spielfigur.
 - **K** (oder Knopf „Geschichte“): Stand der Geschichte umschalten (Splitterkreis → frischer Krater mit Splitter, immer Nacht → umzäunter Krater).
 - Steht man hinter einem Haus oder Baum, wird es halb durchsichtig.
+
+## Karten aus dem Baukasten
+
+Weg nach Grünwacht, Waldboden, Wipfelheim und Pilzhöhle entstehen mit `tools/gruenwacht_karten.py`. Das Raster in `data/karten.json` bleibt und bestimmt, wo man laufen kann; das Werkzeug legt Boden und Teile als `data/karte_<karte>.json` darüber und prüft, dass alles erreichbar bleibt.

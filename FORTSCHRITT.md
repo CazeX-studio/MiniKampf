@@ -8,9 +8,18 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Neu (01.11.): Alle Bilder von Grünwacht und Glutoase zugeschnitten:** 18 Monster-Familien mit 30 Arten, 7 Boss-Blätter (Pilzhöhle und
   Vulkanschmiede), 111 Baukasten-Teile (`gw_`, `go_`, `vs_`) und 11 neue Böden. Rindenbär, Steinkröte, Sporenling, Splitterbär, Leuchtmotte,
   Wurzelkriecher, Sporenkönigin, Sporenknospe, Wurzelmutter und Der Vorbote zeigen im Kampf jetzt die neuen Bilder. Die übrigen Monster haben Bilder,
-  stehen aber noch in keinem Kampf. Die Karten von Grünwacht und Glutoase sind noch nicht umgebaut (Projekt 9 Schritt 6), der Kampf-Hintergrund der
+  stehen aber noch in keinem Kampf. Die Karten der Glutoase sind noch nicht umgebaut, der Kampf-Hintergrund der
   Vulkanschmiede liegt als Vorlage bereit (`tools/vorlagen/schmiede_v3.png`). Die besonderen Bewegungen der Pilzhöhlen-Bosse sind noch nicht an ihre Angriffe gekoppelt.
   - **So testest du es:** Grünwacht bis zum Wald spielen, Rindenbär oder Steinkröte haben neue Bilder; in der Kampf-Sandbox „Pilzhöhle: nur Bosse“ wählen.
+- **Neu (01.11.): Grünwacht aus dem Baukasten** (Projekt 9, Schritt 6): Weg nach Grünwacht, Waldboden, Wipfelheim und Pilzhöhle
+  stehen jetzt aus den gemalten Teilen. Figuren, Monster, Orte, Aufträge und Wege bleiben auf ihren Feldern. Werkzeug: `tools/gruenwacht_karten.py`.
+  - Geändert gegenüber vorher: Der Koch-Stand steht vor dem Gasthaus (Feld 12,22), die Bank nördlich von Bankhüter Tamm, Dornfeders Halle ein Feld weiter westlich.
+  - Dornfeders Halle hat noch kein eigenes Bild (vorläufig ein Wohnbaumhaus mit Namen).
+  - **So testest du es:**
+    1. Von Kreuzweg nach Westen über den Weg nach Grünwacht bis Wipfelheim gehen.
+    2. In Wipfelheim Gasthaus, Halle, Bank, Labor und Stall ansehen und hinter Häuser laufen (sie werden durchsichtig).
+    3. Mit dem Seilaufzug hinunter in den Waldboden: Rowans Grab, Bienenstock und Urbaum finden.
+    4. In die Pilzhöhle gehen und bis zur Sporenkönigin laufen.
 - **Neu (01.11.): Kreuzweg aus dem Baukasten** (Projekt 9, Schritt 5): Die echte Stadt steht jetzt aus den Baukasten-Teilen
   (`data/kreuzweg_karte.json`), alle Figuren, Aufträge und Orte sind umgezogen (`data/kreuzweg.json`). Figuren werden wie
   im Testfeld gezeichnet (80 %), Häuser werden nur durchsichtig, wenn die eigene Figur wirklich dahinter steht. Das Tor nach

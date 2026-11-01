@@ -1262,54 +1262,54 @@
 			"bild": "objekte/gw_plattform_rund.png",
 			"flaeche": [
 				4,
-				3
+				4
 			],
 			"fuss": [
-				122,
-				195
+				138,
+				187
 			]
 		},
 		"gw_plattform_eckig": {
 			"bild": "objekte/gw_plattform_eckig.png",
 			"flaeche": [
-				2,
+				4,
 				3
 			],
 			"fuss": [
-				100,
-				114
+				68,
+				98
 			]
 		},
 		"gw_haengebruecke": {
 			"bild": "objekte/gw_haengebruecke.png",
 			"flaeche": [
-				1,
-				2
+				3,
+				1
 			],
 			"fuss": [
-				54,
-				75
+				6,
+				67
 			]
 		},
 		"gw_haengebruecke_lang": {
 			"bild": "objekte/gw_haengebruecke_lang.png",
 			"flaeche": [
-				1,
-				4
+				6,
+				1
 			],
 			"fuss": [
-				81,
-				84
+				-47,
+				68
 			]
 		},
 		"gw_gelaender": {
 			"bild": "objekte/gw_gelaender.png",
 			"flaeche": [
-				1,
-				2
+				2,
+				1
 			],
 			"fuss": [
-				33,
+				1,
 				59
 			]
 		},
@@ -1327,11 +1327,11 @@
 		"gw_seilaufzug": {
 			"bild": "objekte/gw_seilaufzug.png",
 			"flaeche": [
-				1,
-				3
+				2,
+				2
 			],
 			"fuss": [
-				76,
+				44,
 				115
 			]
 		},
@@ -1349,89 +1349,89 @@
 		"gw_bank": {
 			"bild": "objekte/gw_bank.png",
 			"flaeche": [
-				3,
+				4,
 				4
 			],
 			"fuss": [
-				127,
-				154
+				111,
+				146
 			]
 		},
 		"gw_stand_salbei": {
 			"bild": "objekte/gw_stand_salbei.png",
 			"flaeche": [
-				2,
-				3
+				3,
+				2
 			],
 			"fuss": [
-				68,
+				36,
 				91
 			]
 		},
 		"gw_esches_huette": {
 			"bild": "objekte/gw_esches_huette.png",
 			"flaeche": [
-				2,
-				5
+				4,
+				4
 			],
 			"fuss": [
-				124,
-				140
+				76,
+				132
 			]
 		},
 		"gw_tildas_stall": {
 			"bild": "objekte/gw_tildas_stall.png",
 			"flaeche": [
-				3,
-				6
+				5,
+				4
 			],
 			"fuss": [
-				132,
+				68,
 				118
 			]
 		},
 		"gw_wohnbaumhaus": {
 			"bild": "objekte/gw_wohnbaumhaus.png",
 			"flaeche": [
-				4,
-				1
+				3,
+				3
 			],
 			"fuss": [
-				73,
-				163
+				121,
+				155
 			]
 		},
 		"gw_urbaum": {
 			"bild": "objekte/gw_urbaum.png",
 			"flaeche": [
-				5,
-				5
+				6,
+				6
 			],
 			"fuss": [
 				185,
-				158
+				142
 			]
 		},
 		"gw_grosse_wurzel": {
 			"bild": "objekte/gw_grosse_wurzel.png",
 			"flaeche": [
-				1,
-				4
+				4,
+				2
 			],
 			"fuss": [
-				82,
-				72
+				2,
+				64
 			]
 		},
 		"gw_hoehleneingang": {
 			"bild": "objekte/gw_hoehleneingang.png",
 			"flaeche": [
 				4,
-				2
+				3
 			],
 			"fuss": [
-				111,
-				73
+				127,
+				65
 			]
 		},
 		"gw_leuchtpilze_klein": {
@@ -1459,11 +1459,11 @@
 		"gw_leuchtpilze_gross": {
 			"bild": "objekte/gw_leuchtpilze_gross.png",
 			"flaeche": [
-				1,
-				3
+				2,
+				2
 			],
 			"fuss": [
-				72,
+				40,
 				64
 			]
 		},
@@ -1514,22 +1514,22 @@
 		"gw_baumtor": {
 			"bild": "objekte/gw_baumtor.png",
 			"flaeche": [
-				2,
-				3
+				4,
+				1
 			],
 			"fuss": [
-				90,
+				26,
 				59
 			]
 		},
 		"gw_pfad_tiefwurzel": {
 			"bild": "objekte/gw_pfad_tiefwurzel.png",
 			"flaeche": [
-				2,
-				2
+				3,
+				1
 			],
 			"fuss": [
-				63,
+				31,
 				55
 			]
 		},
@@ -1602,11 +1602,11 @@
 		"gw_rowans_grab": {
 			"bild": "objekte/gw_rowans_grab.png",
 			"flaeche": [
-				1,
-				2
+				2,
+				1
 			],
 			"fuss": [
-				57,
+				25,
 				38
 			]
 		},
@@ -1635,12 +1635,12 @@
 		"gw_jaegerpfad": {
 			"bild": "objekte/gw_jaegerpfad.png",
 			"flaeche": [
-				1,
+				3,
 				1
 			],
 			"fuss": [
-				38,
-				50
+				6,
+				34
 			],
 			"flach": true,
 			"begehbar": true
@@ -1659,12 +1659,12 @@
 		"gw_lichtung": {
 			"bild": "objekte/gw_lichtung.png",
 			"flaeche": [
-				2,
-				3
+				4,
+				4
 			],
 			"fuss": [
-				142,
-				100
+				126,
+				76
 			],
 			"flach": true,
 			"begehbar": true
@@ -1707,12 +1707,12 @@
 		"gw_wurzelbruecke": {
 			"bild": "objekte/gw_wurzelbruecke.png",
 			"flaeche": [
-				1,
+				4,
 				1
 			],
 			"fuss": [
-				35,
-				79
+				-13,
+				55
 			]
 		},
 		"gw_wurzelhoehle": {
@@ -1762,12 +1762,12 @@
 		"gw_nebelboden": {
 			"bild": "objekte/gw_nebelboden.png",
 			"flaeche": [
-				1,
-				1
+				2,
+				2
 			],
 			"fuss": [
 				64,
-				48
+				32
 			],
 			"flach": true,
 			"begehbar": true
@@ -1775,23 +1775,23 @@
 		"gw_wurzelwand": {
 			"bild": "objekte/gw_wurzelwand.png",
 			"flaeche": [
-				1,
-				2
+				4,
+				1
 			],
 			"fuss": [
-				34,
-				99
+				-30,
+				83
 			]
 		},
 		"gw_pilzboden": {
 			"bild": "objekte/gw_pilzboden.png",
 			"flaeche": [
-				1,
-				1
+				2,
+				2
 			],
 			"fuss": [
 				64,
-				59
+				43
 			],
 			"flach": true,
 			"begehbar": true
@@ -1821,12 +1821,12 @@
 		"go_terrassenkante": {
 			"bild": "objekte/go_terrassenkante.png",
 			"flaeche": [
-				2,
+				4,
 				1
 			],
 			"fuss": [
-				128,
-				112
+				96,
+				96
 			]
 		},
 		"go_treppe": {
@@ -1843,11 +1843,11 @@
 		"go_treppe_ecke": {
 			"bild": "objekte/go_treppe_ecke.png",
 			"flaeche": [
-				3,
-				1
+				2,
+				2
 			],
 			"fuss": [
-				52,
+				84,
 				78
 			]
 		},
@@ -1889,44 +1889,44 @@
 		"go_basar_b": {
 			"bild": "objekte/go_basar_b.png",
 			"flaeche": [
-				2,
-				3
+				3,
+				2
 			],
 			"fuss": [
-				84,
+				52,
 				142
 			]
 		},
 		"go_krankenzelt": {
 			"bild": "objekte/go_krankenzelt.png",
 			"flaeche": [
-				3,
-				4
+				4,
+				3
 			],
 			"fuss": [
-				106,
+				74,
 				101
 			]
 		},
 		"go_karawanenplatz": {
 			"bild": "objekte/go_karawanenplatz.png",
 			"flaeche": [
-				4,
-				4
+				5,
+				3
 			],
 			"fuss": [
-				130,
+				98,
 				78
 			]
 		},
 		"go_lehmhaus_gross": {
 			"bild": "objekte/go_lehmhaus_gross.png",
 			"flaeche": [
-				4,
-				5
+				5,
+				4
 			],
 			"fuss": [
-				146,
+				114,
 				200
 			]
 		},
@@ -1977,11 +1977,11 @@
 		"go_clan_werkstatt": {
 			"bild": "objekte/go_clan_werkstatt.png",
 			"flaeche": [
-				4,
-				5
+				5,
+				4
 			],
 			"fuss": [
-				156,
+				124,
 				161
 			]
 		},
@@ -2010,44 +2010,44 @@
 		"go_wassertrog": {
 			"bild": "objekte/go_wassertrog.png",
 			"flaeche": [
-				1,
+				2,
 				1
 			],
 			"fuss": [
-				36,
-				59
+				20,
+				51
 			]
 		},
 		"go_werkzeugwand": {
 			"bild": "objekte/go_werkzeugwand.png",
 			"flaeche": [
-				3,
+				2,
 				1
 			],
 			"fuss": [
-				50,
-				73
+				66,
+				81
 			]
 		},
 		"go_brakkus_werkstatt": {
 			"bild": "objekte/go_brakkus_werkstatt.png",
 			"flaeche": [
-				4,
-				6
+				5,
+				5
 			],
 			"fuss": [
-				154,
+				122,
 				123
 			]
 		},
 		"go_hadraks_schmiede": {
 			"bild": "objekte/go_hadraks_schmiede.png",
 			"flaeche": [
-				5,
-				8
+				7,
+				6
 			],
 			"fuss": [
-				201,
+				137,
 				158
 			]
 		},
@@ -2065,34 +2065,34 @@
 		"go_schmiede_zu": {
 			"bild": "objekte/go_schmiede_zu.png",
 			"flaeche": [
-				4,
-				1
+				3,
+				2
 			],
 			"fuss": [
-				66,
+				98,
 				67
 			]
 		},
 		"go_schmiede_offen": {
 			"bild": "objekte/go_schmiede_offen.png",
 			"flaeche": [
-				4,
-				1
+				3,
+				2
 			],
 			"fuss": [
-				65,
+				97,
 				65
 			]
 		},
 		"go_bergpfad": {
 			"bild": "objekte/go_bergpfad.png",
 			"flaeche": [
-				1,
-				2
+				3,
+				1
 			],
 			"fuss": [
-				56,
-				74
+				8,
+				66
 			]
 		},
 		"go_tor_steppe": {
@@ -2120,33 +2120,33 @@
 		"go_aufzug_unten": {
 			"bild": "objekte/go_aufzug_unten.png",
 			"flaeche": [
-				4,
-				2
+				3,
+				3
 			],
 			"fuss": [
-				94,
+				126,
 				124
 			]
 		},
 		"go_aufzug_oben": {
 			"bild": "objekte/go_aufzug_oben.png",
 			"flaeche": [
-				4,
-				2
+				3,
+				3
 			],
 			"fuss": [
-				95,
+				127,
 				126
 			]
 		},
 		"go_sonnensegel": {
 			"bild": "objekte/go_sonnensegel.png",
 			"flaeche": [
-				4,
-				1
+				3,
+				2
 			],
 			"fuss": [
-				66,
+				98,
 				112
 			]
 		},
@@ -2230,12 +2230,12 @@
 		"go_steppengras": {
 			"bild": "objekte/go_steppengras.png",
 			"flaeche": [
-				1,
-				1
+				2,
+				2
 			],
 			"fuss": [
 				64,
-				58
+				42
 			],
 			"flach": true,
 			"begehbar": true
@@ -2243,12 +2243,12 @@
 		"go_gras_zu_sand": {
 			"bild": "objekte/go_gras_zu_sand.png",
 			"flaeche": [
-				1,
-				1
+				2,
+				2
 			],
 			"fuss": [
 				62,
-				56
+				40
 			],
 			"flach": true,
 			"begehbar": true
@@ -2278,12 +2278,12 @@
 		"go_karawanenspur": {
 			"bild": "objekte/go_karawanenspur.png",
 			"flaeche": [
-				1,
+				3,
 				1
 			],
 			"fuss": [
-				30,
-				48
+				-2,
+				32
 			],
 			"flach": true,
 			"begehbar": true
@@ -2291,44 +2291,44 @@
 		"go_verlassener_wagen": {
 			"bild": "objekte/go_verlassener_wagen.png",
 			"flaeche": [
-				2,
+				3,
 				2
 			],
 			"fuss": [
-				58,
-				72
+				42,
+				64
 			]
 		},
 		"go_duene": {
 			"bild": "objekte/go_duene.png",
 			"flaeche": [
-				2,
-				2
+				4,
+				3
 			],
 			"fuss": [
-				112,
-				68
+				96,
+				44
 			]
 		},
 		"go_duenenkamm": {
 			"bild": "objekte/go_duenenkamm.png",
 			"flaeche": [
-				1,
-				2
+				4,
+				1
 			],
 			"fuss": [
-				54,
-				44
+				-10,
+				28
 			]
 		},
 		"go_wasserstelle": {
 			"bild": "objekte/go_wasserstelle.png",
 			"flaeche": [
-				3,
-				5
+				4,
+				4
 			],
 			"fuss": [
-				140,
+				108,
 				144
 			]
 		},
@@ -2357,23 +2357,23 @@
 		"go_sternenduene": {
 			"bild": "objekte/go_sternenduene.png",
 			"flaeche": [
-				3,
-				3
+				5,
+				5
 			],
 			"fuss": [
 				150,
-				96
+				64
 			]
 		},
 		"go_erkaltete_lava": {
 			"bild": "objekte/go_erkaltete_lava.png",
 			"flaeche": [
-				1,
+				2,
 				2
 			],
 			"fuss": [
-				78,
-				53
+				62,
+				45
 			],
 			"flach": true,
 			"begehbar": true
@@ -2381,23 +2381,23 @@
 		"go_lavarinne": {
 			"bild": "objekte/go_lavarinne.png",
 			"flaeche": [
-				1,
+				3,
 				1
 			],
 			"fuss": [
-				32,
-				56
+				0,
+				40
 			]
 		},
 		"go_felsgrat": {
 			"bild": "objekte/go_felsgrat.png",
 			"flaeche": [
-				2,
+				4,
 				2
 			],
 			"fuss": [
-				62,
-				89
+				30,
+				73
 			]
 		},
 		"go_heisse_quelle": {
@@ -2425,23 +2425,23 @@
 		"go_kraterrand": {
 			"bild": "objekte/go_kraterrand.png",
 			"flaeche": [
-				1,
-				6
+				5,
+				2
 			],
 			"fuss": [
-				116,
+				-12,
 				29
 			]
 		},
 		"vs_eisenwand": {
 			"bild": "objekte/vs_eisenwand.png",
 			"flaeche": [
-				1,
-				2
+				4,
+				1
 			],
 			"fuss": [
-				29,
-				105
+				-35,
+				89
 			]
 		},
 		"vs_esse": {
@@ -2458,23 +2458,23 @@
 		"vs_kettenwinde": {
 			"bild": "objekte/vs_kettenwinde.png",
 			"flaeche": [
-				1,
-				3
+				2,
+				2
 			],
 			"fuss": [
-				71,
+				39,
 				93
 			]
 		},
 		"vs_kettenbruecke": {
 			"bild": "objekte/vs_kettenbruecke.png",
 			"flaeche": [
-				1,
-				3
+				5,
+				1
 			],
 			"fuss": [
-				63,
-				108
+				-33,
+				92
 			],
 			"flach": true,
 			"begehbar": true

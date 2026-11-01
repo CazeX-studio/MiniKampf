@@ -1,0 +1,257 @@
+{
+	"boden": [
+		"                              ",
+		"                              ",
+		"                              ",
+		"                              ",
+		"                 rwrwr        ",
+		"                 rwrrr        ",
+		" rwrrwr          rwrrr        ",
+		" rrrrrr  rwrwrrw rrrrr        ",
+		" rwrrrr  wrrwrrr wrrrr rrrrrr ",
+		" rrrwwr  rwrrwwr rrwrr rrrrrr ",
+		" rwrrwr  rrrrrwrrrwrwrrrwwrwrr",
+		" wrwrwrrwrrrrrrrrrrrwrrrrrrwrr",
+		" rrrrwrrrrrrwwrrwrrwrwwwwrwrrr",
+		" rrrwrr  rwrrrrwrwwwwrrrwrrww ",
+		" wwrwrw  rrrwrrw       rrrwrr ",
+		" rrrrrw  rrwrrrr              ",
+		" rwrrwr  wrrrrrr              ",
+		" wrrwrr                       ",
+		"                              ",
+		"                              ",
+		"                              ",
+		"                              "
+	],
+	"objekte": [
+		{
+			"teil": "gw_leuchtpilze_gross",
+			"feld": [
+				17,
+				4
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_gross",
+			"feld": [
+				21,
+				4
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_gross",
+			"feld": [
+				1,
+				6
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_gross",
+			"feld": [
+				6,
+				6
+			]
+		},
+		{
+			"teil": "gw_wurzelsplitter",
+			"feld": [
+				4,
+				7
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_gross",
+			"feld": [
+				9,
+				7
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_gross",
+			"feld": [
+				15,
+				7
+			]
+		},
+		{
+			"teil": "gw_wurzelsplitter",
+			"feld": [
+				12,
+				8
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_gross",
+			"feld": [
+				24,
+				8
+			]
+		},
+		{
+			"teil": "gw_wurzelsplitter",
+			"feld": [
+				2,
+				9
+			]
+		},
+		{
+			"teil": "gw_wurzelsplitter",
+			"feld": [
+				22,
+				10
+			]
+		},
+		{
+			"teil": "gw_wurzelsplitter",
+			"feld": [
+				19,
+				13
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_gross",
+			"feld": [
+				23,
+				14
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_gross",
+			"feld": [
+				28,
+				14
+			]
+		},
+		{
+			"teil": "gw_wurzelsplitter",
+			"feld": [
+				5,
+				15
+			]
+		},
+		{
+			"teil": "gw_wurzelsplitter",
+			"feld": [
+				13,
+				15
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_gross",
+			"feld": [
+				9,
+				16
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_gross",
+			"feld": [
+				15,
+				16
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_gross",
+			"feld": [
+				1,
+				17
+			]
+		},
+		{
+			"teil": "gw_wurzelwand",
+			"feld": [
+				17,
+				3
+			]
+		},
+		{
+			"teil": "gw_wurzelwand",
+			"feld": [
+				1,
+				5
+			]
+		},
+		{
+			"teil": "gw_wurzelwand",
+			"feld": [
+				9,
+				6
+			]
+		},
+		{
+			"teil": "gw_wurzelwand",
+			"feld": [
+				23,
+				7
+			]
+		},
+		{
+			"teil": "gw_wurzelwand",
+			"feld": [
+				0,
+				6
+			],
+			"gespiegelt": true
+		},
+		{
+			"teil": "gw_wurzelwand",
+			"feld": [
+				0,
+				10
+			],
+			"gespiegelt": true
+		},
+		{
+			"teil": "gw_wurzelwand",
+			"feld": [
+				0,
+				14
+			],
+			"gespiegelt": true
+		},
+		{
+			"teil": "gw_wurzelwand",
+			"feld": [
+				8,
+				7
+			],
+			"gespiegelt": true
+		},
+		{
+			"teil": "gw_wurzelwand",
+			"feld": [
+				8,
+				13
+			],
+			"gespiegelt": true
+		},
+		{
+			"teil": "gw_lichtlaterne",
+			"feld": [
+				22,
+				8
+			]
+		},
+		{
+			"teil": "gw_lichtlaterne",
+			"feld": [
+				16,
+				9
+			]
+		},
+		{
+			"teil": "gw_lichtlaterne",
+			"feld": [
+				29,
+				9
+			]
+		},
+		{
+			"teil": "gw_lichtlaterne",
+			"feld": [
+				29,
+				13
+			]
+		}
+	]
+}

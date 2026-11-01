@@ -1,0 +1,1110 @@
+{
+	"boden": [
+		"mmmmmwwwwrwwwwwwwwwwwrwwwlllllwwwrwwwwwwmmmmm",
+		"mmmmmwwwwwwwrwwwwwwwrwwwwlllllwwwwwwwwwwmmmmm",
+		"mmmmmrwwwwwwwwwwwrwwwrwwwlllllwwwwwwwwwwmmmmm",
+		"mmmmmrwwwwrrwwwwrwwwwwwwwlllllwwwwwwwwwwmmmmm",
+		"lllllwwwwwwwwwwwwwwwmmmmmwwwwwwwwwwwrwwwmmmmm",
+		"lllllwwwwwwwwwwwwwwwmmmmmwwwwwwwwwwwwwrwmmmmm",
+		"lllllwwwwwwwrwwwwwwwmmmmmwwwwwwwwwwwwwwwmmmmm",
+		"lllllwwwwwwwwwwwwwrwmmmmmwwwwwwwwwwwwwwwmmmmm",
+		"wwwwwlllllmmmmmwwwwwrwwwwwwwwwwwrwrmmmmmwwwww",
+		"wwwwwlllllmmmmmwwwwwwwwwwwwwwwwwwwwmmmmmwwwww",
+		"wwwwwlllllmmmmmrrwwwwwwwwrwwwwwwwwwmmmmmwwwww",
+		"wwwwwlllllmmmmmwrwwwwwwwwwwwwwwwwwwmmmmmwwwww",
+		"wwwwwwwwwwwwwwwwwwwwlllllmmmmmmmmmmwwwwwwwwww",
+		"wwwwwwwwwwwwwwwwwwwwlllllmmmmmmmmmmwwwwwwwwww",
+		"wrwwwwwwwwwwwrrwwweeeeellmmmmmmmmmmwwwwwwwwww",
+		"wwwwwwwwwwwwwwwwweeeeeeelmmmmmmmmmmwrwwwwwwww",
+		"wwwwwwrwwwwwwwwwweeeeeeewwwwwwwrwwwwwwwwwwwww",
+		"wwwwwwwwwwrwwwweeeeeeeeeeeeeeeeewwwwwweeeeeee",
+		"wwwwwrwwwwwwwwweeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+		"wwwwwwwwrwwwwwweeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+		"wwwwwmmmmmmmmmmeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+		"wwwwwmmmmmmmmmmlleeeeeeewwwwwwwweeeeeewwwwwww",
+		"wwwwwmmmmmmmmmmlleeeeeeewwwwwwwweeeeeewwwwwww",
+		"wwwwwmmmmmmmmmmllleeeeewwwwwwwwwwwwwwwwrwwwww",
+		"mmmmmwwwrwwwwwwwwwwwwwrwwmmmmmlllllwwwwwwwwww",
+		"mmmmmwwwwwwwwwwwwwwwrwrwwmmmmmlllllwwwwwwwwww",
+		"mmmmmwwwwwwwrwwwwwwwwwwwrmmmmmlllllwwwwwwwrww",
+		"mmmmmwwwwwwwwwwwwwwwwwwwwmmmmmlllllwwwwwwwwww",
+		"wrwwwwwwwwwrwwwmmmmmwwwwwwwwwwwwwwwlllllwwwww",
+		"wwwwwwwwwwwwwwwmmmmmwwwwwwrwwwwwwwwlllllwwwwr",
+		"wwwwwwwwwwwwwrwmmmmmwwwrwwwwwwwwwwwlllllwwwww",
+		"wwwwwwwwwwwwrwwmmmmmwwwwrwwwwwwwwwwlllllwrwww",
+		"wwwwwwwwwwlllllwwwwwwwwwwwwwwwwwwwwmmmmmwwwww",
+		"wwwwwwwwwwlllllwwwwwwwwwwwwwwwwwwwwmmmmmwwwww",
+		"wrwwwwwwwwlllllwwwwwwwwwwwwwwwwwwwwmmmmmwwwww",
+		"wwwwwwwwwwlllllwwwwwwwwwwwwwwwwwwwwmmmmmwwwww",
+		"wwwwwmmmmmwwwwwmmmmmwwwwwwwwwwwwwwrwwrwwwwwww",
+		"wwwwwmmmmmwrwrwmmmmmwwwwwwrwwwrwwwwwwwwwwwwww",
+		"wwwwwmmmmmwwrwrmmmmmwwwwwwwwwrwwwwwwwwwwwwwww"
+	],
+	"objekte": [
+		{
+			"teil": "gw_urbaum",
+			"feld": [
+				18,
+				24
+			],
+			"name": "Der Urbaum"
+		},
+		{
+			"teil": "gw_hoehleneingang",
+			"feld": [
+				14,
+				24
+			]
+		},
+		{
+			"teil": "gw_seilaufzug",
+			"feld": [
+				20,
+				16
+			]
+		},
+		{
+			"teil": "gw_rowans_grab",
+			"feld": [
+				5,
+				2
+			]
+		},
+		{
+			"teil": "gw_bienenstock",
+			"feld": [
+				41,
+				35
+			]
+		},
+		{
+			"teil": "gw_hochsitz",
+			"feld": [
+				34,
+				25
+			]
+		},
+		{
+			"teil": "gw_steinkreis",
+			"feld": [
+				34,
+				8
+			]
+		},
+		{
+			"teil": "gw_lichtung",
+			"feld": [
+				6,
+				30
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				11,
+				0
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				15,
+				0
+			]
+		},
+		{
+			"teil": "gw_farn",
+			"feld": [
+				23,
+				0
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_klein",
+			"feld": [
+				24,
+				0
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				26,
+				0
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				44,
+				0
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				11,
+				2
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				15,
+				2
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				20,
+				2
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				23,
+				2
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_mittel",
+			"feld": [
+				27,
+				2
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				29,
+				2
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				30,
+				2
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				44,
+				2
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				11,
+				3
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				17,
+				3
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_mittel",
+			"feld": [
+				21,
+				3
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				24,
+				3
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				32,
+				3
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				44,
+				3
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_mittel",
+			"feld": [
+				9,
+				5
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				20,
+				5
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_mittel",
+			"feld": [
+				32,
+				5
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				11,
+				6
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_mittel",
+			"feld": [
+				14,
+				6
+			]
+		},
+		{
+			"teil": "gw_farn",
+			"feld": [
+				18,
+				6
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				26,
+				6
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				29,
+				6
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				30,
+				6
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_klein",
+			"feld": [
+				32,
+				6
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				39,
+				6
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				44,
+				6
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				2,
+				8
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				3,
+				8
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				12,
+				8
+			]
+		},
+		{
+			"teil": "gw_farn",
+			"feld": [
+				21,
+				8
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				33,
+				8
+			]
+		},
+		{
+			"teil": "gw_farn",
+			"feld": [
+				42,
+				8
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				0,
+				9
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_mittel",
+			"feld": [
+				3,
+				9
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				5,
+				9
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				6,
+				9
+			]
+		},
+		{
+			"teil": "gw_farn",
+			"feld": [
+				12,
+				9
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				20,
+				9
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				30,
+				9
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				39,
+				9
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				2,
+				11
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_mittel",
+			"feld": [
+				8,
+				11
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				15,
+				11
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				23,
+				11
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				24,
+				11
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				35,
+				11
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				41,
+				11
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				5,
+				12
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_klein",
+			"feld": [
+				8,
+				12
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				15,
+				12
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_mittel",
+			"feld": [
+				41,
+				12
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_mittel",
+			"feld": [
+				42,
+				12
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				0,
+				14
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				5,
+				14
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				6,
+				14
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				9,
+				14
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_klein",
+			"feld": [
+				11,
+				14
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_mittel",
+			"feld": [
+				26,
+				14
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				27,
+				14
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				32,
+				14
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				3,
+				15
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_klein",
+			"feld": [
+				6,
+				15
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_mittel",
+			"feld": [
+				0,
+				17
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				9,
+				17
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				0,
+				18
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				3,
+				18
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				12,
+				18
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				9,
+				20
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_klein",
+			"feld": [
+				2,
+				21
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				6,
+				21
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				8,
+				23
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				26,
+				23
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				29,
+				23
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				39,
+				23
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				41,
+				23
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				42,
+				23
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				8,
+				24
+			]
+		},
+		{
+			"teil": "gw_farn",
+			"feld": [
+				24,
+				24
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				30,
+				24
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				44,
+				24
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_klein",
+			"feld": [
+				3,
+				26
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				24,
+				26
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				26,
+				26
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_mittel",
+			"feld": [
+				27,
+				26
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_mittel",
+			"feld": [
+				32,
+				26
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				0,
+				27
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				26,
+				27
+			]
+		},
+		{
+			"teil": "gw_farn",
+			"feld": [
+				35,
+				27
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				36,
+				27
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				0,
+				29
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				3,
+				29
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				11,
+				29
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				12,
+				29
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				14,
+				29
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				36,
+				29
+			]
+		},
+		{
+			"teil": "gw_farn",
+			"feld": [
+				0,
+				30
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				5,
+				30
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				15,
+				30
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				17,
+				30
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				18,
+				30
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				26,
+				30
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_mittel",
+			"feld": [
+				29,
+				30
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				30,
+				30
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				33,
+				30
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_mittel",
+			"feld": [
+				36,
+				30
+			]
+		},
+		{
+			"teil": "gw_farn",
+			"feld": [
+				42,
+				30
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				14,
+				32
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_klein",
+			"feld": [
+				17,
+				32
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				18,
+				32
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				39,
+				32
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				44,
+				32
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				18,
+				33
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				30,
+				33
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_klein",
+			"feld": [
+				36,
+				33
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				0,
+				35
+			]
+		},
+		{
+			"teil": "gw_farn",
+			"feld": [
+				11,
+				35
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				18,
+				35
+			]
+		},
+		{
+			"teil": "gw_farn",
+			"feld": [
+				29,
+				35
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				30,
+				35
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				33,
+				35
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				35,
+				35
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				0,
+				36
+			]
+		},
+		{
+			"teil": "gw_farn",
+			"feld": [
+				11,
+				36
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				30,
+				36
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				36,
+				36
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				11,
+				38
+			]
+		},
+		{
+			"teil": "gw_farn",
+			"feld": [
+				17,
+				38
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				18,
+				38
+			]
+		},
+		{
+			"teil": "gw_farn",
+			"feld": [
+				30,
+				38
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				37,
+				0
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				2,
+				1
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				25,
+				33
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				21,
+				35
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				3,
+				36
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				14,
+				36
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				25,
+				36
+			]
+		},
+		{
+			"teil": "baum_herbst",
+			"feld": [
+				7,
+				37
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				33,
+				38
+			]
+		}
+	]
+}

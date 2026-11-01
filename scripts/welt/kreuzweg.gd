@@ -72,6 +72,7 @@ const PROP_LIGHTS := {
 const FORGE := "Schmiede"
 ## Größe der Figuren auf Baukasten-Karten (wie im Testfeld ausprobiert)
 const BAUKASTEN_FIGUR := 0.8
+const ORTE_ALS_TEIL := ["seilaufzug", "grab", "bienenstock", "hoehle"]
 const BAUKASTEN_FIGUR_RECT := Rect2(-24, -128, 48, 130)
 const PICKUP_LIGHTS := {
 	"urbaum_herz": ["splitter", Vector2(0, -40)],
@@ -1201,6 +1202,9 @@ func _add_pickup(target: String) -> void:
 	var art: String
 	if target.begins_with("ort:"):
 		art = state.places[int(target.substr(4))].art
+		# Auf Baukasten-Karten steht dort ein gemaltes Teil
+		if art in ORTE_ALS_TEIL and not state.get_map(state.places[int(target.substr(4))].map).baukasten.is_empty():
+			art = "leer"
 	else:
 		art = state.pickups[int(target.substr(6))].item
 	node.draw.connect(func() -> void: _draw_pickup(node, art))
