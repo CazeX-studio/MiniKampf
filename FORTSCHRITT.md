@@ -8,6 +8,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 - **Nächster Schritt:** D2 der „Demo-Reihenfolge“ in `BAUAUFTRAEGE.md` (35 Bauschritte und 4 Testtage bis zum Abschluss der Demo).
 
 - **Neu (01.11.): D1 Bildaufträge für die Figuren:** 113 Prompts in `Spieldesign/GRAFIK_AUFTRAG.md` Teil D und auf der Seite „Asterfall Bildaufträge“: Probe am Novizen, fünf Klassen, Baukasten, 21 Nebenfiguren und 19 Hauptfiguren. Die Haupt- und Nebenfiguren waren noch nicht eingeplant: Sie sind im Spiel bisher Platzhalter.
+  - Geändert nach Marcos erstem Versuch: Beim Novizen bleibt der Griff in der Hand, nur die Klinge geht weg. Körper-Prompts nennen keine Waffe und keine Klasse mehr. Marcos Blatt liegt als `tools/vorlagen/novize_m_kampf_a_ohne_klinge.png` bereit (gelbe Funken entfernt Claude in D2).
   - **Von Marco zu entscheiden:** Kobalt nutzt in den Prompts den Körper des Zähmers. Die Sternensängerin gibt es vorerst nur weiblich (Marco, 01.11.).
   - **So testest du es:** Die Seite öffnen, bei „Figuren: Probe“ einen Prompt kopieren und das Bild erzeugen.
 

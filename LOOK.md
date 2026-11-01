@@ -135,7 +135,7 @@ ersten Blatt jeder Größe per Vergleichsbild mit Marco festgelegt.
   Flügel) und **Waffe**. Rüstung und Sets zeigen sich über **Umfärben des Körpers**. Ganze Outfits im Shop nur selten.
 - **Regeln für Bilder:**
   - Körper werden **ohne Waffe** gezeichnet, die Hand greift ins Leere (die Waffe kommt als eigenes Teil dazu,
-    pro Bild ein Handpunkt). Ausnahme: Der Schild der Novizen bleibt am Körper.
+    pro Bild ein Handpunkt). Ausnahme: Der Schild der Novizen bleibt am Körper, und bei ihrem Kurzschwert bleibt der Griff in der Hand, die Waffe liegt im Spiel darüber (01.11., ChatGPT entfernt Griffe nicht sauber).
   - **Köpfe ohne Hut**, alle Köpfe gleich groß und an derselben Stelle.
   - **Feste Farbflächen** (Abschnitt 6).
   - **Platz am Rücken** frei lassen, damit Umhang, Köcher oder Flügel dahinter passen.
