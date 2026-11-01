@@ -7,7 +7,9 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 - **Neu (01.11.): Fahrplan zur Demo, Phase 0** (Brainstorm-Doc „Fahrplan zur Demo“): design.md ist auf Stand
   (Schritt 0.1). Die drei Regel-Dateien **LOOK.md**, **MONSTER.md** und **NPC.md** sind angelegt, dazu die
-  Bild-Prüfung (Projekt 13, Schritt 0). Als Nächstes Schritt 0.3 (Bildaufträge in GRAFIK_AUFTRAG.md).
+  Bild-Prüfung (Projekt 13, Schritt 0). Referenzbilder Vega, Gilde und Moosling von Marco abgenommen, der Stil bleibt
+  wie jetzt. Schritt 0.3: Alle Bildaufträge der Demo stehen in `Spieldesign/GRAFIK_AUFTRAG.md`, Teil C. **Phase 0 ist
+  damit fertig.** Als Nächstes Phase 1 (Aussehen): Projekt 13, Schritte 1 bis 3.
 
 - **Neu (25.10.): Playtest-Rückmeldungen Teil 1 eingebaut** (Liste im Brainstorm-Doc unter „Testtag-Notizen“):
   Fehler (Ye-Laternen, Silberhirsch, Pilzhöhle), Parier-Tutorial, Abwarten für alle, Aufträge allein und Dungeon nur für die Gruppe,
