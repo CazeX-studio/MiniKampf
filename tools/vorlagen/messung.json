@@ -558,5 +558,397 @@
 			83,
 			74
 		]
+	},
+	"mauer_kurve": {
+		"groesse": [
+			301,
+			185
+		],
+		"flaeche": [
+			5,
+			4
+		],
+		"fuss": [
+			160,
+			111
+		]
+	},
+	"mauer_ende": {
+		"groesse": [
+			95,
+			147
+		],
+		"flaeche": [
+			2,
+			1
+		],
+		"fuss": [
+			34,
+			122
+		]
+	},
+	"mauer_treppe": {
+		"groesse": [
+			179,
+			198
+		],
+		"flaeche": [
+			2,
+			3
+		],
+		"fuss": [
+			84,
+			157
+		]
+	},
+	"mauer_gerade_a": {
+		"groesse": [
+			220,
+			188
+		],
+		"flaeche": [
+			4,
+			1
+		],
+		"fuss": [
+			131,
+			147
+		]
+	},
+	"mauer_gerade_b": {
+		"groesse": [
+			220,
+			188
+		],
+		"flaeche": [
+			1,
+			4
+		],
+		"fuss": [
+			88,
+			147
+		]
+	},
+	"banner_messinghafen": {
+		"groesse": [
+			52,
+			72
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			26,
+			55
+		]
+	},
+	"banner_glutoase": {
+		"groesse": [
+			52,
+			73
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			26,
+			56
+		]
+	},
+	"banner_gruenwacht": {
+		"groesse": [
+			52,
+			73
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			26,
+			56
+		]
+	},
+	"banner_arkanum": {
+		"groesse": [
+			52,
+			72
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			26,
+			55
+		]
+	},
+	"banner_nebelinseln": {
+		"groesse": [
+			52,
+			72
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			26,
+			55
+		]
+	},
+	"seitentor": {
+		"groesse": [
+			174,
+			144
+		],
+		"flaeche": [
+			1,
+			4
+		],
+		"fuss": [
+			84,
+			103
+		]
+	},
+	"wachhaeuschen": {
+		"groesse": [
+			209,
+			192
+		],
+		"flaeche": [
+			3,
+			4
+		],
+		"fuss": [
+			98,
+			135
+		]
+	},
+	"bankhaus": {
+		"groesse": [
+			279,
+			252
+		],
+		"flaeche": [
+			5,
+			4
+		],
+		"fuss": [
+			140,
+			179
+		]
+	},
+	"bingos_laden": {
+		"groesse": [
+			255,
+			260
+		],
+		"flaeche": [
+			4,
+			4
+		],
+		"fuss": [
+			126,
+			195
+		]
+	},
+	"hutmacher": {
+		"groesse": [
+			204,
+			281
+		],
+		"flaeche": [
+			3,
+			3
+		],
+		"fuss": [
+			98,
+			231
+		]
+	},
+	"haus_gross": {
+		"groesse": [
+			304,
+			300
+		],
+		"flaeche": [
+			5,
+			5
+		],
+		"fuss": [
+			147,
+			219
+		]
+	},
+	"eckhaus": {
+		"groesse": [
+			285,
+			245
+		],
+		"flaeche": [
+			4,
+			4
+		],
+		"fuss": [
+			136,
+			180
+		]
+	},
+	"wegelaterne": {
+		"groesse": [
+			74,
+			178
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			32,
+			161
+		]
+	},
+	"festbuehne": {
+		"groesse": [
+			297,
+			195
+		],
+		"flaeche": [
+			5,
+			4
+		],
+		"fuss": [
+			144,
+			122
+		]
+	},
+	"strohpuppe": {
+		"groesse": [
+			55,
+			91
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			26,
+			74
+		]
+	},
+	"zielscheibe": {
+		"groesse": [
+			66,
+			78
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			30,
+			61
+		]
+	},
+	"waffenstaender": {
+		"groesse": [
+			100,
+			86
+		],
+		"flaeche": [
+			1,
+			2
+		],
+		"fuss": [
+			46,
+			61
+		]
+	},
+	"feuerstelle": {
+		"groesse": [
+			125,
+			121
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			62,
+			88
+		]
+	},
+	"blumenkasten": {
+		"groesse": [
+			62,
+			50
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			22,
+			33
+		]
+	},
+	"festlaternen": {
+		"groesse": [
+			283,
+			157
+		],
+		"flaeche": [
+			4,
+			5
+		],
+		"fuss": [
+			134,
+			84
+		]
+	},
+	"dornenranken": {
+		"groesse": [
+			121,
+			80
+		],
+		"flaeche": [
+			1,
+			3
+		],
+		"fuss": [
+			62,
+			47
+		]
+	},
+	"steg": {
+		"groesse": [
+			208,
+			125
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			88,
+			92
+		]
+	},
+	"heuballen": {
+		"groesse": [
+			92,
+			73
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			43,
+			56
+		]
 	}
 }

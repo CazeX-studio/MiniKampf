@@ -54,6 +54,19 @@ func _process(delta: float) -> void:
 			walk_to(Vector2i(32, 50))],
 		[14.6, func() -> void:
 			_foto("laufen_hinten")
+			_set_night(false)
+			place_player(Vector2i(32, 70))],
+		[15.6, func() -> void:
+			_foto("kreuzweg_neu_mitte")
+			place_player(Vector2i(20, 72))],
+		[16.6, func() -> void:
+			_foto("kreuzweg_neu_west")
+			place_player(Vector2i(42, 72))],
+		[17.6, func() -> void:
+			_foto("kreuzweg_neu_ost")
+			_set_night(true)],
+		[18.1, func() -> void:
+			_foto("kreuzweg_neu_ost_nacht")
 			get_tree().quit()],
 	]
 	while _step < plan.size() and _t >= plan[_step][0]:

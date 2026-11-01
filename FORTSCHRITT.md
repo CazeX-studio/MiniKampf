@@ -5,6 +5,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 01.11.)
 
+- **Neu (01.11.): Kreuzweg-Bilder eingebaut:** Die Blätter K1–K5, K7, K8, Z1a und Z1b plus die neuen geraden
+  Mauerstücke (K1b) sind von Marco abgenommen und stehen im Baukasten: 28 Teile und die Blumenwiese. Im Testfeld
+  stehen sie südlich der bisherigen Fläche. Die echte Stadt Kreuzweg kommt erst mit Projekt 9, Schritt 5.
+  **So testest du es:** Startmenü → „Baukasten-Testfeld“, dann die Straße ganz nach Süden laufen.
+  1. Links die Mauerteile, die Festbühne, die Festlaternen, den Trainingsplatz und die Banner ansehen.
+  2. Rechts die fünf neuen Häuser und das Wachhäuschen ansehen, auch mal hinter ein Haus laufen.
+  3. Mit **G** das Raster einschalten: Steht jedes Teil sauber auf seinen Feldern?
+  4. Mit **N** auf Nacht schalten: Leuchten die Laternen an den Häusern an der richtigen Stelle?
+  5. Durch das Seitentor gehen und im Südosten über den Steg laufen.
+
 - **Neu (01.11.): Fahrplan zur Demo, Phase 0** (Brainstorm-Doc „Fahrplan zur Demo“): design.md ist auf Stand
   (Schritt 0.1). Die drei Regel-Dateien **LOOK.md**, **MONSTER.md** und **NPC.md** sind angelegt, dazu die
   Bild-Prüfung (Projekt 13, Schritt 0). Referenzbilder Vega, Gilde und Moosling von Marco abgenommen, der Stil bleibt

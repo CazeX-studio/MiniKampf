@@ -39,6 +39,14 @@
 			],
 			"begehbar": false,
 			"vorrang": 0
+		},
+		":": {
+			"name": "Blumenwiese",
+			"bilder": [
+				"boden/blumenwiese_1.png",
+				"boden/blumenwiese_2.png"
+			],
+			"vorrang": 5
 		}
 	},
 	"objekte": {
@@ -592,6 +600,430 @@
 				"art": "splitter",
 				"hoehe": 30
 			}
+		},
+		"mauer_kurve": {
+			"bild": "objekte/mauer_kurve.png",
+			"flaeche": [
+				5,
+				4
+			],
+			"fuss": [
+				160,
+				111
+			]
+		},
+		"mauer_ende": {
+			"bild": "objekte/mauer_ende.png",
+			"flaeche": [
+				2,
+				1
+			],
+			"fuss": [
+				34,
+				122
+			]
+		},
+		"mauer_treppe": {
+			"bild": "objekte/mauer_treppe.png",
+			"flaeche": [
+				2,
+				3
+			],
+			"fuss": [
+				84,
+				157
+			]
+		},
+		"mauer_gerade_a": {
+			"bild": "objekte/mauer_gerade_a.png",
+			"flaeche": [
+				4,
+				1
+			],
+			"fuss": [
+				131,
+				147
+			]
+		},
+		"mauer_gerade_b": {
+			"bild": "objekte/mauer_gerade_b.png",
+			"flaeche": [
+				1,
+				4
+			],
+			"fuss": [
+				88,
+				147
+			]
+		},
+		"banner_messinghafen": {
+			"bild": "objekte/banner_messinghafen.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				26,
+				55
+			],
+			"blockiert": false
+		},
+		"banner_glutoase": {
+			"bild": "objekte/banner_glutoase.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				26,
+				56
+			],
+			"blockiert": false
+		},
+		"banner_gruenwacht": {
+			"bild": "objekte/banner_gruenwacht.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				26,
+				56
+			],
+			"blockiert": false
+		},
+		"banner_arkanum": {
+			"bild": "objekte/banner_arkanum.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				26,
+				55
+			],
+			"blockiert": false
+		},
+		"banner_nebelinseln": {
+			"bild": "objekte/banner_nebelinseln.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				26,
+				55
+			],
+			"blockiert": false
+		},
+		"seitentor": {
+			"bild": "objekte/seitentor.png",
+			"flaeche": [
+				1,
+				4
+			],
+			"fuss": [
+				84,
+				103
+			],
+			"frei": [
+				[
+					0,
+					1
+				],
+				[
+					0,
+					2
+				]
+			]
+		},
+		"wachhaeuschen": {
+			"bild": "objekte/wachhaeuschen.png",
+			"flaeche": [
+				3,
+				4
+			],
+			"fuss": [
+				98,
+				135
+			],
+			"lichter": [
+				{
+					"art": "laterne",
+					"bild": [
+						30,
+						76
+					]
+				}
+			]
+		},
+		"bankhaus": {
+			"bild": "objekte/bankhaus.png",
+			"flaeche": [
+				5,
+				4
+			],
+			"fuss": [
+				140,
+				179
+			],
+			"lichter": [
+				{
+					"art": "laterne",
+					"bild": [
+						162,
+						169
+					]
+				},
+				{
+					"art": "laterne",
+					"bild": [
+						230,
+						150
+					]
+				}
+			]
+		},
+		"bingos_laden": {
+			"bild": "objekte/bingos_laden.png",
+			"flaeche": [
+				4,
+				4
+			],
+			"fuss": [
+				126,
+				195
+			],
+			"lichter": [
+				{
+					"art": "laterne",
+					"bild": [
+						116,
+						173
+					]
+				}
+			]
+		},
+		"hutmacher": {
+			"bild": "objekte/hutmacher.png",
+			"flaeche": [
+				3,
+				3
+			],
+			"fuss": [
+				98,
+				231
+			]
+		},
+		"haus_gross": {
+			"bild": "objekte/haus_gross.png",
+			"flaeche": [
+				5,
+				5
+			],
+			"fuss": [
+				147,
+				219
+			],
+			"lichter": [
+				{
+					"art": "laterne",
+					"bild": [
+						289,
+						150
+					]
+				}
+			]
+		},
+		"eckhaus": {
+			"bild": "objekte/eckhaus.png",
+			"flaeche": [
+				4,
+				4
+			],
+			"fuss": [
+				136,
+				180
+			],
+			"lichter": [
+				{
+					"art": "laterne",
+					"bild": [
+						114,
+						175
+					]
+				}
+			]
+		},
+		"wegelaterne": {
+			"bild": "objekte/wegelaterne.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				32,
+				161
+			],
+			"lichter": [
+				{
+					"art": "laterne",
+					"bild": [
+						58,
+						42
+					]
+				}
+			]
+		},
+		"festbuehne": {
+			"bild": "objekte/festbuehne.png",
+			"flaeche": [
+				5,
+				4
+			],
+			"fuss": [
+				144,
+				122
+			]
+		},
+		"strohpuppe": {
+			"bild": "objekte/strohpuppe.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				26,
+				74
+			]
+		},
+		"zielscheibe": {
+			"bild": "objekte/zielscheibe.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				30,
+				61
+			]
+		},
+		"waffenstaender": {
+			"bild": "objekte/waffenstaender.png",
+			"flaeche": [
+				1,
+				2
+			],
+			"fuss": [
+				46,
+				61
+			]
+		},
+		"feuerstelle": {
+			"bild": "objekte/feuerstelle.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				62,
+				88
+			]
+		},
+		"blumenkasten": {
+			"bild": "objekte/blumenkasten.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				22,
+				33
+			]
+		},
+		"festlaternen": {
+			"bild": "objekte/festlaternen.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				141,
+				135
+			],
+			"blockiert": false,
+			"lichter": [
+				{
+					"art": "laterne",
+					"bild": [
+						58,
+						62
+					]
+				},
+				{
+					"art": "laterne",
+					"bild": [
+						99,
+						75
+					]
+				},
+				{
+					"art": "laterne",
+					"bild": [
+						140,
+						78
+					]
+				},
+				{
+					"art": "laterne",
+					"bild": [
+						184,
+						72
+					]
+				},
+				{
+					"art": "laterne",
+					"bild": [
+						225,
+						59
+					]
+				}
+			]
+		},
+		"dornenranken": {
+			"bild": "objekte/dornenranken.png",
+			"flaeche": [
+				1,
+				3
+			],
+			"fuss": [
+				62,
+				47
+			]
+		},
+		"steg": {
+			"bild": "objekte/steg.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				88,
+				92
+			],
+			"flach": true,
+			"begehbar": true
+		},
+		"heuballen": {
+			"bild": "objekte/heuballen.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				43,
+				56
+			]
 		}
 	}
 }

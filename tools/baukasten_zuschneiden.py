@@ -6,14 +6,17 @@ Was das Werkzeug macht:
 - verkleinert es auf Spielgröße (ein Feld ist im Spiel 64 x 32 Pixel),
 - misst die Grundfläche (wie viele Felder breit und tief) und den Fußpunkt und schreibt beides
   nach tools/vorlagen/messung.json (Claude überträgt die Werte nach data/baukasten_teile.json).
-Aufruf: python3 tools/baukasten_zuschneiden.py   (braucht numpy, scipy und Pillow)
+Aufruf: python3 tools/baukasten_zuschneiden.py [BLATT …]   (braucht numpy, scipy und Pillow; ohne Angabe alle Blätter)
 """
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
 from PIL import Image
 from scipy import ndimage
+
+import look_pruefen
 
 WURZEL = Path(__file__).resolve().parent.parent
 VORLAGEN = WURZEL / "tools" / "vorlagen"
@@ -46,6 +49,28 @@ BLAETTER = {
 	"boden": {"boden": True, "teile": {
 		"gras_1": (274, 190), "gras_2": (820, 190), "pflaster_1": (1360, 190), "pflaster_2": (1896, 190),
 		"platz": (274, 510), "erde": (820, 510), "wasser_1": (1360, 510), "wasser_2": (1896, 510)}},
+	# Kreuzweg und Kreuzwegfelder (GRAFIK_AUFTRAG.md, Teil C). "massstaebe": Maßstab einzelner Teile, weil die Motive
+	# auf diesen Blättern unterschiedlich groß gemalt sind. "saum": durchsichtig gespeichertes Blatt mit rotem Saum.
+	"kreuzweg_k1": {"massstab": 0.38, "saum": True, "look": True, "teile": {
+		"mauer_kurve": (467, 348), "mauer_ende": (1178, 380), "mauer_treppe": (1846, 358)}},
+	"kreuzweg_k1b": {"massstab": 0.33, "stein": (0.86, 0.86, 0.9), "look": True, "teile": {
+		"mauer_gerade_a": (540, 330), "mauer_gerade_b": (1450, 330)}},
+	"kreuzweg_k2": {"massstab": 0.32, "look": True, "massstaebe": {"seitentor": 0.38, "wachhaeuschen": 0.4}, "teile": {
+		"banner_messinghafen": (438, 147), "banner_glutoase": (749, 147), "banner_gruenwacht": (1070, 147),
+		"banner_arkanum": (1387, 147), "banner_nebelinseln": (1708, 147), "seitentor": (717, 516), "wachhaeuschen": (1390, 489)}},
+	"kreuzweg_k3": {"massstab": 0.38, "saum": True, "look": True, "massstaebe": {"bankhaus": 0.36, "hutmacher": 0.42}, "teile": {
+		"bankhaus": (418, 358), "bingos_laden": (1195, 348), "hutmacher": (1846, 358)}},
+	"kreuzweg_k4": {"massstab": 0.38, "look": True, "massstaebe": {"eckhaus": 0.34}, "teile": {
+		"haus_gross": (489, 434), "eckhaus": (1542, 456)}},
+	"kreuzweg_k5": {"massstab": 0.26, "look": True, "massstaebe": {"wegelaterne": 0.25}, "teile": {
+		"wegelaterne": (424, 413), "festbuehne": (1401, 413)}},
+	"kreuzweg_k7": {"massstab": 0.2, "saum": True, "look": True, "teile": {
+		"strohpuppe": (282, 380), "zielscheibe": (695, 402), "waffenstaender": (1184, 380), "feuerstelle": (1825, 380)}},
+	"kreuzweg_k8": {"massstab": 0.19, "look": True, "massstaebe": {"festlaternen": 0.3, "dornenranken": 0.22}, "teile": {
+		"blumenkasten": (239, 489), "festlaternen": (983, 348), "dornenranken": (1835, 445)}},
+	"kreuzwegfelder_z1a": {"boden": True, "teile": {"blumenwiese_1": (545, 355), "blumenwiese_2": (1630, 355)}},
+	"kreuzwegfelder_z1b": {"massstab": 0.2, "look": True, "massstaebe": {"heuballen": 0.17}, "teile": {
+		"steg": (711, 391), "heuballen": (1683, 391)}},
 }
 
 
@@ -80,6 +105,24 @@ def freistellen(bild, roter_rand=False):
 	aus[schatten, 3] = np.clip((235 - tief[schatten]) * 2.2, 0, 255)
 	aus[schatten, :3] = 0
 	return aus.astype(np.uint8)
+
+
+def saum_entfernen(bild):
+	"""Durchsichtig gespeichertes Blatt: der weiche rote Saum außen fliegt raus, das Innere der Teile wird ganz deckend."""
+	a = np.array(bild.convert("RGBA")).astype(np.int16)
+	r, g, b, alpha = a[..., 0], a[..., 1], a[..., 2], a[..., 3]
+	a[(alpha < 128) & (r > g + 80) & (r > b + 40), 3] = 0
+	a[ndimage.binary_fill_holes(a[..., 3] >= 128), 3] = 255
+	return a.astype(np.uint8)
+
+
+def stein_angleichen(a, faktor):
+	"""Färbt nur steinfarbene Pixel um; Banner, Blätter und Umriss bleiben."""
+	f = a.astype(np.float32)
+	r, g, b = f[..., 0], f[..., 1], f[..., 2]
+	maske = (abs(r - b) < 75) & (r > 70) & (g > b - 5) & (r - g < 45) & (g - r < 5)
+	f[..., :3][maske] = np.clip(f[..., :3][maske] * np.array(faktor, dtype=np.float32), 0, 255)
+	return f.astype(np.uint8)
 
 
 def teile_finden(a, schnitte):
@@ -142,9 +185,16 @@ def boden_teil(a, sl, lab, i):
 
 
 def main():
-	messung = {}
-	for blatt, info in BLAETTER.items():
-		a = freistellen(Image.open(VORLAGEN / f"{blatt}.png"), info.get("roter_rand", False))
+	namen = sys.argv[1:] or list(BLAETTER)
+	datei = VORLAGEN / "messung.json"
+	messung = json.loads(datei.read_text(encoding="utf-8"))
+	regeln = look_pruefen.lade_regeln()
+	for blatt in namen:
+		info = BLAETTER[blatt]
+		bild = Image.open(VORLAGEN / f"{blatt}.png")
+		a = saum_entfernen(bild) if info.get("saum") else freistellen(bild, info.get("roter_rand", False))
+		if info.get("stein"):
+			a = stein_angleichen(a, info["stein"])
 		lab, stuecke = teile_finden(a, info.get("schnitt", []))
 		for name, punkt in info["teile"].items():
 			i, sl = naechstes(stuecke, punkt)
@@ -154,13 +204,17 @@ def main():
 			stueck = a[sl].copy()
 			stueck[lab[sl] != i, 3] = 0
 			bild = Image.fromarray(stueck)
-			s = info["massstab"]
+			s = info.get("massstaebe", {}).get(name, info["massstab"])
 			bild = bild.resize((max(1, round(bild.width * s)), max(1, round(bild.height * s))), Image.LANCZOS)
-			bild.save(ZIEL / "objekte" / f"{name}.png")
+			pfad = ZIEL / "objekte" / f"{name}.png"
+			bild.save(pfad)
+			if info.get("look"):
+				look_pruefen.nachbearbeiten(pfad, "baukasten", pfad, None, regeln)
+				bild = Image.open(pfad)
 			flaeche, fuss = messen(bild)
 			messung[name] = {"groesse": [bild.width, bild.height], "flaeche": flaeche, "fuss": fuss}
 			print(f"{name:24s} {bild.width:4d} x {bild.height:4d}  Felder {flaeche}  Fuß {fuss}")
-	(VORLAGEN / "messung.json").write_text(json.dumps(messung, ensure_ascii=False, indent="\t"))
+	datei.write_text(json.dumps(messung, ensure_ascii=False, indent="	"))
 
 
 if __name__ == "__main__":

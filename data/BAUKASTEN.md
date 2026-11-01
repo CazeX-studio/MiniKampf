@@ -14,7 +14,7 @@ Ausprobieren kannst du das im Startmenü unter **„Baukasten-Testfeld“**.
    Es misst auch die ungefähre Grundfläche und den Fußpunkt (`tools/vorlagen/messung.json`).
 4. In `data/baukasten_teile.json` stehen pro Teil Grundfläche, Fußpunkt, Licht usw. (von Claude geprüft und angepasst).
 
-Ein neues Blatt oder ein besseres Bild: Datei in `tools/vorlagen/` ersetzen, Werkzeug laufen lassen, im Testfeld mit **G** prüfen.
+Ein neues Blatt oder ein besseres Bild: Datei in `tools/vorlagen/` ersetzen, Werkzeug laufen lassen (mit Blattnamen nur dieses Blatt), im Testfeld mit **G** prüfen.
 
 ## Größen
 
@@ -34,6 +34,12 @@ Ein neues Blatt oder ein besseres Bild: Datei in `tools/vorlagen/` ersetzen, Wer
 | Gesandten-Hof | pavillon_messinghafen, _glutoase, _gruenwacht, _arkanum, _nebelinseln (je 4×4) |
 | Kleinkram | laterne, fackelschale (leuchten nachts), banner, bank, fass, kiste, zaun, wegweiser, auftragsbrett, mauerruine |
 | Pflanzen | baum, baum_herbst, tanne, tanne_gross, busch, busch_bluete, blumen und grasbueschel (flach) |
+| Kreuzweg: Mauer | mauer_kurve, mauer_ende, mauer_treppe, mauer_gerade_a, mauer_gerade_b (die geraden Stücke sind rund 4 Felder lang, Pfeiler an beiden Enden) |
+| Kreuzweg: Tore | banner_messinghafen, _glutoase, _gruenwacht, _arkanum, _nebelinseln (für den Torbogen, nicht blockierend), seitentor (Mitte begehbar), wachhaeuschen |
+| Kreuzweg: Häuser | bankhaus, bingos_laden, hutmacher, haus_gross, eckhaus |
+| Kreuzweg: Markt und Hof | wegelaterne (leuchtet nachts), festbuehne, strohpuppe, zielscheibe, waffenstaender, feuerstelle (Feuer macht das Spiel, noch nicht eingebaut) |
+| Kreuzweg: Kleinkram | blumenkasten, festlaternen (von vorne gemalt, nur quer über eine Straße), dornenranken |
+| Kreuzwegfelder | Boden blumenwiese_1, _2 (Zeichen `:`, am besten kleine Flecken), steg (flach, begehbar, Wasser fest eingemalt), heuballen |
 | Sternenfall | splitterkreis (3×3, vor dem Fest), krater_frisch (4×4, Festnacht), krater_spaet (4×4, umzäunt, Wochen danach), sternsplitter (1×1, leuchtet) |
 
 **Übergänge:** Das Spiel macht sie selbst, es braucht keine eigenen Bilder. Jede Bodenart hat in `data/baukasten_teile.json`
@@ -54,7 +60,7 @@ Weite, Fransen und Weichheit stehen oben in `scripts/welt/baukasten_test.gd` (RA
   - `frei`: Felder eines Teils, die begehbar bleiben (Torbogen)
   - `licht` (Höhe über dem Boden) oder `lichter` (Stellen im Bild, z. B. Laternen an der Hauswand)
   - `massstab`: nur für die alten Pixel-Platzhalter (2)
-- `data/baukasten_testfeld.json`: Das Testfeld. Boden als Zeichen-Raster (`.` Gras, `#` Pflaster, `o` Platz, `e` Erde, `~` Wasser),
+- `data/baukasten_testfeld.json`: Das Testfeld. Boden als Zeichen-Raster (`.` Gras, `:` Blumenwiese, `#` Pflaster, `o` Platz, `e` Erde, `~` Wasser),
   dazu die Gegenstände mit ihrem Feld. `"gespiegelt": true` stellt ein Teil quer (z. B. das sechste Tor am Weg nach links).
   `"nur_stufe"`: das Teil gibt es nur in diesen Stufen der Geschichte (0 vor dem Fest, 1 Nacht des Sternenfalls, 2 Wochen danach).
 
