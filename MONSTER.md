@@ -329,8 +329,8 @@ Beim Anlegen gegen das Spiel geprüft. Nichts davon ist geändert, Marco entsche
 
 1. **Kreuzwegfelder:** Im Spiel kämpft man dort gegen **Wiesenkobold, Kieselkobold, Rüpelkobold und Feldschleim**
    (Bilder in `assets/figuren/`). Die beschlossenen Steckbriefe nennen Tauschleim, Wiesenhoppler, Knollenkäfer,
-   Löwenzahnling usw. Die Kobolde (Beschluss 28.10.) stehen in keinem Steckbrief. Frage: Kommen die Kobolde weg, oder
-   bekommen sie einen Platz (zum Beispiel als Gegner in Ye's Lektionen, die keine Monster sind)?
+   Löwenzahnling usw. Die Kobolde (Beschluss 28.10.) stehen in keinem Steckbrief. **Entschieden (Marco, 01.11.):** Die Kobolde bleiben im Spiel,
+   bekommen aber später einen anderen Platz. Auf den Kreuzwegfeldern stehen jetzt die Monster aus den Steckbriefen.
 2. **Familien ohne Angabe im Steckbrief:** Bei Kronhirsch, Wipfelluchs, Splitterbär, Leuchtmotte, Wurzelkriecher,
    Schatzpilzling, Sonnenlöwe, Stachelflitzer und den Vulkanschmiede-Monstern stammt die Familie aus dem
    Bildauftrags-Entwurf vom 01.11. (oben markiert). Bitte bestätigen.

@@ -7,8 +7,8 @@
 		"phasen": [
 			{
 				"name": "Lektion 1: Die Tempo-Leiste",
-				"ansage": "Übungswiese vor dem Stadttor: Ein Feldschleim kriecht heran.",
-				"gegner": ["feldschleim"],
+				"ansage": "Übungswiese vor dem Stadttor: Ein Tauschleim kriecht heran.",
+				"gegner": ["tauschleim"],
 				"erlaubt": ["schlag"],
 				"reaktion": false,
 				"hinweise": {
@@ -17,8 +17,8 @@
 			},
 			{
 				"name": "Lektion 2: Fähigkeiten",
-				"ansage": "Ein Feldschleim und ein Wiesenkobold stellen sich dir.",
-				"gegner": ["feldschleim", "wiesenkobold"],
+				"ansage": "Ein Tauschleim und ein Wiesenhoppler stellen sich dir.",
+				"gegner": ["tauschleim", "wiesenhoppler"],
 				"erlaubt": ["schlag", "kraftschlag", "erste_hilfe"],
 				"reaktion": false,
 				"hinweise": {
@@ -37,27 +37,27 @@
 			},
 			{
 				"name": "Lektion 4: Zwei Reihen",
-				"ansage": "Ein Rüpelkobold mit einer großen Keule stürmt heran!",
-				"gegner": ["ruepelkobold"],
+				"ansage": "Ein bulliger Knollenkäfer stürmt heran!",
+				"gegner": ["knollenkaefer"],
 				"erlaubt": ["schlag", "kraftschlag", "erste_hilfe", "row", "trank"],
 				"zuerst": "row",
 				"hinweise": {
-					"erster_zug": "Letzte Lektion! Der Rüpelkobold schlägt hart zu. In der hinteren Reihe bekommst du weniger Nahkampf-Schaden, machst aber auch weniger. Wechsle jetzt zuerst mit „Nach hinten“ die Reihe (kostet den Zug) – erst danach kannst du wieder angreifen. Parieren klappt jetzt auch wieder."
+					"erster_zug": "Letzte Lektion! Der Knollenkäfer zwickt hart zu. In der hinteren Reihe bekommst du weniger Nahkampf-Schaden, machst aber auch weniger. Wechsle jetzt zuerst mit „Nach hinten“ die Reihe (kostet den Zug) – erst danach kannst du wieder angreifen. Parieren klappt jetzt auch wieder."
 				}
 			}
 		]
 	},
 	"gruppenkampf": {
 		"name": "Erster Gruppenkampf",
-		"ansage": "Kobolde überfallen die Übungswiese! Tessa und Gorm kämpfen mit dir.",
+		"ansage": "Monster überfallen die Übungswiese! Tessa und Gorm kämpfen mit dir.",
 		"begleiter": [
 			{"name": "Tessa", "aussehen": "novize_tessa"}, {"name": "Gorm", "aussehen": "novize_gorm"}
 		],
-		"wellen": [["wiesenkobold", "ruepelkobold", "kieselkobold", "feldschleim"]],
+		"wellen": [["wiesenhoppler", "knollenkaefer", "loewenzahnling", "tauschleim"]],
 		"erlaubt": ["schlag", "kraftschlag", "erste_hilfe", "row", "trank"],
 		"erfahrung": 100,
 		"hinweise": {
-			"erster_zug": "Tessa und Gorm sind auch Novizen und handeln selbst. Zusammen seid ihr stärker: Heilt euch gegenseitig mit „Erste Hilfe“ und nehmt euch zuerst die schwachen Kobolde vor."
+			"erster_zug": "Tessa und Gorm sind auch Novizen und handeln selbst. Zusammen seid ihr stärker: Heilt euch gegenseitig mit „Erste Hilfe“ und nehmt euch zuerst die schwachen Monster vor."
 		}
 	},
 	"probestunde": {
@@ -67,7 +67,7 @@
 			{"name": "Tessa", "aussehen": "novize_tessa"},
 			{"name": "Gorm", "aussehen": "novize_gorm"}
 		],
-		"wellen": [["wiesenkobold", "feldschleim", "wiesenkobold", "ruepelkobold"]],
+		"wellen": [["wiesenhoppler", "tauschleim", "wiesenhoppler", "knollenkaefer"]],
 		"ult_start": 60,
 		"merken": "probestunde_gemacht",
 		"erfahrung": 40,

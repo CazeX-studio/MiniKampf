@@ -152,7 +152,7 @@
 			"abschluss": {"wer": "Ye", "text": "Vier Lektionen am Stück, und du stehst noch. Nicht schlecht für einen Novizen.", "antworten": [
 				{"text": "Danke, Ye.", "weiter": "gruppe", "aktionen": [{"auftrag_abgeben": "grundausbildung"}]}
 			]},
-			"gruppe": {"wer": "Ye", "text": "Allein kommt da draußen niemand weit. Tessa und Gorm sind auch Novizen. Kobolde treiben sich auf der Übungswiese herum – vertreibt sie zusammen.", "antworten": [
+			"gruppe": {"wer": "Ye", "text": "Allein kommt da draußen niemand weit. Tessa und Gorm sind auch Novizen. Monster treiben sich auf der Übungswiese herum – vertreibt sie zusammen.", "antworten": [
 				{"text": "Wir schaffen das!", "aktionen": [{"auftrag_starten": "erster_gruppenkampf"}, {"kampf": "gruppenkampf"}]},
 				{"text": "Gleich.", "aktionen": [{"auftrag_starten": "erster_gruppenkampf"}]}
 			]},
@@ -195,7 +195,7 @@
 			{"knoten": "danach"}
 		],
 		"knoten": {
-			"hallo": {"wer": "Marv", "text": "He! Du! Ja, DU! Du bist doch der Novize, der gerade die Kobolde verkloppt hat?", "antworten": [
+			"hallo": {"wer": "Marv", "text": "He! Du! Ja, DU! Du bist doch der Novize, der gerade die Monster verkloppt hat?", "antworten": [
 				{"text": "Äh … ja?", "weiter": "hallo2"},
 				{"text": "Wer will das wissen?", "weiter": "hallo2"}
 			]},

@@ -5,6 +5,12 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 01.11.)
 
+- **Neu (01.11.): Demo-Start: Monster auf den Kreuzwegfeldern** (Marcos Entscheidung: Kobolde bleiben im Spiel, bekommen
+  aber später einen anderen Platz): Ye's Lektionen, der Überfall auf die Übungswiese und die Probestunden nutzen jetzt
+  Tauschleim, Wiesenhoppler, Knollenkäfer und Löwenzahnling. Die Texte sagen „Monster“ statt „Kobolde“. Die Werte sind
+  die der Kobolde; die Tabelle nach Rolle und die volle Fähigkeiten-Liste kommen noch. **So testest du es (in der Demo):**
+  1. Neues Spiel, Grundausbildung bei Ye. 2. Überfall mit Tessa und Gorm spielen. 3. Eine Probestunde spielen.
+
 - **Neu (01.11.): Hirschtal-Monster und Startbildschirm:** Sieben weitere Familien (Wildschwein, Ranke, Krabbe, Vogel, Wolf,
   Geist, Hirsch) und 19 Arten liegen als Bilder in `assets/figuren/`, dazu die Vögel- und Wölfe-Arten für Wachtwald,
   Tiefwurzel und Pilzhöhle. Sie kämpfen noch nicht mit. Ausnahme: Windfalke, Sporenwolf und Donnerhirsch waren schon in
