@@ -376,6 +376,9 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 				# Zuerst vom Gürtel, dann aus der Tasche
 				p.progress.use_potions("heiltrank", used)
 				progress_changed.emit(p.id)
+			# Sternenmut: einmal in der Festnacht gelernt, danach immer da (Novize)
+			if GameData.battle(str(cmd.get("kampf", ""))).get("sternenmut", false):
+				p.progress.flags["sternenmut"] = true
 			# Mana nach dem Kampf (nur Kämpfe in der Wildnis melden es)
 			if cmd.has("mana_anteil"):
 				p.progress.mana_anteil = clampf(float(cmd.mana_anteil), 0.0, 1.0)

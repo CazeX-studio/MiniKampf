@@ -54,7 +54,7 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
 ## Kämpfe (seit Schritt 3, `kaempfe.json`)
 
 - Jeder Kampf hat `name`, `ansage` (erste Zeile im Kampf-Log), `wellen` (Gegner-Kennungen aus `scripts/kampf/sandbox.gd`),
-  `erlaubt` (welche Fähigkeiten der Novize schon hat: `schlag`, `kraftschlag`, `erste_hilfe`, `row` = Reihe wechseln),
+  `erlaubt` (welche Fähigkeiten der Novize schon hat: `schlag`, `schildstoss`, `doppelschlag`, `erste_hilfe`, `deckung`, `row` = Reihe wechseln, `trank`, `manatrank_trinken`, `ult` = Sternenmut),
   `erfahrung` (gibt es nur beim ersten Sieg), optional `begleiter` (Novizen-Mitstreiter, der Computer steuert sie),
   `reaktion: false` (der Novize kann noch nicht parieren, z. B. Lektion 1 und 2),
   `zuerst` (diese Aktion muss als Erstes kommen, alles andere ist bis dahin gesperrt, z. B. `"row"` in Lektion 4),

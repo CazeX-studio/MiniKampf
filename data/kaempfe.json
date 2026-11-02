@@ -9,20 +9,20 @@
 				"name": "Lektion 1: Die Tempo-Leiste",
 				"ansage": "Übungswiese vor dem Stadttor: Ein Tauschleim kriecht heran.",
 				"gegner": ["tauschleim"],
-				"erlaubt": ["schlag"],
+				"erlaubt": ["schlag", "schildstoss"],
 				"reaktion": false,
 				"hinweise": {
-					"erster_zug": "Oben siehst du die Zugleiste: Ganz links steht, wer JETZT dran ist, rechts daneben die nächsten Züge. Schnelle Figuren kommen öfter dran.\nUnter dir stehen deine Grundwerte: Leben (grün) – ist es leer, fällst du. Mana (blau) – Kraft für Fähigkeiten. Mit jeder Stufe wachsen sie, dazu dein Angriff.\nJetzt bist du dran: Tippe „Schlag“ und dann den Feldschleim."
+					"erster_zug": "Oben siehst du die Zugleiste: Ganz links steht, wer JETZT dran ist, rechts daneben die nächsten Züge. Schnelle Figuren kommen öfter dran.\nUnter dir stehen deine Grundwerte: Leben (grün) – ist es leer, fällst du. Mana (blau) – Kraft für Fähigkeiten. Mit jeder Stufe wachsen sie, dazu dein Angriff.\nJetzt bist du dran: Tippe „Hieb“ und dann den Gegner. Neu ist auch „Schildstoß“: wenig Schaden, aber der Gegner rutscht auf der Zugleiste nach hinten. Ye: „Wer zuerst dran ist, gewinnt öfter. Schieb ihn nach hinten.“"
 				}
 			},
 			{
 				"name": "Lektion 2: Fähigkeiten",
 				"ansage": "Ein Tauschleim und ein Wiesenhoppler stellen sich dir.",
 				"gegner": ["tauschleim", "wiesenhoppler"],
-				"erlaubt": ["schlag", "kraftschlag", "erste_hilfe"],
+				"erlaubt": ["schlag", "schildstoss", "doppelschlag", "erste_hilfe"],
 				"reaktion": false,
 				"hinweise": {
-					"erster_zug": "Gut gemacht – aber es geht weiter! Neu: „Kraftschlag“ trifft härter und „Erste Hilfe“ heilt. Beide kosten Mana (blaue Leiste) und brauchen danach eine Pause („Bereit in 2“). Mana kommt jeden Zug ein wenig zurück. Pass auf dein Leben auf!"
+					"erster_zug": "Gut gemacht – aber es geht weiter! Neu: „Doppelschlag“ trifft zweimal und „Erste Hilfe“ heilt dich oder einen Verbündeten. Beide kosten Mana (blaue Leiste). Mana kommt nicht von selbst zurück: Ein normaler Hieb gibt etwas, eine perfekte Parade mehr, Abwarten auch etwas. Ye: „Mana fällt nicht vom Himmel. Kämpf gut, dann kommt es zurück.“ Pass auf dein Leben auf!"
 				}
 			},
 			{
@@ -39,10 +39,10 @@
 				"name": "Lektion 4: Zwei Reihen",
 				"ansage": "Ein bulliger Knollenkäfer stürmt heran!",
 				"gegner": ["knollenkaefer"],
-				"erlaubt": ["schlag", "kraftschlag", "erste_hilfe", "row", "trank"],
+				"erlaubt": ["schlag", "schildstoss", "doppelschlag", "erste_hilfe", "deckung", "row", "trank", "manatrank_trinken", "ult"],
 				"zuerst": "row",
 				"hinweise": {
-					"erster_zug": "Letzte Lektion! Der Knollenkäfer zwickt hart zu. In der hinteren Reihe bekommst du weniger Nahkampf-Schaden, machst aber auch weniger. Wechsle jetzt zuerst mit „Nach hinten“ die Reihe (kostet den Zug) – erst danach kannst du wieder angreifen. Parieren klappt jetzt auch wieder."
+					"erster_zug": "Letzte Lektion! Der Knollenkäfer zwickt hart zu. In der hinteren Reihe bekommst du weniger Nahkampf-Schaden, machst aber auch weniger. Wechsle jetzt zuerst mit „Nach hinten“ die Reihe (kostet den Zug) – erst danach kannst du wieder angreifen. Später, mit Tessa und Gorm an deiner Seite, kannst du mit „Deckung geben“ nach vorne springen und einen Treffer für sie abfangen. Parieren klappt jetzt auch wieder."
 				}
 			}
 		]
@@ -54,7 +54,7 @@
 			{"name": "Tessa", "aussehen": "novize_tessa"}, {"name": "Gorm", "aussehen": "novize_gorm"}
 		],
 		"wellen": [["wiesenhoppler", "knollenkaefer", "loewenzahnling", "tauschleim"]],
-		"erlaubt": ["schlag", "kraftschlag", "erste_hilfe", "row", "trank"],
+		"erlaubt": ["schlag", "schildstoss", "doppelschlag", "erste_hilfe", "deckung", "row", "trank", "manatrank_trinken", "ult"],
 		"erfahrung": 100,
 		"hinweise": {
 			"erster_zug": "Tessa und Gorm sind auch Novizen und handeln selbst. Zusammen seid ihr stärker: Heilt euch gegenseitig mit „Erste Hilfe“ und nehmt euch zuerst die schwachen Monster vor."
@@ -82,16 +82,17 @@
 		],
 		"wellen": [["sternenfresser"]],
 		"hintergrund": "marktplatz_nacht",
-		"erlaubt": ["schlag", "kraftschlag", "erste_hilfe", "row", "trank"],
+		"erlaubt": ["schlag", "schildstoss", "doppelschlag", "erste_hilfe", "deckung", "row", "trank", "manatrank_trinken", "ult"],
 		"erfahrung": 300,
 		"merken": "sternenfresser_besiegt",
 		"merken_immer": "sternenfall_kampf_vorbei",
+		"sternenmut": true,
 		"erfolg": "schild_hoch",
 		"kein_nochmal": true,
 		"gruppe_staerke": 0.25,
 		"verloren_text": "Alles wird schwarz …",
 		"hinweise": {
-			"erster_zug": "Ein Sternenpanzer schützt den Sternenfresser: Normale Treffer prallen fast ab. Nur eine PERFEKTE PARADE erschüttert ihn – dann ist er kurz verwundbar und ihr könnt zuschlagen. Vorsicht: Seine Treffer sind tödlich! Ohne Parade fällst du sofort, normal pariert bleibt dir nur ein Rest Leben. Beeilt euch: Nach 10 Zügen explodiert der Splitter in seinem Bauch! Schild hoch, Schild runter!"
+			"erster_zug": "Ein Sternenpanzer schützt den Sternenfresser: Normale Treffer prallen fast ab. Nur eine PERFEKTE PARADE erschüttert ihn – dann ist er kurz verwundbar und ihr könnt zuschlagen. Vorsicht: Seine Treffer sind tödlich! Ohne Parade fällst du sofort, normal pariert bleibt dir nur ein Rest Leben. Beeilt euch: Nach 10 Zügen explodiert der Splitter in seinem Bauch! Schild hoch, Schild runter!\nYe ruft: „Jetzt! Du hast es gefühlt, oder?“ Neu: deine kleine Ult „Sternenmut“. Jede perfekte Parade lädt sie auf."
 		}
 	},
 	"fenns_pruefung": {

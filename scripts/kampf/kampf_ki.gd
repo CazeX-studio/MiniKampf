@@ -15,8 +15,8 @@ func _init(p_seed: int) -> void:
 func choose(rules: Skills, f: Fighter) -> Dictionary:
 	var options: Array[Dictionary] = []
 	for ab in rules.abilities(f):
-		# Abwarten nimmt der Computer nicht (er soll mitkämpfen)
-		if rules.blocked_reason(f, ab) != "" or ab.id == "abwarten":
+			# Abwarten und Deckung geben nimmt der Computer nicht (er soll mitkämpfen und seinen Platz halten)
+		if rules.blocked_reason(f, ab) != "" or ab.id == "abwarten" or ab.id == "deckung":
 			continue
 		if ab.target == "choice":
 			for choice: Dictionary in ab.choices:
@@ -37,7 +37,8 @@ func choose(rules: Skills, f: Fighter) -> Dictionary:
 	if pick.is_empty():
 		var weighted: Array[Dictionary] = []
 		for ab in options:
-			if ab.id != "row" or rng.randf() < 0.15:
+			# Reihe wechseln nur selten, der schwache Schildstoß nur manchmal
+			if (ab.id != "row" or rng.randf() < 0.15) and (ab.id != "schildstoss" or rng.randf() < 0.3):
 				weighted.append(ab)
 		if weighted.is_empty():
 			weighted = options

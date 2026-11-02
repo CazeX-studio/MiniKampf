@@ -106,7 +106,7 @@ const CLASSES := {
 	"novize": {
 		hero = "Novize", title = "Novize", role = "Schaden", region = "Kreuzweg", color = Color("8affc1"),
 		hp = 90, mana = 40, tempo = 11, back = false, reaction = "parry",
-		mechanic = "Grundlagen: Schlag, Kraftschlag, Erste Hilfe. Noch keine Klasse.",
+		mechanic = "Grundlagen: Hieb, Schildstoß, Doppelschlag, Erste Hilfe, Deckung geben. Noch keine Klasse.",
 		reaction_text = "Parieren",
 		ult = "keine (kommt mit der Klasse)",
 	},
@@ -287,7 +287,7 @@ const PASSIVES := {
 	"quartermaster": {name = "Karren", info = "Waren aus dem Karren, bezahlt mit Gold."},
 	"kunoichi": {name = "Siegel", info = "Zwei Element-Siegel auf einem Gegner ergeben eine Kombination."},
 	"singer": {name = "Sternbilder", info = "Ungenutzte Sternbilder verblassen nach 2 Zügen."},
-	"novize": {name = "Novize", info = "Noch keine Klasse: Schlag, Kraftschlag, Erste Hilfe."},
+	"novize": {name = "Novize", info = "Noch keine Klasse: Hieb, Schildstoß, Doppelschlag, Erste Hilfe, Deckung geben."},
 }
 
 

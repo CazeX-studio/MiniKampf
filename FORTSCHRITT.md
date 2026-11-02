@@ -5,7 +5,18 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 01.11.)
 
-- **Nächster Schritt:** D8 der „Demo-Reihenfolge“ (Novize und die Bäume der fünf Demo-Klassen). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 bis D7 wurden auf Marcos Wunsch vor T1 gebaut.
+- **Nächster Schritt:** D8b der „Demo-Reihenfolge“ (Ye's Lektionen auf Stufe 2, 4, 6 und 8). D8 ist in sieben Teile geteilt (D8a bis D8g). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 bis D8a wurden auf Marcos Wunsch vor T1 gebaut.
+
+- **Neu (02.11.): D8a Fähigkeiten des Novizen** (Projekt 14, K.5, Steckbriefe Sitzung 28): Der normale Angriff heißt jetzt **Hieb**. Neu sind **Schildstoß** (wenig Schaden, der Gegner rutscht auf der Zugleiste nach hinten), **Doppelschlag** (zwei Hiebe, 10 Mana, ersetzt den Kraftschlag), **Erste Hilfe** (heilt dich oder einen Verbündeten) und **Deckung geben** (springt nach vorne und fängt bis zum eigenen nächsten Zug einen Treffer für einen Verbündeten ab). In der Festnacht bekommt der Novize seine kleine Ult **Sternenmut**: Ye ruft „Jetzt! Du hast es gefühlt, oder?“, jede perfekte Parade lädt sie, danach bleibt sie.
+  - **Von Marco zu entscheiden:** Im Steckbrief heilt Erste Hilfe nur sich selbst. Gebaut ist: sich selbst oder einen Verbündeten. Grund: Nur mit sich selbst gewinnt man den Urbaum in der Pilzhöhle mit den Novizen-Begleitern nur noch in etwa der Hälfte der Fälle (Prüfung verlangt mindestens 55 %), mit Verbündeten in 63 %. Soll es so bleiben?
+  - Die Novizen-Begleiter nehmen „Deckung geben“ nicht und den schwachen Schildstoß nur selten, damit sie gut mitkämpfen. Schildstoß macht 8, der Doppelschlag zweimal 12 Schaden (vorläufig).
+  - Die Texte von Ye in der Grundausbildung sind angepasst (auch die alte Erklärung, dass Mana von selbst zurückkommt).
+  - Noch nicht drin: Die vier Fähigkeiten lernt man noch alle in der Grundausbildung, nicht verteilt auf Stufe 2, 4, 6 und 8 (D8b). Eigene Bewegungen und Klänge kommen mit D9.
+  - **So testest du es:**
+    1. Neues Spiel, Grundausbildung bei Ye: In Lektion 1 gibt es Hieb und Schildstoß, der Gegner rutscht auf der Zugleiste nach hinten.
+    2. Lektion 2: Doppelschlag trifft zweimal, Erste Hilfe heilt dich.
+    3. Beim Überfall mit Tessa und Gorm: Deckung geben auf einen der beiden, der nächste Treffer auf ihn geht auf dich.
+    4. In der Festnacht gegen den Sternenfresser: Perfekte Paraden laden die Ult, dann „ULT: Sternenmut“ drücken.
 
 - **Neu (02.11.): D7 Effekt-Liste** (Projekt 14, K.4): Neun feste Bausteine für Klassen und Monster: **Brennen** und **Gift** (Schaden zu Beginn jedes Zuges, Gift stapelt bis 3), **Lähmen** (nächster Zug fällt aus), **Festhalten** (keine Reihe wechseln, nicht abwarten), **Verfehlen** (nächster Angriff geht daneben), **Zugleiste schieben**, **Heilen**, **Schutz** (Schild) und **Schattenmale** (stapeln bis 5). Jeder Effekt hat eine feste Farbe, denselben Text unter der Figur und dasselbe Leuchten, egal wer ihn auslöst. Monster-Angriffe können einen Effekt mitbringen, perfekt pariert trifft er nicht.
   - Die Klassen und Monster benutzen die Bausteine noch nicht, das kommt mit D8 (Klassen) und D22 (Monster). Bis dahin probiert man sie in der Kampf-Sandbox aus. Die Zahlen sind vorläufig.

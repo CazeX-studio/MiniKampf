@@ -700,7 +700,7 @@ func _draw_hero_details(font: Font, x0: float, y: float, w: float) -> void:
 	if fighter.ult_ready():
 		ult_color = COL_ULT.lerp(Color.WHITE, 0.5 + 0.5 * sin(_time * 8.0))
 	var ult_text := "ULT bereit!" if fighter.ult_ready() else "ULT %d %%" % int(fighter.ult)
-	if fighter.klass == "novize":
+	if fighter.klass == "novize" and not fighter.has_meta("sternenmut"):
 		# Novizen haben noch keine Ult (kommt mit der Klasse)
 		ult_text = "Ult kommt mit der Klasse"
 		ult_color = Color(0.5, 0.5, 0.5)

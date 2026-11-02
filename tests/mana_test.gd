@@ -32,10 +32,10 @@ func _run() -> void:
 	_check(kampf.skills.is_basic_attack(h, schlag.id), "Der Schlag gilt nicht als normaler Angriff")
 	kampf.execute(h, schlag, gegner)
 	_check(h.mana > 10, "Normaler Angriff gibt kein Mana (%d)" % h.mana)
-	# Kraftschlag kostet Mana und gibt keins
-	var kraft: Dictionary = kampf.skills.abilities(h).filter(func(a: Dictionary) -> bool: return a.id == "kraftschlag")[0]
-	_check(not kraft.has("cd"), "Kraftschlag hat noch eine Abklingzeit (nur die stärksten Fähigkeiten haben eine)")
-	_check(not kampf.skills.is_basic_attack(h, "kraftschlag"), "Kraftschlag gilt als normaler Angriff")
+	# Doppelschlag kostet Mana und gibt keins
+	var kraft: Dictionary = kampf.skills.abilities(h).filter(func(a: Dictionary) -> bool: return a.id == "doppelschlag")[0]
+	_check(not kraft.has("cd"), "Doppelschlag hat eine Abklingzeit (nur die stärksten Fähigkeiten haben eine)")
+	_check(not kampf.skills.is_basic_attack(h, "doppelschlag"), "Doppelschlag gilt als normaler Angriff")
 	# Die stärksten Fähigkeiten behalten ihre Abklingzeit (Beispiel: Bann-Zeichen des Tanks)
 	var tank_kampf := BattleState.new(null, [] as Array[String], "", 3)
 	tank_kampf.setup = {helden = [{klasse = "tank", name = "Tank", stufe = 1}], wellen = []}
@@ -88,7 +88,7 @@ func _probekampf(seed: int) -> int:
 	return r
 
 
-## Spielt wie ein normaler Spieler: Kraftschlag, wenn das Mana reicht, sonst Schlag; jede dritte Parade perfekt.
+## Spielt wie ein normaler Spieler: Doppelschlag, wenn das Mana reicht, sonst Hieb; jede dritte Parade perfekt.
 class Steuerer extends Node:
 	var state: BattleState
 	var runden := 0
@@ -103,7 +103,7 @@ class Steuerer extends Node:
 		var ziele := state.alive(state.enemies)
 		var liste := state.skills.abilities(f)
 		for ab: Dictionary in liste:
-			if ab.id == "kraftschlag" and state.skills.blocked_reason(f, ab) == "":
+			if ab.id == "doppelschlag" and state.skills.blocked_reason(f, ab) == "":
 				return {ab = ab, target = ziele[0]}
 		return {ab = liste[0], target = ziele[0]}
 

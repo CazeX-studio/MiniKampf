@@ -2986,6 +2986,7 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 	BattleRequest.player_skills = local_player().progress.faehigkeiten.duplicate()
 	BattleRequest.player_skills_known = true
 	BattleRequest.player_bar = local_player().progress.leiste.duplicate()
+	BattleRequest.player_sternenmut = local_player().progress.flags.has("sternenmut")
 	_prepare_reward(kampf_id)
 	if BattleRequest.prepare(kampf_id, progress.level, progress.potion_count("heiltrank"), progress.battle_class(),
 			progress.flags.get("monster", [])):

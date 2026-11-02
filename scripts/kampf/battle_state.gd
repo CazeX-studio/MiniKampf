@@ -345,6 +345,8 @@ func _create_heroes() -> void:
 		if spec.has("traenke"):
 			h.wares = {heiltrank = int(spec.traenke)}
 		# Gelernte Fähigkeiten aus dem Baum (nur bei Klassen mit Baum, siehe Faehigkeiten)
+		if spec.get("sternenmut", false):
+			h.set_meta("sternenmut", true)
 		if spec.has("faehigkeiten"):
 			h.set_meta("faehigkeiten", spec.faehigkeiten)
 			h.set_meta("leiste", spec.get("leiste", []))
@@ -678,6 +680,10 @@ func _begin_turn(f: Fighter) -> void:
 	f.blind_turns = maxi(f.blind_turns - 1, 0)
 	f.stagger_turns = maxi(f.stagger_turns - 1, 0)
 	f.waiting = false
+	# Deckung geben hält nur bis zum eigenen nächsten Zug
+	for other in all_fighters():
+		if other.has_meta("gedeckt_von") and other.get_meta("gedeckt_von") == f:
+			other.remove_meta("gedeckt_von")
 	_gelaehmt = Effekte.zug_beginn(self, f)
 	skills.begin_turn(f)
 	refresh()
@@ -917,6 +923,13 @@ func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String
 				and t != mechanic.robot and p_targets.size() == 1:
 			float_text(t, "Roboter schützt!", Color("d9a441"), 26)
 			actual = mechanic.robot
+		elif t.has_meta("gedeckt_von"):
+			# Deckung geben (Novize): einen Treffer fängt der Deckende ab
+			var cover: Fighter = t.get_meta("gedeckt_von")
+			t.remove_meta("gedeckt_von")
+			if cover.is_alive() and cover != t:
+				float_text(t, "Deckung!", Color("8fd3ff"), 26)
+				actual = cover
 		if not actual in targets:
 			targets.append(actual)
 	var names: Array[String] = []

@@ -25,7 +25,10 @@ const WARES := {
 }
 const START_WARES := {"heiltrank": 3, "manatrank": 2, "bombe": 2, "kraftkraut": 2}
 ## Grundschaden und -heilung des Novizen (wächst mit dem Angriff, s. Grundwerte)
-const NOVIZE := {schlag = 12, kraftschlag = 20, erste_hilfe = 16, trank = 25, manatrank = 15}
+## Novize (Projekt 14, K.5, Steckbriefe Sitzung 28): Hieb, Schildstoß, Doppelschlag, Erste Hilfe, Deckung geben,
+## kleine Ult Sternenmut (lädt durch perfekte Paraden)
+const NOVIZE := {schlag = 12, schildstoss = 8, schildstoss_leiste = 0.5, doppelschlag = 12, erste_hilfe = 16,
+		sternenmut = 45, sternenmut_laden = 34, trank = 25, manatrank = 15}
 ## Abklingzeiten nur für die stärksten Fähigkeiten (Beschluss 29.10.): Fähigkeiten, die Mana kosten, behalten ihre
 ## Abklingzeit nur ab so vielen Zügen. Die anderen begrenzt das Mana (es füllt sich im Kampf nicht von selbst).
 const STARKE_ABKLINGZEIT := 3
@@ -221,10 +224,15 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 			]
 		"novize":
 			list = [
-				{id = "schlag", name = "Schlag", info = "%d Nahkampf" % roundi(NOVIZE.schlag * f.power), target = "enemy"},
-				{id = "kraftschlag", name = "Kraftschlag", info = "%d Nahkampf · 10 Mana" % roundi(NOVIZE.kraftschlag * f.power), target = "enemy", mana = 10, cd = 2},
-				{id = "erste_hilfe", name = "Erste Hilfe", info = "Heilt %d · 12 Mana" % roundi(NOVIZE.erste_hilfe * f.power), target = "ally", mana = 12, cd = 2},
+				{id = "schlag", name = "Hieb", info = "%d Nahkampf mit dem Kurzschwert" % roundi(NOVIZE.schlag * f.power), target = "enemy"},
+				{id = "schildstoss", name = "Schildstoß", info = "%d Nahkampf, Ziel rutscht auf der Zugleiste zurück" % roundi(NOVIZE.schildstoss * f.power), target = "enemy"},
+				{id = "doppelschlag", name = "Doppelschlag", info = "Zwei Hiebe à %d · 10 Mana" % roundi(NOVIZE.doppelschlag * f.power), target = "enemy", mana = 10},
+				{id = "erste_hilfe", name = "Erste Hilfe", info = "Heilt dich oder einen Verbündeten um %d · 12 Mana" % roundi(NOVIZE.erste_hilfe * f.power), target = "ally", mana = 12},
+				{id = "deckung", name = "Deckung geben", info = "Nach vorne, fängt bis zu deinem nächsten Zug einen Treffer für einen Verbündeten ab · 8 Mana", target = "ally_other", mana = 8},
 			]
+			# Kleine Ult Sternenmut: erst ab der Festnacht (lädt durch perfekte Paraden)
+			if f.has_meta("sternenmut"):
+				list.append({id = "ult", name = "Sternenmut", info = "%d Sternenkraft, mit dem Licht des fallenden Sterns" % roundi(NOVIZE.sternenmut * f.power), target = "enemy"})
 			var free := "gratis, du bist noch dran" if not f.belt_free_used else "kostet den Zug"
 			if f.wares.has("heiltrank"):
 				list.append({id = "trank", name = "Heiltrank (%d)" % f.wares.heiltrank, info = "Heilt %d · Gürtel: %s" % [roundi(NOVIZE.trank * f.power), free],
@@ -1237,6 +1245,9 @@ func on_perfect_reaction(h: Fighter, attacker: Fighter) -> void:
 		"novize":
 			c.float_text(h, "PARIERT!", Color("8affc1"))
 			c.hop(h)
+			# Sternenmut lädt durch perfekte Paraden
+			if h.has_meta("sternenmut"):
+				h.add_ult(NOVIZE.sternenmut_laden)
 		"kunoichi":
 			c.float_text(h, "AUSGEWICHEN! Konter!", Color("ff7fb0"))
 			c.hop(h)
@@ -1395,11 +1406,31 @@ func _novize(f: Fighter, id: String, target: Fighter) -> void:
 		"schlag":
 			c.lunge(f, target, 0.25)
 			c.hit(f, target, NOVIZE.schlag, "melee")
-		"kraftschlag":
+		"schildstoss":
 			c.lunge(f, target, 0.3)
-			c.hit(f, target, NOVIZE.kraftschlag, "melee")
+			if c.hit(f, target, NOVIZE.schildstoss, "melee") > 0 and target.is_alive():
+				Effekte.anwenden(c, f, target, "zugleiste", NOVIZE.schildstoss_leiste)
+		"doppelschlag":
+			for i in 2:
+				c.lunge(f, target, 0.2)
+				if target.is_alive():
+					c.hit(f, target, NOVIZE.doppelschlag, "melee")
+				c.wait(0.15)
 		"erste_hilfe":
 			c.heal(f, target, roundi(NOVIZE.erste_hilfe * f.power))
+		"deckung":
+			# In die vordere Reihe und den Verbündeten decken, bis man selbst wieder dran ist
+			if f.back_row:
+				f.back_row = false
+				c.move_to_row(f)
+			target.set_meta("gedeckt_von", f)
+			c.float_text(target, "Gedeckt", Color("8fd3ff"))
+			c.add_log("%s gibt %s Deckung." % [f.display_name, target.display_name])
+			c.refresh()
+		"ult":
+			c.add_log("[color=#b48cff][b]Sternenmut![/b][/color] Das Kurzschwert leuchtet wie ein Splitter.")
+			c.lunge(f, target, 0.45)
+			c.hit(f, target, NOVIZE.sternenmut, "melee", "Sternenkraft")
 		"manatrank_trinken":
 			f.wares.manatrank -= 1
 			c.add_log("%s trinkt einen Manatrank." % f.display_name if target == f else "%s reicht %s einen Manatrank." % [f.display_name, target.display_name])

@@ -36,6 +36,8 @@ static var player_skills := {}
 static var player_skills_known := false
 ## Die feste Leiste der eigenen Figur (sechs Kennungen, "" = frei)
 static var player_bar: Array = []
+## Kennt die eigene Figur schon die kleine Ult Sternenmut? (lernt man in der Festnacht)
+static var player_sternenmut := false
 
 
 static func active() -> bool:
@@ -79,6 +81,8 @@ static func prepare(id: String, level: int, potions := 0, own_class := "", own_m
 		player["traenke"] = potions
 	if not player_gear.is_empty():
 		player["ausruestung"] = Ausruestung.kampfwerte(player_gear)
+	if klasse == "novize" and (player_sternenmut or data.get("sternenmut", false)):
+		player["sternenmut"] = true
 	if klasse == "novize" and player_mana_potions > 0:
 		player["manatraenke"] = player_mana_potions
 	if data.get("eigene_klasse", false):
@@ -127,6 +131,8 @@ static func build_group(id: String, members: Array) -> Dictionary:
 			hero["traenke"] = int(m.get("traenke", 0))
 		if m.has("ausruestung"):
 			hero["ausruestung"] = m.ausruestung
+		if klasse == "novize" and (m.get("sternenmut", false) or data.get("sternenmut", false)):
+			hero["sternenmut"] = true
 		if klasse == "novize" and int(m.get("manatraenke", 0)) > 0:
 			hero["manatraenke"] = int(m.manatraenke)
 		if m.has("faehigkeiten") and klasse == str(m.get("eigene_klasse", "")) and Faehigkeiten.hat_baum(klasse) and not data.has("phasen"):
