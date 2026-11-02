@@ -18,7 +18,8 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 
 - **D2a:** Regeln festschreiben, Bilder prüfen. (Fahrplan A.1, Projekt 13 Schritt 1–2) – Status: fertig (02.11.2026, LOOK.md Abschnitt 9a und 12; der Zusatz zum Stil-Block wartet auf Marcos Ja)
 - **D2b:** Kurzschwert als eigenes Teil (braucht Marcos Novizen-Blätter ohne Klinge). (Fahrplan A.1, Projekt 13 Schritt 3) – Status: offen
-- **D3:** Hut und Rückenteil als Schicht, Umfärben, Aussehen-Plätze. (Fahrplan A.2, Projekt 13 Schritt 4–6) – Status: offen
+- **D3a:** Hut und Rückenteil als Schicht, mit Platzhaltern bis Marcos Probe-Hut und Probe-Umhang da sind. (Fahrplan A.2, Projekt 13 Schritt 4) – Status: fertig (02.11.2026)
+- **D3b:** Umfärben und Aussehen-Plätze. (Fahrplan A.2, Projekt 13 Schritt 5–6) – Status: offen
 - **T1:** Testtag Aussehen (Marco). – Status: offen
 
 ### Kampfgefühl
@@ -392,7 +393,7 @@ _Am 28.10. geteilt: Kofis Kopf-Blatt kam zuerst._
 ### Schritt 4: Kopfbedeckung und Rückenteil als Schichten
 - **Ziel:** Ein Probe-Hut über dem Kopf, ein Probe-Umhang hinter dem Körper.
 - **So testest du es:** Hut und Umhang an- und ablegen, beide sitzen in allen Richtungen und Bewegungen richtig.
-- **Status:** offen
+- **Status:** fertig (02.11.2026: Hut wird auf den Kopf gesetzt und neigt sich mit, Rückenteil hängt am Hals, von hinten liegt es über dem Körper, beim Liegen ist es nicht zu sehen. Teile in `data/aussehen_teile.json`, Bilder in `assets/teile/hut/` und `assets/teile/ruecken/`. Wanderhut und Reiseumhang sind Platzhalter aus `tools/platzhalter_aussehen.py`, bis Marcos Blätter da sind.)
 
 ### Schritt 5: Umfärben
 - **Ziel:** Das Spiel tauscht die festen Farbtöne eines Klassen-Körpers gegen eine andere Palette (Probe: Set der Vulkanschmiede in Glutrot und Schwarz). Novizen werden nicht umgefärbt.

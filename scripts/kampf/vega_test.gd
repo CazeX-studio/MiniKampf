@@ -109,9 +109,25 @@ func _build_buttons() -> void:
 			FigurTeile.kopf = ids[(ids.find(jetzt) + 1) % ids.size()]
 			get_tree().reload_current_scene())
 		box.add_child(kopf_knopf)
+	# Projekt 13, Schritt 4: Hut und Rückenteil an- und ablegen (wo Kopf und Körper zusammengesetzt werden)
+	if FigurTeile.art == FigurTeile.Art.KOPFBLATT or nur_teile:
+		box.add_child(_schicht_knopf("Hut", FigurTeile.hut_liste(), FigurTeile.hut,
+				func(id: String) -> void: FigurTeile.hut = id))
+		box.add_child(_schicht_knopf("Rücken", FigurTeile.ruecken_liste(), FigurTeile.ruecken,
+				func(id: String) -> void: FigurTeile.ruecken = id))
 	var back := _small("Zurück zum Editor")
 	back.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/editor.tscn"))
 	box.add_child(back)
+
+
+## Knopf, der der Reihe nach durch „keiner“ und alle Teile einer Schicht schaltet.
+func _schicht_knopf(titel: String, teile: Dictionary, jetzt: String, setzen: Callable) -> Button:
+	var ids: Array = [""] + teile.keys()
+	var knopf := _small("%s: %s" % [titel, teile.get(jetzt, "keiner")])
+	knopf.pressed.connect(func() -> void:
+		setzen.call(ids[(ids.find(jetzt) + 1) % ids.size()])
+		get_tree().reload_current_scene())
+	return knopf
 
 
 ## Wessen Bilder gezeigt werden: der gewählte Körper oder die eigene Figur.

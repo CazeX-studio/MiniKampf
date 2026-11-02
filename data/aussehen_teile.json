@@ -1,0 +1,21 @@
+{
+	"_hinweis": "Aussehen-Schichten (Projekt 13, Schritt 4). hut: anker = Punkt im Hutbild, der auf die Kopfmitte kommt, sitz = so weit (Anteil der Kopfhöhe) unter dem Scheitel. ruecken: anker = Punkt an der Schulterkante, kommt auf den Halspunkt des Körpers plus versatz. Bilder: assets/teile/hut/<id>_<richtung>.png und assets/teile/ruecken/<id>_<richtung>.png. Platzhalter aus tools/platzhalter_aussehen.py.",
+	"hut": {
+		"wanderhut": {
+			"name": "Wanderhut",
+			"platzhalter": true,
+			"seite": {"anker": [42, 31], "sitz": 0.34},
+			"vorn": {"anker": [46, 31], "sitz": 0.34},
+			"hinten": {"anker": [46, 31], "sitz": 0.34}
+		}
+	},
+	"ruecken": {
+		"reiseumhang": {
+			"name": "Reiseumhang",
+			"platzhalter": true,
+			"seite": {"anker": [52, 2], "versatz": [-4, 4]},
+			"vorn": {"anker": [52, 2], "versatz": [-6, 4]},
+			"hinten": {"anker": [35, 2], "versatz": [0, 4]}
+		}
+	}
+}

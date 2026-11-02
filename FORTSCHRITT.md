@@ -5,7 +5,14 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 01.11.)
 
-- **Nächster Schritt:** D2b der „Demo-Reihenfolge“ in `BAUAUFTRAEGE.md` (Kurzschwert als eigenes Teil, braucht die Novizen-Blätter ohne Klinge; 35 Bauschritte und 4 Testtage bis zum Abschluss der Demo).
+- **Nächster Schritt:** D3b der „Demo-Reihenfolge“ in `BAUAUFTRAEGE.md` (Umfärben und Aussehen-Plätze). D2b (Kurzschwert als eigenes Teil) wartet auf die Novizen-Blätter ohne Klinge.
+
+- **Neu (02.11.): D3a Hut und Umhang als Schichten** (Projekt 13, Schritt 4): Der Hut sitzt auf dem Kopf und neigt sich mit ihm, der Umhang hängt hinter dem Körper. Von hinten liegt der Umhang über dem Rücken, beim Liegen nach dem Fallen ist er nicht zu sehen. Hut und Umhang sind vorerst **einfach gezeichnete Platzhalter** (brauner Wanderhut, dunkelroter Umhang). Sobald deine Blätter „Probe-Hut“ und „Probe-Umhang“ da sind, tausche ich sie aus.
+  - **So testest du es:**
+    1. Editor → „Figuren-Animationen“, mit „Körper“ den Novizen-Körper wählen.
+    2. „Hut: keiner“ drücken, dann trägt die Figur den Wanderhut. „Rücken: keiner“ drücken, dann kommt der Umhang dazu.
+    3. Alle Bewegungen durchklicken (Angriff, Parade, Fallen, Sieg): Der Hut bleibt auf dem Kopf, der Umhang hinter dem Rücken.
+    4. Mit Hut und Umhang aus dem Editor ein Spiel mit einer Figur aus „Figur erstellen“ starten und in alle Richtungen laufen: Von hinten sieht man den ganzen Umhang. (Bis D3b gilt das nur bis zum Neustart und nur für Figuren aus „Figur erstellen“.)
 
 - **Neu (02.11.): D2a Regeln und Bilder geprüft** (Projekt 13, Schritt 1 und 2):
   - Vorschlag für den Zusatz „FIGUREN“ zum Stil-Block: Körper ohne Waffe, Köpfe ohne Hut, Rücken frei, wenige klare Farbflächen, keine Effekte im Bild (`LOOK.md`, Abschnitt 9a). **Von Marco zu entscheiden:** Ja zum Wortlaut, dann kommt er in den Stil-Block.

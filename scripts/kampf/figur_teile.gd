@@ -24,11 +24,25 @@ const GESICHT := {
 
 ## So viel Platz (Pixel) bekommen Körper-Blätter oben und an den Seiten für den Kopf
 const RAND := 24
+## Zusätzlicher Platz, wenn Hut oder Rückenteil getragen werden
+const RAND_SCHICHT := 24
+## Ab dieser Neigung (Grad) gilt eine Figur als liegend
+const LIEGEND := 60.0
+
+## Aussehen-Schichten (Projekt 13, Schritt 4): Hut über dem Kopf, Rückenteil hinter dem Körper
+const SCHICHTEN := "res://data/aussehen_teile.json"
+const HUT_BILD := "res://assets/teile/hut/%s_%s.png"  # Hut, Richtung
+const RUECKEN_BILD := "res://assets/teile/ruecken/%s_%s.png"  # Rückenteil, Richtung
 
 ## Gilt für alle Figuren, die Teile haben (Umschalter in Editor → Figuren-Animationen)
 static var art := Art.GANZ
 ## Gewählter Kopf bei KOPFBLATT ("" = der eigene Kopf der Figur), siehe koepfe()
 static var kopf := ""
+## Getragener Hut und getragenes Rückenteil ("" = keins), siehe hut_liste() und ruecken_liste().
+## Gilt nur, wo Kopf und Körper zusammengesetzt werden (neuer Kopf und Körper-Blätter).
+static var hut := ""
+static var ruecken := ""
+static var _schichten := {}
 static var _daten := {}
 static var _cache := {}
 
@@ -61,7 +75,9 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 	if info.is_empty():
 		return null
 	var kopf_id := kopf_wahl if koepfe(figur).has(kopf_wahl) else standardkopf(figur)
-	var schluessel := "%s/%s/%d/%d/%s" % [figur, anim, frame, art_jetzt, kopf_id]
+	var hut_jetzt := hut if art_jetzt == Art.KOPFBLATT and hut_liste().has(hut) else ""
+	var ruecken_jetzt := ruecken if art_jetzt == Art.KOPFBLATT and ruecken_liste().has(ruecken) else ""
+	var schluessel := "%s/%s/%d/%d/%s/%s/%s" % [figur, anim, frame, art_jetzt, kopf_id, hut_jetzt, ruecken_jetzt]
 	if _cache.has(schluessel):
 		return _cache[schluessel]
 	var koerper := _bild_laden(KOERPER % [figur, anim, frame])
@@ -73,6 +89,8 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 		# Körper-Blätter: oben und seitlich Platz lassen, damit ein großer oder geneigter Kopf nicht abgeschnitten wird
 		# (die Füße bleiben unten in der Mitte, dort richtet das Spiel die Figur aus)
 		var rand := RAND if _alle()[figur].get("_nur_teile", false) else 0
+		if hut_jetzt != "" or ruecken_jetzt != "":
+			rand += RAND_SCHICHT
 		ergebnis = Image.create_empty(koerper.get_width() + 2 * rand, koerper.get_height() + rand, false, Image.FORMAT_RGBA8)
 		var kopf_bild: Image
 		var ecke: Vector2i
@@ -87,6 +105,11 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 				variante = "%s_normal" % info.richtung
 			kopf_bild = _bild_laden(KOPF % [kopf_id, variante])
 			var punkt := Vector2(punkte[variante][0], punkte[variante][1])
+			if kopf_bild != null and hut_jetzt != "":
+				# Den Hut auf den noch ungedrehten Kopf setzen, dann dreht er sich mit
+				var mit_hut := _hut_aufsetzen(kopf_bild, hut_jetzt, info.richtung)
+				kopf_bild = mit_hut.bild
+				punkt += mit_hut.verschoben
 			var winkel: float = info.get("winkel", 0.0)
 			if kopf_bild != null and absf(winkel) > 1.0:
 				# Geneigter Kopf (Körper-Blätter mit länglichem Oval): um den Halspunkt drehen
@@ -95,13 +118,92 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 				kopf_bild = _drehen(kopf_bild, punkt, winkel, radius)
 				punkt = Vector2(radius, radius)
 			ecke = Vector2i(roundi(info.hals[0] - punkt.x), roundi(info.hals[1] - punkt.y)) + Vector2i(rand, rand)
+		# Rückenteil: von der Seite und von vorne hinter allem, von hinten über dem Körper
+		var umhang := {}
+		if ruecken_jetzt != "" and info.has("hals"):
+			umhang = _rueckenteil(ruecken_jetzt, info, rand)
+		if not umhang.is_empty() and not umhang.vorne:
+			ergebnis.blend_rect(umhang.bild, Rect2i(Vector2i.ZERO, umhang.bild.get_size()), umhang.ecke)
 		if kopf_bild != null:
 			ergebnis.blend_rect(kopf_bild, Rect2i(Vector2i.ZERO, kopf_bild.get_size()), ecke)
 		ergebnis.blend_rect(koerper, Rect2i(Vector2i.ZERO, koerper.get_size()), Vector2i(rand, rand))
+		if not umhang.is_empty() and umhang.vorne:
+			ergebnis.blend_rect(umhang.bild, Rect2i(Vector2i.ZERO, umhang.bild.get_size()), umhang.ecke)
 	ergebnis.generate_mipmaps()
 	var textur := ImageTexture.create_from_image(ergebnis)
 	_cache[schluessel] = textur
 	return textur
+
+
+## Alle Hüte: Name -> Anzeigename.
+static func hut_liste() -> Dictionary:
+	return _namen(_alle_schichten().get("hut", {}))
+
+
+## Alle Rückenteile: Name -> Anzeigename.
+static func ruecken_liste() -> Dictionary:
+	return _namen(_alle_schichten().get("ruecken", {}))
+
+
+static func _namen(teile: Dictionary) -> Dictionary:
+	var liste := {}
+	for id: String in teile:
+		liste[id] = teile[id].get("name", id)
+	return liste
+
+
+## Hut auf ein Kopfbild setzen. Ergebnis: {bild, verschoben} (um so viel ist der alte Inhalt im neuen Bild verrutscht).
+static func _hut_aufsetzen(kopf_bild: Image, hut_id: String, richtung: String) -> Dictionary:
+	var daten: Dictionary = _alle_schichten().hut[hut_id].get(richtung, {})
+	var hut_bild := _bild_laden(HUT_BILD % [hut_id, richtung])
+	if hut_bild == null or daten.is_empty():
+		return {bild = kopf_bild, verschoben = Vector2.ZERO}
+	var sichtbar := kopf_bild.get_used_rect()
+	var ziel := Vector2(sichtbar.position.x + sichtbar.size.x / 2.0,
+			sichtbar.position.y + sichtbar.size.y * float(daten.get("sitz", 0.3)))
+	var hut_ecke := Vector2i((ziel - Vector2(daten.anker[0], daten.anker[1])).round())
+	# Neues Bild, in das Kopf und Hut beide passen
+	var links := mini(0, hut_ecke.x)
+	var oben := mini(0, hut_ecke.y)
+	var rechts := maxi(kopf_bild.get_width(), hut_ecke.x + hut_bild.get_width())
+	var unten := maxi(kopf_bild.get_height(), hut_ecke.y + hut_bild.get_height())
+	var neu := Image.create_empty(rechts - links, unten - oben, false, Image.FORMAT_RGBA8)
+	var verschoben := Vector2i(-links, -oben)
+	neu.blend_rect(kopf_bild, Rect2i(Vector2i.ZERO, kopf_bild.get_size()), verschoben)
+	neu.blend_rect(hut_bild, Rect2i(Vector2i.ZERO, hut_bild.get_size()), hut_ecke + verschoben)
+	return {bild = neu, verschoben = Vector2(verschoben)}
+
+
+## Rückenteil für ein Bild: {bild, ecke, vorne} oder leer. Es hängt am Halspunkt und neigt sich mit dem Körper.
+static func _rueckenteil(id: String, info: Dictionary, rand: int) -> Dictionary:
+	var richtung: String = info.richtung
+	var daten: Dictionary = _alle_schichten().ruecken[id].get(richtung, {})
+	var bild := _bild_laden(RUECKEN_BILD % [id, richtung])
+	if bild == null or daten.is_empty():
+		return {}
+	var anker := Vector2(daten.anker[0], daten.anker[1])
+	var versatz: Array = daten.get("versatz", [0, 0])
+	var winkel: float = info.get("winkel", 0.0)
+	# Liegend (Ende vom Fallen) würde der Umhang nach oben abstehen: dann liegt er unter dem Körper und ist nicht zu sehen
+	if absf(winkel) > LIEGEND:
+		return {}
+	if absf(winkel) > 1.0:
+		var radius := ceili(maxf(maxf(anker.length(), (Vector2(bild.get_size()) - anker).length()),
+				maxf(Vector2(bild.get_width() - anker.x, anker.y).length(), Vector2(anker.x, bild.get_height() - anker.y).length())))
+		bild = _drehen(bild, anker, winkel, radius)
+		anker = Vector2(radius, radius)
+	var hals := Vector2(info.hals[0] + versatz[0], info.hals[1] + versatz[1])
+	var ecke := Vector2i((hals - anker).round()) + Vector2i(rand, rand)
+	return {bild = bild, ecke = ecke, vorne = richtung == "hinten"}
+
+
+static func _alle_schichten() -> Dictionary:
+	if _schichten.is_empty() and FileAccess.file_exists(SCHICHTEN):
+		var gelesen: Variant = JSON.parse_string(FileAccess.get_file_as_string(SCHICHTEN))
+		if gelesen is Dictionary:
+			_schichten = gelesen
+			_schichten.erase("_hinweis")
+	return _schichten
 
 
 ## Körper aus Körper-Blättern (mit grünem Platzhalter statt Kopf), z. B. der Novizen-Körper: Name -> Anzeigename.
