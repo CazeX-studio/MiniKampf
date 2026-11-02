@@ -166,6 +166,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 - **Neu (01.11.): D1 Bildaufträge für die Figuren:** 113 Prompts in `Spieldesign/GRAFIK_AUFTRAG.md` Teil D und auf der Seite „Asterfall Bildaufträge“: Probe am Novizen, fünf Klassen, Baukasten, 21 Nebenfiguren und 19 Hauptfiguren. Die Haupt- und Nebenfiguren waren noch nicht eingeplant: Sie sind im Spiel bisher Platzhalter.
   - Geändert nach Marcos erstem Versuch: Beim Novizen bleibt der Griff in der Hand, nur die Klinge geht weg. Körper-Prompts nennen keine Waffe und keine Klasse mehr. Marcos Blatt liegt als `tools/vorlagen/novize_m_kampf_a_ohne_klinge.png` bereit (gelbe Funken entfernt Claude in D2).
+  - Geliefert (02.11.): 38 Blätter liegen unter `tools/vorlagen/` (Novize ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen). Es fehlt die Klingentänzerin Blatt 1 (`klingentaenzer_w_blatt1.png`). Noch nicht geliefert: Figuren 3 bis 5 (Grundkörper, Köpfe, Neben- und Hauptfiguren).
+  - Beim Einbauen von Claude zu beheben: gelbe Funken bei `schmied_m_blatt1` und `klingentaenzer_m_blatt1`, grüne Stellen auf dem Rücken bei `zaehmer_w_welt`, rotes Halstuch in einem Bild bei `saengerin_w_blatt2`, blasse Farben bei `bogen_m_welt`, je ein Bild zu viel in Reihe 3 bei `bogen_m_blatt2` und `bogen_w_blatt2`.
   - **Von Marco zu entscheiden:** Kobalt nutzt in den Prompts den Körper des Zähmers. Die Sternensängerin gibt es vorerst nur weiblich (Marco, 01.11.).
   - **So testest du es:** Die Seite öffnen, bei „Figuren: Probe“ einen Prompt kopieren und das Bild erzeugen.
 
