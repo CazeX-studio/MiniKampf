@@ -14,7 +14,7 @@
 
 Sagt Marco „Mach den nächsten Bauauftrag“ (oder ähnlich), dann:
 1. FORTSCHRITT.md kurz lesen, damit klar ist, was schon gebaut ist.
-2. In BAUAUFTRAEGE.md den obersten offenen Punkt der „Demo-Reihenfolge“ nehmen (Testtage dort einhalten); ist sie abgearbeitet, den nächsten Schritt mit „Status: offen“ von oben nach unten (Abschnitt „Später“ auslassen). Ist er durch FORTSCHRITT.md schon erledigt, auf „fertig“ setzen und den nächsten nehmen.
+2. In BAUAUFTRAEGE.md den obersten offenen Punkt der „Demo-Reihenfolge“ nehmen (die Testtage stehen seit 02.11.2026 am Ende, wegen ihnen nicht anhalten); ist sie abgearbeitet, den nächsten Schritt mit „Status: offen“ von oben nach unten (Abschnitt „Später“ auslassen). Ist er durch FORTSCHRITT.md schon erledigt, auf „fertig“ setzen und den nächsten nehmen.
 3. Status auf „in Arbeit“ setzen, den Schritt bauen. Die Beschlüsse in design.md (Repo Spieldesign) gelten.
 4. Committen (kurze deutsche Nachricht, z. B. „Bauauftrag: Geld-Anzeige“), Status in BAUAUFTRAEGE.md auf „fertig“ setzen, den Schritt in FORTSCHRITT.md eintragen (mit „So testest du es“), committen und pushen.
    Außerdem im Google Doc „CazeX MMO – Brainstorming“ (Abschnitt „Bauaufträge-Entwurf“) den Status des Schritts auf „fertig“ setzen, damit Doc, BAUAUFTRAEGE.md und FORTSCHRITT.md immer dasselbe sagen. Genaue Schritte: Skill `.claude/skills/bauauftrag/SKILL.md`.
@@ -42,7 +42,7 @@ Das gilt genauso in Claude Code in der Cloud (vom Handy): dort direkt im GitHub-
 
 ## Marcos Arbeitsregeln
 
-- „Mach weiter“ heißt: Skill `bauauftrag`, obersten offenen Punkt der Demo-Reihenfolge bauen, bei Testtagen anhalten.
+- „Mach weiter“ heißt: Skill `bauauftrag`, obersten offenen Punkt der Demo-Reihenfolge bauen. Alle Testtage kommen am Ende (Marcos Beschluss 02.11.2026), nicht anhalten.
 - Antworten knapp halten: was jetzt geht, was fehlt, was seine Sache ist.
 - Entscheidungen ohne Spoiler: Knöpfe und Fragen nennen nur die Handlung, Folgen erst nach der Wahl.
 - Bei Grafik-Nachbesserungen und fehlenden Bildern immer den fertigen Prompt zum Kopieren liefern.

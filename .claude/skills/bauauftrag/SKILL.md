@@ -20,7 +20,7 @@ Damit Marco beim Brainstormen immer den echten Stand sieht, müssen **drei Stell
    dann `read_file_content`, Abschnitt „Bauaufträge-Entwurf“ suchen). Weicht die Reihenfolge oder ein Schritt im Doc
    von BAUAUFTRAEGE.md ab, gilt das Doc (Marco plant dort) – BAUAUFTRAEGE.md zuerst daran angleichen, fertige
    Schritte behalten ihren Status.
-2. **Schritt wählen:** den obersten offenen Punkt der „Demo-Reihenfolge“ in BAUAUFTRAEGE.md (bei einem Testtag anhalten und Marco fragen), sonst den obersten Schritt mit „Status: offen“ (Abschnitt „Später“ auslassen). Einen fertigen D-Punkt auch dort und im Doc auf „fertig“ setzen. Ist er laut
+2. **Schritt wählen:** den obersten offenen Punkt der „Demo-Reihenfolge“ in BAUAUFTRAEGE.md (die Testtage stehen am Ende der Liste, davor nicht anhalten), sonst den obersten Schritt mit „Status: offen“ (Abschnitt „Später“ auslassen). Einen fertigen D-Punkt auch dort und im Doc auf „fertig“ setzen. Ist er laut
    FORTSCHRITT.md schon erledigt, auf „fertig“ setzen und den nächsten nehmen.
 3. **Bauen:** Status „in Arbeit“. Die Beschlüsse in design.md (Repo Spieldesign) gelten. Prüfen mit Godot
    (headless-Tests unter `tests/`, bei Grafik Bildschirmfotos). In der Cloud: Godot 4.7.2 für Linux von GitHub laden.

@@ -8,6 +8,8 @@ Status: offen / in Arbeit / fertig
 
 ## Demo-Reihenfolge (Stand 01.11.2026)
 
+**Marcos Beschluss (02.11.2026): Alle Testtage stehen am Ende.** Nirgends wegen eines Testtags anhalten, D10 bis D36 der Reihe nach bauen. Marco testet am Schluss das volle Spiel zusammen (T1 bis T4). Die Testpunkte gesammelt in FORTSCHRITT.md eintragen.
+
 Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D12“: **Diese Liste gilt zuerst.** Den obersten offenen Punkt nehmen, die Einzelheiten stehen beim genannten Projekt oder im Brainstorm-Doc unter „Fahrplan zur Demo“. T-Punkte sind Testtage: Dort hält Claude an, nennt Marco, was zu testen ist, und baut erst nach seiner Rückmeldung weiter. Braucht ein Punkt Bilder, die noch nicht da sind, wird er mit Platzhalter gebaut oder übersprungen, und Marco bekommt den fertigen Prompt.
 
 ### Vorbereitung
@@ -21,7 +23,6 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D3a:** Hut und Rückenteil als Schicht, mit Platzhaltern bis Marcos Probe-Hut und Probe-Umhang da sind. (Fahrplan A.2, Projekt 13 Schritt 4) – Status: fertig (02.11.2026)
 - **D3b:** Umfärben, Probe an Hut und Umhang. (Fahrplan A.2, Projekt 13 Schritt 5) – Status: fertig (02.11.2026)
 - **D3c:** Aussehen-Plätze: Fenster zum Auswählen, im Spielstand gespeichert. (Fahrplan A.2, Projekt 13 Schritt 6) – Status: fertig (02.11.2026; Waffen-Aussehen kam mit D2b)
-- **T1:** Testtag Aussehen (Marco). – Status: offen
 
 ### Kampfgefühl
 
@@ -46,7 +47,6 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D9f:** Eigene Bewegungen und Effekte: Klingentänzerin. (K.6) – Status: fertig (02.11.2026; alle aktiven Fähigkeiten und die Ult; Klingensturm zeigt die Klingen einzeln, die Schadenszahl bleibt eine; Käfig bleibt nicht zwei Runden sichtbar, Trommel-Zeichen und goldene Klingen bei fünf fehlen noch)
 - **D9g:** Eigene Bewegungen und Effekte: Sternensängerin. (K.6) – Status: fertig (02.11.2026; Abläufe aller aktiven Fähigkeiten und der Ult; die gezeichneten Effekte sind Platzhalter, siehe D9h; Sternbilder über ihr und bleibende Monde fehlen noch)
 - **D9h:** Effekte überarbeiten: Die gezeichneten Effekte gefallen Marco nicht (02.11.). Sie sollen als Bildfolgen von ChatGPT kommen, Claude Code schneidet sie und setzt sie in `scripts/kampf/faehigkeit_fx.gd` ein. Zuerst ein Probe-Effekt, erst nach Marcos Ja die übrigen. LOOK.md sagt bisher „Effekte macht das Spiel“, das wird nach der Probe angepasst. Probe seit 02.11. im Spiel: der Hieb (`assets/fx/hieb_f0-5.png`). (K.6) – Die Bildaufträge stehen in `Spieldesign/GRAFIK_AUFTRAG.md`, Teil E. Status: später (wartet auf Marcos Bilder)
-- **T2:** Testtag Kampfgefühl (Marco). – Status: offen
 
 ### Kreuzweg und Grünwacht rund machen
 
@@ -63,7 +63,6 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D20:** Kreuzweg nach Sitzung 30: Hatta, Zeichen über Diensten, Figuren tags und nachts, Ye mit Regenschirm. (1.9) – Status: offen
 - **D21:** Grünwacht-Figuren nach Steckbrief: Salbei, Borko, Ysolde nachts, Oma Hagebutte. (1.10) – Status: offen
 - **D22:** Monster nach Regelblatt in Kreuzwegfeldern, Hirschtal, Wachtwald, Tiefwurzel und Pilzhöhle, dazu die Spezialbewegungen der Pilzhöhlen-Bosse. (1.11) – Status: offen
-- **T3:** Testtag 1 (Marco): Kreuzweg und Grünwacht komplett, allein und in der Gruppe, dazu der Sternenfresser. – Status: offen
 
 ### Glutoase
 
@@ -84,6 +83,9 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 ### Demo abschließen
 
 - **D36:** Bilder für das Web verkleinern, Ladezeit prüfen, von Marco offene Punkte aus FORTSCHRITT.md einsammeln, Demo-Seite vorbereiten. (neu) – Status: offen
+- **T1:** Testtag Aussehen (Marco). – Status: offen
+- **T2:** Testtag Kampfgefühl (Marco). – Status: offen
+- **T3:** Testtag 1 (Marco): Kreuzweg und Grünwacht komplett, allein und in der Gruppe, dazu der Sternenfresser. – Status: offen
 - **T4:** Testtag 2 (Marco): die ganze Demo von Kreuzweg bis zum Ende der Glutoase. – Status: offen
 
 ## Projekt 0: Playtest 25.10. (Rest) – kommt vor allen anderen
