@@ -45,6 +45,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D9e:** Eigene Bewegungen und Effekte: Rüstungsschmied. (K.6) – Status: offen
 - **D9f:** Eigene Bewegungen und Effekte: Klingentänzerin. (K.6) – Status: offen
 - **D9g:** Eigene Bewegungen und Effekte: Sternensängerin. (K.6) – Status: offen
+- **D9h:** Effekte überarbeiten: Marco gefallen die bisherigen noch nicht, er will sie später überarbeiten. (K.6) – Status: später (Marco sagt, wann)
 - **T2:** Testtag Kampfgefühl (Marco). – Status: offen
 
 ### Kreuzweg und Grünwacht rund machen
