@@ -20,3 +20,6 @@ __pycache__/
 
 # Vergleichsbilder für Marcos Abnahme (werden bei Bedarf neu gebaut)
 tools/vergleich/
+
+# Godot-Importdateien der Referenzbilder (nicht mitnehmen, siehe CLAUDE.md)
+tools/referenz/*.png.import
