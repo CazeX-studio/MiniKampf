@@ -16,7 +16,11 @@ extends RefCounted
 const BACK_ROW_MELEE := 0.6
 const CRIT_CHANCE := 0.1
 const CRIT_MULT := 1.5
-const MANA_REGEN := 6
+## Mana nur durch Handeln (Projekt 14, K.2, Beschluss 29.10.): Im Kampf füllt es sich nicht von selbst.
+## Zurück gibt es (Anteil vom Höchstwert): normaler Angriff etwas, perfekte Parade oder perfektes Ausweichen mehr,
+## Abwarten etwas (WAIT_MANA), dazu Manatränke. Vorläufige Werte, Feinschliff am Ende.
+const MANA_ATTACK := 0.15
+const MANA_PERFECT := 0.25
 const BUFF_TURNS := 2
 const ATK_BUFF := 1.4
 const DEF_BUFF := 0.7
@@ -337,6 +341,8 @@ func _create_heroes() -> void:
 		h.ult = float(spec.get("ult", 0.0))
 		if spec.has("traenke"):
 			h.wares = {heiltrank = int(spec.traenke)}
+		if int(spec.get("manatraenke", 0)) > 0:
+			h.wares["manatrank"] = int(spec.manatraenke)
 		if spec.get("computer", false):
 			computer[h] = true
 		# Zähmer in der Welt: sein eigenes Rudel (Start-Monster von Professor Esche und gezähmte Monster)
@@ -631,6 +637,15 @@ func _battle_loop() -> void:
 			return
 
 
+## Mana zurückgeben (Anteil vom Höchstwert). Gibt zurück, wie viel es wirklich gab.
+func gain_mana(f: Fighter, share: float) -> int:
+	if f.max_mana <= 0 or not f.is_alive():
+		return 0
+	var before := f.mana
+	f.mana = mini(f.mana + roundi(f.max_mana * share), f.max_mana)
+	return f.mana - before
+
+
 ## Was zu Beginn jedes eigenen Zuges passiert (Abklingzeiten, Mana, Klassen-Mechaniken).
 func _begin_turn(f: Fighter) -> void:
 	for id: String in f.cooldowns.keys():
@@ -641,8 +656,6 @@ func _begin_turn(f: Fighter) -> void:
 	f.blind_turns = maxi(f.blind_turns - 1, 0)
 	f.stagger_turns = maxi(f.stagger_turns - 1, 0)
 	f.waiting = false
-	if f.max_mana > 0:
-		f.mana = mini(f.mana + MANA_REGEN, f.max_mana)
 	skills.begin_turn(f)
 	refresh()
 
@@ -753,6 +766,9 @@ func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 	f.mana -= ab.get("mana", 0)
 	if ab.has("cd"):
 		f.cooldowns[id] = ab.cd + 1
+	# Normaler Angriff gibt etwas Mana zurück
+	if skills.is_basic_attack(f, id):
+		gain_mana(f, MANA_ATTACK)
 
 	if id == "abwarten":
 		f.waiting = true
@@ -915,6 +931,9 @@ func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String
 			continue
 		if success and t.reaction != "":
 			t.credit().stat_perfect += 1
+			# Perfekt pariert oder ausgewichen: mehr Mana zurück
+			if gain_mana(t, MANA_PERFECT) > 0:
+				float_text(t, "+%d Mana" % roundi(t.max_mana * MANA_PERFECT), Color("6fa8ff"), 40)
 			t.stat_blocked += calc_damage(e, t, base, kind, e.element)
 			_last_crit = false
 			_last_eff = 1.0

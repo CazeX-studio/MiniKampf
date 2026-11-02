@@ -372,6 +372,10 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 				# Zuerst vom Gürtel, dann aus der Tasche
 				p.progress.use_potions("heiltrank", used)
 				progress_changed.emit(p.id)
+			var mana_used := mini(int(cmd.get("manatraenke_benutzt", 0)), p.progress.potion_count("manatrank"))
+			if mana_used > 0:
+				p.progress.use_potions("manatrank", mana_used)
+				progress_changed.emit(p.id)
 			_fighting.erase(p.id)
 			for monster_id: String in cmd.get("gezaehmt", []):
 				_add_to_pack(p, monster_id, true)

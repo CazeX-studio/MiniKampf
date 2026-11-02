@@ -272,7 +272,8 @@ func _ready() -> void:
 	# Zurück aus einem Kampf: Ergebnis verbuchen (Erfahrung, Aufträge)
 	if not BattleRequest.result.is_empty():
 		var cmd := {type = "kampf_ergebnis", kampf = BattleRequest.result.kampf, gewonnen = BattleRequest.result.gewonnen,
-				traenke_benutzt = BattleRequest.result.get("traenke_benutzt", 0), gezaehmt = BattleRequest.result.get("gezaehmt", []),
+				traenke_benutzt = BattleRequest.result.get("traenke_benutzt", 0),
+				manatraenke_benutzt = BattleRequest.result.get("manatraenke_benutzt", 0), gezaehmt = BattleRequest.result.get("gezaehmt", []),
 				belohnung_gezeigt = BattleRequest.result.get("belohnung_gezeigt", false)}
 		if BattleRequest.result.has("karte"):
 			cmd["karte"] = BattleRequest.result.karte
@@ -2876,6 +2877,7 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 	var progress := local_player().progress
 	BattleRequest.player_look = local_player().look
 	BattleRequest.player_gear = local_player().progress.ausruestung.duplicate()
+	BattleRequest.player_mana_potions = local_player().progress.potion_count("manatrank")
 	_prepare_reward(kampf_id)
 	if BattleRequest.prepare(kampf_id, progress.level, progress.potion_count("heiltrank"), progress.battle_class(),
 			progress.flags.get("monster", [])):

@@ -5,7 +5,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 01.11.)
 
-- **Nächster Schritt:** D5 der „Demo-Reihenfolge“ (Mana nur durch Handeln). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 wurde auf Marcos Wunsch vor T1 gebaut.
+- **Nächster Schritt:** D5b der „Demo-Reihenfolge“ (Hinsetzen und Lagerfeuer). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 und D5a wurden auf Marcos Wunsch vor T1 gebaut.
+
+- **Neu (02.11.): D5a Mana nur durch Handeln** (Projekt 14, K.2): Im Kampf füllt sich Mana nicht mehr von selbst. Es gibt Mana zurück für einen normalen Angriff (etwas), eine perfekte Parade oder ein perfektes Ausweichen (mehr, mit „+Mana“ über der Figur) und für Abwarten (etwas). Neu ist der **Manatrank** für den Gürtel, Bingo verkauft ihn für 25 Bronze. **Abklingzeiten** haben nur noch die stärksten Fähigkeiten (bisher 3 Züge und mehr), die anderen begrenzt das Mana. Der Kraftschlag des Novizen geht also so oft, wie das Mana reicht.
+  - Ein Probekampf in der Prüfung (Gruppenkampf auf den Kreuzwegfeldern, ohne Trank) dauert im Schnitt 3,5 Runden, das Ziel sind 3 bis 5. Alle Zahlen sind vorläufig.
+  - Noch nicht drin: Hinsetzen und Lagerfeuer (D5b). Bis dahin startet jeder Kampf weiter mit vollem Mana.
+  - **So testest du es:**
+    1. Einen Kampf beginnen und zweimal Kraftschlag nehmen: Das Mana sinkt und kommt zu Beginn des nächsten Zuges nicht von selbst zurück.
+    2. Einen normalen Schlag machen: Das Mana steigt ein bisschen.
+    3. Einen Angriff perfekt parieren: Über der Figur steht „+Mana“, und die blaue Leiste wächst deutlich.
+    4. Bei Bingo einen Manatrank kaufen, an den Gürtel hängen und im Kampf trinken (gratis, du bist danach noch dran).
 
 - **Neu (02.11.): D4 Werte für Waffen und Rüstung** (Projekt 14, K.1): Es gibt jetzt Ausrüstung auf sechs Plätzen (Waffe, Kopf, Körper, Schuhe, zweimal Schmuck). Jeder startet mit Kurzschwert, Stoffkappe, Lederweste und Lederstiefeln. Damit kämpft man genauso wie bisher, etwa ein Drittel der Kraft kommt aus der Ausrüstung.
   - **Waffenkraft** macht mehr Schaden und Heilung. **Verteidigung** senkt Schaden im Nah- und Fernkampf, **Widerstand** senkt Magie-Schaden. Platte hat mehr Verteidigung, Stoff mehr Widerstand, Schmuck gibt nur Bonus-Werte.

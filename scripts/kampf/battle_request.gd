@@ -23,6 +23,10 @@ static var player_look := ""
 ## Angelegte Ausrüstung der eigenen Figur (Platz -> Gegenstand, siehe Ausruestung). Leer = ohne Ausrüstung kämpfen
 ## wie bisher (Sandbox).
 static var player_gear := {}
+## Manatränke am Gürtel der eigenen Figur (Projekt 14, K.2)
+static var player_mana_potions := 0
+## Manatränke, die in früheren Versuchen desselben Kampfes getrunken wurden
+static var mana_used_before := 0
 
 
 static func active() -> bool:
@@ -66,6 +70,8 @@ static func prepare(id: String, level: int, potions := 0, own_class := "", own_m
 		player["traenke"] = potions
 	if not player_gear.is_empty():
 		player["ausruestung"] = Ausruestung.kampfwerte(player_gear)
+	if klasse == "novize" and player_mana_potions > 0:
+		player["manatraenke"] = player_mana_potions
 	# Parieren lernt man erst in Lektion 3: davor hat der Novize keine Reaktion (im langen Lernkampf je Phase)
 	if not data.get("reaktion", true):
 		player["reaktion"] = ""
@@ -106,6 +112,8 @@ static func build_group(id: String, members: Array) -> Dictionary:
 			hero["traenke"] = int(m.get("traenke", 0))
 		if m.has("ausruestung"):
 			hero["ausruestung"] = m.ausruestung
+		if klasse == "novize" and int(m.get("manatraenke", 0)) > 0:
+			hero["manatraenke"] = int(m.manatraenke)
 		if not data.get("reaktion", true):
 			hero["reaktion"] = ""
 		heroes.append(hero)
@@ -164,8 +172,10 @@ static func _make_setup(id: String, data: Dictionary, heroes: Array, phases: Arr
 
 
 ## Der Kampf ist vorbei: Ergebnis für die Welt merken.
-static func finish(won: bool, potions_used := 0, tamed: Array = []) -> void:
-	result = {kampf = kampf_id, gewonnen = won, traenke_benutzt = used_before + potions_used, gezaehmt = tamed}
+static func finish(won: bool, potions_used := 0, tamed: Array = [], mana_used := 0) -> void:
+	result = {kampf = kampf_id, gewonnen = won, traenke_benutzt = used_before + potions_used, gezaehmt = tamed,
+			manatraenke_benutzt = mana_used_before + mana_used}
+	mana_used_before = 0
 	# Die Belohnung stand schon auf dem Sieg-Bildschirm: Die Welt meldet sie nicht noch einmal
 	if won and not reward.is_empty():
 		result["belohnung_gezeigt"] = true
@@ -180,9 +190,12 @@ static func finish(won: bool, potions_used := 0, tamed: Array = []) -> void:
 
 ## „Nochmal versuchen“: getrunkene Tränke sind weg, der neue Versuch beginnt mit dem Rest.
 ## Im langen Lernkampf geht es bei der Phase weiter, in der man verloren hat.
-static func retry(potions_used: int, phase := 0) -> void:
+static func retry(potions_used: int, phase := 0, mana_used := 0) -> void:
 	used_before += potions_used
+	mana_used_before += mana_used
 	if setup.has("phasen"):
 		setup["start_welle"] = phase
 	if not setup.is_empty():
 		setup.helden[0]["traenke"] = maxi(0, int(setup.helden[0].get("traenke", 0)) - potions_used)
+		if setup.helden[0].has("manatraenke"):
+			setup.helden[0]["manatraenke"] = maxi(0, int(setup.helden[0].manatraenke) - mana_used)

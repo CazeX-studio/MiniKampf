@@ -182,7 +182,7 @@ func _battle_name() -> String:
 ## Zurück in die Stadt (Kampf aus der Kreuzweg-Demo).
 func _back_to_world(won: bool) -> void:
 	# Verbrauchte Heiltränke fehlen danach in der Tasche, gezähmte Monster kommen ins Rudel
-	BattleRequest.finish(won, _potions_used(), _tamed())
+	BattleRequest.finish(won, _potions_used(), _tamed(), _potions_used("manatrank", "manatraenke"))
 	get_tree().change_scene_to_file(BattleRequest.return_scene)
 
 
@@ -196,13 +196,13 @@ func _tamed() -> Array:
 	return result
 
 
-## Wie viele Heiltränke der Spieler in diesem Kampf getrunken hat.
-func _potions_used() -> int:
+## Wie viele Heiltränke (oder Manatränke) der Spieler in diesem Kampf getrunken hat.
+func _potions_used(ware := "heiltrank", key := "traenke") -> int:
 	var index := int(_group.get("mine", 0))
 	var player := state.heroes[index]
-	if not player.wares.has("heiltrank"):
+	if not player.wares.has(ware):
 		return 0
-	return int(state.setup.helden[index].get("traenke", 0)) - int(player.wares.heiltrank)
+	return int(state.setup.helden[index].get(key, 0)) - int(player.wares[ware])
 
 
 # --- Gruppenkampf ---------------------------------------------------------------
@@ -564,7 +564,7 @@ func _show_actions(f: Fighter, category := "faehigkeiten") -> void:
 		_turn_label.text = "%s (%s) ist am Zug" % [f.display_name, f.class_title]
 	var list := state.skills.abilities(f)
 	if category == "gegenstaende":
-		list = list.filter(func(ab: Dictionary) -> bool: return ab.id == "trank")
+		list = list.filter(func(ab: Dictionary) -> bool: return ab.id == "trank" or ab.id == "manatrank_trinken")
 		if list.is_empty():
 			_turn_label.text = "Keine Gegenstände für den Kampf in der Tasche"
 	# Mehr als 8 Knöpfe (z. B. mit Dungeon-Aktionen): kleiner, damit 3 Reihen passen
@@ -603,7 +603,7 @@ func _skill_icon(f: Fighter, ab: Dictionary) -> String:
 	if ab.has("duet"):
 		return "sternenkraft"
 	match id:
-		"trank":
+		"trank", "manatrank_trinken":
 			return "trank"
 		"abwarten":
 			return "sanduhr"
@@ -1783,7 +1783,7 @@ func _end_button(text: String, callback: Callable) -> Button:
 func _world_buttons(buttons: Control, won: bool) -> void:
 	if not won and not state.setup.get("kein_nochmal", false):
 		buttons.add_child(_end_button(GameData.text("nochmal"), func() -> void:
-			BattleRequest.retry(_potions_used(), state.wave)
+			BattleRequest.retry(_potions_used(), state.wave, _potions_used("manatrank", "manatraenke"))
 			get_tree().reload_current_scene()))
 	var back := _end_button(GameData.text("zurueck_kreuzweg"), func() -> void: _back_to_world(won))
 	back.theme_type_variation = &"KnopfGold"

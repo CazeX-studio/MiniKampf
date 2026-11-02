@@ -25,7 +25,10 @@ const WARES := {
 }
 const START_WARES := {"heiltrank": 3, "manatrank": 2, "bombe": 2, "kraftkraut": 2}
 ## Grundschaden und -heilung des Novizen (wächst mit dem Angriff, s. Grundwerte)
-const NOVIZE := {schlag = 12, kraftschlag = 20, erste_hilfe = 16, trank = 25}
+const NOVIZE := {schlag = 12, kraftschlag = 20, erste_hilfe = 16, trank = 25, manatrank = 15}
+## Abklingzeiten nur für die stärksten Fähigkeiten (Beschluss 29.10.): Fähigkeiten, die Mana kosten, behalten ihre
+## Abklingzeit nur ab so vielen Zügen. Die anderen begrenzt das Mana (es füllt sich im Kampf nicht von selbst).
+const STARKE_ABKLINGZEIT := 3
 const START_GOLD := 300
 const CART_HP := 60
 ## Passive "Feilschen": Gold-Fähigkeiten kosten weniger.
@@ -222,9 +225,12 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 				{id = "kraftschlag", name = "Kraftschlag", info = "%d Nahkampf · 10 Mana" % roundi(NOVIZE.kraftschlag * f.power), target = "enemy", mana = 10, cd = 2},
 				{id = "erste_hilfe", name = "Erste Hilfe", info = "Heilt %d · 12 Mana" % roundi(NOVIZE.erste_hilfe * f.power), target = "ally", mana = 12, cd = 2},
 			]
+			var free := "gratis, du bist noch dran" if not f.belt_free_used else "kostet den Zug"
 			if f.wares.has("heiltrank"):
-				var free := "gratis, du bist noch dran" if not f.belt_free_used else "kostet den Zug"
 				list.append({id = "trank", name = "Heiltrank (%d)" % f.wares.heiltrank, info = "Heilt %d · Gürtel: %s" % [roundi(NOVIZE.trank * f.power), free],
+						target = "ally", guertel = true})
+			if f.wares.has("manatrank"):
+				list.append({id = "manatrank_trinken", name = "Manatrank (%d)" % f.wares.manatrank, info = "+%d Mana · Gürtel: %s" % [NOVIZE.manatrank, free],
 						target = "ally", guertel = true})
 		"singer":
 			var lullaby_info := "Heilt 24, +1 Schutz-Sternbild · 8 Mana"
@@ -261,6 +267,10 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 			list.append_array(c.dungeon.extra_abilities(f))
 		var row_name := "Nach vorne" if f.back_row else "Nach hinten"
 		list.append({id = "row", name = row_name, info = "Reihe wechseln (kostet den Zug)", target = "none"})
+	# Abklingzeiten nur für die stärksten Fähigkeiten: Wer Mana kostet, braucht sonst keine (das Mana begrenzt sie)
+	for ab in list:
+		if ab.has("mana") and int(ab.get("cd", 0)) < STARKE_ABKLINGZEIT:
+			ab.erase("cd")
 	# Abwarten können alle (beim Zähmer wartet das Monster, er selbst handelt trotzdem)
 	if f.is_hero or is_pet(f):
 		list.append(wait_ability())
@@ -269,6 +279,15 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 	if not allowed.is_empty() and f.is_hero:
 		list = list.filter(func(ab: Dictionary) -> bool: return ab.id in allowed or ab.id == "abwarten")
 	return list
+
+
+## Ist das der normale Angriff der Figur? (Die erste Fähigkeit ihrer Liste, ohne Mana-Kosten, gegen einen Gegner.)
+## Er gibt im Kampf etwas Mana zurück (BattleState.MANA_ATTACK).
+func is_basic_attack(f: Fighter, id: String) -> bool:
+	if f.max_mana <= 0:
+		return false
+	var list := abilities(f)
+	return not list.is_empty() and list[0].id == id and not list[0].has("mana") and str(list[0].target) == "enemy"
 
 
 ## Abwarten: für alle Klassen gleich (design.md, 25.10.).
@@ -338,6 +357,9 @@ func blocked_reason(f: Fighter, ab: Dictionary) -> String:
 				return "Keine Siegel"
 		"trank":
 			if f.wares.get("heiltrank", 0) <= 0:
+				return "Keine Tränke mehr"
+		"manatrank_trinken":
+			if f.wares.get("manatrank", 0) <= 0:
 				return "Keine Tränke mehr"
 		"tame":
 			# Bei vollem Gepäck geht das neue Monster nach dem Kampf in den Stall
@@ -1353,6 +1375,13 @@ func _novize(f: Fighter, id: String, target: Fighter) -> void:
 			c.hit(f, target, NOVIZE.kraftschlag, "melee")
 		"erste_hilfe":
 			c.heal(f, target, roundi(NOVIZE.erste_hilfe * f.power))
+		"manatrank_trinken":
+			f.wares.manatrank -= 1
+			c.add_log("%s trinkt einen Manatrank." % f.display_name if target == f else "%s reicht %s einen Manatrank." % [f.display_name, target.display_name])
+			var before := target.mana
+			target.mana = mini(target.mana + NOVIZE.manatrank, target.max_mana)
+			c.float_text(target, "+%d Mana" % (target.mana - before), Color("6fa8ff"))
+			c.refresh()
 		"trank":
 			f.wares.heiltrank -= 1
 			c.add_log("%s trinkt einen Heiltrank." % f.display_name if target == f else "%s reicht %s einen Heiltrank." % [f.display_name, target.display_name])
