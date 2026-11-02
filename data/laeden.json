@@ -3,7 +3,7 @@
 	"bingo_heimkehr": {
 		"name": "Bingos Laden",
 		"hinweis": "Nach der Rückkehr aus Grünwacht: Heimkehrer-Preis für die Sternentafel.",
-		"waren": ["heiltrank", "sternentafel"],
+		"waren": ["heiltrank", "sternentafel", "breitschwert", "flinker_dolch", "kettenhemd", "wollrobe", "glueckskette"],
 		"preise": {"sternentafel": 6000},
 		"ankauf": 0.5
 	},
@@ -16,7 +16,8 @@
 	},
 	"bingo": {
 		"name": "Bingos Laden",
-		"waren": ["heiltrank", "sternentafel"],
+		"hinweis_ausruestung": "Zum Ausprobieren der Ausrüstung (Projekt 14, K.1), bis die Händler kommen (D13).",
+		"waren": ["heiltrank", "sternentafel", "breitschwert", "flinker_dolch", "kettenhemd", "wollrobe", "glueckskette"],
 		"ankauf": 0.5
 	}
 }

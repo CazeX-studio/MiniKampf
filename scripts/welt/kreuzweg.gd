@@ -153,6 +153,7 @@ var _quest_detail: RichTextLabel
 var _quest_selected := ""
 var _stats_head: HBoxContainer
 var _rep_box: VBoxContainer
+var _rep_scroll: ScrollContainer
 var _bag_selected := -1
 ## Gegenstand, bei dem gerade „Wirklich wegwerfen?“ gefragt wird ("" = keine Frage)
 var _discard_ask := ""
@@ -1547,7 +1548,13 @@ func _build_ui() -> void:
 	# Ruf bei den Gruppen als Leiste mit Feldern (nur nach der Klassenwahl)
 	_rep_box = VBoxContainer.new()
 	_rep_box.add_theme_constant_override("separation", 4)
-	panel_box.add_child(_rep_box)
+	_rep_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# Aussehen, Ausrüstung und Ruf liegen in einem Bereich zum Scrollen, damit das Fenster nicht zu hoch wird
+	_rep_scroll = ScrollContainer.new()
+	_rep_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_rep_scroll.custom_minimum_size.y = 250
+	_rep_scroll.add_child(_rep_box)
+	panel_box.add_child(_rep_scroll)
 	# Tasche: Kästchen mit Bild und Anzahl, per Ziehen und Ablegen umsortieren
 	_bag_grid = GridContainer.new()
 	_bag_grid.columns = 10
@@ -1584,6 +1591,11 @@ func _build_ui() -> void:
 		var link := str(meta)
 		if link == "testtasche" or link == "testbeute":
 			_send({type = "test_tasche" if link == "testtasche" else "test_beute"})
+			return
+		if link.begins_with("anlegen:"):
+			_send({type = "anlegen", gegenstand = link.trim_prefix("anlegen:")})
+			_bag_selected = -1
+			_fill_panel()
 			return
 		if link.begins_with("guertel:"):
 			_send({type = "guertel_ablegen", gegenstand = link.trim_prefix("guertel:")})
@@ -2452,13 +2464,14 @@ func _fill_panel() -> void:
 	_panel_text.visible = not quest_list
 	_stats_head.visible = _panel_mode == "werte"
 	_rep_box.visible = _panel_mode == "werte"
+	_rep_scroll.visible = _panel_mode == "werte"
 	for child in _rep_box.get_children():
 		child.queue_free()
 	_bag_grid.visible = _panel_mode == "tasche"
 	_bag_footer.visible = _panel_mode == "tasche"
 	_belt_row.visible = _panel_mode == "tasche"
 	_bag_tests.visible = _panel_mode == "tasche"
-	_panel_text.custom_minimum_size.y = {"tasche": 120.0, "werte": 220.0}.get(_panel_mode, 330.0)
+	_panel_text.custom_minimum_size.y = {"tasche": 120.0, "werte": 90.0}.get(_panel_mode, 330.0)
 	for tab_button: Button in _quest_tabs.get_children():
 		tab_button.button_pressed = tab_button.get_meta("tab") == _quest_tab
 	if _panel_mode == "auftraege":
@@ -2475,6 +2488,7 @@ func _fill_panel() -> void:
 	elif _panel_mode == "werte":
 		_panel_title.text = GameData.text("werte")
 		_aussehen_zeilen(p)
+		_ausruestung_zeilen(p)
 		var klasse := p.progress.battle_class()
 		if p.progress.flags.has("klasse_bestaetigt") and Sandbox.CLASSES.has(klasse):
 			# Nach der Klassenwahl: Werte der eigenen Klasse (so kämpft man in der Wildnis)
@@ -2523,9 +2537,15 @@ func _fill_panel() -> void:
 			var use := "  [url=%s][color=#5ab8ff][%s][/color][/url]" % [picked, GameData.text("benutzen")] if item.has("benutzen") else ""
 			if Progress.belt_allowed(picked):
 				use += "  [url=guertel:%s][color=#f2c14e][%s][/color][/url]" % [picked, GameData.text("guertel_ablegen")]
+			if Ausruestung.ist_ausruestung(picked):
+				use += "  [url=anlegen:%s][color=#6dff8a][%s][/color][/url]" % [picked, GameData.text("anlegen")]
 			if state.can_discard(p, picked):
 				use += "  [url=wegwerfen:%s][color=#ff8a7a][%s][/color][/url]" % [picked, GameData.text("wegwerfen")]
 			lines.append("[b]%d × %s[/b] – %s%s" % [p.progress.item_count(picked), item.get("name", picked), item.get("beschreibung", ""), use])
+			# Ausrüstung: Werte und Vergleich mit dem, was angelegt ist (grüne Pfeile besser, rote schlechter)
+			if Ausruestung.ist_ausruestung(picked):
+				lines.append(Ausruestung.werte_text(picked))
+				lines.append("%s %s" % [GameData.text("vergleich"), Ausruestung.vergleich(picked, p.progress.ausruestung)])
 			if _discard_ask == picked:
 				lines.append("[color=#ff8a7a]%s[/color]  [url=wegwerfen_ja][color=#ff8a7a][%s][/color][/url]  [url=wegwerfen_nein][color=#5ab8ff][%s][/color][/url]" % [
 						GameData.text("wegwerfen_frage", [p.progress.item_count(picked), item.get("name", picked)]),
@@ -2743,6 +2763,43 @@ func _fill_bag(p: PlayerState) -> Array:
 	return slots
 
 
+## Ausrüstung (Projekt 14, K.1): was angelegt ist, mit „Ablegen“, und was es zusammen bringt.
+func _ausruestung_zeilen(p: PlayerState) -> void:
+	_rep_box.add_child(_label(GameData.text("ausruestung_titel"), 17, Color("f2c14e")))
+	var angelegt: Dictionary = p.progress.ausruestung
+	for platz: String in Ausruestung.PLAETZE:
+		var id := str(angelegt.get(platz, ""))
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 8)
+		var name_label := _label(Ausruestung.PLATZ_NAMEN[platz], 15, Color("c8c8c8"))
+		name_label.custom_minimum_size.x = 80
+		row.add_child(name_label)
+		var text := RichTextLabel.new()
+		text.bbcode_enabled = true
+		text.fit_content = true
+		text.scroll_active = false
+		text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		text.add_theme_font_size_override("normal_font_size", 15)
+		text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		text.custom_minimum_size.x = 100
+		text.text = "%s  [color=#a0a0a0]%s[/color]" % [Ausruestung.name_farbig(id), Ausruestung.werte_text(id)] if id != "" else "[color=#707070]–[/color]"
+		row.add_child(text)
+		if id != "":
+			var button := _small_button(GameData.text("ablegen"), func() -> void:
+				_send({type = "ablegen", platz = platz})
+				_fill_panel())
+			button.custom_minimum_size = Vector2(90, 28)
+			row.add_child(button)
+		_rep_box.add_child(row)
+	var s := Ausruestung.summe(angelegt)
+	var summe := _label(GameData.text("ausruestung_summe", [s.waffenkraft, s.verteidigung, s.widerstand,
+			Ausruestung.TEMPO_NAMEN.get(s.waffen_tempo, "normal")]), 14, Color("a0a0a0"))
+	summe.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	summe.custom_minimum_size.x = 100
+	_rep_box.add_child(summe)
+	_rep_box.add_child(UiStil.trennlinie())
+
+
 ## Aussehen-Plätze (Projekt 13, Schritt 6): Hut, Rückenteil und Farben wählen. Nur Aussehen, die Werte bleiben.
 ## Nur für Figuren aus „Figur erstellen“ (Körper und Kopf).
 func _aussehen_zeilen(p: PlayerState) -> void:
@@ -2769,7 +2826,10 @@ func _aussehen_zeilen(p: PlayerState) -> void:
 		row.add_child(button)
 	_rep_box.add_child(row)
 	# Waffen-Aussehen: kommt mit der Waffe als eigenem Teil (D2b)
-	_rep_box.add_child(_label(GameData.text("aussehen_waffe"), 14, Color("a0a0a0")))
+	var hinweis := _label(GameData.text("aussehen_waffe"), 14, Color("a0a0a0"))
+	hinweis.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	hinweis.custom_minimum_size.x = 100
+	_rep_box.add_child(hinweis)
 	_rep_box.add_child(UiStil.trennlinie())
 
 
@@ -2815,6 +2875,7 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 		return
 	var progress := local_player().progress
 	BattleRequest.player_look = local_player().look
+	BattleRequest.player_gear = local_player().progress.ausruestung.duplicate()
 	_prepare_reward(kampf_id)
 	if BattleRequest.prepare(kampf_id, progress.level, progress.potion_count("heiltrank"), progress.battle_class(),
 			progress.flags.get("monster", [])):

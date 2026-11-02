@@ -5,7 +5,20 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 01.11.)
 
-- **Nächster Schritt:** T1 Testtag Aussehen (Marco). Vorher sollte D2b (Kurzschwert als eigenes Teil) fertig sein, das wartet auf die Novizen-Blätter ohne Klinge.
+- **Nächster Schritt:** D5 der „Demo-Reihenfolge“ (Mana nur durch Handeln). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 wurde auf Marcos Wunsch vor T1 gebaut.
+
+- **Neu (02.11.): D4 Werte für Waffen und Rüstung** (Projekt 14, K.1): Es gibt jetzt Ausrüstung auf sechs Plätzen (Waffe, Kopf, Körper, Schuhe, zweimal Schmuck). Jeder startet mit Kurzschwert, Stoffkappe, Lederweste und Lederstiefeln. Damit kämpft man genauso wie bisher, etwa ein Drittel der Kraft kommt aus der Ausrüstung.
+  - **Waffenkraft** macht mehr Schaden und Heilung. **Verteidigung** senkt Schaden im Nah- und Fernkampf, **Widerstand** senkt Magie-Schaden. Platte hat mehr Verteidigung, Stoff mehr Widerstand, Schmuck gibt nur Bonus-Werte.
+  - **Waffen-Tempo:** Schnelle Waffen geben 2 Tempo, schwere kosten 2, dann ist man auf der Zugleiste später dran.
+  - **Seltenheit:** Der Name hat die Farbe der Seltenheit, ungewöhnliche Teile haben einen Bonus-Wert (zum Beispiel Leben +5).
+  - **Zum Ausprobieren verkauft Bingo** Breitschwert (schwer), Flinken Dolch (schnell), Kettenhemd (Platte), Wollrobe (Stoff) und Glückskette (Schmuck), bis die Händler mit D13 kommen.
+  - Alle Zahlen sind vorläufig, der Feinschliff kommt am Ende. Noch nicht drin: Waffen nur für die eigene Klasse, Sonderwerte ab „Selten“, zufällige Bonus-Werte bei Beute.
+  - **So testest du es:**
+    1. C drücken: Unter „Ausrüstung“ stehen die vier Grundteile mit ihren Werten.
+    2. Bei Bingo das Breitschwert kaufen, in der Tasche (I) anklicken: Grüne Pfeile zeigen mehr Waffenkraft und Leben, ein roter Pfeil weniger Tempo.
+    3. „Anlegen“ drücken: Das Kurzschwert liegt jetzt in der Tasche, das Breitschwert steht unter „Ausrüstung“.
+    4. In einen Kampf gehen: Mit dem Breitschwert triffst du härter, kommst auf der Zugleiste aber später dran. Mit dem Flinken Dolch ist es umgekehrt.
+    5. Wollrobe und Kettenhemd vergleichen: Die Robe schützt besser gegen Magie, das Kettenhemd besser gegen Schläge.
 
 - **Neu (02.11.): D3c Aussehen-Plätze** (Projekt 13, Schritt 6): Im Werte-Fenster (Taste C) steht jetzt „Aussehen“ mit drei Knöpfen für Hut, Rücken und Farben. Das ist nur Aussehen, die Werte bleiben gleich. Das Aussehen wird im Spielstand gespeichert, und Mitspieler sehen es auch. Es geht nur mit einer Figur aus „Figur erstellen“. Das Waffen-Aussehen kommt mit D2b.
   - **So testest du es:**

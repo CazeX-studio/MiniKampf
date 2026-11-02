@@ -20,6 +20,7 @@ extends RefCounted
 ##   {type = "guertel_ablegen", gegenstand = "…"} / {type = "guertel_nehmen", platz = 0}  Trank an den Gürtel bzw. zurück
 ##   {type = "bank_erweitern"}           an einer Bankstelle mehr Bankplätze kaufen
 ##   {type = "kaufen", gegenstand = "…"} / {type = "verkaufen", gegenstand = "…"} / {type = "laden_zu"}  im geöffneten Laden
+##   {type = "anlegen", gegenstand = "…"} / {type = "ablegen", platz = "waffe"}  Ausrüstung (Projekt 14, K.1)
 ##   {type = "aussehen", hut = "…", ruecken = "…", farben = "…"}  Aussehen-Plätze ändern ("" = keins, fehlt = bleibt)
 ##   {type = "wegwerfen", gegenstand = "…"}  alle Stück eines Gegenstands aus der Tasche wegwerfen
 ##   {type = "beute_nehmen", gegenstand = "…"} / {type = "beute_lassen"}  Beute, die nicht in die Tasche gepasst hat
@@ -429,6 +430,10 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			_sell(p, str(cmd.get("gegenstand", "")))
 		"laden_zu":
 			p.shop = ""
+		"anlegen":
+			_equip(p, str(cmd.get("gegenstand", "")))
+		"ablegen":
+			_unequip(p, str(cmd.get("platz", "")))
 		"aussehen":
 			# Aussehen-Plätze (Projekt 13, Schritt 6): nur das Aussehen ändert sich, die Werte bleiben
 			if FigurTeile.kann_aussehen(p.look):
@@ -1565,6 +1570,34 @@ func _turn_in_quest(p: PlayerState, id: String) -> void:
 
 
 ## Gegenstand aus der Tasche benutzen (z. B. die Bürste an der Statue). Wo und was dann passiert, steht in
+## Ausrüstung anlegen: Das Teil kommt aus der Tasche auf seinen Platz, was dort lag, kommt in die Tasche.
+func _equip(p: PlayerState, item_id: String) -> void:
+	if p.progress.item_count(item_id) <= 0 or not Ausruestung.ist_ausruestung(item_id):
+		return
+	var platz := Ausruestung.platz_fuer(item_id, p.progress.ausruestung)
+	if platz == "":
+		return
+	var alt := str(p.progress.ausruestung.get(platz, ""))
+	p.progress.remove_item(item_id, 1)
+	if alt != "":
+		p.progress.add_item(alt, 1)
+	p.progress.ausruestung[platz] = item_id
+	progress_changed.emit(p.id)
+
+
+## Ausrüstung ablegen: zurück in die Tasche (nur, wenn dort Platz ist).
+func _unequip(p: PlayerState, platz: String) -> void:
+	var alt := str(p.progress.ausruestung.get(platz, ""))
+	if alt == "":
+		return
+	if not p.progress.has_room(alt):
+		_say(p, GameData.text("tasche_voll", [GameData.item_name(alt)]))
+		return
+	p.progress.ausruestung.erase(platz)
+	p.progress.add_item(alt, 1)
+	progress_changed.emit(p.id)
+
+
 ## data/gegenstaende.json unter "benutzen": {"feld": [x, y], "radius": 3, "dialog": "…", "sonst": "Meldung"}.
 func _use_item(p: PlayerState, item_id: String) -> void:
 	var use: Dictionary = GameData.item(item_id).get("benutzen", {})

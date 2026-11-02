@@ -664,7 +664,8 @@ func _on_group_battle(ids: Array, kampf_id: String) -> void:
 	for id: String in ids:
 		var p: PlayerState = world.players[id]
 		members.append({name = p.display_name, stufe = p.progress.level, traenke = p.progress.potion_count("heiltrank"), aussehen = p.look,
-				klasse = p.progress.battle_class(), monster = p.progress.flags.get("monster", [])})
+				klasse = p.progress.battle_class(), monster = p.progress.flags.get("monster", []),
+				ausruestung = Ausruestung.kampfwerte(p.progress.ausruestung)})
 	var setup := BattleRequest.build_group(kampf_id, members)
 	if setup.is_empty():
 		return

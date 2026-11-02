@@ -20,6 +20,9 @@ static var group := {}
 static var reward := {}
 ## Aussehen der eigenen Figur, solange sie als Novize kämpft ("" = Novize aus dem 0x72-Paket)
 static var player_look := ""
+## Angelegte Ausrüstung der eigenen Figur (Platz -> Gegenstand, siehe Ausruestung). Leer = ohne Ausrüstung kämpfen
+## wie bisher (Sandbox).
+static var player_gear := {}
 
 
 static func active() -> bool:
@@ -61,6 +64,8 @@ static func prepare(id: String, level: int, potions := 0, own_class := "", own_m
 			player["monster"] = own_monsters
 	if klasse == "novize":
 		player["traenke"] = potions
+	if not player_gear.is_empty():
+		player["ausruestung"] = Ausruestung.kampfwerte(player_gear)
 	# Parieren lernt man erst in Lektion 3: davor hat der Novize keine Reaktion (im langen Lernkampf je Phase)
 	if not data.get("reaktion", true):
 		player["reaktion"] = ""
@@ -82,7 +87,7 @@ static func prepare(id: String, level: int, potions := 0, own_class := "", own_m
 
 
 ## Aufbau eines Gruppenkampfs (Gastgeber): erst die Spieler der Gruppe, freie Plätze füllen die Novizen-Mitstreiter.
-## members: [{name, stufe, traenke, aussehen, klasse, monster}]. Gibt den Aufbau zurück (leer, wenn es den Kampf nicht gibt).
+## members: [{name, stufe, traenke, aussehen, klasse, monster, ausruestung}] (ausruestung: Ausruestung.kampfwerte). Gibt den Aufbau zurück (leer, wenn es den Kampf nicht gibt).
 static func build_group(id: String, members: Array) -> Dictionary:
 	var data: Dictionary = GameData.battle(id)
 	if data.is_empty():
@@ -99,6 +104,8 @@ static func build_group(id: String, members: Array) -> Dictionary:
 				hero["monster"] = m.get("monster", [])
 		if klasse == "novize":
 			hero["traenke"] = int(m.get("traenke", 0))
+		if m.has("ausruestung"):
+			hero["ausruestung"] = m.ausruestung
 		if not data.get("reaktion", true):
 			hero["reaktion"] = ""
 		heroes.append(hero)

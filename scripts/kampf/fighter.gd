@@ -112,6 +112,9 @@ var power := 1.0
 
 # Gegner
 var resist := 1.0
+## Ausrüstung (Projekt 14, K.1): Faktor auf Nah- und Fernkampf-Schaden (Verteidigung) und auf Magie-Schaden (Widerstand)
+var schutz := 1.0
+var magieschutz := 1.0
 ## Großer Gegner (Boss): größeres Namensschild unter der Figur
 var big := false
 ## Hat keinen eigenen Zug (z. B. Splitter-Knoten der Wurzelmutter)

@@ -25,7 +25,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 
 ### Kampfgefühl
 
-- **D4:** Werte für Waffen und Rüstung. (K.1) – Status: offen
+- **D4:** Werte für Waffen und Rüstung. (K.1) – Status: fertig (02.11.2026: sechs Plätze, Grundausrüstung, Waffenkraft, Verteidigung und Widerstand, Waffen-Tempo, Bonus-Werte nach Seltenheit, Vergleich mit Pfeilen; Probe-Teile bei Bingo. Noch nicht drin: Waffen nur für ihre Klasse, Sonderwerte ab Selten, zufällige Bonus-Werte bei Beute)
 - **D5:** Mana nur durch Handeln, Hinsetzen, Lagerfeuer. (K.2) – Status: offen
 - **D6:** Fähigkeiten-Baum und feste Leiste mit 6 Plätzen. (K.3) – Status: offen
 - **D7:** Effekt-Liste als feste Bausteine. (K.4) – Status: offen

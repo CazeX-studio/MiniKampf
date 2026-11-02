@@ -200,6 +200,28 @@ static func draw_icon(node: CanvasItem, c: Vector2, form: String, color: Color) 
 			node.draw_rect(Rect2(c + Vector2(-16, -12), Vector2(9, 8)), color.lightened(0.15))
 			node.draw_rect(Rect2(c + Vector2(7, -12), Vector2(9, 8)), color.lightened(0.15))
 			node.draw_line(c + Vector2(0, -8), c + Vector2(0, 12), dark, 2.0)
+		"schwert", "dolch":
+			# Klinge schräg von unten links nach oben rechts, Parierstange und Griff
+			var laenge := 26.0 if form == "schwert" else 16.0
+			var spitze := c + Vector2(laenge * 0.55, -laenge * 0.55)
+			var ansatz := c + Vector2(-4, 4)
+			node.draw_line(ansatz, spitze, dark, 6.0 if form == "schwert" else 4.5)
+			node.draw_line(ansatz, spitze, color, 4.0 if form == "schwert" else 3.0)
+			node.draw_line(c + Vector2(-10, -2), c + Vector2(2, 10), Color("8a6a2c"), 4.0)
+			node.draw_line(ansatz, c + Vector2(-12, 12), Color("6e4a2c"), 4.0)
+		"kappe":
+			node.draw_circle(c + Vector2(0, 4), 13.0, dark)
+			node.draw_circle(c + Vector2(0, 4), 11.5, color)
+			node.draw_rect(Rect2(c + Vector2(-15, 4), Vector2(30, 5)), color.darkened(0.2))
+		"stiefel":
+			for x: float in [-8.0, 7.0]:
+				node.draw_rect(Rect2(c + Vector2(x - 4, -12), Vector2(8, 22)), dark)
+				node.draw_rect(Rect2(c + Vector2(x - 3, -11), Vector2(6, 20)), color)
+				node.draw_rect(Rect2(c + Vector2(x - 3, 6), Vector2(11, 6)), color.darkened(0.15))
+		"kette":
+			node.draw_arc(c + Vector2(0, -4), 12.0, 0.2, PI - 0.2, 16, dark, 2.0)
+			node.draw_circle(c + Vector2(0, 10), 6.0, dark)
+			node.draw_circle(c + Vector2(0, 10), 4.5, color)
 		"stein":
 			node.draw_circle(c + Vector2(0, 3), 11.0, dark)
 			node.draw_circle(c + Vector2(-1, 1), 10.0, color)

@@ -28,6 +28,9 @@ var bank := {}
 var bank_size := BANK_START
 ## Gürtel: BELT_SLOTS Plätze, je {id, anzahl} oder leer ({}). Was am Gürtel hängt, ist nicht mehr in der Tasche.
 var belt: Array = [{}, {}, {}, {}]
+## Angelegte Ausrüstung (Projekt 14, K.1): Platz -> Gegenstand (siehe Ausruestung.PLAETZE). Was angelegt ist,
+## liegt nicht mehr in der Tasche. Jeder startet mit der Grundausrüstung.
+var ausruestung: Dictionary = Ausruestung.START.duplicate()
 var xp := 0
 var level := 1
 ## Auftrag -> "aktiv", "fertig" oder "abgegeben" (nicht drin = "neu")
@@ -240,7 +243,7 @@ func xp_range() -> Vector2i:
 
 
 func to_dict() -> Dictionary:
-	return {gold = gold, items = items, slots = bag_slots().duplicate(), beute = loot, bank = bank, bank_plaetze = bank_size, guertel = belt,
+	return {gold = gold, items = items, slots = bag_slots().duplicate(), beute = loot, bank = bank, bank_plaetze = bank_size, guertel = belt, ausruestung = ausruestung,
 			xp = xp, level = level, quests = quests, flags = flags}
 
 
@@ -260,6 +263,12 @@ func load_dict(data: Dictionary) -> void:
 	for i in BELT_SLOTS:
 		var entry: Dictionary = saved_belt[i] if i < saved_belt.size() and saved_belt[i] is Dictionary else {}
 		belt.append({id = str(entry.id), anzahl = int(entry.anzahl)} if entry.has("id") and int(entry.get("anzahl", 0)) > 0 else {})
+	# Ältere Spielstände ohne Ausrüstung bekommen die Grundausrüstung
+	ausruestung = {}
+	var saved_gear: Dictionary = data.get("ausruestung", Ausruestung.START)
+	for platz: String in saved_gear:
+		if platz in Ausruestung.PLAETZE and str(saved_gear[platz]) != "":
+			ausruestung[platz] = str(saved_gear[platz])
 	xp = int(data.get("xp", 0))
 	level = int(data.get("level", 1))
 	quests = data.get("quests", {})

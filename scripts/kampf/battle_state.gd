@@ -316,6 +316,16 @@ func _create_heroes() -> void:
 		else:
 			h = Fighter.new(spec.get("name", data.hero), id, data.title, true, data.hp + LEVEL_HP * level_bonus, data.tempo, data.color)
 			h.max_mana = data.mana + LEVEL_MANA * level_bonus if data.mana > 0 else 0
+		# Ausrüstung (Projekt 14, K.1): Waffen-Tempo, Bonus-Werte, Verteidigung und Widerstand
+		var gear: Dictionary = spec.get("ausruestung", {})
+		if not gear.is_empty():
+			h.tempo = maxi(1, h.tempo + int(gear.get("tempo", 0)))
+			h.max_hp += int(gear.get("leben", 0))
+			h.hp = h.max_hp
+			if h.max_mana > 0:
+				h.max_mana += int(gear.get("mana", 0))
+			h.schutz = float(gear.get("schutz", 1.0))
+			h.magieschutz = float(gear.get("magieschutz", 1.0))
 		h.look = spec.get("aussehen", "")
 		h.set_meta("stufe", level_bonus + 1)
 		h.mana = data.get("start_mana", h.max_mana)
@@ -348,6 +358,9 @@ func _create_heroes() -> void:
 				b.power = h.power
 				b.max_hp = roundi(b.max_hp * float(spec.macht))
 				b.hp = b.max_hp
+		# Waffenkraft: mehr Schaden und Heilung (mit der Grundausrüstung bleibt alles wie vorher)
+		if not gear.is_empty():
+			h.power *= float(gear.get("macht", 1.0))
 		_emit({type = "spawn", f = h, place = "hero", index = i, hp = h.hp})
 		h.next_time = h.turn_delay() * zufall_range(0.2, 1.0)
 
@@ -958,6 +971,11 @@ func calc_damage(attacker: Fighter, target: Fighter, base: float, kind: String, 
 		dmg *= VULN_MULT
 	if not star:
 		dmg *= target.resist
+	# Ausrüstung: Verteidigung gegen Nah- und Fernkampf, Widerstand gegen Magie
+	if kind == "magic":
+		dmg *= target.magieschutz
+	elif kind == "melee" or kind == "ranged":
+		dmg *= target.schutz
 	# Sternenpanzer: Treffer prallen fast ab, bis eine perfekte Parade ihn erschüttert
 	if target.plate < 1.0 and target.stagger_turns == 0:
 		dmg *= target.plate
