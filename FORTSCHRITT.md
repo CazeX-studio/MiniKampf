@@ -11,7 +11,13 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** D9c (eigene Bewegungen des Bogenschützen). T1 Testtag Aussehen holt Marco nach (02.11.: „mache nachher Tests“). D4 bis D8 wurden auf Marcos Wunsch vor T1 gebaut, D8 ist damit ganz fertig.
+- **Nächster Schritt:** D9d (eigene Bewegungen des Monster-Zähmers). T1 Testtag Aussehen holt Marco nach (02.11.: „mache nachher Tests“). D4 bis D8 wurden auf Marcos Wunsch vor T1 gebaut, D8 ist damit ganz fertig.
+
+- **Neu (02.11.): D9c Eigene Bewegungen des Bogenschützen** (K.6): Statt der runden Kugel fliegen jetzt dünne Pfeilspuren. Schneller Schuss, Aufgeladener Schuss mit Rückstoß und Staub, Pfeilhagel mit Schatten am Boden, Netzpfeil mit Bogen in der Luft und zappelndem Gegner, Schnellfeuer wird heller und schneller, Durchschlag lässt eine Schneise stehen, Schwachstelle zeigt ein rotes Fadenkreuz, Elementpfeil hat die Farbe des Elements. Beim Jägerpfeil läuft der Geist des Silberhirschs mit, der Einschlag wirbelt grüne Funken. Noch nicht drin: Zeichen der passiven Fähigkeiten, das Netz reißt nicht sichtbar, das Fadenkreuz bleibt nicht drei Runden stehen.
+  - **So testest du es:**
+    1. Kampf-Sandbox mit dem Bogenschützen: alle Fähigkeiten einmal auslösen.
+    2. Pfeilhagel mit mehreren Gegnern: erst der Schatten, dann der Pfeil.
+    3. Ult laden und auslösen: Film, dann Hirschgeist und großer Einschlag.
 
 - **Neu (02.11.): D9b Eigene Bewegungen des Novizen** (K.6): Schildstoß hat zwei schnelle Schritte, einen dumpfen Stoß, und das Ziel taumelt zurück. Doppelschlag schlägt von links und rechts mit kleinem Hüpfer und zwei Klirren. Erste Hilfe: Der Novize geht kurz in die Knie, grüne Funken und ein Pflaster steigen auf. Deckung geben zeigt einen Sprung und eine Schild-Kuppel, beim Abfangen sprüht ein Funke. Sternenmut leuchtet lila, klingt hell und endet in einem großen lila Hieb. Noch ohne eigene Bilder: Knien und Schild sind nur angedeutet.
   - **So testest du es:**

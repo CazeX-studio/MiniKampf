@@ -1,8 +1,9 @@
 extends SceneTree
-## D9b: Jede eigene Bewegung läuft im echten Kampfbild durch und lässt die Figuren an ihrem Platz zurück.
+## D9b, D9c: Jede eigene Bewegung läuft im echten Kampfbild durch und lässt die Figuren an ihrem Platz zurück.
 
 const NAMEN := ["schildstoss_anlauf", "schildstoss_treffer", "hieb", "erste_hilfe", "deckung", "deckung_funke",
-		"sternenmut_an", "sternenmut_schlag"]
+		"sternenmut_an", "sternenmut_schlag", "schnellschuss", "spannen", "ladeschuss", "durchschlag", "durchschlag_weiter",
+		"hagel_auf", "hagel_regen", "netzpfeil", "schnellfeuer", "schnellfeuer_ende", "schwachstelle", "elementpfeil", "jaegerpfeil"]
 
 
 func _initialize() -> void:
@@ -23,7 +24,7 @@ func _initialize() -> void:
 	var feld_kinder: int = kampf._field.get_child_count()
 	for name: String in NAMEN:
 		await FaehigkeitFx.spielen(kampf, name, f, ziel, 1)
-		await create_timer(0.6).timeout
+		await create_timer(0.8).timeout
 		if v.position != ort or v_ziel.position != ort_ziel:
 			print("FEHLER: %s lässt eine Figur verschoben zurück" % name)
 			fehler += 1

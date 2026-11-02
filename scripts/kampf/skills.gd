@@ -747,20 +747,22 @@ func _archer(f: Fighter, id: String, target: Fighter) -> void:
 				base = 30.0
 				f.charged = false
 				f.add_ult(30)
-			c.projectile(f, target, Color("b8ff8a"))
+			c.zeige("ladeschuss" if base > 12.0 else "schnellschuss", f, target)
 			c.hit(f, target, base, "ranged")
 		"charge":
 			f.charged = true
+			c.zeige("spannen", f)
 			c.float_text(f, "Gespannt", Color("b8ff8a"))
 			c.add_log("%s spannt den Bogen." % f.display_name)
 		"volley":
+			c.zeige("hagel_auf", f)
 			for enemy in c.alive(c.enemies):
-				c.projectile_bg(f, enemy, Color("b8ff8a"))
-			c.wait(0.3)
+				c.zeige("hagel_regen", f, enemy)
+			c.wait(0.6)
 			for enemy in c.alive(c.enemies):
 				c.hit(f, enemy, 9, "ranged")
 		"net":
-			c.projectile(f, target, Color.WHITE)
+			c.zeige("netzpfeil", f, target)
 			c.hit(f, target, 6, "ranged")
 			c.delay(target, 0.7)
 			c.float_text(target, "Gefesselt", Color.WHITE, 30)
@@ -770,19 +772,20 @@ func _archer(f: Fighter, id: String, target: Fighter) -> void:
 			for i in _rapid_hits(f):
 				if not target.is_alive():
 					break
-				c.projectile(f, target, Color("b8ff8a").lightened(0.1 * i), 0.15)
+				c.zeige("schnellfeuer", f, target, i)
 				c.hit(f, target, 5, "ranged")
+			c.zeige("schnellfeuer_ende", f)
 		"durchschlag":
 			# Durchbohrt das Ziel und trifft den Gegner dahinter
-			c.projectile(f, target, Color("e8ffc8"))
+			c.zeige("durchschlag", f, target)
 			c.hit(f, target, 24, "ranged")
 			var others := c.alive(c.enemies).filter(func(e: Fighter) -> bool: return e != target)
 			if not others.is_empty():
 				var behind: Fighter = c.pick(others)
-				c.projectile(f, behind, Color("e8ffc8"), 0.15)
+				c.zeige("durchschlag_weiter", f, behind)
 				c.hit(f, behind, 16, "ranged")
 		"schwachstelle":
-			c.projectile(f, target, Color("ff5050"))
+			c.zeige("schwachstelle", f, target)
 			c.hit(f, target, 4, "ranged")
 			if target.is_alive():
 				target.vuln_turns = maxi(target.vuln_turns, 3)
@@ -793,11 +796,11 @@ func _archer(f: Fighter, id: String, target: Fighter) -> void:
 			if art.is_empty() or int(f.wares.get(str(ab_choice), 0)) <= 0:
 				return
 			f.wares[str(ab_choice)] = int(f.wares[str(ab_choice)]) - 1
-			c.projectile(f, target, Color(art.farbe))
+			c.zeige("elementpfeil", f, target, 0, Color(art.farbe))
 			if c.hit(f, target, 14, "ranged", str(art.element)) > 0 and target.is_alive():
 				Effekte.anwenden(c, f, target, str(art.effekt))
 		"ult":
-			c.projectile(f, target, Color("f2c14e"))
+			c.zeige("jaegerpfeil", f, target)
 			c.hit(f, target, 70, "ranged")
 	f.add_ult(20 * c.crits)
 

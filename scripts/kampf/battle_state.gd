@@ -243,8 +243,8 @@ func screen_flash(color: Color) -> void:
 
 
 ## Eigene Bewegung oder eigener Effekt einer Fähigkeit (siehe FaehigkeitFx).
-func zeige(fx_name: String, f: Fighter, ziel: Fighter = null, seite := 0) -> void:
-	_emit({type = "fx", name = fx_name, f = f, ziel = ziel, seite = seite})
+func zeige(fx_name: String, f: Fighter, ziel: Fighter = null, seite := 0, farbe := Color.WHITE) -> void:
+	_emit({type = "fx", name = fx_name, f = f, ziel = ziel, seite = seite, farbe = farbe})
 
 
 ## Kleiner Hüpfer einer Figur.
