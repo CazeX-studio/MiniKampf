@@ -11,7 +11,13 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** D9g (eigene Bewegungen der Sternensängerin). T1 Testtag Aussehen holt Marco nach (02.11.: „mache nachher Tests“). D4 bis D8 wurden auf Marcos Wunsch vor T1 gebaut, D8 ist damit ganz fertig.
+- **Nächster Schritt:** T2 Testtag Kampfgefühl (Marco). Effekte als Bilder von ChatGPT: D9h wartet auf das Probe-Bild. T1 Testtag Aussehen holt Marco nach (02.11.: „mache nachher Tests“). D4 bis D8 wurden auf Marcos Wunsch vor T1 gebaut, D8 ist damit ganz fertig.
+
+- **Neu (02.11.): D9g Eigene Bewegungen der Sternensängerin** (K.6): Sternenfunke fliegt im Bogen. Mondwiegenlied, Polarstern, Kometenlied und Mondschild haben eigene Abläufe und Zeichen bei den Verbündeten. Sternschnuppenregen fällt einzeln von oben mit fallender Tonhöhe. Lied der Rückkehr lässt einen Stern sinken, der Gefallene steht auf. Dissonanz trifft mit roten Ringen, der Gegner zappelt. Himmelszelt: Sternenlicht fällt auf alle. Die Effekte sind Platzhalter, die Bilder sollen von ChatGPT kommen (D9h). Noch nicht drin: Sternbilder über ihr, bleibende Monde und Sterne, echte Melodien.
+  - **So testest du es:**
+    1. Kampf-Sandbox mit der Sängerin: Sternenfunke, Mondwiegenlied und Kometenlied auslösen.
+    2. Resonanz sammeln, dann Sternschnuppenregen: Die Schnuppen fallen einzeln.
+    3. Ult laden und auslösen: Film, dann Sternenlicht auf alle.
 
 - **Neu (02.11.): D9f Eigene Bewegungen der Klingentänzerin** (K.6): Klingenschritt lässt ein Nachbild stehen und schneidet über Kreuz. Eine neue Klinge glitzert kurz. Wirbel zeigt einen Kreis aus Schnitten und Sand. Ausfallschritt und Sturmschritte lassen Nachbilder zurück, Sturmschritte mit schnellen Trommelschlägen. Fächerschnitt: Eine breite Lichtsichel fegt über die Gegner. Partnertanz: Eine Klinge fliegt glitzernd zum Partner. Klingenkäfig: Drei Klingen kreisen um den Gegner. Klingensturm schickt die Klingen einzeln los, bei fünf mit großem Abschluss. Ult: Klingenschwarm mit Nachbildern, zum Schluss der Klingensturm. Noch nicht drin: Käfig bleibt nicht zwei Runden sichtbar, Trommel-Zeichen, goldene Klingen bei fünf.
   - **So testest du es:**

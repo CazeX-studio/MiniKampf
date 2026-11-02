@@ -44,8 +44,8 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D9d:** Eigene Bewegungen und Effekte: Monster-Zähmer. (K.6) – Status: fertig (02.11.2026; alle aktiven Fähigkeiten und die Ult; ohne Monsterrufe, ohne Kameraschwenk über die drei Monster im Ult-Film, passive Fähigkeiten ohne Zeichen)
 - **D9e:** Eigene Bewegungen und Effekte: Rüstungsschmied. (K.6) – Status: fertig (02.11.2026; alle aktiven Fähigkeiten, Funkenflug und die Ult; Amboss vorerst gezeichnet; Risse im Boden, Rüstungsbilder je Art und Glanz je Stufe fehlen noch)
 - **D9f:** Eigene Bewegungen und Effekte: Klingentänzerin. (K.6) – Status: fertig (02.11.2026; alle aktiven Fähigkeiten und die Ult; Klingensturm zeigt die Klingen einzeln, die Schadenszahl bleibt eine; Käfig bleibt nicht zwei Runden sichtbar, Trommel-Zeichen und goldene Klingen bei fünf fehlen noch)
-- **D9g:** Eigene Bewegungen und Effekte: Sternensängerin. (K.6) – Status: offen
-- **D9h:** Effekte überarbeiten: Marco gefallen die bisherigen noch nicht, er will sie später überarbeiten. (K.6) – Status: später (Marco sagt, wann)
+- **D9g:** Eigene Bewegungen und Effekte: Sternensängerin. (K.6) – Status: fertig (02.11.2026; Abläufe aller aktiven Fähigkeiten und der Ult; die gezeichneten Effekte sind Platzhalter, siehe D9h; Sternbilder über ihr und bleibende Monde fehlen noch)
+- **D9h:** Effekte überarbeiten: Die gezeichneten Effekte gefallen Marco nicht (02.11.). Sie sollen als Bildfolgen von ChatGPT kommen, Claude Code schneidet sie und setzt sie in `scripts/kampf/faehigkeit_fx.gd` ein. Zuerst ein Probe-Effekt, erst nach Marcos Ja die übrigen. LOOK.md sagt bisher „Effekte macht das Spiel“, das wird nach der Probe angepasst. (K.6) – Status: später (wartet auf Marcos Probe-Bild)
 - **T2:** Testtag Kampfgefühl (Marco). – Status: offen
 
 ### Kreuzweg und Grünwacht rund machen

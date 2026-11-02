@@ -1346,12 +1346,14 @@ func _seal_effect(f: Fighter, target: Fighter, el: String, mult: float) -> void:
 func _singer(f: Fighter, id: String, target: Fighter) -> void:
 	match id:
 		"spark":
-			c.projectile(f, target, Color("ffe680"))
+			c.zeige("sternenfunke", f, target)
 			c.hit(f, target, 14, "magic")
 			_add_resonance(f, true)
 		"lullaby":
 			# Heilung über drei Runden für die ganze Gruppe (Nachhall: eine Runde länger)
+			c.zeige("lied", f, null, 0, FaehigkeitFx.MOND)
 			for a in c.allies():
+				c.zeige("mond_ueber", f, a)
 				a.set_meta("wiegenlied", {zuege = 3 + _nachhall(f), heilung = _wiegen_heal(f), quelle = f})
 				c.heal(f, a, _wiegen_heal(f))
 				c.float_text(a, "Mondwiegenlied", Color("cfe6ff"), 30)
@@ -1368,20 +1370,24 @@ func _singer(f: Fighter, id: String, target: Fighter) -> void:
 			for a in targets:
 				a.def_buff_turns = maxi(a.def_buff_turns, 2 + used + _nachhall(f))
 				c.hasten(a, 0.2)
-				c.burst(a, Color("cfe6ff"), 90.0)
+				c.zeige("polarstern", f, a)
 				c.float_text(a, "Polarstern", Color("cfe6ff"), 30)
 		"comet":
 			# Mehr Angriff für die Gruppe, je mehr Kometen-Resonanz, desto länger
 			var used := f.res_off
 			f.res_off = 0
 			f.add_ult(used * 10)
+			c.zeige("lied", f, null, 0, FaehigkeitFx.KOMET)
 			for a in c.allies():
+				c.zeige("komet_um", f, a)
 				a.atk_buff_turns = maxi(a.atk_buff_turns, 1 + used + _nachhall(f))
 				c.float_text(a, "Kometenlied", Color("ff8a3d"), 30)
 		"mondschild":
 			var used := f.res_def
 			f.res_def = 0
+			c.zeige("lied", f, null, 0, FaehigkeitFx.MOND)
 			for a in c.allies():
+				c.zeige("mondkuppel", f, a)
 				c.give_shield(f, a, 8 * used)
 			c.add_log("Mondschild: Eine silberne Kuppel legt sich über die Gruppe.")
 		"meteor":
@@ -1395,7 +1401,7 @@ func _singer(f: Fighter, id: String, target: Fighter) -> void:
 				if ziele.is_empty():
 					break
 				var t: Fighter = ziele[i % ziele.size()]
-				c.projectile(f, t, Color("ffe680"), 0.15)
+				c.zeige("schnuppe", f, t, i)
 				c.hit(f, t, 14, "magic", "Sternenkraft")
 		"rueckkehr":
 			if not target.is_alive():
@@ -1405,11 +1411,12 @@ func _singer(f: Fighter, id: String, target: Fighter) -> void:
 				f.res_off /= 2
 				f.res_def /= 2
 				c._hp_changed(target)
+				c.zeige("rueckkehr", f, target)
 				c.float_text(target, "Lied der Rückkehr!", Color("fff3b0"), 30)
 				c.add_log("%s singt %s zurück ins Leben." % [f.display_name, target.display_name])
 				c.refresh()
 		"dissonanz":
-			c.projectile(f, target, Color("ff5050"))
+			c.zeige("dissonanz", f, target)
 			c.hit(f, target, 8, "magic")
 			if target.is_alive():
 				c.delay(target, 0.5)
@@ -1419,6 +1426,7 @@ func _singer(f: Fighter, id: String, target: Fighter) -> void:
 			# Himmelszelt: Heilung und starke Stärkung, je mehr Resonanz, desto stärker. Danach sind beide leer.
 			var total := f.res_off + f.res_def
 			for a in c.allies():
+				c.zeige("sternenlicht", f, a)
 				c.heal(f, a, 20 + 6 * total)
 				a.atk_buff_turns = maxi(a.atk_buff_turns, BattleState.BUFF_TURNS + 1 + total / 3)
 				a.def_buff_turns = maxi(a.def_buff_turns, BattleState.BUFF_TURNS + 1 + total / 3)
@@ -1427,7 +1435,7 @@ func _singer(f: Fighter, id: String, target: Fighter) -> void:
 			c.add_log("[color=#fff3b0][b]Himmelszelt![/b][/color] Das Sternenlicht fällt auf alle.")
 			# Ergänzung zum Steckbrief: das Sternenlicht trifft auch die Gegner (wie bisher)
 			for enemy in c.alive(c.enemies):
-				c.projectile_bg(f, enemy, Elements.color("Sternenkraft"))
+				c.zeige("sternenlicht", f, enemy)
 			c.wait(0.3)
 			for enemy in c.alive(c.enemies):
 				c.hit(f, enemy, 22, "magic", "Sternenkraft")

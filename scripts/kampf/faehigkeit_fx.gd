@@ -10,6 +10,8 @@ const WALD := Color("8fe86a")
 const STAUB := Color("c8b898")
 const GLUT := Color("ff9a4c")
 const KLINGE := Color("ffd0a0")
+const MOND := Color("cfe6ff")
+const KOMET := Color("ffe680")
 const STAHL := Color("d8e0ec")
 const PFEIL_RUNTER := [Vector2(-14, -10), Vector2(14, -10), Vector2(0, 12)]
 const PFEIL_HOCH := [Vector2(-14, 10), Vector2(14, 10), Vector2(0, -12)]
@@ -440,6 +442,64 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 				for i in 4:
 					_pfeil(feld, v.center() + Vector2(randf_range(-50, 50), randf_range(-70, 70)), ort, KLINGE, 0.2, 3.0)
 				Fx.spawn(feld, Fx.Kind.SLASH, ort, KLINGE, 50.0, 0.25)
+		"sternenfunke":
+			_pose(v)
+			Geraeusche.play("perfekt", 1.9)
+			if ziel_ansicht != null:
+				await _bogenwurf(feld, v.center(), ziel_ansicht.center(), KOMET)
+				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.center(), KOMET, 60.0, 0.35)
+		"lied":
+			# Sie spielt: ruhig (farbe Mond) oder schnell mit Schritt nach vorn (farbe Komet)
+			_pose(v)
+			_huepfer(v, 8.0, 0.14)
+			Geraeusche.play("zauber", 0.8 if farbe == MOND else 1.3)
+			await k.wait(0.3)
+		"mond_ueber":
+			if ziel_ansicht != null:
+				_symbol(feld, ziel_ansicht.center() + Vector2(0, -60), MOND, STERN_FORM)
+				ziel_ansicht.glow(MOND, 0.5)
+		"polarstern":
+			if ziel_ansicht != null:
+				var ort := ziel_ansicht.center()
+				_schneise(feld, ort + Vector2(0, -170), ort + Vector2(0, 50), MOND)
+				_symbol(feld, ort + Vector2(0, -170), MOND, STERN_FORM)
+				ziel_ansicht.glow(MOND, 0.6)
+		"komet_um":
+			if ziel_ansicht != null:
+				ziel_ansicht.glow(KOMET, 0.6)
+				Fx.spawn(feld, Fx.Kind.RING, ziel_ansicht.center(), Color("ff8a3d"), 80.0, 0.4)
+		"mondkuppel":
+			if ziel_ansicht != null:
+				Geraeusche.play("perfekt", 0.8)
+				_kuppel(feld, ziel_ansicht.home_feet())
+		"schnuppe":
+			# Sternschnuppe von oben, die Tonleiter fällt (seite zählt die Schnuppen)
+			if ziel_ansicht != null:
+				var ort := ziel_ansicht.center()
+				await _pfeil(feld, ort + Vector2(160, -380), ort, KOMET, 0.15, 6.0)
+				Geraeusche.play("treffer", maxf(1.7 - 0.12 * seite, 0.7))
+				Fx.spawn(feld, Fx.Kind.SPARKS, ort, KOMET, 70.0, 0.35)
+		"rueckkehr":
+			# Ein einzelner Stern sinkt auf den Gefallenen, Lichtfunken steigen auf
+			Geraeusche.play("perfekt", 0.9)
+			if ziel_ansicht != null:
+				var ort := ziel_ansicht.center()
+				await _pfeil(feld, ort + Vector2(0, -330), ort, KOMET, 0.4, 5.0)
+				Fx.spawn(feld, Fx.Kind.SPARKS, ort, Color("fff3b0"), 90.0, 0.7)
+				_huepfer(ziel_ansicht, 14.0, 0.12)
+		"dissonanz":
+			_pose(v)
+			Geraeusche.play("parade", 0.4)
+			if ziel_ansicht != null:
+				for i in 2:
+					Fx.spawn(feld, Fx.Kind.RING, ziel_ansicht.center(), Color("ff5050"), 70.0 + 40.0 * i, 0.3)
+					await k.wait(0.1)
+				_zappeln(ziel_ansicht)
+		"sternenlicht":
+			if ziel_ansicht != null:
+				var ort := ziel_ansicht.center()
+				_schneise(feld, ort + Vector2(0, -320), ort, Color("fff3b0"))
+				Fx.spawn(feld, Fx.Kind.SPARKS, ort, Color("fff3b0"), 80.0, 0.6)
 
 
 ## Kleiner Sprung. Bewegt die ganze Ansicht, damit er neben einem laufenden Angriff funktioniert.

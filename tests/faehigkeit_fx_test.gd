@@ -1,5 +1,5 @@
 extends SceneTree
-## D9b bis D9f: Jede eigene Bewegung läuft im echten Kampfbild durch und lässt die Figuren an ihrem Platz zurück.
+## D9b bis D9g: Jede eigene Bewegung läuft im echten Kampfbild durch und lässt die Figuren an ihrem Platz zurück.
 
 const NAMEN := ["schildstoss_anlauf", "schildstoss_treffer", "hieb", "erste_hilfe", "deckung", "deckung_funke",
 		"sternenmut_an", "sternenmut_schlag", "schnellschuss", "spannen", "ladeschuss", "durchschlag", "durchschlag_weiter",
@@ -9,7 +9,8 @@ const NAMEN := ["schildstoss_anlauf", "schildstoss_treffer", "hieb", "erste_hilf
 		"hammer_treffer", "schmiede_moment", "amboss", "bedroht", "verstaerken", "abfangen", "haerten", "gluehend", "angesengt",
 		"funkenflug", "ambossschlag", "betaeubt", "haerte_geben", "haerte_splitter", "meisterstueck",
 		"nachbild", "sturm_schritt", "kreuzschnitt", "klinge_neu", "klinge_flug", "wirbel", "faecher", "partnertanz", "kaefig",
-		"klingensturm", "schwarm"]
+		"klingensturm", "schwarm",
+		"sternenfunke", "lied", "mond_ueber", "polarstern", "komet_um", "mondkuppel", "schnuppe", "rueckkehr", "dissonanz", "sternenlicht"]
 
 
 func _initialize() -> void:
