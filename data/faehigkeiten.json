@@ -206,5 +206,101 @@
 			}
 		],
 		"ult": "Rudelruf"
+	},
+	"smith": {
+		"grundreihe": {
+			"name": "Parieren und Rüstung wechseln",
+			"info": "Parieren (perfekt gibt eine Stufe Gehärtet) und der feste Knopf Rüstung wechseln (Platte gegen Nahkampf, Kette gegen Fernkampf, Runen gegen Magie). Kosten keine Punkte."
+		},
+		"faehigkeiten": [
+			{
+				"id": "hammer",
+				"name": "Hammerschlag",
+				"reihe": 1,
+				"max": 5,
+				"grundangriff": true,
+				"info": "Dein normaler Angriff mit viel Bedrohung: Der Gegner greift danach eher dich an."
+			},
+			{
+				"id": "reinforce",
+				"name": "Rüstung verstärken",
+				"reihe": 1,
+				"max": 5,
+				"info": "Ein Verbündeter hat zwei Runden mehr Verteidigung."
+			},
+			{
+				"id": "gehaertet",
+				"name": "Gehärtet",
+				"reihe": 1,
+				"max": 5,
+				"passiv": true,
+				"info": "Treffer gegen die passende Rüstung härten sie, bis zu 1 + Stufe (höchstens 5). Beim Wechsel fängt die Härte neu an."
+			},
+			{
+				"id": "anvil",
+				"name": "Amboss aufstellen",
+				"reihe": 2,
+				"max": 5,
+				"info": "Alle Gegner müssen eine Weile dich angreifen."
+			},
+			{
+				"id": "abfangen",
+				"name": "Abfangen",
+				"reihe": 2,
+				"max": 5,
+				"info": "Fängt bis zu deinem nächsten Zug den ersten Treffer gegen einen Verbündeten ab, auch in der hinteren Reihe."
+			},
+			{
+				"id": "meisterhand",
+				"name": "Meisterhand",
+				"reihe": 2,
+				"max": 5,
+				"passiv": true,
+				"info": "Rüstung wechseln hat ab Stufe 3 nur noch 1 Zug Abklingzeit."
+			},
+			{
+				"id": "haerten",
+				"name": "Härten",
+				"reihe": 3,
+				"max": 5,
+				"braucht": {
+					"hammer": 3
+				},
+				"info": "Sofort zwei Stufen Gehärtet."
+			},
+			{
+				"id": "gluehend",
+				"name": "Glühende Rüstung",
+				"reihe": 3,
+				"max": 5,
+				"braucht": {
+					"anvil": 3
+				},
+				"info": "3 Runden: Wer dich im Nahkampf trifft, bekommt Feuerschaden und brennt."
+			},
+			{
+				"id": "funkenflug",
+				"name": "Funkenflug",
+				"reihe": 3,
+				"max": 5,
+				"passiv": true,
+				"info": "Nach einer perfekten Parade fliegen Funken auf den Angreifer: 4 Feuerschaden je Stufe."
+			},
+			{
+				"id": "ambossschlag",
+				"name": "Ambossschlag",
+				"reihe": 4,
+				"max": 5,
+				"info": "Trifft alle Gegner und betäubt sie kurz (Bosse nicht)."
+			},
+			{
+				"id": "gemeinsame_haerte",
+				"name": "Gemeinsame Härte",
+				"reihe": 4,
+				"max": 5,
+				"info": "Verbraucht alle Stufen Gehärtet und gibt sie zwei Runden als Schutz an die ganze Gruppe."
+			}
+		],
+		"ult": "Meisterstück"
 	}
 }

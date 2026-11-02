@@ -133,11 +133,16 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 			for id: String in ARMORS:
 				choices.append({id = id, name = ARMORS[id].name, info = ARMORS[id].info})
 			list = [
-				{id = "hammer", name = "Hammerschlag", info = "15 Nahkampf", target = "enemy"},
-				{id = "armor", name = "Rüstung wechseln", info = "Jetzt: %s" % ARMORS[f.armor].name, target = "choice", cd = 2, choices = choices},
+				{id = "hammer", name = "Hammerschlag", info = "15 Nahkampf, viel Bedrohung", target = "enemy"},
+				{id = "armor", name = "Rüstung wechseln", info = "Jetzt: %s" % ARMORS[f.armor].name, target = "choice", cd = _armor_cd(f), choices = choices},
+				{id = "reinforce", name = "Rüstung verstärken", info = "Verbündeter 2 Runden Abwehr+, Schild 24 · 12 Mana", target = "ally", mana = 12},
 				{id = "anvil", name = "Amboss aufstellen", info = "Zieht 3 Angriffe auf sich, +1 Härte · 10 Mana", target = "none", mana = 10, cd = 3},
-				{id = "reinforce", name = "Rüstung verstärken", info = "Schild 28 für Verbündeten · 12 Mana", target = "ally", mana = 12, cd = 2},
-				{id = "ult", name = "Meisterstück", info = "Alle Schild 30 und Abwehr+, Härte 5", target = "none"},
+				{id = "abfangen", name = "Abfangen", info = "Fängt bis zu deinem nächsten Zug den ersten Treffer gegen einen Verbündeten ab · 8 Mana", target = "ally_other", mana = 8},
+				{id = "haerten", name = "Härten", info = "Sofort zwei Stufen Gehärtet · 8 Mana", target = "none", mana = 8},
+				{id = "gluehend", name = "Glühende Rüstung", info = "3 Runden: Wer dich im Nahkampf trifft, verbrennt sich · 14 Mana", target = "none", mana = 14, cd = 3},
+				{id = "ambossschlag", name = "Ambossschlag", info = "12 an alle Gegner, betäubt sie kurz (Bosse nicht) · 16 Mana", target = "none", mana = 16, cd = 3},
+				{id = "gemeinsame_haerte", name = "Gemeinsame Härte", info = "Gibt deine Härte (%d) 2 Runden als Schutz an alle · 10 Mana" % f.hard, target = "none", mana = 10},
+				{id = "ult", name = "Meisterstück", info = "3 Runden Meisterrüstung: schützt gegen alles, Härte voll, Schild 40", target = "none"},
 			]
 		"archer":
 			var shot_name := "Aufgeladener Schuss" if f.charged else "Schneller Schuss"
@@ -418,6 +423,11 @@ func blocked_reason(f: Fighter, ab: Dictionary) -> String:
 		"trank":
 			if f.wares.get("heiltrank", 0) <= 0:
 				return "Keine Tränke mehr"
+		"gemeinsame_haerte":
+			if f.hard <= 0:
+				return "Keine Härte"
+			if c.allies().size() <= 1:
+				return "Keine Gruppe"
 		"manatrank_trinken":
 			if f.wares.get("manatrank", 0) <= 0:
 				return "Keine Tränke mehr"
@@ -621,6 +631,8 @@ func _smith(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 		"hammer":
 			c.lunge(f, target, 0.3)
 			c.hit(f, target, 15, "melee")
+			# Viel Bedrohung: der Gegner greift danach eher den Schmied an
+			f.taunt = maxi(f.taunt, 1)
 		"armor":
 			f.armor = ab.choice
 			c.float_text(f, ARMORS[f.armor].name, Color("ffb070"))
@@ -630,18 +642,66 @@ func _smith(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 			_add_hard(f, 1)
 			c.add_log("%s stellt den Amboss auf: Gegner müssen sie angreifen." % f.display_name)
 		"reinforce":
-			c.give_shield(f, target, 28)
+			# Steckbrief: zwei Runden mehr Verteidigung (dazu ein kleiner Schild)
+			target.def_buff_turns = maxi(target.def_buff_turns, BattleState.BUFF_TURNS + 1)
+			c.give_shield(f, target, 24)
+			c.float_text(target, "Abwehr+", Color("c8d0e0"), 30)
+		"abfangen":
+			target.set_meta("gedeckt_von", f)
+			c.float_text(target, "Abgefangen", Color("ffb070"), 30)
+			c.add_log("%s hält den Hammer vor %s." % [f.display_name, target.display_name])
+		"haerten":
+			_add_hard(f, 2)
+		"gluehend":
+			f.set_meta("gluehend", 3)
+			c.float_text(f, "Glühende Rüstung", Color("ff7a3d"), 30)
+		"ambossschlag":
+			c.burst(f, Color("ffb070"), 180.0)
+			c.wait(0.25)
+			for e in c.alive(c.enemies):
+				c.hit(f, e, 12, "melee")
+				if e.is_alive() and Sandbox.ENEMIES.get(e.klass, {}).has("tame"):
+					Effekte.anwenden(c, f, e, "laehmen")
+		"gemeinsame_haerte":
+			if f.hard > 0:
+				var schutz := 6 * f.hard
+				for a in c.allies():
+					c.give_shield(f, a, schutz)
+					a.def_buff_turns = maxi(a.def_buff_turns, BattleState.BUFF_TURNS + 1)
+				c.add_log("%s gibt seine Härte an alle weiter." % f.display_name)
+				f.hard = 0
 		"ult":
-			for a in c.allies():
-				c.give_shield(f, a, 30)
-				a.def_buff_turns = BattleState.BUFF_TURNS + 1
-			f.hard = Fighter.MAX_HARD
-			c.add_log("Meisterstück! %s schmiedet für alle eine Rüstung." % f.display_name)
+			# Steckbrief: drei Runden eine Meisterrüstung mit den Vorteilen aller drei Rüstungen
+			f.set_meta("meisterstueck", 3)
+			f.hard = _max_hard(f)
+			c.give_shield(f, f, 40)
+			c.float_text(f, "Meisterstück!", Color("f2c14e"), 30)
+			c.add_log("Meisterstück! %s schmiedet eine Meisterrüstung." % f.display_name)
+
+
+## Rüstung wechseln: Abklingzeit 2, mit Meisterhand ab Stufe 3 nur 1.
+func _armor_cd(f: Fighter) -> int:
+	return 1 if f.has_meta("faehigkeiten") and skill_level(f, "meisterhand") >= 3 else 2
+
+
+## Grenze für Gehärtet: ohne Baum 5, mit Baum 1 + Stufe von „Gehärtet“ (höchstens 5).
+func _max_hard(f: Fighter) -> int:
+	if not f.has_meta("faehigkeiten"):
+		return Fighter.MAX_HARD
+	return mini(Fighter.MAX_HARD, 1 + skill_level(f, "gehaertet"))
+
+
+## Nach einem Nahkampf-Treffer eines Gegners: Glühende Rüstung des Schmieds verbrennt den Angreifer.
+func after_enemy_hit(attacker: Fighter, target: Fighter, kind: String) -> void:
+	if kind == "melee" and target.has_meta("gluehend") and attacker.is_alive():
+		c.hit(target, attacker, 6, "magic", "Feuer")
+		if attacker.is_alive():
+			Effekte.anwenden(c, target, attacker, "brennen", 3.0, 2)
 
 
 func _add_hard(f: Fighter, amount: int) -> void:
 	var before := f.hard
-	f.hard = mini(f.hard + amount, Fighter.MAX_HARD)
+	f.hard = mini(f.hard + amount, _max_hard(f))
 	if f.hard > before:
 		c.float_text(f, "Gehärtet %d" % f.hard, Color("ffb070"), 30)
 
@@ -1363,6 +1423,10 @@ func on_perfect_reaction(h: Fighter, attacker: Fighter) -> void:
 		"smith":
 			c.float_text(h, "PARIERT!", Color("ffb070"))
 			_add_hard(h, 1)
+			# Funkenflug (passiv): Funken fliegen auf den Angreifer
+			if h.has_meta("faehigkeiten") and skill_level(h, "funkenflug") > 0 and attacker.is_alive():
+				c.projectile(h, attacker, Color("ffb070"), 0.15)
+				c.hit(h, attacker, 4 * skill_level(h, "funkenflug"), "magic", "Feuer")
 		"blade":
 			_add_blades(h, 1)
 			c.float_text(h, "PARIERT! +1 Klinge", Color("ffd0a0"))
@@ -1402,12 +1466,12 @@ func damage_bonus(attacker: Fighter) -> float:
 ## Schaden, den das Ziel durch Rüstung oder Bank-Monster abfängt.
 func mitigate(target: Fighter, amount: int, kind: String) -> int:
 	if target.klass == "smith" and kind != "" and amount > 0:
-		if kind == target.armor:
+		if kind == target.armor or target.has_meta("meisterstueck"):
 			var saved := roundi(amount * ARMOR_BLOCK)
 			amount -= saved
 			target.stat_blocked += saved
 			target.add_ult(18)
-			c.float_text(target, "Passende Rüstung!", Color("ffb070"), 52)
+			c.float_text(target, "Meisterrüstung!" if target.has_meta("meisterstueck") else "Passende Rüstung!", Color("ffb070"), 52)
 			_add_hard(target, 1)
 		elif target.hard > 0:
 			target.hard -= 1

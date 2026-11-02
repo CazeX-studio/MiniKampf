@@ -184,7 +184,40 @@ func _init() -> void:
 	zp.progress.flags["monster"] = ["moosling"]
 	welt.apply_command("z", {type = "kampf_ergebnis", kampf = "splitterbaer", gewonnen = true})
 	_check(int((zp.progress.flags.get("band", {}) as Dictionary).get("moosling", 0)) == 1, "Band zählt den Sieg nicht")
+	# D8e: Rüstungsschmied
 	BattleRequest.player_band = {}
+	BattleRequest.player_bar = ["abfangen", "haerten", "gluehend", "ambossschlag", "gemeinsame_haerte", "reinforce"]
+	BattleRequest.player_skills = {abfangen = 1, haerten = 1, gluehend = 1, ambossschlag = 1, gemeinsame_haerte = 1, reinforce = 1, gehaertet = 4, funkenflug = 2, meisterhand = 3, hammer = 3, anvil = 3}
+	BattleRequest.player_skills_known = true
+	BattleRequest.prepare("splitterbaer", 25, 0, "smith")
+	var sm := BattleState.new(null, [] as Array[String], "", 8)
+	sm.setup = BattleRequest.setup
+	sm._create_heroes()
+	var schmied: Fighter = sm.heroes[0]
+	var wolf := Fighter.new("Wolf", "wiesenhoppler", "Erde", false, 400, 10, Color.WHITE)
+	sm.enemies.append(wolf)
+	var sabs := {}
+	for a in sm.skills.abilities(schmied):
+		sabs[a.id] = a
+	for id: String in ["hammer", "armor", "abfangen", "haerten", "gluehend", "ambossschlag", "gemeinsame_haerte", "ult"]:
+		_check(sabs.has(id), "Schmied hat %s nicht" % id)
+	_check(int(sabs.armor.get("cd", 0)) == 1, "Meisterhand verkürzt die Abklingzeit nicht")
+	schmied.mana = schmied.max_mana
+	sm.execute(schmied, sabs.haerten, null)
+	_check(schmied.hard == 2, "Härten gibt keine zwei Stufen")
+	sm.execute(schmied, sabs.gemeinsame_haerte, null)
+	_check(schmied.hard == 0 and schmied.shield_total() >= 12, "Gemeinsame Härte gibt den Schutz nicht weiter")
+	sm.execute(schmied, sabs.gluehend, null)
+	var vor := wolf.hp
+	sm.skills.after_enemy_hit(wolf, schmied, "melee")
+	_check(wolf.hp < vor and wolf.effekte.has("brennen"), "Glühende Rüstung verbrennt den Angreifer nicht")
+	sm.execute(schmied, sabs.ambossschlag, null)
+	_check(wolf.effekte.has("laehmen"), "Ambossschlag betäubt nicht")
+	sm.execute(schmied, sabs.ult, null)
+	_check(schmied.has_meta("meisterstueck") and schmied.hard == 5, "Meisterstück wirkt nicht")
+	var vor2 := wolf.hp
+	sm.skills.on_perfect_reaction(schmied, wolf)
+	_check(wolf.hp < vor2, "Funkenflug trifft nicht")
 	BattleRequest.player_bar = []
 	BattleRequest.player_skills_known = false
 	BattleRequest.player_skills = {}

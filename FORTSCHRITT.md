@@ -5,7 +5,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 01.11.)
 
-- **Nächster Schritt:** D8e der „Demo-Reihenfolge“ (Baum des Rüstungsschmieds). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 bis D8d wurden auf Marcos Wunsch vor T1 gebaut.
+- **Nächster Schritt:** D8f der „Demo-Reihenfolge“ (Baum der Klingentänzerin). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 bis D8e wurden auf Marcos Wunsch vor T1 gebaut.
+
+- **Neu (02.11.): D8e Baum des Rüstungsschmieds** (Projekt 14, K.5, Steckbriefe Sitzung 28): Grundreihe Parieren und der feste Knopf **Rüstung wechseln**. Reihe 1: **Hammerschlag** (normaler Angriff, jetzt mit Bedrohung), **Rüstung verstärken** (Verbündeter 2 Runden Abwehr+ und Schild), **Gehärtet** (passiv, Grenze 1 + Stufe). Reihe 2: **Amboss aufstellen**, **Abfangen** (fängt den nächsten Treffer gegen einen Verbündeten ab, auch hinten), **Meisterhand** (passiv, Rüstung wechseln schneller). Reihe 3: **Härten** (sofort zwei Stufen), **Glühende Rüstung** (wer ihn im Nahkampf trifft, verbrennt sich), **Funkenflug** (passiv, Funken nach perfekter Parade). Reihe 4: **Ambossschlag** (alle Gegner, betäubt, Bosse nicht), **Gemeinsame Härte** (gibt die Härte als Schutz an die Gruppe, geht nicht allein). Ult **Meisterstück**: 3 Runden Meisterrüstung, die gegen alles passt, dazu ein Schild von 40 (der Schild ist eine Ergänzung, damit der Schmied allein nicht zu schwach wird).
+  - Der Schmied ist eine Klasse der Glutoase, in Kreuzweg und Grünwacht spielt man ihn nur in der Probestunde und in der Kampf-Sandbox. Zahlen vorläufig.
+  - **So testest du es:**
+    1. Kampf-Sandbox mit dem Rüstungsschmied: Hammerschlag, danach greifen die Gegner eher ihn an.
+    2. Glühende Rüstung zünden und warten: Wer ihn im Nahkampf trifft, brennt.
+    3. Mit einer zweiten Klasse im Team: Abfangen auf sie, dann Gemeinsame Härte (vorher mit Härten Stufen sammeln).
+    4. Ult Meisterstück: 3 Runden steht „Meisterrüstung“ unter ihm, jeder Treffer zählt als passende Rüstung.
 
 - **Neu (02.11.): D8d Baum des Monster-Zähmers** (Projekt 14, K.5, Steckbriefe Sitzung 28): Grundreihe **Zähmen** (fester Knopf), normaler Angriff **Schleuder**. Reihe 1: **Wechsel** (das neue Monster greift beim Auftritt gleich an), **Anfeuern**, **Band** (passiv: jedes Monster wird mit jedem gewonnenen Kampf im Rudel etwas stärker, höchstens 30 %). Reihe 2: **Pflege**, **Lockfutter** (wilder Gegner ist 2 Runden abgelenkt, greift seltener an und lässt sich leichter zähmen), **Rudelinstinkt** (passiv: Unterstützer helfen früher und stärker). Reihe 3: **Gemeinsamer Angriff** (Stab und Monster, 2 bis 4 Treffer), **Wachstumsschub** (Monster 3 Runden größer), **Großer Auftritt** (passiv). Reihe 4: **Einschüchtern** (alle Gegner 2 Runden schwächer), **Zweites Leben** (besiegtes Monster zurück, einmal pro Kampf). Ult **Rudelruf**. **Befehl** gibt es laut Steckbrief nicht mehr, das Monster hat seinen eigenen Zug.
   - **Zum Feinschliff:** Der erste Rivalenkampf gegen Kobalt ist mit dem Moosling deutlich schwerer geworden (in der Prüfung 2 von 16 Siegen statt 8 von 16), mit Glutwelpe und Bachotter bleibt er machbar. Verlieren ist dort erlaubt, für den Testtag Kampfgefühl (T2) vormerken.

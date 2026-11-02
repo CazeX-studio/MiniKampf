@@ -693,6 +693,14 @@ func _begin_turn(f: Fighter) -> void:
 	f.vuln_turns = maxi(f.vuln_turns - 1, 0)
 	f.blind_turns = maxi(f.blind_turns - 1, 0)
 	f.schwach_turns = maxi(f.schwach_turns - 1, 0)
+	# Rüstungsschmied: Glühende Rüstung und Meisterstück laufen ab
+	for zeit: String in ["gluehend", "meisterstueck"]:
+		if f.has_meta(zeit):
+			var rest := int(f.get_meta(zeit)) - 1
+			if rest <= 0:
+				f.remove_meta(zeit)
+			else:
+				f.set_meta(zeit, rest)
 	# Wachstumsschub (Zähmer) läuft ab
 	if f.has_meta("wachstum"):
 		var w: Dictionary = f.get_meta("wachstum")
@@ -1043,6 +1051,7 @@ func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String
 		else:
 			hit(e, t, base, kind, e.element)
 			_getroffen.append(t)
+			skills.after_enemy_hit(e, t, kind)
 	# Perfekte Parade gegen einen Gepanzerten (Sternenfresser): Der Panzer ist kurz offen
 	if success and e.plate < 1.0 and e.is_alive():
 		e.stagger_turns = e.stagger_length

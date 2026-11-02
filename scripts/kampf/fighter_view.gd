@@ -766,6 +766,10 @@ func _status() -> Array[String]:
 		status.append("Abgelenkt")
 	if fighter.has_meta("wachstum"):
 		status.append("Gewachsen")
+	if fighter.has_meta("gluehend"):
+		status.append("Glüht")
+	if fighter.has_meta("meisterstueck"):
+		status.append("Meisterrüstung")
 	if fighter.plate < 1.0:
 		status.append("ERSCHÜTTERT" if fighter.stagger_turns > 0 else "Sternenpanzer")
 	if fighter.light:
