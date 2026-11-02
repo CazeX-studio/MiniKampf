@@ -466,6 +466,16 @@ func _sync() -> void:
 			_objects.add_child(view)
 			_characters[id] = view
 		var view: WorldCharacter = _characters[id]
+		if view.get_meta("look", p.look) != p.look:
+			# Neues Aussehen (Aussehen-Plätze): Figur neu aufbauen
+			view.queue_free()
+			_characters.erase(id)
+			view = WorldCharacter.new()
+			view.setup(p.look, p.figur_name if p.figur_name != "" else p.display_name, Color.WHITE,
+					Color("8affc1") if id == local_id else Color.WHITE)
+			_objects.add_child(view)
+			_characters[id] = view
+		view.set_meta("look", p.look)
 		if id != local_id and Netz.online():
 			view.set_name_color(GROUP_NAME_COLOR if Netz.in_my_group(id) else Color.WHITE)
 		view.position = cell_center(p.pos)
@@ -2464,6 +2474,7 @@ func _fill_panel() -> void:
 			lines.append("Noch keine Erfolge.")
 	elif _panel_mode == "werte":
 		_panel_title.text = GameData.text("werte")
+		_aussehen_zeilen(p)
 		var klasse := p.progress.battle_class()
 		if p.progress.flags.has("klasse_bestaetigt") and Sandbox.CLASSES.has(klasse):
 			# Nach der Klassenwahl: Werte der eigenen Klasse (so kämpft man in der Wildnis)
@@ -2730,6 +2741,36 @@ func _fill_bag(p: PlayerState) -> Array:
 		var id := str(slots[slot.index]) if slot.index < slots.size() else ""
 		slot.show_item(id, p.progress.item_count(id), slot.index == _bag_selected)
 	return slots
+
+
+## Aussehen-Plätze (Projekt 13, Schritt 6): Hut, Rückenteil und Farben wählen. Nur Aussehen, die Werte bleiben.
+## Nur für Figuren aus „Figur erstellen“ (Körper und Kopf).
+func _aussehen_zeilen(p: PlayerState) -> void:
+	if not FigurTeile.kann_aussehen(p.look):
+		return
+	_rep_box.add_child(_label(GameData.text("aussehen_titel"), 17, Color("f2c14e")))
+	var aussehen := FigurTeile.aussehen_von(p.look)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	var plaetze := [["hut", "aussehen_hut", FigurTeile.hut_liste()], ["ruecken", "aussehen_ruecken", FigurTeile.ruecken_liste()],
+			["farben", "aussehen_farben", FigurTeile.paletten_liste()]]
+	for platz: Array in plaetze:
+		var teile: Dictionary = platz[2]
+		var ids: Array = [""] + teile.keys()
+		var jetzt := str(aussehen[platz[0]])
+		var leer := GameData.text("aussehen_grundfarben" if platz[0] == "farben" else "aussehen_keins")
+		var button := _small_button("%s: %s" % [GameData.text(platz[1]), teile.get(jetzt, leer)], func() -> void:
+			var neu := {}
+			neu[platz[0]] = ids[(ids.find(jetzt) + 1) % ids.size()]
+			neu["type"] = "aussehen"
+			_send(neu)
+			_fill_panel())
+		button.custom_minimum_size.x = 190
+		row.add_child(button)
+	_rep_box.add_child(row)
+	# Waffen-Aussehen: kommt mit der Waffe als eigenem Teil (D2b)
+	_rep_box.add_child(_label(GameData.text("aussehen_waffe"), 14, Color("a0a0a0")))
+	_rep_box.add_child(UiStil.trennlinie())
 
 
 ## Ruf bei den Gruppen der Regionen als Leiste aus dem UI-Set (nur Gruppen, bei denen man schon Ruf hat).

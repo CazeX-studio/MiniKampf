@@ -5,14 +5,28 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 01.11.)
 
-- **Nächster Schritt:** D3b der „Demo-Reihenfolge“ in `BAUAUFTRAEGE.md` (Umfärben und Aussehen-Plätze). D2b (Kurzschwert als eigenes Teil) wartet auf die Novizen-Blätter ohne Klinge.
+- **Nächster Schritt:** T1 Testtag Aussehen (Marco). Vorher sollte D2b (Kurzschwert als eigenes Teil) fertig sein, das wartet auf die Novizen-Blätter ohne Klinge.
+
+- **Neu (02.11.): D3c Aussehen-Plätze** (Projekt 13, Schritt 6): Im Werte-Fenster (Taste C) steht jetzt „Aussehen“ mit drei Knöpfen für Hut, Rücken und Farben. Das ist nur Aussehen, die Werte bleiben gleich. Das Aussehen wird im Spielstand gespeichert, und Mitspieler sehen es auch. Es geht nur mit einer Figur aus „Figur erstellen“. Das Waffen-Aussehen kommt mit D2b.
+  - **So testest du es:**
+    1. Neues Spiel, in „Figur erstellen“ eine Figur bauen.
+    2. C drücken und unter „Aussehen“ auf „Hut: keins“ klicken: Die Figur trägt den Wanderhut, auch im Bild oben im Fenster.
+    3. „Rücken“ und „Farben“ durchklicken. Angriff, Tempo, Leben und Mana bleiben gleich.
+    4. Spiel schließen und wieder starten: Hut, Umhang und Farben sind noch da.
+    5. In einen Kampf gehen: Die Figur kämpft mit Hut und Umhang.
+
+- **Neu (02.11.): D3b Umfärben** (Projekt 13, Schritt 5): Das Spiel tauscht die festen Farbtöne gegen eine andere Farbpalette. Zur Probe gibt es „Glutrot und Schwarz“ (Set der Vulkanschmiede) und „Waldgrün und Erdbraun“. Weil es noch keinen Klassen-Körper nach den neuen Regeln gibt, färben sich vorerst nur Hut und Umhang. Novizen werden nicht umgefärbt.
+  - **So testest du es:**
+    1. Editor → „Figuren-Animationen“, den Novizen-Körper wählen, Hut und Umhang anlegen.
+    2. „Farben: Grundfarben“ drücken, dann werden Hut und Umhang schwarz und glutrot. Noch einmal drücken für Waldgrün.
+    3. Darauf achten, dass der Novize selbst (Weste, Hemd, Schild) gleich bleibt und die Ränder sauber sind.
 
 - **Neu (02.11.): D3a Hut und Umhang als Schichten** (Projekt 13, Schritt 4): Der Hut sitzt auf dem Kopf und neigt sich mit ihm, der Umhang hängt hinter dem Körper. Von hinten liegt der Umhang über dem Rücken, beim Liegen nach dem Fallen ist er nicht zu sehen. Hut und Umhang sind vorerst **einfach gezeichnete Platzhalter** (brauner Wanderhut, dunkelroter Umhang). Sobald deine Blätter „Probe-Hut“ und „Probe-Umhang“ da sind, tausche ich sie aus.
   - **So testest du es:**
     1. Editor → „Figuren-Animationen“, mit „Körper“ den Novizen-Körper wählen.
     2. „Hut: keiner“ drücken, dann trägt die Figur den Wanderhut. „Rücken: keiner“ drücken, dann kommt der Umhang dazu.
     3. Alle Bewegungen durchklicken (Angriff, Parade, Fallen, Sieg): Der Hut bleibt auf dem Kopf, der Umhang hinter dem Rücken.
-    4. Mit Hut und Umhang aus dem Editor ein Spiel mit einer Figur aus „Figur erstellen“ starten und in alle Richtungen laufen: Von hinten sieht man den ganzen Umhang. (Bis D3b gilt das nur bis zum Neustart und nur für Figuren aus „Figur erstellen“.)
+    4. Die Ansicht von hinten (ganzer Umhang) gibt es im Spiel erst, wenn die Figuren in der Stadt in vier Richtungen laufen. Claude hat sie mit Fotos aller Bewegungen geprüft.
 
 - **Neu (02.11.): D2a Regeln und Bilder geprüft** (Projekt 13, Schritt 1 und 2):
   - Vorschlag für den Zusatz „FIGUREN“ zum Stil-Block: Körper ohne Waffe, Köpfe ohne Hut, Rücken frei, wenige klare Farbflächen, keine Effekte im Bild (`LOOK.md`, Abschnitt 9a). **Von Marco zu entscheiden:** Ja zum Wortlaut, dann kommt er in den Stil-Block.

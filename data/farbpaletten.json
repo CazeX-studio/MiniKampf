@@ -1,0 +1,22 @@
+{
+	"_hinweis": "Umfärben (Projekt 13, Schritt 5). Jede Palette gibt für jede Farbfläche (hauptfarbe, zweitfarbe, metall, leder, haut) vier Töne an: hell, mittel, dunkel, Schatten. Welche Töne ein Bild hat, steht beim Teil unter flaechen (data/aussehen_teile.json, bei Körpern _flaechen in data/figurteile.json). Novizen-Körper haben keine flaechen und werden nie umgefärbt (Beschluss 28./29.10.). Fehlt eine Fläche in der Palette, bleibt sie, wie sie ist.",
+	"glutschmiede": {
+		"name": "Glutrot und Schwarz",
+		"herkunft": "Set der Vulkanschmiede (Probe)",
+		"flaechen": {
+			"hauptfarbe": ["#d8442a", "#b02a1c", "#7e1c16", "#521210"],
+			"zweitfarbe": ["#e08a2a", "#b8641c", "#844414", "#58300e"],
+			"leder": ["#4a4248", "#343036", "#242026", "#16131a"],
+			"metall": ["#9a9496", "#6e686c", "#4a4448", "#2c282c"]
+		}
+	},
+	"waldlaeufer": {
+		"name": "Waldgrün und Erdbraun",
+		"herkunft": "Probe für Grünwacht",
+		"flaechen": {
+			"hauptfarbe": ["#6e9a4a", "#4e7a34", "#365a26", "#243e1a"],
+			"zweitfarbe": ["#c8a04a", "#a07c34", "#765a24", "#4e3c18"],
+			"leder": ["#8a6a44", "#6a4e32", "#4c3624", "#322418"]
+		}
+	}
+}

@@ -115,6 +115,12 @@ func _build_buttons() -> void:
 				func(id: String) -> void: FigurTeile.hut = id))
 		box.add_child(_schicht_knopf("Rücken", FigurTeile.ruecken_liste(), FigurTeile.ruecken,
 				func(id: String) -> void: FigurTeile.ruecken = id))
+		# Projekt 13, Schritt 5: Umfärben (Hut, Rückenteil und Klassen-Körper; Novizen-Körper bleiben, wie sie sind)
+		var farb_knopf := _schicht_knopf("Farben", FigurTeile.paletten_liste(), FigurTeile.farben,
+				func(id: String) -> void: FigurTeile.farben = id)
+		farb_knopf.text = farb_knopf.text.replace("keiner", "Grundfarben")
+		farb_knopf.tooltip_text = "Färbt Hut, Umhang und Klassen-Körper um. Novizen werden nicht umgefärbt."
+		box.add_child(farb_knopf)
 	var back := _small("Zurück zum Editor")
 	back.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/editor.tscn"))
 	box.add_child(back)

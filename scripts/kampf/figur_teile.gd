@@ -33,6 +33,10 @@ const LIEGEND := 60.0
 const SCHICHTEN := "res://data/aussehen_teile.json"
 const HUT_BILD := "res://assets/teile/hut/%s_%s.png"  # Hut, Richtung
 const RUECKEN_BILD := "res://assets/teile/ruecken/%s_%s.png"  # Rückenteil, Richtung
+## Umfärben (Projekt 13, Schritt 5): Farbpaletten je Farbfläche
+const PALETTEN := "res://data/farbpaletten.json"
+## So nah (Abstand im Farbraum, 0 bis 1,7) muss ein Bildpunkt an einem festen Ton liegen, damit er umgefärbt wird
+const FARB_TOLERANZ := 0.1
 
 ## Gilt für alle Figuren, die Teile haben (Umschalter in Editor → Figuren-Animationen)
 static var art := Art.GANZ
@@ -42,14 +46,53 @@ static var kopf := ""
 ## Gilt nur, wo Kopf und Körper zusammengesetzt werden (neuer Kopf und Körper-Blätter).
 static var hut := ""
 static var ruecken := ""
+## Gewählte Farbpalette ("" = Grundfarben), siehe paletten_liste(). Färbt Hut, Rückenteil und Klassen-Körper um,
+## nie die Novizen-Körper.
+static var farben := ""
 static var _schichten := {}
+static var _paletten := {}
 static var _daten := {}
 static var _cache := {}
 
 
 ## Körper einer zusammengesetzten Figur: „novize_w+mira“ -> „novize_w“ (andere Namen bleiben, wie sie sind).
 static func koerper_von(look: String) -> String:
-	return look.get_slice("+", 0)
+	return look.get_slice("#", 0).get_slice("+", 0)
+
+
+## Aussehen-Plätze (Projekt 13, Schritt 6): Das Aussehen hängt hinten am Namen der Figur, getrennt von den Werten:
+## „novize_w+mira#hut=wanderhut,ruecken=reiseumhang,farben=glutschmiede“. So kommt es überall mit, wo die Figur
+## gezeigt wird (Welt, Kampf, Mitspieler) und steht im Spielstand. Ergebnis: {hut, ruecken, farben} (fehlt = "").
+static func aussehen_von(look: String) -> Dictionary:
+	var aussehen := {hut = "", ruecken = "", farben = ""}
+	if "#" in look:
+		for teil: String in look.get_slice("#", 1).split(",", false):
+			var platz := teil.get_slice("=", 0)
+			if aussehen.has(platz):
+				aussehen[platz] = teil.get_slice("=", 1)
+	return aussehen
+
+
+## Figur ohne Aussehen-Teil: „novize_w+mira#hut=…“ -> „novize_w+mira“.
+static func ohne_aussehen(look: String) -> String:
+	return look.get_slice("#", 0)
+
+
+## Figur mit neuem Aussehen. Unbekannte Teile fallen weg; ohne Teile bleibt der Name ohne „#“.
+static func mit_aussehen(look: String, aussehen: Dictionary) -> String:
+	var gueltig := {hut = hut_liste(), ruecken = ruecken_liste(), farben = paletten_liste()}
+	var teile: PackedStringArray = []
+	for platz: String in ["hut", "ruecken", "farben"]:
+		var id := str(aussehen.get(platz, ""))
+		if id != "" and gueltig[platz].has(id):
+			teile.append("%s=%s" % [platz, id])
+	var basis := ohne_aussehen(look)
+	return basis if teile.is_empty() else "%s#%s" % [basis, ",".join(teile)]
+
+
+## Kann diese Figur Aussehen-Teile tragen? (Nur Figuren aus Körper und Kopf, z. B. aus „Figur erstellen“.)
+static func kann_aussehen(look: String) -> bool:
+	return koerper_liste().has(koerper_von(look))
 
 
 ## Hat die Figur zerlegte Teile?
@@ -62,6 +105,16 @@ static func hat_teile(figur: String) -> bool:
 ## dann gilt dieser Kopf statt des im Editor gewählten.
 static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 	var kopf_wahl := kopf
+	var hut_wahl := hut
+	var ruecken_wahl := ruecken
+	var farben_wahl := farben
+	if "#" in figur or "+" in figur:
+		# Figuren aus „Figur erstellen“ tragen ihr eigenes Aussehen (aus dem Namen), die Wahl im Editor gilt für sie nicht
+		var aussehen := aussehen_von(figur)
+		hut_wahl = aussehen.hut
+		ruecken_wahl = aussehen.ruecken
+		farben_wahl = aussehen.farben
+		figur = ohne_aussehen(figur)
 	if "+" in figur:
 		kopf_wahl = figur.get_slice("+", 1)
 		figur = koerper_von(figur)
@@ -75,14 +128,18 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 	if info.is_empty():
 		return null
 	var kopf_id := kopf_wahl if koepfe(figur).has(kopf_wahl) else standardkopf(figur)
-	var hut_jetzt := hut if art_jetzt == Art.KOPFBLATT and hut_liste().has(hut) else ""
-	var ruecken_jetzt := ruecken if art_jetzt == Art.KOPFBLATT and ruecken_liste().has(ruecken) else ""
-	var schluessel := "%s/%s/%d/%d/%s/%s/%s" % [figur, anim, frame, art_jetzt, kopf_id, hut_jetzt, ruecken_jetzt]
+	var hut_jetzt := hut_wahl if art_jetzt == Art.KOPFBLATT and hut_liste().has(hut_wahl) else ""
+	var ruecken_jetzt := ruecken_wahl if art_jetzt == Art.KOPFBLATT and ruecken_liste().has(ruecken_wahl) else ""
+	var farben_jetzt := farben_wahl if paletten_liste().has(farben_wahl) else ""
+	var schluessel := "%s/%s/%d/%d/%s/%s/%s/%s" % [figur, anim, frame, art_jetzt, kopf_id, hut_jetzt, ruecken_jetzt, farben_jetzt]
 	if _cache.has(schluessel):
 		return _cache[schluessel]
 	var koerper := _bild_laden(KOERPER % [figur, anim, frame])
 	if koerper == null:
 		return null
+	# Klassen-Körper mit festen Farbflächen werden umgefärbt, Novizen-Körper haben keine
+	if farben_jetzt != "" and _alle()[figur].has("_flaechen"):
+		koerper = umfaerben(koerper, _alle()[figur]._flaechen, farben_jetzt)
 	var ergebnis := koerper
 	if not info.get("ganz", false):
 		# Erst der Kopf, dann der Körper darüber: Halstuch und Schwert liegen vor dem Kopf
@@ -107,7 +164,7 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 			var punkt := Vector2(punkte[variante][0], punkte[variante][1])
 			if kopf_bild != null and hut_jetzt != "":
 				# Den Hut auf den noch ungedrehten Kopf setzen, dann dreht er sich mit
-				var mit_hut := _hut_aufsetzen(kopf_bild, hut_jetzt, info.richtung)
+				var mit_hut := _hut_aufsetzen(kopf_bild, hut_jetzt, info.richtung, farben_jetzt)
 				kopf_bild = mit_hut.bild
 				punkt += mit_hut.verschoben
 			var winkel: float = info.get("winkel", 0.0)
@@ -121,7 +178,7 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 		# Rückenteil: von der Seite und von vorne hinter allem, von hinten über dem Körper
 		var umhang := {}
 		if ruecken_jetzt != "" and info.has("hals"):
-			umhang = _rueckenteil(ruecken_jetzt, info, rand)
+			umhang = _rueckenteil(ruecken_jetzt, info, rand, farben_jetzt)
 		if not umhang.is_empty() and not umhang.vorne:
 			ergebnis.blend_rect(umhang.bild, Rect2i(Vector2i.ZERO, umhang.bild.get_size()), umhang.ecke)
 		if kopf_bild != null:
@@ -153,11 +210,12 @@ static func _namen(teile: Dictionary) -> Dictionary:
 
 
 ## Hut auf ein Kopfbild setzen. Ergebnis: {bild, verschoben} (um so viel ist der alte Inhalt im neuen Bild verrutscht).
-static func _hut_aufsetzen(kopf_bild: Image, hut_id: String, richtung: String) -> Dictionary:
+static func _hut_aufsetzen(kopf_bild: Image, hut_id: String, richtung: String, palette := "") -> Dictionary:
 	var daten: Dictionary = _alle_schichten().hut[hut_id].get(richtung, {})
 	var hut_bild := _bild_laden(HUT_BILD % [hut_id, richtung])
 	if hut_bild == null or daten.is_empty():
 		return {bild = kopf_bild, verschoben = Vector2.ZERO}
+	hut_bild = _schicht_faerben(hut_bild, _alle_schichten().hut[hut_id], palette)
 	var sichtbar := kopf_bild.get_used_rect()
 	var ziel := Vector2(sichtbar.position.x + sichtbar.size.x / 2.0,
 			sichtbar.position.y + sichtbar.size.y * float(daten.get("sitz", 0.3)))
@@ -175,12 +233,13 @@ static func _hut_aufsetzen(kopf_bild: Image, hut_id: String, richtung: String) -
 
 
 ## Rückenteil für ein Bild: {bild, ecke, vorne} oder leer. Es hängt am Halspunkt und neigt sich mit dem Körper.
-static func _rueckenteil(id: String, info: Dictionary, rand: int) -> Dictionary:
+static func _rueckenteil(id: String, info: Dictionary, rand: int, palette := "") -> Dictionary:
 	var richtung: String = info.richtung
 	var daten: Dictionary = _alle_schichten().ruecken[id].get(richtung, {})
 	var bild := _bild_laden(RUECKEN_BILD % [id, richtung])
 	if bild == null or daten.is_empty():
 		return {}
+	bild = _schicht_faerben(bild, _alle_schichten().ruecken[id], palette)
 	var anker := Vector2(daten.anker[0], daten.anker[1])
 	var versatz: Array = daten.get("versatz", [0, 0])
 	var winkel: float = info.get("winkel", 0.0)
@@ -195,6 +254,67 @@ static func _rueckenteil(id: String, info: Dictionary, rand: int) -> Dictionary:
 	var hals := Vector2(info.hals[0] + versatz[0], info.hals[1] + versatz[1])
 	var ecke := Vector2i((hals - anker).round()) + Vector2i(rand, rand)
 	return {bild = bild, ecke = ecke, vorne = richtung == "hinten"}
+
+
+## Alle Farbpaletten: Name -> Anzeigename.
+static func paletten_liste() -> Dictionary:
+	return _namen(_alle_paletten())
+
+
+## Bild umfärben: Jeder Bildpunkt, der nah an einem festen Ton einer Farbfläche liegt, bekommt den Ton gleicher Stufe
+## aus der Palette. Kleine Abweichungen (weiche Übergänge der KI-Bilder) bleiben als Helligkeit erhalten.
+## flaechen: Farbfläche -> vier Töne (hell, mittel, dunkel, Schatten) als „#rrggbb“.
+static func umfaerben(bild: Image, flaechen: Dictionary, palette_id: String) -> Image:
+	var ziel_flaechen: Dictionary = _alle_paletten().get(palette_id, {}).get("flaechen", {})
+	var von: Array[Color] = []
+	var nach: Array[Color] = []
+	for flaeche: String in flaechen:
+		if not ziel_flaechen.has(flaeche):
+			continue
+		var quelle: Array = flaechen[flaeche]
+		var ziel: Array = ziel_flaechen[flaeche]
+		for stufe in mini(quelle.size(), ziel.size()):
+			von.append(Color.html(quelle[stufe]))
+			nach.append(Color.html(ziel[stufe]))
+	if von.is_empty():
+		return bild
+	var neu := bild.duplicate() as Image
+	for y in neu.get_height():
+		for x in neu.get_width():
+			var farbe := neu.get_pixel(x, y)
+			if farbe.a <= 0.0:
+				continue
+			var bester := -1
+			var abstand := FARB_TOLERANZ
+			for i in von.size():
+				var d := Vector3(farbe.r - von[i].r, farbe.g - von[i].g, farbe.b - von[i].b).length()
+				if d < abstand:
+					abstand = d
+					bester = i
+			if bester < 0:
+				continue
+			var heller := farbe.get_luminance() - von[bester].get_luminance()
+			var ergebnis := nach[bester]
+			ergebnis = Color(clampf(ergebnis.r + heller, 0.0, 1.0), clampf(ergebnis.g + heller, 0.0, 1.0),
+					clampf(ergebnis.b + heller, 0.0, 1.0), farbe.a)
+			neu.set_pixel(x, y, ergebnis)
+	return neu
+
+
+## Hut oder Rückenteil in der gewählten Palette.
+static func _schicht_faerben(bild: Image, teil: Dictionary, palette: String) -> Image:
+	if palette == "" or not paletten_liste().has(palette) or not teil.has("flaechen"):
+		return bild
+	return umfaerben(bild, teil.flaechen, palette)
+
+
+static func _alle_paletten() -> Dictionary:
+	if _paletten.is_empty() and FileAccess.file_exists(PALETTEN):
+		var gelesen: Variant = JSON.parse_string(FileAccess.get_file_as_string(PALETTEN))
+		if gelesen is Dictionary:
+			_paletten = gelesen
+			_paletten.erase("_hinweis")
+	return _paletten
 
 
 static func _alle_schichten() -> Dictionary:

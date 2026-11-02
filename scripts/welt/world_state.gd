@@ -20,6 +20,7 @@ extends RefCounted
 ##   {type = "guertel_ablegen", gegenstand = "…"} / {type = "guertel_nehmen", platz = 0}  Trank an den Gürtel bzw. zurück
 ##   {type = "bank_erweitern"}           an einer Bankstelle mehr Bankplätze kaufen
 ##   {type = "kaufen", gegenstand = "…"} / {type = "verkaufen", gegenstand = "…"} / {type = "laden_zu"}  im geöffneten Laden
+##   {type = "aussehen", hut = "…", ruecken = "…", farben = "…"}  Aussehen-Plätze ändern ("" = keins, fehlt = bleibt)
 ##   {type = "wegwerfen", gegenstand = "…"}  alle Stück eines Gegenstands aus der Tasche wegwerfen
 ##   {type = "beute_nehmen", gegenstand = "…"} / {type = "beute_lassen"}  Beute, die nicht in die Tasche gepasst hat
 ##   {type = "test_geld", bronze = 75} / {type = "test_tasche"} / {type = "test_beute"}  Testknöpfe (nur im Godot-Editor)
@@ -428,6 +429,15 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			_sell(p, str(cmd.get("gegenstand", "")))
 		"laden_zu":
 			p.shop = ""
+		"aussehen":
+			# Aussehen-Plätze (Projekt 13, Schritt 6): nur das Aussehen ändert sich, die Werte bleiben
+			if FigurTeile.kann_aussehen(p.look):
+				var aussehen := FigurTeile.aussehen_von(p.look)
+				for platz: String in ["hut", "ruecken", "farben"]:
+					if cmd.has(platz):
+						aussehen[platz] = str(cmd[platz])
+				p.look = FigurTeile.mit_aussehen(p.look, aussehen)
+				progress_changed.emit(p.id)
 		"einlagern":
 			_bank_move(p, str(cmd.get("gegenstand", "")), true)
 		"abholen":

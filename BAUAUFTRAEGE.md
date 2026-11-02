@@ -19,7 +19,8 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D2a:** Regeln festschreiben, Bilder prüfen. (Fahrplan A.1, Projekt 13 Schritt 1–2) – Status: fertig (02.11.2026, LOOK.md Abschnitt 9a und 12; der Zusatz zum Stil-Block wartet auf Marcos Ja)
 - **D2b:** Kurzschwert als eigenes Teil (braucht Marcos Novizen-Blätter ohne Klinge). (Fahrplan A.1, Projekt 13 Schritt 3) – Status: offen
 - **D3a:** Hut und Rückenteil als Schicht, mit Platzhaltern bis Marcos Probe-Hut und Probe-Umhang da sind. (Fahrplan A.2, Projekt 13 Schritt 4) – Status: fertig (02.11.2026)
-- **D3b:** Umfärben und Aussehen-Plätze. (Fahrplan A.2, Projekt 13 Schritt 5–6) – Status: offen
+- **D3b:** Umfärben, Probe an Hut und Umhang. (Fahrplan A.2, Projekt 13 Schritt 5) – Status: fertig (02.11.2026)
+- **D3c:** Aussehen-Plätze: Fenster zum Auswählen, im Spielstand gespeichert. (Fahrplan A.2, Projekt 13 Schritt 6) – Status: fertig (02.11.2026; Waffen-Aussehen kommt mit D2b)
 - **T1:** Testtag Aussehen (Marco). – Status: offen
 
 ### Kampfgefühl
@@ -398,12 +399,12 @@ _Am 28.10. geteilt: Kofis Kopf-Blatt kam zuerst._
 ### Schritt 5: Umfärben
 - **Ziel:** Das Spiel tauscht die festen Farbtöne eines Klassen-Körpers gegen eine andere Palette (Probe: Set der Vulkanschmiede in Glutrot und Schwarz). Novizen werden nicht umgefärbt.
 - **So testest du es:** Im Editor eine Farbpalette wählen, der Körper färbt sich sauber um.
-- **Status:** offen (braucht einen Klassen-Körper nach den neuen Regeln, sonst Probe an einem Platzhalter)
+- **Status:** fertig (02.11.2026: Paletten in `data/farbpaletten.json` (Glutrot und Schwarz für die Vulkanschmiede, dazu Waldgrün als zweite Probe). Probe an den Platzhaltern Hut und Umhang, weil es noch keinen Klassen-Körper nach den neuen Regeln gibt. Klassen-Körper werden umgefärbt, sobald sie in `data/figurteile.json` ihre Farbflächen (`_flaechen`) haben. Novizen-Körper haben keine und bleiben, wie sie sind.)
 
 ### Schritt 6: Aussehen-Plätze
 - **Ziel:** Werte und Aussehen getrennt, ein Fenster zum Auswählen von Hut, Rückenteil und Waffen-Aussehen, im Spielstand gespeichert.
 - **So testest du es:** Ein anderes Aussehen wählen, die Werte bleiben gleich, nach dem Neustart ist das Aussehen noch da.
-- **Status:** offen
+- **Status:** fertig (02.11.2026: Im Werte-Fenster (C) gibt es „Aussehen“ mit Hut, Rücken und Farben, nur für Figuren aus „Figur erstellen“. Das Aussehen hängt am Namen der Figur (`novize_w+mira#hut=…,ruecken=…,farben=…`), kommt so in Welt, Kampf, zu Mitspielern und in den Spielstand. Befehl `aussehen` in WorldState. Waffen-Aussehen fehlt noch, es kommt mit der Waffe als eigenem Teil (D2b).)
 
 ### Testtag Aussehen
 - Marco prüft, ob alles einheitlich aussieht. Erst danach werden die Klassen-Körper nach den neuen Regeln gezeichnet (Projekt 11, Schritte 4 und 6, Bogenschütze neu).
