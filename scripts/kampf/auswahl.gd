@@ -91,10 +91,24 @@ func _build() -> void:
 	var random := Button.new()
 	random.text = "Zufallsteam"
 	random.position = Vector2(948, 484)
-	random.size = Vector2(140, 80)
+	random.size = Vector2(140, 38)
 	random.add_theme_font_size_override("font_size", 17)
 	random.pressed.connect(_random_team)
 	add_child(random)
+
+	# Effekt-Probe (Projekt 14, K.4): Helden bekommen einen Knopf, mit dem sie jeden Effekt der Effekt-Liste auslösen
+	var probe := Button.new()
+	probe.toggle_mode = true
+	probe.button_pressed = Sandbox.effekt_probe
+	probe.text = "Effekt-Probe: an" if Sandbox.effekt_probe else "Effekt-Probe: aus"
+	probe.tooltip_text = "Im Kampf: Knopf „Effekt auslösen“ mit allen Effekten der Effekt-Liste"
+	probe.position = Vector2(948, 526)
+	probe.size = Vector2(140, 38)
+	probe.add_theme_font_size_override("font_size", 14)
+	probe.toggled.connect(func(an: bool) -> void:
+		Sandbox.effekt_probe = an
+		probe.text = "Effekt-Probe: an" if an else "Effekt-Probe: aus")
+	add_child(probe)
 
 	_start = Button.new()
 	_start.text = "Kampf starten!"

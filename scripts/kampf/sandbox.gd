@@ -3,6 +3,8 @@ extends RefCounted
 ## Daten der Kampf-Sandbox: alle 11 Startklassen, Duette, Zähmer-Monster, Gegner und Kämpfe.
 ## Die Auswahl (Team, Start-Monster, Gegner) merkt sich das Spiel hier zwischen den Bildschirmen.
 
+## Kampf-Sandbox: Helden bekommen „Effekt auslösen“ (alle Effekte der Effekt-Liste zum Ausprobieren, Projekt 14, K.4)
+static var effekt_probe := false
 static var team: Array[String] = []
 static var starter := "glutwelpe"
 static var encounter := "beides"

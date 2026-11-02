@@ -112,6 +112,8 @@ var power := 1.0
 
 # Gegner
 var resist := 1.0
+## Dauer-Effekte aus der Effekt-Liste (Projekt 14, K.4): Kennung -> {zuege, staerke, stapel, quelle}, siehe Effekte
+var effekte := {}
 ## Ausrüstung (Projekt 14, K.1): Faktor auf Nah- und Fernkampf-Schaden (Verteidigung) und auf Magie-Schaden (Widerstand)
 var schutz := 1.0
 var magieschutz := 1.0

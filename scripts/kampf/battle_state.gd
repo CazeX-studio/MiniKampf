@@ -628,7 +628,11 @@ func _battle_loop() -> void:
 		_begin_turn(f)
 		if await _check_end():
 			return
-		if f.is_alive():
+		if f.is_alive() and _gelaehmt:
+			# Gelähmt (Effekt-Liste): Dieser Zug fällt aus
+			add_log("%s ist gelähmt und setzt aus." % f.display_name)
+			wait(0.6)
+		elif f.is_alive():
 			turns += 1
 			if f.is_ally():
 				await _player_turn(f)
@@ -654,6 +658,17 @@ func gain_mana(f: Fighter, share: float) -> int:
 
 
 ## Was zu Beginn jedes eigenen Zuges passiert (Abklingzeiten, Mana, Klassen-Mechaniken).
+## Wurde der Kämpfer zu Beginn seines Zuges gelähmt? (siehe Effekte.zug_beginn)
+var _gelaehmt := false
+## Wer vom letzten Gegner-Angriff wirklich getroffen wurde (für Effekte, die am Angriff hängen)
+var _getroffen: Array[Fighter] = []
+
+
+## Ein Effekt aus der Effekt-Liste wird sichtbar (gleich für alle, die ihn auslösen).
+func emit_effect(f: Fighter, art: String, color: Color) -> void:
+	_emit({type = "effekt", f = f, art = art, color = color})
+
+
 func _begin_turn(f: Fighter) -> void:
 	for id: String in f.cooldowns.keys():
 		f.cooldowns[id] = maxi(f.cooldowns[id] - 1, 0)
@@ -663,6 +678,7 @@ func _begin_turn(f: Fighter) -> void:
 	f.blind_turns = maxi(f.blind_turns - 1, 0)
 	f.stagger_turns = maxi(f.stagger_turns - 1, 0)
 	f.waiting = false
+	_gelaehmt = Effekte.zug_beginn(self, f)
 	skills.begin_turn(f)
 	refresh()
 
@@ -827,6 +843,11 @@ func _enemy_turn(e: Fighter) -> void:
 		else:
 			targets = [pick_target(attack.get("back", false), true)]
 		await enemy_attack(e, targets, attack.base, attack.kind, attack.name)
+		# Effekt am Angriff (Effekt-Liste): trifft nur, wer nicht perfekt pariert oder ausgewichen ist
+		if attack.has("effekt"):
+			var fx: Dictionary = attack.effekt
+			for t in _getroffen:
+				Effekte.anwenden(self, e, t, str(fx.art), float(fx.get("staerke", -1.0)), int(fx.get("zuege", -1)))
 		e.step += 1
 		# Zeitbombe (Sternenfresser): nach so vielen eigenen Zügen stirbt die ganze Gruppe
 		if data.has("wipe_nach") and e.is_alive() and e.step >= int(data.wipe_nach):
@@ -928,9 +949,15 @@ func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String
 		# Ältere Steuerer antworten mit ja/nein (ja = perfekt)
 		grade = (REACT_PERFECT if answer else REACT_NONE) if answer is bool else int(answer)
 	var success := grade == REACT_PERFECT
+	# Effekt „Verfehlen“ auf dem Angreifer: Dieser Angriff geht daneben
+	var daneben := Effekte.verfehlt(self, e)
+	_getroffen.clear()
 
 	for t in targets:
 		if not t.is_alive():
+			continue
+		if daneben:
+			float_text(t, "Verfehlt!", Color(Effekte.ARTEN.verfehlen.farbe))
 			continue
 		if t.smoke > 0:
 			t.smoke -= 1
@@ -962,8 +989,10 @@ func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String
 			float_text(t, "Pariert" if t.reaction == "parry" else "Ausgewichen", Color("cfe2ff"), 78)
 			var lost := hit(e, t, base * (1.0 - NORMAL_REACT_BLOCK), kind, e.element)
 			t.credit().stat_blocked += roundi(lost * NORMAL_REACT_BLOCK / (1.0 - NORMAL_REACT_BLOCK))
+			_getroffen.append(t)
 		else:
 			hit(e, t, base, kind, e.element)
+			_getroffen.append(t)
 	# Perfekte Parade gegen einen Gepanzerten (Sternenfresser): Der Panzer ist kurz offen
 	if success and e.plate < 1.0 and e.is_alive():
 		e.stagger_turns = e.stagger_length
@@ -1028,6 +1057,10 @@ func calc_damage(attacker: Fighter, target: Fighter, base: float, kind: String, 
 ## Angriff: Schaden berechnen und zufügen. Gibt die verlorenen LP zurück.
 func hit(attacker: Fighter, target: Fighter, base: float, kind: String, element := "") -> int:
 	if not target.is_alive():
+		return 0
+	# Effekt „Verfehlen“: Der nächste Angriff geht daneben
+	if attacker.is_ally() and Effekte.verfehlt(self, attacker):
+		float_text(target, "Verfehlt!", Color(Effekte.ARTEN.verfehlen.farbe))
 		return 0
 	var dmg := calc_damage(attacker, target, base, kind, element)
 	_last_element = element

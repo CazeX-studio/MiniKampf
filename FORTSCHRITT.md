@@ -5,10 +5,18 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 01.11.)
 
-- **Nächster Schritt:** D7 der „Demo-Reihenfolge“ (Effekt-Liste als feste Bausteine). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 bis D6 wurden auf Marcos Wunsch vor T1 gebaut.
+- **Nächster Schritt:** D8 der „Demo-Reihenfolge“ (Novize und die Bäume der fünf Demo-Klassen). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 bis D7 wurden auf Marcos Wunsch vor T1 gebaut.
+
+- **Neu (02.11.): D7 Effekt-Liste** (Projekt 14, K.4): Neun feste Bausteine für Klassen und Monster: **Brennen** und **Gift** (Schaden zu Beginn jedes Zuges, Gift stapelt bis 3), **Lähmen** (nächster Zug fällt aus), **Festhalten** (keine Reihe wechseln, nicht abwarten), **Verfehlen** (nächster Angriff geht daneben), **Zugleiste schieben**, **Heilen**, **Schutz** (Schild) und **Schattenmale** (stapeln bis 5). Jeder Effekt hat eine feste Farbe, denselben Text unter der Figur und dasselbe Leuchten, egal wer ihn auslöst. Monster-Angriffe können einen Effekt mitbringen, perfekt pariert trifft er nicht.
+  - Die Klassen und Monster benutzen die Bausteine noch nicht, das kommt mit D8 (Klassen) und D22 (Monster). Bis dahin probiert man sie in der Kampf-Sandbox aus. Die Zahlen sind vorläufig.
+  - **So testest du es:**
+    1. Editor → Kampf-Sandbox, unten „Effekt-Probe: aus“ antippen, dann steht dort „an“.
+    2. Kampf starten. Unter „Fähigkeiten“ gibt es „Effekt auslösen“ mit allen neun Effekten.
+    3. Jeden Effekt einmal auf einen Gegner oder Verbündeten legen: Unter der Figur steht der Zustand (zum Beispiel „Brennt“, „Gift 2“, „Gelähmt“), im Protokoll in seiner Farbe.
+    4. Ein paar Züge warten: Brennen, Gift und Schattenmale machen zu Beginn des Zuges Schaden, ein gelähmter Gegner setzt aus.
 
 - **Neu (02.11.): D6b Feste Leiste mit 6 Plätzen** (Projekt 14, K.3): Im Fähigkeiten-Fenster (K) steht oben die Leiste mit sechs Plätzen. Was du neu lernst, kommt von selbst auf den ersten freien Platz. „Herunter“ oder ein Klick auf den Platz nimmt es wieder ab, „Auf die Leiste“ legt es zurück. Im Kampf gibt es genau die Fähigkeiten auf der Leiste, dazu immer den normalen Angriff, Abwarten, die Gürtel-Gegenstände und die Ult. Die Leiste wird gespeichert, Neuverteilen leert sie.
-  - **Von Marco zu entscheiden:** Gebaut sind 6 freie Plätze zusätzlich zu Angriff, Abwarten, Gürtel und Ult. Ist gemeint, dass diese vier auf den 6 Plätzen mitzählen? Dann blieben 2 freie Plätze.
+  - Die 6 Plätze kommen zusätzlich zu Angriff, Abwarten, Gürtel und Ult (Marco, 02.11.).
   - Gilt vorerst nur für den Bogenschützen, weil nur er schon einen Baum hat.
   - **So testest du es:**
     1. Als Bogenschütze K drücken, zwei Fähigkeiten lernen: Sie stehen auf Platz 1 und 2.

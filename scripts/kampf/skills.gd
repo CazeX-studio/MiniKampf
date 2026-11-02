@@ -277,6 +277,13 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 	for ab in list:
 		if ab.has("mana") and int(ab.get("cd", 0)) < STARKE_ABKLINGZEIT:
 			ab.erase("cd")
+	# Kampf-Sandbox mit Effekt-Probe: jeder Effekt der Effekt-Liste zum Ausprobieren (nicht in Kämpfen aus der Welt)
+	if Sandbox.effekt_probe and f.is_hero and not c.setup.has("wellen"):
+		var choices: Array = []
+		for art: String in Effekte.ARTEN:
+			var d: Dictionary = Effekte.ARTEN[art]
+			choices.append({id = art, name = d.name, info = d.info, then = "ally" if art in ["heilen", "schutz"] else "enemy"})
+		list.append({id = "effekt_probe", name = "Effekt auslösen", info = "Probe: jeden Effekt einmal", target = "choice", choices = choices})
 	# Abwarten können alle (beim Zähmer wartet das Monster, er selbst handelt trotzdem)
 	if f.is_hero or is_pet(f):
 		list.append(wait_ability())
@@ -323,6 +330,8 @@ func blocked_reason(f: Fighter, ab: Dictionary) -> String:
 		return ""
 	if f.cooldown(id) > 0:
 		return "Bereit in %d" % f.cooldown(id)
+	if (id == "row" or id == "abwarten") and f.effekte.has("festhalten"):
+		return "Festgehalten"
 	if ab.get("mana", 0) > f.mana:
 		return "Zu wenig Mana"
 	if ab.has("blood") and f.hp + f.blood - int(ab.blood) < 1:
@@ -440,6 +449,9 @@ func _monster(tamer: Fighter, id: String) -> Fighter:
 
 func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 	var id: String = ab.id
+	if id == "effekt_probe":
+		Effekte.anwenden(c, f, target, str(ab.get("choice", "")))
+		return
 	if ab.has("dungeon"):
 		c.dungeon.execute(f, ab, target)
 		return

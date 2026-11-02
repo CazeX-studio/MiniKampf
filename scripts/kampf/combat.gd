@@ -410,6 +410,13 @@ func _play_event(event: Dictionary) -> void:
 					var light_color := Elements.color(element)
 					Fx.spawn(_field, Fx.Kind.GLOW, v.center(), light_color, 340.0 if element != "Blitz" else 420.0, 0.55)
 					Fx.spawn(_field, Fx.Kind.GLOW, v.center(), light_color.lightened(0.4), 110.0, 0.35)
+		"effekt":
+			# Effekt-Liste: jeder Effekt sieht gleich aus, egal wer ihn auslöst
+			if has_view(event.f):
+				var v := view(event.f)
+				v.glow(event.color, 0.5)
+				Fx.spawn(_field, Fx.Kind.GLOW, v.center(), event.color, 90.0, 0.5)
+				Fx.spawn(_field, Fx.Kind.SPARKS, v.center(), (event.color as Color).lightened(0.3), 50.0, 0.5)
 		"heal_fx":
 			Geraeusche.play("heilung")
 			if has_view(event.f):

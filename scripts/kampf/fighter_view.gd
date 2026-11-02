@@ -768,6 +768,7 @@ func _status() -> Array[String]:
 		status.append("Ladung %d" % fighter.charge)
 	if fighter.protecting != null and fighter.protecting.is_alive():
 		status.append("schützt " + fighter.protecting.display_name)
+	status.append_array(Effekte.zustaende(fighter))
 	return status
 
 
