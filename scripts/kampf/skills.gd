@@ -651,42 +651,53 @@ func _smith(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 	match id:
 		"hammer":
 			c.lunge(f, target, 0.3)
+			c.zeige("hammer_treffer", f, target)
 			c.hit(f, target, 15, "melee")
 			# Viel Bedrohung: der Gegner greift danach eher den Schmied an
 			f.taunt = maxi(f.taunt, 1)
 		"armor":
 			f.armor = ab.choice
+			c.zeige("schmiede_moment", f)
 			c.float_text(f, ARMORS[f.armor].name, Color("ffb070"))
 			c.add_log("%s legt die %s an (%s)." % [f.display_name, ARMORS[f.armor].name, ARMORS[f.armor].info])
 		"anvil":
 			f.taunt = 3
+			c.zeige("amboss", f)
+			for e in c.alive(c.enemies):
+				c.zeige("bedroht", f, e)
 			_add_hard(f, 1)
 			c.add_log("%s stellt den Amboss auf: Gegner müssen sie angreifen." % f.display_name)
 		"reinforce":
 			# Steckbrief: zwei Runden mehr Verteidigung (dazu ein kleiner Schild)
 			target.def_buff_turns = maxi(target.def_buff_turns, BattleState.BUFF_TURNS + 1)
+			c.zeige("verstaerken", f, target)
 			c.give_shield(f, target, 24)
 			c.float_text(target, "Abwehr+", Color("c8d0e0"), 30)
 		"abfangen":
+			c.zeige("abfangen", f, target)
 			target.set_meta("gedeckt_von", f)
 			c.float_text(target, "Abgefangen", Color("ffb070"), 30)
 			c.add_log("%s hält den Hammer vor %s." % [f.display_name, target.display_name])
 		"haerten":
+			c.zeige("haerten", f)
 			_add_hard(f, 2)
 		"gluehend":
 			f.set_meta("gluehend", 3)
+			c.zeige("gluehend", f)
 			c.float_text(f, "Glühende Rüstung", Color("ff7a3d"), 30)
 		"ambossschlag":
-			c.burst(f, Color("ffb070"), 180.0)
-			c.wait(0.25)
+			c.zeige("ambossschlag", f)
 			for e in c.alive(c.enemies):
 				c.hit(f, e, 12, "melee")
 				if e.is_alive() and Sandbox.ENEMIES.get(e.klass, {}).has("tame"):
+					c.zeige("betaeubt", f, e)
 					Effekte.anwenden(c, f, e, "laehmen")
 		"gemeinsame_haerte":
 			if f.hard > 0:
 				var schutz := 6 * f.hard
+				c.zeige("haerte_geben", f)
 				for a in c.allies():
+					c.zeige("haerte_splitter", f, a)
 					c.give_shield(f, a, schutz)
 					a.def_buff_turns = maxi(a.def_buff_turns, BattleState.BUFF_TURNS + 1)
 				c.add_log("%s gibt seine Härte an alle weiter." % f.display_name)
@@ -694,6 +705,7 @@ func _smith(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 		"ult":
 			# Steckbrief: drei Runden eine Meisterrüstung mit den Vorteilen aller drei Rüstungen
 			f.set_meta("meisterstueck", 3)
+			c.zeige("meisterstueck", f)
 			f.hard = _max_hard(f)
 			c.give_shield(f, f, 40)
 			c.float_text(f, "Meisterstück!", Color("f2c14e"), 30)
@@ -716,6 +728,7 @@ func _max_hard(f: Fighter) -> int:
 func after_enemy_hit(attacker: Fighter, target: Fighter, kind: String) -> void:
 	blade_hit_taken(target)
 	if kind == "melee" and target.has_meta("gluehend") and attacker.is_alive():
+		c.zeige("angesengt", target, attacker)
 		c.hit(target, attacker, 6, "magic", "Feuer")
 		if attacker.is_alive():
 			Effekte.anwenden(c, target, attacker, "brennen", 3.0, 2)
@@ -1574,7 +1587,7 @@ func on_perfect_reaction(h: Fighter, attacker: Fighter) -> void:
 			_add_hard(h, 1)
 			# Funkenflug (passiv): Funken fliegen auf den Angreifer
 			if h.has_meta("faehigkeiten") and skill_level(h, "funkenflug") > 0 and attacker.is_alive():
-				c.projectile(h, attacker, Color("ffb070"), 0.15)
+				c.zeige("funkenflug", h, attacker)
 				c.hit(h, attacker, 4 * skill_level(h, "funkenflug"), "magic", "Feuer")
 		"blade":
 			_add_blades(h, 1)

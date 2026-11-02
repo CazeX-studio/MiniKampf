@@ -8,6 +8,12 @@ const SCHILD := Color("8fd3ff")
 const GRUEN := Color("7dffa0")
 const WALD := Color("8fe86a")
 const STAUB := Color("c8b898")
+const GLUT := Color("ff9a4c")
+const STAHL := Color("d8e0ec")
+const PFEIL_RUNTER := [Vector2(-14, -10), Vector2(14, -10), Vector2(0, 12)]
+const PFEIL_HOCH := [Vector2(-14, 10), Vector2(14, 10), Vector2(0, -12)]
+const STERN_FORM := [Vector2(0, -16), Vector2(4, -5), Vector2(15, -5), Vector2(6, 2), Vector2(9, 13), Vector2(0, 7),
+		Vector2(-9, 13), Vector2(-6, 2), Vector2(-15, -5), Vector2(-4, -5)]
 const HIRSCH := "res://assets/figuren/hirsch_idle_anim_f0.png"
 
 
@@ -249,7 +255,7 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 		"eingeschuechtert":
 			if ziel_ansicht != null:
 				_taumeln(ziel_ansicht)
-				_zeichen(feld, ziel_ansicht.center() + Vector2(0, -60), "▼", Color("8fb8ff"))
+				_symbol(feld, ziel_ansicht.center() + Vector2(0, -60), Color("8fb8ff"), PFEIL_RUNTER)
 		"zweites_leben":
 			# Lichtfunken sammeln sich, ein Ton schwillt an, das Monster steht auf
 			Geraeusche.play("perfekt", 0.8)
@@ -269,6 +275,97 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 				Fx.spawn(feld, Fx.Kind.RING, ziel_ansicht.home_feet(), STAUB, 170.0, 0.5)
 			k._change_speed(0.3, 0.25)
 			k._shake(14.0)
+		"hammer_treffer":
+			Geraeusche.play("parade", 0.6)
+			if ziel_ansicht != null:
+				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.center(), GLUT, 100.0, 0.5)
+				_symbol(feld, ziel_ansicht.center() + Vector2(0, -60), Color("ff5050"), PFEIL_RUNTER)
+		"schmiede_moment":
+			_pose(v)
+			Geraeusche.play("parade", 0.9)
+			Fx.spawn(feld, Fx.Kind.SPARKS, v.center(), GLUT, 70.0, 0.4)
+			await k.wait(0.2)
+		"amboss":
+			# Der Amboss fällt vom Rücken in den Boden, alle Gegner schauen zu ihm
+			await _amboss(k, feld, v.home_feet() + Vector2(-70 if f.is_ally() else 70, 0))
+		"bedroht":
+			if ziel_ansicht != null:
+				_symbol(feld, ziel_ansicht.center() + Vector2(0, -60), Color("ff5050"), PFEIL_RUNTER)
+		"verstaerken":
+			# Zwei helle Klopftöne auf die Rüstung
+			for i in 2:
+				Geraeusche.play("parade", 1.6)
+				_huepfer(v, 6.0, 0.06)
+				await k.wait(0.16)
+			if ziel_ansicht != null:
+				ziel_ansicht.glow(STAHL, 0.6)
+				_kuppel(feld, ziel_ansicht.home_feet())
+		"abfangen":
+			_huepfer(v, 20.0, 0.16)
+			Geraeusche.play("parade", 0.8)
+			if ziel_ansicht != null:
+				_schneise(feld, v.center(), ziel_ansicht.center(), GLUT)
+			await k.wait(0.3)
+		"haerten":
+			# Kniet ab, Schlag auf die Schulter, die Rüstung glüht weiß und kühlt zischend ab
+			var kniend := _kniefall(v)
+			await k.wait(0.2)
+			kniend.kill()
+			v.body.position = v._home
+			Geraeusche.play("treffer", 0.8)
+			v.glow(Color.WHITE, 0.8)
+			await k.wait(0.3)
+			Geraeusche.play("wurf", 0.4)
+			Fx.spawn(feld, Fx.Kind.SPARKS, v.center(), Color(Color.WHITE, 0.7), 80.0, 0.6)
+		"gluehend":
+			_pose(v)
+			Geraeusche.play("zauber", 0.7)
+			v.glow(GLUT, 1.0)
+			Fx.spawn(feld, Fx.Kind.GLOW, v.center(), Color(GLUT, 0.5), 100.0, 0.8)
+			Fx.spawn(feld, Fx.Kind.SPARKS, v.center(), GLUT, 90.0, 0.8)
+			await k.wait(0.4)
+		"angesengt":
+			if ziel_ansicht != null:
+				ziel_ansicht.glow(GLUT, 0.4)
+				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.center(), GLUT, 60.0, 0.3)
+		"funkenflug":
+			if ziel_ansicht != null:
+				await _pfeil(feld, v.center(), ziel_ansicht.center(), GLUT, 0.15, 6.0)
+				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.center(), GLUT, 70.0, 0.3)
+		"ambossschlag":
+			_huepfer(v, 50.0, 0.2)
+			await k.wait(0.4)
+			Geraeusche.play("kritisch", 0.5)
+			Fx.spawn(feld, Fx.Kind.RING, v.home_feet(), GLUT, 300.0, 0.5)
+			Fx.spawn(feld, Fx.Kind.SPARKS, v.home_feet(), STAUB, 160.0, 0.7)
+			k._change_speed(0.3, 0.2)
+			k._shake(16.0)
+			await k.wait(0.15)
+		"betaeubt":
+			if ziel_ansicht != null:
+				_symbol(feld, ziel_ansicht.center() + Vector2(0, -60), Color("ffe08a"), STERN_FORM)
+		"haerte_geben":
+			_pose(v)
+			Geraeusche.play("perfekt", 1.4)
+			v.glow(STAHL, 0.6)
+			await k.wait(0.2)
+		"haerte_splitter":
+			if ziel_ansicht != null:
+				_pfeil(feld, v.center(), ziel_ansicht.center(), STAHL, 0.25, 4.0)
+				ziel_ansicht.glow(STAHL, 0.7)
+		"meisterstueck":
+			# Drei Schläge im Takt, je einer für Platte, Kette und Runen, dann der goldene Glanz
+			for farbe_teil: Color in [Color("b8c0cc"), Color("e8ecf4"), Color("6fa8ff")]:
+				Geraeusche.play("parade", 0.9)
+				_pose(v)
+				v.glow(farbe_teil, 0.3)
+				Fx.spawn(feld, Fx.Kind.SPARKS, v.center(), farbe_teil, 80.0, 0.35)
+				await k.wait(0.28)
+			Geraeusche.play("perfekt", 0.6)
+			v.glow(Color("f2c14e"), 1.2)
+			Fx.spawn(feld, Fx.Kind.SPARKS, v.center(), Color("f2c14e"), 170.0, 0.9)
+			Fx.spawn(feld, Fx.Kind.RING, v.center(), Color("f2c14e"), 150.0, 0.5)
+			k.screen_flash(Color("f2c14e"))
 
 
 ## Kleiner Sprung. Bewegt die ganze Ansicht, damit er neben einem laufenden Angriff funktioniert.
@@ -494,3 +591,39 @@ static func _zeichen(feld: Control, ort: Vector2, text: String, farbe: Color) ->
 	tween.tween_property(schrift, "position:y", ort.y - 60.0, 0.8)
 	tween.tween_property(schrift, "modulate:a", 0.0, 0.3).set_delay(0.5)
 	tween.chain().tween_callback(schrift.queue_free)
+
+
+## Kleine Form (Pfeil, Stern), die über einer Figur aufsteigt und verblasst.
+static func _symbol(feld: Control, ort: Vector2, farbe: Color, form: Array) -> void:
+	var zeichen := Polygon2D.new()
+	zeichen.polygon = PackedVector2Array(form)
+	zeichen.color = farbe
+	zeichen.position = ort
+	zeichen.z_index = 9
+	feld.add_child(zeichen)
+	var tween := zeichen.create_tween().set_parallel()
+	tween.tween_property(zeichen, "position:y", ort.y - 40.0, 0.8)
+	tween.tween_property(zeichen, "modulate:a", 0.0, 0.3).set_delay(0.5)
+	tween.chain().tween_callback(zeichen.queue_free)
+
+
+## Ein gezeichneter Amboss fällt in den Boden, dann Staub und Wackeln.
+static func _amboss(k: Control, feld: Control, ort: Vector2) -> void:
+	var amboss := Polygon2D.new()
+	amboss.polygon = PackedVector2Array([Vector2(-36, -40), Vector2(36, -40), Vector2(22, -26), Vector2(10, -26), Vector2(14, -10),
+			Vector2(26, 0), Vector2(-26, 0), Vector2(-14, -10), Vector2(-10, -26), Vector2(-22, -26)])
+	amboss.color = Color("4a5058")
+	amboss.position = ort + Vector2(0, -160)
+	amboss.z_index = 7
+	feld.add_child(amboss)
+	var tween := amboss.create_tween()
+	tween.tween_property(amboss, "position", ort, 0.16).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	await tween.finished
+	Geraeusche.play("treffer", 0.4)
+	k._shake(10.0)
+	Fx.spawn(feld, Fx.Kind.SPARKS, ort, STAUB, 110.0, 0.5)
+	Fx.spawn(feld, Fx.Kind.RING, ort, STAUB, 120.0, 0.35)
+	var weg := amboss.create_tween()
+	weg.tween_property(amboss, "modulate:a", 0.0, 0.3).set_delay(0.6)
+	weg.tween_callback(amboss.queue_free)
+	await k.wait(0.25)
