@@ -398,5 +398,101 @@
 			}
 		],
 		"ult": "Tanz der tausend Klingen"
+	},
+	"singer": {
+		"grundreihe": {
+			"name": "Ausweichen",
+			"info": "Perfekt ausweichen wehrt den Treffer ab. Kostet keine Punkte."
+		},
+		"faehigkeiten": [
+			{
+				"id": "spark",
+				"name": "Sternenfunke",
+				"reihe": 1,
+				"max": 5,
+				"grundangriff": true,
+				"info": "Dein normaler Angriff: kleiner Magie-Angriff, +1 Kometen-Sternbild."
+			},
+			{
+				"id": "lullaby",
+				"name": "Mondwiegenlied",
+				"reihe": 1,
+				"max": 5,
+				"info": "Heilung über drei Runden für die ganze Gruppe, +1 Mond-Sternbild."
+			},
+			{
+				"id": "sternenglanz",
+				"name": "Sternenglanz",
+				"reihe": 1,
+				"max": 5,
+				"passiv": true,
+				"info": "Ist ein Sternbild voll, wirkt das nächste passende Lied stärker oder auf die ganze Gruppe."
+			},
+			{
+				"id": "polar",
+				"name": "Polarstern",
+				"reihe": 2,
+				"max": 5,
+				"info": "Mehr Verteidigung für einen Verbündeten, verbraucht Mond-Resonanz und hält dafür länger."
+			},
+			{
+				"id": "comet",
+				"name": "Kometenlied",
+				"reihe": 2,
+				"max": 5,
+				"info": "Mehr Angriff für die Gruppe, verbraucht Kometen-Resonanz und hält dafür länger."
+			},
+			{
+				"id": "nachhall",
+				"name": "Nachhall",
+				"reihe": 2,
+				"max": 5,
+				"passiv": true,
+				"info": "Mondwiegenlied, Polarstern und Kometenlied wirken eine Runde länger."
+			},
+			{
+				"id": "mondschild",
+				"name": "Mondschild",
+				"reihe": 3,
+				"max": 5,
+				"braucht": {
+					"polar": 3
+				},
+				"info": "Verbraucht die ganze Mond-Resonanz: Schild für die ganze Gruppe."
+			},
+			{
+				"id": "meteor",
+				"name": "Sternschnuppenregen",
+				"reihe": 3,
+				"max": 5,
+				"braucht": {
+					"comet": 3
+				},
+				"info": "Verbraucht die ganze Kometen-Resonanz: so viele Sternschnuppen, verteilt auf alle Gegner."
+			},
+			{
+				"id": "verblassen",
+				"name": "Langsames Verblassen",
+				"reihe": 3,
+				"max": 5,
+				"passiv": true,
+				"info": "Ein Sternbild verblasst erst nach 3 statt 2 Runden ohne Füllen."
+			},
+			{
+				"id": "rueckkehr",
+				"name": "Lied der Rückkehr",
+				"reihe": 4,
+				"max": 5,
+				"info": "Holt einen gefallenen Verbündeten mit wenig Leben zurück, halbiert beide Sternbilder. Einmal pro Kampf."
+			},
+			{
+				"id": "dissonanz",
+				"name": "Dissonanz",
+				"reihe": 4,
+				"max": 5,
+				"info": "Ein schiefer Ton: Der Gegner rutscht zurück und macht in seinem nächsten Zug weniger Schaden."
+			}
+		],
+		"ult": "Himmelszelt"
 	}
 }

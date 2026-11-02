@@ -37,7 +37,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D8d:** Baum des Monster-Zähmers. (K.5) – Status: fertig (02.11.2026; Befehl entfällt laut Steckbrief)
 - **D8e:** Baum des Rüstungsschmieds. (K.5) – Status: fertig (02.11.2026; Ult Meisterstück nach Steckbrief, dazu ein Schild)
 - **D8f:** Baum der Klingentänzerin. (K.5) – Status: fertig (02.11.2026)
-- **D8g:** Baum der Sternensängerin. (K.5) – Status: offen
+- **D8g:** Baum der Sternensängerin. (K.5) – Status: fertig (02.11.2026; Lieder nach Steckbrief umgebaut, Himmelszelt behält seinen Schaden, Urbaum mit 5 statt 4 Zügen bis zum Verschlingen)
 - **D9:** Eigene Bewegungen pro Fähigkeit, filmische Ult. (K.6) – Status: offen
 - **T2:** Testtag Kampfgefühl (Marco). – Status: offen
 

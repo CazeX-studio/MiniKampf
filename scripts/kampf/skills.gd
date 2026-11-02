@@ -280,22 +280,23 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 				list.append({id = "manatrank_trinken", name = "Manatrank (%d)" % f.wares.manatrank, info = "+%d Mana · Gürtel: %s" % [NOVIZE.manatrank, free],
 						target = "ally", guertel = true})
 		"singer":
-			var lullaby_info := "Heilt 24, +1 Schutz-Sternbild · 8 Mana"
-			if f.res_def >= Fighter.MAX_RES:
-				lullaby_info = "Sternenglanz: heilt die GANZE Gruppe 24 · 8 Mana"
-			var polar_info := "Abwehr+ und früher dran, +1 Schutz-Sternbild · 10 Mana"
-			if f.res_def >= Fighter.MAX_RES:
-				polar_info = "Sternenglanz: Abwehr+ und früher dran für die GANZE Gruppe · 10 Mana"
-			var comet_info := "Verbraucht Angriffs-Resonanz: 8 + 8 je Punkt · 10 Mana"
-			if f.res_off >= Fighter.MAX_RES:
-				comet_info = "Sternenglanz: trifft ALLE Gegner mit 48 · 10 Mana"
+			# Steckbriefe (Sitzung 28): Mond-Sternbild (Schutz, res_def) und Kometen-Sternbild (Angriff, res_off)
+			var glanz := _sternenglanz(f)
+			var lullaby_info := "Heilt alle 3 Runden lang je %d, +1 Mond-Sternbild · 8 Mana" % _wiegen_heal(f)
+			var polar_info := "Verbraucht Mond-Resonanz (%d): Abwehr+ für %d Runden · 10 Mana" % [f.res_def, 2 + f.res_def + _nachhall(f)]
+			if glanz and f.res_def >= Fighter.MAX_RES:
+				polar_info = "Sternenglanz: Abwehr+ für die GANZE Gruppe, %d Runden · 10 Mana" % (2 + f.res_def + _nachhall(f))
+			var comet_info := "Verbraucht Kometen-Resonanz (%d): Angriff+ für alle, %d Runden · 10 Mana" % [f.res_off, 1 + f.res_off + _nachhall(f)]
 			list = [
-				{id = "spark", name = "Sternenfunke", info = "11 Magie, +1 Angriffs-Sternbild", target = "enemy"},
-				{id = "lullaby", name = "Mondwiegenlied", info = lullaby_info, target = "ally", mana = 8},
-				{id = "polar", name = "Polarstern", info = polar_info, target = "ally", mana = 10, cd = 3},
-				{id = "comet", name = "Kometenlied", info = comet_info, target = "enemy", mana = 10},
-				{id = "meteor", name = "Sternschnuppenregen", info = "Verbraucht Schutz-Resonanz: alle 7 je Punkt · 10 Mana", target = "none", mana = 10},
-				{id = "ult", name = "Himmelszelt", info = "Alle +35 LP, Angriff+/Abwehr+, 22 Sternenkraft", target = "none"},
+				{id = "spark", name = "Sternenfunke", info = "14 Magie, +1 Kometen-Sternbild", target = "enemy"},
+				{id = "lullaby", name = "Mondwiegenlied", info = lullaby_info, target = "none", mana = 8},
+				{id = "polar", name = "Polarstern", info = polar_info, target = "ally", mana = 10},
+				{id = "comet", name = "Kometenlied", info = comet_info, target = "none", mana = 10},
+				{id = "mondschild", name = "Mondschild", info = "Verbraucht Mond-Resonanz: Schild %d für alle · 12 Mana" % (8 * f.res_def), target = "none", mana = 12},
+				{id = "meteor", name = "Sternschnuppenregen", info = "Verbraucht Kometen-Resonanz: %d Sternschnuppen à 14 auf alle Gegner · 12 Mana" % f.res_off, target = "none", mana = 12},
+				{id = "rueckkehr", name = "Lied der Rückkehr", info = "Holt einen Gefallenen zurück, halbe Sternbilder · einmal pro Kampf · 16 Mana", target = "ally_fallen", mana = 16},
+				{id = "dissonanz", name = "Dissonanz", info = "8 Magie, Ziel rutscht zurück und macht weniger Schaden · 8 Mana", target = "enemy", mana = 8},
+				{id = "ult", name = "Himmelszelt", info = "Alle +%d LP und stark gestärkt, 22 Sternenkraft an alle Gegner, leert beide Sternbilder" % (20 + 6 * (f.res_off + f.res_def)), target = "none"},
 			]
 		_:
 			# Gezähmtes Monster: kämpft mit seinem eigenen Angriff für den Zähmer
@@ -448,12 +449,17 @@ func blocked_reason(f: Fighter, ab: Dictionary) -> String:
 			# Bei vollem Gepäck geht das neue Monster nach dem Kampf in den Stall
 			if valid_targets(f, ab).is_empty():
 				return "Kein Monster geschwächt"
-		"comet":
+		"comet", "meteor":
 			if f.res_off == 0:
 				return "Keine Resonanz"
-		"meteor":
+		"polar", "mondschild":
 			if f.res_def == 0:
 				return "Keine Resonanz"
+		"rueckkehr":
+			if f.has_meta("rueckkehr_benutzt"):
+				return "Schon gesungen"
+			if valid_targets(f, ab).is_empty():
+				return "Niemand gefallen"
 	return ""
 
 
@@ -492,6 +498,8 @@ func valid_targets(f: Fighter, ab: Dictionary) -> Array[Fighter]:
 				return Sandbox.ENEMIES[e.klass].has("tame") and e.hp * 2 <= e.max_hp)
 		"ally":
 			return c.allies()
+		"ally_fallen":
+			return c.heroes.filter(func(h: Fighter) -> bool: return not h.is_alive())
 		"ally_hero":
 			return c.alive(c.heroes)
 		"ally_other":
@@ -1308,59 +1316,106 @@ func _singer(f: Fighter, id: String, target: Fighter) -> void:
 	match id:
 		"spark":
 			c.projectile(f, target, Color("ffe680"))
-			c.hit(f, target, 11, "magic")
+			c.hit(f, target, 14, "magic")
 			_add_resonance(f, true)
 		"lullaby":
-			if f.res_def >= Fighter.MAX_RES:
-				c.add_log("[color=#6fe0ff]Sternenglanz![/color] Das Wiegenlied klingt für die ganze Gruppe.")
-				for a in c.allies():
-					c.heal(f, a, 24)
-			else:
-				c.heal(f, target, 24)
+			# Heilung über drei Runden für die ganze Gruppe (Nachhall: eine Runde länger)
+			for a in c.allies():
+				a.set_meta("wiegenlied", {zuege = 3 + _nachhall(f), heilung = _wiegen_heal(f), quelle = f})
+				c.heal(f, a, _wiegen_heal(f))
+				c.float_text(a, "Mondwiegenlied", Color("cfe6ff"), 30)
 			_add_resonance(f, false)
 		"polar":
-			# Polarstern: ein fester Leitstern. Mit vollem Schutz-Sternbild (Sternenglanz) für alle.
+			# Verbraucht die Mond-Resonanz und hält dafür länger. Sternenglanz (volles Sternbild): für alle.
+			var used := f.res_def
 			var targets: Array[Fighter] = [target]
-			if f.res_def >= Fighter.MAX_RES:
+			if _sternenglanz(f) and used >= Fighter.MAX_RES:
 				c.add_log("[color=#6fe0ff]Sternenglanz![/color] Der Polarstern leuchtet für die ganze Gruppe.")
 				targets = c.allies()
+			f.res_def = 0
+			f.add_ult(used * 10)
 			for a in targets:
-				a.def_buff_turns = BattleState.BUFF_TURNS + 1
-				c.hasten(a, 0.3)
+				a.def_buff_turns = maxi(a.def_buff_turns, 2 + used + _nachhall(f))
+				c.hasten(a, 0.2)
 				c.burst(a, Color("cfe6ff"), 90.0)
 				c.float_text(a, "Polarstern", Color("cfe6ff"), 30)
-			_add_resonance(f, false)
 		"comet":
+			# Mehr Angriff für die Gruppe, je mehr Kometen-Resonanz, desto länger
 			var used := f.res_off
 			f.res_off = 0
-			f.add_ult(used * 12)
-			var dmg := 8.0 + 8.0 * used
-			var targets: Array[Fighter] = [target]
-			if used >= Fighter.MAX_RES:
-				c.add_log("[color=#ff8a3d]Sternenglanz![/color] Der Komet trifft alle Gegner.")
-				targets = c.alive(c.enemies)
-			for enemy in targets:
-				c.projectile_bg(f, enemy, Color("ff8a3d"))
-			c.wait(0.3)
-			for enemy in targets:
-				c.hit(f, enemy, dmg, "magic")
-		"meteor":
+			f.add_ult(used * 10)
+			for a in c.allies():
+				a.atk_buff_turns = maxi(a.atk_buff_turns, 1 + used + _nachhall(f))
+				c.float_text(a, "Kometenlied", Color("ff8a3d"), 30)
+		"mondschild":
 			var used := f.res_def
 			f.res_def = 0
-			f.add_ult(used * 12)
 			for a in c.allies():
-				c.heal(f, a, 7 * used)
+				c.give_shield(f, a, 8 * used)
+			c.add_log("Mondschild: Eine silberne Kuppel legt sich über die Gruppe.")
+		"meteor":
+			# Sternschnuppen: so viele wie Kometen-Resonanz, verteilt auf alle Gegner
+			var used := f.res_off
+			f.res_off = 0
+			f.add_ult(used * 8)
+			# Gleichmäßig verteilt: der Reihe nach auf jeden Gegner
+			for i in used:
+				var ziele := c.alive(c.enemies)
+				if ziele.is_empty():
+					break
+				var t: Fighter = ziele[i % ziele.size()]
+				c.projectile(f, t, Color("ffe680"), 0.15)
+				c.hit(f, t, 14, "magic", "Sternenkraft")
+		"rueckkehr":
+			if not target.is_alive():
+				f.set_meta("rueckkehr_benutzt", true)
+				target.hp = maxi(1, roundi(target.max_hp * 0.3))
+				target.next_time = c.now + target.turn_delay() * 0.5
+				f.res_off /= 2
+				f.res_def /= 2
+				c._hp_changed(target)
+				c.float_text(target, "Lied der Rückkehr!", Color("fff3b0"), 30)
+				c.add_log("%s singt %s zurück ins Leben." % [f.display_name, target.display_name])
+				c.refresh()
+		"dissonanz":
+			c.projectile(f, target, Color("ff5050"))
+			c.hit(f, target, 8, "magic")
+			if target.is_alive():
+				c.delay(target, 0.5)
+				target.schwach_turns = maxi(target.schwach_turns, 1)
+				c.float_text(target, "Aus dem Takt", Color("ff5050"), 30)
 		"ult":
+			# Himmelszelt: Heilung und starke Stärkung, je mehr Resonanz, desto stärker. Danach sind beide leer.
+			var total := f.res_off + f.res_def
 			for a in c.allies():
-				c.heal(f, a, 35)
-				a.atk_buff_turns = BattleState.BUFF_TURNS + 1
-				a.def_buff_turns = BattleState.BUFF_TURNS + 1
+				c.heal(f, a, 20 + 6 * total)
+				a.atk_buff_turns = maxi(a.atk_buff_turns, BattleState.BUFF_TURNS + 1 + total / 3)
+				a.def_buff_turns = maxi(a.def_buff_turns, BattleState.BUFF_TURNS + 1 + total / 3)
+			f.res_off = 0
+			f.res_def = 0
+			c.add_log("[color=#fff3b0][b]Himmelszelt![/b][/color] Das Sternenlicht fällt auf alle.")
+			# Ergänzung zum Steckbrief: das Sternenlicht trifft auch die Gegner (wie bisher)
 			for enemy in c.alive(c.enemies):
 				c.projectile_bg(f, enemy, Elements.color("Sternenkraft"))
 			c.wait(0.3)
 			for enemy in c.alive(c.enemies):
 				c.hit(f, enemy, 22, "magic", "Sternenkraft")
 	c.wait(0.1)
+
+
+## Sternenglanz (passiv): mit Baum nur, wenn gelernt.
+func _sternenglanz(f: Fighter) -> bool:
+	return not f.has_meta("faehigkeiten") or skill_level(f, "sternenglanz") > 0
+
+
+## Nachhall (passiv): Lieder wirken eine Runde länger.
+func _nachhall(f: Fighter) -> int:
+	return 1 if f.has_meta("faehigkeiten") and skill_level(f, "nachhall") > 0 else 0
+
+
+## Heilung des Mondwiegenlieds je Runde, mit vollem Mond-Sternbild (Sternenglanz) stärker.
+func _wiegen_heal(f: Fighter) -> int:
+	return 15 if _sternenglanz(f) and f.res_def >= Fighter.MAX_RES else 11
 
 
 func _add_resonance(f: Fighter, offensive: bool) -> void:
@@ -1456,10 +1511,12 @@ func begin_turn(f: Fighter) -> void:
 				c.wait(0.6)
 		"singer":
 			# Verblassen: Ein Sternbild, das 2 Züge nicht gefüllt wurde, verliert jeden Zug 1 Resonanz.
-			if f.off_idle >= 2 and f.res_off > 0:
+			# Langsames Verblassen (passiv): erst nach 3 Zügen
+			var frist := 3 if f.has_meta("faehigkeiten") and skill_level(f, "verblassen") > 0 else 2
+			if f.off_idle >= frist and f.res_off > 0:
 				f.res_off -= 1
 				c.float_text(f, "Verblassen", Color("ff8a3d"))
-			if f.def_idle >= 2 and f.res_def > 0:
+			if f.def_idle >= frist and f.res_def > 0:
 				f.res_def -= 1
 				c.float_text(f, "Verblassen", Color("6fe0ff"))
 			f.off_idle += 1

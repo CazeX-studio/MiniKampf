@@ -693,6 +693,14 @@ func _begin_turn(f: Fighter) -> void:
 	f.vuln_turns = maxi(f.vuln_turns - 1, 0)
 	f.blind_turns = maxi(f.blind_turns - 1, 0)
 	f.schwach_turns = maxi(f.schwach_turns - 1, 0)
+	# Mondwiegenlied: Heilung über mehrere Runden
+	if f.has_meta("wiegenlied"):
+		var lied: Dictionary = f.get_meta("wiegenlied")
+		lied.zuege = int(lied.zuege) - 1
+		if f.is_alive():
+			heal(lied.quelle as Fighter, f, int(lied.heilung))
+		if int(lied.zuege) <= 0:
+			f.remove_meta("wiegenlied")
 	# Rüstungsschmied: Glühende Rüstung und Meisterstück laufen ab
 	for zeit: String in ["gluehend", "meisterstueck"]:
 		if f.has_meta(zeit):

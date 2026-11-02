@@ -250,6 +250,37 @@ func _init() -> void:
 	_check(tanz.blades >= 2, "Festhalten hält zu wenige Klingen (%d von 5 nach 4 Treffern)" % tanz.blades)
 	bt.execute(tanz, babs.ult, null)
 	_check(tanz.blades == 0, "Die Ult endet nicht mit dem Klingensturm")
+	# D8g: Sternensängerin
+	BattleRequest.player_bar = ["lullaby", "polar", "comet", "mondschild", "meteor", "dissonanz"]
+	BattleRequest.player_skills = {lullaby = 1, polar = 3, comet = 3, mondschild = 1, meteor = 1, dissonanz = 1, rueckkehr = 1, sternenglanz = 1, nachhall = 1, verblassen = 1}
+	BattleRequest.prepare("splitterbaer", 25, 0, "singer")
+	var sg := BattleState.new(null, [] as Array[String], "", 10)
+	sg.setup = BattleRequest.setup
+	sg._create_heroes()
+	var saengerin: Fighter = sg.heroes[0]
+	var s1 := Fighter.new("Eins", "wiesenhoppler", "Erde", false, 400, 10, Color.WHITE)
+	var s2 := Fighter.new("Zwei", "wiesenhoppler", "Erde", false, 400, 10, Color.WHITE)
+	sg.enemies.append_array([s1, s2])
+	var gabs := {}
+	for a in sg.skills.abilities(saengerin):
+		gabs[a.id] = a
+	for id: String in ["spark", "lullaby", "polar", "comet", "mondschild", "meteor", "dissonanz", "ult"]:
+		_check(gabs.has(id), "Sternensängerin hat %s nicht" % id)
+	saengerin.mana = saengerin.max_mana
+	sg.execute(saengerin, gabs.lullaby, null)
+	_check(saengerin.has_meta("wiegenlied") and saengerin.res_def == 1, "Mondwiegenlied heilt nicht über Zeit oder füllt das Mond-Sternbild nicht")
+	saengerin.res_off = 3
+	sg.execute(saengerin, gabs.comet, null)
+	_check(saengerin.res_off == 0 and saengerin.atk_buff_turns >= 4, "Kometenlied stärkt die Gruppe nicht (verbraucht Resonanz, hält länger)")
+	saengerin.res_def = 4
+	sg.execute(saengerin, gabs.mondschild, null)
+	_check(saengerin.res_def == 0 and saengerin.shield_total() >= 32, "Mondschild wirkt nicht")
+	saengerin.res_off = 4
+	sg.execute(saengerin, gabs.meteor, null)
+	_check(saengerin.res_off == 0 and s1.hp < 400 and s2.hp < 400, "Sternschnuppenregen trifft nicht alle Gegner")
+	var zeit := s1.next_time
+	sg.execute(saengerin, gabs.dissonanz, s1)
+	_check(s1.next_time > zeit and s1.schwach_turns > 0, "Dissonanz wirkt nicht")
 	BattleRequest.player_bar = []
 	BattleRequest.player_skills_known = false
 	BattleRequest.player_skills = {}

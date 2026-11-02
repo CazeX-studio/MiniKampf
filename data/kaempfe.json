@@ -433,7 +433,7 @@
 		"verloren_text": "Die Wurzeln ziehen dich unter die Erde … Du kommst am Eingang der Höhle wieder zu dir.",
 		"zurueck_zum_start": true,
 		"gegner_leben": 0.6,
-		"verschlingen_zuege": 4
+		"verschlingen_zuege": 5
 	},
 	"kobalt2_moosling": {
 		"name": "Kobalts Revanche",
