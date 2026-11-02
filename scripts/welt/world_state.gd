@@ -25,7 +25,7 @@ extends RefCounted
 ##   {type = "leiste", faehigkeit = "…", platz = 0–5}  auf die feste Leiste legen (platz -1 = erster freier;
 ##       ist sie schon drauf, kommt sie herunter)
 ##   {type = "anlegen", gegenstand = "…"} / {type = "ablegen", platz = "waffe"}  Ausrüstung (Projekt 14, K.1)
-##   {type = "aussehen", hut = "…", ruecken = "…", farben = "…"}  Aussehen-Plätze ändern ("" = keins, fehlt = bleibt)
+##   {type = "aussehen", hut = "…", ruecken = "…", farben = "…", waffe = "…"}  Aussehen-Plätze ändern ("" = keins, fehlt = bleibt)
 ##   {type = "wegwerfen", gegenstand = "…"}  alle Stück eines Gegenstands aus der Tasche wegwerfen
 ##   {type = "beute_nehmen", gegenstand = "…"} / {type = "beute_lassen"}  Beute, die nicht in die Tasche gepasst hat
 ##   {type = "test_geld", bronze = 75} / {type = "test_tasche"} / {type = "test_beute"}  Testknöpfe (nur im Godot-Editor)
@@ -479,7 +479,7 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			# Aussehen-Plätze (Projekt 13, Schritt 6): nur das Aussehen ändert sich, die Werte bleiben
 			if FigurTeile.kann_aussehen(p.look):
 				var aussehen := FigurTeile.aussehen_von(p.look)
-				for platz: String in ["hut", "ruecken", "farben"]:
+				for platz: String in ["hut", "ruecken", "farben", "waffe"]:
 					if cmd.has(platz):
 						aussehen[platz] = str(cmd[platz])
 				p.look = FigurTeile.mit_aussehen(p.look, aussehen)

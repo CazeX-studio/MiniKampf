@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3hp4uguh7oxl"
-path="res://.godot/imported/reiseumhang_vorn.png-0aaead79778d2073e84b6fbfb326c1cc.ctex"
+uid="uid://gbur3hdg51af"
+path="res://.godot/imported/reiseumhang_vorn_f1.png-8c0156e801e4bd7e6ef5366bec7a8f73.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/teile/ruecken/reiseumhang_vorn.png"
-dest_files=["res://.godot/imported/reiseumhang_vorn.png-0aaead79778d2073e84b6fbfb326c1cc.ctex"]
+source_file="res://assets/teile/ruecken/reiseumhang_vorn_f1.png"
+dest_files=["res://.godot/imported/reiseumhang_vorn_f1.png-8c0156e801e4bd7e6ef5366bec7a8f73.ctex"]
 
 [params]
 

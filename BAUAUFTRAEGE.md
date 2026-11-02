@@ -16,11 +16,11 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 
 ### Aussehen
 
-- **D2a:** Regeln festschreiben, Bilder prüfen. (Fahrplan A.1, Projekt 13 Schritt 1–2) – Status: fertig (02.11.2026, LOOK.md Abschnitt 9a und 12; der Zusatz zum Stil-Block wartet auf Marcos Ja)
-- **D2b:** Kurzschwert als eigenes Teil (braucht Marcos Novizen-Blätter ohne Klinge). (Fahrplan A.1, Projekt 13 Schritt 3) – Status: offen
+- **D2a:** Regeln festschreiben, Bilder prüfen. (Fahrplan A.1, Projekt 13 Schritt 1–2) – Status: fertig (02.11.2026, LOOK.md Abschnitt 9a und 12; der Zusatz zum Stil-Block ist seit 02.11. von Marco bestätigt)
+- **D2b:** Kurzschwert als eigenes Teil (braucht Marcos Novizen-Blätter ohne Klinge). (Fahrplan A.1, Projekt 13 Schritt 3) – Status: fertig (02.11.2026)
 - **D3a:** Hut und Rückenteil als Schicht, mit Platzhaltern bis Marcos Probe-Hut und Probe-Umhang da sind. (Fahrplan A.2, Projekt 13 Schritt 4) – Status: fertig (02.11.2026)
 - **D3b:** Umfärben, Probe an Hut und Umhang. (Fahrplan A.2, Projekt 13 Schritt 5) – Status: fertig (02.11.2026)
-- **D3c:** Aussehen-Plätze: Fenster zum Auswählen, im Spielstand gespeichert. (Fahrplan A.2, Projekt 13 Schritt 6) – Status: fertig (02.11.2026; Waffen-Aussehen kommt mit D2b)
+- **D3c:** Aussehen-Plätze: Fenster zum Auswählen, im Spielstand gespeichert. (Fahrplan A.2, Projekt 13 Schritt 6) – Status: fertig (02.11.2026; Waffen-Aussehen kam mit D2b)
 - **T1:** Testtag Aussehen (Marco). – Status: offen
 
 ### Kampfgefühl
@@ -397,12 +397,12 @@ _Am 28.10. geteilt: Kofis Kopf-Blatt kam zuerst._
 ### Schritt 3: Waffe als eigenes Teil
 - **Ziel:** Pro Bild ein Handpunkt, die Waffe hängt dort und bewegt sich mit. Probe mit dem Kurzschwert des Novizen.
 - **So testest du es:** Mit dem Novizen laufen und kämpfen, das Schwert sitzt immer in der Hand.
-- **Status:** offen
+- **Status:** fertig (02.11.2026: Novizen-Körper kommen aus Marcos Blättern ohne Klinge. `griff` und `waffe_winkel` je Bild in `data/figurteile.json` (`tools/waffe_punkte.py`), Klinge und Parierstange als Bild in `assets/teile/waffe/` (`tools/aussehen_bilder.py`), der gemalte Griff bleibt in der Hand. Beim Wirken ist kein Schwert zu sehen. Wanderhut und Reiseumhang sind jetzt Marcos Bilder, der Umhang weht im Laufen. Waffen-Aussehen wählbar: Kurzschwert und Krummklinge.)
 
 ### Schritt 4: Kopfbedeckung und Rückenteil als Schichten
 - **Ziel:** Ein Probe-Hut über dem Kopf, ein Probe-Umhang hinter dem Körper.
 - **So testest du es:** Hut und Umhang an- und ablegen, beide sitzen in allen Richtungen und Bewegungen richtig.
-- **Status:** fertig (02.11.2026: Hut wird auf den Kopf gesetzt und neigt sich mit, Rückenteil hängt am Hals, von hinten liegt es über dem Körper, beim Liegen ist es nicht zu sehen. Teile in `data/aussehen_teile.json`, Bilder in `assets/teile/hut/` und `assets/teile/ruecken/`. Wanderhut und Reiseumhang sind Platzhalter aus `tools/platzhalter_aussehen.py`, bis Marcos Blätter da sind.)
+- **Status:** fertig (02.11.2026: Hut wird auf den Kopf gesetzt und neigt sich mit, Rückenteil hängt am Hals, von hinten liegt es über dem Körper, beim Liegen ist es nicht zu sehen. Teile in `data/aussehen_teile.json`, Bilder in `assets/teile/hut/` und `assets/teile/ruecken/`. Wanderhut und Reiseumhang waren zuerst Platzhalter, seit D2b sind es Marcos Blätter.)
 
 ### Schritt 5: Umfärben
 - **Ziel:** Das Spiel tauscht die festen Farbtöne eines Klassen-Körpers gegen eine andere Palette (Probe: Set der Vulkanschmiede in Glutrot und Schwarz). Novizen werden nicht umgefärbt.
@@ -412,7 +412,7 @@ _Am 28.10. geteilt: Kofis Kopf-Blatt kam zuerst._
 ### Schritt 6: Aussehen-Plätze
 - **Ziel:** Werte und Aussehen getrennt, ein Fenster zum Auswählen von Hut, Rückenteil und Waffen-Aussehen, im Spielstand gespeichert.
 - **So testest du es:** Ein anderes Aussehen wählen, die Werte bleiben gleich, nach dem Neustart ist das Aussehen noch da.
-- **Status:** fertig (02.11.2026: Im Werte-Fenster (C) gibt es „Aussehen“ mit Hut, Rücken und Farben, nur für Figuren aus „Figur erstellen“. Das Aussehen hängt am Namen der Figur (`novize_w+mira#hut=…,ruecken=…,farben=…`), kommt so in Welt, Kampf, zu Mitspielern und in den Spielstand. Befehl `aussehen` in WorldState. Waffen-Aussehen fehlt noch, es kommt mit der Waffe als eigenem Teil (D2b).)
+- **Status:** fertig (02.11.2026: Im Werte-Fenster (C) gibt es „Aussehen“ mit Hut, Rücken und Farben, nur für Figuren aus „Figur erstellen“. Das Aussehen hängt am Namen der Figur (`novize_w+mira#hut=…,ruecken=…,farben=…`), kommt so in Welt, Kampf, zu Mitspielern und in den Spielstand. Befehl `aussehen` in WorldState. Das Waffen-Aussehen kam mit der Waffe als eigenem Teil (D2b).)
 
 ### Testtag Aussehen
 - Marco prüft, ob alles einheitlich aussieht. Erst danach werden die Klassen-Körper nach den neuen Regeln gezeichnet (Projekt 11, Schritte 4 und 6, Bogenschütze neu).

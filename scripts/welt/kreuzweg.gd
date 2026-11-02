@@ -2906,7 +2906,7 @@ func _ausruestung_zeilen(p: PlayerState) -> void:
 	_rep_box.add_child(UiStil.trennlinie())
 
 
-## Aussehen-Plätze (Projekt 13, Schritt 6): Hut, Rückenteil und Farben wählen. Nur Aussehen, die Werte bleiben.
+## Aussehen-Plätze (Projekt 13, Schritt 6): Hut, Rückenteil, Farben und Waffe wählen. Nur Aussehen, die Werte bleiben.
 ## Nur für Figuren aus „Figur erstellen“ (Körper und Kopf).
 func _aussehen_zeilen(p: PlayerState) -> void:
 	if not FigurTeile.kann_aussehen(p.look):
@@ -2916,12 +2916,12 @@ func _aussehen_zeilen(p: PlayerState) -> void:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 8)
 	var plaetze := [["hut", "aussehen_hut", FigurTeile.hut_liste()], ["ruecken", "aussehen_ruecken", FigurTeile.ruecken_liste()],
-			["farben", "aussehen_farben", FigurTeile.paletten_liste()]]
+			["farben", "aussehen_farben", FigurTeile.paletten_liste()], ["waffe", "aussehen_waffe", FigurTeile.waffe_liste()]]
 	for platz: Array in plaetze:
 		var teile: Dictionary = platz[2]
 		var ids: Array = [""] + teile.keys()
 		var jetzt := str(aussehen[platz[0]])
-		var leer := GameData.text("aussehen_grundfarben" if platz[0] == "farben" else "aussehen_keins")
+		var leer := GameData.text({"farben": "aussehen_grundfarben", "waffe": "aussehen_standardwaffe"}.get(platz[0], "aussehen_keins"))
 		var button := _small_button("%s: %s" % [GameData.text(platz[1]), teile.get(jetzt, leer)], func() -> void:
 			var neu := {}
 			neu[platz[0]] = ids[(ids.find(jetzt) + 1) % ids.size()]
@@ -2931,8 +2931,7 @@ func _aussehen_zeilen(p: PlayerState) -> void:
 		button.custom_minimum_size.x = 190
 		row.add_child(button)
 	_rep_box.add_child(row)
-	# Waffen-Aussehen: kommt mit der Waffe als eigenem Teil (D2b)
-	var hinweis := _label(GameData.text("aussehen_waffe"), 14, Color("a0a0a0"))
+	var hinweis := _label(GameData.text("aussehen_hinweis"), 14, Color("a0a0a0"))
 	hinweis.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	hinweis.custom_minimum_size.x = 100
 	_rep_box.add_child(hinweis)

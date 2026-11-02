@@ -1,7 +1,7 @@
 """Körper-Blätter mit grünem Kopf-Platzhalter einbauen (Projekt 11, Auftrag B8 in Spieldesign/GRAFIK_AUFTRAG.md).
 
-Blätter in tools/vorlagen/<körper>_kampf_a.png, _kampf_b.png, _welt.png (Aufbau wie Kofis Blätter, fehlende Blätter
-werden übersprungen). Ablauf:
+Blätter in tools/vorlagen/<körper>_kampf_a_ohne_klinge.png, _kampf_b_ohne_klinge.png, _welt_ohne_klinge.png (Aufbau wie
+Kofis Blätter, fehlende Blätter werden übersprungen). Die alten Blätter mit Klinge braucht nur noch tools/waffe_punkte.py. Ablauf:
 1. Zerlegen wie bei tools/figur_bilder.py: ganze Bilder (mit grünem Oval) nach assets/figuren/<körper>_<anim>_anim_f<n>.png.
 2. Das grüne Oval wird herausgenommen: assets/teile/koerper/<körper>_<anim>_f<n>.png.
 3. Halspunkt = Mitte des Ovals, knapp unter seiner sichtbaren Unterkante (dort, wo es im Halstuch verschwindet).
@@ -30,6 +30,8 @@ DATEN = WURZEL / "data" / "figurteile.json"
 KOERPER = {"novize_m": "Novize (m)", "novize_w": "Novizin (w)"}
 ## Geschlecht des Körpers: bei „Figur erstellen“ passen nur Köpfe desselben Geschlechts
 GESCHLECHT = {"novize_m": "m", "novize_w": "w"}
+## Die Klinge kommt als eigenes Teil dazu (Projekt 13, Schritt 3), der Griff bleibt in der Hand
+ZUSATZ = "_ohne_klinge"
 ## Abweichende Reihen einzelner Blätter (sonst wie Kofi): Körper -> Blatt -> Reihen
 REIHEN = {
 	"novize_m": {
@@ -49,6 +51,8 @@ RUND = {"novize_m": ["kampf_a"], "novize_w": ["kampf_a"]}
 LAENGLICH = 1.12
 ## Von dieser Figur kommen die Köpfe (alle Köpfe sind auf ihre Größe gebracht)
 KOPF_QUELLE = "kofi"
+## Lose Flächen unter dieser Größe (Bildpunkte) sind Reste, keine Figur
+STAUB = 200
 ## So weit unter der sichtbaren Unterkante des Ovals sitzt der Hals (Pixel)
 HALS_TIEFE = 2
 
@@ -126,6 +130,15 @@ def neigung(bild, platz, rund=False):
 	return [round(float(punkt[0]), 1), round(float(punkt[1]), 1)], round(winkel, 1)
 
 
+def staub_weg(bild):
+	"""Kleine lose Reste um die Figur (Funken, Spuren der entfernten Klinge) werden durchsichtig."""
+	lab, n = ndimage.label(bild[..., 3] > 20, structure=np.ones((3, 3)))
+	groessen = ndimage.sum_labels(np.ones_like(lab), lab, range(1, n + 1))
+	for i, groesse in enumerate(groessen, 1):
+		if groesse < STAUB:
+			bild[lab == i, 3] = 0
+
+
 def main():
 	daten = json.loads(DATEN.read_text()) if DATEN.exists() else {}
 	for koerper in sys.argv[1:] or list(KOERPER):
@@ -133,10 +146,10 @@ def main():
 		ziel = None
 		runde = set()
 		for name, reihen in FIGUREN[KOPF_QUELLE].items():
-			if not (VORLAGEN / f"{koerper}_{name}.png").exists():
+			if not (VORLAGEN / f"{koerper}_{name}{ZUSATZ}.png").exists():
 				print(f"{koerper}: Blatt {name} fehlt noch")
 				continue
-			teil = blatt(koerper, name, REIHEN.get(koerper, {}).get(name, reihen))
+			teil = blatt(koerper, name, REIHEN.get(koerper, {}).get(name, reihen), ZUSATZ)
 			# Alle Blätter gleich groß wie Blatt 1 (gemessen von der Oberkante des Ovals bis zu den Füßen)
 			hoehe = kopf_hoehe(teil[GROESSE_VON[name]])
 			if ziel is None:

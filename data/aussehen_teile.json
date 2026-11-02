@@ -1,42 +1,35 @@
 {
-	"_hinweis": "Aussehen-Schichten (Projekt 13, Schritt 4). hut: anker = Punkt im Hutbild, der auf die Kopfmitte kommt, sitz = so weit (Anteil der Kopfhöhe) unter dem Scheitel. ruecken: anker = Punkt an der Schulterkante, kommt auf den Halspunkt des Körpers plus versatz. Bilder: assets/teile/hut/<id>_<richtung>.png und assets/teile/ruecken/<id>_<richtung>.png. Platzhalter aus tools/platzhalter_aussehen.py. flaechen: die festen Farbtöne des Bildes je Farbfläche (hell, mittel, dunkel, Schatten), damit das Spiel sie umfärben kann (data/farbpaletten.json).",
+	"_hinweis": "Aussehen-Teile, erzeugt von tools/aussehen_bilder.py. waffe: anker = Punkt auf der Parierstange, kommt auf griff des Bildes (data/figurteile.json), Spitze oben, wird um waffe_winkel gedreht. hut: anker = Punkt im Hutbild, der auf die Kopfmitte kommt, sitz = so weit (Anteil der Kopfhöhe) unter dem Scheitel. ruecken: je Richtung 6 Bilder (Stehen 2, Laufen 4) mit anker an der Schulterkante, kommt auf den Halspunkt des Körpers plus versatz. flaechen: die festen Farbtöne des Bildes je Farbfläche (hell, mittel, dunkel, Schatten), damit das Spiel sie umfärben kann (data/farbpaletten.json).",
 	"hut": {
 		"wanderhut": {
 			"name": "Wanderhut",
-			"platzhalter": true,
 			"seite": {
 				"anker": [
-					42,
-					31
+					44,
+					37
 				],
 				"sitz": 0.34
 			},
 			"vorn": {
 				"anker": [
-					46,
-					31
+					42,
+					38
 				],
 				"sitz": 0.34
 			},
 			"hinten": {
 				"anker": [
-					46,
-					31
+					43,
+					38
 				],
 				"sitz": 0.34
 			},
 			"flaechen": {
 				"leder": [
-					"#a8764a",
-					"#855834",
-					"#644026",
-					"#482d1c"
-				],
-				"zweitfarbe": [
-					"#5c2824",
-					"#5c2824",
-					"#5c2824",
-					"#5c2824"
+					"#986f53",
+					"#63341d",
+					"#3a1d0e",
+					"#130803"
 				]
 			}
 		}
@@ -44,11 +37,32 @@
 	"ruecken": {
 		"reiseumhang": {
 			"name": "Reiseumhang",
-			"platzhalter": true,
 			"seite": {
 				"anker": [
-					52,
-					2
+					[
+						36.5,
+						2
+					],
+					[
+						35.5,
+						2
+					],
+					[
+						54.0,
+						2
+					],
+					[
+						56.5,
+						2
+					],
+					[
+						57.0,
+						2
+					],
+					[
+						55.5,
+						2
+					]
 				],
 				"versatz": [
 					-4,
@@ -57,8 +71,30 @@
 			},
 			"vorn": {
 				"anker": [
-					52,
-					2
+					[
+						31.0,
+						2
+					],
+					[
+						31.0,
+						2
+					],
+					[
+						48.0,
+						2
+					],
+					[
+						48.5,
+						2
+					],
+					[
+						48.0,
+						2
+					],
+					[
+						44.0,
+						2
+					]
 				],
 				"versatz": [
 					-6,
@@ -67,8 +103,30 @@
 			},
 			"hinten": {
 				"anker": [
-					35,
-					2
+					[
+						34.5,
+						2
+					],
+					[
+						34.5,
+						2
+					],
+					[
+						47.0,
+						2
+					],
+					[
+						51.5,
+						2
+					],
+					[
+						53.5,
+						2
+					],
+					[
+						50.5,
+						2
+					]
 				],
 				"versatz": [
 					0,
@@ -77,12 +135,28 @@
 			},
 			"flaechen": {
 				"hauptfarbe": [
-					"#a03e34",
-					"#802c28",
-					"#602020",
-					"#441618"
+					"#95847f",
+					"#786964",
+					"#554744",
+					"#2d2522"
 				]
 			}
+		}
+	},
+	"waffe": {
+		"kurzschwert": {
+			"name": "Kurzschwert",
+			"anker": [
+				10.5,
+				45
+			]
+		},
+		"krummklinge": {
+			"name": "Krummklinge",
+			"anker": [
+				11.5,
+				45
+			]
 		}
 	}
 }

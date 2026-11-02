@@ -33,9 +33,10 @@ FIGUREN = {
 }
 
 
-def blatt(figur, name, reihen):
-	"""Animationen eines Blatts, jedes Bild schon auf ZIEL_HOEHE gebracht (gemessen am ersten Bild der ersten Reihe)."""
-	a = freistellen(Image.open(VORLAGEN / f"{figur}_{name}.png"))
+def blatt(figur, name, reihen, zusatz=""):
+	"""Animationen eines Blatts, jedes Bild schon auf ZIEL_HOEHE gebracht (gemessen am ersten Bild der ersten Reihe).
+	zusatz: Endung des Dateinamens (z. B. „_ohne_klinge“)."""
+	a = freistellen(Image.open(VORLAGEN / f"{figur}_{name}{zusatz}.png"))
 	ziel, gefunden = bilder_finden(a, [])
 	erwartet = [sum(n for _, n in r) for r in reihen]
 	if [len(r) for r in gefunden] != erwartet:

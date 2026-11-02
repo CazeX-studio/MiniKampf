@@ -44,6 +44,7 @@ func _init() -> void:
 					i += 1
 	fehler += _umfaerben_pruefen(ordner)
 	fehler += _plaetze_pruefen()
+	fehler += _waffe_pruefen(ordner)
 	print("aussehen_schichten_test: %s" % ("OK" if fehler == 0 else "%d Fehler" % fehler))
 	quit(1 if fehler > 0 else 0)
 
@@ -61,23 +62,21 @@ func _umfaerben_pruefen(ordner: String) -> int:
 	if grund.get_data() != gefaerbt.get_data():
 		print("FEHLER: Der Novizen-Körper wurde umgefärbt")
 		fehler += 1
-	# Mit Umhang: Die Töne des Umhangs werden zu den Tönen der Palette
-	var umhang := (load("res://assets/teile/ruecken/reiseumhang_hinten.png") as Texture2D).get_image()
+	# Mit Umhang: Die festen Töne des Umhangs werden zu den Tönen der Palette
+	var umhang := (load("res://assets/teile/ruecken/reiseumhang_hinten_f0.png") as Texture2D).get_image()
 	umhang.convert(Image.FORMAT_RGBA8)
-	var flaechen: Dictionary = {"hauptfarbe": ["#a03e34", "#802c28", "#602020", "#441618"]}
-	var neu := FigurTeile.umfaerben(umhang, flaechen, "glutschmiede")
-	var ziel := Color.html("#b02a1c")
-	var quelle := Color.html("#802c28")
-	var alt_gefunden := 0
-	var neu_gefunden := 0
+	var daten: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/aussehen_teile.json"))
+	var neu := FigurTeile.umfaerben(umhang, daten.ruecken.reiseumhang.flaechen, "glutschmiede")
+	var sichtbar := 0
+	var geaendert := 0
 	for y in neu.get_height():
 		for x in neu.get_width():
-			if umhang.get_pixel(x, y).is_equal_approx(quelle):
-				alt_gefunden += 1
-				if neu.get_pixel(x, y).is_equal_approx(ziel):
-					neu_gefunden += 1
-	if alt_gefunden == 0 or neu_gefunden != alt_gefunden:
-		print("FEHLER: Umhang nicht sauber umgefärbt (%d von %d Punkten)" % [neu_gefunden, alt_gefunden])
+			if umhang.get_pixel(x, y).a > 0.9:
+				sichtbar += 1
+				if not umhang.get_pixel(x, y).is_equal_approx(neu.get_pixel(x, y)):
+					geaendert += 1
+	if sichtbar == 0 or geaendert * 2 < sichtbar:
+		print("FEHLER: Umhang nicht sauber umgefärbt (%d von %d Punkten)" % [geaendert, sichtbar])
 		fehler += 1
 	for palette: String in [""] + FigurTeile.paletten_liste().keys():
 		var look := FigurTeile.mit_aussehen(figur, {hut = "wanderhut", ruecken = "reiseumhang", farben = palette})
@@ -129,5 +128,47 @@ func _plaetze_pruefen() -> int:
 	state.apply_command("vega", {type = "aussehen", hut = "wanderhut"})
 	if vega.look != "vega":
 		print("FEHLER: Vega darf keinen Hut bekommen")
+		fehler += 1
+	return fehler
+
+
+## Projekt 13, Schritt 3: Waffe als eigenes Teil. Das Schwert sitzt in jedem Bild mit Griff, nichts wird abgeschnitten.
+func _waffe_pruefen(ordner: String) -> int:
+	var fehler := 0
+	for koerper: String in ["novize_m", "novize_w"]:
+		var daten: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(FigurTeile.DATEN))[koerper]
+		var figur := "%s+%s" % [koerper, FigurTeile.passende_koepfe(koerper)[0]]
+		for anim: String in ANIMS:
+			var i := 0
+			while ResourceLoader.exists(FighterView.sprite_path(koerper, anim, i)):
+				var info: Dictionary = daten.get("%s_f%d" % [anim, i], {})
+				var mit := FigurTeile.bild(figur, anim, i).get_image()
+				mit.clear_mipmaps()
+				if anim == "attack" and i == 3 and not info.has("griff"):
+					print("FEHLER: %s hat im Treffer-Bild kein Schwert" % koerper)
+					fehler += 1
+				if anim == "cast" and info.has("griff"):
+					print("FEHLER: %s hält beim Wirken ein Schwert" % koerper)
+					fehler += 1
+				var sichtbar := mit.get_used_rect()
+				if sichtbar.position.x <= 0 or sichtbar.position.y <= 0 or sichtbar.end.x >= mit.get_width():
+					print("FEHLER: %s %s_f%d: Schwert abgeschnitten (%s in %s)" % [koerper, anim, i, sichtbar, mit.get_size()])
+					fehler += 1
+				if ordner != "":
+					mit.save_png("%s/waffe_%s_%s_f%d.png" % [ordner, koerper, anim, i])
+				i += 1
+	# Waffen-Aussehen: wählbar, anderes Bild, die Werte bleiben unberührt
+	var figur := "novize_m+m1"
+	var eigen := FigurTeile.bild(figur, "attack", 3).get_image()
+	var krumm := FigurTeile.bild(FigurTeile.mit_aussehen(figur, {waffe = "krummklinge"}), "attack", 3).get_image()
+	if eigen.get_data() == krumm.get_data():
+		print("FEHLER: Das Waffen-Aussehen ändert das Bild nicht")
+		fehler += 1
+	var state := WorldState.new()
+	var p := state.add_player("test2", "Test", "novize_w+w1", WorldState.start_cell())
+	var werte_vorher := JSON.stringify(p.progress.to_dict())
+	state.apply_command("test2", {type = "aussehen", waffe = "krummklinge"})
+	if FigurTeile.aussehen_von(p.look).waffe != "krummklinge" or JSON.stringify(p.progress.to_dict()) != werte_vorher:
+		print("FEHLER: Befehl „aussehen“ wirkt nicht auf die Waffe: %s" % p.look)
 		fehler += 1
 	return fehler

@@ -26,13 +26,20 @@ const GESICHT := {
 const RAND := 24
 ## Zusätzlicher Platz, wenn Hut oder Rückenteil getragen werden
 const RAND_SCHICHT := 24
+## Zusätzlicher Platz bei Körpern mit Waffe: Das hochgereckte Schwert ragt weit über die Figur hinaus
+const RAND_WAFFE := 48
 ## Ab dieser Neigung (Grad) gilt eine Figur als liegend
 const LIEGEND := 60.0
 
 ## Aussehen-Schichten (Projekt 13, Schritt 4): Hut über dem Kopf, Rückenteil hinter dem Körper
 const SCHICHTEN := "res://data/aussehen_teile.json"
 const HUT_BILD := "res://assets/teile/hut/%s_%s.png"  # Hut, Richtung
-const RUECKEN_BILD := "res://assets/teile/ruecken/%s_%s.png"  # Rückenteil, Richtung
+const RUECKEN_BILD := "res://assets/teile/ruecken/%s_%s_f%d.png"  # Rückenteil, Richtung, Bild
+## Bilder je Rückenteil: erst Stehen, dann Laufen
+const RUECKEN_STEHEN := 2
+const RUECKEN_LAUFEN := 4
+## Waffe als eigenes Teil (Projekt 13, Schritt 3): Sie sitzt am Griff und dreht sich mit dem Bild
+const WAFFE_BILD := "res://assets/teile/waffe/%s.png"
 ## Umfärben (Projekt 13, Schritt 5): Farbpaletten je Farbfläche
 const PALETTEN := "res://data/farbpaletten.json"
 ## So nah (Abstand im Farbraum, 0 bis 1,7) muss ein Bildpunkt an einem festen Ton liegen, damit er umgefärbt wird
@@ -46,6 +53,8 @@ static var kopf := ""
 ## Gilt nur, wo Kopf und Körper zusammengesetzt werden (neuer Kopf und Körper-Blätter).
 static var hut := ""
 static var ruecken := ""
+## Waffen-Aussehen ("" = die Waffe des Körpers), siehe waffe_liste()
+static var waffe := ""
 ## Gewählte Farbpalette ("" = Grundfarben), siehe paletten_liste(). Färbt Hut, Rückenteil und Klassen-Körper um,
 ## nie die Novizen-Körper.
 static var farben := ""
@@ -61,10 +70,10 @@ static func koerper_von(look: String) -> String:
 
 
 ## Aussehen-Plätze (Projekt 13, Schritt 6): Das Aussehen hängt hinten am Namen der Figur, getrennt von den Werten:
-## „novize_w+mira#hut=wanderhut,ruecken=reiseumhang,farben=glutschmiede“. So kommt es überall mit, wo die Figur
-## gezeigt wird (Welt, Kampf, Mitspieler) und steht im Spielstand. Ergebnis: {hut, ruecken, farben} (fehlt = "").
+## „novize_w+mira#hut=wanderhut,ruecken=reiseumhang,farben=glutschmiede,waffe=krummklinge“. So kommt es überall mit, wo die
+## Figur gezeigt wird (Welt, Kampf, Mitspieler) und steht im Spielstand. Ergebnis: {hut, ruecken, farben, waffe} (fehlt = "").
 static func aussehen_von(look: String) -> Dictionary:
-	var aussehen := {hut = "", ruecken = "", farben = ""}
+	var aussehen := {hut = "", ruecken = "", farben = "", waffe = ""}
 	if "#" in look:
 		for teil: String in look.get_slice("#", 1).split(",", false):
 			var platz := teil.get_slice("=", 0)
@@ -80,9 +89,9 @@ static func ohne_aussehen(look: String) -> String:
 
 ## Figur mit neuem Aussehen. Unbekannte Teile fallen weg; ohne Teile bleibt der Name ohne „#“.
 static func mit_aussehen(look: String, aussehen: Dictionary) -> String:
-	var gueltig := {hut = hut_liste(), ruecken = ruecken_liste(), farben = paletten_liste()}
+	var gueltig := {hut = hut_liste(), ruecken = ruecken_liste(), farben = paletten_liste(), waffe = waffe_liste()}
 	var teile: PackedStringArray = []
-	for platz: String in ["hut", "ruecken", "farben"]:
+	for platz: String in ["hut", "ruecken", "farben", "waffe"]:
 		var id := str(aussehen.get(platz, ""))
 		if id != "" and gueltig[platz].has(id):
 			teile.append("%s=%s" % [platz, id])
@@ -108,12 +117,14 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 	var hut_wahl := hut
 	var ruecken_wahl := ruecken
 	var farben_wahl := farben
+	var waffe_wahl := waffe
 	if "#" in figur or "+" in figur:
 		# Figuren aus „Figur erstellen“ tragen ihr eigenes Aussehen (aus dem Namen), die Wahl im Editor gilt für sie nicht
 		var aussehen := aussehen_von(figur)
 		hut_wahl = aussehen.hut
 		ruecken_wahl = aussehen.ruecken
 		farben_wahl = aussehen.farben
+		waffe_wahl = aussehen.waffe
 		figur = ohne_aussehen(figur)
 	if "+" in figur:
 		kopf_wahl = figur.get_slice("+", 1)
@@ -131,7 +142,8 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 	var hut_jetzt := hut_wahl if art_jetzt == Art.KOPFBLATT and hut_liste().has(hut_wahl) else ""
 	var ruecken_jetzt := ruecken_wahl if art_jetzt == Art.KOPFBLATT and ruecken_liste().has(ruecken_wahl) else ""
 	var farben_jetzt := farben_wahl if paletten_liste().has(farben_wahl) else ""
-	var schluessel := "%s/%s/%d/%d/%s/%s/%s/%s" % [figur, anim, frame, art_jetzt, kopf_id, hut_jetzt, ruecken_jetzt, farben_jetzt]
+	var waffe_jetzt := _waffe_von(figur, waffe_wahl)
+	var schluessel := "%s/%s/%d/%d/%s/%s/%s/%s/%s" % [figur, anim, frame, art_jetzt, kopf_id, hut_jetzt, ruecken_jetzt, farben_jetzt, waffe_jetzt]
 	if _cache.has(schluessel):
 		return _cache[schluessel]
 	var koerper := _bild_laden(KOERPER % [figur, anim, frame])
@@ -146,6 +158,8 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 		# Körper-Blätter: oben und seitlich Platz lassen, damit ein großer oder geneigter Kopf nicht abgeschnitten wird
 		# (die Füße bleiben unten in der Mitte, dort richtet das Spiel die Figur aus)
 		var rand := RAND if _alle()[figur].get("_nur_teile", false) else 0
+		if _alle()[figur].has("_waffe"):
+			rand += RAND_WAFFE
 		if hut_jetzt != "" or ruecken_jetzt != "":
 			rand += RAND_SCHICHT
 		ergebnis = Image.create_empty(koerper.get_width() + 2 * rand, koerper.get_height() + rand, false, Image.FORMAT_RGBA8)
@@ -178,7 +192,7 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 		# Rückenteil: von der Seite und von vorne hinter allem, von hinten über dem Körper
 		var umhang := {}
 		if ruecken_jetzt != "" and info.has("hals"):
-			umhang = _rueckenteil(ruecken_jetzt, info, rand, farben_jetzt)
+			umhang = _rueckenteil(ruecken_jetzt, info, rand, farben_jetzt, anim, frame)
 		if not umhang.is_empty() and not umhang.vorne:
 			ergebnis.blend_rect(umhang.bild, Rect2i(Vector2i.ZERO, umhang.bild.get_size()), umhang.ecke)
 		if kopf_bild != null:
@@ -186,10 +200,42 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 		ergebnis.blend_rect(koerper, Rect2i(Vector2i.ZERO, koerper.get_size()), Vector2i(rand, rand))
 		if not umhang.is_empty() and umhang.vorne:
 			ergebnis.blend_rect(umhang.bild, Rect2i(Vector2i.ZERO, umhang.bild.get_size()), umhang.ecke)
+		# Die Waffe liegt über dem Körper und deckt den gemalten Griff ab
+		if waffe_jetzt != "" and info.has("griff"):
+			var teil := _waffe_gedreht(waffe_jetzt, float(info.waffe_winkel))
+			var griff := Vector2(info.griff[0], info.griff[1]) + Vector2(rand, rand)
+			ergebnis.blend_rect(teil.bild, Rect2i(Vector2i.ZERO, teil.bild.get_size()), Vector2i((griff - teil.punkt).round()))
 	ergebnis.generate_mipmaps()
 	var textur := ImageTexture.create_from_image(ergebnis)
 	_cache[schluessel] = textur
 	return textur
+
+
+## Waffe, die eine Figur trägt: die gewählte, sonst die des Körpers ("" = keine).
+static func _waffe_von(figur: String, wahl: String) -> String:
+	if not _alle().get(koerper_von(figur), {}).has("_waffe"):
+		return ""
+	return wahl if waffe_liste().has(wahl) else str(_alle()[koerper_von(figur)]._waffe)
+
+
+## Waffenbild in einem Winkel: {bild, punkt} (punkt = Stelle der Parierstange). Je Waffe und Winkel nur einmal gerechnet.
+static func _waffe_gedreht(id: String, winkel: float) -> Dictionary:
+	var schluessel := "waffe/%s/%d" % [id, roundi(winkel)]
+	if _cache.has(schluessel):
+		return _cache[schluessel]
+	var bild := _bild_laden(WAFFE_BILD % id)
+	var anker_daten: Array = _alle_schichten().waffe[id].anker
+	var anker := Vector2(anker_daten[0], anker_daten[1])
+	var radius := ceili(maxf(maxf(anker.length(), (Vector2(bild.get_size()) - anker).length()),
+			maxf(Vector2(bild.get_width() - anker.x, anker.y).length(), Vector2(anker.x, bild.get_height() - anker.y).length())))
+	var teil := {bild = _drehen(bild, anker, winkel, radius), punkt = Vector2(radius, radius)}
+	_cache[schluessel] = teil
+	return teil
+
+
+## Alle Waffen-Aussehen: Name -> Anzeigename.
+static func waffe_liste() -> Dictionary:
+	return _namen(_alle_schichten().get("waffe", {}))
 
 
 ## Alle Hüte: Name -> Anzeigename.
@@ -233,14 +279,16 @@ static func _hut_aufsetzen(kopf_bild: Image, hut_id: String, richtung: String, p
 
 
 ## Rückenteil für ein Bild: {bild, ecke, vorne} oder leer. Es hängt am Halspunkt und neigt sich mit dem Körper.
-static func _rueckenteil(id: String, info: Dictionary, rand: int, palette := "") -> Dictionary:
+## Im Laufen weht es: Stehen und Laufen haben eigene Bilder.
+static func _rueckenteil(id: String, info: Dictionary, rand: int, palette: String, anim: String, frame: int) -> Dictionary:
 	var richtung: String = info.richtung
 	var daten: Dictionary = _alle_schichten().ruecken[id].get(richtung, {})
-	var bild := _bild_laden(RUECKEN_BILD % [id, richtung])
+	var nummer := RUECKEN_STEHEN + frame % RUECKEN_LAUFEN if anim.begins_with("run") else frame % RUECKEN_STEHEN
+	var bild := _bild_laden(RUECKEN_BILD % [id, richtung, nummer])
 	if bild == null or daten.is_empty():
 		return {}
 	bild = _schicht_faerben(bild, _alle_schichten().ruecken[id], palette)
-	var anker := Vector2(daten.anker[0], daten.anker[1])
+	var anker := Vector2(daten.anker[nummer][0], daten.anker[nummer][1])
 	var versatz: Array = daten.get("versatz", [0, 0])
 	var winkel: float = info.get("winkel", 0.0)
 	# Liegend (Ende vom Fallen) würde der Umhang nach oben abstehen: dann liegt er unter dem Körper und ist nicht zu sehen
