@@ -64,6 +64,21 @@ func battle_class() -> String:
 	return "" if GameData.get_file("klassen").get(klasse, {}).has("lernen_bei") else klasse
 
 
+## Fähigkeiten des Novizen, die man bei Ye lernt (Projekt 14, K.5): Fähigkeit -> Merker der Lektion.
+## Den Hieb kann man immer.
+const NOVIZE_LEKTIONEN := {schildstoss = "lektion_schildstoss", doppelschlag = "lektion_doppelschlag",
+		erste_hilfe = "lektion_erste_hilfe", deckung = "lektion_deckung"}
+
+
+## Welche Novizen-Fähigkeiten schon gelernt sind.
+func novize_gelernt() -> Array:
+	var liste: Array = ["schlag"]
+	for id: String in NOVIZE_LEKTIONEN:
+		if flags.has(NOVIZE_LEKTIONEN[id]):
+			liste.append(id)
+	return liste
+
+
 ## Klassenstufe: 0 = noch keine Klasse gelernt, sonst ab 1 (Tabelle wie die Charakterstufe).
 func klassenstufe() -> int:
 	if not flags.has("klasse_gelernt") or battle_class() == "":
@@ -292,7 +307,7 @@ func xp_range() -> Vector2i:
 
 
 func to_dict() -> Dictionary:
-	return {gold = gold, items = items, slots = bag_slots().duplicate(), beute = loot, bank = bank, bank_plaetze = bank_size, guertel = belt, ausruestung = ausruestung, mana_anteil = mana_anteil, klassen_xp = klassen_xp, faehigkeiten = faehigkeiten, leiste = leiste,
+	return {gold = gold, items = items, slots = bag_slots().duplicate(), beute = loot, bank = bank, bank_plaetze = bank_size, guertel = belt, ausruestung = ausruestung, mana_anteil = mana_anteil, lektionen_v2 = true, klassen_xp = klassen_xp, faehigkeiten = faehigkeiten, leiste = leiste,
 			xp = xp, level = level, quests = quests, flags = flags}
 
 
@@ -350,6 +365,12 @@ func load_dict(data: Dictionary) -> void:
 			if belt_allowed(id):
 				while belt_put(id) > 0:
 					pass
+	# Ältere Spielstände (vor D8b): Wer die Grundausbildung hatte, kannte schon alles außer „Deckung geben“
+	if not data.has("lektionen_v2") and quest_state("grundausbildung") == "abgegeben":
+		for flag: String in ["lektion_schildstoss", "lektion_doppelschlag", "lektion_erste_hilfe"]:
+			flags[flag] = true
+		if level >= 8:
+			flags["lektion_deckung"] = true
 	# Ältere Spielstände ohne Leiste: gelernte Fähigkeiten kommen von selbst darauf
 	if not data.has("leiste"):
 		for id: String in faehigkeiten:

@@ -5,10 +5,18 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 01.11.)
 
-- **Nächster Schritt:** D8b der „Demo-Reihenfolge“ (Ye's Lektionen auf Stufe 2, 4, 6 und 8). D8 ist in sieben Teile geteilt (D8a bis D8g). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 bis D8a wurden auf Marcos Wunsch vor T1 gebaut.
+- **Nächster Schritt:** D8c der „Demo-Reihenfolge“ (Baum des Bogenschützen fertig). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 bis D8b wurden auf Marcos Wunsch vor T1 gebaut.
+
+- **Neu (02.11.): D8b Ye's Lektionen nach und nach** (Projekt 14, K.5): Die Grundausbildung hat jetzt drei Lektionen (Zugleiste mit **Schildstoß**, Parieren, zwei Reihen). Danach bietet Ye am Tor neue Lektionen an, sobald du stark genug bist: **Doppelschlag** ab Stufe 4, **Erste Hilfe** ab Stufe 6, **Deckung geben** ab Stufe 8 (mit Tessa und Gorm). Jede ist ein kurzer Nebenauftrag mit einem Übungskampf und Ye's Spruch aus dem Steckbrief. Im Kampf hat der Novize nur, was er schon gelernt hat, Tessa und Gorm können alles. Alte Spielstände mit Grundausbildung kennen schon alles außer Deckung geben (ab Stufe 8 auch das).
+  - Weil man Erste Hilfe jetzt erst ab Stufe 6 hat, ist der erste Gruppenkampf etwas härter. Tessa und Gorm heilen dort, der Hinweis sagt das.
+  - **So testest du es:**
+    1. Neues Spiel bis zur Grundausbildung: drei Lektionen, Ye sagt am Ende „Mehr bringe ich dir bei, wenn du stärker bist.“
+    2. Im ersten Gruppenkampf hast du Hieb und Schildstoß (noch keinen Doppelschlag).
+    3. Ab Stufe 4 hat Ye am Tor ein „!“: die Lektion Doppelschlag spielen. Danach gibt es ihn in jedem Kampf.
+    4. Ab Stufe 6 und 8 genauso mit Erste Hilfe und Deckung geben.
 
 - **Neu (02.11.): D8a Fähigkeiten des Novizen** (Projekt 14, K.5, Steckbriefe Sitzung 28): Der normale Angriff heißt jetzt **Hieb**. Neu sind **Schildstoß** (wenig Schaden, der Gegner rutscht auf der Zugleiste nach hinten), **Doppelschlag** (zwei Hiebe, 10 Mana, ersetzt den Kraftschlag), **Erste Hilfe** (heilt dich oder einen Verbündeten) und **Deckung geben** (springt nach vorne und fängt bis zum eigenen nächsten Zug einen Treffer für einen Verbündeten ab). In der Festnacht bekommt der Novize seine kleine Ult **Sternenmut**: Ye ruft „Jetzt! Du hast es gefühlt, oder?“, jede perfekte Parade lädt sie, danach bleibt sie.
-  - **Von Marco zu entscheiden:** Im Steckbrief heilt Erste Hilfe nur sich selbst. Gebaut ist: sich selbst oder einen Verbündeten. Grund: Nur mit sich selbst gewinnt man den Urbaum in der Pilzhöhle mit den Novizen-Begleitern nur noch in etwa der Hälfte der Fälle (Prüfung verlangt mindestens 55 %), mit Verbündeten in 63 %. Soll es so bleiben?
+  - Erste Hilfe heilt dich oder einen Verbündeten (Marco, 02.11.). Nur mit sich selbst wäre der Urbaum mit den Novizen-Begleitern zu schwer.
   - Die Novizen-Begleiter nehmen „Deckung geben“ nicht und den schwachen Schildstoß nur selten, damit sie gut mitkämpfen. Schildstoß macht 8, der Doppelschlag zweimal 12 Schaden (vorläufig).
   - Die Texte von Ye in der Grundausbildung sind angepasst (auch die alte Erklärung, dass Mana von selbst zurückkommt).
   - Noch nicht drin: Die vier Fähigkeiten lernt man noch alle in der Grundausbildung, nicht verteilt auf Stufe 2, 4, 6 und 8 (D8b). Eigene Bewegungen und Klänge kommen mit D9.

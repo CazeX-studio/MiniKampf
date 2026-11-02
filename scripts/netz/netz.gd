@@ -666,7 +666,7 @@ func _on_group_battle(ids: Array, kampf_id: String) -> void:
 		members.append({name = p.display_name, stufe = p.progress.level, traenke = p.progress.potion_count("heiltrank"), aussehen = p.look,
 				klasse = p.progress.battle_class(), monster = p.progress.flags.get("monster", []),
 				ausruestung = Ausruestung.kampfwerte(p.progress.ausruestung), manatraenke = p.progress.potion_count("manatrank"),
-				faehigkeiten = p.progress.faehigkeiten.duplicate(), leiste = p.progress.leiste.duplicate(), sternenmut = p.progress.flags.has("sternenmut"), eigene_klasse = p.progress.battle_class()})
+				faehigkeiten = p.progress.faehigkeiten.duplicate(), leiste = p.progress.leiste.duplicate(), sternenmut = p.progress.flags.has("sternenmut"), novize_gelernt = p.progress.novize_gelernt(), eigene_klasse = p.progress.battle_class()})
 	var setup := BattleRequest.build_group(kampf_id, members)
 	if setup.is_empty():
 		return

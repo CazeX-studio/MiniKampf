@@ -6,7 +6,7 @@ extends SceneTree
 ## Mit welcher Stufe man den Kampf im normalen Ablauf erreicht
 const LEVELS := {
 	"sternenfall": 8,
-	"grundausbildung": 2, "gruppenkampf": 4, "kobalt_glutwelpe": 11, "kobalt2_bachotter": 20,
+	"grundausbildung": 2, "lektion_doppelschlag": 4, "lektion_erste_hilfe": 6, "lektion_deckung": 8, "gruppenkampf": 4, "kobalt_glutwelpe": 11, "kobalt2_bachotter": 20,
 	"probe:tank": 5, "probe:twilight": 5, "probe:mechanic": 5, "probe:quartermaster": 5, "probe:smith": 5,
 	"probe:blade": 5, "probe:singer": 5, "probe:archer": 5, "probe:tamer": 5, "probe:ritualist": 5, "probe:kunoichi": 5,
 	"fenns_pruefung": 11,
@@ -37,21 +37,21 @@ func _run() -> void:
 			if end == "":
 				problems += 1
 				print("FEHLER: %s endet nicht" % kampf_id)
-			# Langer Lernkampf: In Lektion 1 und 2 kann der Novize noch nicht parieren,
-			# Lektion 4 beginnt mit „Nach hinten“ (vorher trifft der Spieler nichts)
+			# Langer Lernkampf (seit D8b drei Lektionen): In Lektion 1 kann der Novize noch nicht parieren,
+			# Lektion 3 beginnt mit „Nach hinten“ (vorher trifft der Spieler nichts)
 			if kampf_id == "grundausbildung":
 				var lines: PackedStringArray = node.protokoll.lines
 				var l3 := -1
 				var l4 := -1
 				for n in lines.size():
-					if l3 < 0 and lines[n].contains("Lektion 3: Parieren"):
+					if l3 < 0 and lines[n].contains("Lektion 2: Parieren"):
 						l3 = n
-					if l4 < 0 and lines[n].contains("Lektion 4: Zwei Reihen"):
+					if l4 < 0 and lines[n].contains("Lektion 3: Zwei Reihen"):
 						l4 = n
 				for n in (l3 if l3 >= 0 else lines.size()):
 					if lines[n].contains("Du reagierst perfekt"):
 						problems += 1
-						print("FEHLER: Parieren schon in Lektion 1/2 möglich")
+						print("FEHLER: Parieren schon in Lektion 1 möglich")
 						break
 				if l4 >= 0:
 					var moved := -1
@@ -63,7 +63,7 @@ func _run() -> void:
 							first_hit = n
 					if first_hit >= 0 and (moved < 0 or first_hit < moved):
 						problems += 1
-						print("FEHLER: Lektion 4 beginnt nicht mit „Nach hinten“")
+						print("FEHLER: Lektion 3 beginnt nicht mit „Nach hinten“")
 			if end == "ENDE Sieg":
 				wins += 1
 			turns += node.state.turns

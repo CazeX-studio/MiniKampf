@@ -32,7 +32,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D6b:** Feste Leiste mit 6 Plätzen, vor dem Kampf bestückt; Angriff, Abwarten, Gürtel und Ult immer dabei. (K.3) – Status: fertig (02.11.2026; die 6 Plätze kommen zu Angriff, Abwarten, Gürtel und Ult dazu, von Marco bestätigt)
 - **D7:** Effekt-Liste als feste Bausteine. (K.4) – Status: fertig (02.11.2026: neun Bausteine in `scripts/kampf/effekte.gd`, Effekt-Probe in der Kampf-Sandbox; Klassen und Monster nutzen sie mit D8 und D22)
 - **D8a:** Novize: Hieb, Schildstoß, Doppelschlag, Erste Hilfe, Deckung geben, kleine Ult Sternenmut in der Festnacht. (K.5) – Status: fertig (02.11.2026)
-- **D8b:** Ye's Lektionen auf Stufe 2, 4, 6 und 8 verteilen (je Lektion eine Fähigkeit), statt alles in der Grundausbildung. (K.5) – Status: offen
+- **D8b:** Ye's Lektionen auf Stufe 2, 4, 6 und 8 verteilen (je Lektion eine Fähigkeit), statt alles in der Grundausbildung. (K.5) – Status: fertig (02.11.2026; die drei späteren Lektionen sind Nebenaufträge bei Ye am Tor)
 - **D8c:** Baum des Bogenschützen fertig: Adlerauge, Durchschlag, Jagdinstinkt, Schwachstelle markieren, Elementpfeil. (K.5) – Status: offen
 - **D8d:** Baum des Monster-Zähmers. (K.5) – Status: offen
 - **D8e:** Baum des Rüstungsschmieds. (K.5) – Status: offen

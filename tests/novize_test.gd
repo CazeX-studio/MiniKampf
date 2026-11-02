@@ -68,5 +68,36 @@ func _init() -> void:
 	var p := state.add_player("a", "Test", "elf_m", WorldState.start_cell())
 	state.apply_command("a", {type = "kampf_ergebnis", kampf = "sternenfall", gewonnen = true})
 	_check(p.progress.flags.has("sternenmut"), "Sternenmut wird nach der Festnacht nicht gemerkt")
+	# Lektionen bei Ye (D8b): Was noch nicht gelernt ist, fehlt im Kampf
+	var q := WorldState.new()
+	var neu := q.add_player("b", "Neu", "elf_m", WorldState.start_cell())
+	_check(neu.progress.novize_gelernt() == ["schlag"], "Neuer Novize kann schon mehr als den Hieb")
+	neu.progress.flags["lektion_schildstoss"] = true
+	BattleRequest.player_novize = neu.progress.novize_gelernt()
+	BattleRequest.player_sternenmut = false
+	BattleRequest.prepare("gruppenkampf", 4, 0)
+	var g := BattleState.new(null, [] as Array[String], "", 3)
+	g.setup = BattleRequest.setup
+	g._create_heroes()
+	var g_ids: Array = g.skills.abilities(g.heroes[0]).map(func(a: Dictionary) -> String: return a.id)
+	_check("schildstoss" in g_ids and not "doppelschlag" in g_ids and not "erste_hilfe" in g_ids, "Ungelerntes im Kampf: %s" % [g_ids])
+	var tessa_ids: Array = g.skills.abilities(g.heroes[1]).map(func(a: Dictionary) -> String: return a.id)
+	_check("erste_hilfe" in tessa_ids, "Tessa als Begleiterin hat Erste Hilfe nicht")
+	# Die Lektion selbst zeigt die neue Fähigkeit
+	BattleRequest.prepare("lektion_doppelschlag", 4, 0)
+	_check(not BattleRequest.setup.helden[0].has("novize_gelernt"), "In der Lektion fehlt die neue Fähigkeit")
+	BattleRequest.player_novize = []
+	# Ye bietet die Lektion erst ab Stufe 4 an
+	neu.progress.quests["grundausbildung"] = "abgegeben"
+	var stufe_ok := q.check(neu, {auftrag = "lektion_doppelschlag", stand = "neu", stufe_ab = 4})
+	_check(not stufe_ok, "Lektion Doppelschlag vor Stufe 4")
+	neu.progress.add_xp(500)
+	_check(q.check(neu, {auftrag = "lektion_doppelschlag", stand = "neu", stufe_ab = 4}), "Lektion Doppelschlag ab Stufe 4 nicht da")
+	q.apply_command("b", {type = "kampf_ergebnis", kampf = "lektion_doppelschlag", gewonnen = true})
+	_check(neu.progress.flags.has("lektion_doppelschlag"), "Nach der Lektion ist der Doppelschlag nicht gelernt")
+	# Alter Spielstand mit Grundausbildung kennt schon alles außer Deckung geben
+	var alt := Progress.new()
+	alt.load_dict({quests = {grundausbildung = "abgegeben"}, level = 5})
+	_check(alt.novize_gelernt().size() == 4 and not "deckung" in alt.novize_gelernt(), "Alter Spielstand: %s" % [alt.novize_gelernt()])
 	print("novize_test: %s" % ("OK" if _fehler == 0 else "%d Fehler" % _fehler))
 	quit(1 if _fehler > 0 else 0)

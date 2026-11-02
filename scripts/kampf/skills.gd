@@ -230,6 +230,10 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 				{id = "erste_hilfe", name = "Erste Hilfe", info = "Heilt dich oder einen Verbündeten um %d · 12 Mana" % roundi(NOVIZE.erste_hilfe * f.power), target = "ally", mana = 12},
 				{id = "deckung", name = "Deckung geben", info = "Nach vorne, fängt bis zu deinem nächsten Zug einen Treffer für einen Verbündeten ab · 8 Mana", target = "ally_other", mana = 8},
 			]
+			# Nur, was der Novize bei Ye schon gelernt hat
+			if f.has_meta("novize_gelernt"):
+				var gelernt: Array = f.get_meta("novize_gelernt")
+				list = list.filter(func(ab: Dictionary) -> bool: return ab.id in gelernt)
 			# Kleine Ult Sternenmut: erst ab der Festnacht (lädt durch perfekte Paraden)
 			if f.has_meta("sternenmut"):
 				list.append({id = "ult", name = "Sternenmut", info = "%d Sternenkraft, mit dem Licht des fallenden Sterns" % roundi(NOVIZE.sternenmut * f.power), target = "enemy"})

@@ -347,6 +347,8 @@ func _create_heroes() -> void:
 		# Gelernte Fähigkeiten aus dem Baum (nur bei Klassen mit Baum, siehe Faehigkeiten)
 		if spec.get("sternenmut", false):
 			h.set_meta("sternenmut", true)
+		if spec.has("novize_gelernt"):
+			h.set_meta("novize_gelernt", spec.novize_gelernt)
 		if spec.has("faehigkeiten"):
 			h.set_meta("faehigkeiten", spec.faehigkeiten)
 			h.set_meta("leiste", spec.get("leiste", []))

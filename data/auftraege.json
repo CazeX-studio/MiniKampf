@@ -31,7 +31,7 @@
 	},
 	"grundausbildung": {
 		"titel": "Grundausbildung",
-		"beschreibung": "Ye bringt dir vor dem Stadttor das Kämpfen bei: ein langer Übungskampf mit vier Lektionen. Sprich mit ihm, um anzufangen.",
+		"beschreibung": "Ye bringt dir vor dem Stadttor das Kämpfen bei: ein langer Übungskampf mit drei Lektionen. Sprich mit ihm, um anzufangen.",
 		"start_bei": "ye_tor",
 		"voraussetzung": "erster_auftrag",
 		"ziele": [
@@ -123,6 +123,9 @@
 		"abgeben_bei": "ye_tor",
 		"belohnung": {"erfahrung": 300}
 	},
+	"lektion_doppelschlag": {"titel": "Ye's Lektion: Doppelschlag", "neben": true, "beschreibung": "Ye will dir auf der Übungswiese den Doppelschlag zeigen: zwei schnelle Hiebe, die Mana kosten. (ab Stufe 4)", "start_bei": "ye_tor", "voraussetzung": "grundausbildung", "start_wenn": {"stufe_ab": 4}, "ziele": [{"art": "kampf", "kampf": "lektion_doppelschlag", "bei": "ye_tor", "text": "Bei Ye den Doppelschlag üben"}], "abgeben_bei": "ye_tor", "belohnung": {"gold": 50}},
+	"lektion_erste_hilfe": {"titel": "Ye's Lektion: Erste Hilfe", "neben": true, "beschreibung": "Ye zeigt dir, wie du dich und andere im Kampf verbindest. (ab Stufe 6)", "start_bei": "ye_tor", "voraussetzung": "lektion_doppelschlag", "start_wenn": {"stufe_ab": 6}, "ziele": [{"art": "kampf", "kampf": "lektion_erste_hilfe", "bei": "ye_tor", "text": "Bei Ye die Erste Hilfe üben"}], "abgeben_bei": "ye_tor", "belohnung": {"gold": 50}},
+	"lektion_deckung": {"titel": "Ye's Lektion: Deckung geben", "neben": true, "beschreibung": "Mit Tessa und Gorm übst du, einen Treffer für jemand anderen abzufangen. (ab Stufe 8)", "start_bei": "ye_tor", "voraussetzung": "lektion_erste_hilfe", "start_wenn": {"stufe_ab": 8}, "ziele": [{"art": "kampf", "kampf": "lektion_deckung", "bei": "ye_tor", "text": "Bei Ye mit Tessa und Gorm Deckung geben üben"}], "abgeben_bei": "ye_tor", "belohnung": {"gold": 50}},
 	"hannes_kater": {
 		"titel": "Hannes Kater",
 		"neben": true,

@@ -2,72 +2,206 @@
 	"hinweis": "Kämpfe aus der Kreuzweg-Demo. Gegner-Kennungen stehen in scripts/kampf/sandbox.gd (ENEMIES). erlaubt = welche Fähigkeiten der Novize schon hat (row = Reihe wechseln). erfahrung gibt es beim ersten Sieg. Alle Texte sind Platzhalter.",
 	"grundausbildung": {
 		"name": "Grundausbildung bei Ye",
-		"hinweis": "Langer Lernkampf: Jede Phase ist eine Lektion mit eigenen Gegnern, Fähigkeiten und Erklärungen. Verliert man, geht es bei der Phase weiter, in der man verloren hat.",
+		"hinweis": "Langer Lernkampf: Jede Phase ist eine Lektion mit eigenen Gegnern, Fähigkeiten und Erklärungen. Verliert man, geht es bei der Phase weiter, in der man verloren hat. Seit D8b drei Lektionen (Zugleiste mit Schildstoß, Parieren, zwei Reihen). Doppelschlag, Erste Hilfe und Deckung geben lernt man danach bei Ye (lektion_…).",
 		"erfahrung": 300,
 		"phasen": [
 			{
 				"name": "Lektion 1: Die Tempo-Leiste",
 				"ansage": "Übungswiese vor dem Stadttor: Ein Tauschleim kriecht heran.",
-				"gegner": ["tauschleim"],
-				"erlaubt": ["schlag", "schildstoss"],
+				"gegner": [
+					"tauschleim"
+				],
+				"erlaubt": [
+					"schlag",
+					"schildstoss"
+				],
 				"reaktion": false,
 				"hinweise": {
 					"erster_zug": "Oben siehst du die Zugleiste: Ganz links steht, wer JETZT dran ist, rechts daneben die nächsten Züge. Schnelle Figuren kommen öfter dran.\nUnter dir stehen deine Grundwerte: Leben (grün) – ist es leer, fällst du. Mana (blau) – Kraft für Fähigkeiten. Mit jeder Stufe wachsen sie, dazu dein Angriff.\nJetzt bist du dran: Tippe „Hieb“ und dann den Gegner. Neu ist auch „Schildstoß“: wenig Schaden, aber der Gegner rutscht auf der Zugleiste nach hinten. Ye: „Wer zuerst dran ist, gewinnt öfter. Schieb ihn nach hinten.“"
 				}
 			},
 			{
-				"name": "Lektion 2: Fähigkeiten",
-				"ansage": "Ein Tauschleim und ein Wiesenhoppler stellen sich dir.",
-				"gegner": ["tauschleim", "wiesenhoppler"],
-				"erlaubt": ["schlag", "schildstoss", "doppelschlag", "erste_hilfe"],
-				"reaktion": false,
-				"hinweise": {
-					"erster_zug": "Gut gemacht – aber es geht weiter! Neu: „Doppelschlag“ trifft zweimal und „Erste Hilfe“ heilt dich oder einen Verbündeten. Beide kosten Mana (blaue Leiste). Mana kommt nicht von selbst zurück: Ein normaler Hieb gibt etwas, eine perfekte Parade mehr, Abwarten auch etwas. Ye: „Mana fällt nicht vom Himmel. Kämpf gut, dann kommt es zurück.“ Pass auf dein Leben auf!"
-				}
-			},
-			{
-				"name": "Lektion 3: Parieren",
+				"name": "Lektion 2: Parieren",
 				"ansage": "Ye nimmt ein Übungsschwert: „Heute greifst du nicht an. Heute lernst du parieren.“",
-				"gegner": ["uebungs_ye"],
-				"erlaubt": ["abwarten"],
+				"gegner": [
+					"uebungs_ye"
+				],
+				"erlaubt": [
+					"abwarten"
+				],
 				"paradeschule": true,
 				"hinweise": {
 					"erste_reaktion": "Wir lernen jetzt das Parieren. Es gibt zwei Arten: die normale Parade und die perfekte. Du greifst dabei nicht an, schau nur auf mich. Wenn ich angreife, schließt sich ein Ring um dich, und oben läuft ein Strich über eine Leiste. Beim ersten Angriff halte ich den Strich im hellgrünen Bereich an, beim zweiten in der grünen Mitte. Danach übst du zweimal allein. Übrigens: Als Novize lernt jeder das Parieren. Später hängt es von deiner Klasse ab – manche parieren, manche weichen aus, manche haben gar keine Reaktion."
 				}
 			},
 			{
-				"name": "Lektion 4: Zwei Reihen",
+				"name": "Lektion 3: Zwei Reihen",
 				"ansage": "Ein bulliger Knollenkäfer stürmt heran!",
-				"gegner": ["knollenkaefer"],
-				"erlaubt": ["schlag", "schildstoss", "doppelschlag", "erste_hilfe", "deckung", "row", "trank", "manatrank_trinken", "ult"],
+				"gegner": [
+					"knollenkaefer"
+				],
+				"erlaubt": [
+					"schlag",
+					"schildstoss",
+					"row",
+					"trank",
+					"manatrank_trinken"
+				],
 				"zuerst": "row",
 				"hinweise": {
-					"erster_zug": "Letzte Lektion! Der Knollenkäfer zwickt hart zu. In der hinteren Reihe bekommst du weniger Nahkampf-Schaden, machst aber auch weniger. Wechsle jetzt zuerst mit „Nach hinten“ die Reihe (kostet den Zug) – erst danach kannst du wieder angreifen. Später, mit Tessa und Gorm an deiner Seite, kannst du mit „Deckung geben“ nach vorne springen und einen Treffer für sie abfangen. Parieren klappt jetzt auch wieder."
+					"erster_zug": "Letzte Lektion! Der Knollenkäfer zwickt hart zu. In der hinteren Reihe bekommst du weniger Nahkampf-Schaden, machst aber auch weniger. Wechsle jetzt zuerst mit „Nach hinten“ die Reihe (kostet den Zug) – erst danach kannst du wieder angreifen. Parieren klappt jetzt auch wieder."
 				}
 			}
-		]
+		],
+		"merken": "lektion_schildstoss"
+	},
+	"lektion_doppelschlag": {
+		"name": "Ye's Lektion: Doppelschlag",
+		"hinweis": "Lektion der Novizen ab Stufe 4 (Steckbrief Sitzung 28): Mana und Mehrfach-Treffer.",
+		"lektion": true,
+		"ansage": "Übungswiese vor dem Stadttor: Ein Wiesenhoppler und ein Tauschleim hüpfen heran.",
+		"wellen": [
+			[
+				"wiesenhoppler",
+				"tauschleim"
+			]
+		],
+		"erlaubt": [
+			"schlag",
+			"schildstoss",
+			"doppelschlag",
+			"row",
+			"trank",
+			"manatrank_trinken"
+		],
+		"erfahrung": 80,
+		"merken": "lektion_doppelschlag",
+		"hinweise": {
+			"erster_zug": "Neu: „Doppelschlag“, zwei schnelle Hiebe. Er kostet Mana (blaue Leiste), und Mana kommt nicht von selbst zurück: Ein normaler Hieb gibt etwas, eine perfekte Parade mehr, Abwarten auch etwas.\nYe: „Mana fällt nicht vom Himmel. Kämpf gut, dann kommt es zurück.“"
+		}
+	},
+	"lektion_erste_hilfe": {
+		"name": "Ye's Lektion: Erste Hilfe",
+		"hinweis": "Lektion der Novizen ab Stufe 6: Heilen, Leben im Blick behalten, Tränke am Gürtel.",
+		"lektion": true,
+		"ansage": "Ein Knollenkäfer und ein Löwenzahnling versperren den Weg.",
+		"wellen": [
+			[
+				"knollenkaefer",
+				"loewenzahnling"
+			]
+		],
+		"erlaubt": [
+			"schlag",
+			"schildstoss",
+			"doppelschlag",
+			"erste_hilfe",
+			"row",
+			"trank",
+			"manatrank_trinken"
+		],
+		"erfahrung": 120,
+		"merken": "lektion_erste_hilfe",
+		"hinweise": {
+			"erster_zug": "Neu: „Erste Hilfe“ heilt dich oder einen Verbündeten und kostet Mana. Behalte dein Leben (grüne Leiste) im Blick. Tränke hängen an deinem Gürtel: Der erste im Zug ist gratis, du bist danach noch einmal dran.\nYe: „Wer liegt, hilft keinem.“"
+		}
+	},
+	"lektion_deckung": {
+		"name": "Ye's Lektion: Deckung geben",
+		"hinweis": "Lektion der Novizen ab Stufe 8: zwei Reihen und Zusammenspiel, geübt mit Tessa und Gorm.",
+		"lektion": true,
+		"ansage": "Tessa und Gorm stehen hinten, ein Schwarm Monster stürmt heran.",
+		"begleiter": [
+			{
+				"name": "Tessa",
+				"aussehen": "novize_tessa"
+			},
+			{
+				"name": "Gorm",
+				"aussehen": "novize_gorm"
+			}
+		],
+		"wellen": [
+			[
+				"knollenkaefer",
+				"wiesenhoppler",
+				"tauschleim"
+			]
+		],
+		"erlaubt": [
+			"schlag",
+			"schildstoss",
+			"doppelschlag",
+			"erste_hilfe",
+			"deckung",
+			"row",
+			"trank",
+			"manatrank_trinken"
+		],
+		"erfahrung": 160,
+		"merken": "lektion_deckung",
+		"hinweise": {
+			"erster_zug": "Neu: „Deckung geben“. Du springst in die vordere Reihe und fängst bis zu deinem nächsten Zug einen Treffer für Tessa oder Gorm ab.\nYe: „Schild hoch, Schild runter. Und manchmal für jemand anderen.“"
+		}
 	},
 	"gruppenkampf": {
 		"name": "Erster Gruppenkampf",
 		"ansage": "Monster überfallen die Übungswiese! Tessa und Gorm kämpfen mit dir.",
 		"begleiter": [
-			{"name": "Tessa", "aussehen": "novize_tessa"}, {"name": "Gorm", "aussehen": "novize_gorm"}
+			{
+				"name": "Tessa",
+				"aussehen": "novize_tessa"
+			},
+			{
+				"name": "Gorm",
+				"aussehen": "novize_gorm"
+			}
 		],
-		"wellen": [["wiesenhoppler", "knollenkaefer", "loewenzahnling", "tauschleim"]],
-		"erlaubt": ["schlag", "schildstoss", "doppelschlag", "erste_hilfe", "deckung", "row", "trank", "manatrank_trinken", "ult"],
+		"wellen": [
+			[
+				"wiesenhoppler",
+				"knollenkaefer",
+				"loewenzahnling",
+				"tauschleim"
+			]
+		],
+		"erlaubt": [
+			"schlag",
+			"schildstoss",
+			"doppelschlag",
+			"erste_hilfe",
+			"deckung",
+			"row",
+			"trank",
+			"manatrank_trinken",
+			"ult"
+		],
 		"erfahrung": 100,
 		"hinweise": {
-			"erster_zug": "Tessa und Gorm sind auch Novizen und handeln selbst. Zusammen seid ihr stärker: Heilt euch gegenseitig mit „Erste Hilfe“ und nehmt euch zuerst die schwachen Monster vor."
+			"erster_zug": "Tessa und Gorm sind auch Novizen und handeln selbst. Zusammen seid ihr stärker: Tessa und Gorm heilen mit „Erste Hilfe“. Nehmt euch zuerst die schwachen Monster vor."
 		}
 	},
 	"probestunde": {
 		"hinweis": "Vorlage für alle Probestunden („probe:<klasse>“, z. B. probe:archer). Der Spieler spielt die Klasse (Ult zu 60 % voll), Tessa und Gorm helfen.",
 		"ansage": "Probestunde auf der Übungswiese: Tessa und Gorm helfen dir, vier Übungsgegner warten.",
 		"begleiter": [
-			{"name": "Tessa", "aussehen": "novize_tessa"},
-			{"name": "Gorm", "aussehen": "novize_gorm"}
+			{
+				"name": "Tessa",
+				"aussehen": "novize_tessa"
+			},
+			{
+				"name": "Gorm",
+				"aussehen": "novize_gorm"
+			}
 		],
-		"wellen": [["wiesenhoppler", "tauschleim", "wiesenhoppler", "knollenkaefer"]],
+		"wellen": [
+			[
+				"wiesenhoppler",
+				"tauschleim",
+				"wiesenhoppler",
+				"knollenkaefer"
+			]
+		],
 		"ult_start": 60,
 		"merken": "probestunde_gemacht",
 		"erfahrung": 40,
@@ -78,11 +212,32 @@
 		"name": "Nacht des Sternenfalls: Der Sternenfresser",
 		"ansage": "Der Sternenfresser erhebt sich auf dem Marktplatz! Tessa und Gorm stehen dir bei.",
 		"begleiter": [
-			{"name": "Tessa", "aussehen": "novize_tessa"}, {"name": "Gorm", "aussehen": "novize_gorm"}
+			{
+				"name": "Tessa",
+				"aussehen": "novize_tessa"
+			},
+			{
+				"name": "Gorm",
+				"aussehen": "novize_gorm"
+			}
 		],
-		"wellen": [["sternenfresser"]],
+		"wellen": [
+			[
+				"sternenfresser"
+			]
+		],
 		"hintergrund": "marktplatz_nacht",
-		"erlaubt": ["schlag", "schildstoss", "doppelschlag", "erste_hilfe", "deckung", "row", "trank", "manatrank_trinken", "ult"],
+		"erlaubt": [
+			"schlag",
+			"schildstoss",
+			"doppelschlag",
+			"erste_hilfe",
+			"deckung",
+			"row",
+			"trank",
+			"manatrank_trinken",
+			"ult"
+		],
 		"erfahrung": 300,
 		"merken": "sternenfresser_besiegt",
 		"merken_immer": "sternenfall_kampf_vorbei",
@@ -138,14 +293,220 @@
 			}
 		]
 	},
-	"kobalt_moosling": {"name": "Rivalenkampf: Kobalts Moosling", "klasse": "tamer", "eigene_klasse": true, "ansage": "Kobalt: „Mein Moosling gegen deins! Los!“", "wellen": [["kobalts_moosling", "kobalt"]], "gegner_stufe": 12, "hintergrund": "wald", "erfahrung": 250, "gegner_leben": 3.6, "merken_immer": "kobalt_gekaempft", "merken": "kobalt_sieg", "erfolg": "rivale_kobalt", "verloren_text": "Kobalt jubelt. Eine Niederlage ist kein Spielende – du kannst weitermachen."},
-	"kobalt_glutwelpe": {"name": "Rivalenkampf: Kobalts Glutwelpe", "klasse": "tamer", "eigene_klasse": true, "ansage": "Kobalt: „Mein Glutwelpe gegen deins! Los!“", "wellen": [["kobalts_glutwelpe", "kobalt"]], "gegner_stufe": 12, "hintergrund": "wald", "erfahrung": 250, "gegner_leben": 3.6, "merken_immer": "kobalt_gekaempft", "merken": "kobalt_sieg", "erfolg": "rivale_kobalt", "verloren_text": "Kobalt jubelt. Eine Niederlage ist kein Spielende – du kannst weitermachen."},
-	"kobalt_bachotter": {"name": "Rivalenkampf: Kobalts Bachotter", "klasse": "tamer", "eigene_klasse": true, "ansage": "Kobalt: „Mein Bachotter gegen deins! Los!“", "wellen": [["kobalts_bachotter", "kobalt"]], "gegner_stufe": 12, "hintergrund": "wald", "erfahrung": 250, "gegner_leben": 3.6, "merken_immer": "kobalt_gekaempft", "merken": "kobalt_sieg", "erfolg": "rivale_kobalt", "verloren_text": "Kobalt jubelt. Eine Niederlage ist kein Spielende – du kannst weitermachen."},
-	"splitterbaer": {"gruppe": true, "name": "Das veränderte Tier", "eigene_klasse": true, "ansage": "Der Splitter-Rindenbär brüllt und stürzt sich auf dich!", "wellen": [["splitterbaer"]], "gegner_stufe": 17, "gegner_leben": 2.5, "hintergrund": "wald", "erfahrung": 600, "merken": "tier_besiegt", "verloren_text": "Der Bär ist zu stark. Ruh dich aus und versuch es noch einmal."},
-	"pilz_koenigin": {"gruppe": true, "name": "Pilzhöhle: Die Sporenkönigin", "eigene_klasse": true, "dungeon": "pilzhoehle", "entscheidung_in_der_welt": true, "ansage": "Die Sporenkönigin erhebt sich aus einem Teppich aus Pilzen. Tessa und Gorm sind dir gefolgt!", "begleiter": [{"name": "Tessa", "aussehen": "novize_tessa"}, {"name": "Gorm", "aussehen": "novize_gorm"}], "wellen": [["sporenkoenigin", "sporenling", "sporenling"]], "gegner_stufe": 20, "hintergrund": "pilzhoehle", "erfahrung": 800, "merken": "lauf:koenigin", "verloren_text": "Die Sporen nehmen dir die Luft. Du kommst am Eingang der Höhle wieder zu dir.", "zurueck_zum_start": true, "gegner_leben": 3.8},
-	"pilz_urbaum": {"gruppe": true, "name": "Pilzhöhle: Die Wurzelmutter", "eigene_klasse": true, "dungeon": "pilzhoehle", "entscheidung_in_der_welt": true, "ansage": "Der Urbaum selbst bewegt sich. Seine Wurzeln greifen nach euch!", "begleiter": [{"name": "Tessa", "aussehen": "novize_tessa"}, {"name": "Gorm", "aussehen": "novize_gorm"}], "wellen": [["wurzelmutter", "knoten_vorne", "knoten_hinten"]], "gegner_stufe": 20, "hintergrund": "pilzhoehle", "erfahrung": 1500, "merken": "lauf:urbaum", "verloren_text": "Die Wurzeln ziehen dich unter die Erde … Du kommst am Eingang der Höhle wieder zu dir.", "zurueck_zum_start": true, "gegner_leben": 0.6, "verschlingen_zuege": 4},
-	"kobalt2_moosling": {"name": "Kobalts Revanche", "klasse": "tamer", "eigene_klasse": true, "ansage": "Kobalt: „Ich hab trainiert! Jetzt ist mein Monster viel stärker!“", "wellen": [["kobalts_moosling", "kobalt"]], "gegner_stufe": 19, "gegner_leben": 5.0, "hintergrund": "wald", "erfahrung": 500, "merken_immer": "kobalt_revanche_gekaempft", "merken": "kobalt_revanche_sieg", "verloren_text": "Kobalt jubelt schon wieder. Versuch es noch einmal!"},
-	"kobalt2_glutwelpe": {"name": "Kobalts Revanche", "klasse": "tamer", "eigene_klasse": true, "ansage": "Kobalt: „Ich hab trainiert! Jetzt ist mein Monster viel stärker!“", "wellen": [["kobalts_glutwelpe", "kobalt"]], "gegner_stufe": 19, "gegner_leben": 5.0, "hintergrund": "wald", "erfahrung": 500, "merken_immer": "kobalt_revanche_gekaempft", "merken": "kobalt_revanche_sieg", "verloren_text": "Kobalt jubelt schon wieder. Versuch es noch einmal!"},
-	"kobalt2_bachotter": {"name": "Kobalts Revanche", "klasse": "tamer", "eigene_klasse": true, "ansage": "Kobalt: „Ich hab trainiert! Jetzt ist mein Monster viel stärker!“", "wellen": [["kobalts_bachotter", "kobalt"]], "gegner_stufe": 19, "gegner_leben": 5.0, "hintergrund": "wald", "erfahrung": 500, "merken_immer": "kobalt_revanche_gekaempft", "merken": "kobalt_revanche_sieg", "verloren_text": "Kobalt jubelt schon wieder. Versuch es noch einmal!"},
-	"bienenschwarm": {"gruppe": true, "name": "Der verrückte Bienenstock", "eigene_klasse": true, "ansage": "Der Schwarm löst sich vom Stock und stürzt sich auf dich!", "wellen": [["bienenschwarm", "bienenschwarm"]], "gegner_stufe": 16, "hintergrund": "wald", "erfahrung": 300, "merken": "bienen_beobachtet", "verloren_text": "Die Bienen jagen dich davon. Vielleicht erst einmal nur zuhören?"}
+	"kobalt_moosling": {
+		"name": "Rivalenkampf: Kobalts Moosling",
+		"klasse": "tamer",
+		"eigene_klasse": true,
+		"ansage": "Kobalt: „Mein Moosling gegen deins! Los!“",
+		"wellen": [
+			[
+				"kobalts_moosling",
+				"kobalt"
+			]
+		],
+		"gegner_stufe": 12,
+		"hintergrund": "wald",
+		"erfahrung": 250,
+		"gegner_leben": 3.6,
+		"merken_immer": "kobalt_gekaempft",
+		"merken": "kobalt_sieg",
+		"erfolg": "rivale_kobalt",
+		"verloren_text": "Kobalt jubelt. Eine Niederlage ist kein Spielende – du kannst weitermachen."
+	},
+	"kobalt_glutwelpe": {
+		"name": "Rivalenkampf: Kobalts Glutwelpe",
+		"klasse": "tamer",
+		"eigene_klasse": true,
+		"ansage": "Kobalt: „Mein Glutwelpe gegen deins! Los!“",
+		"wellen": [
+			[
+				"kobalts_glutwelpe",
+				"kobalt"
+			]
+		],
+		"gegner_stufe": 12,
+		"hintergrund": "wald",
+		"erfahrung": 250,
+		"gegner_leben": 3.6,
+		"merken_immer": "kobalt_gekaempft",
+		"merken": "kobalt_sieg",
+		"erfolg": "rivale_kobalt",
+		"verloren_text": "Kobalt jubelt. Eine Niederlage ist kein Spielende – du kannst weitermachen."
+	},
+	"kobalt_bachotter": {
+		"name": "Rivalenkampf: Kobalts Bachotter",
+		"klasse": "tamer",
+		"eigene_klasse": true,
+		"ansage": "Kobalt: „Mein Bachotter gegen deins! Los!“",
+		"wellen": [
+			[
+				"kobalts_bachotter",
+				"kobalt"
+			]
+		],
+		"gegner_stufe": 12,
+		"hintergrund": "wald",
+		"erfahrung": 250,
+		"gegner_leben": 3.6,
+		"merken_immer": "kobalt_gekaempft",
+		"merken": "kobalt_sieg",
+		"erfolg": "rivale_kobalt",
+		"verloren_text": "Kobalt jubelt. Eine Niederlage ist kein Spielende – du kannst weitermachen."
+	},
+	"splitterbaer": {
+		"gruppe": true,
+		"name": "Das veränderte Tier",
+		"eigene_klasse": true,
+		"ansage": "Der Splitter-Rindenbär brüllt und stürzt sich auf dich!",
+		"wellen": [
+			[
+				"splitterbaer"
+			]
+		],
+		"gegner_stufe": 17,
+		"gegner_leben": 2.5,
+		"hintergrund": "wald",
+		"erfahrung": 600,
+		"merken": "tier_besiegt",
+		"verloren_text": "Der Bär ist zu stark. Ruh dich aus und versuch es noch einmal."
+	},
+	"pilz_koenigin": {
+		"gruppe": true,
+		"name": "Pilzhöhle: Die Sporenkönigin",
+		"eigene_klasse": true,
+		"dungeon": "pilzhoehle",
+		"entscheidung_in_der_welt": true,
+		"ansage": "Die Sporenkönigin erhebt sich aus einem Teppich aus Pilzen. Tessa und Gorm sind dir gefolgt!",
+		"begleiter": [
+			{
+				"name": "Tessa",
+				"aussehen": "novize_tessa"
+			},
+			{
+				"name": "Gorm",
+				"aussehen": "novize_gorm"
+			}
+		],
+		"wellen": [
+			[
+				"sporenkoenigin",
+				"sporenling",
+				"sporenling"
+			]
+		],
+		"gegner_stufe": 20,
+		"hintergrund": "pilzhoehle",
+		"erfahrung": 800,
+		"merken": "lauf:koenigin",
+		"verloren_text": "Die Sporen nehmen dir die Luft. Du kommst am Eingang der Höhle wieder zu dir.",
+		"zurueck_zum_start": true,
+		"gegner_leben": 3.8
+	},
+	"pilz_urbaum": {
+		"gruppe": true,
+		"name": "Pilzhöhle: Die Wurzelmutter",
+		"eigene_klasse": true,
+		"dungeon": "pilzhoehle",
+		"entscheidung_in_der_welt": true,
+		"ansage": "Der Urbaum selbst bewegt sich. Seine Wurzeln greifen nach euch!",
+		"begleiter": [
+			{
+				"name": "Tessa",
+				"aussehen": "novize_tessa"
+			},
+			{
+				"name": "Gorm",
+				"aussehen": "novize_gorm"
+			}
+		],
+		"wellen": [
+			[
+				"wurzelmutter",
+				"knoten_vorne",
+				"knoten_hinten"
+			]
+		],
+		"gegner_stufe": 20,
+		"hintergrund": "pilzhoehle",
+		"erfahrung": 1500,
+		"merken": "lauf:urbaum",
+		"verloren_text": "Die Wurzeln ziehen dich unter die Erde … Du kommst am Eingang der Höhle wieder zu dir.",
+		"zurueck_zum_start": true,
+		"gegner_leben": 0.6,
+		"verschlingen_zuege": 4
+	},
+	"kobalt2_moosling": {
+		"name": "Kobalts Revanche",
+		"klasse": "tamer",
+		"eigene_klasse": true,
+		"ansage": "Kobalt: „Ich hab trainiert! Jetzt ist mein Monster viel stärker!“",
+		"wellen": [
+			[
+				"kobalts_moosling",
+				"kobalt"
+			]
+		],
+		"gegner_stufe": 19,
+		"gegner_leben": 5.0,
+		"hintergrund": "wald",
+		"erfahrung": 500,
+		"merken_immer": "kobalt_revanche_gekaempft",
+		"merken": "kobalt_revanche_sieg",
+		"verloren_text": "Kobalt jubelt schon wieder. Versuch es noch einmal!"
+	},
+	"kobalt2_glutwelpe": {
+		"name": "Kobalts Revanche",
+		"klasse": "tamer",
+		"eigene_klasse": true,
+		"ansage": "Kobalt: „Ich hab trainiert! Jetzt ist mein Monster viel stärker!“",
+		"wellen": [
+			[
+				"kobalts_glutwelpe",
+				"kobalt"
+			]
+		],
+		"gegner_stufe": 19,
+		"gegner_leben": 5.0,
+		"hintergrund": "wald",
+		"erfahrung": 500,
+		"merken_immer": "kobalt_revanche_gekaempft",
+		"merken": "kobalt_revanche_sieg",
+		"verloren_text": "Kobalt jubelt schon wieder. Versuch es noch einmal!"
+	},
+	"kobalt2_bachotter": {
+		"name": "Kobalts Revanche",
+		"klasse": "tamer",
+		"eigene_klasse": true,
+		"ansage": "Kobalt: „Ich hab trainiert! Jetzt ist mein Monster viel stärker!“",
+		"wellen": [
+			[
+				"kobalts_bachotter",
+				"kobalt"
+			]
+		],
+		"gegner_stufe": 19,
+		"gegner_leben": 5.0,
+		"hintergrund": "wald",
+		"erfahrung": 500,
+		"merken_immer": "kobalt_revanche_gekaempft",
+		"merken": "kobalt_revanche_sieg",
+		"verloren_text": "Kobalt jubelt schon wieder. Versuch es noch einmal!"
+	},
+	"bienenschwarm": {
+		"gruppe": true,
+		"name": "Der verrückte Bienenstock",
+		"eigene_klasse": true,
+		"ansage": "Der Schwarm löst sich vom Stock und stürzt sich auf dich!",
+		"wellen": [
+			[
+				"bienenschwarm",
+				"bienenschwarm"
+			]
+		],
+		"gegner_stufe": 16,
+		"hintergrund": "wald",
+		"erfahrung": 300,
+		"merken": "bienen_beobachtet",
+		"verloren_text": "Die Bienen jagen dich davon. Vielleicht erst einmal nur zuhören?"
+	}
 }
