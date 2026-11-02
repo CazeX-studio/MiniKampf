@@ -345,6 +345,8 @@ func _create_heroes() -> void:
 		if spec.has("traenke"):
 			h.wares = {heiltrank = int(spec.traenke)}
 		# Gelernte Fähigkeiten aus dem Baum (nur bei Klassen mit Baum, siehe Faehigkeiten)
+		if spec.has("band"):
+			h.set_meta("band", spec.band)
 		if spec.get("sternenmut", false):
 			h.set_meta("sternenmut", true)
 		if spec.has("novize_gelernt"):
@@ -380,6 +382,11 @@ func _create_heroes() -> void:
 				b.power = h.power
 				b.max_hp = roundi(b.max_hp * float(spec.macht))
 				b.hp = b.max_hp
+		# Band (passiv, Zähmer): Monster, die schon lange im Rudel sind, sind stärker (höchstens 30 %)
+		var band: Dictionary = spec.get("band", {})
+		if not band.is_empty() and skills.skill_level(h, "band") > 0 and h.has_meta("faehigkeiten"):
+			for m in h.monsters:
+				m.power *= 1.0 + minf(0.3, 0.01 * int(band.get(m.klass, 0)) * skills.skill_level(h, "band"))
 		# Waffenkraft: mehr Schaden und Heilung (mit der Grundausrüstung bleibt alles wie vorher)
 		if not gear.is_empty():
 			h.power *= float(gear.get("macht", 1.0))
@@ -685,6 +692,17 @@ func _begin_turn(f: Fighter) -> void:
 	f.def_buff_turns = maxi(f.def_buff_turns - 1, 0)
 	f.vuln_turns = maxi(f.vuln_turns - 1, 0)
 	f.blind_turns = maxi(f.blind_turns - 1, 0)
+	f.schwach_turns = maxi(f.schwach_turns - 1, 0)
+	# Wachstumsschub (Zähmer) läuft ab
+	if f.has_meta("wachstum"):
+		var w: Dictionary = f.get_meta("wachstum")
+		w.zuege = int(w.zuege) - 1
+		if int(w.zuege) <= 0:
+			f.max_hp -= int(w.leben)
+			f.hp = mini(f.hp, f.max_hp)
+			f.power /= 1.3
+			f.remove_meta("wachstum")
+			float_text(f, "Schrumpft", Color("8fd36b"))
 	f.stagger_turns = maxi(f.stagger_turns - 1, 0)
 	f.waiting = false
 	# Deckung geben hält nur bis zum eigenen nächsten Zug
@@ -847,6 +865,18 @@ func _enemy_turn(e: Fighter) -> void:
 		await _boss_turn(e)
 	else:
 		var data: Dictionary = Sandbox.ENEMIES[e.klass]
+		# Lockfutter (Zähmer): abgelenkt, greift seltener an
+		if e.has_meta("lockfutter"):
+			var rest := int(e.get_meta("lockfutter")) - 1
+			if rest <= 0:
+				e.remove_meta("lockfutter")
+			else:
+				e.set_meta("lockfutter", rest)
+			if zufall() < 0.5:
+				float_text(e, "Frisst …", Color("e8c890"))
+				add_log("%s ist mit dem Futter beschäftigt." % e.display_name)
+				e.intent = skills.enemy_intent(e)
+				return
 		var attack: Dictionary = data.attacks[e.step % data.attacks.size()]
 		var targets: Array[Fighter] = []
 		if attack.get("all", false):
@@ -1043,6 +1073,8 @@ func calc_damage(attacker: Fighter, target: Fighter, base: float, kind: String, 
 		dmg *= DEF_BUFF
 	if attacker.blind_turns > 0:
 		dmg *= 0.7
+	if attacker.schwach_turns > 0:
+		dmg *= 0.75
 	if attacker.enraged:
 		dmg *= BOSS_RAGE_MULT
 	if target.vuln_turns > 0:

@@ -393,6 +393,12 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 				p.progress.use_potions("manatrank", mana_used)
 				progress_changed.emit(p.id)
 			_fighting.erase(p.id)
+			# Band (Zähmer): Jeder gewonnene Kampf zählt für die Monster im Rudel
+			if bool(cmd.get("gewonnen", false)) and p.progress.battle_class() == "tamer":
+				var band: Dictionary = p.progress.flags.get("band", {})
+				for monster_id: String in p.progress.flags.get("monster", []):
+					band[monster_id] = int(band.get(monster_id, 0)) + 1
+				p.progress.flags["band"] = band
 			for monster_id: String in cmd.get("gezaehmt", []):
 				_add_to_pack(p, monster_id, true)
 			_rewards_shown = bool(cmd.get("belohnung_gezeigt", false))

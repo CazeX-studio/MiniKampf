@@ -5,7 +5,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 01.11.)
 
-- **Nächster Schritt:** D8d der „Demo-Reihenfolge“ (Baum des Monster-Zähmers). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 bis D8c wurden auf Marcos Wunsch vor T1 gebaut.
+- **Nächster Schritt:** D8e der „Demo-Reihenfolge“ (Baum des Rüstungsschmieds). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 bis D8d wurden auf Marcos Wunsch vor T1 gebaut.
+
+- **Neu (02.11.): D8d Baum des Monster-Zähmers** (Projekt 14, K.5, Steckbriefe Sitzung 28): Grundreihe **Zähmen** (fester Knopf), normaler Angriff **Schleuder**. Reihe 1: **Wechsel** (das neue Monster greift beim Auftritt gleich an), **Anfeuern**, **Band** (passiv: jedes Monster wird mit jedem gewonnenen Kampf im Rudel etwas stärker, höchstens 30 %). Reihe 2: **Pflege**, **Lockfutter** (wilder Gegner ist 2 Runden abgelenkt, greift seltener an und lässt sich leichter zähmen), **Rudelinstinkt** (passiv: Unterstützer helfen früher und stärker). Reihe 3: **Gemeinsamer Angriff** (Stab und Monster, 2 bis 4 Treffer), **Wachstumsschub** (Monster 3 Runden größer), **Großer Auftritt** (passiv). Reihe 4: **Einschüchtern** (alle Gegner 2 Runden schwächer), **Zweites Leben** (besiegtes Monster zurück, einmal pro Kampf). Ult **Rudelruf**. **Befehl** gibt es laut Steckbrief nicht mehr, das Monster hat seinen eigenen Zug.
+  - **Zum Feinschliff:** Der erste Rivalenkampf gegen Kobalt ist mit dem Moosling deutlich schwerer geworden (in der Prüfung 2 von 16 Siegen statt 8 von 16), mit Glutwelpe und Bachotter bleibt er machbar. Verlieren ist dort erlaubt, für den Testtag Kampfgefühl (T2) vormerken.
+  - Wie beim Bogenschützen hat ein Zähmer in der Wildnis nur, was er gelernt und auf die Leiste gelegt hat. Reihe 3 und 4 gibt es in der Demo noch nicht (Klassenstufe 20 und 30), zum Ausprobieren in der Kampf-Sandbox. Zahlen vorläufig.
+  - **So testest du es:**
+    1. Als Zähmer nach Tildas Unterricht K drücken und Wechsel, Anfeuern und Band lernen.
+    2. Im Kampf wechseln: Das neue Monster greift beim Auftritt gleich an.
+    3. Ab Klassenstufe 10 Lockfutter auf ein wildes Monster werfen: Unter ihm steht „Abgelenkt“, es frisst manchmal statt anzugreifen.
+    4. In der Kampf-Sandbox mit dem Zähmer Wachstumsschub, Einschüchtern und Zweites Leben ausprobieren.
 
 - **Neu (02.11.): D8c Baum des Bogenschützen komplett** (Projekt 14, K.5, Steckbriefe Sitzung 27): Alle Fähigkeiten im Baum lassen sich jetzt lernen. **Adlerauge** (passiv, aus der hinteren Reihe öfter kritisch, „Adlerauge!“ blitzt auf), **Durchschlag** (durchbohrt das Ziel und trifft einen zweiten Gegner), **Jagdinstinkt** (passiv, nach einem perfekten Ausweichen ist der nächste Schuss sicher kritisch), **Schwachstelle markieren** (3 Runden nehmen alle Treffer auf das Ziel mehr Schaden) und **Elementpfeil** (Feuer-, Gift-, Blitz- oder Frostpfeil aus der Tasche, mit Brennen, Gift, Lähmen oder Zugleiste). **Schnellfeuer** schießt jetzt wie im Steckbrief viele kleine Pfeile auf ein Ziel (3 bis 6).
   - Die besonderen Pfeile verkauft vorerst Bingo (15 Bronze), bis die Händler kommen (D13). Verschossene Pfeile fehlen danach in der Tasche. Zahlen vorläufig.

@@ -103,5 +103,108 @@
 			}
 		],
 		"ult": "Jägerpfeil"
+	},
+	"tamer": {
+		"grundreihe": {
+			"name": "Zähmen",
+			"info": "Geschwächte wilde Monster fangen. Kostet keine Punkte, bleibt immer ein fester Knopf."
+		},
+		"faehigkeiten": [
+			{
+				"id": "sling",
+				"name": "Schleuder",
+				"reihe": 1,
+				"max": 5,
+				"grundangriff": true,
+				"info": "Dein normaler Angriff. Jede Stufe mehr: 10 % mehr Schaden."
+			},
+			{
+				"id": "switch",
+				"name": "Wechsel",
+				"reihe": 1,
+				"max": 5,
+				"info": "Anderes Monster schicken, es greift beim Auftritt gleich an. Gut getimt lädt es die Ult."
+			},
+			{
+				"id": "cheer",
+				"name": "Anfeuern",
+				"reihe": 1,
+				"max": 5,
+				"info": "Das aktive Monster ist in seinem nächsten Zug deutlich stärker."
+			},
+			{
+				"id": "band",
+				"name": "Band",
+				"reihe": 1,
+				"max": 5,
+				"passiv": true,
+				"info": "Je länger ein Monster im Rudel ist (gewonnene Kämpfe), desto stärker wird es, höchstens 30 %. Jede Stufe lässt es schneller wachsen."
+			},
+			{
+				"id": "care",
+				"name": "Pflege",
+				"reihe": 2,
+				"max": 5,
+				"info": "Heilt das aktive Monster."
+			},
+			{
+				"id": "lockfutter",
+				"name": "Lockfutter",
+				"reihe": 2,
+				"max": 5,
+				"info": "Ein wilder Gegner ist 2 Runden abgelenkt und lässt sich leichter zähmen. Wirkt nicht bei Bossen."
+			},
+			{
+				"id": "rudelinstinkt",
+				"name": "Rudelinstinkt",
+				"reihe": 2,
+				"max": 5,
+				"passiv": true,
+				"info": "Die zwei unterstützenden Monster helfen früher und stärker mit: 20 % je Stufe."
+			},
+			{
+				"id": "gemeinsam",
+				"name": "Gemeinsamer Angriff",
+				"reihe": 3,
+				"max": 5,
+				"braucht": {
+					"cheer": 3
+				},
+				"info": "Stabschlag und das Monster hinterher, 2 bis 4 Treffer."
+			},
+			{
+				"id": "wachstum",
+				"name": "Wachstumsschub",
+				"reihe": 3,
+				"max": 5,
+				"braucht": {
+					"care": 3
+				},
+				"info": "Das aktive Monster wird 3 Runden größer: mehr Leben und Schaden."
+			},
+			{
+				"id": "auftritt",
+				"name": "Großer Auftritt",
+				"reihe": 3,
+				"max": 5,
+				"passiv": true,
+				"info": "Der Angriff beim Wechsel wird stärker, das neue Monster bekommt einen kleinen Schutz."
+			},
+			{
+				"id": "einschuechtern",
+				"name": "Einschüchtern",
+				"reihe": 4,
+				"max": 5,
+				"info": "Das Monster brüllt: alle Gegner machen 2 Runden weniger Schaden."
+			},
+			{
+				"id": "zweites_leben",
+				"name": "Zweites Leben",
+				"reihe": 4,
+				"max": 5,
+				"info": "Holt ein besiegtes eigenes Monster mit wenig Leben zurück. Einmal pro Kampf."
+			}
+		],
+		"ult": "Rudelruf"
 	}
 }

@@ -131,7 +131,60 @@ func _init() -> void:
 	_check(bogen.has_meta("jagdinstinkt"), "Jagdinstinkt wird nach perfektem Ausweichen nicht scharf")
 	b.calc_damage(bogen, g1, 10.0, "ranged")
 	_check(not bogen.has_meta("jagdinstinkt"), "Jagdinstinkt wird nicht verbraucht")
+	# D8d: Monster-Zähmer
 	BattleRequest.player_munition = {}
+	BattleRequest.player_bar = ["switch", "lockfutter", "gemeinsam", "wachstum", "einschuechtern", "zweites_leben"]
+	BattleRequest.player_skills = {switch = 1, lockfutter = 1, gemeinsam = 1, wachstum = 1, einschuechtern = 1, zweites_leben = 1, band = 5, rudelinstinkt = 1, auftritt = 2, cheer = 3, care = 3}
+	BattleRequest.player_band = {moosling = 10}
+	BattleRequest.prepare("splitterbaer", 25, 0, "tamer", ["moosling", "glutwelpe", "bachotter"])
+	var z := BattleState.new(null, [] as Array[String], "", 6)
+	z.setup = BattleRequest.setup
+	z._create_heroes()
+	var zaehmer: Fighter = z.heroes[0]
+	var wild := Fighter.new("Wild", "wiesenhoppler", "Erde", false, 400, 10, Color.WHITE)
+	z.enemies.append(wild)
+	var zabs := {}
+	for a in z.skills.abilities(zaehmer):
+		zabs[a.id] = a
+	_check(not zabs.has("command"), "Befehl gibt es beim Zähmer nicht mehr")
+	for id: String in ["sling", "switch", "lockfutter", "gemeinsam", "wachstum", "einschuechtern", "tame", "ult"]:
+		_check(zabs.has(id), "Zähmer hat %s nicht" % id)
+	var moos: Fighter = zaehmer.monsters[0]
+	_check(moos.power > zaehmer.monsters[1].power, "Band macht das lange Rudelmitglied nicht stärker")
+	zaehmer.mana = zaehmer.max_mana
+	z.execute(zaehmer, zabs.lockfutter, wild)
+	_check(wild.has_meta("lockfutter"), "Lockfutter lenkt nicht ab")
+	var wild_vorher := wild.hp
+	z.execute(zaehmer, zabs.gemeinsam, wild)
+	_check(wild_vorher - wild.hp > 8, "Gemeinsamer Angriff trifft nur einmal")
+	var aktiv: Fighter = zaehmer.active_monster
+	var leben := aktiv.max_hp
+	z.execute(zaehmer, zabs.wachstum, null)
+	_check(aktiv.max_hp > leben and aktiv.has_meta("wachstum"), "Wachstumsschub wirkt nicht")
+	for i in 3:
+		z._begin_turn(aktiv)
+	_check(aktiv.max_hp == leben and not aktiv.has_meta("wachstum"), "Wachstumsschub hört nicht auf")
+	z.execute(zaehmer, zabs.einschuechtern, null)
+	_check(wild.schwach_turns == 2, "Einschüchtern wirkt nicht")
+	# Zweites Leben: besiegtes Monster zurück, einmal pro Kampf
+	zaehmer.monsters[2].hp = 0
+	var leben_ab: Array = z.skills.abilities(zaehmer).filter(func(a: Dictionary) -> bool: return a.id == "zweites_leben")
+	_check(not leben_ab.is_empty(), "Zweites Leben fehlt, obwohl ein Monster besiegt ist")
+	if not leben_ab.is_empty():
+		var wahl: Dictionary = leben_ab[0].duplicate()
+		wahl.choice = zaehmer.monsters[2].klass
+		z.execute(zaehmer, wahl, null)
+		_check(zaehmer.monsters[2].is_alive(), "Zweites Leben holt das Monster nicht zurück")
+		_check(z.skills.abilities(zaehmer).filter(func(a: Dictionary) -> bool: return a.id == "zweites_leben").is_empty(), "Zweites Leben geht zweimal")
+	# Band wächst nach gewonnenen Kämpfen
+	var welt := WorldState.new()
+	var zp := welt.add_player("z", "Z", "elf_m", WorldState.start_cell())
+	zp.progress.flags["klasse"] = "tamer"
+	zp.progress.flags["klasse_gelernt"] = true
+	zp.progress.flags["monster"] = ["moosling"]
+	welt.apply_command("z", {type = "kampf_ergebnis", kampf = "splitterbaer", gewonnen = true})
+	_check(int((zp.progress.flags.get("band", {}) as Dictionary).get("moosling", 0)) == 1, "Band zählt den Sieg nicht")
+	BattleRequest.player_band = {}
 	BattleRequest.player_bar = []
 	BattleRequest.player_skills_known = false
 	BattleRequest.player_skills = {}

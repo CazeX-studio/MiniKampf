@@ -116,6 +116,8 @@ var resist := 1.0
 var effekte := {}
 ## Ausrüstung (Projekt 14, K.1): Faktor auf Nah- und Fernkampf-Schaden (Verteidigung) und auf Magie-Schaden (Widerstand)
 var schutz := 1.0
+## Eingeschüchtert (Einschüchtern des Zähmers): so viele eigene Züge weniger Schaden
+var schwach_turns := 0
 var magieschutz := 1.0
 ## Großer Gegner (Boss): größeres Namensschild unter der Figur
 var big := false

@@ -180,17 +180,26 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 			]
 		"tamer":
 			var choices: Array[Dictionary] = []
+			var fallen: Array[Dictionary] = []
 			for m in f.monsters:
 				choices.append({id = m.klass, name = m.display_name, info = "%s · %d/%d LP" % [m.element, m.hp, m.max_hp]})
+				if not m.is_alive():
+					fallen.append({id = m.klass, name = m.display_name, info = "kommt mit wenig Leben zurück", then = "none"})
+			# Steckbrief (Sitzung 28): Das Monster hat einen eigenen Zug, „Befehl“ entfällt. Zähmen ist die Grundreihe.
 			list = [
 				{id = "sling", name = "Schleuder", info = "8 Fernkampf", target = "enemy"},
-				{id = "command", name = "Befehl", info = "Monster ist sofort dran · 8 Mana", target = "none", mana = 8, cd = 2},
-				{id = "switch", name = "Wechsel", info = "Anderes Monster schicken", target = "choice", cd = 1, choices = choices},
-				{id = "cheer", name = "Anfeuern", info = "Monster Angriff+, +10 LP · 8 Mana", target = "none", mana = 8, cd = 2},
-				{id = "care", name = "Pflege", info = "Monster +30 LP · 10 Mana", target = "none", mana = 10, cd = 1},
+				{id = "switch", name = "Wechsel", info = "Anderes Monster schicken, es greift beim Auftritt gleich an", target = "choice", cd = 1, choices = choices},
+				{id = "cheer", name = "Anfeuern", info = "Monster Angriff+, +10 LP · 8 Mana", target = "none", mana = 8},
+				{id = "care", name = "Pflege", info = "Monster +30 LP · 10 Mana", target = "none", mana = 10},
+				{id = "lockfutter", name = "Lockfutter", info = "Wilder Gegner ist 2 Runden abgelenkt, Zähmen klappt leichter · 8 Mana", target = "enemy_wild", mana = 8},
+				{id = "gemeinsam", name = "Gemeinsamer Angriff", info = "Stabschlag 8, dann das Monster (%d Treffer) · 12 Mana" % _gemeinsam_hits(f), target = "enemy", mana = 12},
+				{id = "wachstum", name = "Wachstumsschub", info = "Monster 3 Runden größer: mehr Leben und Schaden · 14 Mana", target = "none", mana = 14, cd = 3},
+				{id = "einschuechtern", name = "Einschüchtern", info = "Monster brüllt: alle Gegner 2 Runden schwächer · 12 Mana", target = "none", mana = 12, cd = 3},
 				{id = "tame", name = "Zähmen", info = "Geschwächtes Monster (unter 50 % LP) fangen · 10 Mana", target = "enemy_tamable", mana = 10, cd = 2},
 				{id = "ult", name = "Rudelruf", info = "Alle Monster greifen an (je 16, eigenes Element)", target = "enemy"},
 			]
+			if not fallen.is_empty() and not f.has_meta("zweites_leben_benutzt"):
+				list.insert(list.size() - 1, {id = "zweites_leben", name = "Zweites Leben", info = "Besiegtes Monster zurückholen · einmal pro Kampf · 15 Mana", target = "choice", mana = 15, choices = fallen})
 		"moosling":
 			list = [
 				{id = "vine", name = "Rankenhieb", info = "12 Pflanze (Nahkampf)", target = "enemy"},
@@ -452,6 +461,9 @@ func valid_targets(f: Fighter, ab: Dictionary) -> Array[Fighter]:
 			return c.alive(c.enemies)
 		"enemy_sealed":
 			return c.alive(c.enemies).filter(func(e: Fighter) -> bool: return not e.seals.is_empty())
+		"enemy_wild":
+			# Wilde Monster (keine Bosse): die, die man auch zähmen kann
+			return c.alive(c.enemies).filter(func(e: Fighter) -> bool: return Sandbox.ENEMIES.get(e.klass, {}).has("tame"))
 		"enemy_tamable":
 			return c.alive(c.enemies).filter(func(e: Fighter) -> bool:
 				return Sandbox.ENEMIES[e.klass].has("tame") and e.hp * 2 <= e.max_hp)
@@ -843,10 +855,6 @@ func _tamer(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 		"sling":
 			c.projectile(f, target, Color("c9b28a"))
 			c.hit(f, target, 8, "ranged")
-		"command":
-			m.next_time = c.now + 0.001
-			c.float_text(m, "Los!", Color("8fd36b"))
-			c.add_log("%s gibt %s einen Befehl: Es ist sofort dran." % [f.display_name, m.display_name])
 		"switch":
 			var next := _monster(f, ab.choice)
 			c.remove_companion(m)
@@ -856,6 +864,15 @@ func _tamer(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 			c.show_supporters(f)
 			next.next_time = c.now + next.turn_delay() * 0.5
 			c.burst(next, Elements.color(next.element), 100.0)
+			# Beim Auftritt gleich ein kleiner Angriff (Großer Auftritt: stärker und ein kleiner Schutz)
+			var auftritt := skill_level(f, "auftritt") if f.has_meta("faehigkeiten") else 0
+			var opfer := c.next_enemy()
+			if opfer != null and next.is_alive():
+				c.projectile(next, opfer, Elements.color(next.element), 0.2)
+				c.hit(next, opfer, 8.0 * (1.0 + 0.2 * auftritt), "ranged", next.element)
+			if auftritt > 0:
+				next.add_shield(f, 6 + 3 * auftritt)
+				c.float_text(next, "Großer Auftritt!", Color("fff3b0"), 30)
 			c.add_log("%s: „%s, zurück! %s, du bist dran!“" % [f.display_name, m.display_name, next.display_name])
 			var enemy := c.next_enemy()
 			if enemy != null and Elements.multiplier(enemy.element, next.element) < 1.0:
@@ -868,10 +885,53 @@ func _tamer(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 			c.float_text(m, "Angriff+", Color("ff8080"), 30)
 		"care":
 			c.heal(f, m, 30)
+		"lockfutter":
+			c.projectile(f, target, Color("e8c890"), 0.3)
+			target.set_meta("lockfutter", 2)
+			c.float_text(target, "Schnuppert …", Color("e8c890"), 30)
+			c.add_log("%s wirft %s Futter hin. Es ist abgelenkt." % [f.display_name, target.display_name])
+		"gemeinsam":
+			# Zähmer und Monster greifen zusammen an: Stabschlag, dann das Monster (öfter mit schneller Waffe)
+			c.lunge(f, target, 0.2)
+			c.hit(f, target, 8, "melee")
+			for i in _gemeinsam_hits(f) - 1:
+				if not target.is_alive() or not m.is_alive():
+					break
+				c.projectile(m, target, Elements.color(m.element), 0.15)
+				c.hit(m, target, 10, "melee", m.element)
+		"wachstum":
+			if m.is_alive() and not m.has_meta("wachstum"):
+				var mehr := roundi(m.max_hp * 0.5)
+				m.max_hp += mehr
+				m.hp += mehr
+				m.power *= 1.3
+				m.set_meta("wachstum", {zuege = 3, leben = mehr})
+				c.float_text(m, "Wächst!", Color("8fd36b"), 30)
+				c.refresh()
+		"einschuechtern":
+			c.burst(m if m.is_alive() else f, Color("8fb8ff"), 160.0)
+			for e in c.alive(c.enemies):
+				e.schwach_turns = maxi(e.schwach_turns, 2)
+				c.float_text(e, "Eingeschüchtert", Color("8fb8ff"), 30)
+			c.add_log("%s brüllt: Alle Gegner machen 2 Runden weniger Schaden." % m.display_name)
+		"zweites_leben":
+			var back := _monster(f, ab.choice)
+			if back != null and not back.is_alive():
+				back.hp = maxi(1, roundi(back.max_hp * 0.3))
+				f.set_meta("zweites_leben_benutzt", true)
+				c.add_log("%s ruft %s. Es steht wieder auf!" % [f.display_name, back.display_name])
+				if back == f.active_monster and not c.on_field(back):
+					c.add_companion(back)
+				c.show_supporters(f)
+				c.float_text(back, "Zweites Leben!", Color("fff3b0"), 30)
+				c.refresh()
 		"tame":
 			c.projectile(f, target, Color("8fd36b"), 0.3)
 			# Je schwächer das Monster, desto sicherer klappt es (50 % LP = halbe Chance)
 			var chance := 1.0 - float(target.hp) / target.max_hp
+			# Lockfutter: abgelenkte Monster lassen sich leichter zähmen
+			if target.has_meta("lockfutter"):
+				chance += 0.25
 			if c.zufall() < chance:
 				c.tame(f, target)
 				f.add_ult(25)
@@ -1403,6 +1463,14 @@ func on_death(target: Fighter) -> void:
 				c.add_log("%s muss ein anderes Monster schicken (Wechsel)." % target.owner.display_name)
 
 
+## Gemeinsamer Angriff: Stabschlag plus 1 Monster-Treffer, je zwei Stufen einer mehr, schnelle Waffe einer mehr (2 bis 4).
+func _gemeinsam_hits(f: Fighter) -> int:
+	var hits := 2 + maxi(skill_level(f, "gemeinsam") - 1, 0) / 2
+	if f.tempo >= 15:
+		hits += 1
+	return mini(hits, 4)
+
+
 ## Unterstützer des Zähmers: die anderen Monster unter den ersten drei (sie stehen sichtbar auf dem Feld).
 func supporters(tamer: Fighter) -> Array[Fighter]:
 	var result: Array[Fighter] = []
@@ -1415,23 +1483,27 @@ func supporters(tamer: Fighter) -> Array[Fighter]:
 
 ## Ab Stufe 15: Jeder Unterstützer hilft zu Beginn des Zähmer-Zugs mit einer kleinen Aktion.
 func _support_actions(f: Fighter) -> void:
-	if int(f.get_meta("stufe", 1)) < Sandbox.SUPPORT_LEVEL:
+	# Rudelinstinkt (passiv): Die Unterstützer helfen auch früher und stärker mit
+	var instinkt := skill_level(f, "rudelinstinkt") if f.has_meta("faehigkeiten") else 0
+	if int(f.get_meta("stufe", 1)) < Sandbox.SUPPORT_LEVEL and instinkt == 0:
 		return
+	var staerke := 1.0 + 0.2 * instinkt
 	var active := f.active_monster
 	for s in supporters(f):
 		match s.klass:
 			"moosling":
 				if active != null and active.is_alive():
-					active.shields[s] = active.shields.get(s, 0) + 6
-					c.float_text(active, "Schild +6 (%s)" % s.display_name, Color("6fa8ff"), 30)
+					var schild := roundi(6 * staerke)
+					active.shields[s] = active.shields.get(s, 0) + schild
+					c.float_text(active, "Schild +%d (%s)" % [schild, s.display_name], Color("6fa8ff"), 30)
 			"bachotter":
 				if active != null and active.is_alive():
-					c.heal(s, active, 6)
+					c.heal(s, active, roundi(6 * staerke))
 			_:
 				var enemy := c.next_enemy()
 				if enemy != null:
 					c.projectile_bg(s, enemy, Elements.color(s.element), 0.25)
-					c.hit(s, enemy, 5, "ranged", s.element)
+					c.hit(s, enemy, 5 * staerke, "ranged", s.element)
 
 
 func _bench_has(tamer: Fighter, id: String) -> bool:

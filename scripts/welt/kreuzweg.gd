@@ -2989,6 +2989,7 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 	BattleRequest.player_bar = local_player().progress.leiste.duplicate()
 	BattleRequest.player_sternenmut = local_player().progress.flags.has("sternenmut")
 	BattleRequest.player_novize = local_player().progress.novize_gelernt()
+	BattleRequest.player_band = (local_player().progress.flags.get("band", {}) as Dictionary).duplicate()
 	BattleRequest.player_munition = {}
 	for pfeil: String in Skills.MUNITION:
 		if local_player().progress.item_count(pfeil) > 0:

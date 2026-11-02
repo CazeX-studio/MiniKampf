@@ -134,8 +134,16 @@ func _run() -> void:
 
 
 ## Spielt einen Kampf des Zähmers mit eigenem Rudel mehrmals durch. Gibt die Siege zurück.
+## Zähmer wie in der Demo: Fähigkeiten-Baum mit Reihe 1 und 2 gelernt (Reihe 3 und 4 erreicht man dort noch nicht).
+const ZAEHMER_DEMO := {switch = 2, cheer = 2, band = 1, care = 2, lockfutter = 1, rudelinstinkt = 1}
+const ZAEHMER_LEISTE := ["switch", "cheer", "care", "lockfutter", "", ""]
+
+
 func _play(harness: GDScript, kampf_id: String, level: int, pack: Array, count: int) -> int:
 	var wins := 0
+	BattleRequest.player_skills = ZAEHMER_DEMO.duplicate()
+	BattleRequest.player_bar = ZAEHMER_LEISTE.duplicate()
+	BattleRequest.player_skills_known = true
 	for i in count:
 		BattleRequest.prepare(kampf_id, level, 0, "tamer", pack)
 		var node: Node = harness.new()
@@ -147,4 +155,7 @@ func _play(harness: GDScript, kampf_id: String, level: int, pack: Array, count: 
 				wins += 1
 		root.remove_child(node)
 		node.free()
+	BattleRequest.player_skills_known = false
+	BattleRequest.player_skills = {}
+	BattleRequest.player_bar = []
 	return wins

@@ -34,7 +34,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D8a:** Novize: Hieb, Schildstoß, Doppelschlag, Erste Hilfe, Deckung geben, kleine Ult Sternenmut in der Festnacht. (K.5) – Status: fertig (02.11.2026)
 - **D8b:** Ye's Lektionen auf Stufe 2, 4, 6 und 8 verteilen (je Lektion eine Fähigkeit), statt alles in der Grundausbildung. (K.5) – Status: fertig (02.11.2026; die drei späteren Lektionen sind Nebenaufträge bei Ye am Tor)
 - **D8c:** Baum des Bogenschützen fertig: Adlerauge, Durchschlag, Jagdinstinkt, Schwachstelle markieren, Elementpfeil. (K.5) – Status: fertig (02.11.2026; Schnellfeuer nach Steckbrief auf ein Ziel; besondere Pfeile vorerst bei Bingo)
-- **D8d:** Baum des Monster-Zähmers. (K.5) – Status: offen
+- **D8d:** Baum des Monster-Zähmers. (K.5) – Status: fertig (02.11.2026; Befehl entfällt laut Steckbrief)
 - **D8e:** Baum des Rüstungsschmieds. (K.5) – Status: offen
 - **D8f:** Baum der Klingentänzerin. (K.5) – Status: offen
 - **D8g:** Baum der Sternensängerin. (K.5) – Status: offen

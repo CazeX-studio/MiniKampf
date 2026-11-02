@@ -760,6 +760,12 @@ func _status() -> Array[String]:
 		status.append("Verwundbar")
 	if fighter.blind_turns > 0:
 		status.append("Geblendet")
+	if fighter.schwach_turns > 0:
+		status.append("Eingeschüchtert")
+	if fighter.has_meta("lockfutter"):
+		status.append("Abgelenkt")
+	if fighter.has_meta("wachstum"):
+		status.append("Gewachsen")
 	if fighter.plate < 1.0:
 		status.append("ERSCHÜTTERT" if fighter.stagger_turns > 0 else "Sternenpanzer")
 	if fighter.light:
