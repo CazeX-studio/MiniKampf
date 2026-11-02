@@ -273,7 +273,8 @@ func _ready() -> void:
 	if not BattleRequest.result.is_empty():
 		var cmd := {type = "kampf_ergebnis", kampf = BattleRequest.result.kampf, gewonnen = BattleRequest.result.gewonnen,
 				traenke_benutzt = BattleRequest.result.get("traenke_benutzt", 0),
-				manatraenke_benutzt = BattleRequest.result.get("manatraenke_benutzt", 0), gezaehmt = BattleRequest.result.get("gezaehmt", []),
+				manatraenke_benutzt = BattleRequest.result.get("manatraenke_benutzt", 0),
+				munition_benutzt = BattleRequest.result.get("munition_benutzt", {}), gezaehmt = BattleRequest.result.get("gezaehmt", []),
 				belohnung_gezeigt = BattleRequest.result.get("belohnung_gezeigt", false)}
 		if BattleRequest.result.has("karte"):
 			cmd["karte"] = BattleRequest.result.karte
@@ -2988,6 +2989,10 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 	BattleRequest.player_bar = local_player().progress.leiste.duplicate()
 	BattleRequest.player_sternenmut = local_player().progress.flags.has("sternenmut")
 	BattleRequest.player_novize = local_player().progress.novize_gelernt()
+	BattleRequest.player_munition = {}
+	for pfeil: String in Skills.MUNITION:
+		if local_player().progress.item_count(pfeil) > 0:
+			BattleRequest.player_munition[pfeil] = local_player().progress.item_count(pfeil)
 	_prepare_reward(kampf_id)
 	if BattleRequest.prepare(kampf_id, progress.level, progress.potion_count("heiltrank"), progress.battle_class(),
 			progress.flags.get("monster", [])):

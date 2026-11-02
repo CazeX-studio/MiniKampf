@@ -182,7 +182,7 @@ func _battle_name() -> String:
 ## Zurück in die Stadt (Kampf aus der Kreuzweg-Demo).
 func _back_to_world(won: bool) -> void:
 	# Verbrauchte Heiltränke fehlen danach in der Tasche, gezähmte Monster kommen ins Rudel
-	BattleRequest.finish(won, _potions_used(), _tamed(), _potions_used("manatrank", "manatraenke"), _mana_share())
+	BattleRequest.finish(won, _potions_used(), _tamed(), _potions_used("manatrank", "manatraenke"), _mana_share(), _ammo_used())
 	get_tree().change_scene_to_file(BattleRequest.return_scene)
 
 
@@ -194,6 +194,20 @@ func _tamed() -> Array:
 		if m.has_meta("neu_gezaehmt"):
 			result.append(m.klass)
 	return result
+
+
+## Verschossene besondere Munition des Spielers (Pfeil -> Anzahl).
+func _ammo_used() -> Dictionary:
+	var index := int(_group.get("mine", 0))
+	if index >= state.heroes.size():
+		return {}
+	var start: Dictionary = state.setup.helden[index].get("munition", {})
+	var used := {}
+	for pfeil: String in start:
+		var n := int(start[pfeil]) - int(state.heroes[index].wares.get(pfeil, 0))
+		if n > 0:
+			used[pfeil] = n
+	return used
 
 
 ## Mana des Spielers am Ende (Anteil), nur bei Kämpfen, die mit dem Mana aus der Welt begonnen haben; sonst -1.

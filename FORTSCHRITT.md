@@ -5,7 +5,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 01.11.)
 
-- **Nächster Schritt:** D8c der „Demo-Reihenfolge“ (Baum des Bogenschützen fertig). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 bis D8b wurden auf Marcos Wunsch vor T1 gebaut.
+- **Nächster Schritt:** D8d der „Demo-Reihenfolge“ (Baum des Monster-Zähmers). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 bis D8c wurden auf Marcos Wunsch vor T1 gebaut.
+
+- **Neu (02.11.): D8c Baum des Bogenschützen komplett** (Projekt 14, K.5, Steckbriefe Sitzung 27): Alle Fähigkeiten im Baum lassen sich jetzt lernen. **Adlerauge** (passiv, aus der hinteren Reihe öfter kritisch, „Adlerauge!“ blitzt auf), **Durchschlag** (durchbohrt das Ziel und trifft einen zweiten Gegner), **Jagdinstinkt** (passiv, nach einem perfekten Ausweichen ist der nächste Schuss sicher kritisch), **Schwachstelle markieren** (3 Runden nehmen alle Treffer auf das Ziel mehr Schaden) und **Elementpfeil** (Feuer-, Gift-, Blitz- oder Frostpfeil aus der Tasche, mit Brennen, Gift, Lähmen oder Zugleiste). **Schnellfeuer** schießt jetzt wie im Steckbrief viele kleine Pfeile auf ein Ziel (3 bis 6).
+  - Die besonderen Pfeile verkauft vorerst Bingo (15 Bronze), bis die Händler kommen (D13). Verschossene Pfeile fehlen danach in der Tasche. Zahlen vorläufig.
+  - **So testest du es:**
+    1. Als Bogenschütze mit K Punkte in Reihe 2 setzen (ab Klassenstufe 10). Reihe 3 und 4 (Klassenstufe 20 und 30) erreicht man in der Demo noch nicht: Durchschlag und Schwachstelle markieren gibt es zum Ausprobieren in der Kampf-Sandbox, dort hat der Bogenschütze alles außer dem Elementpfeil.
+    2. Bei Bingo Feuerpfeile kaufen, im Kampf „Elementpfeil“ wählen: Das Ziel brennt, ein Pfeil weniger in der Tasche.
+    3. Schwachstelle markieren, dann angreifen: Unter dem Gegner steht „Verwundbar“, alle treffen härter.
+    4. Mit Jagdinstinkt perfekt ausweichen: „Jagdinstinkt!“ erscheint, der nächste Schuss ist kritisch.
 
 - **Neu (02.11.): D8b Ye's Lektionen nach und nach** (Projekt 14, K.5): Die Grundausbildung hat jetzt drei Lektionen (Zugleiste mit **Schildstoß**, Parieren, zwei Reihen). Danach bietet Ye am Tor neue Lektionen an, sobald du stark genug bist: **Doppelschlag** ab Stufe 4, **Erste Hilfe** ab Stufe 6, **Deckung geben** ab Stufe 8 (mit Tessa und Gorm). Jede ist ein kurzer Nebenauftrag mit einem Übungskampf und Ye's Spruch aus dem Steckbrief. Im Kampf hat der Novize nur, was er schon gelernt hat, Tessa und Gorm können alles. Alte Spielstände mit Grundausbildung kennen schon alles außer Deckung geben (ab Stufe 8 auch das).
   - Weil man Erste Hilfe jetzt erst ab Stufe 6 hat, ist der erste Gruppenkampf etwas härter. Tessa und Gorm heilen dort, der Hinweis sagt das.

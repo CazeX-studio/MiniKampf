@@ -40,6 +40,8 @@ static var player_bar: Array = []
 static var player_sternenmut := false
 ## Welche Novizen-Fähigkeiten die eigene Figur schon bei Ye gelernt hat ([] = unbekannt: alle, z. B. Sandbox)
 static var player_novize: Array = []
+## Besondere Munition der eigenen Figur aus der Tasche (Pfeil -> Anzahl, siehe Skills.MUNITION)
+static var player_munition := {}
 
 
 static func active() -> bool:
@@ -86,6 +88,8 @@ static func prepare(id: String, level: int, potions := 0, own_class := "", own_m
 	# Novize: nur, was er bei Ye schon gelernt hat (Lektionen und Lernkämpfe mit Phasen zeigen, was sie erlauben)
 	if klasse == "novize" and not player_novize.is_empty() and not data.has("phasen") and not data.get("lektion", false):
 		player["novize_gelernt"] = player_novize.duplicate()
+	if klasse == "archer" and not player_munition.is_empty():
+		player["munition"] = player_munition.duplicate()
 	if klasse == "novize" and (player_sternenmut or data.get("sternenmut", false)):
 		player["sternenmut"] = true
 	if klasse == "novize" and player_mana_potions > 0:
@@ -203,11 +207,13 @@ static func _make_setup(id: String, data: Dictionary, heroes: Array, phases: Arr
 
 
 ## Der Kampf ist vorbei: Ergebnis für die Welt merken.
-static func finish(won: bool, potions_used := 0, tamed: Array = [], mana_used := 0, mana_share := -1.0) -> void:
+static func finish(won: bool, potions_used := 0, tamed: Array = [], mana_used := 0, mana_share := -1.0, ammo_used := {}) -> void:
 	result = {kampf = kampf_id, gewonnen = won, traenke_benutzt = used_before + potions_used, gezaehmt = tamed,
 			manatraenke_benutzt = mana_used_before + mana_used}
 	if mana_share >= 0.0:
 		result["mana_anteil"] = mana_share
+	if not ammo_used.is_empty():
+		result["munition_benutzt"] = ammo_used
 	mana_used_before = 0
 	# Die Belohnung stand schon auf dem Sieg-Bildschirm: Die Welt meldet sie nicht noch einmal
 	if won and not reward.is_empty():

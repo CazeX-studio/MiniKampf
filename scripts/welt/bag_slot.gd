@@ -209,6 +209,12 @@ static func draw_icon(node: CanvasItem, c: Vector2, form: String, color: Color) 
 			node.draw_line(ansatz, spitze, color, 4.0 if form == "schwert" else 3.0)
 			node.draw_line(c + Vector2(-10, -2), c + Vector2(2, 10), Color("8a6a2c"), 4.0)
 			node.draw_line(ansatz, c + Vector2(-12, 12), Color("6e4a2c"), 4.0)
+		"pfeil":
+			# Pfeil schräg mit farbiger Spitze und Federn
+			node.draw_line(c + Vector2(-13, 13), c + Vector2(10, -10), Color("8a6a44"), 3.0)
+			node.draw_colored_polygon(PackedVector2Array([c + Vector2(15, -15), c + Vector2(6, -11), c + Vector2(11, -6)]), color)
+			node.draw_line(c + Vector2(-13, 13), c + Vector2(-16, 6), Color("e8e8e8"), 2.0)
+			node.draw_line(c + Vector2(-13, 13), c + Vector2(-6, 16), Color("e8e8e8"), 2.0)
 		"kappe":
 			node.draw_circle(c + Vector2(0, 4), 13.0, dark)
 			node.draw_circle(c + Vector2(0, 4), 11.5, color)

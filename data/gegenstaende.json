@@ -32,6 +32,10 @@
 		"ausruestung": {"platz": "koerper", "art": "stoff", "seltenheit": "gewoehnlich", "verteidigung": 2, "widerstand": 7}},
 	"glueckskette": {"bild": {"form": "kette", "farbe": "f2c14e"}, "name": "Glückskette", "beschreibung": "Ein Anhänger aus Messing. Schmuck gibt nur Bonus-Werte.", "preis": 90,
 		"ausruestung": {"platz": "schmuck", "seltenheit": "ungewoehnlich", "boni": {"mana": 3}}},
+	"feuerpfeil": {"bild": {"form": "pfeil", "farbe": "ff7a3d"}, "name": "Feuerpfeil", "beschreibung": "Besondere Munition für den Elementpfeil des Bogenschützen: setzt das Ziel in Brand. Normale Pfeile kosten nichts.", "preis": 15},
+	"giftpfeil": {"bild": {"form": "pfeil", "farbe": "9ad94a"}, "name": "Giftpfeil", "beschreibung": "Besondere Munition für den Elementpfeil des Bogenschützen: vergiftet das Ziel. Normale Pfeile kosten nichts.", "preis": 15},
+	"blitzpfeil": {"bild": {"form": "pfeil", "farbe": "ffe14d"}, "name": "Blitzpfeil", "beschreibung": "Besondere Munition für den Elementpfeil des Bogenschützen: lähmt das Ziel. Normale Pfeile kosten nichts.", "preis": 15},
+	"frostpfeil": {"bild": {"form": "pfeil", "farbe": "8fd3ff"}, "name": "Frostpfeil", "beschreibung": "Besondere Munition für den Elementpfeil des Bogenschützen: schiebt das Ziel auf der Zugleiste zurück. Normale Pfeile kosten nichts.", "preis": 15},
 	"testkiesel": {"bild": {"form": "stein", "farbe": "9a9a9a"}, "name": "Testkiesel", "beschreibung": "Nur zum Ausprobieren, füllt die Tasche. Bingo kauft ihn für 1 Bronze.", "preis": 2},
 	"testruestung": {"bild": {"form": "ruestung", "farbe": "8fa3b8"}, "name": "Testrüstung", "beschreibung": "Nur zum Ausprobieren: Beute wie nach einem Sieg. Bingo kauft sie für 20 Bronze.", "preis": 40}
 }

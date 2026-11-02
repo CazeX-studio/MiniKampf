@@ -32,6 +32,13 @@ const NOVIZE := {schlag = 12, schildstoss = 8, schildstoss_leiste = 0.5, doppels
 ## Abklingzeiten nur für die stärksten Fähigkeiten (Beschluss 29.10.): Fähigkeiten, die Mana kosten, behalten ihre
 ## Abklingzeit nur ab so vielen Zügen. Die anderen begrenzt das Mana (es füllt sich im Kampf nicht von selbst).
 const STARKE_ABKLINGZEIT := 3
+## Besondere Munition des Bogenschützen (Elementpfeil, aus der Tasche): Pfeil -> Element und Effekt aus der Effekt-Liste
+const MUNITION := {
+	feuerpfeil = {name = "Feuerpfeil", element = "Feuer", effekt = "brennen", farbe = "ff7a3d"},
+	giftpfeil = {name = "Giftpfeil", element = "Pflanze", effekt = "gift", farbe = "9ad94a"},
+	blitzpfeil = {name = "Blitzpfeil", element = "Blitz", effekt = "laehmen", farbe = "ffe14d"},
+	frostpfeil = {name = "Frostpfeil", element = "Wasser", effekt = "zugleiste", farbe = "8fd3ff"},
+}
 const START_GOLD := 300
 const CART_HP := 60
 ## Passive "Feilschen": Gold-Fähigkeiten kosten weniger.
@@ -140,9 +147,19 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 				{id = "charge", name = "Bogen spannen", info = "Nächster Schuss ×2,5 (Treffer unterbricht)", target = "none"},
 				{id = "volley", name = "Pfeilhagel", info = "9 an alle Gegner · 15 Mana", target = "none", mana = 15, cd = 2},
 				{id = "net", name = "Netzpfeil", info = "6 Schaden, Ziel rutscht auf der Leiste zurück · 10 Mana", target = "enemy", mana = 10, cd = 3},
-				{id = "rapid", name = "Schnellfeuer", info = "3 schnelle Pfeile à 7 auf zufällige Gegner · 12 Mana", target = "none", mana = 12, cd = 2},
+				{id = "rapid", name = "Schnellfeuer", info = "%d schnelle Pfeile à 5 auf ein Ziel · 12 Mana" % _rapid_hits(f), target = "enemy", mana = 12},
+				{id = "durchschlag", name = "Durchschlag", info = "24 Fernkampf, durchbohrt das Ziel und trifft einen zweiten Gegner · 14 Mana", target = "enemy", mana = 14, cd = 3},
+				{id = "schwachstelle", name = "Schwachstelle markieren", info = "4 Fernkampf, 3 Runden nimmt das Ziel von allen mehr Schaden · 10 Mana", target = "enemy", mana = 10, cd = 3},
 				{id = "ult", name = "Jägerpfeil", info = "70 Fernkampf", target = "enemy"},
 			]
+			# Elementpfeil: nur mit besonderer Munition aus der Tasche
+			var pfeile: Array = []
+			for pfeil: String in MUNITION:
+				if int(f.wares.get(pfeil, 0)) > 0:
+					var art: Dictionary = MUNITION[pfeil]
+					pfeile.append({id = pfeil, name = "%s (%d)" % [art.name, int(f.wares[pfeil])], info = "14 %s, dazu %s" % [art.element, Effekte.ARTEN[art.effekt].name], then = "enemy"})
+			if not pfeile.is_empty():
+				list.insert(list.size() - 1, {id = "elementpfeil", name = "Elementpfeil", info = "Pfeil mit Element und Effekt · besondere Munition", target = "choice", choices = pfeile})
 		"blade":
 			var step := " (Tanzschritt %d/3)" % (f.dance.size() + 1)
 			list = [
@@ -411,6 +428,9 @@ func blocked_reason(f: Fighter, ab: Dictionary) -> String:
 ## Ob eine Auswahl im zweiten Schritt möglich ist.
 func choice_blocked(f: Fighter, ab: Dictionary, choice: Dictionary) -> String:
 	match ab.id:
+		"elementpfeil":
+			if int(f.wares.get(choice.id, 0)) <= 0:
+				return "Keine Pfeile"
 		"armor":
 			if choice.id == f.armor:
 				return "Trägst du schon"
@@ -486,6 +506,7 @@ func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 		"smith":
 			_smith(f, id, target, ab)
 		"archer":
+			ab_choice = ab.get("choice", null)
 			_archer(f, id, target)
 		"blade":
 			_blade(f, id, target)
@@ -613,6 +634,17 @@ func _add_hard(f: Fighter, amount: int) -> void:
 		c.float_text(f, "Gehärtet %d" % f.hard, Color("ffb070"), 30)
 
 
+## Schnellfeuer: 3 Treffer, je zwei Stufen im Baum einer mehr (höchstens 6), schnelle Waffe +1.
+func _rapid_hits(f: Fighter) -> int:
+	var hits := 3 + maxi(skill_level(f, "rapid") - 1, 0) / 2
+	if f.tempo >= 15:
+		hits += 1
+	return mini(hits, 6)
+
+
+var ab_choice: Variant = null
+
+
 func _archer(f: Fighter, id: String, target: Fighter) -> void:
 	match id:
 		"shot":
@@ -640,13 +672,36 @@ func _archer(f: Fighter, id: String, target: Fighter) -> void:
 			c.float_text(target, "Gefesselt", Color.WHITE, 30)
 			c.add_log("%s rutscht auf der Zugleiste nach hinten." % target.display_name)
 		"rapid":
-			for i in 3:
-				var targets := c.alive(c.enemies)
-				if targets.is_empty():
+			# Steckbrief: viele kurze, schwache Schüsse auf ein Ziel (3 bis 6 Treffer)
+			for i in _rapid_hits(f):
+				if not target.is_alive():
 					break
-				var t: Fighter = c.pick(targets)
-				c.projectile(f, t, Color("b8ff8a"), 0.15)
-				c.hit(f, t, 7, "ranged")
+				c.projectile(f, target, Color("b8ff8a").lightened(0.1 * i), 0.15)
+				c.hit(f, target, 5, "ranged")
+		"durchschlag":
+			# Durchbohrt das Ziel und trifft den Gegner dahinter
+			c.projectile(f, target, Color("e8ffc8"))
+			c.hit(f, target, 24, "ranged")
+			var others := c.alive(c.enemies).filter(func(e: Fighter) -> bool: return e != target)
+			if not others.is_empty():
+				var behind: Fighter = c.pick(others)
+				c.projectile(f, behind, Color("e8ffc8"), 0.15)
+				c.hit(f, behind, 16, "ranged")
+		"schwachstelle":
+			c.projectile(f, target, Color("ff5050"))
+			c.hit(f, target, 4, "ranged")
+			if target.is_alive():
+				target.vuln_turns = maxi(target.vuln_turns, 3)
+				c.float_text(target, "Schwachstelle!", Color("ff5050"), 30)
+				c.add_log("%s ist markiert: Alle machen 3 Runden mehr Schaden." % target.display_name)
+		"elementpfeil":
+			var art: Dictionary = MUNITION.get(str(ab_choice), {})
+			if art.is_empty() or int(f.wares.get(str(ab_choice), 0)) <= 0:
+				return
+			f.wares[str(ab_choice)] = int(f.wares[str(ab_choice)]) - 1
+			c.projectile(f, target, Color(art.farbe))
+			if c.hit(f, target, 14, "ranged", str(art.element)) > 0 and target.is_alive():
+				Effekte.anwenden(c, f, target, str(art.effekt))
 		"ult":
 			c.projectile(f, target, Color("f2c14e"))
 			c.hit(f, target, 70, "ranged")
@@ -1232,6 +1287,11 @@ func begin_turn(f: Fighter) -> void:
 ## Was eine perfekte Reaktion bei der jeweiligen Klasse bewirkt (der Treffer wird immer abgewehrt).
 func on_perfect_reaction(h: Fighter, attacker: Fighter) -> void:
 	match h.klass:
+		"archer":
+			# Jagdinstinkt (passiv): nach einem perfekten Ausweichen ist der nächste Schuss sicher kritisch
+			if skill_level(h, "jagdinstinkt") > 0 and h.has_meta("faehigkeiten"):
+				h.set_meta("jagdinstinkt", true)
+				c.float_text(h, "Jagdinstinkt!", Color("b8ff8a"), 40)
 		"tank":
 			h.mana = mini(h.mana + 15, h.max_mana)
 			c.float_text(h, "PARIERT! +15 Mana", Color("6fa8ff"))

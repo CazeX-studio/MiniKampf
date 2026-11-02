@@ -1,22 +1,106 @@
 {
 	"hinweis": "Fähigkeiten-Bäume (Projekt 14, K.3, Beschluss 29./30.10., Bäume aus design.md). Jeder Punkt der Klassenstufe lernt oder verbessert eine Fähigkeit (höchstens „max“), Reihe 1 ab Klassenstufe 1, Reihe 2 ab 10, Reihe 3 ab 20, Reihe 4 ab 30. „braucht“: diese Fähigkeit muss auf dieser Stufe sein. „bald“: steht im Baum, wirkt aber erst mit D8 und kann noch nicht gelernt werden. Die Grundreihe kostet keine Punkte. Der normale Angriff und die Ult sind immer da. Neu verteilen beim Lehrmeister: das erste Mal kostenlos, danach neu_verteilen_preis × Klassenstufe Bronze. Klassen ohne Baum kämpfen mit allen Fähigkeiten wie bisher (D8 baut die übrigen Bäume).",
-	"reihen_ab": [1, 10, 20, 30],
+	"reihen_ab": [
+		1,
+		10,
+		20,
+		30
+	],
 	"neu_verteilen_preis": 100,
 	"stufen_bonus": 0.1,
 	"archer": {
-		"grundreihe": {"name": "Ausweichen", "info": "Perfekt ausweichen wehrt den Treffer ab und gibt Mana zurück. Kostet keine Punkte."},
+		"grundreihe": {
+			"name": "Ausweichen",
+			"info": "Perfekt ausweichen wehrt den Treffer ab und gibt Mana zurück. Kostet keine Punkte."
+		},
 		"faehigkeiten": [
-			{"id": "shot", "name": "Schneller Schuss", "reihe": 1, "max": 5, "grundangriff": true, "info": "Dein normaler Angriff. Jede Stufe mehr: 10 % mehr Schaden."},
-			{"id": "charge", "name": "Aufgeladener Schuss", "reihe": 1, "max": 5, "info": "Bogen spannen: Der nächste Schuss trifft 2,5-mal so hart. Jede Stufe mehr: 10 % mehr Schaden."},
-			{"id": "ruhige_hand", "name": "Ruhige Hand", "reihe": 1, "max": 5, "passiv": true, "info": "Aus der hinteren Reihe öfter kritisch: 4 % je Stufe."},
-			{"id": "net", "name": "Netzpfeil", "reihe": 2, "max": 5, "info": "Ziel rutscht auf der Zugleiste zurück."},
-			{"id": "volley", "name": "Pfeilhagel", "reihe": 2, "max": 5, "info": "Trifft alle Gegner."},
-			{"id": "adlerauge", "name": "Adlerauge", "reihe": 2, "max": 5, "passiv": true, "bald": true},
-			{"id": "rapid", "name": "Schnellfeuer", "reihe": 3, "max": 5, "braucht": {"shot": 3}, "info": "Drei schnelle Pfeile auf zufällige Gegner."},
-			{"id": "durchschlag", "name": "Durchschlag", "reihe": 3, "max": 5, "braucht": {"charge": 3}, "bald": true},
-			{"id": "jagdinstinkt", "name": "Jagdinstinkt", "reihe": 3, "max": 5, "passiv": true, "bald": true},
-			{"id": "schwachstelle", "name": "Schwachstelle markieren", "reihe": 4, "max": 5, "bald": true},
-			{"id": "elementpfeil", "name": "Elementpfeil", "reihe": 4, "max": 5, "bald": true}
+			{
+				"id": "shot",
+				"name": "Schneller Schuss",
+				"reihe": 1,
+				"max": 5,
+				"grundangriff": true,
+				"info": "Dein normaler Angriff. Jede Stufe mehr: 10 % mehr Schaden."
+			},
+			{
+				"id": "charge",
+				"name": "Aufgeladener Schuss",
+				"reihe": 1,
+				"max": 5,
+				"info": "Bogen spannen: Der nächste Schuss trifft 2,5-mal so hart. Jede Stufe mehr: 10 % mehr Schaden."
+			},
+			{
+				"id": "ruhige_hand",
+				"name": "Ruhige Hand",
+				"reihe": 1,
+				"max": 5,
+				"passiv": true,
+				"info": "Aus der hinteren Reihe öfter kritisch: 4 % je Stufe."
+			},
+			{
+				"id": "net",
+				"name": "Netzpfeil",
+				"reihe": 2,
+				"max": 5,
+				"info": "Ziel rutscht auf der Zugleiste zurück."
+			},
+			{
+				"id": "volley",
+				"name": "Pfeilhagel",
+				"reihe": 2,
+				"max": 5,
+				"info": "Trifft alle Gegner."
+			},
+			{
+				"id": "adlerauge",
+				"name": "Adlerauge",
+				"reihe": 2,
+				"max": 5,
+				"passiv": true,
+				"info": "Aus der hinteren Reihe öfter kritisch: 3 % je Stufe, bei einem kritischen Treffer blitzt „Adlerauge!“ auf."
+			},
+			{
+				"id": "rapid",
+				"name": "Schnellfeuer",
+				"reihe": 3,
+				"max": 5,
+				"braucht": {
+					"shot": 3
+				},
+				"info": "Viele kurze Schüsse auf ein Ziel: 3 Treffer, je zwei Stufen einer mehr (höchstens 6)."
+			},
+			{
+				"id": "durchschlag",
+				"name": "Durchschlag",
+				"reihe": 3,
+				"max": 5,
+				"braucht": {
+					"charge": 3
+				},
+				"info": "Durchbohrt das Ziel und trifft einen zweiten Gegner."
+			},
+			{
+				"id": "jagdinstinkt",
+				"name": "Jagdinstinkt",
+				"reihe": 3,
+				"max": 5,
+				"passiv": true,
+				"info": "Nach einem perfekten Ausweichen ist der nächste Schuss sicher kritisch."
+			},
+			{
+				"id": "schwachstelle",
+				"name": "Schwachstelle markieren",
+				"reihe": 4,
+				"max": 5,
+				"info": "Markiert ein Ziel: 3 Runden nimmt es von allen mehr Schaden."
+			},
+			{
+				"id": "elementpfeil",
+				"name": "Elementpfeil",
+				"reihe": 4,
+				"max": 5,
+				"info": "Pfeil mit Element und Effekt (Brennen, Gift, Lähmen, Zugleiste), braucht besondere Munition aus der Tasche."
+			}
 		],
 		"ult": "Jägerpfeil"
 	}

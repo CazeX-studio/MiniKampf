@@ -352,6 +352,11 @@ func _create_heroes() -> void:
 		if spec.has("faehigkeiten"):
 			h.set_meta("faehigkeiten", spec.faehigkeiten)
 			h.set_meta("leiste", spec.get("leiste", []))
+		# Besondere Munition (Elementpfeil des Bogenschützen)
+		var munition: Dictionary = spec.get("munition", {})
+		for pfeil: String in munition:
+			if Skills.MUNITION.has(pfeil) and int(munition[pfeil]) > 0:
+				h.wares[pfeil] = int(munition[pfeil])
 		if int(spec.get("manatraenke", 0)) > 0:
 			h.wares["manatrank"] = int(spec.manatraenke)
 		if spec.get("computer", false):
@@ -1061,11 +1066,21 @@ func calc_damage(attacker: Fighter, target: Fighter, base: float, kind: String, 
 		# Passive "Ruhige Hand": Der Bogenschütze trifft aus der hinteren Reihe öfter kritisch.
 		var chance := CRIT_CHANCE
 		if attacker.klass == "archer" and attacker.back_row:
-			# Mit Fähigkeiten-Baum je nach Stufe von „Ruhige Hand“, sonst wie bisher
-			chance += 0.04 * skills.skill_level(attacker, "ruhige_hand") if attacker.has_meta("faehigkeiten") else 0.2
+			# Mit Fähigkeiten-Baum je nach Stufe von „Ruhige Hand“ und „Adlerauge“, sonst wie bisher
+			if attacker.has_meta("faehigkeiten"):
+				chance += 0.04 * skills.skill_level(attacker, "ruhige_hand") + 0.03 * skills.skill_level(attacker, "adlerauge")
+			else:
+				chance += 0.2
+		# Jagdinstinkt: nach einem perfekten Ausweichen sicher kritisch
+		var instinkt := attacker.has_meta("jagdinstinkt")
+		if instinkt:
+			attacker.remove_meta("jagdinstinkt")
+			chance = 1.0
 		if zufall() < chance:
 			dmg *= CRIT_MULT
 			_last_crit = true
+			if attacker.klass == "archer" and skills.skill_level(attacker, "adlerauge") > 0 and attacker.has_meta("faehigkeiten") and not instinkt:
+				float_text(attacker, "Adlerauge!", Color("f2c14e"), 40)
 	return maxi(1, roundi(dmg))
 
 

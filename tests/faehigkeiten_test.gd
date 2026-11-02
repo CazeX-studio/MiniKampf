@@ -42,7 +42,6 @@ func _init() -> void:
 	_check(int(p.progress.faehigkeiten.get("charge", 0)) == 2 and p.progress.freie_punkte() == 1, "Lernen verbraucht Punkte")
 	state.apply_command("a", {type = "lernen", faehigkeit = "volley"})
 	_check(not p.progress.faehigkeiten.has("volley"), "Reihe 2 vor Klassenstufe 10 gelernt")
-	_check(Faehigkeiten.grund_gegen(p.progress, "adlerauge") != "", "Fähigkeit „bald“ darf man noch nicht lernen")
 	p.progress.klassen_xp = 20000
 	_check(Faehigkeiten.grund_gegen(p.progress, "rapid").begins_with("Braucht"), "Schnellfeuer ohne Schneller Schuss 3 lernbar")
 	# Neu verteilen nur beim Lehrmeister, das erste Mal kostenlos
@@ -99,6 +98,41 @@ func _init() -> void:
 	# Prüfungen mit Phasen (Fenn) zeigen alles
 	BattleRequest.prepare("fenns_pruefung", 10, 0, "archer")
 	_check(not BattleRequest.setup.helden[0].has("faehigkeiten"), "Fenns Prüfung darf nicht nach dem Baum filtern")
+	# D8c: die fünf neuen Fähigkeiten des Bogenschützen
+	BattleRequest.player_bar = ["durchschlag", "schwachstelle", "elementpfeil", "rapid", "", ""]
+	BattleRequest.player_skills = {durchschlag = 1, schwachstelle = 1, elementpfeil = 1, rapid = 1, jagdinstinkt = 1, adlerauge = 5, charge = 3, shot = 3}
+	BattleRequest.player_munition = {feuerpfeil = 2}
+	BattleRequest.prepare("splitterbaer", 25, 0, "archer")
+	var b := BattleState.new(null, [] as Array[String], "", 4)
+	b.setup = BattleRequest.setup
+	b._create_heroes()
+	var bogen: Fighter = b.heroes[0]
+	var g1 := Fighter.new("Eins", "test", "Erde", false, 500, 10, Color.WHITE)
+	var g2 := Fighter.new("Zwei", "test", "Erde", false, 500, 10, Color.WHITE)
+	b.enemies.append_array([g1, g2])
+	var abs := {}
+	for a in b.skills.abilities(bogen):
+		abs[a.id] = a
+	for id: String in ["durchschlag", "schwachstelle", "elementpfeil", "rapid"]:
+		_check(abs.has(id), "Bogenschütze hat %s nicht" % id)
+	bogen.mana = bogen.max_mana
+	b.execute(bogen, abs.durchschlag, g1)
+	_check(g1.hp < 500 and g2.hp < 500, "Durchschlag trifft nicht zwei Gegner")
+	b.execute(bogen, abs.schwachstelle, g2)
+	_check(g2.vuln_turns >= 3, "Schwachstelle markiert nicht")
+	var pfeil: Dictionary = abs.elementpfeil.duplicate()
+	pfeil.choice = "feuerpfeil"
+	b.execute(bogen, pfeil, g1)
+	_check(g1.effekte.has("brennen") and int(bogen.wares.feuerpfeil) == 1, "Feuerpfeil setzt nicht in Brand oder wird nicht verbraucht")
+	var vorher := g1.hp
+	b.execute(bogen, abs.rapid, g1)
+	_check(vorher - g1.hp >= 3 * 3, "Schnellfeuer trifft nicht mehrmals ein Ziel")
+	b.skills.on_perfect_reaction(bogen, g1)
+	_check(bogen.has_meta("jagdinstinkt"), "Jagdinstinkt wird nach perfektem Ausweichen nicht scharf")
+	b.calc_damage(bogen, g1, 10.0, "ranged")
+	_check(not bogen.has_meta("jagdinstinkt"), "Jagdinstinkt wird nicht verbraucht")
+	BattleRequest.player_munition = {}
+	BattleRequest.player_bar = []
 	BattleRequest.player_skills_known = false
 	BattleRequest.player_skills = {}
 	print("faehigkeiten_test: %s" % ("OK" if _fehler == 0 else "%d Fehler" % _fehler))

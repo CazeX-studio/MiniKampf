@@ -383,6 +383,11 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			if cmd.has("mana_anteil"):
 				p.progress.mana_anteil = clampf(float(cmd.mana_anteil), 0.0, 1.0)
 				progress_changed.emit(p.id)
+			# Verschossene besondere Pfeile sind weg
+			var ammo: Dictionary = cmd.get("munition_benutzt", {})
+			for pfeil: String in ammo:
+				if Skills.MUNITION.has(pfeil):
+					p.progress.remove_item(pfeil, mini(int(ammo[pfeil]), p.progress.item_count(pfeil)))
 			var mana_used := mini(int(cmd.get("manatraenke_benutzt", 0)), p.progress.potion_count("manatrank"))
 			if mana_used > 0:
 				p.progress.use_potions("manatrank", mana_used)
