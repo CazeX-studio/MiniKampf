@@ -344,6 +344,9 @@ func _create_heroes() -> void:
 		h.ult = float(spec.get("ult", 0.0))
 		if spec.has("traenke"):
 			h.wares = {heiltrank = int(spec.traenke)}
+		# Gelernte Fähigkeiten aus dem Baum (nur bei Klassen mit Baum, siehe Faehigkeiten)
+		if spec.has("faehigkeiten"):
+			h.set_meta("faehigkeiten", spec.faehigkeiten)
 		if int(spec.get("manatraenke", 0)) > 0:
 			h.wares["manatrank"] = int(spec.manatraenke)
 		if spec.get("computer", false):
@@ -767,6 +770,9 @@ func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 	status("%s: %s" % [f.display_name, ab.name])
 	crits = 0
 	f.mana -= ab.get("mana", 0)
+	# Stufe der Fähigkeit im Baum: jede Stufe über 1 mehr Schaden und Heilung
+	if f.has_meta("faehigkeiten"):
+		f.set_meta("stufen_mult", 1.0 + Faehigkeiten.stufen_bonus() * maxi(skills.skill_level(f, id) - 1, 0))
 	if ab.has("cd"):
 		f.cooldowns[id] = ab.cd + 1
 	# Normaler Angriff gibt etwas Mana zurück
@@ -1004,11 +1010,14 @@ func calc_damage(attacker: Fighter, target: Fighter, base: float, kind: String, 
 	_last_eff = Elements.multiplier(element, target.element)
 	dmg *= _last_eff
 	dmg *= skills.damage_bonus(attacker) * attacker.power
+	# Fähigkeit auf höherer Stufe (Fähigkeiten-Baum): mehr Schaden
+	dmg *= float(attacker.get_meta("stufen_mult", 1.0))
 	if attacker.is_ally():
 		# Passive "Ruhige Hand": Der Bogenschütze trifft aus der hinteren Reihe öfter kritisch.
 		var chance := CRIT_CHANCE
 		if attacker.klass == "archer" and attacker.back_row:
-			chance += 0.2
+			# Mit Fähigkeiten-Baum je nach Stufe von „Ruhige Hand“, sonst wie bisher
+			chance += 0.04 * skills.skill_level(attacker, "ruhige_hand") if attacker.has_meta("faehigkeiten") else 0.2
 		if zufall() < chance:
 			dmg *= CRIT_MULT
 			_last_crit = true
@@ -1114,6 +1123,9 @@ func heal(source: Fighter, target: Fighter, amount: int) -> int:
 	# Heilung wächst mit der Stufe (der Novize rechnet seine Stärke schon selbst ein)
 	if source != null and source.klass != "novize":
 		amount = roundi(amount * source.power)
+	# Fähigkeit auf höherer Stufe (Fähigkeiten-Baum): mehr Heilung
+	if source != null:
+		amount = roundi(amount * float(source.get_meta("stufen_mult", 1.0)))
 	var healed := target.heal(amount)
 	if source != null:
 		source.credit().stat_heal += healed

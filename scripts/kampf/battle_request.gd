@@ -30,6 +30,10 @@ static var mana_used_before := 0
 ## Mana der eigenen Figur vor dem Kampf (Anteil). Kämpfe in der Wildnis (eigene Klasse) beginnen damit und melden
 ## danach, was übrig ist; Lektionen und Geschichtskämpfe in Kreuzweg beginnen mit vollem Mana.
 static var player_mana_share := 1.0
+## Gelernte Fähigkeiten der eigenen Figur (Kennung -> Stufe, Projekt 14, K.3). player_skills_known = false: unbekannt
+## (Sandbox und Prüfungen), dann kämpft man mit allen Fähigkeiten der Klasse.
+static var player_skills := {}
+static var player_skills_known := false
 
 
 static func active() -> bool:
@@ -77,6 +81,9 @@ static func prepare(id: String, level: int, potions := 0, own_class := "", own_m
 		player["manatraenke"] = player_mana_potions
 	if data.get("eigene_klasse", false):
 		player["mana_anteil"] = player_mana_share
+	# Fähigkeiten-Baum: in Kämpfen mit der eigenen Klasse nur das Gelernte (Lernkämpfe mit Phasen zeigen alles)
+	if player_skills_known and klasse == own_class and Faehigkeiten.hat_baum(klasse) and not data.has("phasen"):
+		player["faehigkeiten"] = player_skills.duplicate()
 	# Parieren lernt man erst in Lektion 3: davor hat der Novize keine Reaktion (im langen Lernkampf je Phase)
 	if not data.get("reaktion", true):
 		player["reaktion"] = ""
@@ -119,6 +126,8 @@ static func build_group(id: String, members: Array) -> Dictionary:
 			hero["ausruestung"] = m.ausruestung
 		if klasse == "novize" and int(m.get("manatraenke", 0)) > 0:
 			hero["manatraenke"] = int(m.manatraenke)
+		if m.has("faehigkeiten") and klasse == str(m.get("eigene_klasse", "")) and Faehigkeiten.hat_baum(klasse) and not data.has("phasen"):
+			hero["faehigkeiten"] = m.faehigkeiten
 		if not data.get("reaktion", true):
 			hero["reaktion"] = ""
 		heroes.append(hero)

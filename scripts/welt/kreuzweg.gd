@@ -617,6 +617,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_toggle_panel("werte")
 		elif key == KEY_X:
 			_send({type = "hinsetzen"})
+		elif key == KEY_K:
+			_toggle_panel("faehigkeiten")
 		elif key == KEY_R and _is_tamer():
 			_pack_open = not _pack_open
 		elif key == KEY_ESCAPE and local_player().shop != "":
@@ -1414,6 +1416,7 @@ func _build_ui() -> void:
 	var x := 1270.0
 	for info: Array in [["", "zahnrad", "Menü", 56, _go_menu], ["I", "tasche", "Tasche (I)", 72, _toggle_panel.bind("tasche")],
 			["X", "sanduhr", "Hinsetzen (X): füllt das Mana, am Lagerfeuer schneller", 72, func() -> void: _send({type = "hinsetzen"})],
+			["K", "rolle", "Fähigkeiten (K)", 72, _toggle_panel.bind("faehigkeiten")],
 			["C", "schild", "Werte (C)", 72, _toggle_panel.bind("werte")], ["J", "ausrufe", "Aufträge (J)", 72, _toggle_panel.bind("auftraege")],
 			[GameData.text("neu_beginnen"), "", GameData.text("neu_beginnen"), 140, _restart]]:
 		var button := Button.new()
@@ -2472,15 +2475,16 @@ func _fill_panel() -> void:
 	_quest_view.visible = quest_list
 	_panel_text.visible = not quest_list
 	_stats_head.visible = _panel_mode == "werte"
-	_rep_box.visible = _panel_mode == "werte"
-	_rep_scroll.visible = _panel_mode == "werte"
+	_rep_box.visible = _panel_mode in ["werte", "faehigkeiten"]
+	_rep_scroll.visible = _panel_mode in ["werte", "faehigkeiten"]
+	_rep_scroll.custom_minimum_size.y = 360.0 if _panel_mode == "faehigkeiten" else 250.0
 	for child in _rep_box.get_children():
 		child.queue_free()
 	_bag_grid.visible = _panel_mode == "tasche"
 	_bag_footer.visible = _panel_mode == "tasche"
 	_belt_row.visible = _panel_mode == "tasche"
 	_bag_tests.visible = _panel_mode == "tasche"
-	_panel_text.custom_minimum_size.y = {"tasche": 120.0, "werte": 90.0}.get(_panel_mode, 330.0)
+	_panel_text.custom_minimum_size.y = {"tasche": 120.0, "werte": 90.0, "faehigkeiten": 0.0}.get(_panel_mode, 330.0)
 	for tab_button: Button in _quest_tabs.get_children():
 		tab_button.button_pressed = tab_button.get_meta("tab") == _quest_tab
 	if _panel_mode == "auftraege":
@@ -2494,6 +2498,9 @@ func _fill_panel() -> void:
 				lines.append("%s [color=#f2c14e]%s[/color] – %s" % [UiStil.bild("kristall"), achievements[id].name, achievements[id].beschreibung])
 		if lines.is_empty():
 			lines.append("Noch keine Erfolge.")
+	elif _panel_mode == "faehigkeiten":
+		_panel_title.text = GameData.text("faehigkeiten_titel")
+		_faehigkeiten_zeilen(p)
 	elif _panel_mode == "werte":
 		_panel_title.text = GameData.text("werte")
 		_aussehen_zeilen(p)
@@ -2772,6 +2779,72 @@ func _fill_bag(p: PlayerState) -> Array:
 	return slots
 
 
+## Fähigkeiten-Baum (Projekt 14, K.3): Klassenstufe, freie Punkte, die Reihen mit „+“ zum Lernen und Neu verteilen.
+func _faehigkeiten_zeilen(p: PlayerState) -> void:
+	var klasse := p.progress.battle_class()
+	if p.progress.klassenstufe() <= 0:
+		_rep_box.add_child(_wrapped(GameData.text("faehigkeiten_keine"), 15, Color("c8c8c8")))
+		return
+	var baum := Faehigkeiten.baum(klasse)
+	if baum.is_empty():
+		_rep_box.add_child(_wrapped(GameData.text("faehigkeiten_ohne_baum"), 15, Color("c8c8c8")))
+		return
+	_rep_box.add_child(_label(GameData.text("faehigkeiten_kopf", [p.progress.klassenstufe(), p.progress.freie_punkte()]), 17, Color("f2c14e")))
+	var grund: Dictionary = baum.get("grundreihe", {})
+	if not grund.is_empty():
+		_rep_box.add_child(_wrapped("%s: [b]%s[/b] – %s" % [GameData.text("faehigkeiten_grundreihe"), grund.name, grund.get("info", "")], 14, Color("c8c8c8")))
+	var reihe := 0
+	for f: Dictionary in baum.get("faehigkeiten", []):
+		if int(f.reihe) != reihe:
+			reihe = int(f.reihe)
+			var frei := p.progress.klassenstufe() >= Faehigkeiten.reihe_ab(reihe)
+			_rep_box.add_child(_label(GameData.text("faehigkeiten_reihe", [reihe, Faehigkeiten.reihe_ab(reihe)]), 15,
+					Color("f3ead8") if frei else Color("808080")))
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 8)
+		var stufe := int(p.progress.faehigkeiten.get(f.id, 0))
+		var text := "[b]%s[/b]%s  %d / %d" % [f.name, " (passiv)" if f.get("passiv", false) else "", stufe, int(f.get("max", 5))]
+		var braucht: Dictionary = f.get("braucht", {})
+		for andere: String in braucht:
+			text += "  [color=#a0a0a0]braucht %s %d[/color]" % [Faehigkeiten.eintrag(klasse, andere).get("name", andere), int(braucht[andere])]
+		if f.has("info"):
+			text += "\n[color=#a0a0a0]%s[/color]" % f.info
+		var label := _wrapped(text, 14, Color("e8e8e8") if stufe > 0 else Color("b0b0b0"))
+		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(label)
+		var grund_gegen := Faehigkeiten.grund_gegen(p.progress, f.id)
+		var button := _small_button("+" if grund_gegen == "" else grund_gegen, func() -> void:
+			_send({type = "lernen", faehigkeit = f.id})
+			_fill_panel())
+		button.disabled = grund_gegen != ""
+		button.custom_minimum_size = Vector2(150, 28)
+		button.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		row.add_child(button)
+		_rep_box.add_child(row)
+	var preis := Faehigkeiten.preis_neu_verteilen(p.progress)
+	var neu := _small_button(GameData.text("faehigkeiten_neu_verteilen", [GameData.text("faehigkeiten_kostenlos") if preis == 0 else Geld.text(preis)]),
+			func() -> void:
+				_send({type = "neu_verteilen"})
+				_fill_panel())
+	neu.custom_minimum_size = Vector2(260, 32)
+	_rep_box.add_child(neu)
+
+
+## Text mit Zeilenumbruch und BBCode für die Fenster.
+func _wrapped(text: String, font_size: int, color: Color) -> RichTextLabel:
+	var label := RichTextLabel.new()
+	label.bbcode_enabled = true
+	label.fit_content = true
+	label.scroll_active = false
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.custom_minimum_size.x = 100
+	label.add_theme_font_size_override("normal_font_size", font_size)
+	label.add_theme_font_size_override("bold_font_size", font_size)
+	label.add_theme_color_override("default_color", color)
+	label.text = text
+	return label
+
+
 ## Ausrüstung (Projekt 14, K.1): was angelegt ist, mit „Ablegen“, und was es zusammen bringt.
 func _ausruestung_zeilen(p: PlayerState) -> void:
 	_rep_box.add_child(_label(GameData.text("ausruestung_titel"), 17, Color("f2c14e")))
@@ -2887,6 +2960,8 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 	BattleRequest.player_gear = local_player().progress.ausruestung.duplicate()
 	BattleRequest.player_mana_potions = local_player().progress.potion_count("manatrank")
 	BattleRequest.player_mana_share = local_player().progress.mana_anteil
+	BattleRequest.player_skills = local_player().progress.faehigkeiten.duplicate()
+	BattleRequest.player_skills_known = true
 	_prepare_reward(kampf_id)
 	if BattleRequest.prepare(kampf_id, progress.level, progress.potion_count("heiltrank"), progress.battle_class(),
 			progress.flags.get("monster", [])):

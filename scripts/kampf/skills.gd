@@ -267,6 +267,12 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 			list.append_array(c.dungeon.extra_abilities(f))
 		var row_name := "Nach vorne" if f.back_row else "Nach hinten"
 		list.append({id = "row", name = row_name, info = "Reihe wechseln (kostet den Zug)", target = "none"})
+	# Fähigkeiten-Baum: nur, was gelernt ist (normaler Angriff, Ult und alles außerhalb des Baums bleiben)
+	if f.has_meta("faehigkeiten") and Faehigkeiten.hat_baum(f.klass) and not list.is_empty():
+		var basic: String = list[0].id
+		list = list.filter(func(ab: Dictionary) -> bool:
+			return ab.id == basic or ab.id == "ult" or Faehigkeiten.eintrag(f.klass, ab.id).is_empty() \
+					or skill_level(f, ab.id) > 0)
 	# Abklingzeiten nur für die stärksten Fähigkeiten: Wer Mana kostet, braucht sonst keine (das Mana begrenzt sie)
 	for ab in list:
 		if ab.has("mana") and int(ab.get("cd", 0)) < STARKE_ABKLINGZEIT:
@@ -279,6 +285,13 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 	if not allowed.is_empty() and f.is_hero:
 		list = list.filter(func(ab: Dictionary) -> bool: return ab.id in allowed or ab.id == "abwarten")
 	return list
+
+
+## Stufe einer Fähigkeit aus dem Baum (0 = nicht gelernt). Ohne Baum-Angaben zählt alles als Stufe 1.
+func skill_level(f: Fighter, id: String) -> int:
+	if not f.has_meta("faehigkeiten"):
+		return 1
+	return int((f.get_meta("faehigkeiten") as Dictionary).get(id, 0))
 
 
 ## Ist das der normale Angriff der Figur? (Die erste Fähigkeit ihrer Liste, ohne Mana-Kosten, gegen einen Gegner.)

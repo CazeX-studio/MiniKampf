@@ -5,7 +5,17 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 01.11.)
 
-- **Nächster Schritt:** D6 der „Demo-Reihenfolge“ (Fähigkeiten-Baum und feste Leiste mit 6 Plätzen). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 und D5 wurden auf Marcos Wunsch vor T1 gebaut.
+- **Nächster Schritt:** D6b der „Demo-Reihenfolge“ (feste Leiste mit 6 Plätzen). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 bis D6a wurden auf Marcos Wunsch vor T1 gebaut.
+
+- **Neu (02.11.): D6a Fähigkeiten-Baum** (Projekt 14, K.3): Nach dem Lernen der Klasse wächst die **Klassenstufe** mit der Erfahrung (gleiche Tabelle wie die Charakterstufe), jede Klassenstufe gibt einen Punkt. Mit **K** (oder dem Rollen-Knopf oben) öffnet sich das Fähigkeiten-Fenster: Grundreihe, vier Reihen (frei ab Klassenstufe 1, 10, 20, 30), Voraussetzungen wie „braucht Schneller Schuss 3“, ein „+“ zum Lernen. Jede Stufe über 1 gibt 10 % mehr Schaden oder Heilung. **Neu verteilen** geht nur beim eigenen Lehrmeister, das erste Mal kostenlos, danach 100 Bronze je Klassenstufe.
+  - Der erste Baum ist der des **Bogenschützen** (aus design.md). Fähigkeiten, die es im Kampf noch nicht gibt (Adlerauge, Durchschlag, Jagdinstinkt, Schwachstelle markieren, Elementpfeil), stehen mit „Kommt bald“ im Baum, sie kommen mit D8. Alle anderen Klassen kämpfen weiter mit allen Fähigkeiten, bis ihr Baum da ist.
+  - **Wichtig:** Ein Bogenschütze hat im Kampf in der Wildnis jetzt nur noch, was er gelernt hat (dazu immer den normalen Angriff und die Ult). Fenns Prüfung zeigt weiter alles. Alte Spielstände bekommen ihre Klassen-Erfahrung ab Stufe 10 geschätzt.
+  - Alle Zahlen sind vorläufig.
+  - **So testest du es:**
+    1. Als Bogenschütze nach Fenns Prüfung K drücken: Klassenstufe und freie Punkte stehen oben.
+    2. Mit „+“ den Aufgeladenen Schuss lernen. Netzpfeil zeigt „Ab Klassenstufe 10“.
+    3. In der Wildnis kämpfen: Es gibt nur Schneller Schuss, Bogen spannen, Abwarten, Reihe wechseln und die Ult.
+    4. Bei Fenn „Neu verteilen“ drücken (kostenlos), weit weg von Fenn geht es nicht.
 
 - **Neu (02.11.): D5b Hinsetzen und Lagerfeuer** (Projekt 14, K.2): Nach Kämpfen in der Wildnis (ab Grünwacht, mit der eigenen Klasse) bleibt das übrige Mana erhalten, und der nächste Kampf beginnt damit. Wer verliert, steht mit leerem Mana auf. Mit **X** (oder dem Sanduhr-Knopf oben rechts) setzt du dich hin, dann füllt sich das Mana (in etwa 20 Sekunden). **Am Lagerfeuer** geht es dreimal so schnell, zum Beispiel am Rastplatz auf dem Weg nach Grünwacht. Wer losläuft, steht wieder auf. Ist das Mana nicht voll, steht es oben neben der Erfahrung. Lektionen und Geschichtskämpfe in Kreuzweg beginnen weiter mit vollem Mana.
   - Eigene Bilder zum Sitzen gibt es noch nicht, die Figur wird so lange etwas gestaucht gezeigt.

@@ -34,6 +34,11 @@ var ausruestung: Dictionary = Ausruestung.START.duplicate()
 ## Mana außerhalb des Kampfes als Anteil (0 bis 1, Projekt 14, K.2): Nach Kämpfen in der Wildnis bleibt, was übrig
 ## war. Hinsetzen füllt es wieder auf, am Lagerfeuer schneller.
 var mana_anteil := 1.0
+## Klassenstufe (Projekt 14, K.3): Erfahrung, die man nach dem Lernen der Klasse sammelt, zählt auch hierfür.
+## Die Stufen kommen aus derselben Tabelle wie die Charakterstufe. Jede Klassenstufe gibt einen Fähigkeitspunkt.
+var klassen_xp := 0
+## Gelernte Fähigkeiten aus dem Baum der Klasse: Kennung -> Stufe (siehe Faehigkeiten)
+var faehigkeiten := {}
 var xp := 0
 var level := 1
 ## Auftrag -> "aktiv", "fertig" oder "abgegeben" (nicht drin = "neu")
@@ -53,6 +58,25 @@ func battle_class() -> String:
 	if klasse == "" or flags.has("klasse_gelernt"):
 		return klasse
 	return "" if GameData.get_file("klassen").get(klasse, {}).has("lernen_bei") else klasse
+
+
+## Klassenstufe: 0 = noch keine Klasse gelernt, sonst ab 1 (Tabelle wie die Charakterstufe).
+func klassenstufe() -> int:
+	if not flags.has("klasse_gelernt") or battle_class() == "":
+		return 0
+	var table := GameData.level_xp()
+	var stufe := 1
+	while stufe < table.size() and klassen_xp >= int(table[stufe]):
+		stufe += 1
+	return stufe
+
+
+## Fähigkeitspunkte, die noch nicht verteilt sind (ein Punkt pro Klassenstufe).
+func freie_punkte() -> int:
+	var benutzt := 0
+	for id: String in faehigkeiten:
+		benutzt += int(faehigkeiten[id])
+	return maxi(0, klassenstufe() - benutzt)
 
 
 ## Höchstes Mana, mit dem man in den Kampf geht: gelernte Klasse oder Novize, dazu der Mana-Bonus der Ausrüstung.
@@ -245,6 +269,9 @@ func move_slot(from: int, to: int) -> void:
 ## Fügt Erfahrung hinzu. Gibt die neu erreichten Stufen zurück (meist leer).
 func add_xp(amount: int) -> Array[int]:
 	xp += amount
+	# Nach dem Lernen der Klasse wächst auch die Klassenstufe
+	if flags.has("klasse_gelernt") and battle_class() != "":
+		klassen_xp += amount
 	var reached: Array[int] = []
 	var table := GameData.level_xp()
 	while level < table.size() and xp >= int(table[level]):
@@ -261,7 +288,7 @@ func xp_range() -> Vector2i:
 
 
 func to_dict() -> Dictionary:
-	return {gold = gold, items = items, slots = bag_slots().duplicate(), beute = loot, bank = bank, bank_plaetze = bank_size, guertel = belt, ausruestung = ausruestung, mana_anteil = mana_anteil,
+	return {gold = gold, items = items, slots = bag_slots().duplicate(), beute = loot, bank = bank, bank_plaetze = bank_size, guertel = belt, ausruestung = ausruestung, mana_anteil = mana_anteil, klassen_xp = klassen_xp, faehigkeiten = faehigkeiten,
 			xp = xp, level = level, quests = quests, flags = flags}
 
 
@@ -288,6 +315,16 @@ func load_dict(data: Dictionary) -> void:
 		if platz in Ausruestung.PLAETZE and str(saved_gear[platz]) != "":
 			ausruestung[platz] = str(saved_gear[platz])
 	mana_anteil = clampf(float(data.get("mana_anteil", 1.0)), 0.0, 1.0)
+	klassen_xp = int(data.get("klassen_xp", 0))
+	# Ältere Spielstände mit gelernter Klasse: Klassen-Erfahrung ab Stufe 10 schätzen (dort lernt man die Klasse)
+	if not data.has("klassen_xp") and (data.get("flags", {}) as Dictionary).has("klasse_gelernt"):
+		var table := GameData.level_xp()
+		klassen_xp = maxi(0, int(data.get("xp", 0)) - int(table[mini(9, table.size() - 1)]))
+	faehigkeiten = {}
+	var saved_skills: Dictionary = data.get("faehigkeiten", {})
+	for id: String in saved_skills:
+		if int(saved_skills[id]) > 0:
+			faehigkeiten[id] = int(saved_skills[id])
 	xp = int(data.get("xp", 0))
 	level = int(data.get("level", 1))
 	quests = data.get("quests", {})

@@ -21,6 +21,7 @@ extends RefCounted
 ##   {type = "bank_erweitern"}           an einer Bankstelle mehr Bankplätze kaufen
 ##   {type = "kaufen", gegenstand = "…"} / {type = "verkaufen", gegenstand = "…"} / {type = "laden_zu"}  im geöffneten Laden
 ##   {type = "hinsetzen"}  hinsetzen oder aufstehen: füllt das Mana, am Lagerfeuer schneller (Projekt 14, K.2)
+##   {type = "lernen", faehigkeit = "…"} / {type = "neu_verteilen"}  Fähigkeiten-Baum (Projekt 14, K.3)
 ##   {type = "anlegen", gegenstand = "…"} / {type = "ablegen", platz = "waffe"}  Ausrüstung (Projekt 14, K.1)
 ##   {type = "aussehen", hut = "…", ruecken = "…", farben = "…"}  Aussehen-Plätze ändern ("" = keins, fehlt = bleibt)
 ##   {type = "wegwerfen", gegenstand = "…"}  alle Stück eines Gegenstands aus der Tasche wegwerfen
@@ -448,6 +449,10 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 				p.steer = Vector2.ZERO
 				p.sitting = true
 				_say(p, GameData.text("hinsetzen_lagerfeuer" if _at_campfire(p) else "hinsetzen"))
+		"lernen":
+			_learn(p, str(cmd.get("faehigkeit", "")))
+		"neu_verteilen":
+			_respec(p)
 		"anlegen":
 			_equip(p, str(cmd.get("gegenstand", "")))
 		"ablegen":
@@ -1615,6 +1620,39 @@ func _rest(p: PlayerState, delta: float) -> void:
 		progress_changed.emit(p.id)
 	if p.progress.mana_anteil >= 1.0:
 		_say(p, GameData.text("mana_voll"))
+
+
+## Eine Fähigkeit aus dem Baum lernen oder verbessern (kostet einen Punkt).
+func _learn(p: PlayerState, id: String) -> void:
+	var grund := Faehigkeiten.grund_gegen(p.progress, id)
+	if grund != "":
+		_say(p, grund)
+		return
+	p.progress.faehigkeiten[id] = int(p.progress.faehigkeiten.get(id, 0)) + 1
+	progress_changed.emit(p.id)
+
+
+## So nah (Felder) muss man beim Lehrmeister stehen, um neu zu verteilen
+const TRAINER_RANGE := 4.0
+
+
+## Alle Punkte zurück (nur beim eigenen Lehrmeister; das erste Mal kostenlos, danach gegen Bronze).
+func _respec(p: PlayerState) -> void:
+	var klasse := p.progress.battle_class()
+	var trainer := str(GameData.get_file("klassen").get(klasse, {}).get("lernen_bei", ""))
+	var npc: Dictionary = npcs.get(trainer, {})
+	if npc.is_empty() or npc.map != p.map or Vector2(npc.cell).distance_to(p.pos) > TRAINER_RANGE:
+		_say(p, GameData.text("neu_verteilen_lehrmeister", [GameData.get_file("klassen").get(klasse, {}).get("lehrmeister", "deinem Lehrmeister")]))
+		return
+	var preis := Faehigkeiten.preis_neu_verteilen(p.progress)
+	if p.progress.gold < preis:
+		_say(p, GameData.text("neu_verteilen_teuer", [Geld.text(preis)]))
+		return
+	p.progress.gold -= preis
+	p.progress.faehigkeiten.clear()
+	p.progress.flags["neu_verteilt"] = int(p.progress.flags.get("neu_verteilt", 0)) + 1
+	_say(p, GameData.text("neu_verteilt"))
+	progress_changed.emit(p.id)
 
 
 ## Ausrüstung anlegen: Das Teil kommt aus der Tasche auf seinen Platz, was dort lag, kommt in die Tasche.
