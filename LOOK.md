@@ -149,7 +149,7 @@ ersten Blatt jeder Größe per Vergleichsbild mit Marco festgelegt.
 
 Dieser Text kommt **wörtlich** in jeden Bild-Prompt (in ChatGPT als Projekt-Anweisung, siehe
 `Spieldesign/GRAFIK_AUFTRAG.md`, Teil A). Er wird nie umformuliert. Ändern darf ihn nur Marco; dann wird er hier und
-in GRAFIK_AUFTRAG.md gleichzeitig geändert. Stand: GRAFIK_AUFTRAG.md Teil A vom 27.10.2026.
+in GRAFIK_AUFTRAG.md gleichzeitig geändert. Stand: GRAFIK_AUFTRAG.md Teil A vom 02.11.2026.
 
 ```
 Du malst Grafiken für „Asterfall“, ein düster-episches 2D-Fantasy-Rollenspiel (MMO) von CazeX Studio. Halte dich bei JEDEM Bild an diese Regeln, auch wenn ich sie in einer Nachricht nicht wiederhole.
@@ -180,29 +180,24 @@ FARBWELTEN DER REGIONEN
 - Nebelinseln: Rosa, Weiß, Nebelgrau, Rot, japanisch inspiriert, Schreine.
 - Immernacht (geheim, später): dunkles Blau, Laternen statt Sterne.
 
-Wenn ich ein Vorbild-Bild anhänge, übernimm Gesicht, Haare, Kleidung, Waffe und Farben exakt und ändere nur die Pose.
-```
-
-Hinweis: Projekt 13, Schritt 1 erweitert den Stil-Block um die Regeln von Variante C (Abschnitt 8). Das passiert erst
-mit Marcos Ja zum neuen Wortlaut.
-
-### 9a. Vorschlag: Zusatz „FIGUREN“ zum Stil-Block (Projekt 13, Schritt 1, Entwurf vom 02.11.2026)
-
-**Wartet auf Marcos Ja.** Danach kommt der Text wörtlich vor den letzten Satz des Stil-Blocks („Wenn ich ein
-Vorbild-Bild anhänge …“), hier und in `Spieldesign/GRAFIK_AUFTRAG.md` Teil A gleichzeitig.
-
-```
 FIGUREN (Spieler und Figuren der Welt)
 - Körper OHNE Waffe malen: Die Waffenhand bleibt halb geschlossen und greift ins Leere, so als hielte sie einen Griff. Keine Waffe, kein Schwert, kein Stab, kein Bogen im Bild. (Ausnahme nur, wenn ich ausdrücklich eine Waffe verlange.)
 - Köpfe OHNE Hut, Helm, Kapuze oder Krone. Alle Köpfe gleich groß und an derselben Stelle über dem Halsansatz.
 - Den Rücken frei lassen: kein Umhang, kein Köcher, keine Flügel, kein Rucksack. Dort kommt später ein eigenes Teil hin.
 - Kleidung aus wenigen klaren Farbflächen: eine Hauptfarbe, eine Zweitfarbe, Metall, Leder und Haut. Jede Fläche nur in 3 bis 4 Tönen (hell, mittel, dunkel, Schatten), keine Muster, keine Verläufe, keine Stickerei.
 - Keine Effekte im Figurenbild: keine Funken, Blitze, Schwungbögen oder Sterne. Die macht das Spiel.
+
+Wenn ich ein Vorbild-Bild anhänge, übernimm Gesicht, Haare, Kleidung, Waffe und Farben exakt und ändere nur die Pose.
 ```
 
-Was der Zusatz ändert: Die Bilder sind gleich aufgebaut, das Spiel kann Waffe, Hut und Rückenteil darüberlegen und
-die Kleidung sauber umfärben. Für die Novizen gilt weiter die Ausnahme aus Abschnitt 8 (Schild am Körper, Griff in
-der Hand).
+Hinweis: Projekt 13, Schritt 1 erweitert den Stil-Block um die Regeln von Variante C (Abschnitt 8). Das passiert erst
+mit Marcos Ja zum neuen Wortlaut.
+
+### 9a. Zusatz „FIGUREN“ (Projekt 13, Schritt 1, von Marco bestätigt am 02.11.2026)
+
+Der Block steht jetzt im Stil-Block oben, in `Spieldesign/GRAFIK_AUFTRAG.md` Teil A und in Marcos ChatGPT-Projekt.
+Damit sind die Bilder gleich aufgebaut, das Spiel kann Waffe, Hut und Rückenteil darüberlegen und die Kleidung sauber
+umfärben. Für die Novizen gilt weiter die Ausnahme aus Abschnitt 8 (Schild am Körper, Griff in der Hand).
 
 ## 10. Referenzbilder
 
