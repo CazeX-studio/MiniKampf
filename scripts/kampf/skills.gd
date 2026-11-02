@@ -1744,29 +1744,36 @@ func _novize(f: Fighter, id: String, target: Fighter) -> void:
 			c.lunge(f, target, 0.25)
 			c.hit(f, target, NOVIZE.schlag, "melee")
 		"schildstoss":
+			c.zeige("schildstoss_anlauf", f)
 			c.lunge(f, target, 0.3)
 			if c.hit(f, target, NOVIZE.schildstoss, "melee") > 0 and target.is_alive():
+				c.zeige("schildstoss_treffer", f, target)
 				Effekte.anwenden(c, f, target, "zugleiste", NOVIZE.schildstoss_leiste)
 		"doppelschlag":
 			for i in 2:
 				c.lunge(f, target, 0.2)
+				c.zeige("hieb", f, target, i)
 				if target.is_alive():
 					c.hit(f, target, NOVIZE.doppelschlag, "melee")
 				c.wait(0.15)
 		"erste_hilfe":
+			c.zeige("erste_hilfe", f, target)
 			c.heal(f, target, roundi(NOVIZE.erste_hilfe * f.power))
 		"deckung":
 			# In die vordere Reihe und den Verbündeten decken, bis man selbst wieder dran ist
 			if f.back_row:
 				f.back_row = false
 				c.move_to_row(f)
+			c.zeige("deckung", f, target)
 			target.set_meta("gedeckt_von", f)
 			c.float_text(target, "Gedeckt", Color("8fd3ff"))
 			c.add_log("%s gibt %s Deckung." % [f.display_name, target.display_name])
 			c.refresh()
 		"ult":
 			c.add_log("[color=#b48cff][b]Sternenmut![/b][/color] Das Kurzschwert leuchtet wie ein Splitter.")
+			c.zeige("sternenmut_an", f)
 			c.lunge(f, target, 0.45)
+			c.zeige("sternenmut_schlag", f, target)
 			c.hit(f, target, NOVIZE.sternenmut, "melee", "Sternenkraft")
 		"manatrank_trinken":
 			f.wares.manatrank -= 1

@@ -395,6 +395,8 @@ func _play_event(event: Dictionary) -> void:
 			burst(event.f, event.color, event.radius)
 		"flash":
 			screen_flash(event.color)
+		"fx":
+			await FaehigkeitFx.spielen(self, event.name, event.f, event.ziel, event.seite)
 		"hop":
 			if has_view(event.f):
 				view(event.f).cast_hop()

@@ -242,6 +242,11 @@ func screen_flash(color: Color) -> void:
 	_emit({type = "flash", color = color})
 
 
+## Eigene Bewegung oder eigener Effekt einer Fähigkeit (siehe FaehigkeitFx).
+func zeige(fx_name: String, f: Fighter, ziel: Fighter = null, seite := 0) -> void:
+	_emit({type = "fx", name = fx_name, f = f, ziel = ziel, seite = seite})
+
+
 ## Kleiner Hüpfer einer Figur.
 func hop(f: Fighter) -> void:
 	_emit({type = "hop", f = f})
@@ -982,6 +987,7 @@ func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String
 			t.remove_meta("gedeckt_von")
 			if cover.is_alive() and cover != t:
 				float_text(t, "Deckung!", Color("8fd3ff"), 26)
+				zeige("deckung_funke", cover)
 				actual = cover
 		if not actual in targets:
 			targets.append(actual)

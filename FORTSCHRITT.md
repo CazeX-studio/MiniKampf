@@ -11,7 +11,14 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** D9b (eigene Bewegungen des Novizen). T1 Testtag Aussehen holt Marco nach (02.11.: „mache nachher Tests“). D4 bis D8 wurden auf Marcos Wunsch vor T1 gebaut, D8 ist damit ganz fertig.
+- **Nächster Schritt:** D9c (eigene Bewegungen des Bogenschützen). T1 Testtag Aussehen holt Marco nach (02.11.: „mache nachher Tests“). D4 bis D8 wurden auf Marcos Wunsch vor T1 gebaut, D8 ist damit ganz fertig.
+
+- **Neu (02.11.): D9b Eigene Bewegungen des Novizen** (K.6): Schildstoß hat zwei schnelle Schritte, einen dumpfen Stoß, und das Ziel taumelt zurück. Doppelschlag schlägt von links und rechts mit kleinem Hüpfer und zwei Klirren. Erste Hilfe: Der Novize geht kurz in die Knie, grüne Funken und ein Pflaster steigen auf. Deckung geben zeigt einen Sprung und eine Schild-Kuppel, beim Abfangen sprüht ein Funke. Sternenmut leuchtet lila, klingt hell und endet in einem großen lila Hieb. Noch ohne eigene Bilder: Knien und Schild sind nur angedeutet.
+  - **So testest du es:**
+    1. Kampf mit dem Novizen: Schildstoß und Doppelschlag ausprobieren, jede Fähigkeit sieht anders aus.
+    2. Erste Hilfe auf dich und auf einen Verbündeten wirken: Das Pflaster erscheint beim Ziel.
+    3. Deckung geben: Kuppel über dem Verbündeten, beim nächsten Treffer der Funke am Novizen.
+    4. In der Festnacht Sternenmut auslösen: erst der Film, dann der lila Hieb.
 
 - **Neu (02.11.): D9a Filmische Ult** (K.6): Löst jemand seine Ult aus, dunkelt das Bild ab, Kino-Streifen fahren herein, die Kamera rückt an die Figur, Bild und Name der Ult gleiten ins Bild. Das dauert 3,4 Sekunden. Im Hauptmenü stellt der Knopf „Ult: filmisch“ auf „Ult: kurz“ (1 Sekunde), jede Klasse zeigt ihre Ult beim ersten Mal trotzdem ganz. Jede Demo-Klasse hat einen eigenen Hintergrund (Lichtstrahl, Mond, Ringe, Esse, Feuer, Sternenhimmel), die Effekte aus den Steckbriefen folgen mit D9b bis D9g. D9 ist dafür in Schritte geteilt.
   - **So testest du es:**
