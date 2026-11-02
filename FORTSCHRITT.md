@@ -13,6 +13,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 - **Nächster Schritt:** D12 (Gemeinsame Trank-Wartezeit). Alle Testtage stehen seit 02.11. am Ende, Marco testet das volle Spiel zusammen. D9h wartet auf Marcos Bilder (GRAFIK_AUFTRAG.md, Teil E).
 
+- **Neu (02.11.): Schneller (Leistung)**: Kreuzweg und Grünwacht sollen flüssiger laufen, besonders im Browser.
+  - Der Boden aus dem Baukasten war ein einziges Riesenbild der ganzen Karte, das in jedem Bild komplett gezeichnet wurde (und von jedem Licht noch einmal). Jetzt ist er in Kacheln geteilt, gezeichnet wird nur, was zu sehen ist. Gemessen mit Software-Grafik: 95 → 41 ms pro Bild, das Aussehen ist gleich (Bildvergleich).
+  - Zeichen (! und ?), Wegweiser und Ziel werden fünfmal pro Sekunde und nach jedem Fortschritt bestimmt statt in jedem Bild, jede Figur prüft nur noch ihre eigenen Aufträge. Stillstehende Figuren werden nicht jedes Bild neu einsortiert. Spiel-Logik in Kreuzweg: 4,1 → 1,2 ms pro Bild.
+  - Prüfungen: `bash tools/alle_tests.sh` startet alle gleichzeitig, 43 Sekunden statt rund 10 Minuten.
+  - **Noch offen, deine Entscheidung:** Die 42 Lichter in Kreuzweg kosten etwa ein Drittel der Zeichenzeit. Sie ließen sich durch einfache leuchtende Flecken ersetzen (viel schneller, sieht aber anders aus: eher Schein als beleuchteter Boden).
+  - **So testest du es:**
+    1. Im Browser (https://cazex-studio.github.io/MiniKampf/) durch Kreuzweg laufen: Fühlt es sich flüssiger an?
+    2. In Wipfelheim und im Waldboden laufen: ebenfalls flüssig?
+    3. Sieht der Boden aus wie vorher (keine Lücken, Übergänge zwischen Gras und Weg weich)?
+
 - **Neu (02.11.): D11 Zähmer lernt bei Tilda** (1.2, Projekt 12 Schritt 1): Nach der Klassenwahl und dem Gespräch mit Ysolde führt der Wegweiser jetzt zu Rudelmeisterin Tilda. Sie erklärt, wie ein Zähmer kämpft und zähmt, und schickt dich zu Professor Esche. Dort wählst du das erste Monster, ab dann kämpfst du als Zähmer. Danach geht es wie bisher weiter: Kobalt, zurück zu Esche, Tildas Unterricht im Wald. Wer zuerst zu Esche geht, wird zu Tilda geschickt. Punkte neu verteilen geht jetzt bei Tilda. Dazu behoben: Esche zeigte dem Zähmer zu früh das blaue „!“ für den Bienenstock. Die Texte von Tilda und Esche sind Platzhalter.
   - **So testest du es:**
     1. Neu beginnen, Monster-Zähmer wählen und bis zu Ysolde spielen.

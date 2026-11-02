@@ -15,6 +15,8 @@ const NAMEN := ["schildstoss_anlauf", "schildstoss_treffer", "hieb", "erste_hilf
 
 func _initialize() -> void:
 	var fehler := 0
+	# Vierfaches Tempo: Die Abläufe sind dieselben, die Prüfung ist nur schneller fertig
+	Engine.time_scale = 4.0
 	BattleRequest.kampf_id = ""
 	BattleRequest.setup = {}
 	Sandbox.team = ["archer", "tank"] as Array[String]

@@ -16,6 +16,9 @@ const ECKEN: Array[Vector2i] = [Vector2i(1, 1), Vector2i(-1, -1), Vector2i(1, -1
 const RAND_WEITE := 0.3
 const RAND_FRANSEN := 0.2
 const RAND_WEICH := 0.07
+## Der Boden wird in Kacheln von KACHEL x KACHEL Feldern gezeichnet. So malt Godot nur, was gerade im Bild ist,
+## und jedes Licht trifft nur die Kacheln in seiner Nähe (vorher war der ganze Boden ein einziges Riesenbild).
+const KACHEL := 8
 ## Am Ufer liegt im Wasser ein dunkler Schatten etwas weiter als der Rand
 const UFER_WEITE := 0.5
 const UFER_SCHATTEN := Color(0.0, 0.03, 0.08, 0.45)
@@ -34,7 +37,16 @@ func setup(teile: Dictionary, rows: PackedStringArray) -> void:
 	_size = Vector2i(rows[0].length() if rows.size() > 0 else 0, rows.size())
 	z_index = -10
 	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-	draw.connect(_zeichnen)
+	# Erst alle Bodenkacheln, darüber alle Übergänge (damit kein Nachbar einen Übergang wieder verdeckt)
+	var bereiche: Array[Rect2i] = []
+	for ky in range(0, _size.y, KACHEL):
+		for kx in range(0, _size.x, KACHEL):
+			bereiche.append(Rect2i(kx, ky, mini(KACHEL, _size.x - kx), mini(KACHEL, _size.y - ky)))
+	for ebene: Callable in [_zeichne_boden, _zeichne_uebergaenge]:
+		for bereich in bereiche:
+			var kachel := Node2D.new()
+			kachel.draw.connect(ebene.bind(kachel, bereich))
+			add_child(kachel)
 
 
 static func cell_to_screen(c: Vector2) -> Vector2:
@@ -128,9 +140,12 @@ func _ground_def(cell: Vector2i) -> Dictionary:
 	return _teile.boden.get(_rows[cell.y][cell.x], {})
 
 
-func _zeichnen() -> void:
-	for y in _size.y:
-		for x in _size.x:
+func _zeichne_boden(kachel: Node2D, bereich: Rect2i) -> void:
+	# Erst alle Grundflächen, dann die Bilder nach Bild geordnet: So kann die Grafikkarte viele Felder
+	# auf einmal malen. Die Rauten überlappen sich nicht, deshalb sieht es genauso aus wie Feld für Feld.
+	var nach_bild := {}
+	for y in range(bereich.position.y, bereich.end.y):
+		for x in range(bereich.position.x, bereich.end.x):
 			var cell := Vector2i(x, y)
 			var d := _ground_def(cell)
 			var bilder: Array = d.get("bilder", [])
@@ -142,12 +157,20 @@ func _zeichnen() -> void:
 			# Darunter eine Raute in der Grundfarbe, damit zwischen den Pixel-Rauten keine Ritzen bleiben
 			var diamond := PackedVector2Array([top, top + Vector2(TILE_W * 0.5, TILE_H * 0.5),
 					top + Vector2(0, TILE_H), top + Vector2(-TILE_W * 0.5, TILE_H * 0.5)])
-			draw_colored_polygon(diamond, _base_color(tex))
-			draw_texture_rect(tex, Rect2(top - Vector2(TILE_W * 0.5, 0), Vector2(TILE_W, TILE_H)), false)
-	# Danach die Übergänge (über allen Bodenfeldern, damit kein Nachbar sie wieder verdeckt)
-	for y in _size.y:
-		for x in _size.x:
-			_draw_uebergaenge(Vector2i(x, y))
+			kachel.draw_colored_polygon(diamond, _base_color(tex))
+			if not nach_bild.has(tex):
+				nach_bild[tex] = []
+			nach_bild[tex].append(Rect2(top - Vector2(TILE_W * 0.5, 0), Vector2(TILE_W, TILE_H)))
+	for tex: Texture2D in nach_bild:
+		for r: Rect2 in nach_bild[tex]:
+			kachel.draw_texture_rect(tex, r, false)
+
+
+## Die Übergänge einer Kachel (liegen über allen Bodenkacheln).
+func _zeichne_uebergaenge(kachel: Node2D, bereich: Rect2i) -> void:
+	for y in range(bereich.position.y, bereich.end.y):
+		for x in range(bereich.position.x, bereich.end.x):
+			_draw_uebergaenge(kachel, Vector2i(x, y))
 
 
 ## Bild eines Bodenfeldes (jedes Feld nimmt immer dasselbe, aber zufällig wirkende Bild).
@@ -159,7 +182,7 @@ func _boden_bild(cell: Vector2i) -> Texture2D:
 
 
 ## Ränder der Nachbarn mit mehr Vorrang in dieses Feld malen.
-func _draw_uebergaenge(cell: Vector2i) -> void:
+func _draw_uebergaenge(kachel: Node2D, cell: Vector2i) -> void:
 	var mein := _ground_def(cell)
 	if mein.is_empty():
 		return
@@ -180,9 +203,9 @@ func _draw_uebergaenge(cell: Vector2i) -> void:
 	if wasser:
 		for d in richtungen:
 			if _ground_def(cell + d).get("begehbar", true):
-				draw_texture_rect(_rand(_boden_bild(cell + d), d, UFER_WEITE), rect, false, UFER_SCHATTEN)
+				kachel.draw_texture_rect(_rand(_boden_bild(cell + d), d, UFER_WEITE), rect, false, UFER_SCHATTEN)
 	for d in richtungen:
-		draw_texture_rect(_rand(_boden_bild(cell + d), d, RAND_WEITE), rect, false)
+		kachel.draw_texture_rect(_rand(_boden_bild(cell + d), d, RAND_WEITE), rect, false)
 
 
 func _ground_char(cell: Vector2i) -> String:

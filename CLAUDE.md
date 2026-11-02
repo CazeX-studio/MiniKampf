@@ -26,7 +26,8 @@ Das gilt genauso in Claude Code in der Cloud (vom Handy): dort direkt im GitHub-
 
 - Python auf dem PC mit Pillow, numpy und scipy: `C:/GameDev/.venv/Scripts/python.exe` (das normale `python` geht nicht). Für Umlaute in der Ausgabe `PYTHONIOENCODING=utf-8` setzen.
 - Bilder importieren: `..._console.exe --path . --import --headless`.
-- Eine Prüfung: `..._console.exe --headless --path . -s tests/<name>_test.gd`. Alle Prüfungen: Schleife über `tests/*_test.gd`, nach `FEHLER|SCRIPT ERROR|Parse` suchen. Alle müssen sauber sein.
+- Eine Prüfung: `..._console.exe --headless --path . -s tests/<name>_test.gd`. Alle Prüfungen: `bash tools/alle_tests.sh` (gleichzeitig auf allen Kernen, rund 45 s in der Cloud; mit einem Wort dahinter nur passende, z. B. `gruenwacht`). Alle müssen sauber sein.
+- Leistung messen: `..._console.exe --headless --path . -s tests/leistung_messen.gd` (Rechenzeit pro Bild in Kreuzweg). Mit Bild in der Cloud: `xvfb-run -a ~/godot/godot --path . --rendering-driver opengl3 -s tests/leistung_messen.gd -- 300` (Software-Grafik, nur zum Vergleichen vorher/nachher).
 - Fotos aus dem Spiel: `..._console.exe --path . res://tests/<name>_foto.tscn -- <Ordner>` (z. B. `gruenwacht_foto`).
 - Commits: Dateien gezielt hinzufügen (`tools/referenz/*.png.import` nicht mitnehmen), auf `main` pushen.
 - Google Doc „CazeX MMO – Brainstorming“: ID `1yVavfCZW8AntSBdW14AA6RUH6KY50G1L9OGxyzEUawg`. Es ist zu groß zum direkten Lesen: Das gespeicherte Ergebnis mit Python öffnen.

@@ -123,6 +123,12 @@ var _edge_arrow: Control
 var _occluders: Array[Dictionary] = []
 var _bot_timer := 2.0
 var _time := 0.0
+## Zeichen (! und ?), Wegweiser und Ziel werden nicht in jedem Bild neu bestimmt, sondern ein paar Mal pro Sekunde
+## und sofort nach jedem Fortschritt (spart viel Rechenzeit, besonders im Browser).
+const LANGSAM_ABSTAND := 0.2
+var _langsam_naechstes := 0.0
+## Platz der Figuren beim letzten Einsortieren: Wer stillsteht, wird nicht neu einsortiert.
+var _sortier_merker := {}
 ## Beim "Neu beginnen" nicht mehr speichern
 var _no_save := false
 
@@ -457,6 +463,7 @@ func _sync() -> void:
 	var local := local_player()
 	if local.map != _shown_map:
 		_build_map_view()
+		_langsam_naechstes = 0.0
 		_camera.position = cell_center(local.pos)
 		_camera.reset_smoothing()
 	for id: String in state.players:
@@ -494,6 +501,10 @@ func _sync() -> void:
 			_characters[id].queue_free()
 			_characters.erase(id)
 	_camera.position = cell_center(local.pos)
+	var langsam := _time >= _langsam_naechstes
+	if langsam:
+		_langsam_naechstes = _time + LANGSAM_ABSTAND
+		_sortier_merker.clear()
 	# Sammelpunkte: Jeder sieht nur die, die er selbst noch nicht eingesammelt hat
 	for target: String in _pickup_nodes:
 		var node: Node2D = _pickup_nodes[target]
@@ -535,15 +546,18 @@ func _sync() -> void:
 		var npc_view: WorldCharacter = _characters["npc:" + id]
 		npc_view.visible = state.npc_visible(local, id)
 		_place_npc(npc_view, id, local)
-		npc_view.marker = state.npc_marker(local, id)
-		npc_view.marker_side = state.npc_marker_side(local, id)
+		if langsam:
+			var marker := state.npc_marker_info(local, id)
+			npc_view.marker = marker[0]
+			npc_view.marker_side = marker[1]
 		# Namen nur in der Nähe zeigen (Zeichen ! und ? bleiben immer sichtbar)
 		var distance := (Vector2(state.npcs[id].cell) - local.pos).length()
 		npc_view.set_name_alpha(clampf((NAME_FADE_END - distance) / (NAME_FADE_END - NAME_FADE_START), 0.0, 1.0))
-	_waypoint = state.objective_cell(local)
-	_side_waypoints = state.side_objectives(local)
-	var goal := state.objective(local)
-	_goal.text = "Ziel: " + goal if goal != "" else ""
+	if langsam:
+		_waypoint = state.objective_cell(local)
+		_side_waypoints = state.side_objectives(local)
+		var goal := state.objective(local)
+		_goal.text = "Ziel: " + goal if goal != "" else ""
 	_update_hud()
 	_figuren_sortieren()
 
@@ -931,6 +945,11 @@ func _figuren_sortieren() -> void:
 		if not is_instance_valid(view) or not view.visible:
 			continue
 		var screen: Vector2 = view.position
+		var merker: Array = _sortier_merker.get(view, [])
+		if not merker.is_empty() and merker[0] == screen:
+			view.position.y = merker[1]
+			view.versetzen(screen.y - merker[1])
+			continue
 		var c := _feld_von(screen)
 		var flaeche := _figur_flaeche(screen)
 		var low := -INF
@@ -949,6 +968,7 @@ func _figuren_sortieren() -> void:
 			key = low
 		view.position.y = key
 		view.versetzen(screen.y - key)
+		_sortier_merker[view] = [screen, key]
 
 
 func _feld_von(screen: Vector2) -> Vector2:
@@ -2455,6 +2475,7 @@ static func _escape_regex(template: String) -> String:
 
 ## Automatisch speichern, sobald sich der Fortschritt des eigenen Spielers ändert.
 func _on_progress_changed(player_id: String) -> void:
+	_langsam_naechstes = 0.0
 	if player_id == local_id and not _no_save:
 		SaveGame.save(local_player())
 

@@ -196,6 +196,8 @@ static func _start_server(p_name: String, look: String, p_mode: Mode) -> Error:
 
 ## Port für Gastgeber und Server: Der Anbieter im Internet gibt ihn vor (PORT), sonst --port=… oder 8910.
 static func server_port() -> int:
+	if test_port() > 0:
+		return test_port()
 	var from_env := OS.get_environment("PORT")
 	if from_env.is_valid_int():
 		return int(from_env)
@@ -205,6 +207,13 @@ static func server_port() -> int:
 	return PORT
 
 
+## Nur für die Prüfungen: Mit MINIKAMPF_PORT bekommt jede Netz-Prüfung ihren eigenen Anschluss, damit mehrere
+## gleichzeitig laufen können (tools/alle_tests.sh). 0 = nicht gesetzt.
+static func test_port() -> int:
+	var wert := OS.get_environment("MINIKAMPF_PORT")
+	return int(wert) if wert.is_valid_int() else 0
+
+
 ## Bei einem Gastgeber mitspielen. Adresse: "localhost", "192.168.0.5" oder eine volle Adresse ("wss://…").
 static func join(address: String, p_name: String, look: String) -> Error:
 	stop()
@@ -212,7 +221,7 @@ static func join(address: String, p_name: String, look: String) -> Error:
 	if url == "":
 		url = "localhost"
 	if not url.begins_with("ws://") and not url.begins_with("wss://"):
-		url = "ws://%s:%d" % [url, PORT]
+		url = "ws://%s:%d" % [url, test_port() if test_port() > 0 else PORT]
 	var err := _connect(url)
 	if err != OK:
 		return err

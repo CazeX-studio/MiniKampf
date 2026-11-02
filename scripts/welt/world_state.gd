@@ -1545,6 +1545,11 @@ func npc_marker(p: PlayerState, npc_id: String) -> String:
 	return _marker(p, npc_id)[0]
 
 
+## [Zeichen, Nebenauftrag?] in einem Rutsch (für die Anzeige, spart das doppelte Suchen).
+func npc_marker_info(p: PlayerState, npc_id: String) -> Array:
+	return _marker(p, npc_id)
+
+
 ## Gehört das Zeichen über dem NPC zu einem Nebenauftrag? (Dann ist es blau statt gelb.)
 func npc_marker_side(p: PlayerState, npc_id: String) -> bool:
 	return _marker(p, npc_id)[1]
@@ -1555,8 +1560,10 @@ func _marker(p: PlayerState, npc_id: String) -> Array:
 	if not npc_visible(p, npc_id):
 		return ["", false]
 	var all_quests := GameData.get_file("auftraege")
+	# Nur die Aufträge ansehen, die mit diesem NPC zu tun haben (gleiche Reihenfolge wie in der Datei)
+	var own: Array = _quests_for_npc(all_quests, npc_id)
 	for side: bool in [false, true]:
-		for id: String in all_quests:
+		for id: String in own:
 			var q: Dictionary = all_quests[id]
 			if bool(q.get("neben", false)) != side:
 				continue
@@ -1567,7 +1574,7 @@ func _marker(p: PlayerState, npc_id: String) -> Array:
 				for goal: Dictionary in q.get("ziele", []):
 					if goal.get("bei", "") == npc_id and not goal_done(p, goal) and goal_shown(p, goal) and check(p, goal.get("wenn", {})):
 						return ["?", side]
-		for id: String in all_quests:
+		for id: String in own:
 			var q: Dictionary = all_quests[id]
 			# start_wenn: nur für manche Spieler (z. B. Fenns Prüfung nur für Bogenschützen)
 			if bool(q.get("neben", false)) == side and q.get("start_bei", "") == npc_id and p.progress.quest_state(id) == "neu" \
@@ -1575,6 +1582,28 @@ func _marker(p: PlayerState, npc_id: String) -> Array:
 					and check(p, q.get("start_wenn", {})):
 				return ["!", side]
 	return ["", false]
+
+
+## Welche Aufträge einen NPC nennen (start_bei, abgeben_bei oder ein Ziel „bei“). Einmal ausgerechnet und gemerkt.
+var _npc_quests := {}
+var _npc_quests_von: Dictionary = {}
+
+
+func _quests_for_npc(all_quests: Dictionary, npc_id: String) -> Array:
+	if not is_same(all_quests, _npc_quests_von):
+		_npc_quests.clear()
+		_npc_quests_von = all_quests
+		for id: String in all_quests:
+			var q: Dictionary = all_quests[id]
+			var names := {str(q.get("start_bei", "")): true, str(q.get("abgeben_bei", "")): true}
+			for goal: Dictionary in q.get("ziele", []):
+				names[str(goal.get("bei", ""))] = true
+			for n: String in names:
+				if n != "":
+					if not _npc_quests.has(n):
+						_npc_quests[n] = []
+					_npc_quests[n].append(id)
+	return _npc_quests.get(npc_id, [])
 
 
 ## Aktive Aufträge werden "fertig", sobald alle Ziele erfüllt sind (und wieder "aktiv", falls nicht mehr).

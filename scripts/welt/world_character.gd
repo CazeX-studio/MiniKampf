@@ -17,9 +17,17 @@ var richtungen := false
 ## Läuft bzw. schaut die Figur nach hinten (vom Betrachter weg)?
 var hinten := false
 ## Zeichen über dem Kopf: "!" = neuer Auftrag, "?" = hier etwas erledigen, "" = nichts
-var marker := ""
+var marker := "":
+	set(value):
+		if value != marker and _overlay != null:
+			_overlay.queue_redraw()
+		marker = value
 ## Gehört das Zeichen zu einem Nebenauftrag? Dann ist es blau statt gelb.
-var marker_side := false
+var marker_side := false:
+	set(value):
+		if value != marker_side and _overlay != null:
+			_overlay.queue_redraw()
+		marker_side = value
 const MARKER_COLOR := Color("ffd34d")
 const MARKER_SIDE_COLOR := Color("5ab8ff")
 const BUBBLE := preload("res://assets/ui/sprechblase.png")
@@ -98,15 +106,19 @@ func _process(delta: float) -> void:
 			# Die Richtungsbilder haben 6 statt 4 Bilder pro Bewegung
 			fps = 10.0 if moving else idle_fps
 	var frames: Array = _frames[anim]
-	_sprite.texture = frames[int(_time * fps) % frames.size()]
-	_sprite.offset = Vector2(0, -_sprite.texture.get_height() * 0.5)
+	var bild: Texture2D = frames[int(_time * fps) % frames.size()]
+	# Nur rechnen, wenn sich das Bild wirklich ändert (spart Zeit bei vielen Figuren)
+	if bild != _sprite.texture:
+		_sprite.texture = bild
+		_sprite.offset = Vector2(0, -bild.get_height() * 0.5)
+		_sprite.texture_filter = FighterView.filter_fuer(bild)
 	# Fein gezeichnete Bilder (z. B. Vega aus Marcos Bildblättern): gleich groß, aber weich verkleinert
-	var groesse := _base_scale / FighterView.fein_faktor(_sprite.texture)
+	var groesse := _base_scale / FighterView.fein_faktor(bild)
 	_sprite.scale = Vector2(groesse, groesse * (0.8 if sitzt and not moving else 1.0))
-	_sprite.texture_filter = FighterView.filter_fuer(_sprite.texture)
 	_sprite.flip_h = facing < 0
-	queue_redraw()
-	_overlay.queue_redraw()
+	# Das Zeichen (! oder ?) wippt, darum nur dann jedes Bild neu malen
+	if marker != "":
+		_overlay.queue_redraw()
 
 
 func _draw() -> void:
@@ -127,6 +139,9 @@ func _draw_overlay() -> void:
 
 ## Sortierung und Bild trennen: Die Figur wird als stünde sie um dy weiter oben einsortiert, gemalt aber an der alten Stelle.
 func versetzen(dy: float) -> void:
+	if dy != versatz:
+		# Der Schatten hängt am Versatz
+		queue_redraw()
 	versatz = dy
 	_sprite.position.y = dy
 	_overlay.position.y = dy
