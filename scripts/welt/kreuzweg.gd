@@ -483,6 +483,7 @@ func _sync() -> void:
 		view.position = cell_center(p.pos)
 		view.scale = Vector2(_figur_groesse, _figur_groesse)
 		view.moving = p.is_walking()
+		view.sitzt = p.sitting
 		view.facing = p.facing
 		# Wer auf einer anderen Karte steht, ist hier nicht zu sehen. Im Dungeon sieht man nur die eigene Gruppe.
 		view.visible = p.map == local.map and (id == local_id or state.get_map(p.map).dungeon == "" or Netz.in_my_group(id))
@@ -595,7 +596,7 @@ func screen_to_cell(p: Vector2) -> Vector2i:
 
 # --- Eingabe --------------------------------------------------------------------
 # PC: Klicken = hinlaufen, WASD/Pfeiltasten = laufen, E/Leertaste = reden bzw. weiter,
-#     1–4 = Antwort wählen, J = Auftragsbuch, I = Tasche, C = Werte, Esc = Fenster schließen.
+#     1–4 = Antwort wählen, J = Auftragsbuch, I = Tasche, C = Werte, X = hinsetzen, Esc = Fenster schließen.
 # Handy: Antippen = hinlaufen, Steuerknopf unten links (erscheint unter dem Daumen), Aktions-Knopf unten rechts.
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -614,6 +615,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_toggle_panel("tasche")
 		elif key == KEY_C:
 			_toggle_panel("werte")
+		elif key == KEY_X:
+			_send({type = "hinsetzen"})
 		elif key == KEY_R and _is_tamer():
 			_pack_open = not _pack_open
 		elif key == KEY_ESCAPE and local_player().shop != "":
@@ -1410,6 +1413,7 @@ func _build_ui() -> void:
 	# Schnellleiste oben rechts wie im UI-Entwurf: Symbol mit Taste, Name als Hinweis beim Darüberfahren
 	var x := 1270.0
 	for info: Array in [["", "zahnrad", "Menü", 56, _go_menu], ["I", "tasche", "Tasche (I)", 72, _toggle_panel.bind("tasche")],
+			["X", "sanduhr", "Hinsetzen (X): füllt das Mana, am Lagerfeuer schneller", 72, func() -> void: _send({type = "hinsetzen"})],
 			["C", "schild", "Werte (C)", 72, _toggle_panel.bind("werte")], ["J", "ausrufe", "Aufträge (J)", 72, _toggle_panel.bind("auftraege")],
 			[GameData.text("neu_beginnen"), "", GameData.text("neu_beginnen"), 140, _restart]]:
 		var button := Button.new()
@@ -2396,6 +2400,10 @@ func _update_hud() -> void:
 	var xp_span := progress.xp_range()
 	var xp_text := GameData.text("hud_max") if xp_span.y < 0 else GameData.text("hud_erfahrung", [progress.xp, xp_span.y])
 	_hud.text = GameData.text("hud", [progress.level, xp_text, Geld.text(progress.gold)])
+	# Mana außerhalb des Kampfes (nur wenn es nicht voll ist)
+	var max_mana := progress.max_mana()
+	if max_mana > 0 and progress.mana_anteil < 1.0:
+		_hud.text += GameData.text("hud_mana", [roundi(max_mana * progress.mana_anteil), max_mana])
 	if _panel.visible:
 		_fill_panel()
 
@@ -2878,6 +2886,7 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 	BattleRequest.player_look = local_player().look
 	BattleRequest.player_gear = local_player().progress.ausruestung.duplicate()
 	BattleRequest.player_mana_potions = local_player().progress.potion_count("manatrank")
+	BattleRequest.player_mana_share = local_player().progress.mana_anteil
 	_prepare_reward(kampf_id)
 	if BattleRequest.prepare(kampf_id, progress.level, progress.potion_count("heiltrank"), progress.battle_class(),
 			progress.flags.get("monster", [])):

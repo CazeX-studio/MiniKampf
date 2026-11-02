@@ -37,6 +37,9 @@ var safe_time := 3.0
 ## Ein NPC, der von sich aus zu diesem Spieler läuft (z. B. Marv): {id, pos (Vector2), path (Felder), facing,
 ## phase = "hin" (läuft her, der Spieler wartet), "reden" (Gespräch läuft) oder "zurueck" (geht wieder an seinen Platz)}
 var npc_walk := {}
+## Sitzt der Spieler (Hinsetzen, Projekt 14, K.2)? Dann füllt sich sein Mana, am Lagerfeuer schneller.
+## Wer losläuft, steht wieder auf.
+var sitting := false
 ## Geöffneter Laden (Kennung aus data/laeden.json) oder ""
 var shop := ""
 ## Gold, Tasche, Erfahrung, Aufträge, Gemerktes

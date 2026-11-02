@@ -8,6 +8,8 @@ const SCALE := 3.0
 const OWN_SCALE := 2.0
 
 var moving := false
+## Sitzt die Figur (Hinsetzen)? Vorerst etwas gestaucht gezeigt, bis es eigene Sitz-Bilder gibt.
+var sitzt := false
 var facing := 1
 ## Laufbilder in vier Richtungen benutzen (wenn die Figur sie hat): schräg nach vorne oder nach hinten,
 ## links/rechts über facing. Vorerst nur im Baukasten-Testfeld eingeschaltet.
@@ -100,7 +102,7 @@ func _process(delta: float) -> void:
 	_sprite.offset = Vector2(0, -_sprite.texture.get_height() * 0.5)
 	# Fein gezeichnete Bilder (z. B. Vega aus Marcos Bildblättern): gleich groß, aber weich verkleinert
 	var groesse := _base_scale / FighterView.fein_faktor(_sprite.texture)
-	_sprite.scale = Vector2(groesse, groesse)
+	_sprite.scale = Vector2(groesse, groesse * (0.8 if sitzt and not moving else 1.0))
 	_sprite.texture_filter = FighterView.filter_fuer(_sprite.texture)
 	_sprite.flip_h = facing < 0
 	queue_redraw()

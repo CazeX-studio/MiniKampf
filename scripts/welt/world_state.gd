@@ -20,6 +20,7 @@ extends RefCounted
 ##   {type = "guertel_ablegen", gegenstand = "…"} / {type = "guertel_nehmen", platz = 0}  Trank an den Gürtel bzw. zurück
 ##   {type = "bank_erweitern"}           an einer Bankstelle mehr Bankplätze kaufen
 ##   {type = "kaufen", gegenstand = "…"} / {type = "verkaufen", gegenstand = "…"} / {type = "laden_zu"}  im geöffneten Laden
+##   {type = "hinsetzen"}  hinsetzen oder aufstehen: füllt das Mana, am Lagerfeuer schneller (Projekt 14, K.2)
 ##   {type = "anlegen", gegenstand = "…"} / {type = "ablegen", platz = "waffe"}  Ausrüstung (Projekt 14, K.1)
 ##   {type = "aussehen", hut = "…", ruecken = "…", farben = "…"}  Aussehen-Plätze ändern ("" = keins, fehlt = bleibt)
 ##   {type = "wegwerfen", gegenstand = "…"}  alle Stück eines Gegenstands aus der Tasche wegwerfen
@@ -372,6 +373,10 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 				# Zuerst vom Gürtel, dann aus der Tasche
 				p.progress.use_potions("heiltrank", used)
 				progress_changed.emit(p.id)
+			# Mana nach dem Kampf (nur Kämpfe in der Wildnis melden es)
+			if cmd.has("mana_anteil"):
+				p.progress.mana_anteil = clampf(float(cmd.mana_anteil), 0.0, 1.0)
+				progress_changed.emit(p.id)
 			var mana_used := mini(int(cmd.get("manatraenke_benutzt", 0)), p.progress.potion_count("manatrank"))
 			if mana_used > 0:
 				p.progress.use_potions("manatrank", mana_used)
@@ -434,6 +439,15 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			_sell(p, str(cmd.get("gegenstand", "")))
 		"laden_zu":
 			p.shop = ""
+		"hinsetzen":
+			# Hinsetzen oder wieder aufstehen (nicht im Gespräch und nicht im Laden)
+			if p.sitting:
+				p.sitting = false
+			elif not p.in_dialog() and p.shop == "":
+				p.path.clear()
+				p.steer = Vector2.ZERO
+				p.sitting = true
+				_say(p, GameData.text("hinsetzen_lagerfeuer" if _at_campfire(p) else "hinsetzen"))
 		"anlegen":
 			_equip(p, str(cmd.get("gegenstand", "")))
 		"ablegen":
@@ -607,6 +621,7 @@ func tick(delta: float) -> void:
 		_check_monsters(p)
 		_move_npc_walk(p, delta)
 		_check_approach(p)
+		_rest(p, delta)
 		if not p.is_moving() and p.use_target != "":
 			var target := p.use_target
 			p.use_target = ""
@@ -1574,6 +1589,34 @@ func _turn_in_quest(p: PlayerState, id: String) -> void:
 
 
 ## Gegenstand aus der Tasche benutzen (z. B. die Bürste an der Statue). Wo und was dann passiert, steht in
+## Hinsetzen (Projekt 14, K.2): so viel Mana (Anteil) pro Sekunde, am Lagerfeuer mehr. Vorläufige Werte.
+const SIT_MANA := 0.05
+const CAMPFIRE_MANA := 0.15
+## So nah (Felder) muss man am Lagerfeuer sitzen
+const CAMPFIRE_RANGE := 3.5
+
+
+func _at_campfire(p: PlayerState) -> bool:
+	return get_map(p.map).near_campfire(p.pos, CAMPFIRE_RANGE)
+
+
+## Sitzen: Mana füllt sich. Wer losläuft, steht auf. Gespeichert wird bei jedem vollen Zehntel und wenn es voll ist.
+func _rest(p: PlayerState, delta: float) -> void:
+	if not p.sitting:
+		return
+	if p.is_walking() or p.in_dialog():
+		p.sitting = false
+		return
+	if p.progress.mana_anteil >= 1.0:
+		return
+	var before := p.progress.mana_anteil
+	p.progress.mana_anteil = minf(1.0, before + (CAMPFIRE_MANA if _at_campfire(p) else SIT_MANA) * delta)
+	if floori(p.progress.mana_anteil * 10.0) != floori(before * 10.0):
+		progress_changed.emit(p.id)
+	if p.progress.mana_anteil >= 1.0:
+		_say(p, GameData.text("mana_voll"))
+
+
 ## Ausrüstung anlegen: Das Teil kommt aus der Tasche auf seinen Platz, was dort lag, kommt in die Tasche.
 func _equip(p: PlayerState, item_id: String) -> void:
 	if p.progress.item_count(item_id) <= 0 or not Ausruestung.ist_ausruestung(item_id):

@@ -333,6 +333,9 @@ func _create_heroes() -> void:
 		h.look = spec.get("aussehen", "")
 		h.set_meta("stufe", level_bonus + 1)
 		h.mana = data.get("start_mana", h.max_mana)
+		# Kampf in der Wildnis: mit dem Mana, das man aus der Welt mitbringt (Hinsetzen füllt es, Projekt 14, K.2)
+		if spec.has("mana_anteil") and h.max_mana > 0:
+			h.mana = roundi(h.max_mana * clampf(float(spec.mana_anteil), 0.0, 1.0))
 		h.reaction = spec.get("reaktion", data.reaction)
 		h.back_row = data.back
 		heroes.append(h)

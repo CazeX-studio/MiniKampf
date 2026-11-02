@@ -31,6 +31,9 @@ var belt: Array = [{}, {}, {}, {}]
 ## Angelegte Ausrüstung (Projekt 14, K.1): Platz -> Gegenstand (siehe Ausruestung.PLAETZE). Was angelegt ist,
 ## liegt nicht mehr in der Tasche. Jeder startet mit der Grundausrüstung.
 var ausruestung: Dictionary = Ausruestung.START.duplicate()
+## Mana außerhalb des Kampfes als Anteil (0 bis 1, Projekt 14, K.2): Nach Kämpfen in der Wildnis bleibt, was übrig
+## war. Hinsetzen füllt es wieder auf, am Lagerfeuer schneller.
+var mana_anteil := 1.0
 var xp := 0
 var level := 1
 ## Auftrag -> "aktiv", "fertig" oder "abgegeben" (nicht drin = "neu")
@@ -50,6 +53,21 @@ func battle_class() -> String:
 	if klasse == "" or flags.has("klasse_gelernt"):
 		return klasse
 	return "" if GameData.get_file("klassen").get(klasse, {}).has("lernen_bei") else klasse
+
+
+## Höchstes Mana, mit dem man in den Kampf geht: gelernte Klasse oder Novize, dazu der Mana-Bonus der Ausrüstung.
+## (Dieselbe Rechnung wie im Werte-Fenster und in BattleState.)
+func max_mana() -> int:
+	var klasse := battle_class()
+	var basis := 0
+	if flags.has("klasse_bestaetigt") and Sandbox.CLASSES.has(klasse) and klasse != "novize":
+		var data: Dictionary = Sandbox.CLASSES[klasse]
+		basis = int(data.mana) + BattleState.LEVEL_MANA * (level - 1) if int(data.mana) > 0 else 0
+	else:
+		basis = int(Grundwerte.for_level(level).mana)
+	if basis <= 0:
+		return 0
+	return basis + int(Ausruestung.kampfwerte(ausruestung).mana)
 
 
 func item_count(id: String) -> int:
@@ -243,7 +261,7 @@ func xp_range() -> Vector2i:
 
 
 func to_dict() -> Dictionary:
-	return {gold = gold, items = items, slots = bag_slots().duplicate(), beute = loot, bank = bank, bank_plaetze = bank_size, guertel = belt, ausruestung = ausruestung,
+	return {gold = gold, items = items, slots = bag_slots().duplicate(), beute = loot, bank = bank, bank_plaetze = bank_size, guertel = belt, ausruestung = ausruestung, mana_anteil = mana_anteil,
 			xp = xp, level = level, quests = quests, flags = flags}
 
 
@@ -269,6 +287,7 @@ func load_dict(data: Dictionary) -> void:
 	for platz: String in saved_gear:
 		if platz in Ausruestung.PLAETZE and str(saved_gear[platz]) != "":
 			ausruestung[platz] = str(saved_gear[platz])
+	mana_anteil = clampf(float(data.get("mana_anteil", 1.0)), 0.0, 1.0)
 	xp = int(data.get("xp", 0))
 	level = int(data.get("level", 1))
 	quests = data.get("quests", {})

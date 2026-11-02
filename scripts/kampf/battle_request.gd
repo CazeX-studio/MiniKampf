@@ -27,6 +27,9 @@ static var player_gear := {}
 static var player_mana_potions := 0
 ## Manatränke, die in früheren Versuchen desselben Kampfes getrunken wurden
 static var mana_used_before := 0
+## Mana der eigenen Figur vor dem Kampf (Anteil). Kämpfe in der Wildnis (eigene Klasse) beginnen damit und melden
+## danach, was übrig ist; Lektionen und Geschichtskämpfe in Kreuzweg beginnen mit vollem Mana.
+static var player_mana_share := 1.0
 
 
 static func active() -> bool:
@@ -72,6 +75,8 @@ static func prepare(id: String, level: int, potions := 0, own_class := "", own_m
 		player["ausruestung"] = Ausruestung.kampfwerte(player_gear)
 	if klasse == "novize" and player_mana_potions > 0:
 		player["manatraenke"] = player_mana_potions
+	if data.get("eigene_klasse", false):
+		player["mana_anteil"] = player_mana_share
 	# Parieren lernt man erst in Lektion 3: davor hat der Novize keine Reaktion (im langen Lernkampf je Phase)
 	if not data.get("reaktion", true):
 		player["reaktion"] = ""
@@ -172,9 +177,11 @@ static func _make_setup(id: String, data: Dictionary, heroes: Array, phases: Arr
 
 
 ## Der Kampf ist vorbei: Ergebnis für die Welt merken.
-static func finish(won: bool, potions_used := 0, tamed: Array = [], mana_used := 0) -> void:
+static func finish(won: bool, potions_used := 0, tamed: Array = [], mana_used := 0, mana_share := -1.0) -> void:
 	result = {kampf = kampf_id, gewonnen = won, traenke_benutzt = used_before + potions_used, gezaehmt = tamed,
 			manatraenke_benutzt = mana_used_before + mana_used}
+	if mana_share >= 0.0:
+		result["mana_anteil"] = mana_share
 	mana_used_before = 0
 	# Die Belohnung stand schon auf dem Sieg-Bildschirm: Die Welt meldet sie nicht noch einmal
 	if won and not reward.is_empty():

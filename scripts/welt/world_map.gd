@@ -154,6 +154,18 @@ func block(cell: Vector2i) -> void:
 		astar.set_point_solid(cell)
 
 
+## Steht in der Nähe von pos ein Lagerfeuer? (Baukasten-Teil „lagerfeuer“ oder Zeichen „lagerfeuer“ der Karte)
+func near_campfire(pos: Vector2, radius: float) -> bool:
+	for prop: Dictionary in props:
+		if prop.kind == "lagerfeuer" and Vector2(prop.cell).distance_to(pos) <= radius:
+			return true
+	for o: Dictionary in baukasten.get("objekte", []):
+		if str(o.get("teil", "")) == "lagerfeuer" and o.has("feld"):
+			if Vector2(float(o.feld[0]), float(o.feld[1])).distance_to(pos) <= radius:
+				return true
+	return false
+
+
 func in_bounds(cell: Vector2i) -> bool:
 	return cell.x >= 0 and cell.y >= 0 and cell.x < size.x and cell.y < size.y
 

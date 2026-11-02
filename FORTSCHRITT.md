@@ -5,7 +5,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 01.11.)
 
-- **Nächster Schritt:** D5b der „Demo-Reihenfolge“ (Hinsetzen und Lagerfeuer). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 und D5a wurden auf Marcos Wunsch vor T1 gebaut.
+- **Nächster Schritt:** D6 der „Demo-Reihenfolge“ (Fähigkeiten-Baum und feste Leiste mit 6 Plätzen). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 und D5 wurden auf Marcos Wunsch vor T1 gebaut.
+
+- **Neu (02.11.): D5b Hinsetzen und Lagerfeuer** (Projekt 14, K.2): Nach Kämpfen in der Wildnis (ab Grünwacht, mit der eigenen Klasse) bleibt das übrige Mana erhalten, und der nächste Kampf beginnt damit. Wer verliert, steht mit leerem Mana auf. Mit **X** (oder dem Sanduhr-Knopf oben rechts) setzt du dich hin, dann füllt sich das Mana (in etwa 20 Sekunden). **Am Lagerfeuer** geht es dreimal so schnell, zum Beispiel am Rastplatz auf dem Weg nach Grünwacht. Wer losläuft, steht wieder auf. Ist das Mana nicht voll, steht es oben neben der Erfahrung. Lektionen und Geschichtskämpfe in Kreuzweg beginnen weiter mit vollem Mana.
+  - Eigene Bilder zum Sitzen gibt es noch nicht, die Figur wird so lange etwas gestaucht gezeigt.
+  - **So testest du es:**
+    1. Auf dem Weg nach Grünwacht gegen ein Monster kämpfen und dabei Mana verbrauchen.
+    2. Nach dem Kampf steht oben „Mana … / …“. Der nächste Kampf beginnt mit diesem Mana.
+    3. X drücken: Die Figur setzt sich, das Mana steigt langsam. Loslaufen lässt sie aufstehen.
+    4. Am Lagerfeuer des Rastplatzes X drücken: Das Mana füllt sich deutlich schneller.
 
 - **Neu (02.11.): D5a Mana nur durch Handeln** (Projekt 14, K.2): Im Kampf füllt sich Mana nicht mehr von selbst. Es gibt Mana zurück für einen normalen Angriff (etwas), eine perfekte Parade oder ein perfektes Ausweichen (mehr, mit „+Mana“ über der Figur) und für Abwarten (etwas). Neu ist der **Manatrank** für den Gürtel, Bingo verkauft ihn für 25 Bronze. **Abklingzeiten** haben nur noch die stärksten Fähigkeiten (bisher 3 Züge und mehr), die anderen begrenzt das Mana. Der Kraftschlag des Novizen geht also so oft, wie das Mana reicht.
   - Ein Probekampf in der Prüfung (Gruppenkampf auf den Kreuzwegfeldern, ohne Trank) dauert im Schnitt 3,5 Runden, das Ziel sind 3 bis 5. Alle Zahlen sind vorläufig.

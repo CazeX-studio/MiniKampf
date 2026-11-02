@@ -182,7 +182,7 @@ func _battle_name() -> String:
 ## Zurück in die Stadt (Kampf aus der Kreuzweg-Demo).
 func _back_to_world(won: bool) -> void:
 	# Verbrauchte Heiltränke fehlen danach in der Tasche, gezähmte Monster kommen ins Rudel
-	BattleRequest.finish(won, _potions_used(), _tamed(), _potions_used("manatrank", "manatraenke"))
+	BattleRequest.finish(won, _potions_used(), _tamed(), _potions_used("manatrank", "manatraenke"), _mana_share())
 	get_tree().change_scene_to_file(BattleRequest.return_scene)
 
 
@@ -194,6 +194,18 @@ func _tamed() -> Array:
 		if m.has_meta("neu_gezaehmt"):
 			result.append(m.klass)
 	return result
+
+
+## Mana des Spielers am Ende (Anteil), nur bei Kämpfen, die mit dem Mana aus der Welt begonnen haben; sonst -1.
+## Wer verloren hat, steht mit leerem Mana wieder auf.
+func _mana_share() -> float:
+	var index := int(_group.get("mine", 0))
+	if index >= state.heroes.size() or not state.setup.helden[index].has("mana_anteil"):
+		return -1.0
+	var player := state.heroes[index]
+	if player.max_mana <= 0:
+		return -1.0
+	return clampf(float(player.mana) / player.max_mana, 0.0, 1.0) if player.is_alive() else 0.0
 
 
 ## Wie viele Heiltränke (oder Manatränke) der Spieler in diesem Kampf getrunken hat.
