@@ -2790,6 +2790,21 @@ func _faehigkeiten_zeilen(p: PlayerState) -> void:
 		_rep_box.add_child(_wrapped(GameData.text("faehigkeiten_ohne_baum"), 15, Color("c8c8c8")))
 		return
 	_rep_box.add_child(_label(GameData.text("faehigkeiten_kopf", [p.progress.klassenstufe(), p.progress.freie_punkte()]), 17, Color("f2c14e")))
+	# Die feste Leiste: sechs Plätze, ein Klick nimmt eine Fähigkeit herunter
+	_rep_box.add_child(_wrapped(GameData.text("leiste_titel"), 15, Color("f3ead8")))
+	var bar := HBoxContainer.new()
+	bar.add_theme_constant_override("separation", 6)
+	for i in p.progress.leiste.size():
+		var id := str(p.progress.leiste[i])
+		var slot := _small_button("%d: %s" % [i + 1, Faehigkeiten.eintrag(klasse, id).get("name", "–") if id != "" else "–"], func() -> void:
+			if id != "":
+				_send({type = "leiste", faehigkeit = id, platz = i})
+				_fill_panel())
+		slot.custom_minimum_size = Vector2(98, 30)
+		slot.add_theme_font_size_override("font_size", 12)
+		slot.clip_text = true
+		bar.add_child(slot)
+	_rep_box.add_child(bar)
 	var grund: Dictionary = baum.get("grundreihe", {})
 	if not grund.is_empty():
 		_rep_box.add_child(_wrapped("%s: [b]%s[/b] – %s" % [GameData.text("faehigkeiten_grundreihe"), grund.name, grund.get("info", "")], 14, Color("c8c8c8")))
@@ -2820,6 +2835,14 @@ func _faehigkeiten_zeilen(p: PlayerState) -> void:
 		button.custom_minimum_size = Vector2(150, 28)
 		button.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		row.add_child(button)
+		if Faehigkeiten.fuer_leiste(p.progress, f.id):
+			var drauf: bool = f.id in p.progress.leiste
+			var leiste_knopf := _small_button(GameData.text("leiste_runter" if drauf else "leiste_drauf"), func() -> void:
+				_send({type = "leiste", faehigkeit = f.id, platz = -1})
+				_fill_panel())
+			leiste_knopf.custom_minimum_size = Vector2(110, 28)
+			leiste_knopf.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+			row.add_child(leiste_knopf)
 		_rep_box.add_child(row)
 	var preis := Faehigkeiten.preis_neu_verteilen(p.progress)
 	var neu := _small_button(GameData.text("faehigkeiten_neu_verteilen", [GameData.text("faehigkeiten_kostenlos") if preis == 0 else Geld.text(preis)]),
@@ -2962,6 +2985,7 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 	BattleRequest.player_mana_share = local_player().progress.mana_anteil
 	BattleRequest.player_skills = local_player().progress.faehigkeiten.duplicate()
 	BattleRequest.player_skills_known = true
+	BattleRequest.player_bar = local_player().progress.leiste.duplicate()
 	_prepare_reward(kampf_id)
 	if BattleRequest.prepare(kampf_id, progress.level, progress.potion_count("heiltrank"), progress.battle_class(),
 			progress.flags.get("monster", [])):

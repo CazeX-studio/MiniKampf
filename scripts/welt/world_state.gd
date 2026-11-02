@@ -22,6 +22,8 @@ extends RefCounted
 ##   {type = "kaufen", gegenstand = "…"} / {type = "verkaufen", gegenstand = "…"} / {type = "laden_zu"}  im geöffneten Laden
 ##   {type = "hinsetzen"}  hinsetzen oder aufstehen: füllt das Mana, am Lagerfeuer schneller (Projekt 14, K.2)
 ##   {type = "lernen", faehigkeit = "…"} / {type = "neu_verteilen"}  Fähigkeiten-Baum (Projekt 14, K.3)
+##   {type = "leiste", faehigkeit = "…", platz = 0–5}  auf die feste Leiste legen (platz -1 = erster freier;
+##       ist sie schon drauf, kommt sie herunter)
 ##   {type = "anlegen", gegenstand = "…"} / {type = "ablegen", platz = "waffe"}  Ausrüstung (Projekt 14, K.1)
 ##   {type = "aussehen", hut = "…", ruecken = "…", farben = "…"}  Aussehen-Plätze ändern ("" = keins, fehlt = bleibt)
 ##   {type = "wegwerfen", gegenstand = "…"}  alle Stück eines Gegenstands aus der Tasche wegwerfen
@@ -453,6 +455,8 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			_learn(p, str(cmd.get("faehigkeit", "")))
 		"neu_verteilen":
 			_respec(p)
+		"leiste":
+			_set_bar(p, str(cmd.get("faehigkeit", "")), int(cmd.get("platz", -1)))
 		"anlegen":
 			_equip(p, str(cmd.get("gegenstand", "")))
 		"ablegen":
@@ -1629,6 +1633,31 @@ func _learn(p: PlayerState, id: String) -> void:
 		_say(p, grund)
 		return
 	p.progress.faehigkeiten[id] = int(p.progress.faehigkeiten.get(id, 0)) + 1
+	# Neu gelernt: gleich auf den ersten freien Platz der Leiste
+	if Faehigkeiten.fuer_leiste(p.progress, id) and not id in p.progress.leiste and "" in p.progress.leiste:
+		p.progress.leiste[p.progress.leiste.find("")] = id
+	progress_changed.emit(p.id)
+
+
+## Leiste bestücken: auf einen Platz legen oder (wenn sie schon drauf ist) herunternehmen.
+func _set_bar(p: PlayerState, id: String, platz: int) -> void:
+	var leiste: Array = p.progress.leiste
+	if id in leiste and (platz < 0 or leiste[platz] == id):
+		leiste[leiste.find(id)] = ""
+		progress_changed.emit(p.id)
+		return
+	if not Faehigkeiten.fuer_leiste(p.progress, id):
+		return
+	if platz < 0:
+		platz = leiste.find("")
+		if platz < 0:
+			_say(p, GameData.text("leiste_voll"))
+			return
+	if platz >= leiste.size():
+		return
+	if id in leiste:
+		leiste[leiste.find(id)] = ""
+	leiste[platz] = id
 	progress_changed.emit(p.id)
 
 
@@ -1650,6 +1679,8 @@ func _respec(p: PlayerState) -> void:
 		return
 	p.progress.gold -= preis
 	p.progress.faehigkeiten.clear()
+	for i in p.progress.leiste.size():
+		p.progress.leiste[i] = ""
 	p.progress.flags["neu_verteilt"] = int(p.progress.flags.get("neu_verteilt", 0)) + 1
 	_say(p, GameData.text("neu_verteilt"))
 	progress_changed.emit(p.id)

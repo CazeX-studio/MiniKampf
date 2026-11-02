@@ -347,6 +347,7 @@ func _create_heroes() -> void:
 		# Gelernte Fähigkeiten aus dem Baum (nur bei Klassen mit Baum, siehe Faehigkeiten)
 		if spec.has("faehigkeiten"):
 			h.set_meta("faehigkeiten", spec.faehigkeiten)
+			h.set_meta("leiste", spec.get("leiste", []))
 		if int(spec.get("manatraenke", 0)) > 0:
 			h.wares["manatrank"] = int(spec.manatraenke)
 		if spec.get("computer", false):

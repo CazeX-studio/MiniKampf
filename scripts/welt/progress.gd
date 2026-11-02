@@ -39,6 +39,10 @@ var mana_anteil := 1.0
 var klassen_xp := 0
 ## Gelernte Fähigkeiten aus dem Baum der Klasse: Kennung -> Stufe (siehe Faehigkeiten)
 var faehigkeiten := {}
+## Feste Leiste (Projekt 14, K.3): sechs Plätze mit Fähigkeiten aus dem Baum ("" = frei), vor dem Kampf bestückt.
+## Angriff, Abwarten, Gürtel und Ult sind im Kampf immer zusätzlich da.
+const LEISTE_PLAETZE := 6
+var leiste: Array = ["", "", "", "", "", ""]
 var xp := 0
 var level := 1
 ## Auftrag -> "aktiv", "fertig" oder "abgegeben" (nicht drin = "neu")
@@ -288,7 +292,7 @@ func xp_range() -> Vector2i:
 
 
 func to_dict() -> Dictionary:
-	return {gold = gold, items = items, slots = bag_slots().duplicate(), beute = loot, bank = bank, bank_plaetze = bank_size, guertel = belt, ausruestung = ausruestung, mana_anteil = mana_anteil, klassen_xp = klassen_xp, faehigkeiten = faehigkeiten,
+	return {gold = gold, items = items, slots = bag_slots().duplicate(), beute = loot, bank = bank, bank_plaetze = bank_size, guertel = belt, ausruestung = ausruestung, mana_anteil = mana_anteil, klassen_xp = klassen_xp, faehigkeiten = faehigkeiten, leiste = leiste,
 			xp = xp, level = level, quests = quests, flags = flags}
 
 
@@ -316,6 +320,10 @@ func load_dict(data: Dictionary) -> void:
 			ausruestung[platz] = str(saved_gear[platz])
 	mana_anteil = clampf(float(data.get("mana_anteil", 1.0)), 0.0, 1.0)
 	klassen_xp = int(data.get("klassen_xp", 0))
+	leiste = []
+	var saved_bar: Array = data.get("leiste", [])
+	for i in LEISTE_PLAETZE:
+		leiste.append(str(saved_bar[i]) if i < saved_bar.size() else "")
 	# Ältere Spielstände mit gelernter Klasse: Klassen-Erfahrung ab Stufe 10 schätzen (dort lernt man die Klasse)
 	if not data.has("klassen_xp") and (data.get("flags", {}) as Dictionary).has("klasse_gelernt"):
 		var table := GameData.level_xp()
@@ -342,4 +350,9 @@ func load_dict(data: Dictionary) -> void:
 			if belt_allowed(id):
 				while belt_put(id) > 0:
 					pass
+	# Ältere Spielstände ohne Leiste: gelernte Fähigkeiten kommen von selbst darauf
+	if not data.has("leiste"):
+		for id: String in faehigkeiten:
+			if Faehigkeiten.fuer_leiste(self, id) and "" in leiste:
+				leiste[leiste.find("")] = id
 	bag_slots()

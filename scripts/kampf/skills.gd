@@ -272,7 +272,7 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 		var basic: String = list[0].id
 		list = list.filter(func(ab: Dictionary) -> bool:
 			return ab.id == basic or ab.id == "ult" or Faehigkeiten.eintrag(f.klass, ab.id).is_empty() \
-					or skill_level(f, ab.id) > 0)
+					or (skill_level(f, ab.id) > 0 and ab.id in (f.get_meta("leiste", []) as Array)))
 	# Abklingzeiten nur für die stärksten Fähigkeiten: Wer Mana kostet, braucht sonst keine (das Mana begrenzt sie)
 	for ab in list:
 		if ab.has("mana") and int(ab.get("cd", 0)) < STARKE_ABKLINGZEIT:

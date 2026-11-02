@@ -29,7 +29,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D5a:** Mana nur durch Handeln, Abklingzeiten nur für die stärksten Fähigkeiten, Manatrank. (K.2) – Status: fertig (02.11.2026)
 - **D5b:** Hinsetzen außerhalb des Kampfes, am Lagerfeuer schneller (Mana bleibt zwischen Kämpfen). (K.2) – Status: fertig (02.11.2026; Sitzen vorerst als gestauchte Figur, eigene Sitz-Bilder fehlen)
 - **D6a:** Fähigkeiten-Baum: Klassenstufe und Punkte, Lernen-Fenster (K), Neuverteilen beim Lehrmeister, Baum des Bogenschützen als erster. (K.3) – Status: fertig (02.11.2026)
-- **D6b:** Feste Leiste mit 6 Plätzen, vor dem Kampf bestückt; Angriff, Abwarten, Gürtel und Ult immer dabei. (K.3) – Status: offen
+- **D6b:** Feste Leiste mit 6 Plätzen, vor dem Kampf bestückt; Angriff, Abwarten, Gürtel und Ult immer dabei. (K.3) – Status: fertig (02.11.2026; die 6 Plätze kommen zu Angriff, Abwarten, Gürtel und Ult dazu, Marco bestätigt das noch)
 - **D7:** Effekt-Liste als feste Bausteine. (K.4) – Status: offen
 - **D8:** Novize und die Bäume der fünf Demo-Klassen. (K.5) – Status: offen
 - **D9:** Eigene Bewegungen pro Fähigkeit, filmische Ult. (K.6) – Status: offen

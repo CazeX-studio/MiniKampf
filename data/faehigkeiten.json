@@ -6,7 +6,7 @@
 	"archer": {
 		"grundreihe": {"name": "Ausweichen", "info": "Perfekt ausweichen wehrt den Treffer ab und gibt Mana zurück. Kostet keine Punkte."},
 		"faehigkeiten": [
-			{"id": "shot", "name": "Schneller Schuss", "reihe": 1, "max": 5, "info": "Dein normaler Angriff. Jede Stufe mehr: 10 % mehr Schaden."},
+			{"id": "shot", "name": "Schneller Schuss", "reihe": 1, "max": 5, "grundangriff": true, "info": "Dein normaler Angriff. Jede Stufe mehr: 10 % mehr Schaden."},
 			{"id": "charge", "name": "Aufgeladener Schuss", "reihe": 1, "max": 5, "info": "Bogen spannen: Der nächste Schuss trifft 2,5-mal so hart. Jede Stufe mehr: 10 % mehr Schaden."},
 			{"id": "ruhige_hand", "name": "Ruhige Hand", "reihe": 1, "max": 5, "passiv": true, "info": "Aus der hinteren Reihe öfter kritisch: 4 % je Stufe."},
 			{"id": "net", "name": "Netzpfeil", "reihe": 2, "max": 5, "info": "Ziel rutscht auf der Zugleiste zurück."},

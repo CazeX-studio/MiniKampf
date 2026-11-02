@@ -50,6 +50,14 @@ static func grund_gegen(p: Progress, id: String) -> String:
 	return ""
 
 
+## Kann die Fähigkeit auf die Leiste? (gelernt, nicht passiv, nicht der normale Angriff, wirkt schon)
+static func fuer_leiste(p: Progress, id: String) -> bool:
+	var f := eintrag(p.battle_class(), id)
+	if f.is_empty() or f.get("passiv", false) or f.get("bald", false) or f.get("grundangriff", false):
+		return false
+	return int(p.faehigkeiten.get(id, 0)) > 0
+
+
 ## Was das nächste Neuverteilen kostet (Bronze): das erste Mal nichts.
 static func preis_neu_verteilen(p: Progress) -> int:
 	if int(p.flags.get("neu_verteilt", 0)) == 0:

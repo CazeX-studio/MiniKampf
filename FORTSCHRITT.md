@@ -5,7 +5,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 01.11.)
 
-- **Nächster Schritt:** D6b der „Demo-Reihenfolge“ (feste Leiste mit 6 Plätzen). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 bis D6a wurden auf Marcos Wunsch vor T1 gebaut.
+- **Nächster Schritt:** D7 der „Demo-Reihenfolge“ (Effekt-Liste als feste Bausteine). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 bis D6 wurden auf Marcos Wunsch vor T1 gebaut.
+
+- **Neu (02.11.): D6b Feste Leiste mit 6 Plätzen** (Projekt 14, K.3): Im Fähigkeiten-Fenster (K) steht oben die Leiste mit sechs Plätzen. Was du neu lernst, kommt von selbst auf den ersten freien Platz. „Herunter“ oder ein Klick auf den Platz nimmt es wieder ab, „Auf die Leiste“ legt es zurück. Im Kampf gibt es genau die Fähigkeiten auf der Leiste, dazu immer den normalen Angriff, Abwarten, die Gürtel-Gegenstände und die Ult. Die Leiste wird gespeichert, Neuverteilen leert sie.
+  - **Von Marco zu entscheiden:** Gebaut sind 6 freie Plätze zusätzlich zu Angriff, Abwarten, Gürtel und Ult. Ist gemeint, dass diese vier auf den 6 Plätzen mitzählen? Dann blieben 2 freie Plätze.
+  - Gilt vorerst nur für den Bogenschützen, weil nur er schon einen Baum hat.
+  - **So testest du es:**
+    1. Als Bogenschütze K drücken, zwei Fähigkeiten lernen: Sie stehen auf Platz 1 und 2.
+    2. Bei einer „Herunter“ drücken und kämpfen: Diese Fähigkeit fehlt im Kampf, Angriff, Abwarten und Ult sind da.
+    3. Wieder „Auf die Leiste“ drücken: Im nächsten Kampf ist sie wieder da.
 
 - **Neu (02.11.): D6a Fähigkeiten-Baum** (Projekt 14, K.3): Nach dem Lernen der Klasse wächst die **Klassenstufe** mit der Erfahrung (gleiche Tabelle wie die Charakterstufe), jede Klassenstufe gibt einen Punkt. Mit **K** (oder dem Rollen-Knopf oben) öffnet sich das Fähigkeiten-Fenster: Grundreihe, vier Reihen (frei ab Klassenstufe 1, 10, 20, 30), Voraussetzungen wie „braucht Schneller Schuss 3“, ein „+“ zum Lernen. Jede Stufe über 1 gibt 10 % mehr Schaden oder Heilung. **Neu verteilen** geht nur beim eigenen Lehrmeister, das erste Mal kostenlos, danach 100 Bronze je Klassenstufe.
   - Der erste Baum ist der des **Bogenschützen** (aus design.md). Fähigkeiten, die es im Kampf noch nicht gibt (Adlerauge, Durchschlag, Jagdinstinkt, Schwachstelle markieren, Elementpfeil), stehen mit „Kommt bald“ im Baum, sie kommen mit D8. Alle anderen Klassen kämpfen weiter mit allen Fähigkeiten, bis ihr Baum da ist.

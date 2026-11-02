@@ -59,7 +59,33 @@ func _init() -> void:
 		p.progress.faehigkeiten["charge"] = 1
 		state.apply_command("a", {type = "neu_verteilen"})
 		_check(not p.progress.faehigkeiten.is_empty(), "Zweites Neuverteilen ohne Geld geht trotzdem")
-	# Im Kampf: genau das Gelernte (normaler Angriff und Ult immer)
+	# Feste Leiste: Gelerntes kommt von selbst drauf, man kann es herunternehmen
+	p.progress.faehigkeiten.clear()
+	p.progress.leiste = ["", "", "", "", "", ""]
+	state.apply_command("a", {type = "lernen", faehigkeit = "charge"})
+	state.apply_command("a", {type = "lernen", faehigkeit = "shot"})
+	_check(p.progress.leiste[0] == "charge" and not "shot" in p.progress.leiste, "Leiste nach dem Lernen falsch: %s" % [p.progress.leiste])
+	state.apply_command("a", {type = "leiste", faehigkeit = "charge", platz = -1})
+	_check(not "charge" in p.progress.leiste, "Herunternehmen geht nicht")
+	state.apply_command("a", {type = "leiste", faehigkeit = "ruhige_hand", platz = 2})
+	_check(not "ruhige_hand" in p.progress.leiste, "Ungelerntes oder Passives auf der Leiste")
+	state.apply_command("a", {type = "leiste", faehigkeit = "charge", platz = 3})
+	_check(p.progress.leiste[3] == "charge", "Auf einen bestimmten Platz legen geht nicht")
+	var gespeichert := Progress.new()
+	gespeichert.load_dict(p.progress.to_dict())
+	_check(gespeichert.leiste == p.progress.leiste, "Leiste wird nicht gespeichert")
+	# Im Kampf: genau das Gelernte auf der Leiste (normaler Angriff und Ult immer)
+	BattleRequest.player_bar = ["", "", "", "", "", ""]
+	BattleRequest.player_skills = {charge = 1, net = 1}
+	BattleRequest.player_skills_known = true
+	BattleRequest.player_gear = {}
+	BattleRequest.prepare("splitterbaer", 15, 0, "archer")
+	var leer := BattleState.new(null, [] as Array[String], "", 1)
+	leer.setup = BattleRequest.setup
+	leer._create_heroes()
+	var leer_ids: Array = leer.skills.abilities(leer.heroes[0]).map(func(a: Dictionary) -> String: return a.id)
+	_check(not "charge" in leer_ids and "shot" in leer_ids and "ult" in leer_ids, "Gelernt, aber nicht auf der Leiste: %s" % [leer_ids])
+	BattleRequest.player_bar = ["charge", "", "", "", "", ""]
 	BattleRequest.player_skills = {charge = 1}
 	BattleRequest.player_skills_known = true
 	BattleRequest.player_gear = {}

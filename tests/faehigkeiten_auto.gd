@@ -21,7 +21,8 @@ func _process(delta: float) -> void:
 			p.progress.flags["klasse_bestaetigt"] = true
 			p.progress.flags["klasse_gelernt"] = true
 			p.progress.klassen_xp = 4100
-			p.progress.faehigkeiten = {shot = 3, charge = 2}
+			p.progress.faehigkeiten = {shot = 3, charge = 2, net = 1}
+			p.progress.leiste = ["charge", "net", "", "", "", ""]
 			_toggle_panel("faehigkeiten")],
 		[2.0, func() -> void:
 			_foto("faehigkeiten")
