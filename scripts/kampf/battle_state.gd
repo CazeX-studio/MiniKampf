@@ -723,6 +723,7 @@ func _begin_turn(f: Fighter) -> void:
 			f.hp = mini(f.hp, f.max_hp)
 			f.power /= 1.3
 			f.remove_meta("wachstum")
+			zeige("wachstum_ende", f)
 			float_text(f, "Schrumpft", Color("8fd36b"))
 	f.stagger_turns = maxi(f.stagger_turns - 1, 0)
 	f.waiting = false

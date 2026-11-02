@@ -1004,19 +1004,20 @@ func _tamer(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 	var m := f.active_monster
 	match id:
 		"sling":
-			c.projectile(f, target, Color("c9b28a"))
+			c.zeige("schleuder", f, target)
 			c.hit(f, target, 8, "ranged")
 		"switch":
 			var next := _monster(f, ab.choice)
+			c.zeige("pfiff", f)
 			c.remove_companion(m)
 			f.active_monster = next
 			c._emit({type = "despawn", f = next})
 			c.add_companion(next)
 			c.show_supporters(f)
 			next.next_time = c.now + next.turn_delay() * 0.5
-			c.burst(next, Elements.color(next.element), 100.0)
 			# Beim Auftritt gleich ein kleiner Angriff (Großer Auftritt: stärker und ein kleiner Schutz)
 			var auftritt := skill_level(f, "auftritt") if f.has_meta("faehigkeiten") else 0
+			c.zeige("auftritt", next, f, auftritt)
 			var opfer := c.next_enemy()
 			if opfer != null and next.is_alive():
 				c.projectile(next, opfer, Elements.color(next.element), 0.2)
@@ -1032,12 +1033,14 @@ func _tamer(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 				c.add_log("Gut getimter Wechsel: %s (%s) hält %s (%s) gut aus." % [next.display_name, next.element, enemy.display_name, enemy.element])
 		"cheer":
 			m.atk_buff_turns = BattleState.BUFF_TURNS + 1
+			c.zeige("anfeuern", f, m)
 			c.heal(f, m, 10)
 			c.float_text(m, "Angriff+", Color("ff8080"), 30)
 		"care":
+			c.zeige("pflege", f, m)
 			c.heal(f, m, 30)
 		"lockfutter":
-			c.projectile(f, target, Color("e8c890"), 0.3)
+			c.zeige("lockfutter", f, target)
 			target.set_meta("lockfutter", 2)
 			c.float_text(target, "Schnuppert …", Color("e8c890"), 30)
 			c.add_log("%s wirft %s Futter hin. Es ist abgelenkt." % [f.display_name, target.display_name])
@@ -1048,8 +1051,9 @@ func _tamer(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 			for i in _gemeinsam_hits(f) - 1:
 				if not target.is_alive() or not m.is_alive():
 					break
-				c.projectile(m, target, Elements.color(m.element), 0.15)
+				c.lunge(m, target, 0.2)
 				c.hit(m, target, 10, "melee", m.element)
+			c.zeige("gemeinsam_blitz", f, target)
 		"wachstum":
 			if m.is_alive() and not m.has_meta("wachstum"):
 				var mehr := roundi(m.max_hp * 0.5)
@@ -1057,12 +1061,14 @@ func _tamer(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 				m.hp += mehr
 				m.power *= 1.3
 				m.set_meta("wachstum", {zuege = 3, leben = mehr})
+				c.zeige("wachstum", f, m)
 				c.float_text(m, "Wächst!", Color("8fd36b"), 30)
 				c.refresh()
 		"einschuechtern":
-			c.burst(m if m.is_alive() else f, Color("8fb8ff"), 160.0)
+			c.zeige("bruellen", f, m if m.is_alive() else f)
 			for e in c.alive(c.enemies):
 				e.schwach_turns = maxi(e.schwach_turns, 2)
+				c.zeige("eingeschuechtert", f, e)
 				c.float_text(e, "Eingeschüchtert", Color("8fb8ff"), 30)
 			c.add_log("%s brüllt: Alle Gegner machen 2 Runden weniger Schaden." % m.display_name)
 		"zweites_leben":
@@ -1074,6 +1080,7 @@ func _tamer(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 				if back == f.active_monster and not c.on_field(back):
 					c.add_companion(back)
 				c.show_supporters(f)
+				c.zeige("zweites_leben", f, back)
 				c.float_text(back, "Zweites Leben!", Color("fff3b0"), 30)
 				c.refresh()
 		"tame":
@@ -1091,12 +1098,14 @@ func _tamer(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 				c.add_log("%s reißt sich los. Weiter schwächen und nochmal versuchen!" % target.display_name)
 		"ult":
 			c.add_log("Rudelruf! Alle Monster von %s greifen an." % f.display_name)
+			c.zeige("rudelruf_an", f)
 			for monster in f.monsters:
 				if not monster.is_alive() or not target.is_alive():
 					continue
 				var from := monster if c.on_field(monster) else f
 				c.projectile(from, target, Elements.color(monster.element), 0.25)
 				c.hit(monster, target, 16, "magic", monster.element)
+			c.zeige("rudelruf_ende", f, target)
 			for monster in f.monsters:
 				if monster.is_alive():
 					c.heal(f, monster, 15)

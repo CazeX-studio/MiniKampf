@@ -11,7 +11,14 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** D9d (eigene Bewegungen des Monster-Zähmers). T1 Testtag Aussehen holt Marco nach (02.11.: „mache nachher Tests“). D4 bis D8 wurden auf Marcos Wunsch vor T1 gebaut, D8 ist damit ganz fertig.
+- **Nächster Schritt:** D9e (eigene Bewegungen des Rüstungsschmieds). T1 Testtag Aussehen holt Marco nach (02.11.: „mache nachher Tests“). D4 bis D8 wurden auf Marcos Wunsch vor T1 gebaut, D8 ist damit ganz fertig.
+
+- **Neu (02.11.): D9d Eigene Bewegungen des Monster-Zähmers** (K.6): Wechsel: zwei Pfiffe, das neue Monster springt ein, Lichtbogen und Staub (mit Großem Auftritt mehr Staub und eine Kuppel). Anfeuern: Klatschen, das Monster stampft mit roten Funken. Pflege: Der Zähmer geht in die Knie. Lockfutter fliegt im Bogen, darüber erscheint ein Fragezeichen. Beim Gemeinsamen Angriff stürmt das Monster nun wirklich vor, am Ende ein Lichtblitz. Wachstumsschub macht das Monster sichtbar größer, bis er endet. Einschüchtern zeigt Schallwellen, die Gegner zucken zurück, blaue Pfeile über ihnen. Zweites Leben: Lichtfunken, das Monster steht auf. Rudelruf endet mit Staubwolke und kurzem Anhalten. Noch nicht drin: Rufe der Monster, Kameraschwenk im Ult-Film, Zeichen der passiven Fähigkeiten.
+  - **So testest du es:**
+    1. Kampf-Sandbox mit dem Zähmer: Schleuder, Wechsel, Anfeuern, Pflege und Lockfutter auslösen.
+    2. Wachstumsschub: Das Monster bleibt groß und schrumpft nach drei Runden wieder.
+    3. Einschüchtern mit mehreren Gegnern: Alle zucken zurück.
+    4. Ult laden und auslösen: Film, die Monster greifen an, dann die Staubwolke.
 
 - **Neu (02.11.): D9c Eigene Bewegungen des Bogenschützen** (K.6): Statt der runden Kugel fliegen jetzt dünne Pfeilspuren. Schneller Schuss, Aufgeladener Schuss mit Rückstoß und Staub, Pfeilhagel mit Schatten am Boden, Netzpfeil mit Bogen in der Luft und zappelndem Gegner, Schnellfeuer wird heller und schneller, Durchschlag lässt eine Schneise stehen, Schwachstelle zeigt ein rotes Fadenkreuz, Elementpfeil hat die Farbe des Elements. Beim Jägerpfeil läuft der Geist des Silberhirschs mit, der Einschlag wirbelt grüne Funken. Noch nicht drin: Zeichen der passiven Fähigkeiten, das Netz reißt nicht sichtbar, das Fadenkreuz bleibt nicht drei Runden stehen.
   - **So testest du es:**

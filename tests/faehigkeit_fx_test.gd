@@ -1,9 +1,11 @@
 extends SceneTree
-## D9b, D9c: Jede eigene Bewegung läuft im echten Kampfbild durch und lässt die Figuren an ihrem Platz zurück.
+## D9b bis D9d: Jede eigene Bewegung läuft im echten Kampfbild durch und lässt die Figuren an ihrem Platz zurück.
 
 const NAMEN := ["schildstoss_anlauf", "schildstoss_treffer", "hieb", "erste_hilfe", "deckung", "deckung_funke",
 		"sternenmut_an", "sternenmut_schlag", "schnellschuss", "spannen", "ladeschuss", "durchschlag", "durchschlag_weiter",
-		"hagel_auf", "hagel_regen", "netzpfeil", "schnellfeuer", "schnellfeuer_ende", "schwachstelle", "elementpfeil", "jaegerpfeil"]
+		"hagel_auf", "hagel_regen", "netzpfeil", "schnellfeuer", "schnellfeuer_ende", "schwachstelle", "elementpfeil", "jaegerpfeil",
+		"schleuder", "pfiff", "auftritt", "anfeuern", "pflege", "lockfutter", "gemeinsam_blitz", "bruellen", "eingeschuechtert",
+		"zweites_leben", "rudelruf_an", "rudelruf_ende"]
 
 
 func _initialize() -> void:
@@ -36,6 +38,17 @@ func _initialize() -> void:
 		if v.body.position != v._home:
 			print("FEHLER: %s: Körper nicht zurück" % name)
 			fehler += 1
+	# Wachstumsschub: Das Ziel wird groß und danach wieder normal
+	var normal := v_ziel.body.scale
+	await FaehigkeitFx.spielen(kampf, "wachstum", f, ziel, 0)
+	if v_ziel.body.scale == normal:
+		print("FEHLER: Wachstumsschub zeigt nichts")
+		fehler += 1
+	await FaehigkeitFx.spielen(kampf, "wachstum_ende", ziel, null, 0)
+	await create_timer(0.5).timeout
+	if v_ziel.body.scale != normal:
+		print("FEHLER: Nach dem Wachstum falsche Größe")
+		fehler += 1
 	# Ohne Ziel und ohne Grafik darf nichts passieren
 	await FaehigkeitFx.spielen(kampf, "hieb", f, null, 0)
 	await create_timer(1.2).timeout

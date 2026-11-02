@@ -7,6 +7,7 @@ const STERN := Color("c9a6ff")
 const SCHILD := Color("8fd3ff")
 const GRUEN := Color("7dffa0")
 const WALD := Color("8fe86a")
+const STAUB := Color("c8b898")
 const HIRSCH := "res://assets/figuren/hirsch_idle_anim_f0.png"
 
 
@@ -93,12 +94,12 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 				if name == "durchschlag":
 					_schneise(feld, v.center(), ort, Color("e8ffc8"))
 					Geraeusche.play("parade", 0.5)
-				Fx.spawn(feld, Fx.Kind.SPARKS, ort, Color("c8b898"), 100.0, 0.5)
+				Fx.spawn(feld, Fx.Kind.SPARKS, ort, STAUB, 100.0, 0.5)
 				k._shake(10.0)
 		"durchschlag_weiter":
 			if ziel_ansicht != null:
 				_schneise(feld, v.center(), ziel_ansicht.center(), Color("e8ffc8"))
-				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.center(), Color("c8b898"), 70.0, 0.4)
+				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.center(), STAUB, 70.0, 0.4)
 				await k.wait(0.15)
 		"hagel_auf":
 			# Steil in den Himmel schießen und hinterherschauen
@@ -168,6 +169,106 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 				k.screen_flash(WALD)
 				Fx.spawn(feld, Fx.Kind.RING, ort, WALD, 170.0, 0.5)
 				Fx.spawn(feld, Fx.Kind.SPARKS, ort, WALD, 170.0, 0.8)
+		"schleuder":
+			_pose(v)
+			Geraeusche.play("wurf")
+			if ziel_ansicht != null:
+				await _bogenwurf(feld, v.center(), ziel_ansicht.center(), Color("c9b28a"))
+		"pfiff":
+			# Zwei Pfiffe, der Stab schwenkt
+			_pose(v)
+			Geraeusche.play("perfekt", 2.0)
+			await k.wait(0.14)
+			Geraeusche.play("perfekt", 2.3)
+			await k.wait(0.14)
+		"auftritt":
+			# f ist das neue Monster, ziel der Zähmer; seite > 0: Großer Auftritt
+			_huepfer(v, 34.0, 0.14)
+			if ziel_ansicht != null:
+				_schneise(feld, ziel_ansicht.center(), v.center(), Color("fff3b0"))
+			await k.wait(0.28)
+			Geraeusche.play("treffer", 0.7)
+			Fx.spawn(feld, Fx.Kind.SPARKS, v.home_feet(), STAUB, 90.0 + 40.0 * seite, 0.5)
+			Fx.spawn(feld, Fx.Kind.RING, v.home_feet(), STAUB, 70.0 + 30.0 * seite, 0.3)
+			if seite > 0:
+				_kuppel(feld, v.home_feet())
+		"anfeuern":
+			_huepfer(v, 12.0, 0.1)
+			Geraeusche.play("parade", 1.7)
+			if ziel_ansicht != null:
+				await k.wait(0.15)
+				_huepfer(ziel_ansicht, 16.0, 0.1)
+				Geraeusche.play("treffer", 0.6)
+				ziel_ansicht.glow(Color("ff6060"), 0.7)
+				Fx.spawn(feld, Fx.Kind.RING, ziel_ansicht.home_feet(), Color("ff6060"), 80.0, 0.4)
+				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.center(), Color("ff8080"), 80.0, 0.6)
+		"pflege":
+			# Kniet sich zum Monster und gibt ihm eine Beere
+			var kniend := _kniefall(v)
+			await k.wait(0.35)
+			kniend.kill()
+			v.body.position = v._home
+			if ziel_ansicht != null:
+				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.center(), WALD, 80.0, 0.7)
+		"lockfutter":
+			_pose(v)
+			Geraeusche.play("wurf", 0.7)
+			if ziel_ansicht != null:
+				var ort := ziel_ansicht.center()
+				await _bogenwurf(feld, v.center(), ort, Color("e8c890"))
+				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.home_feet(), Color("e8c890"), 40.0, 0.4)
+				_zeichen(feld, ort + Vector2(0, -60), "?", Color("e8c890"))
+		"gemeinsam_blitz":
+			if ziel_ansicht != null:
+				Fx.spawn(feld, Fx.Kind.GLOW, ziel_ansicht.center(), Color(Color.WHITE, 0.7), 120.0, 0.35)
+				Fx.spawn(feld, Fx.Kind.RING, ziel_ansicht.center(), Color("fff3b0"), 120.0, 0.35)
+			k.screen_flash(Color("fff3b0"))
+		"wachstum":
+			# Grünes Licht strömt ins Monster, es wächst, der Boden wackelt
+			_pose(v)
+			if ziel_ansicht != null:
+				_schneise(feld, v.center(), ziel_ansicht.center(), WALD)
+				Geraeusche.play("kritisch", 0.5)
+				k._shake(6.0)
+				ziel_ansicht.glow(WALD, 0.7)
+				if not ziel_ansicht.has_meta("grund_scale"):
+					ziel_ansicht.set_meta("grund_scale", ziel_ansicht.body.scale)
+				var gross: Vector2 = ziel_ansicht.get_meta("grund_scale") * 1.5
+				await ziel_ansicht.create_tween().tween_property(ziel_ansicht.body, "scale", gross, 0.4).set_trans(Tween.TRANS_BACK).finished
+		"wachstum_ende":
+			if v.has_meta("grund_scale"):
+				v.create_tween().tween_property(v.body, "scale", v.get_meta("grund_scale"), 0.3)
+		"bruellen":
+			_pose(v)
+			var quelle := ziel_ansicht if ziel_ansicht != null else v
+			Geraeusche.play("kritisch", 0.5)
+			k._shake(6.0)
+			for i in 3:
+				Fx.spawn(feld, Fx.Kind.RING, quelle.center(), Color("8fb8ff"), 140.0 + 70.0 * i, 0.45)
+				await k.wait(0.12)
+		"eingeschuechtert":
+			if ziel_ansicht != null:
+				_taumeln(ziel_ansicht)
+				_zeichen(feld, ziel_ansicht.center() + Vector2(0, -60), "▼", Color("8fb8ff"))
+		"zweites_leben":
+			# Lichtfunken sammeln sich, ein Ton schwillt an, das Monster steht auf
+			Geraeusche.play("perfekt", 0.8)
+			if ziel_ansicht != null:
+				Fx.spawn(feld, Fx.Kind.GLOW, ziel_ansicht.center(), Color("fff3b0"), 110.0, 0.7)
+				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.center(), Color("fff3b0"), 90.0, 0.7)
+				await k.wait(0.4)
+				_huepfer(ziel_ansicht, 14.0, 0.12)
+		"rudelruf_an":
+			_pose(v)
+			Geraeusche.play("perfekt", 1.6)
+			await k.wait(0.35)
+		"rudelruf_ende":
+			Geraeusche.play("kritisch", 0.6)
+			if ziel_ansicht != null:
+				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.home_feet(), STAUB, 180.0, 0.8)
+				Fx.spawn(feld, Fx.Kind.RING, ziel_ansicht.home_feet(), STAUB, 170.0, 0.5)
+			k._change_speed(0.3, 0.25)
+			k._shake(14.0)
 
 
 ## Kleiner Sprung. Bewegt die ganze Ansicht, damit er neben einem laufenden Angriff funktioniert.
@@ -294,7 +395,7 @@ static func _regen(k: Control, feld: Control, fuss: Vector2) -> void:
 		await k.wait(0.14)
 		schatten.queue_free()
 		Geraeusche.play("treffer", 1.6)
-		Fx.spawn(feld, Fx.Kind.SPARKS, ort, Color("c8b898"), 30.0, 0.25)
+		Fx.spawn(feld, Fx.Kind.SPARKS, ort, STAUB, 30.0, 0.25)
 
 
 ## Netz, das sich um den Gegner legt.
@@ -369,3 +470,27 @@ static func _hirschgeist(feld: Control, von: Vector2, nach: Vector2, sekunden: f
 	tween.tween_property(geist, "position", nach, sekunden).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	tween.tween_property(geist, "modulate:a", 0.0, 0.2)
 	tween.tween_callback(geist.queue_free)
+
+
+## Etwas fliegt im Bogen zum Ziel (Stein, Futter).
+static func _bogenwurf(feld: Control, von: Vector2, nach: Vector2, farbe: Color) -> void:
+	var mitte := von.lerp(nach, 0.5) + Vector2(0, -90)
+	await _pfeil(feld, von, mitte, farbe, 0.12, 5.0)
+	await _pfeil(feld, mitte, nach, farbe, 0.12, 5.0)
+
+
+## Kleines Zeichen, das über einer Figur aufsteigt und verblasst.
+static func _zeichen(feld: Control, ort: Vector2, text: String, farbe: Color) -> void:
+	var schrift := Label.new()
+	schrift.text = text
+	schrift.add_theme_font_size_override("font_size", 34)
+	schrift.add_theme_color_override("font_color", farbe)
+	schrift.add_theme_color_override("font_outline_color", Color.BLACK)
+	schrift.add_theme_constant_override("outline_size", 5)
+	schrift.position = ort - Vector2(10, 20)
+	schrift.z_index = 9
+	feld.add_child(schrift)
+	var tween := schrift.create_tween().set_parallel()
+	tween.tween_property(schrift, "position:y", ort.y - 60.0, 0.8)
+	tween.tween_property(schrift, "modulate:a", 0.0, 0.3).set_delay(0.5)
+	tween.chain().tween_callback(schrift.queue_free)
