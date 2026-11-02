@@ -6,7 +6,8 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 ## Aktueller Stand (2026-10-27, ergänzt 02.11.)
 
 - **Bilder von Marco (02.11. abends):** 38 Blätter liegen unter `tools/vorlagen/`: alle sechs Novizen-Blätter ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen.
-  - Fehlt noch: Klingentänzerin Blatt 1 (`klingentaenzer_w_blatt1.png`, wird erst für D25 gebraucht), außerdem Figuren 3 bis 5 (Grundkörper, Köpfe, Neben- und Hauptfiguren).
+  - Dazu der Baukasten (02.11.): acht Grundkörper (`grund_*.png`), Köpfe (`koepfe_*.png`), Hüte (`huete_regionen.png`), Zeichen (`zeichen_dienste.png`) und die Klingentänzerin Blatt 1. Bei den Fäusten der Abwehr-Bilder von Blatt 1 prüft Claude beim Einbauen, ob sie am Oval stören.
+  - Fehlt noch: Figuren 4 und 5 (Neben- und Hauptfiguren), bis dahin Platzhalter. Für T3 reichen Kreuzweg und Grünwacht.
   - **Noch offen von Marco:** Ja zum Zusatz „FIGUREN“ für den Stil-Block (`LOOK.md`, Abschnitt 9a). Erst danach kommt er in `GRAFIK_AUFTRAG.md` Teil A.
 
 - **Nächster Schritt:** D2b (Kurzschwert als eigenes Teil, Hut und Umhang tauschen die Platzhalter aus D3a ab), danach T1 Testtag Aussehen. D4 bis D8 wurden auf Marcos Wunsch vor T1 gebaut, D8 ist damit ganz fertig.
