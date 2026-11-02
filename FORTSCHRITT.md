@@ -3,7 +3,7 @@
 Hier steht, was fertig ist, was als Nächstes kommt und welche Fragen offen sind.
 Wird nach jedem Arbeitsschritt aktualisiert.
 
-## Aktueller Stand (2026-10-27, ergänzt 01.11.)
+## Aktueller Stand (2026-10-27, ergänzt 02.11.)
 
 - **Für den PC: Diese Bilder fehlen noch (Stand 02.11. abends)** – Prompts in `Spieldesign/GRAFIK_AUFTRAG.md`, Teil D, „Figuren 1: Probe“:
   1. Novize männlich, Blatt Kampf B (ohne Klinge, Griff bleibt in der Hand)
