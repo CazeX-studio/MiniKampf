@@ -44,8 +44,7 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 			_huepfer(v, 12.0, 0.1)
 			Geraeusche.play("parade", 1.25 + 0.15 * seite)
 			if ziel_ansicht != null:
-				var spur := Fx.spawn(feld, Fx.Kind.SLASH, ziel_ansicht.center(), Color("fff4d6"), 58.0, 0.28)
-				spur.rotation = -0.8 if seite == 0 else 0.8
+				FxBild.spawn(feld, "hieb", ziel_ansicht.center(), 0.3, seite == 0)
 		"erste_hilfe":
 			# Kniet kurz und legt den Verband an
 			v.play("cast", 0.6)

@@ -11,7 +11,12 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** T2 Testtag Kampfgefühl (Marco). Effekte als Bilder von ChatGPT: D9h wartet auf das Probe-Bild. T1 Testtag Aussehen holt Marco nach (02.11.: „mache nachher Tests“). D4 bis D8 wurden auf Marcos Wunsch vor T1 gebaut, D8 ist damit ganz fertig.
+- **Nächster Schritt:** T2 Testtag Kampfgefühl (Marco). Effekte als Bilder von ChatGPT: D9h wartet auf Marcos Urteil zur Probe. T1 Testtag Aussehen holt Marco nach (02.11.: „mache nachher Tests“). D4 bis D8 wurden auf Marcos Wunsch vor T1 gebaut, D8 ist damit ganz fertig.
+
+- **Neu (02.11.): Probe gemalter Effekt** (D9h): Der normale Treffer im Nahkampf und der Doppelschlag zeigen jetzt deinen Schwerthieb von ChatGPT statt der gezeichneten Form, als kurze Bildfolge.
+  - **So testest du es:**
+    1. Kampf-Sandbox: ein paar Nahkampf-Angriffe ausführen und auf den Hieb am Ziel achten.
+    2. Sag, ob Größe, Tempo und Stil passen.
 
 - **Neu (02.11.): D9g Eigene Bewegungen der Sternensängerin** (K.6): Sternenfunke fliegt im Bogen. Mondwiegenlied, Polarstern, Kometenlied und Mondschild haben eigene Abläufe und Zeichen bei den Verbündeten. Sternschnuppenregen fällt einzeln von oben mit fallender Tonhöhe. Lied der Rückkehr lässt einen Stern sinken, der Gefallene steht auf. Dissonanz trifft mit roten Ringen, der Gegner zappelt. Himmelszelt: Sternenlicht fällt auf alle. Die Effekte sind Platzhalter, die Bilder sollen von ChatGPT kommen (D9h). Noch nicht drin: Sternbilder über ihr, bleibende Monde und Sterne, echte Melodien.
   - **So testest du es:**

@@ -1070,7 +1070,7 @@ func lunge(f: Fighter, target: Fighter, duration: float, attack_name := "") -> v
 		return
 	await view(f).lunge(target_view.home_feet(), duration, view(f).anim_for(attack_name, "attack"))
 	if is_instance_valid(target_view):
-		Fx.spawn(_field, Fx.Kind.SLASH, target_view.center(), Color("fff4d6"), 46.0, 0.25)
+		FxBild.spawn(_field, "hieb", target_view.center(), 0.3, f.is_ally())
 
 
 ## Ein leuchtendes Geschoss mit Lichtschweif fliegt vom Angreifer zum Ziel.

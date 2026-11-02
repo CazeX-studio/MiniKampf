@@ -54,6 +54,10 @@ func _initialize() -> void:
 	if v_ziel.body.scale != normal:
 		print("FEHLER: Nach dem Wachstum falsche Größe")
 		fehler += 1
+	# Gemalte Bildfolge (D9h)
+	if FxBild.bilder("hieb").size() != 6:
+		print("FEHLER: Bildfolge hieb hat nicht 6 Bilder")
+		fehler += 1
 	# Ohne Ziel und ohne Grafik darf nichts passieren
 	await FaehigkeitFx.spielen(kampf, "hieb", f, null, 0)
 	await create_timer(1.2).timeout
