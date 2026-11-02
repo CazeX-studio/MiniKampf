@@ -5,16 +5,11 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 02.11.)
 
-- **Für den PC: Diese Bilder fehlen noch (Stand 02.11. abends)** – Prompts in `Spieldesign/GRAFIK_AUFTRAG.md`, Teil D, „Figuren 1: Probe“:
-  1. Novize männlich, Blatt Kampf B (ohne Klinge, Griff bleibt in der Hand)
-  2. Novize männlich, Blatt Welt (ohne Klinge)
-  3. Novize weiblich, Blatt Kampf A, Kampf B und Welt (ohne Klinge)
-  4. Probe-Hut („Wanderhut“) und Probe-Umhang („Reiseumhang“), ersetzen die Platzhalter aus D3a
-  - Schon da: `tools/vorlagen/novize_m_kampf_a_ohne_klinge.png`. Marcos `Figuren.rar` liegt in Google Drive (57 MB): entpacken und die Blätter mit sprechendem Namen nach `tools/vorlagen/` legen, z. B. `novize_m_kampf_b_ohne_klinge.png`, `novize_w_welt_ohne_klinge.png`, `probe_hut.png`, `probe_umhang.png`.
-  - Danach baut Claude D2b (Kurzschwert als eigenes Teil) und tauscht Hut und Umhang aus, dann Testtag T1.
-  - **Noch offen von Marco:** Ja zum Zusatz „FIGUREN“ für den Stil-Block (`LOOK.md`, Abschnitt 9a). Erst danach kommt er in `GRAFIK_AUFTRAG.md` Teil A.
+- **Bilder von Marco (02.11. abends):** 38 Blätter liegen unter `tools/vorlagen/`: alle sechs Novizen-Blätter ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen.
+  - Fehlt noch: Klingentänzerin Blatt 1 (`klingentaenzer_w_blatt1.png`, wird erst für D25 gebraucht), außerdem Figuren 3 bis 5 (Grundkörper, Köpfe, Neben- und Hauptfiguren).
+  - - **Noch offen von Marco:** Ja zum Zusatz „FIGUREN“ für den Stil-Block (`LOOK.md`, Abschnitt 9a). Erst danach kommt er in `GRAFIK_AUFTRAG.md` Teil A.
 
-- **Nächster Schritt:** D2b (Kurzschwert als eigenes Teil), sobald Marcos Novizen-Blätter ohne Klinge da sind, danach T1 Testtag Aussehen. Ohne die Bilder geht es mit D9 weiter (eigene Bewegungen pro Fähigkeit, filmische Ult), danach kommt T2 Testtag Kampfgefühl. D4 bis D8 wurden auf Marcos Wunsch vor T1 gebaut, D8 ist damit ganz fertig.
+- **Nächster Schritt:** D2b (Kurzschwert als eigenes Teil, Hut und Umhang tauschen die Platzhalter aus D3a ab), danach T1 Testtag Aussehen. D4 bis D8 wurden auf Marcos Wunsch vor T1 gebaut, D8 ist damit ganz fertig.
 
 - **Neu (02.11.): D8g Baum der Sternensängerin** (Projekt 14, K.5, Steckbriefe Sitzung 28): Die Lieder sind jetzt wie in den Steckbriefen. **Sternenfunke** (normaler Angriff, +1 Kometen-Sternbild), **Mondwiegenlied** (heilt die ganze Gruppe 3 Runden lang, +1 Mond-Sternbild), **Sternenglanz** (passiv: volles Sternbild macht das passende Lied stärker oder für alle), **Polarstern** (verbraucht Mond-Resonanz, Abwehr+ hält dafür länger), **Kometenlied** (verbraucht Kometen-Resonanz, Angriff+ für alle, je mehr Resonanz, desto länger; macht keinen Schaden mehr), **Nachhall** (passiv, Lieder eine Runde länger), **Mondschild** (Mond-Resonanz als Schild für alle), **Sternschnuppenregen** (Kometen-Resonanz als Sternschnuppen, gleichmäßig auf alle Gegner; heilt nicht mehr), **Langsames Verblassen** (passiv), **Lied der Rückkehr** (holt einen Gefallenen zurück, einmal pro Kampf), **Dissonanz** (Gegner rutscht zurück und macht weniger Schaden). Ult **Himmelszelt**: Heilung und Stärkung für alle, je mehr Resonanz, desto stärker, danach sind beide Sternbilder leer.
   - **Abweichungen, die du wissen solltest:** Das Himmelszelt trifft wie bisher auch alle Gegner mit Sternenkraft (im Steckbrief nur Heilung und Stärkung). Der Sternenfunke macht 14 statt 11 Schaden. Beim **Urbaum** in der Pilzhöhle hat die Gruppe jetzt **5 statt 4 Züge**, bevor er verschlingt: Nach den neuen Bäumen gewannen die Klassen dort allein nur noch 53 % (Prüfung verlangt 55 %), jetzt 60 %. Bogenschütze und Zähmer schaffen ihn weiter gut.
