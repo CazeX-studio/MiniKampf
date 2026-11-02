@@ -27,6 +27,11 @@ func _initialize() -> void:
 		if v.position != ort or v_ziel.position != ort_ziel:
 			print("FEHLER: %s lässt eine Figur verschoben zurück" % name)
 			fehler += 1
+		# Der Kampf läuft nebenher weiter, ein Treffer darf die Figur gerade bewegen
+		var warten := 0
+		while v.body.position != v._home and warten < 30:
+			await create_timer(0.1).timeout
+			warten += 1
 		if v.body.position != v._home:
 			print("FEHLER: %s: Körper nicht zurück" % name)
 			fehler += 1
