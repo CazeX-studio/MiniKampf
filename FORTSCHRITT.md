@@ -7,7 +7,9 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 - **Bilder von Marco (02.11. abends):** 38 Blätter liegen unter `tools/vorlagen/`: alle sechs Novizen-Blätter ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen.
   - Dazu der Baukasten (02.11.): acht Grundkörper (`grund_*.png`), Köpfe (`koepfe_*.png`), Hüte (`huete_regionen.png`), Zeichen (`zeichen_dienste.png`) und die Klingentänzerin Blatt 1. Bei den Fäusten der Abwehr-Bilder von Blatt 1 prüft Claude beim Einbauen, ob sie am Oval stören.
-  - Fehlt noch: Figuren 4 und 5 (Neben- und Hauptfiguren), bis dahin Platzhalter. Für T3 reichen Kreuzweg und Grünwacht.
+  - Dazu Figuren 4 und 5 (02.11.): 22 Blätter Nebenfiguren (`neben_*.png`) und 41 Blätter Hauptfiguren (`haupt_*.png`) aller drei Städte. `neben_reserve_rashid_tarek.png` ist ein doppeltes Sammelblatt und bleibt Reserve.
+  - **Fehlt noch:** `haupt_hadrak_welt.png` (Hadrak Glutherz, Welt-Blatt), die Porträts sind da. Betrifft erst die Glutoase, nicht T3.
+  - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - **Noch offen von Marco:** Ja zum Zusatz „FIGUREN“ für den Stil-Block (`LOOK.md`, Abschnitt 9a). Erst danach kommt er in `GRAFIK_AUFTRAG.md` Teil A.
 
 - **Nächster Schritt:** D2b (Kurzschwert als eigenes Teil, Hut und Umhang tauschen die Platzhalter aus D3a ab), danach T1 Testtag Aussehen. D4 bis D8 wurden auf Marcos Wunsch vor T1 gebaut, D8 ist damit ganz fertig.
