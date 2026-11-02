@@ -38,7 +38,13 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D8e:** Baum des Rüstungsschmieds. (K.5) – Status: fertig (02.11.2026; Ult Meisterstück nach Steckbrief, dazu ein Schild)
 - **D8f:** Baum der Klingentänzerin. (K.5) – Status: fertig (02.11.2026)
 - **D8g:** Baum der Sternensängerin. (K.5) – Status: fertig (02.11.2026; Lieder nach Steckbrief umgebaut, Himmelszelt behält seinen Schaden, Urbaum mit 5 statt 4 Zügen bis zum Verschlingen)
-- **D9:** Eigene Bewegungen pro Fähigkeit, filmische Ult. (K.6) – Status: offen
+- **D9a:** Filmische Ult, 3 bis 4 Sekunden, in den Einstellungen auf kurz stellbar. (K.6) – Status: fertig (02.11.2026; Ablauf für alle Klassen gleich, je Klasse eigener Hintergrund; die Effekte der Steckbriefe kommen mit D9b bis D9g)
+- **D9b:** Eigene Bewegungen und Effekte: Novize. (K.6) – Status: offen
+- **D9c:** Eigene Bewegungen und Effekte: Bogenschütze. (K.6) – Status: offen
+- **D9d:** Eigene Bewegungen und Effekte: Monster-Zähmer. (K.6) – Status: offen
+- **D9e:** Eigene Bewegungen und Effekte: Rüstungsschmied. (K.6) – Status: offen
+- **D9f:** Eigene Bewegungen und Effekte: Klingentänzerin. (K.6) – Status: offen
+- **D9g:** Eigene Bewegungen und Effekte: Sternensängerin. (K.6) – Status: offen
 - **T2:** Testtag Kampfgefühl (Marco). – Status: offen
 
 ### Kreuzweg und Grünwacht rund machen

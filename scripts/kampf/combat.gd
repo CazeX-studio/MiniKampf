@@ -368,6 +368,8 @@ func _play_event(event: Dictionary) -> void:
 		"cast":
 			Geraeusche.play("zauber", 0.8 if event.ult else 1.0)
 			_cast(event.f, event.ult)
+			if event.ult and has_view(event.f):
+				await UltFilm.abspielen(self, _field, view(event.f), event.f.klass, event.get("name", ""))
 		"projectile":
 			Geraeusche.play("wurf")
 			# Monster mit eigenen Bildern zeigen beim Werfen oder Zaubern ihre Animation

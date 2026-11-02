@@ -856,7 +856,7 @@ func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 		add_log("%s wechselt nach %s." % [f.display_name, f.row_name()])
 		move_to_row(f)
 		return
-	_emit({type = "cast", f = f, ult = id == "ult"})
+	_emit({type = "cast", f = f, ult = id == "ult", name = ab.name})
 	if id == "ult":
 		f.ult = 0.0
 		f.credit().stat_ults += 1

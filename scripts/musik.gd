@@ -21,6 +21,9 @@ const FADE := 1.2
 static var enabled := true
 ## Lautstärke für alles, was das Spiel abspielt (0 bis 1), über den Regler im Menü und in der Stadt
 static var volume := 0.8
+## Ult auf kurz gestellt (Knopf im Menü); jede Ult läuft beim ersten Mal trotzdem ganz (siehe ult_dauer)
+static var ult_kurz := false
+static var _ult_gesehen: Array = []
 static var _loaded := false
 static var _instance: Musik
 
@@ -33,6 +36,28 @@ static func play(track: String) -> void:
 	var node := _instance_node()
 	if node != null:
 		node._play(track)
+
+
+static func ist_ult_kurz() -> bool:
+	_instance_node()
+	return ult_kurz
+
+
+## Ult lang oder kurz.
+static func ult_umschalten() -> void:
+	_instance_node()
+	ult_kurz = not ult_kurz
+	_save_settings()
+
+
+## Sekunden für die Ult einer Klasse; merkt sich, dass sie gesehen wurde.
+static func ult_dauer(klasse: String, lang: float, kurz: float) -> float:
+	_instance_node()
+	var erstes_mal := not _ult_gesehen.has(klasse)
+	if erstes_mal:
+		_ult_gesehen.append(klasse)
+		_save_settings()
+	return kurz if ult_kurz and not erstes_mal else lang
 
 
 ## Musik an oder aus.
@@ -56,6 +81,8 @@ static func _instance_node() -> Musik:
 		if data is Dictionary:
 			enabled = data.get("musik", true)
 			volume = clampf(float(data.get("lautstaerke", volume)), 0.0, 1.0)
+			ult_kurz = data.get("ult_kurz", false)
+			_ult_gesehen = data.get("ult_gesehen", [])
 		_apply_volume()
 	if _instance != null and is_instance_valid(_instance):
 		return _instance
@@ -123,7 +150,7 @@ static func _apply_volume() -> void:
 static func _save_settings() -> void:
 	var file := FileAccess.open(SETTINGS, FileAccess.WRITE)
 	if file != null:
-		file.store_string(JSON.stringify({musik = enabled, lautstaerke = volume}))
+		file.store_string(JSON.stringify({musik = enabled, lautstaerke = volume, ult_kurz = ult_kurz, ult_gesehen = _ult_gesehen}))
 
 
 ## Fertiger Lautstärke-Regler (Text + Schieberegler) zum Einbauen in Menüs.

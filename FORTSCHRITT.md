@@ -11,7 +11,13 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** T1 Testtag Aussehen (Marco). D4 bis D8 wurden auf Marcos Wunsch vor T1 gebaut, D8 ist damit ganz fertig.
+- **Nächster Schritt:** D9b (eigene Bewegungen des Novizen). T1 Testtag Aussehen holt Marco nach (02.11.: „mache nachher Tests“). D4 bis D8 wurden auf Marcos Wunsch vor T1 gebaut, D8 ist damit ganz fertig.
+
+- **Neu (02.11.): D9a Filmische Ult** (K.6): Löst jemand seine Ult aus, dunkelt das Bild ab, Kino-Streifen fahren herein, die Kamera rückt an die Figur, Bild und Name der Ult gleiten ins Bild. Das dauert 3,4 Sekunden. Im Hauptmenü stellt der Knopf „Ult: filmisch“ auf „Ult: kurz“ (1 Sekunde), jede Klasse zeigt ihre Ult beim ersten Mal trotzdem ganz. Jede Demo-Klasse hat einen eigenen Hintergrund (Lichtstrahl, Mond, Ringe, Esse, Feuer, Sternenhimmel), die Effekte aus den Steckbriefen folgen mit D9b bis D9g. D9 ist dafür in Schritte geteilt.
+  - **So testest du es:**
+    1. Kampf-Sandbox: Ult laden und auslösen, der Film läuft, danach geht der Kampf normal weiter.
+    2. Alle sechs Demo-Klassen durchprobieren: Jede hat ihren Hintergrund.
+    3. Im Hauptmenü „Ult: kurz“ wählen, eine schon gesehene Ult läuft jetzt in etwa einer Sekunde.
 
 - **Neu (02.11.): D2b Kurzschwert als eigenes Teil** (Projekt 13, Schritt 3): Die Novizen zeigen jetzt deine Bilder ohne Klinge, das Schwert kommt als eigenes Teil dazu und sitzt in jedem Bild am Griff. Auch Wanderhut und Reiseumhang sind jetzt deine Bilder statt der Platzhalter, der Umhang weht im Laufen. Unter „Aussehen“ gibt es neu den Platz „Waffe“: Eigene oder Krummklinge (die Werte bleiben gleich). Beim Wirken (Hand auf der Brust) ist kein Schwert zu sehen.
   - **So testest du es:**

@@ -64,6 +64,15 @@ func _ready() -> void:
 	var volume := Musik.make_slider(220.0)
 	volume.position = Vector2(470, 535)
 	_inhalt.add_child(volume)
+	var ult := Button.new()
+	ult.position = Vector2(540, 575)
+	ult.size = Vector2(200, 44)
+	ult.add_theme_font_size_override("font_size", 16)
+	ult.text = "Ult: kurz" if Musik.ist_ult_kurz() else "Ult: filmisch"
+	ult.pressed.connect(func() -> void:
+		Musik.ult_umschalten()
+		ult.text = "Ult: kurz" if Musik.ist_ult_kurz() else "Ult: filmisch")
+	_inhalt.add_child(ult)
 
 	if not titel_gesehen and not "--server" in OS.get_cmdline_user_args():
 		_titel_zeigen()

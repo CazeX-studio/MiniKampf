@@ -400,6 +400,11 @@ static func is_own_sprite(sprite: String) -> bool:
 	return ResourceLoader.exists(OWN_SPRITE_PATH % [FigurTeile.koerper_von(sprite), "idle", 0])
 
 
+## Bild der Figur für den Ult-Film.
+func ult_bild() -> Texture2D:
+	return einzelbild(fighter.look if fighter.look != "" else look_data(fighter.klass).sprite, "idle", 0)
+
+
 static func portrait(klass: String) -> Texture2D:
 	return einzelbild(look_data(klass).sprite, "idle", 0)
 
