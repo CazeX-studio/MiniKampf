@@ -770,6 +770,8 @@ func _status() -> Array[String]:
 		status.append("Glüht")
 	if fighter.has_meta("meisterstueck"):
 		status.append("Meisterrüstung")
+	if fighter.has_meta("kaefig"):
+		status.append("Klingenkäfig")
 	if fighter.plate < 1.0:
 		status.append("ERSCHÜTTERT" if fighter.stagger_turns > 0 else "Sternenpanzer")
 	if fighter.light:

@@ -1052,6 +1052,13 @@ func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String
 			hit(e, t, base, kind, e.element)
 			_getroffen.append(t)
 			skills.after_enemy_hit(e, t, kind)
+	# Klingenkäfig: Wer im Käfig angreift, wird von den kreisenden Klingen geschnitten
+	if e.has_meta("kaefig") and e.is_alive():
+		var kaefig: Dictionary = e.get_meta("kaefig")
+		hit(kaefig.quelle, e, 8, "melee")
+		kaefig.zuege = int(kaefig.zuege) - 1
+		if int(kaefig.zuege) <= 0:
+			e.remove_meta("kaefig")
 	# Perfekte Parade gegen einen Gepanzerten (Sternenfresser): Der Panzer ist kurz offen
 	if success and e.plate < 1.0 and e.is_alive():
 		e.stagger_turns = e.stagger_length

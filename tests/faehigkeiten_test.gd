@@ -218,6 +218,38 @@ func _init() -> void:
 	var vor2 := wolf.hp
 	sm.skills.on_perfect_reaction(schmied, wolf)
 	_check(wolf.hp < vor2, "Funkenflug trifft nicht")
+	# D8f: Klingentänzerin
+	BattleRequest.player_bar = ["storm", "sturmschritte", "faecher", "partner", "kaefig", "lunge"]
+	BattleRequest.player_skills = {storm = 1, sturmschritte = 1, faecher = 1, partner = 1, kaefig = 1, lunge = 1, kranz = 2, festhalten = 5, rhythmus = 1, step = 3, whirl = 3}
+	BattleRequest.prepare("splitterbaer", 25, 0, "blade")
+	var bt := BattleState.new(null, [] as Array[String], "", 9)
+	bt.setup = BattleRequest.setup
+	bt._create_heroes()
+	var tanz: Fighter = bt.heroes[0]
+	var e1 := Fighter.new("Eins", "wiesenhoppler", "Erde", false, 400, 10, Color.WHITE)
+	var e2 := Fighter.new("Zwei", "wiesenhoppler", "Erde", false, 400, 10, Color.WHITE)
+	bt.enemies.append_array([e1, e2])
+	var babs := {}
+	for a in bt.skills.abilities(tanz):
+		babs[a.id] = a
+	for id: String in ["step", "storm", "sturmschritte", "faecher", "partner", "kaefig", "lunge", "ult"]:
+		_check(babs.has(id), "Klingentänzerin hat %s nicht" % id)
+	tanz.mana = tanz.max_mana
+	_check(bt.skills.blocked_reason(tanz, babs.kaefig) == "Braucht 3 Klingen", "Klingenkäfig ohne Klingen möglich")
+	bt.execute(tanz, babs.sturmschritte, null)
+	_check(tanz.blades == 1 and (e1.hp < 400 or e2.hp < 400), "Sturmschritte wirken nicht")
+	tanz.blades = 5
+	bt.execute(tanz, babs.faecher, null)
+	_check(tanz.blades == 3 and e1.hp < 400 and e2.hp < 400, "Fächerschnitt wirkt nicht")
+	bt.execute(tanz, babs.kaefig, e1)
+	_check(tanz.blades == 0 and e1.has_meta("kaefig") and e1.effekte.has("festhalten"), "Klingenkäfig wirkt nicht")
+	# Festhalten 5: 75 % behält sie die Klinge; ohne Festhalten geht eine verloren
+	tanz.blades = 5
+	for i in 4:
+		bt.skills.blade_hit_taken(tanz)
+	_check(tanz.blades >= 2, "Festhalten hält zu wenige Klingen (%d von 5 nach 4 Treffern)" % tanz.blades)
+	bt.execute(tanz, babs.ult, null)
+	_check(tanz.blades == 0, "Die Ult endet nicht mit dem Klingensturm")
 	BattleRequest.player_bar = []
 	BattleRequest.player_skills_known = false
 	BattleRequest.player_skills = {}

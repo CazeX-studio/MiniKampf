@@ -36,7 +36,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D8c:** Baum des Bogenschützen fertig: Adlerauge, Durchschlag, Jagdinstinkt, Schwachstelle markieren, Elementpfeil. (K.5) – Status: fertig (02.11.2026; Schnellfeuer nach Steckbrief auf ein Ziel; besondere Pfeile vorerst bei Bingo)
 - **D8d:** Baum des Monster-Zähmers. (K.5) – Status: fertig (02.11.2026; Befehl entfällt laut Steckbrief)
 - **D8e:** Baum des Rüstungsschmieds. (K.5) – Status: fertig (02.11.2026; Ult Meisterstück nach Steckbrief, dazu ein Schild)
-- **D8f:** Baum der Klingentänzerin. (K.5) – Status: offen
+- **D8f:** Baum der Klingentänzerin. (K.5) – Status: fertig (02.11.2026)
 - **D8g:** Baum der Sternensängerin. (K.5) – Status: offen
 - **D9:** Eigene Bewegungen pro Fähigkeit, filmische Ult. (K.6) – Status: offen
 - **T2:** Testtag Kampfgefühl (Marco). – Status: offen

@@ -5,7 +5,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 01.11.)
 
-- **Nächster Schritt:** D8f der „Demo-Reihenfolge“ (Baum der Klingentänzerin). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 bis D8e wurden auf Marcos Wunsch vor T1 gebaut.
+- **Nächster Schritt:** D8g der „Demo-Reihenfolge“ (Baum der Sternensängerin). Offen davor: D2b (Kurzschwert als eigenes Teil, wartet auf die Novizen-Blätter ohne Klinge) und T1 Testtag Aussehen. D4 bis D8f wurden auf Marcos Wunsch vor T1 gebaut.
+
+- **Neu (02.11.): D8f Baum der Klingentänzerin** (Projekt 14, K.5, Steckbriefe Sitzung 28): Reihe 1: **Klingenschritt** (normaler Angriff), **Klingensturm**, **Klingenkranz** (passiv, die schwebenden Klingen treffen nach). Reihe 2: **Wirbel**, **Ausfallschritt** (jetzt nach Steckbrief: der nächste Angriff auf sie verfehlt eher, plus eine Klinge), **Rhythmus** (passiv, nach einer Tanzfolge früher dran). Reihe 3: **Sturmschritte** (3 bis 5 Sprünge auf zufällige Gegner), **Fächerschnitt** (2 Klingen, trifft alle hart), **Festhalten** (passiv). Reihe 4: **Partnertanz** (ein Verbündeter bekommt eine Klinge und greift stärker an), **Klingenkäfig** (3 Klingen, wer angreift, wird geschnitten und kann die Reihe nicht wechseln). Ult **Tanz der tausend Klingen** endet jetzt mit dem Klingensturm.
+  - Mit Baum verliert sie bei jedem Treffer eine schwebende Klinge, „Festhalten“ hält sie manchmal (Steckbrief). In der Kampf-Sandbox ohne Baum verliert sie keine.
+  - Die Klingentänzerin ist eine Klasse der Glutoase, zum Ausprobieren in der Kampf-Sandbox. Zahlen vorläufig.
+  - **So testest du es:**
+    1. Kampf-Sandbox mit der Klingentänzerin: Klingen sammeln, dann Fächerschnitt (2 Klingen) und Klingenkäfig (3 Klingen).
+    2. Einen Gegner im Käfig angreifen lassen: Er wird geschnitten, unter ihm steht „Klingenkäfig“.
+    3. Mit einem Verbündeten Partnertanz: Unter ihm steht „Angr+“.
+    4. Ult auslösen: drei Wellen auf alle, zum Schluss fliegen alle Klingen als Klingensturm.
 
 - **Neu (02.11.): D8e Baum des Rüstungsschmieds** (Projekt 14, K.5, Steckbriefe Sitzung 28): Grundreihe Parieren und der feste Knopf **Rüstung wechseln**. Reihe 1: **Hammerschlag** (normaler Angriff, jetzt mit Bedrohung), **Rüstung verstärken** (Verbündeter 2 Runden Abwehr+ und Schild), **Gehärtet** (passiv, Grenze 1 + Stufe). Reihe 2: **Amboss aufstellen**, **Abfangen** (fängt den nächsten Treffer gegen einen Verbündeten ab, auch hinten), **Meisterhand** (passiv, Rüstung wechseln schneller). Reihe 3: **Härten** (sofort zwei Stufen), **Glühende Rüstung** (wer ihn im Nahkampf trifft, verbrennt sich), **Funkenflug** (passiv, Funken nach perfekter Parade). Reihe 4: **Ambossschlag** (alle Gegner, betäubt, Bosse nicht), **Gemeinsame Härte** (gibt die Härte als Schutz an die Gruppe, geht nicht allein). Ult **Meisterstück**: 3 Runden Meisterrüstung, die gegen alles passt, dazu ein Schild von 40 (der Schild ist eine Ergänzung, damit der Schmied allein nicht zu schwach wird).
   - Der Schmied ist eine Klasse der Glutoase, in Kreuzweg und Grünwacht spielt man ihn nur in der Probestunde und in der Kampf-Sandbox. Zahlen vorläufig.

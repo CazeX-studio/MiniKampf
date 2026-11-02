@@ -302,5 +302,101 @@
 			}
 		],
 		"ult": "Meisterstück"
+	},
+	"blade": {
+		"grundreihe": {
+			"name": "Parieren",
+			"info": "Perfekt pariert gibt eine Klinge. Kostet keine Punkte."
+		},
+		"faehigkeiten": [
+			{
+				"id": "step",
+				"name": "Klingenschritt",
+				"reihe": 1,
+				"max": 5,
+				"grundangriff": true,
+				"info": "Dein normaler Angriff: springt zum Gegner und schneidet, plus eine Klinge."
+			},
+			{
+				"id": "storm",
+				"name": "Klingensturm",
+				"reihe": 1,
+				"max": 5,
+				"info": "Schickt alle schwebenden Klingen auf einen Gegner. Verbraucht alle."
+			},
+			{
+				"id": "kranz",
+				"name": "Klingenkranz",
+				"reihe": 1,
+				"max": 5,
+				"passiv": true,
+				"info": "Nach Klingenschritt und Ausfallschritt trifft jede schwebende Klinge nach, jede Stufe 10 % mehr."
+			},
+			{
+				"id": "whirl",
+				"name": "Wirbel",
+				"reihe": 2,
+				"max": 5,
+				"info": "Dreht sich und trifft alle Gegner, plus eine Klinge."
+			},
+			{
+				"id": "lunge",
+				"name": "Ausfallschritt",
+				"reihe": 2,
+				"max": 5,
+				"info": "Weicht zurück und schneidet: Der nächste Angriff auf sie verfehlt eher, plus eine Klinge."
+			},
+			{
+				"id": "rhythmus",
+				"name": "Rhythmus",
+				"reihe": 2,
+				"max": 5,
+				"passiv": true,
+				"info": "Nach einer Tanzfolge (drei verschiedene Schritte) früher wieder dran."
+			},
+			{
+				"id": "sturmschritte",
+				"name": "Sturmschritte",
+				"reihe": 3,
+				"max": 5,
+				"braucht": {
+					"step": 3
+				},
+				"info": "Springt mehrmals zu zufälligen Gegnern, 3 bis 5 Treffer, plus eine Klinge."
+			},
+			{
+				"id": "faecher",
+				"name": "Fächerschnitt",
+				"reihe": 3,
+				"max": 5,
+				"braucht": {
+					"whirl": 3
+				},
+				"info": "Verbraucht zwei Klingen und trifft alle Gegner hart."
+			},
+			{
+				"id": "festhalten",
+				"name": "Festhalten",
+				"reihe": 3,
+				"max": 5,
+				"passiv": true,
+				"info": "Mit Baum verliert sie bei jedem Treffer eine schwebende Klinge, Festhalten hält sie mit 15 % je Stufe."
+			},
+			{
+				"id": "partner",
+				"name": "Partnertanz",
+				"reihe": 4,
+				"max": 5,
+				"info": "Ein Verbündeter bekommt eine ihrer Klingen, sein nächster Angriff ist stärker."
+			},
+			{
+				"id": "kaefig",
+				"name": "Klingenkäfig",
+				"reihe": 4,
+				"max": 5,
+				"info": "Verbraucht drei Klingen: 2 Runden werden sie dem Gegner zum Käfig, greift er an, wird er geschnitten."
+			}
+		],
+		"ult": "Tanz der tausend Klingen"
 	}
 }

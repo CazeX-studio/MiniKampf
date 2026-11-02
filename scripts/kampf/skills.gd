@@ -172,7 +172,11 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 				{id = "whirl", name = "Wirbel", info = "7 an alle, +1 Klinge · 8 Mana" + step, target = "none", mana = 8, cd = 1},
 				{id = "lunge", name = "Ausfallschritt", info = "13 Nahkampf, jede Klinge trifft nach · 6 Mana" + step, target = "enemy", mana = 6},
 				{id = "storm", name = "Klingensturm", info = "Verbraucht alle Klingen: %d Schaden" % (9 * f.blades), target = "enemy"},
-				{id = "ult", name = "Tanz der 1000 Klingen", info = "3× 10 an alle Gegner, 5 Klingen", target = "none"},
+				{id = "sturmschritte", name = "Sturmschritte", info = "%d Sprünge à 8 auf zufällige Gegner, +1 Klinge · 12 Mana" % _sturm_hits(f), target = "none", mana = 12},
+				{id = "faecher", name = "Fächerschnitt", info = "Verbraucht 2 Klingen: 18 an alle Gegner · 10 Mana", target = "none", mana = 10},
+				{id = "partner", name = "Partnertanz", info = "Gibt einem Verbündeten eine Klinge: sein nächster Angriff ist stärker · 8 Mana", target = "ally_other", mana = 8},
+				{id = "kaefig", name = "Klingenkäfig", info = "Verbraucht 3 Klingen: 2 Runden schneiden sie das Ziel, wenn es angreift · 12 Mana", target = "enemy", mana = 12},
+				{id = "ult", name = "Tanz der 1000 Klingen", info = "5 Klingen, 3× 10 an alle Gegner, zum Schluss der Klingensturm", target = "none"},
 			]
 		"twilight":
 			list = [
@@ -423,6 +427,15 @@ func blocked_reason(f: Fighter, ab: Dictionary) -> String:
 		"trank":
 			if f.wares.get("heiltrank", 0) <= 0:
 				return "Keine Tränke mehr"
+		"faecher":
+			if f.blades < 2:
+				return "Braucht 2 Klingen"
+		"partner":
+			if f.blades < 1:
+				return "Braucht eine Klinge"
+		"kaefig":
+			if f.blades < 3:
+				return "Braucht 3 Klingen"
 		"gemeinsame_haerte":
 			if f.hard <= 0:
 				return "Keine Härte"
@@ -693,6 +706,7 @@ func _max_hard(f: Fighter) -> int:
 
 ## Nach einem Nahkampf-Treffer eines Gegners: Glühende Rüstung des Schmieds verbrennt den Angreifer.
 func after_enemy_hit(attacker: Fighter, target: Fighter, kind: String) -> void:
+	blade_hit_taken(target)
 	if kind == "melee" and target.has_meta("gluehend") and attacker.is_alive():
 		c.hit(target, attacker, 6, "magic", "Feuer")
 		if attacker.is_alive():
@@ -803,6 +817,37 @@ func _blade(f: Fighter, id: String, target: Fighter) -> void:
 			c.lunge(f, target, 0.2)
 			c.hit(f, target, 13 * mult, "melee", element)
 			_blade_follow_up(f, target, element)
+			# Steckbrief: weicht zurück, der nächste Angriff auf sie verfehlt eher, plus eine Klinge
+			if f.has_meta("faehigkeiten"):
+				if c.zufall() < 0.5:
+					f.smoke = maxi(f.smoke, 1)
+					c.float_text(f, "Nachbild", Color("d8d8e8"), 30)
+				_add_blades(f, 1)
+		"sturmschritte":
+			for i in _sturm_hits(f):
+				var ziele := c.alive(c.enemies)
+				if ziele.is_empty():
+					break
+				var t: Fighter = c.pick(ziele)
+				c.lunge(f, t, 0.12)
+				c.hit(f, t, 8, "melee", element)
+			_add_blades(f, 1)
+		"faecher":
+			f.blades -= 2
+			c.burst(f, Color("ffd0a0"), 160.0)
+			c.wait(0.2)
+			for enemy in c.alive(c.enemies):
+				c.hit(f, enemy, 18, "melee", element)
+		"partner":
+			f.blades -= 1
+			target.atk_buff_turns = maxi(target.atk_buff_turns, BattleState.BUFF_TURNS)
+			c.float_text(target, "Klinge geliehen", Color("ffd0a0"), 30)
+			c.add_log("%s tanzt mit %s und leiht eine Klinge." % [f.display_name, target.display_name])
+		"kaefig":
+			f.blades -= 3
+			target.set_meta("kaefig", {zuege = 2, quelle = f})
+			Effekte.anwenden(c, f, target, "festhalten", 0.0, 2)
+			c.float_text(target, "Klingenkäfig", Color("ffd0a0"), 30)
 		"storm":
 			var count := f.blades
 			f.blades = 0
@@ -811,6 +856,7 @@ func _blade(f: Fighter, id: String, target: Fighter) -> void:
 			c.hit(f, target, 9 * count, "ranged", element)
 			c.add_log("Klingensturm mit %d Klingen!" % count)
 		"ult":
+			f.blades = Fighter.MAX_BLADES
 			for i in 3:
 				for enemy in c.alive(c.enemies):
 					c.projectile_bg(f, enemy, Color("ffd0a0"), 0.2)
@@ -818,7 +864,14 @@ func _blade(f: Fighter, id: String, target: Fighter) -> void:
 				for enemy in c.alive(c.enemies):
 					c.hit(f, enemy, 10, "melee", element)
 				c.wait(0.15)
-			f.blades = Fighter.MAX_BLADES
+			# Steckbrief: zum Schluss fallen alle Klingen in den Klingensturm (auf den stärksten Gegner)
+			var rest := c.alive(c.enemies)
+			if not rest.is_empty():
+				rest.sort_custom(func(a: Fighter, b: Fighter) -> bool: return a.hp > b.hp)
+				var count := f.blades
+				f.blades = 0
+				c.projectile(f, rest[0], Color("ffd0a0"))
+				c.hit(f, rest[0], 9 * count, "ranged", element)
 
 
 ## Tanzfolge: Klingenschritt, Wirbel und Ausfallschritt in beliebiger Reihenfolge hintereinander.
@@ -832,18 +885,45 @@ func _dance_step(f: Fighter, move: String) -> float:
 	f.dance.clear()
 	f.add_ult(30)
 	c.float_text(f, "TANZFOLGE!", Color("ffd0a0"), -20)
+	# Rhythmus (passiv): nach einer Tanzfolge früher wieder dran
+	if f.has_meta("faehigkeiten") and skill_level(f, "rhythmus") > 0:
+		c.hasten(f, 0.15 * skill_level(f, "rhythmus"))
 	c.add_log("[color=#ffb07a]Tanzfolge abgeschlossen![/color] Der letzte Schritt trifft härter.")
 	return 1.5
 
 
 ## Passive "Klingenkranz": Nach Klingenschritt und Ausfallschritt trifft jede schwebende Klinge (bis zu 5) noch einmal.
 func _blade_follow_up(f: Fighter, target: Fighter, element: String) -> void:
+	# Mit Baum: nur mit Klingenkranz, jede Stufe mehr Schaden je Klinge
+	var kranz := 1
+	if f.has_meta("faehigkeiten"):
+		kranz = skill_level(f, "kranz")
+		if kranz <= 0:
+			return
 	for i in f.blades:
 		if not target.is_alive():
 			return
 		c.projectile_bg(f, target, Color("ffd0a0"), 0.12)
 		c.wait(0.1)
-		c.hit(f, target, BLADE_HIT, "melee", element)
+		c.hit(f, target, BLADE_HIT * (1.0 + 0.1 * (kranz - 1)), "melee", element)
+
+
+## Sturmschritte: 3 Sprünge, je zwei Stufen einer mehr, schnelle Waffe einer mehr (höchstens 5).
+func _sturm_hits(f: Fighter) -> int:
+	var hits := 3 + maxi(skill_level(f, "sturmschritte") - 1, 0) / 2
+	if f.tempo >= 17:
+		hits += 1
+	return mini(hits, 5)
+
+
+## Treffer auf die Klingentänzerin (mit Baum): eine schwebende Klinge geht verloren, „Festhalten“ hält sie manchmal.
+func blade_hit_taken(f: Fighter) -> void:
+	if f.klass != "blade" or not f.has_meta("faehigkeiten") or f.blades <= 0:
+		return
+	if c.zufall() < 0.15 * skill_level(f, "festhalten"):
+		c.float_text(f, "Festgehalten!", Color("ffd0a0"), 30)
+		return
+	f.blades -= 1
 
 
 func _add_blades(f: Fighter, amount: int) -> void:
