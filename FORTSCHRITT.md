@@ -11,7 +11,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** D10 (Liste aus dem Playtest 25.10.). Alle Testtage stehen seit 02.11. am Ende, Marco testet das volle Spiel zusammen. D9h wartet auf Marcos Bilder (GRAFIK_AUFTRAG.md, Teil E).
+- **Nächster Schritt:** D11 (Zähmer lernt bei Tilda, Esche gibt das erste Monster). Alle Testtage stehen seit 02.11. am Ende, Marco testet das volle Spiel zusammen. D9h wartet auf Marcos Bilder (GRAFIK_AUFTRAG.md, Teil E).
+
+- **Neu (02.11.): D10 Liste aus dem Playtest 25.10.** (1.1): Claude hat jeden Punkt deiner Liste im Spiel nachgeprüft. Alles war schon gebaut (25. und 26.10.), es fehlte nur der Beweis für den Silberhirsch in der Gruppe. Dafür gibt es jetzt eine automatische Prüfung.
+  - Fertig: Wegweiser für Nebenaufträge mit 1, 2, 3 · Auftragsbuch mit Reitern Offen, Abgeschlossen, Erfolge · Ye beantwortet die Laternen-Frage wieder · Silberhirsch frei sichtbar · Silberhirsch auch in der Gruppe (jeder Bogenschütze spricht ihn für sich an) · Pilzhöhle immer sichtbar, hinein erst mit Auftrag · Aufträge macht jeder für sich, gemeinsame Szenen nur im Dungeon · Kämpfe gegen Tiere, Bienen, Bosse und den Sternenfresser mit der Gruppe · im Dungeon nur die eigene Gruppe, besiegte Monster bleiben weg, die Gruppe entscheidet am Ende gemeinsam · Kobalt steht hinter seinem Monster und schießt mit der Schleuder · Kobalts Revanche erst nach dem Dungeon und mit einem Monster · Zähmer: ein Monster kämpft, zwei unterstützen sichtbar · Rudel-Fenster (R) zum Auswählen · Monster-Stall bei Tilda · Abwarten für alle · Passive und Reaktion als Kästchen im Kampf · Parier-Übung bei Ye · Tasche mit Kästchen und Ziehen · Klasse erst beim Lehrmeister · Kael auf der Westplattform · Grünwacht größer.
+  - Fehlt: nichts.
+  - **So testest du es:**
+    1. Zu zweit als Bogenschützen Fenns Prüfung machen und gemeinsam zum Silberhirsch gehen: Jeder kann ihn ansprechen.
+    2. Als Zähmer nach dem Dungeon zu Kobalt: Die Revanche ist gegen ein Monster.
+    3. Sonst die Testpunkte unter „Playtest 25.10. Teil 1“ weiter unten.
 
 - **Neu (02.11.): Probe gemalter Effekt** (D9h): Der normale Treffer im Nahkampf und der Doppelschlag zeigen jetzt deinen Schwerthieb von ChatGPT statt der gezeichneten Form, als kurze Bildfolge.
   - **So testest du es:**
@@ -1797,7 +1805,7 @@ Link: **https://cazex-studio.github.io/MiniKampf/** (Handy quer halten). Das Spi
 2. Stimmt die Länge? Fühlt sich die Region wie Stufe 15–20 an, oder kommst du zu schnell oder zu langsam voran?
 
 **Neu: Grünwacht Schritt 10 – Nebenaufträge** (blaues Zeichen)
-1. Als Zähmer nach Tildas Unterricht: Will Kobalt eine Revanche? Ist der Kampf gegen zwei Monster schaffbar?
+1. Als Zähmer nach dem Dungeon (Pilzhöhle): Will Kobalt eine Revanche? Ist der Kampf gegen sein stärkeres Monster schaffbar?
 2. Oma Hagebutte: Gibt sie dir den Auftrag, sobald du eine Sternentafel hast?
 3. Der Bienenstock im Südosten des Waldbodens: Findest du ihn? Was ist spannender, Kampf oder Zuhören?
 

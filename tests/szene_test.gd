@@ -11,6 +11,7 @@ func _initialize() -> void:
 	_test_scene()
 	_test_scene_battle()
 	_test_solo_quests()
+	_test_deer_in_group()
 	_test_star_night()
 	_test_boss_scaling()
 	print("Szenen: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
@@ -148,6 +149,50 @@ func _test_solo_quests() -> void:
 	w.apply_command("a", {type = "kampf_ergebnis", kampf = "splitterbaer", gewonnen = true})
 	_check(w.players["a"].progress.flags.has("tier_besiegt") and not w.players["b"].progress.flags.has("tier_besiegt"),
 			"Nur wer den Auftrag hat, kommt weiter; der Helfer bekommt Erfahrung")
+
+
+## Playtest 25.10.: Den Silberhirsch aus Fenns Prüfung kann auch eine Gruppe angehen. Jeder Bogenschütze
+## spricht ihn für sich an und besteht für sich; wer die Prüfung nicht hat, sieht ihn nicht.
+func _test_deer_in_group() -> void:
+	var w := WorldState.new()
+	var battles := []
+	w.battle_requested.connect(func(id: String, kampf: String) -> void: battles.append([id, kampf]))
+	w.group_battle_requested.connect(func(ids: Array, kampf: String) -> void: battles.append([ids, kampf]))
+	var ids := ["a", "b", "c"]
+	for i in ids.size():
+		var p := w.add_player(ids[i], ids[i].to_upper(), "elf_m", Vector2i(6, 15))
+		p.progress.flags["klasse"] = "archer" if ids[i] != "c" else "tamer"
+		p.progress.quests["nach_gruenwacht"] = "abgegeben"
+		if ids[i] != "c":
+			p.progress.quests["fenns_pruefung"] = "aktiv"
+			p.progress.flags["fenn_ziele"] = true
+		w.change_map(p, "waldboden", Vector2i(21, 18 + i))
+		p.safe_time = 1000.0
+	w.group_members = func(_id: String) -> Array: return ids
+	w.group_leader = func(_id: String) -> String: return "a"
+	var deer := ""
+	for i in w.places.size():
+		if w.places[i].map == "waldboden" and w.places[i].art == "silberhirsch":
+			deer = "ort:%d" % i
+	_check(deer != "", "Der Silberhirsch steht im Wald")
+	_check(w.can_use(w.players["a"], deer) and w.can_use(w.players["b"], deer), "Beide Bogenschützen der Gruppe sehen den Hirsch")
+	_check(not w.can_use(w.players["c"], deer), "Der Zähmer ohne Prüfung sieht ihn nicht")
+	for id: String in ["a", "b"]:
+		var p: PlayerState = w.players[id]
+		w.apply_command(id, {type = "use", target = deer})
+		_tick_until(w, func() -> bool: return p.in_dialog())
+		_check(p.in_dialog() and p.dialog.id == "silberhirsch", "%s spricht den Hirsch an, auch in der Gruppe" % id.to_upper())
+		var others_busy := false
+		for o: String in ids:
+			if o != id and w.players[o].in_dialog():
+				others_busy = true
+		_check(not others_busy, "Die anderen werden dabei nicht mitgeholt (%s)" % id.to_upper())
+		w.apply_command(id, {type = "dialog_next"})
+		w.apply_command(id, {type = "dialog_choose", index = 1})
+		w.apply_command(id, {type = "dialog_next"})
+		_check(p.progress.flags.has("pruefung_hirsch") and p.progress.flags.has("hirsch_verschont"), "%s hat das dritte Ziel geschafft" % id.to_upper())
+	_check(not w.can_use(w.players["a"], deer) and not w.can_use(w.players["b"], deer), "Danach ist der Hirsch für beide weg")
+	_check(battles.is_empty(), "Kein Kampf auf dem Weg zum Hirsch")
 
 
 func _test_scene_battle() -> void:

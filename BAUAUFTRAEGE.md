@@ -50,7 +50,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 
 ### Kreuzweg und Grünwacht rund machen
 
-- **D10:** Liste aus dem Playtest 25.10. prüfen, Fehlendes bauen. (1.1) – Status: offen
+- **D10:** Liste aus dem Playtest 25.10. prüfen, Fehlendes bauen. (1.1) – Status: fertig (02.11.2026; alle Punkte waren schon gebaut, Liste in FORTSCHRITT.md; neu ist eine Prüfung, dass die Gruppe den Silberhirsch angehen kann)
 - **D11:** Zähmer lernt bei Tilda, Esche gibt das erste Monster. (1.2, Projekt 12) – Status: offen
 - **D12:** Gemeinsame Trank-Wartezeit. (1.3, Projekt 5 Schritt 3) – Status: offen
 - **D13:** Händler, in Grünwacht die Kräuterhändlerin. (1.4, Projekt 6) – Status: offen
