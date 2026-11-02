@@ -1316,6 +1316,9 @@ func _start_quest(p: PlayerState, id: String) -> void:
 ## Sind alle Ziele eines Auftrags erfüllt?
 func quest_goals_met(p: PlayerState, id: String) -> bool:
 	for goal: Dictionary in GameData.quest(id).get("ziele", []):
+		# Ziele nur für andere (z. B. nur für Zähmer) zählen nicht mit
+		if not goal_shown(p, goal):
+			continue
 		match goal.art:
 			"sammeln":
 				if p.progress.item_count(goal.gegenstand) < int(goal.anzahl):

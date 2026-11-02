@@ -34,7 +34,7 @@
 		"ult_vorschau": "Sonnenfinsternis: Licht oder Schatten trifft jeden Gegner dort, wo er am schwächsten ist – je weiter deine Leiste ausschlägt, desto stärker."
 	},
 	"tamer": {
-		"lernen_bei": "esche",
+		"lernen_bei": "tilda",
 		"lehrmeister": "Rudelmeisterin Tilda",
 		"werte": {"schaden": 4, "schutz": 2, "heilung": 1, "unterstuetzung": 2, "schwierigkeit": 4},
 		"ult_vorschau": "Rudelruf: Alle deine Monster greifen gleichzeitig an, jedes mit seinem Element."

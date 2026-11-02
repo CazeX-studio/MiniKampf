@@ -153,9 +153,10 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
 
 - **Tasche mit Kästchen:** Die Reihenfolge der Gegenstände steht im Spielstand unter `slots` (ein Gegenstand pro Kästchen).
   Das Bild jedes Gegenstands steht in `gegenstaende.json` unter `bild` (siehe oben).
-- **Klasse beim Lehrmeister lernen:** In `klassen.json` sagt `lernen_bei` (z. B. `"fenn"`), bei wem man die Klasse lernt.
+- **Klasse beim Lehrmeister lernen:** In `klassen.json` sagt `lernen_bei` (z. B. `"fenn"`), wer der Lehrmeister ist (dort wird auch neu verteilt).
+  Beim Zähmer ist das Tilda; sie schickt einen zu Esche, der mit dem ersten Monster `klasse_gelernt` setzt.
   Bis der Lehrmeister `{"merken": "klasse_gelernt"}` ausführt, kämpft man als Novize. Klassen ohne `lernen_bei`
   kämpfen gleich nach der Wahl mit ihrer Klasse (ihre Region gibt es noch nicht).
 - **Aktion mit Bedingung:** Jede Aktion darf `"wenn"` haben, z. B. `{"auftrag_starten": "klasse_lernen", "wenn": {"klasse": "archer"}}`.
-- **Ziel nur für manche:** `"nur_wenn"` an einem Ziel blendet es sonst ganz aus (im Auftragsbuch, beim „Ziel:“ und beim Wegweiser).
+- **Ziel nur für manche:** `"nur_wenn"` an einem Ziel blendet es sonst ganz aus (im Auftragsbuch, beim „Ziel:“ und beim Wegweiser) und zählt für diese Spieler auch nicht mit, wenn geprüft wird, ob der Auftrag fertig ist.
   `"wenn"` am Ziel gilt jetzt auch für das „Ziel:“ oben links.

@@ -406,7 +406,7 @@ func _test_fenn(choice: String) -> void:
 	BattleRequest.kampf_id = ""
 
 
-## Schritt 4: Zähmer-Start bei Esche, Kobalt fordert heraus (Sieg oder Niederlage), Tilda bringt das Zähmen bei.
+## Schritt 4 (seit D11): Tilda lehrt zuerst und schickt zu Esche, dort das erste Monster, Kobalt fordert heraus\n## (Sieg oder Niederlage), danach Tildas Unterricht im Wald.
 func _test_tamer(kobalt_won: bool) -> void:
 	var world := WorldState.new()
 	var battles: Array[String] = []
@@ -417,8 +417,30 @@ func _test_tamer(kobalt_won: bool) -> void:
 	p.progress.quests["klasse_lernen"] = "aktiv"
 	p.progress.level = 13
 	world.change_map(p, "wipfelheim", Vector2i(21, 33))
-	_check(p.progress.battle_class() == "" and world.objective(p).contains("Esche"), "Zähmer vor Esche: noch Novize, Ziel Esche")
-	_check(world.npc_marker(p, "esche") == "!" and world.npc_marker(p, "fenn") == "", "Zähmer: „!“ bei Esche, nicht bei Fenn")
+	_check(p.progress.battle_class() == "" and world.objective(p).contains("Tilda"), "Zähmer nach der Wahl: noch Novize, Ziel Tilda")
+	_check(world.npc_marker(p, "tilda") == "?" and world.npc_marker(p, "esche") == "" and world.npc_marker(p, "fenn") == "",
+			"Zähmer: Zeichen bei Tilda, nicht bei Esche oder Fenn")
+	world.apply_command("a", {type = "talk", npc = "esche"})
+	_tick(world, 6.0)
+	_check(p.in_dialog() and world.dialog_view(p).text.contains("Tilda"), "Esche schickt einen zuerst zu Tilda")
+	world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.quest_state("esches_monster") == "neu", "Ohne Tilda gibt Esche noch kein Monster")
+	world.change_map(p, "wipfelheim", Vector2i(41, 24))
+	world.apply_command("a", {type = "talk", npc = "tilda"})
+	_tick(world, 6.0)
+	_check(p.in_dialog() and p.dialog.id == "tilda", "Tilda lehrt das Zähmen")
+	for i in 3:
+		world.apply_command("a", {type = "dialog_next"})
+	_check(p.progress.flags.has("tilda_gelehrt") and p.progress.battle_class() == "", "Tilda hat gelehrt, ohne Monster noch Novize")
+	world.apply_command("a", {type = "dialog_next"})
+	_check(not p.in_dialog(), "Tilda ist fertig")
+	_check(world.objective(p).contains("Esche"), "Ziel jetzt: Esche")
+	_check(world.npc_marker(p, "esche") == "!" and world.npc_marker(p, "tilda") == "", "Jetzt „!“ bei Esche")
+	world.apply_command("a", {type = "talk", npc = "tilda"})
+	_tick(world, 6.0)
+	_check(world.dialog_view(p).text.contains("Esche"), "Tilda erinnert an Esche")
+	world.apply_command("a", {type = "dialog_next"})
+	world.change_map(p, "wipfelheim", Vector2i(21, 33))
 	world.apply_command("a", {type = "talk", npc = "esche"})
 	_tick(world, 6.0)
 	world.apply_command("a", {type = "dialog_next"})
@@ -427,7 +449,7 @@ func _test_tamer(kobalt_won: bool) -> void:
 	_check(answers.size() == 4 and str(answers[1]).begins_with("Glutwelpe"), "Esche zeigt die drei Start-Monster")
 	world.apply_command("a", {type = "dialog_choose", index = 1})
 	_check(p.progress.flags.get("monster", []) == ["glutwelpe"] and p.progress.item_count("schleuder") == 1, "Glutwelpe gewählt, Schleuder bekommen")
-	_check(p.progress.quest_state("klasse_lernen") == "abgegeben" and p.progress.battle_class() == "tamer", "Klasse bei Esche gelernt: kämpft jetzt als Zähmer")
+	_check(p.progress.quest_state("klasse_lernen") == "abgegeben" and p.progress.battle_class() == "tamer", "Monster bei Esche gewählt: kämpft jetzt als Zähmer")
 	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "dialog_next"})
 	_check(not p.in_dialog() or p.dialog.id == "kobalt", "Esche ist fertig")

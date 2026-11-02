@@ -51,7 +51,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 ### Kreuzweg und Grünwacht rund machen
 
 - **D10:** Liste aus dem Playtest 25.10. prüfen, Fehlendes bauen. (1.1) – Status: fertig (02.11.2026; alle Punkte waren schon gebaut, Liste in FORTSCHRITT.md; neu ist eine Prüfung, dass die Gruppe den Silberhirsch angehen kann)
-- **D11:** Zähmer lernt bei Tilda, Esche gibt das erste Monster. (1.2, Projekt 12) – Status: offen
+- **D11:** Zähmer lernt bei Tilda, Esche gibt das erste Monster. (1.2, Projekt 12) – Status: fertig (02.11.2026; Neuverteilen der Punkte jetzt bei Tilda; Texte sind Platzhalter)
 - **D12:** Gemeinsame Trank-Wartezeit. (1.3, Projekt 5 Schritt 3) – Status: offen
 - **D13:** Händler, in Grünwacht die Kräuterhändlerin. (1.4, Projekt 6) – Status: offen
 - **D14:** Tag und Nacht nach der Uhrzeit, nachts andere Monster. (1.5, Projekt 7) – Status: offen
@@ -384,7 +384,7 @@ _Am 28.10. geteilt: Kofis Kopf-Blatt kam zuerst._
 ### Schritt 1: Zähmer lernt bei Tilda, Esche gibt das erste Monster
 - **Ziel:** Nach der Klassenwahl führt der Auftrag zu Rudelmeisterin Tilda, sie lehrt das Zähmen und schickt einen zu Professor Esche. Dort wählt man das erste Monster (Glutwelpe, Moosling oder Bachotter).
 - **So testest du es:** Neu beginnen, Monster-Zähmer wählen, dem Wegweiser zu Tilda folgen, danach zu Esche, das Monster wählen und als Zähmer kämpfen.
-- **Status:** offen
+- **Status:** fertig (02.11.2026)
 
 ## Projekt 13: Aussehen nach Variante C „Ragnarok plus“ (Beschluss 29.10.)
 
