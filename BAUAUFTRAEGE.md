@@ -16,7 +16,8 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 
 ### Aussehen
 
-- **D2:** Regeln festschreiben, Bilder prüfen, Kurzschwert als eigenes Teil. (Fahrplan A.1, Projekt 13 Schritt 1–3) – Status: offen
+- **D2a:** Regeln festschreiben, Bilder prüfen. (Fahrplan A.1, Projekt 13 Schritt 1–2) – Status: fertig (02.11.2026, LOOK.md Abschnitt 9a und 12; der Zusatz zum Stil-Block wartet auf Marcos Ja)
+- **D2b:** Kurzschwert als eigenes Teil (braucht Marcos Novizen-Blätter ohne Klinge). (Fahrplan A.1, Projekt 13 Schritt 3) – Status: offen
 - **D3:** Hut und Rückenteil als Schicht, Umfärben, Aussehen-Plätze. (Fahrplan A.2, Projekt 13 Schritt 4–6) – Status: offen
 - **T1:** Testtag Aussehen (Marco). – Status: offen
 
@@ -376,12 +377,12 @@ _Am 28.10. geteilt: Kofis Kopf-Blatt kam zuerst._
 ### Schritt 1: Regeln festschreiben
 - **Ziel:** Den Stil-Block in GRAFIK_AUFTRAG.md erweitern: Körper ohne Waffe (Hand greift ins Leere), Köpfe ohne Hut und gleich groß, feste Farbflächen (Hauptfarbe, Zweitfarbe, Metall, Leder, Haut) mit wenigen festen Farbtönen, Platz am Rücken.
 - **So testest du es:** GRAFIK_AUFTRAG.md lesen, die Regeln stehen verständlich drin.
-- **Status:** offen
+- **Status:** fertig (02.11.2026: Entwurf „FIGUREN“ in LOOK.md Abschnitt 9a; kommt nach Marcos Ja wörtlich in den Stil-Block von LOOK.md und GRAFIK_AUFTRAG.md Teil A)
 
 ### Schritt 2: Vorhandene Bilder prüfen
 - **Ziel:** Sind Waffen in die Novizen-Körper und Kofis Bilder eingemalt? Passen die Farbflächen? Kurze Liste, was neu gezeichnet oder angepasst werden muss (der Schild der Novizen bleibt am Körper).
 - **So testest du es:** Die Liste lesen.
-- **Status:** offen (erste Bestandsaufnahme der Farben steht schon in LOOK.md, Abschnitt 11)
+- **Status:** fertig (02.11.2026: Liste in LOOK.md Abschnitt 12. Neu zeichnen muss Marco nur die fünf fehlenden Novizen-Blätter ohne Klinge, den Rest räumt Claude beim Einbauen auf.)
 
 ### Schritt 3: Waffe als eigenes Teil
 - **Ziel:** Pro Bild ein Handpunkt, die Waffe hängt dort und bewegt sich mit. Probe mit dem Kurzschwert des Novizen.

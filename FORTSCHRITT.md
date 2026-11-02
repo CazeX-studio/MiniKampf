@@ -5,7 +5,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 01.11.)
 
-- **Nächster Schritt:** D2 der „Demo-Reihenfolge“ in `BAUAUFTRAEGE.md` (35 Bauschritte und 4 Testtage bis zum Abschluss der Demo).
+- **Nächster Schritt:** D2b der „Demo-Reihenfolge“ in `BAUAUFTRAEGE.md` (Kurzschwert als eigenes Teil, braucht die Novizen-Blätter ohne Klinge; 35 Bauschritte und 4 Testtage bis zum Abschluss der Demo).
+
+- **Neu (02.11.): D2a Regeln und Bilder geprüft** (Projekt 13, Schritt 1 und 2):
+  - Vorschlag für den Zusatz „FIGUREN“ zum Stil-Block: Körper ohne Waffe, Köpfe ohne Hut, Rücken frei, wenige klare Farbflächen, keine Effekte im Bild (`LOOK.md`, Abschnitt 9a). **Von Marco zu entscheiden:** Ja zum Wortlaut, dann kommt er in den Stil-Block.
+  - Liste, was neu gezeichnet werden muss (`LOOK.md`, Abschnitt 12): Alle Novizen-Bilder passen zur Palette, haben aber Schwert und Klinge eingemalt. Es fehlen fünf Blätter ohne Klinge (männlich Blatt 2 und 3, weiblich Blatt 1 bis 3). Funken, Schwungbögen und Kopfreste entfernt Claude beim Zuschneiden. Kofi wird nicht neu gezeichnet, er bekommt den Novizen-Körper.
+  - Marcos Bilder liegen als `Figuren.rar` (57 MB) in Google Drive. Das ist zu groß zum Holen aus der Cloud: Die Bilder einzeln hochladen oder im Chat anhängen.
+  - **So testest du es:**
+    1. `LOOK.md` öffnen, Abschnitt 9a lesen: Sind die Regeln verständlich und so gewollt?
+    2. Abschnitt 12 lesen: Passt die Liste zu dem, was du in den Bildern siehst?
+    3. Im Spiel ändert sich noch nichts.
 
 - **Neu (01.11.): D1 Bildaufträge für die Figuren:** 113 Prompts in `Spieldesign/GRAFIK_AUFTRAG.md` Teil D und auf der Seite „Asterfall Bildaufträge“: Probe am Novizen, fünf Klassen, Baukasten, 21 Nebenfiguren und 19 Hauptfiguren. Die Haupt- und Nebenfiguren waren noch nicht eingeplant: Sie sind im Spiel bisher Platzhalter.
   - Geändert nach Marcos erstem Versuch: Beim Novizen bleibt der Griff in der Hand, nur die Klinge geht weg. Körper-Prompts nennen keine Waffe und keine Klasse mehr. Marcos Blatt liegt als `tools/vorlagen/novize_m_kampf_a_ohne_klinge.png` bereit (gelbe Funken entfernt Claude in D2).

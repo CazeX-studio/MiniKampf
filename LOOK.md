@@ -186,6 +186,24 @@ Wenn ich ein Vorbild-Bild anhänge, übernimm Gesicht, Haare, Kleidung, Waffe un
 Hinweis: Projekt 13, Schritt 1 erweitert den Stil-Block um die Regeln von Variante C (Abschnitt 8). Das passiert erst
 mit Marcos Ja zum neuen Wortlaut.
 
+### 9a. Vorschlag: Zusatz „FIGUREN“ zum Stil-Block (Projekt 13, Schritt 1, Entwurf vom 02.11.2026)
+
+**Wartet auf Marcos Ja.** Danach kommt der Text wörtlich vor den letzten Satz des Stil-Blocks („Wenn ich ein
+Vorbild-Bild anhänge …“), hier und in `Spieldesign/GRAFIK_AUFTRAG.md` Teil A gleichzeitig.
+
+```
+FIGUREN (Spieler und Figuren der Welt)
+- Körper OHNE Waffe malen: Die Waffenhand bleibt halb geschlossen und greift ins Leere, so als hielte sie einen Griff. Keine Waffe, kein Schwert, kein Stab, kein Bogen im Bild. (Ausnahme nur, wenn ich ausdrücklich eine Waffe verlange.)
+- Köpfe OHNE Hut, Helm, Kapuze oder Krone. Alle Köpfe gleich groß und an derselben Stelle über dem Halsansatz.
+- Den Rücken frei lassen: kein Umhang, kein Köcher, keine Flügel, kein Rucksack. Dort kommt später ein eigenes Teil hin.
+- Kleidung aus wenigen klaren Farbflächen: eine Hauptfarbe, eine Zweitfarbe, Metall, Leder und Haut. Jede Fläche nur in 3 bis 4 Tönen (hell, mittel, dunkel, Schatten), keine Muster, keine Verläufe, keine Stickerei.
+- Keine Effekte im Figurenbild: keine Funken, Blitze, Schwungbögen oder Sterne. Die macht das Spiel.
+```
+
+Was der Zusatz ändert: Die Bilder sind gleich aufgebaut, das Spiel kann Waffe, Hut und Rückenteil darüberlegen und
+die Kleidung sauber umfärben. Für die Novizen gilt weiter die Ausnahme aus Abschnitt 8 (Schild am Körper, Griff in
+der Hand).
+
 ## 10. Referenzbilder
 
 Liegen in `tools/referenz/` und in `data/look_palette.json` (Feld `referenzbilder`).
@@ -219,4 +237,41 @@ ist Projekt 13, Schritt 2.
   hellen Rand. Effekte sind laut Stil-Block erlaubt, wenn sie ausdrücklich bestellt sind.
 - **Kleinere Abweichungen:** Kopf m3 hat einen helleren Umriss als die anderen Köpfe; einige Köpfe von w2 und w3
   sind 71–73 statt höchstens 70 Pixel hoch; einzelne Angriffsbilder der Kobolde haben einen etwas helleren Rand.
-- Ob Kofis und die Novizen-Bilder Schwert und Schild eingemalt haben (Regel „Körper ohne Waffe“), prüft Schritt 2.
+- Ob Kofis und die Novizen-Bilder Schwert und Schild eingemalt haben (Regel „Körper ohne Waffe“), prüft Schritt 2
+  (Ergebnis in Abschnitt 12).
+
+## 12. Was neu gezeichnet oder angepasst werden muss (Projekt 13, Schritt 2, Prüfung vom 02.11.2026)
+
+Geprüft: alle Körper-Teile in `assets/teile/koerper/` (Kofi 49, Novize männlich 52, Novize weiblich 54 Bilder), mit
+`tools/look_pruefen.py` und mit Blick auf jedes Bild.
+
+**Farben:** Alle Novizen-Bilder passen zur Palette. Bei Kofi passen 45 von 49; die vier anderen (Angriff Bild 4 und 5,
+Fallen Bild 5 und 6) sind nur zu breit, weil Schwert oder liegender Körper weit hinausragen. Das erledigt sich mit
+der Waffe als eigenem Teil.
+
+**Waffe eingemalt (Regel „Körper ohne Waffe“):**
+
+| Bilder | Kurzschwert | Schild | Was zu tun ist |
+|---|---|---|---|
+| Novize männlich und weiblich, alle Reihen | ganz eingemalt (Griff und Klinge) | am Körper | **neu:** Blätter mit Griff ohne Klinge (Teil D in GRAFIK_AUFTRAG.md). Blatt 1 männlich liegt schon vor (`tools/vorlagen/novize_m_kampf_a_ohne_klinge.png`), es fehlen männlich Blatt 2 und 3 und alle drei weiblichen. |
+| Novize, Fähigkeit wirken (je 3 Bilder) | nicht zu sehen | am Körper | Schwert fehlt ganz. Beim Einbauen dort das Schwert ausblenden oder am Gürtel zeigen. |
+| Kofi, alle Reihen | ganz eingemalt | am Körper | **nicht neu zeichnen:** Kofis Bilder sind die Vorlage aus der Zeit vor dem gemeinsamen Novizen-Körper. Kofi ist Novize m1 (design.md, 28.10.) und bekommt mit Schritt 3 den Novizen-Körper ohne Klinge. Die Kofi-Blätter bleiben nur als Vorlage für neue Bildaufträge. |
+
+**Weitere Fehler in den Bildern:**
+
+- **Eingemalte Effekte:** Novizen haben gelbe Funken bei Getroffen, Parade (Bild 2 und 3) und Sieg, dazu einen
+  rosa Schwungbogen im Angriff Bild 4. Kofi ebenso, dazu ein Treffer-Stern im Angriff Bild 4. Im neuen Blatt
+  `novize_m_kampf_a_ohne_klinge.png` sind die gelben Funken auch drin. → Claude entfernt sie beim Zuschneiden, das
+  Spiel zeigt eigene Effekte.
+- **Reste vom Kopf:** Bei beiden Novizen ist um den Kopfplatz ein dünner grauer Ring geblieben (Rand des grünen
+  Platzhalters). Bei Kofi stehen Haarsträhnen und dunkle Umrissreste über dem Hals, und in **Fallen Bild 5 und 6 ist
+  sein ganzer Kopf noch eingemalt**. → Claude räumt die Reste beim Zuschneiden der neuen Blätter mit auf. Kofis Reste
+  stören nicht mehr, sobald er den Novizen-Körper trägt.
+- **Farbflächen:** Die Novizen bestehen aus Leder, hellem Hemd, dunkler Hose und den grauen Flächen (Halstuch,
+  Schildrand), die das Spiel einfärbt. Das passt, denn Novizen werden nicht umgefärbt. Für das Umfärben (Projekt 13,
+  Schritt 5) taugen sie nicht: Die Töne gehen weich ineinander über. Die Klassen-Körper brauchen deshalb die
+  Regel „wenige klare Farbflächen“ aus Abschnitt 9a.
+- **Rücken:** Frei bei beiden Novizen und bei Kofi, nur das Halstuch weht nach hinten. Ein Umhang passt dahinter.
+
+**Kurz:** Neu zeichnen musst nur du die fehlenden fünf Novizen-Blätter ohne Klinge. Alles andere räumt Claude beim
+Einbauen auf.
