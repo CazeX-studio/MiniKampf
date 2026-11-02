@@ -9,6 +9,7 @@ const GRUEN := Color("7dffa0")
 const WALD := Color("8fe86a")
 const STAUB := Color("c8b898")
 const GLUT := Color("ff9a4c")
+const KLINGE := Color("ffd0a0")
 const STAHL := Color("d8e0ec")
 const PFEIL_RUNTER := [Vector2(-14, -10), Vector2(14, -10), Vector2(0, 12)]
 const PFEIL_HOCH := [Vector2(-14, 10), Vector2(14, 10), Vector2(0, -12)]
@@ -366,6 +367,79 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 			Fx.spawn(feld, Fx.Kind.SPARKS, v.center(), Color("f2c14e"), 170.0, 0.9)
 			Fx.spawn(feld, Fx.Kind.RING, v.center(), Color("f2c14e"), 150.0, 0.5)
 			k.screen_flash(Color("f2c14e"))
+		"nachbild":
+			_nachbild(feld, v)
+		"sturm_schritt":
+			# Schnelle Trommelschläge im Takt, bei jedem Sprung ein Nachbild
+			_nachbild(feld, v)
+			Geraeusche.play("treffer", 0.9 + 0.1 * seite)
+		"kreuzschnitt":
+			Geraeusche.play("parade", 1.4)
+			if ziel_ansicht != null:
+				for winkel: float in [-0.8, 0.8]:
+					var spur := Fx.spawn(feld, Fx.Kind.SLASH, ziel_ansicht.center(), KLINGE, 60.0, 0.28)
+					spur.rotation = winkel
+		"klinge_neu":
+			Fx.spawn(feld, Fx.Kind.SPARKS, v.center() + Vector2(0, -30), KLINGE, 34.0, 0.3)
+		"klinge_flug":
+			if ziel_ansicht != null:
+				_pfeil(feld, v.center(), ziel_ansicht.center(), KLINGE, 0.12, 3.0)
+		"wirbel":
+			# Pirouette: ein Kreis aus Schnitt-Spuren, Sand wirbelt auf
+			_huepfer(v, 10.0, 0.12)
+			Geraeusche.play("wurf", 1.4)
+			for i in 6:
+				var richtung := Vector2.from_angle(TAU * i / 6.0)
+				var spur := Fx.spawn(feld, Fx.Kind.SLASH, v.center() + richtung * 56.0, KLINGE, 44.0, 0.3)
+				spur.rotation = richtung.angle()
+			Fx.spawn(feld, Fx.Kind.SPARKS, v.home_feet(), STAUB, 90.0, 0.5)
+			await k.wait(0.25)
+		"faecher":
+			_pose(v)
+			Geraeusche.play("kritisch", 0.7)
+			await _sichel(feld, v.center(), -1.0 if f.is_ally() else 1.0)
+			k._change_speed(0.3, 0.15)
+		"partnertanz":
+			Geraeusche.play("treffer", 0.9)
+			_huepfer(v, 12.0, 0.1)
+			await k.wait(0.2)
+			Geraeusche.play("treffer", 0.9)
+			if ziel_ansicht != null:
+				_huepfer(ziel_ansicht, 12.0, 0.1)
+				await _pfeil(feld, v.center(), ziel_ansicht.center(), KLINGE, 0.2, 4.0)
+				Geraeusche.play("perfekt", 1.7)
+				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.center(), KLINGE, 60.0, 0.5)
+		"kaefig":
+			_pose(v)
+			Geraeusche.play("wurf", 1.8)
+			if ziel_ansicht != null:
+				await _klingenring(feld, ziel_ansicht.center())
+		"klingensturm":
+			# Die Klingen schießen nacheinander los (seite: wie viele); bei fünf ein großer Abschluss
+			_pose(v)
+			if ziel_ansicht != null:
+				var ort := ziel_ansicht.center()
+				for i in seite:
+					Geraeusche.play("wurf", 1.5 + 0.08 * i)
+					_pfeil(feld, v.center() + Vector2(0, -50 + 25 * i), ort, KLINGE.lightened(0.1 * i), 0.16, 4.0)
+					await k.wait(0.08)
+				await k.wait(0.1)
+				Fx.spawn(feld, Fx.Kind.SPARKS, ort, KLINGE, 60.0 + 16.0 * seite, 0.4)
+				if seite >= Fighter.MAX_BLADES:
+					Geraeusche.play("kritisch", 1.0)
+					Fx.spawn(feld, Fx.Kind.GLOW, ort, Color(KLINGE, 0.8), 150.0, 0.4)
+					Fx.spawn(feld, Fx.Kind.RING, ort, KLINGE, 190.0, 0.45)
+					k.screen_flash(KLINGE)
+					k._change_speed(0.3, 0.2)
+		"schwarm":
+			# Die Klingen vervielfachen sich, Nachbilder tanzen
+			Geraeusche.play("treffer", 0.8)
+			_nachbild(feld, v)
+			if ziel_ansicht != null:
+				var ort := ziel_ansicht.center()
+				for i in 4:
+					_pfeil(feld, v.center() + Vector2(randf_range(-50, 50), randf_range(-70, 70)), ort, KLINGE, 0.2, 3.0)
+				Fx.spawn(feld, Fx.Kind.SLASH, ort, KLINGE, 50.0, 0.25)
 
 
 ## Kleiner Sprung. Bewegt die ganze Ansicht, damit er neben einem laufenden Angriff funktioniert.
@@ -627,3 +701,59 @@ static func _amboss(k: Control, feld: Control, ort: Vector2) -> void:
 	weg.tween_property(amboss, "modulate:a", 0.0, 0.3).set_delay(0.6)
 	weg.tween_callback(amboss.queue_free)
 	await k.wait(0.25)
+
+
+## Durchsichtiges Nachbild, das kurz stehen bleibt, wo die Figur gerade war.
+static func _nachbild(feld: Control, v: FighterView) -> void:
+	var bild := Sprite2D.new()
+	bild.texture = v.body.texture
+	bild.offset = v.body.offset
+	bild.scale = v.body.scale
+	bild.flip_h = v.body.flip_h
+	bild.texture_filter = v.body.texture_filter
+	bild.position = v.position + v.body.position
+	bild.modulate = Color(0.8, 0.85, 1.0, 0.55)
+	bild.z_index = 5
+	feld.add_child(bild)
+	var tween := bild.create_tween()
+	tween.tween_property(bild, "modulate:a", 0.0, 0.45)
+	tween.tween_callback(bild.queue_free)
+
+
+## Breite Sichel aus Licht, die über die Gegner fegt.
+static func _sichel(feld: Control, von: Vector2, richtung: float) -> void:
+	var sichel := Line2D.new()
+	sichel.width = 16.0
+	sichel.default_color = KLINGE
+	sichel.material = Fx.add_material()
+	sichel.z_index = 8
+	for i in 17:
+		var winkel := (-0.9 + 1.8 * i / 16.0) + (0.0 if richtung > 0.0 else PI)
+		sichel.add_point(Vector2.from_angle(winkel) * 150.0)
+	sichel.position = von
+	feld.add_child(sichel)
+	var tween := sichel.create_tween()
+	tween.tween_property(sichel, "position:x", von.x + richtung * 760.0, 0.28)
+	await tween.finished
+	sichel.queue_free()
+
+
+## Drei Klingen drehen sich als Ring um das Ziel.
+static func _klingenring(feld: Control, ort: Vector2) -> void:
+	var ring := Node2D.new()
+	ring.position = ort
+	ring.z_index = 8
+	for i in 3:
+		var klinge := Line2D.new()
+		klinge.width = 5.0
+		klinge.default_color = KLINGE
+		var richtung := Vector2.from_angle(TAU * i / 3.0)
+		klinge.add_point(richtung * 44.0)
+		klinge.add_point(richtung.rotated(0.6) * 62.0)
+		ring.add_child(klinge)
+	feld.add_child(ring)
+	var tween := ring.create_tween()
+	tween.tween_property(ring, "rotation", TAU * 2.0, 0.7)
+	tween.tween_property(ring, "modulate:a", 0.0, 0.2)
+	await tween.finished
+	ring.queue_free()

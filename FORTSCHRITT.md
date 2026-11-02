@@ -11,7 +11,13 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** D9f (eigene Bewegungen der Klingentänzerin). T1 Testtag Aussehen holt Marco nach (02.11.: „mache nachher Tests“). D4 bis D8 wurden auf Marcos Wunsch vor T1 gebaut, D8 ist damit ganz fertig.
+- **Nächster Schritt:** D9g (eigene Bewegungen der Sternensängerin). T1 Testtag Aussehen holt Marco nach (02.11.: „mache nachher Tests“). D4 bis D8 wurden auf Marcos Wunsch vor T1 gebaut, D8 ist damit ganz fertig.
+
+- **Neu (02.11.): D9f Eigene Bewegungen der Klingentänzerin** (K.6): Klingenschritt lässt ein Nachbild stehen und schneidet über Kreuz. Eine neue Klinge glitzert kurz. Wirbel zeigt einen Kreis aus Schnitten und Sand. Ausfallschritt und Sturmschritte lassen Nachbilder zurück, Sturmschritte mit schnellen Trommelschlägen. Fächerschnitt: Eine breite Lichtsichel fegt über die Gegner. Partnertanz: Eine Klinge fliegt glitzernd zum Partner. Klingenkäfig: Drei Klingen kreisen um den Gegner. Klingensturm schickt die Klingen einzeln los, bei fünf mit großem Abschluss. Ult: Klingenschwarm mit Nachbildern, zum Schluss der Klingensturm. Noch nicht drin: Käfig bleibt nicht zwei Runden sichtbar, Trommel-Zeichen, goldene Klingen bei fünf.
+  - **So testest du es:**
+    1. Kampf-Sandbox mit der Klingentänzerin: Klingenschritt, Wirbel und Ausfallschritt nacheinander.
+    2. Klingen sammeln und Klingensturm mit fünf Klingen auslösen: großer Abschluss.
+    3. Ult laden und auslösen: Film, Schwarm, Klingensturm.
 
 - **Neu (02.11.): D9e Eigene Bewegungen des Rüstungsschmieds** (K.6): Hammerschlag mit Funkenregen und rotem Pfeil über dem Gegner. Rüstung wechseln mit kurzem Schmiede-Moment. Amboss aufstellen: Ein Amboss fällt in den Boden, Staub, Wackeln, rote Pfeile über allen Gegnern. Rüstung verstärken: zweimal Klopfen, Kuppel beim Verbündeten. Abfangen: Lichtband zwischen beiden. Härten: Die Rüstung glüht weiß und kühlt ab. Glühende Rüstung: orange Glut, Angreifer werden angesengt. Funkenflug nach perfekter Parade. Ambossschlag: Sprung, große Schockwelle, Wackeln, Sterne über Betäubten. Gemeinsame Härte: Splitter fliegen zu allen. Meisterstück: drei Schläge, dann goldener Funkenregen. Noch nicht drin: Risse im Boden, eigene Rüstungsbilder, Glanz je Härte-Stufe, der Amboss ist vorerst nur gezeichnet.
   - **So testest du es:**

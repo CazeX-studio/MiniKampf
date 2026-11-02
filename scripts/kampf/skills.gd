@@ -825,19 +825,21 @@ func _blade(f: Fighter, id: String, target: Fighter) -> void:
 	match id:
 		"step":
 			var mult := _dance_step(f, id)
+			c.zeige("nachbild", f)
 			c.lunge(f, target, 0.25)
+			c.zeige("kreuzschnitt", f, target)
 			c.hit(f, target, 9 * mult, "melee", element)
 			_blade_follow_up(f, target, element)
 			_add_blades(f, 1)
 		"whirl":
 			var mult := _dance_step(f, id)
-			c.burst(f, Color("ffb07a"), 120.0)
-			c.wait(0.25)
+			c.zeige("wirbel", f)
 			for enemy in c.alive(c.enemies):
 				c.hit(f, enemy, 7 * mult, "melee", element)
 			_add_blades(f, 1)
 		"lunge":
 			var mult := _dance_step(f, id)
+			c.zeige("nachbild", f)
 			c.lunge(f, target, 0.2)
 			c.hit(f, target, 13 * mult, "melee", element)
 			_blade_follow_up(f, target, element)
@@ -853,37 +855,39 @@ func _blade(f: Fighter, id: String, target: Fighter) -> void:
 				if ziele.is_empty():
 					break
 				var t: Fighter = c.pick(ziele)
+				c.zeige("sturm_schritt", f, null, i)
 				c.lunge(f, t, 0.12)
 				c.hit(f, t, 8, "melee", element)
 			_add_blades(f, 1)
 		"faecher":
 			f.blades -= 2
-			c.burst(f, Color("ffd0a0"), 160.0)
-			c.wait(0.2)
+			c.zeige("faecher", f)
 			for enemy in c.alive(c.enemies):
 				c.hit(f, enemy, 18, "melee", element)
 		"partner":
 			f.blades -= 1
 			target.atk_buff_turns = maxi(target.atk_buff_turns, BattleState.BUFF_TURNS)
+			c.zeige("partnertanz", f, target)
 			c.float_text(target, "Klinge geliehen", Color("ffd0a0"), 30)
 			c.add_log("%s tanzt mit %s und leiht eine Klinge." % [f.display_name, target.display_name])
 		"kaefig":
 			f.blades -= 3
 			target.set_meta("kaefig", {zuege = 2, quelle = f})
+			c.zeige("kaefig", f, target)
 			Effekte.anwenden(c, f, target, "festhalten", 0.0, 2)
 			c.float_text(target, "Klingenkäfig", Color("ffd0a0"), 30)
 		"storm":
 			var count := f.blades
 			f.blades = 0
 			f.add_ult(8 * count)
-			c.projectile(f, target, Color("ffd0a0"))
+			c.zeige("klingensturm", f, target, count)
 			c.hit(f, target, 9 * count, "ranged", element)
 			c.add_log("Klingensturm mit %d Klingen!" % count)
 		"ult":
 			f.blades = Fighter.MAX_BLADES
 			for i in 3:
 				for enemy in c.alive(c.enemies):
-					c.projectile_bg(f, enemy, Color("ffd0a0"), 0.2)
+					c.zeige("schwarm", f, enemy)
 				c.wait(0.25)
 				for enemy in c.alive(c.enemies):
 					c.hit(f, enemy, 10, "melee", element)
@@ -894,7 +898,7 @@ func _blade(f: Fighter, id: String, target: Fighter) -> void:
 				rest.sort_custom(func(a: Fighter, b: Fighter) -> bool: return a.hp > b.hp)
 				var count := f.blades
 				f.blades = 0
-				c.projectile(f, rest[0], Color("ffd0a0"))
+				c.zeige("klingensturm", f, rest[0], count)
 				c.hit(f, rest[0], 9 * count, "ranged", element)
 
 
@@ -927,7 +931,7 @@ func _blade_follow_up(f: Fighter, target: Fighter, element: String) -> void:
 	for i in f.blades:
 		if not target.is_alive():
 			return
-		c.projectile_bg(f, target, Color("ffd0a0"), 0.12)
+		c.zeige("klinge_flug", f, target)
 		c.wait(0.1)
 		c.hit(f, target, BLADE_HIT * (1.0 + 0.1 * (kranz - 1)), "melee", element)
 
@@ -951,6 +955,8 @@ func blade_hit_taken(f: Fighter) -> void:
 
 
 func _add_blades(f: Fighter, amount: int) -> void:
+	if f.blades < Fighter.MAX_BLADES:
+		c.zeige("klinge_neu", f)
 	f.blades = mini(f.blades + amount, Fighter.MAX_BLADES)
 
 
