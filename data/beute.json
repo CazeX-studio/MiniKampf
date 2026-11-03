@@ -1,0 +1,19 @@
+{
+	"hinweis": "Monster-Beute (D20a, MONSTER.md Abschnitt 9): Nach einem Sieg in der Wildnis lässt jedes besiegte Monster mit dieser Chance sein Material fallen (Monster ohne Eintrag lassen nichts fallen). Hatta tauscht Material gegen Hüte (data/laeden.json, \"hatta\").",
+	"chance": 0.7,
+	"monster": {
+		"windfalke": "falkenfeder",
+		"steinkroete": "kroetenstein",
+		"waldsporenling": "sporenkappe",
+		"rindenbaer": "borkenstueck",
+		"donnerhirsch": "donnergeweih",
+		"heulwolf": "wolfspelz",
+		"irrlicht": "irrlichtfunke",
+		"nachtuhu": "eulenfeder",
+		"funkenmarder": "funkenfell",
+		"sporenwolf": "pilzfell",
+		"leuchtmotte": "leuchtschuppen",
+		"wurzelkriecher": "wurzelknolle",
+		"glimmerkaefer": "glimmerfluegel"
+	}
+}

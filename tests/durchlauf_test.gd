@@ -134,7 +134,8 @@ func _next_goal() -> void:
 						world.apply_command("spieler", {type = "use", target = "punkt:%d" % i})
 						return
 	for i in world.places.size():
-		if world.can_use(p, "ort:%d" % i):
+		# Dienste mit Zeichen (z. B. die Wegelaterne) gehören zu keinem Auftrag
+		if world.can_use(p, "ort:%d" % i) and str(world.places[i].get("zeichen", "")) == "":
 			world.apply_command("spieler", {type = "use", target = "ort:%d" % i})
 			return
 	for item_id: String in p.progress.items:

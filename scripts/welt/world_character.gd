@@ -23,6 +23,12 @@ var marker := "":
 			_overlay.queue_redraw()
 		marker = value
 ## Gehört das Zeichen zu einem Nebenauftrag? Dann ist es blau statt gelb.
+## Zeichen über einem Dienst (NPC.md: Münze Händler, Truhe Bank, Hut Hutmacher, Laterne Wegelaterne), "" = keins
+var zeichen := "":
+	set(value):
+		if value != zeichen and _overlay != null:
+			_overlay.queue_redraw()
+		zeichen = value
 var marker_side := false:
 	set(value):
 		if value != marker_side and _overlay != null:
@@ -136,6 +142,12 @@ func _draw() -> void:
 
 
 func _draw_overlay() -> void:
+	# Zeichen des Dienstes über dem Namen; hat die Figur gerade ein „!“ oder „?“, steht es daneben
+	if zeichen != "":
+		var bild := UiStil.zeichen(zeichen)
+		if bild != null:
+			var mitte := Vector2(24 if marker != "" else 0, _head_y - 22)
+			_overlay.draw_texture_rect(bild, Rect2(mitte - Vector2(14, 14), Vector2(28, 28)), false)
 	if marker != "":
 		var font := ThemeDB.fallback_font
 		var bob := sin(_time * 2.5) * 1.5

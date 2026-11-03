@@ -104,6 +104,14 @@ static func symbol(name: String) -> Texture2D:
 	return _symbole[name]
 
 
+## Zeichen über einem Dienst (assets/ui/zeichen_<name>.png, tools/hutmacher.py), null = gibt es nicht.
+static func zeichen(name: String) -> Texture2D:
+	var pfad := "res://assets/ui/zeichen_%s.png" % name
+	if not _symbole.has(pfad):
+		_symbole[pfad] = load(pfad) if ResourceLoader.exists(pfad) else null
+	return _symbole[pfad]
+
+
 ## Symbol mitten im Text eines RichTextLabel (BBCode).
 static func bild(name: String, groesse: int = 20) -> String:
 	return "[img=%d]%s[/img]" % [groesse, symbol(name).resource_path]

@@ -1231,7 +1231,8 @@
 				],
 				"aussehen": "elf_f",
 				"farbe": "d8f0b8",
-				"dialog": "salbei"
+				"dialog": "salbei",
+				"zeichen": "muenze"
 			},
 			"bank_wipfelheim": {
 				"name": "Bankhüter Tamm",
@@ -1241,7 +1242,8 @@
 				],
 				"aussehen": "wizzard_m",
 				"farbe": "c8d8ff",
-				"dialog": "bank"
+				"dialog": "bank",
+				"zeichen": "truhe"
 			},
 			"ysolde": {
 				"name": "Ysolde Dornfeder",

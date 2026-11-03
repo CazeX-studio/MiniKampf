@@ -342,6 +342,7 @@ func _build_map_view() -> void:
 			continue
 		var view := WorldCharacter.new()
 		view.setup(npc.look, npc.name, npc.tint, Color("f2c14e"))
+		view.zeichen = str(npc.get("zeichen", ""))
 		view.idle_fps = NPC_IDLE_FPS
 		# Jeder NPC beginnt an einer anderen Stelle der Animation, damit nicht alle im Gleichtakt wippen
 		view.time_offset(randf() * 4.0)
@@ -1265,6 +1266,14 @@ func _add_pickup(target: String) -> void:
 	node.draw.connect(func() -> void: _draw_pickup(node, art))
 	_add_map_node(node)
 	_pickup_nodes[target] = node
+	# Zeichen über einem Ort (z. B. die Laterne über der Wegelaterne, NPC.md)
+	if target.begins_with("ort:") and str(state.places[int(target.substr(4))].get("zeichen", "")) != "":
+		var bild := Sprite2D.new()
+		bild.texture = UiStil.zeichen(state.places[int(target.substr(4))].zeichen)
+		bild.position = Vector2(0, -150)
+		bild.scale = Vector2(0.75, 0.75)
+		bild.z_index = 20
+		node.add_child(bild)
 	if PICKUP_LIGHTS.has(art):
 		_add_light(node, PICKUP_LIGHTS[art][0], PICKUP_LIGHTS[art][1])
 	elif not FighterView.LOOKS.has(art) and art != "leer" and target.begins_with("punkt:"):
@@ -2306,6 +2315,11 @@ func _update_shop() -> void:
 		return
 	var title := _label("%s  ·  %s" % [shop.get("name", p.shop), Geld.text(p.progress.gold)], 22, Color("f2c14e"))
 	_shop_box.add_child(UiStil.titel_mit_banner(title))
+	# Hutmacher (D20a): nur Tausch, kein Kaufen und Verkaufen
+	if shop.has("tausch"):
+		_fill_tausch(p, shop.tausch)
+		_add_shop_close()
+		return
 	_shop_box.add_child(_label(GameData.text("laden_kaufen"), 17, Color("9fe8ff")))
 	for ware in state.shop_wares(p.shop):
 		var item := GameData.item(ware.gegenstand)
@@ -2349,6 +2363,29 @@ func _update_shop() -> void:
 		if not doppelt:
 			_shop_box.add_child(_label(GameData.text("laden_keine_karten"), 15, Color(1, 1, 1, 0.6)))
 	_add_shop_close()
+
+
+## Hüte eintauschen: je Hut die Beute, die er kostet (mit „hast / brauchst“), und die Bronze.
+func _fill_tausch(p: PlayerState, tausch: Dictionary) -> void:
+	_shop_box.add_child(_label(GameData.text("laden_tausch"), 17, Color("9fe8ff")))
+	for hut_id: String in tausch:
+		var preis: Dictionary = tausch[hut_id]
+		var teile: PackedStringArray = []
+		var genug := p.progress.gold >= int(preis.get("bronze", 0))
+		for id: String in preis.get("gegenstaende", {}):
+			var braucht := int(preis.gegenstaende[id])
+			var hat := p.progress.item_count(id)
+			genug = genug and hat >= braucht
+			teile.append("%d × %s (%d)" % [braucht, GameData.item_name(id), hat])
+		teile.append(Geld.text(int(preis.get("bronze", 0))))
+		var frei := state.hut_frei(p, hut_id)
+		var row := _shop_row("%s – %s" % [FigurTeile.hut_liste().get(hut_id, hut_id), ", ".join(teile)],
+				GameData.text("tausch_schon") if frei else GameData.text("tausch_knopf"), "")
+		row.button.disabled = frei
+		if not genug and not frei:
+			row.button.modulate = Color(1, 1, 1, 0.5)
+		row.button.pressed.connect(func() -> void: _send({type = "hut_tauschen", hut = hut_id}))
+		_shop_box.add_child(row.box)
 
 
 func _add_shop_close() -> void:

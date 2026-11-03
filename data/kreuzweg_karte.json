@@ -156,6 +156,21 @@
 			"geschlossen": true
 		},
 		{
+			"teil": "hutmacher",
+			"feld": [
+				43,
+				12
+			],
+			"name": "Hattas Hüte"
+		},
+		{
+			"teil": "wegelaterne",
+			"feld": [
+				25,
+				38
+			]
+		},
+		{
 			"teil": "brunnen",
 			"feld": [
 				21,

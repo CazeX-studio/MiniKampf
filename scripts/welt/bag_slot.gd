@@ -261,6 +261,24 @@ static func draw_icon(node: CanvasItem, c: Vector2, form: String, color: Color) 
 				node.draw_colored_polygon(PackedVector2Array([fuss + Vector2(-r, 0), fuss + Vector2(-r * 0.7, -r * 0.7),
 						fuss + Vector2(0, -r), fuss + Vector2(r * 0.7, -r * 0.7), fuss + Vector2(r, 0)]), color)
 				node.draw_circle(fuss + Vector2(-r * 0.3, -r * 0.5), r * 0.18, Color(1, 1, 1, 0.7))
+		"feder":
+			# Feder schräg: Kiel und Fahne
+			var spitze := c + Vector2(12, -15)
+			var ende := c + Vector2(-11, 14)
+			var quer := (spitze - ende).normalized().orthogonal()
+			node.draw_colored_polygon(PackedVector2Array([ende.lerp(spitze, 0.25), spitze + quer * 2.0,
+					ende.lerp(spitze, 0.6) + quer * 7.0, ende.lerp(spitze, 0.3) + quer * 4.0]), color)
+			node.draw_colored_polygon(PackedVector2Array([ende.lerp(spitze, 0.25), spitze - quer * 2.0,
+					ende.lerp(spitze, 0.6) - quer * 6.0, ende.lerp(spitze, 0.3) - quer * 3.0]), color.darkened(0.15))
+			node.draw_line(ende, spitze, dark, 1.5)
+		"fell":
+			# Fellstück mit Zotteln
+			node.draw_circle(c + Vector2(-4, 0), 11.0, color)
+			node.draw_circle(c + Vector2(6, 3), 9.0, color)
+			for i in 6:
+				var a := float(i) / 6.0 * TAU
+				node.draw_line(c + Vector2.from_angle(a) * 9.0, c + Vector2.from_angle(a) * 15.0, dark, 2.0)
+			node.draw_circle(c + Vector2(-6, -3), 3.0, color.lightened(0.25))
 		"stein":
 			node.draw_circle(c + Vector2(0, 3), 11.0, dark)
 			node.draw_circle(c + Vector2(-1, 1), 10.0, color)

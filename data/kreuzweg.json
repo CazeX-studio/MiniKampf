@@ -80,7 +80,18 @@
 			],
 			"aussehen": "knight_m",
 			"farbe": "ffd36b",
-			"dialog": "bingo"
+			"dialog": "bingo",
+			"zeichen": "muenze"
+		},
+		"hatta": {
+			"name": "Hutmacher Hatta",
+			"feld": [
+				44,
+				15
+			],
+			"aussehen": "grund_haendler+hatta#hut=hatta_zylinder",
+			"dialog": "hatta",
+			"zeichen": "hut"
 		},
 		"marv": {
 			"name": "Marv",
@@ -302,7 +313,8 @@
 			],
 			"aussehen": "elf_f",
 			"farbe": "c8d8ff",
-			"dialog": "bank"
+			"dialog": "bank",
+			"zeichen": "truhe"
 		},
 		"hanne": {
 			"name": "Wirtin Hanne",
@@ -685,6 +697,15 @@
 					"anzahl": -1
 				}
 			]
+		},
+		{
+			"art": "leer",
+			"feld": [
+				25,
+				38
+			],
+			"dialog": "wegelaterne",
+			"zeichen": "laterne"
 		}
 	]
 }

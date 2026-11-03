@@ -3748,6 +3748,20 @@
 				},
 				"name": "Alte Frau, Kopftuch"
 			},
+			"hatta": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						40.6,
+						34
+					],
+					"vorn_normal": [
+						44.5,
+						66
+					]
+				},
+				"name": "Hutmacher Hatta"
+			},
 			"k_m1": {
 				"geschlecht": "m",
 				"hals": {

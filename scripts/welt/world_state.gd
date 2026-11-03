@@ -31,6 +31,7 @@ extends RefCounted
 ##   {type = "deck", karte = "…"}  Karte ins Deck für Kreuzweg-Karten legen oder wieder herausnehmen (D16, höchstens 5)
 ##   {type = "karte_verkaufen", karte = "…"}  eine doppelte Karte an einen Laden mit "karten_ankauf" verkaufen (D16)
 ##   {type = "karte_verbessern", karte = "…"}  Karte mit einer doppelten und Bronze verbessern, bis +10 (D17)
+##   {type = "hut_tauschen", hut = "…"}  bei Hatta Monster-Beute und Bronze gegen einen Hut tauschen (D20a)
 ##   {type = "test_album", seite = 0}  Testknopf: alle Karten einer Album-Seite geben (nur im Godot-Editor)
 ##   {type = "beute_nehmen", gegenstand = "…"} / {type = "beute_lassen"}  Beute, die nicht in die Tasche gepasst hat
 ##   {type = "test_geld", bronze = 75} / {type = "test_tasche"} / {type = "test_beute"}  Testknöpfe (nur im Godot-Editor)
@@ -196,7 +197,8 @@ func _add_things(map_id: String, data: Dictionary) -> void:
 		var d: Dictionary = npc_data[id]
 		var cell := Vector2i(int(d.feld[0]), int(d.feld[1]))
 		npcs[id] = {name = d.name, cell = cell, map = map_id, look = d.aussehen, tint = Color(d.get("farbe", "ffffff")),
-				dialog = d.get("dialog", id), cond = d.get("wenn", {}), approach = d.get("anspringen", {})}
+				dialog = d.get("dialog", id), cond = d.get("wenn", {}), approach = d.get("anspringen", {}),
+				zeichen = str(d.get("zeichen", ""))}
 		m.block(cell)
 	for d: Dictionary in data.get("deko", []):
 		decorations.append({art = d.art, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), map = map_id, cond = d.get("wenn", {}),
@@ -206,7 +208,7 @@ func _add_things(map_id: String, data: Dictionary) -> void:
 	for d: Dictionary in data.get("orte", []):
 		places.append({art = d.art, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), map = map_id, cond = d.get("wenn", {}),
 				dialog = d.get("dialog", ""), actions = d.get("aktionen", []), text = d.get("meldung", ""),
-				entry = d.get("zutritt_wenn", {}), locked_text = d.get("zutritt_meldung", "")})
+				entry = d.get("zutritt_wenn", {}), locked_text = d.get("zutritt_meldung", ""), zeichen = str(d.get("zeichen", ""))})
 
 
 # --- Karte ----------------------------------------------------------------------
@@ -439,6 +441,8 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			_sell_card(p, str(cmd.get("karte", "")))
 		"karte_verbessern":
 			_upgrade_card(p, str(cmd.get("karte", "")))
+		"hut_tauschen":
+			_trade_hat(p, str(cmd.get("hut", "")))
 		"test_album":
 			if OS.is_debug_build():
 				var seiten := KartenAlbum.seiten()
@@ -2475,6 +2479,26 @@ func _neue_karte(p: PlayerState, npc_id: String) -> String:
 	return ""
 
 
+## Hutmacher Hatta (D20a): Monster-Beute und Bronze gegen einen Hut. Der Hut ist danach unter Aussehen wählbar.
+func _trade_hat(p: PlayerState, hut_id: String) -> void:
+	if p.shop == "":
+		return
+	var tausch: Dictionary = GameData.get_file("laeden").get(p.shop, {}).get("tausch", {}).get(hut_id, {})
+	if tausch.is_empty() or hut_frei(p, hut_id):
+		return
+	var name: String = FigurTeile.hut_liste().get(hut_id, hut_id)
+	var teile: Dictionary = tausch.get("gegenstaende", {})
+	if p.progress.gold < int(tausch.get("bronze", 0)) or teile.keys().any(func(id: String) -> bool: return p.progress.item_count(id) < int(teile[id])):
+		_say(p, GameData.text("tausch_fehlt", [name]))
+		return
+	p.progress.gold -= int(tausch.get("bronze", 0))
+	for id: String in teile:
+		p.progress.remove_item(id, int(teile[id]))
+	p.progress.flags["hut:" + hut_id] = true
+	_say(p, GameData.text("hut_getauscht", [name]))
+	progress_changed.emit(p.id)
+
+
 ## Darf der Spieler diese Kopfbedeckung tragen? Belohnungs-Hüte erst nach der vollen Album-Seite.
 func hut_frei(p: PlayerState, hut_id: String) -> bool:
 	return not FigurTeile.hut_belohnung(hut_id) or p.progress.flags.has("hut:" + hut_id)
@@ -2507,6 +2531,18 @@ func _upgrade_card(p: PlayerState, card_id: String) -> void:
 	else:
 		_say(p, GameData.text("karte_verbessern_fehlschlag", [name, stufe]))
 	progress_changed.emit(p.id)
+
+
+## Material der besiegten Monster: je Monster mit der Chance aus data/beute.json, in die Tasche (sonst ins Beute-Fenster).
+func _drop_materials(p: PlayerState, gegner: Array) -> void:
+	var beute: Dictionary = GameData.get_file("beute")
+	var funde := {}
+	for monster: String in gegner:
+		var material := str(beute.get("monster", {}).get(monster, ""))
+		if material != "" and card_rng.randf() < float(beute.get("chance", 0.0)):
+			funde[material] = int(funde.get(material, 0)) + 1
+	if not funde.is_empty():
+		give_loot(p, funde)
 
 
 ## Eine Monsterkarte gefunden: Sie liegt verdeckt in der Tasche (oder im Beute-Fenster, wenn die Tasche voll ist).
@@ -2630,6 +2666,8 @@ func _wild_result(p: PlayerState, kampf_id: String, battle: Dictionary, won: boo
 		_give_gold(p, int(battle.get("gold", 0)))
 		_give_xp(p, int(battle.get("erfahrung", 0)))
 		# Mit etwas Glück eine Monsterkarte (nur wer schon eine Sternentafel hat, sammelt Karten)
+		# Monster-Beute (D20a): jedes besiegte Monster mit etwas Glück sein Material (MONSTER.md, data/beute.json)
+		_drop_materials(p, GameData.wild_monsters()[int(kampf_id.substr(5))].gegner)
 		# Die Karte kommt verdeckt in die Tasche (bei voller Tasche ins Beute-Fenster), ins Album erst mit „Aktivieren“ (D15)
 		var drop: Array = GameData.wild_monsters()[int(kampf_id.substr(5))].gegner
 		if _shown_card != "?":

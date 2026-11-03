@@ -8,6 +8,20 @@
 		"karten_ankauf": true,
 		"ankauf": 0.5
 	},
+	"hatta": {
+		"name": "Hattas Hüte",
+		"hinweis": "Hutmacher Hatta (D20a): tauscht Monster-Beute und etwas Bronze gegen Hüte (Aussehen, data/aussehen_teile.json). Ein eingetauschter Hut ist danach unter Werte → Aussehen wählbar. Preise vorläufig.",
+		"tausch": {
+			"filzhut": {"bronze": 30, "gegenstaende": {"falkenfeder": 4}},
+			"stoffmuetze": {"bronze": 20, "gegenstaende": {"kroetenstein": 3}},
+			"kochmuetze": {"bronze": 20, "gegenstaende": {"sporenkappe": 3}},
+			"gruene_kapuze": {"bronze": 30, "gegenstaende": {"borkenstueck": 3, "sporenkappe": 2}},
+			"wachhelm": {"bronze": 50, "gegenstaende": {"donnergeweih": 2, "kroetenstein": 2}},
+			"gelehrtenhut": {"bronze": 60, "gegenstaende": {"eulenfeder": 3, "irrlichtfunke": 2}},
+			"schmiedekappe": {"bronze": 50, "gegenstaende": {"funkenfell": 3, "wolfspelz": 2}},
+			"kopftuch": {"bronze": 40, "gegenstaende": {"leuchtschuppen": 2, "pilzfell": 2}}
+		}
+	},
 	"salbei": {
 		"name": "Salbeis Kräuter",
 		"hinweis": "Kräuterhändlerin Salbei in Wipfelheim (D13): Tränke, Grundmaterialien und ihre eigene Ware (Waldpilze).",

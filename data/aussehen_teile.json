@@ -86,6 +86,224 @@
 				"sitz": 0.4,
 				"hinten_bis": 20
 			}
+		},
+		"gruene_kapuze": {
+			"name": "Grüne Kapuze",
+			"belohnung": true,
+			"seite": {
+				"anker": [
+					42,
+					53
+				],
+				"sitz": 0.34
+			},
+			"vorn": {
+				"anker": [
+					40,
+					56
+				],
+				"sitz": 0.34
+			},
+			"hinten": {
+				"anker": [
+					41,
+					54
+				],
+				"sitz": 0.34
+			}
+		},
+		"filzhut": {
+			"name": "Filzhut mit Feder",
+			"belohnung": true,
+			"seite": {
+				"anker": [
+					44,
+					45
+				],
+				"sitz": 0.34
+			},
+			"vorn": {
+				"anker": [
+					46,
+					47
+				],
+				"sitz": 0.34
+			},
+			"hinten": {
+				"anker": [
+					45,
+					48
+				],
+				"sitz": 0.34
+			}
+		},
+		"kopftuch": {
+			"name": "Kopftuch der Glutoase",
+			"belohnung": true,
+			"seite": {
+				"anker": [
+					40,
+					56
+				],
+				"sitz": 0.34
+			},
+			"vorn": {
+				"anker": [
+					44,
+					60
+				],
+				"sitz": 0.34
+			},
+			"hinten": {
+				"anker": [
+					40,
+					57
+				],
+				"sitz": 0.34
+			}
+		},
+		"schmiedekappe": {
+			"name": "Schmiedekappe",
+			"belohnung": true,
+			"seite": {
+				"anker": [
+					42,
+					40
+				],
+				"sitz": 0.34
+			},
+			"vorn": {
+				"anker": [
+					42,
+					40
+				],
+				"sitz": 0.34
+			},
+			"hinten": {
+				"anker": [
+					38,
+					42
+				],
+				"sitz": 0.34
+			}
+		},
+		"wachhelm": {
+			"name": "Wachhelm",
+			"belohnung": true,
+			"seite": {
+				"anker": [
+					38,
+					55
+				],
+				"sitz": 0.34
+			},
+			"vorn": {
+				"anker": [
+					37,
+					58
+				],
+				"sitz": 0.34
+			},
+			"hinten": {
+				"anker": [
+					35,
+					55
+				],
+				"sitz": 0.34
+			}
+		},
+		"kochmuetze": {
+			"name": "Kochmütze",
+			"belohnung": true,
+			"seite": {
+				"anker": [
+					40,
+					49
+				],
+				"sitz": 0.34
+			},
+			"vorn": {
+				"anker": [
+					42,
+					48
+				],
+				"sitz": 0.34
+			},
+			"hinten": {
+				"anker": [
+					42,
+					50
+				],
+				"sitz": 0.34
+			}
+		},
+		"stoffmuetze": {
+			"name": "Stoffmütze",
+			"belohnung": true,
+			"seite": {
+				"anker": [
+					40,
+					42
+				],
+				"sitz": 0.34
+			},
+			"vorn": {
+				"anker": [
+					41,
+					45
+				],
+				"sitz": 0.34
+			},
+			"hinten": {
+				"anker": [
+					42,
+					45
+				],
+				"sitz": 0.34
+			}
+		},
+		"gelehrtenhut": {
+			"name": "Gelehrtenhut",
+			"belohnung": true,
+			"seite": {
+				"anker": [
+					46,
+					50
+				],
+				"sitz": 0.34
+			},
+			"vorn": {
+				"anker": [
+					46,
+					57
+				],
+				"sitz": 0.34
+			},
+			"hinten": {
+				"anker": [
+					47,
+					55
+				],
+				"sitz": 0.34
+			}
+		},
+		"hatta_zylinder": {
+			"name": "Hattas Zylinder",
+			"belohnung": true,
+			"vorn": {
+				"anker": [
+					48,
+					60
+				],
+				"sitz": 0.34
+			},
+			"hinten": {
+				"anker": [
+					46,
+					60
+				],
+				"sitz": 0.34
+			}
 		}
 	},
 	"ruecken": {
