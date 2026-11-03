@@ -116,7 +116,7 @@ func _build_buttons() -> void:
 		box.add_child(_schicht_knopf("Rücken", FigurTeile.ruecken_liste(), FigurTeile.ruecken,
 				func(id: String) -> void: FigurTeile.ruecken = id))
 		# Projekt 13, Schritt 3: Waffen-Aussehen
-		var waffe_knopf := _schicht_knopf("Waffe", FigurTeile.waffe_liste(), FigurTeile.waffe,
+		var waffe_knopf := _schicht_knopf("Waffe", FigurTeile.waffe_auswahl(), FigurTeile.waffe,
 				func(id: String) -> void: FigurTeile.waffe = id)
 		waffe_knopf.text = waffe_knopf.text.replace("keiner", "eigene")
 		box.add_child(waffe_knopf)

@@ -220,7 +220,9 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 			ergebnis.blend_rect(umhang.bild, Rect2i(Vector2i.ZERO, umhang.bild.get_size()), umhang.ecke)
 		# Die Waffe liegt über dem Körper und deckt den gemalten Griff ab
 		if waffe_jetzt != "" and info.has("griff"):
-			var teil := _waffe_gedreht(waffe_jetzt, float(info.waffe_winkel))
+			# Klassenwaffen (D18b): manche Bilder zeigen eine andere Waffe, z. B. den gespannten Bogen beim Schuss
+			var waffe_bild := str(info.get("waffe_bild", waffe_jetzt)) if _alle()[figur].get("_klassenwaffe", false) else waffe_jetzt
+			var teil := _waffe_gedreht(waffe_bild, float(info.waffe_winkel))
 			var griff := Vector2(info.griff[0], info.griff[1]) + Vector2(rand, rand)
 			ergebnis.blend_rect(teil.bild, Rect2i(Vector2i.ZERO, teil.bild.get_size()), Vector2i((griff - teil.punkt).round()))
 	ergebnis.generate_mipmaps()
@@ -233,6 +235,9 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 static func _waffe_von(figur: String, wahl: String) -> String:
 	if not _alle().get(koerper_von(figur), {}).has("_waffe"):
 		return ""
+	# Klassen-Körper tragen immer ihre Klassenwaffe (Bogen, Schleuder), das Waffen-Aussehen gilt für den Novizen
+	if _alle()[koerper_von(figur)].get("_klassenwaffe", false):
+		return str(_alle()[koerper_von(figur)]._waffe)
 	return wahl if waffe_liste().has(wahl) else str(_alle()[koerper_von(figur)]._waffe)
 
 
@@ -254,6 +259,15 @@ static func _waffe_gedreht(id: String, winkel: float) -> Dictionary:
 ## Alle Waffen-Aussehen: Name -> Anzeigename.
 static func waffe_liste() -> Dictionary:
 	return _namen(_alle_schichten().get("waffe", {}))
+
+
+## Waffen, die man unter „Aussehen“ wählen kann (ohne die festen Klassenwaffen wie Bogen und Schleuder).
+static func waffe_auswahl() -> Dictionary:
+	var liste := {}
+	for id: String in waffe_liste():
+		if _alle_schichten().waffe[id].get("auswahl", true):
+			liste[id] = waffe_liste()[id]
+	return liste
 
 
 ## Alle Hüte: Name -> Anzeigename.

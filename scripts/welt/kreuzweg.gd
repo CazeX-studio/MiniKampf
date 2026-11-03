@@ -3183,7 +3183,7 @@ func _aussehen_zeilen(p: PlayerState) -> void:
 		if state.hut_frei(local_player(), hut_id):
 			huete[hut_id] = FigurTeile.hut_liste()[hut_id]
 	var plaetze := [["hut", "aussehen_hut", huete], ["ruecken", "aussehen_ruecken", FigurTeile.ruecken_liste()],
-			["farben", "aussehen_farben", FigurTeile.paletten_liste()], ["waffe", "aussehen_waffe", FigurTeile.waffe_liste()]]
+			["farben", "aussehen_farben", FigurTeile.paletten_liste()], ["waffe", "aussehen_waffe", FigurTeile.waffe_auswahl()]]
 	for platz: Array in plaetze:
 		var teile: Dictionary = platz[2]
 		var ids: Array = [""] + teile.keys()

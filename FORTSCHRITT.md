@@ -11,9 +11,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** D18b (Klassenwaffen an der Hand: Bogen und Schleuder). Alle Testtage stehen seit 02.11. am Ende, Marco testet das volle Spiel zusammen. D9h wartet auf Marcos Bilder (GRAFIK_AUFTRAG.md, Teil E).
+- **Nächster Schritt:** D19 (Figuren-Baukasten mit den acht Grundkörpern). Alle Testtage stehen seit 02.11. am Ende, Marco testet das volle Spiel zusammen. D9h wartet auf Marcos Bilder (GRAFIK_AUFTRAG.md, Teil E).
 
-- **Neu (03.11.): D18 Körper für Bogenschütze und Monster-Zähmer** (1.8, Projekt 11 Schritt 4): Marcos Körper-Blätter sind eingebaut, je männlich und weiblich (alle Bewegungen: Stehen, Laufen, Getroffen, Ausweichen bzw. Anfeuern, Schuss bzw. Wurf, Fallen, Sieg, Konzentration bzw. Befehl, dazu die Welt-Ansichten von vorne und hinten). Hat man die Klasse gelernt (Fenns Prüfung bzw. Esches Monster), trägt die eigene Figur die Klassenkleidung, in der Welt und im Kampf; Kopf, Name und Aussehen (Hut, Umhang, Farben) bleiben. Noch nicht drin: Bogen und Schleuder in der Hand (eigener Schritt D18b), bisher kämpft man mit leeren Fäusten.
+- **Neu (03.11.): D18b Klassenwaffen an der Hand**: Der Bogenschütze hält deinen Langbogen, der Zähmer die Schleuder (aus `klassen_waffen.png` und `klassen_bogen_gespannt.png`). Beim Schuss und bei der Konzentration hält der Bogenschütze den gespannten Bogen mit Pfeil. Beim Fallen, beim Sieg, beim Getroffen-Werden und (Bogenschütze) beim Ausweichen ist keine Waffe zu sehen. Die Klassenwaffen lassen sich nicht im Aussehen austauschen; das Waffen-Aussehen gilt weiter für den Novizen.
+  - **So testest du es:**
+    1. Als Bogenschütze durch Wipfelheim laufen: Der Bogen ist in der Hand, von vorne, hinten und der Seite.
+    2. Im Kampf schießen: Der Bogen wird gespannt, mit Pfeil.
+    3. Als Zähmer: Die Schleuder in der Hand, beim Wurf hoch über dem Kopf.
+
+- **Neu (03.11.): D18 Körper für Bogenschütze und Monster-Zähmer** (1.8, Projekt 11 Schritt 4): Marcos Körper-Blätter sind eingebaut, je männlich und weiblich (alle Bewegungen: Stehen, Laufen, Getroffen, Ausweichen bzw. Anfeuern, Schuss bzw. Wurf, Fallen, Sieg, Konzentration bzw. Befehl, dazu die Welt-Ansichten von vorne und hinten). Hat man die Klasse gelernt (Fenns Prüfung bzw. Esches Monster), trägt die eigene Figur die Klassenkleidung, in der Welt und im Kampf; Kopf, Name und Aussehen (Hut, Umhang, Farben) bleiben. Bogen und Schleuder kamen mit D18b.
   - **So testest du es:**
     1. Als Bogenschütze bei Fenn die Prüfung bestehen: Danach trägt deine Figur grüne Waldläufer-Kleidung, der Kopf bleibt.
     2. Als Zähmer bei Esche das erste Monster wählen: Danach die Zähmer-Kleidung.

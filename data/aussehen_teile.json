@@ -211,6 +211,30 @@
 				11.5,
 				45
 			]
+		},
+		"langbogen": {
+			"name": "Langbogen",
+			"anker": [
+				18.0,
+				40
+			],
+			"auswahl": false
+		},
+		"langbogen_gespannt": {
+			"name": "Langbogen (gespannt)",
+			"anker": [
+				40.5,
+				40
+			],
+			"auswahl": false
+		},
+		"schleuder": {
+			"name": "Schleuder",
+			"anker": [
+				17.0,
+				27
+			],
+			"auswahl": false
 		}
 	}
 }

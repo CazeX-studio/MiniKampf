@@ -51,6 +51,7 @@ func _init() -> void:
 		print("FEHLER: bei „ganz“ darf nichts zusammengesetzt werden")
 		fehler += 1
 	fehler += _klassen_koerper()
+	fehler += _klassen_waffen()
 	print("figurteile_test: %s" % ("OK" if fehler == 0 else "%d Fehler" % fehler))
 	quit(1 if fehler > 0 else 0)
 
@@ -116,5 +117,33 @@ func _klassen_koerper() -> int:
 	world.tick(1.1)
 	if p.look != "bogen_m+m2":
 		print("FEHLER: nach dem Lernen kein Bogenschützen-Körper: %s" % p.look)
+		fehler += 1
+	return fehler
+
+
+## D18b: Bogen und Schleuder an der Hand, beim Schuss der gespannte Bogen; im Aussehen nicht wählbar.
+func _klassen_waffen() -> int:
+	var fehler := 0
+	var daten: Dictionary = FigurTeile._alle()
+	for koerper: String in ["bogen_m", "bogen_w", "zaehmer_m", "zaehmer_w"]:
+		var waffe := "langbogen" if koerper.begins_with("bogen") else "schleuder"
+		if FigurTeile._waffe_von(koerper + "+m1#waffe=krummklinge", "krummklinge") != waffe:
+			print("FEHLER: %s trägt nicht immer %s" % [koerper, waffe])
+			fehler += 1
+		for bild: String in ["idle_f0", "run_f1", "attack_f2", "idle_vorn_f0"]:
+			if not daten[koerper].get(bild, {}).has("griff"):
+				print("FEHLER: %s %s hat keinen Handpunkt" % [koerper, bild])
+				fehler += 1
+		if daten[koerper].get("death_f5", {}).has("griff"):
+			print("FEHLER: %s hält beim Fallen noch die Waffe" % koerper)
+			fehler += 1
+	if daten.bogen_m.attack_f2.get("waffe_bild", "") != "langbogen_gespannt" or daten.bogen_w.cast_f0.get("waffe_bild", "") != "langbogen_gespannt":
+		print("FEHLER: beim Schuss kein gespannter Bogen")
+		fehler += 1
+	if FigurTeile.waffe_auswahl().has("langbogen") or FigurTeile.waffe_auswahl().has("schleuder") or not FigurTeile.waffe_auswahl().has("krummklinge"):
+		print("FEHLER: Klassenwaffen dürfen im Aussehen nicht wählbar sein")
+		fehler += 1
+	if FigurTeile.bild("bogen_m+m1", "attack", 2) == null:
+		print("FEHLER: Bogenschütze mit gespanntem Bogen lässt sich nicht zeichnen")
 		fehler += 1
 	return fehler
