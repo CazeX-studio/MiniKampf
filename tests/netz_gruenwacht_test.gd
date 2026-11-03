@@ -38,11 +38,10 @@ func _process(delta: float) -> bool:
 				_step = 1
 		1:
 			# Unter Last (alle Prüfungen gleichzeitig) startet der Server langsamer: alle 3 Sekunden neu versuchen
-			var peer := Netz._api().multiplayer_peer
-			if fmod(_time, 3.0) < delta and _time > 1.0 and _step == 1 \
-					and peer.get_connection_status() == MultiplayerPeer.CONNECTION_DISCONNECTED:
+			# Alle 5 Sekunden ohne Verbindung neu verbinden (auch wenn ein Versuch noch „hängt“)
+			if fmod(_time, 5.0) < delta and _time > 1.0 and _step == 1:
 				Netz.join("localhost", "Waldläufer", "elf_f")
-			if _time > 25.0:
+			if _time > 40.0:
 				_check(false, "Verbindung zum Server")
 				return _finish()
 		2:

@@ -3,6 +3,7 @@
 - waffe_kurzschwert.png, klassen_waffen.png: Klinge und Parierstange, senkrecht, Spitze oben (assets/teile/waffe/).
   Der Griff bleibt weg, bei den Novizen ist er in die Hand gemalt.
 - probe_hut.png: Hut seitlich, schräg von vorne, schräg von hinten (assets/teile/hut/).
+- hut_sternreif.png, hut_geweihband.png: Stirnbänder des Kartenalbums (D17), gleiche drei Ansichten.
 - probe_umhang.png: je Richtung 2 Bilder Stehen und 4 Bilder Laufen (assets/teile/ruecken/).
 Anker und feste Farbtöne stehen danach in data/aussehen_teile.json.
 Aufruf: python3 tools/aussehen_bilder.py   (braucht numpy, scipy und Pillow)
@@ -94,11 +95,39 @@ def hut():
 		eintrag[richtung] = {"anker": [round(bild.width / 2), round(bild.height * HUT_ANKER)], "sitz": 0.34}
 	eintrag["flaechen"] = {"leder": toene(fertig)}
 	huete = {"wanderhut": eintrag}
-	# Belohnungs-Hüte des Kartenalbums (D17): bis Marcos Bilder da sind, der Wanderhut in einer anderen Farbe
-	for hut_id, name, palette in [("sternreif", "Sternenreif (Platzhalter)", "glutschmiede"),
-			("geweihband", "Geweih-Band (Platzhalter)", "waldlaeufer")]:
-		huete[hut_id] = dict(eintrag, name=name, bild="wanderhut", palette=palette, belohnung=True)
+	huete.update(stirnbaender())
 	return huete
+
+
+## Kopfbedeckungen des Kartenalbums (D17, Auftrag B6d): Stirnbänder, die um die Stirn sitzen
+BAENDER = {"sternreif": "Sternenreif", "geweihband": "Geweih-Band"}
+## So breit ist ein Stirnband von vorne im Spiel (Pixel, etwas breiter als der Kopf)
+BAND_BREITE = 72
+## So weit unter dem Scheitel sitzt das Band (Anteil der Kopfhöhe)
+BAND_SITZ = 0.4
+
+
+def stirnbaender():
+	"""tools/vorlagen/hut_<id>.png: seitlich, schräg von vorne, schräg von hinten in einer Reihe."""
+	ergebnis = {}
+	for hut_id, name in BAENDER.items():
+		bilder = [s for r in teile(f"hut_{hut_id}") for s in r]
+		faktor = BAND_BREITE / bilder[1].shape[1]
+		eintrag = {"name": name, "belohnung": True}
+		for richtung, t in zip(RICHTUNGEN, bilder):
+			bild = klein(t, faktor)
+			bild.save(TEILE / "hut" / f"{hut_id}_{richtung}.png")
+			# Anker: Mitte des Rings (die Zeilen, in denen das Band am breitesten ist), nicht die Geweihe oder der Stern
+			a = np.array(bild)[..., 3] > 60
+			breiten = a.sum(axis=1)
+			zeilen = np.where(breiten >= breiten.max() * 0.85)[0]
+			mitte = int(round(zeilen.mean()))
+			eintrag[richtung] = {"anker": [round(bild.width / 2), mitte], "sitz": BAND_SITZ}
+			# Von vorne und hinten: Die obere Hälfte des Rings liegt hinter dem Kopf
+			if richtung != "seite":
+				eintrag[richtung]["hinten_bis"] = mitte
+		ergebnis[hut_id] = eintrag
+	return ergebnis
 
 
 def umhang():
@@ -138,4 +167,12 @@ def main():
 
 
 if __name__ == "__main__":
-	main()
+	import sys
+	if "--nur-baender" in sys.argv:
+		# Nur die Stirnbänder neu schneiden, alles andere bleibt, wie es ist
+		daten = json.loads(DATEN.read_text(encoding="utf-8"))
+		daten["hut"].update(stirnbaender())
+		DATEN.write_text(json.dumps(daten, ensure_ascii=False, indent="\t"), encoding="utf-8")
+		print("Stirnbänder geschnitten.")
+	else:
+		main()

@@ -279,8 +279,12 @@ static func _hut_aufsetzen(kopf_bild: Image, hut_id: String, richtung: String, p
 	var unten := maxi(kopf_bild.get_height(), hut_ecke.y + hut_bild.get_height())
 	var neu := Image.create_empty(rechts - links, unten - oben, false, Image.FORMAT_RGBA8)
 	var verschoben := Vector2i(-links, -oben)
+	# Stirnbänder (Kartenalbum): Der hintere Teil des Rings (Zeilen über "hinten_bis") liegt hinter dem Kopf
+	var hinten := int(daten.get("hinten_bis", 0))
+	if hinten > 0:
+		neu.blend_rect(hut_bild, Rect2i(0, 0, hut_bild.get_width(), hinten), hut_ecke + verschoben)
 	neu.blend_rect(kopf_bild, Rect2i(Vector2i.ZERO, kopf_bild.get_size()), verschoben)
-	neu.blend_rect(hut_bild, Rect2i(Vector2i.ZERO, hut_bild.get_size()), hut_ecke + verschoben)
+	neu.blend_rect(hut_bild, Rect2i(0, hinten, hut_bild.get_width(), hut_bild.get_height() - hinten), hut_ecke + verschoben + Vector2i(0, hinten))
 	return {bild = neu, verschoben = Vector2(verschoben)}
 
 

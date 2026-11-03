@@ -34,74 +34,58 @@
 			}
 		},
 		"sternreif": {
-			"name": "Sternenreif (Platzhalter)",
+			"name": "Sternenreif",
+			"belohnung": true,
 			"seite": {
 				"anker": [
-					44,
-					37
+					36,
+					12
 				],
-				"sitz": 0.34
+				"sitz": 0.4
 			},
 			"vorn": {
 				"anker": [
-					42,
-					38
+					36,
+					20
 				],
-				"sitz": 0.34
+				"sitz": 0.4,
+				"hinten_bis": 20
 			},
 			"hinten": {
 				"anker": [
-					43,
-					38
+					36,
+					26
 				],
-				"sitz": 0.34
-			},
-			"flaechen": {
-				"leder": [
-					"#986f53",
-					"#63341d",
-					"#3a1d0e",
-					"#130803"
-				]
-			},
-			"bild": "wanderhut",
-			"palette": "glutschmiede",
-			"belohnung": true
+				"sitz": 0.4,
+				"hinten_bis": 26
+			}
 		},
 		"geweihband": {
-			"name": "Geweih-Band (Platzhalter)",
+			"name": "Geweih-Band",
+			"belohnung": true,
 			"seite": {
 				"anker": [
-					44,
-					37
+					31,
+					21
 				],
-				"sitz": 0.34
+				"sitz": 0.4
 			},
 			"vorn": {
 				"anker": [
-					42,
-					38
+					36,
+					21
 				],
-				"sitz": 0.34
+				"sitz": 0.4,
+				"hinten_bis": 21
 			},
 			"hinten": {
 				"anker": [
-					43,
-					38
+					35,
+					20
 				],
-				"sitz": 0.34
-			},
-			"flaechen": {
-				"leder": [
-					"#986f53",
-					"#63341d",
-					"#3a1d0e",
-					"#130803"
-				]
-			},
-			"bild": "wanderhut",
-			"palette": "waldlaeufer",
-			"belohnung": true
+				"sitz": 0.4,
+				"hinten_bis": 20
+			}
 		}
 	},
 	"ruecken": {
