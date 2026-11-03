@@ -52,6 +52,7 @@ func _init() -> void:
 		fehler += 1
 	fehler += _klassen_koerper()
 	fehler += _klassen_waffen()
+	fehler += _baukasten()
 	print("figurteile_test: %s" % ("OK" if fehler == 0 else "%d Fehler" % fehler))
 	quit(1 if fehler > 0 else 0)
 
@@ -146,4 +147,42 @@ func _klassen_waffen() -> int:
 	if FigurTeile.bild("bogen_m+m1", "attack", 2) == null:
 		print("FEHLER: Bogenschütze mit gespanntem Bogen lässt sich nicht zeichnen")
 		fehler += 1
+	return fehler
+
+
+## D19: Figuren-Baukasten. Acht Grundkörper nur für die Welt, jeder mit jedem Volks-Kopf zusammensetzbar.
+func _baukasten() -> int:
+	var fehler := 0
+	var volk := ["v_m1", "v_m2", "v_m3", "v_w1", "v_w2", "v_w3", "a_m1", "a_m2", "a_w1", "a_w2", "k_m1", "k_w1"]
+	for art: String in ["mann", "frau", "kind", "alter_mensch", "wache", "haendler", "handwerker", "gelehrter"]:
+		var koerper := "grund_" + art
+		if not FigurTeile.koerper_liste().has(koerper):
+			print("FEHLER: Grundkörper %s fehlt" % koerper)
+			fehler += 1
+			continue
+		for kopf: String in volk:
+			if not FigurTeile.koepfe(koerper).has(kopf):
+				print("FEHLER: %s kennt den Kopf %s nicht" % [koerper, kopf])
+				fehler += 1
+				continue
+			for anim: String in ["idle_vorn", "run_hinten"]:
+				if FigurTeile.bild("%s+%s" % [koerper, kopf], anim, 1) == null:
+					print("FEHLER: %s mit %s (%s) lässt sich nicht zeichnen" % [koerper, kopf, anim])
+					fehler += 1
+		if FighterView.sprite_path(koerper + "+v_m1", "idle_vorn", 0).find("/figuren/") < 0:
+			print("FEHLER: %s gilt nicht als eigene Figur" % koerper)
+			fehler += 1
+	# Das Kind ist kleiner als der Mann, die Köpfe sind gleich groß
+	var kind := FigurTeile.bild("grund_kind+k_m1", "idle_vorn", 0).get_image().get_used_rect().size.y
+	var mann := FigurTeile.bild("grund_mann+v_m1", "idle_vorn", 0).get_image().get_used_rect().size.y
+	if kind >= mann * 0.95:
+		print("FEHLER: Das Kind ist nicht kleiner als der Mann (%d / %d)" % [kind, mann])
+		fehler += 1
+	# Welt-Figur ohne Seitenbilder nimmt die Ansicht von vorne
+	var figur := WorldCharacter.new()
+	figur.setup("grund_frau+v_w1", "Frau")
+	if not figur.richtungen:
+		print("FEHLER: Welt-Figur ohne Seitenbilder zeigt keine Ansicht von vorne")
+		fehler += 1
+	figur.free()
 	return fehler

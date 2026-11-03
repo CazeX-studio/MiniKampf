@@ -365,7 +365,7 @@ func shown_hp() -> int:
 static func look_data(key: String) -> Dictionary:
 	if LOOKS.has(key):
 		return LOOKS[key]
-	if ResourceLoader.exists(OWN_SPRITE_PATH % [FigurTeile.koerper_von(key), "idle", 0]):
+	if _eigenes_bild(FigurTeile.koerper_von(key)):
 		return {sprite = key, scale = 3.0}
 	return {sprite = key, scale = 4.0} if ResourceLoader.exists(SPRITE_PATH % [key, "idle", 0]) else LOOKS["novize"]
 
@@ -375,7 +375,7 @@ static func look_data(key: String) -> Dictionary:
 static func sprite_path(sprite: String, anim: String, frame: int) -> String:
 	sprite = FigurTeile.koerper_von(sprite)
 	var own := OWN_SPRITE_PATH % [sprite, anim, frame]
-	return own if ResourceLoader.exists(OWN_SPRITE_PATH % [sprite, "idle", 0]) else SPRITE_PATH % [sprite, anim, frame]
+	return own if _eigenes_bild(sprite) else SPRITE_PATH % [sprite, anim, frame]
 
 
 ## Ein Einzelbild laden; Figuren mit Kopf und Körper (Projekt 11) werden je nach FigurTeile.art zusammengesetzt.
@@ -397,7 +397,13 @@ static func filter_fuer(texture: Texture2D) -> CanvasItem.TextureFilter:
 
 ## Ist das eine eigene Figur aus assets/figuren/?
 static func is_own_sprite(sprite: String) -> bool:
-	return ResourceLoader.exists(OWN_SPRITE_PATH % [FigurTeile.koerper_von(sprite), "idle", 0])
+	return _eigenes_bild(FigurTeile.koerper_von(sprite))
+
+
+## Gibt es eigene Bilder dieser Figur? Erkannt am Stehen von der Seite oder, bei Figuren nur für die Welt
+## (Figuren-Baukasten, D19), am Stehen schräg von vorne.
+static func _eigenes_bild(sprite: String) -> bool:
+	return ResourceLoader.exists(OWN_SPRITE_PATH % [sprite, "idle", 0]) or ResourceLoader.exists(OWN_SPRITE_PATH % [sprite, "idle_vorn", 0])
 
 
 ## Bild der Figur für den Ult-Film.

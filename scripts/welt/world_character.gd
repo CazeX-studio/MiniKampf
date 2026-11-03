@@ -59,6 +59,11 @@ func setup(look: String, p_name: String, tint := Color.WHITE, name_color := Colo
 			frames.append(FighterView.einzelbild(look, anim, i))
 			i += 1
 		_frames[anim] = frames
+	# Figuren nur mit Welt-Ansichten (Figuren-Baukasten, D19): Stehen und Laufen schräg von vorne bzw. hinten
+	if _frames.idle.is_empty() and not _frames.idle_vorn.is_empty():
+		richtungen = true
+		_frames.idle = _frames.idle_vorn
+		_frames.run = _frames.run_vorn
 	_sprite = Sprite2D.new()
 	_sprite.texture = _frames.idle[0]
 	# Eigene Figuren: im Verhältnis wie im Kampf (Vega hat dort 3.0, in der Welt 2.0)

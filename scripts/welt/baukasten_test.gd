@@ -82,6 +82,7 @@ func _ready() -> void:
 	_player.setup(FigurWahl.gewaehlt(), "Du")
 	_player.richtungen = true
 	_holder.add_child(_player)
+	_baukasten_figuren()
 	_set_figur(_figur_stufe)
 
 	_grid_node = Node2D.new()
@@ -410,6 +411,22 @@ func _update_player() -> void:
 		key = low
 	_holder.position = Vector2(screen.x, key)
 	_player.position = Vector2(0, screen.y - key)
+
+
+## Figuren-Baukasten (D19): die acht Grundkörper mit ihrem Standardkopf in einer Reihe neben dem Start.
+func _baukasten_figuren() -> void:
+	# Auf dem freien Teil des Platzes nördlich vom Start
+	var i := 0
+	for koerper: String in FigurTeile.koerper_liste():
+		if not FigurTeile._alle()[koerper].get("_baukasten", false):
+			continue
+		var figur := WorldCharacter.new()
+		figur.setup("%s+%s" % [koerper, FigurTeile.standardkopf(koerper)], FigurTeile.koerper_liste()[koerper].trim_suffix(" (Baukasten)"))
+		figur.time_offset(i * 0.37)
+		figur.position = cell_to_screen(Vector2(26.5 + i * 2, 41.5))
+		figur.scale = Vector2(FIGUR_GROESSEN[_figur_stufe], FIGUR_GROESSEN[_figur_stufe])
+		_sorted.add_child(figur)
+		i += 1
 
 
 ## Für Prüfungen: Figur auf ein Feld stellen.
