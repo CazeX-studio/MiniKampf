@@ -149,6 +149,13 @@ var _panel_text: RichTextLabel
 var _panel_mode := ""
 ## Kästchen der Tasche (Raster im Taschen-Fenster) und das gerade angeklickte Kästchen
 var _bag_grid: GridContainer
+## Kartenalbum (D15): Reiter je Region, Plätze der Karten, gewählte Seite und Karte
+var _album_tabs: HBoxContainer
+var _album_grid: GridContainer
+var _album_seite := 0
+var _album_karte := ""
+## Oberste Ebene der Oberfläche (für den Aufdeck-Moment einer Monsterkarte)
+var _ui_root: Control
 var _bag_footer: HBoxContainer
 var _belt_row: HBoxContainer
 var _bag_tests: HBoxContainer
@@ -637,6 +644,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_send({type = "hinsetzen"})
 		elif key == KEY_K:
 			_toggle_panel("faehigkeiten")
+		elif key == KEY_L:
+			_toggle_panel("album")
 		elif key == KEY_R and _is_tamer():
 			_pack_open = not _pack_open
 		elif key == KEY_ESCAPE and local_player().shop != "":
@@ -1414,6 +1423,7 @@ func _build_ui() -> void:
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.theme = Combat.make_theme()
 	ui.add_child(root)
+	_ui_root = root
 
 	var hint := _label("Laufen: antippen / WASD · Reden: E / Leertaste · Text weiter: F (halten = schnell)", 14, Color.WHITE)
 	hint.position = Vector2(16, 10)
@@ -1441,6 +1451,7 @@ func _build_ui() -> void:
 	for info: Array in [["", "zahnrad", "Menü", 56, _go_menu], ["I", "tasche", "Tasche (I)", 72, _toggle_panel.bind("tasche")],
 			["X", "sanduhr", "Hinsetzen (X): füllt das Mana, am Lagerfeuer schneller", 72, func() -> void: _send({type = "hinsetzen"})],
 			["K", "rolle", "Fähigkeiten (K)", 72, _toggle_panel.bind("faehigkeiten")],
+			["L", "kristall", "Kartenalbum (L)", 72, _toggle_panel.bind("album")],
 			["C", "schild", "Werte (C)", 72, _toggle_panel.bind("werte")], ["J", "ausrufe", "Aufträge (J)", 72, _toggle_panel.bind("auftraege")],
 			[GameData.text("neu_beginnen"), "", GameData.text("neu_beginnen"), 140, _restart]]:
 		var button := Button.new()
@@ -1594,6 +1605,17 @@ func _build_ui() -> void:
 	_bag_grid.add_theme_constant_override("h_separation", 4)
 	_bag_grid.add_theme_constant_override("v_separation", 4)
 	panel_box.add_child(_bag_grid)
+	# Kartenalbum: oben die Reiter der Regionen, darunter die festen Plätze der Karten
+	_album_tabs = HBoxContainer.new()
+	_album_tabs.alignment = BoxContainer.ALIGNMENT_CENTER
+	_album_tabs.add_theme_constant_override("separation", 8)
+	panel_box.add_child(_album_tabs)
+	_album_grid = GridContainer.new()
+	_album_grid.columns = 6
+	_album_grid.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	_album_grid.add_theme_constant_override("h_separation", 6)
+	_album_grid.add_theme_constant_override("v_separation", 6)
+	panel_box.add_child(_album_grid)
 	# Gürtel (Projekt 5): vier Plätze unter der Tasche, Klick legt den Stapel zurück in die Tasche
 	_belt_row = HBoxContainer.new()
 	_belt_row.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -1626,6 +1648,13 @@ func _build_ui() -> void:
 			return
 		if link.begins_with("anlegen:"):
 			_send({type = "anlegen", gegenstand = link.trim_prefix("anlegen:")})
+			_bag_selected = -1
+			_fill_panel()
+			return
+		if link.begins_with("aktivieren:"):
+			var gegenstand := link.trim_prefix("aktivieren:")
+			_send({type = "karte_aktivieren", gegenstand = gegenstand})
+			_karte_aufdecken(KartenAlbum.karte_von(gegenstand))
 			_bag_selected = -1
 			_fill_panel()
 			return
@@ -2483,6 +2512,131 @@ func _on_progress_changed(player_id: String) -> void:
 		SaveGame.save(local_player())
 
 
+## Kartenalbum (D15): Reiter je Region mit Zähler, darunter die festen Plätze. Gesammelte Karten mit Bild und Anzahl,
+## fehlende nur als dunkler Umriss. Eine angetippte Karte zeigt unten Element und Schwächen (nur, wenn man sie hat).
+func _fill_album(p: PlayerState, lines: PackedStringArray) -> void:
+	var sammlung: Dictionary = p.progress.flags.get("karten", {})
+	var seiten := KartenAlbum.seiten()
+	_album_seite = clampi(_album_seite, 0, maxi(seiten.size() - 1, 0))
+	for child in _album_tabs.get_children():
+		child.queue_free()
+	for child in _album_grid.get_children():
+		child.queue_free()
+	for i in seiten.size():
+		var zahl := KartenAlbum.zaehler(sammlung, seiten[i])
+		var reiter := _small_button("%s: %d / %d" % [seiten[i].name, zahl[0], zahl[1]], func() -> void:
+			_album_seite = i
+			_album_karte = ""
+			_fill_panel())
+		reiter.toggle_mode = true
+		reiter.button_pressed = i == _album_seite
+		_album_tabs.add_child(reiter)
+	if seiten.is_empty():
+		return
+	for id: String in seiten[_album_seite].karten:
+		_album_grid.add_child(_album_platz(id, int(sammlung.get(id, 0))))
+	if _album_karte != "" and int(sammlung.get(_album_karte, 0)) > 0:
+		var info := KartenAlbum.info(_album_karte)
+		var schwach: PackedStringArray = []
+		for el: String in info.schwaechen:
+			schwach.append("[color=#%s]%s[/color]" % [Elements.color(el).to_html(false), el])
+		var element: String = info.element
+		lines.append(GameData.text("album_info", [KartenSpiel.card(_album_karte).name, int(sammlung[_album_karte]),
+				"[color=#%s]%s[/color]" % [Elements.color(element).to_html(false), element] if element != "" else "–",
+				", ".join(schwach) if not schwach.is_empty() else "–"]))
+	elif _album_karte != "":
+		lines.append("[color=#a0a0a0]%s[/color]" % GameData.text("album_fehlt"))
+	elif sammlung.is_empty():
+		lines.append("[color=#a0a0a0]%s[/color]" % GameData.text("album_leer"))
+	else:
+		lines.append("[color=#a0a0a0]%s[/color]" % GameData.text("album_tipp"))
+
+
+## Ein Platz im Album: Bild des Monsters (fehlt die Karte, nur ein dunkler Umriss), darunter Name und Anzahl.
+func _album_platz(id: String, anzahl: int) -> Control:
+	var platz := PanelContainer.new()
+	platz.custom_minimum_size = Vector2(92, 104)
+	var rahmen := StyleBoxFlat.new()
+	rahmen.bg_color = Color("1c2340") if anzahl > 0 else Color("10131f")
+	rahmen.border_color = Color("f2c14e") if id == _album_karte else (Color("8a7a4a") if anzahl > 0 else Color("3a3f55"))
+	rahmen.set_border_width_all(2)
+	rahmen.set_corner_radius_all(6)
+	platz.add_theme_stylebox_override("panel", rahmen)
+	platz.mouse_filter = Control.MOUSE_FILTER_STOP
+	platz.gui_input.connect(func(event: InputEvent) -> void:
+		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			_album_karte = id
+			_fill_panel())
+	var box := VBoxContainer.new()
+	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	box.add_theme_constant_override("separation", 0)
+	platz.add_child(box)
+	var bild := TextureRect.new()
+	bild.texture = FighterView.portrait(id)
+	bild.custom_minimum_size = Vector2(84, 72)
+	bild.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	bild.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	bild.texture_filter = FighterView.filter_fuer(bild.texture)
+	bild.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# Fehlende Karte: nur der Umriss, ganz dunkel
+	bild.modulate = Color.WHITE if anzahl > 0 else Color(0, 0, 0, 0.8)
+	box.add_child(bild)
+	var name_text: String = KartenSpiel.card(id).name if anzahl > 0 else "???"
+	if anzahl > 1:
+		name_text += " ×%d" % anzahl
+	var schild := _label(name_text, 12, Color("f3ead8") if anzahl > 0 else Color("6a6f85"))
+	schild.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	schild.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	box.add_child(schild)
+	return platz
+
+
+## Aufdeck-Moment (D15): Die verdeckte Karte dreht sich um und zeigt das Monster.
+func _karte_aufdecken(id: String) -> void:
+	if id == "" or _ui_root == null:
+		return
+	var karte := PanelContainer.new()
+	karte.size = Vector2(200, 260)
+	karte.pivot_offset = karte.size * 0.5
+	karte.position = Vector2(640, 330) - karte.size * 0.5
+	karte.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var rahmen := StyleBoxFlat.new()
+	rahmen.bg_color = Color("1c2340")
+	rahmen.border_color = Color("f2c14e")
+	rahmen.set_border_width_all(4)
+	rahmen.set_corner_radius_all(12)
+	karte.add_theme_stylebox_override("panel", rahmen)
+	var bild := TextureRect.new()
+	bild.texture = BagSlot.icon_texture(KartenAlbum.UNBEKANNT)
+	bild.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	bild.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	bild.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	bild.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	karte.add_child(bild)
+	var schild := _label("", 20, Color("f2c14e"))
+	schild.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	schild.size = Vector2(300, 30)
+	schild.position = Vector2(490, 160)
+	_ui_root.add_child(karte)
+	_ui_root.add_child(schild)
+	Geraeusche.play("zauber", 1.4)
+	var ablauf := create_tween()
+	ablauf.tween_property(karte, "scale", Vector2(1.1, 1.1), 0.25).from(Vector2(0.6, 0.6))
+	ablauf.tween_property(karte, "scale:x", 0.0, 0.2)
+	ablauf.tween_callback(func() -> void:
+		bild.texture = FighterView.portrait(id)
+		bild.texture_filter = FighterView.filter_fuer(bild.texture)
+		schild.text = KartenSpiel.card(id).name)
+	ablauf.tween_property(karte, "scale:x", 1.1, 0.2)
+	ablauf.tween_property(karte, "scale", Vector2(1.0, 1.0), 0.15)
+	ablauf.tween_interval(1.4)
+	ablauf.tween_property(karte, "modulate:a", 0.0, 0.4)
+	ablauf.parallel().tween_property(schild, "modulate:a", 0.0, 0.4)
+	ablauf.tween_callback(func() -> void:
+		karte.queue_free()
+		schild.queue_free())
+
+
 func _toggle_panel(mode: String) -> void:
 	if _panel.visible and _panel_mode == mode:
 		_panel.visible = false
@@ -2509,7 +2663,9 @@ func _fill_panel() -> void:
 	_bag_footer.visible = _panel_mode == "tasche"
 	_belt_row.visible = _panel_mode == "tasche"
 	_bag_tests.visible = _panel_mode == "tasche"
-	_panel_text.custom_minimum_size.y = {"tasche": 120.0, "werte": 90.0, "faehigkeiten": 0.0}.get(_panel_mode, 330.0)
+	_album_tabs.visible = _panel_mode == "album"
+	_album_grid.visible = _panel_mode == "album"
+	_panel_text.custom_minimum_size.y = {"tasche": 120.0, "werte": 90.0, "faehigkeiten": 0.0, "album": 70.0}.get(_panel_mode, 330.0)
 	for tab_button: Button in _quest_tabs.get_children():
 		tab_button.button_pressed = tab_button.get_meta("tab") == _quest_tab
 	if _panel_mode == "auftraege":
@@ -2523,6 +2679,9 @@ func _fill_panel() -> void:
 				lines.append("%s [color=#f2c14e]%s[/color] – %s" % [UiStil.bild("kristall"), achievements[id].name, achievements[id].beschreibung])
 		if lines.is_empty():
 			lines.append("Noch keine Erfolge.")
+	elif _panel_mode == "album":
+		_panel_title.text = GameData.text("album")
+		_fill_album(p, lines)
 	elif _panel_mode == "faehigkeiten":
 		_panel_title.text = GameData.text("faehigkeiten_titel")
 		_faehigkeiten_zeilen(p)
@@ -2580,6 +2739,8 @@ func _fill_panel() -> void:
 				use += "  [url=guertel:%s][color=#f2c14e][%s][/color][/url]" % [picked, GameData.text("guertel_ablegen")]
 			if Ausruestung.ist_ausruestung(picked):
 				use += "  [url=anlegen:%s][color=#6dff8a][%s][/color][/url]" % [picked, GameData.text("anlegen")]
+			if KartenAlbum.karte_von(picked) != "":
+				use += "  [url=aktivieren:%s][color=#f2c14e][%s][/color][/url]" % [picked, GameData.text("karte_aktivieren")]
 			if state.can_discard(p, picked):
 				use += "  [url=wegwerfen:%s][color=#ff8a7a][%s][/color][/url]" % [picked, GameData.text("wegwerfen")]
 			lines.append("[b]%d × %s[/b] – %s%s" % [p.progress.item_count(picked), item.get("name", picked), item.get("beschreibung", ""), use])
@@ -2595,14 +2756,6 @@ func _fill_panel() -> void:
 			lines.append(GameData.text("tasche_leer"))
 		else:
 			lines.append("[color=#a0a0a0]%s[/color]" % GameData.text("tasche_tipp"))
-		# Kreuzweg-Karten (Sammlung)
-		var cards: Dictionary = p.progress.flags.get("karten", {})
-		if not cards.is_empty():
-			var names: PackedStringArray = []
-			for id: String in cards:
-				names.append("%s%s" % [KartenSpiel.card(id).name, " ×%d" % cards[id] if int(cards[id]) > 1 else ""])
-			lines.append("")
-			lines.append("[b]Kreuzweg-Karten (%d):[/b] %s" % [names.size(), ", ".join(names)])
 	_panel_text.text = "\n".join(lines)
 
 

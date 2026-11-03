@@ -27,7 +27,7 @@ func _process(delta: float) -> bool:
 				Netz.join("localhost", "Waldläufer", "elf_f")
 				# Spielstand: Klasse gewählt, auf dem Weg kurz vor dem Wald
 				var file := FileAccess.open(SAVE, FileAccess.WRITE)
-				file.store_string(JSON.stringify({version = SaveGame.VERSION, karte = "weg_gruenwacht", feld = [5, 9],
+				file.store_string(JSON.stringify({version = SaveGame.VERSION, karte = "weg_gruenwacht", feld = [2, 9],
 						progress = {level = 10, flags = {"angekommen": true, "klasse": "archer", "klasse_bestaetigt": true},
 							quests = {nach_gruenwacht = "aktiv"}}}))
 				file.close()

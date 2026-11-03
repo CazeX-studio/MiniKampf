@@ -1795,7 +1795,8 @@ func _reward_row() -> HBoxContainer:
 	if int(reward.get("gold", 0)) > 0:
 		parts.append(["gold", "+" + Geld.text(int(reward.gold))])
 	if str(reward.get("karte", "")) != "":
-		parts.append(["schluessel", "Karte: %s" % KartenSpiel.card(str(reward.karte)).name])
+		# Die Karte ist noch verdeckt, welches Monster drauf ist, zeigt erst das Aktivieren in der Tasche (D15)
+		parts.append(["schluessel", GameData.item_name("monsterkarte")])
 	for level: int in reward.get("stufen", []):
 		parts.append(["pfeil", "Stufe %d erreicht!" % level])
 	for part in parts:

@@ -189,6 +189,42 @@
 				5,
 				6
 			]
+		},
+		"heulwolf": {
+			"name": "Heulwolf",
+			"werte": [
+				5,
+				4,
+				3,
+				4
+			]
+		},
+		"irrlicht": {
+			"name": "Irrlicht",
+			"werte": [
+				3,
+				5,
+				4,
+				3
+			]
+		},
+		"nachtuhu": {
+			"name": "Nachtuhu",
+			"werte": [
+				4,
+				4,
+				5,
+				4
+			]
+		},
+		"funkenmarder": {
+			"name": "Funkenmarder",
+			"werte": [
+				6,
+				3,
+				4,
+				5
+			]
 		}
 	},
 	"startkarten": [
@@ -231,5 +267,43 @@
 				"karte": "wilder_moosling"
 			}
 		}
-	}
+	},
+	"seiten": [
+		{
+			"name": "Kreuzweg",
+			"karten": [
+				"feldschleim",
+				"wiesenkobold",
+				"ruepelkobold",
+				"glutkobold",
+				"sumpfschleim",
+				"dornling",
+				"sturmkobold"
+			]
+		},
+		{
+			"name": "Grünwacht",
+			"karten": [
+				"windfalke",
+				"steinkroete",
+				"waldsporenling",
+				"rindenbaer",
+				"donnerhirsch",
+				"heulwolf",
+				"irrlicht",
+				"nachtuhu",
+				"funkenmarder",
+				"wilder_moosling",
+				"wilde_glutwelpe",
+				"wilder_bachotter",
+				"sporenwolf",
+				"leuchtmotte",
+				"wurzelkriecher",
+				"glimmerkaefer",
+				"sporenkoenigin",
+				"wurzelmutter"
+			]
+		}
+	],
+	"hinweis_seiten": "seiten: das Kartenalbum (D15), eine Seite pro Region mit festen Plätzen in dieser Reihenfolge."
 }

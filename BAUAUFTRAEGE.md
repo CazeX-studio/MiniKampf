@@ -55,7 +55,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D12:** Gemeinsame Trank-Wartezeit. (1.3, Projekt 5 Schritt 3) – Status: fertig (03.11.2026; dazu haben jetzt alle Klassen ihre Tränke im Kampf, bisher nur der Novize)
 - **D13:** Händler, in Grünwacht die Kräuterhändlerin. (1.4, Projekt 6) – Status: fertig (03.11.2026; Salbei mit Stand auf dem Hauptplatz von Wipfelheim, Bingo verkauft auch Grundmaterialien; Bilder der neuen Waren: GRAFIK_AUFTRAG.md B6c)
 - **D14:** Tag und Nacht nach der Uhrzeit, nachts andere Monster. (1.5, Projekt 7) – Status: fertig (03.11.2026; Licht nach der Uhr, Testknopf in der Tasche, nachts Heulwolf und Irrlicht auf dem Weg, Nachtuhu und Funkenmarder im Wald; Kämpfe sehen nachts noch aus wie tags)
-- **D15:** Kartenalbum, Teil 1: Album, Karten aktivieren, Monster-Infos. (1.6, Projekt 8 Schritt 1–3) – Status: offen
+- **D15:** Kartenalbum, Teil 1: Album, Karten aktivieren, Monster-Infos. (1.6, Projekt 8 Schritt 1–3) – Status: fertig (03.11.2026; Taste L statt K, weil K schon die Fähigkeiten öffnet; Seiten Kreuzweg und Grünwacht, dazu Karten für die vier Nacht-Monster)
 - **D16:** Kartenalbum, Teil 2: Besitzeffekte, Deck, doppelte Karten verkaufen. (1.6, Projekt 8 Schritt 4–6) – Status: offen
 - **D17:** Kartenalbum, Teil 3: Belohnung volle Seite, Marv, Karten bis +10. (1.6, Projekt 8 Schritt 7–9) – Status: offen
 - **D18:** Körper für Bogenschütze und Monster-Zähmer einbauen (braucht Marcos Bilder). (1.8, Projekt 11 Schritt 4) – Status: offen
@@ -232,17 +232,17 @@ _Aus Marcos Entscheidung vom 22.10.2026: Tageszeit nach der echten Uhrzeit, nach
 ### Schritt 1: Kartenalbum
 - **Ziel:** Eigenes Menü (Taste K und Knopf oben) mit einer Seite pro Region. Feste Plätze für jedes Monster der Region, fehlende Karten nur als dunkler Umriss, Zähler „Grünwacht: 5 / 12“, doppelte Karten mit Anzahl. Die Textzeile unten in der Tasche entfällt.
 - **So testest du es:** Mit K das Album öffnen, zwischen den Seiten blättern; gesammelte Karten sind zu sehen, fehlende als Umriss, der Zähler stimmt.
-- **Status:** offen
+- **Status:** fertig (03.11.2026, als D15)
 
 ### Schritt 2: Karten aktivieren
 - **Ziel:** Eine gefundene Karte fällt als „unbekannte Monsterkarte“ in die Tasche (bei voller Tasche ins Beute-Fenster). „Aktivieren“ dreht sie mit einem kleinen Aufdeck-Moment um, danach liegt sie im Album und die Tasche ist wieder frei.
 - **So testest du es:** Monster besiegen, bis eine Karte kommt, in der Tasche „Aktivieren“ wählen: Die Karte dreht sich um und steht im Album.
-- **Status:** offen
+- **Status:** fertig (03.11.2026, als D15)
 
 ### Schritt 3: Monster-Infos im Album
 - **Ziel:** Schon die erste Karte eines Monsters zeigt im Album sein Element und seine Schwäche.
 - **So testest du es:** Im Album eine Karte anklicken: Element und Schwäche stehen dabei, bei fehlenden Karten nicht.
-- **Status:** offen
+- **Status:** fertig (03.11.2026, als D15)
 
 ### Schritt 4: Besitzeffekte
 - **Ziel:** Jede Karte im Album gibt einen kleinen dauerhaften Bonus, der zum Monster passt (z. B. Rindenbär +1 Leben, Windfalke +1 Tempo) und im Kampf wirkt. Doppelte zählen nicht mehrfach. Im Album und unter „Werte (C)“ steht, was die Karten zusammen bringen. Vorerst nur Werte, die es im Kampf schon gibt (Leben, Mana, Angriff, Tempo); Verteidigung kommt mit der Ausrüstung dazu.

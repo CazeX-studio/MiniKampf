@@ -27,6 +27,7 @@ extends RefCounted
 ##   {type = "anlegen", gegenstand = "…"} / {type = "ablegen", platz = "waffe"}  Ausrüstung (Projekt 14, K.1)
 ##   {type = "aussehen", hut = "…", ruecken = "…", farben = "…", waffe = "…"}  Aussehen-Plätze ändern ("" = keins, fehlt = bleibt)
 ##   {type = "wegwerfen", gegenstand = "…"}  alle Stück eines Gegenstands aus der Tasche wegwerfen
+##   {type = "karte_aktivieren", gegenstand = "monsterkarte_…"}  eine verdeckte Monsterkarte umdrehen, sie kommt ins Album (D15)
 ##   {type = "beute_nehmen", gegenstand = "…"} / {type = "beute_lassen"}  Beute, die nicht in die Tasche gepasst hat
 ##   {type = "test_geld", bronze = 75} / {type = "test_tasche"} / {type = "test_beute"}  Testknöpfe (nur im Godot-Editor)
 ##   {type = "karten_ergebnis", gegner = "marv", gewonnen = true, unentschieden = false}  Ende einer Partie Kreuzweg-Karten
@@ -426,6 +427,8 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 				progress_changed.emit(p.id)
 		"wegwerfen":
 			_discard(p, str(cmd.get("gegenstand", "")))
+		"karte_aktivieren":
+			_activate_card(p, str(cmd.get("gegenstand", "")))
 		"guertel_ablegen":
 			_belt_put(p, str(cmd.get("gegenstand", "")))
 		"guertel_nehmen":
@@ -2400,6 +2403,23 @@ func add_card(p: PlayerState, card_id: String) -> void:
 		_say(p, GameData.text("karte_neu", [KartenSpiel.card(card_id).name]))
 
 
+## Eine Monsterkarte gefunden: Sie liegt verdeckt in der Tasche (oder im Beute-Fenster, wenn die Tasche voll ist).
+func _find_card(p: PlayerState, card_id: String) -> void:
+	if not GameData.get_file("kartenspiel").get("karten", {}).has(card_id):
+		return
+	give_loot(p, {KartenAlbum.verdeckt(card_id): 1})
+
+
+## Verdeckte Karte umdrehen: Sie verschwindet aus der Tasche und steht im Album.
+func _activate_card(p: PlayerState, item_id: String) -> void:
+	var card_id := KartenAlbum.karte_von(item_id)
+	if card_id == "" or p.progress.item_count(item_id) <= 0:
+		return
+	p.progress.remove_item(item_id, 1)
+	add_card(p, card_id)
+	progress_changed.emit(p.id)
+
+
 ## Mit der Sternentafel kommen die Startkarten (beim ersten Spiel).
 func _ensure_starter_cards(p: PlayerState) -> void:
 	if not p.progress.flags.get("karten", {}).is_empty():
@@ -2472,12 +2492,13 @@ func _wild_result(p: PlayerState, kampf_id: String, battle: Dictionary, won: boo
 		_give_gold(p, int(battle.get("gold", 0)))
 		_give_xp(p, int(battle.get("erfahrung", 0)))
 		# Mit etwas Glück eine Monsterkarte (nur wer schon eine Sternentafel hat, sammelt Karten)
+		# Die Karte kommt verdeckt in die Tasche (bei voller Tasche ins Beute-Fenster), ins Album erst mit „Aktivieren“ (D15)
 		var drop: Array = GameData.wild_monsters()[int(kampf_id.substr(5))].gegner
 		if _shown_card != "?":
 			if _shown_card != "":
-				add_card(p, _shown_card)
+				_find_card(p, _shown_card)
 		elif p.progress.item_count("sternentafel") > 0 and card_rng.randf() < float(GameData.get_file("kartenspiel").get("beute", 0.0)):
-			add_card(p, str(drop[card_rng.randi() % drop.size()]))
+			_find_card(p, str(drop[card_rng.randi() % drop.size()]))
 	else:
 		_say(p, GameData.text("wild_verloren"))
 		var start := get_map(p.map).start

@@ -141,10 +141,17 @@ func _test_world() -> void:
 		before += int(p.progress.flags.karten[id])
 	for i in 30:
 		world.apply_command("a", {type = "kampf_ergebnis", kampf = "wild:1", gewonnen = true})
+	# D15: Gefundene Karten liegen erst verdeckt in der Tasche, ins Album kommen sie mit „Aktivieren“
+	var verdeckt := p.progress.item_count("monsterkarte_steinkroete")
+	_check(verdeckt > 0, "Monsterkarten als Beute, verdeckt in der Tasche (%d)" % verdeckt)
+	_check(GameData.item_name("monsterkarte_steinkroete") == "Unbekannte Monsterkarte", "In der Tasche heißt sie „Unbekannte Monsterkarte“")
+	_check(int(p.progress.flags.karten.get("steinkroete", 0)) == 0, "Im Album steht sie noch nicht")
+	world.apply_command("a", {type = "karte_aktivieren", gegenstand = "monsterkarte_steinkroete"})
 	var after := 0
 	for id: String in p.progress.flags.karten:
 		after += int(p.progress.flags.karten[id])
-	_check(after > before and int(p.progress.flags.karten.get("steinkroete", 0)) > 0, "Monsterkarten als Beute (%d neue)" % (after - before))
+	_check(after == before + 1 and int(p.progress.flags.karten.get("steinkroete", 0)) == 1, "Aktiviert: Die Karte steht im Album")
+	_check(p.progress.item_count("monsterkarte_steinkroete") == verdeckt - 1, "Und ist aus der Tasche verschwunden")
 
 
 ## Der Spieltisch mit Anzeige: eine ganze Partie durchtippen, danach ist das Ergebnis da.

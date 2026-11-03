@@ -34,6 +34,9 @@ static func item(id: String) -> Dictionary:
 		var pebble: Dictionary = get_file("gegenstaende").get("testkiesel", {}).duplicate()
 		pebble.name = "%s %s" % [pebble.get("name", "Testkiesel"), id.trim_prefix("testkiesel_")]
 		return pebble
+	# Verdeckte Monsterkarten (D15): "monsterkarte_windfalke" usw. sehen alle gleich aus, welche es ist, zeigt erst das Aktivieren
+	if id.begins_with("monsterkarte_"):
+		return get_file("gegenstaende").get("monsterkarte", {name = "Unbekannte Monsterkarte"})
 	return get_file("gegenstaende").get(id, {name = id, beschreibung = ""})
 
 

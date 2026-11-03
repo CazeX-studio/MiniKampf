@@ -11,7 +11,14 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** D15 (Kartenalbum, Teil 1: Album, Karten aktivieren, Monster-Infos). Alle Testtage stehen seit 02.11. am Ende, Marco testet das volle Spiel zusammen. D9h wartet auf Marcos Bilder (GRAFIK_AUFTRAG.md, Teil E).
+- **Nächster Schritt:** D16 (Kartenalbum, Teil 2: Besitzeffekte, Deck, doppelte Karten verkaufen). Alle Testtage stehen seit 02.11. am Ende, Marco testet das volle Spiel zusammen. D9h wartet auf Marcos Bilder (GRAFIK_AUFTRAG.md, Teil E).
+
+- **Neu (03.11.): D15 Kartenalbum, Teil 1** (1.6, Projekt 8 Schritt 1–3): Das Kartenalbum öffnet sich mit **L** oder dem lila Knopf oben (K war schon mit den Fähigkeiten belegt). Je Region eine Seite (Kreuzweg 7 Plätze, Grünwacht 18 Plätze samt Pilzhöhle und Nacht-Monstern) mit Zähler wie „Grünwacht: 6 / 18“. Gesammelte Karten zeigen das Monster und die Anzahl, fehlende nur einen dunklen Umriss. Eine angetippte Karte zeigt Element und Schwächen. Gefundene Karten liegen erst als „Unbekannte Monsterkarte“ in der Tasche (bei voller Tasche im Beute-Fenster), mit „Aktivieren“ dreht sie sich um und kommt ins Album. Die Kartenzeile unten in der Tasche ist weg. Karten von Oma Hagebutte, Marv und die Startkarten kommen wie bisher gleich ins Album.
+  - **So testest du es:**
+    1. Mit L das Album öffnen und zwischen Kreuzweg und Grünwacht wechseln: Zähler, Bilder und dunkle Umrisse.
+    2. Eine Karte antippen: Element und Schwächen stehen unten, bei fehlenden Karten nur ein Hinweis.
+    3. Mit Sternentafel Monster besiegen, bis eine Karte kommt: In der Tasche liegt eine „Unbekannte Monsterkarte“.
+    4. Dort „Aktivieren“: Die Karte dreht sich um, danach steht sie im Album.
 
 - **Neu (03.11.): D14 Tag und Nacht** (1.5, Projekt 7): Das Licht richtet sich nach deiner Uhrzeit. Ab 19 Uhr wird es warm und langsam dunkel, von 21 bis 6 Uhr ist Nacht (bläulich, dunkler), ab 6 Uhr wird es wieder hell. Nachts leuchten Feuer, Laternen und Fenster stärker. Oben links steht die Uhrzeit. Die Fest-Nacht bleibt immer Nacht, die Pilzhöhle kennt keine Tageszeit. Nachts stehen in der Wildnis andere Monster: auf dem Weg nach Grünwacht Heulwolf und Irrlicht, im Wald Nachtuhu und Funkenmarder (etwas stärker, mit ihren fertigen Bildern). Beim Zusammenspielen gilt für die Monster die Uhr des Servers, damit alle dieselben sehen. Noch nicht drin: Kämpfe sehen nachts noch aus wie tags, nachts geschlossene Stände und andere Figuren (D20).
   - **So testest du es:**
