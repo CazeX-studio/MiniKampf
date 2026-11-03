@@ -20,6 +20,9 @@ func _initialize() -> void:
 	_test_welt()
 	_test_boni()
 	_test_deck_und_ankauf()
+	_test_volle_seite()
+	_test_marv()
+	_test_verbessern()
 	SaveGame.path = "user://test_kartenalbum.json"
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(SaveGame.path))
 	change_scene_to_file("res://scenes/kreuzweg.tscn")
@@ -140,6 +143,83 @@ func _test_deck_und_ankauf() -> void:
 	world.apply_command("a", {type = "karte_verkaufen", karte = "wiesenkobold"})
 	_check(p.progress.flags.karten.wiesenkobold == 1, "Einzelne Karten verkauft man nicht")
 	Tageszeit.feste_stunde = -1.0
+
+
+## D17: volle Seite -> Titel und Kopfbedeckung, volles Album -> Kartenrücken
+func _test_volle_seite() -> void:
+	var world := WorldState.new()
+	var p := world.add_player("a", "Test", "elf_m", Vector2i(6, 15))
+	p.look = "novize_w"
+	_check(not world.hut_frei(p, "geweihband") and world.hut_frei(p, "wanderhut"), "Belohnungs-Hut ist erst gesperrt, der Wanderhut nicht")
+	world.apply_command("a", {type = "aussehen", hut = "geweihband"})
+	_check(FigurTeile.aussehen_von(p.look).get("hut", "") != "geweihband", "Gesperrten Hut kann man nicht aufsetzen")
+	var seiten := KartenAlbum.seiten()
+	for karte: String in seiten[1].karten.slice(1):
+		world.add_card(p, karte)
+	_check(not p.progress.flags.has("titel"), "Fast volle Seite: noch keine Belohnung")
+	world.add_card(p, seiten[1].karten[0])
+	_check(p.progress.flags.get("titel", "") == "Kenner von Grünwacht", "Volle Seite: Titel „Kenner von Grünwacht“")
+	_check(world.hut_frei(p, "geweihband") and not world.hut_frei(p, "sternreif"), "Volle Seite: die Kopfbedeckung der Region")
+	world.apply_command("a", {type = "aussehen", hut = "geweihband"})
+	_check(FigurTeile.aussehen_von(p.look).get("hut", "") == "geweihband", "Jetzt lässt sie sich aufsetzen")
+	_check(FigurTeile.hut_liste().has("geweihband") and FigurTeile.hut_belohnung("geweihband"), "Kopfbedeckung steht in der Hut-Liste")
+	_check(not p.progress.flags.has("kartenruecken"), "Noch kein Kartenrücken (Kreuzweg fehlt)")
+	world.apply_command("a", {type = "test_album", seite = 0})
+	_check(p.progress.flags.get("titel", "") == "Kenner von Kreuzweg" and world.hut_frei(p, "sternreif"), "Testknopf füllt Kreuzweg: Titel und Kopfbedeckung")
+	_check(p.progress.flags.get("kartenruecken", "") == "sterne", "Volles Album: Sternen-Kartenrücken")
+	var vorher := p.progress.flags.duplicate(true)
+	world.add_card(p, "windfalke")
+	_check(p.progress.flags.titel == vorher.titel, "Belohnung gibt es nur einmal")
+
+
+func _test_marv() -> void:
+	var world := WorldState.new()
+	var p := world.add_player("a", "Test", "elf_m", Vector2i(6, 15))
+	p.progress.quests["marvs_traum"] = "abgegeben"
+	p.progress.flags["karten"] = {feldschleim = 1}
+	_check(world._entry_node(p, "marv") == "danach", "Nur Startkarten: Marv hat nichts Neues zu sagen")
+	p.progress.flags["karten"] = {feldschleim = 1, windfalke = 1}
+	_check(world._entry_node(p, "marv") == "neue_karte", "Neue Karte: Marv spricht sie an")
+	world.start_dialog(p, "marv")
+	_check(world.dialog_view(p).text.contains("Windfalke"), "Marv nennt die Karte beim Namen")
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_next"})
+	_check(world._entry_node(p, "marv") == "danach", "Danach kennt er sie")
+
+
+func _test_verbessern() -> void:
+	var world := WorldState.new()
+	var p := world.add_player("a", "Test", "elf_m", Vector2i(6, 15))
+	world.card_rng.seed = 5
+	p.progress.flags["karten"] = {rindenbaer = 12}
+	p.progress.gold = 100000
+	var grund := int(KartenAlbum.bonus("rindenbaer").leben)
+	world.apply_command("a", {type = "karte_verbessern", karte = "rindenbaer"})
+	_check(int(p.progress.flags.karten_stufe.rindenbaer) == 1 and p.progress.flags.karten.rindenbaer == 11
+			and p.progress.gold == 100000 - KartenAlbum.verbessern_preis(1), "+1: eine doppelte Karte und Bronze sind weg")
+	for i in 3:
+		world.apply_command("a", {type = "karte_verbessern", karte = "rindenbaer"})
+	_check(int(p.progress.flags.karten_stufe.rindenbaer) == 4, "Bis +4 klappt es immer")
+	_check(int(KartenAlbum.boni_von(p.progress.flags).leben) > grund, "Der Besitzeffekt ist gestiegen (%d → %d)" % [grund, KartenAlbum.boni_von(p.progress.flags).leben])
+	var fehlschlag := false
+	for i in 7:
+		var vorher := int(p.progress.flags.karten_stufe.rindenbaer)
+		var karten_vorher := int(p.progress.flags.karten.rindenbaer)
+		if karten_vorher < 2:
+			break
+		world.apply_command("a", {type = "karte_verbessern", karte = "rindenbaer"})
+		if int(p.progress.flags.karten_stufe.rindenbaer) == vorher:
+			fehlschlag = true
+			_check(int(p.progress.flags.karten.rindenbaer) == karten_vorher - 1, "Fehlschlag: Stufe bleibt, doppelte Karte ist weg")
+	_check(fehlschlag, "Ab +5 klappt es manchmal nicht")
+	p.progress.flags["karten"] = {rindenbaer = 1}
+	var stufe := int(p.progress.flags.karten_stufe.rindenbaer)
+	world.apply_command("a", {type = "karte_verbessern", karte = "rindenbaer"})
+	_check(int(p.progress.flags.karten_stufe.rindenbaer) == stufe and p.progress.flags.karten.rindenbaer == 1, "Ohne doppelte Karte kein Verbessern")
+	p.progress.flags["karten"] = {windfalke = 30}
+	p.progress.flags["karten_stufe"] = {windfalke = 10}
+	world.apply_command("a", {type = "karte_verbessern", karte = "windfalke"})
+	_check(p.progress.flags.karten.windfalke == 30, "+10 ist das Höchste")
 
 
 func _process(_delta: float) -> bool:

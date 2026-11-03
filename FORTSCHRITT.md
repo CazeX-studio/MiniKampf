@@ -11,7 +11,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** D17 (Kartenalbum, Teil 3: Belohnung volle Seite, Marv, Karten bis +10). Alle Testtage stehen seit 02.11. am Ende, Marco testet das volle Spiel zusammen. D9h wartet auf Marcos Bilder (GRAFIK_AUFTRAG.md, Teil E).
+- **Nächster Schritt:** D18 (Körper für Bogenschütze und Monster-Zähmer einbauen). Alle Testtage stehen seit 02.11. am Ende, Marco testet das volle Spiel zusammen. D9h wartet auf Marcos Bilder (GRAFIK_AUFTRAG.md, Teil E).
+
+- **Neu (03.11.): D17 Kartenalbum, Teil 3** (1.6, Projekt 8 Schritt 7–9): Eine volle Seite im Album bringt einen Titel („Kenner von Kreuzweg“, „Kenner von Grünwacht“) und eine Kopfbedeckung der Region (Sternenreif bzw. Geweih-Band), die es nur so gibt. Der Titel steht unter deinem Namen in der Welt, unter „Werte (C)“ und im Album, die Kopfbedeckung lässt sich unter Werte → Aussehen wählen. Ist das ganze Album voll, gibt es den Sternen-Kartenrücken: Deine Karten am Spieltisch haben dann einen goldenen Rand. Marv in Kreuzweg spricht neue Karten an („Ooooh! Ist das … ein Windfalke?!“). Karten lassen sich im Album bis +10 verbessern: Es kostet eine doppelte Karte und etwas Bronze, bis +4 klappt es immer, ab +5 nur mit Glück (80 % bis 30 %); jede Stufe macht den Besitzeffekt größer. Ein Testknopf im Album füllt die gerade offene Seite. Noch Platzhalter: Die beiden Kopfbedeckungen sind der Wanderhut in anderer Farbe.
+  - **Deine Sache:** Bilder für Sternenreif und Geweih-Band, Prompts in `Spieldesign/GRAFIK_AUFTRAG.md`, Abschnitt B6d.
+  - **So testest du es:**
+    1. Album (L), Testknopf „Seite füllen“ auf Grünwacht: Meldung, Titel unter deinem Namen, unter Werte → Aussehen das Geweih-Band.
+    2. Auch Kreuzweg füllen: Am Spieltisch haben deine Karten jetzt einen goldenen Rand.
+    3. Eine neue Karte aktivieren und in Kreuzweg zu Marv: Er spricht sie an.
+    4. Im Album eine doppelte Karte antippen und verbessern: „+1“ am Namen, der Bonus steigt. Ab +5 klappt es manchmal nicht.
 
 - **Neu (03.11.): D16 Kartenalbum, Teil 2** (1.6, Projekt 8 Schritt 4–6): Jede Karte im Album gibt einen kleinen dauerhaften Bonus, der zum Monster passt (z. B. Rindenbär +3 Leben, Windfalke +1 Tempo, Irrlicht +3 Mana, Glutwelpe +1 Angriff). Doppelte zählen nicht mehrfach. Der Bonus wirkt im Kampf und steht im Album („Alle Karten zusammen“) und unter „Werte (C)“. Im Album legt „Ins Deck“ bis zu 5 Karten fest, mit denen du bei Kreuzweg-Karten antrittst (blau umrandet); fehlen welche, füllt das Spiel mit deinen stärksten auf. Bingo kauft doppelte Karten für ein paar Bronze, die letzte Karte jeder Sorte bleibt im Album. Bingos lange Warenliste lässt sich jetzt rollen. Die Bonus-Zahlen sind vorläufig.
   - **So testest du es:**

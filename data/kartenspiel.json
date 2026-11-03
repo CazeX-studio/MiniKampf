@@ -354,7 +354,11 @@
 				"sumpfschleim",
 				"dornling",
 				"sturmkobold"
-			]
+			],
+			"belohnung": {
+				"titel": "Kenner von Kreuzweg",
+				"hut": "sternreif"
+			}
 		},
 		{
 			"name": "Grünwacht",
@@ -377,9 +381,33 @@
 				"glimmerkaefer",
 				"sporenkoenigin",
 				"wurzelmutter"
-			]
+			],
+			"belohnung": {
+				"titel": "Kenner von Grünwacht",
+				"hut": "geweihband"
+			}
 		}
 	],
 	"hinweis_seiten": "seiten: das Kartenalbum (D15), eine Seite pro Region mit festen Plätzen in dieser Reihenfolge.",
-	"hinweis_bonus": "bonus: Besitzeffekt der Karte (D16), wirkt dauerhaft im Kampf, solange sie im Album ist; doppelte zählen nicht mehrfach. Werte: leben, mana, angriff, tempo."
+	"hinweis_bonus": "bonus: Besitzeffekt der Karte (D16), wirkt dauerhaft im Kampf, solange sie im Album ist; doppelte zählen nicht mehrfach. Werte: leben, mana, angriff, tempo.",
+	"album_voll": {
+		"kartenruecken": "sterne",
+		"name": "Sternen-Kartenrücken"
+	},
+	"verbessern": {
+		"hinweis": "Karten verbessern (D17, Beschluss 27.10.): mit einer doppelten Karte derselben Sorte plus Bronze. Bis +4 klappt es immer, ab +5 mit der Chance aus 'chance' (Stufe -> Anteil). Fehlschlag: Stufe bleibt, doppelte Karte und Bronze sind weg. Jede Stufe macht den Besitzeffekt um 'staerker' (Anteil des Grundwerts) größer.",
+		"hoechste": 10,
+		"sicher_bis": 4,
+		"bronze_je_stufe": 10,
+		"staerker": 0.25,
+		"chance": {
+			"5": 0.8,
+			"6": 0.7,
+			"7": 0.6,
+			"8": 0.5,
+			"9": 0.4,
+			"10": 0.3
+		}
+	},
+	"hinweis_belohnung": "belohnung (je Seite): Titel und Kopfbedeckung (data/aussehen_teile.json, nur durchs Sammeln) für eine volle Seite. album_voll: Kartenrücken, wenn alle Seiten voll sind (Beschluss 30.10.)."
 }

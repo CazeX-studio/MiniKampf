@@ -1,5 +1,5 @@
 {
-	"_hinweis": "Aussehen-Teile, erzeugt von tools/aussehen_bilder.py. waffe: anker = Punkt auf der Parierstange, kommt auf griff des Bildes (data/figurteile.json), Spitze oben, wird um waffe_winkel gedreht. hut: anker = Punkt im Hutbild, der auf die Kopfmitte kommt, sitz = so weit (Anteil der Kopfhöhe) unter dem Scheitel. ruecken: je Richtung 6 Bilder (Stehen 2, Laufen 4) mit anker an der Schulterkante, kommt auf den Halspunkt des Körpers plus versatz. flaechen: die festen Farbtöne des Bildes je Farbfläche (hell, mittel, dunkel, Schatten), damit das Spiel sie umfärben kann (data/farbpaletten.json).",
+	"_hinweis": "Aussehen-Teile, erzeugt von tools/aussehen_bilder.py. waffe: anker = Punkt auf der Parierstange, kommt auf griff des Bildes (data/figurteile.json), Spitze oben, wird um waffe_winkel gedreht. hut: anker = Punkt im Hutbild, der auf die Kopfmitte kommt, sitz = so weit (Anteil der Kopfhöhe) unter dem Scheitel. ruecken: je Richtung 6 Bilder (Stehen 2, Laufen 4) mit anker an der Schulterkante, kommt auf den Halspunkt des Körpers plus versatz. flaechen: die festen Farbtöne des Bildes je Farbfläche (hell, mittel, dunkel, Schatten), damit das Spiel sie umfärben kann (data/farbpaletten.json). Belohnungs-Hüte (Kartenalbum, D17): belohnung = nur nach einer vollen Album-Seite wählbar, bild = Bilder eines anderen Huts nutzen (Platzhalter), palette = Grundfarbe.",
 	"hut": {
 		"wanderhut": {
 			"name": "Wanderhut",
@@ -32,6 +32,76 @@
 					"#130803"
 				]
 			}
+		},
+		"sternreif": {
+			"name": "Sternenreif (Platzhalter)",
+			"seite": {
+				"anker": [
+					44,
+					37
+				],
+				"sitz": 0.34
+			},
+			"vorn": {
+				"anker": [
+					42,
+					38
+				],
+				"sitz": 0.34
+			},
+			"hinten": {
+				"anker": [
+					43,
+					38
+				],
+				"sitz": 0.34
+			},
+			"flaechen": {
+				"leder": [
+					"#986f53",
+					"#63341d",
+					"#3a1d0e",
+					"#130803"
+				]
+			},
+			"bild": "wanderhut",
+			"palette": "glutschmiede",
+			"belohnung": true
+		},
+		"geweihband": {
+			"name": "Geweih-Band (Platzhalter)",
+			"seite": {
+				"anker": [
+					44,
+					37
+				],
+				"sitz": 0.34
+			},
+			"vorn": {
+				"anker": [
+					42,
+					38
+				],
+				"sitz": 0.34
+			},
+			"hinten": {
+				"anker": [
+					43,
+					38
+				],
+				"sitz": 0.34
+			},
+			"flaechen": {
+				"leder": [
+					"#986f53",
+					"#63341d",
+					"#3a1d0e",
+					"#130803"
+				]
+			},
+			"bild": "wanderhut",
+			"palette": "waldlaeufer",
+			"belohnung": true
 		}
 	},
 	"ruecken": {

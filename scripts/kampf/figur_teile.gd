@@ -243,6 +243,11 @@ static func hut_liste() -> Dictionary:
 	return _namen(_alle_schichten().get("hut", {}))
 
 
+## Gibt es diesen Hut nur als Belohnung (Kartenalbum, D17)? Dann ist er erst nach dem Freischalten wählbar.
+static func hut_belohnung(hut_id: String) -> bool:
+	return bool(_alle_schichten().get("hut", {}).get(hut_id, {}).get("belohnung", false))
+
+
 ## Alle Rückenteile: Name -> Anzeigename.
 static func ruecken_liste() -> Dictionary:
 	return _namen(_alle_schichten().get("ruecken", {}))
@@ -258,7 +263,8 @@ static func _namen(teile: Dictionary) -> Dictionary:
 ## Hut auf ein Kopfbild setzen. Ergebnis: {bild, verschoben} (um so viel ist der alte Inhalt im neuen Bild verrutscht).
 static func _hut_aufsetzen(kopf_bild: Image, hut_id: String, richtung: String, palette := "") -> Dictionary:
 	var daten: Dictionary = _alle_schichten().hut[hut_id].get(richtung, {})
-	var hut_bild := _bild_laden(HUT_BILD % [hut_id, richtung])
+	# "bild": Bilder eines anderen Huts nutzen (Platzhalter, z. B. Belohnungs-Hüte des Kartenalbums)
+	var hut_bild := _bild_laden(HUT_BILD % [str(_alle_schichten().hut[hut_id].get("bild", hut_id)), richtung])
 	if hut_bild == null or daten.is_empty():
 		return {bild = kopf_bild, verschoben = Vector2.ZERO}
 	hut_bild = _schicht_faerben(hut_bild, _alle_schichten().hut[hut_id], palette)
@@ -351,6 +357,9 @@ static func umfaerben(bild: Image, flaechen: Dictionary, palette_id: String) -> 
 
 ## Hut oder Rückenteil in der gewählten Palette.
 static func _schicht_faerben(bild: Image, teil: Dictionary, palette: String) -> Image:
+	# Ohne gewählte Farben: die Grundfarbe des Teils (z. B. Platzhalter-Hüte in anderer Farbe)
+	if palette == "":
+		palette = str(teil.get("palette", ""))
 	if palette == "" or not paletten_liste().has(palette) or not teil.has("flaechen"):
 		return bild
 	return umfaerben(bild, teil.flaechen, palette)

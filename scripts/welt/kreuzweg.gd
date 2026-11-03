@@ -496,6 +496,8 @@ func _sync() -> void:
 			_objects.add_child(view)
 			_characters[id] = view
 		view.set_meta("look", p.look)
+		if id == local_id:
+			view.set_title(str(p.progress.flags.get("titel", "")))
 		if id != local_id and Netz.online():
 			view.set_name_color(GROUP_NAME_COLOR if Netz.in_my_group(id) else Color.WHITE)
 		view.position = cell_center(p.pos)
@@ -1654,6 +1656,10 @@ func _build_ui() -> void:
 			_bag_selected = -1
 			_fill_panel()
 			return
+		if link.begins_with("verbessern:"):
+			_send({type = "karte_verbessern", karte = link.trim_prefix("verbessern:")})
+			_fill_panel()
+			return
 		if link.begins_with("deck:"):
 			_send({type = "deck", karte = link.trim_prefix("deck:")})
 			_fill_panel()
@@ -2563,10 +2569,16 @@ func _fill_album(p: PlayerState, lines: PackedStringArray) -> void:
 		reiter.toggle_mode = true
 		reiter.button_pressed = i == _album_seite
 		_album_tabs.add_child(reiter)
+	if OS.is_debug_build():
+		# Testknopf (nur in der Godot-Testversion): alle Karten dieser Seite geben
+		_album_tabs.add_child(_small_button(GameData.text("test_album"), func() -> void:
+			_send({type = "test_album", seite = _album_seite})
+			_fill_panel()))
 	if seiten.is_empty():
 		return
+	var stufen: Dictionary = p.progress.flags.get("karten_stufe", {})
 	for id: String in seiten[_album_seite].karten:
-		_album_grid.add_child(_album_platz(id, int(sammlung.get(id, 0))))
+		_album_grid.add_child(_album_platz(id, int(sammlung.get(id, 0)), int(stufen.get(id, 0))))
 	var deck: Array = p.progress.flags.get("deck", [])
 	if _album_karte != "" and int(sammlung.get(_album_karte, 0)) > 0:
 		var info := KartenAlbum.info(_album_karte)
@@ -2578,9 +2590,17 @@ func _fill_album(p: PlayerState, lines: PackedStringArray) -> void:
 				"[color=#%s]%s[/color]" % [Elements.color(element).to_html(false), element] if element != "" else "–",
 				", ".join(schwach) if not schwach.is_empty() else "–"]))
 		var im_deck := _album_karte in deck
-		lines.append("%s  [url=deck:%s][color=#%s][%s][/color][/url]" % [
-				GameData.text("album_bonus_karte", [KartenAlbum.boni_text(KartenAlbum.bonus(_album_karte))]), _album_karte,
-				"ff8a7a" if im_deck else "5ab8ff", GameData.text("deck_raus" if im_deck else "deck_rein")])
+		var stufe := int(stufen.get(_album_karte, 0))
+		var zeile := "%s  [url=deck:%s][color=#%s][%s][/color][/url]" % [
+				GameData.text("album_bonus_karte", [KartenAlbum.boni_text(KartenAlbum.bonus(_album_karte, stufe))]), _album_karte,
+				"ff8a7a" if im_deck else "5ab8ff", GameData.text("deck_raus" if im_deck else "deck_rein")]
+		# Verbessern (D17): mit einer doppelten Karte und etwas Bronze, bis +10
+		if int(sammlung[_album_karte]) >= 2 and stufe < KartenAlbum.hoechste_stufe():
+			var chance := KartenAlbum.verbessern_chance(stufe + 1)
+			zeile += "\n[url=verbessern:%s][color=#f2c14e][%s %s][/color][/url]" % [_album_karte,
+					GameData.text("karte_verbessern", [stufe + 1, Geld.text(KartenAlbum.verbessern_preis(stufe + 1))]),
+					GameData.text("karte_verbessern_sicher") if chance >= 1.0 else GameData.text("karte_verbessern_chance", [roundi(chance * 100)])]
+		lines.append(zeile)
 	elif _album_karte != "":
 		lines.append("[color=#a0a0a0]%s[/color]" % GameData.text("album_fehlt"))
 	elif sammlung.is_empty():
@@ -2588,7 +2608,9 @@ func _fill_album(p: PlayerState, lines: PackedStringArray) -> void:
 	else:
 		lines.append("[color=#a0a0a0]%s[/color]" % GameData.text("album_tipp"))
 	# Was alle Karten zusammen bringen (D16) und das Deck für Kreuzweg-Karten
-	var boni := KartenAlbum.boni_text(KartenAlbum.boni(sammlung))
+	var boni := KartenAlbum.boni_text(KartenAlbum.boni_von(p.progress.flags))
+	if str(p.progress.flags.get("titel", "")) != "":
+		lines.append(GameData.text("album_titel", ["[color=#f2c14e]%s[/color]" % p.progress.flags.titel]))
 	if boni != "":
 		lines.append(GameData.text("album_boni", ["[color=#6dff8a]%s[/color]" % boni]))
 	if not sammlung.is_empty():
@@ -2597,7 +2619,7 @@ func _fill_album(p: PlayerState, lines: PackedStringArray) -> void:
 
 
 ## Ein Platz im Album: Bild des Monsters (fehlt die Karte, nur ein dunkler Umriss), darunter Name und Anzahl.
-func _album_platz(id: String, anzahl: int) -> Control:
+func _album_platz(id: String, anzahl: int, stufe := 0) -> Control:
 	var platz := PanelContainer.new()
 	platz.custom_minimum_size = Vector2(92, 104)
 	var rahmen := StyleBoxFlat.new()
@@ -2627,6 +2649,8 @@ func _album_platz(id: String, anzahl: int) -> Control:
 	bild.modulate = Color.WHITE if anzahl > 0 else Color(0, 0, 0, 0.8)
 	box.add_child(bild)
 	var name_text: String = KartenSpiel.card(id).name if anzahl > 0 else "???"
+	if anzahl > 0 and stufe > 0:
+		name_text += " +%d" % stufe
 	if anzahl > 1:
 		name_text += " ×%d" % anzahl
 	# Karten im Deck für Kreuzweg-Karten: blauer Rahmen und blaue Schrift
@@ -2711,7 +2735,7 @@ func _fill_panel() -> void:
 	_bag_tests.visible = _panel_mode == "tasche"
 	_album_tabs.visible = _panel_mode == "album"
 	_album_grid.visible = _panel_mode == "album"
-	_panel_text.custom_minimum_size.y = {"tasche": 120.0, "werte": 90.0, "faehigkeiten": 0.0, "album": 120.0}.get(_panel_mode, 330.0)
+	_panel_text.custom_minimum_size.y = {"tasche": 120.0, "werte": 90.0, "faehigkeiten": 0.0, "album": 140.0}.get(_panel_mode, 330.0)
 	for tab_button: Button in _quest_tabs.get_children():
 		tab_button.button_pressed = tab_button.get_meta("tab") == _quest_tab
 	if _panel_mode == "auftraege":
@@ -2741,7 +2765,7 @@ func _fill_panel() -> void:
 			var data: Dictionary = Sandbox.CLASSES[klasse]
 			var bonus := p.progress.level - 1
 			# Besitzeffekte der Karten (D16) zählen mit
-			var karten := KartenAlbum.boni(p.progress.flags.get("karten", {}))
+			var karten := KartenAlbum.boni_von(p.progress.flags)
 			_fill_stats_head(p, data.title, data.hp + BattleState.LEVEL_HP * bonus + int(karten.get("leben", 0)),
 					data.mana + BattleState.LEVEL_MANA * bonus + int(karten.get("mana", 0)) if data.mana > 0 else 0)
 			lines.append(UiStil.bild("pfeil") + " [b]Tempo: %d[/b]" % (data.tempo + int(karten.get("tempo", 0))))
@@ -2759,7 +2783,7 @@ func _fill_panel() -> void:
 			_panel_text.text = "\n".join(lines)
 			return
 		var stats := Grundwerte.for_level(p.progress.level)
-		var karten_n := KartenAlbum.boni(p.progress.flags.get("karten", {}))
+		var karten_n := KartenAlbum.boni_von(p.progress.flags)
 		_fill_stats_head(p, "Novize", stats.leben + int(karten_n.get("leben", 0)), stats.mana + int(karten_n.get("mana", 0)))
 		var chosen := str(p.progress.flags.get("klasse", ""))
 		if p.progress.flags.has("klasse_bestaetigt") and Sandbox.CLASSES.has(chosen):
@@ -2912,6 +2936,9 @@ func _fill_stats_head(p: PlayerState, title: String, hp: int, mana: int) -> void
 	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_stats_head.add_child(right)
 	right.add_child(_label("%s · %s · Stufe %d" % [p.display_name, title, p.progress.level], 18, Color("f3ead8")))
+	# Titel aus dem Kartenalbum (D17)
+	if str(p.progress.flags.get("titel", "")) != "":
+		right.add_child(_label("„%s“" % p.progress.flags.titel, 15, Color("f2c14e")))
 	var xp_span := p.progress.xp_range()
 	if xp_span.y > 0:
 		right.add_child(_stat_bar("Erfahrung", p.progress.xp - xp_span.x, xp_span.y - xp_span.x, "gruen",
@@ -3150,7 +3177,12 @@ func _aussehen_zeilen(p: PlayerState) -> void:
 	var aussehen := FigurTeile.aussehen_von(p.look)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 8)
-	var plaetze := [["hut", "aussehen_hut", FigurTeile.hut_liste()], ["ruecken", "aussehen_ruecken", FigurTeile.ruecken_liste()],
+	# Kopfbedeckungen des Kartenalbums erst nach der vollen Seite (D17)
+	var huete := {}
+	for hut_id: String in FigurTeile.hut_liste():
+		if state.hut_frei(local_player(), hut_id):
+			huete[hut_id] = FigurTeile.hut_liste()[hut_id]
+	var plaetze := [["hut", "aussehen_hut", huete], ["ruecken", "aussehen_ruecken", FigurTeile.ruecken_liste()],
 			["farben", "aussehen_farben", FigurTeile.paletten_liste()], ["waffe", "aussehen_waffe", FigurTeile.waffe_liste()]]
 	for platz: Array in plaetze:
 		var teile: Dictionary = platz[2]
@@ -3216,7 +3248,7 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 	var progress := local_player().progress
 	BattleRequest.player_look = local_player().look
 	BattleRequest.player_gear = local_player().progress.ausruestung.duplicate()
-	BattleRequest.player_card_bonus = KartenAlbum.boni(local_player().progress.flags.get("karten", {}))
+	BattleRequest.player_card_bonus = KartenAlbum.boni_von(local_player().progress.flags)
 	BattleRequest.player_mana_potions = local_player().progress.potion_count("manatrank")
 	BattleRequest.player_mana_share = local_player().progress.mana_anteil
 	BattleRequest.player_skills = local_player().progress.faehigkeiten.duplicate()
@@ -3266,6 +3298,7 @@ func _on_scene(player_id: String, scene: String) -> void:
 		# Deck: die im Album gewählten Karten (D16), der Rest mit den stärksten aufgefüllt
 		var flags := local_player().progress.flags
 		KartenTisch.deck = KartenAlbum.deck(flags.get("karten", {}), flags.get("deck", []))
+		KartenTisch.ruecken = str(flags.get("kartenruecken", ""))
 		get_tree().change_scene_to_file.call_deferred("res://scenes/kartentisch.tscn")
 		return
 	# "erinnerung:rowan" = eine Erinnerungs-Szene aus data/erinnerungen.json

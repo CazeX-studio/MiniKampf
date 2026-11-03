@@ -57,7 +57,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D14:** Tag und Nacht nach der Uhrzeit, nachts andere Monster. (1.5, Projekt 7) – Status: fertig (03.11.2026; Licht nach der Uhr, Testknopf in der Tasche, nachts Heulwolf und Irrlicht auf dem Weg, Nachtuhu und Funkenmarder im Wald; Kämpfe sehen nachts noch aus wie tags)
 - **D15:** Kartenalbum, Teil 1: Album, Karten aktivieren, Monster-Infos. (1.6, Projekt 8 Schritt 1–3) – Status: fertig (03.11.2026; Taste L statt K, weil K schon die Fähigkeiten öffnet; Seiten Kreuzweg und Grünwacht, dazu Karten für die vier Nacht-Monster)
 - **D16:** Kartenalbum, Teil 2: Besitzeffekte, Deck, doppelte Karten verkaufen. (1.6, Projekt 8 Schritt 4–6) – Status: fertig (03.11.2026; Boni vorläufig je Karte +1 bis +5 Leben, Mana, Angriff oder Tempo; Bingos Laden lässt sich jetzt rollen)
-- **D17:** Kartenalbum, Teil 3: Belohnung volle Seite, Marv, Karten bis +10. (1.6, Projekt 8 Schritt 7–9) – Status: offen
+- **D17:** Kartenalbum, Teil 3: Belohnung volle Seite, Marv, Karten bis +10. (1.6, Projekt 8 Schritt 7–9) – Status: fertig (03.11.2026; Kopfbedeckungen Sternenreif und Geweih-Band noch als Platzhalter, Bildauftrag GRAFIK_AUFTRAG.md B6d; Sternen-Kartenrücken vorerst als goldener Rand der eigenen Karten)
 - **D18:** Körper für Bogenschütze und Monster-Zähmer einbauen (braucht Marcos Bilder). (1.8, Projekt 11 Schritt 4) – Status: offen
 - **D19:** Figuren-Baukasten mit den acht Grundkörpern einbauen (braucht Marcos Bilder). (neu, NPC.md) – Status: offen
 - **D20:** Kreuzweg nach Sitzung 30: Hatta, Zeichen über Diensten, Figuren tags und nachts, Ye mit Regenschirm. (1.9) – Status: offen
@@ -262,17 +262,17 @@ _Aus Marcos Entscheidung vom 22.10.2026: Tageszeit nach der echten Uhrzeit, nach
 ### Schritt 7: Belohnung für eine volle Seite
 - **Ziel:** Wer alle Karten einer Region hat, bekommt eine Belohnung (Titel, besonderer Kartenrücken oder Extra-Platz in der Tasche; welche genau, entscheidet Marco).
 - **So testest du es:** Per Testknopf alle Karten einer Region geben: Die Belohnung erscheint mit einer Meldung.
-- **Status:** offen
+- **Status:** fertig (03.11.2026, als D17)
 
 ### Schritt 8: Marv kommentiert neue Karten
 - **Ziel:** Hat man eine Karte, die Marv noch nicht gesehen hat, spricht er einen darauf an („Ooooh, die hab ich noch nicht!“).
 - **So testest du es:** Eine neue Karte aktivieren und in Kreuzweg zu Marv gehen.
-- **Status:** offen
+- **Status:** fertig (03.11.2026, als D17)
 
 ### Schritt 9: Karten verbessern bis +10
 - **Ziel:** Karten lassen sich bis +10 verbessern, mit einer doppelten Karte derselben Sorte plus etwas Gold. Bis +4 klappt es immer, ab +5 kann es misslingen. Jede Stufe stärkt den Besitzeffekt (und später den Sockel). Bei einem Fehlschlag bleibt die Karte auf ihrer Stufe, nur die doppelte Karte und das Gold sind weg. (Beschluss 27.10.)
 - **So testest du es:** Eine Karte verbessern: Sie zeigt „+1“, der Bonus unter „Werte (C)“ steigt, eine doppelte Karte und etwas Gold sind weg. Ab +5 klappt es manchmal nicht.
-- **Status:** offen
+- **Status:** fertig (03.11.2026, als D17)
 
 ## Projekt 9: Kreuzweg im Baukasten
 _Aus Marcos Entscheidung vom 27.10.2026: Die Welt bleibt in Rautenansicht und wird aus Einzelbildern zusammengesetzt (Vorbild: Marcos Bild vom Kreuzweg-Marktplatz bei Nacht). Bild-Regeln in `data/BAUKASTEN.md`._

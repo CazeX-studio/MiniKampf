@@ -43,6 +43,8 @@ var _base_scale := 1.0
 var _time := 0.0
 var _head_y := 0.0
 var _label: Label
+## Titel unter dem Namen (Kartenalbum, D17), erst angelegt, wenn es einen gibt
+var _titel: Label
 ## Name, Zeichen und Sprechblase liegen über allem (auch über Häusern und Bäumen), damit man sie immer sieht
 var _overlay: Node2D
 var _bubble: PanelContainer
@@ -135,6 +137,25 @@ func _draw_overlay() -> void:
 		var pos := Vector2(-20, _head_y - 6 + bob)
 		_overlay.draw_string_outline(font, pos, marker, HORIZONTAL_ALIGNMENT_CENTER, 40, 30, 7, Color.BLACK)
 		_overlay.draw_string(font, pos, marker, HORIZONTAL_ALIGNMENT_CENTER, 40, 30, MARKER_SIDE_COLOR if marker_side else MARKER_COLOR)
+
+
+## Titel unter dem Namen zeigen ("" = keiner), z. B. „Kenner von Grünwacht“.
+func set_title(text: String) -> void:
+	if text == "" and _titel == null:
+		return
+	if _titel == null:
+		_titel = Label.new()
+		_titel.add_theme_font_size_override("font_size", 11)
+		_titel.add_theme_color_override("font_color", Color("f2c14e"))
+		_titel.add_theme_color_override("font_outline_color", Color.BLACK)
+		_titel.add_theme_constant_override("outline_size", 4)
+		_titel.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_titel.size = Vector2(200, 16)
+		_titel.position = Vector2(-100, _head_y + 17)
+		_overlay.add_child(_titel)
+	var anzeige := "„%s“" % text if text != "" else ""
+	if _titel.text != anzeige:
+		_titel.text = anzeige
 
 
 ## Sortierung und Bild trennen: Die Figur wird als stünde sie um dy weiter oben einsortiert, gemalt aber an der alten Stelle.

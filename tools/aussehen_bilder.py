@@ -93,7 +93,12 @@ def hut():
 		fertig.append(bild)
 		eintrag[richtung] = {"anker": [round(bild.width / 2), round(bild.height * HUT_ANKER)], "sitz": 0.34}
 	eintrag["flaechen"] = {"leder": toene(fertig)}
-	return {"wanderhut": eintrag}
+	huete = {"wanderhut": eintrag}
+	# Belohnungs-Hüte des Kartenalbums (D17): bis Marcos Bilder da sind, der Wanderhut in einer anderen Farbe
+	for hut_id, name, palette in [("sternreif", "Sternenreif (Platzhalter)", "glutschmiede"),
+			("geweihband", "Geweih-Band (Platzhalter)", "waldlaeufer")]:
+		huete[hut_id] = dict(eintrag, name=name, bild="wanderhut", palette=palette, belohnung=True)
+	return huete
 
 
 def umhang():

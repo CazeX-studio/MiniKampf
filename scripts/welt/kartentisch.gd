@@ -7,6 +7,8 @@ extends Control
 ## Gegen wen gespielt wird (Kennung aus kartenspiel.json → gegner) und mit welchen Karten
 static var gegner := ""
 static var deck: Array = []
+## Kartenrücken des Spielers ("" = normal, "sterne" = Belohnung für das volle Kartenalbum, D17)
+static var ruecken := ""
 ## Ergebnis für die Welt: {gegner, gewonnen, unentschieden}. Leer = nichts zu melden.
 static var ergebnis := {}
 static var return_scene := "res://scenes/kreuzweg.tscn"
@@ -105,7 +107,11 @@ func _small_card(id: String, color: Color, index: int, mine: bool) -> Button:
 	b.text = card_text(id)
 	b.custom_minimum_size = Vector2(110, 96) if not mine else Vector2(120, 96)
 	b.focus_mode = Control.FOCUS_NONE
-	style_card(b, color, Color("f2c14e") if mine and index == _selected else color.lightened(0.4), 13)
+	# Sternen-Kartenrücken (volles Album): die eigenen Karten mit goldenem Sternenrand
+	var rand := color.lightened(0.4)
+	if mine and ruecken == "sterne":
+		rand = Color("e8c060")
+	style_card(b, color, Color("f2c14e") if mine and index == _selected else rand, 13)
 	b.disabled = not mine or _over or _waiting
 	if mine:
 		b.pressed.connect(func() -> void:

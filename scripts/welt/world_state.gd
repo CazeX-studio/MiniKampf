@@ -30,6 +30,8 @@ extends RefCounted
 ##   {type = "karte_aktivieren", gegenstand = "monsterkarte_…"}  eine verdeckte Monsterkarte umdrehen, sie kommt ins Album (D15)
 ##   {type = "deck", karte = "…"}  Karte ins Deck für Kreuzweg-Karten legen oder wieder herausnehmen (D16, höchstens 5)
 ##   {type = "karte_verkaufen", karte = "…"}  eine doppelte Karte an einen Laden mit "karten_ankauf" verkaufen (D16)
+##   {type = "karte_verbessern", karte = "…"}  Karte mit einer doppelten und Bronze verbessern, bis +10 (D17)
+##   {type = "test_album", seite = 0}  Testknopf: alle Karten einer Album-Seite geben (nur im Godot-Editor)
 ##   {type = "beute_nehmen", gegenstand = "…"} / {type = "beute_lassen"}  Beute, die nicht in die Tasche gepasst hat
 ##   {type = "test_geld", bronze = 75} / {type = "test_tasche"} / {type = "test_beute"}  Testknöpfe (nur im Godot-Editor)
 ##   {type = "karten_ergebnis", gegner = "marv", gewonnen = true, unentschieden = false}  Ende einer Partie Kreuzweg-Karten
@@ -435,6 +437,17 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			_toggle_deck(p, str(cmd.get("karte", "")))
 		"karte_verkaufen":
 			_sell_card(p, str(cmd.get("karte", "")))
+		"karte_verbessern":
+			_upgrade_card(p, str(cmd.get("karte", "")))
+		"test_album":
+			if OS.is_debug_build():
+				var seiten := KartenAlbum.seiten()
+				var nummer := int(cmd.get("seite", 0))
+				if nummer >= 0 and nummer < seiten.size():
+					for karte: String in seiten[nummer].karten:
+						if int(p.progress.flags.get("karten", {}).get(karte, 0)) == 0:
+							add_card(p, karte, true)
+					progress_changed.emit(p.id)
 		"guertel_ablegen":
 			_belt_put(p, str(cmd.get("gegenstand", "")))
 		"guertel_nehmen":
@@ -494,6 +507,9 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 				var aussehen := FigurTeile.aussehen_von(p.look)
 				for platz: String in ["hut", "ruecken", "farben", "waffe"]:
 					if cmd.has(platz):
+						# Kopfbedeckungen des Kartenalbums nur, wenn man sie sich verdient hat (D17)
+						if platz == "hut" and FigurTeile.hut_belohnung(str(cmd[platz])) and not hut_frei(p, str(cmd[platz])):
+							continue
 						aussehen[platz] = str(cmd[platz])
 				p.look = FigurTeile.mit_aussehen(p.look, aussehen)
 				progress_changed.emit(p.id)
@@ -1260,6 +1276,9 @@ func check(p: PlayerState, cond: Dictionary) -> bool:
 		return false
 	if cond.has("nicht_hat") and p.progress.item_count(cond.nicht_hat) > 0:
 		return false
+	# {"neue_karte": "marv"}: Im Album ist eine Karte, die diese Figur noch nicht gesehen hat (D17)
+	if cond.has("neue_karte") and _neue_karte(p, str(cond.neue_karte)) == "":
+		return false
 	# {"klasse": "archer"}: genau diese Klasse gewählt
 	if cond.has("klasse") and str(p.progress.flags.get("klasse", "")) != cond.klasse:
 		return false
@@ -1289,6 +1308,9 @@ func run_actions(p: PlayerState, actions: Array) -> void:
 			_give_item(p, action.gegenstand, int(action.get("anzahl", 1)))
 		if action.has("merken"):
 			p.progress.flags[action.merken] = true
+		# {"karten_gesehen": "marv"}: Diese Figur kennt jetzt alle Karten im Album (D17)
+		if action.has("karten_gesehen"):
+			p.progress.flags["karten_gesehen:" + str(action.karten_gesehen)] = p.progress.flags.get("karten", {}).keys()
 		if action.has("laden"):
 			p.shop = action.laden
 		if action.has("vergessen"):
@@ -2399,14 +2421,81 @@ func _battle_result(p: PlayerState, kampf_id: String, won: bool) -> void:
 
 
 ## Kreuzweg-Karten: Sammlung im Spielstand (Gemerktes "karten": Kennung -> Anzahl).
-func add_card(p: PlayerState, card_id: String) -> void:
+func add_card(p: PlayerState, card_id: String, leise := false) -> void:
 	if not GameData.get_file("kartenspiel").get("karten", {}).has(card_id):
 		return
 	var cards: Dictionary = p.progress.flags.get("karten", {}).duplicate()
 	cards[card_id] = int(cards.get(card_id, 0)) + 1
 	p.progress.flags["karten"] = cards
-	if not (_rewards_shown and _shown_card != "?"):
+	if not leise and not (_rewards_shown and _shown_card != "?"):
 		_say(p, GameData.text("karte_neu", [KartenSpiel.card(card_id).name]))
+	_album_rewards(p)
+
+
+## Volle Album-Seite (D17): Titel und Kopfbedeckung der Region, bei vollem Album dazu ein Kartenrücken. Jeweils einmal.
+func _album_rewards(p: PlayerState) -> void:
+	var sammlung: Dictionary = p.progress.flags.get("karten", {})
+	var alle_voll := true
+	for seite: Dictionary in KartenAlbum.seiten():
+		if not KartenAlbum.seite_voll(sammlung, seite):
+			alle_voll = false
+			continue
+		var flag := "album_voll:" + str(seite.name)
+		if p.progress.flags.has(flag) or not seite.has("belohnung"):
+			continue
+		p.progress.flags[flag] = true
+		var belohnung: Dictionary = seite.belohnung
+		p.progress.flags["titel:" + str(belohnung.titel)] = true
+		p.progress.flags["titel"] = str(belohnung.titel)
+		p.progress.flags["hut:" + str(belohnung.hut)] = true
+		_say(p, GameData.text("album_seite_voll", [seite.name, belohnung.titel, FigurTeile.hut_liste().get(belohnung.hut, belohnung.hut)]))
+	var voll: Dictionary = GameData.get_file("kartenspiel").get("album_voll", {})
+	if alle_voll and not voll.is_empty() and not p.progress.flags.has("kartenruecken"):
+		p.progress.flags["kartenruecken"] = str(voll.kartenruecken)
+		_say(p, GameData.text("album_alles_voll", [voll.get("name", voll.kartenruecken)]))
+
+
+## Eine Karte im Album, die diese Figur noch nicht kennt ("" = keine). Die Startkarten kennt jeder.
+func _neue_karte(p: PlayerState, npc_id: String) -> String:
+	var gesehen: Array = p.progress.flags.get("karten_gesehen:" + npc_id, GameData.get_file("kartenspiel").get("startkarten", []))
+	for karte: String in p.progress.flags.get("karten", {}):
+		if not karte in gesehen:
+			return karte
+	return ""
+
+
+## Darf der Spieler diese Kopfbedeckung tragen? Belohnungs-Hüte erst nach der vollen Album-Seite.
+func hut_frei(p: PlayerState, hut_id: String) -> bool:
+	return not FigurTeile.hut_belohnung(hut_id) or p.progress.flags.has("hut:" + hut_id)
+
+
+## Karte verbessern (D17): kostet eine doppelte Karte derselben Sorte und Bronze. Bis +4 klappt es immer, danach
+## manchmal nicht; dann bleibt die Stufe, die doppelte Karte und das Geld sind trotzdem weg.
+func _upgrade_card(p: PlayerState, card_id: String) -> void:
+	var cards: Dictionary = p.progress.flags.get("karten", {}).duplicate()
+	var stufen: Dictionary = p.progress.flags.get("karten_stufe", {}).duplicate()
+	var stufe := int(stufen.get(card_id, 0))
+	var name: String = KartenSpiel.card(card_id).get("name", card_id)
+	if stufe >= KartenAlbum.hoechste_stufe():
+		_say(p, GameData.text("karte_hoechste", [name, stufe]))
+		return
+	if int(cards.get(card_id, 0)) < 2:
+		_say(p, GameData.text("karte_verbessern_doppelt"))
+		return
+	var preis := KartenAlbum.verbessern_preis(stufe + 1)
+	if p.progress.gold < preis:
+		_say(p, GameData.text("zu_wenig_gold", [name, Geld.text(preis)]))
+		return
+	p.progress.gold -= preis
+	cards[card_id] = int(cards[card_id]) - 1
+	p.progress.flags["karten"] = cards
+	if card_rng.randf() < KartenAlbum.verbessern_chance(stufe + 1):
+		stufen[card_id] = stufe + 1
+		p.progress.flags["karten_stufe"] = stufen
+		_say(p, GameData.text("karte_verbessert", [name, stufe + 1]))
+	else:
+		_say(p, GameData.text("karte_verbessern_fehlschlag", [name, stufe]))
+	progress_changed.emit(p.id)
 
 
 ## Eine Monsterkarte gefunden: Sie liegt verdeckt in der Tasche (oder im Beute-Fenster, wenn die Tasche voll ist).
@@ -2574,5 +2663,8 @@ func fill_text(p: PlayerState, text: String) -> String:
 	var data: Dictionary = Sandbox.CLASSES.get(klasse, {title = "Novize", region = "?"})
 	var extra: Dictionary = GameData.get_file("klassen").get(klasse, {})
 	var wohin: String = GameData.get_file("klassen").get("wohin", {}).get(data.region, "nach " + data.region)
+	if text.contains("{neue_karte}"):
+		var karte := _neue_karte(p, "marv")
+		text = text.replace("{neue_karte}", KartenSpiel.card(karte).get("name", karte) if karte != "" else "?")
 	return text.replace("{klasse}", data.title).replace("{region}", data.region).replace("{wohin}", wohin) \
 			.replace("{lehrmeister}", extra.get("lehrmeister", "?"))
