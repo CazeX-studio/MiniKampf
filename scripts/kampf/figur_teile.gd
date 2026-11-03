@@ -99,6 +99,24 @@ static func mit_aussehen(look: String, aussehen: Dictionary) -> String:
 	return basis if teile.is_empty() else "%s#%s" % [basis, ",".join(teile)]
 
 
+## Körper der Klassen (D18): Wer die Klasse gelernt hat, trägt ihren Körper, der Kopf bleibt.
+## Klasse -> Anfang des Körpernamens (dazu _m oder _w wie beim Novizen). Klassen ohne eigenen Körper bleiben Novize.
+const KLASSEN_KOERPER := {"archer": "bogen", "tamer": "zaehmer"}
+
+
+## Figur mit dem Körper der Klasse: „novize_w+w1#hut=…“ als Bogenschützin -> „bogen_w+w1#hut=…“.
+## klasse "" oder "novize": wieder der Novizen-Körper. Figuren ohne Kopf und Körper bleiben, wie sie sind.
+static func mit_klasse(look: String, klasse: String) -> String:
+	var koerper := koerper_von(look)
+	var teile := koerper.split("_")
+	if not kann_aussehen(look) or teile.size() != 2 or not teile[1] in ["m", "w"]:
+		return look
+	var neu := "%s_%s" % [KLASSEN_KOERPER.get(klasse, "novize"), teile[1]]
+	if neu == koerper or not koerper_liste().has(neu):
+		return look
+	return neu + look.substr(koerper.length())
+
+
 ## Kann diese Figur Aussehen-Teile tragen? (Nur Figuren aus Körper und Kopf, z. B. aus „Figur erstellen“.)
 static func kann_aussehen(look: String) -> bool:
 	return koerper_liste().has(koerper_von(look))

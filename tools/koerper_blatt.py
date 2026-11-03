@@ -27,13 +27,25 @@ TEILE = WURZEL / "assets" / "teile"
 DATEN = WURZEL / "data" / "figurteile.json"
 
 ## Körper -> Name im Editor. Die Blätter sind aufgebaut wie Kofis (siehe FIGUREN["kofi"] in figur_bilder.py).
-KOERPER = {"novize_m": "Novize (m)", "novize_w": "Novizin (w)"}
+KOERPER = {"novize_m": "Novize (m)", "novize_w": "Novizin (w)",
+		"bogen_m": "Bogenschütze (m)", "bogen_w": "Bogenschützin (w)", "zaehmer_m": "Monster-Zähmer (m)", "zaehmer_w": "Monster-Zähmerin (w)"}
 ## Geschlecht des Körpers: bei „Figur erstellen“ passen nur Köpfe desselben Geschlechts
-GESCHLECHT = {"novize_m": "m", "novize_w": "w"}
+GESCHLECHT = {"novize_m": "m", "novize_w": "w", "bogen_m": "m", "bogen_w": "w", "zaehmer_m": "m", "zaehmer_w": "w"}
+## Klassen-Körper (D18, Auftrag Teil D „Figuren 2“): Blätter heißen <körper>_blatt1/_blatt2/_welt und sind schon ohne Waffe
+DATEINAMEN = {k: {"kampf_a": "blatt1", "kampf_b": "blatt2", "welt": "welt"} for k in ["bogen_m", "bogen_w", "zaehmer_m", "zaehmer_w"]}
+OHNE_ZUSATZ = set(DATEINAMEN)
 ## Die Klinge kommt als eigenes Teil dazu (Projekt 13, Schritt 3), der Griff bleibt in der Hand
 ZUSATZ = "_ohne_klinge"
 ## Abweichende Reihen einzelner Blätter (sonst wie Kofi): Körper -> Blatt -> Reihen
-REIHEN = {
+## Klassen-Körper (Auftrag Teil D): Welt mit 5 Bildern je Bewegung, Konzentration bzw. Befehl als "cast" mit 4 Bildern
+KLASSEN_REIHEN = {
+	"welt": [[("idle_vorn", 5), ("run_vorn", 5)], [("idle_hinten", 5), ("run_hinten", 5)]],
+}
+REIHEN = {k: dict(KLASSEN_REIHEN) for k in ["bogen_m", "bogen_w", "zaehmer_m", "zaehmer_w"]}
+# Bogenschütze (m und w), Blatt 2: der Sieg hat 5 Bilder (Faust hoch und wieder herunter)
+REIHEN["bogen_m"]["kampf_b"] = [[("attack", 6)], [("death", 6)], [("victory", 5), ("cast", 4)]]
+REIHEN["bogen_w"]["kampf_b"] = REIHEN["bogen_m"]["kampf_b"]
+REIHEN.update({
 	"novize_m": {
 		"kampf_b": [[("attack", 6)], [("death", 6)], [("victory", 4), ("cast", 3)]],
 		"welt": [[("idle_vorn", 5), ("run_vorn", 5)], [("idle_hinten", 5), ("run_hinten", 5)]],
@@ -42,7 +54,7 @@ REIHEN = {
 		"kampf_b": [[("attack", 6)], [("death", 6)], [("victory", 4), ("cast", 3)]],
 		"welt": [[("idle_vorn", 6), ("run_vorn", 5)], [("idle_hinten", 6), ("run_hinten", 5)]],
 	},
-}
+})
 ## Mit dieser Animation wird jedes weitere Blatt auf die Größe von Blatt 1 gebracht (aufrecht stehend, Kopf frei)
 GROESSE_VON = {"kampf_a": "idle", "kampf_b": "cast", "welt": "idle_vorn"}
 ## Blätter mit runden Kreisen statt länglicher Ovale (gezeichnet vor dem Hinweis vom 28.10.): Kopf bleibt dort gerade
@@ -146,10 +158,12 @@ def main():
 		ziel = None
 		runde = set()
 		for name, reihen in FIGUREN[KOPF_QUELLE].items():
-			if not (VORLAGEN / f"{koerper}_{name}{ZUSATZ}.png").exists():
-				print(f"{koerper}: Blatt {name} fehlt noch")
+			datei = DATEINAMEN.get(koerper, {}).get(name, name)
+			zusatz = "" if koerper in OHNE_ZUSATZ else ZUSATZ
+			if not (VORLAGEN / f"{koerper}_{datei}{zusatz}.png").exists():
+				print(f"{koerper}: Blatt {datei} fehlt noch")
 				continue
-			teil = blatt(koerper, name, REIHEN.get(koerper, {}).get(name, reihen), ZUSATZ)
+			teil = blatt(koerper, datei, REIHEN.get(koerper, {}).get(name, reihen), zusatz)
 			# Alle Blätter gleich groß wie Blatt 1 (gemessen von der Oberkante des Ovals bis zu den Füßen)
 			hoehe = kopf_hoehe(teil[GROESSE_VON[name]])
 			if ziel is None:

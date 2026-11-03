@@ -79,7 +79,11 @@ static func prepare(id: String, level: int, potions := 0, own_class := "", own_m
 	# Probestunde: Der Spieler spielt kurz eine richtige Klasse (Ult schon teilweise geladen)
 	var klasse := fighting_class(data, own_class)
 	var novice_look := player_look if player_look != "" else "novize"
-	var player := {klasse = klasse, name = "Du", aussehen = novice_look if klasse == "novize" else "", stufe = level,
+	# Aussehen: der Novize mit seiner Figur; Klassen mit eigenem Körper (D18) mit der eigenen Figur in Klassenkleidung
+	var eigenes := FigurTeile.mit_klasse(player_look, klasse) if player_look != "" else ""
+	var klassen_figur := eigenes if klasse != "novize" and FigurTeile.KLASSEN_KOERPER.has(klasse) \
+			and FigurTeile.koerper_von(eigenes).begins_with(str(FigurTeile.KLASSEN_KOERPER[klasse])) else ""
+	var player := {klasse = klasse, name = "Du", aussehen = novice_look if klasse == "novize" else klassen_figur, stufe = level,
 			ult = float(data.get("ult_start", 0))}
 	if data.get("eigene_klasse", false):
 		player["macht"] = hero_power(level)

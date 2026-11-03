@@ -11,7 +11,14 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** D18 (Körper für Bogenschütze und Monster-Zähmer einbauen). Alle Testtage stehen seit 02.11. am Ende, Marco testet das volle Spiel zusammen. D9h wartet auf Marcos Bilder (GRAFIK_AUFTRAG.md, Teil E).
+- **Nächster Schritt:** D18b (Klassenwaffen an der Hand: Bogen und Schleuder). Alle Testtage stehen seit 02.11. am Ende, Marco testet das volle Spiel zusammen. D9h wartet auf Marcos Bilder (GRAFIK_AUFTRAG.md, Teil E).
+
+- **Neu (03.11.): D18 Körper für Bogenschütze und Monster-Zähmer** (1.8, Projekt 11 Schritt 4): Marcos Körper-Blätter sind eingebaut, je männlich und weiblich (alle Bewegungen: Stehen, Laufen, Getroffen, Ausweichen bzw. Anfeuern, Schuss bzw. Wurf, Fallen, Sieg, Konzentration bzw. Befehl, dazu die Welt-Ansichten von vorne und hinten). Hat man die Klasse gelernt (Fenns Prüfung bzw. Esches Monster), trägt die eigene Figur die Klassenkleidung, in der Welt und im Kampf; Kopf, Name und Aussehen (Hut, Umhang, Farben) bleiben. Noch nicht drin: Bogen und Schleuder in der Hand (eigener Schritt D18b), bisher kämpft man mit leeren Fäusten.
+  - **So testest du es:**
+    1. Als Bogenschütze bei Fenn die Prüfung bestehen: Danach trägt deine Figur grüne Waldläufer-Kleidung, der Kopf bleibt.
+    2. Als Zähmer bei Esche das erste Monster wählen: Danach die Zähmer-Kleidung.
+    3. Einen Kampf in der Wildnis: Auch dort steht deine eigene Figur in Klassenkleidung.
+    4. Ein Hut aus „Aussehen“ bleibt nach dem Wechsel auf dem Kopf.
 
 - **Neu (03.11.): D17 Kartenalbum, Teil 3** (1.6, Projekt 8 Schritt 7–9): Eine volle Seite im Album bringt einen Titel („Kenner von Kreuzweg“, „Kenner von Grünwacht“) und eine Kopfbedeckung der Region (Sternenreif bzw. Geweih-Band), die es nur so gibt. Der Titel steht unter deinem Namen in der Welt, unter „Werte (C)“ und im Album, die Kopfbedeckung lässt sich unter Werte → Aussehen wählen. Ist das ganze Album voll, gibt es den Sternen-Kartenrücken: Deine Karten am Spieltisch haben dann einen goldenen Rand. Marv in Kreuzweg spricht neue Karten an („Ooooh! Ist das … ein Windfalke?!“). Karten lassen sich im Album bis +10 verbessern: Es kostet eine doppelte Karte und etwas Bronze, bis +4 klappt es immer, ab +5 nur mit Glück (80 % bis 30 %); jede Stufe macht den Besitzeffekt größer. Ein Testknopf im Album füllt die gerade offene Seite. Sternenreif und Geweih-Band sind Marcos Bilder (03.11., `tools/vorlagen/hut_*.png`); der hintere Teil des Bands liegt hinter dem Kopf.
   - **So testest du es:**

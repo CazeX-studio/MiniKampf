@@ -58,7 +58,8 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D15:** Kartenalbum, Teil 1: Album, Karten aktivieren, Monster-Infos. (1.6, Projekt 8 Schritt 1–3) – Status: fertig (03.11.2026; Taste L statt K, weil K schon die Fähigkeiten öffnet; Seiten Kreuzweg und Grünwacht, dazu Karten für die vier Nacht-Monster)
 - **D16:** Kartenalbum, Teil 2: Besitzeffekte, Deck, doppelte Karten verkaufen. (1.6, Projekt 8 Schritt 4–6) – Status: fertig (03.11.2026; Boni vorläufig je Karte +1 bis +5 Leben, Mana, Angriff oder Tempo; Bingos Laden lässt sich jetzt rollen)
 - **D17:** Kartenalbum, Teil 3: Belohnung volle Seite, Marv, Karten bis +10. (1.6, Projekt 8 Schritt 7–9) – Status: fertig (03.11.2026; Sternenreif und Geweih-Band mit Marcos Bildern, B6d; Sternen-Kartenrücken vorerst als goldener Rand der eigenen Karten)
-- **D18:** Körper für Bogenschütze und Monster-Zähmer einbauen (braucht Marcos Bilder). (1.8, Projekt 11 Schritt 4) – Status: offen
+- **D18:** Körper für Bogenschütze und Monster-Zähmer einbauen (braucht Marcos Bilder). (1.8, Projekt 11 Schritt 4) – Status: fertig (03.11.2026; je männlich und weiblich, nach dem Lernen der Klasse in Welt und Kampf, Kopf und Aussehen bleiben; die Waffen fehlen noch, siehe D18b)
+- **D18b:** Klassenwaffen als eigenes Teil an der Hand: Langbogen für den Bogenschützen, Schleuder für den Zähmer (Bilder in `tools/vorlagen/klassen_waffen.png` und `klassen_bogen_gespannt.png`). Die Klassen-Körper haben leere Fäuste, darum braucht jedes Bild einen Handpunkt. (geteilt aus D18) – Status: offen
 - **D19:** Figuren-Baukasten mit den acht Grundkörpern einbauen (braucht Marcos Bilder). (neu, NPC.md) – Status: offen
 - **D20:** Kreuzweg nach Sitzung 30: Hatta, Zeichen über Diensten, Figuren tags und nachts, Ye mit Regenschirm. (1.9) – Status: offen
 - **D21:** Grünwacht-Figuren nach Steckbrief: Salbei, Borko, Ysolde nachts, Oma Hagebutte. (1.10) – Status: offen
@@ -367,7 +368,7 @@ _Am 28.10. geteilt: Kofis Kopf-Blatt kam zuerst._
 ### Schritt 4: Körper der Grünwacht-Klassen
 - **Ziel:** Bogenschütze und Monster-Zähmer, je männlich und weiblich. Beim Lernen der Klasse wechselt der Körper, der Kopf bleibt.
 - **So testest du es:** In Grünwacht die Klasse lernen: Die Figur trägt danach die Klassenkleidung.
-- **Status:** offen (29.10.2026: Prompts B9 in Spieldesign/GRAFIK_AUFTRAG.md bei Marco. Erster Bogenschützen-Versuch zu düster und realistisch, zweiter mit festem Kopf statt grünem Oval; Marco entscheidet: Kopf durch Oval ersetzen lassen oder als Grünwacht-NPC nehmen.)
+- **Status:** fertig (03.11.2026, als D18; Waffen folgen mit D18b. Früher: 29.10.2026: Prompts B9 in Spieldesign/GRAFIK_AUFTRAG.md bei Marco. Erster Bogenschützen-Versuch zu düster und realistisch, zweiter mit festem Kopf statt grünem Oval; Marco entscheidet: Kopf durch Oval ersetzen lassen oder als Grünwacht-NPC nehmen.)
 
 ### Schritt 5: Figur erstellen
 - **Ziel:** Zu Spielbeginn Geschlecht wählen (daraus folgt der Körper), einen passenden Kopf (namenlos: m1, w1 …) wählen, Namen eingeben (design.md: „Charakter erstellen“). Später kommen Frisuren dazu (Ideen-Parkplatz).

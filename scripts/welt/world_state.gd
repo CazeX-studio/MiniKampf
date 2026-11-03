@@ -666,6 +666,8 @@ func tick(delta: float) -> void:
 	if _uhr_pruefen <= 0.0:
 		_uhr_pruefen = 1.0
 		nacht = Tageszeit.ist_nacht()
+		for p: PlayerState in players.values():
+			_klassen_koerper(p)
 	_tick_scenes(delta)
 	_move_monsters(delta)
 	for p: PlayerState in players.values():
@@ -1645,8 +1647,17 @@ func _quests_for_npc(all_quests: Dictionary, npc_id: String) -> Array:
 	return _npc_quests.get(npc_id, [])
 
 
+## Körper der gelernten Klasse (D18): Bogenschütze und Zähmer tragen ihre Klassenkleidung, der Kopf bleibt.
+func _klassen_koerper(p: PlayerState) -> void:
+	var neu := FigurTeile.mit_klasse(p.look, p.progress.battle_class())
+	if neu != p.look:
+		p.look = neu
+		progress_changed.emit(p.id)
+
+
 ## Aktive Aufträge werden "fertig", sobald alle Ziele erfüllt sind (und wieder "aktiv", falls nicht mehr).
 func _update_quests(p: PlayerState) -> void:
+	_klassen_koerper(p)
 	for id: String in p.progress.quests.keys():
 		if GameData.quest(id).is_empty():
 			# Auftrag gibt es in den Daten nicht mehr (alter Spielstand)
