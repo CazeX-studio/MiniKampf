@@ -110,6 +110,7 @@
 	"tasche_plaetze": "Plätze: %d / %d",
 	"test_tasche_fuellen": "Test: Tasche füllen",
 	"test_beute": "Test: Beute",
+	"test_uhrzeit": "Test: Uhr +3 h (%s)",
 	"wegwerfen": "Wegwerfen",
 	"wegwerfen_frage": "Wirklich %d × %s wegwerfen? Das ist dann weg.",
 	"wegwerfen_ja": "Ja, wegwerfen",

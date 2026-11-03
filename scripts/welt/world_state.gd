@@ -93,6 +93,10 @@ var decorations: Array[Dictionary] = []
 ## Monster in der Wildnis: {karte, feld, gegner, stufe} (GameData.wild_monsters). Wer eines besiegt, sieht es eine
 ## Weile nicht mehr (MONSTER_RESPAWN), die anderen Spieler schon.
 var monsters: Array[Dictionary] = []
+## Ist nach der Uhr dieser Welt gerade Nacht? (D14: nachts andere Monster.) Allein ist das die eigene Uhr, beim
+## Zusammenspielen die des Servers; Mitspieler bekommen den Wert mit den Monstern geschickt (Netz._s_monsters).
+var nacht := Tageszeit.ist_nacht()
+var _uhr_pruefen := 0.0
 ## So nah muss man einem Monster kommen, damit der Kampf beginnt (Felder)
 const MONSTER_TOUCH := 0.6
 ## Monster laufen um ihren Platz herum (so weit, Felder) und folgen Spielern, die so nah herankommen (Felder)
@@ -633,6 +637,10 @@ func _steer(p: PlayerState, delta: float) -> void:
 ## Spielt die Welt um "delta" Sekunden weiter (Laufen, Benutzen nach der Ankunft).
 func tick(delta: float) -> void:
 	_time += delta
+	_uhr_pruefen -= delta
+	if _uhr_pruefen <= 0.0:
+		_uhr_pruefen = 1.0
+		nacht = Tageszeit.ist_nacht()
 	_tick_scenes(delta)
 	_move_monsters(delta)
 	for p: PlayerState in players.values():
@@ -1960,11 +1968,22 @@ func _pack_command(p: PlayerState, cmd: Dictionary) -> void:
 
 ## Steht das Monster für diesen Spieler gerade da? (Nach einem Sieg ist es eine Weile weg.)
 func monster_here(p: PlayerState, index: int) -> bool:
+	if not monster_zur_zeit(index):
+		return false
 	# Im Dungeon kommen besiegte Monster in diesem Durchgang nicht wieder
 	if get_map(monsters[index].karte).dungeon != "" and p.progress.flags.has("lauf:besiegt:monster:%d" % index):
 		return false
 	var beaten := float(p.progress.flags.get("besiegt:monster:%d" % index, -INF))
 	return Time.get_unix_time_from_system() - beaten >= MONSTER_RESPAWN
+
+
+## Ist das Monster zu dieser Tageszeit unterwegs? Tag-Monster nur tagsüber, Nacht-Monster ("zeit": "nacht" in
+## data/karten.json) nur nachts. Im Dungeon gibt es keine Tageszeit.
+func monster_zur_zeit(index: int) -> bool:
+	var m: Dictionary = monsters[index]
+	if get_map(m.karte).dungeon != "":
+		return true
+	return (str(m.get("zeit", "tag")) == "nacht") == nacht
 
 
 ## Kann dieser Spieler gerade in einen Kampf mit einem Monster geraten?

@@ -54,7 +54,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D11:** Zähmer lernt bei Tilda, Esche gibt das erste Monster. (1.2, Projekt 12) – Status: fertig (02.11.2026; Neuverteilen der Punkte jetzt bei Tilda; Texte sind Platzhalter)
 - **D12:** Gemeinsame Trank-Wartezeit. (1.3, Projekt 5 Schritt 3) – Status: fertig (03.11.2026; dazu haben jetzt alle Klassen ihre Tränke im Kampf, bisher nur der Novize)
 - **D13:** Händler, in Grünwacht die Kräuterhändlerin. (1.4, Projekt 6) – Status: fertig (03.11.2026; Salbei mit Stand auf dem Hauptplatz von Wipfelheim, Bingo verkauft auch Grundmaterialien; Bilder der neuen Waren: GRAFIK_AUFTRAG.md B6c)
-- **D14:** Tag und Nacht nach der Uhrzeit, nachts andere Monster. (1.5, Projekt 7) – Status: offen
+- **D14:** Tag und Nacht nach der Uhrzeit, nachts andere Monster. (1.5, Projekt 7) – Status: fertig (03.11.2026; Licht nach der Uhr, Testknopf in der Tasche, nachts Heulwolf und Irrlicht auf dem Weg, Nachtuhu und Funkenmarder im Wald; Kämpfe sehen nachts noch aus wie tags)
 - **D15:** Kartenalbum, Teil 1: Album, Karten aktivieren, Monster-Infos. (1.6, Projekt 8 Schritt 1–3) – Status: offen
 - **D16:** Kartenalbum, Teil 2: Besitzeffekte, Deck, doppelte Karten verkaufen. (1.6, Projekt 8 Schritt 4–6) – Status: offen
 - **D17:** Kartenalbum, Teil 3: Belohnung volle Seite, Marv, Karten bis +10. (1.6, Projekt 8 Schritt 7–9) – Status: offen
@@ -220,12 +220,12 @@ _Aus Marcos Entscheidung vom 22.10.2026: Tageszeit nach der echten Uhrzeit, nach
 ### Schritt 1: Tageszeit nach der echten Uhrzeit
 - **Ziel:** Das Licht wechselt fließend zwischen Morgen, Tag, Abend und Nacht (Nacht von 21 bis 6 Uhr, dazwischen Dämmerung; die Fest-Nacht der Geschichte bleibt immer Nacht). Das Licht richtet sich nach der lokalen Uhrzeit des Spielers. Nachts ist die Welt dunkler, Laternen, Fenster und Fackeln leuchten stärker. Ein Testknopf stellt die Uhrzeit vor.
 - **So testest du es:** Mit dem Testknopf die Uhrzeit auf Abend und Nacht stellen: Die Welt wird langsam dunkler und die Lichter wirken stärker.
-- **Status:** offen
+- **Status:** fertig (03.11.2026, als D14)
 
 ### Schritt 2: Nachts andere Monster
 - **Ziel:** In der Wildnis stehen nachts andere Monster als tagsüber. Ob Nacht ist, bestimmt hier die Uhrzeit des Servers, damit alle am selben Ort dieselben Monster sehen.
 - **So testest du es:** Testknopf auf Nacht: Auf dem Weg nach Grünwacht stehen andere Monster, auf Tag wieder die gewohnten.
-- **Status:** offen
+- **Status:** fertig (03.11.2026, als D14)
 
 ## Projekt 8: Monsterkarten und Kartenalbum (Beschluss 27.10.)
 

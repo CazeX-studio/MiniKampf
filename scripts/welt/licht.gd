@@ -20,6 +20,9 @@ const FLACH := Vector2(1.0, 0.62)
 
 static var _textur: GradientTexture2D
 
+## Nachts leuchten alle Lichter stärker (setzt die Welt jedes Bild, siehe Tageszeit)
+static var nacht_faktor := 1.0
+
 var _art: Dictionary
 var _zeit := 0.0
 
@@ -60,4 +63,4 @@ func _process(delta: float) -> void:
 	var t: float = _zeit * _art.tempo
 	# Zwei Wellen übereinander, damit das Flackern nicht gleichmäßig wirkt
 	var wackeln := 0.6 * sin(t) + 0.4 * sin(t * 2.3 + 1.7)
-	energy = _art.staerke * (1.0 + _art.flackern * wackeln)
+	energy = _art.staerke * (1.0 + _art.flackern * wackeln) * nacht_faktor

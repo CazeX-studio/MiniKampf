@@ -464,7 +464,7 @@ func _send_snapshot() -> void:
 	for m: Dictionary in world.monsters:
 		monster_list.append([m.pos, m.facing, m.moving])
 	if not monster_list.is_empty():
-		_s_monsters.rpc(monster_list)
+		_s_monsters.rpc(monster_list, world.nacht)
 
 
 ## Schickt einem Mitspieler seinen eigenen Zustand (Gespräch, Laden, Fortschritt), wenn er sich geändert hat.
@@ -885,9 +885,11 @@ func _place_on_map(p: PlayerState, map_id: String, pos: Vector2) -> void:
 
 ## Wo die Monster in der Wildnis gerade sind (vom Gastgeber).
 @rpc("authority", "unreliable_ordered")
-func _s_monsters(list: Array) -> void:
+func _s_monsters(list: Array, nacht := false) -> void:
 	if mode != Mode.CLIENT or world == null:
 		return
+	# Tag oder Nacht nach der Uhr des Servers: Alle sehen dieselben Monster
+	world.nacht = nacht
 	for i in mini(list.size(), world.monsters.size()):
 		var m: Dictionary = world.monsters[i]
 		var entry: Array = list[i]

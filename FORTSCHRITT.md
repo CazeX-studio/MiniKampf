@@ -11,7 +11,14 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** D14 (Tag und Nacht nach der Uhrzeit, nachts andere Monster). Alle Testtage stehen seit 02.11. am Ende, Marco testet das volle Spiel zusammen. D9h wartet auf Marcos Bilder (GRAFIK_AUFTRAG.md, Teil E).
+- **Nächster Schritt:** D15 (Kartenalbum, Teil 1: Album, Karten aktivieren, Monster-Infos). Alle Testtage stehen seit 02.11. am Ende, Marco testet das volle Spiel zusammen. D9h wartet auf Marcos Bilder (GRAFIK_AUFTRAG.md, Teil E).
+
+- **Neu (03.11.): D14 Tag und Nacht** (1.5, Projekt 7): Das Licht richtet sich nach deiner Uhrzeit. Ab 19 Uhr wird es warm und langsam dunkel, von 21 bis 6 Uhr ist Nacht (bläulich, dunkler), ab 6 Uhr wird es wieder hell. Nachts leuchten Feuer, Laternen und Fenster stärker. Oben links steht die Uhrzeit. Die Fest-Nacht bleibt immer Nacht, die Pilzhöhle kennt keine Tageszeit. Nachts stehen in der Wildnis andere Monster: auf dem Weg nach Grünwacht Heulwolf und Irrlicht, im Wald Nachtuhu und Funkenmarder (etwas stärker, mit ihren fertigen Bildern). Beim Zusammenspielen gilt für die Monster die Uhr des Servers, damit alle dieselben sehen. Noch nicht drin: Kämpfe sehen nachts noch aus wie tags, nachts geschlossene Stände und andere Figuren (D20).
+  - **So testest du es:**
+    1. Tasche öffnen (I), Testknopf „Uhr +3 h“ drücken, bis oben links ein Abend steht: Die Welt wird langsam wärmer und dunkler.
+    2. Weiter bis Nacht (nach 21 Uhr): Alles bläulich, Feuer und Laternen leuchten stärker.
+    3. Nachts auf dem Weg nach Grünwacht: Statt Windfalken und Kröten stehen Heulwölfe und Irrlichter da.
+    4. Nachts in den Wald: Nachtuhu und Funkenmarder. Uhr weiter bis zum Morgen: Die gewohnten Monster sind zurück.
 
 - **Neu (03.11.): D13 Händler** (1.4, Projekt 6): Kräuterhändlerin Salbei steht mit ihrem Stand und Kräuterkisten auf dem Hauptplatz von Wipfelheim, gleich neben der Bank. Sie verkauft Heiltränke, Manatränke, die Grundmaterialien Garn, Öl und Leder und als eigene Ware Waldpilze (für das Kochen später). Bingo in Kreuzweg verkauft jetzt auch Garn, Öl und Leder. Ohne genug Geld klappt der Kauf nicht. Die Bilder der neuen Waren sind von Marco (03.11., `tools/vorlagen/gegenstaende_3.png`). Noch Platzhalter: Salbeis Figur (kommt mit D21) und ihre Texte.
   - **So testest du es:**

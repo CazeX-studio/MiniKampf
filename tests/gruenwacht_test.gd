@@ -7,6 +7,8 @@ var _failed := 0
 
 
 func _initialize() -> void:
+	# Diese Prüfung spielt bei Tag (Tag-Monster); die Nacht prüft tests/tageszeit_test.gd
+	Tageszeit.feste_stunde = 12.0
 	_test_maps()
 	_test_journey()
 	_test_old_save()

@@ -237,6 +237,30 @@
 					"donnerhirsch"
 				],
 				"stufe": 15
+			},
+			{
+				"zeit": "nacht",
+				"gegner": ["heulwolf"],
+				"stufe": 11,
+				"feld": [50, 12]
+			},
+			{
+				"zeit": "nacht",
+				"gegner": ["irrlicht", "heulwolf"],
+				"stufe": 12,
+				"feld": [38, 14]
+			},
+			{
+				"zeit": "nacht",
+				"gegner": ["heulwolf", "heulwolf"],
+				"stufe": 13,
+				"feld": [24, 3]
+			},
+			{
+				"zeit": "nacht",
+				"gegner": ["heulwolf", "irrlicht"],
+				"stufe": 14,
+				"feld": [12, 3]
 			}
 		],
 		"deko": [
@@ -436,6 +460,36 @@
 					"donnerhirsch"
 				],
 				"stufe": 20
+			},
+			{
+				"zeit": "nacht",
+				"gegner": ["nachtuhu"],
+				"stufe": 16,
+				"feld": [38, 12]
+			},
+			{
+				"zeit": "nacht",
+				"gegner": ["funkenmarder"],
+				"stufe": 17,
+				"feld": [29, 11]
+			},
+			{
+				"zeit": "nacht",
+				"gegner": ["nachtuhu", "funkenmarder"],
+				"stufe": 18,
+				"feld": [12, 12]
+			},
+			{
+				"zeit": "nacht",
+				"gegner": ["funkenmarder", "funkenmarder"],
+				"stufe": 19,
+				"feld": [11, 26]
+			},
+			{
+				"zeit": "nacht",
+				"gegner": ["funkenmarder", "nachtuhu"],
+				"stufe": 20,
+				"feld": [5, 17]
 			}
 		],
 		"deko": [

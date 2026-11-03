@@ -8,6 +8,8 @@ const RUNS := 8
 ## So oft muss man mindestens gewinnen (allein, auf der Stufe des Monsters). Heiler wie der Ritualist sind allein
 ## am langsamsten; wie stark einzelne Klassen allein sind, kommt in den Feinschliff am Ende.
 const MIN_WIN_RATE := 0.55
+## Klassen der Demo (müssen auch nachts allein bestehen)
+const DEMO_KLASSEN := ["archer", "tamer", "smith", "blade", "singer"]
 
 
 func _initialize() -> void:
@@ -25,6 +27,8 @@ func _run() -> void:
 		var line := "%-14s" % klasse
 		var class_wins := 0
 		var class_runs := 0
+		var night_wins := 0
+		var night_runs := 0
 		for index in wild.size():
 			var m: Dictionary = wild[index]
 			var wins := 0
@@ -46,16 +50,25 @@ func _run() -> void:
 				root.remove_child(node)
 				node.free()
 			line += " %d" % wins
-			# Allein leveln: Weg und Wald. Dungeon-Monster sind für Gruppen gedacht und zählen hier nicht mit.
-			if m.get("dungeon", "") == "":
+			# Allein leveln: Weg und Wald bei Tag. Dungeon-Monster sind für Gruppen gedacht, Nacht-Monster
+			# sind mit Absicht stärker (MONSTER.md) – beide zählen hier nicht mit, die Nacht wird extra geprüft.
+			if m.get("dungeon", "") == "" and m.get("zeit", "tag") == "nacht":
+				night_wins += wins
+				night_runs += runs
+			elif m.get("dungeon", "") == "":
 				class_wins += wins
 				class_runs += runs
 			total[index] = int(total.get(index, 0)) + wins
 		var rate := float(class_wins) / class_runs
-		print("%s  → %d %% (ohne Dungeon)" % [line, roundi(rate * 100)])
+		var night_rate := float(night_wins) / maxi(night_runs, 1)
+		print("%s  → %d %% bei Tag, %d %% nachts (ohne Dungeon)" % [line, roundi(rate * 100), roundi(night_rate * 100)])
 		if rate < MIN_WIN_RATE:
 			problems += 1
 			print("FEHLER: %s gewinnt allein zu selten (%d %%)" % [klasse, roundi(rate * 100)])
+		# Nachts: Die Klassen der Demo sollen auch allein gegen die Nacht-Monster bestehen
+		if klasse in DEMO_KLASSEN and night_runs > 0 and night_rate < MIN_WIN_RATE:
+			problems += 1
+			print("FEHLER: %s gewinnt nachts allein zu selten (%d %%)" % [klasse, roundi(night_rate * 100)])
 	print("Je Monster (alle Klassen):")
 	for index in wild.size():
 		var m: Dictionary = wild[index]

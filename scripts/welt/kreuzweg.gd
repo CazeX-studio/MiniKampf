@@ -516,15 +516,18 @@ func _sync() -> void:
 		if node.visible:
 			node.queue_redraw()
 	var m := state.get_map(local.map)
-	var night_color := NIGHT_COLOR if local.progress.flags.has("nacht") else m.light
+	# Licht nach der Uhrzeit (Tag und Nacht, D14). Die Fest-Nacht der Geschichte ist immer Nacht, Dungeons kennen keine Uhrzeit.
+	var fest_nacht := local.progress.flags.has("nacht")
+	var night_color := NIGHT_COLOR if fest_nacht else (m.light if m.dungeon != "" else Tageszeit.licht(m.light))
 	_night.color = _night.color.lerp(night_color, 0.05)
+	Licht.nacht_faktor = Tageszeit.LICHT_NACHTS if fest_nacht else (1.0 if m.dungeon != "" else Tageszeit.licht_faktor())
 	Musik.play("nacht" if local.progress.flags.has("nacht") else m.music_for(local.progress.flags))
 	var here := state.players.values().filter(func(other: PlayerState) -> bool: return other.map == local.map).size()
 	if Netz.online():
 		_info.text = "%s · Zusammen: %d Spieler%s" % [m.title, here, " · Gastgeber, Adresse: " + Netz.local_address() if Netz.mode == Netz.Mode.HOST else ""]
 		_info.reset_size()
 	else:
-		_info.text = "Spieler in %s: %d" % [m.title, here]
+		_info.text = "Spieler in %s: %d · %s Uhr" % [m.title, here, Tageszeit.text()]
 	for i in state.monsters.size():
 		if _characters.has("monster:%d" % i):
 			var monster_view: WorldCharacter = _characters["monster:%d" % i]
@@ -2777,6 +2780,10 @@ func _fill_bag_footer(p: PlayerState, slots: Array) -> void:
 			tests.add_child(_small_button(GameData.text(test[1]), func() -> void:
 				_send({type = test[0]})
 				_fill_panel()))
+		# Tag und Nacht ausprobieren (D14): Die Uhr springt drei Stunden vor, das Licht folgt langsam
+		tests.add_child(_small_button(GameData.text("test_uhrzeit", [Tageszeit.text()]), func() -> void:
+			Tageszeit.versatz = fposmod(Tageszeit.versatz + 3.0, 24.0)
+			_fill_panel()))
 
 
 ## Füllt die Kästchen der Tasche. Die Kästchen bleiben dieselben, damit Ziehen und Ablegen nicht abbricht.

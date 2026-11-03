@@ -19,6 +19,9 @@ fi
 export GODOT
 
 filter="${1:-}"
+# Uhrzeit für Tag und Nacht (D14): fest 12 Uhr, damit die Prüfungen nicht von der echten Uhr abhängen.
+# Nachts prüfen: MINIKAMPF_STUNDE=23 bash tools/alle_tests.sh
+export MINIKAMPF_STUNDE="${MINIKAMPF_STUNDE:-12}"
 kerne="$( (nproc || echo "${NUMBER_OF_PROCESSORS:-4}") 2>/dev/null | head -1)"
 ordner="$(mktemp -d)"
 export ordner
@@ -35,14 +38,16 @@ eine() {
 	start="$(date +%s)"
 	# Eigener Anschluss je Prüfung, aus dem Namen abgeleitet (9000 bis 9899)
 	local port=$(( 9000 + $(echo -n "$name" | cksum | cut -d' ' -f1) % 900 ))
-	MINIKAMPF_PORT="$port" XDG_DATA_HOME="$daten" APPDATA="$daten" timeout 900 "$GODOT" --headless --path . -s "$t" > "$ordner/$name.log" 2>&1
+	MINIKAMPF_PORT="$port" XDG_DATA_HOME="$daten" APPDATA="$daten" timeout 300 "$GODOT" --headless --path . -s "$t" > "$ordner/$name.log" 2>&1
 	local code=$?
 	local dauer=$(( $(date +%s) - start ))
 	local fehler
 	fehler="$(grep -E "FEHLER|SCRIPT ERROR|Parse Error" "$ordner/$name.log" | head -5)"
 	if [ -n "$fehler" ] || [ "$code" -ne 0 ]; then
-		[ "$code" -eq 124 ] && fehler="${fehler}"$'\n'"Abgebrochen nach 15 Minuten"
+		[ "$code" -eq 124 ] && fehler="${fehler}"$'\n'"Abgebrochen nach 5 Minuten"
 		[ "$code" -ne 0 ] && [ "$code" -ne 124 ] && fehler="${fehler}"$'\n'"Beendet mit Fehlercode $code"
+		# Dazu die letzten Zeilen der Ausgabe, damit man sieht, wo es hing
+		fehler="${fehler}"$'\n'"Letzte Zeilen:"$'\n'"$(grep -vE '^\s*at:|^$|ObjectDB|resources still' "$ordner/$name.log" | tail -6)"
 		printf 'FEHLER  %3ds  %s\n%s\n' "$dauer" "$name" "$(echo "$fehler" | sed 's/^/        /')" > "$ordner/$name.ergebnis"
 	else
 		printf 'ok      %3ds  %s\n' "$dauer" "$name" > "$ordner/$name.ergebnis"

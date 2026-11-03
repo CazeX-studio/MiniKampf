@@ -160,3 +160,10 @@ Stand eines Auftrags: neu → aktiv → fertig (alle Ziele erfüllt) → abgegeb
 - **Aktion mit Bedingung:** Jede Aktion darf `"wenn"` haben, z. B. `{"auftrag_starten": "klasse_lernen", "wenn": {"klasse": "archer"}}`.
 - **Ziel nur für manche:** `"nur_wenn"` an einem Ziel blendet es sonst ganz aus (im Auftragsbuch, beim „Ziel:“ und beim Wegweiser) und zählt für diese Spieler auch nicht mit, wenn geprüft wird, ob der Auftrag fertig ist.
   `"wenn"` am Ziel gilt jetzt auch für das „Ziel:“ oben links.
+
+## Tag und Nacht (D14)
+
+- **Uhrzeit:** `scripts/welt/tageszeit.gd`. Nacht von 21 bis 6 Uhr, Abend ab 19 Uhr, Morgen bis 8 Uhr. Das Licht der Karte (`licht`) wird
+  danach gefärbt, Dungeons (`dungeon`) bleiben, wie sie sind. Für Prüfungen: `Tageszeit.feste_stunde` oder Umgebung `MINIKAMPF_STUNDE`.
+- **Nacht-Monster:** In `karten.json` hat ein Monster `"zeit": "nacht"`, dann steht es nur nachts da; ohne Angabe nur tagsüber.
+  Nacht-Monster dürfen dieselben Plätze wie Tag-Monster haben (es ist ja immer nur eins von beiden da).
