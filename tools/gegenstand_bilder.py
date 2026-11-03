@@ -29,11 +29,17 @@ BLAETTER = {"gegenstaende": [
 	["muenze_gold", "muenze_silber", "muenze_bronze", "muenzen"],
 	["heiltrank_gross", "manatrank", "manatrank_gross", "elixier"],
 	["guertel", "guertel_platz"],
+], "gegenstaende_3": [
+	# Grundmaterialien und Salbeis Waldpilze (D13, Auftrag B6c)
+	["garn", "oel", "leder", "waldpilze"],
 ]}
 
 
 def main():
 	for blatt, reihen in BLAETTER.items():
+		if not (WURZEL / "tools" / "vorlagen" / f"{blatt}.png").exists():
+			print(f"{blatt}.png fehlt noch, übersprungen")
+			continue
 		zerlegen(blatt, reihen)
 
 

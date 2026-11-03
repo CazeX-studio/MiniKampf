@@ -1169,6 +1169,16 @@
 			}
 		],
 		"npcs": {
+			"salbei": {
+				"name": "Kräuterhändlerin Salbei",
+				"feld": [
+					31,
+					25
+				],
+				"aussehen": "elf_f",
+				"farbe": "d8f0b8",
+				"dialog": "salbei"
+			},
 			"bank_wipfelheim": {
 				"name": "Bankhüter Tamm",
 				"feld": [

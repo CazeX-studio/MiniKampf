@@ -53,7 +53,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D10:** Liste aus dem Playtest 25.10. prüfen, Fehlendes bauen. (1.1) – Status: fertig (02.11.2026; alle Punkte waren schon gebaut, Liste in FORTSCHRITT.md; neu ist eine Prüfung, dass die Gruppe den Silberhirsch angehen kann)
 - **D11:** Zähmer lernt bei Tilda, Esche gibt das erste Monster. (1.2, Projekt 12) – Status: fertig (02.11.2026; Neuverteilen der Punkte jetzt bei Tilda; Texte sind Platzhalter)
 - **D12:** Gemeinsame Trank-Wartezeit. (1.3, Projekt 5 Schritt 3) – Status: fertig (03.11.2026; dazu haben jetzt alle Klassen ihre Tränke im Kampf, bisher nur der Novize)
-- **D13:** Händler, in Grünwacht die Kräuterhändlerin. (1.4, Projekt 6) – Status: offen
+- **D13:** Händler, in Grünwacht die Kräuterhändlerin. (1.4, Projekt 6) – Status: fertig (03.11.2026; Salbei mit Stand auf dem Hauptplatz von Wipfelheim, Bingo verkauft auch Grundmaterialien; Bilder der neuen Waren: GRAFIK_AUFTRAG.md B6c)
 - **D14:** Tag und Nacht nach der Uhrzeit, nachts andere Monster. (1.5, Projekt 7) – Status: offen
 - **D15:** Kartenalbum, Teil 1: Album, Karten aktivieren, Monster-Infos. (1.6, Projekt 8 Schritt 1–3) – Status: offen
 - **D16:** Kartenalbum, Teil 2: Besitzeffekte, Deck, doppelte Karten verkaufen. (1.6, Projekt 8 Schritt 4–6) – Status: offen
@@ -212,7 +212,7 @@ Teil 1 ist gebaut (siehe FORTSCHRITT.md). Schritte 1–4 fertig (26.10.). Die De
 - **Ziel:** Ein Händler verkauft Heiltränke und Grundmaterialien (Garn, Öl, Leder) gegen Geld.
 - **So testest du es:** Etwas kaufen, das Geld sinkt, der Gegenstand liegt in der Tasche. Ohne genug Geld klappt der Kauf nicht.
 - **Schon da:** Bingos Laden in Kreuzweg verkauft Heiltränke (mit „Zu wenig Gold“). Offen sind die Grundmaterialien und die neuen Münzen.
-- **Status:** offen
+- **Status:** fertig (03.11.2026)
 
 ## Projekt 7: Tag und Nacht
 _Aus Marcos Entscheidung vom 22.10.2026: Tageszeit nach der echten Uhrzeit, nachts andere Monster und eigene Stimmung._

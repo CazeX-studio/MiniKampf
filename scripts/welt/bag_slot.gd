@@ -228,6 +228,39 @@ static func draw_icon(node: CanvasItem, c: Vector2, form: String, color: Color) 
 			node.draw_arc(c + Vector2(0, -4), 12.0, 0.2, PI - 0.2, 16, dark, 2.0)
 			node.draw_circle(c + Vector2(0, 10), 6.0, dark)
 			node.draw_circle(c + Vector2(0, 10), 4.5, color)
+		"garn":
+			# Spule mit aufgewickeltem Garn und losem Faden
+			node.draw_rect(Rect2(c + Vector2(-12, -14), Vector2(24, 5)), Color("8a6a44"))
+			node.draw_rect(Rect2(c + Vector2(-12, 9), Vector2(24, 5)), Color("8a6a44"))
+			node.draw_rect(Rect2(c + Vector2(-9, -9), Vector2(18, 18)), color)
+			for i in 4:
+				node.draw_line(c + Vector2(-9, -6 + i * 4), c + Vector2(9, -4 + i * 4), dark, 1.0)
+			node.draw_line(c + Vector2(9, 4), c + Vector2(15, 14), color, 1.5)
+		"flasche":
+			# Schlanke Flasche mit Korken (Öl)
+			node.draw_rect(Rect2(c + Vector2(-8, -4), Vector2(16, 20)), dark)
+			node.draw_rect(Rect2(c + Vector2(-7, -3), Vector2(14, 18)), color)
+			node.draw_rect(Rect2(c + Vector2(-3, -13), Vector2(6, 10)), Color("cfe6ef"))
+			node.draw_rect(Rect2(c + Vector2(-4, -17), Vector2(8, 5)), Color("8a5a32"))
+			node.draw_rect(Rect2(c + Vector2(-5, 0), Vector2(3, 10)), Color(1, 1, 1, 0.4))
+		"leder":
+			# Ausgebreitete Tierhaut
+			var haut := PackedVector2Array([c + Vector2(-15, -10), c + Vector2(-6, -14), c + Vector2(0, -10), c + Vector2(6, -14),
+					c + Vector2(15, -10), c + Vector2(12, 2), c + Vector2(15, 12), c + Vector2(4, 15), c + Vector2(-4, 15),
+					c + Vector2(-15, 12), c + Vector2(-12, 2)])
+			node.draw_colored_polygon(haut, color)
+			node.draw_polyline(haut + PackedVector2Array([haut[0]]), dark, 1.5)
+			node.draw_circle(c + Vector2(-3, -1), 4.0, color.lightened(0.15))
+		"pilz":
+			# Zwei Pilze mit Hut und Stiel
+			for p: Array in [[Vector2(-6, 2), 10.0], [Vector2(7, 6), 7.0]]:
+				var fuss: Vector2 = c + p[0]
+				var r: float = p[1]
+				node.draw_rect(Rect2(fuss + Vector2(-r * 0.3, 0), Vector2(r * 0.6, r * 1.1)), Color("efe6d0"))
+				node.draw_arc(fuss, r, PI, TAU, 12, dark, 2.0)
+				node.draw_colored_polygon(PackedVector2Array([fuss + Vector2(-r, 0), fuss + Vector2(-r * 0.7, -r * 0.7),
+						fuss + Vector2(0, -r), fuss + Vector2(r * 0.7, -r * 0.7), fuss + Vector2(r, 0)]), color)
+				node.draw_circle(fuss + Vector2(-r * 0.3, -r * 0.5), r * 0.18, Color(1, 1, 1, 0.7))
 		"stein":
 			node.draw_circle(c + Vector2(0, 3), 11.0, dark)
 			node.draw_circle(c + Vector2(-1, 1), 10.0, color)

@@ -209,6 +209,9 @@ def wipfelheim():
 	k.setzen("gw_tildas_stall", 42, 16, "Monster-Stall")
 	k.setzen("gw_wohnbaumhaus", 39, 15)
 	k.setzen("gw_seilaufzug", 5, 24)
+	# Kräuterhändlerin Salbei: Stand auf dem Hauptplatz neben der Bank (D13)
+	k.setzen("gw_stand_salbei", 30, 23, "Salbeis Kräuter")
+	k.setzen("gw_kraeuterkisten", 29, 24, muss=False)
 	for y in range(k.h):
 		for x in range(k.b):
 			z = k.zeichen(x, y)

@@ -3,8 +3,14 @@
 	"bingo_heimkehr": {
 		"name": "Bingos Laden",
 		"hinweis": "Nach der Rückkehr aus Grünwacht: Heimkehrer-Preis für die Sternentafel.",
-		"waren": ["heiltrank", "manatrank", "sternentafel", "breitschwert", "flinker_dolch", "kettenhemd", "wollrobe", "glueckskette", "feuerpfeil", "giftpfeil", "blitzpfeil", "frostpfeil"],
+		"waren": ["heiltrank", "manatrank", "garn", "oel", "leder", "sternentafel", "breitschwert", "flinker_dolch", "kettenhemd", "wollrobe", "glueckskette", "feuerpfeil", "giftpfeil", "blitzpfeil", "frostpfeil"],
 		"preise": {"sternentafel": 6000},
+		"ankauf": 0.5
+	},
+	"salbei": {
+		"name": "Salbeis Kräuter",
+		"hinweis": "Kräuterhändlerin Salbei in Wipfelheim (D13): Tränke, Grundmaterialien und ihre eigene Ware (Waldpilze).",
+		"waren": ["heiltrank", "manatrank", "garn", "oel", "leder", "waldpilze"],
 		"ankauf": 0.5
 	},
 	"bank": {
@@ -16,8 +22,8 @@
 	},
 	"bingo": {
 		"name": "Bingos Laden",
-		"hinweis_ausruestung": "Zum Ausprobieren der Ausrüstung (Projekt 14, K.1), bis die Händler kommen (D13).",
-		"waren": ["heiltrank", "manatrank", "sternentafel", "breitschwert", "flinker_dolch", "kettenhemd", "wollrobe", "glueckskette", "feuerpfeil", "giftpfeil", "blitzpfeil", "frostpfeil"],
+		"hinweis_ausruestung": "Zum Ausprobieren der Ausrüstung (Projekt 14, K.1). Seit D13 auch Grundmaterialien.",
+		"waren": ["heiltrank", "manatrank", "garn", "oel", "leder", "sternentafel", "breitschwert", "flinker_dolch", "kettenhemd", "wollrobe", "glueckskette", "feuerpfeil", "giftpfeil", "blitzpfeil", "frostpfeil"],
 		"ankauf": 0.5
 	}
 }

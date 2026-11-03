@@ -14,6 +14,7 @@ func _initialize() -> void:
 	_test_separate_maps()
 	_test_save()
 	_test_wild()
+	_test_salbei()
 	_test_fenn("verschonen")
 	_test_fenn("schiessen")
 	_test_tamer(false)
@@ -339,6 +340,34 @@ func _test_wild() -> void:
 	w2.apply_command("a", {type = "use", target = target})
 	_tick(w2, 3.0)
 	_check(group_battles.size() == 1 and group_battles[0][0].size() == 2, "Gruppe in der Nähe kämpft gemeinsam gegen das Monster")
+
+
+## D13: Kräuterhändlerin Salbei auf dem Hauptplatz von Wipfelheim verkauft Tränke, Grundmaterialien und Waldpilze.
+func _test_salbei() -> void:
+	var world := WorldState.new()
+	var p := world.add_player("a", "Test", "elf_m", Vector2i(6, 15))
+	p.progress.quests["nach_gruenwacht"] = "abgegeben"
+	world.change_map(p, "wipfelheim", Vector2i(30, 26))
+	_check(world.npcs.has("salbei") and world.npcs.salbei.map == "wipfelheim", "Salbei steht in Wipfelheim")
+	_check(world.npc_visible(p, "salbei"), "Salbei ist zu sehen")
+	world.apply_command("a", {type = "talk", npc = "salbei"})
+	_tick(world, 3.0)
+	_check(p.in_dialog() and p.dialog.id == "salbei", "Salbei spricht einen an")
+	world.apply_command("a", {type = "dialog_next"})
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(p.shop == "salbei", "Ihr Laden ist offen")
+	var waren: Array = world.shop_wares("salbei").map(func(w: Dictionary) -> String: return w.gegenstand)
+	for ware: String in ["heiltrank", "manatrank", "garn", "oel", "leder", "waldpilze"]:
+		_check(ware in waren, "Salbei verkauft %s" % GameData.item_name(ware))
+	p.progress.gold = 20
+	world.apply_command("a", {type = "kaufen", gegenstand = "leder"})
+	_check(p.progress.gold == 8 and p.progress.item_count("leder") == 1, "Leder gekauft: Geld sinkt, Leder in der Tasche")
+	world.apply_command("a", {type = "kaufen", gegenstand = "leder"})
+	_check(p.progress.gold == 8 and p.progress.item_count("leder") == 1, "Zu wenig Geld: kein zweites Leder")
+	world.apply_command("a", {type = "laden_zu"})
+	world.apply_command("a", {type = "talk", npc = "salbei"})
+	_tick(world, 3.0)
+	_check(world.dialog_view(p).text.contains("wieder"), "Beim zweiten Mal erkennt Salbei einen wieder")
 
 
 ## Schritt 3: Fenns Prüfung. Wer den Silberhirsch verschont, besteht mit Erfolg; wer schießt, besteht auch, Fenn ist enttäuscht.

@@ -11,7 +11,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** D13 (Händler, in Grünwacht die Kräuterhändlerin). Alle Testtage stehen seit 02.11. am Ende, Marco testet das volle Spiel zusammen. D9h wartet auf Marcos Bilder (GRAFIK_AUFTRAG.md, Teil E).
+- **Nächster Schritt:** D14 (Tag und Nacht nach der Uhrzeit, nachts andere Monster). Alle Testtage stehen seit 02.11. am Ende, Marco testet das volle Spiel zusammen. D9h wartet auf Marcos Bilder (GRAFIK_AUFTRAG.md, Teil E).
+
+- **Neu (03.11.): D13 Händler** (1.4, Projekt 6): Kräuterhändlerin Salbei steht mit ihrem Stand und Kräuterkisten auf dem Hauptplatz von Wipfelheim, gleich neben der Bank. Sie verkauft Heiltränke, Manatränke, die Grundmaterialien Garn, Öl und Leder und als eigene Ware Waldpilze (für das Kochen später). Bingo in Kreuzweg verkauft jetzt auch Garn, Öl und Leder. Ohne genug Geld klappt der Kauf nicht. Noch Platzhalter: Salbeis Figur (kommt mit D21), ihre Texte und die Bilder der neuen Waren im Laden.
+  - **Deine Sache:** Bild für Garn, Öl, Leder und Waldpilze, Prompt in `Spieldesign/GRAFIK_AUFTRAG.md`, Abschnitt B6c.
+  - **So testest du es:**
+    1. In Wipfelheim zum Hauptplatz neben der Bank: Dort steht Salbeis Stand.
+    2. Salbei ansprechen, „Zeig mir deine Waren“: Tränke, Garn, Öl, Leder und Waldpilze.
+    3. Etwas kaufen: Das Geld sinkt, die Ware liegt in der Tasche (I).
+    4. Mit zu wenig Geld kaufen: Es klappt nicht.
 
 - **Neu (03.11.): D12 Gemeinsame Trank-Wartezeit** (1.3, Projekt 5 Schritt 3): Nach einem Trank (Heil- oder Manatrank) sind alle Tränke 3 Runden gesperrt. Im Kampfmenü steht die Wartezeit bei „Gegenstände“ in Klammern, auf den Trank-Knöpfen steht „Trank-Wartezeit: bereit in …“. Der erste Trank im Zug bleibt gratis. Dabei behoben: Bisher hatte nur der Novize Tränke im Kampf, jetzt hat jede Klasse ihre Tränke vom Gürtel dabei (nicht in der Probestunde mit fremder Klasse).
   - **So testest du es:**

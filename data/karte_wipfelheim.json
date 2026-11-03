@@ -99,6 +99,21 @@
 			]
 		},
 		{
+			"teil": "gw_stand_salbei",
+			"feld": [
+				30,
+				23
+			],
+			"name": "Salbeis Kräuter"
+		},
+		{
+			"teil": "gw_kraeuterkisten",
+			"feld": [
+				29,
+				24
+			]
+		},
+		{
 			"teil": "gw_zielscheibe",
 			"feld": [
 				30,
