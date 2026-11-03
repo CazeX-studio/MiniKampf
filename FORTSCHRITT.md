@@ -13,8 +13,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 - **Nächster Schritt:** D14 (Tag und Nacht nach der Uhrzeit, nachts andere Monster). Alle Testtage stehen seit 02.11. am Ende, Marco testet das volle Spiel zusammen. D9h wartet auf Marcos Bilder (GRAFIK_AUFTRAG.md, Teil E).
 
-- **Neu (03.11.): D13 Händler** (1.4, Projekt 6): Kräuterhändlerin Salbei steht mit ihrem Stand und Kräuterkisten auf dem Hauptplatz von Wipfelheim, gleich neben der Bank. Sie verkauft Heiltränke, Manatränke, die Grundmaterialien Garn, Öl und Leder und als eigene Ware Waldpilze (für das Kochen später). Bingo in Kreuzweg verkauft jetzt auch Garn, Öl und Leder. Ohne genug Geld klappt der Kauf nicht. Noch Platzhalter: Salbeis Figur (kommt mit D21), ihre Texte und die Bilder der neuen Waren im Laden.
-  - **Deine Sache:** Bild für Garn, Öl, Leder und Waldpilze, Prompt in `Spieldesign/GRAFIK_AUFTRAG.md`, Abschnitt B6c.
+- **Neu (03.11.): D13 Händler** (1.4, Projekt 6): Kräuterhändlerin Salbei steht mit ihrem Stand und Kräuterkisten auf dem Hauptplatz von Wipfelheim, gleich neben der Bank. Sie verkauft Heiltränke, Manatränke, die Grundmaterialien Garn, Öl und Leder und als eigene Ware Waldpilze (für das Kochen später). Bingo in Kreuzweg verkauft jetzt auch Garn, Öl und Leder. Ohne genug Geld klappt der Kauf nicht. Die Bilder der neuen Waren sind von Marco (03.11., `tools/vorlagen/gegenstaende_3.png`). Noch Platzhalter: Salbeis Figur (kommt mit D21) und ihre Texte.
   - **So testest du es:**
     1. In Wipfelheim zum Hauptplatz neben der Bank: Dort steht Salbeis Stand.
     2. Salbei ansprechen, „Zeig mir deine Waren“: Tränke, Garn, Öl, Leder und Waldpilze.
