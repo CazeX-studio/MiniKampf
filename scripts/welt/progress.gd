@@ -110,7 +110,7 @@ func max_mana() -> int:
 		basis = int(Grundwerte.for_level(level).mana)
 	if basis <= 0:
 		return 0
-	return basis + int(Ausruestung.kampfwerte(ausruestung).mana)
+	return basis + int(Ausruestung.kampfwerte(ausruestung, KartenAlbum.boni(flags.get("karten", {}))).mana)
 
 
 func item_count(id: String) -> int:

@@ -1,6 +1,7 @@
 extends SceneTree
 ## D15: Kartenalbum (Projekt 8, Schritt 1–3). Seiten je Region mit festen Plätzen und Zähler, verdeckte Karten in der
 ## Tasche (bei voller Tasche im Beute-Fenster), Aktivieren, Element und Schwäche, dazu das Fenster in Kreuzweg.
+## D16: Besitzeffekte im Kampf und unter Werte, Deck für Kreuzweg-Karten, doppelte Karten bei Bingo verkaufen.
 ## Aufruf: Godot --headless --path . -s tests/kartenalbum_test.gd
 
 var _failed := 0
@@ -17,6 +18,8 @@ func _check(ok: bool, text: String) -> void:
 func _initialize() -> void:
 	_test_daten()
 	_test_welt()
+	_test_boni()
+	_test_deck_und_ankauf()
 	SaveGame.path = "user://test_kartenalbum.json"
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(SaveGame.path))
 	change_scene_to_file("res://scenes/kreuzweg.tscn")
@@ -66,6 +69,79 @@ func _test_welt() -> void:
 	Tageszeit.feste_stunde = -1.0
 
 
+func _test_boni() -> void:
+	for seite: Dictionary in KartenAlbum.seiten():
+		for id: String in seite.karten:
+			_check(not KartenAlbum.bonus(id).is_empty(), "%s hat einen Besitzeffekt" % id)
+	var b := KartenAlbum.boni({feldschleim = 3, steinkroete = 1, windfalke = 1, dornling = 0})
+	_check(b == {leben = 5, tempo = 1}, "Boni: doppelte zählen einmal, fehlende gar nicht (%s)" % str(b))
+	_check(KartenAlbum.boni_text(b) == "+5 Leben · +1 Tempo", "Boni als Text")
+	# Im Kampf: mehr Leben und Tempo als ohne Karten
+	BattleRequest.player_gear = {}
+	BattleRequest.player_card_bonus = {}
+	BattleRequest.prepare("wild:0", 12, 0, "archer")
+	var ohne := _held(BattleRequest.setup)
+	BattleRequest.player_card_bonus = b
+	BattleRequest.prepare("wild:0", 12, 0, "archer")
+	var mit := _held(BattleRequest.setup)
+	_check(mit.max_hp == ohne.max_hp + 5 and mit.tempo == ohne.tempo + 1, "Im Kampf: +5 Leben und +1 Tempo (%d/%d → %d/%d)" % [ohne.max_hp, ohne.tempo, mit.max_hp, mit.tempo])
+	_check(is_equal_approx(float(BattleRequest.setup.helden[0].ausruestung.macht), 1.0), "Ohne eigene Ausrüstung bleibt die Stärke gleich")
+	BattleRequest.player_card_bonus = {angriff = 2}
+	BattleRequest.prepare("wild:0", 12, 0, "archer")
+	_check(float(BattleRequest.setup.helden[0].ausruestung.macht) > 1.0, "Angriff-Bonus macht stärker")
+	BattleRequest.player_card_bonus = {}
+	BattleRequest.kampf_id = ""
+	# Mana in der Welt: Grenze steigt mit Mana-Karten
+	var pr := Progress.new()
+	pr.flags["klasse"] = "singer"
+	pr.flags["klasse_bestaetigt"] = true
+	pr.flags["klasse_gelernt"] = true
+	var vorher := pr.max_mana()
+	pr.flags["karten"] = {irrlicht = 1}
+	_check(pr.max_mana() == vorher + 3, "Irrlicht-Karte: +3 Mana auch in der Welt")
+
+
+func _held(setup: Dictionary) -> Fighter:
+	var st := BattleState.new(Node.new(), [] as Array[String], "", 7)
+	st.setup = setup
+	st._create_heroes()
+	return st.heroes[0]
+
+
+func _test_deck_und_ankauf() -> void:
+	_check(KartenAlbum.deck({feldschleim = 1, rindenbaer = 1, donnerhirsch = 1, wiesenkobold = 2, dornling = 1, windfalke = 1}, ["feldschleim", "dornling"]).slice(0, 2) == ["feldschleim", "dornling"],
+			"Deck: gewählte Karten zuerst")
+	_check(KartenAlbum.deck({feldschleim = 1, rindenbaer = 1}, ["windfalke"]) == ["rindenbaer", "feldschleim"], "Deck: nur Karten, die man hat, Rest aufgefüllt")
+	Tageszeit.feste_stunde = 12.0
+	var world := WorldState.new()
+	var p := world.add_player("a", "Test", "elf_m", Vector2i(6, 15))
+	p.progress.flags["karten"] = {feldschleim = 3, wiesenkobold = 1, ruepelkobold = 1, glutkobold = 1, dornling = 1, sturmkobold = 1}
+	for id: String in ["feldschleim", "wiesenkobold", "ruepelkobold", "glutkobold", "dornling", "sturmkobold"]:
+		world.apply_command("a", {type = "deck", karte = id})
+	_check(p.progress.flags.deck.size() == 5 and not "sturmkobold" in p.progress.flags.deck, "Deck: höchstens 5 Karten")
+	world.apply_command("a", {type = "deck", karte = "dornling"})
+	_check(p.progress.flags.deck.size() == 4 and not "dornling" in p.progress.flags.deck, "Karte wieder aus dem Deck")
+	world.apply_command("a", {type = "deck", karte = "rindenbaer"})
+	_check(not "rindenbaer" in p.progress.flags.deck, "Karten, die man nicht hat, kommen nicht ins Deck")
+	# Verkaufen nur bei Bingo, die letzte bleibt
+	var gold := p.progress.gold
+	world.apply_command("a", {type = "karte_verkaufen", karte = "feldschleim"})
+	_check(p.progress.flags.karten.feldschleim == 3, "Ohne Laden kein Verkauf")
+	p.shop = "salbei"
+	world.apply_command("a", {type = "karte_verkaufen", karte = "feldschleim"})
+	_check(p.progress.flags.karten.feldschleim == 3, "Salbei kauft keine Karten")
+	p.shop = "bingo"
+	world.apply_command("a", {type = "karte_verkaufen", karte = "feldschleim"})
+	world.apply_command("a", {type = "karte_verkaufen", karte = "feldschleim"})
+	world.apply_command("a", {type = "karte_verkaufen", karte = "feldschleim"})
+	_check(p.progress.flags.karten.feldschleim == 1, "Bingo kauft die doppelten, die letzte bleibt")
+	_check(p.progress.gold == gold + 2 * KartenAlbum.ankaufpreis("feldschleim") and KartenAlbum.ankaufpreis("feldschleim") > 0,
+			"Geld steigt um ein paar Bronze (%d je Karte)" % KartenAlbum.ankaufpreis("feldschleim"))
+	world.apply_command("a", {type = "karte_verkaufen", karte = "wiesenkobold"})
+	_check(p.progress.flags.karten.wiesenkobold == 1, "Einzelne Karten verkauft man nicht")
+	Tageszeit.feste_stunde = -1.0
+
+
 func _process(_delta: float) -> bool:
 	_frame += 1
 	if _frame == 20:
@@ -96,6 +172,8 @@ func _process(_delta: float) -> bool:
 	if _frame == 40:
 		var p: PlayerState = _town.local_player()
 		_check(int(p.progress.flags.karten.get("sturmkobold", 0)) == 1, "In der Tasche aktiviert: im Album")
+		_town._toggle_panel("werte")
+		_check(_town._panel_text.get_parsed_text().contains("Karten im Album: +2 Leben"), "Werte (C) zeigt, was die Karten bringen")
 		print("Kartenalbum: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 		quit(_failed)
 	return false

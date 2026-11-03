@@ -28,6 +28,8 @@ extends RefCounted
 ##   {type = "aussehen", hut = "…", ruecken = "…", farben = "…", waffe = "…"}  Aussehen-Plätze ändern ("" = keins, fehlt = bleibt)
 ##   {type = "wegwerfen", gegenstand = "…"}  alle Stück eines Gegenstands aus der Tasche wegwerfen
 ##   {type = "karte_aktivieren", gegenstand = "monsterkarte_…"}  eine verdeckte Monsterkarte umdrehen, sie kommt ins Album (D15)
+##   {type = "deck", karte = "…"}  Karte ins Deck für Kreuzweg-Karten legen oder wieder herausnehmen (D16, höchstens 5)
+##   {type = "karte_verkaufen", karte = "…"}  eine doppelte Karte an einen Laden mit "karten_ankauf" verkaufen (D16)
 ##   {type = "beute_nehmen", gegenstand = "…"} / {type = "beute_lassen"}  Beute, die nicht in die Tasche gepasst hat
 ##   {type = "test_geld", bronze = 75} / {type = "test_tasche"} / {type = "test_beute"}  Testknöpfe (nur im Godot-Editor)
 ##   {type = "karten_ergebnis", gegner = "marv", gewonnen = true, unentschieden = false}  Ende einer Partie Kreuzweg-Karten
@@ -429,6 +431,10 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			_discard(p, str(cmd.get("gegenstand", "")))
 		"karte_aktivieren":
 			_activate_card(p, str(cmd.get("gegenstand", "")))
+		"deck":
+			_toggle_deck(p, str(cmd.get("karte", "")))
+		"karte_verkaufen":
+			_sell_card(p, str(cmd.get("karte", "")))
 		"guertel_ablegen":
 			_belt_put(p, str(cmd.get("gegenstand", "")))
 		"guertel_nehmen":
@@ -2417,6 +2423,38 @@ func _activate_card(p: PlayerState, item_id: String) -> void:
 		return
 	p.progress.remove_item(item_id, 1)
 	add_card(p, card_id)
+	progress_changed.emit(p.id)
+
+
+## Deck für Kreuzweg-Karten (D16): Eine Karte aus dem Album hinein oder wieder heraus. Höchstens 5, nur was man hat.
+func _toggle_deck(p: PlayerState, card_id: String) -> void:
+	var deck: Array = p.progress.flags.get("deck", []).duplicate()
+	if card_id in deck:
+		deck.erase(card_id)
+	elif int(p.progress.flags.get("karten", {}).get(card_id, 0)) > 0:
+		if deck.size() >= KartenAlbum.DECK_GROESSE:
+			_say(p, GameData.text("deck_voll", [KartenAlbum.DECK_GROESSE]))
+			return
+		deck.append(card_id)
+	else:
+		return
+	p.progress.flags["deck"] = deck
+	progress_changed.emit(p.id)
+
+
+## Doppelte Karte verkaufen (D16): nur in einem Laden, der Karten kauft (Bingo). Die letzte Karte einer Sorte bleibt.
+func _sell_card(p: PlayerState, card_id: String) -> void:
+	if p.shop == "" or not GameData.get_file("laeden").get(p.shop, {}).get("karten_ankauf", false):
+		return
+	var cards: Dictionary = p.progress.flags.get("karten", {}).duplicate()
+	if int(cards.get(card_id, 0)) < 2:
+		_say(p, GameData.text("karte_letzte"))
+		return
+	cards[card_id] = int(cards[card_id]) - 1
+	p.progress.flags["karten"] = cards
+	var preis := KartenAlbum.ankaufpreis(card_id)
+	p.progress.gold += preis
+	_say(p, GameData.text("karte_verkauft", [KartenSpiel.card(card_id).name, Geld.text(preis)]))
 	progress_changed.emit(p.id)
 
 

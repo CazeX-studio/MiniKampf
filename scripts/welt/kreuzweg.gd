@@ -176,6 +176,9 @@ var _loot_box: VBoxContainer
 var _loot_shown := ""
 var _shop_panel: PanelContainer
 var _shop_box: VBoxContainer
+## Lange Läden (Bingo) passen nicht aufs Bild: Die Liste lässt sich rollen
+var _shop_scroll: ScrollContainer
+const SHOP_MAX_HOEHE := 540.0
 ## Was im Ladenfenster gerade angezeigt wird (zum Neuaufbau bei Änderungen)
 var _shop_shown := ""
 ## Knöpfe, auf denen ein Antippen nicht als Laufen zählt
@@ -1651,6 +1654,10 @@ func _build_ui() -> void:
 			_bag_selected = -1
 			_fill_panel()
 			return
+		if link.begins_with("deck:"):
+			_send({type = "deck", karte = link.trim_prefix("deck:")})
+			_fill_panel()
+			return
 		if link.begins_with("aktivieren:"):
 			var gegenstand := link.trim_prefix("aktivieren:")
 			_send({type = "karte_aktivieren", gegenstand = gegenstand})
@@ -1708,9 +1715,13 @@ func _build_ui() -> void:
 	_shop_panel.visible = false
 	root.add_child(_shop_panel)
 	_buttons.append(_shop_panel)
+	_shop_scroll = ScrollContainer.new()
+	_shop_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_shop_panel.add_child(_shop_scroll)
 	_shop_box = VBoxContainer.new()
 	_shop_box.add_theme_constant_override("separation", 6)
-	_shop_panel.add_child(_shop_box)
+	_shop_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_shop_scroll.add_child(_shop_box)
 
 	# Beute-Fenster rechts neben der Tasche
 	_loot_panel = _framed_panel()
@@ -2272,8 +2283,8 @@ func _small_button(text: String, action: Callable) -> Button:
 
 func _update_shop() -> void:
 	var p := local_player()
-	var key := "" if p.shop == "" else "%s|%d|%s|%s|%d" % [p.shop, p.progress.gold, str(p.progress.items), str(p.progress.bank),
-			p.progress.bank_size]
+	var key := "" if p.shop == "" else "%s|%d|%s|%s|%d|%s" % [p.shop, p.progress.gold, str(p.progress.items), str(p.progress.bank),
+			p.progress.bank_size, str(p.progress.flags.get("karten", {}))]
 	if key == _shop_shown:
 		return
 	_shop_shown = key
@@ -2316,6 +2327,21 @@ func _update_shop() -> void:
 		_shop_box.add_child(row.box)
 	if not any:
 		_shop_box.add_child(_label(GameData.text("laden_nichts_verkaufen"), 15, Color(1, 1, 1, 0.6)))
+	# Doppelte Karten aus dem Album (D16): nur Bingo kauft sie, die letzte jeder Sorte bleibt
+	if shop.get("karten_ankauf", false):
+		_shop_box.add_child(_label(GameData.text("laden_karten"), 17, Color("9fe8ff")))
+		var sammlung: Dictionary = p.progress.flags.get("karten", {})
+		var doppelt := false
+		for karte: String in sammlung:
+			if int(sammlung[karte]) < 2:
+				continue
+			doppelt = true
+			var row := _shop_row("%d × %s" % [int(sammlung[karte]) - 1, KartenSpiel.card(karte).name],
+					"%s · %s" % [GameData.text("laden_verkaufen"), Geld.text(KartenAlbum.ankaufpreis(karte))], KartenAlbum.UNBEKANNT)
+			row.button.pressed.connect(func() -> void: _send({type = "karte_verkaufen", karte = karte}))
+			_shop_box.add_child(row.box)
+		if not doppelt:
+			_shop_box.add_child(_label(GameData.text("laden_keine_karten"), 15, Color(1, 1, 1, 0.6)))
 	_add_shop_close()
 
 
@@ -2327,6 +2353,12 @@ func _add_shop_close() -> void:
 	close.focus_mode = Control.FOCUS_NONE
 	close.pressed.connect(func() -> void: _send({type = "laden_zu"}))
 	_shop_box.add_child(close)
+	_shop_groesse.call_deferred()
+
+
+## Ladenfenster so hoch wie der Inhalt, höchstens SHOP_MAX_HOEHE (dann rollt die Liste).
+func _shop_groesse() -> void:
+	_shop_scroll.custom_minimum_size = Vector2(680, minf(_shop_box.get_combined_minimum_size().y, SHOP_MAX_HOEHE))
 	_shop_panel.reset_size()
 
 
@@ -2535,6 +2567,7 @@ func _fill_album(p: PlayerState, lines: PackedStringArray) -> void:
 		return
 	for id: String in seiten[_album_seite].karten:
 		_album_grid.add_child(_album_platz(id, int(sammlung.get(id, 0))))
+	var deck: Array = p.progress.flags.get("deck", [])
 	if _album_karte != "" and int(sammlung.get(_album_karte, 0)) > 0:
 		var info := KartenAlbum.info(_album_karte)
 		var schwach: PackedStringArray = []
@@ -2544,12 +2577,23 @@ func _fill_album(p: PlayerState, lines: PackedStringArray) -> void:
 		lines.append(GameData.text("album_info", [KartenSpiel.card(_album_karte).name, int(sammlung[_album_karte]),
 				"[color=#%s]%s[/color]" % [Elements.color(element).to_html(false), element] if element != "" else "–",
 				", ".join(schwach) if not schwach.is_empty() else "–"]))
+		var im_deck := _album_karte in deck
+		lines.append("%s  [url=deck:%s][color=#%s][%s][/color][/url]" % [
+				GameData.text("album_bonus_karte", [KartenAlbum.boni_text(KartenAlbum.bonus(_album_karte))]), _album_karte,
+				"ff8a7a" if im_deck else "5ab8ff", GameData.text("deck_raus" if im_deck else "deck_rein")])
 	elif _album_karte != "":
 		lines.append("[color=#a0a0a0]%s[/color]" % GameData.text("album_fehlt"))
 	elif sammlung.is_empty():
 		lines.append("[color=#a0a0a0]%s[/color]" % GameData.text("album_leer"))
 	else:
 		lines.append("[color=#a0a0a0]%s[/color]" % GameData.text("album_tipp"))
+	# Was alle Karten zusammen bringen (D16) und das Deck für Kreuzweg-Karten
+	var boni := KartenAlbum.boni_text(KartenAlbum.boni(sammlung))
+	if boni != "":
+		lines.append(GameData.text("album_boni", ["[color=#6dff8a]%s[/color]" % boni]))
+	if not sammlung.is_empty():
+		lines.append(GameData.text("deck_zeile", [deck.size(), KartenAlbum.DECK_GROESSE,
+				GameData.text("deck_auffuellen") if deck.size() < KartenAlbum.DECK_GROESSE else ""]))
 
 
 ## Ein Platz im Album: Bild des Monsters (fehlt die Karte, nur ein dunkler Umriss), darunter Name und Anzahl.
@@ -2558,7 +2602,8 @@ func _album_platz(id: String, anzahl: int) -> Control:
 	platz.custom_minimum_size = Vector2(92, 104)
 	var rahmen := StyleBoxFlat.new()
 	rahmen.bg_color = Color("1c2340") if anzahl > 0 else Color("10131f")
-	rahmen.border_color = Color("f2c14e") if id == _album_karte else (Color("8a7a4a") if anzahl > 0 else Color("3a3f55"))
+	var im_deck: bool = id in local_player().progress.flags.get("deck", [])
+	rahmen.border_color = Color("f2c14e") if id == _album_karte else (Color("5ab8ff") if im_deck else (Color("8a7a4a") if anzahl > 0 else Color("3a3f55")))
 	rahmen.set_border_width_all(2)
 	rahmen.set_corner_radius_all(6)
 	platz.add_theme_stylebox_override("panel", rahmen)
@@ -2584,7 +2629,8 @@ func _album_platz(id: String, anzahl: int) -> Control:
 	var name_text: String = KartenSpiel.card(id).name if anzahl > 0 else "???"
 	if anzahl > 1:
 		name_text += " ×%d" % anzahl
-	var schild := _label(name_text, 12, Color("f3ead8") if anzahl > 0 else Color("6a6f85"))
+	# Karten im Deck für Kreuzweg-Karten: blauer Rahmen und blaue Schrift
+	var schild := _label(name_text, 12, Color("8fd0ff") if im_deck else (Color("f3ead8") if anzahl > 0 else Color("6a6f85")))
 	schild.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	schild.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	box.add_child(schild)
@@ -2665,7 +2711,7 @@ func _fill_panel() -> void:
 	_bag_tests.visible = _panel_mode == "tasche"
 	_album_tabs.visible = _panel_mode == "album"
 	_album_grid.visible = _panel_mode == "album"
-	_panel_text.custom_minimum_size.y = {"tasche": 120.0, "werte": 90.0, "faehigkeiten": 0.0, "album": 70.0}.get(_panel_mode, 330.0)
+	_panel_text.custom_minimum_size.y = {"tasche": 120.0, "werte": 90.0, "faehigkeiten": 0.0, "album": 120.0}.get(_panel_mode, 330.0)
 	for tab_button: Button in _quest_tabs.get_children():
 		tab_button.button_pressed = tab_button.get_meta("tab") == _quest_tab
 	if _panel_mode == "auftraege":
@@ -2694,9 +2740,14 @@ func _fill_panel() -> void:
 			# Nach der Klassenwahl: Werte der eigenen Klasse (so kämpft man in der Wildnis)
 			var data: Dictionary = Sandbox.CLASSES[klasse]
 			var bonus := p.progress.level - 1
-			_fill_stats_head(p, data.title, data.hp + BattleState.LEVEL_HP * bonus, data.mana + BattleState.LEVEL_MANA * bonus if data.mana > 0 else 0)
-			lines.append(UiStil.bild("pfeil") + " [b]Tempo: %d[/b]" % data.tempo)
+			# Besitzeffekte der Karten (D16) zählen mit
+			var karten := KartenAlbum.boni(p.progress.flags.get("karten", {}))
+			_fill_stats_head(p, data.title, data.hp + BattleState.LEVEL_HP * bonus + int(karten.get("leben", 0)),
+					data.mana + BattleState.LEVEL_MANA * bonus + int(karten.get("mana", 0)) if data.mana > 0 else 0)
+			lines.append(UiStil.bild("pfeil") + " [b]Tempo: %d[/b]" % (data.tempo + int(karten.get("tempo", 0))))
 			lines.append(UiStil.bild("schwert") + " [b]Stärke: %d %%[/b] (Schaden und Heilung)" % roundi(BattleRequest.hero_power(p.progress.level) * 100))
+			if not karten.is_empty():
+				lines.append(GameData.text("werte_karten", ["[color=#6dff8a]%s[/color]" % KartenAlbum.boni_text(karten)]))
 			if klasse == "tamer":
 				var pack: PackedStringArray = []
 				for id: String in p.progress.flags.get("monster", []):
@@ -2708,15 +2759,18 @@ func _fill_panel() -> void:
 			_panel_text.text = "\n".join(lines)
 			return
 		var stats := Grundwerte.for_level(p.progress.level)
-		_fill_stats_head(p, "Novize", stats.leben, stats.mana)
+		var karten_n := KartenAlbum.boni(p.progress.flags.get("karten", {}))
+		_fill_stats_head(p, "Novize", stats.leben + int(karten_n.get("leben", 0)), stats.mana + int(karten_n.get("mana", 0)))
 		var chosen := str(p.progress.flags.get("klasse", ""))
 		if p.progress.flags.has("klasse_bestaetigt") and Sandbox.CLASSES.has(chosen):
 			# Klasse gewählt, aber noch nicht beim Lehrmeister gelernt: noch Novize
 			lines.append("[color=#f2c14e]%s[/color]" % GameData.text("werte_noch_novize", [Sandbox.CLASSES[chosen].title,
 					GameData.get_file("klassen").get(chosen, {}).get("lehrmeister", "?")]))
 			lines.append("")
-		lines.append(UiStil.bild("schwert") + " [b]%s: %d[/b]     " % [Grundwerte.NAMES.angriff, stats.angriff]
-				+ UiStil.bild("pfeil") + " [b]%s: %d[/b]" % [Grundwerte.NAMES.tempo, stats.tempo])
+		lines.append(UiStil.bild("schwert") + " [b]%s: %d[/b]     " % [Grundwerte.NAMES.angriff, stats.angriff + int(karten_n.get("angriff", 0))]
+				+ UiStil.bild("pfeil") + " [b]%s: %d[/b]" % [Grundwerte.NAMES.tempo, stats.tempo + int(karten_n.get("tempo", 0))])
+		if not karten_n.is_empty():
+			lines.append(GameData.text("werte_karten", ["[color=#6dff8a]%s[/color]" % KartenAlbum.boni_text(karten_n)]))
 		lines.append("")
 		lines.append(GameData.text("werte_naechste", [Grundwerte.growth_text()]))
 		lines.append("")
@@ -3162,6 +3216,7 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 	var progress := local_player().progress
 	BattleRequest.player_look = local_player().look
 	BattleRequest.player_gear = local_player().progress.ausruestung.duplicate()
+	BattleRequest.player_card_bonus = KartenAlbum.boni(local_player().progress.flags.get("karten", {}))
 	BattleRequest.player_mana_potions = local_player().progress.potion_count("manatrank")
 	BattleRequest.player_mana_share = local_player().progress.mana_anteil
 	BattleRequest.player_skills = local_player().progress.faehigkeiten.duplicate()
@@ -3208,7 +3263,9 @@ func _on_scene(player_id: String, scene: String) -> void:
 	# "kartenspiel:marv" = eine Partie Kreuzweg-Karten gegen diese Figur, mit den eigenen stärksten Karten
 	if parts[0] == "kartenspiel":
 		KartenTisch.gegner = parts[1] if parts.size() > 1 else ""
-		KartenTisch.deck = KartenSpiel.best_deck(local_player().progress.flags.get("karten", {}))
+		# Deck: die im Album gewählten Karten (D16), der Rest mit den stärksten aufgefüllt
+		var flags := local_player().progress.flags
+		KartenTisch.deck = KartenAlbum.deck(flags.get("karten", {}), flags.get("deck", []))
 		get_tree().change_scene_to_file.call_deferred("res://scenes/kartentisch.tscn")
 		return
 	# "erinnerung:rowan" = eine Erinnerungs-Szene aus data/erinnerungen.json

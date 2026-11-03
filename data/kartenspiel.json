@@ -8,7 +8,10 @@
 				3,
 				1,
 				3
-			]
+			],
+			"bonus": {
+				"leben": 2
+			}
 		},
 		"wiesenkobold": {
 			"name": "Wiesenkobold",
@@ -17,7 +20,10 @@
 				2,
 				3,
 				1
-			]
+			],
+			"bonus": {
+				"angriff": 1
+			}
 		},
 		"ruepelkobold": {
 			"name": "Rüpelkobold",
@@ -26,7 +32,10 @@
 				3,
 				2,
 				4
-			]
+			],
+			"bonus": {
+				"leben": 2
+			}
 		},
 		"glutkobold": {
 			"name": "Glutkobold",
@@ -35,7 +44,10 @@
 				4,
 				2,
 				2
-			]
+			],
+			"bonus": {
+				"angriff": 1
+			}
 		},
 		"sumpfschleim": {
 			"name": "Sumpfschleim",
@@ -44,7 +56,10 @@
 				2,
 				4,
 				3
-			]
+			],
+			"bonus": {
+				"mana": 2
+			}
 		},
 		"dornling": {
 			"name": "Dornling",
@@ -53,7 +68,10 @@
 				1,
 				3,
 				3
-			]
+			],
+			"bonus": {
+				"angriff": 1
+			}
 		},
 		"sturmkobold": {
 			"name": "Sturmkobold",
@@ -62,7 +80,10 @@
 				4,
 				3,
 				3
-			]
+			],
+			"bonus": {
+				"tempo": 1
+			}
 		},
 		"windfalke": {
 			"name": "Windfalke",
@@ -71,7 +92,10 @@
 				3,
 				2,
 				4
-			]
+			],
+			"bonus": {
+				"tempo": 1
+			}
 		},
 		"steinkroete": {
 			"name": "Steinkröte",
@@ -80,7 +104,10 @@
 				5,
 				5,
 				2
-			]
+			],
+			"bonus": {
+				"leben": 3
+			}
 		},
 		"waldsporenling": {
 			"name": "Sporenling",
@@ -89,7 +116,10 @@
 				2,
 				4,
 				4
-			]
+			],
+			"bonus": {
+				"mana": 2
+			}
 		},
 		"rindenbaer": {
 			"name": "Rindenbär",
@@ -98,7 +128,10 @@
 				4,
 				5,
 				3
-			]
+			],
+			"bonus": {
+				"leben": 3
+			}
 		},
 		"donnerhirsch": {
 			"name": "Donnerhirsch",
@@ -107,7 +140,10 @@
 				6,
 				3,
 				4
-			]
+			],
+			"bonus": {
+				"angriff": 1
+			}
 		},
 		"wilder_moosling": {
 			"name": "Moosling",
@@ -116,7 +152,10 @@
 				3,
 				6,
 				3
-			]
+			],
+			"bonus": {
+				"leben": 3
+			}
 		},
 		"wilde_glutwelpe": {
 			"name": "Glutwelpe",
@@ -125,7 +164,10 @@
 				5,
 				2,
 				4
-			]
+			],
+			"bonus": {
+				"angriff": 1
+			}
 		},
 		"wilder_bachotter": {
 			"name": "Bachotter",
@@ -134,7 +176,10 @@
 				5,
 				4,
 				4
-			]
+			],
+			"bonus": {
+				"mana": 2
+			}
 		},
 		"sporenwolf": {
 			"name": "Sporenwolf",
@@ -143,7 +188,10 @@
 				4,
 				4,
 				5
-			]
+			],
+			"bonus": {
+				"angriff": 1
+			}
 		},
 		"leuchtmotte": {
 			"name": "Leuchtmotte",
@@ -152,7 +200,10 @@
 				2,
 				3,
 				6
-			]
+			],
+			"bonus": {
+				"mana": 2
+			}
 		},
 		"wurzelkriecher": {
 			"name": "Wurzelkriecher",
@@ -161,7 +212,10 @@
 				6,
 				6,
 				2
-			]
+			],
+			"bonus": {
+				"leben": 2
+			}
 		},
 		"glimmerkaefer": {
 			"name": "Glimmerkäfer",
@@ -170,7 +224,10 @@
 				6,
 				2,
 				5
-			]
+			],
+			"bonus": {
+				"leben": 2
+			}
 		},
 		"sporenkoenigin": {
 			"name": "Sporenkönigin",
@@ -179,7 +236,10 @@
 				5,
 				6,
 				4
-			]
+			],
+			"bonus": {
+				"angriff": 2
+			}
 		},
 		"wurzelmutter": {
 			"name": "Wurzelmutter",
@@ -188,7 +248,10 @@
 				7,
 				5,
 				6
-			]
+			],
+			"bonus": {
+				"leben": 5
+			}
 		},
 		"heulwolf": {
 			"name": "Heulwolf",
@@ -197,7 +260,10 @@
 				4,
 				3,
 				4
-			]
+			],
+			"bonus": {
+				"angriff": 1
+			}
 		},
 		"irrlicht": {
 			"name": "Irrlicht",
@@ -206,7 +272,10 @@
 				5,
 				4,
 				3
-			]
+			],
+			"bonus": {
+				"mana": 3
+			}
 		},
 		"nachtuhu": {
 			"name": "Nachtuhu",
@@ -215,7 +284,10 @@
 				4,
 				5,
 				4
-			]
+			],
+			"bonus": {
+				"mana": 3
+			}
 		},
 		"funkenmarder": {
 			"name": "Funkenmarder",
@@ -224,7 +296,10 @@
 				3,
 				4,
 				5
-			]
+			],
+			"bonus": {
+				"tempo": 1
+			}
 		}
 	},
 	"startkarten": [
@@ -305,5 +380,6 @@
 			]
 		}
 	],
-	"hinweis_seiten": "seiten: das Kartenalbum (D15), eine Seite pro Region mit festen Plätzen in dieser Reihenfolge."
+	"hinweis_seiten": "seiten: das Kartenalbum (D15), eine Seite pro Region mit festen Plätzen in dieser Reihenfolge.",
+	"hinweis_bonus": "bonus: Besitzeffekt der Karte (D16), wirkt dauerhaft im Kampf, solange sie im Album ist; doppelte zählen nicht mehrfach. Werte: leben, mana, angriff, tempo."
 }

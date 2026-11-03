@@ -23,6 +23,8 @@ static var player_look := ""
 ## Angelegte Ausrüstung der eigenen Figur (Platz -> Gegenstand, siehe Ausruestung). Leer = ohne Ausrüstung kämpfen
 ## wie bisher (Sandbox).
 static var player_gear := {}
+## Besitzeffekte der Karten im Album (D16): {leben, mana, angriff, tempo}, wirken wie Bonus-Werte der Ausrüstung
+static var player_card_bonus := {}
 ## Manatränke am Gürtel der eigenen Figur (Projekt 14, K.2)
 static var player_mana_potions := 0
 ## Manatränke, die in früheren Versuchen desselben Kampfes getrunken wurden
@@ -87,8 +89,8 @@ static func prepare(id: String, level: int, potions := 0, own_class := "", own_m
 	var eigener_guertel := klasse == "novize" or klasse == own_class
 	if eigener_guertel:
 		player["traenke"] = potions
-	if not player_gear.is_empty():
-		player["ausruestung"] = Ausruestung.kampfwerte(player_gear)
+	if not player_gear.is_empty() or not player_card_bonus.is_empty():
+		player["ausruestung"] = Ausruestung.kampfwerte(player_gear if not player_gear.is_empty() else Ausruestung.START, player_card_bonus)
 	# Novize: nur, was er bei Ye schon gelernt hat (Lektionen und Lernkämpfe mit Phasen zeigen, was sie erlauben)
 	if klasse == "novize" and not player_novize.is_empty() and not data.has("phasen") and not data.get("lektion", false):
 		player["novize_gelernt"] = player_novize.duplicate()

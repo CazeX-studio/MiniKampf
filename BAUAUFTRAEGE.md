@@ -56,7 +56,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D13:** Händler, in Grünwacht die Kräuterhändlerin. (1.4, Projekt 6) – Status: fertig (03.11.2026; Salbei mit Stand auf dem Hauptplatz von Wipfelheim, Bingo verkauft auch Grundmaterialien; Bilder der neuen Waren: GRAFIK_AUFTRAG.md B6c)
 - **D14:** Tag und Nacht nach der Uhrzeit, nachts andere Monster. (1.5, Projekt 7) – Status: fertig (03.11.2026; Licht nach der Uhr, Testknopf in der Tasche, nachts Heulwolf und Irrlicht auf dem Weg, Nachtuhu und Funkenmarder im Wald; Kämpfe sehen nachts noch aus wie tags)
 - **D15:** Kartenalbum, Teil 1: Album, Karten aktivieren, Monster-Infos. (1.6, Projekt 8 Schritt 1–3) – Status: fertig (03.11.2026; Taste L statt K, weil K schon die Fähigkeiten öffnet; Seiten Kreuzweg und Grünwacht, dazu Karten für die vier Nacht-Monster)
-- **D16:** Kartenalbum, Teil 2: Besitzeffekte, Deck, doppelte Karten verkaufen. (1.6, Projekt 8 Schritt 4–6) – Status: offen
+- **D16:** Kartenalbum, Teil 2: Besitzeffekte, Deck, doppelte Karten verkaufen. (1.6, Projekt 8 Schritt 4–6) – Status: fertig (03.11.2026; Boni vorläufig je Karte +1 bis +5 Leben, Mana, Angriff oder Tempo; Bingos Laden lässt sich jetzt rollen)
 - **D17:** Kartenalbum, Teil 3: Belohnung volle Seite, Marv, Karten bis +10. (1.6, Projekt 8 Schritt 7–9) – Status: offen
 - **D18:** Körper für Bogenschütze und Monster-Zähmer einbauen (braucht Marcos Bilder). (1.8, Projekt 11 Schritt 4) – Status: offen
 - **D19:** Figuren-Baukasten mit den acht Grundkörpern einbauen (braucht Marcos Bilder). (neu, NPC.md) – Status: offen
@@ -247,17 +247,17 @@ _Aus Marcos Entscheidung vom 22.10.2026: Tageszeit nach der echten Uhrzeit, nach
 ### Schritt 4: Besitzeffekte
 - **Ziel:** Jede Karte im Album gibt einen kleinen dauerhaften Bonus, der zum Monster passt (z. B. Rindenbär +1 Leben, Windfalke +1 Tempo) und im Kampf wirkt. Doppelte zählen nicht mehrfach. Im Album und unter „Werte (C)“ steht, was die Karten zusammen bringen. Vorerst nur Werte, die es im Kampf schon gibt (Leben, Mana, Angriff, Tempo); Verteidigung kommt mit der Ausrüstung dazu.
 - **So testest du es:** Werte (C) ansehen, eine neue Karte aktivieren: Der Wert steigt um den Bonus der Karte.
-- **Status:** offen
+- **Status:** fertig (03.11.2026, als D16)
 
 ### Schritt 5: Deck für Kreuzweg-Karten wählen
 - **Ziel:** Im Album wählt man die 5 Karten, mit denen man bei Kreuzweg-Karten antritt.
 - **So testest du es:** Im Album 5 Karten markieren, gegen Marv spielen: Genau diese Karten sind auf der Hand.
-- **Status:** offen
+- **Status:** fertig (03.11.2026, als D16)
 
 ### Schritt 6: Doppelte Karten bei Bingo verkaufen
 - **Ziel:** Bingo kauft doppelte Karten für ein paar Bronze. Die letzte Karte einer Sorte bleibt immer im Album.
 - **So testest du es:** Mit einer doppelten Karte zu Bingo gehen, sie verkaufen: Das Geld steigt, im Album steht eine weniger.
-- **Status:** offen
+- **Status:** fertig (03.11.2026, als D16)
 
 ### Schritt 7: Belohnung für eine volle Seite
 - **Ziel:** Wer alle Karten einer Region hat, bekommt eine Belohnung (Titel, besonderer Kartenrücken oder Extra-Platz in der Tasche; welche genau, entscheidet Marco).

@@ -69,11 +69,14 @@ static func summe(angelegt: Dictionary) -> Dictionary:
 ## Was die Ausrüstung im Kampf bewirkt (für BattleState, Teil des Helden-Aufbaus „ausruestung“):
 ## {macht = Faktor für Schaden und Heilung, schutz = Faktor auf Nah- und Fernkampf-Schaden, magieschutz = Faktor auf
 ## Magie-Schaden, tempo, leben, mana = was dazukommt}. Mit der Grundausrüstung ist alles neutral (1.0 und 0).
-static func kampfwerte(angelegt: Dictionary) -> Dictionary:
+## karten_boni: Besitzeffekte der Karten im Album (D16, KartenAlbum.boni), sie zählen wie Bonus-Werte der Ausrüstung.
+static func kampfwerte(angelegt: Dictionary, karten_boni: Dictionary = {}) -> Dictionary:
 	var s := summe(angelegt)
 	var start := summe(START)
 	var basis := Grundwerte.BASE_ATTACK
-	var boni: Dictionary = s.boni
+	var boni: Dictionary = s.boni.duplicate()
+	for wert: String in karten_boni:
+		boni[wert] = int(boni.get(wert, 0)) + int(karten_boni[wert])
 	return {
 		macht = (basis + s.waffenkraft + int(boni.get("angriff", 0))) / (basis + start.waffenkraft),
 		schutz = (GRUNDSCHUTZ + start.verteidigung) / (GRUNDSCHUTZ + s.verteidigung),

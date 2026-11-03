@@ -5,6 +5,7 @@
 		"hinweis": "Nach der Rückkehr aus Grünwacht: Heimkehrer-Preis für die Sternentafel.",
 		"waren": ["heiltrank", "manatrank", "garn", "oel", "leder", "sternentafel", "breitschwert", "flinker_dolch", "kettenhemd", "wollrobe", "glueckskette", "feuerpfeil", "giftpfeil", "blitzpfeil", "frostpfeil"],
 		"preise": {"sternentafel": 6000},
+		"karten_ankauf": true,
 		"ankauf": 0.5
 	},
 	"salbei": {
@@ -24,6 +25,7 @@
 		"name": "Bingos Laden",
 		"hinweis_ausruestung": "Zum Ausprobieren der Ausrüstung (Projekt 14, K.1). Seit D13 auch Grundmaterialien.",
 		"waren": ["heiltrank", "manatrank", "garn", "oel", "leder", "sternentafel", "breitschwert", "flinker_dolch", "kettenhemd", "wollrobe", "glueckskette", "feuerpfeil", "giftpfeil", "blitzpfeil", "frostpfeil"],
+		"karten_ankauf": true,
 		"ankauf": 0.5
 	}
 }
