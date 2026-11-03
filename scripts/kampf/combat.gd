@@ -595,6 +595,11 @@ func _show_actions(f: Fighter, category := "faehigkeiten") -> void:
 	_clear_actions()
 	_menu_fighter = f
 	_set_commands(category)
+	# Gemeinsame Trank-Wartezeit sichtbar am Gürtel (Eintrag „Gegenstände“)
+	if _commands.has("gegenstaende"):
+		var warten := f.cooldown(Skills.TRANK_WARTEZEIT_ID)
+		_commands.gegenstaende.text = "Gegenstände" if warten <= 0 else "Gegenstände (%d)" % warten
+		_commands.gegenstaende.tooltip_text = "" if warten <= 0 else "Trank-Wartezeit: Tränke sind in %d Zügen wieder bereit" % warten
 	if f.display_name == "Du" or (not _group.is_empty() and _owner(f) == ""):
 		_turn_label.text = "Du bist am Zug"
 	else:

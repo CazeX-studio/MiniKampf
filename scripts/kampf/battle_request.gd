@@ -83,7 +83,9 @@ static func prepare(id: String, level: int, potions := 0, own_class := "", own_m
 		player["macht"] = hero_power(level)
 		if klasse == "tamer":
 			player["monster"] = own_monsters
-	if klasse == "novize":
+	# Tränke am Gürtel: für den Novizen und für jede eigene Klasse (nicht in der Probestunde mit fremder Klasse)
+	var eigener_guertel := klasse == "novize" or klasse == own_class
+	if eigener_guertel:
 		player["traenke"] = potions
 	if not player_gear.is_empty():
 		player["ausruestung"] = Ausruestung.kampfwerte(player_gear)
@@ -96,7 +98,7 @@ static func prepare(id: String, level: int, potions := 0, own_class := "", own_m
 		player["munition"] = player_munition.duplicate()
 	if klasse == "novize" and (player_sternenmut or data.get("sternenmut", false)):
 		player["sternenmut"] = true
-	if klasse == "novize" and player_mana_potions > 0:
+	if eigener_guertel and player_mana_potions > 0:
 		player["manatraenke"] = player_mana_potions
 	if data.get("eigene_klasse", false):
 		player["mana_anteil"] = player_mana_share

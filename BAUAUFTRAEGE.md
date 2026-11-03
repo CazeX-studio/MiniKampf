@@ -52,7 +52,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 
 - **D10:** Liste aus dem Playtest 25.10. prüfen, Fehlendes bauen. (1.1) – Status: fertig (02.11.2026; alle Punkte waren schon gebaut, Liste in FORTSCHRITT.md; neu ist eine Prüfung, dass die Gruppe den Silberhirsch angehen kann)
 - **D11:** Zähmer lernt bei Tilda, Esche gibt das erste Monster. (1.2, Projekt 12) – Status: fertig (02.11.2026; Neuverteilen der Punkte jetzt bei Tilda; Texte sind Platzhalter)
-- **D12:** Gemeinsame Trank-Wartezeit. (1.3, Projekt 5 Schritt 3) – Status: offen
+- **D12:** Gemeinsame Trank-Wartezeit. (1.3, Projekt 5 Schritt 3) – Status: fertig (03.11.2026; dazu haben jetzt alle Klassen ihre Tränke im Kampf, bisher nur der Novize)
 - **D13:** Händler, in Grünwacht die Kräuterhändlerin. (1.4, Projekt 6) – Status: offen
 - **D14:** Tag und Nacht nach der Uhrzeit, nachts andere Monster. (1.5, Projekt 7) – Status: offen
 - **D15:** Kartenalbum, Teil 1: Album, Karten aktivieren, Monster-Infos. (1.6, Projekt 8 Schritt 1–3) – Status: offen
@@ -204,7 +204,7 @@ Teil 1 ist gebaut (siehe FORTSCHRITT.md). Schritte 1–4 fertig (26.10.). Die De
 ### Schritt 3: Gemeinsame Trank-Wartezeit
 - **Ziel:** Gemeinsame Wartezeit von 3 Runden für alle Tränke, sichtbar am Gürtel.
 - **So testest du es:** Nach einem Trank sind alle Tränke 3 Runden gesperrt und zählen sichtbar herunter.
-- **Status:** offen
+- **Status:** fertig (03.11.2026)
 
 ## Projekt 6: Händler
 

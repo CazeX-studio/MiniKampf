@@ -11,7 +11,14 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** D12 (Gemeinsame Trank-Wartezeit). Alle Testtage stehen seit 02.11. am Ende, Marco testet das volle Spiel zusammen. D9h wartet auf Marcos Bilder (GRAFIK_AUFTRAG.md, Teil E).
+- **Nächster Schritt:** D13 (Händler, in Grünwacht die Kräuterhändlerin). Alle Testtage stehen seit 02.11. am Ende, Marco testet das volle Spiel zusammen. D9h wartet auf Marcos Bilder (GRAFIK_AUFTRAG.md, Teil E).
+
+- **Neu (03.11.): D12 Gemeinsame Trank-Wartezeit** (1.3, Projekt 5 Schritt 3): Nach einem Trank (Heil- oder Manatrank) sind alle Tränke 3 Runden gesperrt. Im Kampfmenü steht die Wartezeit bei „Gegenstände“ in Klammern, auf den Trank-Knöpfen steht „Trank-Wartezeit: bereit in …“. Der erste Trank im Zug bleibt gratis. Dabei behoben: Bisher hatte nur der Novize Tränke im Kampf, jetzt hat jede Klasse ihre Tränke vom Gürtel dabei (nicht in der Probestunde mit fremder Klasse).
+  - **So testest du es:**
+    1. Mit einer Klasse (z. B. Bogenschütze) in der Wildnis kämpfen: Unter „Gegenstände“ stehen deine Tränke.
+    2. Einen Heiltrank trinken: Du bist noch dran, aber alle Tränke sind jetzt gesperrt.
+    3. Bei „Gegenstände“ steht eine Zahl, die jede Runde kleiner wird.
+    4. Nach 3 Runden ist wieder ein Trank möglich.
 
 - **Neu (02.11.): Schneller (Leistung)**: Kreuzweg und Grünwacht sollen flüssiger laufen, besonders im Browser.
   - Der Boden aus dem Baukasten war ein einziges Riesenbild der ganzen Karte, das in jedem Bild komplett gezeichnet wurde (und von jedem Licht noch einmal). Jetzt ist er in Kacheln geteilt, gezeichnet wird nur, was zu sehen ist. Gemessen mit Software-Grafik: 95 → 41 ms pro Bild, das Aussehen ist gleich (Bildvergleich).

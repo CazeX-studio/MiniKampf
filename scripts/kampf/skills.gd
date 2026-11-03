@@ -23,6 +23,10 @@ const WARES := {
 	"bombe": {name = "Bombe", info = "26 Feuer-Schaden", value = 30, then = "enemy"},
 	"kraftkraut": {name = "Kraftkraut", info = "Angriff+ 2 Züge, +10 LP", value = 25, then = "ally"},
 }
+## Gemeinsame Trank-Wartezeit (design.md, 21.10.): Nach einem Trank sind alle Tränke 3 Runden gesperrt.
+## Zählt wie die Abklingzeiten der Fähigkeiten (bei jedem eigenen Zug eins weniger), alle Tränke teilen sich einen Zähler.
+const TRANK_WARTEZEIT := 3
+const TRANK_WARTEZEIT_ID := "traenke"
 const START_WARES := {"heiltrank": 3, "manatrank": 2, "bombe": 2, "kraftkraut": 2}
 ## Grundschaden und -heilung des Novizen (wächst mit dem Angriff, s. Grundwerte)
 ## Novize (Projekt 14, K.5, Steckbriefe Sitzung 28): Hieb, Schildstoß, Doppelschlag, Erste Hilfe, Deckung geben,
@@ -272,13 +276,6 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 			# Kleine Ult Sternenmut: erst ab der Festnacht (lädt durch perfekte Paraden)
 			if f.has_meta("sternenmut"):
 				list.append({id = "ult", name = "Sternenmut", info = "%d Sternenkraft, mit dem Licht des fallenden Sterns" % roundi(NOVIZE.sternenmut * f.power), target = "enemy"})
-			var free := "gratis, du bist noch dran" if not f.belt_free_used else "kostet den Zug"
-			if f.wares.has("heiltrank"):
-				list.append({id = "trank", name = "Heiltrank (%d)" % f.wares.heiltrank, info = "Heilt %d · Gürtel: %s" % [roundi(NOVIZE.trank * f.power), free],
-						target = "ally", guertel = true})
-			if f.wares.has("manatrank"):
-				list.append({id = "manatrank_trinken", name = "Manatrank (%d)" % f.wares.manatrank, info = "+%d Mana · Gürtel: %s" % [NOVIZE.manatrank, free],
-						target = "ally", guertel = true})
 		"singer":
 			# Steckbriefe (Sitzung 28): Mond-Sternbild (Schutz, res_def) und Kometen-Sternbild (Angriff, res_off)
 			var glanz := _sternenglanz(f)
@@ -306,6 +303,15 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 					{id = "pet_attack", name = tame.name, info = "%d %s" % [tame.base, f.element], target = "enemy"},
 					{id = "pet_guard", name = "Beschützen", info = "Zieht 2 Angriffe auf sich, Abwehr+", target = "none", cd = 2},
 				]
+	# Tränke am Gürtel: für jede Klasse, die welche dabei hat (Projekt 5). Der Quartiermeister hat stattdessen seinen Karren.
+	if f.is_hero and not is_pet(f) and f.klass != "quartermaster":
+		var free := "gratis, du bist noch dran" if not f.belt_free_used else "kostet den Zug"
+		if f.wares.has("heiltrank"):
+			list.append({id = "trank", name = "Heiltrank (%d)" % f.wares.heiltrank, info = "Heilt %d · Gürtel: %s" % [roundi(NOVIZE.trank * f.power), free],
+					target = "ally", guertel = true})
+		if f.wares.has("manatrank"):
+			list.append({id = "manatrank_trinken", name = "Manatrank (%d)" % f.wares.manatrank, info = "+%d Mana · Gürtel: %s" % [NOVIZE.manatrank, free],
+					target = "ally", guertel = true})
 	if f.is_hero:
 		for duet in Sandbox.active_duets(c.team):
 			if f.klass == duet.a or f.klass == duet.b:
@@ -428,6 +434,8 @@ func blocked_reason(f: Fighter, ab: Dictionary) -> String:
 		"trank":
 			if f.wares.get("heiltrank", 0) <= 0:
 				return "Keine Tränke mehr"
+			if f.cooldown(TRANK_WARTEZEIT_ID) > 0:
+				return "Trank-Wartezeit: bereit in %d" % f.cooldown(TRANK_WARTEZEIT_ID)
 		"faecher":
 			if f.blades < 2:
 				return "Braucht 2 Klingen"
@@ -445,6 +453,8 @@ func blocked_reason(f: Fighter, ab: Dictionary) -> String:
 		"manatrank_trinken":
 			if f.wares.get("manatrank", 0) <= 0:
 				return "Keine Tränke mehr"
+			if f.cooldown(TRANK_WARTEZEIT_ID) > 0:
+				return "Trank-Wartezeit: bereit in %d" % f.cooldown(TRANK_WARTEZEIT_ID)
 		"tame":
 			# Bei vollem Gepäck geht das neue Monster nach dem Kampf in den Stall
 			if valid_targets(f, ab).is_empty():
@@ -1594,7 +1604,9 @@ func on_perfect_reaction(h: Fighter, attacker: Fighter) -> void:
 		"mechanic":
 			for owner_or_robot: Fighter in [h, h.robot]:
 				for id: String in owner_or_robot.cooldowns.keys():
-					owner_or_robot.cooldowns[id] = maxi(owner_or_robot.cooldowns[id] - 1, 0)
+					# Die Trank-Wartezeit bleibt (sie gehört zum Gürtel, nicht zu den Fähigkeiten)
+					if id != TRANK_WARTEZEIT_ID:
+						owner_or_robot.cooldowns[id] = maxi(owner_or_robot.cooldowns[id] - 1, 0)
 			c.float_text(h, "PARIERT! Abklingzeit −1", Color("d9a441"))
 		"smith":
 			c.float_text(h, "PARIERT!", Color("ffb070"))
@@ -1816,6 +1828,7 @@ func _novize(f: Fighter, id: String, target: Fighter) -> void:
 			c.hit(f, target, NOVIZE.sternenmut, "melee", "Sternenkraft")
 		"manatrank_trinken":
 			f.wares.manatrank -= 1
+			f.cooldowns[TRANK_WARTEZEIT_ID] = TRANK_WARTEZEIT + 1
 			c.add_log("%s trinkt einen Manatrank." % f.display_name if target == f else "%s reicht %s einen Manatrank." % [f.display_name, target.display_name])
 			var before := target.mana
 			target.mana = mini(target.mana + NOVIZE.manatrank, target.max_mana)
@@ -1823,5 +1836,6 @@ func _novize(f: Fighter, id: String, target: Fighter) -> void:
 			c.refresh()
 		"trank":
 			f.wares.heiltrank -= 1
+			f.cooldowns[TRANK_WARTEZEIT_ID] = TRANK_WARTEZEIT + 1
 			c.add_log("%s trinkt einen Heiltrank." % f.display_name if target == f else "%s reicht %s einen Heiltrank." % [f.display_name, target.display_name])
 			c.heal(f, target, roundi(NOVIZE.trank * f.power))
