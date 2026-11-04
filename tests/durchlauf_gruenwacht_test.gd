@@ -14,7 +14,7 @@ const SECONDS_PER_TURN := 6.0
 const START_LEVEL := 10
 const START_XP := 3030
 const START_GOLD := 1900
-const CLASSES := ["archer", "tamer", "blade"]
+const CLASSES := ["archer", "tamer", "kunoichi"]
 
 var world: WorldState
 var p: PlayerState

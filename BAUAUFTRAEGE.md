@@ -83,7 +83,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D25:** Körper der drei Glutoase-Klassen einbauen (braucht Marcos Bilder). (2.11, Rest; die Wüsten- und Schmiede-Teile liegen schon bereit) – Status: geteilt (04.11.2026)
 - **D25a:** Körper der Klingentänzerin (m und w) aus Marcos Blättern. – Status: fertig (04.11.2026)
 - **D25b:** Körper von Rüstungsschmied (m und w) und Sternensängerin (w). – Status: wartet auf Marcos Bilder (Prompts in GRAFIK_AUFTRAG.md, Teil D „Figuren 2“)
-- **D26:** Klassen lernen in der Glutoase. (2.3) – Status: offen
+- **D26:** Klassen lernen in der Glutoase. (2.3) – Status: fertig (04.11.2026; Rüstungsschmied und Sternensängerin kämpfen bis D25b noch in der Platzhalter-Figur)
 - **D27:** Glutoase-Figuren nach Steckbrief, Rastplatz-Händler. (2.13, vorgezogen) – Status: offen
 - **D28:** Geschichte Teil 1: Kochende Brunnen, Miras Lied. (2.4) – Status: offen
 - **D29:** Geschichte Teil 2: Tanz mit der Pause, Rivalenkampf gegen Kael. (2.5) – Status: offen

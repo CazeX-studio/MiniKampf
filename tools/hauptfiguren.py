@@ -34,6 +34,11 @@ FIGUREN = {
 	"tilda": (1.08, []),
 	"esche": (1.06, []),
 	"kael": (1.06, []),
+	# Glutoase (D26)
+	"hadrak": (1.12, []),
+	"brakkus": (1.1, []),
+	"samira": (1.04, []),
+	"xavina": (1.04, []),
 }
 KAMPF = {"ye": [[("idle", 4)], [("attack", 6)], [("hit", 1), ("parry", 4)]]}
 STIMMUNGEN = ["ruhig", "laechelnd", "wuetend", "traurig", "ueberrascht"]
@@ -50,12 +55,21 @@ def bilder(figur, blattname, reihen, name, groesse):
 def portraets(figur):
 	a = freistellen(Image.open(VORLAGEN / f"haupt_{figur}_portraets.png"))
 	ziel, reihen = bilder_finden(a, [])
-	if [len(r) for r in reihen] != [len(STIMMUNGEN)]:
-		raise SystemExit(f"haupt_{figur}_portraets: Reihen {[len(r) for r in reihen]}, erwartet [{len(STIMMUNGEN)}]")
+	if [len(r) for r in reihen] == [len(STIMMUNGEN)]:
+		stuecke = [ausschneiden(a, ziel, i) for i, _ in reihen[0]]
+	else:
+		# Berühren sich die Porträts (z. B. Xavinas Haare), das Blatt in gleich breite Streifen teilen
+		print(f"haupt_{figur}_portraets: {[len(r) for r in reihen]} Stücke erkannt, teile in {len(STIMMUNGEN)} gleiche Streifen")
+		breite = a.shape[1] / len(STIMMUNGEN)
+		stuecke = []
+		for n in range(len(STIMMUNGEN)):
+			streifen = a[:, round(n * breite):round((n + 1) * breite)]
+			ys, xs = np.where(streifen[..., 3] > 20)
+			stuecke.append(streifen[ys.min():ys.max() + 1, xs.min():xs.max() + 1])
 	ordner = WURZEL / "assets" / "portraets"
 	ordner.mkdir(exist_ok=True)
-	for stimmung, (i, _) in zip(STIMMUNGEN, reihen[0]):
-		bild = Image.fromarray(ausschneiden(a, ziel, i))
+	for stimmung, stueck in zip(STIMMUNGEN, stuecke):
+		bild = Image.fromarray(stueck)
 		faktor = PORTRAET_HOEHE / bild.height
 		bild.resize((round(bild.width * faktor), PORTRAET_HOEHE), Image.LANCZOS).save(ordner / f"{figur}_{stimmung}.png")
 	print(f"{figur}: {len(STIMMUNGEN)} Porträts")

@@ -11,7 +11,14 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** D26 (Klassen lernen in der Glutoase). D25b (Rüstungsschmied und Sternensängerin) wartet auf deine Bilder. Marcos Hinweis 04.11.: Einige stärkere Monster dürfen bleiben (Reiz), beim Balancing ansehen.
+- **Nächster Schritt:** D27 (Glutoase-Figuren nach Steckbrief, Rastplatz-Händler). D25b (Rüstungsschmied und Sternensängerin) wartet auf deine Bilder. Marcos Hinweis 04.11.: Einige stärkere Monster dürfen bleiben (Reiz), beim Balancing ansehen.
+
+- **Neu (04.11.): D26 Klassen lernen in der Glutoase** (2.3): Wer Rüstungsschmied, Klingentänzerin oder Sternensängerin wählt, reist nach dem Abschied von Ye nicht mehr nach Grünwacht, sondern durch das Südtor in die Aschensteppe (Auftrag „Der Weg in die Glutoase“). Oben in seiner Schmiede begrüßt einen Hadrak Glutherz, mit deinen Bildern und Porträts (fast nur Einwortsätze; nachts steht er vor dem Gasthaus). Danach lernt man die Klasse mit einer kleinen Prüfung als Lernkampf: bei Essenmeister Brakkus vor seiner Werkstatt im Schmiedeviertel (die Rüstung muss halten), bei Tanzmeisterin Samira auf dem Tanzplatz (Schrittfolge im Takt) oder bei der Hohen Sängerin Xavina auf der Sternendüne in der Palmenrast (dort ist es beim Lernen immer Nacht). Erst danach kämpft man mit der Klasse. Die anderen Klassen reisen wie bisher nach Grünwacht. Noch nicht drin: Rüstungsschmied und Sternensängerin haben noch keinen eigenen Körper (D25b), die übrigen Figuren der Stadt (D27), Hadraks lange Sätze, wenn er betrunken ist.
+  - **So testest du es:**
+    1. Neues Spiel bis zur Klassenwahl, Klingentänzerin wählen, von Ye verabschieden: Ankunft in der Aschensteppe.
+    2. Bis in die Glutoase laufen und ganz oben Hadrak ansprechen.
+    3. Auf dem Tanzplatz Samiras Prüfung tanzen, danach erneut mit ihr reden: jetzt Klingentänzerin.
+    4. Mit einem zweiten Spielstand Sternensängerin: Xavina auf der Sternendüne in der Palmenrast.
 
 - **Neu (04.11.): D25a Körper der Klingentänzerin** (2.11): Deine Blätter für Klingentänzer (m) und Klingentänzerin (w) sind eingebaut: Tanzkleidung in Orange und Gold mit Schärpe und wehenden Tüchern, im Kampf mit Drehung, Abwehr, Fähigkeit und Sieg, in der Welt schräg von vorne und hinten. Wer die Klasse gelernt hat, trägt sie mit seinem eigenen Kopf, und in der Probestunde spielt man die Klingentänzerin mit der eigenen Figur in Tanzkleidung. Noch nicht drin: Rüstungsschmied und Sternensängerin (D25b, dafür fehlen noch die Blätter).
   - **So testest du es:**

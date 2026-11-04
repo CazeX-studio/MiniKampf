@@ -2171,7 +2171,18 @@
 				"zeit": "nacht"
 			}
 		],
-		"baukasten": "karte_palmenrast"
+		"baukasten": "karte_palmenrast",
+		"npcs": {
+			"xavina": {
+				"name": "Hohe Sängerin Xavina",
+				"feld": [
+					30,
+					28
+				],
+				"aussehen": "xavina",
+				"dialog": "xavina"
+			}
+		}
 	},
 	"glutoase": {
 		"name": "Glutoase",
@@ -2328,6 +2339,39 @@
 				"dialog": "eingang_vulkanschmiede"
 			}
 		],
-		"baukasten": "karte_glutoase"
+		"baukasten": "karte_glutoase",
+		"npcs": {
+			"hadrak": {
+				"name": "Hadrak Glutherz",
+				"feld": [
+					26,
+					43
+				],
+				"nachts": [
+					31,
+					7
+				],
+				"aussehen": "hadrak",
+				"dialog": "hadrak"
+			},
+			"brakkus": {
+				"name": "Essenmeister Brakkus",
+				"feld": [
+					32,
+					26
+				],
+				"aussehen": "brakkus",
+				"dialog": "brakkus"
+			},
+			"samira": {
+				"name": "Tanzmeisterin Samira",
+				"feld": [
+					32,
+					11
+				],
+				"aussehen": "samira",
+				"dialog": "samira"
+			}
+		}
 	}
 }

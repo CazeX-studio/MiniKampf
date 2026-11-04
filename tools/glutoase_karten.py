@@ -171,6 +171,7 @@ def palmenrast():
 		"raster": ["".join(z) for z in g],
 		"ausgaenge": [{"bereich": [17, 0, 7, 1], "karte": "glutoase", "feld": [GB - 3, 11]}],
 		"kampf_hintergrund": "wiese", "monster": palmenrast_monster(), "baukasten": "karte_palmenrast",
+		"npcs": {"xavina": {"name": "Hohe Sängerin Xavina", "feld": [30, 28], "aussehen": "xavina", "dialog": "xavina"}},
 	}
 	(gk.DATEN / "karten.json").write_text(json.dumps(karten, ensure_ascii=False, indent="\t") + "\n", encoding="utf-8")
 	gk.KARTEN.clear()
@@ -277,6 +278,12 @@ def glutoase():
 		"ausgaenge": [{"bereich": [20, 0, 7, 1], "karte": "aschensteppe", "feld": [14, H - 2]},
 			{"bereich": [GB - 1, 9, 1, 5], "karte": "palmenrast", "feld": [20, 1]}],
 		"kampf_hintergrund": "wiese", "orte": glutoase_orte(), "baukasten": "karte_glutoase",
+		# Oberhaupt und Lehrmeister (D26); die übrigen Figuren kommen mit D27
+		"npcs": {
+			"hadrak": {"name": "Hadrak Glutherz", "feld": [26, 43], "nachts": [31, 7], "aussehen": "hadrak", "dialog": "hadrak"},
+			"brakkus": {"name": "Essenmeister Brakkus", "feld": [32, 26], "aussehen": "brakkus", "dialog": "brakkus"},
+			"samira": {"name": "Tanzmeisterin Samira", "feld": [32, 11], "aussehen": "samira", "dialog": "samira"},
+		},
 	}
 	(gk.DATEN / "karten.json").write_text(json.dumps(karten, ensure_ascii=False, indent="\t") + "\n", encoding="utf-8")
 	gk.KARTEN.clear()

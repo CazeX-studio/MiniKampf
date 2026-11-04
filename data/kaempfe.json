@@ -508,5 +508,105 @@
 		"erfahrung": 300,
 		"merken": "bienen_beobachtet",
 		"verloren_text": "Die Bienen jagen dich davon. Vielleicht erst einmal nur zuhören?"
+	},
+	"brakkus_pruefung": {
+		"name": "Brakkus' Prüfung am Amboss",
+		"hinweis": "Lernkampf des Rüstungsschmieds (D26). Texte sind Platzhalter.",
+		"klasse": "smith",
+		"eigene_klasse": true,
+		"hintergrund": "wiese",
+		"erfahrung": 400,
+		"merken": "brakkus_geprueft",
+		"gegner_stufe": 11,
+		"phasen": [
+			{
+				"name": "Erste Probe: Die Rüstung hält",
+				"ansage": "Brakkus wirft dir eine Rüstung zu: „Zieh an. Und dann halt still.“",
+				"gegner": [
+					"zielscheibe",
+					"steppenroller"
+				],
+				"hinweise": {
+					"erster_zug": "Brakkus: „Eine Rüstung, die passt, frisst den Schlag. Eine, die nicht passt, frisst dich.“\nWechsle die Rüstung passend zum nächsten Angriff des Gegners (Nahkampf, Fernkampf oder Magie)."
+				}
+			},
+			{
+				"name": "Zweite Probe: Glut und Eisen",
+				"ansage": "Ein Sandwurm bricht aus dem Boden hinter der Werkstatt.",
+				"gegner": [
+					"sandwurm"
+				],
+				"hinweise": {
+					"erster_zug": "Brakkus: „Jeder Treffer härtet dich. Steh, Schmied!“"
+				}
+			}
+		]
+	},
+	"samiras_pruefung": {
+		"name": "Samiras Schrittfolge im Takt",
+		"hinweis": "Lernkampf der Klingentänzerin (D26, Prüfung: Schrittfolge im Takt). Texte sind Platzhalter.",
+		"klasse": "blade",
+		"eigene_klasse": true,
+		"hintergrund": "wiese",
+		"erfahrung": 400,
+		"merken": "samira_geprueft",
+		"gegner_stufe": 11,
+		"phasen": [
+			{
+				"name": "Erster Takt",
+				"ansage": "Samira klatscht einen Takt auf dem Tanzplatz: eins, zwei, drei … und die Pause.",
+				"gegner": [
+					"zielscheibe",
+					"zielscheibe"
+				],
+				"hinweise": {
+					"erster_zug": "Samira: „Möge deine Glut nie erkalten! Tanz, Kind, tanz – der Schritt kommt vor der Klinge.“\nKlingenschritt und Ausfallschritt lassen deine Klingen noch einmal treffen (Klingenkranz)."
+				}
+			},
+			{
+				"name": "Zweiter Takt",
+				"ansage": "Zwei Funkenechsen springen auf den Tanzplatz.",
+				"gegner": [
+					"funkenechse",
+					"funkenechse"
+				],
+				"hinweise": {
+					"erster_zug": "Samira: „Jetzt mit Gegnern, die zurücktanzen!“"
+				}
+			}
+		]
+	},
+	"xavinas_pruefung": {
+		"name": "Xavinas Lied auf der Sternendüne",
+		"hinweis": "Lernkampf der Sternensängerin (D26). Die Lern-Szene ist immer Nacht (design.md). Texte sind Platzhalter.",
+		"klasse": "singer",
+		"eigene_klasse": true,
+		"hintergrund": "wiese_nacht",
+		"erfahrung": 400,
+		"merken": "xavina_geprueft",
+		"gegner_stufe": 13,
+		"phasen": [
+			{
+				"name": "Das erste Sternbild",
+				"ansage": "Über der Sternendüne ist es Nacht, egal wie spät es ist. Xavina stimmt die Harfe.",
+				"gegner": [
+					"zielscheibe",
+					"zielscheibe"
+				],
+				"hinweise": {
+					"erster_zug": "Xavina: „Die Sterne singen, Kind. Du musst nur lernen, ihnen zu antworten.“\nSternbilder verblassen, wenn du sie nicht nutzt. Sing, bevor sie erlöschen."
+				}
+			},
+			{
+				"name": "Der Staubgeist",
+				"ansage": "Ein Staubgeist weht über die Düne, angelockt vom Lied.",
+				"gegner": [
+					"staubgeist"
+				],
+				"hinweise": {
+					"erster_zug": "Xavina: „Halte die anderen am Leben. Ein Lied, das niemand hört, ist kein Lied.“"
+				}
+			}
+		]
 	}
 }

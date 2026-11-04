@@ -14,6 +14,7 @@
 	},
 	"smith": {
 		"lehrmeister": "Essenmeister Brakkus",
+		"lernen_bei": "brakkus",
 		"werte": {"schaden": 2, "schutz": 5, "heilung": 0, "unterstuetzung": 2, "schwierigkeit": 3},
 		"ult_vorschau": "Meisterstück: Du schmiedest der ganzen Gruppe Rüstung – Schild und Abwehr für alle, du selbst bist voll gehärtet."
 	},
@@ -25,6 +26,7 @@
 	},
 	"blade": {
 		"lehrmeister": "Tanzmeisterin Samira",
+		"lernen_bei": "samira",
 		"werte": {"schaden": 5, "schutz": 1, "heilung": 0, "unterstuetzung": 1, "schwierigkeit": 4},
 		"ult_vorschau": "Tanz der tausend Klingen: Dreimal fegen deine Klingen über alle Gegner, danach schweben fünf neue um dich."
 	},
@@ -56,6 +58,7 @@
 	},
 	"singer": {
 		"lehrmeister": "Hohe Sängerin Xavina",
+		"lernen_bei": "xavina",
 		"werte": {"schaden": 2, "schutz": 1, "heilung": 4, "unterstuetzung": 4, "schwierigkeit": 4},
 		"ult_vorschau": "Himmelszelt: Alle werden geheilt und gestärkt, und Sternenkraft trifft jeden Gegner."
 	}
