@@ -29,12 +29,14 @@ DATEN = WURZEL / "data" / "figurteile.json"
 ## Körper -> Name im Editor. Die Blätter sind aufgebaut wie Kofis (siehe FIGUREN["kofi"] in figur_bilder.py).
 KOERPER = {"novize_m": "Novize (m)", "novize_w": "Novizin (w)",
 		"bogen_m": "Bogenschütze (m)", "bogen_w": "Bogenschützin (w)", "zaehmer_m": "Monster-Zähmer (m)", "zaehmer_w": "Monster-Zähmerin (w)",
-		"klingentaenzer_m": "Klingentänzer (m)", "klingentaenzer_w": "Klingentänzerin (w)"}
+		"klingentaenzer_m": "Klingentänzer (m)", "klingentaenzer_w": "Klingentänzerin (w)",
+		"schmied_m": "Rüstungsschmied (m)", "schmied_w": "Rüstungsschmiedin (w)", "saengerin_w": "Sternensängerin (w)"}
 ## Geschlecht des Körpers: bei „Figur erstellen“ passen nur Köpfe desselben Geschlechts
 GESCHLECHT = {"novize_m": "m", "novize_w": "w", "bogen_m": "m", "bogen_w": "w", "zaehmer_m": "m", "zaehmer_w": "w",
-		"klingentaenzer_m": "m", "klingentaenzer_w": "w"}
+		"klingentaenzer_m": "m", "klingentaenzer_w": "w", "schmied_m": "m", "schmied_w": "w", "saengerin_w": "w"}
 ## Klassen-Körper (D18, Auftrag Teil D „Figuren 2“): Blätter heißen <körper>_blatt1/_blatt2/_welt und sind schon ohne Waffe
-DATEINAMEN = {k: {"kampf_a": "blatt1", "kampf_b": "blatt2", "welt": "welt"} for k in ["bogen_m", "bogen_w", "zaehmer_m", "zaehmer_w", "klingentaenzer_m", "klingentaenzer_w"]}
+DATEINAMEN = {k: {"kampf_a": "blatt1", "kampf_b": "blatt2", "welt": "welt"} for k in ["bogen_m", "bogen_w", "zaehmer_m", "zaehmer_w", "klingentaenzer_m", "klingentaenzer_w",
+		"schmied_m", "schmied_w", "saengerin_w"]}
 OHNE_ZUSATZ = set(DATEINAMEN)
 ## Die Klinge kommt als eigenes Teil dazu (Projekt 13, Schritt 3), der Griff bleibt in der Hand
 ZUSATZ = "_ohne_klinge"
@@ -43,7 +45,8 @@ ZUSATZ = "_ohne_klinge"
 KLASSEN_REIHEN = {
 	"welt": [[("idle_vorn", 5), ("run_vorn", 5)], [("idle_hinten", 5), ("run_hinten", 5)]],
 }
-REIHEN = {k: dict(KLASSEN_REIHEN) for k in ["bogen_m", "bogen_w", "zaehmer_m", "zaehmer_w", "klingentaenzer_m", "klingentaenzer_w"]}
+REIHEN = {k: dict(KLASSEN_REIHEN) for k in ["bogen_m", "bogen_w", "zaehmer_m", "zaehmer_w", "klingentaenzer_m", "klingentaenzer_w",
+		"schmied_m", "schmied_w", "saengerin_w"]}
 # Bogenschütze (m und w), Blatt 2: der Sieg hat 5 Bilder (Faust hoch und wieder herunter)
 REIHEN["bogen_m"]["kampf_b"] = [[("attack", 6)], [("death", 6)], [("victory", 5), ("cast", 4)]]
 REIHEN["bogen_w"]["kampf_b"] = REIHEN["bogen_m"]["kampf_b"]
@@ -152,9 +155,32 @@ def staub_weg(bild):
 		if groesse < STAUB:
 			bild[lab == i, 3] = 0
 
+## Ausbesserungen einzelner Bilder (FORTSCHRITT.md, Prüfung der Blätter 02.11.): Körper -> Bild -> Art
+## "funken": lose Funken neben der Figur weg; ("schal", Kasten y0, y1, x0, x1): rotes Halstuch im Kasten in Schalfarbe
+NACHBESSERN = {
+	"schmied_m": {"hit_f0": "funken"},
+	"saengerin_w": {"victory_f3": ("schal", 34, 52, 20, 72)},
+}
+## Farbe des Schals der Sternensängerin (Mittel aus den anderen Siegesbildern)
+SCHAL = np.array([62.0, 56.0, 89.0])
+
+
+def nachbessern(bild, art):
+	if art == "funken":
+		staub_weg(bild)
+		return
+	_, y0, y1, x0, x1 = art
+	r, g, b = (bild[..., i].astype(int) for i in range(3))
+	kasten = np.zeros(r.shape, bool)
+	kasten[y0:y1, x0:x1] = True
+	rot = kasten & (bild[..., 3] > 20) & (r > 130) & (r > g + 60) & (r > b + 50)
+	# Helligkeit bleibt, nur der Farbton wechselt
+	hell = bild[rot][:, :3].astype(float).mean(1)
+	bild[rot, :3] = np.clip(SCHAL[None, :] * (hell / hell.mean())[:, None], 0, 255).astype(np.uint8)
+
 
 def main():
-	daten = json.loads(DATEN.read_text()) if DATEN.exists() else {}
+	daten = json.loads(DATEN.read_text(encoding="utf-8")) if DATEN.exists() else {}
 	for koerper in sys.argv[1:] or list(KOERPER):
 		anims = {}
 		ziel = None
@@ -185,9 +211,13 @@ def main():
 				"_koepfe": daten[KOPF_QUELLE]["_koepfe"]}
 		for anim, bilder in anims.items():
 			for n in range(len(bilder)):
-				bild = np.array(Image.open(WURZEL / "assets" / "figuren" / f"{koerper}_{anim}_anim_f{n}.png").convert("RGBA"))
-				platz = gruen(bild)
+				ganz = WURZEL / "assets" / "figuren" / f"{koerper}_{anim}_anim_f{n}.png"
+				bild = np.array(Image.open(ganz).convert("RGBA"))
 				name = f"{anim}_f{n}"
+				if name in NACHBESSERN.get(koerper, {}):
+					nachbessern(bild, NACHBESSERN[koerper][name])
+					Image.fromarray(bild).save(ganz)
+				platz = gruen(bild)
 				if not platz.any():
 					Image.fromarray(bild).save(TEILE / "koerper" / f"{koerper}_{name}.png")
 					eintrag[name] = {"ganz": True}
@@ -202,7 +232,7 @@ def main():
 				eintrag[name] = {"hals": hals, "winkel": winkel, "richtung": richtung_von(anim)}
 		daten[koerper] = eintrag
 		print(f"{koerper}: {sum(len(b) for b in anims.values())} Bilder")
-	DATEN.write_text(json.dumps(daten, ensure_ascii=False, indent="\t", sort_keys=True))
+	DATEN.write_text(json.dumps(daten, ensure_ascii=False, indent="\t", sort_keys=True), encoding="utf-8")
 
 
 if __name__ == "__main__":

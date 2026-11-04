@@ -103,7 +103,8 @@ static func mit_aussehen(look: String, aussehen: Dictionary) -> String:
 
 ## Körper der Klassen (D18): Wer die Klasse gelernt hat, trägt ihren Körper, der Kopf bleibt.
 ## Klasse -> Anfang des Körpernamens (dazu _m oder _w wie beim Novizen). Klassen ohne eigenen Körper bleiben Novize.
-const KLASSEN_KOERPER := {"archer": "bogen", "tamer": "zaehmer", "blade": "klingentaenzer"}
+## Die Sternensängerin gibt es vorerst nur weiblich: ein Sänger bleibt in der Klassenfigur.
+const KLASSEN_KOERPER := {"archer": "bogen", "tamer": "zaehmer", "blade": "klingentaenzer", "smith": "schmied", "singer": "saengerin"}
 
 
 ## Figur mit dem Körper der Klasse: „novize_w+w1#hut=…“ als Bogenschützin -> „bogen_w+w1#hut=…“.

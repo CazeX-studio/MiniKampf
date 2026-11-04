@@ -86,7 +86,7 @@ func _koerper_pruefen(koerper: String) -> int:
 func _klassen_koerper() -> int:
 	var fehler := 0
 	var faelle := [["novize_m+m1", "archer", "bogen_m+m1"], ["novize_w+w1#hut=geweihband", "tamer", "zaehmer_w+w1#hut=geweihband"],
-			["bogen_m+m1", "", "novize_m+m1"], ["novize_m+m1", "blade", "klingentaenzer_m+m1"], ["novize_m+m1", "smith", "novize_m+m1"], ["kofi", "archer", "kofi"],
+			["bogen_m+m1", "", "novize_m+m1"], ["novize_m+m1", "blade", "klingentaenzer_m+m1"], ["novize_m+m1", "smith", "schmied_m+m1"], ["novize_w+w2", "singer", "saengerin_w+w2"], ["novize_m+m1", "singer", "novize_m+m1"], ["kofi", "archer", "kofi"],
 			["zaehmer_w+w2", "archer", "bogen_w+w2"]]
 	for fall: Array in faelle:
 		var ergebnis := FigurTeile.mit_klasse(fall[0], fall[1])
@@ -99,10 +99,21 @@ func _klassen_koerper() -> int:
 	if BattleRequest.setup.helden[0].aussehen != "bogen_w+w1":
 		print("FEHLER: Bogenschützin kämpft nicht in ihrer Kleidung: %s" % BattleRequest.setup.helden[0].aussehen)
 		fehler += 1
+	# Seit D25b: Rüstungsschmiedin und Sternensängerin in ihrer Kleidung, ein Sänger (noch ohne Körper) in der Klassenfigur
 	BattleRequest.prepare("probe:smith", 8, 0, "novize")
-	if BattleRequest.setup.helden[0].aussehen != "":
-		print("FEHLER: Probestunde Rüstungsschmied (noch ohne Körper) sollte die Klassenfigur zeigen")
+	if BattleRequest.setup.helden[0].aussehen != "schmied_w+w1":
+		print("FEHLER: Probestunde Rüstungsschmied: %s" % BattleRequest.setup.helden[0].aussehen)
 		fehler += 1
+	BattleRequest.prepare("probe:singer", 8, 0, "novize")
+	if BattleRequest.setup.helden[0].aussehen != "saengerin_w+w1":
+		print("FEHLER: Probestunde Sternensängerin: %s" % BattleRequest.setup.helden[0].aussehen)
+		fehler += 1
+	BattleRequest.player_look = "novize_m+m1"
+	BattleRequest.prepare("probe:singer", 8, 0, "novize")
+	if BattleRequest.setup.helden[0].aussehen != "":
+		print("FEHLER: Sänger (ohne Körper) sollte die Klassenfigur zeigen: %s" % BattleRequest.setup.helden[0].aussehen)
+		fehler += 1
+	BattleRequest.player_look = "novize_w+w1"
 	# Seit D25 hat die Klingentänzerin ihren Körper: in der Probestunde die eigene Figur in Tanzkleidung
 	BattleRequest.prepare("probe:blade", 8, 0, "novize")
 	if BattleRequest.setup.helden[0].aussehen != "klingentaenzer_w+w1":

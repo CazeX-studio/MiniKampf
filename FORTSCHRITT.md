@@ -11,10 +11,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** Die Demo-Reihenfolge ist bis D36 gebaut. Es fehlt nur D25b (Körper Rüstungsschmied m/w und Sternensängerin w), das wartet auf deine Bilder. Danach kommen die Testtage T1 bis T4 (du testest das ganze Spiel zusammen).
+- **Nächster Schritt:** Die Demo-Reihenfolge ist komplett gebaut (D1 bis D36, mit D25b). Jetzt kommen die Testtage T1 bis T4 (du testest das ganze Spiel zusammen).
+
+- **Neu (04.11.): D25b Körper von Rüstungsschmied und Sternensängerin** (2.11): Deine Blätter sind eingebaut: Rüstungsschmied (m) und Rüstungsschmiedin (w) in Rüstung mit Lederschürze und rotem Halstuch, die Sternensängerin (w) im hellen Gewand mit dunkelblauem Schal. Je mit Stehen, Laufen, Abwehr, Treffer, Angriff, Fallen, Sieg und Fähigkeit im Kampf, in der Welt schräg von vorne und hinten. Wer die Klasse gelernt hat, trägt sie mit seinem eigenen Kopf, auch in der Probestunde. Ausgebessert: die gelben Funken im Treffer-Bild des Schmieds und das rote Halstuch in einem Siegesbild der Sängerin. Noch nicht drin: ein männlicher Sternensänger (der kämpft weiter in der Klassenfigur).
+  - **So testest du es:**
+    1. Kampf-Sandbox oder Probestunde Rüstungsschmied: die eigene Figur in Rüstung.
+    2. Probestunde Sternensängerin mit einer weiblichen Figur: die eigene Figur im Sternengewand.
+    3. Nach der Klassenwahl in der Glutoase: In der Welt läuft man in der neuen Kleidung herum.
 
 - **Offene Punkte für dich (gesammelt 04.11., D36):** Alles, was im Moment auf deine Entscheidung, deine Bilder oder das Balancing wartet.
-  - **Bilder:** D25b: Körper für Rüstungsschmied (m und w) und Sternensängerin (w), je Blatt 1, Blatt 2 und Welt (Prompts und Novizen-Blätter hast du). Bis dahin kämpfen diese Klassen im Novizen-Körper.
   - **Balancing (am Ende, Marcos Hinweis 04.11.: stärkere Monster dürfen bleiben):** Kael in der Glutoase (73 %, der Rüstungsschmied schafft ihn selten), Glasskorpion-Gruppen in der Palmenrast (um 50–60 %), die Gruppen der Vulkanschmiede allein (51–100 %), Ritualist und Zwielicht allgemein schwächer allein. Die Sporenkönigin nutzt in der Welt ihre Mechanik (Giftwolken oder Zwillinge) nicht; mit Mechanik gewinnt man allein nur 36 %: Soll sie sie bekommen?
   - **Entscheidungen:**
     - Glutgeist „Letzte Glut“: gebaut als „trifft die vordere Reihe der Helden“. Gemeint so?
