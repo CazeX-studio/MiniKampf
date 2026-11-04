@@ -160,7 +160,7 @@
 				"gegner": [
 					"dornenranke"
 				],
-				"stufe": 5
+				"stufe": 9
 			},
 			{
 				"feld": [
@@ -170,7 +170,7 @@
 				"gegner": [
 					"bachkrebs"
 				],
-				"stufe": 6
+				"stufe": 10
 			},
 			{
 				"feld": [
@@ -180,7 +180,7 @@
 				"gegner": [
 					"borstenkeiler"
 				],
-				"stufe": 7
+				"stufe": 10
 			},
 			{
 				"feld": [
@@ -190,7 +190,7 @@
 				"gegner": [
 					"zankelster"
 				],
-				"stufe": 7
+				"stufe": 11
 			},
 			{
 				"feld": [
@@ -201,7 +201,7 @@
 					"dornenranke",
 					"bachkrebs"
 				],
-				"stufe": 8
+				"stufe": 10
 			},
 			{
 				"feld": [
@@ -212,7 +212,7 @@
 					"zankelster",
 					"borstenkeiler"
 				],
-				"stufe": 9
+				"stufe": 11
 			},
 			{
 				"feld": [
@@ -224,7 +224,7 @@
 					"dornenranke",
 					"zankelster"
 				],
-				"stufe": 10
+				"stufe": 11
 			},
 			{
 				"feld": [
@@ -376,8 +376,8 @@
 		"monster": [
 			{
 				"feld": [
-					26,
-					20
+					8,
+					32
 				],
 				"gegner": [
 					"windfalke"

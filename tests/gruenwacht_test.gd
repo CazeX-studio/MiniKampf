@@ -277,11 +277,11 @@ func _test_wild() -> void:
 	var levels: Array[int] = []
 	for m: Dictionary in GameData.wild_monsters():
 		if m.karte == "weg_gruenwacht":
-			_check(m.stufe >= 10 and m.stufe <= 15, "Monster auf dem Weg: Stufe 10–15 (%d)" % m.stufe)
+			_check(m.stufe >= 9 and m.stufe <= 12, "Monster auf dem Weg (Hirschtal, MONSTER.md): Stufe 9–12 (%d)" % m.stufe)
 		elif m.karte == "waldboden":
 			_check(m.stufe >= 15 and m.stufe <= 20, "Monster im Wald: Stufe 15–20 (%d)" % m.stufe)
 		levels.append(m.stufe)
-	_check(levels.min() == 10 and levels.max() == 20, "Monster von Stufe 10 bis 20")
+	_check(levels.min() == 9 and levels.max() == 20, "Monster von Stufe 9 bis 20")
 
 	# Kampf mit der eigenen Klasse, Stärke nach Stufe
 	_check(BattleRequest.prepare("wild:0", 12, 0, "archer"), "Kampf gegen ein Monster lässt sich vorbereiten")
