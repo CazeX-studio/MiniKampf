@@ -82,5 +82,12 @@
 	"kaktusbluete": {"bild": {"form": "kraut", "farbe": "e070a0"}, "name": "Kaktusblüte", "beschreibung": "Beute vom Kaktusling. Duftet süß.", "preis": 2, "material": true},
 	"aschefell": {"bild": {"form": "fell", "farbe": "6a5a5a"}, "name": "Aschefell", "beschreibung": "Beute vom Aschefuchs (nachts). Noch warm wie Glut.", "preis": 3, "material": true},
 	"schwarzer_panzer": {"bild": {"form": "stein", "farbe": "2a2a3a"}, "name": "Schwarzer Panzer", "beschreibung": "Beute vom Schattenskarabäus (nachts). Schluckt das Licht.", "preis": 3, "material": true},
-	"sonnenmaehne": {"bild": {"form": "fell", "farbe": "ffd34d"}, "name": "Sonnenmähne", "beschreibung": "Seltene Beute vom Sonnenlöwen. Leuchtet wie die Mittagssonne.", "preis": 12, "material": true}
+	"sonnenmaehne": {"bild": {"form": "fell", "farbe": "ffd34d"}, "name": "Sonnenmähne", "beschreibung": "Seltene Beute vom Sonnenlöwen. Leuchtet wie die Mittagssonne.", "preis": 12, "material": true},
+	"wurmhaut": {"bild": {"form": "leder", "farbe": "c8a070"}, "name": "Wurmhaut", "beschreibung": "Beute vom Sandwurm. Zäh wie Leder.", "preis": 3, "material": true},
+	"feuerschuppe": {"bild": {"form": "splitter", "farbe": "ff6a3a"}, "name": "Feuerschuppe", "beschreibung": "Beute von der Feuerechse. Heiß!", "preis": 3, "material": true},
+	"blitzglas": {"bild": {"form": "splitter", "farbe": "c0f0ff"}, "name": "Blitzglas", "beschreibung": "Beute vom Glasskorpion. In ihm zuckt ein kleiner Blitz.", "preis": 3, "material": true},
+	"oasenschleim": {"bild": {"form": "stein", "farbe": "6ac0b0"}, "name": "Oasenschleim", "beschreibung": "Beute von der Oasenkröte. Kühl und feucht.", "preis": 2, "material": true},
+	"geisterstaub": {"bild": {"form": "splitter", "farbe": "e8e0d0"}, "name": "Geisterstaub", "beschreibung": "Beute vom Staubgeist (nachts). Rieselt durch die Finger.", "preis": 4, "material": true},
+	"schakalfell": {"bild": {"form": "fell", "farbe": "4a3a6a"}, "name": "Schakalfell", "beschreibung": "Beute vom Mondschakal (nachts). Mit Mondsichel.", "preis": 4, "material": true},
+	"stachelflitzer_bluete": {"bild": {"form": "kraut", "farbe": "ff90c0"}, "name": "Stachelflitzer-Blüte", "beschreibung": "Seltene Beute vom Stachelflitzer. Duftet nach Abenteuer.", "preis": 15, "material": true}
 }

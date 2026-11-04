@@ -1,10 +1,12 @@
-"""Karten der Glutoase aus dem Baukasten (D23). Zuerst die Aschensteppe: die Straße von Kreuzweg nach Süden.
+"""Karten der Glutoase aus dem Baukasten (D23): die Aschensteppe (Straße von Kreuzweg nach Süden) und die Palmenrast.
 
 Grasland, das nach Süden zur Wüste wird (MONSTER.md, design.md „Glutoase im Detail“). In der Mitte der Rastplatz der
 Karawanen mit Lagerfeuer, Zelt, Wagen und der ersten Wegelaterne der Straße: Dort greifen keine Monster an
 („sicher“ in data/karten.json). Das Werkzeug schreibt Raster, Orte und Monster nach data/karten.json und die Teile nach
 data/karte_aschensteppe.json; es prüft wie tools/gruenwacht_karten.py, dass alles erreichbar bleibt.
-Aufruf: python3 tools/glutoase_karten.py
+Palmenrast (D23b): Wüste mit Palmen, Dünen und Wasserstellen, Heimat-Gebiet der Glutoase (Stufe 12–19), mit Xavinas
+Sternendüne. Bis die Stadt steht (D24), führt die Aschensteppe direkt hinein.
+Aufruf: python3 tools/glutoase_karten.py [karte …]   (ohne Angabe alle)
 """
 import json
 import random
@@ -67,7 +69,8 @@ def aschensteppe():
 	karten["aschensteppe"] = {
 		"name": "Aschensteppe", "musik": "wald", "grund": "wiese", "licht": "fff0d8", "start": [14, 1],
 		"raster": ["".join(z) for z in g],
-		"ausgaenge": [{"bereich": [12, 0, 6, 1], "karte": "kreuzweg", "feld": [31, 63]}],
+		"ausgaenge": [{"bereich": [12, 0, 6, 1], "karte": "kreuzweg", "feld": [31, 63]},
+			{"bereich": [11, H - 1, 7, 1], "karte": "palmenrast", "feld": [20, 1]}],
 		"kampf_hintergrund": "wiese", "sicher": RASTPLATZ,
 		"orte": [{"art": "wegelaterne", "feld": [11, 28], "dialog": "wegelaterne_aschensteppe", "zeichen": "laterne"}],
 		"monster": monster(), "baukasten": "karte_aschensteppe",
@@ -117,5 +120,96 @@ def aschensteppe():
 	k.speichern(boden)
 
 
+PB, PH = 40, 34
+
+
+def palmenrast_monster():
+	M = lambda feld, gegner, stufe, **kw: dict({"feld": feld, "gegner": gegner, "stufe": stufe}, **kw)
+	return [
+		M([8, 8], ["feuerechse"], 12), M([30, 7], ["oasenkroete", "feuerechse"], 13), M([10, 18], ["glasskorpion"], 14),
+		M([32, 18], ["sandwurm"], 15), M([20, 25], ["glasskorpion", "feuerechse"], 16), M([8, 28], ["sandwurm", "oasenkroete"], 17),
+		M([12, 24], ["sandwurm", "glasskorpion"], 18), M([36, 12], ["stachelflitzer"], 18),
+		M([30, 7], ["staubgeist"], 15, zeit="nacht"), M([10, 18], ["mondschakal"], 16, zeit="nacht"),
+		M([32, 18], ["staubgeist", "mondschakal"], 17, zeit="nacht"), M([20, 25], ["mondschakal"], 18, zeit="nacht"),
+		M([8, 28], ["staubgeist", "staubgeist"], 19, zeit="nacht"),
+	]
+
+
+def palmenrast():
+	r = random.Random(32)
+	g = [["."] * PB for _ in range(PH)]
+	for y in range(PH):
+		for x in range(PB):
+			if x in (0, PB - 1) or y == PH - 1 or ((x in (1, PB - 2) or y == PH - 2) and r.random() < 0.5) or r.random() < 0.03:
+				g[y][x] = "s" if r.random() < 0.5 else "T"
+	for x in range(17, 24):
+		g[0][x] = "."
+	# Oasenteich in der Mitte (nicht begehbar), drumherum Oasengras
+	teich = {(x, y) for y in range(13, 19) for x in range(17, 25) if ((x - 20.5) / 4.2) ** 2 + ((y - 15.5) / 3.2) ** 2 < 1}
+	for x, y in teich:
+		g[y][x] = "~"
+	# Karawanenspur vom Norden um den Teich herum nach Süden
+	for y in range(0, PH - 2):
+		x = 20 if y < 10 or y > 21 else (14 if y < 16 else 14)
+		g[y][x] = "="
+	for x in range(14, 21):
+		g[10][x] = "="
+		g[21][x] = "="
+	for y in range(10, 22):
+		g[y][14] = "="
+	for m in palmenrast_monster():
+		x, y = m["feld"]
+		for dx in (-1, 0, 1):
+			for dy in (-1, 0, 1):
+				if g[y + dy][x + dx] in "sT":
+					g[y + dy][x + dx] = "."
+	karten = json.loads((gk.DATEN / "karten.json").read_text(encoding="utf-8"))
+	karten["palmenrast"] = {
+		"name": "Palmenrast", "musik": "wald", "grund": "wiese", "licht": "fff4e0", "start": [20, 1],
+		"raster": ["".join(z) for z in g],
+		"ausgaenge": [{"bereich": [17, 0, 7, 1], "karte": "aschensteppe", "feld": [14, H - 2]}],
+		"kampf_hintergrund": "wiese", "monster": palmenrast_monster(), "baukasten": "karte_palmenrast",
+	}
+	(gk.DATEN / "karten.json").write_text(json.dumps(karten, ensure_ascii=False, indent="\t") + "\n", encoding="utf-8")
+	gk.KARTEN.clear()
+	gk.KARTEN.update(karten)
+	k = gk.Karte("palmenrast")
+	boden = []
+	for y in range(PH):
+		zeile = ""
+		for x in range(PB):
+			if (x, y) in teich:
+				zeile += "t"
+			elif g[y][x] == "=":
+				zeile += "e"
+			elif min(abs(x - 20.5) / 6.5, 1) ** 2 + min(abs(y - 15.5) / 5.0, 1) ** 2 < 1:
+				zeile += "g"
+			else:
+				zeile += "s"
+		boden.append(zeile)
+	# Palmen rund um den Teich, Wasserstellen, Dünen, Xavinas Sternendüne im Südosten
+	for x, y in [(15, 12), (25, 13), (16, 19), (25, 18), (22, 12), (18, 20)]:
+		k.setzen("go_palme_gross", x, y, muss=False)
+	for x, y in [(13, 14), (26, 16), (19, 11), (23, 20), (12, 18), (27, 14)]:
+		k.setzen("go_palme_klein", x, y, muss=False)
+	k.setzen("go_sternenduene", 28, 23, "Sternendüne", muss=False)
+	for teil, x, y in [("go_wasserstelle", 3, 3), ("go_wasserstelle", 33, 2), ("go_duene", 3, 12), ("go_duene", 34, 23), ("go_duene", 12, 30),
+			("go_duenenkamm", 24, 31), ("go_ruine", 3, 21), ("go_felsbrocken", 26, 4), ("go_felsbrocken", 14, 26), ("go_sonnensegel", 22, 2)]:
+		k.setzen(teil, x, y, muss=False)
+	for y in range(PH):
+		for x in range(PB):
+			z = g[y][x]
+			if z == "s":
+				k.setzen("go_felsbrocken" if r.random() < 0.3 else "go_kakteen", x, y, muss=False)
+			elif z == "T":
+				k.setzen(r.choice(["go_palme_klein", "go_trockenbusch", "go_kakteen"]), x, y, muss=False)
+			elif z == "." and r.random() < 0.03:
+				k.setzen("go_gras_zu_sand", x, y, muss=False)
+	k.erreichbar()
+	k.speichern(boden)
+
+
 if __name__ == "__main__":
-	aschensteppe()
+	alle = {"aschensteppe": aschensteppe, "palmenrast": palmenrast}
+	for name in sys.argv[1:] or list(alle):
+		alle[name]()

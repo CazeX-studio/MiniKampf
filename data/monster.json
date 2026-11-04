@@ -1576,5 +1576,255 @@
 				"ziel": "alle"
 			}
 		]
+	},
+	"sandwurm": {
+		"name": "Sandwurm",
+		"element": "Erde",
+		"rolle": "tank",
+		"stufe": [
+			14,
+			20
+		],
+		"familie": "wuermer",
+		"beute": "wurmhaut",
+		"faehigkeiten": [
+			{
+				"name": "Abtauchen",
+				"schaden": 1.0,
+				"art": "melee",
+				"ziel": "hinten",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Sandschlund",
+				"schaden": 0.9,
+				"art": "melee",
+				"effekt": {
+					"art": "festhalten",
+					"zuege": 1
+				}
+			}
+		]
+	},
+	"feuerechse": {
+		"name": "Feuerechse",
+		"element": "Feuer",
+		"rolle": "angreifer",
+		"stufe": [
+			10,
+			15
+		],
+		"familie": "echsen",
+		"beute": "feuerschuppe",
+		"faehigkeiten": [
+			{
+				"name": "Feueratem",
+				"schaden": 0.6,
+				"art": "magic",
+				"ziel": "vorne",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Schwanzpeitsche",
+				"schaden": 0.9,
+				"art": "melee",
+				"effekt": {
+					"art": "zugleiste",
+					"staerke": 0.4
+				}
+			}
+		]
+	},
+	"glasskorpion": {
+		"name": "Glasskorpion",
+		"element": "Blitz",
+		"rolle": "angreifer",
+		"stufe": [
+			12,
+			17
+		],
+		"familie": "skorpione",
+		"beute": "blitzglas",
+		"faehigkeiten": [
+			{
+				"name": "Blitzstachel",
+				"schaden": 1.0,
+				"art": "melee",
+				"effekt": {
+					"art": "laehmen",
+					"zuege": 1
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Glaspanzer",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.35
+				},
+				"einmal": true
+			}
+		]
+	},
+	"oasenkroete": {
+		"name": "Oasenkröte",
+		"element": "Wasser",
+		"rolle": "helfer",
+		"stufe": [
+			10,
+			14
+		],
+		"familie": "kroeten",
+		"beute": "oasenschleim",
+		"faehigkeiten": [
+			{
+				"name": "Quellregen",
+				"schaden": 0,
+				"art": "magic",
+				"ziel": "freunde",
+				"effekt": {
+					"art": "heilen",
+					"anteil": 0.08
+				},
+				"einmal": true,
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Schlammspucke",
+				"schaden": 0.8,
+				"art": "ranged",
+				"effekt": {
+					"art": "zugleiste",
+					"staerke": 0.3
+				}
+			}
+		]
+	},
+	"staubgeist": {
+		"name": "Staubgeist",
+		"element": "Wind",
+		"rolle": "helfer",
+		"stufe": [
+			15,
+			20
+		],
+		"zeit": "nacht",
+		"familie": "geister",
+		"beute": "geisterstaub",
+		"faehigkeiten": [
+			{
+				"name": "Sandsturm",
+				"schaden": 0.4,
+				"art": "magic",
+				"ziel": "alle",
+				"effekt": {
+					"art": "verfehlen",
+					"zuege": 1
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Wirbelwind",
+				"schaden": 0.7,
+				"art": "magic",
+				"effekt": {
+					"art": "zugleiste",
+					"staerke": 0.4
+				}
+			},
+			{
+				"name": "Geisterheulen",
+				"schaden": 0.4,
+				"art": "magic",
+				"ziel": "alle"
+			}
+		]
+	},
+	"mondschakal": {
+		"name": "Mondschakal",
+		"element": "Schatten",
+		"rolle": "angreifer",
+		"stufe": [
+			16,
+			20
+		],
+		"zeit": "nacht",
+		"familie": "woelfe",
+		"beute": "schakalfell",
+		"faehigkeiten": [
+			{
+				"name": "Schattenbiss",
+				"schaden": 0.8,
+				"art": "melee",
+				"effekt": {
+					"art": "schattenmale"
+				}
+			},
+			{
+				"name": "Mondheulen",
+				"schaden": 0,
+				"art": "magic",
+				"ruf": "mondschakal",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Lauern",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"aufladen": true
+			}
+		]
+	},
+	"stachelflitzer": {
+		"name": "Stachelflitzer",
+		"element": "Pflanze",
+		"rolle": "fluechter",
+		"stufe": [
+			18,
+			18
+		],
+		"selten": "fluechter",
+		"flieht_nach": 3,
+		"familie": "bluetenwesen",
+		"beute": "stachelflitzer_bluete",
+		"faehigkeiten": [
+			{
+				"name": "Flitzen",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "zugleiste",
+					"staerke": -0.6
+				}
+			},
+			{
+				"name": "Ausweichen",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.6
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Tausend Stacheln",
+				"schaden": 0.5,
+				"art": "ranged",
+				"treffer": 3
+			},
+			{
+				"name": "Davonsausen",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst"
+			}
+		]
 	}
 }

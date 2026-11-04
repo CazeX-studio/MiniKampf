@@ -76,9 +76,9 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 
 ### Glutoase
 
-- **D23:** Aschensteppe mit Rastplatz, dann Palmenrast. (2.1) – Status: geteilt (04.11.2026)
+- **D23:** Aschensteppe mit Rastplatz, dann Palmenrast. (2.1) – Status: fertig (04.11.2026, in D23a und D23b)
 - **D23a:** Aschensteppe (Straße von Kreuzweg nach Süden) mit dem Rastplatz der Karawanen (keine Monster, Wegelaterne), Monster nach Steckbrief. – Status: fertig (04.11.2026; der Rastplatz-Händler kommt mit D27, der Weg nach Süden endet noch an der Karte)
-- **D23b:** Palmenrast (Heimat-Gebiet der Glutoase) südlich der Aschensteppe, Monster nach Steckbrief. – Status: offen
+- **D23b:** Palmenrast (Heimat-Gebiet der Glutoase) südlich der Aschensteppe, Monster nach Steckbrief. – Status: fertig (04.11.2026; bis die Stadt steht, führt die Aschensteppe direkt in die Palmenrast)
 - **D24:** Stadt Glutoase als Terrassenstadt. (2.2) – Status: offen
 - **D25:** Körper der drei Glutoase-Klassen einbauen (braucht Marcos Bilder). (2.11, Rest; die Wüsten- und Schmiede-Teile liegen schon bereit) – Status: offen
 - **D26:** Klassen lernen in der Glutoase. (2.3) – Status: offen
@@ -86,7 +86,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D28:** Geschichte Teil 1: Kochende Brunnen, Miras Lied. (2.4) – Status: offen
 - **D29:** Geschichte Teil 2: Tanz mit der Pause, Rivalenkampf gegen Kael. (2.5) – Status: offen
 - **D30:** Glutgrat über den Bergpfad. (2.6) – Status: offen
-- **D31:** Monster nach Regelblatt in Aschensteppe, Palmenrast und Glutgrat. (2.12, vorgezogen) – Status: offen (Aschensteppe schon mit D23a)
+- **D31:** Monster nach Regelblatt in Aschensteppe, Palmenrast und Glutgrat. (2.12, vorgezogen) – Status: offen (Aschensteppe und Palmenrast schon mit D23, es fehlt der Glutgrat)
 - **D32:** Vulkanschmiede Teil 1: drei Abschnitte, Lava-Takt, Monster, Kampf-Hintergrund. (2.7) – Status: offen
 - **D33:** Vulkanschmiede Teil 2: Hammerbrüder. (2.8) – Status: offen
 - **D34:** Vulkanschmiede Teil 3: Kettenschmied. (2.9) – Status: offen

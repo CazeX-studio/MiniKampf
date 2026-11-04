@@ -1,5 +1,5 @@
 extends SceneTree
-## D23a: Aschensteppe (Straße von Kreuzweg zur Glutoase) mit dem Rastplatz der Karawanen und ihren Monstern.
+## D23a und D23b: Aschensteppe (Straße von Kreuzweg zur Glutoase) mit dem Rastplatz der Karawanen, Palmenrast, Monster.
 ## Aufruf: Godot --headless --path . -s tests/aschensteppe_test.gd
 
 const MONSTER := ["steppenhyaene", "funkenechse", "steppenroller", "kaktusling", "aschefuchs", "schattenskarabaeus", "sonnenloewe"]
@@ -52,6 +52,23 @@ func _initialize() -> void:
 		_check(arten.has(id) and Sandbox.ENEMIES[id].get("regelblatt", false), "%s lebt in der Aschensteppe" % id)
 		_check(GameData.get_file("kartenspiel").karten.has(id) and GameData.get_file("beute").monster.has(id), "%s: Karte und Beute" % id)
 	_check(WorldState._seltenes(["sonnenloewe"]) == "sonnenloewe", "Sonnenlöwe ist selten")
+
+	# D23b: Palmenrast südlich der Aschensteppe
+	world.change_map(p, "aschensteppe", Vector2i(14, 56))
+	world.apply_command("a", {type = "move", cell = Vector2i(14, 59)})
+	for i in 300:
+		world.tick(0.05)
+	_check(p.map == "palmenrast" and world.get_map("palmenrast").title == "Palmenrast", "Von der Aschensteppe nach Süden in die Palmenrast")
+	_check(world.get_map("palmenrast").baukasten.objekte.any(func(o: Dictionary) -> bool: return o.teil == "go_sternenduene"), "Xavinas Sternendüne steht da")
+	var palmen := {}
+	for w: Dictionary in GameData.wild_monsters():
+		if w.karte == "palmenrast":
+			for id: String in w.gegner:
+				palmen[id] = true
+			_check(int(w.stufe) >= 12 and int(w.stufe) <= 19, "Palmenrast Stufe 12–19 (%d)" % int(w.stufe))
+	for id: String in ["sandwurm", "feuerechse", "glasskorpion", "oasenkroete", "staubgeist", "mondschakal", "stachelflitzer"]:
+		_check(palmen.has(id) and Sandbox.ENEMIES[id].get("regelblatt", false) and GameData.get_file("kartenspiel").karten.has(id), "%s lebt in der Palmenrast" % id)
+	_check(Sandbox.ENEMIES.stachelflitzer.get("flieht_nach", 0) == 3, "Stachelflitzer saust nach drei Runden davon")
 	Tageszeit.feste_stunde = -1.0
 	print("Aschensteppe: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)

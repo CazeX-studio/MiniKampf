@@ -540,6 +540,90 @@
 			"bonus": {
 				"angriff": 2
 			}
+		},
+		"sandwurm": {
+			"name": "Sandwurm",
+			"werte": [
+				6,
+				6,
+				5,
+				5
+			],
+			"bonus": {
+				"leben": 5
+			}
+		},
+		"feuerechse": {
+			"name": "Feuerechse",
+			"werte": [
+				6,
+				4,
+				4,
+				5
+			],
+			"bonus": {
+				"angriff": 1
+			}
+		},
+		"glasskorpion": {
+			"name": "Glasskorpion",
+			"werte": [
+				6,
+				5,
+				4,
+				5
+			],
+			"bonus": {
+				"tempo": 1
+			}
+		},
+		"oasenkroete": {
+			"name": "Oasenkröte",
+			"werte": [
+				3,
+				5,
+				5,
+				4
+			],
+			"bonus": {
+				"mana": 3
+			}
+		},
+		"staubgeist": {
+			"name": "Staubgeist",
+			"werte": [
+				5,
+				5,
+				6,
+				5
+			],
+			"bonus": {
+				"mana": 4
+			}
+		},
+		"mondschakal": {
+			"name": "Mondschakal",
+			"werte": [
+				7,
+				5,
+				5,
+				6
+			],
+			"bonus": {
+				"angriff": 2
+			}
+		},
+		"stachelflitzer": {
+			"name": "Stachelflitzer",
+			"werte": [
+				4,
+				8,
+				4,
+				8
+			],
+			"bonus": {
+				"tempo": 2
+			}
 		}
 	},
 	"startkarten": [
@@ -649,7 +733,14 @@
 				"kaktusling",
 				"aschefuchs",
 				"schattenskarabaeus",
-				"sonnenloewe"
+				"sonnenloewe",
+				"sandwurm",
+				"feuerechse",
+				"glasskorpion",
+				"oasenkroete",
+				"staubgeist",
+				"mondschakal",
+				"stachelflitzer"
 			]
 		}
 	],
