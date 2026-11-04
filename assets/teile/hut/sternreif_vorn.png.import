@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/sternreif_vorn.png-c71c9b3a29a9f55f7a0a5c86b1
 
 compress/mode=0
 compress/high_quality=false
-compress/lossy_quality=0.7
+compress/lossy_quality=0.8
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

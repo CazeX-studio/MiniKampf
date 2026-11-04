@@ -96,7 +96,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 
 ### Demo abschließen
 
-- **D36:** Bilder für das Web verkleinern, Ladezeit prüfen, von Marco offene Punkte aus FORTSCHRITT.md einsammeln, Demo-Seite vorbereiten. (neu) – Status: offen
+- **D36:** Bilder für das Web verkleinern, Ladezeit prüfen, von Marco offene Punkte aus FORTSCHRITT.md einsammeln, Demo-Seite vorbereiten. (neu) – Status: fertig (04.11.2026)
 - **T1:** Testtag Aussehen (Marco). – Status: offen
 - **T2:** Testtag Kampfgefühl (Marco). – Status: offen
 - **T3:** Testtag 1 (Marco): Kreuzweg und Grünwacht komplett, allein und in der Gruppe, dazu der Sternenfresser. – Status: offen

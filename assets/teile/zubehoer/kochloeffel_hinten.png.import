@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/kochloeffel_hinten.png-ff0fb1a4cca70aa3c4648d
 
 compress/mode=0
 compress/high_quality=false
-compress/lossy_quality=0.7
+compress/lossy_quality=0.8
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

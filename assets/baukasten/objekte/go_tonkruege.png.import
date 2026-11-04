@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/go_tonkruege.png-929d5d73cc10222b59c82da31719
 
 compress/mode=0
 compress/high_quality=false
-compress/lossy_quality=0.7
+compress/lossy_quality=0.8
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

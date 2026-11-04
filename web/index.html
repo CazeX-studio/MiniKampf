@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Asterfall – Demo</title>
+<meta name="description" content="Asterfall (Arbeitstitel): die spielbare Demo des 2D-Story-Rollenspiels von CazeX Studio.">
+<!-- Startseite der Web-Demo (D36). Das Spiel selbst liegt unter spiel/ (Web-Export, .github/workflows/web-export.yml).
+     Alle Texte sind Platzhalter, Marco passt sie an. -->
+<style>
+	:root {
+		--grund: #0b0d1a;
+		--feld: #151a2e;
+		--rand: #3a3550;
+		--gold: #f2c14e;
+		--gruen: #8affc1;
+		--text: #ecebf4;
+		--leise: #a9a7bd;
+	}
+	* { box-sizing: border-box; }
+	body {
+		margin: 0;
+		background: var(--grund);
+		color: var(--text);
+		font: 17px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+	}
+	main { max-width: 960px; margin: 0 auto; padding: 32px 16px 48px; }
+	header { text-align: center; margin-bottom: 28px; }
+	h1 { font-size: clamp(40px, 9vw, 64px); margin: 0; color: var(--gold); letter-spacing: 2px; font-family: Georgia, "Times New Roman", serif; }
+	.unter { color: var(--leise); margin: 4px 0 0; }
+	.einleitung { max-width: 680px; margin: 18px auto 0; }
+	.spielen {
+		display: inline-block; margin-top: 24px; padding: 16px 44px; border-radius: 10px;
+		background: linear-gradient(#f6d27a, #d99a2b); color: #241605; font-weight: 700; font-size: 22px;
+		text-decoration: none; border: 2px solid #ffe7a8; box-shadow: 0 4px 18px rgba(242, 193, 78, 0.35);
+	}
+	.spielen:hover, .spielen:focus-visible { filter: brightness(1.08); }
+	.laden { color: var(--leise); font-size: 15px; margin-top: 10px; }
+	.bilder { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 30px 0; }
+	.bilder figure { margin: 0; border: 1px solid var(--rand); border-radius: 8px; overflow: hidden; background: var(--feld); }
+	.bilder img { display: block; width: 100%; height: auto; }
+	.bilder figcaption { padding: 6px 10px; font-size: 14px; color: var(--leise); }
+	section { background: var(--feld); border: 1px solid var(--rand); border-radius: 10px; padding: 18px 22px; margin-top: 16px; }
+	h2 { margin: 0 0 8px; font-size: 21px; color: var(--gold); }
+	ul { margin: 0; padding-left: 20px; }
+	li { margin: 4px 0; }
+	.zwei { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+	kbd { background: #24203a; border: 1px solid var(--rand); border-radius: 4px; padding: 0 5px; font-size: 14px; }
+	footer { text-align: center; color: var(--leise); font-size: 14px; margin-top: 30px; }
+	@media (max-width: 640px) {
+		.bilder, .zwei { grid-template-columns: 1fr; }
+		section { padding: 16px; }
+	}
+</style>
+</head>
+<body>
+<main>
+	<header>
+		<h1>Asterfall</h1>
+		<p class="unter">Demo · Arbeitstitel · CazeX Studio</p>
+		<p class="einleitung">Fünf Helden haben die Welt gerettet – so erzählt man es. Du beginnst als Novize in Kreuzweg, lernst deine Klasse
+			und folgst den Spuren der Splitter, die vom Himmel fallen. Und irgendwo fehlt in jedem Lied ein Ton.</p>
+		<a class="spielen" href="spiel/">Spielen</a>
+		<p class="laden">Läuft direkt im Browser, am PC und am Handy. Beim ersten Start lädt das Spiel etwa 80 MB (WLAN empfohlen).
+			Dein Spielstand bleibt im Browser gespeichert.</p>
+	</header>
+
+	<div class="bilder">
+		<figure><img src="bilder/kreuzweg.jpg" alt="Der Platz von Kreuzweg mit dem Sternenkreis" loading="lazy"><figcaption>Kreuzweg – hier beginnt alles</figcaption></figure>
+		<figure><img src="bilder/wipfelheim.jpg" alt="Wipfelheim, die Stadt in den Baumkronen" loading="lazy"><figcaption>Grünwacht – Wipfelheim in den Bäumen</figcaption></figure>
+		<figure><img src="bilder/glutoase.jpg" alt="Die Oase der Glutoase mit Brunnen und Tanzplatz" loading="lazy"><figcaption>Glutoase – die Terrassenstadt am Vulkan</figcaption></figure>
+		<figure><img src="bilder/vulkan.jpg" alt="Die Schmiedehallen der Vulkanschmiede" loading="lazy"><figcaption>Vulkanschmiede der Ketten – ein Dungeon</figcaption></figure>
+	</div>
+
+	<section>
+		<h2>Was in der Demo steckt</h2>
+		<ul>
+			<li><b>Akt 1 in Kreuzweg:</b> Grundausbildung bei Ye, Probestunden bei den Gesandten, die Nacht des Sternenfalls und deine Klassenwahl.</li>
+			<li><b>Grünwacht:</b> Bogenschütze und Monster-Zähmer lernen hier, mit dem Dungeon Pilzhöhle unter dem Urbaum.</li>
+			<li><b>Glutoase:</b> Rüstungsschmied, Klingentänzerin und Sternensängerin lernen hier, mit dem Dungeon Vulkanschmiede der Ketten.</li>
+			<li><b>Kämpfe mit Zugleiste:</b> Parieren und Ausweichen im richtigen Moment, Reihen, Elemente und Bosse, die man nur gemeinsam schafft.</li>
+			<li><b>Kreuzweg-Karten:</b> ein Kartenspiel mit Monsterkarten, die du unterwegs findest.</li>
+			<li><b>Tag und Nacht</b> nach deiner Uhrzeit: Nachts sind andere Leute und andere Monster unterwegs.</li>
+			<li><b>Zusammen spielen:</b> Gruppen und gemeinsame Dungeons (in der Demo noch im Aufbau).</li>
+		</ul>
+	</section>
+
+	<div class="zwei">
+		<section>
+			<h2>Steuerung am PC</h2>
+			<ul>
+				<li>Klicken oder <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>: laufen</li>
+				<li><kbd>E</kbd> oder <kbd>Leertaste</kbd>: reden, benutzen</li>
+				<li><kbd>F</kbd>: Text weiter (halten = schnell)</li>
+				<li><kbd>J</kbd> Aufträge · <kbd>I</kbd> Tasche · <kbd>C</kbd> Werte · <kbd>K</kbd> Fähigkeiten · <kbd>L</kbd> Kartenalbum · <kbd>X</kbd> hinsetzen</li>
+			</ul>
+		</section>
+		<section>
+			<h2>Steuerung am Handy</h2>
+			<ul>
+				<li>Antippen: dorthin laufen</li>
+				<li>Aktions-Knopf: reden, benutzen</li>
+				<li>Im Kampf: Fähigkeit antippen, dann das Ziel</li>
+				<li>Gegner greift an: tippen, wenn sich der Ring schließt</li>
+			</ul>
+		</section>
+	</div>
+
+	<footer>
+		Eine frühe Demo – Texte, Werte und Bilder können sich noch ändern.<br>
+		© CazeX Studio · freie Bilder und Klänge (CC0) sind im Projekt unter CREDITS.md aufgeführt.
+	</footer>
+</main>
+</body>
+</html>

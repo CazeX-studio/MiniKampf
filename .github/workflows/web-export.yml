@@ -50,8 +50,14 @@ jobs:
       - name: Web-Version exportieren
         run: |
           mkdir -p builds/web
+          # Gemalte Bilder verlustbehaftet speichern (etwa viermal kleiner, tools/web_bilder.py)
+          python3 tools/web_bilder.py
           ~/godot/godot --headless --import || true
-          ~/godot/godot --headless --export-release "Web" builds/web/index.html
+          # Das Spiel liegt unter spiel/, davor die Startseite der Demo (web/index.html, D36)
+          mkdir -p builds/web/spiel
+          ~/godot/godot --headless --export-release "Web" builds/web/spiel/index.html
+          test -f builds/web/spiel/index.html
+          cp -r web/index.html web/bilder builds/web/
           test -f builds/web/index.html
 
       - uses: actions/upload-pages-artifact@v3

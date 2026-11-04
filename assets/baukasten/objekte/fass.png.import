@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/fass.png-8cfc52905f6b976324dd3ec3cfbf0d36.cte
 
 compress/mode=0
 compress/high_quality=false
-compress/lossy_quality=0.7
+compress/lossy_quality=0.8
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

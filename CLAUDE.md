@@ -31,13 +31,14 @@ Das gilt genauso in Claude Code in der Cloud (vom Handy): dort direkt im GitHub-
 - Fotos aus dem Spiel: `..._console.exe --path . res://tests/<name>_foto.tscn -- <Ordner>` (z. B. `gruenwacht_foto`).
 - Commits: Dateien gezielt hinzufügen (`tools/referenz/*.png.import` nicht mitnehmen), auf `main` pushen.
 - Google Doc „CazeX MMO – Brainstorming“: ID `1yVavfCZW8AntSBdW14AA6RUH6KY50G1L9OGxyzEUawg`. Es ist zu groß zum direkten Lesen: Das gespeicherte Ergebnis mit Python öffnen.
+- Neue gemalte Bilder (Figuren, Porträts, Figurteile, Baukasten-Objekte) nach dem Import mit `tools/web_bilder.py` aufs kleinere Web-Format stellen (der Web-Export macht es sonst selbst).
 - Karten von Grünwacht neu erzeugen: `tools/gruenwacht_karten.py`. Bilder zuschneiden: `tools/baukasten_zuschneiden.py <blatt>`.
 
 ## In der Cloud (Marco arbeitet auch vom Handy)
 
 - **Zu Beginn jedes Cloud-Chats einmal `bash tools/cloud_einrichten.sh` starten.** Das holt Godot 4.7.2 für Linux nach `~/godot/godot`, installiert die Python-Pakete und importiert die Bilder. Python ist dort `python3`, die Befehle unter „Werkzeuge“ gelten sonst gleich.
 - `design.md` und `GRAFIK_AUFTRAG.md` liegen im privaten Repo `CazeX-studio/Spieldesign`. Ist es nicht da, mit `git clone` holen; geht das nicht, Marco bitten, es dem Chat hinzuzufügen. Nicht ohne die Beschlüsse bauen.
-- Direkt auf `main` committen und pushen, nicht auf Nebenzweige. Jeder Push veröffentlicht die Web-Version unter https://cazex-studio.github.io/MiniKampf/.
+- Direkt auf `main` committen und pushen, nicht auf Nebenzweige. Jeder Push veröffentlicht die Web-Version unter https://cazex-studio.github.io/MiniKampf/ (Startseite `web/index.html`, das Spiel unter `/spiel/`).
 - Fehlt der Zugriff auf das Google Doc, Marco den fertigen Status-Text zum Einfügen geben (siehe Skill `bauauftrag`).
 - Bilder von Marco kommen als Anhang im Chat: unter `tools/vorlagen/` mit sprechendem Namen ablegen und mit committen.
 
