@@ -108,7 +108,15 @@ Wenig Tokens übrig: Arbeit in wenigen großen Blöcken statt vieler kleiner Run
 
 - **E1:** Fünf Entscheidungen einbauen. – Status: fertig (04.11.2026: Sporenkönigin mit Mechanik in der Welt, Glutgeist und Namen bleiben, Kobalt vorerst Zähmer-Körper; Lichter in Kreuzweg: Vergleichsbilder geschickt, ohne Zusage bleiben die echten Lichter)
 - **E2:** D25b auf einen Schlag. – Status: fertig (04.11.2026, Bilder lagen schon unter `tools/vorlagen/`)
-- **E3:** T1 und T2 zusammen spielen. Marco notiert Stichpunkte und schickt **eine** Liste; Claude arbeitet sie gesammelt ab. – Status: offen
+- **E3:** T1 und T2 zusammen spielen. – Status: Marcos erste Liste da (04.11.2026), geteilt in E3a bis E3h:
+  - **E3a:** Wegweiser nach dem Klassenwechsel (z. B. Klingentänzerin: man weiß nicht, wohin). Alle Aufträge nach der Klassenwahl bekommen Wegweiser. – Status: offen (klein)
+  - **E3b:** Kopfrichtung: Bei den Novizen und beim eigenen Charakter schaut der Kopf in eine andere Richtung als der Körper. Fehler suchen und beheben. – Status: offen (klein)
+  - **E3c:** Ortsnamen beim Betreten eines Gebiets groß und in einer schöneren Schrift einblenden, damit man merkt, wo man hingeht (freie Schrift, Quelle in CREDITS.md). – Status: offen (klein)
+  - **E3d:** Kampf-Hintergründe: jedes Gebiet mindestens ein eigener (fehlen: Aschensteppe, Palmenrast, Glutgrat, Tiefwurzel, Kreuzwegfelder; Kämpfe in Städten), gern mehrere je nach Ort im Gebiet. – Status: offen (mittel)
+  - **E3e:** Klingentänzerin hat noch die alten Schwerter: ihre eigenen Klingen aus Marcos Waffen-Blatt einbauen (sonst Prompt). – Status: offen (klein bis mittel)
+  - **E3f:** Kräuter sammeln: neues Bild für die Kräuter in der Welt (Prompt für Marco). – Status: offen (Prompt, dann klein)
+  - **E3g:** Laufbewegung der Novizen sieht schlecht aus: feiner, ggf. mit mehr Bildern (Prompt für Marco). – Status: offen (Prompt, dann mittel)
+  - **E3h:** Städte umbauen: zu viele Figuren und zu viele Deko-Teile auf einem Fleck (Kreuzweg, Wipfelheim, Glutoase), Figuren und Deko verteilen, Plätze freier lassen. – Status: offen (groß, pro Stadt eine Sitzung)
 - **E4:** Eine Balancing-Runde: Marcos Liste plus die Zahlen aus den Prüfungen (Kael, Glasskorpion, Vulkanschmiede allein, Ritualist/Zwielicht), alle Werte in einer Sitzung. – Status: offen
 - **E5:** T3 und T4 am Stück spielen, danach wieder eine Liste und eine Sitzung für die Korrekturen. – Status: offen
 
