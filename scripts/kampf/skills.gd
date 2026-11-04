@@ -370,6 +370,14 @@ func wait_ability() -> Dictionary:
 
 
 ## Kann die Fähigkeit gerade benutzt werden? Gibt "" zurück oder den Grund, warum nicht.
+## Kann der Kämpfer außer Abwarten und Reihe wechseln noch irgendetwas tun?
+func _sonst_etwas_moeglich(f: Fighter) -> bool:
+	for ab in abilities(f):
+		if ab.id != "abwarten" and ab.id != "row" and blocked_reason(f, ab) == "":
+			return true
+	return false
+
+
 func blocked_reason(f: Fighter, ab: Dictionary) -> String:
 	var id: String = ab.id
 	# Lektion: Die erste Aktion des Spielers ist vorgegeben (z. B. „Nach hinten“), alles andere ist bis dahin gesperrt
@@ -384,7 +392,10 @@ func blocked_reason(f: Fighter, ab: Dictionary) -> String:
 		return ""
 	if f.cooldown(id) > 0:
 		return "Bereit in %d" % f.cooldown(id)
-	if (id == "row" or id == "abwarten") and f.effekte.has("festhalten"):
+	if id == "row" and f.effekte.has("festhalten"):
+		return "Festgehalten"
+	# Abwarten geht festgehalten nur, wenn sonst nichts geht (sonst hinge der Zug fest, z. B. Quartiermeister ohne Gold)
+	if id == "abwarten" and f.effekte.has("festhalten") and _sonst_etwas_moeglich(f):
 		return "Festgehalten"
 	if ab.get("mana", 0) > f.mana:
 		return "Zu wenig Mana"

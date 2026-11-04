@@ -34,7 +34,9 @@ static func reihe_in_runde(r: int) -> String:
 
 ## Vor jedem Zug: Sind seit dem letzten Mal neue Runden angebrochen?
 func vor_dem_zug(jetzt: float) -> void:
-	var bis := int(jetzt / RUNDE) + 1
+	var bis := int(minf(jetzt, 1e6) / RUNDE) + 1
+	# Ein riesiger Zeitsprung (z. B. alle Helden ausgeschaltet) rechnet nur die letzten Runden nach
+	runde = maxi(runde, bis - 2 * ABSTAND)
 	while runde < bis:
 		runde += 1
 		_neue_runde(runde)

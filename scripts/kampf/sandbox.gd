@@ -192,6 +192,9 @@ const FESTE_GEGNER := {
 	"knoten_vorne": {name = "Knoten vorne", element = "Sternenkraft", hp = 40, tempo = 1, passive = true},
 	"knoten_hinten": {name = "Knoten hinten", element = "Sternenkraft", hp = 40, tempo = 1, passive = true},
 	"vorbote": {name = "Der Vorbote", element = "Schatten", hp = 240, tempo = 10, big = true},
+	# Vulkanschmiede der Ketten: Zwischenboss Hammerbrüder (vulkanschmiede.gd)
+	"hammerbruder_hammer": {name = "Hammer-Bruder", element = "Erde", hp = 200, tempo = 8, big = true},
+	"hammerbruder_zange": {name = "Zangen-Bruder", element = "Erde", hp = 200, tempo = 9, big = true},
 	# Vor dem Stadttor (Grundausbildung in der Kreuzweg-Demo)
 	"feldschleim": {name = "Feldschleim", element = "Wasser", hp = 40, tempo = 8,
 		attacks = [{name = "Schleimstoß", base = 8, kind = "melee"}],
@@ -383,7 +386,8 @@ const ENCOUNTERS := {
 	"pilzbosse": {name = "Pilzhöhle: nur Bosse", info = "Sporenkönigin, dann Wurzelmutter und Vorbote", dungeon = "pilzhoehle",
 		waves = [["sporenkoenigin", "sporenling", "sporenling"], ["wurzelmutter", "knoten_vorne", "knoten_hinten"]]},
 	"vulkanschmiede": {name = "Vulkanschmiede", info = "Monster der Vulkanschmiede mit Lava-Takt", dungeon = "vulkanschmiede",
-		waves = [["schlackenkriecher", "glutgeist", "aschefalter"], ["ambossknecht", "magmaschnecke", "glutgeist"]]},
+		waves = [["schlackenkriecher", "glutgeist", "aschefalter"], ["ambossknecht", "magmaschnecke", "glutgeist"],
+			["hammerbruder_hammer", "hammerbruder_zange"]]},
 }
 const ENCOUNTER_ORDER: Array[String] = ["monster", "boss", "beides", "pilzhoehle", "pilzbosse", "vulkanschmiede"]
 

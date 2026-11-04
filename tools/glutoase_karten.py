@@ -455,7 +455,7 @@ def vulkanschmiede_monster():
 		M([6, 20], ["schlackenkriecher", "glutgeist"], 15), M([12, 15], ["ambossknecht"], 16), M([6, 11], ["aschefalter", "glutgeist"], 16),
 		M([12, 7], ["magmaschnecke", "schlackenkriecher"], 17),
 		# Kettengänge
-		M([23, 10], ["glutgeist", "glutgeist", "aschefalter"], 18), M([23, 21], ["ambossknecht", "magmaschnecke"], 18),
+		M([23, 10], ["glutgeist", "glutgeist", "aschefalter"], 18), M([40, 16], ["ambossknecht", "magmaschnecke"], 18),
 		# Ankerkammer
 		M([37, 10], ["schlackenkriecher", "aschefalter", "glutgeist"], 19), M([37, 21], ["ambossknecht", "magmaschnecke", "glutgeist"], 20),
 		# Selten: der Messingwächter, Hadraks Probe-Automat, in einer Ecke der Schmiedehallen
@@ -484,6 +484,9 @@ def vulkanschmiede():
 		"raster": ["".join(z) for z in g],
 		"ausgaenge": [{"bereich": [ex - 1, VH - 1, 3, 1], "karte": "glutoase", "feld": [22, 43]}],
 		"monster": vulkanschmiede_monster(), "baukasten": "karte_vulkanschmiede",
+		# Zwischenboss Hammerbrüder (D33) auf der unteren Plattform der Kettengänge, bis sie in diesem Lauf besiegt sind
+		"orte": [{"art": "hammerbruder_hammer", "feld": [22, 19], "dialog": "vs_hammerbrueder", "wenn": {"nicht_gemerkt": "lauf:hammerbrueder"}},
+			{"art": "hammerbruder_zange", "feld": [24, 22], "dialog": "vs_hammerbrueder", "wenn": {"nicht_gemerkt": "lauf:hammerbrueder"}}],
 	}
 	(gk.DATEN / "karten.json").write_text(json.dumps(karten, ensure_ascii=False, indent="\t") + "\n", encoding="utf-8")
 	gk.KARTEN.clear()
@@ -501,7 +504,7 @@ def vulkanschmiede():
 			("go_kettenamboss", 9, 22, "")]:
 		k.setzen(teil, x, y, name, muss=False)
 	# Kettengänge: Winden auf den Plattformen
-	for x, y in [(21, 8), (24, 23 - 1)]:
+	for x, y in [(21, 8), (21, 18)]:
 		k.setzen("vs_kettenwinde", x, y, muss=False)
 	# Ankerkammer: drei Anker an den Wänden, in der Mitte frei für den Kettenschmied, am Rand ein Kühlbecken
 	for x, y, name in [(32, 4, "Anker"), (43, 4, ""), (43, 24, "")]:

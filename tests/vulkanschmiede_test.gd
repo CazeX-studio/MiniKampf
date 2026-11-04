@@ -72,6 +72,51 @@ func _lava_takt() -> void:
 	k.cleanup()
 
 
+## D33: Zwischenboss Hammerbrüder (Doppelschlag oder Gleichschritt)
+func _hammerbrueder() -> void:
+	var k := BattleState.new(null, [] as Array[String], "", 11)
+	k.setup = {gegner_stufe = 18, dungeon = "vulkanschmiede", helden = [{klasse = "tank", name = "A", stufe = 18},
+			{klasse = "smith", name = "B", stufe = 18}]}
+	k._create_heroes()
+	k.dungeon = Vulkanschmiede.new(k)
+	k.spawn_enemies(["hammerbruder_hammer", "hammerbruder_zange"])
+	var hammer: Fighter = k.enemies[0]
+	var zange: Fighter = k.enemies[1]
+	k.dungeon.on_wave(0)
+	_check(k.dungeon.modus in ["doppelschlag", "gleichschritt"], "Pro Kampf eine der beiden Mechaniken")
+	var v: Vulkanschmiede = k.dungeon
+	# Doppelschlag: angekündigt, jede Klasse kann einen Bruder stören
+	v.modus = "doppelschlag"
+	v._ausholen()
+	_check(hammer.has_meta("holt_aus") and zange.has_meta("holt_aus") and "DOPPELSCHLAG" in v.intent(hammer), "Beide holen aus (angekündigt)")
+	var aktionen := v.extra_abilities(k.heroes[0])
+	_check(aktionen.size() == 1 and aktionen[0].id == "stoeren", "Jede Klasse kann „Bruder stören“")
+	v.execute(k.heroes[1], aktionen[0], null)
+	_check(not hammer.has_meta("holt_aus") and v.extra_abilities(k.heroes[0]).is_empty(), "Ein gestörter Bruder reicht")
+	v._ausholen()
+	v._doppelschlag(hammer)
+	_check(k.allies().is_empty(), "Doppelschlag ohne Störung: die ganze Gruppe fällt")
+	# Gleichschritt: liegt einer deutlich vorn, wird der schwächere rasend
+	for h in k.heroes:
+		h.hp = h.max_hp
+	v.modus = "gleichschritt"
+	zange.hp = roundi(zange.max_hp * 0.5)
+	v.on_hit(null, zange, "", 0)
+	_check(zange.has_meta("rasend") and not hammer.has_meta("rasend"), "Gleichschritt: der schwächere Bruder wird rasend")
+	hammer.hp = roundi(hammer.max_hp * 0.55)
+	v.on_hit(null, hammer, "", 0)
+	_check(not zange.has_meta("rasend"), "Gleichmäßig geschwächt: er beruhigt sich")
+	zange.hp = 0
+	v.on_hit(null, zange, "", 0)
+	_check(hammer.has_meta("rasend"), "Fällt einer, während der andere noch viel Leben hat, tobt der andere")
+	k.cleanup()
+	# In der Welt: auf der Plattform der Kettengänge, ein Kampf für die Gruppe
+	var kampf: Dictionary = GameData.battle("hammerbrueder")
+	_check(kampf.get("dungeon", "") == "vulkanschmiede" and kampf.get("merken", "") == "lauf:hammerbrueder", "Kampf gegen die Hammerbrüder")
+	var orte: Array = GameData.get_file("karten").vulkanschmiede.orte.filter(func(o: Dictionary) -> bool: return o.dialog == "vs_hammerbrueder")
+	_check(orte.size() == 2 and GameData.dialog("vs_hammerbrueder").size() > 0, "Die Brüder stehen in den Kettengängen")
+
+
 func _initialize() -> void:
 	Tageszeit.feste_stunde = 12.0
 	var world := WorldState.new()
@@ -108,6 +153,7 @@ func _initialize() -> void:
 	_check(Sandbox.ENEMIES.messingwaechter.has("selten"), "Der Messingwächter ist selten")
 	_check(Backdrop.fighter_light("vulkanschmiede") != Color.WHITE, "Eigenes Licht im Kampf")
 	_lava_takt()
+	_hammerbrueder()
 	world.change_map(p, "vulkanschmiede", Vector2i(8, 28))
 	world.apply_command("a", {type = "move", cell = Vector2i(8, 29)})
 	for i in 300:

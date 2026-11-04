@@ -2951,8 +2951,8 @@
 			},
 			{
 				"feld": [
-					23,
-					21
+					40,
+					16
 				],
 				"gegner": [
 					"ambossknecht",
@@ -2995,6 +2995,30 @@
 				"stufe": 20
 			}
 		],
-		"baukasten": "karte_vulkanschmiede"
+		"baukasten": "karte_vulkanschmiede",
+		"orte": [
+			{
+				"art": "hammerbruder_hammer",
+				"feld": [
+					22,
+					19
+				],
+				"dialog": "vs_hammerbrueder",
+				"wenn": {
+					"nicht_gemerkt": "lauf:hammerbrueder"
+				}
+			},
+			{
+				"art": "hammerbruder_zange",
+				"feld": [
+					24,
+					22
+				],
+				"dialog": "vs_hammerbrueder",
+				"wenn": {
+					"nicht_gemerkt": "lauf:hammerbrueder"
+				}
+			}
+		]
 	}
 }

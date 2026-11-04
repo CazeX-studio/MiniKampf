@@ -1,5 +1,5 @@
 class_name Pilzhoehle
-extends RefCounted
+extends DungeonRegeln
 ## Test-Dungeon Pilzhöhle unter dem Urbaum (design.md: „Grünwacht im Detail“ und „Dungeon-Regeln“).
 ## - Eigene Monster: Leuchtmotte, Wurzelkriecher, Sporenwolf, Glimmerkäfer
 ## - Zwischenboss Sporenkönigin: pro Kampf zufällig EINE Mechanik
@@ -23,7 +23,6 @@ const PAIR_DAMAGE := 0.25
 const MAX_DARKNESS := 6
 const DARKNESS_STEP := 0.13
 
-var c: BattleState
 ## Mechanik der Sporenkönigin in diesem Kampf: "bluete" (Wipe) oder "zwillinge" (Zusammenspiel)
 var queen_mode := ""
 var clouds := 0
@@ -34,10 +33,6 @@ var phase2 := false
 var darkness := 0
 
 
-func _init(p_combat: BattleState) -> void:
-	c = p_combat
-
-
 ## Züge bis „Verschlingen“. In der Welt (setup.verschlingen_zuege) kann es mehr sein: Allein helfen dort nur
 ## die Novizen-Mitstreiter, die sich nicht absprechen.
 func devour_turns() -> int:
@@ -46,13 +41,6 @@ func devour_turns() -> int:
 
 func handles(e: Fighter) -> bool:
 	return e.klass in ENEMY_IDS
-
-
-func _find(klass: String) -> Fighter:
-	for e in c.enemies:
-		if e.klass == klass:
-			return e
-	return null
 
 
 ## Wird zu Beginn jeder Welle aufgerufen.

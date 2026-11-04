@@ -174,6 +174,8 @@ const LOOKS := {
 	"magmaschnecke": {sprite = "magmaschnecke", scale = 1.0},
 	"schlackenkriecher": {sprite = "schlackenkriecher", scale = 1.0},
 	"hammerbrueder": {sprite = "hammerbrueder", scale = 1.0},
+	"hammerbruder_hammer": {sprite = "hammerbruder_hammer", scale = 1.0, angriffe = {"Erdstoß": "spezial", "Doppelschlag": "spezial"}},
+	"hammerbruder_zange": {sprite = "hammerbruder_zange", scale = 1.0},
 	"kettenschmied_1": {sprite = "kettenschmied_1", scale = 1.0},
 	"kettenschmied_2": {sprite = "kettenschmied_2", scale = 1.0},
 	# Grünwacht

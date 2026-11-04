@@ -103,7 +103,7 @@ var won := false
 var now := 0.0
 var skills: Skills
 ## Dungeon-Regeln (Pilzhöhle), sonst null
-var dungeon: Pilzhoehle
+var dungeon: DungeonRegeln
 ## Lava-Takt (Vulkanschmiede der Ketten): steigt abwechselnd vorne und hinten
 var lava: LavaTakt
 var controller: Object
@@ -157,6 +157,7 @@ func run() -> void:
 			dungeon = Pilzhoehle.new(self)
 		if setup.get("dungeon", "") == "vulkanschmiede":
 			lava = LavaTakt.new(self)
+			dungeon = Vulkanschmiede.new(self)
 		_spawn_wave(int(setup.get("start_welle", 0)))
 		await _battle_loop()
 		return
@@ -165,6 +166,7 @@ func run() -> void:
 		dungeon = Pilzhoehle.new(self)
 	if Sandbox.ENCOUNTERS[encounter].get("dungeon", "") == "vulkanschmiede":
 		lava = LavaTakt.new(self)
+		dungeon = Vulkanschmiede.new(self)
 	_spawn_wave(0)
 	await _battle_loop()
 
@@ -469,8 +471,13 @@ func _spawn_wave(index: int) -> void:
 		add_log("\n[b]Welle %d von %d[/b]" % [index + 1, waves.size()])
 	if setup.has("ansage"):
 		add_log("[b]%s[/b]" % setup.ansage)
-	elif dungeon != null:
+	# Dungeon-Mechaniken (z. B. welche Mechanik der Zwischenboss heute nutzt) auch in der Welt, wo es eine Ansage gibt.
+	# Ausnahme: Die Pilzhöhle lief in der Welt bisher ohne diese Wahl (Sporenkönigin ohne Mechanik); das bleibt so,
+	# bis es beim Balancing geklärt ist (mit Mechanik gewinnt man allein nur gut ein Drittel der Kämpfe).
+	if dungeon != null and not (setup.has("ansage") and dungeon is Pilzhoehle):
 		dungeon.on_wave(index)
+	elif setup.has("ansage"):
+		pass
 	elif "boss" in ids:
 		add_log("[b]Ein Steinwächter (Erde) und seine Begleiter greifen an![/b]")
 	else:

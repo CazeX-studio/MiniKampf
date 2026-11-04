@@ -35,6 +35,11 @@ func choose(rules: Skills, f: Fighter) -> Dictionary:
 		# (Meisterstück des Rüstungsschmieds nicht, solange noch ein Schild hält: sonst greift er nie an)
 		if ab.id == "ult" and not (f.klass == "smith" and f.shield_total() > 0):
 			pick = ab
+	# Hammerbrüder: Holen beide zum Doppelschlag aus, einen stören (das täte jede Gruppe)
+	if pick.is_empty():
+		for ab in options:
+			if ab.id == "stoeren":
+				pick = ab
 	# Lava-Takt (Vulkanschmiede): Ist die Lava in der eigenen Reihe angekündigt, meist die Reihe wechseln
 	# (mit wenig Leben immer, sonst in der Hälfte der Fälle; ein Zug zum Ausweichen lohnt sich nicht immer)
 	if pick.is_empty() and rules.c.lava != null and rules.c.lava.angekuendigt == ("hinten" if f.back_row else "vorne") \
@@ -50,6 +55,11 @@ func choose(rules: Skills, f: Fighter) -> Dictionary:
 				weighted.append(ab)
 		if weighted.is_empty():
 			weighted = options
+		# Nichts geht (z. B. festgehalten und ohne Mana): irgendetwas, das erlaubt ist
+		if weighted.is_empty():
+			for ab in rules.abilities(f):
+				if rules.blocked_reason(f, ab) == "":
+					weighted.append(ab)
 		pick = weighted[rng.randi() % weighted.size()]
 	var target: Fighter = null
 	if pick.target != "none":
