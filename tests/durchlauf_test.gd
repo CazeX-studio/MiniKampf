@@ -24,6 +24,8 @@ var _failed := 0
 
 
 func _initialize() -> void:
+	# Tagsüber prüfen: nachts stehen manche Figuren woanders oder sind zu Hause (D20d)
+	Tageszeit.feste_stunde = 12.0
 	_run.call_deferred()
 
 
