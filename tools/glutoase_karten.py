@@ -298,6 +298,9 @@ def glutoase():
 				"zeichen": "muenze"},
 			"layla": {"name": "Wirtin Layla", "feld": [29, 6], "aussehen": "grund_frau+layla#zubehoer=schuerze_layla&tablett", "dialog": "layla"},
 			"mira_glutoase": {"name": "Mira", "feld": [40, 13], "aussehen": "mira", "dialog": "mira_glutoase", "liegt": True},
+			# Kael wartet nach dem Fest in Hadraks Schmiede (D29, Rivalenkampf)
+			"kael_glutoase": {"name": "Kael", "feld": [24, 43], "aussehen": "kael", "dialog": "kael_glutoase",
+				"wenn": {"oder": [{"auftrag": "rivale_kael", "stand": "aktiv"}, {"auftrag": "rivale_kael", "stand": "fertig"}]}},
 			# Volk: Schmiede, Tänzer (nachts), Basar- und Karawanenleute, Aufzugwärter, Gäste (vor allem nachts)
 			"schmied_1": {"name": "Schmied", "feld": [8, 26], "aussehen": "grund_handwerker+v_m2#zubehoer=schuerze", "dialog": "volk_go_schmied_1"},
 			"schmied_2": {"name": "Schmied", "feld": [12, 26], "aussehen": "grund_handwerker+v_m3#zubehoer=schuerze", "dialog": "volk_go_schmied_2"},

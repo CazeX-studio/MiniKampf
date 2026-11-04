@@ -108,8 +108,9 @@ def freistellen(bild):
 	return a.astype(np.uint8)
 
 
-def bilder_finden(a, schnitte):
-	"""Große Bilder (nach Reihen sortiert) und eine Karte, welcher Pixel zu welchem Bild gehört."""
+def bilder_finden(a, schnitte, klein_bis=2500):
+	"""Große Bilder (nach Reihen sortiert) und eine Karte, welcher Pixel zu welchem Bild gehört.
+	klein_bis: Stücke mit weniger Pixeln gehören zum nächsten großen Bild (z. B. eine Waffe neben der liegenden Figur)."""
 	fest = a[..., 3] > 40
 	trenn = ndimage.binary_dilation(fest, iterations=2)
 	for x, y0, y1 in schnitte:
@@ -123,7 +124,7 @@ def bilder_finden(a, schnitte):
 	for i, sl in enumerate(ndimage.find_objects(lab)):
 		if sl is None:
 			continue
-		(gross if (lab[sl] == i + 1).sum() >= 2500 else klein).append((i + 1, sl))
+		(gross if (lab[sl] == i + 1).sum() >= klein_bis else klein).append((i + 1, sl))
 	zuordnung = {i: i for i, _ in gross}
 	for i, sl in klein:
 		cy, cx = (sl[0].start + sl[0].stop) / 2, (sl[1].start + sl[1].stop) / 2

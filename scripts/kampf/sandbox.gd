@@ -283,6 +283,11 @@ const FESTE_GEGNER := {
 	"funkenmarder": {name = "Funkenmarder", element = "Blitz", hp = 60, tempo = 18,
 		attacks = [{name = "Flinker Biss", base = 11, kind = "melee"}, {name = "Funkenschlag", base = 12, kind = "magic"}],
 		tame = {name = "Flinker Biss", base = 11, kind = "melee"}},
+	# Rivale Kael in Hadraks Schmiede (D29, Glutoase): ein Klingentänzer, flink und hart. Werte vorläufig.
+	"kael_rivale": {name = "Kael", element = "", hp = 240, tempo = 16, title = "Kael",
+		attacks = [{name = "Klingenschritt", base = 18, kind = "melee"}, {name = "Ausfallschritt", base = 16, kind = "melee", back = true},
+			{name = "Klingenwirbel", base = 10, kind = "melee", all = true}, {name = "Spott", base = 0, kind = "melee", ziel = "selbst",
+			effekt = {art = "schutz", anteil = 0.15}, einmal = true}]},
 	# Nacht des Sternenfalls (Kreuzweg-Demo): Ein Feldschleim hat einen Splitter gefressen
 	"sternenfresser": {name = "Der Sternenfresser", element = "Sternenkraft", hp = 240, tempo = 9, big = true,
 		panzer = 0.1, erschuettert = 2, wipe_nach = 10, toedlich = true, wipe_text = "Der Splitter im Bauch des Sternenfressers explodiert!",

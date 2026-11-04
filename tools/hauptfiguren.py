@@ -40,14 +40,23 @@ FIGUREN = {
 	"samira": (1.04, []),
 	"xavina": (1.04, []),
 }
-KAMPF = {"ye": [[("idle", 4)], [("attack", 6)], [("hit", 1), ("parry", 4)]]}
+## Kampf-Blätter: Figur -> Liste (Blatt, Reihen); alle Blätter einer Figur landen unter <figur>_kampf
+KAMPF = {
+	"ye": [("kampf", [[("idle", 4)], [("attack", 6)], [("hit", 1), ("parry", 4)]])],
+	# Kael (D29, Rivalenkampf in der Glutoase): Aufbau wie Kofis Kampf-Blätter
+	"kael": [("kampf_a", [[("idle", 4)], [("run", 4)], [("hit", 1), ("parry", 4)]]),
+		("kampf_b", [[("attack", 6)], [("death", 6)], [("victory", 4), ("cast", 4)]])],
+}
 STIMMUNGEN = ["ruhig", "laechelnd", "wuetend", "traurig", "ueberrascht"]
 ## So hoch sind die Porträts (Pixel)
 PORTRAET_HOEHE = 200
 
 
-def bilder(figur, blattname, reihen, name, groesse):
-	anims = blatt(f"haupt_{figur}", blattname, reihen)
+def bilder(figur, blaetter, name, groesse):
+	"""blaetter: Liste (Blatt, Reihen). Die Waffe neben der liegenden Figur (Kael) gehört zum Bild (klein_bis)."""
+	anims = {}
+	for blattname, reihen in blaetter:
+		anims.update(blatt(f"haupt_{figur}", blattname, reihen, klein_bis=4000))
 	groesser = lambda t: np.array(Image.fromarray(t).resize((round(t.shape[1] * groesse), round(t.shape[0] * groesse)), Image.LANCZOS))
 	speichern(name, {k: [groesser(t) for t in v] for k, v in anims.items()}, 1.0)
 
@@ -79,9 +88,9 @@ def main():
 	for figur in sys.argv[1:] or list(FIGUREN):
 		groesse, extra = FIGUREN[figur]
 		# Achtung: speichern("ye") löscht auch ye_kampf_*, darum zuerst die Welt, dann der Kampf
-		bilder(figur, "welt", WELT + extra, figur, groesse)
+		bilder(figur, [("welt", WELT + extra)], figur, groesse)
 		if figur in KAMPF:
-			bilder(figur, "kampf", KAMPF[figur], f"{figur}_kampf", groesse)
+			bilder(figur, KAMPF[figur], f"{figur}_kampf", groesse)
 		portraets(figur)
 
 

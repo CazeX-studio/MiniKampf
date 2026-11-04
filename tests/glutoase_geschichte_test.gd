@@ -1,6 +1,6 @@
 extends SceneTree
-## D28: Geschichte der Glutoase, Teil 1: Kochende Brunnen (Nadia, zwei Wasserstellen, Kampf, Brakkus' Ahnung) und
-## Miras Lied (fünf Töne aufschreiben, der sechste fehlt).
+## D28 und D29: Geschichte der Glutoase: Kochende Brunnen (Nadia, zwei Wasserstellen, Kampf, Brakkus' Ahnung) und
+## Miras Lied (fünf Töne aufschreiben, der sechste fehlt), der Tanz mit der Pause und Kael in Hadraks Schmiede.
 ## Aufruf: Godot --headless --path . -s tests/glutoase_geschichte_test.gd
 
 var _failed := 0
@@ -15,7 +15,7 @@ func _check(ok: bool, text: String) -> void:
 ## Gespräch führen; antworten: welche Antwort jeweils (sonst die erste)
 func _reden(world: WorldState, p: PlayerState, dialog: String, antworten: Array = []) -> void:
 	world.start_dialog(p, dialog)
-	for i in 30:
+	for i in 60:
 		if not p.in_dialog():
 			break
 		if world.dialog_view(p).antworten.is_empty():
@@ -60,6 +60,27 @@ func _initialize() -> void:
 	_check(p.progress.item_count("miras_notenblatt") == 1, "Miras Notenblatt in der Tasche")
 	var g: Dictionary = GameData.get_file("kaempfe").heisse_quelle
 	_check(g.get("eigene_klasse", false) and g.merken == "quelle_gekuehlt", "Der Kampf an der Quelle ist ein Kampf mit der eigenen Klasse")
+
+	# D29: Der Tanz mit der Pause (nur nachts), Kael provoziert Hadrak, Rivalenkampf in der Schmiede
+	_reden(world, p, "samira")
+	_check(p.progress.quest_state("fest_der_glut") == "aktiv", "Samira lädt zum Fest ein")
+	world.nacht = false
+	world.start_dialog(p, "samira")
+	_check(world.dialog_view(p).text.contains("heute Nacht"), "Tagsüber: erst heute Nacht")
+	world.apply_command("a", {type = "dialog_next"})
+	world.nacht = true
+	# Schritte: einmal falsch (Sprung), dann richtig; in der Pause erst weitertanzen, dann lauschen
+	_reden(world, p, "samira", [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
+	_check(p.progress.flags.has("sechster_ton"), "In der Pause den sechsten Ton gehört")
+	_check(p.progress.quest_state("fest_der_glut") == "abgegeben" and p.progress.quest_state("rivale_kael") == "aktiv", "Kael fordert Hadrak heraus")
+	world.change_map(p, "glutoase", Vector2i(26, 40))
+	_check(world._npc_present(p, "kael_glutoase"), "Kael wartet in Hadraks Schmiede")
+	_check(Sandbox.ENEMIES.has("kael_rivale") and ResourceLoader.exists("res://assets/figuren/kael_kampf_attack_anim_f3.png"), "Kael kämpft mit seinen eigenen Bildern")
+	world.apply_command("a", {type = "kampf_ergebnis", kampf = "kael_rivale", gewonnen = true})
+	_reden(world, p, "hadrak")
+	_check(p.progress.quest_state("rivale_kael") == "abgegeben", "Hadrak dankt (in zwei Worten)")
+	_reden(world, p, "hadrak")
+	_check(p.progress.flags.has("hadrak_gerannt"), "Nachts mit seinem Vertrauen: „Wir sind gerannt.“")
 	Tageszeit.feste_stunde = -1.0
 	print("Glutoase-Geschichte: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)

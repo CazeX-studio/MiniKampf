@@ -2459,6 +2459,27 @@
 				"dialog": "mira_glutoase",
 				"liegt": true
 			},
+			"kael_glutoase": {
+				"name": "Kael",
+				"feld": [
+					24,
+					43
+				],
+				"aussehen": "kael",
+				"dialog": "kael_glutoase",
+				"wenn": {
+					"oder": [
+						{
+							"auftrag": "rivale_kael",
+							"stand": "aktiv"
+						},
+						{
+							"auftrag": "rivale_kael",
+							"stand": "fertig"
+						}
+					]
+				}
+			},
 			"schmied_1": {
 				"name": "Schmied",
 				"feld": [

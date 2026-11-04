@@ -114,6 +114,8 @@ const LOOKS := {
 	"kieselkobold": {sprite = "kieselkobold", scale = 1.0, angriffe = {"Kieselwurf": "wurf"}},
 	# Ausbilder Ye mit Regenschirm (D20b, tools/ye_bilder.py)
 	"uebungs_ye": {sprite = "ye_kampf", scale = 3.0},
+	# Kael im Rivalenkampf (D29): eigene Kampf-Blätter
+	"kael_rivale": {sprite = "kael_kampf", scale = 3.0, angriffe = {"Klingenwirbel": "cast"}},
 	"sternenfresser": {sprite = "sternenfresser", scale = 1.0,
 		angriffe = {"Leuchtender Biss": "attack2", "Splitterregen": "spezial"}},
 	# Fenns Prüfung (Platzhalter-Bilder: Strohpuppen)

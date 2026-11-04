@@ -615,8 +615,7 @@
 		"wellen": [
 			[
 				"feuerechse",
-				"oasenkroete",
-				"feuerechse"
+				"oasenkroete"
 			]
 		],
 		"gegner_stufe": 13,
@@ -624,5 +623,19 @@
 		"hintergrund": "wiese",
 		"erfahrung": 250,
 		"merken": "quelle_gekuehlt"
+	},
+	"kael_rivale": {
+		"name": "Rivalenkampf: Kael",
+		"hinweis": "Glutoase Story 3 (D29): Kael provoziert Hadrak beim Fest, der Kampf findet in Hadraks Schmiede statt.",
+		"wellen": [
+			[
+				"kael_rivale"
+			]
+		],
+		"gegner_stufe": 15,
+		"eigene_klasse": true,
+		"hintergrund": "gewoelbe",
+		"erfahrung": 900,
+		"merken": "kael_besiegt_glutoase"
 	}
 }
