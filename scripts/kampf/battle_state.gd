@@ -104,6 +104,8 @@ var now := 0.0
 var skills: Skills
 ## Dungeon-Regeln (Pilzhöhle), sonst null
 var dungeon: Pilzhoehle
+## Lava-Takt (Vulkanschmiede der Ketten): steigt abwechselnd vorne und hinten
+var lava: LavaTakt
 var controller: Object
 ## Zufall der Spielregeln. Gleicher Startwert + gleiche Entscheidungen = gleicher Kampf.
 var rng := RandomNumberGenerator.new()
@@ -153,12 +155,16 @@ func run() -> void:
 		# Dungeon in der Welt (Pilzhöhle unter dem Urbaum): dieselben Mechaniken wie in der Sandbox
 		if setup.get("dungeon", "") == "pilzhoehle":
 			dungeon = Pilzhoehle.new(self)
+		if setup.get("dungeon", "") == "vulkanschmiede":
+			lava = LavaTakt.new(self)
 		_spawn_wave(int(setup.get("start_welle", 0)))
 		await _battle_loop()
 		return
 	waves = Sandbox.ENCOUNTERS[encounter].waves
 	if Sandbox.ENCOUNTERS[encounter].get("dungeon", "") == "pilzhoehle":
 		dungeon = Pilzhoehle.new(self)
+	if Sandbox.ENCOUNTERS[encounter].get("dungeon", "") == "vulkanschmiede":
+		lava = LavaTakt.new(self)
 	_spawn_wave(0)
 	await _battle_loop()
 
@@ -180,6 +186,7 @@ func cleanup() -> void:
 		f.shields.clear()
 	skills = null
 	dungeon = null
+	lava = null
 	controller = null
 
 
@@ -682,6 +689,10 @@ func _battle_loop() -> void:
 		var f := _earliest(times)
 		current = f
 		now = f.next_time
+		# Lava-Takt: neue Runden anbrechen lassen (Ankündigung, Lava steigt und sinkt)
+		if lava != null:
+			lava.vor_dem_zug(now)
+			await _flush()
 		_emit({type = "turn", f = f})
 		await _flush()
 		if max_turns > 0 and turns >= max_turns:
@@ -942,15 +953,7 @@ func _enemy_turn(e: Fighter) -> void:
 				add_log("%s ist mit dem Futter beschäftigt." % e.display_name)
 				e.intent = skills.enemy_intent(e)
 				return
-		var attack: Dictionary = data.attacks[e.step % data.attacks.size()]
-		# Überspringen: Heilen eines anderen Monsters, wenn keins mehr da ist, und Fähigkeiten, die nur einmal gehen
-		for versuch in data.attacks.size():
-			var allein: bool = str(attack.get("ziel", "")) == "freund" and not enemies.any(func(m: Fighter) -> bool: return m.is_alive() and m != e)
-			var verbraucht: bool = attack.get("einmal", false) and e.get_meta("einmal", {}).has(attack.name)
-			if not allein and not verbraucht:
-				break
-			e.step += 1
-			attack = data.attacks[e.step % data.attacks.size()]
+		var attack := faehigkeit_waehlen(e)
 		if attack.get("einmal", false):
 			var benutzt: Dictionary = e.get_meta("einmal", {})
 			benutzt[attack.name] = true
@@ -979,6 +982,22 @@ func _enemy_turn(e: Fighter) -> void:
 		if data.has("wipe_nach") and e.is_alive() and e.step >= int(data.wipe_nach):
 			wipe(data.get("wipe_text", "Zu spät!"))
 	e.intent = skills.enemy_intent(e)
+
+
+## Nächste Fähigkeit eines Monsters nach Steckbrief. Übersprungen werden: Heilen eines anderen Monsters, wenn keins
+## mehr da ist, Fähigkeiten, die nur einmal gehen, und solche, die nur bei Lava gehen (Magmaheilung).
+func faehigkeit_waehlen(e: Fighter) -> Dictionary:
+	var data: Dictionary = Sandbox.ENEMIES[e.klass]
+	var attack: Dictionary = data.attacks[e.step % data.attacks.size()]
+	for versuch in data.attacks.size():
+		var allein: bool = str(attack.get("ziel", "")) == "freund" and not enemies.any(func(m: Fighter) -> bool: return m.is_alive() and m != e)
+		var verbraucht: bool = attack.get("einmal", false) and e.get_meta("einmal", {}).has(attack.name)
+		var ohne_lava: bool = attack.get("nur_bei_lava", false) and (lava == null or lava.oben == "")
+		if not allein and not verbraucht and not ohne_lava:
+			break
+		e.step += 1
+		attack = data.attacks[e.step % data.attacks.size()]
+	return attack
 
 
 ## Ziele eines Monster-Angriffs (MONSTER.md): alle, vordere/hintere Reihe, das schwächste Ziel oder mehrere verschiedene.
@@ -1044,6 +1063,10 @@ func _monster_effekte(quelle: Fighter, ziel: Fighter, attack: Dictionary) -> voi
 		var staerke := float(fx.get("staerke", -1.0))
 		if fx.has("anteil"):
 			staerke = float(fx.anteil) * quelle.max_hp
+		# In der Lava-Runde härter (Schlackenpanzer)
+		if attack.has("lava_staerker") and lava != null and lava.oben != "":
+			staerke *= float(attack.lava_staerker)
+			add_log("Die Lava härtet den %s." % attack.name)
 		# Schutz von Monstern stapelt nicht: der neue ersetzt den alten (sonst zieht sich der Kampf endlos)
 		if str(fx.art) == "schutz":
 			ziel.shields.erase(quelle)
@@ -1415,8 +1438,30 @@ func apply_damage(target: Fighter, amount: int, source: Fighter = null, kind := 
 	if not target.is_alive():
 		add_log("[color=red]%s ist besiegt![/color]" % target.display_name)
 		skills.on_death(target)
+		if not target.is_ally() and Sandbox.ENEMIES.get(target.klass, {}).has("beim_tod") and not target.has_meta("geflohen"):
+			_beim_tod(target)
 	refresh()
 	return lost
+
+
+## Letzte Glut (Glutgeist): explodiert beim Tod und trifft die vordere Reihe der Helden.
+func _beim_tod(e: Fighter) -> void:
+	if e.has_meta("explodiert"):
+		return
+	e.set_meta("explodiert", true)
+	var tod: Dictionary = Sandbox.ENEMIES[e.klass].beim_tod
+	add_log("[color=#ff8a3d][b]%s: %s![/b][/color]" % [e.display_name, tod.name])
+	burst(e, Color("ff8a3d"), 200.0)
+	var ziele := allies().filter(func(h: Fighter) -> bool: return not h.back_row)
+	if ziele.is_empty():
+		ziele = allies()
+	for h: Fighter in ziele:
+		apply_damage(h, maxi(1, roundi(float(tod.base) * e.power)), e, "magic")
+
+
+## Lava-Takt anzeigen: reihe "vorne"/"hinten" ("" = keine), stufe "warnung" oder "oben".
+func zeige_lava(reihe: String, stufe: String) -> void:
+	_emit({type = "lava", reihe = reihe, stufe = stufe})
 
 
 ## Heilt ein Ziel. "source" bekommt die Heilung in der Auswertung gutgeschrieben.

@@ -327,7 +327,7 @@ static func aus_steckbrief(m: Dictionary, rollen: Dictionary, zuschlag: Dictiona
 	var zaehmen := {}
 	for fa: Dictionary in m.faehigkeiten:
 		var a := {name = fa.name, base = roundi(float(fa.schaden) * float(rolle.angriff) * staerke), kind = str(fa.get("art", "melee"))}
-		for feld: String in ["ziel", "treffer", "ziele", "ruf", "effekt", "bewegung", "einmal", "blenden", "rudel", "aufladen"]:
+		for feld: String in ["ziel", "treffer", "ziele", "ruf", "effekt", "bewegung", "einmal", "blenden", "rudel", "aufladen", "nur_bei_lava", "lava_staerker"]:
 			if fa.has(feld):
 				a[feld] = fa[feld]
 		match str(fa.get("ziel", "")):
@@ -346,6 +346,9 @@ static func aus_steckbrief(m: Dictionary, rollen: Dictionary, zuschlag: Dictiona
 		ergebnis.selten = m.selten
 	if m.has("flieht_nach"):
 		ergebnis.flieht_nach = int(m.flieht_nach)
+	# Beim Tod (Letzte Glut des Glutgeists): Schaden wie eine Fähigkeit
+	if m.has("beim_tod"):
+		ergebnis.beim_tod = {name = m.beim_tod.name, base = roundi(float(m.beim_tod.schaden) * float(rolle.angriff) * staerke)}
 	return ergebnis
 
 
@@ -379,8 +382,10 @@ const ENCOUNTERS := {
 			["glimmerkaefer", "glimmerkaefer", "leuchtmotte", "sporenwolf"], ["wurzelmutter", "knoten_vorne", "knoten_hinten"]]},
 	"pilzbosse": {name = "Pilzhöhle: nur Bosse", info = "Sporenkönigin, dann Wurzelmutter und Vorbote", dungeon = "pilzhoehle",
 		waves = [["sporenkoenigin", "sporenling", "sporenling"], ["wurzelmutter", "knoten_vorne", "knoten_hinten"]]},
+	"vulkanschmiede": {name = "Vulkanschmiede", info = "Monster der Vulkanschmiede mit Lava-Takt", dungeon = "vulkanschmiede",
+		waves = [["schlackenkriecher", "glutgeist", "aschefalter"], ["ambossknecht", "magmaschnecke", "glutgeist"]]},
 }
-const ENCOUNTER_ORDER: Array[String] = ["monster", "boss", "beides", "pilzhoehle", "pilzbosse"]
+const ENCOUNTER_ORDER: Array[String] = ["monster", "boss", "beides", "pilzhoehle", "pilzbosse", "vulkanschmiede"]
 
 ## Gegner-Leben je nach Teamgröße (1 bis 4 Klassen)
 const HP_SCALE: Array[float] = [0.5, 0.68, 0.85, 1.0]

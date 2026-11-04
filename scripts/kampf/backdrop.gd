@@ -3,7 +3,8 @@ extends Control
 ## Hintergrund des Kampfbildschirms: ein dunkles Gewölbe aus den 0x72-Kacheln
 ## mit Fackeln, Lava-Brunnen, Lichtflecken und schwebendem Staub (Octopath-Stimmung).
 ## Andere Stile: "wiese" (vor dem Stadttor von Kreuzweg, Tag), "wiese_nacht" und "marktplatz_nacht" (Sternenfall),
-## "wald" (Grünwacht: Weg und Waldboden), "pilzhoehle" (Höhle unter dem Urbaum mit Leuchtpilzen und Fackeln).
+## "wald" (Grünwacht: Weg und Waldboden), "pilzhoehle" (Höhle unter dem Urbaum mit Leuchtpilzen und Fackeln),
+## "vulkanschmiede" (Glutoase: alte Schmiede im Berg mit Lavafluss, Essen und Ketten).
 
 const TILE_PATH := "res://assets/0x72_dungeontileset_ii/%s.png"
 ## Kacheln sind 16 Pixel groß und werden 4-fach vergrößert.
@@ -30,7 +31,11 @@ const FIGHTER_LIGHT := {
 	"wiese_nacht": Color(0.74, 0.78, 0.98),
 	"marktplatz_nacht": Color(0.8, 0.8, 0.98),
 	"wald": Color(0.92, 0.98, 0.86),
+	"vulkanschmiede": Color(1.0, 0.82, 0.72),
 }
+## Vulkanschmiede: Essen an der Wand (x) und Ketten, die von der Decke hängen (x, Länge)
+const FORGE_ESSEN: Array[float] = [150.0, 640.0, 1130.0]
+const FORGE_CHAINS: Array[Vector2] = [Vector2(70, 120), Vector2(300, 90), Vector2(420, 140), Vector2(860, 110), Vector2(990, 150), Vector2(1220, 100)]
 
 var _tex := {}
 var _floor_pick: Array[String] = []
@@ -38,7 +43,7 @@ var _wall_pick: Array[String] = []
 var _time := 0.0
 var _lights: Node2D
 ## "gewoelbe", "wiese" oder "wiese_nacht" (vor dem Einhängen setzen)
-var style := "gewoelbe"  # oder "wiese", "wiese_nacht", "marktplatz_nacht", "wald", "pilzhoehle"
+var style := "gewoelbe"  # oder "wiese", "wiese_nacht", "marktplatz_nacht", "wald", "pilzhoehle", "vulkanschmiede"
 var _stars: Array[Vector2] = []
 
 
@@ -94,6 +99,9 @@ static func fighter_light(p_style: String) -> Color:
 
 
 func _draw() -> void:
+	if style == "vulkanschmiede":
+		_draw_forge()
+		return
 	if style == "pilzhoehle":
 		_draw_cave()
 		return
@@ -159,6 +167,9 @@ func _draw_torch(base: Vector2, seed_value: int) -> void:
 
 ## Lichtflecken (werden addiert und hellen die Szene auf).
 func _draw_lights() -> void:
+	if style == "vulkanschmiede":
+		_draw_forge_lights()
+		return
 	if style == "pilzhoehle":
 		_draw_cave_lights()
 		return
@@ -386,6 +397,67 @@ func _draw_cave_lights() -> void:
 	_lights.draw_texture_rect(glow, Rect2(Vector2(0, 170), Vector2(640, 410)), false, Color(0.6, 0.4, 1.0, 0.16))
 
 
+## Vulkanschmiede der Ketten: dunkle Felswand mit Essen, ein Lavafluss hinter den Kämpfern, Ketten von der Decke.
+func _draw_forge() -> void:
+	for i in 12:
+		var t := float(i) / 11.0
+		draw_rect(Rect2(0, i * 15.0, 1280, 16), Color("0c0706").lerp(Color("2e1a14"), t))
+	# Gemauerte Wand aus großen dunklen Steinen
+	for row in 3:
+		for i in 14:
+			var x := float(i) * 96.0 - (48.0 if row % 2 else 0.0)
+			draw_rect(Rect2(x + 2, 40 + row * 40.0, 92, 36), Color("2a1914") if (i + row) % 3 else Color("33201a"))
+	# Essen in der Wand: Steinofen mit glühender Öffnung
+	for x in FORGE_ESSEN:
+		draw_rect(Rect2(x - 56, 60, 112, 110), Color("3a2a24"))
+		draw_rect(Rect2(x - 22, 10, 44, 50), Color("2a1e1a"))
+		var glut := 0.8 + 0.2 * sin(_time * 3.0 + x)
+		draw_rect(Rect2(x - 34, 112, 68, 46), Color(1.0, 0.45, 0.12).lerp(Color(1.0, 0.8, 0.35), 0.3 * glut))
+		draw_rect(Rect2(x - 34, 104, 68, 8), Color("1a100c"))
+	# Lavafluss hinter den Kämpfern: fließende helle Streifen
+	draw_rect(Rect2(0, 170, 1280, 26), Color("c8381a"))
+	for i in 28:
+		var x := fmod(float(i) * 61.0 + _time * 40.0, 1340.0) - 30.0
+		draw_rect(Rect2(x, 176 + float(i % 3) * 6.0, 26 + float(i % 4) * 8.0, 4), Color(1.0, 0.75, 0.3, 0.9))
+	draw_rect(Rect2(0, 194, 1280, 6), Color("4a1e10"))
+	# Steinboden: Platten, weiter vorne heller, mit glühenden Ritzen
+	for row in 21:
+		var t := float(row) / 20.0
+		draw_rect(Rect2(0, 200 + row * 16.0, 1280, 17), Color("1e1412").lerp(Color("3e2c24"), t))
+	for i in _floor_pick.size():
+		var x := float((i * 97) % 1280)
+		var y := 210.0 + float((i * 53) % 300)
+		if i % 7 == 0:
+			draw_line(Vector2(x, y), Vector2(x + 30, y + 6), Color(1.0, 0.4, 0.1, 0.55 + 0.25 * sin(_time * 2.0 + i)), 2.0)
+		elif i % 4 == 0:
+			draw_rect(Rect2(x, y, 10, 6), Color("2a1c18"))
+	# Ketten hängen von der Decke
+	for c in FORGE_CHAINS:
+		var y := 0.0
+		var n := 0
+		while y < c.y:
+			var sway := sin(_time * 1.2 + c.x) * 2.0 * (y / c.y)
+			if n % 2 == 0:
+				draw_rect(Rect2(c.x - 5 + sway, y, 10, 14), Color("5a4a44"), false, 3.0)
+			else:
+				draw_rect(Rect2(c.x - 1.5 + sway, y + 1, 3, 12), Color("6a5a54"))
+			y += 12.0
+			n += 1
+
+
+## Licht in der Vulkanschmiede: rote Glut von unten (Lavafluss) und aus den Essen.
+func _draw_forge_lights() -> void:
+	var glow := Fx.glow_texture()
+	for x in FORGE_ESSEN:
+		var flicker := 0.85 + 0.15 * sin(_time * 7.0 + x) * sin(_time * 4.3 + x * 2.0)
+		var r := 170.0 * flicker
+		_lights.draw_texture_rect(glow, Rect2(Vector2(x, 135) - Vector2(r, r), Vector2(r, r) * 2.0), false, Color(1.0, 0.45, 0.15, 0.32 * flicker))
+	var pulse := 0.9 + 0.1 * sin(_time * 1.5)
+	_lights.draw_texture_rect(glow, Rect2(Vector2(-200, 60), Vector2(1680, 260) * Vector2(1.0, pulse)), false, Color(1.0, 0.3, 0.08, 0.3))
+	_lights.draw_texture_rect(glow, Rect2(Vector2(640, 170), Vector2(640, 410)), false, Color(1.0, 0.6, 0.35, 0.16))
+	_lights.draw_texture_rect(glow, Rect2(Vector2(0, 170), Vector2(640, 410)), false, Color(1.0, 0.5, 0.3, 0.14))
+
+
 ## Schwebender Staub im Licht (draußen: Pollen bei Tag, Glühwürmchen bei Nacht).
 func _add_dust() -> void:
 	var dust := CPUParticles2D.new()
@@ -404,7 +476,7 @@ func _add_dust() -> void:
 	dust.scale_amount_min = 2.0
 	dust.scale_amount_max = 4.0
 	var ramp := Gradient.new()
-	var tone := Color(0.8, 0.65, 1.0) if style == "pilzhoehle" else Color(1, 0.85, 0.6) if style == "gewoelbe" else (Color(0.8, 1.0, 0.5) if style in ["wiese_nacht", "wald"] else Color(1, 1, 0.85))
+	var tone := Color(0.8, 0.65, 1.0) if style == "pilzhoehle" else Color(1.0, 0.55, 0.2) if style == "vulkanschmiede" else Color(1, 0.85, 0.6) if style == "gewoelbe" else (Color(0.8, 1.0, 0.5) if style in ["wiese_nacht", "wald"] else Color(1, 1, 0.85))
 	ramp.set_color(0, Color(tone, 0))
 	ramp.add_point(0.3, Color(tone, 0.45))
 	ramp.add_point(0.7, Color(tone, 0.35))

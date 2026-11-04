@@ -9,6 +9,8 @@ Sternendüne; man erreicht sie durch das Osttor der Stadt.
 Glutoase (D24): die Terrassenstadt. Die Aschensteppe endet an ihrem Nordtor.
 Glutgrat (D30): Wildes Land der Glutoase (Stufe 15–20) über dem Bergpfad am Schmiedeviertel: erkaltete Lava, Lavarinnen,
 Felsgrate, heiße Quellen, Obsidian und oben der Kraterrand.
+Vulkanschmiede der Ketten (D32): Dungeon hinter Hadraks Schmiede (Stufe 15–20) mit drei Abschnitten: Schmiedehallen,
+Kettengänge (Brücken über dem Abgrund) und Ankerkammer.
 Aufruf: python3 tools/glutoase_karten.py [karte …]   (ohne Angabe alle)
 """
 import json
@@ -251,6 +253,7 @@ def glutoase_orte():
 		{"art": "tor", "feld": [3, 15], "dialog": "tor_duerrewald"},
 		{"art": "bergpfad", "feld": [42, 25], "meldung": "Du steigst den Bergpfad hinauf auf den Glutgrat.",
 			"aktionen": [{"reisen": "glutgrat", "feld": [GGB // 2, GGH - 3]}]},
+		# Vulkanschmiede der Ketten (D32): Das Gespräch am Eingang lässt hinein, sobald Kael besiegt ist
 		{"art": "schmiede_eingang", "feld": [22, 44], "dialog": "eingang_vulkanschmiede"},
 	]
 
@@ -436,7 +439,85 @@ def glutgrat():
 	k.speichern(boden)
 
 
+VB, VH = 46, 30
+## Abschnitte der Vulkanschmiede (x, y, Breite, Höhe): begehbarer Steinboden, dazwischen der Abgrund
+SCHMIEDEHALLEN = (2, 4, 14, 23)
+ANKERKAMMER = (31, 4, 14, 23)
+## Plattformen in den Kettengängen und die Kettenbrücken dazwischen (x, y, gespiegelt = quer)
+PLATTFORMEN = [(21, 8, 5, 5), (21, 18, 5, 6)]
+BRUECKEN = [(16, 10, False), (26, 10, False), (16, 21, False), (26, 21, False), (23, 13, True)]
+
+
+def vulkanschmiede_monster():
+	M = lambda feld, gegner, stufe: {"feld": feld, "gegner": gegner, "stufe": stufe}
+	return [
+		# Schmiedehallen
+		M([6, 20], ["schlackenkriecher", "glutgeist"], 15), M([12, 15], ["ambossknecht"], 16), M([6, 11], ["aschefalter", "glutgeist"], 16),
+		M([12, 7], ["magmaschnecke", "schlackenkriecher"], 17),
+		# Kettengänge
+		M([23, 10], ["glutgeist", "glutgeist", "aschefalter"], 18), M([23, 21], ["ambossknecht", "magmaschnecke"], 18),
+		# Ankerkammer
+		M([37, 10], ["schlackenkriecher", "aschefalter", "glutgeist"], 19), M([37, 21], ["ambossknecht", "magmaschnecke", "glutgeist"], 20),
+		# Selten: der Messingwächter, Hadraks Probe-Automat, in einer Ecke der Schmiedehallen
+		M([4, 5], ["messingwaechter"], 20),
+	]
+
+
+def vulkanschmiede():
+	"""Vulkanschmiede der Ketten (D32, design.md „Glutoase im Detail“, Sitzung 24)."""
+	r = random.Random(35)
+	g = [["X"] * VB for _ in range(VH)]
+	offen = set()
+	for x0, y0, b, h in [SCHMIEDEHALLEN, ANKERKAMMER] + PLATTFORMEN:
+		offen |= {(x0 + i, y0 + j) for i in range(b) for j in range(h)}
+	for x, y, quer in BRUECKEN:
+		offen |= {(x, y + i) for i in range(5)} if quer else {(x + i, y) for i in range(5)}
+	# Eingang: ein Gang von unten in die Schmiedehallen
+	ex = VB // 2 - 15
+	offen |= {(ex + i, y) for i in range(-1, 2) for y in range(SCHMIEDEHALLEN[1] + SCHMIEDEHALLEN[3], VH)}
+	for x, y in offen:
+		g[y][x] = "h"
+	karten = json.loads((gk.DATEN / "karten.json").read_text(encoding="utf-8"))
+	karten["vulkanschmiede"] = {
+		"name": "Vulkanschmiede der Ketten", "musik": "wald_nacht", "grund": "hoehle", "licht": "b07a64", "dungeon": "vulkanschmiede",
+		"kampf_hintergrund": "vulkanschmiede", "start": [ex, VH - 2],
+		"raster": ["".join(z) for z in g],
+		"ausgaenge": [{"bereich": [ex - 1, VH - 1, 3, 1], "karte": "glutoase", "feld": [22, 43]}],
+		"monster": vulkanschmiede_monster(), "baukasten": "karte_vulkanschmiede",
+	}
+	(gk.DATEN / "karten.json").write_text(json.dumps(karten, ensure_ascii=False, indent="\t") + "\n", encoding="utf-8")
+	gk.KARTEN.clear()
+	gk.KARTEN.update(karten)
+	k = gk.Karte("vulkanschmiede")
+	brueckenfelder = {(x, y + i) if quer else (x + i, y) for x, y, quer in BRUECKEN for i in range(5)}
+	# Boden: Schmiedestein; unter den Brücken und um alles herum der dunkle Abgrund
+	boden = ["".join("i" if (x, y) in offen and (x, y) not in brueckenfelder else " " for x in range(VB)) for y in range(VH)]
+	for x, y, quer in BRUECKEN:
+		k.setzen("vs_kettenbruecke", x, y, gespiegelt=quer)
+	# Schmiedehallen: verlassene Werkstätten mit Essen, Eisenwänden, Ambossen und einem Kühlbecken
+	for teil, x, y, name in [("vs_esse", 2, 13, "Verlassene Esse"), ("vs_esse", 9, 4, ""), ("vs_eisenwand", 8, 18, ""), ("vs_eisenwand", 2, 9, ""),
+			("vs_kuehlbecken", 13, 24, ""), ("go_amboss", 9, 12, ""), ("go_amboss", 4, 23, ""), ("go_kohlesaecke", 14, 11, ""),
+			("go_kohlesaecke", 2, 17, ""), ("go_werkzeugwand", 6, 4, ""), ("go_fackel", 15, 4, ""), ("go_fackel", 2, 26, ""),
+			("go_kettenamboss", 9, 22, "")]:
+		k.setzen(teil, x, y, name, muss=False)
+	# Kettengänge: Winden auf den Plattformen
+	for x, y in [(21, 8), (24, 23 - 1)]:
+		k.setzen("vs_kettenwinde", x, y, muss=False)
+	# Ankerkammer: drei Anker an den Wänden, in der Mitte frei für den Kettenschmied, am Rand ein Kühlbecken
+	for x, y, name in [(32, 4, "Anker"), (43, 4, ""), (43, 24, "")]:
+		k.setzen("vs_anker", x, y, name, muss=False)
+	for teil, x, y in [("vs_kuehlbecken", 32, 24), ("go_fackel", 38, 4), ("go_fackel", 44, 14), ("go_kohlesaecke", 34, 15),
+			("go_lavarinne", 40, 4)]:
+		k.setzen(teil, x, y, muss=False)
+	for y in range(VH):
+		for x in range(VB):
+			if (x, y) in offen and (x, y) not in brueckenfelder and r.random() < 0.025:
+				k.setzen(r.choice(["go_obsidian", "go_erkaltete_lava", "go_kohlesaecke"]), x, y, muss=False)
+	k.erreichbar()
+	k.speichern(boden)
+
+
 if __name__ == "__main__":
-	alle = {"aschensteppe": aschensteppe, "palmenrast": palmenrast, "glutoase": glutoase, "glutgrat": glutgrat}
+	alle = {"aschensteppe": aschensteppe, "palmenrast": palmenrast, "glutoase": glutoase, "glutgrat": glutgrat, "vulkanschmiede": vulkanschmiede}
 	for name in sys.argv[1:] or list(alle):
 		alle[name]()

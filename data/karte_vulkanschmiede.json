@@ -1,0 +1,396 @@
+{
+	"boden": [
+		"                                              ",
+		"                                              ",
+		"                                              ",
+		"                                              ",
+		"  iiiiiiiiiiiiii               iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii               iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii               iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii               iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii     iiiii     iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii     iiiii     iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii     iiiii     iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii     iiiii     iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii     iiiii     iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii               iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii               iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii               iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii               iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii               iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii     iiiii     iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii     iiiii     iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii     iiiii     iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii     iiiii     iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii     iiiii     iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii     iiiii     iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii               iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii               iiiiiiiiiiiiii ",
+		"  iiiiiiiiiiiiii               iiiiiiiiiiiiii ",
+		"       iii                                    ",
+		"       iii                                    ",
+		"       iii                                    "
+	],
+	"objekte": [
+		{
+			"teil": "vs_kettenbruecke",
+			"feld": [
+				16,
+				10
+			]
+		},
+		{
+			"teil": "vs_kettenbruecke",
+			"feld": [
+				26,
+				10
+			]
+		},
+		{
+			"teil": "vs_kettenbruecke",
+			"feld": [
+				16,
+				21
+			]
+		},
+		{
+			"teil": "vs_kettenbruecke",
+			"feld": [
+				26,
+				21
+			]
+		},
+		{
+			"teil": "vs_kettenbruecke",
+			"feld": [
+				23,
+				13
+			],
+			"gespiegelt": true
+		},
+		{
+			"teil": "vs_esse",
+			"feld": [
+				2,
+				13
+			],
+			"name": "Verlassene Esse"
+		},
+		{
+			"teil": "vs_esse",
+			"feld": [
+				9,
+				4
+			]
+		},
+		{
+			"teil": "vs_eisenwand",
+			"feld": [
+				8,
+				18
+			]
+		},
+		{
+			"teil": "vs_eisenwand",
+			"feld": [
+				2,
+				9
+			]
+		},
+		{
+			"teil": "vs_kuehlbecken",
+			"feld": [
+				13,
+				24
+			]
+		},
+		{
+			"teil": "go_amboss",
+			"feld": [
+				9,
+				12
+			]
+		},
+		{
+			"teil": "go_amboss",
+			"feld": [
+				4,
+				23
+			]
+		},
+		{
+			"teil": "go_kohlesaecke",
+			"feld": [
+				14,
+				11
+			]
+		},
+		{
+			"teil": "go_kohlesaecke",
+			"feld": [
+				2,
+				17
+			]
+		},
+		{
+			"teil": "go_werkzeugwand",
+			"feld": [
+				6,
+				4
+			]
+		},
+		{
+			"teil": "go_fackel",
+			"feld": [
+				15,
+				4
+			]
+		},
+		{
+			"teil": "go_fackel",
+			"feld": [
+				2,
+				26
+			]
+		},
+		{
+			"teil": "go_kettenamboss",
+			"feld": [
+				9,
+				22
+			]
+		},
+		{
+			"teil": "vs_kettenwinde",
+			"feld": [
+				21,
+				8
+			]
+		},
+		{
+			"teil": "vs_kettenwinde",
+			"feld": [
+				24,
+				22
+			]
+		},
+		{
+			"teil": "vs_anker",
+			"feld": [
+				32,
+				4
+			],
+			"name": "Anker"
+		},
+		{
+			"teil": "vs_anker",
+			"feld": [
+				43,
+				4
+			]
+		},
+		{
+			"teil": "vs_anker",
+			"feld": [
+				43,
+				24
+			]
+		},
+		{
+			"teil": "vs_kuehlbecken",
+			"feld": [
+				32,
+				24
+			]
+		},
+		{
+			"teil": "go_fackel",
+			"feld": [
+				38,
+				4
+			]
+		},
+		{
+			"teil": "go_fackel",
+			"feld": [
+				44,
+				14
+			]
+		},
+		{
+			"teil": "go_kohlesaecke",
+			"feld": [
+				34,
+				15
+			]
+		},
+		{
+			"teil": "go_lavarinne",
+			"feld": [
+				40,
+				4
+			]
+		},
+		{
+			"teil": "go_kohlesaecke",
+			"feld": [
+				34,
+				4
+			]
+		},
+		{
+			"teil": "go_kohlesaecke",
+			"feld": [
+				40,
+				5
+			]
+		},
+		{
+			"teil": "go_kohlesaecke",
+			"feld": [
+				6,
+				6
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				11,
+				9
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				38,
+				11
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				39,
+				13
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				37,
+				14
+			]
+		},
+		{
+			"teil": "go_kohlesaecke",
+			"feld": [
+				15,
+				16
+			]
+		},
+		{
+			"teil": "go_kohlesaecke",
+			"feld": [
+				43,
+				16
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				4,
+				17
+			]
+		},
+		{
+			"teil": "go_kohlesaecke",
+			"feld": [
+				7,
+				17
+			]
+		},
+		{
+			"teil": "go_kohlesaecke",
+			"feld": [
+				8,
+				17
+			]
+		},
+		{
+			"teil": "go_kohlesaecke",
+			"feld": [
+				23,
+				18
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				37,
+				18
+			]
+		},
+		{
+			"teil": "go_kohlesaecke",
+			"feld": [
+				2,
+				19
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				42,
+				19
+			]
+		},
+		{
+			"teil": "go_kohlesaecke",
+			"feld": [
+				41,
+				20
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				4,
+				21
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				21,
+				21
+			]
+		},
+		{
+			"teil": "go_kohlesaecke",
+			"feld": [
+				2,
+				22
+			]
+		},
+		{
+			"teil": "go_kohlesaecke",
+			"feld": [
+				8,
+				22
+			]
+		},
+		{
+			"teil": "go_kohlesaecke",
+			"feld": [
+				41,
+				22
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				3,
+				24
+			]
+		}
+	]
+}

@@ -708,6 +708,78 @@
 			"bonus": {
 				"angriff": 3
 			}
+		},
+		"schlackenkriecher": {
+			"name": "Schlackenkriecher",
+			"werte": [
+				5,
+				7,
+				6,
+				5
+			],
+			"bonus": {
+				"leben": 6
+			}
+		},
+		"glutgeist": {
+			"name": "Glutgeist",
+			"werte": [
+				7,
+				5,
+				6,
+				5
+			],
+			"bonus": {
+				"angriff": 2
+			}
+		},
+		"ambossknecht": {
+			"name": "Ambossknecht",
+			"werte": [
+				6,
+				7,
+				7,
+				5
+			],
+			"bonus": {
+				"leben": 8
+			}
+		},
+		"aschefalter": {
+			"name": "Aschefalter",
+			"werte": [
+				5,
+				6,
+				5,
+				7
+			],
+			"bonus": {
+				"tempo": 2
+			}
+		},
+		"magmaschnecke": {
+			"name": "Magmaschnecke",
+			"werte": [
+				5,
+				6,
+				7,
+				5
+			],
+			"bonus": {
+				"mana": 4
+			}
+		},
+		"messingwaechter": {
+			"name": "Messingwächter",
+			"werte": [
+				8,
+				8,
+				7,
+				7
+			],
+			"bonus": {
+				"leben": 10
+			}
 		}
 	},
 	"startkarten": [
@@ -831,7 +903,13 @@
 				"geysirkrabbe",
 				"glutfledermaus",
 				"obsidiangolem",
-				"gewitterwyvern"
+				"gewitterwyvern",
+				"schlackenkriecher",
+				"glutgeist",
+				"ambossknecht",
+				"aschefalter",
+				"magmaschnecke",
+				"messingwaechter"
 			]
 		}
 	],

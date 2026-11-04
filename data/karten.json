@@ -2834,5 +2834,167 @@
 			}
 		],
 		"baukasten": "karte_glutgrat"
+	},
+	"vulkanschmiede": {
+		"name": "Vulkanschmiede der Ketten",
+		"musik": "wald_nacht",
+		"grund": "hoehle",
+		"licht": "b07a64",
+		"dungeon": "vulkanschmiede",
+		"kampf_hintergrund": "vulkanschmiede",
+		"start": [
+			8,
+			28
+		],
+		"raster": [
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXhhhhhhhhhhhhhhXXXXXXXXXXXXXXXhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhXXXXXXXXXXXXXXXhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhXXXXXXXXXXXXXXXhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhXXXXXXXXXXXXXXXhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhXXXXXhhhhhXXXXXhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhXXXXXhhhhhXXXXXhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhXXXXXhhhhhXXXXXhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhXXXXXhhhhhXXXXXhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhXXXXXXXhXXXXXXXhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhXXXXXXXhXXXXXXXhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhXXXXXXXhXXXXXXXhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhXXXXXXXhXXXXXXXhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhXXXXXXXhXXXXXXXhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhXXXXXhhhhhXXXXXhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhXXXXXhhhhhXXXXXhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhXXXXXhhhhhXXXXXhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhXXXXXhhhhhXXXXXhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhXXXXXhhhhhXXXXXhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhXXXXXXXXXXXXXXXhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhXXXXXXXXXXXXXXXhhhhhhhhhhhhhhX",
+			"XXhhhhhhhhhhhhhhXXXXXXXXXXXXXXXhhhhhhhhhhhhhhX",
+			"XXXXXXXhhhXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXXXXXXhhhXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"XXXXXXXhhhXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+		],
+		"ausgaenge": [
+			{
+				"bereich": [
+					7,
+					29,
+					3,
+					1
+				],
+				"karte": "glutoase",
+				"feld": [
+					22,
+					43
+				]
+			}
+		],
+		"monster": [
+			{
+				"feld": [
+					6,
+					20
+				],
+				"gegner": [
+					"schlackenkriecher",
+					"glutgeist"
+				],
+				"stufe": 15
+			},
+			{
+				"feld": [
+					12,
+					15
+				],
+				"gegner": [
+					"ambossknecht"
+				],
+				"stufe": 16
+			},
+			{
+				"feld": [
+					6,
+					11
+				],
+				"gegner": [
+					"aschefalter",
+					"glutgeist"
+				],
+				"stufe": 16
+			},
+			{
+				"feld": [
+					12,
+					7
+				],
+				"gegner": [
+					"magmaschnecke",
+					"schlackenkriecher"
+				],
+				"stufe": 17
+			},
+			{
+				"feld": [
+					23,
+					10
+				],
+				"gegner": [
+					"glutgeist",
+					"glutgeist",
+					"aschefalter"
+				],
+				"stufe": 18
+			},
+			{
+				"feld": [
+					23,
+					21
+				],
+				"gegner": [
+					"ambossknecht",
+					"magmaschnecke"
+				],
+				"stufe": 18
+			},
+			{
+				"feld": [
+					37,
+					10
+				],
+				"gegner": [
+					"schlackenkriecher",
+					"aschefalter",
+					"glutgeist"
+				],
+				"stufe": 19
+			},
+			{
+				"feld": [
+					37,
+					21
+				],
+				"gegner": [
+					"ambossknecht",
+					"magmaschnecke",
+					"glutgeist"
+				],
+				"stufe": 20
+			},
+			{
+				"feld": [
+					4,
+					5
+				],
+				"gegner": [
+					"messingwaechter"
+				],
+				"stufe": 20
+			}
+		],
+		"baukasten": "karte_vulkanschmiede"
 	}
 }

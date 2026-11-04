@@ -267,6 +267,10 @@ Elemente: Erde, Feuer, Wind, selten Blitz.
 | Magmaschnecke **D** | Feuer, Helfer | Schnecken (laut Bildauftrag) | Magmaheilung (heilt andere Monster, solange die Lava oben ist); Lavaspur (vordere Reihe brennt zwei Runden); Ins Haus (viel Verteidigung, setzt eine Runde aus) | Magmaschleim |
 | Messingwächter **S D** | Blitz, Tank, 20 | Automaten (laut Bildauftrag), Probe-Automat von Hadrak | Funkenschlag (kann lähmen); Überladung (trifft alle, danach eine Runde Pause); Schutzschild (fängt Treffer für ein anderes Monster ab); Ersatzteile (heilt sich, einmal pro Kampf) | Messingzahnrad (seltenes Material), besondere Karte |
 
+Gebaut 04.11. (D32) in `data/monster.json`. Eigene Felder für den Lava-Takt: `lava_staerker` (Schutz in der Lava-Runde
+so viel stärker), `nur_bei_lava` (Fähigkeit nur, solange die Lava oben ist), `beim_tod` (Letzte Glut: trifft beim Tod
+die vordere Reihe der Helden). Ambossstand und Dampf ablassen gehen nur einmal pro Kampf (sonst endlose Kämpfe).
+
 ### Bosse der Demo (eigene Blätter, Boss-Größe, nicht zähmbar)
 
 Sternenfresser (Festnacht in Kreuzweg), Sporenkönigin, Wurzelmutter und Vorbote (Pilzhöhle, wie gebaut),

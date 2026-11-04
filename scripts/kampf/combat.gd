@@ -126,6 +126,10 @@ var _flash_rect: ColorRect
 var _dark_rect: ColorRect
 ## Wie dunkel es gerade ist (0 bis MAX_DARK_ALPHA, wird weich angeglichen)
 var _darkness := 0.0
+## Lava-Takt (Vulkanschmiede): Glühen unter der vorderen und der hinteren Reihe der Helden
+var _lava_glow := {}
+var _lava_stufe := {}
+var _lava_time := 0.0
 ## Entzündete Laternen auf dem Feld (Pilzhöhle)
 var _lanterns: Array[Node2D] = []
 var _light_time := 0.0
@@ -323,6 +327,7 @@ func _process(delta: float) -> void:
 		_ring_layer.queue_redraw()
 	_update_darkness(delta)
 	_update_shake(delta)
+	_update_lava(delta)
 
 
 # --- Ereignisse abspielen -----------------------------------------------------
@@ -404,6 +409,8 @@ func _play_event(event: Dictionary) -> void:
 			_banner(event.text)
 		"row":
 			await move_to_row(event.f)
+		"lava":
+			_zeige_lava(str(event.reihe), str(event.stufe))
 		"darkness":
 			var target := clampf(event.amount, 0.0, MAX_DARK_ALPHA)
 			create_tween().tween_property(self, "_darkness", target, 0.5)
@@ -1139,6 +1146,30 @@ func burst(f: Fighter, color: Color, radius := 160.0) -> void:
 	Fx.spawn(_field, Fx.Kind.RING, v.center(), color.lightened(0.3), radius * 1.4, 0.6)
 
 
+## Lava-Takt: Warnung (pulsierendes Glühen) oder Lava oben (helles Glühen) unter einer Reihe; reihe "" = alles aus.
+func _zeige_lava(reihe: String, stufe: String) -> void:
+	for r: String in _lava_glow:
+		if reihe == "" or r == reihe:
+			_lava_stufe[r] = stufe if r == reihe else ""
+	if stufe == "oben":
+		Geraeusche.play("kritisch")
+
+
+func _update_lava(delta: float) -> void:
+	if _lava_glow.is_empty():
+		return
+	_lava_time += delta
+	for r: String in _lava_glow:
+		var glut: TextureRect = _lava_glow[r]
+		var ziel := 0.0
+		match str(_lava_stufe[r]):
+			"warnung":
+				ziel = 0.35 + 0.25 * sin(_lava_time * 5.0)
+			"oben":
+				ziel = 0.95 + 0.05 * sin(_lava_time * 9.0)
+		glut.modulate.a = move_toward(glut.modulate.a, ziel, delta * 2.5)
+
+
 ## Dunkelheit und Lichtkreise: Je dunkler es ist, desto kleiner werden die Kreise um Laternen und Splitterlicht.
 func _update_darkness(delta: float) -> void:
 	_dark_rect.visible = _darkness > 0.005
@@ -1425,6 +1456,19 @@ func _build_ui() -> void:
 	_field.size = SCREEN
 	_field.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_field)
+	# Lava-Glühen unter den Reihen der Helden (nur sichtbar, wenn der Lava-Takt es zeigt)
+	for reihe: String in ["vorne", "hinten"]:
+		var glut := TextureRect.new()
+		glut.texture = Fx.glow_texture()
+		glut.stretch_mode = TextureRect.STRETCH_SCALE
+		glut.size = Vector2(300, 380)
+		glut.position = Vector2((FRONT_X if reihe == "vorne" else BACK_X) - 150.0, HERO_FEET_Y[0] - 110.0)
+		glut.material = Fx.add_material()
+		glut.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		glut.modulate = Color(1.0, 0.35, 0.08, 0.0)
+		_field.add_child(glut)
+		_lava_glow[reihe] = glut
+		_lava_stufe[reihe] = ""
 
 	# Dunkelheit (Vorbote in der Pilzhöhle)
 	# Dunkelheit (Vorbote in der Pilzhöhle): nur um Laternen und das Splitterlicht bleibt es hell

@@ -2088,5 +2088,278 @@
 				"aufladen": true
 			}
 		]
+	},
+	"schlackenkriecher": {
+		"name": "Schlackenkriecher",
+		"element": "Erde",
+		"rolle": "verteidiger",
+		"stufe": [
+			15,
+			20
+		],
+		"dungeon": true,
+		"familie": "schnecken",
+		"beute": "schlackenbrocken",
+		"faehigkeiten": [
+			{
+				"name": "Schlackenpanzer",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.15
+				},
+				"lava_staerker": 2.0,
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Kriechbiss",
+				"schaden": 0.9,
+				"art": "melee",
+				"effekt": {
+					"art": "zugleiste",
+					"staerke": 0.3
+				}
+			},
+			{
+				"name": "Schlackenwurf",
+				"schaden": 0.8,
+				"art": "ranged",
+				"ziel": "hinten"
+			}
+		]
+	},
+	"glutgeist": {
+		"name": "Glutgeist",
+		"element": "Feuer",
+		"rolle": "angreifer",
+		"stufe": [
+			15,
+			20
+		],
+		"dungeon": true,
+		"familie": "geister",
+		"beute": "glutkern",
+		"beim_tod": {
+			"name": "Letzte Glut",
+			"schaden": 0.8
+		},
+		"faehigkeiten": [
+			{
+				"name": "Flammenstoß",
+				"schaden": 0.8,
+				"art": "magic",
+				"effekt": {
+					"art": "brennen",
+					"zuege": 3
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Aufglühen",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"aufladen": true
+			},
+			{
+				"name": "Glutschlag",
+				"schaden": 1.0,
+				"art": "melee"
+			}
+		]
+	},
+	"ambossknecht": {
+		"name": "Ambossknecht",
+		"element": "Erde",
+		"rolle": "tank",
+		"stufe": [
+			15,
+			20
+		],
+		"dungeon": true,
+		"familie": "automaten",
+		"beute": "alte_zahnraeder",
+		"faehigkeiten": [
+			{
+				"name": "Hammerschlag",
+				"schaden": 1.6,
+				"art": "melee",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Ambossstand",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "freund",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.25
+				},
+				"einmal": true
+			},
+			{
+				"name": "Dampf ablassen",
+				"schaden": 0.4,
+				"art": "magic",
+				"ziel": "vorne",
+				"effekt": {
+					"art": "verfehlen",
+					"zuege": 1
+				},
+				"einmal": true
+			}
+		]
+	},
+	"aschefalter": {
+		"name": "Aschefalter",
+		"element": "Wind",
+		"rolle": "helfer",
+		"stufe": [
+			15,
+			20
+		],
+		"dungeon": true,
+		"familie": "falter",
+		"beute": "ascheschuppen",
+		"faehigkeiten": [
+			{
+				"name": "Glutstaub",
+				"schaden": 0.5,
+				"art": "magic",
+				"effekt": {
+					"art": "brennen",
+					"zuege": 5
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Aschewirbel",
+				"schaden": 0.3,
+				"art": "magic",
+				"ziel": "alle",
+				"effekt": {
+					"art": "verfehlen",
+					"zuege": 1
+				},
+				"einmal": true
+			},
+			{
+				"name": "Aufwind",
+				"schaden": 0,
+				"art": "magic",
+				"ziel": "freund",
+				"effekt": {
+					"art": "zugleiste",
+					"staerke": -0.5
+				}
+			}
+		]
+	},
+	"magmaschnecke": {
+		"name": "Magmaschnecke",
+		"element": "Feuer",
+		"rolle": "helfer",
+		"stufe": [
+			15,
+			20
+		],
+		"dungeon": true,
+		"familie": "schnecken",
+		"beute": "magmaschleim",
+		"faehigkeiten": [
+			{
+				"name": "Magmaheilung",
+				"schaden": 0,
+				"art": "magic",
+				"ziel": "freund",
+				"effekt": {
+					"art": "heilen",
+					"anteil": 0.1
+				},
+				"nur_bei_lava": true,
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Lavaspur",
+				"schaden": 0.4,
+				"art": "magic",
+				"ziel": "vorne",
+				"effekt": {
+					"art": "brennen",
+					"zuege": 2
+				}
+			},
+			{
+				"name": "Ins Haus",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.5
+				},
+				"einmal": true
+			}
+		]
+	},
+	"messingwaechter": {
+		"name": "Messingwächter",
+		"element": "Blitz",
+		"rolle": "tank",
+		"stufe": [
+			20,
+			20
+		],
+		"dungeon": true,
+		"selten": "brocken",
+		"familie": "automaten",
+		"beute": "messingzahnrad",
+		"faehigkeiten": [
+			{
+				"name": "Funkenschlag",
+				"schaden": 1.0,
+				"art": "melee",
+				"effekt": {
+					"art": "laehmen",
+					"zuege": 1
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Überladung",
+				"schaden": 0.7,
+				"art": "magic",
+				"ziel": "alle"
+			},
+			{
+				"name": "Abkühlen",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst"
+			},
+			{
+				"name": "Schutzschild",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "freund",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.2
+				}
+			},
+			{
+				"name": "Ersatzteile",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "heilen",
+					"anteil": 0.25
+				},
+				"einmal": true
+			}
+		]
 	}
 }

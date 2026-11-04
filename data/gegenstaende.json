@@ -97,5 +97,11 @@
 	"quellstein": {"bild": {"form": "stein", "farbe": "8ac8d0"}, "name": "Quellstein", "beschreibung": "Beute von der Geysirkrabbe. Immer feucht.", "preis": 4, "material": true},
 	"glutfluegel": {"bild": {"form": "feder", "farbe": "ff7a3d"}, "name": "Glutflügel", "beschreibung": "Beute von der Glutfledermaus (nachts). Glimmt an den Rändern.", "preis": 5, "material": true},
 	"obsidian": {"bild": {"form": "splitter", "farbe": "2a2a3a"}, "name": "Obsidian", "beschreibung": "Beute vom Obsidiangolem (nachts). Schwarzes Glas, scharf wie eine Klinge.", "preis": 5, "material": true},
-	"wyvernschuppe": {"bild": {"form": "splitter", "farbe": "ffe14d"}, "name": "Wyvernschuppe", "beschreibung": "Seltene Beute vom Gewitterwyvern. Knistert vor Blitzen.", "preis": 15, "material": true}
+	"wyvernschuppe": {"bild": {"form": "splitter", "farbe": "ffe14d"}, "name": "Wyvernschuppe", "beschreibung": "Seltene Beute vom Gewitterwyvern. Knistert vor Blitzen.", "preis": 15, "material": true},
+	"schlackenbrocken": {"bild": {"form": "stein", "farbe": "5a4a40"}, "name": "Schlackenbrocken", "beschreibung": "Beute vom Schlackenkriecher. Hart wie alter Stahl.", "preis": 5, "material": true},
+	"glutkern": {"bild": {"form": "splitter", "farbe": "ff8a3a"}, "name": "Glutkern", "beschreibung": "Beute vom Glutgeist. Glüht in der Hand weiter.", "preis": 5, "material": true},
+	"alte_zahnraeder": {"bild": {"form": "stein", "farbe": "9a8a6a"}, "name": "Alte Zahnräder", "beschreibung": "Beute vom Ambossknecht. Hadraks Zeichen ist noch eingeritzt.", "preis": 5, "material": true},
+	"ascheschuppen": {"bild": {"form": "feder", "farbe": "8a8a8a"}, "name": "Ascheschuppen", "beschreibung": "Beute vom Aschefalter. Zerfällt fast beim Anfassen.", "preis": 5, "material": true},
+	"magmaschleim": {"bild": {"form": "kraut", "farbe": "e05a2a"}, "name": "Magmaschleim", "beschreibung": "Beute von der Magmaschnecke. Brodelt leise.", "preis": 5, "material": true},
+	"messingzahnrad": {"bild": {"form": "stein", "farbe": "e0b040"}, "name": "Messingzahnrad", "beschreibung": "Seltene Beute vom Messingwächter, Hadraks Probe-Automat. Glänzt wie neu.", "preis": 20, "material": true}
 }
