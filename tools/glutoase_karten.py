@@ -74,6 +74,9 @@ def aschensteppe():
 			{"bereich": [11, H - 1, 7, 1], "karte": "glutoase", "feld": [23, 1]}],
 		"kampf_hintergrund": "wiese", "sicher": RASTPLATZ,
 		"orte": [{"art": "wegelaterne", "feld": [11, 28], "dialog": "wegelaterne_aschensteppe", "zeichen": "laterne"}],
+		# Rastplatz-Händler (D27, NPC.md „Überall gleich“): an jedem Rastplatz dieselbe Figur
+		"npcs": {"rastplatz_haendler": {"name": "Rastplatz-Händler", "feld": [19, 29], "aussehen": "grund_haendler+v_m2#hut=filzhut",
+			"dialog": "rastplatz_haendler", "zeichen": "muenze"}},
 		"monster": monster(), "baukasten": "karte_aschensteppe",
 	}
 	(gk.DATEN / "karten.json").write_text(json.dumps(karten, ensure_ascii=False, indent="\t") + "\n", encoding="utf-8")
@@ -283,6 +286,29 @@ def glutoase():
 			"hadrak": {"name": "Hadrak Glutherz", "feld": [26, 43], "nachts": [31, 7], "aussehen": "hadrak", "dialog": "hadrak"},
 			"brakkus": {"name": "Essenmeister Brakkus", "feld": [32, 26], "aussehen": "brakkus", "dialog": "brakkus"},
 			"samira": {"name": "Tanzmeisterin Samira", "feld": [32, 11], "aussehen": "samira", "dialog": "samira"},
+			# Figuren nach Steckbrief (D27, NPC.md)
+			"nadia": {"name": "Brunnenhüterin Nadia", "feld": [25, 12], "aussehen": "grund_frau+nadia#zubehoer=wasserkrug", "dialog": "nadia"},
+			"zaid": {"name": "Karawanenführer Zaid", "feld": [6, 7], "aussehen": "grund_haendler+zaid", "dialog": "zaid"},
+			"bank_glutoase": {"name": "Bankhüter Rashid", "feld": [38, 6], "aussehen": "grund_alter_mensch+rashid#hut=rashid_kopftuch,zubehoer=bankschluessel",
+				"dialog": "rashid", "zeichen": "truhe"},
+			"tarek": {"name": "Händler Tarek", "feld": [7, 16], "aussehen": "grund_haendler+tarek#zubehoer=schaerpe&guertelklinge", "dialog": "tarek",
+				"zeichen": "muenze"},
+			"layla": {"name": "Wirtin Layla", "feld": [29, 6], "aussehen": "grund_frau+layla#zubehoer=schuerze_layla&tablett", "dialog": "layla"},
+			"mira_glutoase": {"name": "Mira", "feld": [40, 13], "aussehen": "mira", "dialog": "mira_glutoase", "liegt": True},
+			# Volk: Schmiede, Tänzer (nachts), Basar- und Karawanenleute, Aufzugwärter, Gäste (vor allem nachts)
+			"schmied_1": {"name": "Schmied", "feld": [8, 26], "aussehen": "grund_handwerker+v_m2#zubehoer=schuerze", "dialog": "volk_go_schmied_1"},
+			"schmied_2": {"name": "Schmied", "feld": [12, 26], "aussehen": "grund_handwerker+v_m3#zubehoer=schuerze", "dialog": "volk_go_schmied_2"},
+			"schmied_3": {"name": "Schmiedin", "feld": [27, 26], "aussehen": "grund_frau+v_w2#zubehoer=schuerze", "dialog": "volk_go_schmied_3"},
+			"taenzer_1": {"name": "Tänzer", "feld": [30, 9], "aussehen": "klingentaenzer_m+m3", "dialog": "volk_go_taenzer", "wenn": {"nacht": True}},
+			"taenzer_2": {"name": "Tänzerin", "feld": [34, 13], "aussehen": "klingentaenzer_w+w3", "dialog": "volk_go_taenzer", "wenn": {"nacht": True}},
+			"basar_1": {"name": "Basarhändlerin", "feld": [8, 11], "aussehen": "grund_haendler+v_w3", "dialog": "volk_go_basar_1", "wenn": {"nacht": False}},
+			"basar_2": {"name": "Basarhändler", "feld": [12, 11], "aussehen": "grund_haendler+v_m1", "dialog": "volk_go_basar_2", "wenn": {"nacht": False}},
+			"karawane_1": {"name": "Karawanenmann", "feld": [10, 4], "aussehen": "grund_mann+v_m3", "dialog": "volk_go_karawane_1"},
+			"karawane_2": {"name": "Karawanenfrau", "feld": [3, 7], "aussehen": "grund_frau+v_w1", "dialog": "volk_go_karawane_2"},
+			"aufzugwaerter": {"name": "Aufzugwärter", "feld": [39, 17], "aussehen": "grund_handwerker+a_m2", "dialog": "volk_go_aufzug"},
+			"gast_go_1": {"name": "Gast", "feld": [33, 6], "aussehen": "grund_mann+v_m1", "dialog": "volk_go_gast_1"},
+			"gast_go_2": {"name": "Gast", "feld": [35, 6], "aussehen": "grund_frau+v_w3", "dialog": "volk_go_gast_2", "wenn": {"nacht": True}},
+			"gast_go_3": {"name": "Gast", "feld": [28, 9], "aussehen": "grund_handwerker+v_m2", "dialog": "volk_go_gast_3", "wenn": {"nacht": True}},
 		},
 	}
 	(gk.DATEN / "karten.json").write_text(json.dumps(karten, ensure_ascii=False, indent="\t") + "\n", encoding="utf-8")

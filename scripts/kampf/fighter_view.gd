@@ -392,7 +392,8 @@ static func einzelbild(sprite: String, anim: String, frame: int) -> Texture2D:
 ## Fein gezeichnete Bilder (z. B. Vega aus Marcos Bildblättern) sind dreimal so hoch aufgelöst wie die Pixel-Bilder.
 ## Sie werden um diesen Faktor kleiner und weich dargestellt, damit sie gleich groß, aber sauber aussehen.
 static func fein_faktor(texture: Texture2D) -> float:
-	return 3.0 if texture != null and texture.get_height() > 80 else 1.0
+	# Auch breite, flache Bilder sind fein gezeichnet (z. B. Mira liegend), die Pixel-Bilder sind höchstens 32 breit
+	return 3.0 if texture != null and (texture.get_height() > 80 or texture.get_width() > 100) else 1.0
 
 
 ## Passende Bildglättung: Pixel-Bilder scharf, fein gezeichnete Bilder weich.

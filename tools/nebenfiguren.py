@@ -48,6 +48,12 @@ FIGUREN = {
 	"tamm": ("grund_alter_mensch", "Bankhüter Tamm", "m", ["ruhig", "laechelnd"]),
 	# Kobalt kämpft hinter seinem Monster: Zähmer-Körper, Kopf von vorne gilt auch von der Seite
 	"kobalt": ("zaehmer_m", "Kobalt", "m", ["laechelnd", "wuetend", "ueberrascht"]),
+	# Glutoase (D27)
+	"nadia": ("grund_frau", "Brunnenhüterin Nadia", "w", ["ruhig", "traurig", "ueberrascht"]),
+	"zaid": ("grund_haendler", "Karawanenführer Zaid", "m", ["laechelnd", "ueberrascht"]),
+	"rashid": ("grund_alter_mensch", "Bankhüter Rashid", "m", ["ruhig", "laechelnd"]),
+	"tarek": ("grund_haendler", "Händler Tarek", "m", ["laechelnd", "ueberrascht"]),
+	"layla": ("grund_frau", "Wirtin Layla", "w", ["laechelnd", "wuetend"]),
 }
 ## Der Maßstab für alle Köpfe kommt von diesen Blättern (fest, damit neue Blätter die alten Köpfe nicht verändern)
 MASSSTAB = ["lene", "hanne", "ilse", "edmar", "brom", "quill", "pip", "lotte"]
@@ -56,7 +62,7 @@ SPRECHER = {"hagebutte": "oma_hagebutte"}
 
 ## Zubehör am Körper: Figur -> Liste (Nummer des Paars in Reihe 3, Kennung, Name, Größe im Spiel, Höhe am Körper, x).
 ## Größe: ("breite"|"hoehe", Pixel). Höhe am Körper: 0 = am Hals, 1 = an den Füßen; x: nach rechts (von hinten gespiegelt).
-## Gehängt wird jedes Teil an seiner oberen Mitte. Ilses Ärmelschoner und Edmars Festschärpen fehlen noch (Arme, Fest).
+## Gehängt wird jedes Teil an seiner oberen Mitte. Ilses Ärmelschoner und Edmars Festschärpen fehlen noch (Arme, Fest), ebenso Zaids Reiseumhang (Rückenteil).
 ZUBEHOER = {
 	"hanne": [(0, "schuerze", "Hannes Schürze", ("breite", 28), 0.30, 0), (1, "kochloeffel", "Kochlöffel", ("hoehe", 20), 0.28, 13)],
 	"ilse": [(1, "schluesselbund", "Schlüsselbund", ("hoehe", 15), 0.36, 12)],
@@ -66,6 +72,10 @@ ZUBEHOER = {
 	"salbei": [(0, "kraeuterbuendel", "Kräuterbündel", ("hoehe", 16), 0.34, -12), (1, "korb", "Salbeis Korb", ("breite", 16), 0.40, 13)],
 	"borko": [(1, "schoepfkelle", "Schöpfkelle", ("hoehe", 20), 0.30, 13)],
 	"hagebutte": [(1, "kartenstapel", "Kartenstapel", ("hoehe", 10), 0.40, 12)],
+	"nadia": [(1, "wasserkrug", "Nadias Wasserkrug", ("hoehe", 16), 0.30, 13)],
+	"rashid": [(1, "bankschluessel", "Rashids Schlüssel", ("hoehe", 14), 0.36, 12)],
+	"tarek": [(0, "schaerpe", "Tareks Schärpe", ("breite", 26), 0.22, 0), (1, "guertelklinge", "Klinge am Gürtel", ("hoehe", 22), 0.32, -12)],
+	"layla": [(0, "schuerze_layla", "Laylas Schürze", ("breite", 28), 0.30, 0), (1, "tablett", "Tablett", ("breite", 18), 0.28, 14)],
 }
 ## Hüte aus Reihe 3: Figur -> (Nummer des Paars, Kennung, Name, Größe zum Kopf, Anteil der Hut-Höhe, an dem der Kopf
 ## steckt, Sitz unter dem Scheitel). Hagebuttes Strickjacke fehlt noch (müsste den ganzen Körper bedecken).
@@ -74,10 +84,12 @@ HUETE = {
 	"lotte": (0, "lotte_krone", "Lottes Papierkrone", 0.5, 0.85, 0.10),
 	"borko": (0, "borko_kochmuetze", "Borkos Kochmütze", 0.8, 0.85, 0.15),
 	"tamm": (0, "tamm_moos_hut", "Tamms Hut mit Moos", 0.85, 0.85, 0.25),
+	# Nadias Kopftuch und Zaids Turban sind schon im Kopf-Bild gezeichnet
+	"rashid": (0, "rashid_kopftuch", "Rashids Kopftuch", 0.9, 0.85, 0.42),
 }
 
 ## Köpfe, die im Blatt größer gezeichnet sind als die anderen (Lenes Dutt und Brille): so viel kleiner machen
-KLEINER = {"lene": 0.82}
+KLEINER = {"lene": 0.82, "nadia": 0.88}
 
 
 def hoehe(t):

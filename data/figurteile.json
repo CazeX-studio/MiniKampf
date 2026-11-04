@@ -2142,6 +2142,20 @@
 				},
 				"name": "Novize m3"
 			},
+			"rashid": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						31.5,
+						50
+					],
+					"vorn_normal": [
+						32.2,
+						53
+					]
+				},
+				"name": "Bankhüter Rashid"
+			},
 			"tamm": {
 				"geschlecht": "m",
 				"hals": {
@@ -2624,6 +2638,20 @@
 				},
 				"name": "Mädchen"
 			},
+			"layla": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						36.5,
+						56
+					],
+					"vorn_normal": [
+						52.7,
+						56
+					]
+				},
+				"name": "Wirtin Layla"
+			},
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
@@ -2773,6 +2801,20 @@
 					]
 				},
 				"name": "Novize m3"
+			},
+			"nadia": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						29.0,
+						47
+					],
+					"vorn_normal": [
+						37.9,
+						46
+					]
+				},
+				"name": "Brunnenhüterin Nadia"
 			},
 			"v_m1": {
 				"geschlecht": "m",
@@ -4024,6 +4066,20 @@
 				},
 				"name": "Kräuterhändlerin Salbei"
 			},
+			"tarek": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						32.5,
+						54
+					],
+					"vorn_normal": [
+						35.6,
+						57
+					]
+				},
+				"name": "Händler Tarek"
+			},
 			"v_m1": {
 				"geschlecht": "m",
 				"hals": {
@@ -4257,6 +4313,20 @@
 					]
 				},
 				"name": "Novizin w3"
+			},
+			"zaid": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						21.5,
+						44
+					],
+					"vorn_normal": [
+						28.5,
+						44
+					]
+				},
+				"name": "Karawanenführer Zaid"
 			}
 		},
 		"_name": "Händler (Baukasten)",

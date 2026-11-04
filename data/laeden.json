@@ -41,5 +41,7 @@
 		"waren": ["heiltrank", "manatrank", "garn", "oel", "leder", "sternentafel", "breitschwert", "flinker_dolch", "kettenhemd", "wollrobe", "glueckskette", "feuerpfeil", "giftpfeil", "blitzpfeil", "frostpfeil"],
 		"karten_ankauf": true,
 		"ankauf": 0.5
-	}
+	},
+	"tarek": {"name": "Tareks Laden", "hinweis": "Händler Tarek im Basar der Glutoase (D27): Grundwaffen aus den Schmieden, Heiltränke und Grundmaterialien.", "waren": ["kurzschwert", "breitschwert", "flinker_dolch", "heiltrank", "manatrank", "garn", "oel", "leder"], "ankauf": 0.5},
+	"rastplatz": {"name": "Rastplatz-Händler", "hinweis": "Rastplatz-Händler (NPC.md „Überall gleich“): an jedem Rastplatz dieselbe Figur mit denselben Waren.", "waren": ["heiltrank", "manatrank", "garn", "oel", "leder"], "ankauf": 0.5}
 }

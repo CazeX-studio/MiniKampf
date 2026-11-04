@@ -376,6 +376,24 @@
 				],
 				"sitz": 0.25
 			}
+		},
+		"rashid_kopftuch": {
+			"name": "Rashids Kopftuch",
+			"belohnung": true,
+			"vorn": {
+				"anker": [
+					27,
+					48
+				],
+				"sitz": 0.42
+			},
+			"hinten": {
+				"anker": [
+					25,
+					48
+				],
+				"sitz": 0.42
+			}
 		}
 	},
 	"ruecken": {
@@ -716,6 +734,120 @@
 				],
 				"hoehe": 0.4,
 				"x": -12
+			}
+		},
+		"wasserkrug": {
+			"name": "Nadias Wasserkrug",
+			"vorn": {
+				"anker": [
+					6,
+					0
+				],
+				"hoehe": 0.3,
+				"x": 13
+			},
+			"hinten": {
+				"anker": [
+					6,
+					0
+				],
+				"hoehe": 0.3,
+				"x": -13
+			}
+		},
+		"bankschluessel": {
+			"name": "Rashids Schlüssel",
+			"vorn": {
+				"anker": [
+					4,
+					0
+				],
+				"hoehe": 0.36,
+				"x": 12
+			},
+			"hinten": {
+				"anker": [
+					4,
+					0
+				],
+				"hoehe": 0.36,
+				"x": -12
+			}
+		},
+		"schaerpe": {
+			"name": "Tareks Schärpe",
+			"vorn": {
+				"anker": [
+					13,
+					0
+				],
+				"hoehe": 0.22,
+				"x": 0
+			},
+			"hinten": {
+				"anker": [
+					13,
+					0
+				],
+				"hoehe": 0.22,
+				"x": 0
+			}
+		},
+		"guertelklinge": {
+			"name": "Klinge am Gürtel",
+			"vorn": {
+				"anker": [
+					10,
+					0
+				],
+				"hoehe": 0.32,
+				"x": -12
+			},
+			"hinten": {
+				"anker": [
+					10,
+					0
+				],
+				"hoehe": 0.32,
+				"x": 12
+			}
+		},
+		"schuerze_layla": {
+			"name": "Laylas Schürze",
+			"vorn": {
+				"anker": [
+					14,
+					0
+				],
+				"hoehe": 0.3,
+				"x": 0
+			},
+			"hinten": {
+				"anker": [
+					14,
+					0
+				],
+				"hoehe": 0.3,
+				"x": 0
+			}
+		},
+		"tablett": {
+			"name": "Tablett",
+			"vorn": {
+				"anker": [
+					9,
+					0
+				],
+				"hoehe": 0.28,
+				"x": 14
+			},
+			"hinten": {
+				"anker": [
+					9,
+					0
+				],
+				"hoehe": 0.28,
+				"x": -14
 			}
 		}
 	}
