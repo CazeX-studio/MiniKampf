@@ -6890,6 +6890,1468 @@
 			"winkel": -2.5
 		}
 	},
+	"klingentaenzer_m": {
+		"_geschlecht": "m",
+		"_koepfe": {
+			"m1": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_geneigt": [
+						33.7,
+						54
+					],
+					"hinten_normal": [
+						34.7,
+						53
+					],
+					"seite_augen_zu": [
+						39.2,
+						60
+					],
+					"seite_entschlossen": [
+						38.2,
+						58
+					],
+					"seite_freude": [
+						39.2,
+						58
+					],
+					"seite_normal": [
+						38.2,
+						59
+					],
+					"seite_schmerz": [
+						39.2,
+						58
+					],
+					"vorn_augen_zu": [
+						35.0,
+						56
+					],
+					"vorn_freude": [
+						35.0,
+						56
+					],
+					"vorn_normal": [
+						35.0,
+						57
+					],
+					"vorn_schmerz": [
+						34.0,
+						56
+					]
+				},
+				"name": "Novize m1"
+			},
+			"m2": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_geneigt": [
+						43.5,
+						53
+					],
+					"hinten_normal": [
+						43.5,
+						54
+					],
+					"seite_augen_zu": [
+						41.8,
+						63
+					],
+					"seite_entschlossen": [
+						41.8,
+						63
+					],
+					"seite_freude": [
+						42.8,
+						63
+					],
+					"seite_normal": [
+						41.8,
+						63
+					],
+					"seite_schmerz": [
+						41.8,
+						63
+					],
+					"vorn_augen_zu": [
+						31.2,
+						63
+					],
+					"vorn_freude": [
+						32.2,
+						63
+					],
+					"vorn_normal": [
+						32.2,
+						63
+					],
+					"vorn_schmerz": [
+						32.2,
+						64
+					]
+				},
+				"name": "Novize m2"
+			},
+			"m3": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_geneigt": [
+						46.1,
+						57
+					],
+					"hinten_normal": [
+						47.1,
+						57
+					],
+					"seite_augen_zu": [
+						43.7,
+						66
+					],
+					"seite_entschlossen": [
+						42.7,
+						66
+					],
+					"seite_freude": [
+						42.7,
+						66
+					],
+					"seite_normal": [
+						43.7,
+						66
+					],
+					"seite_schmerz": [
+						43.7,
+						66
+					],
+					"vorn_augen_zu": [
+						34.8,
+						65
+					],
+					"vorn_freude": [
+						34.8,
+						65
+					],
+					"vorn_normal": [
+						34.8,
+						65
+					],
+					"vorn_schmerz": [
+						34.8,
+						65
+					]
+				},
+				"name": "Novize m3"
+			},
+			"w1": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_geneigt": [
+						39.3,
+						45
+					],
+					"hinten_normal": [
+						38.3,
+						46
+					],
+					"seite_augen_zu": [
+						37.3,
+						58
+					],
+					"seite_entschlossen": [
+						37.3,
+						58
+					],
+					"seite_freude": [
+						37.3,
+						57
+					],
+					"seite_normal": [
+						37.3,
+						57
+					],
+					"seite_schmerz": [
+						37.3,
+						57
+					],
+					"vorn_augen_zu": [
+						34.2,
+						53
+					],
+					"vorn_freude": [
+						35.2,
+						53
+					],
+					"vorn_normal": [
+						36.2,
+						53
+					],
+					"vorn_schmerz": [
+						36.2,
+						53
+					]
+				},
+				"name": "Novizin w1"
+			},
+			"w2": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_geneigt": [
+						49.8,
+						57
+					],
+					"hinten_normal": [
+						45.8,
+						57
+					],
+					"seite_augen_zu": [
+						42.8,
+						69
+					],
+					"seite_entschlossen": [
+						41.8,
+						70
+					],
+					"seite_freude": [
+						43.8,
+						69
+					],
+					"seite_normal": [
+						42.8,
+						69
+					],
+					"seite_schmerz": [
+						41.8,
+						69
+					],
+					"vorn_augen_zu": [
+						34.8,
+						68
+					],
+					"vorn_freude": [
+						33.8,
+						67
+					],
+					"vorn_normal": [
+						35.8,
+						68
+					],
+					"vorn_schmerz": [
+						36.8,
+						68
+					]
+				},
+				"name": "Novizin w2"
+			},
+			"w3": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_geneigt": [
+						51.3,
+						59
+					],
+					"hinten_normal": [
+						51.3,
+						60
+					],
+					"seite_augen_zu": [
+						49.4,
+						67
+					],
+					"seite_entschlossen": [
+						48.4,
+						67
+					],
+					"seite_freude": [
+						48.4,
+						67
+					],
+					"seite_normal": [
+						48.4,
+						67
+					],
+					"seite_schmerz": [
+						48.4,
+						67
+					],
+					"vorn_augen_zu": [
+						34.1,
+						69
+					],
+					"vorn_freude": [
+						34.1,
+						69
+					],
+					"vorn_normal": [
+						35.1,
+						69
+					],
+					"vorn_schmerz": [
+						34.1,
+						69
+					]
+				},
+				"name": "Novizin w3"
+			}
+		},
+		"_name": "Klingentänzer (m)",
+		"_nur_teile": true,
+		"attack_f0": {
+			"hals": [
+				69.1,
+				47.1
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"attack_f1": {
+			"hals": [
+				63.9,
+				47.3
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"attack_f2": {
+			"hals": [
+				45.3,
+				45.1
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"attack_f3": {
+			"hals": [
+				67.8,
+				47.1
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"attack_f4": {
+			"hals": [
+				64.4,
+				46.0
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"attack_f5": {
+			"hals": [
+				67.4,
+				47.3
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"cast_f0": {
+			"hals": [
+				52.0,
+				45.3
+			],
+			"richtung": "vorn",
+			"winkel": -0.0
+		},
+		"cast_f1": {
+			"hals": [
+				46.4,
+				49.5
+			],
+			"richtung": "vorn",
+			"winkel": -0.0
+		},
+		"cast_f2": {
+			"hals": [
+				55.0,
+				50.5
+			],
+			"richtung": "vorn",
+			"winkel": -0.0
+		},
+		"cast_f3": {
+			"hals": [
+				53.2,
+				50.3
+			],
+			"richtung": "vorn",
+			"winkel": -0.0
+		},
+		"death_f0": {
+			"hals": [
+				77.8,
+				47.2
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"death_f1": {
+			"hals": [
+				37.7,
+				52.5
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"death_f2": {
+			"hals": [
+				39.1,
+				70.1
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"death_f3": {
+			"hals": [
+				59.9,
+				82.2
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"death_f4": {
+			"hals": [
+				75.8,
+				83.2
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"death_f5": {
+			"hals": [
+				59.4,
+				93.3
+			],
+			"richtung": "seite",
+			"winkel": -90.0
+		},
+		"hit_f0": {
+			"hals": [
+				23.6,
+				45.3
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"idle_f0": {
+			"hals": [
+				46.7,
+				43.2
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"idle_f1": {
+			"hals": [
+				44.7,
+				44.5
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"idle_f2": {
+			"hals": [
+				44.6,
+				43.1
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"idle_f3": {
+			"hals": [
+				44.7,
+				43.1
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"idle_hinten_f0": {
+			"hals": [
+				38.7,
+				43.3
+			],
+			"richtung": "hinten",
+			"winkel": 4.1
+		},
+		"idle_hinten_f1": {
+			"hals": [
+				39.2,
+				43.2
+			],
+			"richtung": "hinten",
+			"winkel": 3.5
+		},
+		"idle_hinten_f2": {
+			"hals": [
+				38.4,
+				43.2
+			],
+			"richtung": "hinten",
+			"winkel": 5.2
+		},
+		"idle_hinten_f3": {
+			"hals": [
+				39.1,
+				43.3
+			],
+			"richtung": "hinten",
+			"winkel": 4.6
+		},
+		"idle_hinten_f4": {
+			"hals": [
+				39.3,
+				43.2
+			],
+			"richtung": "hinten",
+			"winkel": 5.8
+		},
+		"idle_vorn_f0": {
+			"hals": [
+				37.2,
+				42.0
+			],
+			"richtung": "vorn",
+			"winkel": 14.6
+		},
+		"idle_vorn_f1": {
+			"hals": [
+				36.5,
+				42.3
+			],
+			"richtung": "vorn",
+			"winkel": 17.2
+		},
+		"idle_vorn_f2": {
+			"hals": [
+				37.2,
+				42.3
+			],
+			"richtung": "vorn",
+			"winkel": 16.0
+		},
+		"idle_vorn_f3": {
+			"hals": [
+				37.4,
+				43.3
+			],
+			"richtung": "vorn",
+			"winkel": 15.8
+		},
+		"idle_vorn_f4": {
+			"hals": [
+				37.2,
+				42.2
+			],
+			"richtung": "vorn",
+			"winkel": 14.9
+		},
+		"parry_f0": {
+			"hals": [
+				50.1,
+				44.2
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"parry_f1": {
+			"hals": [
+				51.6,
+				45.2
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"parry_f2": {
+			"hals": [
+				49.3,
+				45.1
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"parry_f3": {
+			"hals": [
+				50.4,
+				45.1
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"run_f0": {
+			"hals": [
+				83.2,
+				43.2
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"run_f1": {
+			"hals": [
+				86.5,
+				43.3
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"run_f2": {
+			"hals": [
+				84.2,
+				44.4
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"run_f3": {
+			"hals": [
+				86.6,
+				44.4
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"run_hinten_f0": {
+			"hals": [
+				67.6,
+				42.2
+			],
+			"richtung": "hinten",
+			"winkel": -1.8
+		},
+		"run_hinten_f1": {
+			"hals": [
+				58.3,
+				41.0
+			],
+			"richtung": "hinten",
+			"winkel": -0.3
+		},
+		"run_hinten_f2": {
+			"hals": [
+				56.7,
+				42.0
+			],
+			"richtung": "hinten",
+			"winkel": -0.6
+		},
+		"run_hinten_f3": {
+			"hals": [
+				61.5,
+				41.0
+			],
+			"richtung": "hinten",
+			"winkel": -2.0
+		},
+		"run_hinten_f4": {
+			"hals": [
+				61.5,
+				42.2
+			],
+			"richtung": "hinten",
+			"winkel": -3.1
+		},
+		"run_vorn_f0": {
+			"hals": [
+				52.6,
+				42.1
+			],
+			"richtung": "vorn",
+			"winkel": 8.5
+		},
+		"run_vorn_f1": {
+			"hals": [
+				47.8,
+				42.3
+			],
+			"richtung": "vorn",
+			"winkel": 7.7
+		},
+		"run_vorn_f2": {
+			"hals": [
+				56.1,
+				43.4
+			],
+			"richtung": "vorn",
+			"winkel": 8.7
+		},
+		"run_vorn_f3": {
+			"hals": [
+				55.6,
+				43.3
+			],
+			"richtung": "vorn",
+			"winkel": 4.8
+		},
+		"run_vorn_f4": {
+			"hals": [
+				55.7,
+				43.2
+			],
+			"richtung": "vorn",
+			"winkel": 0.9
+		},
+		"victory_f0": {
+			"hals": [
+				44.0,
+				46.2
+			],
+			"richtung": "vorn",
+			"winkel": -6.3
+		},
+		"victory_f1": {
+			"hals": [
+				39.4,
+				46.2
+			],
+			"richtung": "vorn",
+			"winkel": -0.0
+		},
+		"victory_f2": {
+			"hals": [
+				39.8,
+				47.3
+			],
+			"richtung": "vorn",
+			"winkel": -3.0
+		},
+		"victory_f3": {
+			"hals": [
+				39.5,
+				46.2
+			],
+			"richtung": "vorn",
+			"winkel": -0.0
+		}
+	},
+	"klingentaenzer_w": {
+		"_geschlecht": "w",
+		"_koepfe": {
+			"m1": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_geneigt": [
+						33.7,
+						54
+					],
+					"hinten_normal": [
+						34.7,
+						53
+					],
+					"seite_augen_zu": [
+						39.2,
+						60
+					],
+					"seite_entschlossen": [
+						38.2,
+						58
+					],
+					"seite_freude": [
+						39.2,
+						58
+					],
+					"seite_normal": [
+						38.2,
+						59
+					],
+					"seite_schmerz": [
+						39.2,
+						58
+					],
+					"vorn_augen_zu": [
+						35.0,
+						56
+					],
+					"vorn_freude": [
+						35.0,
+						56
+					],
+					"vorn_normal": [
+						35.0,
+						57
+					],
+					"vorn_schmerz": [
+						34.0,
+						56
+					]
+				},
+				"name": "Novize m1"
+			},
+			"m2": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_geneigt": [
+						43.5,
+						53
+					],
+					"hinten_normal": [
+						43.5,
+						54
+					],
+					"seite_augen_zu": [
+						41.8,
+						63
+					],
+					"seite_entschlossen": [
+						41.8,
+						63
+					],
+					"seite_freude": [
+						42.8,
+						63
+					],
+					"seite_normal": [
+						41.8,
+						63
+					],
+					"seite_schmerz": [
+						41.8,
+						63
+					],
+					"vorn_augen_zu": [
+						31.2,
+						63
+					],
+					"vorn_freude": [
+						32.2,
+						63
+					],
+					"vorn_normal": [
+						32.2,
+						63
+					],
+					"vorn_schmerz": [
+						32.2,
+						64
+					]
+				},
+				"name": "Novize m2"
+			},
+			"m3": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_geneigt": [
+						46.1,
+						57
+					],
+					"hinten_normal": [
+						47.1,
+						57
+					],
+					"seite_augen_zu": [
+						43.7,
+						66
+					],
+					"seite_entschlossen": [
+						42.7,
+						66
+					],
+					"seite_freude": [
+						42.7,
+						66
+					],
+					"seite_normal": [
+						43.7,
+						66
+					],
+					"seite_schmerz": [
+						43.7,
+						66
+					],
+					"vorn_augen_zu": [
+						34.8,
+						65
+					],
+					"vorn_freude": [
+						34.8,
+						65
+					],
+					"vorn_normal": [
+						34.8,
+						65
+					],
+					"vorn_schmerz": [
+						34.8,
+						65
+					]
+				},
+				"name": "Novize m3"
+			},
+			"w1": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_geneigt": [
+						39.3,
+						45
+					],
+					"hinten_normal": [
+						38.3,
+						46
+					],
+					"seite_augen_zu": [
+						37.3,
+						58
+					],
+					"seite_entschlossen": [
+						37.3,
+						58
+					],
+					"seite_freude": [
+						37.3,
+						57
+					],
+					"seite_normal": [
+						37.3,
+						57
+					],
+					"seite_schmerz": [
+						37.3,
+						57
+					],
+					"vorn_augen_zu": [
+						34.2,
+						53
+					],
+					"vorn_freude": [
+						35.2,
+						53
+					],
+					"vorn_normal": [
+						36.2,
+						53
+					],
+					"vorn_schmerz": [
+						36.2,
+						53
+					]
+				},
+				"name": "Novizin w1"
+			},
+			"w2": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_geneigt": [
+						49.8,
+						57
+					],
+					"hinten_normal": [
+						45.8,
+						57
+					],
+					"seite_augen_zu": [
+						42.8,
+						69
+					],
+					"seite_entschlossen": [
+						41.8,
+						70
+					],
+					"seite_freude": [
+						43.8,
+						69
+					],
+					"seite_normal": [
+						42.8,
+						69
+					],
+					"seite_schmerz": [
+						41.8,
+						69
+					],
+					"vorn_augen_zu": [
+						34.8,
+						68
+					],
+					"vorn_freude": [
+						33.8,
+						67
+					],
+					"vorn_normal": [
+						35.8,
+						68
+					],
+					"vorn_schmerz": [
+						36.8,
+						68
+					]
+				},
+				"name": "Novizin w2"
+			},
+			"w3": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_geneigt": [
+						51.3,
+						59
+					],
+					"hinten_normal": [
+						51.3,
+						60
+					],
+					"seite_augen_zu": [
+						49.4,
+						67
+					],
+					"seite_entschlossen": [
+						48.4,
+						67
+					],
+					"seite_freude": [
+						48.4,
+						67
+					],
+					"seite_normal": [
+						48.4,
+						67
+					],
+					"seite_schmerz": [
+						48.4,
+						67
+					],
+					"vorn_augen_zu": [
+						34.1,
+						69
+					],
+					"vorn_freude": [
+						34.1,
+						69
+					],
+					"vorn_normal": [
+						35.1,
+						69
+					],
+					"vorn_schmerz": [
+						34.1,
+						69
+					]
+				},
+				"name": "Novizin w3"
+			}
+		},
+		"_name": "Klingentänzerin (w)",
+		"_nur_teile": true,
+		"attack_f0": {
+			"hals": [
+				74.5,
+				45.1
+			],
+			"richtung": "seite",
+			"winkel": -6.1
+		},
+		"attack_f1": {
+			"hals": [
+				65.8,
+				47.2
+			],
+			"richtung": "seite",
+			"winkel": -9.6
+		},
+		"attack_f2": {
+			"hals": [
+				65.1,
+				45.1
+			],
+			"richtung": "seite",
+			"winkel": -9.7
+		},
+		"attack_f3": {
+			"hals": [
+				54.6,
+				45.3
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"attack_f4": {
+			"hals": [
+				57.7,
+				47.5
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"attack_f5": {
+			"hals": [
+				61.2,
+				47.0
+			],
+			"richtung": "seite",
+			"winkel": -7.1
+		},
+		"cast_f0": {
+			"hals": [
+				62.2,
+				51.2
+			],
+			"richtung": "vorn",
+			"winkel": -11.7
+		},
+		"cast_f1": {
+			"hals": [
+				59.3,
+				47.0
+			],
+			"richtung": "vorn",
+			"winkel": -13.0
+		},
+		"cast_f2": {
+			"hals": [
+				57.7,
+				44.1
+			],
+			"richtung": "vorn",
+			"winkel": -11.7
+		},
+		"cast_f3": {
+			"hals": [
+				60.1,
+				51.3
+			],
+			"richtung": "vorn",
+			"winkel": -8.6
+		},
+		"death_f0": {
+			"hals": [
+				104.6,
+				44.5
+			],
+			"richtung": "seite",
+			"winkel": -6.3
+		},
+		"death_f1": {
+			"hals": [
+				71.1,
+				46.0
+			],
+			"richtung": "seite",
+			"winkel": -19.2
+		},
+		"death_f2": {
+			"hals": [
+				63.1,
+				60.4
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"death_f3": {
+			"hals": [
+				94.3,
+				75.5
+			],
+			"richtung": "seite",
+			"winkel": -0.0
+		},
+		"death_f4": {
+			"hals": [
+				101.4,
+				76.9
+			],
+			"richtung": "seite",
+			"winkel": -15.9
+		},
+		"death_f5": {
+			"hals": [
+				140.0,
+				88.6
+			],
+			"richtung": "seite",
+			"winkel": 90.0
+		},
+		"hit_f0": {
+			"hals": [
+				40.9,
+				38.8
+			],
+			"richtung": "seite",
+			"winkel": -46.2
+		},
+		"idle_f0": {
+			"hals": [
+				46.0,
+				50.1
+			],
+			"richtung": "seite",
+			"winkel": 0.9
+		},
+		"idle_f1": {
+			"hals": [
+				45.3,
+				51.3
+			],
+			"richtung": "seite",
+			"winkel": 2.4
+		},
+		"idle_f2": {
+			"hals": [
+				44.5,
+				52.3
+			],
+			"richtung": "seite",
+			"winkel": 0.2
+		},
+		"idle_f3": {
+			"hals": [
+				44.8,
+				53.2
+			],
+			"richtung": "seite",
+			"winkel": 1.2
+		},
+		"idle_hinten_f0": {
+			"hals": [
+				44.9,
+				45.0
+			],
+			"richtung": "hinten",
+			"winkel": -7.4
+		},
+		"idle_hinten_f1": {
+			"hals": [
+				40.8,
+				46.0
+			],
+			"richtung": "hinten",
+			"winkel": -0.0
+		},
+		"idle_hinten_f2": {
+			"hals": [
+				42.6,
+				45.3
+			],
+			"richtung": "hinten",
+			"winkel": -0.0
+		},
+		"idle_hinten_f3": {
+			"hals": [
+				45.1,
+				45.3
+			],
+			"richtung": "hinten",
+			"winkel": -0.0
+		},
+		"idle_hinten_f4": {
+			"hals": [
+				47.5,
+				45.0
+			],
+			"richtung": "hinten",
+			"winkel": -9.2
+		},
+		"idle_vorn_f0": {
+			"hals": [
+				53.1,
+				46.4
+			],
+			"richtung": "vorn",
+			"winkel": -4.5
+		},
+		"idle_vorn_f1": {
+			"hals": [
+				50.3,
+				45.2
+			],
+			"richtung": "vorn",
+			"winkel": -4.8
+		},
+		"idle_vorn_f2": {
+			"hals": [
+				49.8,
+				46.2
+			],
+			"richtung": "vorn",
+			"winkel": -0.0
+		},
+		"idle_vorn_f3": {
+			"hals": [
+				50.2,
+				46.2
+			],
+			"richtung": "vorn",
+			"winkel": -7.6
+		},
+		"idle_vorn_f4": {
+			"hals": [
+				48.6,
+				47.3
+			],
+			"richtung": "vorn",
+			"winkel": -0.0
+		},
+		"parry_f0": {
+			"hals": [
+				36.8,
+				45.2
+			],
+			"richtung": "seite",
+			"winkel": -0.5
+		},
+		"parry_f1": {
+			"hals": [
+				41.8,
+				46.5
+			],
+			"richtung": "seite",
+			"winkel": 1.0
+		},
+		"parry_f2": {
+			"hals": [
+				44.0,
+				47.4
+			],
+			"richtung": "seite",
+			"winkel": 0.9
+		},
+		"parry_f3": {
+			"hals": [
+				43.1,
+				47.5
+			],
+			"richtung": "seite",
+			"winkel": 0.8
+		},
+		"run_f0": {
+			"hals": [
+				87.5,
+				49.2
+			],
+			"richtung": "seite",
+			"winkel": 4.1
+		},
+		"run_f1": {
+			"hals": [
+				110.7,
+				52.1
+			],
+			"richtung": "seite",
+			"winkel": 3.1
+		},
+		"run_f2": {
+			"hals": [
+				96.7,
+				52.3
+			],
+			"richtung": "seite",
+			"winkel": 1.3
+		},
+		"run_f3": {
+			"hals": [
+				106.3,
+				52.4
+			],
+			"richtung": "seite",
+			"winkel": 2.6
+		},
+		"run_hinten_f0": {
+			"hals": [
+				62.2,
+				50.2
+			],
+			"richtung": "hinten",
+			"winkel": -7.5
+		},
+		"run_hinten_f1": {
+			"hals": [
+				70.9,
+				47.3
+			],
+			"richtung": "hinten",
+			"winkel": -8.1
+		},
+		"run_hinten_f2": {
+			"hals": [
+				65.6,
+				53.1
+			],
+			"richtung": "hinten",
+			"winkel": -12.7
+		},
+		"run_hinten_f3": {
+			"hals": [
+				71.0,
+				45.2
+			],
+			"richtung": "hinten",
+			"winkel": -8.4
+		},
+		"run_hinten_f4": {
+			"hals": [
+				64.0,
+				48.1
+			],
+			"richtung": "hinten",
+			"winkel": -8.5
+		},
+		"run_vorn_f0": {
+			"hals": [
+				63.9,
+				49.4
+			],
+			"richtung": "vorn",
+			"winkel": -4.1
+		},
+		"run_vorn_f1": {
+			"hals": [
+				69.0,
+				49.2
+			],
+			"richtung": "vorn",
+			"winkel": -6.8
+		},
+		"run_vorn_f2": {
+			"hals": [
+				56.9,
+				49.1
+			],
+			"richtung": "vorn",
+			"winkel": -9.5
+		},
+		"run_vorn_f3": {
+			"hals": [
+				74.1,
+				47.4
+			],
+			"richtung": "vorn",
+			"winkel": -7.0
+		},
+		"run_vorn_f4": {
+			"hals": [
+				66.1,
+				50.3
+			],
+			"richtung": "vorn",
+			"winkel": -6.3
+		},
+		"victory_f0": {
+			"hals": [
+				48.3,
+				45.4
+			],
+			"richtung": "vorn",
+			"winkel": -7.3
+		},
+		"victory_f1": {
+			"hals": [
+				48.0,
+				45.1
+			],
+			"richtung": "vorn",
+			"winkel": -4.8
+		},
+		"victory_f2": {
+			"hals": [
+				48.6,
+				45.0
+			],
+			"richtung": "vorn",
+			"winkel": -10.4
+		},
+		"victory_f3": {
+			"hals": [
+				48.0,
+				45.2
+			],
+			"richtung": "vorn",
+			"winkel": -10.7
+		}
+	},
 	"kofi": {
 		"_eigener_kopf": "m1",
 		"_koepfe": {

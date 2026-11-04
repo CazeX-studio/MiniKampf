@@ -86,7 +86,7 @@ func _koerper_pruefen(koerper: String) -> int:
 func _klassen_koerper() -> int:
 	var fehler := 0
 	var faelle := [["novize_m+m1", "archer", "bogen_m+m1"], ["novize_w+w1#hut=geweihband", "tamer", "zaehmer_w+w1#hut=geweihband"],
-			["bogen_m+m1", "", "novize_m+m1"], ["novize_m+m1", "blade", "novize_m+m1"], ["kofi", "archer", "kofi"],
+			["bogen_m+m1", "", "novize_m+m1"], ["novize_m+m1", "blade", "klingentaenzer_m+m1"], ["novize_m+m1", "smith", "novize_m+m1"], ["kofi", "archer", "kofi"],
 			["zaehmer_w+w2", "archer", "bogen_w+w2"]]
 	for fall: Array in faelle:
 		var ergebnis := FigurTeile.mit_klasse(fall[0], fall[1])
@@ -99,9 +99,14 @@ func _klassen_koerper() -> int:
 	if BattleRequest.setup.helden[0].aussehen != "bogen_w+w1":
 		print("FEHLER: Bogenschützin kämpft nicht in ihrer Kleidung: %s" % BattleRequest.setup.helden[0].aussehen)
 		fehler += 1
-	BattleRequest.prepare("probe:blade", 8, 0, "novize")
+	BattleRequest.prepare("probe:smith", 8, 0, "novize")
 	if BattleRequest.setup.helden[0].aussehen != "":
-		print("FEHLER: Probestunde Klingentänzerin sollte ihre eigene Figur zeigen")
+		print("FEHLER: Probestunde Rüstungsschmied (noch ohne Körper) sollte die Klassenfigur zeigen")
+		fehler += 1
+	# Seit D25 hat die Klingentänzerin ihren Körper: in der Probestunde die eigene Figur in Tanzkleidung
+	BattleRequest.prepare("probe:blade", 8, 0, "novize")
+	if BattleRequest.setup.helden[0].aussehen != "klingentaenzer_w+w1":
+		print("FEHLER: Probestunde Klingentänzerin: %s" % BattleRequest.setup.helden[0].aussehen)
 		fehler += 1
 	BattleRequest.player_look = ""
 	BattleRequest.kampf_id = ""

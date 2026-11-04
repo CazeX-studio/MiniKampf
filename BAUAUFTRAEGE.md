@@ -80,7 +80,9 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D23a:** Aschensteppe (Straße von Kreuzweg nach Süden) mit dem Rastplatz der Karawanen (keine Monster, Wegelaterne), Monster nach Steckbrief. – Status: fertig (04.11.2026; der Rastplatz-Händler kommt mit D27, der Weg nach Süden endet noch an der Karte)
 - **D23b:** Palmenrast (Heimat-Gebiet der Glutoase) südlich der Aschensteppe, Monster nach Steckbrief. – Status: fertig (04.11.2026; bis die Stadt steht, führt die Aschensteppe direkt in die Palmenrast)
 - **D24:** Stadt Glutoase als Terrassenstadt. (2.2) – Status: fertig (04.11.2026; noch ohne Figuren, die kommen mit D27; Dürrewald-Tor, Bergpfad und Vulkanschmiede sind noch zu)
-- **D25:** Körper der drei Glutoase-Klassen einbauen (braucht Marcos Bilder). (2.11, Rest; die Wüsten- und Schmiede-Teile liegen schon bereit) – Status: offen
+- **D25:** Körper der drei Glutoase-Klassen einbauen (braucht Marcos Bilder). (2.11, Rest; die Wüsten- und Schmiede-Teile liegen schon bereit) – Status: geteilt (04.11.2026)
+- **D25a:** Körper der Klingentänzerin (m und w) aus Marcos Blättern. – Status: fertig (04.11.2026)
+- **D25b:** Körper von Rüstungsschmied (m und w) und Sternensängerin (w). – Status: wartet auf Marcos Bilder (Prompts in GRAFIK_AUFTRAG.md, Teil D „Figuren 2“)
 - **D26:** Klassen lernen in der Glutoase. (2.3) – Status: offen
 - **D27:** Glutoase-Figuren nach Steckbrief, Rastplatz-Händler. (2.13, vorgezogen) – Status: offen
 - **D28:** Geschichte Teil 1: Kochende Brunnen, Miras Lied. (2.4) – Status: offen

@@ -28,11 +28,13 @@ DATEN = WURZEL / "data" / "figurteile.json"
 
 ## Körper -> Name im Editor. Die Blätter sind aufgebaut wie Kofis (siehe FIGUREN["kofi"] in figur_bilder.py).
 KOERPER = {"novize_m": "Novize (m)", "novize_w": "Novizin (w)",
-		"bogen_m": "Bogenschütze (m)", "bogen_w": "Bogenschützin (w)", "zaehmer_m": "Monster-Zähmer (m)", "zaehmer_w": "Monster-Zähmerin (w)"}
+		"bogen_m": "Bogenschütze (m)", "bogen_w": "Bogenschützin (w)", "zaehmer_m": "Monster-Zähmer (m)", "zaehmer_w": "Monster-Zähmerin (w)",
+		"klingentaenzer_m": "Klingentänzer (m)", "klingentaenzer_w": "Klingentänzerin (w)"}
 ## Geschlecht des Körpers: bei „Figur erstellen“ passen nur Köpfe desselben Geschlechts
-GESCHLECHT = {"novize_m": "m", "novize_w": "w", "bogen_m": "m", "bogen_w": "w", "zaehmer_m": "m", "zaehmer_w": "w"}
+GESCHLECHT = {"novize_m": "m", "novize_w": "w", "bogen_m": "m", "bogen_w": "w", "zaehmer_m": "m", "zaehmer_w": "w",
+		"klingentaenzer_m": "m", "klingentaenzer_w": "w"}
 ## Klassen-Körper (D18, Auftrag Teil D „Figuren 2“): Blätter heißen <körper>_blatt1/_blatt2/_welt und sind schon ohne Waffe
-DATEINAMEN = {k: {"kampf_a": "blatt1", "kampf_b": "blatt2", "welt": "welt"} for k in ["bogen_m", "bogen_w", "zaehmer_m", "zaehmer_w"]}
+DATEINAMEN = {k: {"kampf_a": "blatt1", "kampf_b": "blatt2", "welt": "welt"} for k in ["bogen_m", "bogen_w", "zaehmer_m", "zaehmer_w", "klingentaenzer_m", "klingentaenzer_w"]}
 OHNE_ZUSATZ = set(DATEINAMEN)
 ## Die Klinge kommt als eigenes Teil dazu (Projekt 13, Schritt 3), der Griff bleibt in der Hand
 ZUSATZ = "_ohne_klinge"
@@ -41,7 +43,7 @@ ZUSATZ = "_ohne_klinge"
 KLASSEN_REIHEN = {
 	"welt": [[("idle_vorn", 5), ("run_vorn", 5)], [("idle_hinten", 5), ("run_hinten", 5)]],
 }
-REIHEN = {k: dict(KLASSEN_REIHEN) for k in ["bogen_m", "bogen_w", "zaehmer_m", "zaehmer_w"]}
+REIHEN = {k: dict(KLASSEN_REIHEN) for k in ["bogen_m", "bogen_w", "zaehmer_m", "zaehmer_w", "klingentaenzer_m", "klingentaenzer_w"]}
 # Bogenschütze (m und w), Blatt 2: der Sieg hat 5 Bilder (Faust hoch und wieder herunter)
 REIHEN["bogen_m"]["kampf_b"] = [[("attack", 6)], [("death", 6)], [("victory", 5), ("cast", 4)]]
 REIHEN["bogen_w"]["kampf_b"] = REIHEN["bogen_m"]["kampf_b"]
