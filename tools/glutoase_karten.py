@@ -303,7 +303,10 @@ def glutoase():
 			"tarek": {"name": "Händler Tarek", "feld": [7, 16], "aussehen": "grund_haendler+tarek#zubehoer=schaerpe&guertelklinge", "dialog": "tarek",
 				"zeichen": "muenze"},
 			"layla": {"name": "Wirtin Layla", "feld": [29, 6], "aussehen": "grund_frau+layla#zubehoer=schuerze_layla&tablett", "dialog": "layla"},
-			"mira_glutoase": {"name": "Mira", "feld": [40, 13], "aussehen": "mira", "dialog": "mira_glutoase", "liegt": True},
+			"mira_glutoase": {"name": "Mira", "feld": [40, 13], "aussehen": "mira", "dialog": "mira_glutoase", "liegt": True,
+				"wenn": {"nicht_gemerkt": "mira_geheilt"}},
+			# Ohne Splitter gesund (D35): Mira steht wieder
+			"mira_gesund": {"name": "Mira", "feld": [41, 13], "aussehen": "mira", "dialog": "mira_glutoase", "wenn": {"gemerkt": "mira_geheilt"}},
 			# Kael wartet nach dem Fest in Hadraks Schmiede (D29, Rivalenkampf)
 			"kael_glutoase": {"name": "Kael", "feld": [24, 43], "aussehen": "kael", "dialog": "kael_glutoase",
 				"wenn": {"oder": [{"auftrag": "rivale_kael", "stand": "aktiv"}, {"auftrag": "rivale_kael", "stand": "fertig"}]}},
@@ -489,7 +492,10 @@ def vulkanschmiede():
 			{"art": "hammerbruder_zange", "feld": [24, 22], "dialog": "vs_hammerbrueder", "wenn": {"nicht_gemerkt": "lauf:hammerbrueder"}},
 			# Endboss Kettenschmied (D34) in der Mitte der Ankerkammer, erst nach den Hammerbrüdern
 			{"art": "kettenschmied_1", "feld": [38, 14], "dialog": "vs_kettenschmied",
-				"wenn": {"gemerkt": "lauf:hammerbrueder", "nicht_gemerkt": "lauf:kettenschmied"}}],
+				"wenn": {"gemerkt": "lauf:hammerbrueder", "nicht_gemerkt": "lauf:kettenschmied"}},
+			# Belohnung (D35): wo der Kettenschmied zerfiel, glüht ein Splitter in der Schlacke
+			{"art": "glutsplitter", "feld": [38, 14], "dialog": "vs_glutsplitter",
+				"wenn": {"gemerkt": "lauf:kettenschmied", "nicht_gemerkt": "lauf:splitter"}}],
 	}
 	(gk.DATEN / "karten.json").write_text(json.dumps(karten, ensure_ascii=False, indent="\t") + "\n", encoding="utf-8")
 	gk.KARTEN.clear()

@@ -30,6 +30,21 @@ func _run() -> void:
 	await _frames(5)
 	_check(current_scene.has_method("local_player") and current_scene.local_player().map == "wipfelheim", "Zurück in Wipfelheim")
 	_check(Abspann.variante == "", "Abspann von Akt 1 bleibt unverändert")
+	# D35: Ende der Glutoase
+	# (Die Welt speichert beim Verlassen selbst: darum die Merker beim Spieler in der Welt setzen)
+	var spieler: PlayerState = current_scene.local_player()
+	spieler.progress.flags = {"klasse": "smith", "sechster_ton": true, "kael_besiegt_glutoase": true, "mira_hoert": true}
+	Abspann.variante = "glutoase"
+	change_scene_to_file("res://scenes/abspann.tscn")
+	await _frames(5)
+	texts = ""
+	for label in current_scene.find_children("*", "Label", true, false):
+		texts += label.text + " "
+	_check(texts.contains("Ende der Glutoase") and texts.contains("sechsten Ton gehört") and texts.contains("Kael") and texts.contains("Mira trägt den Splitter"),
+			"Ende der Glutoase mit Rückblick")
+	_check(not texts.contains("Mira ist gesund"), "Nur Miras Weg, den man gewählt hat")
+	buttons = current_scene.find_children("*", "Button", true, false)
+	_check(buttons.size() == 2 and buttons[0].text == "Zurück in die Glutoase", "Knopf: Zurück in die Glutoase")
 	SaveGame.delete()
 	SaveGame.path = SaveGame.DEFAULT_PATH
 	print("Abspann: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))

@@ -1347,6 +1347,16 @@ func _draw_pickup(node: Node2D, art: String) -> void:
 			node.draw_colored_polygon(PackedVector2Array([Vector2(0, -60), Vector2(10, -40), Vector2(0, -22), Vector2(-10, -40)]),
 					Color(0.85, 0.7, 1.0).lightened(0.3 * beat))
 			return
+		"glutsplitter":
+			# Belohnung der Vulkanschmiede: ein glühender Splitter in der Schlacke
+			var puls := 0.5 + 0.5 * sin(_time * 3.0)
+			node.draw_set_transform(Vector2(0, -4), 0.0, Vector2(1.0, 0.5))
+			node.draw_circle(Vector2.ZERO, 26.0, Color("2a1c18"))
+			node.draw_set_transform_matrix(Transform2D.IDENTITY)
+			node.draw_circle(Vector2(0, -16), 30.0 + 6.0 * puls, Color(1.0, 0.5, 0.15, 0.12 + 0.12 * puls))
+			node.draw_colored_polygon(PackedVector2Array([Vector2(0, -38), Vector2(9, -18), Vector2(0, -4), Vector2(-9, -18)]),
+					Color(1.0, 0.7, 0.3).lightened(0.3 * puls))
+			return
 		"hoehle":
 			# Eingang zur Pilzhöhle zwischen den Wurzeln des Urbaums
 			node.draw_set_transform(Vector2(0, -6), 0.0, Vector2(1.0, 0.6))

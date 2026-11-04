@@ -2466,7 +2466,22 @@
 				],
 				"aussehen": "mira",
 				"dialog": "mira_glutoase",
-				"liegt": true
+				"liegt": true,
+				"wenn": {
+					"nicht_gemerkt": "mira_geheilt"
+				}
+			},
+			"mira_gesund": {
+				"name": "Mira",
+				"feld": [
+					41,
+					13
+				],
+				"aussehen": "mira",
+				"dialog": "mira_glutoase",
+				"wenn": {
+					"gemerkt": "mira_geheilt"
+				}
 			},
 			"kael_glutoase": {
 				"name": "Kael",
@@ -3029,6 +3044,18 @@
 				"wenn": {
 					"gemerkt": "lauf:hammerbrueder",
 					"nicht_gemerkt": "lauf:kettenschmied"
+				}
+			},
+			{
+				"art": "glutsplitter",
+				"feld": [
+					38,
+					14
+				],
+				"dialog": "vs_glutsplitter",
+				"wenn": {
+					"gemerkt": "lauf:kettenschmied",
+					"nicht_gemerkt": "lauf:splitter"
 				}
 			}
 		]
