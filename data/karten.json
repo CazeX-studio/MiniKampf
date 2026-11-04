@@ -1302,8 +1302,8 @@
 				],
 				"aussehen": "ysolde",
 				"nachts": [
-					14,
-					26
+					30,
+					28
 				],
 				"dialog": "ysolde"
 			},
@@ -1368,8 +1368,8 @@
 				],
 				"aussehen": "grund_alter_mensch+hagebutte#zubehoer=kartenstapel",
 				"nachts": [
-					7,
-					21
+					10,
+					23
 				],
 				"dialog": "oma_hagebutte"
 			},
@@ -1413,6 +1413,105 @@
 				],
 				"aussehen": "grund_mann+borko#hut=borko_kochmuetze,zubehoer=schoepfkelle",
 				"dialog": "borko"
+			},
+			"jaeger_1": {
+				"name": "Jäger",
+				"feld": [
+					30,
+					8
+				],
+				"aussehen": "grund_mann+v_m2#hut=gruene_kapuze",
+				"dialog": "volk_gw_jaeger"
+			},
+			"jaeger_2": {
+				"name": "Jägerin",
+				"feld": [
+					45,
+					20
+				],
+				"aussehen": "grund_frau+v_w2#hut=gruene_kapuze",
+				"dialog": "volk_gw_jaegerin"
+			},
+			"sammlerin_1": {
+				"name": "Sammlerin",
+				"feld": [
+					20,
+					24
+				],
+				"aussehen": "grund_frau+v_w3#zubehoer=korb",
+				"dialog": "volk_gw_sammlerin_1",
+				"wenn": {
+					"nacht": false
+				}
+			},
+			"sammlerin_2": {
+				"name": "Sammlerin",
+				"feld": [
+					28,
+					26
+				],
+				"aussehen": "grund_frau+v_w1#zubehoer=korb",
+				"dialog": "volk_gw_sammlerin_2",
+				"wenn": {
+					"nacht": false
+				}
+			},
+			"kind_gw_1": {
+				"name": "Junge",
+				"feld": [
+					22,
+					14
+				],
+				"aussehen": "grund_kind+k_m1#hut=gruene_kapuze",
+				"dialog": "volk_gw_kinder",
+				"wenn": {
+					"nacht": false
+				}
+			},
+			"kind_gw_2": {
+				"name": "Mädchen",
+				"feld": [
+					28,
+					14
+				],
+				"aussehen": "grund_kind+k_w1",
+				"dialog": "volk_gw_kinder",
+				"wenn": {
+					"nacht": false
+				}
+			},
+			"gast_gw_1": {
+				"name": "Gast",
+				"feld": [
+					7,
+					26
+				],
+				"aussehen": "grund_mann+v_m1",
+				"dialog": "volk_gw_gast_1",
+				"wenn": {
+					"nacht": true
+				}
+			},
+			"gast_gw_2": {
+				"name": "Gast",
+				"feld": [
+					14,
+					25
+				],
+				"aussehen": "grund_handwerker+v_m3",
+				"dialog": "volk_gw_gast_2",
+				"wenn": {
+					"nacht": true
+				}
+			},
+			"gast_gw_3": {
+				"name": "Gast",
+				"feld": [
+					8,
+					21
+				],
+				"aussehen": "grund_frau+v_w2",
+				"dialog": "volk_gw_gast_3"
 			}
 		},
 		"baukasten": "karte_wipfelheim"

@@ -1,5 +1,5 @@
 extends SceneTree
-## D21: Grünwacht-Figuren nach Steckbrief (NPC.md): eigene Bilder, Köpfe, Porträts, Plätze bei Tag und Nacht, Wirt Borko.
+## D21 und D21b: Grünwacht-Figuren nach Steckbrief (NPC.md): eigene Bilder, Köpfe, Porträts, Plätze bei Tag und Nacht, Wirt Borko.
 ## Aufruf: Godot --headless --path . -s tests/gruenwacht_figuren_test.gd
 
 const NEBEN := {"salbei": "grund_haendler+salbei#zubehoer=kraeuterbuendel&korb", "bank_wipfelheim": "grund_alter_mensch+tamm#hut=tamm_moos_hut",
@@ -37,8 +37,8 @@ func _initialize() -> void:
 	var tag: Vector2i = world.npcs.ysolde.cell
 	_check(world._npc_present(p, "kobalt") and world._npc_present(p, "borko"), "Tags: Kobalt und Borko da")
 	world.nacht = true
-	_check(world.npcs.ysolde.cell == Vector2i(14, 26) and world.npcs.ysolde.cell != tag, "Nachts: Ysolde am Rand des Dorfs")
-	_check(world.npcs.fenn.cell == Vector2i(21, 27) and world.npcs.oma_hagebutte.cell == Vector2i(7, 21), "Nachts: Fenn am Rand, Oma beim Gasthaus")
+	_check(world.npcs.ysolde.cell == Vector2i(30, 28) and world.npcs.ysolde.cell != tag, "Nachts: Ysolde am Rand des Dorfs")
+	_check(world.npcs.fenn.cell == Vector2i(21, 27) and world.npcs.oma_hagebutte.cell == Vector2i(10, 23), "Nachts: Fenn am Rand, Oma beim Gasthaus")
 	_check(not world._npc_present(p, "kobalt"), "Nachts: Kobalt nicht zu sehen")
 	world.start_dialog(p, "ysolde")
 	_check(world.dialog_view(p).text.contains("Nachts hat der Wald andere Augen"), "Ysolde nachts")
@@ -48,6 +48,20 @@ func _initialize() -> void:
 	_check(world.npcs.ysolde.cell == tag, "Morgens: Ysolde wieder auf der Hauptplattform")
 	world.start_dialog(p, "borko")
 	_check(world.dialog_view(p).wer == "Borko" and WorldState.portraet(world.dialog_view(p)).ends_with("borko_wuetend.png"), "Borko brummt")
+
+	# D21b: Volk in Grünwacht
+	world.nacht = false
+	for id: String in ["jaeger_1", "jaeger_2", "sammlerin_1", "sammlerin_2", "kind_gw_1", "kind_gw_2", "gast_gw_3"]:
+		_check(world._npc_present(p, id), "Tags da: %s" % id)
+		_check(FigurTeile.bild(world.npcs[id].look, "idle_vorn", 0) != null, "Aus dem Baukasten: %s" % id)
+	for id: String in ["gast_gw_1", "gast_gw_2"]:
+		_check(not world._npc_present(p, id), "Tags nicht da: %s" % id)
+	world.nacht = true
+	for id: String in ["sammlerin_1", "sammlerin_2", "kind_gw_1", "kind_gw_2"]:
+		_check(not world._npc_present(p, id), "Nachts nicht da: %s" % id)
+	for id: String in ["jaeger_1", "jaeger_2", "gast_gw_1", "gast_gw_2", "gast_gw_3"]:
+		_check(world._npc_present(p, id), "Nachts da: %s" % id)
+	world.nacht = false
 	Tageszeit.feste_stunde = -1.0
 	print("Grünwacht-Figuren: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)
