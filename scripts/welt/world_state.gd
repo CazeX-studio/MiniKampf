@@ -796,10 +796,12 @@ static func portraet(view: Dictionary) -> String:
 	var wer := str(view.get("wer", "")).to_lower()
 	if wer == "":
 		return ""
-	var pfad := "res://assets/portraets/%s_%s.png" % [wer, view.get("stimmung", "ruhig")]
-	if not ResourceLoader.exists(pfad):
-		pfad = "res://assets/portraets/%s_ruhig.png" % wer
-	return pfad if ResourceLoader.exists(pfad) else ""
+	# Gibt es die Stimmung nicht (Nebenfiguren haben nur zwei oder drei), dann die nächstbeste
+	for stimmung: String in [str(view.get("stimmung", "ruhig")), "ruhig", "laechelnd", "ueberrascht", "traurig", "wuetend"]:
+		var pfad := "res://assets/portraets/%s_%s.png" % [wer, stimmung]
+		if ResourceLoader.exists(pfad):
+			return pfad
+	return ""
 
 
 func dialog_view(p: PlayerState) -> Dictionary:

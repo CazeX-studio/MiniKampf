@@ -56,8 +56,7 @@
 				15,
 				45
 			],
-			"aussehen": "wizzard_f",
-			"farbe": "ffe0b0",
+			"aussehen": "grund_gelehrter+lene",
 			"dialog": "schreiberin"
 		},
 		"schmiedin": {
@@ -76,8 +75,7 @@
 				37,
 				15
 			],
-			"aussehen": "knight_m",
-			"farbe": "ffd36b",
+			"aussehen": "bingo",
 			"dialog": "bingo",
 			"zeichen": "muenze"
 		},
@@ -97,8 +95,7 @@
 				30,
 				46
 			],
-			"aussehen": "elf_m",
-			"farbe": "ffb070",
+			"aussehen": "marv",
 			"dialog": "marv",
 			"wenn": {
 				"und": [
@@ -232,8 +229,7 @@
 				60,
 				52
 			],
-			"aussehen": "knight_m",
-			"farbe": "b0b8c8",
+			"aussehen": "grund_wache+brom",
 			"dialog": "wache"
 		},
 		"mira": {
@@ -242,8 +238,7 @@
 				57,
 				55
 			],
-			"aussehen": "elf_f",
-			"farbe": "fff0c0",
+			"aussehen": "mira",
 			"dialog": "mira",
 			"wenn": {
 				"auftrag": "leises_singen",
@@ -259,8 +254,7 @@
 				30,
 				28
 			],
-			"aussehen": "elf_m",
-			"farbe": "ffb070",
+			"aussehen": "marv",
 			"dialog": "marv_fest",
 			"wenn": {
 				"gemerkt": "nacht",
@@ -293,8 +287,7 @@
 				30,
 				46
 			],
-			"aussehen": "elf_m",
-			"farbe": "ffb070",
+			"aussehen": "marv",
 			"dialog": "marv_abschied",
 			"wenn": {
 				"gemerkt": "abreise_angekuendigt"
@@ -309,8 +302,7 @@
 				38,
 				8
 			],
-			"aussehen": "elf_f",
-			"farbe": "c8d8ff",
+			"aussehen": "grund_alter_mensch+ilse",
 			"dialog": "bank",
 			"zeichen": "truhe"
 		},
@@ -320,8 +312,7 @@
 				10,
 				28
 			],
-			"aussehen": "knight_f",
-			"farbe": "ffd0c0",
+			"aussehen": "grund_frau+hanne",
 			"dialog": "hanne"
 		},
 		"edmar": {
@@ -330,8 +321,7 @@
 				33,
 				36
 			],
-			"aussehen": "wizzard_m",
-			"farbe": "f0d890",
+			"aussehen": "grund_mann+edmar",
 			"dialog": "edmar"
 		},
 		"quill": {
@@ -340,8 +330,7 @@
 				27,
 				25
 			],
-			"aussehen": "knight_m",
-			"farbe": "c8c0b0",
+			"aussehen": "grund_handwerker+quill",
 			"dialog": "quill"
 		},
 		"pip": {
@@ -350,8 +339,7 @@
 				29,
 				26
 			],
-			"aussehen": "elf_m",
-			"farbe": "ffe8a0",
+			"aussehen": "grund_kind+pip",
 			"dialog": "pip"
 		},
 		"lotte": {
@@ -360,8 +348,7 @@
 				30,
 				26
 			],
-			"aussehen": "elf_f",
-			"farbe": "c0e8ff",
+			"aussehen": "grund_kind+lotte",
 			"dialog": "lotte"
 		},
 		"torwache_nebelinseln": {
