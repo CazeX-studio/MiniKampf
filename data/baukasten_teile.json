@@ -2511,6 +2511,28 @@
 				142,
 				147
 			]
+		},
+		"marktstand_rot_zu": {
+			"bild": "objekte/marktstand_rot_zu.png",
+			"flaeche": [
+				3,
+				2
+			],
+			"fuss": [
+				100,
+				125
+			]
+		},
+		"marktstand_blau_zu": {
+			"bild": "objekte/marktstand_blau_zu.png",
+			"flaeche": [
+				3,
+				2
+			],
+			"fuss": [
+				100,
+				135
+			]
 		}
 	}
 }

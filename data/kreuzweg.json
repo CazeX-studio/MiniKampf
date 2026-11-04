@@ -48,7 +48,11 @@
 			"dialog": "ye_tor",
 			"wenn": {
 				"gemerkt": "ausbildung_morgen"
-			}
+			},
+			"nachts": [
+				12,
+				44
+			]
 		},
 		"schreiberin": {
 			"name": "Schreiberin Lene",
@@ -111,7 +115,11 @@
 			},
 			"anspringen": {
 				"radius": 5
-			}
+			},
+			"nachts": [
+				12,
+				28
+			]
 		},
 		"gesandte_arkanum": {
 			"name": "Magistra Ilwen",
@@ -322,7 +330,17 @@
 				36
 			],
 			"aussehen": "grund_mann+edmar#zubehoer=amtskette",
-			"dialog": "edmar"
+			"dialog": "edmar",
+			"wenn": {
+				"oder": [
+					{
+						"nacht": false
+					},
+					{
+						"gemerkt": "nacht"
+					}
+				]
+			}
 		},
 		"quill": {
 			"name": "Steinmetz Quill",
@@ -331,7 +349,17 @@
 				25
 			],
 			"aussehen": "grund_handwerker+quill#zubehoer=meissel",
-			"dialog": "quill"
+			"dialog": "quill",
+			"wenn": {
+				"oder": [
+					{
+						"nacht": false
+					},
+					{
+						"gemerkt": "nacht"
+					}
+				]
+			}
 		},
 		"pip": {
 			"name": "Pip",
@@ -340,7 +368,17 @@
 				26
 			],
 			"aussehen": "grund_kind+pip#zubehoer=holzschwert",
-			"dialog": "pip"
+			"dialog": "pip",
+			"wenn": {
+				"oder": [
+					{
+						"nacht": false
+					},
+					{
+						"gemerkt": "nacht"
+					}
+				]
+			}
 		},
 		"lotte": {
 			"name": "Lotte",
@@ -349,7 +387,17 @@
 				26
 			],
 			"aussehen": "grund_kind+lotte#hut=lotte_krone",
-			"dialog": "lotte"
+			"dialog": "lotte",
+			"wenn": {
+				"oder": [
+					{
+						"nacht": false
+					},
+					{
+						"gemerkt": "nacht"
+					}
+				]
+			}
 		},
 		"torwache_nebelinseln": {
 			"name": "Torwache",
@@ -357,7 +405,7 @@
 				2,
 				5
 			],
-			"aussehen": "knight_m",
+			"aussehen": "grund_wache+v_m1",
 			"farbe": "b0c8d8",
 			"dialog": "torwache_nebelinseln"
 		},
@@ -367,7 +415,7 @@
 				31,
 				3
 			],
-			"aussehen": "knight_m",
+			"aussehen": "grund_wache+v_m3",
 			"farbe": "c4b0d8",
 			"dialog": "torwache_arkanum"
 		},
@@ -377,9 +425,145 @@
 				61,
 				31
 			],
-			"aussehen": "knight_m",
+			"aussehen": "grund_wache+v_m2",
 			"farbe": "d8c8a0",
 			"dialog": "torwache_messinghafen"
+		},
+		"tessa": {
+			"name": "Tessa",
+			"feld": [
+				15,
+				47
+			],
+			"nachts": [
+				7,
+				30
+			],
+			"aussehen": "novize_w+tessa",
+			"dialog": "tessa",
+			"wenn": {
+				"gemerkt": "gilde_angemeldet",
+				"nicht_gemerkt": "klasse_bestaetigt"
+			}
+		},
+		"gorm": {
+			"name": "Gorm",
+			"feld": [
+				12,
+				47
+			],
+			"nachts": [
+				11,
+				30
+			],
+			"aussehen": "novize_m+gorm",
+			"dialog": "gorm",
+			"wenn": {
+				"gemerkt": "gilde_angemeldet",
+				"nicht_gemerkt": "klasse_bestaetigt"
+			}
+		},
+		"marktfrau": {
+			"name": "Marktfrau Rosa",
+			"feld": [
+				37,
+				23
+			],
+			"aussehen": "grund_haendler+v_w2",
+			"dialog": "volk_marktfrau",
+			"wenn": {
+				"nacht": false
+			}
+		},
+		"marktmann": {
+			"name": "Gemüsehändler Jost",
+			"feld": [
+				41,
+				27
+			],
+			"aussehen": "grund_haendler+v_m3",
+			"dialog": "volk_marktmann",
+			"wenn": {
+				"nacht": false
+			}
+		},
+		"buerger_1": {
+			"name": "Bürgerin",
+			"feld": [
+				24,
+				33
+			],
+			"aussehen": "grund_frau+v_w1",
+			"dialog": "volk_buergerin",
+			"wenn": {
+				"nacht": false
+			}
+		},
+		"buerger_2": {
+			"name": "Bürger",
+			"feld": [
+				40,
+				33
+			],
+			"aussehen": "grund_mann+v_m1",
+			"dialog": "volk_buerger",
+			"wenn": {
+				"nacht": false
+			}
+		},
+		"buerger_3": {
+			"name": "Alter Bürger",
+			"feld": [
+				19,
+				30
+			],
+			"aussehen": "grund_alter_mensch+a_m1",
+			"dialog": "volk_alter"
+		},
+		"buerger_4": {
+			"name": "Junge",
+			"feld": [
+				44,
+				24
+			],
+			"aussehen": "grund_kind+k_m1",
+			"dialog": "volk_junge",
+			"wenn": {
+				"nacht": false
+			}
+		},
+		"gast_1": {
+			"name": "Gast",
+			"feld": [
+				14,
+				27
+			],
+			"aussehen": "grund_handwerker+v_m2",
+			"dialog": "volk_gast_1"
+		},
+		"gast_2": {
+			"name": "Gast",
+			"feld": [
+				8,
+				28
+			],
+			"aussehen": "grund_frau+v_w3",
+			"dialog": "volk_gast_2",
+			"wenn": {
+				"nacht": true
+			}
+		},
+		"gast_3": {
+			"name": "Gast",
+			"feld": [
+				12,
+				30
+			],
+			"aussehen": "grund_mann+v_m3",
+			"dialog": "volk_gast_3",
+			"wenn": {
+				"nacht": true
+			}
 		}
 	},
 	"deko": [

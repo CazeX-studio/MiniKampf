@@ -101,7 +101,11 @@ var decorations: Array[Dictionary] = []
 var monsters: Array[Dictionary] = []
 ## Ist nach der Uhr dieser Welt gerade Nacht? (D14: nachts andere Monster.) Allein ist das die eigene Uhr, beim
 ## Zusammenspielen die des Servers; Mitspieler bekommen den Wert mit den Monstern geschickt (Netz._s_monsters).
-var nacht := Tageszeit.ist_nacht()
+var nacht := Tageszeit.ist_nacht():
+	set(wert):
+		if wert != nacht:
+			nacht = wert
+			_npc_orte()
 var _uhr_pruefen := 0.0
 ## So nah muss man einem Monster kommen, damit der Kampf beginnt (Felder)
 const MONSTER_TOUCH := 0.6
@@ -182,11 +186,19 @@ func _init() -> void:
 		if all_maps[id] is Dictionary and all_maps[id].has("raster"):
 			maps[id] = WorldMap.from_data(id, all_maps[id], legend)
 			_add_things(id, all_maps[id])
+	_npc_orte()
 	# Wer irgendwo hintippt, läuft um Monster herum statt mitten hindurch (nur wer sie antippt, läuft hin)
 	for m: Dictionary in monsters:
 		var astar: AStarGrid2D = get_map(m.karte).astar
 		if astar.region.has_point(m.feld) and not astar.is_point_solid(m.feld):
 			astar.set_point_weight_scale(m.feld, 40.0)
+
+
+## Figuren mit einem Platz für die Nacht dorthin stellen (und morgens zurück).
+func _npc_orte() -> void:
+	for npc: Dictionary in npcs.values():
+		if npc.has("nacht_cell"):
+			npc.cell = npc.nacht_cell if nacht else npc.tag_cell
 
 
 ## NPCs, Sammelpunkte, Orte und Schmuck einer Karte aus ihren Daten.
@@ -198,8 +210,12 @@ func _add_things(map_id: String, data: Dictionary) -> void:
 		var cell := Vector2i(int(d.feld[0]), int(d.feld[1]))
 		npcs[id] = {name = d.name, cell = cell, map = map_id, look = d.aussehen, tint = Color(d.get("farbe", "ffffff")),
 				dialog = d.get("dialog", id), cond = d.get("wenn", {}), approach = d.get("anspringen", {}),
-				zeichen = str(d.get("zeichen", "")), liegt = bool(d.get("liegt", false))}
+				zeichen = str(d.get("zeichen", "")), liegt = bool(d.get("liegt", false)), tag_cell = cell}
 		m.block(cell)
+		# {"nachts": [x, y]}: nachts steht die Figur dort (Steckbriefe in NPC.md, D20d)
+		if d.has("nachts"):
+			npcs[id].nacht_cell = Vector2i(int(d.nachts[0]), int(d.nachts[1]))
+			m.block(npcs[id].nacht_cell)
 	for d: Dictionary in data.get("deko", []):
 		decorations.append({art = d.art, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), map = map_id, cond = d.get("wenn", {}),
 				text = d.get("text", "")})
@@ -234,7 +250,8 @@ func _build_map() -> void:
 			for y in rect.size.y:
 				for x in rect.size.x:
 					blocked.erase(rect.position + Vector2i(x, y))
-		elif not o.has("wenn"):
+		elif not o.has("wenn") or o.get("sperrt", false):
+			# "sperrt": true – sperrt auch mit Bedingung immer (Marktstand tags offen, nachts zu: gleicher Platz)
 			for cell: Vector2i in BaukastenBoden.gesperrte_felder(o, teile):
 				blocked[cell] = true
 

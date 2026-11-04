@@ -66,7 +66,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D20b:** Ye mit Regenschirm und seinen neuen Sprüchen (Bilder `haupt_ye_welt.png`, `haupt_ye_portraets.png`). – Status: fertig
 - **D20c:** Kreuzweg-Figuren nach Steckbrief: eigene Köpfe und Baukasten-Körper für Lene, Hanne, Ilse, Edmar, Brom, Quill, Pip, Lotte; Bingo, Marv, Mira mit ihren eigenen Bildern; Porträts im Gespräch. – Status: fertig (04.11.2026; geteilt, Rest in D20c2)
 - **D20c2:** Tessa und Gorm mit eigenen Köpfen auf den Novizen-Körpern (Welt und Kampf), Zubehör der Nebenfiguren (Hannes Schürze und Kochlöffel, Ilses Schlüsselbund, Edmars Amtskette und Festschärpe, Broms Helm, Quills Meißel, Pips Holzschwert, Lottes Papierkrone), Mira krank liegend. – Status: fertig (04.11.2026; Ilses Ärmelschoner und Edmars Festschärpen noch nicht im Spiel, Mira liegt erst im Krankenzelt der Glutoase)
-- **D20d:** Figuren tags und nachts an ihren Plätzen (Steckbriefe), Volk aus dem Baukasten (Wachen, Marktleute, Bürger, Gäste im Wegrast), Marktstände nachts zu. – Status: offen
+- **D20d:** Figuren tags und nachts an ihren Plätzen (Steckbriefe), Volk aus dem Baukasten (Wachen, Marktleute, Bürger, Gäste im Wegrast), Marktstände nachts zu. – Status: fertig (04.11.2026; geschlossene Stände vorläufig, Bildauftrag B6e; Volk steht, läuft noch keine Runden)
 - **D21:** Grünwacht-Figuren nach Steckbrief: Salbei, Borko, Ysolde nachts, Oma Hagebutte. (1.10) – Status: offen
 - **D22:** Monster nach Regelblatt in Kreuzwegfeldern, Hirschtal, Wachtwald, Tiefwurzel und Pilzhöhle, dazu die Spezialbewegungen der Pilzhöhlen-Bosse. (1.11) – Status: offen
 

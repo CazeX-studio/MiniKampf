@@ -196,14 +196,44 @@
 			"feld": [
 				38,
 				21
-			]
+			],
+			"wenn": {
+				"nacht": false
+			},
+			"sperrt": true
+		},
+		{
+			"teil": "marktstand_rot_zu",
+			"feld": [
+				38,
+				21
+			],
+			"wenn": {
+				"nacht": true
+			},
+			"sperrt": true
 		},
 		{
 			"teil": "marktstand_blau",
 			"feld": [
 				38,
 				25
-			]
+			],
+			"wenn": {
+				"nacht": false
+			},
+			"sperrt": true
+		},
+		{
+			"teil": "marktstand_blau_zu",
+			"feld": [
+				38,
+				25
+			],
+			"wenn": {
+				"nacht": true
+			},
+			"sperrt": true
 		},
 		{
 			"teil": "fass",
