@@ -1,0 +1,1829 @@
+{
+	"boden": [
+		"lmmmmwwwwlwwwwwwrwlwwwwwrlllllwwwwrwlwww",
+		"mmmmmwlwwwwwwwwlwrwwewwwllllllwwwlwwwwww",
+		"mmmlmwwwwwwwlwrwwwwwelwwwllllllwwwwwwwwl",
+		"lmmmmwwwwlwwwwwwwwlwewwwwlllllwwwwwwlwww",
+		"lllllrlwwwwwwwwlwwwwemmmlwwrwwwwwlwwwwww",
+		"lllllwrwwrwwlwwwwwwwelmmmwwrwwlwwwwwwwwl",
+		"lllllwwwwlrwwwwrwwlwemmmmwwlwwwrwwwwlwww",
+		"lllllwlwwwwwwwwlwwwwemmmlwwwwwwwwlwrwwww",
+		"wwrlwlllllmmlmmwwwwwelwwwwwwwwlwwwwmmmml",
+		"lwwwwlllllmmmmmwwwlwewwwwrwlwwwwwwwmlmmm",
+		"wwwwwlllllmmmmmlwwwwewwwlwwwwwwwwlwmmmmm",
+		"wwwlwlllllmmlmmwwwwwelrwwwrwrwlwwrwmmmml",
+		"lwwwwwwwwlwrwwwwwwlweelllmmlmmmmmmmwlrww",
+		"wwwwrwlwwwwwwwwlwwweeeeeeeeeeeeeeemwwwww",
+		"rrwlwwwwwwwwlwwwwweelelllmmmmmlemmmrwwwl",
+		"lwwwwwweeeeeeeeeeeewlelllmmlmeeemmmwlwww",
+		"wwwwwwlwrwewwwwlwwwwwewwlwwwwewwwlwwwwrw",
+		"wrwlwwwwwwewlwwwwwwwwewwwwwrwelwwwwwwwrl",
+		"lwwwwwwwwlewrwwwwwlwwewwwwwlwewwwwwwlwww",
+		"wwwwwwlwwweeewwlwwwwrewwlwwwrewwwlwwwwww",
+		"wwwlwmmmmmmmemmlllllwewwrwwwwelwwwwwwwwl",
+		"lrwwwmmmmlmmemmlllllwewwwwwlwewwwwwwlwww",
+		"wwwrwmlmmmmmemmlllllwwwwlrwwwewwwlwwwwww",
+		"wwwlwmmmmmmmemmlllllwlrwwwwwwelwwwwwwwwl",
+		"lmmmmwwwwlwwewwwwwlwwrwwwmmlmelllllwlwww",
+		"mmmmmwlwwwwwewwlwwwwwwwwlmmmmmlllllwwwww",
+		"mmmlmwwwwwwwlwwwwwwwwlwwwmmmmmlllllwwwwl",
+		"lmmmmwwwrlwwwrwwwwlwwwwwwmmlmmlllllwlwww",
+		"wwwwwwlwwwwwwwrlmmmmwwwwlrwwwwwwwlwlllll",
+		"wwwlwwwwwwwwlwwmmmmmwlwwwwwwwwlwwwwlllll"
+	],
+	"objekte": [
+		{
+			"teil": "gw_pfad_tiefwurzel",
+			"feld": [
+				17,
+				1
+			],
+			"name": "Pfad nach oben"
+		},
+		{
+			"teil": "gw_wurzelhoehle",
+			"feld": [
+				3,
+				18
+			]
+		},
+		{
+			"teil": "gw_grosse_wurzel",
+			"feld": [
+				24,
+				6
+			]
+		},
+		{
+			"teil": "gw_grosse_wurzel",
+			"feld": [
+				14,
+				19
+			]
+		},
+		{
+			"teil": "gw_verdorrter_baum",
+			"feld": [
+				34,
+				4
+			]
+		},
+		{
+			"teil": "gw_verdorrter_baum",
+			"feld": [
+				5,
+				6
+			]
+		},
+		{
+			"teil": "gw_verdorrter_baum",
+			"feld": [
+				24,
+				26
+			]
+		},
+		{
+			"teil": "gw_splitterkristall_gross",
+			"feld": [
+				33,
+				24
+			]
+		},
+		{
+			"teil": "gw_splitterkristall_gross",
+			"feld": [
+				10,
+				8
+			]
+		},
+		{
+			"teil": "gw_wurzelsplitter",
+			"feld": [
+				16,
+				26
+			]
+		},
+		{
+			"teil": "gw_wurzelsplitter",
+			"feld": [
+				35,
+				15
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_gross",
+			"feld": [
+				27,
+				3
+			]
+		},
+		{
+			"teil": "gw_splitterkristall_klein",
+			"feld": [
+				23,
+				22
+			]
+		},
+		{
+			"teil": "gw_nebelboden",
+			"feld": [
+				6,
+				12
+			]
+		},
+		{
+			"teil": "gw_nebelboden",
+			"feld": [
+				24,
+				17
+			]
+		},
+		{
+			"teil": "gw_nebelboden",
+			"feld": [
+				15,
+				22
+			]
+		},
+		{
+			"teil": "gw_nebelboden",
+			"feld": [
+				32,
+				19
+			]
+		},
+		{
+			"teil": "gw_nebelboden",
+			"feld": [
+				26,
+				9
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				0,
+				0
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				1,
+				0
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				2,
+				0
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				3,
+				0
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				4,
+				0
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				5,
+				0
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				6,
+				0
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				7,
+				0
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				8,
+				0
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				9,
+				0
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				10,
+				0
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				11,
+				0
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				12,
+				0
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				13,
+				0
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				14,
+				0
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				15,
+				0
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				16,
+				0
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				24,
+				0
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				25,
+				0
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				26,
+				0
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				27,
+				0
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				28,
+				0
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				29,
+				0
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				30,
+				0
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				31,
+				0
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				32,
+				0
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				33,
+				0
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				34,
+				0
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				35,
+				0
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				36,
+				0
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				37,
+				0
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				38,
+				0
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				39,
+				0
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				0,
+				1
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				1,
+				1
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				4,
+				1
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				5,
+				1
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				8,
+				1
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				9,
+				1
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				10,
+				1
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				11,
+				1
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				12,
+				1
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				13,
+				1
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				14,
+				1
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				16,
+				1
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				24,
+				1
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				25,
+				1
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				26,
+				1
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				28,
+				1
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				29,
+				1
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				31,
+				1
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				33,
+				1
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				34,
+				1
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				35,
+				1
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				36,
+				1
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				37,
+				1
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				38,
+				1
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				39,
+				1
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				0,
+				2
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				38,
+				2
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				39,
+				2
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				0,
+				3
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_klein",
+			"feld": [
+				3,
+				3
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				38,
+				3
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				39,
+				3
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				0,
+				4
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_mittel",
+			"feld": [
+				36,
+				4
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				39,
+				4
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				0,
+				5
+			]
+		},
+		{
+			"teil": "dornengebuesch",
+			"feld": [
+				3,
+				5
+			]
+		},
+		{
+			"teil": "gw_farn",
+			"feld": [
+				33,
+				5
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				39,
+				5
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				0,
+				6
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				1,
+				6
+			]
+		},
+		{
+			"teil": "gw_farn",
+			"feld": [
+				18,
+				6
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				39,
+				6
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				0,
+				7
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				1,
+				7
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				19,
+				7
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				38,
+				7
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				39,
+				7
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				0,
+				8
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				17,
+				8
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				38,
+				8
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				39,
+				8
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				0,
+				9
+			]
+		},
+		{
+			"teil": "dornengebuesch",
+			"feld": [
+				6,
+				9
+			]
+		},
+		{
+			"teil": "gw_farn",
+			"feld": [
+				28,
+				9
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				39,
+				9
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				0,
+				10
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				1,
+				10
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_mittel",
+			"feld": [
+				17,
+				10
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				38,
+				10
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				39,
+				10
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				0,
+				11
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				1,
+				11
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_mittel",
+			"feld": [
+				6,
+				11
+			]
+		},
+		{
+			"teil": "gw_farn",
+			"feld": [
+				16,
+				11
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				38,
+				11
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				39,
+				11
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				0,
+				12
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				38,
+				12
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				39,
+				12
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				0,
+				13
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				1,
+				13
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				3,
+				13
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_klein",
+			"feld": [
+				34,
+				13
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				38,
+				13
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				39,
+				13
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				0,
+				14
+			]
+		},
+		{
+			"teil": "dornengebuesch",
+			"feld": [
+				7,
+				14
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				11,
+				14
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				13,
+				14
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				39,
+				14
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				0,
+				15
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				1,
+				15
+			]
+		},
+		{
+			"teil": "dornengebuesch",
+			"feld": [
+				3,
+				15
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_mittel",
+			"feld": [
+				23,
+				15
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				38,
+				15
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				39,
+				15
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				0,
+				16
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				1,
+				16
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				39,
+				16
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				0,
+				17
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				1,
+				17
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				5,
+				17
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				8,
+				17
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				39,
+				17
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				0,
+				18
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				1,
+				18
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				12,
+				18
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				27,
+				18
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				39,
+				18
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				0,
+				19
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				1,
+				19
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_klein",
+			"feld": [
+				9,
+				19
+			]
+		},
+		{
+			"teil": "dornengebuesch",
+			"feld": [
+				30,
+				19
+			]
+		},
+		{
+			"teil": "gw_farn",
+			"feld": [
+				31,
+				19
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				34,
+				19
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				38,
+				19
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				39,
+				19
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				0,
+				20
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				1,
+				20
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				39,
+				20
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				0,
+				21
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				1,
+				21
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				18,
+				21
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				38,
+				21
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				39,
+				21
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				0,
+				22
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				1,
+				22
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				38,
+				22
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				39,
+				22
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				0,
+				23
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				1,
+				23
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				19,
+				23
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				39,
+				23
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				0,
+				24
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				26,
+				24
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				36,
+				24
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				38,
+				24
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				39,
+				24
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				0,
+				25
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_mittel",
+			"feld": [
+				17,
+				25
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				39,
+				25
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				0,
+				26
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				28,
+				26
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				39,
+				26
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				0,
+				27
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				1,
+				27
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				39,
+				27
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				0,
+				28
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				2,
+				28
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				4,
+				28
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				5,
+				28
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				6,
+				28
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				8,
+				28
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				9,
+				28
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				12,
+				28
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				14,
+				28
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				15,
+				28
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				16,
+				28
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				17,
+				28
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				18,
+				28
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				19,
+				28
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				20,
+				28
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				24,
+				28
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				25,
+				28
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				27,
+				28
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				29,
+				28
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				30,
+				28
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				35,
+				28
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				36,
+				28
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				38,
+				28
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				39,
+				28
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				0,
+				29
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				1,
+				29
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				2,
+				29
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				3,
+				29
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				4,
+				29
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				5,
+				29
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				6,
+				29
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				7,
+				29
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				8,
+				29
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				9,
+				29
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				10,
+				29
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				11,
+				29
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				12,
+				29
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				13,
+				29
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				14,
+				29
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				15,
+				29
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				16,
+				29
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				17,
+				29
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				18,
+				29
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				19,
+				29
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				20,
+				29
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				21,
+				29
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				22,
+				29
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				23,
+				29
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				24,
+				29
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				25,
+				29
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				26,
+				29
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				27,
+				29
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				28,
+				29
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				29,
+				29
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				30,
+				29
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				31,
+				29
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				32,
+				29
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				33,
+				29
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				34,
+				29
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				35,
+				29
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				36,
+				29
+			]
+		},
+		{
+			"teil": "tanne_gross",
+			"feld": [
+				37,
+				29
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				38,
+				29
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				39,
+				29
+			]
+		},
+		{
+			"teil": "baum_herbst",
+			"feld": [
+				11,
+				5
+			]
+		},
+		{
+			"teil": "gw_dunkler_baum",
+			"feld": [
+				35,
+				8
+			]
+		},
+		{
+			"teil": "baum_herbst",
+			"feld": [
+				6,
+				24
+			]
+		}
+	]
+}

@@ -1105,6 +1105,14 @@
 				33,
 				38
 			]
+		},
+		{
+			"teil": "gw_pfad_tiefwurzel",
+			"feld": [
+				24,
+				37
+			],
+			"name": "Nach Tiefwurzel"
 		}
 	]
 }

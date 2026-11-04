@@ -370,6 +370,19 @@
 					2,
 					9
 				]
+			},
+			{
+				"bereich": [
+					20,
+					38,
+					4,
+					1
+				],
+				"karte": "tiefwurzel",
+				"feld": [
+					20,
+					2
+				]
 			}
 		],
 		"kampf_hintergrund": "wald",
@@ -546,115 +559,6 @@
 					"nachtuhu"
 				],
 				"stufe": 19,
-				"zeit": "nacht"
-			},
-			{
-				"feld": [
-					8,
-					32
-				],
-				"gegner": [
-					"donnerhirsch"
-				],
-				"stufe": 20
-			},
-			{
-				"feld": [
-					21,
-					32
-				],
-				"gegner": [
-					"sumpfschnapper"
-				],
-				"stufe": 20
-			},
-			{
-				"feld": [
-					35,
-					32
-				],
-				"gegner": [
-					"moosgolem",
-					"rankenschlinger"
-				],
-				"stufe": 20
-			},
-			{
-				"feld": [
-					28,
-					36
-				],
-				"gegner": [
-					"rankenschlinger",
-					"donnerhirsch"
-				],
-				"stufe": 20
-			},
-			{
-				"feld": [
-					13,
-					37
-				],
-				"gegner": [
-					"moosgolem",
-					"sumpfschnapper"
-				],
-				"stufe": 20
-			},
-			{
-				"feld": [
-					4,
-					36
-				],
-				"gegner": [
-					"splitterbaer_wild"
-				],
-				"stufe": 20
-			},
-			{
-				"feld": [
-					8,
-					32
-				],
-				"gegner": [
-					"splitterwolf"
-				],
-				"stufe": 20,
-				"zeit": "nacht"
-			},
-			{
-				"feld": [
-					21,
-					32
-				],
-				"gegner": [
-					"moderfalter",
-					"splitterwolf"
-				],
-				"stufe": 20,
-				"zeit": "nacht"
-			},
-			{
-				"feld": [
-					35,
-					32
-				],
-				"gegner": [
-					"splitterwolf",
-					"splitterwolf"
-				],
-				"stufe": 20,
-				"zeit": "nacht"
-			},
-			{
-				"feld": [
-					28,
-					36
-				],
-				"gegner": [
-					"moderfalter"
-				],
-				"stufe": 20,
 				"zeit": "nacht"
 			}
 		],
@@ -1640,5 +1544,175 @@
 			}
 		},
 		"baukasten": "karte_wipfelheim"
+	},
+	"tiefwurzel": {
+		"name": "Tiefwurzel",
+		"musik": "wald",
+		"grund": "waldboden",
+		"licht": "8a9890",
+		"start": [
+			20,
+			2
+		],
+		"raster": [
+			"ttttttttttttttttt,,,,,,,tttttttttttttttt",
+			"tt,,tt,,ttttttt,t,,,=,,,ttt,tt,t,ttttttt",
+			"t,,,,,,,,,,,,,,,,,,,=,,,,,,,,,,,,,,,,,tt",
+			"t,,p,,,,,,,,,,,,,,,,=,,,,,,,,,,,,,,,,,tt",
+			"t,,,,,,,,,,,,,,,,,,,=,,,,,,,,,,,,,,,p,,t",
+			"t,,b,,,,,,,,,,,,,,,,=,,,,,,,,,,,,b,,,,,t",
+			"tt,,,,,,,,,,,,,,,,b,=,,,,,,,,,,,,,,,,,,t",
+			"tt,,,,,,,,,,,,,,,,,t=,,,,t,,,,,,,,,,,,tt",
+			"t,,,,,,,,,,,,,,,,t,,=,,,,,,,,,,,,,,,,,tt",
+			"t,,,,,b,,,b,,,,,,,,,=,,,,,,,b,,p,,,,,,,t",
+			"tt,,,,,,,,,,,,,,,p,,=,,,,,,,,,,,,,,,,,tt",
+			"tt,,,,p,,,,,,,,,b,,,=,,,,,,,,,,,,,,,,,tt",
+			"t,,,,,,,,,,,,,,,,,,,==,,,,,,,,,,,,,,,,tt",
+			"tt,t,,,,,,,,,,,,,,,===============p,,,tt",
+			"t,,,,,,b,,,t,t,,,,==,=,,,,,,,,,=,,,,,,,t",
+			"tt,b,,,============,,=,p,,,,,===,,,,,,tt",
+			"tt,,,,,,,,=,,,,,,,,,,=,,,,,,,=,,,,,,,,,t",
+			"tt,,,t,,t,=,,,,,,,,,,=,,,,,,,=,,,,,,,,,t",
+			"tt,,b,,,,,=,t,,,,,,,,=,,,,,t,=,,,,,,,,,t",
+			"tt,,,,,,,p===,,,,,,,,=,,,,,,,=bb,,t,,,tt",
+			"tt,,,,,,,,,,=,,,,,,,,=,,,,,,,=,,,,,,,,,t",
+			"tt,,,,,,,,,,=,,b,,t,,=,,,,,,,=,,,,,,,,tt",
+			"tt,,,,,,,,,,=,,,,,,,,,,,,,,,,=,,,,,,,,tt",
+			"tt,,,,,,,,,,=,,,,,,t,,,,,,,,,=,,,,,,,,,t",
+			"t,,,,,,,,,,,=,,,,,,,,,,,,,t,,=,,,,,,t,tt",
+			"t,,,,,,,,,,,=,,,,p,,,,,,,,,,,,,,,,,,,,,t",
+			"t,,,,,,,,,,,,,,,,,,,,,,,,,,,t,,,,,,,,,,t",
+			"tt,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,t",
+			"t,t,ttt,tt,,t,ttttttt,,,tt,t,tt,,,,tt,tt",
+			"tttttttttttttttttttttttttttttttttttttttt"
+		],
+		"ausgaenge": [
+			{
+				"bereich": [
+					17,
+					0,
+					7,
+					1
+				],
+				"karte": "waldboden",
+				"feld": [
+					21,
+					36
+				]
+			}
+		],
+		"kampf_hintergrund": "wald",
+		"monster": [
+			{
+				"feld": [
+					8,
+					10
+				],
+				"gegner": [
+					"donnerhirsch"
+				],
+				"stufe": 20
+			},
+			{
+				"feld": [
+					31,
+					9
+				],
+				"gegner": [
+					"sumpfschnapper"
+				],
+				"stufe": 20
+			},
+			{
+				"feld": [
+					12,
+					24
+				],
+				"gegner": [
+					"moosgolem",
+					"rankenschlinger"
+				],
+				"stufe": 20
+			},
+			{
+				"feld": [
+					28,
+					23
+				],
+				"gegner": [
+					"rankenschlinger",
+					"donnerhirsch"
+				],
+				"stufe": 20
+			},
+			{
+				"feld": [
+					20,
+					20
+				],
+				"gegner": [
+					"moosgolem",
+					"sumpfschnapper"
+				],
+				"stufe": 20
+			},
+			{
+				"feld": [
+					35,
+					26
+				],
+				"gegner": [
+					"splitterbaer_wild"
+				],
+				"stufe": 20
+			},
+			{
+				"feld": [
+					8,
+					10
+				],
+				"gegner": [
+					"splitterwolf"
+				],
+				"stufe": 20,
+				"zeit": "nacht"
+			},
+			{
+				"feld": [
+					31,
+					9
+				],
+				"gegner": [
+					"moderfalter",
+					"splitterwolf"
+				],
+				"stufe": 20,
+				"zeit": "nacht"
+			},
+			{
+				"feld": [
+					12,
+					24
+				],
+				"gegner": [
+					"splitterwolf",
+					"splitterwolf"
+				],
+				"stufe": 20,
+				"zeit": "nacht"
+			},
+			{
+				"feld": [
+					28,
+					23
+				],
+				"gegner": [
+					"moderfalter"
+				],
+				"stufe": 20,
+				"zeit": "nacht"
+			}
+		],
+		"baukasten": "karte_tiefwurzel"
 	}
 }

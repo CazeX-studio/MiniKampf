@@ -50,17 +50,33 @@ func _run() -> void:
 	for id: String in START_MONSTER:
 		_check(daten[id].faehigkeiten.size() == 2 and daten[id].selten == "start", "%s: wild sehr selten, mit 2 Fähigkeiten (Ausnahme)" % id)
 
-	# Wachtwald und Tiefwurzel im Waldboden: Tiefwurzel ist der dunkle Teil rund um den Urbaum (Stufe 20)
-	var wald := GameData.wild_monsters().filter(func(m: Dictionary) -> bool: return m.karte == "waldboden")
-	var im_wald := {}
-	for m: Dictionary in wald:
-		for id: String in m.gegner:
-			im_wald[id] = true
-			if TIEFWURZEL.has(id):
-				_check(int(m.stufe) == 20 and int(m.feld[1]) >= 30, "%s im Süden des Waldes auf Stufe 20" % id)
+	# Wachtwald im Waldboden, Tiefwurzel ist ein eigenes Gebiet südlich davon (Marco, 04.11.), Stufe 20
+	var im_gebiet := {"waldboden": {}, "tiefwurzel": {}}
+	for m: Dictionary in GameData.wild_monsters():
+		if im_gebiet.has(m.karte):
+			for id: String in m.gegner:
+				im_gebiet[m.karte][id] = true
+				if m.karte == "tiefwurzel":
+					_check(int(m.stufe) == 20, "%s in Tiefwurzel auf Stufe 20" % id)
+	for id: String in WACHTWALD + START_MONSTER:
+		_check(im_gebiet.waldboden.has(id) and not im_gebiet.tiefwurzel.has(id), "%s lebt im Wachtwald" % id)
+	for id: String in TIEFWURZEL:
+		_check(im_gebiet.tiefwurzel.has(id) and not im_gebiet.waldboden.has(id), "%s lebt in Tiefwurzel" % id)
 	for id: String in WACHTWALD + TIEFWURZEL + START_MONSTER:
-		_check(im_wald.has(id), "%s lebt im Wald" % id)
 		_check(GameData.get_file("kartenspiel").karten.has(id), "%s hat eine Karte" % id)
+
+	# Tiefwurzel ist eine eigene Karte: vom Waldboden über den Pfad im Süden hin und zurück
+	var welt := WorldState.new()
+	var q := welt.add_player("t", "Test", "novize_m+m1", Vector2i(30, 30))
+	welt.change_map(q, "waldboden", Vector2i(21, 36))
+	welt.apply_command("t", {type = "move", cell = Vector2i(21, 38)})
+	for i in 200:
+		welt.tick(0.05)
+	_check(q.map == "tiefwurzel" and welt.get_map("tiefwurzel").title == "Tiefwurzel", "Über den Pfad im Süden nach Tiefwurzel")
+	welt.apply_command("t", {type = "move", cell = Vector2i(20, 0)})
+	for i in 200:
+		welt.tick(0.05)
+	_check(q.map == "waldboden", "Und zurück in den Waldboden")
 
 	# Werte aus der Tabelle: Nacht etwa +15 %, Brocken +50 % Leben, gleiche Rolle = gleiche Werte
 	var r: Dictionary = daten._rollen

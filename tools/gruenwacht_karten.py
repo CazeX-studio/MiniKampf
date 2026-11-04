@@ -1,9 +1,9 @@
-"""Baut den Weg nach Grünwacht, den Waldboden, Wipfelheim und die Pilzhöhle aus dem Baukasten (data/karte_<karte>.json).
+"""Baut den Weg nach Grünwacht, den Waldboden, Tiefwurzel, Wipfelheim und die Pilzhöhle aus dem Baukasten (data/karte_<karte>.json).
 
 Das Raster in data/karten.json bleibt, wie es ist: Es bestimmt weiter die Größe der Karte und wo man laufen kann. Jede Zahl
 von dort (Figuren, Orte, Monster, Ausgänge) stimmt also weiter. Dieses Werkzeug legt nur Boden und Teile darüber. Zufällige
 Bäume sind immer gleich (fester Startwert), und das Werkzeug prüft, dass alle wichtigen Felder erreichbar bleiben.
-Aufruf: python3 tools/gruenwacht_karten.py
+Aufruf: python3 tools/gruenwacht_karten.py [karte …]   (ohne Angabe alle)
 """
 import json
 import random
@@ -174,6 +174,31 @@ def waldboden():
 			if teil:
 				k.setzen(teil, x, y, muss=False)
 	wald_fuellen(k, r, 0.1, ["gw_laubbaum", "baum_herbst", "gw_dunkler_baum", "tanne"], "=")
+	# Pfad hinunter nach Tiefwurzel (D22b, Ausgang im Süden)
+	k.setzen("gw_pfad_tiefwurzel", 24, 37, "Nach Tiefwurzel", muss=False)
+	k.erreichbar()
+	k.speichern(boden)
+
+
+def tiefwurzel():
+	"""Tiefwurzel (D22b): dunkler Wald südlich vom Waldboden, Wildes Land von Grünwacht (Stufe 20). Mehr Moos und Laub,
+	dunkle und verdorrte Bäume, große Wurzeln, Splitterkristalle und Nebel am Boden."""
+	k, r = Karte("tiefwurzel"), random.Random(21)
+	boden = ["".join("e" if k.zeichen(x, y) == "=" else ("l" if (x * 7 + y * 3) % 9 == 0 else waldboden_zeichen(x, y, r))
+		for x in range(k.b)) for y in range(k.h)]
+	k.setzen("gw_pfad_tiefwurzel", 17, 1, "Pfad nach oben", muss=False)
+	for teil, x, y in [("gw_wurzelhoehle", 3, 18), ("gw_grosse_wurzel", 24, 6), ("gw_grosse_wurzel", 14, 19), ("gw_verdorrter_baum", 34, 4),
+			("gw_verdorrter_baum", 5, 6), ("gw_verdorrter_baum", 24, 26), ("gw_splitterkristall_gross", 33, 24), ("gw_splitterkristall_gross", 10, 8),
+			("gw_wurzelsplitter", 16, 26), ("gw_wurzelsplitter", 35, 15), ("gw_leuchtpilze_gross", 27, 3), ("gw_splitterkristall_klein", 23, 22),
+			("gw_nebelboden", 6, 12), ("gw_nebelboden", 24, 17), ("gw_nebelboden", 15, 22), ("gw_nebelboden", 32, 19), ("gw_nebelboden", 26, 9)]:
+		k.setzen(teil, x, y, muss=False)
+	for y in range(k.h):
+		for x in range(k.b):
+			teil = {"t": r.choice(["gw_dunkler_baum", "gw_dunkler_baum", "tanne", "tanne_gross"]), "b": r.choice(["gw_farn", "dornengebuesch"]),
+				"p": r.choice(["gw_leuchtpilze_klein", "gw_leuchtpilze_mittel"])}.get(k.zeichen(x, y))
+			if teil:
+				k.setzen(teil, x, y, muss=False)
+	wald_fuellen(k, r, 0.08, ["gw_dunkler_baum", "gw_dunkler_baum", "tanne", "baum_herbst"], "=")
 	k.erreichbar()
 	k.speichern(boden)
 
@@ -267,7 +292,7 @@ def pilzhoehle():
 
 
 if __name__ == "__main__":
-	weg_gruenwacht()
-	waldboden()
-	wipfelheim()
-	pilzhoehle()
+	import sys
+	alle = {"weg_gruenwacht": weg_gruenwacht, "waldboden": waldboden, "tiefwurzel": tiefwurzel, "wipfelheim": wipfelheim, "pilzhoehle": pilzhoehle}
+	for name in sys.argv[1:] or list(alle):
+		alle[name]()
