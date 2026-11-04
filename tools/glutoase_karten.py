@@ -175,6 +175,9 @@ def palmenrast():
 		"ausgaenge": [{"bereich": [17, 0, 7, 1], "karte": "glutoase", "feld": [GB - 3, 11]}],
 		"kampf_hintergrund": "wiese", "monster": palmenrast_monster(), "baukasten": "karte_palmenrast",
 		"npcs": {"xavina": {"name": "Hohe Sängerin Xavina", "feld": [30, 28], "aussehen": "xavina", "dialog": "xavina"}},
+		# Kochende Brunnen (D28): zwei Wasserstellen, an denen man das Wasser prüft
+		"orte": [{"art": "wasserstelle", "feld": [5, 7], "dialog": "wasserstelle_nordwest"},
+			{"art": "wasserstelle", "feld": [34, 6], "dialog": "wasserstelle_nordost"}],
 	}
 	(gk.DATEN / "karten.json").write_text(json.dumps(karten, ensure_ascii=False, indent="\t") + "\n", encoding="utf-8")
 	gk.KARTEN.clear()

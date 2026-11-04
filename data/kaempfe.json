@@ -608,5 +608,21 @@
 				}
 			}
 		]
+	},
+	"heisse_quelle": {
+		"name": "Die dampfende Quelle",
+		"hinweis": "Kochende Brunnen (D28): An der Wasserstelle im Nordosten der Palmenrast tauchen hitzige Monster aus dem Dampf auf.",
+		"wellen": [
+			[
+				"feuerechse",
+				"oasenkroete",
+				"feuerechse"
+			]
+		],
+		"gegner_stufe": 13,
+		"eigene_klasse": true,
+		"hintergrund": "wiese",
+		"erfahrung": 250,
+		"merken": "quelle_gekuehlt"
 	}
 }

@@ -2194,7 +2194,25 @@
 				"aussehen": "xavina",
 				"dialog": "xavina"
 			}
-		}
+		},
+		"orte": [
+			{
+				"art": "wasserstelle",
+				"feld": [
+					5,
+					7
+				],
+				"dialog": "wasserstelle_nordwest"
+			},
+			{
+				"art": "wasserstelle",
+				"feld": [
+					34,
+					6
+				],
+				"dialog": "wasserstelle_nordost"
+			}
+		]
 	},
 	"glutoase": {
 		"name": "Glutoase",

@@ -89,5 +89,6 @@
 	"oasenschleim": {"bild": {"form": "stein", "farbe": "6ac0b0"}, "name": "Oasenschleim", "beschreibung": "Beute von der Oasenkröte. Kühl und feucht.", "preis": 2, "material": true},
 	"geisterstaub": {"bild": {"form": "splitter", "farbe": "e8e0d0"}, "name": "Geisterstaub", "beschreibung": "Beute vom Staubgeist (nachts). Rieselt durch die Finger.", "preis": 4, "material": true},
 	"schakalfell": {"bild": {"form": "fell", "farbe": "4a3a6a"}, "name": "Schakalfell", "beschreibung": "Beute vom Mondschakal (nachts). Mit Mondsichel.", "preis": 4, "material": true},
-	"stachelflitzer_bluete": {"bild": {"form": "kraut", "farbe": "ff90c0"}, "name": "Stachelflitzer-Blüte", "beschreibung": "Seltene Beute vom Stachelflitzer. Duftet nach Abenteuer.", "preis": 15, "material": true}
+	"stachelflitzer_bluete": {"bild": {"form": "kraut", "farbe": "ff90c0"}, "name": "Stachelflitzer-Blüte", "beschreibung": "Seltene Beute vom Stachelflitzer. Duftet nach Abenteuer.", "preis": 15, "material": true},
+	"miras_notenblatt": {"bild": {"form": "tafel", "farbe": "e8d8b0"}, "name": "Miras Notenblatt", "beschreibung": "Fünf Töne, die Mira im Fieber summt: Glut, Blatt, Nebel, Funke, Stern. Dahinter eine Pause, als würde einer fehlen.", "preis": 0}
 }
