@@ -102,6 +102,18 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **T3:** Testtag 1 (Marco): Kreuzweg und Grünwacht komplett, allein und in der Gruppe, dazu der Sternenfresser. – Status: offen
 - **T4:** Testtag 2 (Marco): die ganze Demo von Kreuzweg bis zum Ende der Glutoase. – Status: offen
 
+### Endspurt (Plan vom 04.11.2026, sparsam mit Tokens)
+
+Wenig Tokens übrig: Arbeit in wenigen großen Blöcken statt vieler kleiner Runden. **Pro Block ein neuer Chat**, Marco schreibt nur „Mach weiter“; alles Wichtige steht in FORTSCHRITT.md.
+
+- **E1:** Fünf Entscheidungen auf einmal einbauen (Marcos Antworten): Sporenkönigin-Mechanik in der Welt, Glutgeist trifft vordere Reihe, Lichter in Kreuzweg als Leuchtflecken, Namen (Hammer-/Zangen-Bruder, Kettenbrecher, Kettenglut-Set), Kobalt mit Zähmer-Körper. – Status: wartet auf Marcos Antworten
+- **E2:** D25b auf einen Schlag. – Status: fertig (04.11.2026, Bilder lagen schon unter `tools/vorlagen/`)
+- **E3:** T1 und T2 zusammen spielen. Marco notiert Stichpunkte und schickt **eine** Liste; Claude arbeitet sie gesammelt ab. – Status: offen
+- **E4:** Eine Balancing-Runde: Marcos Liste plus die Zahlen aus den Prüfungen (Kael, Glasskorpion, Vulkanschmiede allein, Ritualist/Zwielicht), alle Werte in einer Sitzung. – Status: offen
+- **E5:** T3 und T4 am Stück spielen, danach wieder eine Liste und eine Sitzung für die Korrekturen. – Status: offen
+
+**So arbeitet Claude im Endspurt:** nur die Prüfungen laufen lassen, die zur Änderung passen (`bash tools/alle_tests.sh <wort>`), die volle Prüfung einmal am Ende der Sitzung; Fotos aus dem Spiel nur, wenn sich das Aussehen ändert; kurze Antworten.
+
 ## Projekt 0: Playtest 25.10. (Rest) – kommt vor allen anderen
 
 Teil 1 ist gebaut (siehe FORTSCHRITT.md). Schritte 1–4 fertig (26.10.). Die Details stehen im Brainstorm-Doc unter „Testtag-Notizen“ → „Playtest 25.10.2026“.
