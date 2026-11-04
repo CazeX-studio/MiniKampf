@@ -170,6 +170,8 @@ func _queen_turn(e: Fighter) -> void:
 		for a in c.allies():
 			c.apply_damage(a, CLOUD_DAMAGE * clouds, e)
 		c.wait(0.3)
+		if c.allies().is_empty():
+			return
 	if e.step % 2 == 0:
 		await c.enemy_attack(e, [c.pick_target()], 16, "melee", "Sporenpeitsche")
 	else:

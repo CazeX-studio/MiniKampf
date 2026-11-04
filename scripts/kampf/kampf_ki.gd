@@ -41,6 +41,9 @@ func choose(rules: Skills, f: Fighter) -> Dictionary:
 			# Kettenschmied: wackelnden Anker festhämmern, Gefesselte befreien
 			if ab.id in ["stoeren", "anker", "kette"]:
 				pick = ab
+			# Sporenkönigin: ab drei Giftwolken eine vertreiben (bei fünf fällt die Gruppe)
+			if ab.id == "clear_cloud" and rules.c.dungeon is Pilzhoehle and (rules.c.dungeon as Pilzhoehle).clouds >= 3:
+				pick = ab
 	# Lava-Takt (Vulkanschmiede): Ist die Lava in der eigenen Reihe angekündigt, meist die Reihe wechseln
 	# (mit wenig Leben immer, sonst in der Hälfte der Fälle; ein Zug zum Ausweichen lohnt sich nicht immer)
 	if pick.is_empty() and rules.c.lava != null and rules.c.lava.angekuendigt == ("hinten" if f.back_row else "vorne") \

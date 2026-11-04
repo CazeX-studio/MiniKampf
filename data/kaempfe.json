@@ -400,7 +400,7 @@
 		"merken": "lauf:koenigin",
 		"verloren_text": "Die Sporen nehmen dir die Luft. Du kommst am Eingang der Höhle wieder zu dir.",
 		"zurueck_zum_start": true,
-		"gegner_leben": 3.8
+		"gegner_leben": 2.0
 	},
 	"pilz_urbaum": {
 		"gruppe": true,

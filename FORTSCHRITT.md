@@ -19,13 +19,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     2. Probestunde Sternensängerin mit einer weiblichen Figur: die eigene Figur im Sternengewand.
     3. Nach der Klassenwahl in der Glutoase: In der Welt läuft man in der neuen Kleidung herum.
 
+- **Neu (04.11.): E1 Deine Entscheidungen eingebaut:** Die Sporenkönigin nutzt jetzt auch in der Welt ihre Mechanik (pro Kampf Sporenblüte oder Zwillinge, wie in der Sandbox). Damit es allein schaffbar bleibt, hat sie weniger Leben (2,0 statt 3,8): im Schnitt 77 % Siege. Nebenbei behoben: Töteten die Giftwolken die letzten Helden, wollte sie noch angreifen und hängte. Für die Lichter in Kreuzweg gibt es Vergleichsbilder (echte Lichter oben, Leuchtflecken unten); ohne deine Zusage bleibt es bei den echten Lichtern.
+  - **So testest du es:**
+    1. In der Pilzhöhle die Sporenkönigin angreifen: Unten im Protokoll steht die Mechanik des Kampfs.
+    2. Bei Sporenblüte: ab drei Giftwolken „Giftwolke vertreiben“ nutzen.
+    3. Bei Zwillingen: beide Sporenknospen in derselben Runde besiegen.
+
 - **Offene Punkte für dich (gesammelt 04.11., D36):** Alles, was im Moment auf deine Entscheidung, deine Bilder oder das Balancing wartet.
   - **Balancing (am Ende, Marcos Hinweis 04.11.: stärkere Monster dürfen bleiben):** Kael in der Glutoase (73 %, der Rüstungsschmied schafft ihn selten), Glasskorpion-Gruppen in der Palmenrast (um 50–60 %), die Gruppen der Vulkanschmiede allein (51–100 %), Ritualist und Zwielicht allgemein schwächer allein. Die Sporenkönigin nutzt in der Welt ihre Mechanik (Giftwolken oder Zwillinge) nicht; mit Mechanik gewinnt man allein nur 36 %: Soll sie sie bekommen?
-  - **Entscheidungen:**
-    - Glutgeist „Letzte Glut“: gebaut als „trifft die vordere Reihe der Helden“. Gemeint so?
-    - Die 42 Lichter in Kreuzweg kosten ein Drittel der Zeichenzeit. Durch einfache leuchtende Flecken ersetzen (schneller, sieht anders aus)?
-    - Kobalt nutzt in den Prompts den Körper des Zähmers; die Sternensängerin gibt es vorerst nur weiblich.
-    - Namen, die ich vergeben habe: Hammer-Bruder und Zangen-Bruder, die Klinge Kettenbrecher, das Kettenglut-Set (Set-Boni gibt es noch nicht im Spiel).
+  - **Entscheidungen (Marcos Antworten 04.11., E1):** Sporenkönigin bekommt ihre Mechanik in der Welt (eingebaut). Glutgeist „trifft die vordere Reihe“ passt. Namen Hammer-Bruder, Zangen-Bruder, Kettenbrecher und Kettenglut-Set bleiben erst einmal. Kobalt nutzt vorerst den Zähmer-Körper, bekommt später einen eigenen (steht unter „Später“). **Noch offen:** Lichter in Kreuzweg durch Leuchtflecken ersetzen? Vergleichsbilder hast du; ohne Zusage bleiben die echten Lichter. Die Sternensängerin gibt es vorerst nur weiblich.
   - **Texte:** Alle Dialoge sind Platzhalter, die Hauptfiguren schreibst du selbst (Anleitung in `data/LIESMICH.md`).
   - **Noch nicht drin:** Zaids Reiseumhang, Set-Boni, Waffen nur für die eigene Klasse, zufällige Bonus-Werte bei Beute.
 

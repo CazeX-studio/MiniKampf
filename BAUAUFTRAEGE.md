@@ -106,7 +106,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 
 Wenig Tokens übrig: Arbeit in wenigen großen Blöcken statt vieler kleiner Runden. **Pro Block ein neuer Chat**, Marco schreibt nur „Mach weiter“; alles Wichtige steht in FORTSCHRITT.md.
 
-- **E1:** Fünf Entscheidungen auf einmal einbauen (Marcos Antworten): Sporenkönigin-Mechanik in der Welt, Glutgeist trifft vordere Reihe, Lichter in Kreuzweg als Leuchtflecken, Namen (Hammer-/Zangen-Bruder, Kettenbrecher, Kettenglut-Set), Kobalt mit Zähmer-Körper. – Status: wartet auf Marcos Antworten
+- **E1:** Fünf Entscheidungen einbauen. – Status: fertig (04.11.2026: Sporenkönigin mit Mechanik in der Welt, Glutgeist und Namen bleiben, Kobalt vorerst Zähmer-Körper; Lichter in Kreuzweg: Vergleichsbilder geschickt, ohne Zusage bleiben die echten Lichter)
 - **E2:** D25b auf einen Schlag. – Status: fertig (04.11.2026, Bilder lagen schon unter `tools/vorlagen/`)
 - **E3:** T1 und T2 zusammen spielen. Marco notiert Stichpunkte und schickt **eine** Liste; Claude arbeitet sie gesammelt ab. – Status: offen
 - **E4:** Eine Balancing-Runde: Marcos Liste plus die Zahlen aus den Prüfungen (Kael, Glasskorpion, Vulkanschmiede allein, Ritualist/Zwielicht), alle Werte in einer Sitzung. – Status: offen
@@ -453,6 +453,7 @@ _Am 28.10. geteilt: Kofis Kopf-Blatt kam zuerst._
 - Marco prüft, ob alles einheitlich aussieht. Erst danach werden die Klassen-Körper nach den neuen Regeln gezeichnet (Projekt 11, Schritte 4 und 6, Bogenschütze neu).
 
 ## Später (wartet auf andere Teile des Spiels)
+- Kobalt bekommt einen eigenen Körper (bis dahin der des Zähmers, Marco 04.11.)
 - Taschen vom Schneider und Lagerfeuer-Essen (brauchen Berufe)
 - Marktstand-Gebühr (braucht den Markt)
 - Schriftrollen (auch „Licht im Dunkeln“, beschlossen 28.10.), Wiederbelebungs-Rolle und besondere Munition

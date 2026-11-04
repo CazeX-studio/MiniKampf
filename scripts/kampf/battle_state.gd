@@ -471,10 +471,9 @@ func _spawn_wave(index: int) -> void:
 		add_log("\n[b]Welle %d von %d[/b]" % [index + 1, waves.size()])
 	if setup.has("ansage"):
 		add_log("[b]%s[/b]" % setup.ansage)
-	# Dungeon-Mechaniken (z. B. welche Mechanik der Zwischenboss heute nutzt) auch in der Welt, wo es eine Ansage gibt.
-	# Ausnahme: Die Pilzhöhle lief in der Welt bisher ohne diese Wahl (Sporenkönigin ohne Mechanik); das bleibt so,
-	# bis es beim Balancing geklärt ist (mit Mechanik gewinnt man allein nur gut ein Drittel der Kämpfe).
-	if dungeon != null and not (setup.has("ansage") and dungeon is Pilzhoehle):
+	# Dungeon-Mechaniken (z. B. welche Mechanik der Zwischenboss heute nutzt) auch in der Welt, wo es eine Ansage gibt
+	# (Sporenkönigin seit 04.11. auch in der Welt mit Mechanik, Marcos Entscheidung)
+	if dungeon != null:
 		dungeon.on_wave(index)
 	elif setup.has("ansage"):
 		pass
