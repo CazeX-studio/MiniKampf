@@ -116,6 +116,7 @@ Wenig Tokens übrig: Arbeit in wenigen großen Blöcken statt vieler kleiner Run
   - **E3e:** Klingentänzerin hat noch die alten Schwerter: ihre eigenen Klingen aus Marcos Waffen-Blatt einbauen (sonst Prompt). – Status: offen (klein bis mittel)
   - **E3f:** Kräuter sammeln: neues Bild für die Kräuter in der Welt (Prompt für Marco). – Status: offen (Prompt, dann klein)
   - **E3g:** Laufbewegung der Novizen sieht schlecht aus: feiner, ggf. mit mehr Bildern (Prompt für Marco). – Status: offen (Prompt, dann mittel)
+  - **E3i:** Abschied von Kreuzweg ohne Versetzen: Ye schickt einen nach dem Abschied zur Torwache in Richtung der eigenen Region (West-/Südtor, mit Wegweiser), man läuft selbst hin und durchs Tor. Die Wache nennt die Richtung. „Ende von Akt 1“ erscheint erst beim ersten Gang durchs Tor (Vorschlag, sonst ganz weglassen). Heute steht in Yes Abschied `reisen` nach weg_gruenwacht bzw. aschensteppe (data/dialoge.json, ye_tor). – Status: offen (klein)
   - **E3h:** Städte umbauen: zu viele Figuren und zu viele Deko-Teile auf einem Fleck (Kreuzweg, Wipfelheim, Glutoase), Figuren und Deko verteilen, Plätze freier lassen. – Status: offen (groß, pro Stadt eine Sitzung)
 - **E4:** Eine Balancing-Runde: Marcos Liste plus die Zahlen aus den Prüfungen (Kael, Glasskorpion, Vulkanschmiede allein, Ritualist/Zwielicht), alle Werte in einer Sitzung. – Status: offen
 - **E5:** T3 und T4 am Stück spielen, danach wieder eine Liste und eine Sitzung für die Korrekturen. – Status: offen
