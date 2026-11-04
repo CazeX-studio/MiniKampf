@@ -1838,7 +1838,8 @@
 			"fuss": [
 				68,
 				80
-			]
+			],
+			"begehbar": true
 		},
 		"go_treppe_ecke": {
 			"bild": "objekte/go_treppe_ecke.png",
@@ -1849,7 +1850,8 @@
 			"fuss": [
 				84,
 				78
-			]
+			],
+			"begehbar": true
 		},
 		"go_brunnen": {
 			"bild": "objekte/go_brunnen.png",

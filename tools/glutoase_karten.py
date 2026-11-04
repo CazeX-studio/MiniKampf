@@ -5,7 +5,8 @@ Karawanen mit Lagerfeuer, Zelt, Wagen und der ersten Wegelaterne der Straße: Do
 („sicher“ in data/karten.json). Das Werkzeug schreibt Raster, Orte und Monster nach data/karten.json und die Teile nach
 data/karte_aschensteppe.json; es prüft wie tools/gruenwacht_karten.py, dass alles erreichbar bleibt.
 Palmenrast (D23b): Wüste mit Palmen, Dünen und Wasserstellen, Heimat-Gebiet der Glutoase (Stufe 12–19), mit Xavinas
-Sternendüne. Bis die Stadt steht (D24), führt die Aschensteppe direkt hinein.
+Sternendüne; man erreicht sie durch das Osttor der Stadt.
+Glutoase (D24): die Terrassenstadt. Die Aschensteppe endet an ihrem Nordtor.
 Aufruf: python3 tools/glutoase_karten.py [karte …]   (ohne Angabe alle)
 """
 import json
@@ -70,7 +71,7 @@ def aschensteppe():
 		"name": "Aschensteppe", "musik": "wald", "grund": "wiese", "licht": "fff0d8", "start": [14, 1],
 		"raster": ["".join(z) for z in g],
 		"ausgaenge": [{"bereich": [12, 0, 6, 1], "karte": "kreuzweg", "feld": [31, 63]},
-			{"bereich": [11, H - 1, 7, 1], "karte": "palmenrast", "feld": [20, 1]}],
+			{"bereich": [11, H - 1, 7, 1], "karte": "glutoase", "feld": [23, 1]}],
 		"kampf_hintergrund": "wiese", "sicher": RASTPLATZ,
 		"orte": [{"art": "wegelaterne", "feld": [11, 28], "dialog": "wegelaterne_aschensteppe", "zeichen": "laterne"}],
 		"monster": monster(), "baukasten": "karte_aschensteppe",
@@ -121,6 +122,7 @@ def aschensteppe():
 
 
 PB, PH = 40, 34
+GB, GH = 46, 46
 
 
 def palmenrast_monster():
@@ -167,7 +169,7 @@ def palmenrast():
 	karten["palmenrast"] = {
 		"name": "Palmenrast", "musik": "wald", "grund": "wiese", "licht": "fff4e0", "start": [20, 1],
 		"raster": ["".join(z) for z in g],
-		"ausgaenge": [{"bereich": [17, 0, 7, 1], "karte": "aschensteppe", "feld": [14, H - 2]}],
+		"ausgaenge": [{"bereich": [17, 0, 7, 1], "karte": "glutoase", "feld": [GB - 3, 11]}],
 		"kampf_hintergrund": "wiese", "monster": palmenrast_monster(), "baukasten": "karte_palmenrast",
 	}
 	(gk.DATEN / "karten.json").write_text(json.dumps(karten, ensure_ascii=False, indent="\t") + "\n", encoding="utf-8")
@@ -209,7 +211,119 @@ def palmenrast():
 	k.speichern(boden)
 
 
+## Die drei Stufen der Terrassenstadt (Zeilen): unten die Oase, in der Mitte das Schmiedeviertel, oben Hadraks Schmiede
+OASE, SCHMIEDEVIERTEL, HADRAK = (0, 17), (20, 33), (36, 45)
+## Terrassenkanten (Mauern zwischen den Stufen) mit einer Treppe in der Mitte
+KANTEN = [18, 34]
+TREPPE_X = 22
+## Gebäude und Plätze der Stadt: (Teil, x, y, Name). Ihre Fläche ist gesperrt (außer flachen Teilen wie dem Tanzplatz).
+GEBAEUDE = [
+	# Unten: die Oase
+	("go_karawanenplatz", 4, 3, "Karawanenplatz"), ("go_brunnen", 21, 8, "Großer Brunnen"), ("go_tanzplatz", 30, 9, "Tanzplatz"),
+	("go_basar_a", 7, 9, "Basar"), ("go_basar_b", 11, 9, ""), ("go_tareks_laden", 5, 13, "Tareks Laden"), ("go_bank", 37, 2, "Bank"),
+	("go_gasthaus", 28, 1, "Gasthaus Glutstube"), ("go_krankenzelt", 38, 10, "Krankenzelt"), ("lagerfeuer", 26, 7, ""),
+	("go_aufzug_unten", 40, 14, "Lastenaufzug"), ("go_tor_duerrewald", 0, 16, "Tor zum Dürrewald"), ("go_sonnensegel", 15, 3, ""),
+	# Mitte: das Schmiedeviertel
+	("go_clan_werkstatt", 3, 21, "Werkstatt der Schmiedeclans"), ("go_clan_werkstatt", 10, 21, ""), ("go_brakkus_werkstatt", 30, 21, "Brakkus' Werkstatt"),
+	("go_schmiede_offen", 6, 29, "Schmiede-Werkstatt"), ("go_esse", 19, 24, ""), ("go_esse", 25, 29, ""), ("go_lehmhaus_gross", 36, 27, ""),
+	("go_lehmhaus_klein", 14, 29, ""), ("go_wassertrog", 23, 25, ""), ("go_werkzeugwand", 17, 22, ""), ("go_bergpfad", 43, 24, "Bergpfad zum Glutgrat"),
+	# Oben: Hadraks Schmiede
+	("go_hadraks_schmiede", 19, 37, "Hadraks Schmiede"), ("go_kettenamboss", 29, 40, ""), ("go_aufzug_oben", 40, 36, "Lastenaufzug"),
+	("go_kraterrand", 8, 43, ""), ("go_kraterrand", 32, 43, ""), ("go_lavarinne", 12, 39, ""), ("go_lavarinne", 33, 38, ""),
+]
+
+
+def glutoase_orte():
+	return [
+		{"art": "wegelaterne", "feld": [19, 4], "dialog": "wegelaterne_glutoase", "zeichen": "laterne"},
+		# Lastenaufzug der Schmiede: Abkürzung zwischen der Oase und Hadraks Schmiede
+		{"art": "aufzug", "feld": [41, 17], "meldung": "Der Lastenaufzug rattert nach oben zu Hadraks Schmiede.", "aktionen": [{"reisen": "glutoase", "feld": [41, 40]}]},
+		{"art": "aufzug", "feld": [41, 39], "meldung": "Der Lastenaufzug rattert hinunter zur Oase.", "aktionen": [{"reisen": "glutoase", "feld": [41, 18 - 1]}]},
+		{"art": "tor", "feld": [3, 15], "dialog": "tor_duerrewald"},
+		{"art": "bergpfad", "feld": [42, 25], "dialog": "bergpfad_glutgrat"},
+		{"art": "schmiede_eingang", "feld": [22, 44], "dialog": "eingang_vulkanschmiede"},
+	]
+
+
+def glutoase():
+	"""Die Stadt Glutoase als Terrassenstadt (D24, design.md „Glutoase im Detail“, beschlossen 29.10.)."""
+	r = random.Random(33)
+	tk = gk.TEILE
+	g = [["."] * GB for _ in range(GH)]
+	for y in range(GH):
+		for x in range(GB):
+			if x in (0, GB - 1) or y == GH - 1:
+				g[y][x] = "X"
+	for y in KANTEN:
+		for x in range(GB):
+			if x not in (TREPPE_X, TREPPE_X + 1):
+				g[y][x] = "X"
+	for teil, x, y, _ in GEBAEUDE:
+		if tk[teil].get("flach"):
+			continue
+		b, t = tk[teil]["flaeche"]
+		for i in range(b):
+			for j in range(t):
+				if 0 <= y + j < GH and 0 <= x + i < GB:
+					g[y + j][x + i] = "X"
+	for x in range(20, 27):
+		g[0][x] = "."
+	for y in range(9, 14):
+		g[y][GB - 1] = "."
+	karten = json.loads((gk.DATEN / "karten.json").read_text(encoding="utf-8"))
+	karten["glutoase"] = {
+		"name": "Glutoase", "musik": "stadt", "grund": "wiese", "licht": "fff0dc", "start": [23, 1],
+		"raster": ["".join(z) for z in g],
+		"ausgaenge": [{"bereich": [20, 0, 7, 1], "karte": "aschensteppe", "feld": [14, H - 2]},
+			{"bereich": [GB - 1, 9, 1, 5], "karte": "palmenrast", "feld": [20, 1]}],
+		"kampf_hintergrund": "wiese", "orte": glutoase_orte(), "baukasten": "karte_glutoase",
+	}
+	(gk.DATEN / "karten.json").write_text(json.dumps(karten, ensure_ascii=False, indent="\t") + "\n", encoding="utf-8")
+	gk.KARTEN.clear()
+	gk.KARTEN.update(karten)
+	k = gk.Karte("glutoase")
+	boden = []
+	for y in range(GH):
+		zeile = ""
+		for x in range(GB):
+			if y <= OASE[1]:
+				# Oase: Lehmpflaster auf den Wegen, Oasengras um den Brunnen, sonst Sand
+				if abs(x - 23) <= 1 or y in (6, 7) or (abs(x - 23) < 8 and abs(y - 10) < 5 and (x * 3 + y) % 7 != 0):
+					zeile += "L" if abs(x - 23) <= 1 or y in (6, 7) else "g"
+				else:
+					zeile += "s"
+			elif y <= SCHMIEDEVIERTEL[1] + 1:
+				zeile += "L" if abs(x - 23) <= 1 or y == 27 else "i"
+			else:
+				zeile += "i"
+		boden.append(zeile)
+	for teil, x, y, name in GEBAEUDE:
+		k.setzen(teil, x, y, name, muss=False)
+	# Terrassenkanten aus Lehmziegeln, in der Mitte die Treppen
+	for y in KANTEN:
+		for x in range(0, GB, 4):
+			if not (x <= TREPPE_X + 1 and x + 3 >= TREPPE_X):
+				k.setzen("go_terrassenkante", x, y, muss=False)
+		k.setzen("go_treppe", TREPPE_X, y, muss=False)
+		k.gesperrt -= {(TREPPE_X + i, y + j) for i in range(2) for j in range(2)}
+	# Palmen, Krüge, Teppiche und Fackeln
+	for x, y in [(3, 1), (18, 6), (27, 12), (35, 8), (16, 14), (43, 5), (2, 9), (25, 15)]:
+		k.setzen("go_palme_gross" if (x + y) % 2 else "go_palme_klein", x, y, muss=False)
+	for x, y in [(14, 12), (10, 13), (34, 3), (38, 17)]:
+		k.setzen("go_tonkruege", x, y, muss=False)
+	for x, y in [(9, 12), (13, 12)]:
+		k.setzen("go_teppiche", x, y, muss=False)
+	for x, y in [(29, 14), (35, 14), (29, 8), (35, 8)]:
+		k.setzen("go_tanzlaterne", x, y, muss=False)
+	for x, y in [(18, 36), (27, 36), (21, 20), (26, 20), (21, 35), (26, 35), (2, 30), (40, 30)]:
+		k.setzen("go_fackel", x, y, muss=False)
+	for x, y in [(18, 28), (27, 23), (9, 27), (35, 25)]:
+		k.setzen(r.choice(["go_kohlesaecke", "go_amboss", "go_tonkruege"]), x, y, muss=False)
+	k.erreichbar()
+	k.speichern(boden)
+
+
 if __name__ == "__main__":
-	alle = {"aschensteppe": aschensteppe, "palmenrast": palmenrast}
+	alle = {"aschensteppe": aschensteppe, "palmenrast": palmenrast, "glutoase": glutoase}
 	for name in sys.argv[1:] or list(alle):
 		alle[name]()

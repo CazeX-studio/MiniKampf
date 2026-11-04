@@ -1807,9 +1807,9 @@
 					7,
 					1
 				],
-				"karte": "palmenrast",
+				"karte": "glutoase",
 				"feld": [
-					20,
+					23,
 					1
 				]
 			}
@@ -2020,10 +2020,10 @@
 					7,
 					1
 				],
-				"karte": "aschensteppe",
+				"karte": "glutoase",
 				"feld": [
-					14,
-					58
+					43,
+					11
 				]
 			}
 		],
@@ -2172,5 +2172,162 @@
 			}
 		],
 		"baukasten": "karte_palmenrast"
+	},
+	"glutoase": {
+		"name": "Glutoase",
+		"musik": "stadt",
+		"grund": "wiese",
+		"licht": "fff0dc",
+		"start": [
+			23,
+			1
+		],
+		"raster": [
+			"X............................................X",
+			"X...........................XXXXXX...........X",
+			"X...........................XXXXXX...XXXX....X",
+			"X...XXXXX......XXX..........XXXXXX...XXXX....X",
+			"X...XXXXX......XXX..........XXXXXX...XXXX....X",
+			"X...XXXXX...................XXXXXX...XXXX....X",
+			"X............................................X",
+			"X.........................XX.................X",
+			"X....................XXXX.XX.................X",
+			"X......XXX.XXX.......XXXX.....................",
+			"X......XXX.XXX.......XXXX.............XXXX....",
+			"X....................XXXX.............XXXX....",
+			"X.....................................XXXX....",
+			"X....XXXX.....................................",
+			"X....XXXX...............................XXX..X",
+			"X....XXXX...............................XXX..X",
+			"XXXXXX..................................XXX..X",
+			"X............................................X",
+			"XXXXXXXXXXXXXXXXXXXXXX..XXXXXXXXXXXXXXXXXXXXXX",
+			"X............................................X",
+			"X............................................X",
+			"X..XXXXX..XXXXX...............XXXXX..........X",
+			"X..XXXXX..XXXXX..XX...........XXXXX..........X",
+			"X..XXXXX..XXXXX...............XXXXX..........X",
+			"X..XXXXX..XXXXX....XX.........XXXXX........XXX",
+			"X..................XX..XX.....XXXXX..........X",
+			"X............................................X",
+			"X...................................XXXXX....X",
+			"X...................................XXXXX....X",
+			"X.....XXX.....XXX........XX.........XXXXX....X",
+			"X.....XXX.....XXX........XX.........XXXXX....X",
+			"X.............XXX............................X",
+			"X............................................X",
+			"X............................................X",
+			"XXXXXXXXXXXXXXXXXXXXXX..XXXXXXXXXXXXXXXXXXXXXX",
+			"X............................................X",
+			"X.......................................XXX..X",
+			"X..................XXXXXXX..............XXX..X",
+			"X..................XXXXXXX.......XXX....XXX..X",
+			"X...........XXX....XXXXXXX...................X",
+			"X..................XXXXXXX...XX..............X",
+			"X..................XXXXXXX...XX..............X",
+			"X..................XXXXXXX...................X",
+			"X.......XXXXX...................XXXXX........X",
+			"X.......XXXXX...................XXXXX........X",
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+		],
+		"ausgaenge": [
+			{
+				"bereich": [
+					20,
+					0,
+					7,
+					1
+				],
+				"karte": "aschensteppe",
+				"feld": [
+					14,
+					58
+				]
+			},
+			{
+				"bereich": [
+					45,
+					9,
+					1,
+					5
+				],
+				"karte": "palmenrast",
+				"feld": [
+					20,
+					1
+				]
+			}
+		],
+		"kampf_hintergrund": "wiese",
+		"orte": [
+			{
+				"art": "wegelaterne",
+				"feld": [
+					19,
+					4
+				],
+				"dialog": "wegelaterne_glutoase",
+				"zeichen": "laterne"
+			},
+			{
+				"art": "aufzug",
+				"feld": [
+					41,
+					17
+				],
+				"meldung": "Der Lastenaufzug rattert nach oben zu Hadraks Schmiede.",
+				"aktionen": [
+					{
+						"reisen": "glutoase",
+						"feld": [
+							41,
+							40
+						]
+					}
+				]
+			},
+			{
+				"art": "aufzug",
+				"feld": [
+					41,
+					39
+				],
+				"meldung": "Der Lastenaufzug rattert hinunter zur Oase.",
+				"aktionen": [
+					{
+						"reisen": "glutoase",
+						"feld": [
+							41,
+							17
+						]
+					}
+				]
+			},
+			{
+				"art": "tor",
+				"feld": [
+					3,
+					15
+				],
+				"dialog": "tor_duerrewald"
+			},
+			{
+				"art": "bergpfad",
+				"feld": [
+					42,
+					25
+				],
+				"dialog": "bergpfad_glutgrat"
+			},
+			{
+				"art": "schmiede_eingang",
+				"feld": [
+					22,
+					44
+				],
+				"dialog": "eingang_vulkanschmiede"
+			}
+		],
+		"baukasten": "karte_glutoase"
 	}
 }

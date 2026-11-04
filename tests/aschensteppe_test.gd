@@ -1,5 +1,5 @@
 extends SceneTree
-## D23a und D23b: Aschensteppe (Straße von Kreuzweg zur Glutoase) mit dem Rastplatz der Karawanen, Palmenrast, Monster.
+## D23 und D24: Aschensteppe (Straße von Kreuzweg zur Glutoase) mit dem Rastplatz der Karawanen, Palmenrast, Monster, die Terrassenstadt Glutoase.
 ## Aufruf: Godot --headless --path . -s tests/aschensteppe_test.gd
 
 const MONSTER := ["steppenhyaene", "funkenechse", "steppenroller", "kaktusling", "aschefuchs", "schattenskarabaeus", "sonnenloewe"]
@@ -58,7 +58,12 @@ func _initialize() -> void:
 	world.apply_command("a", {type = "move", cell = Vector2i(14, 59)})
 	for i in 300:
 		world.tick(0.05)
-	_check(p.map == "palmenrast" and world.get_map("palmenrast").title == "Palmenrast", "Von der Aschensteppe nach Süden in die Palmenrast")
+	_check(p.map == "glutoase" and world.get_map("glutoase").title == "Glutoase", "Von der Aschensteppe nach Süden in die Glutoase (D24)")
+	world.change_map(p, "glutoase", Vector2i(43, 11))
+	world.apply_command("a", {type = "move", cell = Vector2i(45, 11)})
+	for i in 300:
+		world.tick(0.05)
+	_check(p.map == "palmenrast" and world.get_map("palmenrast").title == "Palmenrast", "Durch das Osttor der Stadt in die Palmenrast")
 	_check(world.get_map("palmenrast").baukasten.objekte.any(func(o: Dictionary) -> bool: return o.teil == "go_sternenduene"), "Xavinas Sternendüne steht da")
 	var palmen := {}
 	for w: Dictionary in GameData.wild_monsters():
@@ -69,6 +74,28 @@ func _initialize() -> void:
 	for id: String in ["sandwurm", "feuerechse", "glasskorpion", "oasenkroete", "staubgeist", "mondschakal", "stachelflitzer"]:
 		_check(palmen.has(id) and Sandbox.ENEMIES[id].get("regelblatt", false) and GameData.get_file("kartenspiel").karten.has(id), "%s lebt in der Palmenrast" % id)
 	_check(Sandbox.ENEMIES.stachelflitzer.get("flieht_nach", 0) == 3, "Stachelflitzer saust nach drei Runden davon")
+
+	# D24: Die Terrassenstadt mit drei Stufen, Treppen und Lastenaufzug
+	var stadt: WorldMap = world.get_map("glutoase")
+	var teile := {}
+	for o: Dictionary in stadt.baukasten.objekte:
+		teile[o.teil] = true
+	for teil: String in ["go_brunnen", "go_tanzplatz", "go_basar_a", "go_bank", "go_gasthaus", "go_krankenzelt", "go_karawanenplatz",
+			"go_tareks_laden", "go_brakkus_werkstatt", "go_clan_werkstatt", "go_hadraks_schmiede", "go_treppe", "go_terrassenkante",
+			"go_aufzug_unten", "go_aufzug_oben", "go_bergpfad", "go_tor_duerrewald"]:
+		_check(teile.has(teil), "In der Stadt steht %s" % teil)
+	world.change_map(p, "glutoase", Vector2i(23, 6))
+	var oben: PackedVector2Array = stadt.astar.get_point_path(Vector2i(23, 6), Vector2i(22, 44))
+	_check(oben.size() > 0, "Über die Treppen von der Oase bis hinauf zu Hadraks Schmiede")
+	var aufzug := -1
+	for i in world.places.size():
+		if world.places[i].map == "glutoase" and world.places[i].art == "aufzug" and world.places[i].cell.y < 20:
+			aufzug = i
+	world.change_map(p, "glutoase", Vector2i(41, 18 - 1))
+	world.apply_command("a", {type = "use", target = "ort:%d" % aufzug})
+	for i in 100:
+		world.tick(0.05)
+	_check(p.cell.y > 36, "Mit dem Lastenaufzug nach oben")
 	Tageszeit.feste_stunde = -1.0
 	print("Aschensteppe: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)
