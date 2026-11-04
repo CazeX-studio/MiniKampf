@@ -345,6 +345,7 @@ func _build_map_view() -> void:
 		var view := WorldCharacter.new()
 		view.setup(npc.look, npc.name, npc.tint, Color("f2c14e"))
 		view.zeichen = str(npc.get("zeichen", ""))
+		view.liegt = npc.get("liegt", false)
 		view.idle_fps = NPC_IDLE_FPS
 		# Jeder NPC beginnt an einer anderen Stelle der Animation, damit nicht alle im Gleichtakt wippen
 		view.time_offset(randf() * 4.0)

@@ -31,9 +31,9 @@ const LOOKS := {
 	"vega": {sprite = "vega", scale = 3.0, fern = true},
 	# Kofi: erster der sechs Novizen (Schwert und Schild, Nahkampf), Bilder aus tools/figur_bilder.py
 	"kofi": {sprite = "kofi", scale = 3.0},
-	# Mitschüler aus design.md: Tessa (übereifrig) und Gorm (ängstlich), Platzhalter bis zu eigenen Bildern
-	"novize_tessa": {sprite = "elf_f", scale = 4.0, tint = Color(1.0, 0.88, 0.8)},
-	"novize_gorm": {sprite = "knight_m", scale = 4.0, tint = Color(0.85, 0.95, 0.85)},
+	# Mitschüler aus design.md: Tessa (übereifrig) und Gorm (ängstlich), eigene Köpfe auf den Novizen-Körpern (D20c2)
+	"novize_tessa": {sprite = "novize_w+tessa", scale = 3.0},
+	"novize_gorm": {sprite = "novize_m+gorm", scale = 3.0},
 	# Begleiter
 	"robot": {sprite = "big_zombie", scale = 2.5, tint = Color(0.72, 0.82, 1.0)},
 	# Start-Monster aus Marcos Bildblättern (tools/monster_bilder.py)

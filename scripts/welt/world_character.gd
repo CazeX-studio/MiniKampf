@@ -10,6 +10,8 @@ const OWN_SCALE := 2.0
 var moving := false
 ## Sitzt die Figur (Hinsetzen)? Vorerst etwas gestaucht gezeigt, bis es eigene Sitz-Bilder gibt.
 var sitzt := false
+## Liegt (z. B. Mira krank im Bett, "liegt": true beim NPC): zeigt die Bilder „liegen“, wenn die Figur welche hat
+var liegt := false
 var facing := 1
 ## Laufbilder in vier Richtungen benutzen (wenn die Figur sie hat): schräg nach vorne oder nach hinten,
 ## links/rechts über facing. Vorerst nur im Baukasten-Testfeld eingeschaltet.
@@ -58,7 +60,7 @@ var _bubble_time := 0.0
 
 
 func setup(look: String, p_name: String, tint := Color.WHITE, name_color := Color.WHITE) -> void:
-	for anim: String in ["idle", "run", "idle_vorn", "run_vorn", "idle_hinten", "run_hinten"]:
+	for anim: String in ["idle", "run", "idle_vorn", "run_vorn", "idle_hinten", "run_hinten", "liegen"]:
 		var frames: Array[Texture2D] = []
 		var i := 0
 		while ResourceLoader.exists(FighterView.sprite_path(look, anim, i)):
@@ -112,7 +114,11 @@ func _process(delta: float) -> void:
 			_bubble = null
 	var anim := "run" if moving and _frames.run.size() > 0 else "idle"
 	var fps := 12.0 if anim == "run" else idle_fps
-	if richtungen:
+	if liegt and not moving and _frames.liegen.size() > 0:
+		# Langsam atmen
+		anim = "liegen"
+		fps = 1.5
+	elif richtungen:
 		var gerichtet := anim + ("_hinten" if hinten else "_vorn")
 		if _frames[gerichtet].size() > 0:
 			anim = gerichtet

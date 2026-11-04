@@ -7666,6 +7666,25 @@
 		"_geschlecht": "m",
 		"_klinge": 39.5,
 		"_koepfe": {
+			"gorm": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						35.0,
+						57
+					],
+					"seite_normal": [
+						37.3,
+						57
+					],
+					"vorn_normal": [
+						37.3,
+						57
+					]
+				},
+				"name": "Gorm",
+				"nur_figur": true
+			},
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
@@ -8775,6 +8794,25 @@
 					]
 				},
 				"name": "Novize m3"
+			},
+			"tessa": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						34.5,
+						60
+					],
+					"seite_normal": [
+						38.5,
+						62
+					],
+					"vorn_normal": [
+						38.5,
+						62
+					]
+				},
+				"name": "Tessa",
+				"nur_figur": true
 			},
 			"w1": {
 				"geschlecht": "w",

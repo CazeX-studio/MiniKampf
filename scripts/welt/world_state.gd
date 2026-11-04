@@ -198,7 +198,7 @@ func _add_things(map_id: String, data: Dictionary) -> void:
 		var cell := Vector2i(int(d.feld[0]), int(d.feld[1]))
 		npcs[id] = {name = d.name, cell = cell, map = map_id, look = d.aussehen, tint = Color(d.get("farbe", "ffffff")),
 				dialog = d.get("dialog", id), cond = d.get("wenn", {}), approach = d.get("anspringen", {}),
-				zeichen = str(d.get("zeichen", ""))}
+				zeichen = str(d.get("zeichen", "")), liegt = bool(d.get("liegt", false))}
 		m.block(cell)
 	for d: Dictionary in data.get("deko", []):
 		decorations.append({art = d.art, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), map = map_id, cond = d.get("wenn", {}),

@@ -229,7 +229,7 @@
 				60,
 				52
 			],
-			"aussehen": "grund_wache+brom",
+			"aussehen": "grund_wache+brom#hut=brom_helm",
 			"dialog": "wache"
 		},
 		"mira": {
@@ -302,7 +302,7 @@
 				38,
 				8
 			],
-			"aussehen": "grund_alter_mensch+ilse",
+			"aussehen": "grund_alter_mensch+ilse#zubehoer=schluesselbund",
 			"dialog": "bank",
 			"zeichen": "truhe"
 		},
@@ -312,7 +312,7 @@
 				10,
 				28
 			],
-			"aussehen": "grund_frau+hanne",
+			"aussehen": "grund_frau+hanne#zubehoer=schuerze&kochloeffel",
 			"dialog": "hanne"
 		},
 		"edmar": {
@@ -321,7 +321,7 @@
 				33,
 				36
 			],
-			"aussehen": "grund_mann+edmar",
+			"aussehen": "grund_mann+edmar#zubehoer=amtskette",
 			"dialog": "edmar"
 		},
 		"quill": {
@@ -330,7 +330,7 @@
 				27,
 				25
 			],
-			"aussehen": "grund_handwerker+quill",
+			"aussehen": "grund_handwerker+quill#zubehoer=meissel",
 			"dialog": "quill"
 		},
 		"pip": {
@@ -339,7 +339,7 @@
 				29,
 				26
 			],
-			"aussehen": "grund_kind+pip",
+			"aussehen": "grund_kind+pip#zubehoer=holzschwert",
 			"dialog": "pip"
 		},
 		"lotte": {
@@ -348,7 +348,7 @@
 				30,
 				26
 			],
-			"aussehen": "grund_kind+lotte",
+			"aussehen": "grund_kind+lotte#hut=lotte_krone",
 			"dialog": "lotte"
 		},
 		"torwache_nebelinseln": {

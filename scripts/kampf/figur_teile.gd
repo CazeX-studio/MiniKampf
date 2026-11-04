@@ -35,6 +35,7 @@ const LIEGEND := 60.0
 const SCHICHTEN := "res://data/aussehen_teile.json"
 const HUT_BILD := "res://assets/teile/hut/%s_%s.png"  # Hut, Richtung
 const RUECKEN_BILD := "res://assets/teile/ruecken/%s_%s_f%d.png"  # Rückenteil, Richtung, Bild
+const ZUBEHOER_BILD := "res://assets/teile/zubehoer/%s_%s.png"  # Zubehör (D20c2), Richtung
 ## Bilder je Rückenteil: erst Stehen, dann Laufen
 const RUECKEN_STEHEN := 2
 const RUECKEN_LAUFEN := 4
@@ -73,7 +74,8 @@ static func koerper_von(look: String) -> String:
 ## „novize_w+mira#hut=wanderhut,ruecken=reiseumhang,farben=glutschmiede,waffe=krummklinge“. So kommt es überall mit, wo die
 ## Figur gezeigt wird (Welt, Kampf, Mitspieler) und steht im Spielstand. Ergebnis: {hut, ruecken, farben, waffe} (fehlt = "").
 static func aussehen_von(look: String) -> Dictionary:
-	var aussehen := {hut = "", ruecken = "", farben = "", waffe = ""}
+	# zubehoer: Teile bestimmter Figuren (Schürze, Amtskette …), mehrere mit „&“ getrennt, z. B. „zubehoer=schuerze&kochloeffel“
+	var aussehen := {hut = "", ruecken = "", farben = "", waffe = "", zubehoer = ""}
 	if "#" in look:
 		for teil: String in look.get_slice("#", 1).split(",", false):
 			var platz := teil.get_slice("=", 0)
@@ -136,6 +138,7 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 	var ruecken_wahl := ruecken
 	var farben_wahl := farben
 	var waffe_wahl := waffe
+	var zubehoer_wahl := ""
 	if "#" in figur or "+" in figur:
 		# Figuren aus „Figur erstellen“ tragen ihr eigenes Aussehen (aus dem Namen), die Wahl im Editor gilt für sie nicht
 		var aussehen := aussehen_von(figur)
@@ -143,6 +146,7 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 		ruecken_wahl = aussehen.ruecken
 		farben_wahl = aussehen.farben
 		waffe_wahl = aussehen.waffe
+		zubehoer_wahl = aussehen.zubehoer
 		figur = ohne_aussehen(figur)
 	if "+" in figur:
 		kopf_wahl = figur.get_slice("+", 1)
@@ -161,7 +165,9 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 	var ruecken_jetzt := ruecken_wahl if art_jetzt == Art.KOPFBLATT and ruecken_liste().has(ruecken_wahl) else ""
 	var farben_jetzt := farben_wahl if paletten_liste().has(farben_wahl) else ""
 	var waffe_jetzt := _waffe_von(figur, waffe_wahl)
-	var schluessel := "%s/%s/%d/%d/%s/%s/%s/%s/%s" % [figur, anim, frame, art_jetzt, kopf_id, hut_jetzt, ruecken_jetzt, farben_jetzt, waffe_jetzt]
+	var zubehoer_jetzt := zubehoer_wahl if art_jetzt == Art.KOPFBLATT else ""
+	var schluessel := "%s/%s/%d/%d/%s/%s/%s/%s/%s/%s" % [figur, anim, frame, art_jetzt, kopf_id, hut_jetzt, ruecken_jetzt, farben_jetzt, waffe_jetzt,
+			zubehoer_jetzt]
 	if _cache.has(schluessel):
 		return _cache[schluessel]
 	var koerper := _bild_laden(KOERPER % [figur, anim, frame])
@@ -216,6 +222,8 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 		if kopf_bild != null:
 			ergebnis.blend_rect(kopf_bild, Rect2i(Vector2i.ZERO, kopf_bild.get_size()), ecke)
 		ergebnis.blend_rect(koerper, Rect2i(Vector2i.ZERO, koerper.get_size()), Vector2i(rand, rand))
+		if zubehoer_jetzt != "" and info.has("hals"):
+			_zubehoer_zeichnen(ergebnis, zubehoer_jetzt, info, koerper.get_height(), rand)
 		if not umhang.is_empty() and umhang.vorne:
 			ergebnis.blend_rect(umhang.bild, Rect2i(Vector2i.ZERO, umhang.bild.get_size()), umhang.ecke)
 		# Die Waffe liegt über dem Körper und deckt den gemalten Griff ab
@@ -346,6 +354,22 @@ static func _rueckenteil(id: String, info: Dictionary, rand: int, palette: Strin
 	return {bild = bild, ecke = ecke, vorne = richtung == "hinten"}
 
 
+## Zubehör über dem Körper (D20c2): Jedes Teil hängt am Halspunkt des Bildes. "hoehe" sagt, wie weit es vom Hals
+## Richtung Füße sitzt (0 = am Hals, 1 = an den Füßen), "x" verschiebt es waagerecht, "anker" ist der Punkt im Teil.
+## Nur schräg von vorne und von hinten (die Figuren mit Zubehör stehen in der Welt).
+static func _zubehoer_zeichnen(ziel: Image, ids: String, info: Dictionary, koerper_hoehe: int, rand: int) -> void:
+	var alle: Dictionary = _alle_schichten().get("zubehoer", {})
+	for id: String in ids.split("&", false):
+		var daten: Dictionary = alle.get(id, {}).get(str(info.richtung), {})
+		var bild := _bild_laden(ZUBEHOER_BILD % [id, info.richtung]) if not daten.is_empty() else null
+		if bild == null:
+			continue
+		var hals := Vector2(info.hals[0], info.hals[1])
+		var punkt := Vector2(hals.x + float(daten.get("x", 0.0)), hals.y + float(daten.get("hoehe", 0.0)) * (koerper_hoehe - hals.y))
+		var ecke := Vector2i((punkt - Vector2(daten.anker[0], daten.anker[1])).round()) + Vector2i(rand, rand)
+		ziel.blend_rect(bild, Rect2i(Vector2i.ZERO, bild.get_size()), ecke)
+
+
 ## Alle Farbpaletten: Name -> Anzeigename.
 static func paletten_liste() -> Dictionary:
 	return _namen(_alle_paletten())
@@ -438,10 +462,13 @@ static func standardkopf(figur: String) -> String:
 
 
 ## Köpfe, die bei „Figur erstellen“ zum Körper passen (gleiches Geschlecht), in Reihenfolge m1, m2 …
+## Köpfe bestimmter Figuren ("nur_figur": true, z. B. Tessa und Gorm) gehören nicht dazu.
 static func passende_koepfe(figur: String) -> Array:
 	var geschlecht: String = _alle().get(koerper_von(figur), {}).get("_geschlecht", "")
 	var liste: Array = []
 	for id: String in koepfe(figur):
+		if koepfe(figur)[id].get("nur_figur", false):
+			continue
 		if geschlecht == "" or koepfe(figur)[id].get("geschlecht", "") == geschlecht:
 			liste.append(id)
 	liste.sort()

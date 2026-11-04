@@ -1,7 +1,9 @@
 """Nebenfiguren von Kreuzweg nach Steckbrief (D20c): eigene Köpfe auf den Baukasten-Körpern, dazu Porträts.
 
 Blätter tools/vorlagen/neben_<figur>.png (Auftrag GRAFIK_AUFTRAG.md Teil D „Figuren 4“): Reihe 1 Kopf schräg von vorne
-und schräg von hinten, Reihe 2 Porträts (Stimmungen je Figur, siehe FIGUREN), Reihe 3 Zubehör (kommt später).
+und schräg von hinten, Reihe 2 Porträts (Stimmungen je Figur, siehe FIGUREN), Reihe 3 Zubehör je von vorne und von
+hinten (D20c2, siehe ZUBEHOER und HUETE): Teile am Körper -> assets/teile/zubehoer/, Helm und Krone als Hut ->
+assets/teile/hut/, beides mit Eintrag in data/aussehen_teile.json.
 Ergebnis: assets/teile/koepfe/<figur>_<richtung>_normal.png, Eintrag in data/figurteile.json beim Körper (_koepfe) und
 assets/portraets/<sprecher>_<stimmung>.png (Sprecher = Name im Gespräch, klein geschrieben).
 Aufruf: python3 tools/nebenfiguren.py   (braucht numpy, scipy und Pillow; nach tools/baukasten_figuren.py)
@@ -15,6 +17,7 @@ from PIL import Image
 
 WURZEL = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(WURZEL / "tools"))
+from aussehen_bilder import DATEN as SCHICHTEN  # noqa: E402
 from figur_bilder import VORLAGEN  # noqa: E402
 from kopf_koerper import hals, verkleinern  # noqa: E402
 from monster_bilder import ausschneiden, bilder_finden, freistellen  # noqa: E402
@@ -35,6 +38,26 @@ FIGUREN = {
 	"quill": ("grund_handwerker", "Steinmetz Quill", "m", ["ruhig", "traurig"]),
 	"pip": ("grund_kind", "Pip", "m", ["laechelnd", "wuetend", "ueberrascht"]),
 	"lotte": ("grund_kind", "Lotte", "w", ["laechelnd", "wuetend", "ueberrascht"]),
+	# Mitschüler auf den Novizen-Körpern (D20c2): kämpfen auch, darum gilt der Kopf von vorne auch von der Seite
+	"tessa": ("novize_w", "Tessa", "w", ["laechelnd", "ueberrascht", "wuetend"]),
+	"gorm": ("novize_m", "Gorm", "m", ["ruhig", "traurig", "ueberrascht"]),
+}
+
+## Zubehör am Körper: Figur -> Liste (Nummer des Paars in Reihe 3, Kennung, Name, Größe im Spiel, Höhe am Körper, x).
+## Größe: ("breite"|"hoehe", Pixel). Höhe am Körper: 0 = am Hals, 1 = an den Füßen; x: nach rechts (von hinten gespiegelt).
+## Gehängt wird jedes Teil an seiner oberen Mitte. Ilses Ärmelschoner und Edmars Festschärpen fehlen noch (Arme, Fest).
+ZUBEHOER = {
+	"hanne": [(0, "schuerze", "Hannes Schürze", ("breite", 28), 0.30, 0), (1, "kochloeffel", "Kochlöffel", ("hoehe", 20), 0.28, 13)],
+	"ilse": [(1, "schluesselbund", "Schlüsselbund", ("hoehe", 15), 0.36, 12)],
+	"edmar": [(0, "amtskette", "Amtskette", ("breite", 22), 0.0, 0)],
+	"quill": [(0, "meissel", "Meißel", ("hoehe", 14), 0.36, 13)],
+	"pip": [(0, "holzschwert", "Holzschwert", ("hoehe", 20), 0.34, 11)],
+}
+## Hüte aus Reihe 3: Figur -> (Kennung, Name, Größe zum Kopf, Anteil der Hut-Höhe, an dem der Kopf steckt,
+## Sitz unter dem Scheitel)
+HUETE = {
+	"brom": ("brom_helm", "Broms alter Helm", 0.82, 0.95, 0.36),
+	"lotte": ("lotte_krone", "Lottes Papierkrone", 0.5, 0.85, 0.10),
 }
 
 ## Köpfe, die im Blatt größer gezeichnet sind als die anderen (Lenes Dutt und Brille): so viel kleiner machen
@@ -68,7 +91,8 @@ def main():
 	# Ein Maßstab für alle Blätter (gleich groß gezeichnet): mittlere Kopfhöhe von vorne wie ein Volks-Kopf.
 	# Einzelne Frisuren (Dutt, Krone) bleiben so größer, statt das Gesicht zu verkleinern.
 	volk = np.array(Image.open(TEILE / "koepfe" / "v_m1_vorn_normal.png").convert("RGBA"))
-	gezeichnet = np.median([hoehe(ausschneiden(a, z, r[0][0][0])) for a, z, r in blaetter.values()])
+	gezeichnet = np.median([hoehe(ausschneiden(a, z, r[0][0][0])) for figur, (a, z, r) in blaetter.items()
+			if not FIGUREN[figur][0].startswith("novize")])
 	faktor = hoehe(volk) / gezeichnet
 	PORTRAETS.mkdir(exist_ok=True)
 	for figur, (koerper, name, geschlecht, stimmungen) in FIGUREN.items():
@@ -77,13 +101,49 @@ def main():
 		Image.fromarray(vorn).save(TEILE / "koepfe" / f"{figur}_vorn_normal.png")
 		Image.fromarray(hinten).save(TEILE / "koepfe" / f"{figur}_hinten_normal.png")
 		punkte = {"vorn_normal": hals(vorn), "hinten_normal": hals_hinten(hinten, vorn)}
+		if koerper.startswith("novize"):
+			# Der Kopf schräg von vorne schaut nach rechts wie die Kampf-Körper: er dient auch als Seitenansicht
+			Image.fromarray(vorn).save(TEILE / "koepfe" / f"{figur}_seite_normal.png")
+			punkte["seite_normal"] = punkte["vorn_normal"]
 		daten[koerper]["_koepfe"][figur] = {"name": name, "geschlecht": geschlecht, "hals": punkte}
+		if koerper.startswith("novize"):
+			# Nicht bei „Figur erstellen“ wählbar
+			daten[koerper]["_koepfe"][figur]["nur_figur"] = True
 		for stimmung, (i, _) in zip(stimmungen, reihen[1]):
 			bild = Image.fromarray(ausschneiden(a, ziel, i))
 			f = PORTRAET_HOEHE / bild.height
 			bild.resize((round(bild.width * f), PORTRAET_HOEHE), Image.LANCZOS).save(PORTRAETS / f"{figur}_{stimmung}.png")
 	FIGURTEILE.write_text(json.dumps(daten, ensure_ascii=False, indent="\t", sort_keys=True))
 	print(f"{len(FIGUREN)} Nebenfiguren, Faktor {faktor:.3f}")
+	zubehoer(blaetter, faktor)
+
+
+def zubehoer(blaetter, faktor):
+	schichten = json.loads(SCHICHTEN.read_text(encoding="utf-8"))
+	schichten.setdefault("zubehoer", {})
+	(TEILE / "zubehoer").mkdir(exist_ok=True)
+	for figur, liste in ZUBEHOER.items():
+		a, ziel, reihen = blaetter[figur]
+		for paar, kennung, name, (mass, groesse), hoehe_am_koerper, x in liste:
+			eintrag = {"name": name}
+			for richtung, (i, _) in zip(["vorn", "hinten"], reihen[2][2 * paar:2 * paar + 2]):
+				bild = Image.fromarray(ausschneiden(a, ziel, i))
+				f = groesse / (bild.width if mass == "breite" else bild.height)
+				bild = bild.resize((max(1, round(bild.width * f)), max(1, round(bild.height * f))), Image.LANCZOS)
+				bild.save(TEILE / "zubehoer" / f"{kennung}_{richtung}.png")
+				eintrag[richtung] = {"anker": [round(bild.width / 2), 0], "hoehe": hoehe_am_koerper,
+						"x": x if richtung == "vorn" else -x}
+			schichten["zubehoer"][kennung] = eintrag
+	for figur, (kennung, name, groesse, anker, sitz) in HUETE.items():
+		a, ziel, reihen = blaetter[figur]
+		eintrag = {"name": name, "belohnung": True}
+		for richtung, (i, _) in zip(["vorn", "hinten"], reihen[2][:2]):
+			bild = Image.fromarray(verkleinern(ausschneiden(a, ziel, i), faktor * groesse))
+			bild.save(TEILE / "hut" / f"{kennung}_{richtung}.png")
+			eintrag[richtung] = {"anker": [round(bild.width / 2), round(bild.height * anker)], "sitz": sitz}
+		schichten["hut"][kennung] = eintrag
+	SCHICHTEN.write_text(json.dumps(schichten, ensure_ascii=False, indent="\t"), encoding="utf-8")
+	print(f"Zubehör: {sum(len(v) for v in ZUBEHOER.values())} Teile, {len(HUETE)} Hüte")
 
 
 if __name__ == "__main__":

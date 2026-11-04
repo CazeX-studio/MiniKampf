@@ -304,6 +304,42 @@
 				],
 				"sitz": 0.34
 			}
+		},
+		"brom_helm": {
+			"name": "Broms alter Helm",
+			"belohnung": true,
+			"vorn": {
+				"anker": [
+					26,
+					51
+				],
+				"sitz": 0.36
+			},
+			"hinten": {
+				"anker": [
+					24,
+					51
+				],
+				"sitz": 0.36
+			}
+		},
+		"lotte_krone": {
+			"name": "Lottes Papierkrone",
+			"belohnung": true,
+			"vorn": {
+				"anker": [
+					18,
+					18
+				],
+				"sitz": 0.1
+			},
+			"hinten": {
+				"anker": [
+					18,
+					18
+				],
+				"sitz": 0.1
+			}
 		}
 	},
 	"ruecken": {
@@ -453,6 +489,122 @@
 				27
 			],
 			"auswahl": false
+		}
+	},
+	"zubehoer": {
+		"schuerze": {
+			"name": "Hannes Schürze",
+			"vorn": {
+				"anker": [
+					14,
+					0
+				],
+				"hoehe": 0.3,
+				"x": 0
+			},
+			"hinten": {
+				"anker": [
+					14,
+					0
+				],
+				"hoehe": 0.3,
+				"x": 0
+			}
+		},
+		"kochloeffel": {
+			"name": "Kochlöffel",
+			"vorn": {
+				"anker": [
+					6,
+					0
+				],
+				"hoehe": 0.28,
+				"x": 13
+			},
+			"hinten": {
+				"anker": [
+					6,
+					0
+				],
+				"hoehe": 0.28,
+				"x": -13
+			}
+		},
+		"schluesselbund": {
+			"name": "Schlüsselbund",
+			"vorn": {
+				"anker": [
+					5,
+					0
+				],
+				"hoehe": 0.36,
+				"x": 12
+			},
+			"hinten": {
+				"anker": [
+					5,
+					0
+				],
+				"hoehe": 0.36,
+				"x": -12
+			}
+		},
+		"amtskette": {
+			"name": "Amtskette",
+			"vorn": {
+				"anker": [
+					11,
+					0
+				],
+				"hoehe": 0.0,
+				"x": 0
+			},
+			"hinten": {
+				"anker": [
+					11,
+					0
+				],
+				"hoehe": 0.0,
+				"x": 0
+			}
+		},
+		"meissel": {
+			"name": "Meißel",
+			"vorn": {
+				"anker": [
+					8,
+					0
+				],
+				"hoehe": 0.36,
+				"x": 13
+			},
+			"hinten": {
+				"anker": [
+					8,
+					0
+				],
+				"hoehe": 0.36,
+				"x": -13
+			}
+		},
+		"holzschwert": {
+			"name": "Holzschwert",
+			"vorn": {
+				"anker": [
+					10,
+					0
+				],
+				"hoehe": 0.34,
+				"x": 11
+			},
+			"hinten": {
+				"anker": [
+					10,
+					0
+				],
+				"hoehe": 0.34,
+				"x": -11
+			}
 		}
 	}
 }
