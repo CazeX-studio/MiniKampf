@@ -994,6 +994,16 @@
 					"wurzelkriecher"
 				],
 				"stufe": 19
+			},
+			{
+				"feld": [
+					5,
+					17
+				],
+				"gegner": [
+					"schatzpilzling"
+				],
+				"stufe": 20
 			}
 		],
 		"orte": [

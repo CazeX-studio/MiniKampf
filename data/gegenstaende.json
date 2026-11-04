@@ -74,5 +74,6 @@
 	"splitterstaub": {"bild": {"form": "splitter", "farbe": "b48cff"}, "name": "Splitterstaub", "beschreibung": "Beute vom Splitterwolf (nachts). Funkelt lila.", "preis": 4, "material": true},
 	"falterschuppen": {"bild": {"form": "feder", "farbe": "5a4a8a"}, "name": "Falterschuppen", "beschreibung": "Beute vom Moderfalter (nachts). Dunkel wie die Nacht.", "preis": 4, "material": true},
 	"luchsohr": {"bild": {"form": "fell", "farbe": "c8a070"}, "name": "Luchsohr", "beschreibung": "Seltene Beute vom Wipfelluchs. Mit Pinselspitze.", "preis": 12, "material": true},
-	"grosser_splitterkristall": {"bild": {"form": "splitter", "farbe": "9a6aff"}, "name": "Großer Splitterkristall", "beschreibung": "Seltene Beute vom Splitterbär. Er summt leise.", "preis": 15, "material": true}
+	"grosser_splitterkristall": {"bild": {"form": "splitter", "farbe": "9a6aff"}, "name": "Großer Splitterkristall", "beschreibung": "Seltene Beute vom Splitterbär. Er summt leise.", "preis": 15, "material": true},
+	"goldspore": {"bild": {"form": "pilz", "farbe": "f2c14e"}, "name": "Goldspore", "beschreibung": "Seltene Beute vom Schatzpilzling. Glänzt wie eine Münze.", "preis": 20, "material": true}
 }

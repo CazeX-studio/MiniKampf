@@ -28,6 +28,8 @@ const VULN_MULT := 1.3
 ## Zwischen zwei Wellen heilen sich die Helden um diesen Anteil.
 const WAVE_HEAL := 0.25
 ## Reaktion auf einen Gegner-Angriff (Ring und Balken): verpasst, normal, perfekt
+## Aufgeladener Angriff (Glimmerkäfer): so viel stärker
+const AUFGELADEN := 1.6
 const REACT_NONE := 0
 const REACT_NORMAL := 1
 const REACT_PERFECT := 2
@@ -953,15 +955,24 @@ func _enemy_turn(e: Fighter) -> void:
 			var benutzt: Dictionary = e.get_meta("einmal", {})
 			benutzt[attack.name] = true
 			e.set_meta("einmal", benutzt)
+		# Flüchter (seltene Monster, MONSTER.md 8): laufen nach ein paar eigenen Zügen weg
+		if data.has("flieht_nach") and e.step >= int(data.flieht_nach):
+			_weglaufen(e)
+			return
 		if not await _monster_faehigkeit(e, attack):
 			var targets := _monster_ziele(attack)
+			var schaden := _monster_schaden(e, attack)
 			for n in maxi(int(attack.get("treffer", 1)), 1):
 				if targets.is_empty() or not e.is_alive():
 					break
-				await enemy_attack(e, targets, attack.base, attack.kind, attack.name)
+				await enemy_attack(e, targets, schaden, attack.kind, attack.name)
 				# Effekt am Angriff (Effekt-Liste): trifft nur, wer nicht perfekt pariert oder ausgewichen ist
 				for t in _getroffen:
 					_monster_effekte(e, t, attack)
+					# Lichtfraß (Pilzhöhle): der Lichtkreis um das Ziel schrumpft, es ist ein paar Züge geblendet
+					if attack.has("blenden") and t.is_alive():
+						t.blind_turns = maxi(t.blind_turns, int(attack.blenden))
+						float_text(t, "Geblendet", Color("fff3b0"), 30)
 				targets = targets.filter(func(t: Fighter) -> bool: return t.is_alive())
 		e.step += 1
 		# Zeitbombe (Sternenfresser): nach so vielen eigenen Zügen stirbt die ganze Gruppe
@@ -999,6 +1010,30 @@ func _monster_ziele(attack: Dictionary) -> Array[Fighter]:
 	return targets
 
 
+## Schaden eines Monster-Angriffs: Rudel (mehr je weiterem Monster derselben Art), Aufladen (nächster Angriff stärker).
+func _monster_schaden(e: Fighter, attack: Dictionary) -> int:
+	var schaden := float(attack.base)
+	if attack.has("rudel"):
+		var rudel := enemies.filter(func(m: Fighter) -> bool: return m.is_alive() and m != e and m.klass == e.klass).size()
+		if rudel > 0:
+			schaden *= 1.0 + float(attack.rudel) * rudel
+			add_log("Das Rudel heult: %s beißt härter." % e.display_name)
+	if schaden > 0.0 and e.has_meta("geladen"):
+		e.remove_meta("geladen")
+		schaden *= AUFGELADEN
+	return roundi(schaden)
+
+
+## Ein Flüchter läuft weg: Er ist aus dem Kampf, aber nicht besiegt.
+func _weglaufen(e: Fighter) -> void:
+	add_log("[color=#f2c14e]%s läuft weg![/color]" % e.display_name)
+	float_text(e, "Weggelaufen!", Color("f2c14e"), 40)
+	e.set_meta("geflohen", true)
+	e.hp = 0
+	_emit({type = "despawn", f = e})
+	refresh()
+
+
 ## Effekte einer Monster-Fähigkeit auf ein Ziel ("effekt" ist ein Baustein oder eine Liste; anteil = Teil des
 ## Lebens der Quelle bei heilen und schutz).
 func _monster_effekte(quelle: Fighter, ziel: Fighter, attack: Dictionary) -> void:
@@ -1033,6 +1068,9 @@ func _monster_faehigkeit(e: Fighter, attack: Dictionary) -> bool:
 		return true
 	if ziel not in ["selbst", "freund", "freunde"]:
 		return false
+	if attack.get("aufladen", false):
+		e.set_meta("geladen", true)
+		float_text(e, "Lädt sich auf!", Color("ffe14d"), 30)
 	_emit({type = "cast", f = e, ult = false, name = attack.name})
 	add_log("%s: %s" % [e.display_name, attack.name])
 	var ziele: Array[Fighter] = []

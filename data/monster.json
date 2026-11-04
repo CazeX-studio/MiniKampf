@@ -1,5 +1,5 @@
 {
-	"_hinweis": "Monster nach MONSTER.md (D22). Werte aus der Tabelle nach Rolle (_rollen, Stufe 1), wachsen mit der Stufe wie alle Monster (BattleState.monster_hp/monster_power). Zuschläge: Nacht, Dungeon, seltene Brocken (_zuschlag). Fähigkeiten der Reihe nach: schaden = Anteil am Angriff der Rolle (0 = kein Schaden), art melee/ranged/magic, ziel: gegner (Standard), alle, vorne, hinten, schwaechster, selbst, freund (das verletzteste andere Monster), freunde (alle Monster). treffer: so oft hintereinander, ziele: so viele verschiedene Ziele, ruf: ruft dieses Monster (einmal pro Kampf), effekt: Baustein aus scripts/kampf/effekte.gd (anteil = Teil des eigenen Lebens bei heilen und schutz), bewegung: eigene Animation (spezial). einmal: true = nur einmal pro Kampf (danach überspringt das Monster die Fähigkeit).",
+	"_hinweis": "Monster nach MONSTER.md (D22). Werte aus der Tabelle nach Rolle (_rollen, Stufe 1), wachsen mit der Stufe wie alle Monster (BattleState.monster_hp/monster_power). Zuschläge: Nacht, Dungeon, seltene Brocken (_zuschlag). Fähigkeiten der Reihe nach: schaden = Anteil am Angriff der Rolle (0 = kein Schaden), art melee/ranged/magic, ziel: gegner (Standard), alle, vorne, hinten, schwaechster, selbst, freund (das verletzteste andere Monster), freunde (alle Monster). treffer: so oft hintereinander, ziele: so viele verschiedene Ziele, ruf: ruft dieses Monster (einmal pro Kampf), effekt: Baustein aus scripts/kampf/effekte.gd (anteil = Teil des eigenen Lebens bei heilen und schutz), bewegung: eigene Animation (spezial). einmal: true = nur einmal pro Kampf (danach überspringt das Monster die Fähigkeit). Pilzhöhle (D22c): blenden = so viele Züge geblendet (Lichtkreis schrumpft), rudel = mehr Schaden je weiterem Monster derselben Art, aufladen = nächster Angriff 1,6-fach, flieht_nach = Flüchter läuft nach so vielen eigenen Zügen weg, dungeon = Dungeon-Zuschlag.",
 	"_rollen": {
 		"tank": {
 			"name": "Tank",
@@ -28,6 +28,13 @@
 			"angriff": 7,
 			"tempo": 13,
 			"abwehr": 1.0
+		},
+		"fluechter": {
+			"name": "Flüchter",
+			"leben": 30,
+			"angriff": 6,
+			"tempo": 22,
+			"abwehr": 0.5
 		}
 	},
 	"_zuschlag": {
@@ -1110,6 +1117,216 @@
 				"schaden": 0.6,
 				"art": "magic",
 				"ziel": "alle"
+			}
+		]
+	},
+	"leuchtmotte": {
+		"name": "Leuchtmotte",
+		"element": "Licht",
+		"rolle": "helfer",
+		"stufe": [
+			20,
+			25
+		],
+		"dungeon": true,
+		"familie": "falter",
+		"beute": "leuchtschuppen",
+		"faehigkeiten": [
+			{
+				"name": "Blendflügel",
+				"schaden": 0.7,
+				"art": "magic",
+				"effekt": {
+					"art": "verfehlen",
+					"zuege": 1
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Lichtfraß",
+				"schaden": 0.6,
+				"art": "magic",
+				"blenden": 2
+			},
+			{
+				"name": "Mottenheilung",
+				"schaden": 0,
+				"art": "magic",
+				"ziel": "freund",
+				"effekt": {
+					"art": "heilen",
+					"anteil": 0.15
+				}
+			}
+		]
+	},
+	"wurzelkriecher": {
+		"name": "Wurzelkriecher",
+		"element": "Erde",
+		"rolle": "verteidiger",
+		"stufe": [
+			20,
+			25
+		],
+		"dungeon": true,
+		"familie": "wuermer",
+		"beute": "wurzelknolle",
+		"faehigkeiten": [
+			{
+				"name": "Wurzelgriff",
+				"schaden": 0.8,
+				"art": "melee",
+				"effekt": {
+					"art": "festhalten",
+					"zuege": 1
+				}
+			},
+			{
+				"name": "Durch den Boden",
+				"schaden": 0.9,
+				"art": "melee",
+				"ziel": "hinten",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Rindenpanzer",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.3
+				},
+				"einmal": true
+			}
+		]
+	},
+	"sporenwolf": {
+		"name": "Sporenwolf",
+		"element": "Pflanze",
+		"rolle": "angreifer",
+		"stufe": [
+			20,
+			25
+		],
+		"dungeon": true,
+		"familie": "woelfe",
+		"beute": "pilzfell",
+		"faehigkeiten": [
+			{
+				"name": "Rudelbiss",
+				"schaden": 0.9,
+				"art": "melee",
+				"rudel": 0.4
+			},
+			{
+				"name": "Sporenwolke",
+				"schaden": 0.35,
+				"art": "magic",
+				"ziel": "vorne",
+				"effekt": {
+					"art": "gift",
+					"zuege": 3
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Hetzjagd",
+				"schaden": 1.2,
+				"art": "melee",
+				"ziel": "schwaechster"
+			}
+		]
+	},
+	"glimmerkaefer": {
+		"name": "Glimmerkäfer",
+		"element": "Blitz",
+		"rolle": "angreifer",
+		"stufe": [
+			20,
+			25
+		],
+		"dungeon": true,
+		"familie": "kaefer",
+		"beute": "glimmerfluegel",
+		"faehigkeiten": [
+			{
+				"name": "Aufladen",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"aufladen": true
+			},
+			{
+				"name": "Entladung",
+				"schaden": 0.9,
+				"art": "magic",
+				"ziele": 2,
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Glimmerpanzer",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.25
+				},
+				"einmal": true
+			}
+		]
+	},
+	"schatzpilzling": {
+		"name": "Schatzpilzling",
+		"element": "Pflanze",
+		"rolle": "fluechter",
+		"stufe": [
+			25,
+			25
+		],
+		"dungeon": true,
+		"selten": "fluechter",
+		"flieht_nach": 3,
+		"familie": "pilze",
+		"beute": "goldspore",
+		"faehigkeiten": [
+			{
+				"name": "Flitzen",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "zugleiste",
+					"staerke": -0.6
+				}
+			},
+			{
+				"name": "Verstecken",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.6
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Schreckwolke",
+				"schaden": 0.3,
+				"art": "magic",
+				"ziel": "alle",
+				"effekt": {
+					"art": "verfehlen",
+					"zuege": 1
+				}
+			},
+			{
+				"name": "Weglaufen",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst"
 			}
 		]
 	}

@@ -54,12 +54,13 @@ const LOOKS := {
 	# Pilzhöhle
 	"leuchtmotte": {sprite = "leuchtmotte", scale = 1.0},
 	"wurzelkriecher": {sprite = "wurzelkriecher", scale = 1.0},
-	"sporenkoenigin": {sprite = "sporenkoenigin", scale = 1.0},
+	# Bosse der Pilzhöhle: ihre besonderen Bewegungen gehören zu ihren großen Angriffen (D22c)
+	"sporenkoenigin": {sprite = "sporenkoenigin", scale = 1.0, angriffe = {"Giftsporen": "spezial"}},
 	"sporenling": {sprite = "sporenknospe", scale = 1.0},
-	"wurzelmutter": {sprite = "wurzelmutter", scale = 1.0},
+	"wurzelmutter": {sprite = "wurzelmutter", scale = 1.0, angriffe = {"Wurzelzug": "spezial", "Verschlingen": "spezial"}},
 	"knoten_vorne": {sprite = "ice_zombie", scale = 4.0, tint = Color(1.0, 0.95, 0.7)},
 	"knoten_hinten": {sprite = "ice_zombie", scale = 4.0, tint = Color(1.0, 0.95, 0.7)},
-	"vorbote": {sprite = "vorbote", scale = 1.0},
+	"vorbote": {sprite = "vorbote", scale = 1.0, angriffe = {"Schattenwelle": "spezial", "Leerengriff": "attack", "Lichtfraß": "spezial"}},
 	# Vor dem Stadttor (Grundausbildung)
 	# Eigene Monster aus Marcos Bildblättern (tools/monster_bilder.py): fein gezeichnet, Größe 1.0.
 	# "angriffe": welcher Angriff (Name aus Sandbox.ENEMIES) welche Animation zeigt, sonst "attack" bzw. "wurf".

@@ -322,7 +322,7 @@ static func aus_steckbrief(m: Dictionary, rollen: Dictionary, zuschlag: Dictiona
 	var zaehmen := {}
 	for fa: Dictionary in m.faehigkeiten:
 		var a := {name = fa.name, base = roundi(float(fa.schaden) * float(rolle.angriff) * staerke), kind = str(fa.get("art", "melee"))}
-		for feld: String in ["ziel", "treffer", "ziele", "ruf", "effekt", "bewegung", "einmal"]:
+		for feld: String in ["ziel", "treffer", "ziele", "ruf", "effekt", "bewegung", "einmal", "blenden", "rudel", "aufladen"]:
 			if fa.has(feld):
 				a[feld] = fa[feld]
 		match str(fa.get("ziel", "")):
@@ -339,6 +339,8 @@ static func aus_steckbrief(m: Dictionary, rollen: Dictionary, zuschlag: Dictiona
 		ergebnis.tame = zaehmen
 	if m.has("selten"):
 		ergebnis.selten = m.selten
+	if m.has("flieht_nach"):
+		ergebnis.flieht_nach = int(m.flieht_nach)
 	return ergebnis
 
 

@@ -1,5 +1,5 @@
 extends SceneTree
-## D22a und D22b: Monster nach Regelblatt (MONSTER.md, data/monster.json): Werte nach Rolle und Stufe, Fähigkeiten mit Effekten,
+## D22a bis D22c: Monster nach Regelblatt (MONSTER.md, data/monster.json): Werte nach Rolle und Stufe, Fähigkeiten mit Effekten,
 ## Kreuzwegfelder und Hirschtal (Weg nach Grünwacht), seltene Monster.
 ## Aufruf: Godot --headless --path . -s tests/monster_regelblatt_test.gd
 
@@ -112,5 +112,32 @@ func _run() -> void:
 			index = i
 	_check(world.battle_reward(p, "wild:%d" % index, true).karte == "kronhirsch", "Kronhirsch bringt immer seine Karte")
 	_check(GameData.get_file("kartenspiel").karten.has("kronhirsch"), "Kronhirsch-Karte gibt es")
+	# D22c: Pilzhöhle nach Steckbrief
+	for id: String in ["leuchtmotte", "wurzelkriecher", "sporenwolf", "glimmerkaefer", "schatzpilzling"]:
+		var m: Dictionary = daten[id]
+		_check(m.get("dungeon", false) and m.faehigkeiten.size() == (4 if m.has("selten") else 3), "%s: Dungeon-Monster mit %d Fähigkeiten" % [id, m.faehigkeiten.size()])
+		_check(not Pilzhoehle.ENEMY_IDS.has(id), "%s kämpft nach Steckbrief" % id)
+	_check(Sandbox.ENEMIES.sporenwolf.hp == roundi(float(r.angreifer.leben) * 1.1), "Dungeon-Monster etwa 10 % stärker")
+	var rudel := BattleState.new(null, [] as Array[String], "", 6)
+	rudel.setup = {gegner_stufe = 19}
+	rudel.spawn_enemies(["sporenwolf", "sporenwolf", "glimmerkaefer"])
+	var biss: Dictionary = Sandbox.ENEMIES.sporenwolf.attacks[0]
+	_check(rudel._monster_schaden(rudel.enemies[0], biss) > biss.base, "Rudelbiss: stärker im Rudel")
+	var kaefer: Fighter = rudel.enemies[2]
+	rudel._monster_faehigkeit(kaefer, Sandbox.ENEMIES.glimmerkaefer.attacks[0])
+	var entladung: Dictionary = Sandbox.ENEMIES.glimmerkaefer.attacks[1]
+	_check(rudel._monster_schaden(kaefer, entladung) > entladung.base and rudel._monster_schaden(kaefer, entladung) == entladung.base,
+			"Aufladen: nur der nächste Angriff ist stärker")
+	var flucht := BattleState.new(null, [] as Array[String], "", 7)
+	flucht.setup = {gegner_stufe = 20}
+	flucht.spawn_enemies(["schatzpilzling"])
+	var pilz: Fighter = flucht.enemies[0]
+	pilz.step = 3
+	flucht._enemy_turn(pilz)
+	_check(not pilz.is_alive() and pilz.has_meta("geflohen"), "Schatzpilzling läuft nach drei Zügen weg")
+	_check(WorldState._seltenes(["schatzpilzling"]) == "schatzpilzling", "Schatzpilzling ist selten (immer Karte)")
+	_check(FighterView.look_data("sporenkoenigin").angriffe.has("Giftsporen") and FighterView.look_data("wurzelmutter").angriffe.has("Verschlingen")
+			and FighterView.look_data("vorbote").angriffe.has("Lichtfraß"), "Bosse zeigen bei ihren großen Angriffen ihre besondere Bewegung")
+
 	print("Monster-Regelblatt: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)

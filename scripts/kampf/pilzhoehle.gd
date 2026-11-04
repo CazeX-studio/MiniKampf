@@ -9,8 +9,9 @@ extends RefCounted
 ## - Endboss Phase 2 Vorbote: Dunkelheit, keine Zugleiste,
 ##     Wipe „Lichtfraß“ und Zusammenspiel „Das letzte Licht“
 
+## Die Monster der Höhle (Leuchtmotte, Wurzelkriecher, Sporenwolf, Glimmerkäfer, Schatzpilzling) kämpfen seit D22c
+## nach ihrem Steckbrief (data/monster.json); hier stehen nur noch die Bosse mit ihren Mechaniken.
 const ENEMY_IDS: Array[String] = [
-	"leuchtmotte", "wurzelkriecher", "sporenwolf", "glimmerkaefer",
 	"sporenkoenigin", "sporenling", "wurzelmutter", "knoten_vorne", "knoten_hinten", "vorbote",
 ]
 const MAX_CLOUDS := 5
@@ -168,6 +169,8 @@ func _sporeling_turn(e: Fighter) -> void:
 				return
 	var queen := _find("sporenkoenigin")
 	if queen != null and queen.is_alive():
+		# Die Sporenknospe zeigt beim Heilen ihre eigene Bewegung (D22c)
+		c._emit({type = "cast", f = e, ult = false, name = "Heilsporen"})
 		c.heal(null, queen, roundi(queen.max_hp * SPORE_HEAL))
 		c.add_log("Die Sporenknospe heilt die Sporenkönigin.")
 	c.wait(0.3)
@@ -213,6 +216,8 @@ func _mother_turn(e: Fighter) -> void:
 			devour = devour_turns()
 			pairs_since_warning = 0
 		else:
+			# Besondere Bewegung der Wurzelmutter (D22c)
+			c._emit({type = "cast", f = e, ult = false, name = "Verschlingen"})
 			c.burst(e, Color("4a2a10"), 300.0)
 			c.wipe("Verschlingen! Die Wurzeln ziehen alle unter die Erde.")
 			return
@@ -240,6 +245,7 @@ func _herald_turn(e: Fighter) -> void:
 	darkness += 1
 	c.set_darkness(darkness * DARKNESS_STEP)
 	if darkness >= MAX_DARKNESS:
+		c._emit({type = "cast", f = e, ult = false, name = "Lichtfraß"})
 		c.wipe("Lichtfraß! Die Dunkelheit verschlingt die Gruppe.")
 		return
 	if darkness == MAX_DARKNESS - 1:
