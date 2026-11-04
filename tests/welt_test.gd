@@ -115,7 +115,7 @@ func _test_building_blocks() -> void:
 	world.apply_command("a", {type = "dialog_next"})
 	_check(world.dialog_view(p).antworten.size() == 3, "Ye fragt nach Fragen (drei Antworten)")
 	world.apply_command("a", {type = "dialog_choose", index = 0})
-	_check(world.dialog_view(p).text.contains("Schild hoch"), "Antwort 1: Schild hoch, Schild runter")
+	_check(world.dialog_view(p).text.contains("Deine Hände wissen es vor dir"), "Antwort 1: Yes Spruch übers Parieren")
 	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "dialog_choose", index = 2})
 	world.apply_command("a", {type = "dialog_choose", index = 1})
@@ -382,8 +382,8 @@ func _test_building_blocks() -> void:
 	var achievements: Array[String] = []
 	w2.notice.connect(func(_id: String, text: String) -> void: achievements.append(text))
 	w2.apply_command("q", {type = "kampf_ergebnis", kampf = "sternenfall", gewonnen = true})
-	_check(q.progress.flags.has("erfolg:schild_hoch") and "Erfolg freigeschaltet: Schild hoch, Schild runter" in achievements,
-		"Sieg: Erfolg „Schild hoch, Schild runter“")
+	_check(q.progress.flags.has("erfolg:schild_hoch") and "Erfolg freigeschaltet: Deine Hände wissen es" in achievements,
+		"Sieg: Erfolg „Deine Hände wissen es“")
 	_tick(w2, 5.0)
 	_check(q.in_dialog() and w2.dialog_view(q).text.contains("Nicht schlecht"), "Ren klaut den Splitter (Sieg)")
 	var battle := GameData.battle("probe:kunoichi")

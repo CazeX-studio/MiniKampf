@@ -22,7 +22,7 @@
 			},
 			{
 				"name": "Lektion 2: Parieren",
-				"ansage": "Ye nimmt ein Übungsschwert: „Heute greifst du nicht an. Heute lernst du parieren.“",
+				"ansage": "Ye spannt seinen Regenschirm auf: „Heute greifst du nicht an. Heute lernst du parieren.“",
 				"gegner": [
 					"uebungs_ye"
 				],
@@ -141,7 +141,7 @@
 		"erfahrung": 160,
 		"merken": "lektion_deckung",
 		"hinweise": {
-			"erster_zug": "Neu: „Deckung geben“. Du springst in die vordere Reihe und fängst bis zu deinem nächsten Zug einen Treffer für Tessa oder Gorm ab.\nYe: „Schild hoch, Schild runter. Und manchmal für jemand anderen.“"
+			"erster_zug": "Neu: „Deckung geben“. Du springst in die vordere Reihe und fängst bis zu deinem nächsten Zug einen Treffer für Tessa oder Gorm ab.\nYe: „Deine Hände wissen es vor dir. Auch, wenn es um jemand anderen geht.“"
 		}
 	},
 	"gruppenkampf": {
@@ -247,7 +247,7 @@
 		"gruppe_staerke": 0.25,
 		"verloren_text": "Alles wird schwarz …",
 		"hinweise": {
-			"erster_zug": "Ein Sternenpanzer schützt den Sternenfresser: Normale Treffer prallen fast ab. Nur eine PERFEKTE PARADE erschüttert ihn – dann ist er kurz verwundbar und ihr könnt zuschlagen. Vorsicht: Seine Treffer sind tödlich! Ohne Parade fällst du sofort, normal pariert bleibt dir nur ein Rest Leben. Beeilt euch: Nach 10 Zügen explodiert der Splitter in seinem Bauch! Schild hoch, Schild runter!\nYe ruft: „Jetzt! Du hast es gefühlt, oder?“ Neu: deine kleine Ult „Sternenmut“. Jede perfekte Parade lädt sie auf."
+			"erster_zug": "Ein Sternenpanzer schützt den Sternenfresser: Normale Treffer prallen fast ab. Nur eine PERFEKTE PARADE erschüttert ihn – dann ist er kurz verwundbar und ihr könnt zuschlagen. Vorsicht: Seine Treffer sind tödlich! Ohne Parade fällst du sofort, normal pariert bleibt dir nur ein Rest Leben. Beeilt euch: Nach 10 Zügen explodiert der Splitter in seinem Bauch!\nYe ruft: „Jetzt! Du hast es gefühlt, oder?“ Neu: deine kleine Ult „Sternenmut“. Jede perfekte Parade lädt sie auf."
 		}
 	},
 	"fenns_pruefung": {

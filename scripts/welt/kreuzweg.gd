@@ -134,6 +134,8 @@ var _no_save := false
 
 var _dialog: PanelContainer
 var _dialog_name: Label
+## Gemaltes Porträt der sprechenden Figur über dem Gesprächsfenster (D20b, erst Ye)
+var _dialog_bild: TextureRect
 var _dialog_text: Label
 var _dialog_answers: VBoxContainer
 var _dialog_next: Button
@@ -1526,6 +1528,14 @@ func _build_ui() -> void:
 	_dialog.size = Vector2(960, 260)
 	_dialog.visible = false
 	root.add_child(_dialog)
+	_dialog_bild = TextureRect.new()
+	_dialog_bild.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_dialog_bild.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	_dialog_bild.size = Vector2(150, 200)
+	_dialog_bild.position = Vector2(_dialog.position.x + 10, _dialog.position.y - 200)
+	_dialog_bild.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_dialog_bild.visible = false
+	root.add_child(_dialog_bild)
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 6)
 	_dialog.add_child(box)
@@ -2148,10 +2158,15 @@ func _update_dialog() -> void:
 		return
 	_dialog_shown = view
 	_dialog.visible = not view.is_empty()
+	_dialog_bild.visible = false
 	_action_button.text = "Weiter" if _dialog.visible else "Reden"
 	if view.is_empty():
 		return
 	_dialog_name.text = view.wer
+	var bild_pfad := WorldState.portraet(view)
+	_dialog_bild.visible = bild_pfad != ""
+	if bild_pfad != "":
+		_dialog_bild.texture = load(bild_pfad)
 	_dialog_text.text = view.text
 	for child in _dialog_answers.get_children():
 		child.queue_free()

@@ -270,7 +270,7 @@ func _test_star_night() -> void:
 			break
 	_check(a.in_dialog() and b2.in_dialog() and a.dialog.get("id", "") == "ren", "Alle zurück: Ren spricht beide zusammen an")
 	_check(w.dialog_view(b2).get("szene", {}).get("rolle", "") in ["spricht", "abstimmen"], "Beide stimmen in der Szene mit Ren ab")
-	_check(a.progress.flags.has("erfolg:schild_hoch") and b2.progress.flags.has("erfolg:schild_hoch"), "Beide haben den Erfolg „Schild hoch, Schild runter“")
+	_check(a.progress.flags.has("erfolg:schild_hoch") and b2.progress.flags.has("erfolg:schild_hoch"), "Beide haben den Erfolg „Deine Hände wissen es“")
 
 
 ## Der Sternenfresser hat mehr Leben, je mehr Spieler mitkämpfen.

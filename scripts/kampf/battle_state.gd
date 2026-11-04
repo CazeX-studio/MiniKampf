@@ -469,6 +469,21 @@ func _spawn_wave(index: int) -> void:
 
 
 ## Langer Lernkampf: Jede Phase (Lektion) bringt eigene Regeln mit – erlaubte Fähigkeiten, Reaktion an/aus,
+## Ye kommentiert in der Paradeschule (D20b, Sprüche aus design.md): bei den Übungsversuchen nach jeder Parade,
+## beim ersten Übungsversuch wird sein Schirm kurz zu einer anderen Waffe.
+func _ye_sagt(grade: int) -> void:
+	if parry_attempts == 3:
+		add_log("[color=#c8b8e8][i]Für einen Augenblick ist Yes Schirm ein Schwert. Dann wieder ein Schirm. Ye tut, als wäre nichts gewesen.[/i][/color]")
+	if parry_attempts <= 2:
+		return
+	var spruch := "Nicht nachdenken. Deine Hände wissen es vor dir."
+	if grade == REACT_NONE:
+		spruch = "Zu langsam. Noch mal."
+	elif grade == REACT_PERFECT and parry_attempts == PARRY_SCHOOL_ATTACKS:
+		spruch = "Nicht schlecht. Für einen Anfänger."
+	add_log("[color=#cfe2ff]Ye: „%s“[/color]" % spruch)
+
+
 ## Paraden-Ziel, Pflicht-Aktion, Ansage und Ye-Erklärungen.
 func _apply_phase(index: int) -> void:
 	var phase: Dictionary = setup.phasen[index]
@@ -1022,6 +1037,8 @@ func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String
 		# Ältere Steuerer antworten mit ja/nein (ja = perfekt)
 		grade = (REACT_PERFECT if answer else REACT_NONE) if answer is bool else int(answer)
 	var success := grade == REACT_PERFECT
+	if setup.get("paradeschule", false) and focus == heroes[0] and not reactors.is_empty():
+		_ye_sagt(grade)
 	# Effekt „Verfehlen“ auf dem Angreifer: Dieser Angriff geht daneben
 	var daneben := Effekte.verfehlt(self, e)
 	_getroffen.clear()

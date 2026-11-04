@@ -791,6 +791,17 @@ func _enter_node(p: PlayerState, dialog_id: String, node_id: String) -> void:
 
 ## Was der Spieler gerade im Gespräch sieht: {wer, text, antworten (nur die erlaubten)}. Leer = kein Gespräch.
 ## In einer gemeinsamen Szene kommt "szene" dazu: {rolle, sprecher, stimmen, meine, offen, zeit, teilnehmer}.
+## Gemaltes Porträt zur Zeile (design.md: Porträt-Stimmung): assets/portraets/<wer>_<stimmung>.png, "" = keins.
+static func portraet(view: Dictionary) -> String:
+	var wer := str(view.get("wer", "")).to_lower()
+	if wer == "":
+		return ""
+	var pfad := "res://assets/portraets/%s_%s.png" % [wer, view.get("stimmung", "ruhig")]
+	if not ResourceLoader.exists(pfad):
+		pfad = "res://assets/portraets/%s_ruhig.png" % wer
+	return pfad if ResourceLoader.exists(pfad) else ""
+
+
 func dialog_view(p: PlayerState) -> Dictionary:
 	if not p.in_dialog():
 		return {}
@@ -805,7 +816,7 @@ func dialog_view(p: PlayerState) -> Dictionary:
 	for a in visible:
 		answers.append(a.text)
 	return {wer = node.get("wer", ""), text = fill_text(p, node.get("text", "")), antworten = answers,
-			zeichen = answer_markers(p, p.dialog.id, p.dialog.node, visible)}
+			zeichen = answer_markers(p, p.dialog.id, p.dialog.node, visible), stimmung = node.get("stimmung", "ruhig")}
 
 
 ## Gesprächszustand zum Verschicken an einen Mitspieler (in einer Szene mit fertiger Ansicht, weil das Spiegelbild
@@ -1248,7 +1259,7 @@ func _scene_view(p: PlayerState, scene: Dictionary) -> Dictionary:
 			open += 1
 	var role := "spricht" if p.id == speaker.id else ("abstimmen" if p.id in scene.voters else "zuschauen")
 	return {wer = node.get("wer", ""), text = fill_text(p, node.get("text", "")), antworten = answers,
-			zeichen = answer_markers(speaker, speaker.dialog.id, speaker.dialog.node, visible),
+			zeichen = answer_markers(speaker, speaker.dialog.id, speaker.dialog.node, visible), stimmung = node.get("stimmung", "ruhig"),
 			szene = {rolle = role, sprecher = speaker.display_name, stimmen = votes, meine = scene.votes.get(p.id, -1),
 				offen = open, zeit = ceili(scene.time_left), teilnehmer = _scene_members(scene).size()}}
 
@@ -1269,6 +1280,9 @@ func check(p: PlayerState, cond: Dictionary) -> bool:
 	if cond.has("gemerkt") and not p.progress.flags.has(cond.gemerkt):
 		return false
 	if cond.has("nicht_gemerkt") and p.progress.flags.has(cond.nicht_gemerkt):
+		return false
+	# {"nacht": true}: nur nachts ({"nacht": false} = nur tagsüber), nach der Uhr dieser Welt
+	if cond.has("nacht") and bool(cond.nacht) != nacht:
 		return false
 	if cond.has("stufe_ab") and p.progress.level < int(cond.stufe_ab):
 		return false

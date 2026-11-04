@@ -32,8 +32,7 @@
 				13,
 				45
 			],
-			"aussehen": "wizzard_m",
-			"farbe": "ccdbf2",
+			"aussehen": "ye",
 			"dialog": "ye",
 			"wenn": {
 				"nicht_gemerkt": "ausbildung_morgen"
@@ -45,8 +44,7 @@
 				29,
 				61
 			],
-			"aussehen": "wizzard_m",
-			"farbe": "ccdbf2",
+			"aussehen": "ye",
 			"dialog": "ye_tor",
 			"wenn": {
 				"gemerkt": "ausbildung_morgen"
