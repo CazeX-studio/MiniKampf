@@ -510,27 +510,13 @@ func spawn_enemies(ids: Array) -> void:
 	var slot := 0
 	# Gruppenkampf: Bosse wie der Sternenfresser haben mehr Leben, je mehr Spieler mitkämpfen (setup.gegner_leben)
 	var hp_scale: float = Sandbox.HP_SCALE[heroes.size() - 1] * float(setup.get("gegner_leben", 1.0))
-	# Monster in der Wildnis haben eine Stufe (setup.gegner_stufe): mehr Leben und härtere Treffer
-	var level := int(setup.get("gegner_stufe", 1))
 	var has_big := false
 	for id: String in ids:
 		has_big = has_big or Sandbox.ENEMIES[id].get("big", false)
 	for i in ids.size():
 		var id: String = ids[i]
 		var data: Dictionary = Sandbox.ENEMIES[id]
-		# Was sich nicht wehrt (Splitter-Knoten, Zielscheiben), wächst nicht mit der Stufe: Es gehört zur Mechanik
-		var level_hp := 1.0 if data.get("passive", false) else monster_hp(level)
-		var e := Fighter.new(data.name, id, data.element, false, roundi(data.hp * hp_scale * level_hp), data.tempo, Elements.color(data.element))
-		e.element = data.element
-		e.power = monster_power(level) * _enemy_gap_factor(level)
-		e.resist = data.get("resist", 1.0)
-		e.big = data.get("big", false)
-		e.passive = data.get("passive", false)
-		e.plate = data.get("panzer", 1.0)
-		e.stagger_length = data.get("erschuettert", 2)
-		e.deadly = data.get("toedlich", false)
-		if data.has("title"):
-			e.display_name = data.title
+		var e := _monster_bauen(id, hp_scale)
 		if data.get("trainer", false):
 			# Der Trainer steht hinten, sein Monster vorne; angreifen kann man ihn nicht
 			e.trainer = true
@@ -540,9 +526,49 @@ func spawn_enemies(ids: Array) -> void:
 			continue
 		enemies.append(e)
 		e.intent = skills.enemy_intent(e)
+		e.set_meta("platz", slot + (2 if with_trainer else 0))
 		_emit({type = "spawn", f = e, place = "boss_wave" if has_big else "wave", index = slot + (2 if with_trainer else 0), hp = e.hp})
 		slot += 1
 		e.next_time = now + e.turn_delay() * zufall_range(0.2, 1.0)
+
+
+## Ein Gegner nach seinen Daten. Monster in der Wildnis haben eine Stufe (setup.gegner_stufe): mehr Leben und härtere
+## Treffer. Ohne Stufe (Lernkämpfe) kämpfen Monster nach Regelblatt auf ihrer kleinsten Stufe (MONSTER.md).
+func _monster_bauen(id: String, hp_scale: float, stufe := 0) -> Fighter:
+	var data: Dictionary = Sandbox.ENEMIES[id]
+	var level := stufe if stufe > 0 else int(setup.get("gegner_stufe", data.get("stufe_min", 1)))
+	# Was sich nicht wehrt (Splitter-Knoten, Zielscheiben), wächst nicht mit der Stufe: Es gehört zur Mechanik
+	var level_hp := 1.0 if data.get("passive", false) else monster_hp(level)
+	var e := Fighter.new(data.name, id, data.element, false, roundi(data.hp * hp_scale * level_hp), data.tempo, Elements.color(data.element))
+	e.element = data.element
+	e.power = monster_power(level) * _enemy_gap_factor(level)
+	e.resist = data.get("resist", 1.0)
+	e.big = data.get("big", false)
+	e.passive = data.get("passive", false)
+	e.plate = data.get("panzer", 1.0)
+	e.stagger_length = data.get("erschuettert", 2)
+	e.deadly = data.get("toedlich", false)
+	e.set_meta("stufe", level)
+	if data.has("title"):
+		e.display_name = data.title
+	return e
+
+
+## Ein Monster kommt mitten im Kampf dazu (Herbeirufen, MONSTER.md: höchstens einmal pro Kampf).
+func add_enemy(id: String, stufe: int) -> void:
+	var e := _monster_bauen(id, Sandbox.HP_SCALE[heroes.size() - 1], stufe)
+	# Freier Platz: einer, auf dem kein lebendes Monster steht
+	var belegt := enemies.filter(func(m: Fighter) -> bool: return m.is_alive()).map(func(m: Fighter) -> int: return int(m.get_meta("platz", 0)))
+	var platz := 0
+	while belegt.has(platz):
+		platz += 1
+	e.set_meta("platz", platz)
+	enemies.append(e)
+	e.intent = skills.enemy_intent(e)
+	_emit({type = "spawn", f = e, place = "wave", index = platz, hp = e.hp})
+	float_text(e, "Herbeigerufen!", Color("ffd34d"))
+	e.next_time = now + e.turn_delay() * zufall_range(0.6, 1.0)
+	refresh()
 
 
 ## Härtere oder schwächere Treffer der Gegner durch den Stufenabstand (in der Gruppe zählt die mittlere Stufe).
@@ -915,24 +941,117 @@ func _enemy_turn(e: Fighter) -> void:
 				e.intent = skills.enemy_intent(e)
 				return
 		var attack: Dictionary = data.attacks[e.step % data.attacks.size()]
-		var targets: Array[Fighter] = []
-		if attack.get("all", false):
-			targets = allies()
-		elif attack.kind == "melee":
-			targets = [pick_target()]
-		else:
-			targets = [pick_target(attack.get("back", false), true)]
-		await enemy_attack(e, targets, attack.base, attack.kind, attack.name)
-		# Effekt am Angriff (Effekt-Liste): trifft nur, wer nicht perfekt pariert oder ausgewichen ist
-		if attack.has("effekt"):
-			var fx: Dictionary = attack.effekt
-			for t in _getroffen:
-				Effekte.anwenden(self, e, t, str(fx.art), float(fx.get("staerke", -1.0)), int(fx.get("zuege", -1)))
+		# Überspringen: Heilen eines anderen Monsters, wenn keins mehr da ist, und Fähigkeiten, die nur einmal gehen
+		for versuch in data.attacks.size():
+			var allein: bool = str(attack.get("ziel", "")) == "freund" and not enemies.any(func(m: Fighter) -> bool: return m.is_alive() and m != e)
+			var verbraucht: bool = attack.get("einmal", false) and e.get_meta("einmal", {}).has(attack.name)
+			if not allein and not verbraucht:
+				break
+			e.step += 1
+			attack = data.attacks[e.step % data.attacks.size()]
+		if attack.get("einmal", false):
+			var benutzt: Dictionary = e.get_meta("einmal", {})
+			benutzt[attack.name] = true
+			e.set_meta("einmal", benutzt)
+		if not await _monster_faehigkeit(e, attack):
+			var targets := _monster_ziele(attack)
+			for n in maxi(int(attack.get("treffer", 1)), 1):
+				if targets.is_empty() or not e.is_alive():
+					break
+				await enemy_attack(e, targets, attack.base, attack.kind, attack.name)
+				# Effekt am Angriff (Effekt-Liste): trifft nur, wer nicht perfekt pariert oder ausgewichen ist
+				for t in _getroffen:
+					_monster_effekte(e, t, attack)
+				targets = targets.filter(func(t: Fighter) -> bool: return t.is_alive())
 		e.step += 1
 		# Zeitbombe (Sternenfresser): nach so vielen eigenen Zügen stirbt die ganze Gruppe
 		if data.has("wipe_nach") and e.is_alive() and e.step >= int(data.wipe_nach):
 			wipe(data.get("wipe_text", "Zu spät!"))
 	e.intent = skills.enemy_intent(e)
+
+
+## Ziele eines Monster-Angriffs (MONSTER.md): alle, vordere/hintere Reihe, das schwächste Ziel oder mehrere verschiedene.
+func _monster_ziele(attack: Dictionary) -> Array[Fighter]:
+	var targets: Array[Fighter] = []
+	match str(attack.get("ziel", "")):
+		"vorne":
+			targets.assign(allies().filter(func(h: Fighter) -> bool: return not h.back_row))
+			if targets.is_empty():
+				targets = allies()
+			return targets
+		"schwaechster":
+			var alle := allies()
+			alle.sort_custom(func(a: Fighter, b: Fighter) -> bool: return a.hp < b.hp)
+			if not alle.is_empty():
+				targets = [alle[0]]
+			return targets
+	if attack.get("all", false):
+		return allies()
+	var anzahl := int(attack.get("ziele", 1))
+	for i in anzahl:
+		var t := pick_target() if attack.kind == "melee" and i == 0 else pick_target(attack.get("back", false), true)
+		if i > 0:
+			var rest := allies().filter(func(h: Fighter) -> bool: return not targets.has(h))
+			if rest.is_empty():
+				break
+			t = pick(rest)
+		targets.append(t)
+	return targets
+
+
+## Effekte einer Monster-Fähigkeit auf ein Ziel ("effekt" ist ein Baustein oder eine Liste; anteil = Teil des
+## Lebens der Quelle bei heilen und schutz).
+func _monster_effekte(quelle: Fighter, ziel: Fighter, attack: Dictionary) -> void:
+	if not attack.has("effekt"):
+		return
+	var liste: Array = attack.effekt if attack.effekt is Array else [attack.effekt]
+	for fx: Dictionary in liste:
+		var staerke := float(fx.get("staerke", -1.0))
+		if fx.has("anteil"):
+			staerke = float(fx.anteil) * quelle.max_hp
+		# Schutz von Monstern stapelt nicht: der neue ersetzt den alten (sonst zieht sich der Kampf endlos)
+		if str(fx.art) == "schutz":
+			ziel.shields.erase(quelle)
+		Effekte.anwenden(self, quelle, ziel, str(fx.art), staerke, int(fx.get("zuege", -1)))
+
+
+## Fähigkeiten ohne Angriff auf die Helden: auf sich selbst, auf andere Monster oder Herbeirufen.
+## Gibt true zurück, wenn die Fähigkeit so ausgeführt wurde (dann folgt kein Angriff).
+func _monster_faehigkeit(e: Fighter, attack: Dictionary) -> bool:
+	var ziel := str(attack.get("ziel", ""))
+	if attack.has("ruf"):
+		# Herbeirufen höchstens einmal pro Kampf (MONSTER.md), und nur, wenn noch Platz ist
+		if has_meta("gerufen") or enemies.filter(func(m: Fighter) -> bool: return m.is_alive()).size() >= 4:
+			_emit({type = "cast", f = e, ult = false, name = attack.name})
+			float_text(e, "Niemand kommt …", Color("d8d8e8"))
+			return true
+		set_meta("gerufen", true)
+		_emit({type = "cast", f = e, ult = false, name = attack.name})
+		add_log("%s: %s!" % [e.display_name, attack.name])
+		add_enemy(str(attack.ruf), int(e.get_meta("stufe", 1)))
+		wait(0.4)
+		return true
+	if ziel not in ["selbst", "freund", "freunde"]:
+		return false
+	_emit({type = "cast", f = e, ult = false, name = attack.name})
+	add_log("%s: %s" % [e.display_name, attack.name])
+	var ziele: Array[Fighter] = []
+	match ziel:
+		"selbst":
+			ziele = [e]
+		"freunde":
+			ziele.assign(enemies.filter(func(m: Fighter) -> bool: return m.is_alive()))
+		"freund":
+			# Das verletzteste andere Monster (sonst sich selbst)
+			var andere := enemies.filter(func(m: Fighter) -> bool: return m.is_alive() and m != e)
+			andere.sort_custom(func(a: Fighter, b: Fighter) -> bool: return float(a.hp) / a.max_hp < float(b.hp) / b.max_hp)
+			if andere.is_empty():
+				return true
+			ziele = [andere[0]]
+	for z in ziele:
+		_monster_effekte(e, z, attack)
+	wait(0.5)
+	return true
 
 
 func _boss_turn(boss: Fighter) -> void:

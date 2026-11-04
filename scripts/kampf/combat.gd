@@ -367,7 +367,7 @@ func _play_event(event: Dictionary) -> void:
 				view(event.f).shown = event.hp
 		"cast":
 			Geraeusche.play("zauber", 0.8 if event.ult else 1.0)
-			_cast(event.f, event.ult)
+			_cast(event.f, event.ult, str(event.get("name", "")))
 			if event.ult and has_view(event.f):
 				await UltFilm.abspielen(self, _field, view(event.f), event.f.klass, event.get("name", ""))
 		"projectile":
@@ -475,11 +475,16 @@ func _feet(f: Fighter, place: String, index: int) -> Vector2:
 
 
 ## Glühen beim Wirken einer Fähigkeit (Ult: goldener Lichtblitz über den ganzen Bildschirm).
-func _cast(f: Fighter, ult: bool) -> void:
+func _cast(f: Fighter, ult: bool, faehigkeit := "") -> void:
 	if not has_view(f):
 		return
 	var v := view(f)
 	v.cast_hop()
+	# Monster zeigen bei Fähigkeiten ohne Angriff (Schutz, Heilen, Herbeirufen) ihre eigene Bewegung
+	if not f.is_ally():
+		var anim := v.anim_for(faehigkeit, "spezial")
+		if anim != "":
+			v.strike(anim, 0.3)
 	if ult:
 		v.glow(Color("ffe08a"), 1.2)
 		Fx.spawn(_field, Fx.Kind.GLOW, v.center(), Color("f2c14e"), 220.0, 1.0)

@@ -158,9 +158,9 @@
 					12
 				],
 				"gegner": [
-					"windfalke"
+					"dornenranke"
 				],
-				"stufe": 10
+				"stufe": 5
 			},
 			{
 				"feld": [
@@ -168,9 +168,9 @@
 					5
 				],
 				"gegner": [
-					"steinkroete"
+					"bachkrebs"
 				],
-				"stufe": 11
+				"stufe": 6
 			},
 			{
 				"feld": [
@@ -178,10 +178,9 @@
 					14
 				],
 				"gegner": [
-					"windfalke",
-					"windfalke"
+					"borstenkeiler"
 				],
-				"stufe": 11
+				"stufe": 7
 			},
 			{
 				"feld": [
@@ -189,10 +188,9 @@
 					12
 				],
 				"gegner": [
-					"waldsporenling",
-					"steinkroete"
+					"zankelster"
 				],
-				"stufe": 12
+				"stufe": 7
 			},
 			{
 				"feld": [
@@ -200,10 +198,10 @@
 					3
 				],
 				"gegner": [
-					"windfalke",
-					"waldsporenling"
+					"dornenranke",
+					"bachkrebs"
 				],
-				"stufe": 13
+				"stufe": 8
 			},
 			{
 				"feld": [
@@ -211,10 +209,10 @@
 					14
 				],
 				"gegner": [
-					"steinkroete",
-					"steinkroete"
+					"zankelster",
+					"borstenkeiler"
 				],
-				"stufe": 13
+				"stufe": 9
 			},
 			{
 				"feld": [
@@ -222,11 +220,11 @@
 					3
 				],
 				"gegner": [
-					"waldsporenling",
-					"waldsporenling",
-					"windfalke"
+					"bachkrebs",
+					"dornenranke",
+					"zankelster"
 				],
-				"stufe": 14
+				"stufe": 10
 			},
 			{
 				"feld": [
@@ -234,16 +232,16 @@
 					14
 				],
 				"gegner": [
-					"donnerhirsch"
+					"kronhirsch"
 				],
-				"stufe": 15
+				"stufe": 12
 			},
 			{
 				"zeit": "nacht",
 				"gegner": [
 					"heulwolf"
 				],
-				"stufe": 11,
+				"stufe": 9,
 				"feld": [
 					50,
 					12
@@ -255,7 +253,7 @@
 					"irrlicht",
 					"heulwolf"
 				],
-				"stufe": 12,
+				"stufe": 10,
 				"feld": [
 					38,
 					14
@@ -267,7 +265,7 @@
 					"heulwolf",
 					"heulwolf"
 				],
-				"stufe": 13,
+				"stufe": 11,
 				"feld": [
 					24,
 					3
@@ -279,7 +277,7 @@
 					"heulwolf",
 					"irrlicht"
 				],
-				"stufe": 14,
+				"stufe": 12,
 				"feld": [
 					12,
 					3
@@ -376,6 +374,16 @@
 		],
 		"kampf_hintergrund": "wald",
 		"monster": [
+			{
+				"feld": [
+					26,
+					20
+				],
+				"gegner": [
+					"windfalke"
+				],
+				"stufe": 15
+			},
 			{
 				"feld": [
 					38,

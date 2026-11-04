@@ -152,7 +152,10 @@ const ROBOT := {name = "Zahnrad", hp = 130, tempo = 9}
 
 ## Gegner. attacks: der Reihe nach benutzt. kind: melee / ranged / magic, all = trifft alle.
 ## tame: zähmbar (Monster-Zähmer), mit dem Angriff, den das Monster dann für die Helden benutzt.
-const ENEMIES := {
+## Alle Gegner: diese hier und die Monster nach Regelblatt aus data/monster.json (D22, gehen vor).
+static var ENEMIES: Dictionary = _gegner_laden()
+## Gegner, die (noch) nicht nach dem Regelblatt gebaut sind: Kobolde, Bosse, Lernkämpfe, Pilzhöhle.
+const FESTE_GEGNER := {
 	"glutkobold": {name = "Glutkobold", element = "Feuer", hp = 62, tempo = 13,
 		attacks = [{name = "Glutdolch", base = 13, kind = "melee"}],
 		tame = {name = "Glutdolch", base = 13, kind = "melee"}},
@@ -286,6 +289,58 @@ const ENEMIES := {
 		attacks = [{name = "Sternenschlag", base = 28, kind = "melee"}, {name = "Splitterregen", base = 14, kind = "magic", all = true},
 			{name = "Sternenschlag", base = 28, kind = "melee"}, {name = "Leuchtender Biss", base = 20, kind = "melee"}]},
 }
+
+## Monster nach Regelblatt (MONSTER.md, data/monster.json): Werte aus der Tabelle nach Rolle (Stufe 1), dazu die
+## Zuschläge für Nacht, Dungeon und seltene Brocken. Die Stufe wirkt im Kampf (BattleState.monster_hp/monster_power).
+static func _gegner_laden() -> Dictionary:
+	var alle := FESTE_GEGNER.duplicate(true)
+	var datei := FileAccess.open("res://data/monster.json", FileAccess.READ)
+	if datei == null:
+		return alle
+	var daten: Dictionary = JSON.parse_string(datei.get_as_text())
+	var rollen: Dictionary = daten.get("_rollen", {})
+	var zuschlag: Dictionary = daten.get("_zuschlag", {})
+	for id: String in daten:
+		if id.begins_with("_"):
+			continue
+		alle[id] = aus_steckbrief(daten[id], rollen, zuschlag)
+	return alle
+
+
+## Ein Monster aus seinem Steckbrief (data/monster.json) im Format der Gegner oben.
+static func aus_steckbrief(m: Dictionary, rollen: Dictionary, zuschlag: Dictionary) -> Dictionary:
+	var rolle: Dictionary = rollen[m.rolle]
+	var staerke := 1.0
+	if str(m.get("zeit", "tag")) == "nacht":
+		staerke *= float(zuschlag.get("nacht", 1.0))
+	if m.get("dungeon", false):
+		staerke *= float(zuschlag.get("dungeon", 1.0))
+	var leben := float(rolle.leben) * staerke
+	if str(m.get("selten", "")) == "brocken":
+		leben *= float(zuschlag.get("brocken_leben", 1.0))
+	var angriffe: Array = []
+	var zaehmen := {}
+	for fa: Dictionary in m.faehigkeiten:
+		var a := {name = fa.name, base = roundi(float(fa.schaden) * float(rolle.angriff) * staerke), kind = str(fa.get("art", "melee"))}
+		for feld: String in ["ziel", "treffer", "ziele", "ruf", "effekt", "bewegung", "einmal"]:
+			if fa.has(feld):
+				a[feld] = fa[feld]
+		match str(fa.get("ziel", "")):
+			"alle":
+				a.all = true
+			"hinten":
+				a.back = true
+		angriffe.append(a)
+		if zaehmen.is_empty() and a.base > 0 and not a.get("all", false):
+			zaehmen = {name = a.name, base = a.base, kind = a.kind}
+	var ergebnis := {name = m.name, element = m.element, hp = roundi(leben), tempo = int(rolle.tempo), resist = float(rolle.abwehr),
+			attacks = angriffe, rolle = m.rolle, stufe_min = int(m.stufe[0]), stufe_max = int(m.stufe[1]), regelblatt = true}
+	if m.get("zaehmbar", true) and not zaehmen.is_empty():
+		ergebnis.tame = zaehmen
+	if m.has("selten"):
+		ergebnis.selten = m.selten
+	return ergebnis
+
 
 ## Passive jeder Klasse für die Anzeige im Kampf (Kästchen unten). Die Regeln stehen in skills.gd.
 const PASSIVES := {

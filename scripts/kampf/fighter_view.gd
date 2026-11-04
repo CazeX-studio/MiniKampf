@@ -466,6 +466,10 @@ func has_anim(anim: String) -> bool:
 ## "" = keine passende Animation.
 func anim_for(attack_name: String, standard: String) -> String:
 	var anim: String = look_data(fighter.look_key()).get("angriffe", {}).get(attack_name, standard)
+	# Monster nach Regelblatt (data/monster.json): Fähigkeit mit eigener Bewegung („bewegung“: „spezial“)
+	for a: Dictionary in Sandbox.ENEMIES.get(fighter.klass, {}).get("attacks", []):
+		if a.name == attack_name and a.has("bewegung"):
+			anim = str(a.bewegung)
 	if has_anim(anim):
 		return anim
 	return standard if has_anim(standard) else ""

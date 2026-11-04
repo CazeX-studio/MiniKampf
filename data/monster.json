@@ -1,0 +1,524 @@
+{
+	"_hinweis": "Monster nach MONSTER.md (D22). Werte aus der Tabelle nach Rolle (_rollen, Stufe 1), wachsen mit der Stufe wie alle Monster (BattleState.monster_hp/monster_power). Zuschläge: Nacht, Dungeon, seltene Brocken (_zuschlag). Fähigkeiten der Reihe nach: schaden = Anteil am Angriff der Rolle (0 = kein Schaden), art melee/ranged/magic, ziel: gegner (Standard), alle, vorne, hinten, schwaechster, selbst, freund (das verletzteste andere Monster), freunde (alle Monster). treffer: so oft hintereinander, ziele: so viele verschiedene Ziele, ruf: ruft dieses Monster (einmal pro Kampf), effekt: Baustein aus scripts/kampf/effekte.gd (anteil = Teil des eigenen Lebens bei heilen und schutz), bewegung: eigene Animation (spezial). einmal: true = nur einmal pro Kampf (danach überspringt das Monster die Fähigkeit).",
+	"_rollen": {
+		"tank": {
+			"name": "Tank",
+			"leben": 80,
+			"angriff": 8,
+			"tempo": 7,
+			"abwehr": 0.85
+		},
+		"verteidiger": {
+			"name": "Verteidiger",
+			"leben": 55,
+			"angriff": 8,
+			"tempo": 9,
+			"abwehr": 0.85
+		},
+		"angreifer": {
+			"name": "Angreifer",
+			"leben": 42,
+			"angriff": 10,
+			"tempo": 14,
+			"abwehr": 1.0
+		},
+		"helfer": {
+			"name": "Helfer",
+			"leben": 46,
+			"angriff": 7,
+			"tempo": 13,
+			"abwehr": 1.0
+		}
+	},
+	"_zuschlag": {
+		"nacht": 1.15,
+		"dungeon": 1.1,
+		"brocken_leben": 1.5
+	},
+	"tauschleim": {
+		"name": "Tauschleim",
+		"element": "Wasser",
+		"rolle": "verteidiger",
+		"stufe": [
+			1,
+			3
+		],
+		"familie": "schleime",
+		"beute": "schleimklecks",
+		"faehigkeiten": [
+			{
+				"name": "Platsch",
+				"schaden": 1.0,
+				"art": "melee"
+			},
+			{
+				"name": "Zusammenziehen",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.25
+				},
+				"bewegung": "spezial"
+			}
+		]
+	},
+	"wiesenhoppler": {
+		"name": "Wiesenhoppler",
+		"element": "Wind",
+		"rolle": "angreifer",
+		"stufe": [
+			2,
+			5
+		],
+		"familie": "hasen",
+		"beute": "weiches_fell",
+		"faehigkeiten": [
+			{
+				"name": "Doppelsprung",
+				"schaden": 0.6,
+				"art": "melee",
+				"treffer": 2,
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Haken schlagen",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.2
+				}
+			}
+		]
+	},
+	"knollenkaefer": {
+		"name": "Knollenkäfer",
+		"element": "Erde",
+		"rolle": "verteidiger",
+		"stufe": [
+			3,
+			6
+		],
+		"familie": "kaefer",
+		"beute": "kaeferpanzer",
+		"faehigkeiten": [
+			{
+				"name": "Zwicken",
+				"schaden": 1.2,
+				"art": "melee"
+			},
+			{
+				"name": "Einrollen",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.35
+				},
+				"bewegung": "spezial"
+			}
+		]
+	},
+	"loewenzahnling": {
+		"name": "Löwenzahnling",
+		"element": "Pflanze",
+		"rolle": "helfer",
+		"stufe": [
+			4,
+			7
+		],
+		"familie": "bluetenwesen",
+		"beute": "pusteblumensamen",
+		"faehigkeiten": [
+			{
+				"name": "Pollenwolke",
+				"schaden": 0.6,
+				"art": "ranged",
+				"effekt": {
+					"art": "verfehlen",
+					"zuege": 1
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Samenflug",
+				"schaden": 0,
+				"art": "magic",
+				"ziel": "freund",
+				"effekt": {
+					"art": "heilen",
+					"anteil": 0.15
+				}
+			}
+		]
+	},
+	"funkenflirr": {
+		"name": "Funkenflirr",
+		"element": "Blitz",
+		"rolle": "angreifer",
+		"stufe": [
+			4,
+			7
+		],
+		"zeit": "nacht",
+		"familie": "schwaerme",
+		"beute": "leuchtstaub",
+		"faehigkeiten": [
+			{
+				"name": "Schwarmtanz",
+				"schaden": 0.4,
+				"art": "magic",
+				"ziel": "alle"
+			},
+			{
+				"name": "Funkenschlag",
+				"schaden": 0.9,
+				"art": "ranged",
+				"effekt": {
+					"art": "laehmen"
+				}
+			},
+			{
+				"name": "Kettenfunke",
+				"schaden": 0.8,
+				"art": "magic",
+				"ziele": 2,
+				"bewegung": "spezial"
+			}
+		]
+	},
+	"glutigel": {
+		"name": "Glutigel",
+		"element": "Feuer",
+		"rolle": "verteidiger",
+		"stufe": [
+			5,
+			8
+		],
+		"zeit": "nacht",
+		"familie": "igel",
+		"beute": "gluehender_stachel",
+		"faehigkeiten": [
+			{
+				"name": "Stachelball",
+				"schaden": 1.1,
+				"art": "melee",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Glutstacheln",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.25
+				}
+			},
+			{
+				"name": "Glutnest",
+				"schaden": 0.4,
+				"art": "magic",
+				"ziel": "vorne",
+				"effekt": {
+					"art": "brennen",
+					"zuege": 2
+				}
+			}
+		]
+	},
+	"kronenschleim": {
+		"name": "Kronenschleim",
+		"element": "Wasser",
+		"rolle": "tank",
+		"stufe": [
+			8,
+			8
+		],
+		"selten": "brocken",
+		"familie": "schleime",
+		"beute": "schleimkrone",
+		"faehigkeiten": [
+			{
+				"name": "Großer Platsch",
+				"schaden": 0.8,
+				"art": "melee",
+				"ziel": "vorne",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Schleimruf",
+				"schaden": 0,
+				"art": "magic",
+				"ruf": "tauschleim"
+			},
+			{
+				"name": "Königlicher Befehl",
+				"schaden": 0,
+				"art": "magic",
+				"ziel": "freunde",
+				"effekt": {
+					"art": "zugleiste",
+					"staerke": -0.4
+				}
+			},
+			{
+				"name": "Kronenwurf",
+				"schaden": 0.6,
+				"art": "ranged",
+				"ziel": "alle"
+			}
+		]
+	},
+	"borstenkeiler": {
+		"name": "Borstenkeiler",
+		"element": "Erde",
+		"rolle": "tank",
+		"stufe": [
+			6,
+			10
+		],
+		"familie": "wildschweine",
+		"beute": "borsten",
+		"faehigkeiten": [
+			{
+				"name": "Ansturm",
+				"schaden": 1.1,
+				"art": "melee",
+				"effekt": {
+					"art": "zugleiste",
+					"staerke": 0.4
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Suhlen",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": [
+					{
+						"art": "schutz",
+						"anteil": 0.2
+					},
+					{
+						"art": "heilen",
+						"anteil": 0.1
+					}
+				],
+				"einmal": true
+			}
+		]
+	},
+	"dornenranke": {
+		"name": "Dornenranke",
+		"element": "Pflanze",
+		"rolle": "verteidiger",
+		"stufe": [
+			5,
+			9
+		],
+		"familie": "ranken",
+		"beute": "dornenzweig",
+		"faehigkeiten": [
+			{
+				"name": "Umschlingen",
+				"schaden": 0.6,
+				"art": "melee",
+				"effekt": {
+					"art": "festhalten",
+					"zuege": 1
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Dornenpeitsche",
+				"schaden": 1.0,
+				"art": "ranged",
+				"effekt": {
+					"art": "gift",
+					"zuege": 2
+				}
+			}
+		]
+	},
+	"bachkrebs": {
+		"name": "Bachkrebs",
+		"element": "Wasser",
+		"rolle": "verteidiger",
+		"stufe": [
+			6,
+			10
+		],
+		"familie": "krabben",
+		"beute": "krebsschere",
+		"faehigkeiten": [
+			{
+				"name": "Scherenschnapp",
+				"schaden": 0.6,
+				"art": "melee",
+				"treffer": 2,
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Panzer hoch",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.3
+				}
+			}
+		]
+	},
+	"zankelster": {
+		"name": "Zankelster",
+		"element": "Wind",
+		"rolle": "angreifer",
+		"stufe": [
+			7,
+			11
+		],
+		"familie": "voegel",
+		"beute": "schillernde_feder",
+		"faehigkeiten": [
+			{
+				"name": "Sturzflug",
+				"schaden": 1.0,
+				"art": "ranged",
+				"ziel": "hinten",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Diebischer Schnabel",
+				"schaden": 0.8,
+				"art": "melee"
+			}
+		]
+	},
+	"heulwolf": {
+		"name": "Heulwolf",
+		"element": "Wind",
+		"rolle": "angreifer",
+		"stufe": [
+			9,
+			12
+		],
+		"zeit": "nacht",
+		"familie": "woelfe",
+		"beute": "wolfspelz",
+		"faehigkeiten": [
+			{
+				"name": "Biss",
+				"schaden": 1.0,
+				"art": "melee"
+			},
+			{
+				"name": "Heulen",
+				"schaden": 0,
+				"art": "magic",
+				"ruf": "heulwolf",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Rudeljagd",
+				"schaden": 1.3,
+				"art": "melee",
+				"ziel": "schwaechster"
+			}
+		]
+	},
+	"irrlicht": {
+		"name": "Irrlicht",
+		"element": "Licht",
+		"rolle": "helfer",
+		"stufe": [
+			8,
+			12
+		],
+		"zeit": "nacht",
+		"familie": "geister",
+		"beute": "irrlichtfunke",
+		"faehigkeiten": [
+			{
+				"name": "Irreführen",
+				"schaden": 0.5,
+				"art": "magic",
+				"effekt": {
+					"art": "verfehlen",
+					"zuege": 1
+				}
+			},
+			{
+				"name": "Lichtfunke",
+				"schaden": 0,
+				"art": "magic",
+				"ziel": "freund",
+				"effekt": {
+					"art": "heilen",
+					"anteil": 0.15
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Erlöschen",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.2
+				},
+				"einmal": true
+			}
+		]
+	},
+	"kronhirsch": {
+		"name": "Kronhirsch",
+		"element": "Wind",
+		"rolle": "tank",
+		"stufe": [
+			12,
+			12
+		],
+		"selten": "brocken",
+		"familie": "hirsche",
+		"beute": "kronhirsch_geweih",
+		"faehigkeiten": [
+			{
+				"name": "Geweihstoß",
+				"schaden": 1.3,
+				"art": "melee",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Röhren",
+				"schaden": 0.4,
+				"art": "magic",
+				"ziel": "alle"
+			},
+			{
+				"name": "Sprung über die Reihe",
+				"schaden": 1.0,
+				"art": "melee",
+				"ziel": "hinten"
+			},
+			{
+				"name": "Waldsegen",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "heilen",
+					"anteil": 0.2
+				},
+				"einmal": true
+			}
+		]
+	}
+}

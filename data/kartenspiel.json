@@ -300,6 +300,66 @@
 			"bonus": {
 				"tempo": 1
 			}
+		},
+		"borstenkeiler": {
+			"name": "Borstenkeiler",
+			"werte": [
+				4,
+				6,
+				5,
+				3
+			],
+			"bonus": {
+				"leben": 5
+			}
+		},
+		"dornenranke": {
+			"name": "Dornenranke",
+			"werte": [
+				3,
+				5,
+				4,
+				4
+			],
+			"bonus": {
+				"leben": 3
+			}
+		},
+		"bachkrebs": {
+			"name": "Bachkrebs",
+			"werte": [
+				4,
+				5,
+				3,
+				5
+			],
+			"bonus": {
+				"leben": 4
+			}
+		},
+		"zankelster": {
+			"name": "Zankelster",
+			"werte": [
+				5,
+				3,
+				4,
+				3
+			],
+			"bonus": {
+				"tempo": 1
+			}
+		},
+		"kronhirsch": {
+			"name": "Kronhirsch",
+			"werte": [
+				7,
+				6,
+				7,
+				6
+			],
+			"bonus": {
+				"leben": 8
+			}
 		}
 	},
 	"startkarten": [
@@ -363,6 +423,11 @@
 		{
 			"name": "Grünwacht",
 			"karten": [
+				"borstenkeiler",
+				"dornenranke",
+				"bachkrebs",
+				"zankelster",
+				"kronhirsch",
 				"windfalke",
 				"steinkroete",
 				"waldsporenling",

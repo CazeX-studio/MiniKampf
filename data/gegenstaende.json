@@ -55,5 +55,17 @@
 	"blitzpfeil": {"bild": {"form": "pfeil", "farbe": "ffe14d"}, "name": "Blitzpfeil", "beschreibung": "Besondere Munition für den Elementpfeil des Bogenschützen: lähmt das Ziel. Normale Pfeile kosten nichts.", "preis": 15},
 	"frostpfeil": {"bild": {"form": "pfeil", "farbe": "8fd3ff"}, "name": "Frostpfeil", "beschreibung": "Besondere Munition für den Elementpfeil des Bogenschützen: schiebt das Ziel auf der Zugleiste zurück. Normale Pfeile kosten nichts.", "preis": 15},
 	"testkiesel": {"bild": {"form": "stein", "farbe": "9a9a9a"}, "name": "Testkiesel", "beschreibung": "Nur zum Ausprobieren, füllt die Tasche. Bingo kauft ihn für 1 Bronze.", "preis": 2},
-	"testruestung": {"bild": {"form": "ruestung", "farbe": "8fa3b8"}, "name": "Testrüstung", "beschreibung": "Nur zum Ausprobieren: Beute wie nach einem Sieg. Bingo kauft sie für 20 Bronze.", "preis": 40}
+	"testruestung": {"bild": {"form": "ruestung", "farbe": "8fa3b8"}, "name": "Testrüstung", "beschreibung": "Nur zum Ausprobieren: Beute wie nach einem Sieg. Bingo kauft sie für 20 Bronze.", "preis": 40},
+	"schleimklecks": {"bild": {"form": "stein", "farbe": "8fc8f0"}, "name": "Schleimklecks", "beschreibung": "Beute vom Tauschleim. Wabbelt noch ein bisschen.", "preis": 1, "material": true},
+	"weiches_fell": {"bild": {"form": "fell", "farbe": "e8dcc0"}, "name": "Weiches Fell", "beschreibung": "Beute vom Wiesenhoppler. Weich wie eine Wolke.", "preis": 1, "material": true},
+	"kaeferpanzer": {"bild": {"form": "stein", "farbe": "a07850"}, "name": "Käferpanzer", "beschreibung": "Beute vom Knollenkäfer. Sieht aus wie eine Kartoffel.", "preis": 1, "material": true},
+	"pusteblumensamen": {"bild": {"form": "kraut", "farbe": "f0f0e0"}, "name": "Pusteblumensamen", "beschreibung": "Beute vom Löwenzahnling. Nicht pusten!", "preis": 1, "material": true},
+	"leuchtstaub": {"bild": {"form": "splitter", "farbe": "ffe14d"}, "name": "Leuchtstaub", "beschreibung": "Beute vom Funkenflirr (nachts). Glimmt im Dunkeln.", "preis": 2, "material": true},
+	"gluehender_stachel": {"bild": {"form": "splitter", "farbe": "ff7a3d"}, "name": "Glühender Stachel", "beschreibung": "Beute vom Glutigel (nachts). Noch warm.", "preis": 2, "material": true},
+	"schleimkrone_splitter": {"bild": {"form": "splitter", "farbe": "f2c14e"}, "name": "Splitter der Schleimkrone", "beschreibung": "Seltene Beute vom Kronenschleim. Ein Stück echtes Gold.", "preis": 10, "material": true},
+	"borsten": {"bild": {"form": "fell", "farbe": "6a5040"}, "name": "Borsten", "beschreibung": "Beute vom Borstenkeiler. Hart wie eine Bürste.", "preis": 2, "material": true},
+	"dornenzweig": {"bild": {"form": "kraut", "farbe": "5a8a3a"}, "name": "Dornenzweig", "beschreibung": "Beute von der Dornenranke. Vorsicht, pikst.", "preis": 2, "material": true},
+	"krebsschere": {"bild": {"form": "splitter", "farbe": "d86a4a"}, "name": "Krebsschere", "beschreibung": "Beute vom Bachkrebs. Kneift sogar noch.", "preis": 2, "material": true},
+	"schillernde_feder": {"bild": {"form": "feder", "farbe": "6a9ad8"}, "name": "Schillernde Feder", "beschreibung": "Beute von der Zankelster. Glänzt in allen Farben.", "preis": 2, "material": true},
+	"kronhirsch_geweih": {"bild": {"form": "splitter", "farbe": "e8d8b0"}, "name": "Kronhirsch-Geweih", "beschreibung": "Seltene Beute vom Kronhirsch. Ein riesiges Geweih.", "preis": 12, "material": true}
 }

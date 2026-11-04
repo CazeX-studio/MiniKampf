@@ -117,6 +117,8 @@ const MONSTER_SPEED := 1.2
 const MONSTER_CHASE_SPEED := 2.4
 ## So lange bleibt ein besiegtes Monster für den Spieler weg (Sekunden)
 const MONSTER_RESPAWN := 60.0
+## Seltene Monster kommen so viel später wieder (MONSTER.md 8: „Nach dem Besiegen dauert es eine Weile“)
+const SELTEN_RESPAWN := 10.0
 ## Spieler, deren Kampf gerade beginnt (bis das Ergebnis kommt oder sie gehen): Kennung -> true
 var _fighting := {}
 ## Gruppenmitglieder, die bei einem fremden Geschichts-Kampf nur mithelfen: Kennung -> Kampf
@@ -2053,7 +2055,17 @@ func monster_here(p: PlayerState, index: int) -> bool:
 	if get_map(monsters[index].karte).dungeon != "" and p.progress.flags.has("lauf:besiegt:monster:%d" % index):
 		return false
 	var beaten := float(p.progress.flags.get("besiegt:monster:%d" % index, -INF))
-	return Time.get_unix_time_from_system() - beaten >= MONSTER_RESPAWN
+	# Seltene Monster (MONSTER.md 8) brauchen viel länger, bis sie wieder auftauchen
+	var warten := MONSTER_RESPAWN * (SELTEN_RESPAWN if _seltenes(monsters[index].gegner) != "" else 1.0)
+	return Time.get_unix_time_from_system() - beaten >= warten
+
+
+## Das seltene Monster einer Gruppe ("" = keins), siehe data/monster.json ("selten").
+static func _seltenes(gegner: Array) -> String:
+	for id: String in gegner:
+		if Sandbox.ENEMIES.get(id, {}).has("selten"):
+			return id
+	return ""
 
 
 ## Ist das Monster zu dieser Tageszeit unterwegs? Tag-Monster nur tagsüber, Nacht-Monster ("zeit": "nacht" in
@@ -2672,7 +2684,10 @@ func battle_reward(p: PlayerState, kampf_id: String, roll_card: bool) -> Diction
 		reward.erfahrung = int(battle.get("erfahrung", 0))
 		reward.gold = int(battle.get("gold", 0))
 		var drop: Array = GameData.wild_monsters()[int(kampf_id.substr(5))].gegner
-		if roll_card and p.progress.item_count("sternentafel") > 0 \
+		# Seltene Monster bringen immer ihre besondere Karte (MONSTER.md 8)
+		if roll_card and _seltenes(drop) != "":
+			reward.karte = _seltenes(drop)
+		elif roll_card and p.progress.item_count("sternentafel") > 0 \
 				and card_rng.randf() < float(GameData.get_file("kartenspiel").get("beute", 0.0)):
 			reward.karte = str(drop[card_rng.randi() % drop.size()])
 	elif _helpers.get(p.id, "") == kampf_id:
@@ -2706,6 +2721,8 @@ func _wild_result(p: PlayerState, kampf_id: String, battle: Dictionary, won: boo
 		if _shown_card != "?":
 			if _shown_card != "":
 				_find_card(p, _shown_card)
+		elif _seltenes(drop) != "":
+			_find_card(p, _seltenes(drop))
 		elif p.progress.item_count("sternentafel") > 0 and card_rng.randf() < float(GameData.get_file("kartenspiel").get("beute", 0.0)):
 			_find_card(p, str(drop[card_rng.randi() % drop.size()]))
 	else:
