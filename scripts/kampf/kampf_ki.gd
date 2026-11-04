@@ -38,7 +38,8 @@ func choose(rules: Skills, f: Fighter) -> Dictionary:
 	# Hammerbrüder: Holen beide zum Doppelschlag aus, einen stören (das täte jede Gruppe)
 	if pick.is_empty():
 		for ab in options:
-			if ab.id == "stoeren":
+			# Kettenschmied: wackelnden Anker festhämmern, Gefesselte befreien
+			if ab.id in ["stoeren", "anker", "kette"]:
 				pick = ab
 	# Lava-Takt (Vulkanschmiede): Ist die Lava in der eigenen Reihe angekündigt, meist die Reihe wechseln
 	# (mit wenig Leben immer, sonst in der Hälfte der Fälle; ein Zug zum Ausweichen lohnt sich nicht immer)
@@ -64,6 +65,10 @@ func choose(rules: Skills, f: Fighter) -> Dictionary:
 	var target: Fighter = null
 	if pick.target != "none":
 		var targets := rules.valid_targets(f, pick)
+		# Kühlbecken (Kettenschmied): nur ab und zu hineinschlagen, um nass zu werden, und nicht, wenn man schon nass ist
+		var ohne_becken := targets.filter(func(t: Fighter) -> bool: return t.klass != "kuehlbecken")
+		if not ohne_becken.is_empty() and ohne_becken.size() < targets.size() and (f.has_meta("nass") or rng.randf() < 0.75):
+			targets.assign(ohne_becken)
 		target = targets[rng.randi() % targets.size()]
 	return {ab = pick, target = target}
 

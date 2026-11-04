@@ -486,7 +486,10 @@ def vulkanschmiede():
 		"monster": vulkanschmiede_monster(), "baukasten": "karte_vulkanschmiede",
 		# Zwischenboss Hammerbrüder (D33) auf der unteren Plattform der Kettengänge, bis sie in diesem Lauf besiegt sind
 		"orte": [{"art": "hammerbruder_hammer", "feld": [22, 19], "dialog": "vs_hammerbrueder", "wenn": {"nicht_gemerkt": "lauf:hammerbrueder"}},
-			{"art": "hammerbruder_zange", "feld": [24, 22], "dialog": "vs_hammerbrueder", "wenn": {"nicht_gemerkt": "lauf:hammerbrueder"}}],
+			{"art": "hammerbruder_zange", "feld": [24, 22], "dialog": "vs_hammerbrueder", "wenn": {"nicht_gemerkt": "lauf:hammerbrueder"}},
+			# Endboss Kettenschmied (D34) in der Mitte der Ankerkammer, erst nach den Hammerbrüdern
+			{"art": "kettenschmied_1", "feld": [38, 14], "dialog": "vs_kettenschmied",
+				"wenn": {"gemerkt": "lauf:hammerbrueder", "nicht_gemerkt": "lauf:kettenschmied"}}],
 	}
 	(gk.DATEN / "karten.json").write_text(json.dumps(karten, ensure_ascii=False, indent="\t") + "\n", encoding="utf-8")
 	gk.KARTEN.clear()

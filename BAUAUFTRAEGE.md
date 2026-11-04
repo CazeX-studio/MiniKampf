@@ -91,7 +91,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D31:** Monster nach Regelblatt in Aschensteppe, Palmenrast und Glutgrat. (2.12, vorgezogen) – Status: fertig (04.11.2026; Aschensteppe und Palmenrast mit D23, Glutgrat mit D30)
 - **D32:** Vulkanschmiede Teil 1: drei Abschnitte, Lava-Takt, Monster, Kampf-Hintergrund. (2.7) – Status: fertig (04.11.2026)
 - **D33:** Vulkanschmiede Teil 2: Hammerbrüder. (2.8) – Status: fertig (04.11.2026)
-- **D34:** Vulkanschmiede Teil 3: Kettenschmied. (2.9) – Status: offen
+- **D34:** Vulkanschmiede Teil 3: Kettenschmied. (2.9) – Status: fertig (04.11.2026)
 - **D35:** Ende der Glutoase: Entscheidung um Miras Splitter. (2.10) – Status: offen
 
 ### Demo abschließen

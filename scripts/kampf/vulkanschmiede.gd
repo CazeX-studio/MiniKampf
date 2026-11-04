@@ -7,6 +7,7 @@ extends DungeonRegeln
 ## - Zusammenspiel „Gleichschritt“: Liegt einer im Leben deutlich vorn, wird der schwächere rasend.
 ##     Beide gleichmäßig schwächen. Fällt einer, während der andere noch viel Leben hat, tobt der andere.
 ## Der Lava-Takt (lava_takt.gd) läuft in allen Kämpfen hier weiter.
+## Endboss Kettenschmied (D34): eigene Datei kettenschmied.gd, hier nur weitergereicht.
 
 const BRUEDER: Array[String] = ["hammerbruder_hammer", "hammerbruder_zange"]
 ## Nach so vielen Zügen des Hammer-Bruders kommt der Doppelschlag (angekündigt zwei Züge vorher)
@@ -21,13 +22,21 @@ const RASEND_SCHADEN := 1.7
 var modus := ""
 ## Züge des Hammer-Bruders bis zum Doppelschlag
 var schlag_in := DOPPELSCHLAG_ALLE
+## Endboss
+var ks: Kettenschmied
+
+
+func _init(p_combat: BattleState) -> void:
+	super(p_combat)
+	ks = Kettenschmied.new(p_combat)
 
 
 func handles(e: Fighter) -> bool:
-	return e.klass in BRUEDER
+	return e.klass in BRUEDER or ks.handles(e)
 
 
-func on_wave(_index: int) -> void:
+func on_wave(index: int) -> void:
+	ks.on_wave(index)
 	modus = ""
 	if _find(BRUEDER[0]) == null:
 		return
@@ -44,6 +53,8 @@ func on_wave(_index: int) -> void:
 
 
 func intent(e: Fighter) -> String:
+	if ks.handles(e):
+		return ks.intent(e)
 	if not handles(e):
 		return ""
 	var text := ("Hammerschlag" if e.step % 2 == 0 else "Erdstoß (alle)") if e.klass == BRUEDER[0] \
@@ -67,6 +78,9 @@ func _update_intents() -> void:
 # --- Gegner-Züge --------------------------------------------------------------
 
 func enemy_turn(e: Fighter) -> void:
+	if ks.handles(e):
+		await ks.enemy_turn(e)
+		return
 	if e.klass == BRUEDER[0] and modus == "doppelschlag":
 		schlag_in -= 1
 		if schlag_in == ANKUENDIGUNG:
@@ -123,6 +137,14 @@ func _doppelschlag(e: Fighter) -> void:
 
 # --- Gleichschritt ------------------------------------------------------------
 
+func check_phase() -> void:
+	ks.check_phase()
+
+
+func absorbs(target: Fighter, amount: int, source: Fighter) -> bool:
+	return ks.absorbs(target, amount, source)
+
+
 func on_hit(_attacker: Fighter, target: Fighter, _element: String, _lost: int) -> void:
 	if modus != "gleichschritt" or not handles(target):
 		return
@@ -162,8 +184,8 @@ func _rasend(f: Fighter, text: String) -> void:
 
 # --- Aktion für alle Klassen ----------------------------------------------------
 
-func extra_abilities(_f: Fighter) -> Array[Dictionary]:
-	var list: Array[Dictionary] = []
+func extra_abilities(f: Fighter) -> Array[Dictionary]:
+	var list: Array[Dictionary] = ks.extra_abilities(f)
 	# Nur solange noch beide im Takt sind (einen zu stören reicht)
 	if modus == "doppelschlag" and c.alive(c.enemies).filter(func(b: Fighter) -> bool: return handles(b) and b.has_meta("holt_aus")).size() >= 2:
 		list.append({id = "stoeren", name = "Bruder stören", info = "Bringt einen Bruder aus dem Takt: kein Doppelschlag (kostet den Zug)",
@@ -171,7 +193,10 @@ func extra_abilities(_f: Fighter) -> Array[Dictionary]:
 	return list
 
 
-func execute(f: Fighter, ab: Dictionary, _target: Fighter) -> void:
+func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
+	if ab.id in ["anker", "kette"]:
+		ks.execute(f, ab, target)
+		return
 	if ab.id == "stoeren":
 		var im_takt := c.alive(c.enemies).filter(func(b: Fighter) -> bool: return handles(b) and b.has_meta("holt_aus"))
 		if not im_takt.is_empty():

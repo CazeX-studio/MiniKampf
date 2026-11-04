@@ -3018,6 +3018,18 @@
 				"wenn": {
 					"nicht_gemerkt": "lauf:hammerbrueder"
 				}
+			},
+			{
+				"art": "kettenschmied_1",
+				"feld": [
+					38,
+					14
+				],
+				"dialog": "vs_kettenschmied",
+				"wenn": {
+					"gemerkt": "lauf:hammerbrueder",
+					"nicht_gemerkt": "lauf:kettenschmied"
+				}
 			}
 		]
 	}

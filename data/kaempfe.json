@@ -669,5 +669,36 @@
 		"verloren_text": "Die Hämmer dröhnen in deinem Kopf. Du kommst am Eingang der Vulkanschmiede wieder zu dir.",
 		"zurueck_zum_start": true,
 		"gegner_leben": 1.2
+	},
+	"kettenschmied": {
+		"gruppe": true,
+		"name": "Vulkanschmiede: Der Kettenschmied",
+		"hinweis": "Endboss der Vulkanschmiede (D34, kettenschmied.gd): Phase 1 Lavaflut und Gefesselt, Phase 2 Entfesselt mit Kühlbecken.",
+		"eigene_klasse": true,
+		"dungeon": "vulkanschmiede",
+		"entscheidung_in_der_welt": true,
+		"ansage": "Zwischen den drei Ankern richtet sich etwas aus Schlacke und Glut auf. Tessa und Gorm sind bei dir!",
+		"begleiter": [
+			{
+				"name": "Tessa",
+				"aussehen": "novize_tessa"
+			},
+			{
+				"name": "Gorm",
+				"aussehen": "novize_gorm"
+			}
+		],
+		"wellen": [
+			[
+				"kettenschmied_1"
+			]
+		],
+		"gegner_stufe": 20,
+		"hintergrund": "vulkanschmiede",
+		"erfahrung": 1500,
+		"merken": "lauf:kettenschmied",
+		"verloren_text": "Die Glut schlägt über dir zusammen. Du kommst am Eingang der Vulkanschmiede wieder zu dir.",
+		"zurueck_zum_start": true,
+		"gegner_leben": 0.65
 	}
 }

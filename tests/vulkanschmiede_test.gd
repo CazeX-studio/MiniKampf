@@ -117,6 +117,75 @@ func _hammerbrueder() -> void:
 	_check(orte.size() == 2 and GameData.dialog("vs_hammerbrueder").size() > 0, "Die Brüder stehen in den Kettengängen")
 
 
+## D34: Endboss Kettenschmied (Lavaflut und Gefesselt, Phase 2 mit Kühlbecken und Panzer)
+func _kettenschmied() -> void:
+	var k := BattleState.new(null, [] as Array[String], "", 13)
+	k.setup = {gegner_stufe = 20, dungeon = "vulkanschmiede", helden = [{klasse = "tank", name = "A", stufe = 20},
+			{klasse = "smith", name = "B", stufe = 20}, {klasse = "archer", name = "C", stufe = 20}]}
+	k._create_heroes()
+	k.lava = LavaTakt.new(k)
+	var v := Vulkanschmiede.new(k)
+	k.dungeon = v
+	k.spawn_enemies(["kettenschmied_1"])
+	v.on_wave(0)
+	var ks := v.ks
+	var boss: Fighter = k.enemies[0]
+	var a: Fighter = k.heroes[0]
+	var b: Fighter = k.heroes[1]
+	var dritter: Fighter = k.heroes[2]
+	_check(ks.anker == ["fest", "fest", "fest"] and "Anker" in v.intent(boss), "Drei Anker, angezeigt beim Kettenschmied")
+	ks.anker_ziehen(boss)
+	_check(ks.anker.count("wackelt") == 1, "Er reißt an einer Kette: ein Anker wackelt")
+	var hammer := v.extra_abilities(a).filter(func(x: Dictionary) -> bool: return x.id == "anker")
+	_check(hammer.size() == 1, "Jede Klasse kann den Anker festhämmern")
+	v.execute(a, hammer[0], null)
+	_check(ks.anker.count("wackelt") == 0, "Festgehämmert hält er wieder")
+	for i in 3:
+		ks.anker_ziehen(boss)
+	_check(ks.anker.count("lose") == 2, "Ohne Hämmern löst sich ein Anker nach dem anderen")
+	ks.anker_ziehen(boss)
+	_check(k.allies().is_empty(), "Alle drei lose: Lavaflut, die Gruppe fällt")
+	for h in k.heroes:
+		h.hp = h.max_hp
+	# Gefesselt: geteilter Schaden, ein Dritter zerschlägt die Kette
+	ks.gefesselt.assign([a, b])
+	var la := a.hp
+	var lb := b.hp
+	k.apply_damage(a, 20)
+	_check(la - a.hp > 0 and lb - b.hp > 0 and absi((la - a.hp) - (lb - b.hp)) <= 12, "Gefesselt: beide teilen den Schaden")
+	_check(v.extra_abilities(a).all(func(x: Dictionary) -> bool: return x.id != "kette"), "Die Gefesselten selbst können die Kette nicht zerschlagen")
+	var kette := v.extra_abilities(dritter).filter(func(x: Dictionary) -> bool: return x.id == "kette")
+	_check(kette.size() == 1, "Ein Dritter kann die Kette zerschlagen")
+	v.execute(dritter, kette[0], null)
+	_check(ks.gefesselt.is_empty(), "Kette zerschlagen")
+	# Phase 2: Entfesselt
+	boss.hp = 0
+	v.check_phase()
+	var zwei := v._find("kettenschmied_2")
+	var becken := v._find("kuehlbecken")
+	_check(ks.phase2 and zwei != null and becken != null and k.lava == null, "Phase 2: entfesselt, mit Kühlbecken, die Lava steigt jetzt stufenweise")
+	var vorher := becken.hp
+	k.apply_damage(becken, 15, a)
+	_check(becken.hp == vorher and a.has_meta("nass"), "Wer ins Kühlbecken schlägt, wird nass")
+	var leben := zwei.hp
+	k.apply_damage(zwei, 20, dritter)
+	_check(leben - zwei.hp == roundi(20 * Kettenschmied.PANZER_DURCH) and ks.panzer == Kettenschmied.PANZER, "Der Panzer hält einen Teil ab")
+	k.apply_damage(zwei, 30, a)
+	_check(ks.panzer == Kettenschmied.PANZER - 1, "Nass und hart getroffen: ein Stück Panzer splittert ab")
+	ks.gefesselt.assign([a, b])
+	_check(v.extra_abilities(dritter).all(func(x: Dictionary) -> bool: return x.id != "kette"), "Glühende Kette: erst zerschlagen, wenn beide nass sind")
+	k.apply_damage(becken, 15, b)
+	_check(v.extra_abilities(dritter).any(func(x: Dictionary) -> bool: return x.id == "kette"), "Beide nass: jetzt geht es")
+	zwei.hp = 0
+	v.check_phase()
+	_check(not becken.is_alive() and k.alive(k.enemies).is_empty(), "Kettenschmied besiegt: der Kampf ist vorbei")
+	k.cleanup()
+	var kampf: Dictionary = GameData.battle("kettenschmied")
+	_check(kampf.get("merken", "") == "lauf:kettenschmied", "Kampf gegen den Kettenschmied")
+	var orte: Array = GameData.get_file("karten").vulkanschmiede.orte.filter(func(o: Dictionary) -> bool: return o.dialog == "vs_kettenschmied")
+	_check(orte.size() == 1 and orte[0].wenn.gemerkt == "lauf:hammerbrueder", "Er wartet in der Ankerkammer, erst nach den Hammerbrüdern")
+
+
 func _initialize() -> void:
 	Tageszeit.feste_stunde = 12.0
 	var world := WorldState.new()
@@ -154,6 +223,7 @@ func _initialize() -> void:
 	_check(Backdrop.fighter_light("vulkanschmiede") != Color.WHITE, "Eigenes Licht im Kampf")
 	_lava_takt()
 	_hammerbrueder()
+	_kettenschmied()
 	world.change_map(p, "vulkanschmiede", Vector2i(8, 28))
 	world.apply_command("a", {type = "move", cell = Vector2i(8, 29)})
 	for i in 300:

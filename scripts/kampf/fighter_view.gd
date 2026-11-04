@@ -176,8 +176,10 @@ const LOOKS := {
 	"hammerbrueder": {sprite = "hammerbrueder", scale = 1.0},
 	"hammerbruder_hammer": {sprite = "hammerbruder_hammer", scale = 1.0, angriffe = {"Erdstoß": "spezial", "Doppelschlag": "spezial"}},
 	"hammerbruder_zange": {sprite = "hammerbruder_zange", scale = 1.0},
-	"kettenschmied_1": {sprite = "kettenschmied_1", scale = 1.0},
-	"kettenschmied_2": {sprite = "kettenschmied_2", scale = 1.0},
+	"kettenschmied_1": {sprite = "kettenschmied_1", scale = 1.0, angriffe = {"Glutwelle": "spezial", "Lavaflut": "spezial"}},
+	"kettenschmied_2": {sprite = "kettenschmied_2", scale = 1.0, angriffe = {"Glutsturm": "spezial"}},
+	# Kühlbecken am Rand der Ankerkammer (Bild aus dem Baukasten, vs_kuehlbecken)
+	"kuehlbecken": {sprite = "kuehlbecken", scale = 2.6},
 	# Grünwacht
 	"rindenbaer": {sprite = "rindenbaer", scale = 1.0},
 	"steinkroete": {sprite = "steinkroete", scale = 1.0},
@@ -684,7 +686,7 @@ func _draw_plate() -> void:
 		tag_color = Elements.color(fighter.element)
 		if fighter.big:
 			tag = "BOSS · " + fighter.element
-		elif fighter.passive:
+		elif fighter.passive and fighter.klass != "kuehlbecken":
 			tag = "Splitter"
 	draw_string(font, Vector2(x0, y + 16), tag, HORIZONTAL_ALIGNMENT_RIGHT, w, 11, tag_color)
 	# Element-Symbol aus dem UI-Set links neben dem Element-Namen

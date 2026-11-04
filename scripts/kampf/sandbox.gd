@@ -195,6 +195,10 @@ const FESTE_GEGNER := {
 	# Vulkanschmiede der Ketten: Zwischenboss Hammerbrüder (vulkanschmiede.gd)
 	"hammerbruder_hammer": {name = "Hammer-Bruder", element = "Erde", hp = 200, tempo = 8, big = true},
 	"hammerbruder_zange": {name = "Zangen-Bruder", element = "Erde", hp = 200, tempo = 9, big = true},
+	# Endboss Kettenschmied (kettenschmied.gd): Phase 1, Phase 2 „Entfesselt“ und das Kühlbecken am Rand
+	"kettenschmied_1": {name = "Der Kettenschmied", element = "Feuer", hp = 320, tempo = 9, big = true},
+	"kettenschmied_2": {name = "Der Kettenschmied (entfesselt)", element = "Feuer", hp = 260, tempo = 10, big = true},
+	"kuehlbecken": {name = "Kühlbecken", element = "Wasser", hp = 999, tempo = 1, passive = true},
 	# Vor dem Stadttor (Grundausbildung in der Kreuzweg-Demo)
 	"feldschleim": {name = "Feldschleim", element = "Wasser", hp = 40, tempo = 8,
 		attacks = [{name = "Schleimstoß", base = 8, kind = "melee"}],
@@ -387,7 +391,7 @@ const ENCOUNTERS := {
 		waves = [["sporenkoenigin", "sporenling", "sporenling"], ["wurzelmutter", "knoten_vorne", "knoten_hinten"]]},
 	"vulkanschmiede": {name = "Vulkanschmiede", info = "Monster der Vulkanschmiede mit Lava-Takt", dungeon = "vulkanschmiede",
 		waves = [["schlackenkriecher", "glutgeist", "aschefalter"], ["ambossknecht", "magmaschnecke", "glutgeist"],
-			["hammerbruder_hammer", "hammerbruder_zange"]]},
+			["hammerbruder_hammer", "hammerbruder_zange"], ["kettenschmied_1"]]},
 }
 const ENCOUNTER_ORDER: Array[String] = ["monster", "boss", "beides", "pilzhoehle", "pilzbosse", "vulkanschmiede"]
 

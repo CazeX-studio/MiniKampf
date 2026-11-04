@@ -75,7 +75,7 @@ func _run() -> void:
 		print("  %2d %-16s %-48s Stufe %d: %d %%" % [index, m.karte, ", ".join(m.gegner), m.stufe,
 				roundi(100.0 * total[index] / (runs * classes.size()))])
 	# Geschichtskämpfe (allein, mit jeder Klasse, auf der Stufe, auf der man sie erreicht)
-	for story: Array in [["splitterbaer", 15], ["bienenschwarm", 16], ["pilz_koenigin", 19], ["pilz_urbaum", 20], ["heisse_quelle", 14], ["kael_rivale", 16], ["hammerbrueder", 18]]:
+	for story: Array in [["splitterbaer", 15], ["bienenschwarm", 16], ["pilz_koenigin", 19], ["pilz_urbaum", 20], ["heisse_quelle", 14], ["kael_rivale", 16], ["hammerbrueder", 18], ["kettenschmied", 20]]:
 		var line := "%-14s" % story[0]
 		var all_wins := 0
 		for klasse: String in classes:
