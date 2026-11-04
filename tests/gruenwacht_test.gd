@@ -279,7 +279,7 @@ func _test_wild() -> void:
 		if m.karte == "weg_gruenwacht":
 			_check(m.stufe >= 9 and m.stufe <= 12, "Monster auf dem Weg (Hirschtal, MONSTER.md): Stufe 9–12 (%d)" % m.stufe)
 		elif m.karte == "waldboden":
-			_check(m.stufe >= 15 and m.stufe <= 20, "Monster im Wald: Stufe 15–20 (%d)" % m.stufe)
+			_check(m.stufe >= 12 and m.stufe <= 20, "Monster im Wald (Wachtwald und Tiefwurzel, MONSTER.md): Stufe 12–20 (%d)" % m.stufe)
 		levels.append(m.stufe)
 	_check(levels.min() == 9 and levels.max() == 20, "Monster von Stufe 9 bis 20")
 

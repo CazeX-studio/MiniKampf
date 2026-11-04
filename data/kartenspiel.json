@@ -360,6 +360,90 @@
 			"bonus": {
 				"leben": 8
 			}
+		},
+		"sumpfschnapper": {
+			"name": "Sumpfschnapper",
+			"werte": [
+				5,
+				7,
+				6,
+				4
+			],
+			"bonus": {
+				"leben": 5
+			}
+		},
+		"moosgolem": {
+			"name": "Moosgolem",
+			"werte": [
+				6,
+				7,
+				5,
+				5
+			],
+			"bonus": {
+				"leben": 5
+			}
+		},
+		"rankenschlinger": {
+			"name": "Rankenschlinger",
+			"werte": [
+				5,
+				5,
+				6,
+				6
+			],
+			"bonus": {
+				"mana": 4
+			}
+		},
+		"splitterwolf": {
+			"name": "Splitterwolf",
+			"werte": [
+				7,
+				5,
+				6,
+				5
+			],
+			"bonus": {
+				"angriff": 2
+			}
+		},
+		"moderfalter": {
+			"name": "Moderfalter",
+			"werte": [
+				5,
+				6,
+				5,
+				6
+			],
+			"bonus": {
+				"mana": 4
+			}
+		},
+		"wipfelluchs": {
+			"name": "Wipfelluchs",
+			"werte": [
+				7,
+				6,
+				6,
+				7
+			],
+			"bonus": {
+				"tempo": 2
+			}
+		},
+		"splitterbaer_wild": {
+			"name": "Splitterbär",
+			"werte": [
+				8,
+				7,
+				8,
+				7
+			],
+			"bonus": {
+				"leben": 10
+			}
 		}
 	},
 	"startkarten": [
@@ -445,7 +529,14 @@
 				"wurzelkriecher",
 				"glimmerkaefer",
 				"sporenkoenigin",
-				"wurzelmutter"
+				"wurzelmutter",
+				"sumpfschnapper",
+				"moosgolem",
+				"rankenschlinger",
+				"splitterwolf",
+				"moderfalter",
+				"wipfelluchs",
+				"splitterbaer_wild"
 			],
 			"belohnung": {
 				"titel": "Kenner von Grünwacht",

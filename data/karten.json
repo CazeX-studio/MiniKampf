@@ -376,13 +376,13 @@
 		"monster": [
 			{
 				"feld": [
-					8,
-					32
+					15,
+					5
 				],
 				"gegner": [
 					"windfalke"
 				],
-				"stufe": 15
+				"stufe": 12
 			},
 			{
 				"feld": [
@@ -392,18 +392,7 @@
 				"gegner": [
 					"rindenbaer"
 				],
-				"stufe": 15
-			},
-			{
-				"feld": [
-					33,
-					24
-				],
-				"gegner": [
-					"donnerhirsch",
-					"waldsporenling"
-				],
-				"stufe": 16
+				"stufe": 14
 			},
 			{
 				"feld": [
@@ -411,16 +400,70 @@
 					11
 				],
 				"gegner": [
+					"steinkroete",
+					"waldsporenling"
+				],
+				"stufe": 13
+			},
+			{
+				"feld": [
+					12,
+					12
+				],
+				"gegner": [
 					"windfalke",
-					"windfalke",
+					"windfalke"
+				],
+				"stufe": 14
+			},
+			{
+				"feld": [
+					33,
+					24
+				],
+				"gegner": [
+					"rindenbaer",
 					"waldsporenling"
 				],
 				"stufe": 16
 			},
 			{
 				"feld": [
-					35,
-					32
+					5,
+					17
+				],
+				"gegner": [
+					"steinkroete",
+					"rindenbaer"
+				],
+				"stufe": 17
+			},
+			{
+				"feld": [
+					39,
+					27
+				],
+				"gegner": [
+					"windfalke",
+					"steinkroete",
+					"rindenbaer"
+				],
+				"stufe": 18
+			},
+			{
+				"feld": [
+					28,
+					4
+				],
+				"gegner": [
+					"wipfelluchs"
+				],
+				"stufe": 18
+			},
+			{
+				"feld": [
+					42,
+					9
 				],
 				"gegner": [
 					"wilder_moosling"
@@ -429,19 +472,8 @@
 			},
 			{
 				"feld": [
-					12,
-					12
-				],
-				"gegner": [
-					"rindenbaer",
-					"waldsporenling"
-				],
-				"stufe": 17
-			},
-			{
-				"feld": [
-					15,
-					5
+					22,
+					9
 				],
 				"gegner": [
 					"wilde_glutwelpe"
@@ -450,19 +482,8 @@
 			},
 			{
 				"feld": [
-					11,
-					26
-				],
-				"gegner": [
-					"donnerhirsch",
-					"windfalke"
-				],
-				"stufe": 18
-			},
-			{
-				"feld": [
-					39,
-					27
+					42,
+					5
 				],
 				"gegner": [
 					"wilder_bachotter"
@@ -471,14 +492,37 @@
 			},
 			{
 				"feld": [
-					21,
-					32
+					38,
+					12
 				],
 				"gegner": [
-					"rindenbaer",
-					"donnerhirsch"
+					"nachtuhu"
 				],
-				"stufe": 19
+				"stufe": 15,
+				"zeit": "nacht"
+			},
+			{
+				"feld": [
+					29,
+					11
+				],
+				"gegner": [
+					"funkenmarder"
+				],
+				"stufe": 16,
+				"zeit": "nacht"
+			},
+			{
+				"feld": [
+					12,
+					12
+				],
+				"gegner": [
+					"nachtuhu",
+					"funkenmarder"
+				],
+				"stufe": 17,
+				"zeit": "nacht"
 			},
 			{
 				"feld": [
@@ -486,69 +530,132 @@
 					17
 				],
 				"gegner": [
-					"rindenbaer",
-					"steinkroete",
+					"funkenmarder",
+					"funkenmarder"
+				],
+				"stufe": 18,
+				"zeit": "nacht"
+			},
+			{
+				"feld": [
+					33,
+					24
+				],
+				"gegner": [
+					"funkenmarder",
+					"nachtuhu"
+				],
+				"stufe": 19,
+				"zeit": "nacht"
+			},
+			{
+				"feld": [
+					8,
+					32
+				],
+				"gegner": [
 					"donnerhirsch"
 				],
 				"stufe": 20
 			},
 			{
-				"zeit": "nacht",
-				"gegner": [
-					"nachtuhu"
-				],
-				"stufe": 16,
 				"feld": [
-					38,
-					12
-				]
+					21,
+					32
+				],
+				"gegner": [
+					"sumpfschnapper"
+				],
+				"stufe": 20
 			},
 			{
-				"zeit": "nacht",
-				"gegner": [
-					"funkenmarder"
-				],
-				"stufe": 17,
 				"feld": [
-					29,
-					11
-				]
+					35,
+					32
+				],
+				"gegner": [
+					"moosgolem",
+					"rankenschlinger"
+				],
+				"stufe": 20
 			},
 			{
-				"zeit": "nacht",
-				"gegner": [
-					"nachtuhu",
-					"funkenmarder"
-				],
-				"stufe": 18,
 				"feld": [
-					12,
-					12
-				]
+					28,
+					36
+				],
+				"gegner": [
+					"rankenschlinger",
+					"donnerhirsch"
+				],
+				"stufe": 20
 			},
 			{
-				"zeit": "nacht",
-				"gegner": [
-					"funkenmarder",
-					"funkenmarder"
-				],
-				"stufe": 19,
 				"feld": [
-					11,
-					26
-				]
+					13,
+					37
+				],
+				"gegner": [
+					"moosgolem",
+					"sumpfschnapper"
+				],
+				"stufe": 20
 			},
 			{
-				"zeit": "nacht",
+				"feld": [
+					4,
+					36
+				],
 				"gegner": [
-					"funkenmarder",
-					"nachtuhu"
+					"splitterbaer_wild"
+				],
+				"stufe": 20
+			},
+			{
+				"feld": [
+					8,
+					32
+				],
+				"gegner": [
+					"splitterwolf"
 				],
 				"stufe": 20,
+				"zeit": "nacht"
+			},
+			{
 				"feld": [
-					5,
-					17
-				]
+					21,
+					32
+				],
+				"gegner": [
+					"moderfalter",
+					"splitterwolf"
+				],
+				"stufe": 20,
+				"zeit": "nacht"
+			},
+			{
+				"feld": [
+					35,
+					32
+				],
+				"gegner": [
+					"splitterwolf",
+					"splitterwolf"
+				],
+				"stufe": 20,
+				"zeit": "nacht"
+			},
+			{
+				"feld": [
+					28,
+					36
+				],
+				"gegner": [
+					"moderfalter"
+				],
+				"stufe": 20,
+				"zeit": "nacht"
 			}
 		],
 		"deko": [

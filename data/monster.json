@@ -520,5 +520,597 @@
 				"einmal": true
 			}
 		]
+	},
+	"rindenbaer": {
+		"name": "Rindenbär",
+		"element": "Pflanze",
+		"rolle": "tank",
+		"stufe": [
+			12,
+			18
+		],
+		"familie": "baeren",
+		"beute": "borkenstueck",
+		"faehigkeiten": [
+			{
+				"name": "Prankenhieb",
+				"schaden": 1.3,
+				"art": "melee",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Borkenhaut",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": [
+					{
+						"art": "schutz",
+						"anteil": 0.3
+					},
+					{
+						"art": "heilen",
+						"anteil": 0.1
+					}
+				],
+				"einmal": true
+			}
+		]
+	},
+	"windfalke": {
+		"name": "Windfalke",
+		"element": "Wind",
+		"rolle": "angreifer",
+		"stufe": [
+			10,
+			15
+		],
+		"familie": "voegel",
+		"beute": "falkenfeder",
+		"faehigkeiten": [
+			{
+				"name": "Krallenstoß",
+				"schaden": 0.6,
+				"art": "melee",
+				"treffer": 2,
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Aufwind",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "zugleiste",
+					"staerke": -0.5
+				}
+			}
+		]
+	},
+	"steinkroete": {
+		"name": "Steinkröte",
+		"element": "Erde",
+		"rolle": "verteidiger",
+		"stufe": [
+			11,
+			16
+		],
+		"familie": "kroeten",
+		"beute": "kroetenstein",
+		"faehigkeiten": [
+			{
+				"name": "Zungenschlag",
+				"schaden": 0.9,
+				"art": "ranged",
+				"ziel": "hinten",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Steinhaut",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.35
+				},
+				"einmal": true
+			}
+		]
+	},
+	"waldsporenling": {
+		"name": "Sporenling",
+		"element": "Pflanze",
+		"rolle": "helfer",
+		"stufe": [
+			10,
+			14
+		],
+		"familie": "pilze",
+		"beute": "sporenkappe",
+		"faehigkeiten": [
+			{
+				"name": "Giftsporen",
+				"schaden": 0.4,
+				"art": "magic",
+				"effekt": {
+					"art": "gift",
+					"zuege": 3
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Sporenregen",
+				"schaden": 0,
+				"art": "magic",
+				"ziel": "freunde",
+				"effekt": {
+					"art": "heilen",
+					"anteil": 0.08
+				},
+				"einmal": true
+			}
+		]
+	},
+	"nachtuhu": {
+		"name": "Nachtuhu",
+		"element": "Schatten",
+		"rolle": "helfer",
+		"stufe": [
+			14,
+			19
+		],
+		"zeit": "nacht",
+		"familie": "voegel",
+		"beute": "eulenfeder",
+		"faehigkeiten": [
+			{
+				"name": "Starrblick",
+				"schaden": 0.8,
+				"art": "ranged",
+				"effekt": {
+					"art": "zugleiste",
+					"staerke": 0.4
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Lautloser Flug",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.25
+				},
+				"einmal": true
+			},
+			{
+				"name": "Nachtruf",
+				"schaden": 0,
+				"art": "magic",
+				"ziel": "freunde",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.12
+				}
+			}
+		]
+	},
+	"funkenmarder": {
+		"name": "Funkenmarder",
+		"element": "Blitz",
+		"rolle": "angreifer",
+		"stufe": [
+			15,
+			20
+		],
+		"zeit": "nacht",
+		"familie": "marder",
+		"beute": "funkenfell",
+		"faehigkeiten": [
+			{
+				"name": "Flinker Biss",
+				"schaden": 0.6,
+				"art": "melee",
+				"treffer": 2
+			},
+			{
+				"name": "Funkenfell",
+				"schaden": 0.5,
+				"art": "magic",
+				"effekt": {
+					"art": "laehmen",
+					"zuege": 1
+				}
+			},
+			{
+				"name": "Fluchtsprung",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "zugleiste",
+					"staerke": -0.5
+				},
+				"bewegung": "spezial"
+			}
+		]
+	},
+	"wipfelluchs": {
+		"name": "Wipfelluchs",
+		"element": "Wind",
+		"rolle": "angreifer",
+		"stufe": [
+			18,
+			18
+		],
+		"selten": "brocken",
+		"familie": "katzen",
+		"beute": "luchsohr",
+		"faehigkeiten": [
+			{
+				"name": "Ansprung aus dem Wipfel",
+				"schaden": 1.1,
+				"art": "melee",
+				"ziel": "hinten",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Krallenwirbel",
+				"schaden": 0.45,
+				"art": "melee",
+				"treffer": 3
+			},
+			{
+				"name": "Tarnen",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.3
+				},
+				"einmal": true
+			},
+			{
+				"name": "Luchsblick",
+				"schaden": 1.4,
+				"art": "melee",
+				"ziel": "schwaechster"
+			}
+		]
+	},
+	"wilder_moosling": {
+		"name": "Wilder Moosling",
+		"element": "Pflanze",
+		"rolle": "verteidiger",
+		"stufe": [
+			15,
+			18
+		],
+		"selten": "start",
+		"familie": "start",
+		"beute": "borkenstueck",
+		"faehigkeiten": [
+			{
+				"name": "Rankenschlag",
+				"schaden": 1.0,
+				"art": "melee"
+			},
+			{
+				"name": "Dornenpeitsche",
+				"schaden": 0.5,
+				"art": "magic",
+				"ziel": "alle",
+				"bewegung": "attack2"
+			}
+		]
+	},
+	"wilde_glutwelpe": {
+		"name": "Wilde Glutwelpe",
+		"element": "Feuer",
+		"rolle": "angreifer",
+		"stufe": [
+			15,
+			18
+		],
+		"selten": "start",
+		"familie": "start",
+		"beute": "falkenfeder",
+		"faehigkeiten": [
+			{
+				"name": "Glutbiss",
+				"schaden": 1.0,
+				"art": "melee"
+			},
+			{
+				"name": "Funkenregen",
+				"schaden": 0.4,
+				"art": "magic",
+				"ziel": "alle",
+				"effekt": {
+					"art": "brennen",
+					"zuege": 2
+				},
+				"bewegung": "spezial"
+			}
+		]
+	},
+	"wilder_bachotter": {
+		"name": "Wilder Bachotter",
+		"element": "Wasser",
+		"rolle": "helfer",
+		"stufe": [
+			15,
+			18
+		],
+		"selten": "start",
+		"familie": "start",
+		"beute": "kroetenstein",
+		"faehigkeiten": [
+			{
+				"name": "Wasserstrahl",
+				"schaden": 1.0,
+				"art": "ranged",
+				"bewegung": "wurf"
+			},
+			{
+				"name": "Welle",
+				"schaden": 0.5,
+				"art": "magic",
+				"ziel": "alle",
+				"bewegung": "spezial"
+			}
+		]
+	},
+	"donnerhirsch": {
+		"name": "Donnerhirsch",
+		"element": "Blitz",
+		"rolle": "angreifer",
+		"stufe": [
+			20,
+			24
+		],
+		"familie": "hirsche",
+		"beute": "donnergeweih",
+		"faehigkeiten": [
+			{
+				"name": "Blitzgeweih",
+				"schaden": 1.0,
+				"art": "melee",
+				"effekt": {
+					"art": "laehmen",
+					"zuege": 1
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Galopp",
+				"schaden": 0.6,
+				"art": "melee",
+				"ziel": "vorne"
+			}
+		]
+	},
+	"sumpfschnapper": {
+		"name": "Sumpfschnapper",
+		"element": "Wasser",
+		"rolle": "tank",
+		"stufe": [
+			20,
+			23
+		],
+		"familie": "schildkroeten",
+		"beute": "schildpatt",
+		"faehigkeiten": [
+			{
+				"name": "Schnappbiss",
+				"schaden": 1.0,
+				"art": "melee",
+				"effekt": {
+					"art": "festhalten",
+					"zuege": 1
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Panzerrückzug",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.35
+				},
+				"einmal": true
+			}
+		]
+	},
+	"moosgolem": {
+		"name": "Moosgolem",
+		"element": "Erde",
+		"rolle": "verteidiger",
+		"stufe": [
+			21,
+			25
+		],
+		"familie": "golems",
+		"beute": "moosstein",
+		"faehigkeiten": [
+			{
+				"name": "Felshieb",
+				"schaden": 1.3,
+				"art": "melee",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Moospolster",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "heilen",
+					"anteil": 0.15
+				},
+				"einmal": true
+			}
+		]
+	},
+	"rankenschlinger": {
+		"name": "Rankenschlinger",
+		"element": "Pflanze",
+		"rolle": "helfer",
+		"stufe": [
+			20,
+			24
+		],
+		"familie": "ranken",
+		"beute": "rankenstrang",
+		"faehigkeiten": [
+			{
+				"name": "Fesselranke",
+				"schaden": 0.6,
+				"art": "melee",
+				"effekt": {
+					"art": "festhalten",
+					"zuege": 1
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Saftheilung",
+				"schaden": 0,
+				"art": "magic",
+				"ziel": "freund",
+				"effekt": {
+					"art": "heilen",
+					"anteil": 0.15
+				}
+			}
+		]
+	},
+	"splitterwolf": {
+		"name": "Splitterwolf",
+		"element": "Sternenkraft",
+		"rolle": "angreifer",
+		"stufe": [
+			22,
+			25
+		],
+		"zeit": "nacht",
+		"familie": "woelfe",
+		"splitter": true,
+		"beute": "splitterstaub",
+		"faehigkeiten": [
+			{
+				"name": "Sternenbiss",
+				"schaden": 1.1,
+				"art": "melee"
+			},
+			{
+				"name": "Splitterheulen",
+				"schaden": 0,
+				"art": "magic",
+				"ruf": "splitterwolf",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Leuchtende Augen",
+				"schaden": 0.5,
+				"art": "magic",
+				"effekt": {
+					"art": "verfehlen",
+					"zuege": 1
+				}
+			}
+		]
+	},
+	"moderfalter": {
+		"name": "Moderfalter",
+		"element": "Schatten",
+		"rolle": "helfer",
+		"stufe": [
+			21,
+			25
+		],
+		"zeit": "nacht",
+		"familie": "falter",
+		"beute": "falterschuppen",
+		"faehigkeiten": [
+			{
+				"name": "Schattenstaub",
+				"schaden": 0.4,
+				"art": "magic",
+				"effekt": {
+					"art": "schattenmale"
+				}
+			},
+			{
+				"name": "Flatterschleier",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.25
+				},
+				"einmal": true
+			},
+			{
+				"name": "Lähmstaub",
+				"schaden": 0.4,
+				"art": "magic",
+				"effekt": {
+					"art": "zugleiste",
+					"staerke": 0.4
+				},
+				"bewegung": "spezial"
+			}
+		]
+	},
+	"splitterbaer_wild": {
+		"name": "Splitterbär",
+		"element": "Sternenkraft",
+		"rolle": "tank",
+		"stufe": [
+			25,
+			25
+		],
+		"selten": "brocken",
+		"familie": "baeren",
+		"splitter": true,
+		"beute": "grosser_splitterkristall",
+		"faehigkeiten": [
+			{
+				"name": "Splitterkruste",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.3
+				},
+				"einmal": true
+			},
+			{
+				"name": "Prankenbeben",
+				"schaden": 0.8,
+				"art": "melee",
+				"ziel": "vorne",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Sternenwut",
+				"schaden": 1.4,
+				"art": "melee"
+			},
+			{
+				"name": "Splitterregen",
+				"schaden": 0.6,
+				"art": "magic",
+				"ziel": "alle"
+			}
+		]
 	}
 }

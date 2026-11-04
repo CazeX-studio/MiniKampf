@@ -1,10 +1,13 @@
 extends SceneTree
-## D22a: Monster nach Regelblatt (MONSTER.md, data/monster.json): Werte nach Rolle und Stufe, Fähigkeiten mit Effekten,
+## D22a und D22b: Monster nach Regelblatt (MONSTER.md, data/monster.json): Werte nach Rolle und Stufe, Fähigkeiten mit Effekten,
 ## Kreuzwegfelder und Hirschtal (Weg nach Grünwacht), seltene Monster.
 ## Aufruf: Godot --headless --path . -s tests/monster_regelblatt_test.gd
 
 const KREUZWEGFELDER := ["tauschleim", "wiesenhoppler", "knollenkaefer", "loewenzahnling", "funkenflirr", "glutigel", "kronenschleim"]
 const HIRSCHTAL := ["borstenkeiler", "dornenranke", "bachkrebs", "zankelster", "heulwolf", "irrlicht", "kronhirsch"]
+const WACHTWALD := ["rindenbaer", "windfalke", "steinkroete", "waldsporenling", "nachtuhu", "funkenmarder", "wipfelluchs"]
+const TIEFWURZEL := ["donnerhirsch", "sumpfschnapper", "moosgolem", "rankenschlinger", "splitterwolf", "moderfalter", "splitterbaer_wild"]
+const START_MONSTER := ["wilder_moosling", "wilde_glutwelpe", "wilder_bachotter"]
 const ANZAHL := {"tag": 2, "nacht": 3, "selten": 4}
 
 var _failed := 0
@@ -23,13 +26,14 @@ func _initialize() -> void:
 func _run() -> void:
 	var daten: Dictionary = GameData.get_file("monster")
 	var effekte := Effekte.ARTEN.keys()
-	for gebiet: Array in [KREUZWEGFELDER, HIRSCHTAL]:
+	for gebiet: Array in [KREUZWEGFELDER, HIRSCHTAL, WACHTWALD, TIEFWURZEL]:
 		var elemente := {}
 		for id: String in gebiet:
 			var m: Dictionary = daten[id]
 			var art := "selten" if m.has("selten") else str(m.get("zeit", "tag"))
 			_check(m.faehigkeiten.size() == ANZAHL[art], "%s: %d Fähigkeiten (%s)" % [id, ANZAHL[art], art])
-			_check((Elements.NATURE.has(m.element) or m.element in ["Licht", "Schatten"]) and m.element != "Sternenkraft", "%s: ein Element (%s)" % [id, m.element])
+			_check((Elements.NATURE.has(m.element) or m.element in ["Licht", "Schatten"]) or (m.element == "Sternenkraft" and m.get("splitter", false)),
+					"%s: ein Element, Sternenkraft nur bei Splitter-Monstern (%s)" % [id, m.element])
 			elemente[m.element] = true
 			for fa: Dictionary in m.faehigkeiten:
 				var liste: Array = [] if not fa.has("effekt") else (fa.effekt if fa.effekt is Array else [fa.effekt])
@@ -38,10 +42,25 @@ func _run() -> void:
 					if fx.art in ["laehmen", "festhalten"]:
 						_check(int(fx.get("zuege", 1)) <= 1, "%s/%s: höchstens eine Runde" % [id, fa.name])
 			_check(Sandbox.ENEMIES[id].get("regelblatt", false), "%s ist im Spiel" % id)
-			_check(ResourceLoader.exists("res://assets/figuren/%s_spezial_anim_f0.png" % id), "%s hat eine eigene Bewegung" % id)
+			_check(ResourceLoader.exists("res://assets/figuren/%s_spezial_anim_f0.png" % FighterView.look_data(id).sprite), "%s hat eine eigene Bewegung" % id)
 			_check(GameData.get_file("beute").monster.has(id) and GameData.item(GameData.get_file("beute").monster[id]).get("material", false),
 					"%s lässt Material fallen" % id)
 		_check(elemente.size() >= 3, "Mindestens drei Elemente im Gebiet")
+
+	for id: String in START_MONSTER:
+		_check(daten[id].faehigkeiten.size() == 2 and daten[id].selten == "start", "%s: wild sehr selten, mit 2 Fähigkeiten (Ausnahme)" % id)
+
+	# Wachtwald und Tiefwurzel im Waldboden: Tiefwurzel ist der dunkle Teil rund um den Urbaum (Stufe 20)
+	var wald := GameData.wild_monsters().filter(func(m: Dictionary) -> bool: return m.karte == "waldboden")
+	var im_wald := {}
+	for m: Dictionary in wald:
+		for id: String in m.gegner:
+			im_wald[id] = true
+			if TIEFWURZEL.has(id):
+				_check(int(m.stufe) == 20 and int(m.feld[1]) >= 30, "%s im Süden des Waldes auf Stufe 20" % id)
+	for id: String in WACHTWALD + TIEFWURZEL + START_MONSTER:
+		_check(im_wald.has(id), "%s lebt im Wald" % id)
+		_check(GameData.get_file("kartenspiel").karten.has(id), "%s hat eine Karte" % id)
 
 	# Werte aus der Tabelle: Nacht etwa +15 %, Brocken +50 % Leben, gleiche Rolle = gleiche Werte
 	var r: Dictionary = daten._rollen

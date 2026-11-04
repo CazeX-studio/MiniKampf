@@ -71,7 +71,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D21b:** Volk in Grünwacht (Jäger, Sammlerinnen, Kinder an den Hängebrücken, Gäste im Gasthaus nachts). – Status: fertig (04.11.2026; Volk steht, läuft noch keine Runden)
 - **D22:** Monster nach Regelblatt in Kreuzwegfeldern, Hirschtal, Wachtwald, Tiefwurzel und Pilzhöhle, dazu die Spezialbewegungen der Pilzhöhlen-Bosse. (1.11) – Status: geteilt (04.11.2026) in D22a bis D22c
 - **D22a:** Werte-Tabelle nach Rolle und Stufe, Monster-Fähigkeiten mit Effekten (Schutz, Heilen, Herbeirufen, mehrere Treffer, Ziele), Kreuzwegfelder- und Hirschtal-Monster nach Steckbrief, Hirschtal auf dem Weg nach Grünwacht, seltene Monster (immer Karte, kommen später wieder). – Status: fertig (04.11.2026; Kreuzwegfelder-Monster nur in Ye's Lektionen, es gibt noch kein Gebiet „Kreuzwegfelder“ zum Herumlaufen)
-- **D22b:** Wachtwald und Tiefwurzel nach Steckbrief (Waldboden, Splitter-Monster), Start-Monster wild und sehr selten, Wipfelluchs und Splitterbär als seltene Monster. – Status: offen
+- **D22b:** Wachtwald und Tiefwurzel nach Steckbrief (Waldboden, Splitter-Monster), Start-Monster wild und sehr selten, Wipfelluchs und Splitterbär als seltene Monster. – Status: fertig (04.11.2026; Tiefwurzel ist der südliche Teil des Waldbodens rund um den Urbaum, alle Monster dort auf Stufe 20 = Höchststufe der Demo)
 - **D22c:** Pilzhöhle nach Steckbrief (Fähigkeiten der Dungeon-Monster, Schatzpilzling als Flüchter) und die Spezialbewegungen der Pilzhöhlen-Bosse. – Status: offen
 
 ### Glutoase

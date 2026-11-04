@@ -67,5 +67,12 @@
 	"dornenzweig": {"bild": {"form": "kraut", "farbe": "5a8a3a"}, "name": "Dornenzweig", "beschreibung": "Beute von der Dornenranke. Vorsicht, pikst.", "preis": 2, "material": true},
 	"krebsschere": {"bild": {"form": "splitter", "farbe": "d86a4a"}, "name": "Krebsschere", "beschreibung": "Beute vom Bachkrebs. Kneift sogar noch.", "preis": 2, "material": true},
 	"schillernde_feder": {"bild": {"form": "feder", "farbe": "6a9ad8"}, "name": "Schillernde Feder", "beschreibung": "Beute von der Zankelster. Glänzt in allen Farben.", "preis": 2, "material": true},
-	"kronhirsch_geweih": {"bild": {"form": "splitter", "farbe": "e8d8b0"}, "name": "Kronhirsch-Geweih", "beschreibung": "Seltene Beute vom Kronhirsch. Ein riesiges Geweih.", "preis": 12, "material": true}
+	"kronhirsch_geweih": {"bild": {"form": "splitter", "farbe": "e8d8b0"}, "name": "Kronhirsch-Geweih", "beschreibung": "Seltene Beute vom Kronhirsch. Ein riesiges Geweih.", "preis": 12, "material": true},
+	"schildpatt": {"bild": {"form": "stein", "farbe": "6a7a4a"}, "name": "Schildpatt", "beschreibung": "Beute vom Sumpfschnapper. Glatt und schwer.", "preis": 3, "material": true},
+	"moosstein": {"bild": {"form": "stein", "farbe": "6a9a5a"}, "name": "Moosstein", "beschreibung": "Beute vom Moosgolem. Das Moos wächst einfach weiter.", "preis": 3, "material": true},
+	"rankenstrang": {"bild": {"form": "kraut", "farbe": "4a7a3a"}, "name": "Zäher Rankenstrang", "beschreibung": "Beute vom Rankenschlinger. Hält fast alles fest.", "preis": 3, "material": true},
+	"splitterstaub": {"bild": {"form": "splitter", "farbe": "b48cff"}, "name": "Splitterstaub", "beschreibung": "Beute vom Splitterwolf (nachts). Funkelt lila.", "preis": 4, "material": true},
+	"falterschuppen": {"bild": {"form": "feder", "farbe": "5a4a8a"}, "name": "Falterschuppen", "beschreibung": "Beute vom Moderfalter (nachts). Dunkel wie die Nacht.", "preis": 4, "material": true},
+	"luchsohr": {"bild": {"form": "fell", "farbe": "c8a070"}, "name": "Luchsohr", "beschreibung": "Seltene Beute vom Wipfelluchs. Mit Pinselspitze.", "preis": 12, "material": true},
+	"grosser_splitterkristall": {"bild": {"form": "splitter", "farbe": "9a6aff"}, "name": "Großer Splitterkristall", "beschreibung": "Seltene Beute vom Splitterbär. Er summt leise.", "preis": 15, "material": true}
 }

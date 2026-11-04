@@ -119,6 +119,8 @@ const LOOKS := {
 	"zielscheibe": {sprite = "zombie", scale = 4.0, tint = Color(1.0, 0.88, 0.55)},
 	"laufscheibe": {sprite = "goblin", scale = 4.0, tint = Color(1.0, 0.9, 0.6)},
 	"splitterbaer": {sprite = "splitterbaer", scale = 1.0},
+	# Splitterbär in Tiefwurzel (seltenes Monster, D22b); der Splitter-Rindenbär der Geschichte heißt „splitterbaer“
+	"splitterbaer_wild": {sprite = "splitterbaer", scale = 1.0},
 	"bienenschwarm": {sprite = "imp", scale = 3.5, tint = Color(1.0, 0.9, 0.35)},
 	# Kobalts Monster
 	# Kobalts Monster: dieselben Bilder, etwas größer und dunkler gefärbt
