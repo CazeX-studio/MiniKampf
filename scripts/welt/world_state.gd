@@ -2079,6 +2079,9 @@ func monster_zur_zeit(index: int) -> bool:
 
 ## Kann dieser Spieler gerade in einen Kampf mit einem Monster geraten?
 func _can_meet_monster(p: PlayerState) -> bool:
+	# Am Rastplatz der Karawanen (sicherer Platz der Karte) greifen keine Monster an
+	if get_map(p.map).sicher.has_point(p.cell):
+		return false
 	return not p.in_dialog() and not p.awaiting_npc() and p.shop == "" and not _fighting.has(p.id) \
 			and not waiting_for_group(p.id) and p.safe_time <= 0.0
 

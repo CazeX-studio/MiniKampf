@@ -166,6 +166,9 @@ func _test_volle_seite() -> void:
 	_check(not p.progress.flags.has("kartenruecken"), "Noch kein Kartenrücken (Kreuzweg fehlt)")
 	world.apply_command("a", {type = "test_album", seite = 0})
 	_check(p.progress.flags.get("titel", "") == "Kenner von Kreuzweg" and world.hut_frei(p, "sternreif"), "Testknopf füllt Kreuzweg: Titel und Kopfbedeckung")
+	# Seit D23 gibt es die Glutoase-Seite: erst mit ihr ist das Album voll
+	_check(not p.progress.flags.has("kartenruecken"), "Noch kein Kartenrücken (Glutoase fehlt)")
+	world.apply_command("a", {type = "test_album", seite = 2})
 	_check(p.progress.flags.get("kartenruecken", "") == "sterne", "Volles Album: Sternen-Kartenrücken")
 	var vorher := p.progress.flags.duplicate(true)
 	world.add_card(p, "windfalke")

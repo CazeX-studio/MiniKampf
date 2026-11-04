@@ -456,6 +456,90 @@
 			"bonus": {
 				"tempo": 2
 			}
+		},
+		"steppenhyaene": {
+			"name": "Steppenhyäne",
+			"werte": [
+				5,
+				3,
+				4,
+				3
+			],
+			"bonus": {
+				"angriff": 1
+			}
+		},
+		"funkenechse": {
+			"name": "Funkenechse",
+			"werte": [
+				5,
+				4,
+				3,
+				4
+			],
+			"bonus": {
+				"tempo": 1
+			}
+		},
+		"steppenroller": {
+			"name": "Steppenroller",
+			"werte": [
+				3,
+				5,
+				4,
+				4
+			],
+			"bonus": {
+				"leben": 3
+			}
+		},
+		"kaktusling": {
+			"name": "Kaktusling",
+			"werte": [
+				3,
+				4,
+				5,
+				4
+			],
+			"bonus": {
+				"mana": 3
+			}
+		},
+		"aschefuchs": {
+			"name": "Aschefuchs",
+			"werte": [
+				6,
+				4,
+				4,
+				5
+			],
+			"bonus": {
+				"angriff": 1
+			}
+		},
+		"schattenskarabaeus": {
+			"name": "Schattenskarabäus",
+			"werte": [
+				4,
+				6,
+				5,
+				4
+			],
+			"bonus": {
+				"leben": 4
+			}
+		},
+		"sonnenloewe": {
+			"name": "Sonnenlöwe",
+			"werte": [
+				7,
+				6,
+				7,
+				6
+			],
+			"bonus": {
+				"angriff": 2
+			}
 		}
 	},
 	"startkarten": [
@@ -555,6 +639,18 @@
 				"titel": "Kenner von Grünwacht",
 				"hut": "geweihband"
 			}
+		},
+		{
+			"name": "Glutoase",
+			"karten": [
+				"steppenhyaene",
+				"funkenechse",
+				"steppenroller",
+				"kaktusling",
+				"aschefuchs",
+				"schattenskarabaeus",
+				"sonnenloewe"
+			]
 		}
 	],
 	"hinweis_seiten": "seiten: das Kartenalbum (D15), eine Seite pro Region mit festen Plätzen in dieser Reihenfolge.",

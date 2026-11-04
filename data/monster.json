@@ -1329,5 +1329,252 @@
 				"ziel": "selbst"
 			}
 		]
+	},
+	"steppenhyaene": {
+		"name": "Steppenhyäne",
+		"element": "Erde",
+		"rolle": "angreifer",
+		"stufe": [
+			6,
+			10
+		],
+		"familie": "hyaenen",
+		"beute": "struppiges_fell",
+		"faehigkeiten": [
+			{
+				"name": "Lachender Biss",
+				"schaden": 1.1,
+				"art": "melee",
+				"ziel": "schwaechster",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Kichern",
+				"schaden": 0,
+				"art": "magic",
+				"ziel": "freunde",
+				"effekt": {
+					"art": "zugleiste",
+					"staerke": -0.3
+				}
+			}
+		]
+	},
+	"funkenechse": {
+		"name": "Funkenechse",
+		"element": "Blitz",
+		"rolle": "angreifer",
+		"stufe": [
+			7,
+			11
+		],
+		"familie": "echsen",
+		"beute": "echsenschuppe",
+		"faehigkeiten": [
+			{
+				"name": "Funkenzunge",
+				"schaden": 0.9,
+				"art": "ranged",
+				"effekt": {
+					"art": "laehmen",
+					"zuege": 1
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Sonnenbad",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"aufladen": true
+			}
+		]
+	},
+	"steppenroller": {
+		"name": "Steppenroller",
+		"element": "Wind",
+		"rolle": "verteidiger",
+		"stufe": [
+			5,
+			9
+		],
+		"familie": "ranken",
+		"beute": "trockenzweig",
+		"faehigkeiten": [
+			{
+				"name": "Rollangriff",
+				"schaden": 0.7,
+				"art": "melee",
+				"ziel": "vorne",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Dornenkleid",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.3
+				},
+				"einmal": true
+			}
+		]
+	},
+	"kaktusling": {
+		"name": "Kaktusling",
+		"element": "Pflanze",
+		"rolle": "helfer",
+		"stufe": [
+			6,
+			10
+		],
+		"familie": "bluetenwesen",
+		"beute": "kaktusbluete",
+		"faehigkeiten": [
+			{
+				"name": "Stachelsalve",
+				"schaden": 0.9,
+				"art": "ranged",
+				"ziel": "hinten",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Wasserspeicher",
+				"schaden": 0,
+				"art": "magic",
+				"ziel": "freund",
+				"effekt": {
+					"art": "heilen",
+					"anteil": 0.15
+				}
+			}
+		]
+	},
+	"aschefuchs": {
+		"name": "Aschefuchs",
+		"element": "Feuer",
+		"rolle": "angreifer",
+		"stufe": [
+			9,
+			12
+		],
+		"zeit": "nacht",
+		"familie": "fuechse",
+		"beute": "aschefell",
+		"faehigkeiten": [
+			{
+				"name": "Glutbiss",
+				"schaden": 0.9,
+				"art": "melee",
+				"effekt": {
+					"art": "brennen",
+					"zuege": 2
+				}
+			},
+			{
+				"name": "Flammenschweif",
+				"schaden": 0.7,
+				"art": "magic",
+				"ziele": 2,
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Rauchsprung",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.25
+				},
+				"einmal": true
+			}
+		]
+	},
+	"schattenskarabaeus": {
+		"name": "Schattenskarabäus",
+		"element": "Schatten",
+		"rolle": "verteidiger",
+		"stufe": [
+			8,
+			12
+		],
+		"zeit": "nacht",
+		"familie": "kaefer",
+		"beute": "schwarzer_panzer",
+		"faehigkeiten": [
+			{
+				"name": "Dunkelstich",
+				"schaden": 0.6,
+				"art": "melee",
+				"effekt": {
+					"art": "schattenmale"
+				}
+			},
+			{
+				"name": "Eingraben",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.35
+				},
+				"einmal": true
+			},
+			{
+				"name": "Kugelrollen",
+				"schaden": 0.8,
+				"art": "melee",
+				"effekt": {
+					"art": "zugleiste",
+					"staerke": 0.4
+				},
+				"bewegung": "spezial"
+			}
+		]
+	},
+	"sonnenloewe": {
+		"name": "Sonnenlöwe",
+		"element": "Licht",
+		"rolle": "angreifer",
+		"stufe": [
+			12,
+			12
+		],
+		"selten": "brocken",
+		"familie": "katzen",
+		"beute": "sonnenmaehne",
+		"faehigkeiten": [
+			{
+				"name": "Brüllen",
+				"schaden": 0.4,
+				"art": "magic",
+				"ziel": "alle"
+			},
+			{
+				"name": "Sonnenmähne",
+				"schaden": 0.6,
+				"art": "magic",
+				"effekt": {
+					"art": "verfehlen",
+					"zuege": 1
+				}
+			},
+			{
+				"name": "Löwensprung",
+				"schaden": 1.1,
+				"art": "melee",
+				"ziel": "hinten",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Mittagsglut",
+				"schaden": 0.6,
+				"art": "magic",
+				"ziel": "alle"
+			}
+		]
 	}
 }

@@ -27,6 +27,8 @@ var music := "stadt"
 var music_if: Dictionary = {}
 ## Dungeon-Regeln für Kämpfe auf dieser Karte ("pilzhoehle") oder "" (normale Karte)
 var dungeon := ""
+## Sicherer Platz (Rastplatz der Karawanen, design.md): dort greifen keine Monster an. Leer = keiner.
+var sicher := Rect2i()
 ## Karte aus dem Baukasten: Inhalt von data/kreuzweg_karte.json ({boden, objekte}), sonst leer (gemalt aus tiles und Häusern)
 var baukasten: Dictionary = {}
 
@@ -58,6 +60,8 @@ static func from_data(p_id: String, data: Dictionary, legend: Dictionary) -> Wor
 	m.music = data.get("musik", "stadt")
 	m.music_if = data.get("musik_wenn", {})
 	m.dungeon = data.get("dungeon", "")
+	if data.has("sicher"):
+		m.sicher = Rect2i(int(data.sicher[0]), int(data.sicher[1]), int(data.sicher[2]), int(data.sicher[3]))
 	# Karte aus dem Baukasten: Das Raster bestimmt weiter, wo man laufen kann, gezeichnet werden die Teile
 	if data.has("baukasten"):
 		m.baukasten = GameData.get_file(data.baukasten)

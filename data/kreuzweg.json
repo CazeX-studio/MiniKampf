@@ -23,6 +23,22 @@
 			"wenn": {
 				"gemerkt": "klasse_bestaetigt"
 			}
+		},
+		{
+			"bereich": [
+				31,
+				65,
+				2,
+				1
+			],
+			"karte": "aschensteppe",
+			"feld": [
+				14,
+				1
+			],
+			"wenn": {
+				"gemerkt": "klasse_bestaetigt"
+			}
 		}
 	],
 	"npcs": {

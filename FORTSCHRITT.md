@@ -11,7 +11,14 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** D23 (Aschensteppe mit Rastplatz, dann Palmenrast), der Beginn der Glutoase. Alle Testtage stehen seit 02.11. am Ende, Marco testet das volle Spiel zusammen. D9h wartet auf Marcos Bilder (GRAFIK_AUFTRAG.md, Teil E).
+- **Nächster Schritt:** D23b (Palmenrast südlich der Aschensteppe). D23 ist in D23a und D23b geteilt. Alle Testtage stehen seit 02.11. am Ende, Marco testet das volle Spiel zusammen. D9h wartet auf Marcos Bilder (GRAFIK_AUFTRAG.md, Teil E).
+
+- **Neu (04.11.): D23a Aschensteppe mit dem Rastplatz der Karawanen** (2.1): Durch das Südtor von Kreuzweg (nach der Klassenwahl offen, wie der Weg nach Grünwacht) geht es in die Aschensteppe, die Straße zur Glutoase: oben Grasland mit Steppengras und Felsen, nach Süden immer mehr Sand mit Dünen, Kakteen, einer Ruine und einer Wasserstelle. In der Mitte liegt der Rastplatz der Karawanen mit Lagerfeuer, Zelt, Sonnensegel, Wagen und der ersten Wegelaterne der Straße: Dort greifen keine Monster an. Monster nach Steckbrief (Stufe 9–12): Steppenroller, Steppenhyäne, Kaktusling, Funkenechse, nachts Aschefuchs und Schattenskarabäus, selten der Sonnenlöwe ganz im Süden. Sieben neue Materialien und eine neue Album-Seite „Glutoase“ (noch ohne Belohnung, das entscheidest du). Noch nicht drin: der Rastplatz-Händler (D27), die Palmenrast im Süden (D23b), eigene Musik und ein eigener Kampf-Hintergrund für die Steppe (bis dahin Wald-Musik und Wiese).
+  - **So testest du es:**
+    1. Nach der Klassenwahl in Kreuzweg über die Brücke nach Süden aus der Karte laufen.
+    2. Bis zum Rastplatz in der Mitte gehen: Lagerfeuer, Zelt, Wegelaterne ansprechen; dort greift nichts an.
+    3. Gegen Steppenhyäne und Funkenechse kämpfen, ganz im Süden den Sonnenlöwen suchen.
+    4. Nachts (Uhr +3 h): Aschefuchs und Schattenskarabäus.
 
 - **Neu (04.11.): Tiefwurzel als eigenes Gebiet** (Marcos Wunsch): Tiefwurzel ist jetzt eine eigene Karte südlich vom Waldboden. Im Süden des Waldbodens führt ein Pfad zwischen Wurzeln („Nach Tiefwurzel“) hinunter in einen dunklen Wald mit verdorrten Bäumen, großen Wurzeln, Splitterkristallen und Nebel am Boden. Dort leben die Tiefwurzel-Monster (Stufe 20), der Waldboden ist nur noch der Wachtwald. Über den „Pfad nach oben“ geht es zurück. Werkzeug: `tools/gruenwacht_karten.py tiefwurzel`.
   - **So testest du es:**

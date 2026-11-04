@@ -75,5 +75,12 @@
 	"falterschuppen": {"bild": {"form": "feder", "farbe": "5a4a8a"}, "name": "Falterschuppen", "beschreibung": "Beute vom Moderfalter (nachts). Dunkel wie die Nacht.", "preis": 4, "material": true},
 	"luchsohr": {"bild": {"form": "fell", "farbe": "c8a070"}, "name": "Luchsohr", "beschreibung": "Seltene Beute vom Wipfelluchs. Mit Pinselspitze.", "preis": 12, "material": true},
 	"grosser_splitterkristall": {"bild": {"form": "splitter", "farbe": "9a6aff"}, "name": "Großer Splitterkristall", "beschreibung": "Seltene Beute vom Splitterbär. Er summt leise.", "preis": 15, "material": true},
-	"goldspore": {"bild": {"form": "pilz", "farbe": "f2c14e"}, "name": "Goldspore", "beschreibung": "Seltene Beute vom Schatzpilzling. Glänzt wie eine Münze.", "preis": 20, "material": true}
+	"goldspore": {"bild": {"form": "pilz", "farbe": "f2c14e"}, "name": "Goldspore", "beschreibung": "Seltene Beute vom Schatzpilzling. Glänzt wie eine Münze.", "preis": 20, "material": true},
+	"struppiges_fell": {"bild": {"form": "fell", "farbe": "a08a60"}, "name": "Struppiges Fell", "beschreibung": "Beute von der Steppenhyäne. Riecht nach Staub.", "preis": 2, "material": true},
+	"echsenschuppe": {"bild": {"form": "splitter", "farbe": "e0c040"}, "name": "Echsenschuppe", "beschreibung": "Beute von der Funkenechse. Knistert leise.", "preis": 2, "material": true},
+	"trockenzweig": {"bild": {"form": "kraut", "farbe": "b09a6a"}, "name": "Trockenzweig", "beschreibung": "Beute vom Steppenroller. Brennt wie Zunder.", "preis": 1, "material": true},
+	"kaktusbluete": {"bild": {"form": "kraut", "farbe": "e070a0"}, "name": "Kaktusblüte", "beschreibung": "Beute vom Kaktusling. Duftet süß.", "preis": 2, "material": true},
+	"aschefell": {"bild": {"form": "fell", "farbe": "6a5a5a"}, "name": "Aschefell", "beschreibung": "Beute vom Aschefuchs (nachts). Noch warm wie Glut.", "preis": 3, "material": true},
+	"schwarzer_panzer": {"bild": {"form": "stein", "farbe": "2a2a3a"}, "name": "Schwarzer Panzer", "beschreibung": "Beute vom Schattenskarabäus (nachts). Schluckt das Licht.", "preis": 3, "material": true},
+	"sonnenmaehne": {"bild": {"form": "fell", "farbe": "ffd34d"}, "name": "Sonnenmähne", "beschreibung": "Seltene Beute vom Sonnenlöwen. Leuchtet wie die Mittagssonne.", "preis": 12, "material": true}
 }
