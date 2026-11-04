@@ -1,45 +1,51 @@
-"""Marktstände nachts zu (D20d, VORLÄUFIG bis zu Marcos Bildern): Das Dach wird als Vorhang heruntergelassen.
+"""Marktstände nachts zu (D20d): Marcos Blatt tools/vorlagen/marktstaende_zu.png (links rot, rechts blau, Auftrag B6e).
 
-Aus assets/baukasten/objekte/marktstand_rot.png und marktstand_blau.png entstehen *_zu.png: Unter dem Dach hängt ein
-gestreifter Stoff in den Farben des Dachs bis über die Ware. Kommen Marcos gezeichnete Bilder, ersetzen sie diese.
+Jeder geschlossene Stand wird so groß gemacht wie der offene (gleiche Breite der sichtbaren Fläche) und bekommt denselben
+Fußpunkt relativ zu seiner Unterkante, damit er genau auf dem Platz des offenen Stands steht.
+Ergebnis: assets/baukasten/objekte/marktstand_rot_zu.png, marktstand_blau_zu.png und die Fußpunkte in
+data/baukasten_teile.json.
 Aufruf: python3 tools/marktstand_zu.py   (braucht numpy, scipy und Pillow)
 """
-import math
+import json
+import sys
 from pathlib import Path
 
 import numpy as np
 from PIL import Image
-from scipy import ndimage
 
-OBJEKTE = Path(__file__).resolve().parent.parent / "assets" / "baukasten" / "objekte"
-## Stand -> wie weit der Vorhang unter das Dach fällt (Pixel)
-STAENDE = [("marktstand_rot", 46), ("marktstand_blau", 50)]
-for n, fall in STAENDE:
-	a = np.array(Image.open(OBJEKTE / f"{n}.png").convert("RGBA"))
-	h,w=a.shape[:2]
-	rgb=a[...,:3].astype(int); al=a[...,3]>128
-	r,g,b=rgb[...,0],rgb[...,1],rgb[...,2]
-	stoff=((r>140)&(r>g+40)&(r>b+40)) if 'rot' in n else ((b>120)&(b>r+30))
-	hell=(r>200)&(g>190)&(b>170)
-	oben=np.arange(h)[:,None]<h*0.55
-	maske=ndimage.binary_closing(al&oben&(stoff|hell),iterations=2)&al
-	lab,k=ndimage.label(maske); m=lab==(np.argmax(ndimage.sum(maske,lab,range(1,k+1)))+1)
-	farbe=np.median(rgb[m&stoff],0); hellf=np.median(rgb[m&hell],0) if (m&hell).any() else farbe
-	erg=a.copy()
-	cols=np.where(m.any(0))[0]
-	x0,x1=cols.min()+6,cols.max()-6
-	for x in range(x0,x1+1):
-		ys=np.where(m[:,x])[0]; y0=ys.max()
-		y_end=min(h-1,y0+fall)
-		# Streifen wie das Dach: abwechselnd Farbe und hell, Falten als Schatten
-		streifen=int((x-x0)/18)%2==1
-		basis=hellf if streifen else farbe
-		falte=0.85+0.15*math.cos((x-x0)/6.0)
-		for y in range(y0,y_end+1):
-			tiefe=1.0-0.25*(y-y0)/fall
-			c=np.clip(basis*falte*tiefe,0,255)
-			erg[y,x,:3]=c; erg[y,x,3]=255
-		# dunkler Saum unten
-		erg[y_end,x,:3]=(40,28,20)
-	Image.fromarray(erg).save(OBJEKTE / f"{n}_zu.png")
-	print(f"{n}_zu.png")
+WURZEL = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(WURZEL / "tools"))
+from aussehen_bilder import teile  # noqa: E402
+
+OBJEKTE = WURZEL / "assets" / "baukasten" / "objekte"
+TEILE = WURZEL / "data" / "baukasten_teile.json"
+STAENDE = ["marktstand_rot", "marktstand_blau"]
+
+
+def rahmen(a):
+	ys, xs = np.where(a[..., 3] > 128)
+	return xs.min(), ys.min(), xs.max(), ys.max()
+
+
+def main():
+	stuecke = [t for reihe in teile("marktstaende_zu") for t in reihe]
+	if len(stuecke) != len(STAENDE):
+		raise SystemExit(f"marktstaende_zu: {len(stuecke)} Stände, erwartet {len(STAENDE)}")
+	daten = json.loads(TEILE.read_text(encoding="utf-8"))
+	for name, stueck in zip(STAENDE, stuecke):
+		offen = np.array(Image.open(OBJEKTE / f"{name}.png").convert("RGBA"))
+		x0, y0, x1, y1 = rahmen(offen)
+		fuss = daten["objekte"][name]["fuss"]
+		faktor = (x1 - x0) / (rahmen(stueck)[2] - rahmen(stueck)[0])
+		bild = Image.fromarray(stueck)
+		bild = bild.resize((round(bild.width * faktor), round(bild.height * faktor)), Image.LANCZOS)
+		zx0, _, zx1, zy1 = rahmen(np.array(bild))
+		# Fußpunkt: gleicher Abstand zur linken und zur unteren Kante wie beim offenen Stand
+		daten["objekte"][f"{name}_zu"]["fuss"] = [round(zx0 + fuss[0] - x0), round(zy1 - (y1 - fuss[1]))]
+		bild.save(OBJEKTE / f"{name}_zu.png")
+		print(f"{name}_zu: {bild.size}, Fuß {daten['objekte'][f'{name}_zu']['fuss']}")
+	TEILE.write_text(json.dumps(daten, ensure_ascii=False, indent="\t"), encoding="utf-8")
+
+
+if __name__ == "__main__":
+	main()
