@@ -1936,6 +1936,20 @@
 				},
 				"name": "Alte Frau, Kopftuch"
 			},
+			"hagebutte": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						33.5,
+						56
+					],
+					"vorn_normal": [
+						39.6,
+						53
+					]
+				},
+				"name": "Oma Hagebutte"
+			},
 			"ilse": {
 				"geschlecht": "w",
 				"hals": {
@@ -2127,6 +2141,20 @@
 					]
 				},
 				"name": "Novize m3"
+			},
+			"tamm": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						35.0,
+						55
+					],
+					"vorn_normal": [
+						37.8,
+						55
+					]
+				},
+				"name": "Bankhüter Tamm"
 			},
 			"v_m1": {
 				"geschlecht": "m",
@@ -3982,6 +4010,20 @@
 				},
 				"name": "Novize m3"
 			},
+			"salbei": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						26.1,
+						55
+					],
+					"vorn_normal": [
+						38.8,
+						55
+					]
+				},
+				"name": "Kräuterhändlerin Salbei"
+			},
 			"v_m1": {
 				"geschlecht": "m",
 				"hals": {
@@ -5657,6 +5699,20 @@
 					]
 				},
 				"name": "Alte Frau, Kopftuch"
+			},
+			"borko": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						33.0,
+						50
+					],
+					"vorn_normal": [
+						42.9,
+						50
+					]
+				},
+				"name": "Wirt Borko"
 			},
 			"edmar": {
 				"geschlecht": "m",
@@ -9640,6 +9696,25 @@
 		"_geschlecht": "m",
 		"_klassenwaffe": true,
 		"_koepfe": {
+			"kobalt": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						37.5,
+						56
+					],
+					"seite_normal": [
+						41.6,
+						56
+					],
+					"vorn_normal": [
+						41.6,
+						56
+					]
+				},
+				"name": "Kobalt",
+				"nur_figur": true
+			},
 			"m1": {
 				"geschlecht": "m",
 				"hals": {

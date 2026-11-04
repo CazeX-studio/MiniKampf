@@ -1,4 +1,4 @@
-"""Hauptfiguren mit eigenen Bildblättern (D20b Ye, D20c Bingo, Marv, Mira).
+"""Hauptfiguren mit eigenen Bildblättern (D20b Ye, D20c Bingo, Marv, Mira, D21 Ysolde, Fenn, Tilda, Esche, Kael).
 
 - tools/vorlagen/haupt_<figur>_welt.png: Reihe 1 Stehen und Laufen schräg von vorne (je 4), Reihe 2 dasselbe schräg von
   hinten, dazu je Figur eine dritte Reihe (siehe FIGUREN): Ye mit offenem Schirm (Parier-Training), Mira krank liegend.
@@ -28,6 +28,12 @@ FIGUREN = {
 	"bingo": (1.08, []),
 	"marv": (1.04, []),
 	"mira": (1.0, [[("liegen", 2)]]),
+	# Grünwacht (D21)
+	"ysolde": (1.06, []),
+	"fenn": (1.08, []),
+	"tilda": (1.08, []),
+	"esche": (1.06, []),
+	"kael": (1.06, []),
 }
 KAMPF = {"ye": [[("idle", 4)], [("attack", 6)], [("hit", 1), ("parry", 4)]]}
 STIMMUNGEN = ["ruhig", "laechelnd", "wuetend", "traurig", "ueberrascht"]

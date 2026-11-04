@@ -41,7 +41,8 @@ const LOOKS := {
 	"glutwelpe": {sprite = "glutwelpe", scale = 1.0, angriffe = {"Funkenregen": "spezial"}},
 	"bachotter": {sprite = "bachotter", scale = 1.0, angriffe = {"Wasserstrahl": "wurf", "Welle": "spezial"}},
 	# Rivale Kobalt (steht hinter seinem Monster)
-	"kobalt": {sprite = "elf_m", scale = 4.0, tint = Color(0.75, 0.85, 1.0)},
+	# Kobalt: eigener Kopf auf dem Zähmer-Körper (D21)
+	"kobalt": {sprite = "zaehmer_m+kobalt", scale = 3.0},
 	# Gegner
 	"glutkobold": {sprite = "chort", scale = 4.0},
 	"sumpfschleim": {sprite = "swampy", scale = 5.0, tint = Color(0.55, 0.75, 1.0)},

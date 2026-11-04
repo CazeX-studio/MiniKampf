@@ -810,7 +810,7 @@ func _enter_node(p: PlayerState, dialog_id: String, node_id: String) -> void:
 ## In einer gemeinsamen Szene kommt "szene" dazu: {rolle, sprecher, stimmen, meine, offen, zeit, teilnehmer}.
 ## Gemaltes Porträt zur Zeile (design.md: Porträt-Stimmung): assets/portraets/<wer>_<stimmung>.png, "" = keins.
 static func portraet(view: Dictionary) -> String:
-	var wer := str(view.get("wer", "")).to_lower()
+	var wer := str(view.get("wer", "")).to_lower().replace(" ", "_")
 	if wer == "":
 		return ""
 	# Gibt es die Stimmung nicht (Nebenfiguren haben nur zwei oder drei), dann die nächstbeste

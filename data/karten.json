@@ -240,27 +240,50 @@
 			},
 			{
 				"zeit": "nacht",
-				"gegner": ["heulwolf"],
+				"gegner": [
+					"heulwolf"
+				],
 				"stufe": 11,
-				"feld": [50, 12]
+				"feld": [
+					50,
+					12
+				]
 			},
 			{
 				"zeit": "nacht",
-				"gegner": ["irrlicht", "heulwolf"],
+				"gegner": [
+					"irrlicht",
+					"heulwolf"
+				],
 				"stufe": 12,
-				"feld": [38, 14]
+				"feld": [
+					38,
+					14
+				]
 			},
 			{
 				"zeit": "nacht",
-				"gegner": ["heulwolf", "heulwolf"],
+				"gegner": [
+					"heulwolf",
+					"heulwolf"
+				],
 				"stufe": 13,
-				"feld": [24, 3]
+				"feld": [
+					24,
+					3
+				]
 			},
 			{
 				"zeit": "nacht",
-				"gegner": ["heulwolf", "irrlicht"],
+				"gegner": [
+					"heulwolf",
+					"irrlicht"
+				],
 				"stufe": 14,
-				"feld": [12, 3]
+				"feld": [
+					12,
+					3
+				]
 			}
 		],
 		"deko": [
@@ -463,33 +486,61 @@
 			},
 			{
 				"zeit": "nacht",
-				"gegner": ["nachtuhu"],
+				"gegner": [
+					"nachtuhu"
+				],
 				"stufe": 16,
-				"feld": [38, 12]
+				"feld": [
+					38,
+					12
+				]
 			},
 			{
 				"zeit": "nacht",
-				"gegner": ["funkenmarder"],
+				"gegner": [
+					"funkenmarder"
+				],
 				"stufe": 17,
-				"feld": [29, 11]
+				"feld": [
+					29,
+					11
+				]
 			},
 			{
 				"zeit": "nacht",
-				"gegner": ["nachtuhu", "funkenmarder"],
+				"gegner": [
+					"nachtuhu",
+					"funkenmarder"
+				],
 				"stufe": 18,
-				"feld": [12, 12]
+				"feld": [
+					12,
+					12
+				]
 			},
 			{
 				"zeit": "nacht",
-				"gegner": ["funkenmarder", "funkenmarder"],
+				"gegner": [
+					"funkenmarder",
+					"funkenmarder"
+				],
 				"stufe": 19,
-				"feld": [11, 26]
+				"feld": [
+					11,
+					26
+				]
 			},
 			{
 				"zeit": "nacht",
-				"gegner": ["funkenmarder", "nachtuhu"],
+				"gegner": [
+					"funkenmarder",
+					"nachtuhu"
+				],
 				"stufe": 20,
-				"feld": [5, 17]
+				"feld": [
+					5,
+					17
+				]
 			}
 		],
 		"deko": [
@@ -1229,8 +1280,7 @@
 					31,
 					25
 				],
-				"aussehen": "elf_f",
-				"farbe": "d8f0b8",
+				"aussehen": "grund_haendler+salbei#zubehoer=kraeuterbuendel&korb",
 				"dialog": "salbei",
 				"zeichen": "muenze"
 			},
@@ -1240,8 +1290,7 @@
 					27,
 					21
 				],
-				"aussehen": "wizzard_m",
-				"farbe": "c8d8ff",
+				"aussehen": "grund_alter_mensch+tamm#hut=tamm_moos_hut",
 				"dialog": "bank",
 				"zeichen": "truhe"
 			},
@@ -1251,8 +1300,11 @@
 					24,
 					21
 				],
-				"aussehen": "elf_f",
-				"farbe": "c8e0b0",
+				"aussehen": "ysolde",
+				"nachts": [
+					14,
+					26
+				],
 				"dialog": "ysolde"
 			},
 			"fenn": {
@@ -1261,8 +1313,11 @@
 					23,
 					5
 				],
-				"aussehen": "elf_m",
-				"farbe": "b0d890",
+				"aussehen": "fenn",
+				"nachts": [
+					21,
+					27
+				],
 				"dialog": "fenn"
 			},
 			"tilda": {
@@ -1271,8 +1326,7 @@
 					42,
 					23
 				],
-				"aussehen": "knight_f",
-				"farbe": "d8c090",
+				"aussehen": "tilda",
 				"dialog": "tilda"
 			},
 			"esche": {
@@ -1281,8 +1335,7 @@
 					23,
 					36
 				],
-				"aussehen": "wizzard_m",
-				"farbe": "e0e0c0",
+				"aussehen": "esche",
 				"dialog": "esche"
 			},
 			"kael": {
@@ -1291,8 +1344,7 @@
 					6,
 					18
 				],
-				"aussehen": "lizard_m",
-				"farbe": "c0a0a0",
+				"aussehen": "kael",
 				"dialog": "kael",
 				"wenn": {
 					"auftrag": "veraenderte_tiere",
@@ -1314,8 +1366,11 @@
 					11,
 					24
 				],
-				"aussehen": "wizzard_f",
-				"farbe": "f0c8d0",
+				"aussehen": "grund_alter_mensch+hagebutte#zubehoer=kartenstapel",
+				"nachts": [
+					7,
+					21
+				],
 				"dialog": "oma_hagebutte"
 			},
 			"kobalt": {
@@ -1324,8 +1379,7 @@
 					24,
 					33
 				],
-				"aussehen": "elf_m",
-				"farbe": "a0c8ff",
+				"aussehen": "zaehmer_m+kobalt",
 				"dialog": "kobalt",
 				"anspringen": {
 					"radius": 5,
@@ -1334,6 +1388,9 @@
 						"gemerkt": "starter_gewaehlt",
 						"nicht_gemerkt": "kobalt_gekaempft"
 					}
+				},
+				"wenn": {
+					"nacht": false
 				}
 			},
 			"marv_gruenwacht": {
@@ -1347,6 +1404,15 @@
 				"anspringen": {
 					"radius": 6
 				}
+			},
+			"borko": {
+				"name": "Wirt Borko",
+				"feld": [
+					14,
+					22
+				],
+				"aussehen": "grund_mann+borko#hut=borko_kochmuetze,zubehoer=schoepfkelle",
+				"dialog": "borko"
 			}
 		},
 		"baukasten": "karte_wipfelheim"

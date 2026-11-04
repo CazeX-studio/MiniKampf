@@ -340,6 +340,42 @@
 				],
 				"sitz": 0.1
 			}
+		},
+		"borko_kochmuetze": {
+			"name": "Borkos Kochmütze",
+			"belohnung": true,
+			"vorn": {
+				"anker": [
+					26,
+					40
+				],
+				"sitz": 0.15
+			},
+			"hinten": {
+				"anker": [
+					26,
+					39
+				],
+				"sitz": 0.15
+			}
+		},
+		"tamm_moos_hut": {
+			"name": "Tamms Hut mit Moos",
+			"belohnung": true,
+			"vorn": {
+				"anker": [
+					38,
+					37
+				],
+				"sitz": 0.25
+			},
+			"hinten": {
+				"anker": [
+					38,
+					39
+				],
+				"sitz": 0.25
+			}
 		}
 	},
 	"ruecken": {
@@ -604,6 +640,82 @@
 				],
 				"hoehe": 0.34,
 				"x": -11
+			}
+		},
+		"kraeuterbuendel": {
+			"name": "Kräuterbündel",
+			"vorn": {
+				"anker": [
+					7,
+					0
+				],
+				"hoehe": 0.34,
+				"x": -12
+			},
+			"hinten": {
+				"anker": [
+					7,
+					0
+				],
+				"hoehe": 0.34,
+				"x": 12
+			}
+		},
+		"korb": {
+			"name": "Salbeis Korb",
+			"vorn": {
+				"anker": [
+					8,
+					0
+				],
+				"hoehe": 0.4,
+				"x": 13
+			},
+			"hinten": {
+				"anker": [
+					8,
+					0
+				],
+				"hoehe": 0.4,
+				"x": -13
+			}
+		},
+		"schoepfkelle": {
+			"name": "Schöpfkelle",
+			"vorn": {
+				"anker": [
+					8,
+					0
+				],
+				"hoehe": 0.3,
+				"x": 13
+			},
+			"hinten": {
+				"anker": [
+					8,
+					0
+				],
+				"hoehe": 0.3,
+				"x": -13
+			}
+		},
+		"kartenstapel": {
+			"name": "Kartenstapel",
+			"vorn": {
+				"anker": [
+					5,
+					0
+				],
+				"hoehe": 0.4,
+				"x": 12
+			},
+			"hinten": {
+				"anker": [
+					6,
+					0
+				],
+				"hoehe": 0.4,
+				"x": -12
 			}
 		}
 	}
