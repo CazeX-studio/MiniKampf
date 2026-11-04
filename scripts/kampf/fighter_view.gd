@@ -110,7 +110,8 @@ const LOOKS := {
 	"wiesenkobold": {sprite = "wiesenkobold", scale = 1.0, angriffe = {"Steinwurf": "wurf"}},
 	"ruepelkobold": {sprite = "ruepelkobold", scale = 1.0},
 	"kieselkobold": {sprite = "kieselkobold", scale = 1.0, angriffe = {"Kieselwurf": "wurf"}},
-	"uebungs_ye": {sprite = "wizzard_m", scale = 4.0, tint = Color(0.8, 0.86, 0.95)},
+	# Ausbilder Ye mit Regenschirm (D20b, tools/ye_bilder.py)
+	"uebungs_ye": {sprite = "ye_kampf", scale = 3.0},
 	"sternenfresser": {sprite = "sternenfresser", scale = 1.0,
 		angriffe = {"Leuchtender Biss": "attack2", "Splitterregen": "spezial"}},
 	# Fenns Prüfung (Platzhalter-Bilder: Strohpuppen)

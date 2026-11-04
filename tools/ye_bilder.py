@@ -5,6 +5,9 @@
   Ergebnis: assets/figuren/ye_<anim>_anim_f<n>.png (idle_vorn, run_vorn, idle_hinten, run_hinten, schirm_vorn).
 - tools/vorlagen/haupt_ye_portraets.png: fünf Porträts (ruhig, lächelnd, wütend, traurig, überrascht).
   Ergebnis: assets/portraets/ye_<stimmung>.png, gezeigt neben dem Gesprächsfenster.
+- tools/vorlagen/haupt_ye_kampf.png: von der Seite, schaut nach rechts. Reihe 1 Stehen 4, Reihe 2 Angriff mit dem
+  Schirm 6 (Treffer im 4. Bild), Reihe 3 Getroffen 1 und Parade mit offenem Schirm 4.
+  Ergebnis: assets/figuren/ye_kampf_<anim>_anim_f<n>.png (eigener Name, damit Ye in der Welt die Schräg-Ansichten behält).
 Aufruf: python3 tools/ye_bilder.py   (braucht numpy, scipy und Pillow)
 """
 import sys
@@ -18,6 +21,7 @@ sys.path.insert(0, str(WURZEL / "tools"))
 from figur_bilder import VORLAGEN, blatt  # noqa: E402
 from monster_bilder import ausschneiden, bilder_finden, freistellen, speichern  # noqa: E402
 
+KAMPF = [[("idle", 4)], [("attack", 6)], [("hit", 1), ("parry", 4)]]
 REIHEN = [[("idle_vorn", 4), ("run_vorn", 4)], [("idle_hinten", 4), ("run_hinten", 4)], [("schirm_vorn", 4)]]
 STIMMUNGEN = ["ruhig", "laechelnd", "wuetend", "traurig", "ueberrascht"]
 ## Ye ist ein Erwachsener: etwas größer als die Novizen
@@ -26,11 +30,12 @@ GROESSE = 1.08
 PORTRAET_HOEHE = 200
 
 
-def welt():
-	anims = blatt("haupt_ye", "welt", REIHEN)
+def welt(blattname="welt", reihen=REIHEN, name="ye"):
+	# Achtung: speichern("ye") löscht auch ye_kampf_*, darum zuerst die Welt, dann der Kampf (siehe unten)
+	anims = blatt("haupt_ye", blattname, reihen)
 	groesser = lambda t: np.array(Image.fromarray(t).resize((round(t.shape[1] * GROESSE), round(t.shape[0] * GROESSE)), Image.LANCZOS))
 	anims = {k: [groesser(t) for t in v] for k, v in anims.items()}
-	speichern("ye", anims, 1.0)
+	speichern(name, anims, 1.0)
 
 
 def portraets():
@@ -49,4 +54,5 @@ def portraets():
 
 if __name__ == "__main__":
 	welt()
+	welt("kampf", KAMPF, "ye_kampf")
 	portraets()

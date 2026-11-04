@@ -217,7 +217,7 @@ const ENEMIES := {
 		attacks = [{name = "Pollenwolke", base = 8, kind = "ranged"}, {name = "Blattschlag", base = 9, kind = "melee"}],
 		tame = {name = "Blattschlag", base = 9, kind = "melee"}},
 	"uebungs_ye": {name = "Ausbilder Ye", element = "", hp = 999, tempo = 12, title = "Ausbilder Ye",
-		attacks = [{name = "Übungsschwert", base = 7, kind = "melee"}]},
+		attacks = [{name = "Schirmstoß", base = 7, kind = "melee"}]},
 	# Fenns Prüfung der drei Ziele (Bogenschütze): Scheiben wehren sich nicht (passive), absicht = Text über der Scheibe
 	"zielscheibe": {name = "Zielscheibe", element = "", hp = 40, tempo = 1, passive = true,
 		absicht = "Steht still. Aus der hinteren Reihe trifft deine ruhige Hand öfter kritisch."},
