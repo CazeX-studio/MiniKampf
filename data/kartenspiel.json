@@ -624,6 +624,90 @@
 			"bonus": {
 				"tempo": 2
 			}
+		},
+		"schlackenbock": {
+			"name": "Schlackenbock",
+			"werte": [
+				6,
+				7,
+				6,
+				5
+			],
+			"bonus": {
+				"leben": 6
+			}
+		},
+		"glutsalamander": {
+			"name": "Glutsalamander",
+			"werte": [
+				7,
+				5,
+				5,
+				5
+			],
+			"bonus": {
+				"angriff": 2
+			}
+		},
+		"rauchgeier": {
+			"name": "Rauchgeier",
+			"werte": [
+				6,
+				5,
+				6,
+				6
+			],
+			"bonus": {
+				"tempo": 2
+			}
+		},
+		"geysirkrabbe": {
+			"name": "Geysirkrabbe",
+			"werte": [
+				4,
+				6,
+				6,
+				5
+			],
+			"bonus": {
+				"mana": 4
+			}
+		},
+		"glutfledermaus": {
+			"name": "Glutfledermaus",
+			"werte": [
+				7,
+				5,
+				6,
+				6
+			],
+			"bonus": {
+				"tempo": 2
+			}
+		},
+		"obsidiangolem": {
+			"name": "Obsidiangolem",
+			"werte": [
+				6,
+				8,
+				7,
+				6
+			],
+			"bonus": {
+				"leben": 8
+			}
+		},
+		"gewitterwyvern": {
+			"name": "Gewitterwyvern",
+			"werte": [
+				8,
+				7,
+				8,
+				7
+			],
+			"bonus": {
+				"angriff": 3
+			}
 		}
 	},
 	"startkarten": [
@@ -740,7 +824,14 @@
 				"oasenkroete",
 				"staubgeist",
 				"mondschakal",
-				"stachelflitzer"
+				"stachelflitzer",
+				"schlackenbock",
+				"glutsalamander",
+				"rauchgeier",
+				"geysirkrabbe",
+				"glutfledermaus",
+				"obsidiangolem",
+				"gewitterwyvern"
 			]
 		}
 	],

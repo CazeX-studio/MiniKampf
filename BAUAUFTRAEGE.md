@@ -87,8 +87,8 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D27:** Glutoase-Figuren nach Steckbrief, Rastplatz-Händler. (2.13, vorgezogen) – Status: fertig (04.11.2026; Zaids Reiseumhang fehlt, die Aufträge der Figuren kommen mit der Geschichte)
 - **D28:** Geschichte Teil 1: Kochende Brunnen, Miras Lied. (2.4) – Status: fertig (04.11.2026)
 - **D29:** Geschichte Teil 2: Tanz mit der Pause, Rivalenkampf gegen Kael. (2.5) – Status: fertig (04.11.2026)
-- **D30:** Glutgrat über den Bergpfad. (2.6) – Status: offen
-- **D31:** Monster nach Regelblatt in Aschensteppe, Palmenrast und Glutgrat. (2.12, vorgezogen) – Status: offen (Aschensteppe und Palmenrast schon mit D23, es fehlt der Glutgrat)
+- **D30:** Glutgrat über den Bergpfad. (2.6) – Status: fertig (04.11.2026)
+- **D31:** Monster nach Regelblatt in Aschensteppe, Palmenrast und Glutgrat. (2.12, vorgezogen) – Status: fertig (04.11.2026; Aschensteppe und Palmenrast mit D23, Glutgrat mit D30)
 - **D32:** Vulkanschmiede Teil 1: drei Abschnitte, Lava-Takt, Monster, Kampf-Hintergrund. (2.7) – Status: offen
 - **D33:** Vulkanschmiede Teil 2: Hammerbrüder. (2.8) – Status: offen
 - **D34:** Vulkanschmiede Teil 3: Kettenschmied. (2.9) – Status: offen

@@ -1826,5 +1826,267 @@
 				"ziel": "selbst"
 			}
 		]
+	},
+	"schlackenbock": {
+		"name": "Schlackenbock",
+		"element": "Erde",
+		"rolle": "tank",
+		"stufe": [
+			16,
+			20
+		],
+		"familie": "boecke",
+		"beute": "lavahorn",
+		"faehigkeiten": [
+			{
+				"name": "Felssprung",
+				"schaden": 1.1,
+				"art": "melee",
+				"ziel": "hinten",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Steinfell",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.3
+				},
+				"einmal": true
+			}
+		]
+	},
+	"glutsalamander": {
+		"name": "Glutsalamander",
+		"element": "Feuer",
+		"rolle": "angreifer",
+		"stufe": [
+			15,
+			19
+		],
+		"familie": "echsen",
+		"beute": "salamanderhaut",
+		"faehigkeiten": [
+			{
+				"name": "Feuerschwanz",
+				"schaden": 0.7,
+				"art": "melee",
+				"ziele": 2,
+				"effekt": {
+					"art": "brennen",
+					"zuege": 2
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Lavabad",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "heilen",
+					"anteil": 0.15
+				},
+				"einmal": true
+			}
+		]
+	},
+	"rauchgeier": {
+		"name": "Rauchgeier",
+		"element": "Wind",
+		"rolle": "angreifer",
+		"stufe": [
+			16,
+			20
+		],
+		"familie": "voegel",
+		"beute": "russfeder",
+		"faehigkeiten": [
+			{
+				"name": "Rauchschwinge",
+				"schaden": 0.4,
+				"art": "magic",
+				"ziel": "alle",
+				"effekt": {
+					"art": "verfehlen",
+					"zuege": 1
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Krallengriff",
+				"schaden": 0.9,
+				"art": "melee",
+				"ziel": "hinten",
+				"effekt": {
+					"art": "festhalten",
+					"zuege": 1
+				}
+			}
+		]
+	},
+	"geysirkrabbe": {
+		"name": "Geysirkrabbe",
+		"element": "Wasser",
+		"rolle": "helfer",
+		"stufe": [
+			15,
+			18
+		],
+		"familie": "krabben",
+		"beute": "quellstein",
+		"faehigkeiten": [
+			{
+				"name": "Heiße Quelle",
+				"schaden": 0,
+				"art": "magic",
+				"ziel": "freund",
+				"effekt": {
+					"art": "heilen",
+					"anteil": 0.15
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Dampfstoß",
+				"schaden": 0.5,
+				"art": "magic",
+				"ziel": "vorne",
+				"effekt": {
+					"art": "verfehlen",
+					"zuege": 1
+				}
+			}
+		]
+	},
+	"glutfledermaus": {
+		"name": "Glutfledermaus",
+		"element": "Feuer",
+		"rolle": "angreifer",
+		"stufe": [
+			17,
+			20
+		],
+		"zeit": "nacht",
+		"familie": "fledermaeuse",
+		"beute": "glutfluegel",
+		"faehigkeiten": [
+			{
+				"name": "Funkenflug",
+				"schaden": 0.9,
+				"art": "ranged",
+				"ziel": "hinten",
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Hitzeschrei",
+				"schaden": 0.5,
+				"art": "magic",
+				"effekt": {
+					"art": "zugleiste",
+					"staerke": 0.4
+				}
+			},
+			{
+				"name": "Glutbiss",
+				"schaden": 1.0,
+				"art": "melee"
+			}
+		]
+	},
+	"obsidiangolem": {
+		"name": "Obsidiangolem",
+		"element": "Schatten",
+		"rolle": "tank",
+		"stufe": [
+			18,
+			20
+		],
+		"zeit": "nacht",
+		"familie": "golems",
+		"beute": "obsidian",
+		"faehigkeiten": [
+			{
+				"name": "Schattenhieb",
+				"schaden": 0.8,
+				"art": "melee",
+				"effekt": {
+					"art": "schattenmale"
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Spiegelglas",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.3
+				},
+				"einmal": true
+			},
+			{
+				"name": "Erstarren",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"effekt": {
+					"art": "schutz",
+					"anteil": 0.2
+				},
+				"einmal": true
+			}
+		]
+	},
+	"gewitterwyvern": {
+		"name": "Gewitterwyvern",
+		"element": "Blitz",
+		"rolle": "angreifer",
+		"stufe": [
+			20,
+			20
+		],
+		"selten": "brocken",
+		"familie": "wyvern",
+		"beute": "wyvernschuppe",
+		"faehigkeiten": [
+			{
+				"name": "Aschegewitter",
+				"schaden": 0.5,
+				"art": "magic",
+				"ziel": "alle",
+				"effekt": {
+					"art": "laehmen",
+					"zuege": 1
+				},
+				"bewegung": "spezial"
+			},
+			{
+				"name": "Sturzangriff",
+				"schaden": 1.1,
+				"art": "melee",
+				"ziel": "hinten"
+			},
+			{
+				"name": "Donnerschrei",
+				"schaden": 0.3,
+				"art": "magic",
+				"ziel": "alle",
+				"effekt": {
+					"art": "zugleiste",
+					"staerke": 0.3
+				}
+			},
+			{
+				"name": "Aufladen",
+				"schaden": 0,
+				"art": "melee",
+				"ziel": "selbst",
+				"aufladen": true
+			}
+		]
 	}
 }

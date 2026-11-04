@@ -96,6 +96,38 @@ func _initialize() -> void:
 	for i in 100:
 		world.tick(0.05)
 	_check(p.cell.y > 36, "Mit dem Lastenaufzug nach oben")
+
+	# D30: Über den Bergpfad am Schmiedeviertel auf den Glutgrat (Wildes Land, Stufe 15–20)
+	var pfad := -1
+	for i in world.places.size():
+		if world.places[i].map == "glutoase" and world.places[i].art == "bergpfad":
+			pfad = i
+	world.change_map(p, "glutoase", Vector2i(41, 25))
+	world.apply_command("a", {type = "use", target = "ort:%d" % pfad})
+	for i in 100:
+		world.tick(0.05)
+	_check(p.map == "glutgrat" and world.get_map("glutgrat").title == "Glutgrat", "Über den Bergpfad auf den Glutgrat")
+	var grat: WorldMap = world.get_map("glutgrat")
+	var grat_teile := {}
+	for o: Dictionary in grat.baukasten.objekte:
+		grat_teile[o.teil] = true
+	for teil: String in ["go_erkaltete_lava", "go_lavarinne", "go_felsgrat", "go_heisse_quelle", "go_obsidian", "go_kraterrand"]:
+		_check(grat_teile.has(teil), "Auf dem Glutgrat steht %s" % teil)
+	_check(grat.astar.get_point_path(Vector2i(20, 33), Vector2i(20, 6)).size() > 0, "Der Pfad führt hinauf bis zum Kraterrand")
+	var grat_monster := {}
+	for w: Dictionary in GameData.wild_monsters():
+		if w.karte == "glutgrat":
+			for id: String in w.gegner:
+				grat_monster[id] = true
+			_check(int(w.stufe) >= 15 and int(w.stufe) <= 20, "Glutgrat Stufe 15–20 (%d)" % int(w.stufe))
+	for id: String in ["schlackenbock", "glutsalamander", "rauchgeier", "geysirkrabbe", "glutfledermaus", "obsidiangolem", "gewitterwyvern"]:
+		_check(grat_monster.has(id) and Sandbox.ENEMIES[id].get("regelblatt", false) and GameData.get_file("kartenspiel").karten.has(id), "%s lebt auf dem Glutgrat" % id)
+	_check(Sandbox.ENEMIES.gewitterwyvern.has("selten"), "Die Gewitterwyvern ist selten")
+	world.change_map(p, "glutgrat", Vector2i(20, 34))
+	world.apply_command("a", {type = "move", cell = Vector2i(20, 35)})
+	for i in 300:
+		world.tick(0.05)
+	_check(p.map == "glutoase", "Vom Glutgrat zurück in die Stadt")
 	Tageszeit.feste_stunde = -1.0
 	print("Aschensteppe: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)

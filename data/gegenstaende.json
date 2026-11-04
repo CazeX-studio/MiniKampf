@@ -90,5 +90,12 @@
 	"geisterstaub": {"bild": {"form": "splitter", "farbe": "e8e0d0"}, "name": "Geisterstaub", "beschreibung": "Beute vom Staubgeist (nachts). Rieselt durch die Finger.", "preis": 4, "material": true},
 	"schakalfell": {"bild": {"form": "fell", "farbe": "4a3a6a"}, "name": "Schakalfell", "beschreibung": "Beute vom Mondschakal (nachts). Mit Mondsichel.", "preis": 4, "material": true},
 	"stachelflitzer_bluete": {"bild": {"form": "kraut", "farbe": "ff90c0"}, "name": "Stachelflitzer-Blüte", "beschreibung": "Seltene Beute vom Stachelflitzer. Duftet nach Abenteuer.", "preis": 15, "material": true},
-	"miras_notenblatt": {"bild": {"form": "tafel", "farbe": "e8d8b0"}, "name": "Miras Notenblatt", "beschreibung": "Fünf Töne, die Mira im Fieber summt: Glut, Blatt, Nebel, Funke, Stern. Dahinter eine Pause, als würde einer fehlen.", "preis": 0}
+	"miras_notenblatt": {"bild": {"form": "tafel", "farbe": "e8d8b0"}, "name": "Miras Notenblatt", "beschreibung": "Fünf Töne, die Mira im Fieber summt: Glut, Blatt, Nebel, Funke, Stern. Dahinter eine Pause, als würde einer fehlen.", "preis": 0},
+	"lavahorn": {"bild": {"form": "splitter", "farbe": "8a3a2a"}, "name": "Lavahorn", "beschreibung": "Beute vom Schlackenbock. Schwer und noch warm.", "preis": 4, "material": true},
+	"salamanderhaut": {"bild": {"form": "leder", "farbe": "e06a3a"}, "name": "Salamanderhaut", "beschreibung": "Beute vom Glutsalamander. Feuerfest.", "preis": 4, "material": true},
+	"russfeder": {"bild": {"form": "feder", "farbe": "3a3a3a"}, "name": "Rußfeder", "beschreibung": "Beute vom Rauchgeier. Riecht nach Esse.", "preis": 4, "material": true},
+	"quellstein": {"bild": {"form": "stein", "farbe": "8ac8d0"}, "name": "Quellstein", "beschreibung": "Beute von der Geysirkrabbe. Immer feucht.", "preis": 4, "material": true},
+	"glutfluegel": {"bild": {"form": "feder", "farbe": "ff7a3d"}, "name": "Glutflügel", "beschreibung": "Beute von der Glutfledermaus (nachts). Glimmt an den Rändern.", "preis": 5, "material": true},
+	"obsidian": {"bild": {"form": "splitter", "farbe": "2a2a3a"}, "name": "Obsidian", "beschreibung": "Beute vom Obsidiangolem (nachts). Schwarzes Glas, scharf wie eine Klinge.", "preis": 5, "material": true},
+	"wyvernschuppe": {"bild": {"form": "splitter", "farbe": "ffe14d"}, "name": "Wyvernschuppe", "beschreibung": "Seltene Beute vom Gewitterwyvern. Knistert vor Blitzen.", "preis": 15, "material": true}
 }

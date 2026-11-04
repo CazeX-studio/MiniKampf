@@ -1,0 +1,1820 @@
+{
+	"boden": [
+		"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiiiiiiiiiiiieiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiiiiiiiiiiiieiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiiiiiieeeeeeeiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiiiiiieiiiiiiiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiiiiiieiiiiiiiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiiiiiieiiiiiiiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiiiiiieiiiiiiiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiiiiiieeeeeeeeeeeeeeeiiiiiiiiiii",
+		"iiiiiiiiiiiiiiiiiiiiiiiiiiiieiiiiiiiiiii",
+		"iiiiiiiiiiiiiiiiiiiiiiiiiiiieiiiiiiiiiii",
+		"iiiiiiiiiiiiiiiiiiiiiiiiiiiieiiiiiiiiiii",
+		"iiiiiiiiiiiiiiiiiiiiiiiiiiiieiiiiiiiiiii",
+		"iiiiiiiiiiiiiiiiiiiiiiiiiiiieiiiiiiiiiii",
+		"iiiiiiiiiiiiiiiiiiiiiiiiiiiieiiiiiiiiiii",
+		"iiiiiiiiiiiiiiiiiiiiiiiiiiiieiiiiiiiiiii",
+		"iiiiiiiiiiiiiiiiiiiiiiiiiiiieiiiiiiiiiii",
+		"iiiiiiiiiiiiiiiiiiiiiiiiiiiieiiiiiiiiiii",
+		"iiiiiiiiiieeeeeeeeeeeeeeeeeeeiiiiiiiiiii",
+		"iiiiiiiiiieiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiieiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiieiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiieiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiieiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiieiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiieeeeeeeeeeeiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiiiiiiiiiiiieiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiiiiiiiiiiiieiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiiiiiiiiiiiieiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiiiiiiiiiiiieiiiiiiiiiiiiiiiiiii",
+		"iiiiiiiiiiiiiiiiiiiieiiiiiiiiiiiiiiiiiii"
+	],
+	"objekte": [
+		{
+			"teil": "go_kraterrand",
+			"feld": [
+				9,
+				2
+			]
+		},
+		{
+			"teil": "go_kraterrand",
+			"feld": [
+				26,
+				2
+			]
+		},
+		{
+			"teil": "go_kraterrand",
+			"feld": [
+				15,
+				1
+			]
+		},
+		{
+			"teil": "go_kraterrand",
+			"feld": [
+				21,
+				1
+			]
+		},
+		{
+			"teil": "go_lavarinne",
+			"feld": [
+				3,
+				26
+			]
+		},
+		{
+			"teil": "go_lavarinne",
+			"feld": [
+				14,
+				27
+			]
+		},
+		{
+			"teil": "go_lavarinne",
+			"feld": [
+				31,
+				25
+			]
+		},
+		{
+			"teil": "go_lavarinne",
+			"feld": [
+				3,
+				15
+			]
+		},
+		{
+			"teil": "go_lavarinne",
+			"feld": [
+				33,
+				16
+			]
+		},
+		{
+			"teil": "go_lavarinne",
+			"feld": [
+				18,
+				10
+			]
+		},
+		{
+			"teil": "go_felsgrat",
+			"feld": [
+				23,
+				32
+			]
+		},
+		{
+			"teil": "go_felsgrat",
+			"feld": [
+				32,
+				33
+			]
+		},
+		{
+			"teil": "go_felsgrat",
+			"feld": [
+				2,
+				33
+			]
+		},
+		{
+			"teil": "go_felsgrat",
+			"feld": [
+				17,
+				19
+			]
+		},
+		{
+			"teil": "go_felsgrat",
+			"feld": [
+				32,
+				5
+			]
+		},
+		{
+			"teil": "go_felsgrat",
+			"feld": [
+				3,
+				4
+			]
+		},
+		{
+			"teil": "go_heisse_quelle",
+			"feld": [
+				14,
+				32
+			]
+		},
+		{
+			"teil": "go_heisse_quelle",
+			"feld": [
+				34,
+				12
+			]
+		},
+		{
+			"teil": "go_heisse_quelle",
+			"feld": [
+				4,
+				11
+			]
+		},
+		{
+			"teil": "go_heisse_quelle",
+			"feld": [
+				23,
+				9
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				24,
+				27
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				5,
+				21
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				35,
+				22
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				18,
+				4
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				31,
+				15
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				1,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				2,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				3,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				4,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				5,
+				0
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				6,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				7,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				8,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				9,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				10,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				11,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				12,
+				0
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				13,
+				0
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				14,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				15,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				16,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				17,
+				0
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				18,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				19,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				20,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				21,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				22,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				23,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				24,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				25,
+				0
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				26,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				27,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				28,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				29,
+				0
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				30,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				31,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				32,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				33,
+				0
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				34,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				35,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				36,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				37,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				38,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				0
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				1
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				5,
+				1
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				6,
+				1
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				8,
+				1
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				11,
+				1
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				12,
+				1
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				26,
+				1
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				27,
+				1
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				29,
+				1
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				33,
+				1
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				34,
+				1
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				35,
+				1
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				36,
+				1
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				37,
+				1
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				38,
+				1
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				1
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				2
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				1,
+				2
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				38,
+				2
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				2
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				3
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				3
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				4
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				22,
+				4
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				25,
+				4
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				28,
+				4
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				4
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				5
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				15,
+				5
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				30,
+				5
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				5
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				0,
+				6
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				1,
+				6
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				29,
+				6
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				31,
+				6
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				6
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				7
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				19,
+				7
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				25,
+				7
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				28,
+				7
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				38,
+				7
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				39,
+				7
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				8
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				3,
+				8
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				26,
+				8
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				8
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				9
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				38,
+				9
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				9
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				10
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				22,
+				10
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				38,
+				10
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				10
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				11
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				1,
+				11
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				19,
+				11
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				31,
+				11
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				34,
+				11
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				37,
+				11
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				11
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				12
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				11,
+				12
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				36,
+				12
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				39,
+				12
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				13
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				38,
+				13
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				13
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				14
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				4,
+				14
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				18,
+				14
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				31,
+				14
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				32,
+				14
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				38,
+				14
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				14
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				15
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				26,
+				15
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				38,
+				15
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				16
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				1,
+				16
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				0,
+				17
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				1,
+				17
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				33,
+				17
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				17
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				0,
+				18
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				1,
+				18
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				38,
+				18
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				18
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				0,
+				19
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				5,
+				19
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				19
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				0,
+				20
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				1,
+				20
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				2,
+				20
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				14,
+				20
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				16,
+				20
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				20
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				21
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				23,
+				21
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				38,
+				21
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				21
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				0,
+				22
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				14,
+				22
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				26,
+				22
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				38,
+				22
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				22
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				23
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				1,
+				23
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				30,
+				23
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				32,
+				23
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				23
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				24
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				18,
+				24
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				38,
+				24
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				24
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				25
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				38,
+				25
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				25
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				26
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				1,
+				26
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				11,
+				26
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				22,
+				26
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				26,
+				26
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				38,
+				26
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				26
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				27
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				38,
+				27
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				27
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				28
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				1,
+				28
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				2,
+				28
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				4,
+				28
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				5,
+				28
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				12,
+				28
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				38,
+				28
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				39,
+				28
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				0,
+				29
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				1,
+				29
+			]
+		},
+		{
+			"teil": "go_erkaltete_lava",
+			"feld": [
+				2,
+				29
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				29
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				30
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				1,
+				30
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				38,
+				30
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				30
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				31
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				36,
+				31
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				31
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				32
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				8,
+				32
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				32
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				33
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				38,
+				33
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				33
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				34
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				27,
+				34
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				38,
+				34
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				39,
+				34
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				0,
+				35
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				1,
+				35
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				2,
+				35
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				3,
+				35
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				4,
+				35
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				5,
+				35
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				6,
+				35
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				7,
+				35
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				8,
+				35
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				9,
+				35
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				10,
+				35
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				11,
+				35
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				12,
+				35
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				13,
+				35
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				14,
+				35
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				15,
+				35
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				16,
+				35
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				24,
+				35
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				25,
+				35
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				26,
+				35
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				27,
+				35
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				28,
+				35
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				29,
+				35
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				30,
+				35
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				31,
+				35
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				32,
+				35
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				33,
+				35
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				34,
+				35
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				35,
+				35
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				36,
+				35
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				37,
+				35
+			]
+		},
+		{
+			"teil": "go_obsidian",
+			"feld": [
+				38,
+				35
+			]
+		},
+		{
+			"teil": "go_trockenbusch",
+			"feld": [
+				39,
+				35
+			]
+		}
+	]
+}

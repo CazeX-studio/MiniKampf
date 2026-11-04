@@ -2358,7 +2358,16 @@
 					42,
 					25
 				],
-				"dialog": "bergpfad_glutgrat"
+				"meldung": "Du steigst den Bergpfad hinauf auf den Glutgrat.",
+				"aktionen": [
+					{
+						"reisen": "glutgrat",
+						"feld": [
+							20,
+							33
+						]
+					}
+				]
 			},
 			{
 				"art": "schmiede_eingang",
@@ -2616,5 +2625,214 @@
 				}
 			}
 		}
+	},
+	"glutgrat": {
+		"name": "Glutgrat",
+		"musik": "wald",
+		"grund": "wiese",
+		"licht": "ffd8c0",
+		"start": [
+			20,
+			34
+		],
+		"raster": [
+			"ssssssssssssssssssssssssssssssssssssssss",
+			"s....ss.s..ss...sss..ss..sss.s...sssssss",
+			"ss....................................ss",
+			"s......................................s",
+			"s......................................s",
+			"s..............s.......................s",
+			"ss..................=........s.s.......s",
+			"s..................s=.......s.........ss",
+			"s..s..........=======.....s............s",
+			"s.............=.......................ss",
+			"s.............=...s...s...............ss",
+			"ss............=................s..s..s.s",
+			"s..........s..=.....................s..s",
+			"s.............===============.........ss",
+			"s...s.............s.........=.........ss",
+			"s.........................s.=..........s",
+			"ss..........................=..........s",
+			"ss..........................=.....s....s",
+			"ss..........................=.........ss",
+			"s...........................=..........s",
+			"ss............s.s.s.........=..........s",
+			"s......................s....=.........ss",
+			"s.............s.............=.........ss",
+			"s.........===================.s.s......s",
+			"s.........=.......s...................ss",
+			"s.........=...........................ss",
+			"ss........=...............s...........ss",
+			"s.........=...........................ss",
+			"sss.s.....=...........................ss",
+			"ss....s...=............................s",
+			"ss........===========.................ss",
+			"s...................=...............s..s",
+			"s.......s...........=..................s",
+			"s...................=...s.............ss",
+			"s...................=......s..........ss",
+			"sssssssssssssssss...=...ssssssssssssssss"
+		],
+		"ausgaenge": [
+			{
+				"bereich": [
+					17,
+					35,
+					7,
+					1
+				],
+				"karte": "glutoase",
+				"feld": [
+					41,
+					25
+				]
+			}
+		],
+		"kampf_hintergrund": "wiese",
+		"monster": [
+			{
+				"feld": [
+					8,
+					28
+				],
+				"gegner": [
+					"glutsalamander"
+				],
+				"stufe": 15
+			},
+			{
+				"feld": [
+					30,
+					29
+				],
+				"gegner": [
+					"schlackenbock"
+				],
+				"stufe": 16
+			},
+			{
+				"feld": [
+					33,
+					20
+				],
+				"gegner": [
+					"rauchgeier"
+				],
+				"stufe": 16
+			},
+			{
+				"feld": [
+					7,
+					18
+				],
+				"gegner": [
+					"geysirkrabbe",
+					"glutsalamander"
+				],
+				"stufe": 17
+			},
+			{
+				"feld": [
+					22,
+					16
+				],
+				"gegner": [
+					"schlackenbock",
+					"rauchgeier"
+				],
+				"stufe": 18
+			},
+			{
+				"feld": [
+					9,
+					9
+				],
+				"gegner": [
+					"glutsalamander",
+					"geysirkrabbe",
+					"rauchgeier"
+				],
+				"stufe": 19
+			},
+			{
+				"feld": [
+					30,
+					9
+				],
+				"gegner": [
+					"schlackenbock",
+					"schlackenbock"
+				],
+				"stufe": 20
+			},
+			{
+				"feld": [
+					30,
+					29
+				],
+				"gegner": [
+					"glutfledermaus"
+				],
+				"stufe": 17,
+				"zeit": "nacht"
+			},
+			{
+				"feld": [
+					7,
+					18
+				],
+				"gegner": [
+					"obsidiangolem"
+				],
+				"stufe": 18,
+				"zeit": "nacht"
+			},
+			{
+				"feld": [
+					22,
+					16
+				],
+				"gegner": [
+					"glutfledermaus",
+					"glutfledermaus"
+				],
+				"stufe": 19,
+				"zeit": "nacht"
+			},
+			{
+				"feld": [
+					9,
+					9
+				],
+				"gegner": [
+					"obsidiangolem",
+					"glutfledermaus"
+				],
+				"stufe": 20,
+				"zeit": "nacht"
+			},
+			{
+				"feld": [
+					20,
+					5
+				],
+				"gegner": [
+					"gewitterwyvern"
+				],
+				"stufe": 20
+			},
+			{
+				"feld": [
+					20,
+					5
+				],
+				"gegner": [
+					"gewitterwyvern"
+				],
+				"stufe": 20,
+				"zeit": "nacht"
+			}
+		],
+		"baukasten": "karte_glutgrat"
 	}
 }

@@ -7,6 +7,8 @@ data/karte_aschensteppe.json; es prüft wie tools/gruenwacht_karten.py, dass all
 Palmenrast (D23b): Wüste mit Palmen, Dünen und Wasserstellen, Heimat-Gebiet der Glutoase (Stufe 12–19), mit Xavinas
 Sternendüne; man erreicht sie durch das Osttor der Stadt.
 Glutoase (D24): die Terrassenstadt. Die Aschensteppe endet an ihrem Nordtor.
+Glutgrat (D30): Wildes Land der Glutoase (Stufe 15–20) über dem Bergpfad am Schmiedeviertel: erkaltete Lava, Lavarinnen,
+Felsgrate, heiße Quellen, Obsidian und oben der Kraterrand.
 Aufruf: python3 tools/glutoase_karten.py [karte …]   (ohne Angabe alle)
 """
 import json
@@ -247,7 +249,8 @@ def glutoase_orte():
 		{"art": "aufzug", "feld": [41, 17], "meldung": "Der Lastenaufzug rattert nach oben zu Hadraks Schmiede.", "aktionen": [{"reisen": "glutoase", "feld": [41, 40]}]},
 		{"art": "aufzug", "feld": [41, 39], "meldung": "Der Lastenaufzug rattert hinunter zur Oase.", "aktionen": [{"reisen": "glutoase", "feld": [41, 18 - 1]}]},
 		{"art": "tor", "feld": [3, 15], "dialog": "tor_duerrewald"},
-		{"art": "bergpfad", "feld": [42, 25], "dialog": "bergpfad_glutgrat"},
+		{"art": "bergpfad", "feld": [42, 25], "meldung": "Du steigst den Bergpfad hinauf auf den Glutgrat.",
+			"aktionen": [{"reisen": "glutgrat", "feld": [GGB // 2, GGH - 3]}]},
 		{"art": "schmiede_eingang", "feld": [22, 44], "dialog": "eingang_vulkanschmiede"},
 	]
 
@@ -362,7 +365,78 @@ def glutoase():
 	k.speichern(boden)
 
 
+GGB, GGH = 40, 36
+
+
+def glutgrat_monster():
+	M = lambda feld, gegner, stufe, **kw: dict({"feld": feld, "gegner": gegner, "stufe": stufe}, **kw)
+	return [
+		M([8, 28], ["glutsalamander"], 15), M([30, 29], ["schlackenbock"], 16), M([33, 20], ["rauchgeier"], 16),
+		M([7, 18], ["geysirkrabbe", "glutsalamander"], 17), M([22, 16], ["schlackenbock", "rauchgeier"], 18),
+		M([9, 9], ["glutsalamander", "geysirkrabbe", "rauchgeier"], 19), M([30, 9], ["schlackenbock", "schlackenbock"], 20),
+		M([30, 29], ["glutfledermaus"], 17, zeit="nacht"), M([7, 18], ["obsidiangolem"], 18, zeit="nacht"),
+		M([22, 16], ["glutfledermaus", "glutfledermaus"], 19, zeit="nacht"), M([9, 9], ["obsidiangolem", "glutfledermaus"], 20, zeit="nacht"),
+		# Selten (Brocken): die Gewitterwyvern kreist oben am Kraterrand, Tag und Nacht
+		M([20, 5], ["gewitterwyvern"], 20), M([20, 5], ["gewitterwyvern"], 20, zeit="nacht"),
+	]
+
+
+def glutgrat():
+	"""Glutgrat (D30, design.md „Glutoase im Detail“): freier Bergpfad vom Schmiedeviertel, man kann hier frei leveln."""
+	r = random.Random(34)
+	g = [["."] * GGB for _ in range(GGH)]
+	for y in range(GGH):
+		for x in range(GGB):
+			if x in (0, GGB - 1) or y in (0, GGH - 1) or ((x in (1, GGB - 2) or y == 1) and r.random() < 0.5) or r.random() < 0.035:
+				g[y][x] = "s"
+	# Unten der Einstieg vom Bergpfad
+	for x in range(GGB // 2 - 3, GGB // 2 + 4):
+		g[GGH - 1][x] = "."
+	# Serpentinen-Pfad von unten bis zum Kraterrand
+	pfad = [(20, GGH - 1), (20, 30), (10, 30), (10, 23), (28, 23), (28, 13), (14, 13), (14, 8), (20, 8), (20, 6)]
+	for (x0, y0), (x1, y1) in zip(pfad, pfad[1:]):
+		for y in range(min(y0, y1), max(y0, y1) + 1):
+			for x in range(min(x0, x1), max(x0, x1) + 1):
+				g[y][x] = "="
+	for m in glutgrat_monster():
+		x, y = m["feld"]
+		for dx in (-1, 0, 1):
+			for dy in (-1, 0, 1):
+				if g[y + dy][x + dx] == "s":
+					g[y + dy][x + dx] = "."
+	karten = json.loads((gk.DATEN / "karten.json").read_text(encoding="utf-8"))
+	karten["glutgrat"] = {
+		"name": "Glutgrat", "musik": "wald", "grund": "wiese", "licht": "ffd8c0", "start": [GGB // 2, GGH - 2],
+		"raster": ["".join(z) for z in g],
+		"ausgaenge": [{"bereich": [GGB // 2 - 3, GGH - 1, 7, 1], "karte": "glutoase", "feld": [41, 25]}],
+		"kampf_hintergrund": "wiese", "monster": glutgrat_monster(), "baukasten": "karte_glutgrat",
+	}
+	(gk.DATEN / "karten.json").write_text(json.dumps(karten, ensure_ascii=False, indent="\t") + "\n", encoding="utf-8")
+	gk.KARTEN.clear()
+	gk.KARTEN.update(karten)
+	k = gk.Karte("glutgrat")
+	# Boden: dunkler Stein, der Pfad aus Erde
+	boden = ["".join("e" if g[y][x] == "=" else "i" for x in range(GGB)) for y in range(GGH)]
+	# Oben der Kraterrand, quer über den Berg Lavarinnen und Felsgrate, heiße Quellen und Obsidian
+	for teil, x, y in [("go_kraterrand", 9, 2), ("go_kraterrand", 26, 2), ("go_kraterrand", 15, 1), ("go_kraterrand", 21, 1),
+			("go_lavarinne", 3, 26), ("go_lavarinne", 14, 27), ("go_lavarinne", 31, 25), ("go_lavarinne", 3, 15), ("go_lavarinne", 33, 16),
+			("go_lavarinne", 18, 10), ("go_felsgrat", 23, 32), ("go_felsgrat", 32, 33), ("go_felsgrat", 2, 33), ("go_felsgrat", 17, 19),
+			("go_felsgrat", 32, 5), ("go_felsgrat", 3, 4), ("go_heisse_quelle", 14, 32), ("go_heisse_quelle", 34, 12), ("go_heisse_quelle", 4, 11),
+			("go_heisse_quelle", 23, 9), ("go_erkaltete_lava", 24, 27), ("go_erkaltete_lava", 5, 21), ("go_erkaltete_lava", 35, 22),
+			("go_erkaltete_lava", 18, 4), ("go_erkaltete_lava", 31, 15)]:
+		k.setzen(teil, x, y, muss=False)
+	for y in range(GGH):
+		for x in range(GGB):
+			z = g[y][x]
+			if z == "s":
+				k.setzen(r.choice(["go_obsidian", "go_obsidian", "go_obsidian", "go_trockenbusch"]), x, y, muss=False)
+			elif z == "." and r.random() < 0.02:
+				k.setzen(r.choice(["go_obsidian", "go_erkaltete_lava"]), x, y, muss=False)
+	k.erreichbar()
+	k.speichern(boden)
+
+
 if __name__ == "__main__":
-	alle = {"aschensteppe": aschensteppe, "palmenrast": palmenrast, "glutoase": glutoase}
+	alle = {"aschensteppe": aschensteppe, "palmenrast": palmenrast, "glutoase": glutoase, "glutgrat": glutgrat}
 	for name in sys.argv[1:] or list(alle):
 		alle[name]()

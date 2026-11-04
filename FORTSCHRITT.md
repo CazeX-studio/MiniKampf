@@ -11,7 +11,14 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** D30 (Glutgrat über den Bergpfad). D25b (Rüstungsschmied und Sternensängerin) wartet auf deine Bilder. Marcos Hinweis 04.11.: Einige stärkere Monster dürfen bleiben (Reiz), beim Balancing ansehen.
+- **Nächster Schritt:** D32 (Vulkanschmiede Teil 1). D25b (Rüstungsschmied und Sternensängerin) wartet auf deine Bilder. Marcos Hinweis 04.11.: Einige stärkere Monster dürfen bleiben (Reiz), beim Balancing ansehen.
+
+- **Neu (04.11.): D30 Glutgrat über den Bergpfad** (2.6, mit D31): Der Bergpfad am Ostrand des Schmiedeviertels führt jetzt hinauf auf den Glutgrat, das Wilde Land der Glutoase (Stufe 15–20, frei leveln). Ein Serpentinenpfad zieht sich zwischen erkalteter Lava, glühenden Lavarinnen, Felsgraten, heißen Quellen und Obsidian bis zum Kraterrand. Tags leben dort Schlackenbock, Glutsalamander, Rauchgeier und Geysirkrabbe, nachts Glutfledermaus und Obsidiangolem; oben am Krater kreist selten die Gewitterwyvern (Brocken). Alle sieben haben Beute, Materialien und Sammelkarten (Seite Glutoase). Damit stehen die Monster nach Regelblatt in allen drei Gebieten der Glutoase (D31 erledigt). Unten am Pfad geht es zurück in die Stadt.
+  - **So testest du es:**
+    1. Im Schmiedeviertel ganz nach Osten zum Schild „Bergpfad zum Glutgrat“ und ihn benutzen.
+    2. Den Pfad hinauf bis zum Kraterrand laufen und Monster ansehen (Stufe 15–20).
+    3. Nachts (Uhr +3 h) wiederkommen: andere Monster.
+    4. Unten am Pfad zurück in die Stadt.
 
 - **Neu (04.11.): D29 Geschichte der Glutoase, Teil 2** (2.5, design.md): **Der Tanz mit der Pause:** Nach Miras Lied lädt Samira zum Fest ein. Nachts tanzt man auf dem Tanzplatz ihre fünf Schritte (warm nach vorn, leicht zur Seite, langsam drehen, klatschen, Arme zu den Sternen; ein falscher Schritt, und Samira fängt noch mal an). Dann die Pause: Wer weitertanzt, wird ermahnt; wer stillhält und lauscht, hört für einen Herzschlag den sechsten Ton. Da taucht Kael auf und provoziert Hadrak. **Rivalenkampf:** Kael wartet oben in Hadraks Schmiede, mit deinen Kampfbildern (Klingenschritt, Ausfallschritt auf die hintere Reihe, Klingenwirbel auf alle). Danach dankt Hadrak in zwei Worten. Wer Brakkus bei den kochenden Brunnen geholfen hat (Hadraks Vertrauen), hört nachts vor dem Gasthaus den betrunkenen Hadrak: „Wir waren sechs. Nicht fünf. … Wir sind gerannt.“ Texte sind Platzhalter. Kael ist allein im Schnitt in 3 von 4 Kämpfen zu schlagen, für den Rüstungsschmied ist er schwer (beim Balancing ansehen).
   - **So testest du es:**
