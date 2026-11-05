@@ -11,7 +11,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** Endspurt E3d (Kampf-Hintergründe für jedes Gebiet), dann E3h (Städte umbauen, je Stadt eine Sitzung).
+- **Nächster Schritt:** Endspurt E3h (Städte umbauen, je Stadt eine Sitzung), dann E4 (Balancing-Runde).
 
 - **Neu (04.11.): D25b Körper von Rüstungsschmied und Sternensängerin** (2.11): Deine Blätter sind eingebaut: Rüstungsschmied (m) und Rüstungsschmiedin (w) in Rüstung mit Lederschürze und rotem Halstuch, die Sternensängerin (w) im hellen Gewand mit dunkelblauem Schal. Je mit Stehen, Laufen, Abwehr, Treffer, Angriff, Fallen, Sieg und Fähigkeit im Kampf, in der Welt schräg von vorne und hinten. Wer die Klasse gelernt hat, trägt sie mit seinem eigenen Kopf, auch in der Probestunde. Ausgebessert: die gelben Funken im Treffer-Bild des Schmieds und das rote Halstuch in einem Siegesbild der Sängerin. Noch nicht drin: ein männlicher Sternensänger (der kämpft weiter in der Klassenfigur).
   - **So testest du es:**
@@ -29,6 +29,17 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     1. Mit einem eigenen Kopf (z. B. m1) und mit Tessa oder Gorm herumlaufen: Köpfe und Körper schauen gleich.
     2. Von Kreuzweg auf den Weg nach Grünwacht gehen: Der Ortsname erscheint groß.
     3. Als Novize laufen: flüssigere Schritte, das Schwert in der Hand.
+
+- **Neu (05.11.): E3d Kampf-Hintergründe für jedes Gebiet:** Elf neue Hintergründe, wie bisher vom Spiel gezeichnet:
+  - **Kreuzwegfelder** (Ye's Lektionen, Gruppenkampf, Probestunden): Felder am Hang, Windmühle, Zaun, Vogelscheuche, Kreuzweg in der Ferne.
+  - **Grünwacht:** Weg nach Grünwacht jetzt ein lichter Waldweg (der Waldboden bleibt dichter Wald), **Tiefwurzel** mit Wurzelbögen, Nebel und lila Splittern, **Wipfelheim** (Fenns Prüfung, Kobalts Kämpfe) auf einer Holzplattform mit Hängebrücke und Laternen.
+  - **Glutoase:** **Aschensteppe** im Norden Grasland mit Tafelbergen, im Süden Dünen mit Ruine und Kakteen; **Palmenrast** mit Oasen-Teich und Palmen (auch die dampfende Quelle); **Sternendüne** für Xavinas Prüfung; **Stadt Glutoase** mit Terrassen und Sonnensegeln (Samira); **Hadraks Schmiede** mit Esse und Amboss (Brakkus, Kael); **Glutgrat** mit rauchendem Vulkan und Glutrissen.
+  - **Nachts** (nach der Uhr) sind Kämpfe unter freiem Himmel jetzt auch dunkel, mit Mond und Sternen, die Figuren bläulich. Höhlen, Schmieden und die Vulkanschmiede bleiben wie sie sind.
+  - **So testest du es:**
+    1. Auf dem Weg nach Grünwacht, in der Tiefwurzel, in der Aschensteppe (oben und ganz im Süden), in der Palmenrast und auf dem Glutgrat je ein Monster angreifen: Jeder Ort hat sein eigenes Bild.
+    2. Ye's Lektion oder eine Probestunde: Kampf auf den Feldern vor Kreuzweg.
+    3. Kobalt in Wipfelheim oder Kael in Hadraks Schmiede herausfordern.
+    4. Mit dem Testknopf in der Tasche die Uhr auf Nacht stellen und ein Monster draußen angreifen: Der Kampf ist dunkel, mit Mond.
     4. In Kreuzweg ein Silberkraut ansehen, als Klingentänzerin Klingen sammeln.
 
 - **Neu (05.11.): E3a und E3i Wegweiser und Abschied ohne Versetzen:** Nach dem Abschied von Ye wird man nicht mehr versetzt. Ye sagt: „Geh zur Torwache, sie kennt den Weg in deine Region.“ Am Westtor (Grünwacht) und am Südtor (Glutoase) steht jetzt je eine Torwache; der Wegweiser führt zu ihr. Sie nennt den Weg, „Losgehen.“ zeigt das Ende von Akt 1 (bei Glutoase-Klassen jetzt mit Südstraße und „Weiter in die Glutoase“), danach läuft man selbst durchs Tor. Auf dem Weg zeigt der Wegweiser weiter bis Wipfelheim bzw. bis zur Glutoase und zum Oberhaupt, danach zum Lehrmeister.

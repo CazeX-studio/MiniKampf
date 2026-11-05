@@ -42,9 +42,11 @@ var _floor_pick: Array[String] = []
 var _wall_pick: Array[String] = []
 var _time := 0.0
 var _lights: Node2D
-## "gewoelbe", "wiese" oder "wiese_nacht" (vor dem Einhängen setzen)
+## Stil des Ortes (vor dem Einhängen setzen), weitere Orte in BackdropOrte
 var style := "gewoelbe"  # oder "wiese", "wiese_nacht", "marktplatz_nacht", "wald", "pilzhoehle", "vulkanschmiede"
 var _stars: Array[Vector2] = []
+## Nacht nach der Uhr: 0 = Tag, 1 = tiefe Nacht (nur Orte unter freiem Himmel, siehe nacht_fuer)
+var nacht := 0.0
 
 
 func _ready() -> void:
@@ -69,6 +71,8 @@ func _ready() -> void:
 		_stars.append(Vector2(rng.randf_range(0, 1280), rng.randf_range(0, 150)))
 
 	_lights = Node2D.new()
+	# Nachts verblasst das Sonnenlicht, Mond, Laternen und Glut bleiben (siehe BackdropOrte.mond)
+	_lights.modulate = Color(1, 1, 1, 1.0 - 0.6 * nacht)
 	_lights.material = Fx.add_material()
 	_lights.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	_lights.draw.connect(_draw_lights)
@@ -94,11 +98,25 @@ func _tile(name: String, col: int, y: float, tint := AMBIENT) -> void:
 
 
 ## Wie stark das Licht des Ortes die Figuren färbt (Höhle dunkel und lila, Nacht bläulich, Wiese am Tag hell).
-static func fighter_light(p_style: String) -> Color:
-	return FIGHTER_LIGHT.get(p_style, Color.WHITE)
+static func fighter_light(p_style: String, p_nacht := 0.0) -> Color:
+	var c: Color = FIGHTER_LIGHT.get(p_style, BackdropOrte.LICHT.get(p_style, Color.WHITE))
+	return c.lerp(c * Color(0.62, 0.68, 0.95), p_nacht)
+
+
+## Wie dunkel ein Kampf an diesem Ort gerade ist (nur unter freiem Himmel, nach der Uhr wie in der Welt).
+static func nacht_fuer(p_style: String) -> float:
+	return Tageszeit.dunkelheit() if p_style in BackdropOrte.DRAUSSEN else 0.0
 
 
 func _draw() -> void:
+	_draw_style()
+	BackdropOrte.nacht_schicht(self, style)
+
+
+func _draw_style() -> void:
+	if style in BackdropOrte.STILE:
+		BackdropOrte.zeichne(self, style)
+		return
 	if style == "vulkanschmiede":
 		_draw_forge()
 		return
@@ -167,6 +185,11 @@ func _draw_torch(base: Vector2, seed_value: int) -> void:
 
 ## Lichtflecken (werden addiert und hellen die Szene auf).
 func _draw_lights() -> void:
+	if nacht > 0.0 and style in BackdropOrte.DRAUSSEN:
+		BackdropOrte.mond(self)
+	if style in BackdropOrte.STILE:
+		BackdropOrte.licht(self, style)
+		return
 	if style == "vulkanschmiede":
 		_draw_forge_lights()
 		return
@@ -477,6 +500,7 @@ func _add_dust() -> void:
 	dust.scale_amount_max = 4.0
 	var ramp := Gradient.new()
 	var tone := Color(0.8, 0.65, 1.0) if style == "pilzhoehle" else Color(1.0, 0.55, 0.2) if style == "vulkanschmiede" else Color(1, 0.85, 0.6) if style == "gewoelbe" else (Color(0.8, 1.0, 0.5) if style in ["wiese_nacht", "wald"] else Color(1, 1, 0.85))
+	tone = BackdropOrte.STAUB.get(style, tone)
 	ramp.set_color(0, Color(tone, 0))
 	ramp.add_point(0.3, Color(tone, 0.45))
 	ramp.add_point(0.7, Color(tone, 0.35))

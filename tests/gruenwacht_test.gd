@@ -292,7 +292,7 @@ func _test_wild() -> void:
 	_check(BattleRequest.prepare("wild:0", 12, 0, "archer"), "Kampf gegen ein Monster lässt sich vorbereiten")
 	var hero: Dictionary = BattleRequest.setup.helden[0]
 	_check(hero.klasse == "archer" and is_equal_approx(float(hero.macht), BattleRequest.hero_power(12)), "Man kämpft als Bogenschütze mit Stärke nach Stufe")
-	_check(BattleRequest.setup.gegner_stufe == GameData.wild_monsters()[0].stufe and BattleRequest.setup.hintergrund == "wald", "Monster haben ihre Stufe, Hintergrund Wald")
+	_check(BattleRequest.setup.gegner_stufe == GameData.wild_monsters()[0].stufe and BattleRequest.setup.hintergrund == "waldweg", "Monster haben ihre Stufe, Hintergrund Waldweg")
 	BattleRequest.prepare("wild:0", 12, 0, "")
 	_check(BattleRequest.setup.helden[0].klasse == "novize", "Ohne Klasse kämpft man als Novize")
 	BattleRequest.prepare("probe:archer", 5, 0, "tamer")

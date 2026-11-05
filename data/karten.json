@@ -1,5 +1,5 @@
 {
-	"hinweis": "Karten außerhalb von Kreuzweg. Jede Karte ist ein Bild aus Zeichen (raster: eine Zeile pro Reihe, ein Zeichen pro Feld; links oben ist Feld [0, 0], x nach rechts, y nach unten). Was die Zeichen bedeuten, steht unter \"zeichen\". Häuser, Stände, NPCs, Orte und Schmuck wie in kreuzweg.json. ausgaenge: Wer in den Bereich [x, y, Breite, Höhe] läuft, kommt auf die Karte \"karte\" an das Feld \"feld\" (nur wenn \"wenn\" stimmt). Orte mit {\"reisen\": Karte, \"feld\": [x, y]} bringen einen beim Benutzen hin (Seilaufzug). monster: Monster in der Wildnis mit Feld, Gegnern (Kennungen aus scripts/kampf/sandbox.gd) und Stufe; kampf_hintergrund: Bild im Kampf.",
+	"hinweis": "Karten außerhalb von Kreuzweg. Jede Karte ist ein Bild aus Zeichen (raster: eine Zeile pro Reihe, ein Zeichen pro Feld; links oben ist Feld [0, 0], x nach rechts, y nach unten). Was die Zeichen bedeuten, steht unter \"zeichen\". Häuser, Stände, NPCs, Orte und Schmuck wie in kreuzweg.json. ausgaenge: Wer in den Bereich [x, y, Breite, Höhe] läuft, kommt auf die Karte \"karte\" an das Feld \"feld\" (nur wenn \"wenn\" stimmt). Orte mit {\"reisen\": Karte, \"feld\": [x, y]} bringen einen beim Benutzen hin (Seilaufzug). monster: Monster in der Wildnis mit Feld, Gegnern (Kennungen aus scripts/kampf/sandbox.gd) und Stufe; kampf_hintergrund: Bild im Kampf (ein Monster kann mit \"hintergrund\" ein eigenes haben, z. B. im Süden der Aschensteppe).",
 	"zeichen": {
 		"hinweis": "Was die Zeichen in den Karten bedeuten. boden: wiese, waldboden, weg, platz, gestruepp, planken, bruecke, laub. gesperrt: dort kann man nicht laufen. ding: was dort steht (baum, busch, blumen, pilze, stein, riesenbaum, stamm, zielscheibe, lagerfeuer, fackel).",
 		"~": {
@@ -150,7 +150,7 @@
 				]
 			}
 		],
-		"kampf_hintergrund": "wald",
+		"kampf_hintergrund": "waldweg",
 		"monster": [
 			{
 				"feld": [
@@ -1543,7 +1543,8 @@
 				"dialog": "volk_gw_gast_3"
 			}
 		},
-		"baukasten": "karte_wipfelheim"
+		"baukasten": "karte_wipfelheim",
+		"kampf_hintergrund": "wipfelheim"
 	},
 	"tiefwurzel": {
 		"name": "Tiefwurzel",
@@ -1601,7 +1602,7 @@
 				]
 			}
 		],
-		"kampf_hintergrund": "wald",
+		"kampf_hintergrund": "tiefwurzel",
 		"monster": [
 			{
 				"feld": [
@@ -1814,7 +1815,7 @@
 				]
 			}
 		],
-		"kampf_hintergrund": "wiese",
+		"kampf_hintergrund": "aschensteppe",
 		"sicher": [
 			6,
 			26,
@@ -1895,7 +1896,8 @@
 					"steppenhyaene",
 					"funkenechse"
 				],
-				"stufe": 11
+				"stufe": 11,
+				"hintergrund": "aschensteppe_sand"
 			},
 			{
 				"feld": [
@@ -1906,7 +1908,8 @@
 					"kaktusling",
 					"steppenhyaene"
 				],
-				"stufe": 12
+				"stufe": 12,
+				"hintergrund": "aschensteppe_sand"
 			},
 			{
 				"feld": [
@@ -1918,7 +1921,8 @@
 					"steppenroller",
 					"kaktusling"
 				],
-				"stufe": 12
+				"stufe": 12,
+				"hintergrund": "aschensteppe_sand"
 			},
 			{
 				"feld": [
@@ -1928,7 +1932,8 @@
 				"gegner": [
 					"sonnenloewe"
 				],
-				"stufe": 12
+				"stufe": 12,
+				"hintergrund": "aschensteppe_sand"
 			},
 			{
 				"feld": [
@@ -1962,7 +1967,8 @@
 					"schattenskarabaeus"
 				],
 				"stufe": 11,
-				"zeit": "nacht"
+				"zeit": "nacht",
+				"hintergrund": "aschensteppe_sand"
 			},
 			{
 				"feld": [
@@ -1974,7 +1980,8 @@
 					"aschefuchs"
 				],
 				"stufe": 12,
-				"zeit": "nacht"
+				"zeit": "nacht",
+				"hintergrund": "aschensteppe_sand"
 			}
 		],
 		"baukasten": "karte_aschensteppe"
@@ -2039,7 +2046,7 @@
 				]
 			}
 		],
-		"kampf_hintergrund": "wiese",
+		"kampf_hintergrund": "palmenrast",
 		"monster": [
 			{
 				"feld": [
@@ -2299,7 +2306,7 @@
 				]
 			}
 		],
-		"kampf_hintergrund": "wiese",
+		"kampf_hintergrund": "glutoase_stadt",
 		"orte": [
 			{
 				"art": "wegelaterne",
@@ -2703,7 +2710,7 @@
 				]
 			}
 		],
-		"kampf_hintergrund": "wiese",
+		"kampf_hintergrund": "glutgrat",
 		"monster": [
 			{
 				"feld": [

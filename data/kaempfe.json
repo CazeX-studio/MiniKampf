@@ -53,7 +53,8 @@
 				}
 			}
 		],
-		"merken": "lektion_schildstoss"
+		"merken": "lektion_schildstoss",
+		"hintergrund": "kreuzwegfelder"
 	},
 	"lektion_doppelschlag": {
 		"name": "Ye's Lektion: Doppelschlag",
@@ -78,7 +79,8 @@
 		"merken": "lektion_doppelschlag",
 		"hinweise": {
 			"erster_zug": "Neu: „Doppelschlag“, zwei schnelle Hiebe. Er kostet Mana (blaue Leiste), und Mana kommt nicht von selbst zurück: Ein normaler Hieb gibt etwas, eine perfekte Parade mehr, Abwarten auch etwas.\nYe: „Mana fällt nicht vom Himmel. Kämpf gut, dann kommt es zurück.“"
-		}
+		},
+		"hintergrund": "kreuzwegfelder"
 	},
 	"lektion_erste_hilfe": {
 		"name": "Ye's Lektion: Erste Hilfe",
@@ -104,7 +106,8 @@
 		"merken": "lektion_erste_hilfe",
 		"hinweise": {
 			"erster_zug": "Neu: „Erste Hilfe“ heilt dich oder einen Verbündeten und kostet Mana. Behalte dein Leben (grüne Leiste) im Blick. Tränke hängen an deinem Gürtel: Der erste im Zug ist gratis, du bist danach noch einmal dran.\nYe: „Wer liegt, hilft keinem.“"
-		}
+		},
+		"hintergrund": "kreuzwegfelder"
 	},
 	"lektion_deckung": {
 		"name": "Ye's Lektion: Deckung geben",
@@ -142,7 +145,8 @@
 		"merken": "lektion_deckung",
 		"hinweise": {
 			"erster_zug": "Neu: „Deckung geben“. Du springst in die vordere Reihe und fängst bis zu deinem nächsten Zug einen Treffer für Tessa oder Gorm ab.\nYe: „Deine Hände wissen es vor dir. Auch, wenn es um jemand anderen geht.“"
-		}
+		},
+		"hintergrund": "kreuzwegfelder"
 	},
 	"gruppenkampf": {
 		"name": "Erster Gruppenkampf",
@@ -179,7 +183,8 @@
 		"erfahrung": 100,
 		"hinweise": {
 			"erster_zug": "Tessa und Gorm sind auch Novizen und handeln selbst. Zusammen seid ihr stärker: Tessa und Gorm heilen mit „Erste Hilfe“. Nehmt euch zuerst die schwachen Monster vor."
-		}
+		},
+		"hintergrund": "kreuzwegfelder"
 	},
 	"probestunde": {
 		"hinweis": "Vorlage für alle Probestunden („probe:<klasse>“, z. B. probe:archer). Der Spieler spielt die Klasse (Ult zu 60 % voll), Tessa und Gorm helfen.",
@@ -205,7 +210,8 @@
 		"ult_start": 60,
 		"merken": "probestunde_gemacht",
 		"erfahrung": 40,
-		"hinweis_vorlage": "Probestunde: %s (Rolle: %s)\n%s\nReaktion: %s.\nUlt: %s. Sie ist schon zu 60 %% voll – lade sie mit der typischen Aktion deiner Klasse auf und probier sie aus! Tessa und Gorm (Novizen) helfen dir."
+		"hinweis_vorlage": "Probestunde: %s (Rolle: %s)\n%s\nReaktion: %s.\nUlt: %s. Sie ist schon zu 60 %% voll – lade sie mit der typischen Aktion deiner Klasse auf und probier sie aus! Tessa und Gorm (Novizen) helfen dir.",
+		"hintergrund": "kreuzwegfelder"
 	},
 	"sternenfall": {
 		"gruppe": true,
@@ -255,7 +261,7 @@
 		"hinweis": "Erstes und zweites Ziel als Lernkampf (Phasen wie die Grundausbildung). Das dritte Ziel (Silberhirsch) ist kein Kampf. Texte sind Platzhalter.",
 		"klasse": "archer",
 		"eigene_klasse": true,
-		"hintergrund": "wald",
+		"hintergrund": "wipfelheim",
 		"erfahrung": 400,
 		"merken": "fenn_ziele",
 		"phasen": [
@@ -305,7 +311,7 @@
 			]
 		],
 		"gegner_stufe": 12,
-		"hintergrund": "wald",
+		"hintergrund": "wipfelheim",
 		"erfahrung": 250,
 		"gegner_leben": 3.6,
 		"merken_immer": "kobalt_gekaempft",
@@ -325,7 +331,7 @@
 			]
 		],
 		"gegner_stufe": 12,
-		"hintergrund": "wald",
+		"hintergrund": "wipfelheim",
 		"erfahrung": 250,
 		"gegner_leben": 3.6,
 		"merken_immer": "kobalt_gekaempft",
@@ -345,7 +351,7 @@
 			]
 		],
 		"gegner_stufe": 12,
-		"hintergrund": "wald",
+		"hintergrund": "wipfelheim",
 		"erfahrung": 250,
 		"gegner_leben": 3.6,
 		"merken_immer": "kobalt_gekaempft",
@@ -448,7 +454,7 @@
 		],
 		"gegner_stufe": 19,
 		"gegner_leben": 5.0,
-		"hintergrund": "wald",
+		"hintergrund": "wipfelheim",
 		"erfahrung": 500,
 		"merken_immer": "kobalt_revanche_gekaempft",
 		"merken": "kobalt_revanche_sieg",
@@ -467,7 +473,7 @@
 		],
 		"gegner_stufe": 19,
 		"gegner_leben": 5.0,
-		"hintergrund": "wald",
+		"hintergrund": "wipfelheim",
 		"erfahrung": 500,
 		"merken_immer": "kobalt_revanche_gekaempft",
 		"merken": "kobalt_revanche_sieg",
@@ -486,7 +492,7 @@
 		],
 		"gegner_stufe": 19,
 		"gegner_leben": 5.0,
-		"hintergrund": "wald",
+		"hintergrund": "wipfelheim",
 		"erfahrung": 500,
 		"merken_immer": "kobalt_revanche_gekaempft",
 		"merken": "kobalt_revanche_sieg",
@@ -514,7 +520,7 @@
 		"hinweis": "Lernkampf des Rüstungsschmieds (D26). Texte sind Platzhalter.",
 		"klasse": "smith",
 		"eigene_klasse": true,
-		"hintergrund": "wiese",
+		"hintergrund": "glutoase_schmiede",
 		"erfahrung": 400,
 		"merken": "brakkus_geprueft",
 		"gegner_stufe": 11,
@@ -547,7 +553,7 @@
 		"hinweis": "Lernkampf der Klingentänzerin (D26, Prüfung: Schrittfolge im Takt). Texte sind Platzhalter.",
 		"klasse": "blade",
 		"eigene_klasse": true,
-		"hintergrund": "wiese",
+		"hintergrund": "glutoase_stadt",
 		"erfahrung": 400,
 		"merken": "samira_geprueft",
 		"gegner_stufe": 11,
@@ -581,7 +587,7 @@
 		"hinweis": "Lernkampf der Sternensängerin (D26). Die Lern-Szene ist immer Nacht (design.md). Texte sind Platzhalter.",
 		"klasse": "singer",
 		"eigene_klasse": true,
-		"hintergrund": "wiese_nacht",
+		"hintergrund": "sternenduene",
 		"erfahrung": 400,
 		"merken": "xavina_geprueft",
 		"gegner_stufe": 13,
@@ -620,7 +626,7 @@
 		],
 		"gegner_stufe": 13,
 		"eigene_klasse": true,
-		"hintergrund": "wiese",
+		"hintergrund": "palmenrast",
 		"erfahrung": 250,
 		"merken": "quelle_gekuehlt"
 	},
@@ -634,7 +640,7 @@
 		],
 		"gegner_stufe": 15,
 		"eigene_klasse": true,
-		"hintergrund": "gewoelbe",
+		"hintergrund": "glutoase_schmiede",
 		"erfahrung": 900,
 		"merken": "kael_besiegt_glutoase"
 	},

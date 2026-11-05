@@ -1440,14 +1440,16 @@ func _banner(text: String) -> void:
 func _build_ui() -> void:
 	theme = make_theme()
 
-	# Hintergrund: Gewölbe mit Fackeln und Lava-Brunnen, zum Rand hin abgedunkelt
+	# Hintergrund des Ortes (Backdrop, BackdropOrte), zum Rand hin abgedunkelt
 	var backdrop := Backdrop.new()
 	if BattleRequest.active():
 		backdrop.style = BattleRequest.setup.get("hintergrund", "gewoelbe")
 	elif Sandbox.ENCOUNTERS.get(Sandbox.encounter, {}).get("dungeon", "") == "pilzhoehle":
 		backdrop.style = "pilzhoehle"
+	# Unter freiem Himmel ist es nachts auch im Kampf dunkel
+	backdrop.nacht = Backdrop.nacht_fuer(backdrop.style)
 	# Die Figuren bekommen das Licht des Ortes ab
-	FighterView.light = Backdrop.fighter_light(backdrop.style)
+	FighterView.light = Backdrop.fighter_light(backdrop.style, backdrop.nacht)
 	add_child(backdrop)
 	_backdrop = backdrop
 	add_child(_vignette(0.85))

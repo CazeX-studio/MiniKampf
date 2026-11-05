@@ -71,7 +71,7 @@ static func wild_monsters() -> Array[Dictionary]:
 			continue
 		for d: Dictionary in maps[map_id].get("monster", []):
 			result.append({karte = map_id, feld = Vector2i(int(d.feld[0]), int(d.feld[1])), gegner = d.gegner,
-					stufe = int(d.get("stufe", 1)), hintergrund = maps[map_id].get("kampf_hintergrund", "wald"),
+					stufe = int(d.get("stufe", 1)), hintergrund = d.get("hintergrund", maps[map_id].get("kampf_hintergrund", "wald")),
 					zeit = str(d.get("zeit", "tag")),
 					dungeon = maps[map_id].get("dungeon", "")})
 	_cache["_wild"] = result

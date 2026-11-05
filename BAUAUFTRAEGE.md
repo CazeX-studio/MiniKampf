@@ -112,7 +112,7 @@ Wenig Tokens übrig: Arbeit in wenigen großen Blöcken statt vieler kleiner Run
   - **E3a:** Wegweiser nach dem Klassenwechsel (z. B. Klingentänzerin: man weiß nicht, wohin). Alle Aufträge nach der Klassenwahl bekommen Wegweiser. – Status: fertig (05.11.2026)
   - **E3b:** Kopfrichtung: Bei den Novizen und beim eigenen Charakter schaut der Kopf in eine andere Richtung als der Körper. Fehler suchen und beheben. – Status: fertig (05.11.2026)
   - **E3c:** Ortsnamen beim Betreten eines Gebiets groß und in einer schöneren Schrift einblenden, damit man merkt, wo man hingeht (freie Schrift, Quelle in CREDITS.md). – Status: fertig (05.11.2026)
-  - **E3d:** Kampf-Hintergründe: jedes Gebiet mindestens ein eigener (fehlen: Aschensteppe, Palmenrast, Glutgrat, Tiefwurzel, Kreuzwegfelder; Kämpfe in Städten), gern mehrere je nach Ort im Gebiet. – Status: offen (mittel)
+  - **E3d:** Kampf-Hintergründe: jedes Gebiet mindestens ein eigener (fehlen: Aschensteppe, Palmenrast, Glutgrat, Tiefwurzel, Kreuzwegfelder; Kämpfe in Städten), gern mehrere je nach Ort im Gebiet. – Status: fertig (05.11.2026; elf neue Hintergründe, dazu nachts dunkle Kämpfe unter freiem Himmel; weiter gezeichnet, keine Bilder)
   - **E3e:** Klingentänzerin hat noch die alten Schwerter: ihre eigenen Klingen aus Marcos Waffen-Blatt einbauen (sonst Prompt). – Status: fertig (05.11.2026)
   - **E3f:** Kräuter sammeln: neues Bild für die Kräuter in der Welt (Prompt für Marco). – Status: fertig (05.11.2026)
   - **E3g:** Laufbewegung der Novizen sieht schlecht aus: feiner, ggf. mit mehr Bildern (Prompt für Marco). – Status: fertig (05.11.2026)

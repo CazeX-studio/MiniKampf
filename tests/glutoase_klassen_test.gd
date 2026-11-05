@@ -88,7 +88,7 @@ func _initialize() -> void:
 	for kampf: String in ["brakkus_pruefung", "samiras_pruefung", "xavinas_pruefung"]:
 		var k := GameData.battle(kampf)
 		_check(not k.is_empty() and k.get("eigene_klasse", false), "%s ist ein Kampf mit der eigenen Klasse" % kampf)
-	_check(GameData.battle("xavinas_pruefung").hintergrund == "wiese_nacht", "Bei Xavina ist es immer Nacht")
+	_check(GameData.battle("xavinas_pruefung").hintergrund == "sternenduene", "Bei Xavina ist es immer Nacht (Sternendüne)")
 	Tageszeit.feste_stunde = -1.0
 	print("Glutoase-Klassen: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)
