@@ -35,16 +35,19 @@ func _ready() -> void:
 		journey = "Dein Weg führt %s, zu %s." % [wohin, extra.lehrmeister]
 	box.add_child(_label("Du verlässt Kreuzweg als %s.\n%s" % [data.title, journey], 24, Color.WHITE))
 	box.add_child(_label("Hinter dir bleibt die Statue der Fünf zurück – und eine sechste Straße, die niemand benutzt.", 19, Color(1, 1, 1, 0.7)))
-	if data.region != "Grünwacht":
+	# Gebaut sind Grünwacht und die Glutoase; wer aus einer anderen Region kommt, beginnt in Grünwacht
+	var glutoase: bool = data.region == "Glutoase"
+	if data.region not in ["Grünwacht", "Glutoase"]:
 		box.add_child(_label("%s ist in dieser Demo noch nicht gebaut. Deine Reise beginnt deshalb in Grünwacht." % data.region, 19, Color(1, 1, 1, 0.7)))
-	box.add_child(_label("Die Reise geht weiter: Folge der Weststraße nach Grünwacht.", 22, Color("8affc1")))
+	box.add_child(_label("Die Reise geht weiter: Folge der Südstraße in die Glutoase." if glutoase
+			else "Die Reise geht weiter: Folge der Weststraße nach Grünwacht.", 22, Color("8affc1")))
 
 	var row := HBoxContainer.new()
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	row.add_theme_constant_override("separation", 24)
 	box.add_child(row)
 	var go := Button.new()
-	go.text = "Weiter nach Grünwacht"
+	go.text = "Weiter in die Glutoase" if glutoase else "Weiter nach Grünwacht"
 	go.custom_minimum_size = Vector2(300, 60)
 	go.add_theme_font_size_override("font_size", 20)
 	go.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/kreuzweg.tscn"))

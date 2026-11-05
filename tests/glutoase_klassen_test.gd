@@ -20,6 +20,16 @@ func _abreise(world: WorldState, id: String, klasse: String) -> PlayerState:
 	world.start_dialog(p, "ye_tor")
 	world.apply_command(id, {type = "dialog_choose", index = 0})
 	world.apply_command(id, {type = "dialog_choose", index = 0})
+	world.apply_command(id, {type = "dialog_next"})
+	# Kein Versetzen (E3i): zur Torwache, dann selbst durchs Tor (West- oder Südtor)
+	var glutoase := klasse in ["smith", "blade", "singer"]
+	world.start_dialog(p, "torwache_glutoase" if glutoase else "torwache_gruenwacht")
+	world.apply_command(id, {type = "dialog_choose", index = 0})
+	world.apply_command(id, {type = "move", cell = Vector2i(31, 65) if glutoase else Vector2i(0, 31)})
+	for i in 1200:
+		world.tick(0.05)
+		if p.map != "kreuzweg":
+			break
 	return p
 
 
@@ -48,7 +58,7 @@ func _initialize() -> void:
 
 	# Klingentänzerin: in die Glutoase
 	var b := _abreise(world, "b", "blade")
-	_check(b.map == "aschensteppe" and b.cell == Vector2i(14, 1), "Klingentänzerin reist in die Aschensteppe")
+	_check(b.map == "aschensteppe", "Klingentänzerin läuft durchs Südtor in die Aschensteppe")
 	_check(b.progress.quest_state("nach_glutoase") == "aktiv" and b.progress.quest_state("nach_gruenwacht") == "neu"
 			and b.progress.quest_state("klasse_lernen") == "aktiv", "Auftrag „Der Weg in die Glutoase“ läuft")
 	world.change_map(b, "glutoase", Vector2i(26, 42))

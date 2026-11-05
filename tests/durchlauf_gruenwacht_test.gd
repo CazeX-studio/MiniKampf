@@ -79,6 +79,13 @@ func _play_region(klasse: String) -> void:
 	while p.in_dialog():
 		_answer()
 	_pending_scene = ""
+	# Kein Versetzen (E3i): zur Torwache am Westtor, dann durchs Tor
+	world.start_dialog(p, "torwache_gruenwacht")
+	while p.in_dialog():
+		_answer()
+	_pending_scene = ""
+	world.apply_command("spieler", {type = "move", cell = Vector2i(0, 31)})
+	_walk(60.0)
 	_check(p.map == "weg_gruenwacht", "%s: Nach dem Abschied auf dem Weg nach Grünwacht" % klasse)
 
 	# Aufträge aus Akt 1 nicht noch einmal melden

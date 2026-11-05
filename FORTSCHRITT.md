@@ -19,6 +19,12 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     2. Probestunde Sternensängerin mit einer weiblichen Figur: die eigene Figur im Sternengewand.
     3. Nach der Klassenwahl in der Glutoase: In der Welt läuft man in der neuen Kleidung herum.
 
+- **Neu (05.11.): E3a und E3i Wegweiser und Abschied ohne Versetzen:** Nach dem Abschied von Ye wird man nicht mehr versetzt. Ye sagt: „Geh zur Torwache, sie kennt den Weg in deine Region.“ Am Westtor (Grünwacht) und am Südtor (Glutoase) steht jetzt je eine Torwache; der Wegweiser führt zu ihr. Sie nennt den Weg, „Losgehen.“ zeigt das Ende von Akt 1 (bei Glutoase-Klassen jetzt mit Südstraße und „Weiter in die Glutoase“), danach läuft man selbst durchs Tor. Auf dem Weg zeigt der Wegweiser weiter bis Wipfelheim bzw. bis zur Glutoase und zum Oberhaupt, danach zum Lehrmeister.
+  - **So testest du es:**
+    1. Klasse wählen, von Ye verabschieden: Man bleibt in Kreuzweg, der Wegweiser zeigt zur Torwache.
+    2. Torwache ansprechen, „Losgehen.“: Ende von Akt 1, dann selbst durchs Tor laufen.
+    3. Als Klingentänzerin: Der Wegweiser führt durch die Aschensteppe bis zu Hadrak und dann zu Samira.
+
 - **Neu (04.11.): E1 Deine Entscheidungen eingebaut:** Die Sporenkönigin nutzt jetzt auch in der Welt ihre Mechanik (pro Kampf Sporenblüte oder Zwillinge, wie in der Sandbox). Damit es allein schaffbar bleibt, hat sie weniger Leben (2,0 statt 3,8): im Schnitt 77 % Siege. Nebenbei behoben: Töteten die Giftwolken die letzten Helden, wollte sie noch angreifen und hängte. Für die Lichter in Kreuzweg gibt es Vergleichsbilder (echte Lichter oben, Leuchtflecken unten); ohne deine Zusage bleibt es bei den echten Lichtern.
   - **So testest du es:**
     1. In der Pilzhöhle die Sporenkönigin angreifen: Unten im Protokoll steht die Mechanik des Kampfs.

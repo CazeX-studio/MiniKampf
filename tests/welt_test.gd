@@ -371,7 +371,10 @@ func _test_building_blocks() -> void:
 		"Ye nennt Klasse, Region und Lehrmeister")
 	world.apply_command("a", {type = "dialog_choose", index = 0})
 	world.apply_command("a", {type = "dialog_choose", index = 0})
-	_check(scenes.back() == "abspann" and p.progress.quest_state("abreise") == "abgegeben", "Abreise: Abspann")
+	world.apply_command("a", {type = "dialog_next"})
+	world.start_dialog(p, "torwache_glutoase")
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check(scenes.back() == "abspann" and p.progress.quest_state("abreise") == "abgegeben", "Abreise: zur Torwache, dann Abspann")
 	_check(p.progress.level == 9, "Am Ende der ersten Stunde: Stufe 9 (nach Niederlage gegen den Boss)")
 
 	# Sieg (eigene Welt): Erfolg, und Ren klaut den Splitter

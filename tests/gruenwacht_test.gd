@@ -107,10 +107,15 @@ func _test_journey() -> void:
 	world.start_dialog(p, "ye_tor")
 	world.apply_command("a", {type = "dialog_choose", index = 0})
 	world.apply_command("a", {type = "dialog_choose", index = 0})
+	world.apply_command("a", {type = "dialog_next"})
 	_check(p.progress.quest_state("abreise") == "abgegeben", "Abreise abgeschlossen")
-	_check("abspann" in scenes, "Abspann kommt")
-	_check(p.map == "weg_gruenwacht" and p.cell == Vector2i(56, 9), "Danach steht man auf dem Weg nach Grünwacht")
-	_check(p.progress.quest_state("nach_gruenwacht") == "aktiv", "Auftrag „Der Weg nach Grünwacht“ läuft")
+	_check(p.map == "kreuzweg" and p.progress.quest_state("nach_gruenwacht") == "aktiv", "Kein Versetzen: Man bleibt in Kreuzweg, der Auftrag läuft")
+	_check(world.objective(p).contains("Torwache"), "Ziel: zur Torwache am Westtor (" + world.objective(p) + ")")
+	world.start_dialog(p, "torwache_gruenwacht")
+	world.apply_command("a", {type = "dialog_choose", index = 0})
+	_check("abspann" in scenes, "Bei der Torwache: Ende von Akt 1")
+	_walk(world, p, Vector2i(0, 31))
+	_check(p.map == "weg_gruenwacht", "Selbst durchs Westtor auf den Weg nach Grünwacht")
 	_check(world.objective(p).contains("Wipfelheim"), "Ziel zeigt den Weg nach Wipfelheim: " + world.objective(p))
 
 	# Zurück nach Kreuzweg und wieder hinaus geht auch
