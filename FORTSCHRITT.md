@@ -11,13 +11,25 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** Marcos erste Test-Liste (04.11.) abarbeiten, BAUAUFTRAEGE.md „Endspurt“ E3a bis E3h: zuerst die kleinen Punkte E3a, E3b, E3c, E3e und E3i in einer Sitzung, dann E3d (Kampf-Hintergründe), dann E3h (Städte, je Stadt eine Sitzung). Die Bilder für E3f (Kräuter) und E3g (Novizen laufen) sind da (05.11.).
+- **Nächster Schritt:** Endspurt E3d (Kampf-Hintergründe für jedes Gebiet), dann E3h (Städte umbauen, je Stadt eine Sitzung).
 
 - **Neu (04.11.): D25b Körper von Rüstungsschmied und Sternensängerin** (2.11): Deine Blätter sind eingebaut: Rüstungsschmied (m) und Rüstungsschmiedin (w) in Rüstung mit Lederschürze und rotem Halstuch, die Sternensängerin (w) im hellen Gewand mit dunkelblauem Schal. Je mit Stehen, Laufen, Abwehr, Treffer, Angriff, Fallen, Sieg und Fähigkeit im Kampf, in der Welt schräg von vorne und hinten. Wer die Klasse gelernt hat, trägt sie mit seinem eigenen Kopf, auch in der Probestunde. Ausgebessert: die gelben Funken im Treffer-Bild des Schmieds und das rote Halstuch in einem Siegesbild der Sängerin. Noch nicht drin: ein männlicher Sternensänger (der kämpft weiter in der Klassenfigur).
   - **So testest du es:**
     1. Kampf-Sandbox oder Probestunde Rüstungsschmied: die eigene Figur in Rüstung.
     2. Probestunde Sternensängerin mit einer weiblichen Figur: die eigene Figur im Sternengewand.
     3. Nach der Klassenwahl in der Glutoase: In der Welt läuft man in der neuen Kleidung herum.
+
+- **Neu (05.11.): E3b, E3c, E3e, E3f, E3g aus deiner Test-Liste:**
+  - **Kopfrichtung (E3b):** Die sechs wählbaren Köpfe (m1 bis w3) und v_w3 waren schräg von vorne nach links gezeichnet, die Körper schauen nach rechts. Sie werden in dieser Ansicht jetzt gespiegelt, alle Figuren schauen in dieselbe Richtung.
+  - **Ortsnamen (E3c):** Beim Betreten eines Gebiets erscheint der Name groß in der Bildmitte, in Gold mit dunklem Rand, in der freien Schrift Cinzel (Quelle in CREDITS.md), und blendet nach gut zwei Sekunden aus.
+  - **Klingentänzerin (E3e):** Die schwebenden Klingen ihres Klingenkranzes sind jetzt ihre Krummklingen aus deinem Waffen-Blatt statt der alten gezeichneten Schwerter.
+  - **Kräuter (E3f):** Silberkraut und Wiesenkraut haben deine neuen Bilder und wiegen sich leicht im Wind.
+  - **Novizen laufen (E3g):** Deine neuen Welt-Blätter sind eingebaut: 8 statt 5 Bilder Laufen je Richtung. Das Schwert setzt das Spiel selbst ein (Richtung aus den alten Bildern, Griff am Gold); in ein, zwei Laufbildern sitzt es vielleicht noch nicht ganz richtig, bitte beim Testen darauf achten.
+  - **So testest du es:**
+    1. Mit einem eigenen Kopf (z. B. m1) und mit Tessa oder Gorm herumlaufen: Köpfe und Körper schauen gleich.
+    2. Von Kreuzweg auf den Weg nach Grünwacht gehen: Der Ortsname erscheint groß.
+    3. Als Novize laufen: flüssigere Schritte, das Schwert in der Hand.
+    4. In Kreuzweg ein Silberkraut ansehen, als Klingentänzerin Klingen sammeln.
 
 - **Neu (05.11.): E3a und E3i Wegweiser und Abschied ohne Versetzen:** Nach dem Abschied von Ye wird man nicht mehr versetzt. Ye sagt: „Geh zur Torwache, sie kennt den Weg in deine Region.“ Am Westtor (Grünwacht) und am Südtor (Glutoase) steht jetzt je eine Torwache; der Wegweiser führt zu ihr. Sie nennt den Weg, „Losgehen.“ zeigt das Ende von Akt 1 (bei Glutoase-Klassen jetzt mit Südstraße und „Weiter in die Glutoase“), danach läuft man selbst durchs Tor. Auf dem Weg zeigt der Wegweiser weiter bis Wipfelheim bzw. bis zur Glutoase und zum Oberhaupt, danach zum Lehrmeister.
   - **So testest du es:**

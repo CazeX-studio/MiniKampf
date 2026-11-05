@@ -67,3 +67,4 @@ Die Platzhalter-Musik (`assets/musik/`: Stadt, Nacht, Kampf, Boss) ist selbst er
 
 Die Kampf-Geräusche (`assets/sfx/`: Schlag, Wurf, Treffer, Kritisch, Parade, Perfekt, Zauber, Heilung) sind ebenfalls
 selbst erzeugt, mit `tools/sounds_erzeugen.gd`. Platzhalter, keine Lizenzfragen.
+| Schrift Cinzel (`assets/schrift/Cinzel.ttf`) | The Cinzel Project Authors (https://github.com/NDISCOVER/Cinzel), aus github.com/google/fonts, SIL Open Font License 1.1 (`assets/schrift/Cinzel_OFL.txt`) | Ortsnamen beim Betreten eines Gebiets (E3c, 05.11.2026) |

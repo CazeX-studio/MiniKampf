@@ -2,22 +2,22 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dbs1dout0ftn8"
-path="res://.godot/imported/novize_w_idle_vorn_anim_f5.png-92ff10cefb3d737d039b17873efbcd37.ctex"
+uid="uid://cxra7ir6evypd"
+path="res://.godot/imported/kraut_f1.png-235f5f87a7f69a3f3d29ee02dad68bf1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/figuren/novize_w_idle_vorn_anim_f5.png"
-dest_files=["res://.godot/imported/novize_w_idle_vorn_anim_f5.png-92ff10cefb3d737d039b17873efbcd37.ctex"]
+source_file="res://assets/sammeln/kraut_f1.png"
+dest_files=["res://.godot/imported/kraut_f1.png-235f5f87a7f69a3f3d29ee02dad68bf1.ctex"]
 
 [params]
 
-compress/mode=1
+compress/mode=0
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

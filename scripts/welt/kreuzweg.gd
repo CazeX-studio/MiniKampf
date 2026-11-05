@@ -307,9 +307,47 @@ func _ready() -> void:
 	_send({type = "start"})
 
 
+## Ortsname groß in der Bildmitte, wenn man ein Gebiet betritt (E3c): Schrift Cinzel (SIL Open Font License).
+const ORTSNAME_SCHRIFT := "res://assets/schrift/Cinzel.ttf"
+var _ortsname: Label
+var _ortsname_tween: Tween
+
+
+func _ortsname_zeigen(name: String) -> void:
+	if _ui_root == null or name == "":
+		return
+	if _ortsname == null:
+		_ortsname = Label.new()
+		var schrift := FontVariation.new()
+		schrift.base_font = load(ORTSNAME_SCHRIFT)
+		schrift.variation_embolden = 0.6
+		_ortsname.add_theme_font_override("font", schrift)
+		_ortsname.add_theme_font_size_override("font_size", 54)
+		_ortsname.add_theme_color_override("font_color", Color("f6d27a"))
+		_ortsname.add_theme_color_override("font_outline_color", Color("1a1208"))
+		_ortsname.add_theme_constant_override("outline_size", 10)
+		_ortsname.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.6))
+		_ortsname.add_theme_constant_override("shadow_offset_y", 4)
+		_ortsname.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_ortsname.size = Vector2(1280, 80)
+		_ortsname.position = Vector2(0, 150)
+		_ortsname.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_ui_root.add_child(_ortsname)
+	_ortsname.text = name
+	_ortsname.modulate.a = 0.0
+	if _ortsname_tween != null:
+		_ortsname_tween.kill()
+	_ortsname_tween = create_tween()
+	_ortsname_tween.tween_property(_ortsname, "modulate:a", 1.0, 0.5)
+	_ortsname_tween.tween_interval(2.2)
+	_ortsname_tween.tween_property(_ortsname, "modulate:a", 0.0, 1.0)
+
+
 ## Baut die Karte des eigenen Spielers auf (beim Start und nach jedem Kartenwechsel).
 func _build_map_view() -> void:
 	var local := local_player()
+	if local.map != _shown_map:
+		_ortsname_zeigen.call_deferred(state.get_map(local.map).title)
 	_shown_map = local.map
 	for node in _map_nodes:
 		if is_instance_valid(node):
@@ -1292,6 +1330,10 @@ func _add_pickup(target: String) -> void:
 		node.add_child(boss)
 
 
+## Bilder der Kräuter zum Sammeln (tools/kraeuter_bilder.py): Gegenstand, Bildnummer
+const KRAUT_BILD := "res://assets/sammeln/%s_f%d.png"
+
+
 func _draw_pickup(node: Node2D, art: String) -> void:
 	var glow := 0.5 + 0.5 * sin(_time * 3.0 + node.position.x)
 	# Bosse in Dungeons (die Figur selbst hängt als Kind am Knoten): nur ein leichtes Leuchten darunter
@@ -1432,6 +1474,15 @@ func _draw_pickup(node: Node2D, art: String) -> void:
 			return
 		"leer":
 			return
+	# Kräuter mit eigenem Bild (E3f, Marcos Blatt kraeuter_welt.png): zwei Bilder wechseln sich im Wind ab
+	if ResourceLoader.exists(KRAUT_BILD % [art, 0]):
+		var bild_nr := posmod(int(_time * 1.2 + node.position.x * 0.01), 2)
+		var textur: Texture2D = load(KRAUT_BILD % [art, bild_nr])
+		var hoehe := 44.0
+		var breite := hoehe * textur.get_width() / float(textur.get_height())
+		node.draw_circle(Vector2(0, -16), 26.0, Color(0.8, 1.0, 0.9, 0.06 + 0.08 * glow))
+		node.draw_texture_rect(textur, Rect2(-breite * 0.5, -hoehe + 6.0, breite, hoehe), false)
+		return
 	node.draw_circle(Vector2(0, -10), 16.0, Color(0.8, 1.0, 0.9, 0.12 + 0.12 * glow))
 	for i in 3:
 		var angle := -PI / 2 + (i - 1) * 0.6

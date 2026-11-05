@@ -38,6 +38,9 @@ GESCHLECHT = {"novize_m": "m", "novize_w": "w", "bogen_m": "m", "bogen_w": "w", 
 DATEINAMEN = {k: {"kampf_a": "blatt1", "kampf_b": "blatt2", "welt": "welt"} for k in ["bogen_m", "bogen_w", "zaehmer_m", "zaehmer_w", "klingentaenzer_m", "klingentaenzer_w",
 		"schmied_m", "schmied_w", "saengerin_w"]}
 OHNE_ZUSATZ = set(DATEINAMEN)
+## Neue Welt-Blätter der Novizen mit feinerem Laufen (E3g, 05.11.): 8 Bilder Laufen je Richtung, schon ohne Klinge.
+## Schwert-Punkte dafür setzt tools/novize_welt2.py (die Blätter haben keine Klinge zum Messen).
+WELT2 = {"novize_m": "welt2", "novize_w": "welt2"}
 ## Die Klinge kommt als eigenes Teil dazu (Projekt 13, Schritt 3), der Griff bleibt in der Hand
 ZUSATZ = "_ohne_klinge"
 ## Abweichende Reihen einzelner Blätter (sonst wie Kofi): Körper -> Blatt -> Reihen
@@ -53,11 +56,11 @@ REIHEN["bogen_w"]["kampf_b"] = REIHEN["bogen_m"]["kampf_b"]
 REIHEN.update({
 	"novize_m": {
 		"kampf_b": [[("attack", 6)], [("death", 6)], [("victory", 4), ("cast", 3)]],
-		"welt": [[("idle_vorn", 5), ("run_vorn", 5)], [("idle_hinten", 5), ("run_hinten", 5)]],
+		"welt": [[("run_vorn", 8)], [("run_hinten", 8)], [("idle_vorn", 4), ("idle_hinten", 5)]],
 	},
 	"novize_w": {
 		"kampf_b": [[("attack", 6)], [("death", 6)], [("victory", 4), ("cast", 3)]],
-		"welt": [[("idle_vorn", 6), ("run_vorn", 5)], [("idle_hinten", 6), ("run_hinten", 5)]],
+		"welt": [[("run_vorn", 8)], [("run_hinten", 8)], [("idle_vorn", 4), ("idle_hinten", 5)]],
 	},
 })
 ## Mit dieser Animation wird jedes weitere Blatt auf die Größe von Blatt 1 gebracht (aufrecht stehend, Kopf frei)
@@ -188,6 +191,8 @@ def main():
 		for name, reihen in FIGUREN[KOPF_QUELLE].items():
 			datei = DATEINAMEN.get(koerper, {}).get(name, name)
 			zusatz = "" if koerper in OHNE_ZUSATZ else ZUSATZ
+			if name == "welt" and koerper in WELT2:
+				datei, zusatz = WELT2[koerper], ""
 			if not (VORLAGEN / f"{koerper}_{datei}{zusatz}.png").exists():
 				print(f"{koerper}: Blatt {datei} fehlt noch")
 				continue

@@ -16,6 +16,8 @@ const DATEN := "res://data/figurteile.json"
 const KOERPER := "res://assets/teile/koerper/%s_%s_f%d.png"
 const ALTER_KOPF := "res://assets/teile/kopf/%s_%s_f%d.png"
 const KOPF := "res://assets/teile/koepfe/%s_%s.png"  # Kopf, Richtung_Gesicht
+## Köpfe, deren Blatt schräg von vorne nach links schaut (die Körper schauen nach rechts): werden gespiegelt (E3b)
+const KOPF_VORN_GESPIEGELT: Array[String] = ["m1", "m2", "m3", "w1", "w2", "w3", "v_w3"]
 ## Gesicht je Animation (seitlich); fehlt ein Gesicht in einer Richtung, gilt „normal“
 const GESICHT := {
 	"hit": "schmerz", "parry": "entschlossen", "attack": "entschlossen", "attack2": "entschlossen",
@@ -201,6 +203,10 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 				variante = "%s_normal" % info.richtung
 			kopf_bild = _bild_laden(KOPF % [kopf_id, variante])
 			var punkt := Vector2(punkte[variante][0], punkte[variante][1])
+			if kopf_bild != null and info.richtung == "vorn" and kopf_id in KOPF_VORN_GESPIEGELT:
+				kopf_bild = kopf_bild.duplicate()
+				kopf_bild.flip_x()
+				punkt.x = kopf_bild.get_width() - punkt.x
 			if kopf_bild != null and hut_jetzt != "":
 				# Den Hut auf den noch ungedrehten Kopf setzen, dann dreht er sich mit
 				var mit_hut := _hut_aufsetzen(kopf_bild, hut_jetzt, info.richtung, farben_jetzt)

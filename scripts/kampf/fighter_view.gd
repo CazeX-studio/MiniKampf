@@ -635,6 +635,15 @@ func _draw() -> void:
 
 
 ## Schwebende Klingen der Klingentänzerin: kreisen um die Figur, vordere über, hintere unter ihr.
+static var _krummklinge_bild: Texture2D
+
+
+static func _krummklinge() -> Texture2D:
+	if _krummklinge_bild == null:
+		_krummklinge_bild = load("res://assets/teile/waffe/krummklinge.png")
+	return _krummklinge_bild
+
+
 func _draw_blades(canvas: CanvasItem, front: bool) -> void:
 	if shown_hp() <= 0:
 		return
@@ -649,13 +658,14 @@ func _draw_blades(canvas: CanvasItem, front: bool) -> void:
 			continue
 		var pos := body.position + Vector2(cos(angle) * sprite_size.x * 0.7, -sprite_size.y * 0.55 + sin(angle) * sprite_size.y * 0.14)
 		pos.y += sin(_time * 3.0 + i) * 4.0
-		canvas.draw_set_transform(pos, 0.25 * cos(angle) + PI, Vector2.ONE)
-		# Klinge (Spitze nach oben), Parierstange, Griff
-		canvas.draw_colored_polygon(PackedVector2Array([Vector2(-3, -12), Vector2(3, -12), Vector2(0, 16)]), Color("e8eef8"))
-		canvas.draw_line(Vector2(0, -12), Vector2(0, 14), color.lightened(0.4), 1.0)
-		canvas.draw_rect(Rect2(-7, -15, 14, 3), color)
-		canvas.draw_rect(Rect2(-1.5, -22, 3, 7), Color("6e4a2c"))
-		canvas.draw_circle(Vector2(0, -23), 2.5, color)
+		# Die Krummklinge der Klingentänzerin aus Marcos Waffen-Blatt (E3e), Spitze nach oben, leicht schwingend;
+		# leuchtet in der Farbe des Klingenkranzes (Sternenglanz, Feuer)
+		canvas.draw_set_transform(pos, 0.25 * cos(angle), Vector2.ONE)
+		var klinge := _krummklinge()
+		var hoehe := 38.0
+		var breite := hoehe * klinge.get_width() / float(klinge.get_height())
+		canvas.draw_circle(Vector2.ZERO, 12.0, Color(color, 0.25))
+		canvas.draw_texture_rect(klinge, Rect2(-breite * 0.5, -hoehe * 0.5, breite, hoehe), false, Color.WHITE.lerp(color, 0.2))
 	canvas.draw_set_transform_matrix(Transform2D.IDENTITY)
 
 
