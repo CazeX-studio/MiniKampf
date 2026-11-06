@@ -329,7 +329,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     2. Als Zähmer nach dem Dungeon zu Kobalt: Die Revanche ist gegen ein Monster.
     3. Sonst die Testpunkte unter „Playtest 25.10. Teil 1“ weiter unten.
 
-- **Neu (02.11.): Probe gemalter Effekt** (D9h): Der normale Treffer im Nahkampf und der Doppelschlag zeigen jetzt deinen Schwerthieb von ChatGPT statt der gezeichneten Form, als kurze Bildfolge.
+- **Neu (06.11.): D9h Gemalte Effekte** (K.6): Alle 31 Effekte von ChatGPT sind im Spiel. Pfeile, Klingen, Sterne, Kometen und Futter fliegen als Bilder. Netz, Fadenkreuz, Pfeilhagel, Schild-Kuppel, Lichtstrahl, Schallwellen, Amboss mit Rissen, Dampf, Glut, Goldregen, Noten, Mond, Sichel und Wirbel sind gemalt. Jeder Treffer zeigt die neuen Funken, jede Heilung die grünen Heil-Funken. Noch gezeichnet: das Glühen der Figuren, Ringe, Zeichen über den Köpfen und Lichtblitze.
+  - **So testest du es:**
+    1. Kampf-Sandbox als Bogenschütze: Schnellschuss, Netzpfeil, Pfeilhagel und Schwachstelle: Pfeil, Netz, Pfeilregen und Fadenkreuz sind gemalt.
+    2. Als Rüstungsschmied: Amboss aufstellen und Härten: Amboss mit Rissen und Staub, dann Dampf.
+    3. Als Klingentänzerin: Klingenschritt, Wirbel und Fächerschnitt: X-Schnitt, Wirbelkreis, Sichel.
+    4. Als Sternensängerin: Mondwiegenlied, Kometenlied und Polarstern: Noten, Mond, Komet und Lichtstrahl.
+    5. Sag, ob dir ein Effekt zu groß, zu klein oder zu schnell ist.
+
+- **Probe gemalter Effekt (02.11.)** (D9h): Der normale Treffer im Nahkampf und der Doppelschlag zeigen jetzt deinen Schwerthieb von ChatGPT statt der gezeichneten Form, als kurze Bildfolge.
   - **So testest du es:**
     1. Kampf-Sandbox: ein paar Nahkampf-Angriffe ausführen und auf den Hieb am Ziel achten.
     2. Sag, ob Größe, Tempo und Stil passen.

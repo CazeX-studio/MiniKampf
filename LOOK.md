@@ -52,6 +52,8 @@
   Bogenschützen-Versuch war zu düster und zu realistisch).
 - **Tageslicht und neutrale Farben** in jedem Bild. Kein eingemaltes Glühen, kein Lichtschein, keine Lichtkegel.
   Nacht, Leuchten und Zauber-Effekte macht das Spiel (Licht wie bei Octopath: Glühen, Fackeln, Tiefe).
+  Ausnahme seit D9h (06.11.2026): die Effekte der Fähigkeiten sind eigene, ausdrücklich bestellte Effekt-Blätter
+  (Bildfolgen, `GRAFIK_AUFTRAG.md` Teil E). In Figuren- und Umgebungsbildern bleibt es bei „keine Effekte“.
 - **Durchsichtiger Hintergrund**, kein gemaltes Karomuster, kein Farbverlauf, keine Schatten-Wolke dahinter.
 - **Keine Texte, Zahlen, Rahmen oder Beschriftungen** im Bild.
 

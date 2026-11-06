@@ -425,7 +425,7 @@ func _play_event(event: Dictionary) -> void:
 			if has_view(event.f):
 				var v := view(event.f)
 				v.hit_react()
-				Fx.spawn(_field, Fx.Kind.SPARKS, v.center(), Color("ffd9a0") if not event.crit else Color("ffe14d"), 70.0 if not event.crit else 110.0, 0.4)
+				FxBild.spawn(_field, "treffer_funken", v.center(), 0.3, false, 0.0, 0.8 if not event.crit else 1.3)
 				if event.get("heavy", false):
 					_hit_stop()
 					_shake(SHAKE_PIXELS * (1.3 if event.crit else 1.0))
@@ -448,7 +448,7 @@ func _play_event(event: Dictionary) -> void:
 				var v := view(event.f)
 				v.glow(Color("8affa0"), 0.6)
 				Fx.spawn(_field, Fx.Kind.GLOW, v.center(), Color("4cff7a"), 90.0, 0.6)
-				Fx.spawn(_field, Fx.Kind.SPARKS, v.center(), Color("b6ffc8"), 60.0, 0.6)
+				FxBild.spawn(_field, "heilung", v.center() + Vector2(0, -20), 0.7, false, 0.0, 0.7)
 		"end":
 			_clear_actions()
 			if not event.aborted:
@@ -1083,7 +1083,7 @@ func lunge(f: Fighter, target: Fighter, duration: float, attack_name := "") -> v
 		await wait(release)
 		await projectile(f, target, Color("7ac8ff"), 0.22)
 		if is_instance_valid(target_view):
-			Fx.spawn(_field, Fx.Kind.SPARKS, target_view.center(), Color("bfe6ff"), 60.0, 0.3)
+			FxBild.spawn(_field, "treffer_funken", target_view.center(), 0.3, false, 0.0, 0.8)
 		return
 	await view(f).lunge(target_view.home_feet(), duration, view(f).anim_for(attack_name, "attack"))
 	if is_instance_valid(target_view):

@@ -37,7 +37,7 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 		"schildstoss_treffer":
 			Geraeusche.play("treffer", 0.55)
 			if ziel_ansicht != null:
-				Fx.spawn(feld, Fx.Kind.RING, ziel_ansicht.center(), Color("e0b070"), 70.0, 0.25)
+				_funken(feld, ziel_ansicht.center(), 1.0)
 				_taumeln(ziel_ansicht)
 		"hieb":
 			# Schnitt-Spur von links oder rechts
@@ -54,7 +54,7 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 			tiefe.kill()
 			v.body.position = v._home
 			var ort := ziel_ansicht.center() if ziel_ansicht != null else v.center()
-			Fx.spawn(feld, Fx.Kind.SPARKS, ort, GRUEN, 70.0, 0.6)
+			FxBild.spawn(feld, "heilung", ort + Vector2(0, -20), 0.7, false, 0.0, 0.7)
 			_pflaster(feld, ort)
 		"deckung":
 			_huepfer(v, 20.0, 0.16)
@@ -64,7 +64,7 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 			await k.wait(0.35)
 		"deckung_funke":
 			Geraeusche.play("parade", 0.7)
-			Fx.spawn(feld, Fx.Kind.SPARKS, v.center(), SCHILD.lightened(0.4), 80.0, 0.35)
+			_funken(feld, v.center(), 0.9).modulate = SCHILD.lightened(0.4)
 		"sternenmut_an":
 			# Das Schwert leuchtet lila wie ein Splitter, ein heller Glockenton
 			Geraeusche.play("perfekt", 1.5)
@@ -74,18 +74,15 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 		"sternenmut_schlag":
 			Geraeusche.play("kritisch", 0.9)
 			if ziel_ansicht != null:
-				var ort := ziel_ansicht.center()
-				Fx.spawn(feld, Fx.Kind.SLASH, ort, STERN, 110.0, 0.4)
-				Fx.spawn(feld, Fx.Kind.SPARKS, ort, STERN.lightened(0.4), 130.0, 0.7)
-				Fx.spawn(feld, Fx.Kind.RING, ort, STERN, 170.0, 0.5)
+				FxBild.spawn(feld, "sternenmut_hieb", ziel_ansicht.center(), 0.45, f.is_ally(), 0.0, 0.9)
 			k.screen_flash(STERN)
 		"schnellschuss":
 			_pose(v)
 			Geraeusche.play("wurf", 1.7)
 			if ziel_ansicht != null:
 				var ort := ziel_ansicht.center()
-				await _pfeil(feld, v.center(), ort, Color("e8ffd0"), 0.14, 3.0)
-				Fx.spawn(feld, Fx.Kind.SPARKS, ort, Color("e8ffd0"), 40.0, 0.25)
+				await _pfeilflug(feld, v.center(), ort, 0.14)
+				_funken(feld, ort, 0.6)
 		"spannen":
 			Geraeusche.play("wurf", 0.5)
 			v.glow(WALD, 0.7)
@@ -98,23 +95,25 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 			Geraeusche.play("kritisch", 1.3)
 			if ziel_ansicht != null:
 				var ort := ziel_ansicht.center()
-				await _pfeil(feld, v.center(), ort, Color("f4ffe0"), 0.12, 7.0)
+				await _pfeilflug(feld, v.center(), ort, 0.12, 0.65)
+				FxBild.streifen(feld, "schneise", v.center(), ort, 0.4)
 				if name == "durchschlag":
-					_schneise(feld, v.center(), ort, Color("e8ffc8"))
 					Geraeusche.play("parade", 0.5)
-				Fx.spawn(feld, Fx.Kind.SPARKS, ort, STAUB, 100.0, 0.5)
+				_funken(feld, ort, 1.1)
+				FxBild.am_boden(feld, "staubwolke", ziel_ansicht.home_feet(), 0.5)
 				k._shake(10.0)
 		"durchschlag_weiter":
 			if ziel_ansicht != null:
-				_schneise(feld, v.center(), ziel_ansicht.center(), Color("e8ffc8"))
-				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.center(), STAUB, 70.0, 0.4)
+				FxBild.streifen(feld, "schneise", v.center(), ziel_ansicht.center(), 0.35, 0.8)
+				_funken(feld, ziel_ansicht.center(), 0.8)
 				await k.wait(0.15)
 		"hagel_auf":
 			# Steil in den Himmel schießen und hinterherschauen
 			_pose(v)
 			Geraeusche.play("wurf", 1.2)
+			var hoch := -1.0 if f.is_ally() else 1.0
 			for i in 3:
-				_pfeil(feld, v.center(), v.center() + Vector2(-40.0 - 30.0 * i, -520.0), Color("e8ffd0"), 0.22, 3.0)
+				_pfeilflug(feld, v.center(), v.center() + Vector2(hoch * (40.0 + 30.0 * i), -520.0), 0.22)
 			await k.wait(0.35)
 		"hagel_regen":
 			if ziel_ansicht != null:
@@ -124,11 +123,9 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 			Geraeusche.play("wurf", 0.8)
 			if ziel_ansicht != null:
 				var ort := ziel_ansicht.center()
-				var mitte := v.center().lerp(ort, 0.5) + Vector2(0, -120)
-				await _pfeil(feld, v.center(), mitte, Color.WHITE, 0.14, 3.0)
-				await _pfeil(feld, mitte, ort, Color.WHITE, 0.14, 3.0)
+				await FxBild.flug(feld, "pfeil_flug", v.center(), ort, 0.28, 0.5, 120.0)
 				Geraeusche.play("parade", 0.5)
-				_netz(feld, ort)
+				FxBild.spawn(feld, "netz", ort, 0.6, f.is_ally(), 0.0, 0.6, 0.3)
 				_zappeln(ziel_ansicht)
 		"schnellfeuer":
 			# Immer schneller, die Spuren werden heller (seite zählt die Pfeile)
@@ -136,8 +133,8 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 			Geraeusche.play("wurf", 1.5 + 0.1 * seite)
 			if ziel_ansicht != null:
 				var ort := ziel_ansicht.center()
-				await _pfeil(feld, v.center(), ort, WALD.lightened(0.15 * seite), maxf(0.15 - 0.02 * seite, 0.07), 3.0)
-				Fx.spawn(feld, Fx.Kind.SPARKS, ort, Color("e8ffd0"), 34.0, 0.2)
+				await _pfeilflug(feld, v.center(), ort, maxf(0.15 - 0.02 * seite, 0.07))
+				_funken(feld, ort, 0.5)
 		"schnellfeuer_ende":
 			Geraeusche.play("wurf", 2.2)
 			_huepfer(v, 10.0, 0.1)
@@ -148,8 +145,8 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 			Geraeusche.play("perfekt", 1.8)
 			if ziel_ansicht != null:
 				var ort := ziel_ansicht.center()
-				await _pfeil(feld, v.center(), ort, Color("ff5050"), 0.2, 4.0)
-				_fadenkreuz(feld, ort)
+				await _pfeilflug(feld, v.center(), ort, 0.2)
+				FxBild.spawn(feld, "fadenkreuz", ort, 0.5, false, 0.0, 0.55, 0.7)
 		"elementpfeil":
 			v.glow(farbe, 0.4)
 			await k.wait(0.25)
@@ -157,9 +154,10 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 			Geraeusche.play("wurf", 1.1)
 			if ziel_ansicht != null:
 				var ort := ziel_ansicht.center()
-				await _pfeil(feld, v.center(), ort, farbe, 0.18, 5.0)
+				_pfeil(feld, v.center(), ort, farbe, 0.18, 5.0)
+				await _pfeilflug(feld, v.center(), ort, 0.18)
 				Fx.spawn(feld, Fx.Kind.RING, ort, farbe, 80.0, 0.3)
-				Fx.spawn(feld, Fx.Kind.SPARKS, ort, farbe, 70.0, 0.4)
+				_funken(feld, ort, 1.0).modulate = farbe.lightened(0.3)
 		"jaegerpfeil":
 			# Der Bogen füllt sich mit Waldlicht, der Geist des Silberhirschs läuft neben dem Pfeil
 			v.glow(WALD, 1.0)
@@ -170,13 +168,12 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 			if ziel_ansicht != null:
 				var ort := ziel_ansicht.center()
 				_hirschgeist(feld, v.home_feet() + Vector2(0, -60), ort, 0.45)
-				await _pfeil(feld, v.center(), ort, WALD.lightened(0.4), 0.45, 8.0)
+				await _pfeilflug(feld, v.center(), ort, 0.45, 0.65)
 				Geraeusche.play("kritisch", 0.6)
 				k._change_speed(0.3, 0.25)
 				k._shake(14.0)
 				k.screen_flash(WALD)
-				Fx.spawn(feld, Fx.Kind.RING, ort, WALD, 170.0, 0.5)
-				Fx.spawn(feld, Fx.Kind.SPARKS, ort, WALD, 170.0, 0.8)
+				FxBild.am_boden(feld, "waldlicht", ziel_ansicht.home_feet() + Vector2(0, 12), 0.8, 0.9)
 		"schleuder":
 			_pose(v)
 			Geraeusche.play("wurf")
@@ -196,8 +193,7 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 				_schneise(feld, ziel_ansicht.center(), v.center(), Color("fff3b0"))
 			await k.wait(0.28)
 			Geraeusche.play("treffer", 0.7)
-			Fx.spawn(feld, Fx.Kind.SPARKS, v.home_feet(), STAUB, 90.0 + 40.0 * seite, 0.5)
-			Fx.spawn(feld, Fx.Kind.RING, v.home_feet(), STAUB, 70.0 + 30.0 * seite, 0.3)
+			FxBild.am_boden(feld, "staubwolke", v.home_feet() + Vector2(0, 8), 0.5, 0.7 + 0.3 * seite)
 			if seite > 0:
 				_kuppel(feld, v.home_feet())
 		"anfeuern":
@@ -208,8 +204,7 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 				_huepfer(ziel_ansicht, 16.0, 0.1)
 				Geraeusche.play("treffer", 0.6)
 				ziel_ansicht.glow(Color("ff6060"), 0.7)
-				Fx.spawn(feld, Fx.Kind.RING, ziel_ansicht.home_feet(), Color("ff6060"), 80.0, 0.4)
-				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.center(), Color("ff8080"), 80.0, 0.6)
+				FxBild.am_boden(feld, "rote_funken", ziel_ansicht.home_feet() + Vector2(0, 10), 0.7, 0.6)
 		"pflege":
 			# Kniet sich zum Monster und gibt ihm eine Beere
 			var kniend := _kniefall(v)
@@ -217,14 +212,13 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 			kniend.kill()
 			v.body.position = v._home
 			if ziel_ansicht != null:
-				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.center(), WALD, 80.0, 0.7)
+				FxBild.spawn(feld, "heilung", ziel_ansicht.center() + Vector2(0, -20), 0.7, false, 0.0, 0.7)
 		"lockfutter":
 			_pose(v)
 			Geraeusche.play("wurf", 0.7)
 			if ziel_ansicht != null:
 				var ort := ziel_ansicht.center()
-				await _bogenwurf(feld, v.center(), ort, Color("e8c890"))
-				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.home_feet(), Color("e8c890"), 40.0, 0.4)
+				await _futterwurf(feld, v.center(), ziel_ansicht.home_feet() + Vector2(0, -20))
 				_zeichen(feld, ort + Vector2(0, -60), "?", Color("e8c890"))
 		"gemeinsam_blitz":
 			if ziel_ansicht != null:
@@ -235,7 +229,7 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 			# Grünes Licht strömt ins Monster, es wächst, der Boden wackelt
 			_pose(v)
 			if ziel_ansicht != null:
-				_schneise(feld, v.center(), ziel_ansicht.center(), WALD)
+				FxBild.spawn(feld, "wachstum", ziel_ansicht.center(), 0.6, false, 0.0, 0.7)
 				Geraeusche.play("kritisch", 0.5)
 				k._shake(6.0)
 				ziel_ansicht.glow(WALD, 0.7)
@@ -251,9 +245,7 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 			var quelle := ziel_ansicht if ziel_ansicht != null else v
 			Geraeusche.play("kritisch", 0.5)
 			k._shake(6.0)
-			for i in 3:
-				Fx.spawn(feld, Fx.Kind.RING, quelle.center(), Color("8fb8ff"), 140.0 + 70.0 * i, 0.45)
-				await k.wait(0.12)
+			await _schallwellen(feld, quelle, "bruellen", 0.45)
 		"eingeschuechtert":
 			if ziel_ansicht != null:
 				_taumeln(ziel_ansicht)
@@ -273,19 +265,19 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 		"rudelruf_ende":
 			Geraeusche.play("kritisch", 0.6)
 			if ziel_ansicht != null:
-				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.home_feet(), STAUB, 180.0, 0.8)
-				Fx.spawn(feld, Fx.Kind.RING, ziel_ansicht.home_feet(), STAUB, 170.0, 0.5)
+				FxBild.am_boden(feld, "staubwolke", ziel_ansicht.home_feet() + Vector2(0, 8), 0.7, 1.1)
+				FxBild.spawn(feld, "schockwelle", ziel_ansicht.home_feet(), 0.5, false, 0.0, 1.0)
 			k._change_speed(0.3, 0.25)
 			k._shake(14.0)
 		"hammer_treffer":
 			Geraeusche.play("parade", 0.6)
 			if ziel_ansicht != null:
-				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.center(), GLUT, 100.0, 0.5)
+				FxBild.spawn(feld, "hammer_funken", ziel_ansicht.center(), 0.5, false, 0.0, 0.7)
 				_symbol(feld, ziel_ansicht.center() + Vector2(0, -60), Color("ff5050"), PFEIL_RUNTER)
 		"schmiede_moment":
 			_pose(v)
 			Geraeusche.play("parade", 0.9)
-			Fx.spawn(feld, Fx.Kind.SPARKS, v.center(), GLUT, 70.0, 0.4)
+			FxBild.spawn(feld, "hammer_funken", v.center(), 0.4, false, 0.0, 0.5)
 			await k.wait(0.2)
 		"amboss":
 			# Der Amboss fällt vom Rücken in den Boden, alle Gegner schauen zu ihm
@@ -318,28 +310,29 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 			v.glow(Color.WHITE, 0.8)
 			await k.wait(0.3)
 			Geraeusche.play("wurf", 0.4)
-			Fx.spawn(feld, Fx.Kind.SPARKS, v.center(), Color(Color.WHITE, 0.7), 80.0, 0.6)
+			FxBild.spawn(feld, "kuehlung", v.center() + Vector2(0, -20), 0.8, false, 0.0, 0.7)
 		"gluehend":
 			_pose(v)
 			Geraeusche.play("zauber", 0.7)
 			v.glow(GLUT, 1.0)
 			Fx.spawn(feld, Fx.Kind.GLOW, v.center(), Color(GLUT, 0.5), 100.0, 0.8)
-			Fx.spawn(feld, Fx.Kind.SPARKS, v.center(), GLUT, 90.0, 0.8)
+			FxBild.am_boden(feld, "glut", v.home_feet(), 0.8, 0.7)
 			await k.wait(0.4)
 		"angesengt":
 			if ziel_ansicht != null:
 				ziel_ansicht.glow(GLUT, 0.4)
-				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.center(), GLUT, 60.0, 0.3)
+				FxBild.spawn(feld, "glut", ziel_ansicht.center(), 0.5, false, 0.0, 0.5)
 		"funkenflug":
 			if ziel_ansicht != null:
 				await _pfeil(feld, v.center(), ziel_ansicht.center(), GLUT, 0.15, 6.0)
-				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.center(), GLUT, 70.0, 0.3)
+				FxBild.spawn(feld, "glut", ziel_ansicht.center(), 0.4, false, 0.0, 0.45)
 		"ambossschlag":
 			_huepfer(v, 50.0, 0.2)
 			await k.wait(0.4)
 			Geraeusche.play("kritisch", 0.5)
-			Fx.spawn(feld, Fx.Kind.RING, v.home_feet(), GLUT, 300.0, 0.5)
-			Fx.spawn(feld, Fx.Kind.SPARKS, v.home_feet(), STAUB, 160.0, 0.7)
+			FxBild.spawn(feld, "risse", v.home_feet() + Vector2(0, 6), 0.6, false, 0.0, 0.9, 0.4).z_index = 2
+			FxBild.spawn(feld, "schockwelle", v.home_feet(), 0.5, false, 0.0, 1.5)
+			FxBild.am_boden(feld, "staubwolke", v.home_feet() + Vector2(0, 8), 0.7, 1.0)
 			k._change_speed(0.3, 0.2)
 			k._shake(16.0)
 			await k.wait(0.15)
@@ -361,12 +354,11 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 				Geraeusche.play("parade", 0.9)
 				_pose(v)
 				v.glow(farbe_teil, 0.3)
-				Fx.spawn(feld, Fx.Kind.SPARKS, v.center(), farbe_teil, 80.0, 0.35)
+				FxBild.spawn(feld, "hammer_funken", v.center(), 0.3, false, 0.0, 0.5).modulate = farbe_teil.lightened(0.3)
 				await k.wait(0.28)
 			Geraeusche.play("perfekt", 0.6)
 			v.glow(Color("f2c14e"), 1.2)
-			Fx.spawn(feld, Fx.Kind.SPARKS, v.center(), Color("f2c14e"), 170.0, 0.9)
-			Fx.spawn(feld, Fx.Kind.RING, v.center(), Color("f2c14e"), 150.0, 0.5)
+			FxBild.spawn(feld, "goldregen", v.center() + Vector2(0, -20), 1.0, false, 0.0, 0.8)
 			k.screen_flash(Color("f2c14e"))
 		"nachbild":
 			_nachbild(feld, v)
@@ -377,23 +369,18 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 		"kreuzschnitt":
 			Geraeusche.play("parade", 1.4)
 			if ziel_ansicht != null:
-				for winkel: float in [-0.8, 0.8]:
-					var spur := Fx.spawn(feld, Fx.Kind.SLASH, ziel_ansicht.center(), KLINGE, 60.0, 0.28)
-					spur.rotation = winkel
+				FxBild.spawn(feld, "kreuzschnitt", ziel_ansicht.center(), 0.35, false, 0.0, 0.7)
 		"klinge_neu":
-			Fx.spawn(feld, Fx.Kind.SPARKS, v.center() + Vector2(0, -30), KLINGE, 34.0, 0.3)
+			_funken(feld, v.center() + Vector2(0, -30), 0.4).modulate = KLINGE
 		"klinge_flug":
 			if ziel_ansicht != null:
-				_pfeil(feld, v.center(), ziel_ansicht.center(), KLINGE, 0.12, 3.0)
+				_klingenflug(feld, v.center(), ziel_ansicht.center(), 0.12)
 		"wirbel":
 			# Pirouette: ein Kreis aus Schnitt-Spuren, Sand wirbelt auf
 			_huepfer(v, 10.0, 0.12)
 			Geraeusche.play("wurf", 1.4)
-			for i in 6:
-				var richtung := Vector2.from_angle(TAU * i / 6.0)
-				var spur := Fx.spawn(feld, Fx.Kind.SLASH, v.center() + richtung * 56.0, KLINGE, 44.0, 0.3)
-				spur.rotation = richtung.angle()
-			Fx.spawn(feld, Fx.Kind.SPARKS, v.home_feet(), STAUB, 90.0, 0.5)
+			FxBild.spawn(feld, "wirbelkreis", v.center() + Vector2(0, 14), 0.4, not f.is_ally(), 0.0, 0.8)
+			FxBild.am_boden(feld, "staubwolke", v.home_feet() + Vector2(0, 8), 0.5, 0.7)
 			await k.wait(0.25)
 		"faecher":
 			_pose(v)
@@ -407,9 +394,9 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 			Geraeusche.play("treffer", 0.9)
 			if ziel_ansicht != null:
 				_huepfer(ziel_ansicht, 12.0, 0.1)
-				await _pfeil(feld, v.center(), ziel_ansicht.center(), KLINGE, 0.2, 4.0)
+				await _klingenflug(feld, v.center(), ziel_ansicht.center(), 0.2)
 				Geraeusche.play("perfekt", 1.7)
-				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.center(), KLINGE, 60.0, 0.5)
+				_funken(feld, ziel_ansicht.center(), 0.8).modulate = KLINGE
 		"kaefig":
 			_pose(v)
 			Geraeusche.play("wurf", 1.8)
@@ -422,14 +409,14 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 				var ort := ziel_ansicht.center()
 				for i in seite:
 					Geraeusche.play("wurf", 1.5 + 0.08 * i)
-					_pfeil(feld, v.center() + Vector2(0, -50 + 25 * i), ort, KLINGE.lightened(0.1 * i), 0.16, 4.0)
+					_klingenflug(feld, v.center() + Vector2(0, -50 + 25 * i), ort, 0.16)
 					await k.wait(0.08)
 				await k.wait(0.1)
-				Fx.spawn(feld, Fx.Kind.SPARKS, ort, KLINGE, 60.0 + 16.0 * seite, 0.4)
+				_funken(feld, ort, 0.6 + 0.12 * seite).modulate = KLINGE
 				if seite >= Fighter.MAX_BLADES:
 					Geraeusche.play("kritisch", 1.0)
 					Fx.spawn(feld, Fx.Kind.GLOW, ort, Color(KLINGE, 0.8), 150.0, 0.4)
-					Fx.spawn(feld, Fx.Kind.RING, ort, KLINGE, 190.0, 0.45)
+					FxBild.spawn(feld, "kreuzschnitt", ort, 0.4, false, 0.0, 1.0)
 					k.screen_flash(KLINGE)
 					k._change_speed(0.3, 0.2)
 		"schwarm":
@@ -439,34 +426,35 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 			if ziel_ansicht != null:
 				var ort := ziel_ansicht.center()
 				for i in 4:
-					_pfeil(feld, v.center() + Vector2(randf_range(-50, 50), randf_range(-70, 70)), ort, KLINGE, 0.2, 3.0)
-				Fx.spawn(feld, Fx.Kind.SLASH, ort, KLINGE, 50.0, 0.25)
+					_klingenflug(feld, v.center() + Vector2(randf_range(-50, 50), randf_range(-70, 70)), ort, 0.2)
+				FxBild.spawn(feld, "kreuzschnitt", ort, 0.3, false, 0.0, 0.6)
 		"sternenfunke":
 			_pose(v)
 			Geraeusche.play("perfekt", 1.9)
 			if ziel_ansicht != null:
-				await _bogenwurf(feld, v.center(), ziel_ansicht.center(), KOMET)
-				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.center(), KOMET, 60.0, 0.35)
+				await FxBild.flug(feld, "stern_flug", v.center(), ziel_ansicht.center(), 0.26, 0.5, 90.0)
+				_funken(feld, ziel_ansicht.center(), 0.8)
 		"lied":
 			# Sie spielt: ruhig (farbe Mond) oder schnell mit Schritt nach vorn (farbe Komet)
 			_pose(v)
 			_huepfer(v, 8.0, 0.14)
 			Geraeusche.play("zauber", 0.8 if farbe == MOND else 1.3)
+			FxBild.spawn(feld, "noten" if farbe == MOND else "noten_gold", v.center() + Vector2(0, -50), 0.7,
+					not f.is_ally(), 0.0, 0.7)
 			await k.wait(0.3)
 		"mond_ueber":
 			if ziel_ansicht != null:
-				_symbol(feld, ziel_ansicht.center() + Vector2(0, -60), MOND, STERN_FORM)
+				FxBild.spawn(feld, "mond", ziel_ansicht.center() + Vector2(0, -70), 0.5, false, 0.0, 0.45, 0.4)
 				ziel_ansicht.glow(MOND, 0.5)
 		"polarstern":
 			if ziel_ansicht != null:
-				var ort := ziel_ansicht.center()
-				_schneise(feld, ort + Vector2(0, -170), ort + Vector2(0, 50), MOND)
-				_symbol(feld, ort + Vector2(0, -170), MOND, STERN_FORM)
+				_lichtstrahl(feld, ziel_ansicht, 0.6).modulate = MOND.lightened(0.3)
 				ziel_ansicht.glow(MOND, 0.6)
 		"komet_um":
 			if ziel_ansicht != null:
 				ziel_ansicht.glow(KOMET, 0.6)
-				Fx.spawn(feld, Fx.Kind.RING, ziel_ansicht.center(), Color("ff8a3d"), 80.0, 0.4)
+				var ort := ziel_ansicht.center()
+				FxBild.flug(feld, "komet", ort + Vector2(-110, -30), ort + Vector2(110, -30), 0.35, 0.5, 50.0)
 		"mondkuppel":
 			if ziel_ansicht != null:
 				Geraeusche.play("perfekt", 0.8)
@@ -475,30 +463,29 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 			# Sternschnuppe von oben, die Tonleiter fällt (seite zählt die Schnuppen)
 			if ziel_ansicht != null:
 				var ort := ziel_ansicht.center()
-				await _pfeil(feld, ort + Vector2(160, -380), ort, KOMET, 0.15, 6.0)
+				var seitlich := -160.0 if f.is_ally() else 160.0
+				await FxBild.flug(feld, "stern_flug", ort + Vector2(-seitlich, -380), ort, 0.15, 0.5)
 				Geraeusche.play("treffer", maxf(1.7 - 0.12 * seite, 0.7))
-				Fx.spawn(feld, Fx.Kind.SPARKS, ort, KOMET, 70.0, 0.35)
+				_funken(feld, ort, 0.9)
 		"rueckkehr":
 			# Ein einzelner Stern sinkt auf den Gefallenen, Lichtfunken steigen auf
 			Geraeusche.play("perfekt", 0.9)
 			if ziel_ansicht != null:
 				var ort := ziel_ansicht.center()
-				await _pfeil(feld, ort + Vector2(0, -330), ort, KOMET, 0.4, 5.0)
-				Fx.spawn(feld, Fx.Kind.SPARKS, ort, Color("fff3b0"), 90.0, 0.7)
+				await FxBild.flug(feld, "stern_flug", ort + Vector2(0, -330), ort, 0.4, 0.5)
+				_lichtstrahl(feld, ziel_ansicht, 0.7)
+				FxBild.spawn(feld, "heilung", ort + Vector2(0, -20), 0.8, false, 0.0, 0.7)
 				_huepfer(ziel_ansicht, 14.0, 0.12)
 		"dissonanz":
 			_pose(v)
 			Geraeusche.play("parade", 0.4)
 			if ziel_ansicht != null:
-				for i in 2:
-					Fx.spawn(feld, Fx.Kind.RING, ziel_ansicht.center(), Color("ff5050"), 70.0 + 40.0 * i, 0.3)
-					await k.wait(0.1)
+				await _schallwellen(feld, v, "bruellen_rot", 0.35)
 				_zappeln(ziel_ansicht)
 		"sternenlicht":
 			if ziel_ansicht != null:
-				var ort := ziel_ansicht.center()
-				_schneise(feld, ort + Vector2(0, -320), ort, Color("fff3b0"))
-				Fx.spawn(feld, Fx.Kind.SPARKS, ort, Color("fff3b0"), 80.0, 0.6)
+				_lichtstrahl(feld, ziel_ansicht, 0.6)
+				FxBild.spawn(feld, "heilung", ziel_ansicht.center() + Vector2(0, -20), 0.7, false, 0.0, 0.7)
 
 
 ## Kleiner Sprung. Bewegt die ganze Ansicht, damit er neben einem laufenden Angriff funktioniert.
@@ -543,20 +530,45 @@ static func _pflaster(feld: Control, ort: Vector2) -> void:
 	tween.chain().tween_callback(zeichen.queue_free)
 
 
-## Kurze Schild-Kuppel über dem Gedeckten.
+## Kurze Schild-Kuppel über dem Gedeckten (gemalt, D9h).
 static func _kuppel(feld: Control, fuss: Vector2) -> void:
-	var bogen := Line2D.new()
-	bogen.position = fuss
-	bogen.width = 5.0
-	bogen.default_color = SCHILD
-	bogen.z_index = 8
-	for i in 25:
-		bogen.add_point(Vector2.from_angle(PI + PI * i / 24.0) * Vector2(70, 110))
-	feld.add_child(bogen)
-	Fx.spawn(feld, Fx.Kind.GLOW, fuss + Vector2(0, -50), Color(SCHILD, 0.3), 90.0, 0.7)
-	var tween := bogen.create_tween()
-	tween.tween_property(bogen, "modulate:a", 0.0, 0.3).set_delay(0.45)
-	tween.tween_callback(bogen.queue_free)
+	FxBild.am_boden(feld, "schild_kuppel", fuss + Vector2(0, 8), 0.75, 0.6)
+
+
+## Kurzer Funken-Einschlag (gemalt), z. B. wo ein Geschoss trifft. Gibt das Bild zurück, damit es eingefärbt werden kann.
+static func _funken(feld: Control, ort: Vector2, groesse: float) -> FxBild:
+	return FxBild.spawn(feld, "treffer_funken", ort, 0.3, false, 0.0, groesse)
+
+
+## Ein gemalter Pfeil fliegt zum Ziel.
+static func _pfeilflug(feld: Control, von: Vector2, nach: Vector2, sekunden: float, groesse := 0.5) -> void:
+	await FxBild.flug(feld, "pfeil_flug", von, nach, sekunden, groesse)
+
+
+## Eine gemalte Tänzerinnen-Klinge fliegt zum Ziel.
+static func _klingenflug(feld: Control, von: Vector2, nach: Vector2, sekunden: float) -> void:
+	await FxBild.flug(feld, "klinge_flug", von, nach, sekunden, 0.45)
+
+
+## Beeren und Körner fliegen im Bogen und verstreuen sich vor dem Monster.
+static func _futterwurf(feld: Control, von: Vector2, nach: Vector2) -> void:
+	var futter := FxBild.spawn(feld, "futter", von, 0.45, nach.x < von.x, 0.0, 0.5)
+	var tween := futter.create_tween()
+	tween.tween_method(func(t: float) -> void:
+		futter.position = von.lerp(nach, t) + Vector2(0, -360.0 * t * (1.0 - t)), 0.0, 1.0, 0.3)
+	await tween.finished
+
+
+## Gemalte Schallwellen laufen von der Figur zu den Gegnern.
+static func _schallwellen(feld: Control, quelle: FighterView, name: String, sekunden: float) -> void:
+	var richtung := -1.0 if quelle.fighter.is_ally() else 1.0
+	FxBild.spawn(feld, name, quelle.center() + Vector2(richtung * 80.0, 0), sekunden, richtung < 0.0, 0.0, 1.0)
+	await feld.get_tree().create_timer(sekunden).timeout
+
+
+## Gemalter Lichtstrahl, der von oben auf eine Figur fällt.
+static func _lichtstrahl(feld: Control, ziel: FighterView, sekunden: float) -> FxBild:
+	return FxBild.am_boden(feld, "lichtstrahl", ziel.home_feet() + Vector2(0, 6), sekunden, 0.9)
 
 
 ## Schuss-Haltung, wenn die Figur eine hat.
@@ -607,47 +619,13 @@ static func _schneise(feld: Control, von: Vector2, nach: Vector2, farbe: Color) 
 	tween.tween_callback(spur.queue_free)
 
 
-## Pfeile regnen nacheinander herab, ihre Schatten erscheinen vorher am Boden.
+## Pfeile regnen herab und bleiben kurz im Boden stecken (gemalt), mit drei Einschlag-Geräuschen.
 static func _regen(k: Control, feld: Control, fuss: Vector2) -> void:
+	FxBild.am_boden(feld, "pfeilregen", fuss + Vector2(0, 10), 0.6, 0.8, false, 0.3)
+	await k.wait(0.15)
 	for i in 3:
-		var ort := fuss + Vector2(randf_range(-46, 46), randf_range(-10, 10))
-		var schatten := Polygon2D.new()
-		var punkte := PackedVector2Array()
-		for winkel in 12:
-			punkte.append(Vector2.from_angle(TAU * winkel / 12.0) * Vector2(16, 6))
-		schatten.polygon = punkte
-		schatten.color = Color(0, 0, 0, 0.5)
-		schatten.position = ort
-		schatten.z_index = 1
-		feld.add_child(schatten)
-		await k.wait(0.1)
-		_pfeil(feld, ort + Vector2(30, -420), ort, Color("e8ffd0"), 0.14, 3.0)
-		await k.wait(0.14)
-		schatten.queue_free()
 		Geraeusche.play("treffer", 1.6)
-		Fx.spawn(feld, Fx.Kind.SPARKS, ort, STAUB, 30.0, 0.25)
-
-
-## Netz, das sich um den Gegner legt.
-static func _netz(feld: Control, ort: Vector2) -> void:
-	var netz := Node2D.new()
-	netz.position = ort
-	netz.z_index = 8
-	for i in range(-3, 4):
-		for richtung: float in [1.0, -1.0]:
-			var faden := Line2D.new()
-			faden.width = 2.0
-			faden.default_color = Color("f0ece0")
-			faden.add_point(Vector2(i * 16.0 - 44.0 * richtung, -44))
-			faden.add_point(Vector2(i * 16.0 + 44.0 * richtung, 44))
-			netz.add_child(faden)
-	netz.scale = Vector2(1.5, 1.5)
-	feld.add_child(netz)
-	var tween := netz.create_tween()
-	tween.tween_property(netz, "scale", Vector2.ONE, 0.15)
-	tween.tween_interval(0.5)
-	tween.tween_property(netz, "modulate:a", 0.0, 0.25)
-	tween.tween_callback(netz.queue_free)
+		await k.wait(0.1)
 
 
 ## Der Gegner zappelt im Netz.
@@ -658,30 +636,6 @@ static func _zappeln(v: FighterView) -> void:
 		tween.tween_property(v, "position:x", x - 5.0, 0.05)
 		tween.tween_property(v, "position:x", x + 5.0, 0.05)
 	tween.tween_property(v, "position:x", x, 0.05)
-
-
-## Rotes Fadenkreuz über dem Ziel.
-static func _fadenkreuz(feld: Control, ort: Vector2) -> void:
-	var kreuz := Node2D.new()
-	kreuz.position = ort
-	kreuz.z_index = 8
-	var ring := Line2D.new()
-	ring.width = 3.0
-	ring.default_color = Color("ff5050")
-	for i in 33:
-		ring.add_point(Vector2.from_angle(TAU * i / 32.0) * 42.0)
-	kreuz.add_child(ring)
-	for richtung: Vector2 in [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]:
-		var strich := Line2D.new()
-		strich.width = 3.0
-		strich.default_color = Color("ff5050")
-		strich.add_point(richtung * 28.0)
-		strich.add_point(richtung * 56.0)
-		kreuz.add_child(strich)
-	feld.add_child(kreuz)
-	var tween := kreuz.create_tween()
-	tween.tween_property(kreuz, "modulate:a", 0.0, 0.4).set_delay(0.9)
-	tween.tween_callback(kreuz.queue_free)
 
 
 ## Leuchtender Geist des Silberhirschs, läuft neben dem Pfeil her.
@@ -740,12 +694,14 @@ static func _symbol(feld: Control, ort: Vector2, farbe: Color, form: Array) -> v
 	tween.chain().tween_callback(zeichen.queue_free)
 
 
-## Ein gezeichneter Amboss fällt in den Boden, dann Staub und Wackeln.
+## Der gemalte Amboss fällt in den Boden, dann Risse, Staub und Wackeln.
 static func _amboss(k: Control, feld: Control, ort: Vector2) -> void:
-	var amboss := Polygon2D.new()
-	amboss.polygon = PackedVector2Array([Vector2(-36, -40), Vector2(36, -40), Vector2(22, -26), Vector2(10, -26), Vector2(14, -10),
-			Vector2(26, 0), Vector2(-26, 0), Vector2(-14, -10), Vector2(-10, -26), Vector2(-22, -26)])
-	amboss.color = Color("4a5058")
+	var amboss := Sprite2D.new()
+	amboss.texture = FxBild.bilder("amboss")[0]
+	amboss.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	amboss.scale = Vector2.ONE * FxBild.GROESSE * 0.4
+	amboss.offset = Vector2(0, -amboss.texture.get_height() * 0.5)
+	amboss.flip_h = ort.x > feld.size.x * 0.5
 	amboss.position = ort + Vector2(0, -160)
 	amboss.z_index = 7
 	feld.add_child(amboss)
@@ -754,8 +710,8 @@ static func _amboss(k: Control, feld: Control, ort: Vector2) -> void:
 	await tween.finished
 	Geraeusche.play("treffer", 0.4)
 	k._shake(10.0)
-	Fx.spawn(feld, Fx.Kind.SPARKS, ort, STAUB, 110.0, 0.5)
-	Fx.spawn(feld, Fx.Kind.RING, ort, STAUB, 120.0, 0.35)
+	FxBild.spawn(feld, "risse", ort, 0.5, false, 0.0, 0.6, 0.4).z_index = 2
+	FxBild.am_boden(feld, "staubwolke", ort + Vector2(0, 6), 0.5, 0.7)
 	var weg := amboss.create_tween()
 	weg.tween_property(amboss, "modulate:a", 0.0, 0.3).set_delay(0.6)
 	weg.tween_callback(amboss.queue_free)
@@ -779,36 +735,27 @@ static func _nachbild(feld: Control, v: FighterView) -> void:
 	tween.tween_callback(bild.queue_free)
 
 
-## Breite Sichel aus Licht, die über die Gegner fegt.
+## Breite gemalte Sichel aus Licht, die über die Gegner fegt (Bauch voran).
 static func _sichel(feld: Control, von: Vector2, richtung: float) -> void:
-	var sichel := Line2D.new()
-	sichel.width = 16.0
-	sichel.default_color = KLINGE
-	sichel.material = Fx.add_material()
-	sichel.z_index = 8
-	for i in 17:
-		var winkel := (-0.9 + 1.8 * i / 16.0) + (0.0 if richtung > 0.0 else PI)
-		sichel.add_point(Vector2.from_angle(winkel) * 150.0)
-	sichel.position = von
-	feld.add_child(sichel)
+	var sichel := FxBild.spawn(feld, "sichel", von, 0.28, richtung > 0.0, 0.0, 1.0)
 	var tween := sichel.create_tween()
 	tween.tween_property(sichel, "position:x", von.x + richtung * 760.0, 0.28)
 	await tween.finished
-	sichel.queue_free()
 
 
-## Drei Klingen drehen sich als Ring um das Ziel.
+## Drei gemalte Klingen drehen sich als Ring um das Ziel.
 static func _klingenring(feld: Control, ort: Vector2) -> void:
 	var ring := Node2D.new()
 	ring.position = ort
 	ring.z_index = 8
 	for i in 3:
-		var klinge := Line2D.new()
-		klinge.width = 5.0
-		klinge.default_color = KLINGE
+		var klinge := Sprite2D.new()
+		klinge.texture = FxBild.bilder("klinge_flug")[0]
+		klinge.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		klinge.scale = Vector2.ONE * FxBild.GROESSE * 0.4
 		var richtung := Vector2.from_angle(TAU * i / 3.0)
-		klinge.add_point(richtung * 44.0)
-		klinge.add_point(richtung.rotated(0.6) * 62.0)
+		klinge.position = richtung * 60.0
+		klinge.rotation = richtung.angle() + PI * 0.5
 		ring.add_child(klinge)
 	feld.add_child(ring)
 	var tween := ring.create_tween()
