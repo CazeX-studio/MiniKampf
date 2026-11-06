@@ -71,6 +71,18 @@ static func code() -> String:
 	return str(_daten.get("code", ""))
 
 
+## Hat der Tester „Abschluss melden“ gedrückt?
+static func gemeldet() -> bool:
+	_laden()
+	return bool(_daten.get("gemeldet", false))
+
+
+static func melden() -> void:
+	_laden()
+	_daten.gemeldet = true
+	_speichern()
+
+
 static func durchgespielt() -> bool:
 	_laden()
 	return bool(_daten.get("durchgespielt", false))

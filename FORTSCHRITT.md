@@ -53,7 +53,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - **Startseite:** Knopf „Demo testen“, Abschnitt „So testest du“ (Spitzname, Feedback, Tester-Code, Browser), Versionsnummer, „Alle Rechte vorbehalten“ (auch als `LICENSE.md` im Repo).
   - **Spitzname:** Vor dem ersten Spielen fragt die Demo nach einem Spitznamen, danach ist er fest. Dazu bekommt jeder Tester eine Nummer (z. B. T-XGFDJ6). Beides bleibt im Browser, auch bei „Neu beginnen“, und steht unten rechts im Menü mit der Version.
   - **Feedback:** In der Welt oben rechts ein Knopf „Feedback“, im Menü „Danke & Feedback“ mit der Dankesliste (`data/dankesliste.json`, noch leer). Der Knopf öffnet dein Formular mit Spitzname, Nummer, Version und Ort schon ausgefüllt. **Das Formular fehlt noch** (deine Aufgabe, siehe unten), bis dahin sagt der Knopf, dass es bald kommt.
-  - **Tester-Code:** Am Ende von Grünwacht oder der Glutoase zeigt das Spiel den Code (z. B. AST-KWG2-V3RG) und den Knopf „Abschluss melden“. Jeder Tester bekommt genau einen Code.
+  - **Tester-Code:** Am Ende von Grünwacht oder der Glutoase zeigt das Spiel den Code (z. B. AST-KWG2-V3RG) und den Knopf „Abschluss melden“ als einzigen Knopf; erst danach kommen „Zurück“ und „Zum Menü“ (wer schon gemeldet hat, sieht gleich alle). Jeder Tester bekommt genau einen Code.
   - Der kurze Hilfetext oben links in der Welt heißt jetzt „Weiter: F“, damit er nicht unter die Knöpfe läuft.
   - **So testest du es:**
     1. Startseite öffnen: Knopf „Demo testen“, darunter „So testest du“ und die Version.

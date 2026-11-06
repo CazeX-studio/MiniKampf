@@ -99,14 +99,9 @@ func _region(box: VBoxContainer, region: String) -> void:
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	row.add_theme_constant_override("separation", 24)
 	box.add_child(row)
-	var melden := Button.new()
-	melden.text = GameData.text("abschluss_melden")
-	melden.custom_minimum_size = Vector2(260, 60)
-	melden.add_theme_font_size_override("font_size", 20)
-	melden.pressed.connect(func() -> void:
-		if not Tester.formular_oeffnen("Demo durchgespielt", info.titel):
-			Tester.hinweis_fenster(self, GameData.text("feedback_titel"), GameData.text("feedback_fehlt")))
-	row.add_child(melden)
+	# Erst „Abschluss melden“ (einziger Knopf), danach zurück oder ins Menü (Marco, 06.11.).
+	# Wer schon gemeldet hat, sieht gleich alle Knöpfe.
+	var weiter_knoepfe: Array[Button] = []
 	for knopf: Array in [[info.zurueck, "res://scenes/kreuzweg.tscn"], ["Zum Menü", "res://scenes/menu.tscn"]]:
 		var button := Button.new()
 		button.text = knopf[0]
@@ -116,8 +111,24 @@ func _region(box: VBoxContainer, region: String) -> void:
 		button.pressed.connect(func() -> void:
 			variante = ""
 			get_tree().change_scene_to_file(target))
-		row.add_child(button)
-
+		button.visible = Tester.gemeldet()
+		weiter_knoepfe.append(button)
+	var melden := Button.new()
+	melden.text = GameData.text("abschluss_melden")
+	melden.custom_minimum_size = Vector2(320, 60)
+	melden.add_theme_font_size_override("font_size", 20)
+	melden.visible = not Tester.gemeldet()
+	melden.pressed.connect(func() -> void:
+		# Ohne Formular (noch nicht verbunden) geht es trotzdem weiter, sonst säße man fest
+		if not Tester.formular_oeffnen("Demo durchgespielt", info.titel):
+			Tester.hinweis_fenster(self, GameData.text("feedback_titel"), GameData.text("feedback_fehlt"))
+		Tester.melden()
+		melden.visible = false
+		for b in weiter_knoepfe:
+			b.visible = true)
+	row.add_child(melden)
+	for b in weiter_knoepfe:
+		row.add_child(b)
 
 func _label(text: String, font_size: int, color: Color) -> Label:
 	var label := Label.new()

@@ -28,9 +28,12 @@ func _run() -> void:
 	_check(texts.contains("Silberhirsch verschont") and texts.contains("Urbaum lebt") and texts.contains("Wahrheit über Rowan"), "Rückblick auf die Entscheidungen")
 	_check(not texts.contains("gefallen") and not texts.contains("Kobalt"), "Nur, was man selbst entschieden hat")
 	var buttons := current_scene.find_children("*", "Button", true, false)
-	# S1: zuerst „Abschluss melden“, dann zurück und Menü; dazu der Tester-Code
+	# S1: erst nur „Abschluss melden“, danach zurück und Menü; dazu der Tester-Code
 	_check(buttons.size() == 3 and buttons[0].text == "Abschluss melden" and buttons[1].text == "Zurück nach Wipfelheim", "Knöpfe: Abschluss melden, Zurück nach Wipfelheim")
+	_check(buttons[0].visible and not buttons[1].visible and not buttons[2].visible, "Zuerst nur Abschluss melden")
 	_check(Tester.code() != "" and texts.contains(Tester.code()), "Tester-Code steht da")
+	buttons[0].pressed.emit()
+	_check(not buttons[0].visible and buttons[1].visible and buttons[2].visible and Tester.gemeldet(), "Nach dem Melden: zurück oder Menü")
 	buttons[1].pressed.emit()
 	await _frames(5)
 	_check(current_scene.has_method("local_player") and current_scene.local_player().map == "wipfelheim", "Zurück in Wipfelheim")
@@ -51,6 +54,7 @@ func _run() -> void:
 	buttons = current_scene.find_children("*", "Button", true, false)
 	_check(buttons.size() == 3 and buttons[1].text == "Zurück in die Glutoase", "Knopf: Zurück in die Glutoase")
 	_check(texts.contains(Tester.code()), "Derselbe Tester-Code am zweiten Ende")
+	_check(not buttons[0].visible and buttons[1].visible, "Schon gemeldet: gleich alle Wege")
 	SaveGame.delete()
 	SaveGame.path = SaveGame.DEFAULT_PATH
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(Tester.datei))
