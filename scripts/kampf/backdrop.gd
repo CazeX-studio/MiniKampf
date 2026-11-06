@@ -7,6 +7,10 @@ extends Control
 ## "vulkanschmiede" (Glutoase: alte Schmiede im Berg mit Lavafluss, Essen und Ketten).
 
 const TILE_PATH := "res://assets/0x72_dungeontileset_ii/%s.png"
+const BILD_PATH := "res://assets/kampf_hintergruende/%s.png"
+## Die gemalten Bilder haben den Horizont etwa in der Mitte, die Kämpfer stehen höher (Füße ab 258):
+## Das Bild wird um so viel nach oben geschoben, unten wird der Boden aus dem untersten Streifen ergänzt.
+const BILD_HOCH := 120.0
 ## Kacheln sind 16 Pixel groß und werden 4-fach vergrößert.
 const SCALE := 4.0
 const TILE := 64.0
@@ -32,6 +36,7 @@ const FIGHTER_LIGHT := {
 	"marktplatz_nacht": Color(0.8, 0.8, 0.98),
 	"wald": Color(0.92, 0.98, 0.86),
 	"vulkanschmiede": Color(1.0, 0.82, 0.72),
+	"ankerkammer": Color(1.0, 0.82, 0.72),
 }
 ## Vulkanschmiede: Essen an der Wand (x) und Ketten, die von der Decke hängen (x, Länge)
 const FORGE_ESSEN: Array[float] = [150.0, 640.0, 1130.0]
@@ -45,6 +50,8 @@ var _lights: Node2D
 ## Stil des Ortes (vor dem Einhängen setzen), weitere Orte in BackdropOrte
 var style := "gewoelbe"  # oder "wiese", "wiese_nacht", "marktplatz_nacht", "wald", "pilzhoehle", "vulkanschmiede"
 var _stars: Array[Vector2] = []
+## Gemaltes Bild des Ortes (assets/kampf_hintergruende/<stil>.png, Teil F im Grafik-Auftrag); ohne Bild zeichnet das Spiel selbst
+var _bild: Texture2D
 ## Nacht nach der Uhr: 0 = Tag, 1 = tiefe Nacht (nur Orte unter freiem Himmel, siehe nacht_fuer)
 var nacht := 0.0
 
@@ -69,6 +76,9 @@ func _ready() -> void:
 		_wall_pick.append(name)
 	for i in 70:
 		_stars.append(Vector2(rng.randf_range(0, 1280), rng.randf_range(0, 150)))
+
+	if ResourceLoader.exists(BILD_PATH % style):
+		_bild = load(BILD_PATH % style)
 
 	_lights = Node2D.new()
 	# Nachts verblasst das Sonnenlicht, Mond, Laternen und Glut bleiben (siehe BackdropOrte.mond)
@@ -109,7 +119,10 @@ static func nacht_fuer(p_style: String) -> float:
 
 
 func _draw() -> void:
-	_draw_style()
+	if _bild:
+		_draw_bild()
+	else:
+		_draw_style()
 	BackdropOrte.nacht_schicht(self, style)
 
 
@@ -183,10 +196,24 @@ func _draw_torch(base: Vector2, seed_value: int) -> void:
 		draw_rect(Rect2(base.x - w * p * 0.5 + sway, base.y - (i + 1) * p, w * p, p), color)
 
 
+## Gemaltes Bild, nach oben geschoben (BILD_HOCH); die Lücke unten füllt der unterste Bodenstreifen.
+func _draw_bild() -> void:
+	var w := float(_bild.get_width())
+	var h := float(_bild.get_height())
+	draw_texture_rect(_bild, Rect2(0, -BILD_HOCH, 1280, 720), false)
+	var quelle := h * BILD_HOCH / 720.0
+	draw_texture_rect_region(_bild, Rect2(0, 720 - BILD_HOCH, 1280, BILD_HOCH), Rect2(0, h - quelle, w, quelle))
+
+
 ## Lichtflecken (werden addiert und hellen die Szene auf).
 func _draw_lights() -> void:
 	if nacht > 0.0 and style in BackdropOrte.DRAUSSEN:
 		BackdropOrte.mond(self)
+	if _bild:
+		# Das gemalte Bild bringt sein Licht mit, nur die Kämpfer stehen in einem leichten Schein
+		var glow := Fx.glow_texture()
+		_lights.draw_texture_rect(glow, Rect2(Vector2(0, 150), Vector2(1280, 430)), false, Color(1.0, 0.9, 0.75, 0.08))
+		return
 	if style in BackdropOrte.STILE:
 		BackdropOrte.licht(self, style)
 		return
@@ -500,7 +527,7 @@ func _add_dust() -> void:
 	dust.scale_amount_max = 4.0
 	var ramp := Gradient.new()
 	var tone := Color(0.8, 0.65, 1.0) if style == "pilzhoehle" else Color(1.0, 0.55, 0.2) if style == "vulkanschmiede" else Color(1, 0.85, 0.6) if style == "gewoelbe" else (Color(0.8, 1.0, 0.5) if style in ["wiese_nacht", "wald"] else Color(1, 1, 0.85))
-	tone = BackdropOrte.STAUB.get(style, tone)
+	tone = BackdropOrte.STAUB.get(style, Color(1.0, 0.55, 0.2) if style == "ankerkammer" else tone)
 	ramp.set_color(0, Color(tone, 0))
 	ramp.add_point(0.3, Color(tone, 0.45))
 	ramp.add_point(0.7, Color(tone, 0.35))

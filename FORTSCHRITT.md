@@ -40,6 +40,13 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     2. Ye's Lektion oder eine Probestunde: Kampf auf den Feldern vor Kreuzweg.
     3. Kobalt in Wipfelheim oder Kael in Hadraks Schmiede herausfordern.
     4. Mit dem Testknopf in der Tasche die Uhr auf Nacht stellen und ein Monster draußen angreifen: Der Kampf ist dunkel, mit Mond.
+
+- **Neu (06.11.): Gemalte Kampf-Hintergründe von ChatGPT (Teil F):** Alle 15 Bilder sind eingebaut, dazu die Ankerkammer (V3) für die Hammerbrüder und den Kettenschmied. Die übrigen Kämpfe in der Vulkanschmiede zeigen die Schmiedehallen. Die Bilder sind ein Stück nach oben geschoben, damit die Kämpfer auf dem Boden stehen. Nachts werden sie draußen dunkler. Die gezeichneten Hintergründe bleiben nur noch als Ersatz (Gewölbe in der Kampf-Sandbox).
+  - **So testest du es:**
+    1. Ye's Lektion: Kampf vor Windmühle, Feldern und Stadtmauer.
+    2. Je ein Monster auf dem Weg nach Grünwacht, im Waldboden, in der Tiefwurzel, in der Aschensteppe (Norden und Süden), in der Palmenrast und auf dem Glutgrat angreifen: überall das gemalte Bild.
+    3. Hammerbrüder oder Kettenschmied: Kampf in der Ankerkammer mit den drei Ankern.
+    4. Stehen die Figuren überall gut auf dem Boden? Sonst sag Bescheid, dann schiebe ich die Bilder anders.
     4. In Kreuzweg ein Silberkraut ansehen, als Klingentänzerin Klingen sammeln.
 
 - **Neu (05.11.): E3a und E3i Wegweiser und Abschied ohne Versetzen:** Nach dem Abschied von Ye wird man nicht mehr versetzt. Ye sagt: „Geh zur Torwache, sie kennt den Weg in deine Region.“ Am Westtor (Grünwacht) und am Südtor (Glutoase) steht jetzt je eine Torwache; der Wegweiser führt zu ihr. Sie nennt den Weg, „Losgehen.“ zeigt das Ende von Akt 1 (bei Glutoase-Klassen jetzt mit Südstraße und „Weiter in die Glutoase“), danach läuft man selbst durchs Tor. Auf dem Weg zeigt der Wegweiser weiter bis Wipfelheim bzw. bis zur Glutoase und zum Oberhaupt, danach zum Lehrmeister.

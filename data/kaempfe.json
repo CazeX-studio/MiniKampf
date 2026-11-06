@@ -669,7 +669,7 @@
 			]
 		],
 		"gegner_stufe": 18,
-		"hintergrund": "vulkanschmiede",
+		"hintergrund": "ankerkammer",
 		"erfahrung": 900,
 		"merken": "lauf:hammerbrueder",
 		"verloren_text": "Die Hämmer dröhnen in deinem Kopf. Du kommst am Eingang der Vulkanschmiede wieder zu dir.",
@@ -700,7 +700,7 @@
 			]
 		],
 		"gegner_stufe": 20,
-		"hintergrund": "vulkanschmiede",
+		"hintergrund": "ankerkammer",
 		"erfahrung": 1500,
 		"merken": "lauf:kettenschmied",
 		"verloren_text": "Die Glut schlägt über dir zusammen. Du kommst am Eingang der Vulkanschmiede wieder zu dir.",

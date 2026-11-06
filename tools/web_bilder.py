@@ -1,6 +1,6 @@
 """Bilder für das Web kleiner machen (D36), ohne ihre Größe im Spiel zu ändern.
 
-Gemalte Bilder (Figuren, Porträts, Figurteile, Baukasten-Objekte) werden beim Import verlustbehaftet gespeichert
+Gemalte Bilder (Figuren, Porträts, Figurteile, Baukasten-Objekte, Kampf-Hintergründe) werden beim Import verlustbehaftet gespeichert
 (WebP, Qualität 0,8) statt verlustfrei. Das macht sie etwa viermal kleiner, man sieht keinen Unterschied.
 Pixel-Grafik, Oberfläche, Effekte und Bodenkacheln bleiben verlustfrei (dort würden Ränder und Nähte unscharf),
 ebenso kleine Bilder unter KLEIN Punkten und die Probe-Figur Kofi (sparen kaum etwas, dort sieht man die Abweichung eher).
@@ -13,7 +13,7 @@ import sys
 from pathlib import Path
 
 WURZEL = Path(__file__).resolve().parent.parent
-ORDNER = ["assets/figuren", "assets/portraets", "assets/teile", "assets/baukasten/objekte"]
+ORDNER = ["assets/figuren", "assets/portraets", "assets/teile", "assets/baukasten/objekte", "assets/kampf_hintergruende"]
 QUALITAET = "0.8"
 ## Bilder, deren längere Seite kleiner ist, bleiben verlustfrei
 KLEIN = 100
