@@ -1,5 +1,5 @@
 extends Control
-## Startmenü: Demo spielen, zusammen spielen oder Werkzeuge zum Testen (Editor).
+## Startmenü: Demo spielen, zusammen spielen und Werkzeuge zum Testen (Editor, nur Werkstatt) oder Dankesliste und Feedback (Demo).
 
 const SCREEN := Vector2(1280, 720)
 const LOGO_GROSS := Rect2(140, 110, 1000, 400)
@@ -40,7 +40,12 @@ func _ready() -> void:
 	_add_button("Kreuzweg-Demo\nDie erste Stunde als Novize", Vector2(40, 300), "",
 			func() -> String: return "res://scenes/kreuzweg.tscn" if SaveGame.exists() else "res://scenes/figur_erstellen.tscn")
 	_add_button("Zusammen spielen\nMit bis zu 4 Spielern in Kreuzweg", Vector2(450, 300), "res://scenes/zusammen.tscn")
-	_add_button("Editor\nTesten: Baukasten, Vega, Sandbox, Akte", Vector2(860, 300), "res://scenes/editor.tscn")
+	# Editor nur in der Werkstatt-Fassung und im Godot-Editor (S1), in der Demo stattdessen Dankesliste und Feedback
+	if Tester.werkzeuge():
+		_add_button("Editor\nTesten: Baukasten, Vega, Sandbox, Akte", Vector2(860, 300), "res://scenes/editor.tscn")
+	else:
+		_add_button(GameData.text("menu_danke"), Vector2(860, 300), "", Callable(), _danke_zeigen)
+	_version_zeigen()
 
 	# Server ohne Grafik: Godot --headless --path . -- --server
 	if "--server" in OS.get_cmdline_user_args():
@@ -125,8 +130,34 @@ func _start_server() -> void:
 		get_tree().quit(1)
 
 
+## Version und Tester unten rechts (S1)
+func _version_zeigen() -> void:
+	var label := Label.new()
+	var text := "Version " + Tester.version()
+	if Tester.spitzname() != "":
+		text += "\n" + GameData.text("tester_info", [Tester.spitzname(), Tester.nummer()])
+	label.text = text
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+	label.size = Vector2(600, 60)
+	label.position = Vector2(SCREEN.x - 616, SCREEN.y - 70)
+	label.add_theme_font_size_override("font_size", 15)
+	label.add_theme_color_override("font_color", Color(1, 1, 1, 0.55))
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_inhalt.add_child(label)
+
+
+## Dankesliste der Tester und Feedback-Knopf
+func _danke_zeigen() -> void:
+	var namen := Tester.dankesliste()
+	var text := GameData.text("danke_leer") if namen.is_empty() else " · ".join(PackedStringArray(namen))
+	Tester.hinweis_fenster(self, GameData.text("danke_titel"), text,
+			[[GameData.text("feedback_titel"), func() -> void: Tester.feedback(self, "Menü")]])
+
+
 ## ziel_von: wenn gesetzt, bestimmt es erst beim Drücken, wohin es geht (statt scene).
-func _add_button(text: String, pos: Vector2, scene: String, ziel_von := Callable()) -> void:
+## aktion: statt eines Szenenwechsels etwas anderes tun.
+func _add_button(text: String, pos: Vector2, scene: String, ziel_von := Callable(), aktion := Callable()) -> void:
 	var button := Button.new()
 	button.text = text
 	button.position = pos
@@ -134,5 +165,13 @@ func _add_button(text: String, pos: Vector2, scene: String, ziel_von := Callable
 	button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	button.add_theme_font_size_override("font_size", 22)
 	button.pressed.connect(func() -> void:
-		get_tree().change_scene_to_file(ziel_von.call() if ziel_von.is_valid() else scene))
+		if aktion.is_valid():
+			aktion.call()
+			return
+		var ziel: String = ziel_von.call() if ziel_von.is_valid() else scene
+		# Vor dem ersten Spielen in der Demo: Spitzname des Testers (S1)
+		if Tester.spitzname_noetig() and ziel != "res://scenes/editor.tscn":
+			Tester.spitzname_fenster(self, func() -> void: get_tree().change_scene_to_file(ziel))
+			return
+		get_tree().change_scene_to_file(ziel))
 	_inhalt.add_child(button)

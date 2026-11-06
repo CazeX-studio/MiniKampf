@@ -181,5 +181,21 @@
 	"laden_nichts_verkaufen": "Nichts zum Verkaufen.",
 	"schliessen": "Schließen",
 	"erfolg": "Erfolg freigeschaltet: %s",
-	"erfolge": "Erfolge"
+	"erfolge": "Erfolge",
+	"tester_titel": "Willkommen, Tester!",
+	"tester_erklaerung": "Danke, dass du die Demo testest. Wie sollen wir dich nennen? Dein Spitzname (höchstens %d Zeichen) steht später in deinem Feedback und auf Wunsch in der Dankesliste im Spiel. Er lässt sich danach nicht mehr ändern. Bitte keinen echten vollen Namen und keine E-Mail-Adresse.",
+	"tester_platzhalter": "Dein Spitzname",
+	"tester_festlegen": "Spitzname festlegen",
+	"tester_leer": "Bitte gib einen Spitznamen ein.",
+	"feedback": "Feedback",
+	"feedback_titel": "Feedback geben",
+	"feedback_fehlt": "Das Feedback-Formular ist noch nicht verbunden. Bald öffnet dieser Knopf ein kurzes Formular, in dem dein Spitzname schon eingetragen ist.",
+	"danke_titel": "Danke an unsere Tester",
+	"danke_leer": "Hier stehen bald die Spitznamen aller, die die Demo getestet haben.",
+	"menu_danke": "Danke & Feedback\nDankesliste der Tester, Rückmeldung geben",
+	"tester_info": "Tester: %s (%s)",
+	"abschluss_titel": "Demo durchgespielt!",
+	"abschluss_text": "Danke fürs Durchspielen, %s! Dein Tester-Code:",
+	"abschluss_hinweis": "Melde deinen Abschluss mit dem Knopf unten, dann ist dein Code bei uns eingetragen. Zum Start des fertigen Spiels gibst du ihn ein und bekommst eine Belohnung als Dankeschön.",
+	"abschluss_melden": "Abschluss melden"
 }

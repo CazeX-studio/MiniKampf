@@ -32,9 +32,9 @@ extends RefCounted
 ##   {type = "karte_verkaufen", karte = "…"}  eine doppelte Karte an einen Laden mit "karten_ankauf" verkaufen (D16)
 ##   {type = "karte_verbessern", karte = "…"}  Karte mit einer doppelten und Bronze verbessern, bis +10 (D17)
 ##   {type = "hut_tauschen", hut = "…"}  bei Hatta Monster-Beute und Bronze gegen einen Hut tauschen (D20a)
-##   {type = "test_album", seite = 0}  Testknopf: alle Karten einer Album-Seite geben (nur im Godot-Editor)
+##   {type = "test_album", seite = 0}  Testknopf: alle Karten einer Album-Seite geben (nur im Godot-Editor und in der Werkstatt)
 ##   {type = "beute_nehmen", gegenstand = "…"} / {type = "beute_lassen"}  Beute, die nicht in die Tasche gepasst hat
-##   {type = "test_geld", bronze = 75} / {type = "test_tasche"} / {type = "test_beute"}  Testknöpfe (nur im Godot-Editor)
+##   {type = "test_geld", bronze = 75} / {type = "test_tasche"} / {type = "test_beute"}  Testknöpfe (nur im Godot-Editor und in der Werkstatt)
 ##   {type = "karten_ergebnis", gegner = "marv", gewonnen = true, unentschieden = false}  Ende einer Partie Kreuzweg-Karten
 ## Auf eine andere Karte kommt man über Ausgänge am Rand (hineinlaufen) oder über Orte mit der Aktion "reisen" (Seilaufzug).
 ## Monster in der Wildnis ("monster:<Nummer>", aus data/karten.json): hineinlaufen oder antippen startet den Kampf.
@@ -446,8 +446,8 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 		"benutzen":
 			_use_item(p, str(cmd.get("gegenstand", "")))
 		"test_geld":
-			# Testknopf in der Tasche (nur beim Ausprobieren im Godot-Editor, nicht im fertigen Spiel)
-			if OS.is_debug_build():
+			# Testknopf in der Tasche (nur im Godot-Editor und in der Werkstatt, nicht in der Demo)
+			if Tester.werkzeuge():
 				_give_gold(p, clampi(int(cmd.get("bronze", 0)), 0, 1000000))
 				progress_changed.emit(p.id)
 		"wegwerfen":
@@ -463,7 +463,7 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 		"hut_tauschen":
 			_trade_hat(p, str(cmd.get("hut", "")))
 		"test_album":
-			if OS.is_debug_build():
+			if Tester.werkzeuge():
 				var seiten := KartenAlbum.seiten()
 				var nummer := int(cmd.get("seite", 0))
 				if nummer >= 0 and nummer < seiten.size():
@@ -481,13 +481,13 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			p.progress.loot.clear()
 			progress_changed.emit(p.id)
 		"test_beute":
-			# Testknopf in der Tasche: Beute wie nach einem Sieg (nur im Godot-Editor)
-			if OS.is_debug_build():
+			# Testknopf in der Tasche: Beute wie nach einem Sieg (nur im Godot-Editor und in der Werkstatt)
+			if Tester.werkzeuge():
 				give_loot(p, {testruestung = 1})
 				progress_changed.emit(p.id)
 		"test_tasche":
-			# Testknopf in der Tasche: alle freien Kästchen mit Testkieseln füllen (nur im Godot-Editor)
-			if OS.is_debug_build():
+			# Testknopf in der Tasche: alle freien Kästchen mit Testkieseln füllen (nur im Godot-Editor und in der Werkstatt)
+			if Tester.werkzeuge():
 				var n := 1
 				while p.progress.used_slots() < Progress.BAG_SIZE:
 					if not p.progress.items.has("testkiesel_%d" % n):

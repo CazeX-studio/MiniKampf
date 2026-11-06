@@ -53,11 +53,20 @@ jobs:
           # Gemalte Bilder verlustbehaftet speichern (etwa viermal kleiner, tools/web_bilder.py)
           python3 tools/web_bilder.py
           ~/godot/godot --headless --import || true
-          # Das Spiel liegt unter spiel/, davor die Startseite der Demo (web/index.html, D36)
+          # Versionsnummer (S1): Datum und Stand, steht im Spiel und auf der Startseite
+          version="Demo $(date -u +%Y-%m-%d) ($(git rev-parse --short HEAD))"
+          printf '{\n\t"version": "%s"\n}\n' "$version" > data/version.json
+          # Die Demo liegt unter spiel/ (ohne Editor und Testknöpfe), davor die Startseite (web/index.html, D36)
           mkdir -p builds/web/spiel
           ~/godot/godot --headless --export-release "Web" builds/web/spiel/index.html
           test -f builds/web/spiel/index.html
+          # Werkstatt (S1): dieselbe Fassung mit Editor und Testknöpfen, unter einer nicht verlinkten Adresse
+          werkstatt=$(python3 -c "import json; print(json.load(open('data/demo.json'))['werkstatt'])")
+          mkdir -p "builds/web/$werkstatt"
+          ~/godot/godot --headless --export-release "Werkstatt" "builds/web/$werkstatt/index.html"
+          test -f "builds/web/$werkstatt/index.html"
           cp -r web/index.html web/bilder builds/web/
+          sed -i "s|__VERSION__|$version|g" builds/web/index.html
           test -f builds/web/index.html
 
       - uses: actions/upload-pages-artifact@v3

@@ -11,7 +11,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** Demo-Start S1 (Demo und Editor trennen, Startseite, Feedback, Version), dann S2 bis S5 (Editoren), danach E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing).
+- **Nächster Schritt:** Demo-Start S2 (Kampf-Editor), dann S3 bis S5 (Editoren), danach E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Offen von S1: Marcos Google-Formular verbinden.
 
 - **Neu (04.11.): D25b Körper von Rüstungsschmied und Sternensängerin** (2.11): Deine Blätter sind eingebaut: Rüstungsschmied (m) und Rüstungsschmiedin (w) in Rüstung mit Lederschürze und rotem Halstuch, die Sternensängerin (w) im hellen Gewand mit dunkelblauem Schal. Je mit Stehen, Laufen, Abwehr, Treffer, Angriff, Fallen, Sieg und Fähigkeit im Kampf, in der Welt schräg von vorne und hinten. Wer die Klasse gelernt hat, trägt sie mit seinem eigenen Kopf, auch in der Probestunde. Ausgebessert: die gelben Funken im Treffer-Bild des Schmieds und das rote Halstuch in einem Siegesbild der Sängerin. Noch nicht drin: ein männlicher Sternensänger (der kämpft weiter in der Klassenfigur).
   - **So testest du es:**
@@ -47,6 +47,19 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     2. Je ein Monster auf dem Weg nach Grünwacht, im Waldboden, in der Tiefwurzel, in der Aschensteppe (Norden und Süden), in der Palmenrast und auf dem Glutgrat angreifen: überall das gemalte Bild.
     3. Hammerbrüder oder Kettenschmied: Kampf in der Ankerkammer mit den drei Ankern.
     4. Stehen die Figuren überall gut auf dem Boden? Sonst sag Bescheid, dann schiebe ich die Bilder anders.
+
+- **Neu (06.11.): S1 Demo und Editor getrennt, Tester-Spitzname, Feedback, Tester-Code:**
+  - **Zwei Fassungen im Web:** die Demo unter https://cazex-studio.github.io/MiniKampf/spiel/ (ohne Editor und ohne Testknöpfe) und deine Werkstatt unter https://cazex-studio.github.io/MiniKampf/werkstatt-glutfunke/ (mit Editor und Testknöpfen, nirgends verlinkt). Am PC in Godot ist wie bisher alles da.
+  - **Startseite:** Knopf „Demo testen“, Abschnitt „So testest du“ (Spitzname, Feedback, Tester-Code, Browser), Versionsnummer, „Alle Rechte vorbehalten“ (auch als `LICENSE.md` im Repo).
+  - **Spitzname:** Vor dem ersten Spielen fragt die Demo nach einem Spitznamen, danach ist er fest. Dazu bekommt jeder Tester eine Nummer (z. B. T-XGFDJ6). Beides bleibt im Browser, auch bei „Neu beginnen“, und steht unten rechts im Menü mit der Version.
+  - **Feedback:** In der Welt oben rechts ein Knopf „Feedback“, im Menü „Danke & Feedback“ mit der Dankesliste (`data/dankesliste.json`, noch leer). Der Knopf öffnet dein Formular mit Spitzname, Nummer, Version und Ort schon ausgefüllt. **Das Formular fehlt noch** (deine Aufgabe, siehe unten), bis dahin sagt der Knopf, dass es bald kommt.
+  - **Tester-Code:** Am Ende von Grünwacht oder der Glutoase zeigt das Spiel den Code (z. B. AST-KWG2-V3RG) und den Knopf „Abschluss melden“. Jeder Tester bekommt genau einen Code.
+  - Der kurze Hilfetext oben links in der Welt heißt jetzt „Weiter: F“, damit er nicht unter die Knöpfe läuft.
+  - **So testest du es:**
+    1. Startseite öffnen: Knopf „Demo testen“, darunter „So testest du“ und die Version.
+    2. In der Demo: „Kreuzweg-Demo“ drücken, Spitzname eingeben. Im Menü steht kein Editor, unten rechts Version und dein Spitzname.
+    3. Die Werkstatt-Adresse öffnen: Dort ist der Editor im Menü, und in der Tasche gibt es die Testknöpfe.
+    4. In der Welt oben rechts „Feedback“ drücken (bis das Formular verbunden ist, kommt ein Hinweis).
     4. In Kreuzweg ein Silberkraut ansehen, als Klingentänzerin Klingen sammeln.
 
 - **Neu (05.11.): E3a und E3i Wegweiser und Abschied ohne Versetzen:** Nach dem Abschied von Ye wird man nicht mehr versetzt. Ye sagt: „Geh zur Torwache, sie kennt den Weg in deine Region.“ Am Westtor (Grünwacht) und am Südtor (Glutoase) steht jetzt je eine Torwache; der Wegweiser führt zu ihr. Sie nennt den Weg, „Losgehen.“ zeigt das Ende von Akt 1 (bei Glutoase-Klassen jetzt mit Südstraße und „Weiter in die Glutoase“), danach läuft man selbst durchs Tor. Auf dem Weg zeigt der Wegweiser weiter bis Wipfelheim bzw. bis zur Glutoase und zum Oberhaupt, danach zum Lehrmeister.

@@ -310,6 +310,8 @@ func _ready() -> void:
 ## Ortsname groß in der Bildmitte, wenn man ein Gebiet betritt (E3c): Schrift Cinzel (SIL Open Font License).
 const ORTSNAME_SCHRIFT := "res://assets/schrift/Cinzel.ttf"
 var _ortsname: Label
+## Wo der Spieler gerade ist (für das Feedback-Formular, S1)
+var _ort_jetzt := "Kreuzweg"
 var _ortsname_tween: Tween
 
 
@@ -334,6 +336,7 @@ func _ortsname_zeigen(name: String) -> void:
 		_ortsname.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_ui_root.add_child(_ortsname)
 	_ortsname.text = name
+	_ort_jetzt = name
 	_ortsname.modulate.a = 0.0
 	if _ortsname_tween != null:
 		_ortsname_tween.kill()
@@ -1503,7 +1506,7 @@ func _build_ui() -> void:
 	ui.add_child(root)
 	_ui_root = root
 
-	var hint := _label("Laufen: antippen / WASD · Reden: E / Leertaste · Text weiter: F (halten = schnell)", 14, Color.WHITE)
+	var hint := _label("Laufen: antippen / WASD · Reden: E / Leertaste · Weiter: F", 14, Color.WHITE)
 	hint.position = Vector2(16, 10)
 	root.add_child(hint)
 	_hud = _label("", 18, Color("f2c14e"))
@@ -1531,7 +1534,8 @@ func _build_ui() -> void:
 			["K", "rolle", "Fähigkeiten (K)", 72, _toggle_panel.bind("faehigkeiten")],
 			["L", "kristall", "Kartenalbum (L)", 72, _toggle_panel.bind("album")],
 			["C", "schild", "Werte (C)", 72, _toggle_panel.bind("werte")], ["J", "ausrufe", "Aufträge (J)", 72, _toggle_panel.bind("auftraege")],
-			[GameData.text("neu_beginnen"), "", GameData.text("neu_beginnen"), 140, _restart]]:
+			[GameData.text("feedback"), "", GameData.text("feedback_titel"), 96, func() -> void: Tester.feedback(_ui_root, _ort_jetzt)],
+			[GameData.text("neu_beginnen"), "", GameData.text("neu_beginnen"), 124, _restart]]:
 		var button := Button.new()
 		button.text = info[0]
 		if info[1] != "":
@@ -1776,7 +1780,7 @@ func _build_ui() -> void:
 	_bag_footer = HBoxContainer.new()
 	_bag_footer.add_theme_constant_override("separation", 6)
 	panel_box.add_child(_bag_footer)
-	# Testknöpfe der Tasche (nur in der Godot-Testversion)
+	# Testknöpfe der Tasche (nur im Godot-Editor und in der Werkstatt)
 	_bag_tests = HBoxContainer.new()
 	_bag_tests.add_theme_constant_override("separation", 6)
 	panel_box.add_child(_bag_tests)
@@ -2683,8 +2687,8 @@ func _fill_album(p: PlayerState, lines: PackedStringArray) -> void:
 		reiter.toggle_mode = true
 		reiter.button_pressed = i == _album_seite
 		_album_tabs.add_child(reiter)
-	if OS.is_debug_build():
-		# Testknopf (nur in der Godot-Testversion): alle Karten dieser Seite geben
+	if Tester.werkzeuge():
+		# Testknopf (nur im Godot-Editor und in der Werkstatt): alle Karten dieser Seite geben
 		_album_tabs.add_child(_small_button(GameData.text("test_album"), func() -> void:
 			_send({type = "test_album", seite = _album_seite})
 			_fill_panel()))
@@ -3117,8 +3121,8 @@ func _fill_bag_footer(p: PlayerState, slots: Array) -> void:
 		_bag_footer.add_child(_label(part[1], 18, Color("ff8a7a") if full else Color("f3ead8")))
 	for child in _bag_tests.get_children():
 		child.queue_free()
-	if OS.is_debug_build():
-		# Testknöpfe (nur in der Godot-Testversion): Geld dazugeben, Tasche füllen, Beute-Fenster ausprobieren
+	if Tester.werkzeuge():
+		# Testknöpfe (nur im Godot-Editor und in der Werkstatt): Geld dazugeben, Tasche füllen, Beute-Fenster ausprobieren
 		var tests := _bag_tests
 		for bronze: int in [75, 9900]:
 			tests.add_child(_small_button("%s +%s" % [GameData.text("test_geld"), Geld.text(bronze)], func() -> void:

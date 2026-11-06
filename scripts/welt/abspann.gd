@@ -79,7 +79,8 @@ const REGIONEN := {
 ## Ende einer Region: Rückblick auf die eigenen Entscheidungen, dann zurück in die Welt.
 func _region(box: VBoxContainer, region: String) -> void:
 	var info: Dictionary = REGIONEN[region]
-	box.position.y = 90
+	box.position.y = 40
+	box.add_theme_constant_override("separation", 16)
 	box.add_child(_label(info.titel, 44, Color(info.farbe)))
 	var flags: Dictionary = SaveGame.read_progress().get("flags", {})
 	var lines: PackedStringArray = []
@@ -89,14 +90,27 @@ func _region(box: VBoxContainer, region: String) -> void:
 	box.add_child(_label("\n".join(lines), 20, Color.WHITE))
 	box.add_child(_label(GameData.text("ende_" + region), 21, Color(1, 1, 1, 0.75)))
 	box.add_child(_label(GameData.text("ende_%s_weiter" % region), 20, Color("8affc1")))
+	# Demo durchgespielt (S1): Tester-Code, einmal vergeben, und „Abschluss melden“ ins Formular
+	var code := Tester.abschliessen(region)
+	var name := Tester.spitzname() if Tester.spitzname() != "" else "Tester"
+	box.add_child(_label("%s  %s" % [GameData.text("abschluss_text", [name]), code], 24, Color("f2c14e")))
+	box.add_child(_label(GameData.text("abschluss_hinweis"), 17, Color(1, 1, 1, 0.7)))
 	var row := HBoxContainer.new()
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	row.add_theme_constant_override("separation", 24)
 	box.add_child(row)
+	var melden := Button.new()
+	melden.text = GameData.text("abschluss_melden")
+	melden.custom_minimum_size = Vector2(260, 60)
+	melden.add_theme_font_size_override("font_size", 20)
+	melden.pressed.connect(func() -> void:
+		if not Tester.formular_oeffnen("Demo durchgespielt", info.titel):
+			Tester.hinweis_fenster(self, GameData.text("feedback_titel"), GameData.text("feedback_fehlt")))
+	row.add_child(melden)
 	for knopf: Array in [[info.zurueck, "res://scenes/kreuzweg.tscn"], ["Zum Menü", "res://scenes/menu.tscn"]]:
 		var button := Button.new()
 		button.text = knopf[0]
-		button.custom_minimum_size = Vector2(280, 60)
+		button.custom_minimum_size = Vector2(260, 60)
 		button.add_theme_font_size_override("font_size", 20)
 		var target: String = knopf[1]
 		button.pressed.connect(func() -> void:
