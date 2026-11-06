@@ -28,13 +28,10 @@ func _run() -> void:
 	_check(texts.contains("Silberhirsch verschont") and texts.contains("Urbaum lebt") and texts.contains("Wahrheit über Rowan"), "Rückblick auf die Entscheidungen")
 	_check(not texts.contains("gefallen") and not texts.contains("Kobalt"), "Nur, was man selbst entschieden hat")
 	var buttons := current_scene.find_children("*", "Button", true, false)
-	# S1: erst nur „Abschluss melden“, danach zurück und Menü; dazu der Tester-Code
-	_check(buttons.size() == 3 and buttons[0].text == "Abschluss melden" and buttons[1].text == "Zurück nach Wipfelheim", "Knöpfe: Abschluss melden, Zurück nach Wipfelheim")
-	_check(buttons[0].visible and not buttons[1].visible and not buttons[2].visible, "Zuerst nur Abschluss melden")
-	_check(Tester.code() != "" and texts.contains(Tester.code()), "Tester-Code steht da")
+	# Erst eine Region durch: noch kein Ende der Demo, die Reise geht in die Glutoase weiter (Marco, 06.11.)
+	_check(texts.contains("weiter in die Glutoase") and not texts.contains("AST-"), "Nach der ersten Region: weiter in die Glutoase, noch kein Code")
+	_check(buttons.size() == 2 and buttons[0].text == "Zurück nach Wipfelheim" and buttons[0].visible, "Knopf: Zurück nach Wipfelheim")
 	buttons[0].pressed.emit()
-	_check(not buttons[0].visible and buttons[1].visible and buttons[2].visible and Tester.gemeldet(), "Nach dem Melden: zurück oder Menü")
-	buttons[1].pressed.emit()
 	await _frames(5)
 	_check(current_scene.has_method("local_player") and current_scene.local_player().map == "wipfelheim", "Zurück in Wipfelheim")
 	_check(Abspann.variante == "", "Abspann von Akt 1 bleibt unverändert")
@@ -42,6 +39,8 @@ func _run() -> void:
 	# (Die Welt speichert beim Verlassen selbst: darum die Merker beim Spieler in der Welt setzen)
 	var spieler: PlayerState = current_scene.local_player()
 	spieler.progress.flags = {"klasse": "smith", "sechster_ton": true, "kael_besiegt_glutoase": true, "mira_hoert": true}
+	spieler.progress.quests["die_wahrheit"] = "abgegeben"
+	spieler.progress.quests["miras_splitter"] = "abgegeben"
 	Abspann.variante = "glutoase"
 	change_scene_to_file("res://scenes/abspann.tscn")
 	await _frames(5)
@@ -52,9 +51,12 @@ func _run() -> void:
 			"Ende der Glutoase mit Rückblick")
 	_check(not texts.contains("Mira ist gesund"), "Nur Miras Weg, den man gewählt hat")
 	buttons = current_scene.find_children("*", "Button", true, false)
-	_check(buttons.size() == 3 and buttons[1].text == "Zurück in die Glutoase", "Knopf: Zurück in die Glutoase")
-	_check(texts.contains(Tester.code()), "Derselbe Tester-Code am zweiten Ende")
-	_check(not buttons[0].visible and buttons[1].visible, "Schon gemeldet: gleich alle Wege")
+	# Beide Regionen durch: Ende der Demo mit Tester-Code, erst nur „Abschluss melden“ (S1)
+	_check(texts.contains("Ende der Demo") and Tester.code() != "" and texts.contains(Tester.code()), "Ende der Demo mit Tester-Code")
+	_check(buttons.size() == 3 and buttons[0].text == "Abschluss melden" and buttons[0].visible and not buttons[1].visible and not buttons[2].visible,
+			"Zuerst nur Abschluss melden")
+	buttons[0].pressed.emit()
+	_check(not buttons[0].visible and buttons[1].visible and buttons[1].text == "Zurück in die Glutoase" and Tester.gemeldet(), "Nach dem Melden: zurück oder Menü")
 	SaveGame.delete()
 	SaveGame.path = SaveGame.DEFAULT_PATH
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(Tester.datei))

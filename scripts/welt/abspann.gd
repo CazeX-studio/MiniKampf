@@ -89,18 +89,41 @@ func _region(box: VBoxContainer, region: String) -> void:
 			lines.append("• " + str(entry[1]))
 	box.add_child(_label("\n".join(lines), 20, Color.WHITE))
 	box.add_child(_label(GameData.text("ende_" + region), 21, Color(1, 1, 1, 0.75)))
-	box.add_child(_label(GameData.text("ende_%s_weiter" % region), 20, Color("8affc1")))
+	var quests: Dictionary = SaveGame.read_progress().get("quests", {})
+	# Die Demo endet erst nach beiden Regionen (Marco, 06.11.): vorher geht die Reise in die andere weiter
+	if not demo_zu_ende(quests):
+		box.add_child(_label(GameData.text("ende_%s_weiter" % region), 20, Color(1, 1, 1, 0.75)))
+		box.add_child(_label(GameData.text("weiter_nach_" + ANDERE[region]), 22, Color("8affc1")))
+		box.add_child(_knopf_reihe(info, true))
+		return
+	box.add_child(_label(GameData.text("demo_ende"), 21, Color("8affc1")))
 	# Demo durchgespielt (S1): Tester-Code, einmal vergeben, und „Abschluss melden“ ins Formular
 	var code := Tester.abschliessen(region)
 	var name := Tester.spitzname() if Tester.spitzname() != "" else "Tester"
 	box.add_child(_label("%s  %s" % [GameData.text("abschluss_text", [name]), code], 24, Color("f2c14e")))
 	box.add_child(_label(GameData.text("abschluss_hinweis"), 17, Color(1, 1, 1, 0.7)))
+	box.add_child(_knopf_reihe(info, Tester.gemeldet()))
+
+
+## Letzter Auftrag jeder Region der Demo und die jeweils andere Region
+const LETZTER_AUFTRAG := {"gruenwacht": "die_wahrheit", "glutoase": "miras_splitter"}
+const ANDERE := {"gruenwacht": "glutoase", "glutoase": "gruenwacht"}
+
+
+## Ist die Demo durch? Erst wenn beide Regionen zu Ende gespielt sind.
+static func demo_zu_ende(quests: Dictionary) -> bool:
+	for id: String in LETZTER_AUFTRAG.values():
+		if str(quests.get(id, "neu")) != "abgegeben":
+			return false
+	return true
+
+
+## Knöpfe am Ende einer Region. Am Ende der Demo erst nur „Abschluss melden“ (Marco, 06.11.), danach zurück
+## oder ins Menü; wer schon gemeldet hat oder die Demo noch nicht durch hat, sieht gleich die Wege.
+func _knopf_reihe(info: Dictionary, wege_offen: bool) -> HBoxContainer:
 	var row := HBoxContainer.new()
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	row.add_theme_constant_override("separation", 24)
-	box.add_child(row)
-	# Erst „Abschluss melden“ (einziger Knopf), danach zurück oder ins Menü (Marco, 06.11.).
-	# Wer schon gemeldet hat, sieht gleich alle Knöpfe.
 	var weiter_knoepfe: Array[Button] = []
 	for knopf: Array in [[info.zurueck, "res://scenes/kreuzweg.tscn"], ["Zum Menü", "res://scenes/menu.tscn"]]:
 		var button := Button.new()
@@ -111,24 +134,25 @@ func _region(box: VBoxContainer, region: String) -> void:
 		button.pressed.connect(func() -> void:
 			variante = ""
 			get_tree().change_scene_to_file(target))
-		button.visible = Tester.gemeldet()
+		button.visible = wege_offen
 		weiter_knoepfe.append(button)
-	var melden := Button.new()
-	melden.text = GameData.text("abschluss_melden")
-	melden.custom_minimum_size = Vector2(320, 60)
-	melden.add_theme_font_size_override("font_size", 20)
-	melden.visible = not Tester.gemeldet()
-	melden.pressed.connect(func() -> void:
-		# Ohne Formular (noch nicht verbunden) geht es trotzdem weiter, sonst säße man fest
-		if not Tester.formular_oeffnen("Demo durchgespielt", info.titel):
-			Tester.hinweis_fenster(self, GameData.text("feedback_titel"), GameData.text("feedback_fehlt"))
-		Tester.melden()
-		melden.visible = false
-		for b in weiter_knoepfe:
-			b.visible = true)
-	row.add_child(melden)
+	if not wege_offen:
+		var melden := Button.new()
+		melden.text = GameData.text("abschluss_melden")
+		melden.custom_minimum_size = Vector2(320, 60)
+		melden.add_theme_font_size_override("font_size", 20)
+		melden.pressed.connect(func() -> void:
+			# Ohne Formular (noch nicht verbunden) geht es trotzdem weiter, sonst säße man fest
+			if not Tester.formular_oeffnen("Demo durchgespielt", info.titel):
+				Tester.hinweis_fenster(self, GameData.text("feedback_titel"), GameData.text("feedback_fehlt"))
+			Tester.melden()
+			melden.visible = false
+			for b in weiter_knoepfe:
+				b.visible = true)
+		row.add_child(melden)
 	for b in weiter_knoepfe:
 		row.add_child(b)
+	return row
 
 func _label(text: String, font_size: int, color: Color) -> Label:
 	var label := Label.new()

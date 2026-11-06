@@ -53,13 +53,14 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - **Startseite:** Knopf „Demo testen“, Abschnitt „So testest du“ (Spitzname, Feedback, Tester-Code, Browser), Versionsnummer, „Alle Rechte vorbehalten“ (auch als `LICENSE.md` im Repo).
   - **Spitzname:** Vor dem ersten Spielen fragt die Demo nach einem Spitznamen, danach ist er fest. Dazu bekommt jeder Tester eine Nummer (z. B. T-XGFDJ6). Beides bleibt im Browser, auch bei „Neu beginnen“, und steht unten rechts im Menü mit der Version.
   - **Feedback:** In der Welt oben rechts ein Knopf „Feedback“, im Menü „Danke & Feedback“ mit der Dankesliste (`data/dankesliste.json`, noch leer). Der Knopf öffnet dein Formular mit Spitzname, Nummer, Version und Ort schon ausgefüllt. **Das Formular fehlt noch** (deine Aufgabe, siehe unten), bis dahin sagt der Knopf, dass es bald kommt.
-  - **Tester-Code:** Am Ende von Grünwacht oder der Glutoase zeigt das Spiel den Code (z. B. AST-KWG2-V3RG) und den Knopf „Abschluss melden“ als einzigen Knopf; erst danach kommen „Zurück“ und „Zum Menü“ (wer schon gemeldet hat, sieht gleich alle). Jeder Tester bekommt genau einen Code.
+  - **Tester-Code:** Die Demo endet erst nach **beiden** Regionen (Marco, 06.11.): Am Ende der ersten Region startet der Weg in die andere (zurück über Kreuzweg, die Torwache schickt einen ohne zweites „Ende von Akt 1“ los). Am Ende der zweiten Region steht „Das ist das Ende der Demo“, und das Spiel zeigt den Code (z. B. AST-KWG2-V3RG) und den Knopf „Abschluss melden“ als einzigen Knopf; erst danach kommen „Zurück“ und „Zum Menü“ (wer schon gemeldet hat, sieht gleich alle). Jeder Tester bekommt genau einen Code.
   - Der kurze Hilfetext oben links in der Welt heißt jetzt „Weiter: F“, damit er nicht unter die Knöpfe läuft.
   - **So testest du es:**
     1. Startseite öffnen: Knopf „Demo testen“, darunter „So testest du“ und die Version.
     2. In der Demo: „Kreuzweg-Demo“ drücken, Spitzname eingeben. Im Menü steht kein Editor, unten rechts Version und dein Spitzname.
     3. Die Werkstatt-Adresse öffnen: Dort ist der Editor im Menü, und in der Tasche gibt es die Testknöpfe.
     4. In der Welt oben rechts „Feedback“ drücken (bis das Formular verbunden ist, kommt ein Hinweis).
+    5. Erste Region zu Ende spielen: Der Abspann schickt dich in die andere Region, noch ohne Code. Nach der zweiten Region: Ende der Demo, nur „Abschluss melden“, danach „Zurück“ und „Zum Menü“.
     4. In Kreuzweg ein Silberkraut ansehen, als Klingentänzerin Klingen sammeln.
 
 - **Neu (05.11.): E3a und E3i Wegweiser und Abschied ohne Versetzen:** Nach dem Abschied von Ye wird man nicht mehr versetzt. Ye sagt: „Geh zur Torwache, sie kennt den Weg in deine Region.“ Am Westtor (Grünwacht) und am Südtor (Glutoase) steht jetzt je eine Torwache; der Wegweiser führt zu ihr. Sie nennt den Weg, „Losgehen.“ zeigt das Ende von Akt 1 (bei Glutoase-Klassen jetzt mit Südstraße und „Weiter in die Glutoase“), danach läuft man selbst durchs Tor. Auf dem Weg zeigt der Wegweiser weiter bis Wipfelheim bzw. bis zur Glutoase und zum Oberhaupt, danach zum Lehrmeister.

@@ -14,7 +14,7 @@
 	"ruf_neutral": "neutral",
 	"ruf_schlecht": "misstrauisch",
 	"ende_gruenwacht": "Ysoldes Worte gehen dir nicht aus dem Kopf: Rowan könnte noch leben. Irgendwo hinter dem sechsten Weg.",
-	"ende_gruenwacht_weiter": "Die anderen Regionen kommen in späteren Lernprojekten. Grünwacht bleibt offen: Monster, Pilzhöhle und Kreuzweg-Karten warten.",
+	"ende_gruenwacht_weiter": "Grünwacht bleibt offen: Monster, Pilzhöhle und Kreuzweg-Karten warten.",
 	"rueckblick_gruenwacht": [["hirsch_verschont", "Du hast den Silberhirsch verschont."], ["hirsch_geschossen", "Du hast auf den Silberhirsch geschossen."], ["kobalt_sieg", "Du hast Kobalt besiegt."], ["entscheidung_jaeger", "Du hast den Splitter-Rindenbär gejagt, wie Ysolde es wollte."], ["entscheidung_zaehmer", "Du hast den Splitter-Rindenbär gerettet, wie Tilda es wollte."], ["urbaum_gerettet", "Der Urbaum lebt. Grünwacht blüht auf."], ["urbaum_gefaellt", "Der Urbaum ist gefallen. Über Grünwacht bleibt es grau."], ["wahrheit_wipfelheim", "Wipfelheim kennt jetzt die Wahrheit über Rowan."], ["geheimnis_bewahrt", "Ysoldes Geheimnis bleibt bewahrt. Kael ist gegangen, wütend."]],
 	"ende_glutoase": "Fünf Töne und eine Pause. Wer fehlt in dem Lied, das alle singen? Und wovor ist Hadrak damals gerannt?",
 	"ende_glutoase_weiter": "Die Glutoase bleibt offen: Glutgrat, Vulkanschmiede und Kreuzweg-Karten warten.",
@@ -197,5 +197,8 @@
 	"abschluss_titel": "Demo durchgespielt!",
 	"abschluss_text": "Danke fürs Durchspielen, %s! Dein Tester-Code:",
 	"abschluss_hinweis": "Melde deinen Abschluss mit dem Knopf unten, dann ist dein Code bei uns eingetragen. Zum Start des fertigen Spiels gibst du ihn ein und bekommst eine Belohnung als Dankeschön.",
-	"abschluss_melden": "Abschluss melden"
+	"abschluss_melden": "Abschluss melden",
+	"weiter_nach_glutoase": "Deine Reise geht weiter in die Glutoase: zurück nach Kreuzweg und durch das Südtor. Hadrak erwartet dich.",
+	"weiter_nach_gruenwacht": "Deine Reise geht weiter nach Grünwacht: zurück nach Kreuzweg und durch das Westtor. Ysolde erwartet dich.",
+	"demo_ende": "Das ist das Ende der Demo. Du hast Kreuzweg, Grünwacht und die Glutoase erlebt. Die Nebelinseln, Arkanum und Messinghafen folgen später."
 }
