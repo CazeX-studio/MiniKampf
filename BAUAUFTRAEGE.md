@@ -117,9 +117,19 @@ Wenig Tokens übrig: Arbeit in wenigen großen Blöcken statt vieler kleiner Run
   - **E3f:** Kräuter sammeln: neues Bild für die Kräuter in der Welt (Prompt für Marco). – Status: fertig (05.11.2026)
   - **E3g:** Laufbewegung der Novizen sieht schlecht aus: feiner, ggf. mit mehr Bildern (Prompt für Marco). – Status: fertig (05.11.2026)
   - **E3i:** Abschied von Kreuzweg ohne Versetzen: Ye schickt einen nach dem Abschied zur Torwache in Richtung der eigenen Region (West-/Südtor, mit Wegweiser), man läuft selbst hin und durchs Tor. Die Wache nennt die Richtung. „Ende von Akt 1“ erscheint erst beim ersten Gang durchs Tor (Vorschlag, sonst ganz weglassen). Heute steht in Yes Abschied `reisen` nach weg_gruenwacht bzw. aschensteppe (data/dialoge.json, ye_tor). – Status: fertig (05.11.2026)
-  - **E3h:** Städte umbauen: zu viele Figuren und zu viele Deko-Teile auf einem Fleck (Kreuzweg, Wipfelheim, Glutoase), Figuren und Deko verteilen, Plätze freier lassen. – Status: offen (groß, pro Stadt eine Sitzung)
+  - **E3h:** (nach S1 bis S5) Städte umbauen: zu viele Figuren und zu viele Deko-Teile auf einem Fleck (Kreuzweg, Wipfelheim, Glutoase), Figuren und Deko verteilen, Plätze freier lassen. – Status: offen (groß, pro Stadt eine Sitzung)
 - **E4:** Eine Balancing-Runde: Marcos Liste plus die Zahlen aus den Prüfungen (Kael, Glasskorpion, Vulkanschmiede allein, Ritualist/Zwielicht), alle Werte in einer Sitzung. – Status: offen
 - **E5:** T3 und T4 am Stück spielen, danach wieder eine Liste und eine Sitzung für die Korrekturen. – Status: offen
+
+### Demo-Start (Plan vom 06.11.2026, Start der Demo Ende der Woche ab 09.11.)
+
+Marcos Beschluss (06.11.): **Diese Punkte kommen vor E3h.** Die Städte baut Claude grob um, den Feinschliff macht Marco im Stadt-Editor (S4). Reihenfolge von oben nach unten.
+
+- **S1:** Demo und Editor trennen. Die Demo unter `/spiel/` wird ohne Editor und ohne Testknöpfe gebaut (Uhr stellen, Geld dazu …). Die volle Fassung mit Editor bekommt eine eigene, nirgends verlinkte Adresse (`/werkstatt-<Wort>/`, das Wort sagt Claude Marco). Beide bei jedem Push veröffentlichen, beide laufen am PC und am Handy. Startseite mit großem Knopf „Demo testen“, kurzer Anleitung (Steuerung PC und Handy, Spielstand bleibt im Browser), Knopf „Fehler melden / Feedback“ (Google-Formular, Fragen schreibt Claude; oder E-Mail, Marco entscheidet), Versionsnummer im Spiel und auf der Seite. – Status: offen
+- **S2:** Kampf-Editor: Monster (bis zu vier), deren Stufe, eigene Gruppe mit Klasse und Stufe, Ort (Kampf-Hintergrund) und Tageszeit wählen, dann kämpfen. Dazu ein „Probe-Lauf“: Der Kampf läuft 100-mal von selbst und zeigt, wie oft man gewinnt (hilft bei E4). – Status: offen
+- **S3:** Bewegungs- und Effekt-Editor: Figur wählen (Klassen, Körper, Köpfe, Monster, Hauptfiguren), jede Bewegung in Welt und Kampf einzeln abspielen (langsam, Bild für Bild), jede Fähigkeit und jeden Effekt einzeln abspielen. Baut auf der Vega-Probe und der Effekt-Probe auf. – Status: offen
+- **S4:** Stadt-Editor: in einer Stadt Baukasten-Teile und Figuren auswählen, verschieben (auch Feld für Feld mit Knöpfen, fürs Handy), hinzufügen und löschen. Am PC in Godot speichert er direkt in die Kartendaten, im Browser gibt er eine Datei aus, die Marco Claude schickt. – Status: offen
+- **S5:** Spielstand-Editor: Stufe, Klasse, Gold, Gegenstände und Akt setzen, um schnell an jede Stelle der Demo zu springen (erweitert „Demo ab einem Akt“). – Status: offen
 
 **So arbeitet Claude im Endspurt:** nur die Prüfungen laufen lassen, die zur Änderung passen (`bash tools/alle_tests.sh <wort>`), die volle Prüfung einmal am Ende der Sitzung; Fotos aus dem Spiel nur, wenn sich das Aussehen ändert; kurze Antworten.
 
