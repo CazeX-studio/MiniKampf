@@ -622,13 +622,13 @@ func _test_story(side: String) -> void:
 	_check(p.progress.quest_state("veraenderte_tiere") == "abgegeben", "Auftrag abgegeben")
 	_check(p.in_dialog() and world.dialog_view(p).text.contains("Westplattform"), "Ysolde schickt einen zur Westplattform")
 	world.apply_command("a", {type = "dialog_next"})
-	_check(p.progress.quest_state("der_fremde") == "aktiv", "Auftrag „Ein Fremder in Wipfelheim“")
+	_check(p.progress.quest_state("der_fremde") == "aktiv", "Auftrag „Kael in Wipfelheim“")
 	_check(world._npc_present(p, "kael"), "Kael ist jetzt in Wipfelheim")
 	# Kael steht nicht neben Ysolde und spricht einen dort nicht an
 	_check((Vector2(world.npcs.kael.cell) - Vector2(world.npcs.ysolde.cell)).length() > 8.0, "Kael steht weit weg von Ysolde")
 	_tick(world, 6.0)
 	_check(not p.in_dialog(), "Bei Ysolde spricht Kael einen nicht an")
-	_check(world.objective_cell(p) != Vector2i(-1, -1), "Wegweiser zeigt zum Fremden")
+	_check(world.objective_cell(p) != Vector2i(-1, -1), "Wegweiser zeigt zu Kael")
 	# Über die Brücke zur Westplattform: Kael kommt angelaufen
 	_walk(world, p, Vector2i(12, 23))
 	_tick(world, 6.0)

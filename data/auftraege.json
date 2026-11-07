@@ -247,7 +247,7 @@
 		"abgeben_bei": "ysolde",
 		"belohnung": {"gold": 500, "erfahrung": 900}
 	},
-	"der_fremde": {"titel": "Ein Fremder in Wipfelheim", "start_bei": "ysolde", "start_wenn": {"nicht_gemerkt": "kael_getroffen"}, "voraussetzung": "veraenderte_tiere", "beschreibung": "Auf der Westplattform beim Seilaufzug treibt sich ein Fremder herum. Ysolde will wissen, wer das ist.", "ziele": [{"art": "gemerkt", "merken": "kael_getroffen", "bei": "kael", "text": "Auf der Westplattform (beim Seilaufzug) nach dem Fremden sehen"}], "abgeben_bei": "ysolde", "belohnung": {"erfahrung": 150}},
+	"der_fremde": {"titel": "Kael in Wipfelheim", "start_bei": "ysolde", "start_wenn": {"nicht_gemerkt": "kael_getroffen"}, "voraussetzung": "veraenderte_tiere", "beschreibung": "Auf der Westplattform beim Seilaufzug treibt sich Kael herum, dein Rivale aus der Glutoase. Ysolde will wissen, was er in Wipfelheim sucht.", "ziele": [{"art": "gemerkt", "merken": "kael_getroffen", "bei": "kael", "text": "Auf der Westplattform (beim Seilaufzug) Kael zur Rede stellen"}], "abgeben_bei": "ysolde", "belohnung": {"erfahrung": 150}},
 	"das_leere_grab": {
 		"titel": "Das leere Grab",
 		"beschreibung": "Kael sagt, das Grab von Ysoldes Bruder Rowan liegt unten im Wald – und es ist leer. Sieh es dir an.",

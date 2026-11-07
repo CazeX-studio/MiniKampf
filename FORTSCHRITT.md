@@ -53,9 +53,9 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - **Rüstungsschmied, Klingentänzerin, Sternensängerin und alle Klassen aus noch nicht gebauten Regionen:** gleich in die Glutoase, danach nach Grünwacht. Die Geschichte von Grünwacht beginnt immer erst nach dem Ende der Glutoase.
   - Die Torwachen schicken einen beim zweiten Mal ohne ein neues „Ende von Akt 1“ los. Das Ende der Glutoase zeigt „Deine Reise geht weiter nach Grünwacht“, erst am Ende von Grünwacht kommen „Ende der Demo“ und der Tester-Code.
   - **Von dir zu entscheiden:**
-    1. **Kael:** In Grünwacht heißt es „Ein Fremder in Wipfelheim“, aber jetzt kennt man Kael schon aus dem Rivalenkampf in der Glutoase. Die Texte von Ysolde und Kael dort müssten das aufgreifen (Platzhalter, deine Dialoge).
-    2. **Stufen:** Nach der Glutoase kommt man mit etwa Stufe 20 nach Grünwacht, die Monster dort sind 15–20. Laut design.md wäre Grünwacht als zweite Region 20–25. Das nehme ich in die Balancing-Runde E4 mit, wenn du einverstanden bist.
-    3. Die neuen Texte von Ysolde („Bericht“, „Heimkehr“) sind Platzhalter.
+    1. **Kael (erledigt 07.11.):** Der Auftrag heißt jetzt „Kael in Wipfelheim“, Ysolde und Kael wissen, dass man sich aus der Glutoase kennt (Platzhalter).
+    2. **Stufen:** Grünwacht wird in der Balancing-Runde E4 auf 20–25 gehoben (Marco, 07.11.).
+    3. **Platzhalter-Gespräche:** Alle 94 stehen als Liste im Brainstorm-Doc ganz oben, für spätere Brainstorming-Sitzungen. Bis dahin gelten sie als in Ordnung (Marco, 07.11.).
   - **So testest du es:**
     1. Neu beginnen, Bogenschütze wählen: nach Fenns Prüfung zu Ysolde, sie schickt dich in die Glutoase.
     2. Neu beginnen, Klingentänzerin wählen: Ye schickt dich gleich in die Glutoase; nach dem Ende der Glutoase geht es nach Grünwacht.
