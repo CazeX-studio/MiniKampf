@@ -35,10 +35,11 @@ func _ready() -> void:
 		journey = "Dein Weg führt %s, zu %s." % [wohin, extra.lehrmeister]
 	box.add_child(_label("Du verlässt Kreuzweg als %s.\n%s" % [data.title, journey], 24, Color.WHITE))
 	box.add_child(_label("Hinter dir bleibt die Statue der Fünf zurück – und eine sechste Straße, die niemand benutzt.", 19, Color(1, 1, 1, 0.7)))
-	# Gebaut sind Grünwacht und die Glutoase; wer aus einer anderen Region kommt, beginnt in Grünwacht
-	var glutoase: bool = data.region == "Glutoase"
+	# Gebaut sind Grünwacht und die Glutoase. Die Geschichte beginnt in der Glutoase (Marco, 07.11.): Nur Bogenschützen
+	# und Zähmer lernen zuerst in Grünwacht, alle anderen reisen gleich in die Glutoase
+	var glutoase: bool = data.region != "Grünwacht"
 	if data.region not in ["Grünwacht", "Glutoase"]:
-		box.add_child(_label("%s ist in dieser Demo noch nicht gebaut. Deine Reise beginnt deshalb in Grünwacht." % data.region, 19, Color(1, 1, 1, 0.7)))
+		box.add_child(_label("%s ist in dieser Demo noch nicht gebaut. Deine Reise beginnt deshalb in der Glutoase." % data.region, 19, Color(1, 1, 1, 0.7)))
 	box.add_child(_label("Die Reise geht weiter: Folge der Südstraße in die Glutoase." if glutoase
 			else "Die Reise geht weiter: Folge der Weststraße nach Grünwacht.", 22, Color("8affc1")))
 

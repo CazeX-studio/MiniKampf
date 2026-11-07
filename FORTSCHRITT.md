@@ -48,6 +48,20 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     3. Hammerbrüder oder Kettenschmied: Kampf in der Ankerkammer mit den drei Ankern.
     4. Stehen die Figuren überall gut auf dem Boden? Sonst sag Bescheid, dann schiebe ich die Bilder anders.
 
+- **Neu (07.11.): S1b Ablauf der Demo wie im fertigen Spiel:** Die Glutoase ist das erste Gebiet der Geschichte, Grünwacht das zweite.
+  - **Bogenschütze und Zähmer:** Weg nach Grünwacht, Klasse bei Fenn bzw. Tilda und Esche, dann der neue Auftrag „Bericht bei Ysolde“. Ysolde schickt einen in die Glutoase (Hadrak ruft nach Novizen). Dort Teil 1 der Geschichte mit der Vulkanschmiede. Danach schickt Hadrak einen mit „Zurück nach Grünwacht“ heim, Ysolde begrüßt einen und Teil 2 beginnt (Leuchtende Tiere bis Pilzhöhle). Ende der Demo nach „Die Wahrheit über Rowan“.
+  - **Rüstungsschmied, Klingentänzerin, Sternensängerin und alle Klassen aus noch nicht gebauten Regionen:** gleich in die Glutoase, danach nach Grünwacht. Die Geschichte von Grünwacht beginnt immer erst nach dem Ende der Glutoase.
+  - Die Torwachen schicken einen beim zweiten Mal ohne ein neues „Ende von Akt 1“ los. Das Ende der Glutoase zeigt „Deine Reise geht weiter nach Grünwacht“, erst am Ende von Grünwacht kommen „Ende der Demo“ und der Tester-Code.
+  - **Von dir zu entscheiden:**
+    1. **Kael:** In Grünwacht heißt es „Ein Fremder in Wipfelheim“, aber jetzt kennt man Kael schon aus dem Rivalenkampf in der Glutoase. Die Texte von Ysolde und Kael dort müssten das aufgreifen (Platzhalter, deine Dialoge).
+    2. **Stufen:** Nach der Glutoase kommt man mit etwa Stufe 20 nach Grünwacht, die Monster dort sind 15–20. Laut design.md wäre Grünwacht als zweite Region 20–25. Das nehme ich in die Balancing-Runde E4 mit, wenn du einverstanden bist.
+    3. Die neuen Texte von Ysolde („Bericht“, „Heimkehr“) sind Platzhalter.
+  - **So testest du es:**
+    1. Neu beginnen, Bogenschütze wählen: nach Fenns Prüfung zu Ysolde, sie schickt dich in die Glutoase.
+    2. Neu beginnen, Klingentänzerin wählen: Ye schickt dich gleich in die Glutoase; nach dem Ende der Glutoase geht es nach Grünwacht.
+    3. In Grünwacht spricht Ysolde erst über die leuchtenden Tiere, wenn die Glutoase geschafft ist.
+    4. Am Ende von Grünwacht: Ende der Demo mit Tester-Code.
+
 - **Neu (06.11.): S1 Demo und Editor getrennt, Tester-Spitzname, Feedback, Tester-Code:**
   - **Zwei Fassungen im Web:** die Demo unter https://cazex-studio.github.io/MiniKampf/spiel/ (ohne Editor und ohne Testknöpfe) und deine Werkstatt unter https://cazex-studio.github.io/MiniKampf/werkstatt-glutfunke/ (mit Editor und Testknöpfen, nirgends verlinkt). Am PC in Godot ist wie bisher alles da.
   - **Startseite:** Knopf „Demo testen“, Abschnitt „So testest du“ (Spitzname, Feedback, Tester-Code, Browser), Versionsnummer, „Alle Rechte vorbehalten“ (auch als `LICENSE.md` im Repo).

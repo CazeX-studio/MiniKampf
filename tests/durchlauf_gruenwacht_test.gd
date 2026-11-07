@@ -79,6 +79,17 @@ func _play_region(klasse: String) -> void:
 	while p.in_dialog():
 		_answer()
 	_pending_scene = ""
+	# Die Geschichte beginnt in der Glutoase (Marco, 07.11.): Grünwacht-Klassen lernen zuerst hier und reisen dann in
+	# die Glutoase, alle anderen kommen erst nach der Glutoase her. Diese Prüfung spielt nur Grünwacht: Die Glutoase
+	# gilt als schon gespielt (die tests/glutoase_*-Prüfungen und tests/zwei_regionen_test.gd prüfen sie).
+	for id: String in ["nach_glutoase", "kochende_brunnen", "miras_lied", "fest_der_glut", "rivale_kael", "die_ketten", "miras_splitter"]:
+		p.progress.quests[id] = "abgegeben"
+	if Sandbox.CLASSES[klasse].region != "Grünwacht":
+		# Nach dem Ende der Glutoase schickt Hadrak einen nach Grünwacht, die Torwache ohne zweites Ende von Akt 1
+		p.progress.quests["nach_gruenwacht"] = "aktiv"
+		p.progress.flags["tor_glutoase"] = true
+		if p.progress.quests.get("klasse_lernen", "") == "aktiv":
+			p.progress.quests["klasse_lernen"] = "abgegeben"
 	# Kein Versetzen (E3i): zur Torwache am Westtor, dann durchs Tor
 	world.start_dialog(p, "torwache_gruenwacht")
 	while p.in_dialog():

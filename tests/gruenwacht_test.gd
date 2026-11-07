@@ -192,7 +192,7 @@ func _test_old_save() -> void:
 	var world := WorldState.new()
 	var p := world.add_player("a", "Test", "elf_m", Vector2i(20, 36))
 	p.progress.quests["abreise"] = "abgegeben"
-	p.progress.flags["klasse"] = "kunoichi"
+	p.progress.flags["klasse"] = "archer"
 	p.progress.flags["klasse_bestaetigt"] = true
 	p.progress.flags["ausbildung_morgen"] = true
 	_check(world.npc_marker(p, "ye_tor") == "!", "Alter Spielstand: Ye am Tor hat ein „!“")
@@ -573,6 +573,8 @@ func _test_story(side: String) -> void:
 	var p := world.add_player("a", "Test", "elf_m", Vector2i(6, 15))
 	p.progress.flags["klasse"] = "ritualist"
 	p.progress.quests["nach_gruenwacht"] = "abgegeben"
+	# Die Geschichte von Grünwacht kommt nach der Glutoase (Marco, 07.11.)
+	p.progress.quests["miras_splitter"] = "abgegeben"
 	p.progress.level = 15
 	world.change_map(p, "wipfelheim", Vector2i(23, 23))
 	_check(world.npc_marker(p, "ysolde") == "!", "Ysolde hat ein „!“ (für alle Klassen)")
