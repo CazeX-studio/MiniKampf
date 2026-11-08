@@ -27,10 +27,11 @@ func _ready() -> void:
 	_label("Zum schnellen Ausprobieren", 20, Color.WHITE, Vector2(0, 108), SCREEN.x)
 
 	_label("Werkzeuge", 22, Color("f2c14e"), Vector2(40, 170), 400)
-	_button("Kampf-Editor\nMonster, Gruppe, Ort, Probe-Lauf", Vector2(40, 210), func() -> void: _go("res://scenes/kampf_editor.tscn"), 290)
-	_button("Baukasten-Testfeld\nNeue Karte aus Einzelbildern", Vector2(345, 210), func() -> void: _go("res://scenes/baukasten_test.tscn"), 290)
-	_button("Figuren-Animationen\nKleiner Testkampf", Vector2(650, 210), func() -> void: _go("res://scenes/vega_test.tscn"), 290)
-	_button("Kampf-Sandbox\nAlle 11 Klassen, Pilzhöhle", Vector2(955, 210), func() -> void: _go("res://scenes/auswahl.tscn"), 290)
+	_button("Kampf-Editor\nKämpfe und Probe-Lauf", Vector2(40, 210), func() -> void: _go("res://scenes/kampf_editor.tscn"), 232)
+	_button("Bewegungen & Effekte\nAlles einzeln abspielen", Vector2(280, 210), func() -> void: _go("res://scenes/bewegung_editor.tscn"), 232)
+	_button("Figuren-Teile\nKörper, Kopf, Hut, Farben", Vector2(520, 210), func() -> void: _go("res://scenes/vega_test.tscn"), 232)
+	_button("Baukasten-Testfeld\nKarte aus Einzelbildern", Vector2(760, 210), func() -> void: _go("res://scenes/baukasten_test.tscn"), 232)
+	_button("Kampf-Sandbox\nAlle 11 Klassen, Pilzhöhle", Vector2(1000, 210), func() -> void: _go("res://scenes/auswahl.tscn"), 232)
 
 	_label("Demo testen (eigener Spielstand, dein normaler bleibt unberührt)", 22, Color("f2c14e"), Vector2(40, 380), 1200)
 	_button("Akt Kreuzweg\nVon vorne, mit Figur erstellen", Vector2(40, 420), _start_kreuzweg)
@@ -126,6 +127,6 @@ func _button(text: String, pos: Vector2, action: Callable, breite := 380.0) -> v
 	button.position = pos
 	button.size = Vector2(breite, 130)
 	button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	button.add_theme_font_size_override("font_size", 22 if breite >= 380.0 else 19)
+	button.add_theme_font_size_override("font_size", 22 if breite >= 380.0 else 17)
 	button.pressed.connect(action)
 	add_child(button)

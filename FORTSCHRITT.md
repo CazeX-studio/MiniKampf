@@ -11,7 +11,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** Demo-Start S3 (Bewegungs- und Effekt-Editor), dann S4 und S5 (Editoren), danach E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Offen von S1: Marcos Google-Formular verbinden.
+- **Nächster Schritt:** Demo-Start S3b (Bewegungen in der Welt), dann S4 und S5 (Editoren), danach E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Offen von S1: Marcos Google-Formular verbinden.
 
 - **Neu (04.11.): D25b Körper von Rüstungsschmied und Sternensängerin** (2.11): Deine Blätter sind eingebaut: Rüstungsschmied (m) und Rüstungsschmiedin (w) in Rüstung mit Lederschürze und rotem Halstuch, die Sternensängerin (w) im hellen Gewand mit dunkelblauem Schal. Je mit Stehen, Laufen, Abwehr, Treffer, Angriff, Fallen, Sieg und Fähigkeit im Kampf, in der Welt schräg von vorne und hinten. Wer die Klasse gelernt hat, trägt sie mit seinem eigenen Kopf, auch in der Probestunde. Ausgebessert: die gelben Funken im Treffer-Bild des Schmieds und das rote Halstuch in einem Siegesbild der Sängerin. Noch nicht drin: ein männlicher Sternensänger (der kämpft weiter in der Klassenfigur).
   - **So testest du es:**
@@ -47,6 +47,18 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     2. Je ein Monster auf dem Weg nach Grünwacht, im Waldboden, in der Tiefwurzel, in der Aschensteppe (Norden und Süden), in der Palmenrast und auf dem Glutgrat angreifen: überall das gemalte Bild.
     3. Hammerbrüder oder Kettenschmied: Kampf in der Ankerkammer mit den drei Ankern.
     4. Stehen die Figuren überall gut auf dem Boden? Sonst sag Bescheid, dann schiebe ich die Bilder anders.
+
+- **Neu (08.11.): S3a Bewegungen & Effekte** (Editor, zweiter Knopf): ein Kampf, unten eine Leiste mit vier Spalten.
+  - **Figur:** Klasse des Helden, Aussehen (Standard, deine eigene Figur, Vega, Kofi, Kael, Ye) und das Monster gegenüber. Tempo: normal, langsam, sehr langsam.
+  - **Bewegungen:** Stehen, Laufen, Angriff, Getroffen, Abwehr, Wirken, Sieg, Fallen, umschaltbar für den Helden oder das Monster.
+  - **Fähigkeiten:** jede Fähigkeit der Klasse als Knopf. Sie wird wirklich ausgeführt (mit Bewegung, Effekt und Zahlen), sobald der Held am Zug ist. Der Held hat immer volles Leben, Mana und Ult, keine Abklingzeiten; das Monster hat sehr viel Leben. Roboter und Zähmer-Monster spielt der Computer.
+  - **Effekte:** alle 71 gezeichneten Abläufe und alle 34 gemalten Bildfolgen (z. B. deine neuen aus D9h) einzeln abspielen.
+  - Die Figuren-Probe heißt im Editor jetzt „Figuren-Teile“ (Körper, Kopf, Hut, Farben). Die Bewegungen in der Welt kommen mit S3b.
+  - **So testest du es:**
+    1. Werkstatt → Editor → „Bewegungen & Effekte“.
+    2. Klasse Klingentänzerin wählen, warten bis „Du“ am Zug ist, „Klingensturm“ drücken.
+    3. Tempo auf „sehr langsam“, „Für: Monster“, „Angriff“ drücken.
+    4. Unter Effekte eine Bildfolge wählen und „Bildfolge abspielen“.
 
 - **Neu (08.11.): S2 Kampf-Editor** (im Editor ganz links, also in deiner Werkstatt und am PC):
   - **Gegner:** bis zu vier Monster frei wählen (alle Monster des Spiels, mit Element) und ihre Stufe, oder einen **Kampf aus dem Spiel** (Lektionen, Rivalen, Bosse der Pilzhöhle und Vulkanschmiede mit ihren Regeln). Bosse, die man frei wählt, bringen die Regeln ihres Dungeons mit.
