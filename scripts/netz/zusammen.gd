@@ -31,7 +31,7 @@ func _ready() -> void:
 	title.size = Vector2(SCREEN.x, 60)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(title)
-	var sub := _label("Bis zu 4 Spieler gleichzeitig in Kreuzweg. Jeder behält seinen eigenen Fortschritt.", 18, Color.WHITE)
+	var sub := _label("Dieselbe Demo mit bis zu 4 Spielern übers Internet. Jeder spielt mit seinem eigenen Spielstand weiter.", 18, Color.WHITE)
 	sub.position = Vector2(0, 110)
 	sub.size = Vector2(SCREEN.x, 30)
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

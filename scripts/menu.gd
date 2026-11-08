@@ -39,7 +39,7 @@ func _ready() -> void:
 	# Neues Spiel (noch kein Spielstand): erst die Figur erstellen (geprüft beim Drücken, der Spielstand-Pfad wird unten gesetzt)
 	_add_button("Kreuzweg-Demo\nDie erste Stunde als Novize", Vector2(40, 300), "",
 			func() -> String: return "res://scenes/kreuzweg.tscn" if SaveGame.exists() else "res://scenes/figur_erstellen.tscn")
-	_add_button("Zusammen spielen\nMit bis zu 4 Spielern in Kreuzweg", Vector2(450, 300), "res://scenes/zusammen.tscn")
+	_add_button("Demo zusammen spielen\nMit bis zu 4 Spielern übers Internet", Vector2(450, 300), "res://scenes/zusammen.tscn")
 	# Editor nur in der Werkstatt-Fassung und im Godot-Editor (S1), in der Demo stattdessen Dankesliste und Feedback
 	if Tester.werkzeuge():
 		_add_button("Editor\nTesten: Baukasten, Vega, Sandbox, Akte", Vector2(860, 300), "res://scenes/editor.tscn")
