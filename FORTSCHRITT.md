@@ -11,7 +11,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt:** Demo-Start S2 (Kampf-Editor), dann S3 bis S5 (Editoren), danach E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Offen von S1: Marcos Google-Formular verbinden.
+- **Nächster Schritt:** Demo-Start S3 (Bewegungs- und Effekt-Editor), dann S4 und S5 (Editoren), danach E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Offen von S1: Marcos Google-Formular verbinden.
 
 - **Neu (04.11.): D25b Körper von Rüstungsschmied und Sternensängerin** (2.11): Deine Blätter sind eingebaut: Rüstungsschmied (m) und Rüstungsschmiedin (w) in Rüstung mit Lederschürze und rotem Halstuch, die Sternensängerin (w) im hellen Gewand mit dunkelblauem Schal. Je mit Stehen, Laufen, Abwehr, Treffer, Angriff, Fallen, Sieg und Fähigkeit im Kampf, in der Welt schräg von vorne und hinten. Wer die Klasse gelernt hat, trägt sie mit seinem eigenen Kopf, auch in der Probestunde. Ausgebessert: die gelben Funken im Treffer-Bild des Schmieds und das rote Halstuch in einem Siegesbild der Sängerin. Noch nicht drin: ein männlicher Sternensänger (der kämpft weiter in der Klassenfigur).
   - **So testest du es:**
@@ -47,6 +47,19 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     2. Je ein Monster auf dem Weg nach Grünwacht, im Waldboden, in der Tiefwurzel, in der Aschensteppe (Norden und Süden), in der Palmenrast und auf dem Glutgrat angreifen: überall das gemalte Bild.
     3. Hammerbrüder oder Kettenschmied: Kampf in der Ankerkammer mit den drei Ankern.
     4. Stehen die Figuren überall gut auf dem Boden? Sonst sag Bescheid, dann schiebe ich die Bilder anders.
+
+- **Neu (08.11.): S2 Kampf-Editor** (im Editor ganz links, also in deiner Werkstatt und am PC):
+  - **Gegner:** bis zu vier Monster frei wählen (alle Monster des Spiels, mit Element) und ihre Stufe, oder einen **Kampf aus dem Spiel** (Lektionen, Rivalen, Bosse der Pilzhöhle und Vulkanschmiede mit ihren Regeln). Bosse, die man frei wählt, bringen die Regeln ihres Dungeons mit.
+  - **Deine Gruppe:** bis zu vier Helden mit Klasse und Stufe, Heiltränke, und ob der Computer die Mitstreiter steuert.
+  - **Ort und Zeit:** jeder Kampf-Hintergrund (oder „wie im Kampf“), Tag oder Nacht.
+  - **Kämpfen!** startet den Kampf, danach kommst du zurück in den Editor, deine Auswahl bleibt.
+  - **Probe-Lauf:** 100 Kämpfe laufen in einer Sekunde von selbst und zeigen, wie oft die Gruppe gewinnt, wie viele Züge es braucht und wie viel Leben übrig bleibt. Der Computer spielt alle Helden und pariert wie ein durchschnittlicher Spieler.
+  - Noch nicht: verschiedene Stufen je Monster (eine Stufe gilt für alle), Ausrüstung und Fähigkeiten-Baum der Helden (alle Fähigkeiten, Grundausrüstung). Ye's Lernkämpfe und der Sternenfresser sind für Novizen gebaut, mit Klassen-Helden gewinnt man sie kaum.
+  - **So testest du es:**
+    1. Werkstatt öffnen → Editor → Kampf-Editor.
+    2. Zwei Monster, deine Gruppe und einen Ort wählen, „Probe-Lauf“ drücken: Unten steht, wie oft man gewinnt.
+    3. „Kämpfen!“: Der Kampf läuft am gewählten Ort, danach bist du wieder im Editor.
+    4. „Kampf aus dem Spiel“ → „Rivalenkampf: Kael“ mit einer Klingentänzerin Stufe 15 ausprobieren.
 
 - **Neu (07.11.): S1b Ablauf der Demo wie im fertigen Spiel:** Die Glutoase ist das erste Gebiet der Geschichte, Grünwacht das zweite.
   - **Bogenschütze und Zähmer:** Weg nach Grünwacht, Klasse bei Fenn bzw. Tilda und Esche, dann der neue Auftrag „Bericht bei Ysolde“. Ysolde schickt einen in die Glutoase (Hadrak ruft nach Novizen). Dort Teil 1 der Geschichte mit der Vulkanschmiede. Danach schickt Hadrak einen mit „Zurück nach Grünwacht“ heim, Ysolde begrüßt einen und Teil 2 beginnt (Leuchtende Tiere bis Pilzhöhle). Ende der Demo nach „Die Wahrheit über Rowan“.

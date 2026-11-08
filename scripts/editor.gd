@@ -1,5 +1,5 @@
 extends Control
-## Editor: Werkzeuge zum schnellen Testen (Baukasten, Vegas Animationen, Kampf-Sandbox) und die Demo ab einem Akt.
+## Editor: Werkzeuge zum schnellen Testen (Kampf-Editor, Baukasten, Vegas Animationen, Kampf-Sandbox) und die Demo ab einem Akt.
 ## Die Demo-Tests benutzen einen eigenen Spielstand (spielstand_editor.json), der normale Spielstand bleibt unberührt.
 
 const SCREEN := Vector2(1280, 720)
@@ -27,9 +27,10 @@ func _ready() -> void:
 	_label("Zum schnellen Ausprobieren", 20, Color.WHITE, Vector2(0, 108), SCREEN.x)
 
 	_label("Werkzeuge", 22, Color("f2c14e"), Vector2(40, 170), 400)
-	_button("Baukasten-Testfeld\nNeue Karte aus Einzelbildern", Vector2(40, 210), func() -> void: _go("res://scenes/baukasten_test.tscn"))
-	_button("Figuren-Animationen\nKleiner Testkampf", Vector2(450, 210), func() -> void: _go("res://scenes/vega_test.tscn"))
-	_button("Kampf-Sandbox\nAlle 11 Klassen, Pilzhöhle", Vector2(860, 210), func() -> void: _go("res://scenes/auswahl.tscn"))
+	_button("Kampf-Editor\nMonster, Gruppe, Ort, Probe-Lauf", Vector2(40, 210), func() -> void: _go("res://scenes/kampf_editor.tscn"), 290)
+	_button("Baukasten-Testfeld\nNeue Karte aus Einzelbildern", Vector2(345, 210), func() -> void: _go("res://scenes/baukasten_test.tscn"), 290)
+	_button("Figuren-Animationen\nKleiner Testkampf", Vector2(650, 210), func() -> void: _go("res://scenes/vega_test.tscn"), 290)
+	_button("Kampf-Sandbox\nAlle 11 Klassen, Pilzhöhle", Vector2(955, 210), func() -> void: _go("res://scenes/auswahl.tscn"), 290)
 
 	_label("Demo testen (eigener Spielstand, dein normaler bleibt unberührt)", 22, Color("f2c14e"), Vector2(40, 380), 1200)
 	_button("Akt Kreuzweg\nVon vorne, mit Figur erstellen", Vector2(40, 420), _start_kreuzweg)
@@ -119,11 +120,12 @@ func _label(text: String, font_size: int, color: Color, pos: Vector2, width: flo
 	add_child(label)
 
 
-func _button(text: String, pos: Vector2, action: Callable) -> void:
+func _button(text: String, pos: Vector2, action: Callable, breite := 380.0) -> void:
 	var button := Button.new()
 	button.text = text
 	button.position = pos
-	button.size = Vector2(380, 130)
-	button.add_theme_font_size_override("font_size", 22)
+	button.size = Vector2(breite, 130)
+	button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	button.add_theme_font_size_override("font_size", 22 if breite >= 380.0 else 19)
 	button.pressed.connect(action)
 	add_child(button)
