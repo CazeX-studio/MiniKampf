@@ -65,6 +65,20 @@ MONSTER = {
 	"staubgeist": {"hoehe": 84, "reihen": EINZELN},
 	# Mondschakal: nur 3 Bilder Stehen gemalt
 	"mondschakal": {"hoehe": 84, "reihen": [("idle", 3)] + EINZELN[1:]},
+	# Glutgrat und Vulkanschmiede
+	"schlackenbock": {"hoehe": 84, "reihen": EINZELN},
+	"glutsalamander": {"hoehe": 84, "reihen": EINZELN},
+	"rauchgeier": {"hoehe": 84, "reihen": EINZELN},
+	"geysirkrabbe": {"hoehe": 56, "reihen": EINZELN},
+	"glutfledermaus": {"hoehe": 56, "reihen": EINZELN},
+	"obsidiangolem": {"hoehe": 120, "reihen": EINZELN},
+	"gewitterwyvern": {"hoehe": 120, "reihen": EINZELN},
+	"schlackenkriecher": {"hoehe": 64, "reihen": EINZELN},
+	"glutgeist": {"hoehe": 84, "reihen": EINZELN},
+	"ambossknecht": {"hoehe": 100, "reihen": EINZELN},
+	"aschefalter": {"hoehe": 56, "reihen": EINZELN},
+	"magmaschnecke": {"hoehe": 64, "reihen": EINZELN},
+	"messingwaechter": {"hoehe": 100, "reihen": EINZELN},
 }
 # Monster mit festen Ausschnitten (wenn sich Bilder berühren oder aus mehreren Blättern stammen):
 # Animation -> Liste von Ausschnitten (x0, y0, x1, y1) im Blatt. Ein Ausschnitt kann auch (Blatt, x0, y0, x1, y1, Faktor)
