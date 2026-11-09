@@ -11,6 +11,13 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
+- **Neu (09.11.): Monster der Kreuzwegfelder mit eigenen Blättern** (Alpha-Feedback Nr. 44): Tauschleim, Kronenschleim, Wiesenhoppler, Knollenkäfer, Schattenskarabäus, Glimmerkäfer, Löwenzahnling, Kaktusling, Stachelflitzer, Glutigel und Funkenflirr haben jetzt deine vollständigen Bilder statt der umgefärbten Familien. Die Familie Schwärme ist raus, der Funkenflirr ist ein einzelnes fliegendes Insekt. Als Nächstes die 24 Monster der Glutoase (Prompts in `Spieldesign/GRAFIK_AUFTRAG.md` Teil G), danach Grünwacht.
+  - **So testest du es:**
+    1. Auf den Kreuzwegfeldern einen Tauschleim oder Wiesenhoppler angreifen: Das Monster sieht in jeder Bewegung gleich aus.
+    2. Einen Kronenschleim suchen und seine besondere Bewegung abwarten: Er wirft die Krone.
+    3. Nachts einen Funkenflirr angreifen: ein einzelnes Glühwürmchen statt eines Schwarms.
+    4. Kaktusling oder Schattenskarabäus in der Aschensteppe angreifen.
+
 - **Nächster Schritt:** Demo-Start S3b (Bewegungen in der Welt), dann S4 und S5 (Editoren), danach E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Offen von S1: Marcos Google-Formular verbinden.
 
 - **Neu (04.11.): D25b Körper von Rüstungsschmied und Sternensängerin** (2.11): Deine Blätter sind eingebaut: Rüstungsschmied (m) und Rüstungsschmiedin (w) in Rüstung mit Lederschürze und rotem Halstuch, die Sternensängerin (w) im hellen Gewand mit dunkelblauem Schal. Je mit Stehen, Laufen, Abwehr, Treffer, Angriff, Fallen, Sieg und Fähigkeit im Kampf, in der Welt schräg von vorne und hinten. Wer die Klasse gelernt hat, trägt sie mit seinem eigenen Kopf, auch in der Probestunde. Ausgebessert: die gelben Funken im Treffer-Bild des Schmieds und das rote Halstuch in einem Siegesbild der Sängerin. Noch nicht drin: ein männlicher Sternensänger (der kämpft weiter in der Klassenfigur).
