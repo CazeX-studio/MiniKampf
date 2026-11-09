@@ -44,6 +44,10 @@ var idle_fps := 6.0
 ## Abstand zwischen Sortierpunkt und gemalter Figur (siehe versetzen)
 var versatz := 0.0
 
+## Editor (S3b): festes Bild statt Ablauf nach der Zeit (-1 = normal), und welche Bilder gerade laufen
+var festes_bild := -1
+var aktuelle_anim := ""
+
 var _frames := {}
 var _sprite: Sprite2D
 ## Vergrößerung für Pixel-Bilder; fein gezeichnete Bilder werden um FighterView.fein_faktor kleiner gezeigt
@@ -125,7 +129,8 @@ func _process(delta: float) -> void:
 			# Die Richtungsbilder haben 6 statt 4 Bilder pro Bewegung
 			fps = 10.0 if moving else idle_fps
 	var frames: Array = _frames[anim]
-	var bild: Texture2D = frames[int(_time * fps) % frames.size()]
+	aktuelle_anim = anim
+	var bild: Texture2D = frames[(festes_bild if festes_bild >= 0 else int(_time * fps)) % frames.size()]
 	# Nur rechnen, wenn sich das Bild wirklich ändert (spart Zeit bei vielen Figuren)
 	if bild != _sprite.texture:
 		_sprite.texture = bild
@@ -189,6 +194,16 @@ func versetzen(dy: float) -> void:
 	versatz = dy
 	_sprite.position.y = dy
 	_overlay.position.y = dy
+
+
+## Wie viele Bilder hat die Bewegung, die gerade läuft? (Editor S3b)
+func bild_anzahl() -> int:
+	return (_frames.get(aktuelle_anim, []) as Array).size()
+
+
+## Hat die Figur Bilder für diese Bewegung? (z. B. „liegen“, „run_vorn“)
+func hat_bilder(anim: String) -> bool:
+	return not (_frames.get(anim, []) as Array).is_empty()
 
 
 ## Animation an einer anderen Stelle beginnen lassen (damit nicht alle Figuren gleichzeitig wippen).
