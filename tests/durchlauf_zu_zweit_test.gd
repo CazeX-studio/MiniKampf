@@ -160,7 +160,7 @@ func _handle_screen(id: String) -> bool:
 		_battle[id] = "probe:" + str(options[_rng.randi() % options.size()])
 		return true
 	if scene == "klassenwahl":
-		var classes: Array = GameData.get_file("klassen").reihenfolge
+		var classes: Array = GameData.get_file("klassen").reihenfolge.filter(func(id: String) -> bool: return Klassenwahl.in_demo(id))
 		world.players[id].progress.flags["klasse"] = classes[_rng.randi() % classes.size()]
 		world.players[id].progress.flags["klasse_gewaehlt"] = "ja"
 		return true

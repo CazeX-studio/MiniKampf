@@ -33,7 +33,8 @@ func _ready() -> void:
 	theme = Combat.make_theme()
 	Musik.play("stadt")
 	_build()
-	_select(_classes()[0])
+	var waehlbar := _classes().filter(func(id: String) -> bool: return in_demo(id))
+	_select(waehlbar[0] if not waehlbar.is_empty() else _classes()[0])
 
 
 func _build() -> void:
@@ -68,7 +69,8 @@ func _build() -> void:
 	for id: String in _classes():
 		var data: Dictionary = Sandbox.CLASSES[id]
 		var button := Button.new()
-		button.text = "%s  ·  %s" % [data.title, data.role]
+		button.text = "%s  ·  %s" % [data.title, data.role] + ("" if in_demo(id) else "  ·  später")
+		button.clip_text = true
 		button.custom_minimum_size = Vector2(300, 52 if region == "" else 80)
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		button.add_theme_font_size_override("font_size", 17)
@@ -200,7 +202,7 @@ func _classes() -> Array:
 func _select(id: String) -> void:
 	_selected = id
 	for other: String in _list_buttons:
-		_list_buttons[other].modulate = Color.WHITE if other == id else Color(1, 1, 1, 0.65)
+		_list_buttons[other].modulate = Color.WHITE if other == id else Color(1, 1, 1, 0.65 if in_demo(other) else 0.35)
 	var data: Dictionary = Sandbox.CLASSES[id]
 	var extra: Dictionary = GameData.get_file("klassen").get(id, {})
 	_title.text = data.title
@@ -213,11 +215,14 @@ func _select(id: String) -> void:
 		"[b]Reaktion:[/b] %s" % data.reaction_text,
 	])
 	_ult.text = "[b][color=#f2c14e]Ult-Vorschau[/color][/b]\n%s" % extra.get("ult_vorschau", data.ult)
-	var erlaubt := FigurTeile.klasse_erlaubt(eigene_figur(), id)
+	var erlaubt := darf_waehlen(id)
 	if _choose_button != null:
 		_choose_button.disabled = not erlaubt
 		_trial_button.disabled = not erlaubt
-		_sperre.text = "" if erlaubt else str(extra.get("nur_geschlecht_text", "Diese Klasse kann deine Figur nicht lernen."))
+		if not in_demo(id):
+			_sperre.text = "Diese Klasse kommt später. In der Demo gibt es die Klassen aus Grünwacht und der Glutoase."
+		else:
+			_sperre.text = "" if erlaubt else str(extra.get("nur_geschlecht_text", "Diese Klasse kann deine Figur nicht lernen."))
 	_diagram.queue_redraw()
 
 
@@ -249,6 +254,18 @@ func _draw_diagram() -> void:
 	_diagram.draw_polyline(points, Sandbox.CLASSES[_selected].color.lightened(0.3), 2.5)
 
 
+## Gibt es die Klasse in der Demo? Nur die Klassen aus Grünwacht und der Glutoase, die anderen sind sichtbar, aber gesperrt
+## (A3, Marco 08.11.: „Klassen auf dem Weg sperren außer die aus den 2 Gebieten“).
+static func in_demo(id: String) -> bool:
+	var regionen: Array = GameData.get_file("klassen").get("demo_regionen", [])
+	return regionen.is_empty() or str(Sandbox.CLASSES.get(id, {}).get("region", "")) in regionen
+
+
+## Darf die eigene Figur diese Klasse wählen und ausprobieren? (in der Demo und, bei der Sternensängerin, weiblich)
+func darf_waehlen(id: String) -> bool:
+	return in_demo(id) and FigurTeile.klasse_erlaubt(eigene_figur(), id)
+
+
 ## Die eigene Figur aus dem Spielstand (sonst die im Menü gewählte).
 static func eigene_figur() -> String:
 	var figur: Dictionary = SaveGame._read().get("figur", {})
@@ -257,7 +274,7 @@ static func eigene_figur() -> String:
 
 ## Probestunde direkt von hier: danach zurück zur Klassenwahl.
 func _trial() -> void:
-	if not FigurTeile.klasse_erlaubt(eigene_figur(), _selected):
+	if not darf_waehlen(_selected):
 		return
 	var progress: Dictionary = SaveGame.read_progress()
 	var level := int(progress.get("level", 1))
@@ -271,7 +288,7 @@ func _trial() -> void:
 
 ## Klasse gewählt: im Spielstand merken und zurück zu Ye.
 func _choose() -> void:
-	if not FigurTeile.klasse_erlaubt(eigene_figur(), _selected):
+	if not darf_waehlen(_selected):
 		return
 	SaveGame.set_flag("klasse", _selected)
 	SaveGame.set_flag("klasse_gewaehlt", "ja")

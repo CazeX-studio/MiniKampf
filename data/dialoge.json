@@ -159,27 +159,27 @@
 	"bank": {"hinweis": "PLATZHALTER-TEXTE: Bankstellen (Ilse in Kreuzweg, Tamm in Wipfelheim). Alle Bankstellen zeigen dieselbe Bank.", "einstieg": [{"knoten": "hallo"}], "knoten": {"hallo": {"wer": "Bank", "text": "Willkommen bei der Bank der fünf Wege! Was du hier einlagerst, liegt an jeder Bankstelle bereit, in jeder Stadt.", "antworten": [{"text": "Meine Bank öffnen.", "aktionen": [{"laden": "bank"}]}, {"text": "Nichts, danke."}]}}},
 	"bingo": {"hinweis": "PLATZHALTER-TEXTE: Handelsherr Bingo.", "einstieg": [{"wenn": {"gemerkt": "klasse_bestaetigt"}, "knoten": "heimkehr"}, {"knoten": "hallo"}], "knoten": {"hallo": {"wer": "Bingo", "text": "Willkommen bei Bingo, dem größten Händler zwischen den fünf Straßen! Was darf's sein?", "antworten": [{"text": "Zeig mir deine Waren.", "aktionen": [{"laden": "bingo"}]}, {"text": "Was ist das leuchtende Brett da?", "weiter": "tafel"}, {"text": "Nichts, danke."}]}, "tafel": {"wer": "Bingo", "text": "Die Sternentafel! Eine Erfindung aus Messinghafen, angetrieben von einem echten Sternensplitter. Neun Felder, und gelegte Monster erscheinen als Leuchtbild!", "aktionen": [{"merken": "sternentafel_gesehen"}], "weiter": "preis"}, "preis": {"wer": "Bingo", "text": "Und für dich, mein Freund, nur 5 Gold. Ein Schnäppchen!", "antworten": [{"text": "Fünftausend?!", "weiter": "zu_teuer"}, {"text": "Zeig mir lieber deine anderen Waren.", "aktionen": [{"laden": "bingo"}]}]}, "zu_teuer": {"wer": "Bingo", "text": "Qualität hat ihren Preis. Komm wieder, wenn dein Beutel schwerer ist."}, "heimkehr": {"wer": "Bingo", "text": "Kundschaft! Zurück aus der weiten Welt? Ich seh's dir an: Der Beutel ist schwerer geworden.", "antworten": [{"text": "Was kostet jetzt die Sternentafel?", "weiter": "heimkehr_tafel"}, {"text": "Zeig mir deine Waren.", "aktionen": [{"laden": "bingo_heimkehr"}]}, {"text": "Nichts, danke."}]}, "heimkehr_tafel": {"wer": "Bingo", "text": "Für Heimkehrer: 60 Silber. Gold ist ehrlich. Und Marv … ist hartnäckig, hab ich gehört.", "antworten": [{"text": "Zeig her.", "aktionen": [{"laden": "bingo_heimkehr"}]}, {"text": "Später."}]}}},
 	"gesandte_arkanum": {
-		"hinweis": "PLATZHALTER-TEXTE: Magistra Ilwen, Gesandte des Arkanums.",
+		"hinweis": "PLATZHALTER-TEXTE: Magistra Ilwen, Gesandte des Arkanums. A3 (Marco, 09.11.): Die Klassen der Region kommen später, der Gesandte bietet noch nichts an.",
 		"einstieg": [{"knoten": "hallo"}],
 		"knoten": {
 			"hallo": {"wer": "Ilwen", "text": "Ich bin Magistra Ilwen, Gesandte des Arkanums. Willkommen, Novize. Bei uns lernt man, dass Magie schützen kann – und dass zwischen Licht und Schatten ein schmaler Grat liegt.", "antworten": [
-				{"text": "Zeig mir eure Klassen.", "aktionen": [{"szene": "klassenwahl:Arkanum"}]},
+				{"text": "Zeig mir eure Klassen.", "weiter": "noch_zu"},
 				{"text": "Erzähl mir vom Arkanum.", "weiter": "region"},
 				{"text": "Später."}
 			]},
-			"region": {"wer": "Ilwen", "text": "Türme auf schwebenden Felsen, ein Turm des Lichts und einer des Schattens. Wer dort lernt, lernt das Gleichgewicht.", "weiter": "hallo"}
+			"noch_zu": {"wer": "Ilwen", "text": "Unsere Türme sind für Novizen noch verschlossen. Komm wieder, wenn sich der Weg ins Arkanum öffnet.", "weiter": "hallo"}, "region": {"wer": "Ilwen", "text": "Türme auf schwebenden Felsen, ein Turm des Lichts und einer des Schattens. Wer dort lernt, lernt das Gleichgewicht.", "weiter": "hallo"}
 		}
 	},
 	"gesandte_messinghafen": {
-		"hinweis": "PLATZHALTER-TEXTE: Tüftler Pim, Gesandter aus Messinghafen.",
+		"hinweis": "PLATZHALTER-TEXTE: Tüftler Pim, Gesandter aus Messinghafen. A3 (Marco, 09.11.): Die Klassen der Region kommen später, der Gesandte bietet noch nichts an.",
 		"einstieg": [{"knoten": "hallo"}],
 		"knoten": {
 			"hallo": {"wer": "Pim", "text": "Pim, Tüftler und Gesandter aus Messinghafen! Zahnräder, Dampf und ein Hafen voller Waren! In Messinghafen baut man sich seine Freunde selbst – oder kauft sie.", "antworten": [
-				{"text": "Zeig mir eure Klassen.", "aktionen": [{"szene": "klassenwahl:Messinghafen"}]},
+				{"text": "Zeig mir eure Klassen.", "weiter": "noch_zu"},
 				{"text": "Erzähl mir von Messinghafen.", "weiter": "region"},
 				{"text": "Später."}
 			]},
-			"region": {"wer": "Pim", "text": "Die Erfinderstadt am Meer. Übrigens: Die Sternentafel bei Bingo kommt auch von uns. Teuer, aber genial!", "weiter": "hallo"}
+			"noch_zu": {"wer": "Pim", "text": "Unsere Werkstätten? Gerade alle zu – großer Umbau, du verstehst! Schau später wieder vorbei, dann zeig ich dir alles.", "weiter": "hallo"}, "region": {"wer": "Pim", "text": "Die Erfinderstadt am Meer. Übrigens: Die Sternentafel bei Bingo kommt auch von uns. Teuer, aber genial!", "weiter": "hallo"}
 		}
 	},
 	"gesandte_glutoase": {
@@ -207,15 +207,15 @@
 		}
 	},
 	"gesandte_nebelinseln": {
-		"hinweis": "PLATZHALTER-TEXTE: Schreindienerin Mei, Gesandte der Nebelinseln.",
+		"hinweis": "PLATZHALTER-TEXTE: Schreindienerin Mei, Gesandte der Nebelinseln. A3 (Marco, 09.11.): Die Klassen der Region kommen später, der Gesandte bietet noch nichts an.",
 		"einstieg": [{"knoten": "hallo"}],
 		"knoten": {
 			"hallo": {"wer": "Mei", "text": "Ich bin Mei, Schreindienerin und Gesandte der Nebelinseln. Auf unseren Inseln stehen alte Schreine, und manche Wege kennt nur, wer Siegel lesen kann.", "antworten": [
-				{"text": "Zeig mir eure Klassen.", "aktionen": [{"szene": "klassenwahl:Nebelinseln"}]},
+				{"text": "Zeig mir eure Klassen.", "weiter": "noch_zu"},
 				{"text": "Erzähl mir von den Nebelinseln.", "weiter": "region"},
 				{"text": "Später."}
 			]},
-			"region": {"wer": "Mei", "text": "Nebel, Schreine, Wesen aus alten Sagen. Und ein Schrein, über den man nicht spricht.", "weiter": "hallo"}
+			"noch_zu": {"wer": "Mei", "text": "Der Nebel lässt noch niemanden zu unseren Schreinen. Wenn die Zeit gekommen ist, zeige ich sie dir.", "weiter": "hallo"}, "region": {"wer": "Mei", "text": "Nebel, Schreine, Wesen aus alten Sagen. Und ein Schrein, über den man nicht spricht.", "weiter": "hallo"}
 		}
 	},
 	"torwache_nebelinseln": {"hinweis": "PLATZHALTER-TEXTE: Torwache am Tor nach den Nebelinseln, hält Spieler auf, solange der Weg nicht gebaut ist.", "einstieg": [{"knoten": "halt"}], "knoten": {"halt": {"wer": "Torwache", "text": "Halt, Novize! Der Weg zu den Nebelinseln ist noch nicht frei. Hier kommt gerade niemand durch."}}},

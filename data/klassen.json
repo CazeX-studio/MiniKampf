@@ -1,6 +1,7 @@
 {
 	"hinweis": "Klassenwahl-Bildschirm: Lehrmeister (aus design.md), Werte 0–5 für das Diagramm (VORLÄUFIG, Feinschliff am Ende) und eine kurze Ult-Vorschau. „lernen_bei“: bei dieser Figur lernt man die Klasse (bis dahin kämpft man als Novize); Klassen ohne „lernen_bei“ kämpfen gleich nach der Wahl mit ihrer Klasse, weil ihre Region noch fehlt. Rolle, Region, Mechanik und Reaktion kommen aus scripts/kampf/sandbox.gd.",
 	"wohin": {"Arkanum": "ins Arkanum", "Messinghafen": "nach Messinghafen", "Glutoase": "in die Glutoase", "Grünwacht": "nach Grünwacht", "Nebelinseln": "auf die Nebelinseln"},
+	"demo_regionen": ["Grünwacht", "Glutoase"],
 	"reihenfolge": ["tank", "mechanic", "smith", "archer", "blade", "twilight", "tamer", "ritualist", "quartermaster", "kunoichi", "singer"],
 	"tank": {
 		"lehrmeister": "Bastionsmeister Theron",
