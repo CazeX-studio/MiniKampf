@@ -24,6 +24,9 @@ var _diagram: Control
 var _portrait: TextureRect
 var _confirm: PanelContainer
 var _confirm_text: Label
+var _choose_button: Button
+var _trial_button: Button
+var _sperre: Label
 
 
 func _ready() -> void:
@@ -124,6 +127,15 @@ func _build() -> void:
 	trial.add_theme_font_size_override("font_size", 18)
 	trial.pressed.connect(_trial)
 	add_child(trial)
+	_trial_button = trial
+	# Hinweis, wenn die eigene Figur die Klasse nicht lernen darf (z. B. Sternensängerin nur weiblich)
+	_sperre = Label.new()
+	_sperre.position = Vector2(380, 640)
+	_sperre.size = Vector2(390, 40)
+	_sperre.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_sperre.add_theme_font_size_override("font_size", 15)
+	_sperre.add_theme_color_override("font_color", Color("ff9a7a"))
+	add_child(_sperre)
 
 	var choose := Button.new()
 	choose.text = "Diese Klasse wählen"
@@ -133,6 +145,7 @@ func _build() -> void:
 	choose.add_theme_color_override("font_color", Color("f2c14e"))
 	choose.pressed.connect(_ask_confirm)
 	add_child(choose)
+	_choose_button = choose
 	if region != "":
 		# Beim Gesandten wird nur geschaut und ausprobiert
 		choose.visible = false
@@ -200,6 +213,11 @@ func _select(id: String) -> void:
 		"[b]Reaktion:[/b] %s" % data.reaction_text,
 	])
 	_ult.text = "[b][color=#f2c14e]Ult-Vorschau[/color][/b]\n%s" % extra.get("ult_vorschau", data.ult)
+	var erlaubt := FigurTeile.klasse_erlaubt(eigene_figur(), id)
+	if _choose_button != null:
+		_choose_button.disabled = not erlaubt
+		_trial_button.disabled = not erlaubt
+		_sperre.text = "" if erlaubt else str(extra.get("nur_geschlecht_text", "Diese Klasse kann deine Figur nicht lernen."))
 	_diagram.queue_redraw()
 
 
@@ -231,8 +249,16 @@ func _draw_diagram() -> void:
 	_diagram.draw_polyline(points, Sandbox.CLASSES[_selected].color.lightened(0.3), 2.5)
 
 
+## Die eigene Figur aus dem Spielstand (sonst die im Menü gewählte).
+static func eigene_figur() -> String:
+	var figur: Dictionary = SaveGame._read().get("figur", {})
+	return str(figur.get("aussehen", FigurWahl.gewaehlt()))
+
+
 ## Probestunde direkt von hier: danach zurück zur Klassenwahl.
 func _trial() -> void:
+	if not FigurTeile.klasse_erlaubt(eigene_figur(), _selected):
+		return
 	var progress: Dictionary = SaveGame.read_progress()
 	var level := int(progress.get("level", 1))
 	var saved := Progress.new()
@@ -245,6 +271,8 @@ func _trial() -> void:
 
 ## Klasse gewählt: im Spielstand merken und zurück zu Ye.
 func _choose() -> void:
+	if not FigurTeile.klasse_erlaubt(eigene_figur(), _selected):
+		return
 	SaveGame.set_flag("klasse", _selected)
 	SaveGame.set_flag("klasse_gewaehlt", "ja")
 	get_tree().change_scene_to_file("res://scenes/kreuzweg.tscn")

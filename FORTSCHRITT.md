@@ -17,12 +17,12 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - **Seilaufzug (40):** Der Wegweiser zeigt jetzt den ganzen Weg bis Wipfelheim, auch im Wald auf den Seilaufzug (bisher hörte er hinter dem Westtor auf). Den Aufzug kann man jetzt auch auf seinem Bild antippen, nicht nur auf dem kleinen Feld davor.
   - **Tanz (32):** „Der Tanz mit der Pause“ geht sofort, man muss nicht mehr bis nachts warten.
   - **Kochende Brunnen (30):** Der Wegweiser zeigt erst zur Wasserstelle im Nordwesten, dann zur dampfenden im Nordosten der Palmenrast.
-  - **Klassenkleidung (24):** Für einen männlichen Sternensänger gab es keinen Körper, darum lief er als Novize herum. Jetzt trägt er vorerst das Gewand der Sängerin mit seinem eigenen Kopf, in der Welt und im Kampf.
+  - **Sternensängerin nur für Frauen (24, dein Beschluss):** Ist die eigene Figur männlich, sind bei der Klassenwahl „Diese Klasse wählen“ und „Probestunde“ der Sternensängerin gesperrt, mit Hinweis. Dass dein Klingentänzer als Novize herumlief, kam vermutlich vom Online-Spiel (alte Figuren), das kommt mit A2.
   - **So testest du es:**
     1. Nach dem Ende der Glutoase am Westtor mit der Wache reden und dem Wegweiser folgen: Er führt bis zum Seilaufzug im Wald, Antippen bringt einen nach Wipfelheim.
     2. Bei Samira „Der Tanz mit der Pause“ tagsüber annehmen und gleich tanzen.
     3. „Kochende Brunnen“ annehmen: Der Wegweiser zeigt in der Palmenrast zu den Wasserstellen.
-    4. Mit einer männlichen Figur Sternensänger lernen und herumlaufen: kein Novize mehr. Wenn dir das Gewand am Mann nicht gefällt, schreibe ich dir den Prompt für einen eigenen Körper.
+    4. Mit einer männlichen Figur bei Ye die Klassenwahl öffnen: Die Sternensängerin ist gesperrt.
 
 - **Neu (04.11.): D25b Körper von Rüstungsschmied und Sternensängerin** (2.11): Deine Blätter sind eingebaut: Rüstungsschmied (m) und Rüstungsschmiedin (w) in Rüstung mit Lederschürze und rotem Halstuch, die Sternensängerin (w) im hellen Gewand mit dunkelblauem Schal. Je mit Stehen, Laufen, Abwehr, Treffer, Angriff, Fallen, Sieg und Fähigkeit im Kampf, in der Welt schräg von vorne und hinten. Wer die Klasse gelernt hat, trägt sie mit seinem eigenen Kopf, auch in der Probestunde. Ausgebessert: die gelben Funken im Treffer-Bild des Schmieds und das rote Halstuch in einem Siegesbild der Sängerin. Noch nicht drin: ein männlicher Sternensänger (der kämpft weiter in der Klassenfigur).
   - **So testest du es:**

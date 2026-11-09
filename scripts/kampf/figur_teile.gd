@@ -117,13 +117,21 @@ static func mit_klasse(look: String, klasse: String) -> String:
 	if not kann_aussehen(look) or teile.size() != 2 or not teile[1] in ["m", "w"]:
 		return look
 	var neu := "%s_%s" % [KLASSEN_KOERPER.get(klasse, "novize"), teile[1]]
-	if not koerper_liste().has(neu) and KLASSEN_KOERPER.has(klasse):
-		# Klasse ohne Körper für dieses Geschlecht (Sternensänger, vorerst nur weiblich): der andere Körper mit dem eigenen
-		# Kopf, sonst bliebe man in der Welt Novize (A1a, Alpha-Punkt 24)
-		neu = "%s_%s" % [KLASSEN_KOERPER[klasse], "w" if teile[1] == "m" else "m"]
 	if neu == koerper or not koerper_liste().has(neu):
 		return look
 	return neu + look.substr(koerper.length())
+
+
+## Geschlecht einer Figur aus Körper und Kopf: "m", "w" oder "" (unbekannt, z. B. alte Pixel-Figuren).
+static func geschlecht(look: String) -> String:
+	return str(_alle().get(koerper_von(look), {}).get("_geschlecht", ""))
+
+
+## Darf diese Figur die Klasse lernen? (Sternensängerin vorerst nur weiblich, Marco 09.11., Alpha-Test)
+static func klasse_erlaubt(look: String, klasse: String) -> bool:
+	var nur: String = str(GameData.get_file("klassen").get(klasse, {}).get("nur_geschlecht", ""))
+	var eigenes := geschlecht(look)
+	return nur == "" or eigenes == "" or eigenes == nur
 
 
 ## Kann diese Figur Aussehen-Teile tragen? (Nur Figuren aus Körper und Kopf, z. B. aus „Figur erstellen“.)

@@ -65,10 +65,15 @@ func _initialize() -> void:
 	r.progress.flags["wasserstelle_nordwest"] = true
 	_check(w2._quest_place(r, "kochende_brunnen").get("feld") == Vector2i(34, 6), "Danach zur dampfenden Wasserstelle")
 
-	# Punkt 24: Nach dem Lernen der Klasse läuft man in Klassenkleidung, auch als Sternensänger
+	# Punkt 24: Nach dem Lernen der Klasse läuft man in Klassenkleidung; die Sternensängerin gibt es nur für Frauen (Marco, 09.11.)
 	for klasse: String in FigurTeile.KLASSEN_KOERPER:
 		for kopf: String in ["novize_m+m1", "novize_w+w1"]:
+			if not FigurTeile.klasse_erlaubt(kopf, klasse):
+				continue
 			var neu := FigurTeile.mit_klasse(kopf, klasse)
 			_check(not FigurTeile.koerper_von(neu).begins_with("novize"), "%s mit %s: %s" % [klasse, kopf, neu])
+	_check(not FigurTeile.klasse_erlaubt("novize_m+m1", "singer"), "Männer können keine Sternensängerin werden")
+	_check(FigurTeile.klasse_erlaubt("novize_w+w1", "singer"), "Frauen schon")
+	_check(FigurTeile.klasse_erlaubt("novize_m+m1", "blade"), "Männer können Klingentänzer werden")
 	print("Alpha-Blocker: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)

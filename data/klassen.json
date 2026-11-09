@@ -57,6 +57,8 @@
 		"ult_vorschau": "Tausend Siegel: Jeder Gegner wird mit seiner Schwäche getroffen, die Gruppe wird geheilt und geschützt."
 	},
 	"singer": {
+		"nur_geschlecht": "w",
+		"nur_geschlecht_text": "Die Sternensängerin gibt es vorerst nur für weibliche Figuren.",
 		"lehrmeister": "Hohe Sängerin Xavina",
 		"lernen_bei": "xavina",
 		"werte": {"schaden": 2, "schutz": 1, "heilung": 4, "unterstuetzung": 4, "schwierigkeit": 4},
