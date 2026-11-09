@@ -11,7 +11,18 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt (09.11.):** Alpha-Blocker A1a und A1b, dann S3b (Bewegungen in der Welt), S4 und S5 (Editoren), danach die Alpha-Aufträge A2 bis A13, E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+- **Nächster Schritt (09.11.):** Alpha-Blocker A1b, dann S3b (Bewegungen in der Welt), S4 und S5 (Editoren), danach die Alpha-Aufträge A2 bis A13, E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+
+- **Neu (09.11.): A1a Blocker beim Weiterkommen** (Alpha-Punkte 24, 30, 32, 40):
+  - **Seilaufzug (40):** Der Wegweiser zeigt jetzt den ganzen Weg bis Wipfelheim, auch im Wald auf den Seilaufzug (bisher hörte er hinter dem Westtor auf). Den Aufzug kann man jetzt auch auf seinem Bild antippen, nicht nur auf dem kleinen Feld davor.
+  - **Tanz (32):** „Der Tanz mit der Pause“ geht sofort, man muss nicht mehr bis nachts warten.
+  - **Kochende Brunnen (30):** Der Wegweiser zeigt erst zur Wasserstelle im Nordwesten, dann zur dampfenden im Nordosten der Palmenrast.
+  - **Klassenkleidung (24):** Für einen männlichen Sternensänger gab es keinen Körper, darum lief er als Novize herum. Jetzt trägt er vorerst das Gewand der Sängerin mit seinem eigenen Kopf, in der Welt und im Kampf.
+  - **So testest du es:**
+    1. Nach dem Ende der Glutoase am Westtor mit der Wache reden und dem Wegweiser folgen: Er führt bis zum Seilaufzug im Wald, Antippen bringt einen nach Wipfelheim.
+    2. Bei Samira „Der Tanz mit der Pause“ tagsüber annehmen und gleich tanzen.
+    3. „Kochende Brunnen“ annehmen: Der Wegweiser zeigt in der Palmenrast zu den Wasserstellen.
+    4. Mit einer männlichen Figur Sternensänger lernen und herumlaufen: kein Novize mehr. Wenn dir das Gewand am Mann nicht gefällt, schreibe ich dir den Prompt für einen eigenen Körper.
 
 - **Neu (04.11.): D25b Körper von Rüstungsschmied und Sternensängerin** (2.11): Deine Blätter sind eingebaut: Rüstungsschmied (m) und Rüstungsschmiedin (w) in Rüstung mit Lederschürze und rotem Halstuch, die Sternensängerin (w) im hellen Gewand mit dunkelblauem Schal. Je mit Stehen, Laufen, Abwehr, Treffer, Angriff, Fallen, Sieg und Fähigkeit im Kampf, in der Welt schräg von vorne und hinten. Wer die Klasse gelernt hat, trägt sie mit seinem eigenen Kopf, auch in der Probestunde. Ausgebessert: die gelben Funken im Treffer-Bild des Schmieds und das rote Halstuch in einem Siegesbild der Sängerin. Noch nicht drin: ein männlicher Sternensänger (der kämpft weiter in der Klassenfigur).
   - **So testest du es:**

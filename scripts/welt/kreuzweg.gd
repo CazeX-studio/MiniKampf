@@ -847,7 +847,7 @@ func _tap_at(world: Vector2) -> void:
 	# Sammelpunkt angetippt? Dann hinlaufen und einsammeln
 	for target: String in _pickup_nodes:
 		var node: Node2D = _pickup_nodes[target]
-		if node.visible and (world - (node.position + Vector2(0, -12))).length() < 26.0:
+		if node.visible and (world - (node.position + Vector2(0, -12))).length() < 26.0 or _ort_als_teil_getroffen(target, node, world):
 			_send({type = "use", target = target})
 			_show_marker(node.position)
 			return
@@ -855,6 +855,16 @@ func _tap_at(world: Vector2) -> void:
 	if state.is_walkable(cell, local_player().map):
 		_send({type = "move", cell = cell})
 		_show_marker(cell_center(Vector2(cell)))
+
+
+## Orte, die als gemaltes Teil dastehen (Seilaufzug, Grab, Höhle …): Das ganze Bild darüber zählt beim Antippen (A1a).
+func _ort_als_teil_getroffen(target: String, node: Node2D, world: Vector2) -> bool:
+	if not node.visible or not target.begins_with("ort:"):
+		return false
+	var place: Dictionary = state.places[int(target.substr(4))]
+	if not place.art in ORTE_ALS_TEIL or state.get_map(place.map).baukasten.is_empty():
+		return false
+	return absf(world.x - node.position.x) < 56.0 and world.y > node.position.y - 170.0 and world.y < node.position.y + 16.0
 
 
 func _show_marker(pos: Vector2) -> void:

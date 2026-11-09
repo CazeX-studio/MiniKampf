@@ -117,6 +117,10 @@ static func mit_klasse(look: String, klasse: String) -> String:
 	if not kann_aussehen(look) or teile.size() != 2 or not teile[1] in ["m", "w"]:
 		return look
 	var neu := "%s_%s" % [KLASSEN_KOERPER.get(klasse, "novize"), teile[1]]
+	if not koerper_liste().has(neu) and KLASSEN_KOERPER.has(klasse):
+		# Klasse ohne Körper für dieses Geschlecht (Sternensänger, vorerst nur weiblich): der andere Körper mit dem eigenen
+		# Kopf, sonst bliebe man in der Welt Novize (A1a, Alpha-Punkt 24)
+		neu = "%s_%s" % [KLASSEN_KOERPER[klasse], "w" if teile[1] == "m" else "m"]
 	if neu == koerper or not koerper_liste().has(neu):
 		return look
 	return neu + look.substr(koerper.length())

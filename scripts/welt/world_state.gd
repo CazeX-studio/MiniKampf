@@ -1533,9 +1533,37 @@ func _quest_place(p: PlayerState, id: String) -> Dictionary:
 		if goal.art == "gemerkt":
 			# Ein Ort, der das Ziel erfüllt (z. B. ein Laternenhaken)
 			for place: Dictionary in places:
-				if check(p, place.cond) and place.actions.any(func(a: Dictionary) -> bool: return a.get("merken", "") == goal.merken):
+				if check(p, place.cond) and _ort_merkt(place).has(str(goal.merken)):
 					return {karte = place.map, feld = place.cell}
 	return {}
+
+
+## Was ein Ort sich merken kann: direkt, über sein Gespräch oder einen Kampf daraus (z. B. die Wasserstellen, A1a).
+var _ort_merker := {}
+func _ort_merkt(place: Dictionary) -> Dictionary:
+	var key := "%s:%s" % [place.map, place.cell]
+	if not _ort_merker.has(key):
+		var flags := {}
+		_merker_sammeln(place.actions, flags)
+		if place.dialog != "":
+			_merker_sammeln(GameData.dialog(place.dialog).get("knoten", {}), flags)
+		_ort_merker[key] = flags
+	return _ort_merker[key]
+
+
+func _merker_sammeln(wert: Variant, flags: Dictionary) -> void:
+	if wert is Dictionary:
+		if wert.has("merken"):
+			flags[str(wert.merken)] = true
+		if wert.has("kampf"):
+			var kampf: Dictionary = GameData.get_file("kaempfe").get(str(wert.kampf), {})
+			if kampf.has("merken"):
+				flags[str(kampf.merken)] = true
+		for v: Variant in wert.values():
+			_merker_sammeln(v, flags)
+	elif wert is Array:
+		for v: Variant in wert:
+			_merker_sammeln(v, flags)
 
 
 ## Wegweiser der Nebenaufträge: [{nummer, feld}] auf der eigenen Karte (oder der Ausgang dorthin).
@@ -1599,13 +1627,14 @@ func _nearest_pickup(p: PlayerState, item: String) -> Dictionary:
 
 ## Ausgang der eigenen Karte, über den man (auch über mehrere Karten hinweg) zur Zielkarte kommt, oder (-1, -1).
 func _exit_towards(p: PlayerState, target_map: String) -> Vector2i:
-	# Breitensuche über die Ausgänge aller Karten; gemerkt wird, über welchen Ausgang der eigenen Karte man losging
+	# Breitensuche über die Ausgänge aller Karten; gemerkt wird, über welchen Ausgang der eigenen Karte man losging.
+	# Orte, die woandershin bringen (z. B. der Seilaufzug nach Wipfelheim), zählen auch als Ausgang (A1a).
 	var first := {}
 	var queue: Array[String] = []
-	for e: Dictionary in get_map(p.map).exits:
-		if check(p, e.cond) and not first.has(e.karte) and e.karte != p.map:
-			first[e.karte] = e.rect.get_center()
-			queue.append(e.karte)
+	for link: Array in _links(p, p.map):
+		if not first.has(link[0]) and link[0] != p.map:
+			first[link[0]] = link[1]
+			queue.append(link[0])
 	while not queue.is_empty():
 		var map_id: String = queue.pop_front()
 		if map_id == target_map:
@@ -1613,11 +1642,27 @@ func _exit_towards(p: PlayerState, target_map: String) -> Vector2i:
 			return Vector2i(c.round())
 		if not maps.has(map_id):
 			continue
-		for e: Dictionary in get_map(map_id).exits:
-			if not first.has(e.karte) and e.karte != p.map:
-				first[e.karte] = first[map_id]
-				queue.append(e.karte)
+		for link: Array in _links(p, map_id, false):
+			if not first.has(link[0]) and link[0] != p.map:
+				first[link[0]] = first[map_id]
+				queue.append(link[0])
 	return Vector2i(-1, -1)
+
+
+## Wege von einer Karte weg: [[Zielkarte, Stelle], ...] aus Ausgängen und Reise-Orten (Seilaufzug).
+## pruefen: Bedingungen für den Spieler beachten (nur auf der eigenen Karte, wie bisher bei den Ausgängen).
+func _links(p: PlayerState, map_id: String, pruefen := true) -> Array:
+	var result := []
+	for e: Dictionary in get_map(map_id).exits:
+		if not pruefen or check(p, e.cond):
+			result.append([str(e.karte), e.rect.get_center()])
+	for place: Dictionary in places:
+		if place.map != map_id or (pruefen and not (check(p, place.cond) and check(p, place.entry))):
+			continue
+		for a: Dictionary in place.actions:
+			if a.has("reisen"):
+				result.append([str(a.reisen), Vector2(place.cell)])
+	return result
 
 
 ## Zeichen über einem NPC: "!" = neuer Auftrag, "?" = hier etwas erledigen oder abgeben, "" = nichts.
