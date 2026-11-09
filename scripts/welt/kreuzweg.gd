@@ -377,6 +377,9 @@ func _build_map_view() -> void:
 	_figur_groesse = BAUKASTEN_FIGUR if not m.baukasten.is_empty() else 1.0
 	if not m.baukasten.is_empty():
 		_add_baukasten(m.baukasten)
+		# Leere um die Wege als Lava (Vulkanschmiede, A5: Lava war kaum zu erkennen, der Weg ging im Dunkeln unter)
+		if GameData.get_file("karten").get(local.map, {}).get("leere", "") == "lava":
+			_add_lava(m.baukasten)
 	for b: Dictionary in m.buildings:
 		_add_building(b)
 	for prop: Dictionary in m.props:
@@ -398,6 +401,9 @@ func _build_map_view() -> void:
 		view.setup(npc.look, npc.name, npc.tint, Color("f2c14e"))
 		view.zeichen = str(npc.get("zeichen", ""))
 		view.liegt = npc.get("liegt", false)
+		# "vorne": über den Teilen gemalt (z. B. Mira auf dem Bett im Krankenzelt, A5)
+		if npc.get("vorne", false):
+			view.z_index = 1
 		view.idle_fps = NPC_IDLE_FPS
 		# Jeder NPC beginnt an einer anderen Stelle der Animation, damit nicht alle im Gleichtakt wippen
 		view.time_offset(randf() * 4.0)
@@ -434,6 +440,61 @@ static func _danger_color(monster_level: int, player_level: int) -> Color:
 	if diff <= 4:
 		return Color("ffb050")
 	return Color("ff6060")
+
+
+## Lava in allen leeren Feldern einer Baukasten-Karte: glüht und wabert langsam, dazu einzelne Glut-Lichter am Rand
+## der Wege. Liegt unter dem Boden, damit die Ränder der Steinwege darüber auslaufen.
+const LAVA_DUNKEL := Color("7a1a08")
+const LAVA_HELL := Color("ff8a1e")
+const LAVA_GLUT := Color("ffd060")
+
+func _add_lava(karte: Dictionary) -> void:
+	var zeilen: Array = karte.get("boden", [])
+	var leer: Array[Vector2i] = []
+	for y in zeilen.size():
+		var zeile: String = zeilen[y]
+		for x in zeile.length():
+			if zeile[x] == " ":
+				leer.append(Vector2i(x, y))
+	if leer.is_empty():
+		return
+	var lava := Node2D.new()
+	lava.z_index = -11
+	lava.draw.connect(func() -> void:
+		for c: Vector2i in leer:
+			# Breite, langsame Wellen: benachbarte Felder haben fast dieselbe Farbe (sonst sieht es kariert aus)
+			var welle := 0.5 + 0.25 * sin(_time * 0.9 + c.x * 0.22 + c.y * 0.15) + 0.25 * sin(_time * 0.6 - c.x * 0.12 + c.y * 0.25)
+			var farbe := LAVA_DUNKEL.lerp(LAVA_HELL, welle)
+			# Hier und da eine helle Glutader
+			var ader := sin(c.x * 0.9 + c.y * 0.55 + _time * 0.7) * sin(c.y * 0.8 - c.x * 0.35)
+			if ader > 0.75:
+				farbe = farbe.lerp(LAVA_GLUT, (ader - 0.75) * 2.4)
+			var mitte := cell_to_screen(Vector2(c) + Vector2(0.5, 0.5))
+			lava.draw_colored_polygon(PackedVector2Array([mitte + Vector2(0, -TILE_H * 0.5 - 1), mitte + Vector2(TILE_W * 0.5 + 1, 0),
+					mitte + Vector2(0, TILE_H * 0.5 + 1), mitte + Vector2(-TILE_W * 0.5 - 1, 0)]), farbe))
+	add_child(lava)
+	_map_nodes.append(lava)
+	_lava_node = lava
+	# Glut-Lichter an leeren Feldern neben einem Weg (jedes vierte), damit die Ränder leuchten
+	var zaehler := 0
+	for c: Vector2i in leer:
+		var am_weg := false
+		for d: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+			var n := c + d
+			if n.y >= 0 and n.y < zeilen.size() and n.x >= 0 and n.x < str(zeilen[n.y]).length() and str(zeilen[n.y])[n.x] != " ":
+				am_weg = true
+		if am_weg:
+			zaehler += 1
+			if zaehler % 4 == 0:
+				var halter := Node2D.new()
+				halter.position = cell_to_screen(Vector2(c) + Vector2(0.5, 0.5))
+				add_child(halter)
+				_map_nodes.append(halter)
+				_add_light(halter, "glut", Vector2.ZERO)
+
+
+var _lava_node: Node2D
+var _lava_takt := 0.0
 
 
 ## Baukasten-Karte aufbauen: Boden, flache Teile, stehende Teile (nach Tiefe sortiert) mit Namensschildern.
@@ -489,6 +550,11 @@ func _exit_tree() -> void:
 
 func _process(delta: float) -> void:
 	_time += delta
+	# Lava wabert (zehnmal pro Sekunde neu malen reicht)
+	_lava_takt -= delta
+	if _lava_takt <= 0.0 and _lava_node != null and is_instance_valid(_lava_node):
+		_lava_takt = 0.1
+		_lava_node.queue_redraw()
 	_update_steer()
 	_update_skip(delta)
 	if not Netz.online():
@@ -637,7 +703,8 @@ func _sync() -> void:
 func _place_npc(npc_view: WorldCharacter, id: String, local: PlayerState) -> void:
 	var walk := local.npc_walk
 	if walk.get("id", "") != id:
-		npc_view.position = cell_center(Vector2(state.npcs[id].cell))
+		# "versatz": [x, y] Bildpunkte, z. B. damit Mira genau auf dem gemalten Bett im Zelt liegt
+		npc_view.position = cell_center(Vector2(state.npcs[id].cell)) + state.npcs[id].get("versatz", Vector2.ZERO)
 		npc_view.moving = false
 		return
 	var target := cell_center(walk.pos)

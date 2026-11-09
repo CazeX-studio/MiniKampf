@@ -11,7 +11,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt (09.11.):** die Alpha-Aufträge A2 bis A13 (als Nächstes A5: Glutoase), E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+- **Nächster Schritt (09.11.):** die Alpha-Aufträge A2 bis A13 (als Nächstes A6: Kampf-Anzeige), E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+
+- **Neu (09.11.): A5 Glutoase** (Alpha-Punkte 23, 31, 33, 34):
+  - **Weiter zum nächsten Auftrag (23):** Ist kein Auftrag der Geschichte offen und auf deiner Karte hat niemand ein „!“, zeigt der Wegweiser jetzt zum nächstgelegenen Auftraggeber auf einer anderen Karte. Beispiel Sternensängerin: Nach dem Lernen bei Xavina in der Palmenrast führt er zu Nadia in die Glutoase (bisher zeigte er nichts).
+  - **Mira im Bett (31):** Mira liegt jetzt auf dem Bett im Krankenzelt (das Bett war im Zelt-Bild schon gemalt). Ansprechen kannst du sie vom Zelteingang aus.
+  - **Lava und Weg (33, 34):** In der Vulkanschmiede ist die dunkle Leere um die Steinwege jetzt glühende, langsam wabernde Lava mit hellen Glutadern, an den Wegrändern leuchten Glut-Lichter. Dadurch sieht man die Lava sofort und die Wege heben sich klar ab.
+  - **So testest du es:**
+    1. Spielstand-Editor: Sternensängerin, Punkt „Beim Lehrmeister lernen“; bei Xavina lernen: Der Wegweiser führt in die Glutoase zu Nadia.
+    2. „Miras Lied“: Mira liegt im Zelt auf dem Bett.
+    3. „Die Ketten unter dem Berg“: In der Vulkanschmiede Lava und Wege ansehen.
 
 - **Neu (09.11.): A4b Mira und Ren** (Alpha-Punkte 13, 14):
   - **Mira (13):** Beim „leisen Singen“ kommt Mira jetzt nach einer Sekunde von oben vom Marktplatz zu dir (vorher lief sie von ihrem Platz am Tor einen Umweg von fast neun Sekunden).

@@ -212,7 +212,9 @@ func _add_things(map_id: String, data: Dictionary) -> void:
 		var cell := Vector2i(int(d.feld[0]), int(d.feld[1]))
 		npcs[id] = {name = d.name, cell = cell, map = map_id, look = d.aussehen, tint = Color(d.get("farbe", "ffffff")),
 				dialog = d.get("dialog", id), cond = d.get("wenn", {}), approach = d.get("anspringen", {}),
-				zeichen = str(d.get("zeichen", "")), liegt = bool(d.get("liegt", false)), tag_cell = cell}
+				zeichen = str(d.get("zeichen", "")), liegt = bool(d.get("liegt", false)), tag_cell = cell,
+				versatz = Vector2(float(d.versatz[0]), float(d.versatz[1])) if d.has("versatz") else Vector2.ZERO,
+				vorne = bool(d.get("vorne", false))}
 		m.block(cell)
 		# {"nachts": [x, y]}: nachts steht die Figur dort (Steckbriefe in NPC.md, D20d)
 		if d.has("nachts"):
@@ -1511,7 +1513,44 @@ func objective_place(p: PlayerState) -> Dictionary:
 		if npc_marker(p, id) == "!" and not npc_marker_side(p, id) \
 				and (best.is_empty() or (Vector2(npcs[id].cell) - p.pos).length() < (Vector2(best.feld) - p.pos).length()):
 			best = {karte = npcs[id].map, feld = npcs[id].cell}
+	if not best.is_empty():
+		return best
+	# Niemand auf dieser Karte: zum nächsten Auftraggeber der Geschichte auf einer anderen Karte (A5, Alpha-Punkt 23:
+	# nach dem Abschluss eines Auftrags soll der Weg zum nächsten führen, z. B. von Xavina zu Nadia in die Glutoase)
+	var alle := GameData.get_file("auftraege")
+	var bester_abstand := 999
+	for id: String in alle:
+		var q = alle[id]
+		if not q is Dictionary or q.get("neben", false) or not q.has("start_bei") or p.progress.quest_state(id) != "neu":
+			continue
+		if q.has("voraussetzung") and p.progress.quest_state(str(q.voraussetzung)) != "abgegeben":
+			continue
+		var geber := str(q.start_bei)
+		if not npcs.has(geber) or npcs[geber].map == p.map or not check(p, npcs[geber].cond) or not check(p, q.get("start_wenn", {})):
+			continue
+		# Der nächstgelegene (wenigste Kartenwechsel) gewinnt
+		var abstand := _karten_abstand(p, str(npcs[geber].map))
+		if abstand >= 0 and abstand < bester_abstand:
+			bester_abstand = abstand
+			best = {karte = npcs[geber].map, feld = npcs[geber].cell}
 	return best
+
+
+## Wie viele Kartenwechsel bis zu dieser Karte (-1 = nicht erreichbar).
+func _karten_abstand(p: PlayerState, ziel: String) -> int:
+	var abstand := {p.map: 0}
+	var queue: Array[String] = [p.map]
+	while not queue.is_empty():
+		var map_id: String = queue.pop_front()
+		if map_id == ziel:
+			return int(abstand[map_id])
+		if not maps.has(map_id):
+			continue
+		for link: Array in _links(p, map_id, map_id == p.map):
+			if not abstand.has(link[0]):
+				abstand[link[0]] = int(abstand[map_id]) + 1
+				queue.append(link[0])
+	return -1
 
 
 ## Wohin man für diesen (laufenden) Auftrag als Nächstes muss: {karte, feld} oder leer.
