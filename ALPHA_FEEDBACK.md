@@ -1,7 +1,25 @@
 # Alpha-Test – erstes Feedback
 
 Eingegangen am 08.11.2026 (Marcos Notizen, wörtlich übernommen).
-Noch nicht in Bauaufträge umgewandelt – das ist der nächste Schritt.
+Am 09.11.2026 in Bauaufträge umgewandelt: A1a bis A13 in BAUAUFTRAEGE.md (Abschnitt „Alpha-Test“), Punkt 50 ist E3h.
+
+| Bauauftrag | Punkte |
+|---|---|
+| A1a | 24, 30, 32, 40 |
+| A1b | 28, 29, 35, 36, 46 |
+| A2 | 3, 4, 8, 16, 48, 49 |
+| A3 | 9, 15 |
+| A4 | 5, 10, 13, 14 |
+| A5 | 23, 31, 33, 34 |
+| A6 | 6, 7, 11, 43 |
+| A7 | 1, 2, 12, 19, 20, 21, 22, 25 |
+| A8 | 26, 27 |
+| A9 | 37, 38, 39 |
+| A10 | 17, 18, 44, 45 |
+| A11 | 41, 42 |
+| A12 | 47 |
+| A13 | 51, 52 |
+| E3h | 50 |
 
 ## Rückmeldungen
 
