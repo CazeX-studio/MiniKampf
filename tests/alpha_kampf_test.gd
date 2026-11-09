@@ -44,6 +44,13 @@ func _run() -> void:
 	var mit := await _kampf("blade", "klingen", {step = 1})
 	_check(mit.vorher - mit.nachher > ohne.vorher - ohne.nachher, "Klingenschritt ohne Klingenkranz: zwei Klingen treffen nach (%d statt %d Schaden)" % [
 			mit.vorher - mit.nachher, ohne.vorher - ohne.nachher])
+	# A2b: Im gemeinsamen Kampf die eigene Figur in Klassenkleidung, mit den eigenen Tränken
+	var aufbau := BattleRequest.build_group("wild:0", [{name = "Katie", stufe = 12, klasse = "blade", eigene_klasse = "blade",
+			aussehen = "novize_w+w1", traenke = 3}, {name = "Marco", stufe = 12, klasse = "novize", aussehen = "novize_m+m1", traenke = 2}])
+	var helden: Array = aufbau.get("helden", [])
+	_check(helden.size() >= 2 and helden[0].aussehen == "klingentaenzer_w+w1" and int(helden[0].get("traenke", 0)) == 3,
+			"Gruppenkampf: Klingentänzerin in eigener Figur mit Tränken (%s)" % (helden[0] if not helden.is_empty() else {}))
+	_check(helden.size() >= 2 and helden[1].aussehen == "novize_m+m1", "Gruppenkampf: Novize in eigener Figur")
 	print("Alpha-Kampf: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)
 

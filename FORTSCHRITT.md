@@ -11,7 +11,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt (09.11.):** die Alpha-Aufträge A2 bis A13 (als Nächstes A2b: Silberkraut online, gemeinsamer Kampf, Gruppenfenster), E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+- **Nächster Schritt (09.11.):** die Alpha-Aufträge A2 bis A13 (als Nächstes A3: andere Klassen sperren), E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+
+- **Neu (09.11.): A2b Fleck, gemeinsamer Kampf, Gruppenfenster** (Alpha-Punkte 4, 8, 16):
+  - **Weißer Fleck (4):** Das war das Silberkraut, aber nicht wegen des Online-Spiels: Im Browser (einfache Grafik) wurde sein Bild in jedem Bild neu geladen und sofort wieder vergessen, die Grafik zeigte dann ein weißes Viereck. Jetzt bleibt es geladen (betrifft auch das Wiesenkraut).
+  - **Gemeinsamer Kampf (16):** Mitspieler mit Klasse kämpften als allgemeine Klassenfigur (andere Größe, anderer Stil). Jetzt kämpft jeder mit seiner eigenen Figur in Klassenkleidung, wie allein, und hat seine Tränke am Gürtel.
+  - **Gruppenfenster (8):** halb durchsichtig, mit „–“ einklappbar (dann nur die Namen), „+“ klappt es wieder auf. „Gruppe verlassen“ ist jetzt ein kleiner Knopf.
+  - **So testest du es:**
+    1. Im Browser (Demo) in Kreuzweg ein Silberkraut ansehen: Pflanze statt weißem Fleck.
+    2. Online zu zweit eine Gruppe bilden: Fenster mit „–“ einklappen, mit „+“ wieder auf.
+    3. Zu zweit mit gelernter Klasse gemeinsam kämpfen: Beide in eigener Figur und Klassenkleidung.
 
 - **Neu (09.11.): A2a Offline und Online** (Alpha-Punkte 3, 24, 48, 49):
   - **Startmenü:** nur noch „Offline spielen“ und „Online spielen“ (in der Werkstatt dazu „Editor“). Feedback gibt es im Spiel oben rechts, die **Dankesliste** steht jetzt im Abspann am Ende der Demo.

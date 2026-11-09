@@ -197,6 +197,8 @@ const CHAT_FADE_SECONDS := 20.0
 ## Gruppe beim Zusammenspielen: Fenster mit den Mitgliedern, Menü beim Antippen eines Mitspielers, Einladung
 var _group_panel: PanelContainer
 var _group_box: VBoxContainer
+## Gruppenfenster eingeklappt (nur Namen)? Bleibt beim Kartenwechsel
+static var _gruppe_eingeklappt := false
 var _player_menu: PanelContainer
 var _player_menu_box: VBoxContainer
 var _invite_panel: PanelContainer
@@ -1352,6 +1354,17 @@ func _add_pickup(target: String) -> void:
 const KRAUT_BILD := "res://assets/sammeln/%s_f%d.png"
 
 
+## Kräuter-Bilder bleiben geladen (A2b, Alpha-Punkt 4): Wurden sie in jedem Bild neu geladen und gleich wieder
+## freigegeben, zeigte die Browser-Grafik statt des Silberkrauts ein weißes Viereck.
+var _kraut_bilder := {}
+func _kraut_bild(art: String, nr: int) -> Texture2D:
+	var schluessel := "%s_%d" % [art, nr]
+	if not _kraut_bilder.has(schluessel):
+		var pfad := KRAUT_BILD % [art, nr]
+		_kraut_bilder[schluessel] = load(pfad) if ResourceLoader.exists(pfad) else null
+	return _kraut_bilder[schluessel]
+
+
 func _draw_pickup(node: Node2D, art: String) -> void:
 	var glow := 0.5 + 0.5 * sin(_time * 3.0 + node.position.x)
 	# Bosse in Dungeons (die Figur selbst hängt als Kind am Knoten): nur ein leichtes Leuchten darunter
@@ -1493,9 +1506,8 @@ func _draw_pickup(node: Node2D, art: String) -> void:
 		"leer":
 			return
 	# Kräuter mit eigenem Bild (E3f, Marcos Blatt kraeuter_welt.png): zwei Bilder wechseln sich im Wind ab
-	if ResourceLoader.exists(KRAUT_BILD % [art, 0]):
-		var bild_nr := posmod(int(_time * 1.2 + node.position.x * 0.01), 2)
-		var textur: Texture2D = load(KRAUT_BILD % [art, bild_nr])
+	var textur := _kraut_bild(art, posmod(int(_time * 1.2 + node.position.x * 0.01), 2))
+	if textur != null:
 		var hoehe := 44.0
 		var breite := hoehe * textur.get_width() / float(textur.get_height())
 		node.draw_circle(Vector2(0, -16), 26.0, Color(0.8, 1.0, 0.9, 0.06 + 0.08 * glow))
@@ -2155,11 +2167,30 @@ func _update_group() -> void:
 	_group_panel.visible = not members.is_empty()
 	if members.is_empty():
 		return
-	_group_box.add_child(_label("Gruppe (%d/%d)" % [members.size(), Gruppen.MAX_SIZE], 17, Color("f2c14e")))
+	# Kopfzeile mit Knopf zum Ein- und Ausklappen (A2b, Alpha-Punkt 8); das Fenster ist halb durchsichtig
+	_group_panel.modulate.a = 0.82
+	var kopf := HBoxContainer.new()
+	kopf.add_child(_label("Gruppe (%d/%d)" % [members.size(), Gruppen.MAX_SIZE], 17, Color("f2c14e")))
+	var platz := Control.new()
+	platz.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	kopf.add_child(platz)
+	var klappen := Button.new()
+	klappen.text = "+" if _gruppe_eingeklappt else "–"
+	klappen.tooltip_text = "Gruppenfenster ausklappen" if _gruppe_eingeklappt else "Gruppenfenster einklappen"
+	klappen.custom_minimum_size = Vector2(40, 30)
+	klappen.add_theme_font_size_override("font_size", 18)
+	klappen.focus_mode = Control.FOCUS_NONE
+	klappen.pressed.connect(func() -> void:
+		_gruppe_eingeklappt = not _gruppe_eingeklappt
+		_update_group())
+	kopf.add_child(klappen)
+	_group_box.add_child(kopf)
 	for m: Dictionary in members:
 		var star := "★ " if m.id == Netz.group.leader else ""
 		var color := Color("8affc1") if m.id == local_id else GROUP_NAME_COLOR
-		_group_box.add_child(_label(star + str(m.name), 16, color))
+		_group_box.add_child(_label(star + str(m.name), 16 if not _gruppe_eingeklappt else 14, color))
+		if _gruppe_eingeklappt:
+			continue
 		var info := "Stufe %d · Leben %d" % [m.level, m.leben]
 		if not m.in_stadt:
 			info += " · kämpft gerade"
@@ -2170,7 +2201,17 @@ func _update_group() -> void:
 		bar.custom_minimum_size = Vector2(200, 5)
 		bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_group_box.add_child(bar)
-	_group_box.add_child(_menu_button("Gruppe verlassen", func() -> void: Netz.group_action("verlassen")))
+	if not _gruppe_eingeklappt:
+		# Kleiner Knopf zum Verlassen (vorher so groß wie die übrigen Knöpfe)
+		var verlassen := Button.new()
+		verlassen.text = "Gruppe verlassen"
+		verlassen.custom_minimum_size = Vector2(130, 26)
+		verlassen.add_theme_font_size_override("font_size", 12)
+		verlassen.focus_mode = Control.FOCUS_NONE
+		verlassen.size_flags_horizontal = Control.SIZE_SHRINK_END
+		verlassen.pressed.connect(func() -> void: Netz.group_action("verlassen"))
+		_group_box.add_child(verlassen)
+	_group_panel.size = Vector2.ZERO
 	_group_panel.reset_size()
 
 
