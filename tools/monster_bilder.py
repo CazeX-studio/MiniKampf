@@ -52,6 +52,19 @@ MONSTER = {
 	"stachelflitzer": {"hoehe": 56, "reihen": EINZELN},
 	"glutigel": {"hoehe": 56, "reihen": EINZELN},
 	"funkenflirr": {"hoehe": 56, "reihen": EINZELN},
+	# Aschensteppe und Palmenrast
+	"steppenhyaene": {"hoehe": 84, "reihen": EINZELN},
+	"funkenechse": {"hoehe": 84, "reihen": EINZELN},
+	"steppenroller": {"hoehe": 84, "reihen": EINZELN},
+	"aschefuchs": {"hoehe": 84, "reihen": EINZELN},
+	"sonnenloewe": {"hoehe": 100, "reihen": EINZELN},
+	"sandwurm": {"hoehe": 100, "reihen": EINZELN},
+	"feuerechse": {"hoehe": 84, "reihen": EINZELN},
+	"oasenkroete": {"hoehe": 56, "reihen": EINZELN},
+	"glasskorpion": {"hoehe": 84, "reihen": EINZELN},
+	"staubgeist": {"hoehe": 84, "reihen": EINZELN},
+	# Mondschakal: nur 3 Bilder Stehen gemalt
+	"mondschakal": {"hoehe": 84, "reihen": [("idle", 3)] + EINZELN[1:]},
 }
 # Monster mit festen Ausschnitten (wenn sich Bilder berühren oder aus mehreren Blättern stammen):
 # Animation -> Liste von Ausschnitten (x0, y0, x1, y1) im Blatt. Ein Ausschnitt kann auch (Blatt, x0, y0, x1, y1, Faktor)
