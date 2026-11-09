@@ -2,7 +2,7 @@ class_name StadtEditor
 extends Node2D
 ## Stadt-Editor (S4a): eine Baukasten-Karte (Kreuzweg, Wipfelheim, Glutoase …) mit allen Teilen und Figuren.
 ## Antippen wählt ein Teil oder eine Figur, Ziehen oder die Pfeilknöpfe verschieben es Feld für Feld (auch am Handy),
-## Teile lassen sich spiegeln und löschen, alles lässt sich rückgängig machen.
+## Teile lassen sich drehen, spiegeln und löschen, alles lässt sich rückgängig machen.
 ## Speichern: im Godot-Editor direkt in die Kartendaten (data/), sonst (Browser, Werkstatt) als Datei zum Herunterladen,
 ## die Marco Claude schickt; Claude übernimmt sie mit tools/stadt_editor_uebernehmen.py.
 ## Hinzufügen neuer Teile und Figuren kommt mit S4b.
@@ -245,6 +245,41 @@ func spiegeln() -> void:
 	_markierung.queue_redraw()
 
 
+## Drehen: flache Teile in 45°-Schritten auf dem Boden; stehende Teile reihum vorne, quer (gespiegelt), von hinten
+## und von hinten quer – die Ansicht von hinten nur, wenn es dafür ein Bild gibt („bild_hinten“ in baukasten_teile.json).
+func drehen() -> void:
+	if _auswahl.get("art", "") != "teil":
+		return
+	var o: Dictionary = _daten.objekte[_auswahl.index]
+	var d: Dictionary = _teile.objekte.get(o.teil, {})
+	_merken()
+	# Flache Teile ohne Höhe (Gras, Teppich, Steine) frei drehen; Brücken haben Geländer, die drehen sich wie Häuser
+	if d.get("flach", false) and d.get("drehbar", true):
+		var neu := posmod(int(o.get("drehung", 0)) + 45, 360)
+		if neu == 0:
+			o.erase("drehung")
+		else:
+			o.drehung = neu
+	else:
+		var stufe := (1 if o.get("gespiegelt", false) else 0) + (2 if o.get("hinten", false) else 0)
+		stufe = (stufe + 1) % (4 if d.has("bild_hinten") else 2)
+		_setzen(o, "gespiegelt", stufe % 2 == 1)
+		_setzen(o, "hinten", stufe >= 2)
+		if not d.has("bild_hinten"):
+			_melden("Für die Ansicht von hinten fehlt noch ein Bild, darum nur vorne und quer.")
+	_teil_bauen(_auswahl.index)
+	_geaendert = true
+	_markierung.queue_redraw()
+	_info_zeigen()
+
+
+static func _setzen(o: Dictionary, schluessel: String, an: bool) -> void:
+	if an:
+		o[schluessel] = true
+	else:
+		o.erase(schluessel)
+
+
 func loeschen() -> void:
 	if _auswahl.get("art", "") != "teil":
 		_melden("Figuren löschen kommt mit S4b.")
@@ -474,7 +509,8 @@ func _info_zeigen() -> void:
 	if _auswahl.get("art", "") == "teil":
 		var o: Dictionary = _daten.objekte[_auswahl.index]
 		text = "Teil: %s  ·  Feld %d, %d%s%s" % [o.teil, int(o.feld[0]), int(o.feld[1]),
-				"  ·  gespiegelt" if o.get("gespiegelt", false) else "",
+				("  ·  gespiegelt" if o.get("gespiegelt", false) else "") + ("  ·  von hinten" if o.get("hinten", false) else "")
+				+ ("  ·  gedreht %d°" % int(o.drehung) if o.has("drehung") else ""),
 				"  ·  nur bei einem Stand der Geschichte" if o.has("wenn") or o.has("nur_stufe") else ""]
 	elif _auswahl.get("art", "") == "npc":
 		var n: Dictionary = _npcs[_auswahl.id]
@@ -572,7 +608,7 @@ func _leiste_bauen() -> void:
 	var aktionen := HBoxContainer.new()
 	aktionen.add_theme_constant_override("separation", 8)
 	rechts.add_child(aktionen)
-	for k: Button in [_knopf("Spiegeln", 110, spiegeln), _knopf("Löschen", 110, loeschen), _knopf("Abwählen", 110, func() -> void: waehlen({}))]:
+	for k: Button in [_knopf("Drehen", 110, drehen), _knopf("Spiegeln", 110, spiegeln), _knopf("Löschen", 110, loeschen), _knopf("Abwählen", 110, func() -> void: waehlen({}))]:
 		_knoepfe_auswahl.append(k)
 		aktionen.add_child(k)
 

@@ -55,6 +55,42 @@ func _run() -> void:
 	_check(editor._daten.objekte.size() == anzahl, "Löschen rückgängig gemacht")
 	_check(GameData.get_file(StadtEditor.karten_datei("wipfelheim")).objekte[0].feld == vorher, "Die Daten im Spiel bleiben bis zum Speichern unberührt")
 
+	# Drehen: flache Teile in 45°-Schritten, stehende vorne/quer (ohne Bild von hinten)
+	var flach := -1
+	var stehend := -1
+	for i in editor._daten.objekte.size():
+		var d: Dictionary = editor._teile.objekte.get(editor._daten.objekte[i].teil, {})
+		if d.get("flach", false) and d.get("drehbar", true) and flach < 0:
+			flach = i
+		elif not d.get("flach", false) and not d.has("bild_hinten") and stehend < 0:
+			stehend = i
+	if flach < 0:
+		# Wipfelheim hat keine flachen Teile: zum Prüfen Blumen dazulegen
+		editor._daten.objekte.append({teil = "blumen", feld = [12, 12]})
+		editor._teil_views.append({})
+		flach = editor._daten.objekte.size() - 1
+		editor._teil_bauen(flach)
+	_check(flach >= 0 and stehend >= 0, "Flache und stehende Teile zum Drehen")
+	editor.waehlen({art = "teil", index = flach})
+	var flach_rect := BaukastenBoden.grundflaeche(editor._daten.objekte[flach], editor._teile)
+	editor.drehen()
+	_check(int(editor._daten.objekte[flach].drehung) == 45 and not editor._teil_views[flach].is_empty(), "Flaches Teil um 45° gedreht")
+	editor.drehen()
+	var quer := BaukastenBoden.grundflaeche(editor._daten.objekte[flach], editor._teile)
+	_check(quer.size == Vector2i(flach_rect.size.y, flach_rect.size.x), "Um 90° gedreht liegt es quer (%s -> %s)" % [flach_rect.size, quer.size])
+	for i in 6:
+		editor.drehen()
+	_check(not editor._daten.objekte[flach].has("drehung"), "Achtmal gedreht: wieder wie vorher")
+	editor.waehlen({art = "teil", index = stehend})
+	editor.drehen()
+	_check(editor._daten.objekte[stehend].get("gespiegelt", false), "Stehendes Teil ohne Bild von hinten: Drehen stellt es quer")
+	editor.drehen()
+	_check(not editor._daten.objekte[stehend].has("gespiegelt") and not editor._daten.objekte[stehend].has("hinten"), "Nochmal: wieder vorne")
+	var probe := {teil = editor._daten.objekte[stehend].teil, feld = [5, 5], hinten = true}
+	var teile_mit_hinten: Dictionary = editor._teile.duplicate(true)
+	teile_mit_hinten.objekte[probe.teil].bild_hinten = teile_mit_hinten.objekte[probe.teil].bild
+	_check(not BaukastenBoden.teil_bauen(probe, teile_mit_hinten).is_empty(), "Mit Bild von hinten baut sich die Ansicht von hinten auf")
+
 	# Figuren: tags und nachts eigener Platz
 	var mit_nacht := ""
 	for id: String in editor._npcs:

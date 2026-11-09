@@ -340,7 +340,8 @@
 				115
 			],
 			"flach": true,
-			"begehbar": true
+			"begehbar": true,
+			"drehbar": false
 		},
 		"mauer": {
 			"bild": "objekte/mauer.png",
@@ -1102,7 +1103,8 @@
 				92
 			],
 			"flach": true,
-			"begehbar": true
+			"begehbar": true,
+			"drehbar": false
 		},
 		"heuballen": {
 			"bild": "objekte/heuballen.png",
@@ -1203,7 +1205,8 @@
 				46
 			],
 			"flach": true,
-			"begehbar": true
+			"begehbar": true,
+			"drehbar": false
 		},
 		"jaegerhuette": {
 			"bild": "objekte/jaegerhuette.png",
@@ -2479,7 +2482,8 @@
 				92
 			],
 			"flach": true,
-			"begehbar": true
+			"begehbar": true,
+			"drehbar": false
 		},
 		"vs_anker": {
 			"bild": "objekte/vs_anker.png",

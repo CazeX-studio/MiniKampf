@@ -13,6 +13,14 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 - **Nächster Schritt (09.11.):** S4b (Hinzufügen im Stadt-Editor) und S5 (Spielstand-Editor), danach die Alpha-Aufträge A2 bis A13, E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
 
+- **Neu (09.11.): Drehen im Stadt-Editor** (dein Wunsch): Knopf „Drehen“ neben „Spiegeln“.
+  - **Flache Teile** (Gras, Blumen, Lichtung, Steppengras, Karawanenspur …) drehen sich frei in 45°-Schritten auf dem Boden.
+  - **Stehende Teile** (Häuser, Stände) und Brücken (wegen der Geländer): reihum vorne → quer → von hinten → von hinten quer. Die Ansichten von hinten brauchen eigene Bilder: Prompts in `GRAFIK_AUFTRAG.md` Teil G (G1 bis G4, je Stadt ein Blatt). Bis sie da sind, wechselt „Drehen“ nur zwischen vorne und quer.
+  - **Online speichern** (für Katie und fürs Handy) steht als S4c „erst besprechen“ in den Bauaufträgen.
+  - **So testest du es:**
+    1. Stadt-Editor → „Aschensteppe“ oder „Glutoase“, Steppengras oder Karawanenspur antippen, mehrmals „Drehen“.
+    2. Ein Haus antippen und „Drehen“: Es steht quer, nochmal: wieder vorne.
+
 - **Neu (09.11.): S4a Stadt-Editor** (Editor, vierter Knopf): Jede Karte aus dem Baukasten (Kreuzweg, Wipfelheim, Glutoase, Wege und Höhlen) mit allen Teilen und Figuren.
   - **Antippen** wählt ein Teil oder eine Figur (gelber Rahmen), **Ziehen** verschiebt es, die vier **Pfeilknöpfe** ↖ ↗ ↙ ↘ schieben Feld für Feld (fürs Handy). Leere Stelle ziehen bewegt die Karte, − + zoomen.
   - Teile **spiegeln** und **löschen**, **Rückgängig** (auch Strg+Z). „Tags/Nachts“ zeigt und verschiebt die Figuren an ihrem Platz bei Tag oder bei Nacht.

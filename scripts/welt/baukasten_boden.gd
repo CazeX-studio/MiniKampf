@@ -57,7 +57,8 @@ static func cell_to_screen(c: Vector2) -> Vector2:
 static func grundflaeche(o: Dictionary, teile: Dictionary) -> Rect2i:
 	var flaeche: Array = teile.objekte[o.teil].get("flaeche", [1, 1])
 	var rect := Rect2i(Vector2i(o.feld[0], o.feld[1]), Vector2i(flaeche[0], flaeche[1]))
-	if o.get("gespiegelt", false):
+	# Gespiegelt oder um 90°/270° gedreht (flache Teile) steht das Teil quer
+	if o.get("gespiegelt", false) != (posmod(int(o.get("drehung", 0)), 180) == 90):
 		rect.size = Vector2i(flaeche[1], flaeche[0])
 	return rect
 
@@ -87,9 +88,12 @@ static func teil_bauen(o: Dictionary, teile: Dictionary) -> Dictionary:
 		return {}
 	var d: Dictionary = teile.objekte[teil]
 	var rect := grundflaeche(o, teile)
-	var tex: Texture2D = load(ASSET_PATH + d.bild)
+	# Ansicht von hinten (Stadt-Editor „Drehen“), wenn es für das Teil ein Bild von hinten gibt
+	var hinten: bool = o.get("hinten", false) and d.has("bild_hinten")
+	var bild_datei: String = d.bild_hinten if hinten else d.bild
+	var tex: Texture2D = load(ASSET_PATH + bild_datei)
 	if tex == null:
-		push_warning("Baukasten: Bild fehlt: %s" % d.bild)
+		push_warning("Baukasten: Bild fehlt: %s" % bild_datei)
 		return {}
 	var node := Node2D.new()
 	# Sortierpunkt: die vorderste Ecke der Grundfläche
@@ -99,7 +103,9 @@ static func teil_bauen(o: Dictionary, teile: Dictionary) -> Dictionary:
 	var gespiegelt: bool = o.get("gespiegelt", false)
 	# Der Fußpunkt (fuss = Pixel im Bild, sonst unten in der Mitte, fuss_y Pixel über dem Rand) steht auf der Mitte der Grundfläche
 	var fuss := Vector2(tex.get_width() * 0.5, tex.get_height() - float(d.get("fuss_y", (rect.size.x + rect.size.y) * 8.0 / massstab)))
-	if d.has("fuss"):
+	if hinten and d.has("fuss_hinten"):
+		fuss = Vector2(d.fuss_hinten[0], d.fuss_hinten[1])
+	elif d.has("fuss") and not hinten:
 		fuss = Vector2(d.fuss[0], d.fuss[1])
 	if gespiegelt:
 		# Gespiegelt steht das Teil quer (Breite und Tiefe tauschen), z. B. ein Tor an einer anderen Straße
@@ -112,7 +118,25 @@ static func teil_bauen(o: Dictionary, teile: Dictionary) -> Dictionary:
 	# Pixel-Platzhalter bleiben scharf, die gemalten Bilder werden weich verkleinert
 	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST if massstab >= 2.0 else CanvasItem.TEXTURE_FILTER_LINEAR
 	sprite.position = center - fuss * massstab
-	node.add_child(sprite)
+	var drehung := float(posmod(int(o.get("drehung", 0)), 360)) if d.get("flach", false) and d.get("drehbar", true) else 0.0
+	var bild_rect := Rect2(node.position + sprite.position, tex.get_size() * massstab)
+	if drehung != 0.0:
+		# Flache Teile drehen auf dem Boden: in der Rautenansicht ist der Boden halb so hoch wie breit,
+		# also erst strecken, drehen, wieder stauchen (so bleibt eine Raute eine Raute)
+		var dreh := Node2D.new()
+		var w := deg_to_rad(drehung)
+		dreh.transform = Transform2D(Vector2(cos(w), 0.5 * sin(w)), Vector2(-2.0 * sin(w), cos(w)), center)
+		sprite.position -= center
+		dreh.add_child(sprite)
+		node.add_child(dreh)
+		var ecken: Array[Vector2] = []
+		for e: Vector2 in [Vector2.ZERO, Vector2(tex.get_width(), 0), Vector2(0, tex.get_height()), Vector2(tex.get_size())]:
+			ecken.append(node.position + dreh.transform * (sprite.position + e * massstab))
+		bild_rect = Rect2(ecken[0], Vector2.ZERO)
+		for e in ecken:
+			bild_rect = bild_rect.expand(e)
+	else:
+		node.add_child(sprite)
 	var lichter: Array = d.get("lichter", []).duplicate()
 	if d.has("licht"):
 		lichter.append({art = d.licht.art, hoehe = d.licht.get("hoehe", 0)})
@@ -131,7 +155,7 @@ static func teil_bauen(o: Dictionary, teile: Dictionary) -> Dictionary:
 		neue_lichter.append(licht)
 	return {name = teil, node = node, rect = rect, flach = d.get("flach", false), lichter = neue_lichter,
 			oben = node.position + sprite.position + Vector2(tex.get_width() * massstab * 0.5, 0),
-			bild = Rect2(node.position + sprite.position, tex.get_size() * massstab)}
+			bild = bild_rect}
 
 
 func _ground_def(cell: Vector2i) -> Dictionary:
