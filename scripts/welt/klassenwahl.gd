@@ -14,6 +14,10 @@ const MAX_VALUE := 5.0
 
 ## Region des Gesandten, dessen Klassen gezeigt werden ("" = Klassenwahl bei Ye mit allen Klassen)
 static var region := ""
+## Nach einer Probestunde beim Gesandten: mit ihm reden (A4, Alpha-Punkt 10: Fenster zu, Abzeichen im Gespräch)
+static var nach_probestunde := ""
+const GESANDTE := {"Glutoase": "gesandte_glutoase", "Grünwacht": "gesandte_gruenwacht", "Arkanum": "gesandte_arkanum",
+		"Messinghafen": "gesandte_messinghafen", "Nebelinseln": "gesandte_nebelinseln"}
 
 var _selected := ""
 var _list_buttons := {}
@@ -283,6 +287,11 @@ func _trial() -> void:
 	var potions := saved.potion_count("heiltrank")
 	if BattleRequest.prepare("probe:" + _selected, level, potions):
 		BattleRequest.return_scene = "res://scenes/klassenwahl.tscn"
+		# Beim Gesandten: danach zurück in die Stadt, der Gesandte spricht einen an
+		if region != "":
+			BattleRequest.return_scene = "res://scenes/kreuzweg.tscn"
+			nach_probestunde = str(GESANDTE.get(region, ""))
+			region = ""
 		get_tree().change_scene_to_file("res://scenes/kampf.tscn")
 
 

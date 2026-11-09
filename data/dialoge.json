@@ -184,8 +184,10 @@
 	},
 	"gesandte_glutoase": {
 		"hinweis": "PLATZHALTER-TEXTE: Feuertänzerin Nalia, Gesandte der Glutoase.",
-		"einstieg": [{"knoten": "hallo"}],
+		"einstieg": [{"wenn": {"gemerkt": "probestunde_gemacht", "nicht_gemerkt": "probe_abzeichen"}, "knoten": "abzeichen"}, {"knoten": "hallo"}],
 		"knoten": {
+			"abzeichen": {"wer": "Nalia", "text": "Gut gemacht! Hier, dein Abzeichen für die Probestunde. Zeig es der Schreiberin, dann geht es für dich weiter.", "aktionen": [{"merken": "probe_abzeichen"}, {"gegenstand": "probe_abzeichen", "anzahl": 1}], "weiter": "abzeichen2"},
+			"abzeichen2": {"wer": "Nalia", "text": "Und wenn du magst: Sprich mich einfach wieder an, dann probierst du noch eine andere Klasse aus."},
 			"hallo": {"wer": "Nalia", "text": "Nalia, Feuertänzerin und Gesandte der Glutoase. Die Oase grüßt dich! Bei uns wird geschmiedet, getanzt und unter den Sternen gesungen.", "antworten": [
 				{"text": "Zeig mir eure Klassen.", "aktionen": [{"szene": "klassenwahl:Glutoase"}]},
 				{"text": "Erzähl mir von der Glutoase.", "weiter": "region"},
@@ -196,8 +198,10 @@
 	},
 	"gesandte_gruenwacht": {
 		"hinweis": "PLATZHALTER-TEXTE: Fährtenleser Aske, Gesandter aus Grünwacht.",
-		"einstieg": [{"knoten": "hallo"}],
+		"einstieg": [{"wenn": {"gemerkt": "probestunde_gemacht", "nicht_gemerkt": "probe_abzeichen"}, "knoten": "abzeichen"}, {"knoten": "hallo"}],
 		"knoten": {
+			"abzeichen": {"wer": "Aske", "text": "Gut gemacht! Hier, dein Abzeichen für die Probestunde. Zeig es der Schreiberin, dann geht es für dich weiter.", "aktionen": [{"merken": "probe_abzeichen"}, {"gegenstand": "probe_abzeichen", "anzahl": 1}], "weiter": "abzeichen2"},
+			"abzeichen2": {"wer": "Aske", "text": "Und wenn du magst: Sprich mich einfach wieder an, dann probierst du noch eine andere Klasse aus."},
 			"hallo": {"wer": "Aske", "text": "Aske, Fährtenleser aus Grünwacht, dem Dorf in den Baumkronen. Wir jagen, wir zähmen – und wir hören auf den Wald.", "antworten": [
 				{"text": "Zeig mir eure Klassen.", "aktionen": [{"szene": "klassenwahl:Grünwacht"}]},
 				{"text": "Erzähl mir von Grünwacht.", "weiter": "region"},

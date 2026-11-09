@@ -2,6 +2,7 @@
 	"honigwabe": {"bild": {"form": "wabe", "farbe": "f2b33a"}, "name": "Honigwabe", "beschreibung": "Vom verrückten Bienenstock. Süß, und sie summt ganz leise. (Für den Beruf Kochen, kommt später.)", "preis": 8},
 	"sternensplitter": {"bild": {"form": "splitter", "farbe": "b48cff"}, "name": "Sternensplitter", "beschreibung": "Ein Splitter des Siegels. Er summt leise. Belohnung für einen abgeschlossenen Dungeon.", "preis": 0},
 	"schleuder": {"bild": {"form": "schleuder", "farbe": "8a5a32"}, "name": "Schleuder", "beschreibung": "Von Professor Esche. Zähmer schießen damit im Kampf kleine Steine (Fähigkeit „Schleuder“).", "preis": 0},
+	"probe_abzeichen": {"bild": {"form": "kette", "farbe": "f2c14e"}, "name": "Probestunden-Abzeichen", "beschreibung": "Bekommt jeder Novize nach seiner ersten Probestunde bei einem Gesandten. Die Schreiberin will es sehen.", "preis": 0},
 	"kraut": {"bild": {"form": "kraut", "farbe": "9fd6b0"}, "name": "Silberkraut", "beschreibung": "Ein Heilkraut, das zwischen den Pflastersteinen wächst.", "preis": 2},
 	"heiltrank": {"bild": {"form": "trank", "farbe": "d94848"}, "guertel": true, "name": "Heiltrank", "beschreibung": "Heilt im Kampf etwas Leben.", "preis": 25},
 	"manatrank": {"bild": {"form": "trank", "farbe": "4a7ad9"}, "guertel": true, "name": "Manatrank", "beschreibung": "Gibt im Kampf Mana zurück. Mana füllt sich im Kampf nicht von selbst.", "preis": 25},

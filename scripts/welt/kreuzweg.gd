@@ -310,6 +310,10 @@ func _ready() -> void:
 		_send({type = "karten_ergebnis", gegner = KartenTisch.ergebnis.gegner, gewonnen = KartenTisch.ergebnis.gewonnen,
 				unentschieden = KartenTisch.ergebnis.unentschieden})
 		KartenTisch.ergebnis = {}
+	# Zurück von einer Probestunde beim Gesandten: er spricht einen an (Abzeichen beim ersten Mal)
+	if Klassenwahl.nach_probestunde != "":
+		_send({type = "talk", npc = Klassenwahl.nach_probestunde})
+		Klassenwahl.nach_probestunde = ""
 	# Beim ersten Betreten der Stadt kommt die Einleitung
 	_send({type = "start"})
 

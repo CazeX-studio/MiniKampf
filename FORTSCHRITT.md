@@ -11,7 +11,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt (09.11.):** die Alpha-Aufträge A2 bis A13 (als Nächstes A4: Kreuzweg-Geschichte), E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+- **Nächster Schritt (09.11.):** die Alpha-Aufträge A2 bis A13 (als Nächstes A4b: Mira vom Marktplatz, Sternenfall-Szene), E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+
+- **Neu (09.11.): A4a Ye's Erklärungen und das Abzeichen** (Alpha-Punkte 5, 10):
+  - **Erklärungen vor dem Kampf (5):** In Ye's Grundausbildung kommen die Erklärungen einer Lektion jetzt gleich zu Beginn, bevor sich jemand bewegt (bisher erst bei deinem Zug oder kurz vor dem ersten Angriff). In der Paradeschule sagt Ye nach den zwei vorgeführten Paraden in einem eigenen Fenster: „Jetzt du – versuch zweimal, PERFEKT zu parieren“, die Leiste zeigt „Jetzt du: Versuch, perfekt zu parieren! (Versuch 1 von 2)“.
+  - **Abzeichen (10):** Nach einer Probestunde bei Nalia (Glutoase) oder Aske (Grünwacht) geht es zurück in die Stadt statt in die Klassenliste. Beim ersten Mal überreicht der Gesandte das **Probestunden-Abzeichen** (in der Tasche) und sagt, dass du es der Schreiberin zeigen sollst; sprichst du ihn wieder an, kannst du weitere Klassen ausprobieren. Texte sind Platzhalter.
+  - **So testest du es:**
+    1. Ye's Grundausbildung: Zu Beginn jeder Lektion kommt erst Ye's Erklärung.
+    2. Lektion 2 (Parieren): Nach den zwei vorgeführten Paraden kommt „Jetzt du …“.
+    3. Bei Nalia eine Probestunde machen: Danach stehst du in der Stadt, sie gibt dir das Abzeichen.
+    4. Nalia nochmal ansprechen: wieder „Zeig mir eure Klassen“.
 
 - **Neu (09.11.): A3 Klassen der Demo** (Alpha-Punkte 9, 15):
   - **Klassenwahl:** Die sechs Klassen aus Arkanum, Messinghafen und von den Nebelinseln stehen weiter in der Liste, aber blasser und mit „später“. Beim Antippen siehst du alles über sie, aber „Probestunde“ und „Diese Klasse wählen“ sind gesperrt, mit dem Hinweis, dass es in der Demo die Klassen aus Grünwacht und der Glutoase gibt.

@@ -267,6 +267,15 @@ func _attack_hint(target: Fighter) -> void:
 		await _show_hint("erste_reaktion")
 
 
+## Zu Beginn jeder Lektion (Phase) alle ihre Erklärungen nacheinander, vor dem ersten Zug (A4, Alpha-Punkt 5).
+## Was im Zug selbst noch einmal gefragt wird, ist dann schon gesehen.
+func _lektion_erklaeren() -> void:
+	if not state.setup.has("phasen"):
+		return
+	for key: String in ["erster_zug", "erste_reaktion"]:
+		await _show_hint(key)
+
+
 ## Erklär-Fenster der Grundausbildung: Der Kampf wartet, bis „Verstanden“ angetippt wird.
 func _show_hint(key: String) -> void:
 	var hints: Dictionary = state.setup.get("hinweise", {})
@@ -356,6 +365,8 @@ func _play_event(event: Dictionary) -> void:
 			if _current == null:
 				_clear_actions()
 			refresh()
+			# Lernkampf: Ye erklärt die ganze Lektion, bevor sich jemand bewegt (A4, Alpha-Punkt 5)
+			await _lektion_erklaeren()
 		"refresh":
 			refresh()
 		"spawn":
@@ -828,6 +839,9 @@ func _react_grade(attacker: Fighter, target: Fighter, duration: float) -> int:
 			Geraeusche.play("parade")
 		return grade
 	await _show_hint("erste_reaktion")
+	# Paradeschule: Nach den zwei vorgeführten Paraden sagt Ye, dass man jetzt zweimal allein perfekt parieren soll
+	if state.setup.get("paradeschule", false) and state.parry_attempts == 3:
+		await _show_hint("allein")
 	# Paradeschule: Die ersten beiden Angriffe halten an der richtigen Stelle an und erklären sie
 	_guided = state.parry_attempts - 1 if state.setup.get("paradeschule", false) and state.parry_attempts <= 2 else -1
 	_guided_frozen = false
@@ -1048,7 +1062,7 @@ func _draw_parry_school(bar: Rect2, font: Font) -> void:
 		lines = ["Halt! Jetzt steht der Strich in der schmalen grünen Mitte –", "genau wenn der Ring den Kreis berührt.",
 				"Das ist die PERFEKTE Parade: gar kein Schaden.", "Drück jetzt die Leertaste (oder tippe)!"]
 	elif _guided < 0 and state.parry_attempts > 2:
-		lines = ["Übungsversuch %d von %d – jetzt allein!" % [state.parry_attempts - 2, BattleState.PARRY_SCHOOL_ATTACKS - 2]]
+		lines = ["Jetzt du: Versuch, perfekt zu parieren! (Versuch %d von %d)" % [state.parry_attempts - 2, BattleState.PARRY_SCHOOL_ATTACKS - 2]]
 	if lines.is_empty():
 		return
 	# Unter den Figuren, damit Ring und Figuren frei bleiben
