@@ -11,7 +11,18 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt (09.11.):** Alpha-Blocker A1b, dann S3b (Bewegungen in der Welt), S4 und S5 (Editoren), danach die Alpha-Aufträge A2 bis A13, E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+- **Nächster Schritt (09.11.):** S3b (Bewegungen in der Welt), S4 und S5 (Editoren), danach die Alpha-Aufträge A2 bis A13, E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+
+- **Neu (09.11.): A1b Blocker in Kampf und Menüs** (Alpha-Punkte 28, 29, 35, 36, 46):
+  - **Menüs anklicken (28, 29):** Tasche, Kartenalbum, Fähigkeiten, Werte und Auftragsbuch wurden in jedem Bild neu aufgebaut. Ein Klick traf so nie denselben Knopf beim Drücken und Loslassen. Jetzt baut sich ein Fenster nur neu auf, wenn sich etwas ändert: Seiten im Album wechseln, Fähigkeiten anklicken usw. geht wieder.
+  - **Heiltrank (35):** Tränke am Gürtel heilten nur beim Novizen, bei allen Klassen passierte nichts. Jetzt heilen Heil- und Manatrank bei jeder Klasse.
+  - **Klingenschritt (36):** Die schwebenden Klingen trafen nur nach, wenn man Klingenkranz gelernt hatte. Jetzt treffen sie immer nach (wie der Knopf sagt), Klingenkranz macht sie je Stufe 10 % stärker.
+  - **Ortsname (46):** Die kleine Meldung „– Kreuzweg –“ beim Betreten ist weg, nur der große Name bleibt.
+  - **So testest du es:**
+    1. L drücken und im Kartenalbum auf eine andere Seite klicken, dann K drücken und eine Fähigkeit anklicken.
+    2. Als Klingentänzerin (oder andere Klasse) im Kampf verletzt einen Heiltrank vom Gürtel trinken: Das Leben steigt.
+    3. Mit Klingen über dir einen Klingenschritt machen: Die Klingen fliegen hinterher und treffen.
+    4. Durch ein Tor gehen: nur noch der große Ortsname.
 
 - **Neu (09.11.): A1a Blocker beim Weiterkommen** (Alpha-Punkte 24, 30, 32, 40):
   - **Seilaufzug (40):** Der Wegweiser zeigt jetzt den ganzen Weg bis Wipfelheim, auch im Wald auf den Seilaufzug (bisher hörte er hinter dem Westtor auf). Den Aufzug kann man jetzt auch auf seinem Bild antippen, nicht nur auf dem kleinen Feld davor.

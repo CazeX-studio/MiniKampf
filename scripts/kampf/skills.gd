@@ -560,6 +560,10 @@ func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 		partner.cooldowns[id] = Sandbox.DUET_CD + 1
 		c.delay(partner, 0.3)
 		return
+	# Tränke am Gürtel kann jede Klasse trinken (A1b: bisher heilten sie nur beim Novizen)
+	if id in ["trank", "manatrank_trinken"] and not ab.has("choice"):
+		_novize(f, id, target)
+		return
 	match f.klass:
 		"tank":
 			_tank(f, id, target)
@@ -943,18 +947,15 @@ func _dance_step(f: Fighter, move: String) -> float:
 
 ## Passive "Klingenkranz": Nach Klingenschritt und Ausfallschritt trifft jede schwebende Klinge (bis zu 5) noch einmal.
 func _blade_follow_up(f: Fighter, target: Fighter, element: String) -> void:
-	# Mit Baum: nur mit Klingenkranz, jede Stufe mehr Schaden je Klinge
-	var kranz := 1
-	if f.has_meta("faehigkeiten"):
-		kranz = skill_level(f, "kranz")
-		if kranz <= 0:
-			return
-	for i in f.blades:
+	# Die Klingen treffen immer nach (A1b, Alpha-Punkt 36: wie es der Knopf verspricht);
+	# mit Baum macht jede Stufe Klingenkranz 10 % mehr Schaden je Klinge
+	var kranz := skill_level(f, "kranz") if f.has_meta("faehigkeiten") else 0
+	for i in mini(f.blades, Fighter.MAX_BLADES):
 		if not target.is_alive():
 			return
 		c.zeige("klinge_flug", f, target)
 		c.wait(0.1)
-		c.hit(f, target, BLADE_HIT * (1.0 + 0.1 * (kranz - 1)), "melee", element)
+		c.hit(f, target, BLADE_HIT * (1.0 + 0.1 * kranz), "melee", element)
 
 
 ## Sturmschritte: 3 Sprünge, je zwei Stufen einer mehr, schnelle Waffe einer mehr (höchstens 5).
@@ -1849,4 +1850,5 @@ func _novize(f: Fighter, id: String, target: Fighter) -> void:
 			f.wares.heiltrank -= 1
 			f.cooldowns[TRANK_WARTEZEIT_ID] = TRANK_WARTEZEIT + 1
 			c.add_log("%s trinkt einen Heiltrank." % f.display_name if target == f else "%s reicht %s einen Heiltrank." % [f.display_name, target.display_name])
-			c.heal(f, target, roundi(NOVIZE.trank * f.power))
+			# c.heal rechnet die Stärke bei Klassen selbst ein, beim Novizen nicht
+			c.heal(f, target, roundi(NOVIZE.trank * f.power) if f.klass == "novize" else NOVIZE.trank)

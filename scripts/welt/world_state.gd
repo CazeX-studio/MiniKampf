@@ -325,7 +325,7 @@ func change_map(p: PlayerState, map_id: String, cell: Vector2i) -> void:
 	p.safe_time = maxf(p.safe_time, 3.0)
 	p.npc_walk = {}
 	p.pos = Vector2(cell)
-	_say(p, GameData.text("karte_betreten", [m.title]))
+	# Der Ortsname kommt groß in der Bildmitte (E3c), die alte kleine Meldung „– Ort –“ ist weg (A1b, Alpha-Punkt 46)
 	# Für Aufträge wie „Reise nach Wipfelheim“
 	p.progress.flags["besucht:" + map_id] = true
 	_update_quests(p)

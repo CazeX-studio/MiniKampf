@@ -618,7 +618,7 @@ func _sync() -> void:
 		_side_waypoints = state.side_objectives(local)
 		var goal := state.objective(local)
 		_goal.text = "Ziel: " + goal if goal != "" else ""
-	_update_hud()
+	_update_hud(langsam)
 	_figuren_sortieren()
 
 
@@ -2617,7 +2617,17 @@ func _shop_row(text: String, button_text: String, item_id := "") -> Dictionary:
 	return {box = box, button = button}
 
 
-func _update_hud() -> void:
+## Stand, mit dem das offene Fenster zuletzt gefüllt wurde (A1b: nur bei Änderungen neu aufbauen, sonst lassen sich
+## Knöpfe nicht anklicken, weil sie zwischen Drücken und Loslassen ersetzt werden)
+var _panel_stand := 0
+
+
+func _panel_stand_jetzt() -> int:
+	var p := local_player()
+	return hash([p.progress.to_dict(), p.shop, p.map, _panel_mode, Netz.online()])
+
+
+func _update_hud(langsam := false) -> void:
 	var progress := local_player().progress
 	var xp_span := progress.xp_range()
 	var xp_text := GameData.text("hud_max") if xp_span.y < 0 else GameData.text("hud_erfahrung", [progress.xp, xp_span.y])
@@ -2626,8 +2636,10 @@ func _update_hud() -> void:
 	var max_mana := progress.max_mana()
 	if max_mana > 0 and progress.mana_anteil < 1.0:
 		_hud.text += GameData.text("hud_mana", [roundi(max_mana * progress.mana_anteil), max_mana])
-	if _panel.visible:
-		_fill_panel()
+	if _panel.visible and langsam:
+		var stand := _panel_stand_jetzt()
+		if stand != _panel_stand:
+			_fill_panel()
 
 
 func _on_notice(player_id: String, text: String) -> void:
@@ -2846,6 +2858,7 @@ func _toggle_panel(mode: String) -> void:
 
 func _fill_panel() -> void:
 	var p := local_player()
+	_panel_stand = _panel_stand_jetzt()
 	var lines: PackedStringArray = []
 	var quest_list := _panel_mode == "auftraege" and _quest_tab != "erfolge"
 	_quest_tabs.visible = _panel_mode == "auftraege"
