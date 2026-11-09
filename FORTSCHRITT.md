@@ -11,7 +11,17 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt (09.11.):** die Alpha-Aufträge A2 bis A13 (als Nächstes A2: Start und Online), E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+- **Nächster Schritt (09.11.):** die Alpha-Aufträge A2 bis A13 (als Nächstes A2b: Silberkraut online, gemeinsamer Kampf, Gruppenfenster), E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+
+- **Neu (09.11.): A2a Offline und Online** (Alpha-Punkte 3, 24, 48, 49):
+  - **Startmenü:** nur noch „Offline spielen“ und „Online spielen“ (in der Werkstatt dazu „Editor“). Feedback gibt es im Spiel oben rechts, die **Dankesliste** steht jetzt im Abspann am Ende der Demo.
+  - **Online = dasselbe Spiel:** Du spielst online mit deiner eigenen Figur und deinem Spielstand weiter. Wer noch keine Figur hat, erstellt sie zuerst („Figur erstellen“), danach geht es zurück zu „Online spielen“. Die alte Auswahl (Vega, Elfen, Ritter …) ist weg.
+  - **Alte Modelle online behoben:** Der Server hat jede eigene Figur durch eine alte Elfe ersetzt. Darum habt ihr euch als alte Modelle gesehen und es gab online keine Klassenkleidung (dein Klingentänzer als Novize). Jetzt kommt jeder mit seiner Figur an, und nach dem Lernen der Klasse trägt man auch online die Klassenkleidung.
+  - **So testest du es:**
+    1. Spiel starten: nur „Offline spielen“ und „Online spielen“.
+    2. „Online spielen“ → „Online spielen (übers Internet)“ mit zwei Geräten: Ihr seht euch mit euren eigenen Figuren.
+    3. Online mit einer Figur, die schon eine Klasse gelernt hat: Der andere sieht dich in Klassenkleidung.
+    4. Demo zu Ende spielen (oder im Spielstand-Editor kurz vor Schluss starten): Die Dankesliste steht im Abspann.
 
 - **Neu (09.11.): S5 Spielstand-Editor** (Editor, „Demo testen“, vierter Knopf): an jede Stelle der Demo springen, dein normaler Spielstand bleibt unberührt.
   - Links **Klasse** (die fünf der Demo; Sternensängerin nur mit Novizin), **Figur**, **Stufe**, **Geld**, **Heil- und Manatränke** und beliebige **weitere Gegenstände** („Dazu“).

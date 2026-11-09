@@ -14,6 +14,8 @@ const BILDER_PRO_SEKUNDE := 7.0
 
 ## Wohin „Zurück“ führt (der Editor setzt das auf sich selbst)
 static var zurueck_zu := "res://scenes/menu.tscn"
+## Wohin nach „Los“ (Online: zurück zum Bildschirm „Online spielen“, der dann verbindet)
+static var weiter_zu := "res://scenes/kreuzweg.tscn"
 
 var _koerper := "novize_m"
 var _kopf := ""
@@ -168,7 +170,9 @@ func _starten() -> void:
 	if name == "":
 		return
 	FigurWahl.neue_figur = {aussehen = aussehen(), name = name}
-	get_tree().change_scene_to_file("res://scenes/kreuzweg.tscn")
+	var ziel := weiter_zu
+	weiter_zu = "res://scenes/kreuzweg.tscn"
+	get_tree().change_scene_to_file(ziel)
 
 
 func _label(text: String, size: int, color: Color, pos: Vector2, width: float) -> Label:

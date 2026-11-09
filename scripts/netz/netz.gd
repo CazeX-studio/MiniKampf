@@ -351,6 +351,12 @@ static func clean_chat(text: String) -> String:
 	return text.replace("\n", " ").replace("\r", " ").replace("\t", " ").strip_edges().left(CHAT_MAX_LENGTH)
 
 
+## Darf ein Mitspieler mit diesem Aussehen kommen? Die alten Figuren und alle Figuren aus „Figur erstellen“ (Körper und
+## Kopf, auch mit Klassen-Körper und Aussehen-Teilen). Bisher kam jede eigene Figur als alte Elfe an (A2a, Alpha-Punkt 3).
+static func erlaubtes_aussehen(look: String) -> bool:
+	return look in LOOKS or (look.length() <= 200 and FigurTeile.kann_aussehen(look))
+
+
 ## Der eigene Spieler betritt die Stadt (er steht schon in Netz.world, beim Mitspieler im Spiegelbild).
 static func enter_world(p: PlayerState) -> void:
 	if mode == Mode.CLIENT and _ready_to_send:
@@ -556,7 +562,7 @@ func _c_join(p_name: String, look: String, progress: Dictionary, cell: Array, ka
 	if cell.size() == 2 and world.is_walkable(Vector2i(int(cell[0]), int(cell[1])), karte):
 		start = Vector2i(int(cell[0]), int(cell[1]))
 	world.remove_player(id)
-	var p := world.add_player(id, p_name.left(16), look if look in LOOKS else "elf_m", start)
+	var p := world.add_player(id, p_name.left(16), look if erlaubtes_aussehen(look) else "elf_m", start)
 	p.map = karte
 	p.progress.load_dict(progress)
 	_groups.set_player_name(id, p.display_name)

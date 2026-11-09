@@ -243,6 +243,11 @@ func _ready() -> void:
 	var local: PlayerState
 	if Netz.online():
 		local = state.add_player(local_id, Netz.my_name, Netz.my_look, WorldState.start_cell())
+		# Neues Spiel nach „Figur erstellen“ auch online: diese Figur nehmen (A2a, dasselbe Spiel wie allein)
+		if not FigurWahl.neue_figur.is_empty():
+			local.look = FigurWahl.neue_figur.aussehen
+			local.figur_name = FigurWahl.neue_figur.name
+			FigurWahl.neue_figur = {}
 		SaveGame.load_into(local)
 		state.fix_position(local)
 		Netz.enter_world(local)

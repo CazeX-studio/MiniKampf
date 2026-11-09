@@ -16,7 +16,7 @@ func _initialize() -> void:
 
 func _start() -> void:
 	Netz.save_override = "user://spielstand_test_mitspieler.json"
-	if Netz.join("localhost", "Testkind", "elf_f") != OK:
+	if Netz.join("localhost", "Testkind", "novize_w+w2") != OK:
 		quit(2)
 		return
 	SaveGame.delete()

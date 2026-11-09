@@ -1,13 +1,15 @@
 extends Control
-## Bildschirm „Zusammen spielen“ (Lernprojekt 4): Name und Figur wählen,
-## dann Gastgeber werden (nur am PC) oder bei einem Gastgeber beitreten.
+## Bildschirm „Online spielen“ (Lernprojekt 4, A2a): Name wählen, dann mit der eigenen Figur und dem eigenen Spielstand
+## auf den Online-Server (dasselbe Spiel wie allein). Ohne Figur erst „Figur erstellen“. Gastgeber werden (nur am PC)
+## und Beitreten über eine Adresse bleiben zum Testen.
 
 const SCREEN := Vector2(1280, 720)
 const SETTINGS := "user://zusammen.json"
 
 var _name: LineEdit
 var _address: LineEdit
-var _look := 0
+## Die eigene Figur (aus dem Spielstand oder gerade erstellt), "" = noch keine
+var _figur := ""
 var _preview: WorldCharacter
 var _look_label: Label
 var _status: Label
@@ -26,12 +28,12 @@ func _ready() -> void:
 	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(shade)
 
-	var title := _label("Zusammen spielen", 44, Color("f2c14e"))
+	var title := _label("Online spielen", 44, Color("f2c14e"))
 	title.position = Vector2(0, 50)
 	title.size = Vector2(SCREEN.x, 60)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(title)
-	var sub := _label("Dieselbe Demo mit bis zu 4 Spielern übers Internet. Jeder spielt mit seinem eigenen Spielstand weiter.", 18, Color.WHITE)
+	var sub := _label("Dasselbe Spiel wie offline, mit bis zu 4 Spielern übers Internet. Du spielst mit deiner Figur und deinem Spielstand weiter.", 18, Color.WHITE)
 	sub.position = Vector2(0, 110)
 	sub.size = Vector2(SCREEN.x, 30)
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -51,21 +53,31 @@ func _ready() -> void:
 	_name.text = saved.get("name", "")
 	add_child(_name)
 
-	# Figur
+	# Figur: die eigene aus dem Spielstand (oder gerade erstellt); ohne Figur erst „Figur erstellen“
 	var look_title := _label("Deine Figur:", 20, Color.WHITE)
 	look_title.position = Vector2(300, 250)
 	add_child(look_title)
-	_look = maxi(Netz.LOOKS.find(saved.get("figur", "vega")), 0)
-	var prev := _small_button("<", Vector2(470, 245), func() -> void: _change_look(-1))
-	add_child(prev)
-	var next := _small_button(">", Vector2(690, 245), func() -> void: _change_look(1))
-	add_child(next)
+	_figur = eigene_figur()
 	_look_label = _label("", 16, Color("cccccc"))
-	_look_label.position = Vector2(530, 335)
-	_look_label.size = Vector2(150, 24)
-	_look_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_look_label.position = Vector2(470, 250)
+	_look_label.size = Vector2(300, 24)
 	add_child(_look_label)
-	_change_look(0)
+	if _figur != "":
+		_preview = WorldCharacter.new()
+		_preview.setup(_figur, "")
+		_preview.position = Vector2(620, 345)
+		add_child(_preview)
+		if _name.text == "":
+			_name.text = eigener_name()
+	else:
+		_look_label.text = "Noch keine Figur."
+		var erstellen := _small_button("Figur erstellen", Vector2(470, 285), func() -> void:
+			_save_settings()
+			FigurErstellen.zurueck_zu = "res://scenes/zusammen.tscn"
+			FigurErstellen.weiter_zu = "res://scenes/zusammen.tscn"
+			get_tree().change_scene_to_file("res://scenes/figur_erstellen.tscn"))
+		erstellen.size = Vector2(220, 50)
+		add_child(erstellen)
 
 	# Adresse des Gastgebers
 	var address_label := _label("Adresse des Gastgebers:", 20, Color.WHITE)
@@ -81,9 +93,13 @@ func _ready() -> void:
 	hint.position = Vector2(300, 428)
 	add_child(hint)
 
-	_host_button = _big_button("Gastgeber werden", Vector2(240, 480), _on_host)
+	_host_button = _big_button("Gastgeber werden\n(zum Testen)", Vector2(240, 480), _on_host)
 	_join_button = _big_button("Beitreten\n(Adresse oben)", Vector2(520, 480), _on_join)
-	_online_button = _big_button("Online-Server\n(übers Internet)", Vector2(800, 480), _on_online)
+	_online_button = _big_button("Online spielen\n(übers Internet)", Vector2(800, 480), _on_online)
+	_online_button.add_theme_color_override("font_color", Color("f2c14e"))
+	if _figur == "":
+		for k: Button in [_host_button, _join_button, _online_button]:
+			k.disabled = true
 	if OS.has_feature("web"):
 		# Im Browser kann man nur beitreten (Gastgeber geht nur mit der PC-Version)
 		_host_button.disabled = true
@@ -110,15 +126,17 @@ func _ready() -> void:
 		Netz.stop()
 
 
-func _change_look(step: int) -> void:
-	_look = posmod(_look + step, Netz.LOOKS.size())
-	if _preview != null:
-		_preview.queue_free()
-	_preview = WorldCharacter.new()
-	_preview.setup(Netz.LOOKS[_look], "")
-	_preview.position = Vector2(605, 320)
-	add_child(_preview)
-	_look_label.text = "%d / %d" % [_look + 1, Netz.LOOKS.size()]
+## Die eigene Figur: gerade erstellt (Figur erstellen) oder aus dem Spielstand, "" = noch keine.
+static func eigene_figur() -> String:
+	if not FigurWahl.neue_figur.is_empty():
+		return str(FigurWahl.neue_figur.aussehen)
+	return str(SaveGame._read().get("figur", {}).get("aussehen", ""))
+
+
+static func eigener_name() -> String:
+	if not FigurWahl.neue_figur.is_empty():
+		return str(FigurWahl.neue_figur.name)
+	return str(SaveGame._read().get("figur", {}).get("name", ""))
 
 
 func _player_name() -> String:
@@ -128,7 +146,7 @@ func _player_name() -> String:
 
 func _on_host() -> void:
 	_save_settings()
-	var err := Netz.host(_player_name(), Netz.LOOKS[_look])
+	var err := Netz.host(_player_name(), _figur)
 	if err != OK:
 		_status.text = "Gastgeber geht nicht (Fehler %d). Läuft schon ein anderes Spiel als Gastgeber?" % err
 		return
@@ -146,7 +164,7 @@ func _on_online() -> void:
 
 func _connect(address: String, waiting_text: String) -> void:
 	_save_settings()
-	var err := Netz.join(address, _player_name(), Netz.LOOKS[_look])
+	var err := Netz.join(address, _player_name(), _figur)
 	if err != OK:
 		_status.text = "Die Adresse stimmt nicht (Fehler %d)." % err
 		return
@@ -169,9 +187,9 @@ func _on_failed() -> void:
 	if Netz._node().connected.is_connected(_on_connected):
 		Netz._node().connected.disconnect(_on_connected)
 	_status.text = "Keine Verbindung. Stimmt die Adresse, und ist der Gastgeber schon in Kreuzweg?"
-	_host_button.disabled = OS.has_feature("web")
-	_join_button.disabled = false
-	_online_button.disabled = false
+	_host_button.disabled = OS.has_feature("web") or _figur == ""
+	_join_button.disabled = _figur == ""
+	_online_button.disabled = _figur == ""
 
 
 func _load_settings() -> Dictionary:
@@ -184,7 +202,7 @@ func _load_settings() -> Dictionary:
 func _save_settings() -> void:
 	var file := FileAccess.open(SETTINGS, FileAccess.WRITE)
 	if file != null:
-		file.store_string(JSON.stringify({name = _name.text.strip_edges(), figur = Netz.LOOKS[_look], adresse = _address.text.strip_edges()}))
+		file.store_string(JSON.stringify({name = _name.text.strip_edges(), adresse = _address.text.strip_edges()}))
 
 
 func _label(text: String, font_size: int, color: Color) -> Label:

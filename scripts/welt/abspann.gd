@@ -103,6 +103,10 @@ func _region(box: VBoxContainer, region: String) -> void:
 	var name := Tester.spitzname() if Tester.spitzname() != "" else "Tester"
 	box.add_child(_label("%s  %s" % [GameData.text("abschluss_text", [name]), code], 24, Color("f2c14e")))
 	box.add_child(_label(GameData.text("abschluss_hinweis"), 17, Color(1, 1, 1, 0.7)))
+	# Dankesliste der Tester (A2a: im Abspann statt im Startmenü)
+	var namen := Tester.dankesliste()
+	if not namen.is_empty():
+		box.add_child(_label("%s: %s" % [GameData.text("danke_titel"), " · ".join(PackedStringArray(namen))], 17, Color("f2c14e")))
 	box.add_child(_knopf_reihe(info, Tester.gemeldet()))
 
 
