@@ -11,7 +11,18 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt (09.11.):** S4 und S5 (Editoren), danach die Alpha-Aufträge A2 bis A13, E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+- **Nächster Schritt (09.11.):** S4b (Hinzufügen im Stadt-Editor) und S5 (Spielstand-Editor), danach die Alpha-Aufträge A2 bis A13, E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+
+- **Neu (09.11.): S4a Stadt-Editor** (Editor, vierter Knopf): Jede Karte aus dem Baukasten (Kreuzweg, Wipfelheim, Glutoase, Wege und Höhlen) mit allen Teilen und Figuren.
+  - **Antippen** wählt ein Teil oder eine Figur (gelber Rahmen), **Ziehen** verschiebt es, die vier **Pfeilknöpfe** ↖ ↗ ↙ ↘ schieben Feld für Feld (fürs Handy). Leere Stelle ziehen bewegt die Karte, − + zoomen.
+  - Teile **spiegeln** und **löschen**, **Rückgängig** (auch Strg+Z). „Tags/Nachts“ zeigt und verschiebt die Figuren an ihrem Platz bei Tag oder bei Nacht.
+  - **Speichern:** am PC im Godot-Editor direkt in die Kartendaten. Im Browser (Werkstatt) lädt es eine Datei „stadt_<ort>.json“ herunter: die schickst du mir, ich übernehme sie mit einem Befehl.
+  - Hinzufügen neuer Teile und Figuren kommt mit S4b.
+  - **So testest du es:**
+    1. Werkstatt → Editor → „Stadt-Editor“, oben „Kreuzweg“.
+    2. Einen Marktstand antippen und mit den Pfeilknöpfen zwei Felder verschieben, dann „Rückgängig“.
+    3. Auf „Nachts“ stellen und eine Figur an einen anderen Platz ziehen.
+    4. „Speichern“: am PC in Godot danach die Demo starten und schauen, ob es dort steht; im Browser kommt eine Datei.
 
 - **Neu (09.11.): S3b Bewegungen in der Welt** (Editor, dritter Knopf): Die gewählte Figur steht viermal nebeneinander: nach links, nach rechts, schräg von vorne und schräg von hinten. Unter jeder steht, welche Bilder gerade laufen und wie viele es sind.
   - **Figur:** Novizen, Klassen-Körper (je mit jedem wählbaren Kopf), Baukasten-Körper (mit den Volks-Köpfen) oder eine der 69 Figuren aus der Welt (Ye, Mira, Hatta …).
