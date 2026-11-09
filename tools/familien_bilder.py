@@ -319,9 +319,11 @@ def grund_bauen(name, familie):
 
 
 def main():
-	for name in sys.argv[1:] or list(GRUNDKOERPER) + list(ARTEN):
+	for name in sys.argv[1:] or list(GRUNDKOERPER) + [a for a in ARTEN if a not in mb.MONSTER]:
 		if name in GRUNDKOERPER:
 			grund_bauen(name, GRUNDKOERPER[name])
+		elif name in mb.MONSTER:
+			print(f"{name}: hat ein eigenes Blatt (monster_bilder.py)")
 		else:
 			art_bauen(name, ARTEN[name])
 

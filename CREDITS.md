@@ -47,6 +47,7 @@ im öffentlichen Repository https://github.com/benc-uk/super-dungeon-delve
 Feldschleim, Wiesenkobold, Kieselkobold, Rüpelkobold, Der Sternenfresser (27./28.10.) sowie die Start-Monster Moosling, Glutwelpe und Bachotter (28.10.). Sie ersetzen die Platzhalter swampy, goblin, imp und wogol.
 
 Die Kreuzweg-Familien (von Marco mit KI-Hilfe erstellt, 01.11.2026, Blätter `tools/vorlagen/familie_*.png`, zerlegt mit `tools/familien_bilder.py`): Schleim, Hase, Käfer, Blütenwesen, Schwarm, Igel sowie Tauschleim, Kronenschleim, Wiesenhoppler, Knollenkäfer, Schattenskarabäus, Glimmerkäfer, Löwenzahnling, Kaktusling, Stachelflitzer, Funkenflirr, Glutigel.
+Einzel-Blätter der Kreuzwegfelder (von Marco mit KI-Hilfe erstellt, 09.11.2026, `tools/vorlagen/<monster>.png`, zerlegt mit `tools/monster_bilder.py`, ersetzen die Familien-Bilder): Tauschleim, Kronenschleim, Wiesenhoppler, Knollenkäfer, Schattenskarabäus, Glimmerkäfer, Löwenzahnling, Kaktusling, Stachelflitzer, Glutigel, Funkenflirr.
 
 Die Hirschtal-Familien (ebenso, 01.11.2026): Wildschwein, Ranke, Krabbe, Vogel, Wolf, Geist, Hirsch sowie Borstenkeiler, Dornenranke, Rankenschlinger, Steppenroller, Bachkrebs, Geysirkrabbe, Zankelster, Windfalke, Rauchgeier, Nachtuhu, Heulwolf, Splitterwolf, Mondschakal, Sporenwolf, Irrlicht, Staubgeist, Glutgeist, Donnerhirsch, Kronhirsch.
 

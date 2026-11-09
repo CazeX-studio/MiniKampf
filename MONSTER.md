@@ -90,9 +90,7 @@ nein, **Tag oder Nacht** (oder Dungeon), **Familie**.
   Fähigkeiten (Aussehen Variante C).
 - In **neuen Gebieten** kommen etwa **5 von 7 Monstern aus vorhandenen Familien** als neue Art.
 - Dazu **1 bis 2 neue Familien pro Region**, am besten nur dort; sie dürfen aber woanders auftauchen.
-- Bildaufträge: **ein Blatt pro Familie**, zuerst der Grundkörper mit allen Kampfbildern (Stehen, Angreifen,
-  Getroffen, Umfallen, dazu die besondere Bewegung jeder Art), dann je Art nur Umfärbung, Zusatzteil und Merkmal.
-  Familien mit vielen Arten zuerst. Die Blätter stehen in `Spieldesign/GRAFIK_AUFTRAG.md`.
+- Bildaufträge (geändert 08.11., Alpha-Test): **ein vollständiges Blatt pro Monster**, fertig gefärbt, mit Stehen (4), Angriff (6), Getroffen (1), Fallen (4) und der besonderen Bewegung (6). Die Familie bestimmt weiter Körperform und Grundbewegungen. Prompts: `Spieldesign/GRAFIK_AUFTRAG.md`, Teil G; zerlegt mit `tools/monster_bilder.py`. Die alten Familien-Blätter bleiben nur für Monster ohne eigenes Blatt.
 
 ### 8. Seltene Monster: zwei Arten
 
@@ -148,7 +146,7 @@ Elemente: Wasser, Wind, Erde, Pflanze, nachts Blitz und Feuer.
 | Wiesenhoppler | Wind, Angreifer, 2–5 | Hasen | Doppelsprung (zwei schnelle Tritte, zwei Zahlen); Haken schlagen (springt zur Seite, weicht dem nächsten Angriff eher aus). Bringt bei: Tempo und Zugleiste | weiches Fell |
 | Knollenkäfer | Erde, Verteidiger, 3–6 | Käfer | Einrollen (rollt sich zur Kugel, viel Verteidigung); Zwicken (senkt kurz die Verteidigung des Ziels). Bringt bei: Feuer und Wind sind stark gegen Erde | Käferpanzer |
 | Löwenzahnling | Pflanze, Helfer, 4–7 | Blütenwesen | Samenflug (heilt ein anderes Monster); Pollenwolke (Ziel verfehlt eher). Bringt bei: Helfer zuerst besiegen | Pusteblumensamen |
-| Funkenflirr **N** | Blitz, Angreifer, 4–7 | Schwärme (Glühwürmchen) | Schwarmtanz (viele kleine Treffer); Funkenschlag (kann kurz lähmen); Kettenfunke (springt auf einen zweiten Gegner über) | Leuchtstaub |
+| Funkenflirr **N** | Blitz, Angreifer, 4–7 | Fluginsekten (Glühwürmchen) | Schwarmtanz (viele kleine Treffer); Funkenschlag (kann kurz lähmen); Kettenfunke (springt auf einen zweiten Gegner über) | Leuchtstaub |
 | Glutigel **N** | Feuer, Verteidiger, 5–8 | Igel | Stachelball (rollt los und rammt); Glutstacheln (wer ihn im Nahkampf trifft, verbrennt sich); Glutnest (vordere Reihe brennt zwei Runden). Bringt bei: aufpassen, wen man im Nahkampf angreift | glühender Stachel |
 | Kronenschleim **S** | Wasser, Tank, 8 | Schleime (König der Porings) | Großer Platsch (landet auf der ganzen vorderen Reihe); Schleimruf (ruft einen Tauschleim); Königlicher Befehl (alle Schleime rücken auf der Zugleiste vor); Kronenwurf (Krone als Bumerang, trifft beide Reihen) | Schleimkrone (Kopfbedeckung, nur Aussehen), mehr Erfahrung, besondere Karte |
 
@@ -288,7 +286,7 @@ Hammerbrüder (zwei große Ambossknechte), Kettenschmied (Phase 1 und 2). Mechan
 | Hasen | klein, rund mit langen Ohren | Wiesenhoppler (Kleeblatt am Ohr) |
 | Käfer | klein, runder Panzer, kurze Beine | Knollenkäfer (Panzer wie eine Kartoffel), Schattenskarabäus N (schwarzer Panzer, Sandkugel), Glimmerkäfer D (leuchtende Flügeldecken) |
 | Blütenwesen | klein, Pflanzenkörper auf Wurzelbeinchen | Löwenzahnling (Pusteblumen-Kopf), Kaktusling (Kaktuskörper mit Blüte), Stachelflitzer S (runder Kaktus mit Blüte) |
-| Schwärme | klein, Wolke aus vielen kleinen Tieren | Funkenflirr N (Glühwürmchen) |
+| Fluginsekten | klein, ein einzelnes fliegendes Insekt (statt Schwärme, Marco 09.11.) | Funkenflirr N (Glühwürmchen) |
 | Igel | klein, rund mit Stacheln | Glutigel N (glühende Stachelspitzen) |
 | Wildschweine | mittel, kräftig mit Hauern | Borstenkeiler (Schlamm auf dem Rücken) |
 | Ranken | mittel, Rankenknäuel mit Blattmaul | Dornenranke (Dornen), Rankenschlinger (größer, lange Fangranken), Steppenroller (trockener Dornenbusch als Kugel) |
@@ -323,7 +321,7 @@ vorhandene Familien: Messinghafen Schrottgolem (Golems), Kesselkrabbe (Krabben),
 (Geister), Buchgolem (Golems); Nebelinseln Kitsune (Füchse), Kappa (Schildkröten), Tengu (Vögel), Kodama
 (Blütenwesen), Raijū (Marder). Neu wäre nur die Funkenspinne (Familie Spinnen). Plätze für Familien mit nur einer
 Art: Igel und Hasen auf Wiesen, Hyänen und Skorpione im Dürrewald, Fledermäuse in Höhlen und den Turmruinen, Böcke
-an den Schwebsteinhängen, Wyvern bei der Wolkenbahn, Schwärme im Kupfermoor, Wildschweine an der Kirschküste.
+an den Schwebsteinhängen, Wyvern bei der Wolkenbahn, Fluginsekten im Kupfermoor, Wildschweine an der Kirschküste.
 
 ---
 

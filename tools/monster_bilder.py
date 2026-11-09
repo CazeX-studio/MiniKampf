@@ -21,6 +21,8 @@ ZIEL = WURZEL / "assets" / "figuren"
 # Monster -> Höhe im Kampf (Pixel, Stehen) und Reihen von oben nach unten: (Animation, Anzahl Bilder).
 # Eine Reihe kann auf zwei Animationen verteilt werden: ("hit+death", 1) = erstes Bild hit, der Rest death.
 # "schnitte": senkrechte Linien (x, y von, y bis), wo sich zwei Bilder berühren; die Linie gehört zum linken Bild.
+# Reihen eines Einzel-Blatts (Teil G): Stehen, Angriff, Getroffen, Fallen, besondere Bewegung
+EINZELN = [("idle", 4), ("attack", 6), ("hit", 1), ("death", 4), ("spezial", 6)]
 MONSTER = {
 	"feldschleim": {"hoehe": 52, "reihen": [("idle", 4), ("attack", 6), ("hit", 1), ("death", 4)]},
 	"wiesenkobold": {"hoehe": 86, "reihen": [("idle", 4), ("attack", 6), ("wurf", 6), ("hit+death", 5)]},
@@ -38,6 +40,18 @@ MONSTER = {
 	"hammerbrueder": {"hoehe": 150, "gruppen": True, "reihen": [("idle", 3), ("attack", 6), ("hit", 1), ("spezial", 6), ("death", 4)]},
 	"kettenschmied_1": {"hoehe": 170, "reihen": [("idle", 4), ("attack", 6), ("hit", 1), ("spezial", 6), ("death", 4)]},
 	"kettenschmied_2": {"hoehe": 170, "reihen": [("idle", 4), ("attack", 6), ("hit", 1), ("spezial", 6), ("death", 4)]},
+	# Ein Blatt pro Monster (GRAFIK_AUFTRAG.md Teil G, ersetzt die Familien-Bilder): Kreuzwegfelder
+	"tauschleim": {"hoehe": 56, "reihen": EINZELN},
+	"kronenschleim": {"hoehe": 84, "klein_bis": 6000, "reihen": EINZELN},
+	"wiesenhoppler": {"hoehe": 56, "reihen": EINZELN},
+	"knollenkaefer": {"hoehe": 56, "reihen": EINZELN},
+	"schattenskarabaeus": {"hoehe": 56, "reihen": EINZELN},
+	"glimmerkaefer": {"hoehe": 56, "reihen": EINZELN},
+	"loewenzahnling": {"hoehe": 56, "reihen": EINZELN},
+	"kaktusling": {"hoehe": 56, "reihen": EINZELN},
+	"stachelflitzer": {"hoehe": 56, "reihen": EINZELN},
+	"glutigel": {"hoehe": 56, "reihen": EINZELN},
+	"funkenflirr": {"hoehe": 56, "reihen": EINZELN},
 }
 # Monster mit festen Ausschnitten (wenn sich Bilder berühren oder aus mehreren Blättern stammen):
 # Animation -> Liste von Ausschnitten (x0, y0, x1, y1) im Blatt. Ein Ausschnitt kann auch (Blatt, x0, y0, x1, y1, Faktor)
@@ -190,7 +204,7 @@ def zerlegen(name, info):
 		if ln:
 			g = ndimage.sum(ll > 0, ll, range(1, ln + 1))
 			a[np.isin(ll, [i + 1 for i in range(ln) if g[i] >= 25]), 3] = 0
-	ziel, reihen = bilder_finden(a, info.get("schnitte", []))
+	ziel, reihen = bilder_finden(a, info.get("schnitte", []), info.get("klein_bis", 2500))
 	erwartet = [n for _, n in info["reihen"]]
 	if info.get("gruppen"):
 		reihen = [gruppieren(ziel, r, n) for r, n in zip(reihen, erwartet)]
