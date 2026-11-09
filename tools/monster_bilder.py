@@ -79,6 +79,22 @@ MONSTER = {
 	"aschefalter": {"hoehe": 56, "reihen": EINZELN},
 	"magmaschnecke": {"hoehe": 64, "reihen": EINZELN},
 	"messingwaechter": {"hoehe": 100, "reihen": EINZELN},
+	# Grünwacht: Hirschtal und Wachtwald
+	"borstenkeiler": {"hoehe": 84, "reihen": EINZELN},
+	"dornenranke": {"hoehe": 84, "reihen": EINZELN},
+	"bachkrebs": {"hoehe": 56, "weg": [(713, 390, 748, 425), (207, 613, 247, 650)], "reihen": EINZELN},
+	"zankelster": {"hoehe": 84, "reihen": EINZELN},
+	"heulwolf": {"hoehe": 84, "reihen": EINZELN},
+	"irrlicht": {"hoehe": 84, "klein_bis": 200, "reihen": EINZELN},
+	# Kronhirsch und Sporenling: 7 Bilder besondere Bewegung gemalt
+	"kronhirsch": {"hoehe": 120, "reihen": EINZELN[:4] + [("spezial", 7)]},
+	"rindenbaer": {"hoehe": 120, "reihen": EINZELN},
+	"windfalke": {"hoehe": 84, "reihen": EINZELN},
+	"steinkroete": {"hoehe": 56, "reihen": EINZELN},
+	"waldsporenling": {"hoehe": 56, "reihen": EINZELN[:4] + [("spezial", 7)]},
+	"nachtuhu": {"hoehe": 84, "reihen": EINZELN},
+	"funkenmarder": {"hoehe": 56, "reihen": EINZELN},
+	"wipfelluchs": {"hoehe": 100, "reihen": EINZELN},
 }
 # Monster mit festen Ausschnitten (wenn sich Bilder berühren oder aus mehreren Blättern stammen):
 # Animation -> Liste von Ausschnitten (x0, y0, x1, y1) im Blatt. Ein Ausschnitt kann auch (Blatt, x0, y0, x1, y1, Faktor)
@@ -223,6 +239,9 @@ def gruppieren(ziel, reihe, anzahl):
 
 def zerlegen(name, info):
 	a = freistellen(Image.open(VORLAGEN / f"{info.get('vorlage', name)}.png"))
+	# "weg": Bereiche (x0, y0, x1, y1) im Blatt, die entfernt werden (mitgemalte Effekt-Striche)
+	for x0, y0, x1, y1 in info.get("weg", []):
+		a[y0:y1, x0:x1, 3] = 0
 	if info.get("loecher"):
 		# Weiße Löcher zwischen den Ästen oder im Schatten-Körper
 		r = a[..., :3].astype(np.int16)
