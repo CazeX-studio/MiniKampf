@@ -20,6 +20,7 @@ func _initialize() -> void:
 		perfekt = _perfect(),
 		zauber = _spell(),
 		heilung = _chime([784.0, 1175.0], 0.5),
+		stufe = _fanfare(),
 	}
 	for name: String in sounds:
 		var wav := _to_wav(sounds[name])
@@ -112,6 +113,27 @@ func _chime(freqs: Array, length: float) -> PackedFloat32Array:
 		for i in range(start, out.size()):
 			var s := float(i - start) / RATE
 			out[i] += (sin(TAU * freqs[n] * s) * 0.7 + sin(TAU * freqs[n] * 2.0 * s) * 0.2) * exp(-s * 5.0) * minf(1.0, s / 0.01) * 0.5
+	return out
+
+
+## Stufenaufstieg (A6): kurze Fanfare nach oben (C – E – G – hohes C), der letzte Ton klingt lange, darüber ein Glitzern.
+func _fanfare() -> PackedFloat32Array:
+	var freqs := [523.0, 659.0, 784.0, 1047.0]
+	var out := _empty(1.3)
+	for n in freqs.size():
+		var start := int(n * 0.09 * RATE)
+		var abklingen := 2.2 if n == freqs.size() - 1 else 9.0
+		for i in range(start, out.size()):
+			var s := float(i - start) / RATE
+			var ton := sin(TAU * freqs[n] * s) * 0.6 + sin(TAU * freqs[n] * 2.0 * s) * 0.25 + sin(TAU * freqs[n] * 3.0 * s) * 0.1
+			out[i] += ton * exp(-s * abklingen) * minf(1.0, s / 0.008) * 0.45
+	# Glitzern: sehr hohe, kurze Töne nach dem letzten Ton
+	var glitzer := [2093.0, 2637.0, 3136.0]
+	for n in glitzer.size():
+		var start := int((0.3 + n * 0.07) * RATE)
+		for i in range(start, out.size()):
+			var s := float(i - start) / RATE
+			out[i] += sin(TAU * glitzer[n] * s) * exp(-s * 12.0) * 0.12
 	return out
 
 

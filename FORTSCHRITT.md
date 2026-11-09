@@ -11,7 +11,18 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt (09.11.):** die Alpha-Aufträge A2 bis A13 (als Nächstes A6: Kampf-Anzeige), E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+- **Nächster Schritt (09.11.):** die Alpha-Aufträge A2 bis A13 (als Nächstes A7: Figuren richten; Klassenbilder A3b warten auf deine Bilder), E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+
+- **Neu (09.11.): A6 Kampf-Anzeige** (Alpha-Punkte 6, 7, 11, 43):
+  - **Schild der Monster (6):** Hat ein Gegner (oder jemand aus der Gruppe) einen Schild, liegt eine hellblaue Leiste direkt über seiner Lebensleiste, und oben auf dem Namensschild sitzt ein Schild-Abzeichen mit der Zahl.
+  - **Ziele unten (43):** Nach dem Antippen einer Fähigkeit stehen alle möglichen Ziele unten als Knöpfe mit Nummer, Leben, Schild und Element („1 · Wiesenhoppler“ …). „Zurück“ liegt immer auf der 6 (auch bei Auswahl-Menüs wie Rüstung oder Ware). Antippen der Figur geht weiterhin.
+  - **Stufen-Klang (11):** kurze Fanfare beim Stufenaufstieg, in der Welt und auf der Kampf-Auswertung (selbst erzeugt wie die anderen Geräusche).
+  - **Auftragsbelohnung (7):** Beim Abgeben erscheint eine Karte „Auftrag abgeschlossen“ mit dem Titel und darunter Geld, Erfahrung und Gegenstände mit ihren Bildern. Sie verschwindet nach ein paar Sekunden oder beim Antippen.
+  - **So testest du es:**
+    1. Gegen ein Monster kämpfen, „Hieb“: Unten stehen die Ziele mit Nummern, „6 · Zurück“.
+    2. Ein Monster, das sich schützt (z. B. Knollenkäfer „Einrollen“): Schild-Leiste und Abzeichen.
+    3. Einen Auftrag abgeben: Belohnungskarte.
+    4. Eine Stufe aufsteigen: Fanfare.
 
 - **Neu (09.11.): A5 Glutoase** (Alpha-Punkte 23, 31, 33, 34):
   - **Weiter zum nächsten Auftrag (23):** Ist kein Auftrag der Geschichte offen und auf deiner Karte hat niemand ein „!“, zeigt der Wegweiser jetzt zum nächstgelegenen Auftraggeber auf einer anderen Karte. Beispiel Sternensängerin: Nach dem Lernen bei Xavina in der Palmenrast führt er zu Nadia in die Glutoase (bisher zeigte er nichts).

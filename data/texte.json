@@ -37,6 +37,7 @@
 	"benutzen_nicht_hier": "Hier kannst du %s nicht benutzen.",
 	"auftrag_fertig": "Auftrag erfüllt: %s – zurück zum Auftraggeber!",
 	"auftrag_abgegeben": "Auftrag abgeschlossen: %s",
+	"auftrag_abgeschlossen_titel": "Auftrag abgeschlossen",
 	"muenzen": ["Bronze", "Silber", "Gold"],
 	"gold": "+%s",
 	"erfahrung": "+%d Erfahrung",

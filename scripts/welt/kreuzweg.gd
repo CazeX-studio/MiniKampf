@@ -2744,8 +2744,97 @@ func _panel_stand_jetzt() -> int:
 	return hash([p.progress.to_dict(), p.shop, p.map, _panel_mode, Netz.online()])
 
 
+## Aufträge, die beim letzten Blick schon abgegeben waren (null = noch nicht geschaut, beim Laden nichts zeigen)
+var _schon_abgegeben: Variant = null
+var _belohnungs_karte: PanelContainer
+
+
+func _abgegebene_pruefen(progress: Progress) -> void:
+	var jetzt := {}
+	for id: String in progress.quests:
+		if progress.quests[id] == "abgegeben":
+			jetzt[id] = true
+	if _schon_abgegeben != null:
+		for id: String in jetzt:
+			if not (_schon_abgegeben as Dictionary).has(id) and not (GameData.quest(id).get("belohnung", {}) as Dictionary).is_empty():
+				_belohnung_zeigen(id)
+				break
+	_schon_abgegeben = jetzt
+
+
+## Karte „Auftrag abgeschlossen“: Titel, darunter Geld, Erfahrung und Gegenstände mit Bild. Verschwindet nach ein paar
+## Sekunden oder beim Antippen.
+func _belohnung_zeigen(id: String) -> void:
+	var q := GameData.quest(id)
+	var reward: Dictionary = q.get("belohnung", {})
+	if _belohnungs_karte != null and is_instance_valid(_belohnungs_karte):
+		_belohnungs_karte.queue_free()
+	var karte := _framed_panel()
+	karte.custom_minimum_size = Vector2(460, 0)
+	karte.mouse_filter = Control.MOUSE_FILTER_STOP
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 8)
+	box.alignment = BoxContainer.ALIGNMENT_CENTER
+	karte.add_child(box)
+	var kopf := _label(GameData.text("auftrag_abgeschlossen_titel"), 16, Color("8affc1"))
+	kopf.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	box.add_child(kopf)
+	var titel := _label(str(q.get("titel", id)), 24, Color("f2c14e"))
+	titel.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	box.add_child(titel)
+	var reihe := HBoxContainer.new()
+	reihe.alignment = BoxContainer.ALIGNMENT_CENTER
+	reihe.add_theme_constant_override("separation", 22)
+	box.add_child(reihe)
+	var teile: Array[Array] = []
+	if int(reward.get("gold", 0)) > 0:
+		teile.append([UiStil.symbol("gold"), "+" + Geld.text(int(reward.gold))])
+	if int(reward.get("erfahrung", 0)) > 0:
+		teile.append([UiStil.symbol("kristall"), "+%d Erfahrung" % int(reward.erfahrung)])
+	var gegenstaende: Dictionary = reward.get("gegenstaende", {})
+	for item_id: String in gegenstaende:
+		var bild := BagSlot.icon_texture(item_id)
+		teile.append([bild if bild != null else UiStil.symbol("tasche"), "%d× %s" % [int(gegenstaende[item_id]), GameData.item_name(item_id)]])
+	for teil: Array in teile:
+		var eintrag := HBoxContainer.new()
+		eintrag.add_theme_constant_override("separation", 6)
+		var symbol := TextureRect.new()
+		symbol.texture = teil[0]
+		symbol.custom_minimum_size = Vector2(30, 30)
+		symbol.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		symbol.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		symbol.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		eintrag.add_child(symbol)
+		eintrag.add_child(_label(str(teil[1]), 19, Color.WHITE))
+		reihe.add_child(eintrag)
+	_ui_root.add_child(karte)
+	karte.reset_size()
+	karte.position = Vector2((1280 - karte.size.x) * 0.5, 165)
+	_belohnungs_karte = karte
+	Geraeusche.play("heilung", 1.3)
+	karte.modulate.a = 0.0
+	var t := karte.create_tween()
+	t.tween_property(karte, "modulate:a", 1.0, 0.25)
+	t.tween_interval(4.0)
+	t.tween_property(karte, "modulate:a", 0.0, 0.6)
+	t.tween_callback(karte.queue_free)
+	karte.gui_input.connect(func(event: InputEvent) -> void:
+		if event is InputEventMouseButton and event.pressed:
+			karte.queue_free())
+
+
+## Stufe beim letzten Blick: steigt sie, kommt der Stufen-Klang (A6, Alpha-Punkt 11)
+var _letzte_stufe := -1
+
+
 func _update_hud(langsam := false) -> void:
 	var progress := local_player().progress
+	if _letzte_stufe >= 0 and progress.level > _letzte_stufe:
+		Geraeusche.play("stufe")
+	_letzte_stufe = progress.level
+	# Gerade abgegebene Aufträge: Belohnungskarte zeigen (A6, Alpha-Punkt 7)
+	if langsam:
+		_abgegebene_pruefen(progress)
 	var xp_span := progress.xp_range()
 	var xp_text := GameData.text("hud_max") if xp_span.y < 0 else GameData.text("hud_erfahrung", [progress.xp, xp_span.y])
 	_hud.text = GameData.text("hud", [progress.level, xp_text, Geld.text(progress.gold)])

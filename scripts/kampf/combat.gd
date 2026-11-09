@@ -824,9 +824,19 @@ func _on_ability_pressed(f: Fighter, ab: Dictionary) -> void:
 	_pending = ab
 	_pending_user = f
 	_clear_actions()
-	_turn_label.text = "%s: Ziel antippen" % ab.name
-	for target in state.skills.valid_targets(f, ab):
+	_turn_label.text = "%s: Ziel wählen (unten oder antippen)" % ab.name
+	# Ziele auch unten als Knöpfe mit Nummer (A6, Alpha-Punkt 43), „Zurück“ immer auf der 6
+	for target: Fighter in state.skills.valid_targets(f, ab):
 		view(target).targetable = true
+		var info := "%d / %d Leben" % [target.hp, target.max_hp]
+		if target.shield_total() > 0:
+			info += " · Schild %d" % target.shield_total()
+		if not target.is_hero and target.element != "":
+			info += " · " + target.element
+		var knopf := _action_button("%s\n%s" % [target.display_name, info])
+		knopf.pressed.connect(_on_fighter_tapped.bind(target))
+		_grid.add_child(knopf)
+	_auffuellen_bis_zurueck()
 	_add_back_button(f)
 
 
@@ -843,6 +853,7 @@ func _show_choices(f: Fighter, ab: Dictionary) -> void:
 		picked.target = choice.get("then", ab.get("then", "none"))
 		button.pressed.connect(_on_ability_pressed.bind(f, picked))
 		_grid.add_child(button)
+	_auffuellen_bis_zurueck()
 	_add_back_button(f)
 
 
@@ -872,13 +883,27 @@ func _grid_buttons() -> Array[Button]:
 	return buttons
 
 
+## Leere Plätze, damit „Zurück“ bei Zielen und Auswahl immer auf der 6 liegt (A6). Bei mehr als 5 Einträgen rutscht es nach hinten.
+const ZURUECK_PLATZ := 6
+
+func _auffuellen_bis_zurueck() -> void:
+	while _grid_buttons().size() < ZURUECK_PLATZ - 1:
+		var leer := _action_button("")
+		leer.disabled = true
+		leer.modulate.a = 0.0
+		leer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		leer.set_meta("platzhalter", true)
+		_grid.add_child(leer)
+
+
 ## Am PC steht vor jedem Knopf seine Zahlentaste.
 func _number_buttons() -> void:
 	if DisplayServer.is_touchscreen_available():
 		return
 	var buttons := _grid_buttons()
 	for i in mini(buttons.size(), 9):
-		buttons[i].text = "%d · %s" % [i + 1, buttons[i].text]
+		if not buttons[i].has_meta("platzhalter"):
+			buttons[i].text = "%d · %s" % [i + 1, buttons[i].text]
 
 
 func _add_back_button(f: Fighter) -> void:
@@ -1969,6 +1994,8 @@ func _reward_row() -> HBoxContainer:
 		parts.append(["schluessel", GameData.item_name("monsterkarte")])
 	for level: int in reward.get("stufen", []):
 		parts.append(["pfeil", "Stufe %d erreicht!" % level])
+	if not (reward.get("stufen", []) as Array).is_empty():
+		Geraeusche.play("stufe")
 	for part in parts:
 		var item := HBoxContainer.new()
 		item.add_theme_constant_override("separation", 6)

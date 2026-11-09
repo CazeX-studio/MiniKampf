@@ -5,7 +5,7 @@ extends Node
 ## gemeinsamen Regler (Musik.volume); Taste M schaltet nur die Musik ab, nicht die Geräusche.
 ## Die Geräusche sind Platzhalter, erzeugt mit tools/sounds_erzeugen.gd.
 
-const SOUNDS := ["schlag", "wurf", "treffer", "kritisch", "parade", "perfekt", "zauber", "heilung"]
+const SOUNDS := ["schlag", "wurf", "treffer", "kritisch", "parade", "perfekt", "zauber", "heilung", "stufe"]
 const PATH := "res://assets/sfx/%s.wav"
 const VOLUME_DB := -4.0
 ## So viele Geräusche können gleichzeitig klingen
