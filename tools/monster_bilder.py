@@ -107,6 +107,9 @@ MONSTER = {
 	"wurzelkriecher": {"loecher": True, "hoehe": 84, "reihen": EINZELN[:4] + [("spezial", 7)]},
 	"sporenwolf": {"hoehe": 84, "reihen": EINZELN},
 	"schatzpilzling": {"hoehe": 56, "reihen": EINZELN},
+	# Nebenfiguren: Bienenschwarm (Bienenstock) und Splitter-Knoten der Wurzelmutter (greifen nie an)
+	"bienenschwarm": {"hoehe": 56, "reihen": EINZELN},
+	"knoten": {"loecher": True, "hoehe": 84, "reihen": [("idle", 4), ("hit", 1), ("death", 4), ("spezial", 6)]},
 }
 # Monster mit festen Ausschnitten (wenn sich Bilder berühren oder aus mehreren Blättern stammen):
 # Animation -> Liste von Ausschnitten (x0, y0, x1, y1) im Blatt. Ein Ausschnitt kann auch (Blatt, x0, y0, x1, y1, Faktor)

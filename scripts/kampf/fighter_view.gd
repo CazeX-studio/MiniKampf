@@ -58,8 +58,8 @@ const LOOKS := {
 	"sporenkoenigin": {sprite = "sporenkoenigin", scale = 1.0, angriffe = {"Giftsporen": "spezial"}},
 	"sporenling": {sprite = "sporenknospe", scale = 1.0},
 	"wurzelmutter": {sprite = "wurzelmutter", scale = 1.0, angriffe = {"Wurzelzug": "spezial", "Verschlingen": "spezial"}},
-	"knoten_vorne": {sprite = "ice_zombie", scale = 4.0, tint = Color(1.0, 0.95, 0.7)},
-	"knoten_hinten": {sprite = "ice_zombie", scale = 4.0, tint = Color(1.0, 0.95, 0.7)},
+	"knoten_vorne": {sprite = "knoten", scale = 1.0},
+	"knoten_hinten": {sprite = "knoten", scale = 1.0},
 	"vorbote": {sprite = "vorbote", scale = 1.0, angriffe = {"Schattenwelle": "spezial", "Leerengriff": "attack", "Lichtfraß": "spezial"}},
 	# Vor dem Stadttor (Grundausbildung)
 	# Eigene Monster aus Marcos Bildblättern (tools/monster_bilder.py): fein gezeichnet, Größe 1.0.
@@ -124,7 +124,7 @@ const LOOKS := {
 	"splitterbaer": {sprite = "splitterbaer", scale = 1.0},
 	# Splitterbär in Tiefwurzel (seltenes Monster, D22b); der Splitter-Rindenbär der Geschichte heißt „splitterbaer“
 	"splitterbaer_wild": {sprite = "splitterbaer", scale = 1.0},
-	"bienenschwarm": {sprite = "imp", scale = 3.5, tint = Color(1.0, 0.9, 0.35)},
+	"bienenschwarm": {sprite = "bienenschwarm", scale = 1.0},
 	# Kobalts Monster
 	# Kobalts Monster: dieselben Bilder, etwas größer und dunkler gefärbt
 	"kobalts_moosling": {sprite = "moosling", scale = 1.15, tint = Color(0.8, 0.95, 0.75), angriffe = {"Dornenpeitsche": "attack2"}},

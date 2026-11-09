@@ -229,6 +229,8 @@ func _mother_turn(e: Fighter) -> void:
 func _regrow(knot: Fighter) -> void:
 	knot.hp = knot.max_hp
 	c.burst(knot, Elements.color("Sternenkraft"), 90.0)
+	# Eigenes Bild „Nachwachsen“ (Teil G, 10.11.)
+	c._emit({type = "cast", f = knot, ult = false, name = "Nachwachsen"})
 
 
 func _herald_turn(e: Fighter) -> void:
