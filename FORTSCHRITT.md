@@ -11,7 +11,19 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt (09.11.):** S5 (Spielstand-Editor), danach die Alpha-Aufträge A2 bis A13, E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+- **Nächster Schritt (09.11.):** die Alpha-Aufträge A2 bis A13 (als Nächstes A2: Start und Online), E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+
+- **Neu (09.11.): S5 Spielstand-Editor** (Editor, „Demo testen“, vierter Knopf): an jede Stelle der Demo springen, dein normaler Spielstand bleibt unberührt.
+  - Links **Klasse** (die fünf der Demo; Sternensängerin nur mit Novizin), **Figur**, **Stufe**, **Geld**, **Heil- und Manatränke** und beliebige **weitere Gegenstände** („Dazu“).
+  - Rechts die **Punkte der Geschichte** in der Reihenfolge deiner Klasse (Bogenschütze und Zähmer erst Grünwacht, alle anderen erst Glutoase). Beim Antippen schlägt der Editor eine passende Stufe vor.
+  - „Spielstand bauen und spielen“: Alle Aufträge davor sind erledigt, der gewählte läuft, und du stehst neben der Figur, bei der es weitergeht (Wegweiser zeigt hin). Die Nacht des Sternenfalls beginnt nach dem Kampf (bei Ren), die Dungeons am Eingang.
+  - Nebenbei: Bei „Die Ketten unter dem Berg“ und „Der Splitter im Urbaum“ zeigt der Wegweiser jetzt auch im Spiel zum Eingang des Dungeons.
+  - Das Editor-Menü hat jetzt zwei Reihen Werkzeuge, damit nichts übereinanderliegt.
+  - **So testest du es:**
+    1. Werkstatt → Editor → „Spielstand-Editor“.
+    2. Klasse Klingentänzerin, Punkt „Der Tanz mit der Pause“, „Spielstand bauen und spielen“: Du stehst in der Glutoase bei Samira.
+    3. Bogenschütze, Punkt „Das leere Grab“: Du bist in Grünwacht, Stufe passend vorgeschlagen.
+    4. Ein paar Gegenstände mit „Dazu“ hinzufügen und in der Tasche nachsehen.
 
 - **Neu (09.11.): S4b Hinzufügen im Stadt-Editor:** Oben der Knopf „Hinzufügen“ öffnet rechts ein Fenster.
   - **Teile:** alle Teile aus dem Baukasten als Bilder, mit Filter (Kreuzweg, Grünwacht, Glutoase, Vulkanschmiede) und Suche. Antippen setzt das Teil in die Bildmitte und wählt es, dann verschieben, drehen usw.

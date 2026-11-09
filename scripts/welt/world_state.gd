@@ -1530,6 +1530,9 @@ func _quest_place(p: PlayerState, id: String) -> Dictionary:
 			return _npc_goal(p, [goal.bei])
 		if goal.has("wegweiser"):
 			return _npc_goal(p, goal.wegweiser)
+		# {"karte": "pilzhoehle"}: das Ziel liegt auf einer anderen Karte (Dungeon), der Wegweiser zeigt zum Eingang
+		if goal.has("karte") and maps.has(str(goal.karte)) and p.map != str(goal.karte):
+			return {karte = str(goal.karte), feld = get_map(str(goal.karte)).start}
 		if goal.art == "gemerkt":
 			# Ein Ort, der das Ziel erfüllt (z. B. ein Laternenhaken)
 			for place: Dictionary in places:

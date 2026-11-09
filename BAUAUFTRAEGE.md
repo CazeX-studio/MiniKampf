@@ -162,7 +162,7 @@ Marcos Beschluss (06.11.): **Diese Punkte kommen vor E3h.** Die Städte baut Cla
   - **S4a2:** Drehen (Marco, 09.11.): flache Teile frei in 45°-Schritten, stehende Teile vorne, quer, von hinten und von hinten quer (Ansicht von hinten mit eigenen Bildern, `bild_hinten` in baukasten_teile.json, Prompts in GRAFIK_AUFTRAG.md Teil G). – Status: fertig (09.11.2026; Bilder von hinten fehlen noch, bis dahin nur vorne und quer)
   - **S4c:** Online speichern, damit Katie mithelfen und Marco am Handy bauen kann. – Status: erst besprechen (Marco, 09.11.)
   - **S4b:** Hinzufügen: Teile aus dem Baukasten mit Bild auswählen und setzen, neue Volks-Figuren (Körper und Kopf), Figuren löschen (nur Volk, keine Figuren mit Aufträgen). – Status: fertig (09.11.2026; Fenster „Hinzufügen“ mit allen Teilen als Bild, Filter nach Region und Suche; neue Figuren sagen vorerst einen allgemeinen Satz)
-- **S5:** Spielstand-Editor: Stufe, Klasse, Gold, Gegenstände und Akt setzen, um schnell an jede Stelle der Demo zu springen (erweitert „Demo ab einem Akt“). – Status: offen
+- **S5:** Spielstand-Editor: Stufe, Klasse, Gold, Gegenstände und Akt setzen, um schnell an jede Stelle der Demo zu springen (erweitert „Demo ab einem Akt“). – Status: fertig (09.11.2026; Editor → „Spielstand-Editor“: Klasse, Figur, Stufe, Geld, Tränke, weitere Gegenstände und einer von 25–27 Punkten der Geschichte je Klasse; der Sternenfall-Punkt beginnt nach dem Kampf, Dungeons am Eingang)
 
 **So arbeitet Claude im Endspurt:** nur die Prüfungen laufen lassen, die zur Änderung passen (`bash tools/alle_tests.sh <wort>`), die volle Prüfung einmal am Ende der Sitzung; Fotos aus dem Spiel nur, wenn sich das Aussehen ändert; kurze Antworten.
 
