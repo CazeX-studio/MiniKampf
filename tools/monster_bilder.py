@@ -95,6 +95,18 @@ MONSTER = {
 	"nachtuhu": {"hoehe": 84, "reihen": EINZELN},
 	"funkenmarder": {"hoehe": 56, "reihen": EINZELN},
 	"wipfelluchs": {"hoehe": 100, "reihen": EINZELN},
+	# Grünwacht: Tiefwurzel und Pilzhöhle (Sumpfschnapper und Wurzelkriecher: 7 Bilder besondere Bewegung)
+	"donnerhirsch": {"hoehe": 120, "reihen": EINZELN},
+	"sumpfschnapper": {"hoehe": 84, "reihen": EINZELN[:4] + [("spezial", 7)]},
+	"moosgolem": {"loecher": True, "hoehe": 120, "reihen": EINZELN},
+	"rankenschlinger": {"loecher": True, "hoehe": 100, "reihen": EINZELN},
+	"splitterwolf": {"hoehe": 84, "reihen": EINZELN},
+	"moderfalter": {"loecher": True, "hoehe": 56, "reihen": EINZELN},
+	"splitterbaer": {"hoehe": 120, "reihen": EINZELN},
+	"leuchtmotte": {"hoehe": 56, "reihen": EINZELN},
+	"wurzelkriecher": {"loecher": True, "hoehe": 84, "reihen": EINZELN[:4] + [("spezial", 7)]},
+	"sporenwolf": {"hoehe": 84, "reihen": EINZELN},
+	"schatzpilzling": {"hoehe": 56, "reihen": EINZELN},
 }
 # Monster mit festen Ausschnitten (wenn sich Bilder berühren oder aus mehreren Blättern stammen):
 # Animation -> Liste von Ausschnitten (x0, y0, x1, y1) im Blatt. Ein Ausschnitt kann auch (Blatt, x0, y0, x1, y1, Faktor)
