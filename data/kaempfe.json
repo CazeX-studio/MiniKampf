@@ -248,6 +248,7 @@
 		"erfahrung": 300,
 		"merken": "sternenfresser_besiegt",
 		"merken_immer": "sternenfall_kampf_vorbei",
+		"rettung": true,
 		"sternenmut": true,
 		"erfolg": "schild_hoch",
 		"kein_nochmal": true,

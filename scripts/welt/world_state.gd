@@ -2279,9 +2279,14 @@ func _check_approach(p: PlayerState) -> void:
 func _start_walk_in(p: PlayerState, npc_id: String) -> void:
 	var home: Vector2i = npcs[npc_id].cell
 	var dir := (Vector2(home) - p.pos).normalized()
+	# "anspringen": {"richtung": [-1, -1], "abstand": 5}: kommt aus dieser Richtung (z. B. Mira von oben vom Marktplatz,
+	# A4b: vorher lief sie von ihrem Platz am Tor einen langen Umweg)
+	var approach: Dictionary = npcs[npc_id].approach
+	if approach.has("richtung"):
+		dir = Vector2(float(approach.richtung[0]), float(approach.richtung[1])).normalized()
 	if dir == Vector2.ZERO:
 		dir = Vector2(1, 0)
-	var start := _nearest_walkable(Vector2i((p.pos + dir * WALK_IN_DISTANCE).round()), p.map)
+	var start := _nearest_walkable(Vector2i((p.pos + dir * float(approach.get("abstand", WALK_IN_DISTANCE))).round()), p.map)
 	var goal := _free_neighbor(p.cell, start, p.map) if start != Vector2i(-1, -1) else Vector2i(-1, -1)
 	var route: Array[Vector2i] = []
 	if goal != Vector2i(-1, -1):

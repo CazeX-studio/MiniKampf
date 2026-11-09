@@ -11,7 +11,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt (09.11.):** die Alpha-Aufträge A2 bis A13 (als Nächstes A4b: Mira vom Marktplatz, Sternenfall-Szene), E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+- **Nächster Schritt (09.11.):** die Alpha-Aufträge A2 bis A13 (als Nächstes A5: Glutoase), E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+
+- **Neu (09.11.): A4b Mira und Ren** (Alpha-Punkte 13, 14):
+  - **Mira (13):** Beim „leisen Singen“ kommt Mira jetzt nach einer Sekunde von oben vom Marktplatz zu dir (vorher lief sie von ihrem Platz am Tor einen Umweg von fast neun Sekunden).
+  - **Rettung in der Sternenfall-Nacht (14):** Ren greift jetzt im Kampf selbst ein, als Szene: Sie rennt von rechts herein („Weg da!“), wirft drei Kunai auf den Sternenfresser, der verblasst, dann „Steh auf, Novize. Das war knapp.“ Gewinnt ihr, zieht sie den Splitter aus dem Gegner zu sich („Den Splitter nehme ich aber mit.“). Danach läuft sie davon, dann kommt die Auswertung.
+  - **Ren mit eigenen Bildern:** Deine Blätter `haupt_ren_kampf_a/b`, `haupt_ren_welt` und `haupt_ren_portraets` sind eingebaut (Kampf, Welt, Porträts). In Kreuzweg ist Ren nicht mehr die alte Elfe.
+  - **So testest du es:**
+    1. Den Korb bei der Wache abgeben: Mira kommt gleich von oben.
+    2. Nacht des Sternenfalls (Spielstand-Editor: Punkt „Das Fest der fünf Wege“): Kampf verlieren oder gewinnen, Ren greift ein.
+    3. Nach dem Kampf in der Stadt: Ren steht mit eigener Figur da.
 
 - **Neu (09.11.): A4a Ye's Erklärungen und das Abzeichen** (Alpha-Punkte 5, 10):
   - **Erklärungen vor dem Kampf (5):** In Ye's Grundausbildung kommen die Erklärungen einer Lektion jetzt gleich zu Beginn, bevor sich jemand bewegt (bisher erst bei deinem Zug oder kurz vor dem ersten Angriff). In der Paradeschule sagt Ye nach den zwei vorgeführten Paraden in einem eigenen Fenster: „Jetzt du – versuch zweimal, PERFEKT zu parieren“, die Leiste zeigt „Jetzt du: Versuch, perfekt zu parieren! (Versuch 1 von 2)“.

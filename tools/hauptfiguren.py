@@ -39,6 +39,8 @@ FIGUREN = {
 	"brakkus": (1.1, []),
 	"samira": (1.04, []),
 	"xavina": (1.04, []),
+	# Ren (A4b, Rettung in der Sternenfall-Nacht)
+	"ren": (1.04, []),
 }
 ## Kampf-Blätter: Figur -> Liste (Blatt, Reihen); alle Blätter einer Figur landen unter <figur>_kampf
 KAMPF = {
@@ -46,6 +48,9 @@ KAMPF = {
 	# Kael (D29, Rivalenkampf in der Glutoase): Aufbau wie Kofis Kampf-Blätter
 	"kael": [("kampf_a", [[("idle", 4)], [("run", 4)], [("hit", 1), ("parry", 4)]]),
 		("kampf_b", [[("attack", 6)], [("death", 6)], [("victory", 4), ("cast", 4)]])],
+	# Ren: Reihe 3 von Blatt b hat ein Wirken-Bild zu viel (5 statt 4)
+	"ren": [("kampf_a", [[("idle", 4)], [("run", 4)], [("hit", 1), ("parry", 4)]]),
+		("kampf_b", [[("attack", 6)], [("death", 6)], [("victory", 4), ("cast", 5)]])],
 }
 STIMMUNGEN = ["ruhig", "laechelnd", "wuetend", "traurig", "ueberrascht"]
 ## So hoch sind die Porträts (Pixel)

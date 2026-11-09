@@ -75,5 +75,17 @@ func _initialize() -> void:
 	_check(not FigurTeile.klasse_erlaubt("novize_m+m1", "singer"), "Männer können keine Sternensängerin werden")
 	_check(FigurTeile.klasse_erlaubt("novize_w+w1", "singer"), "Frauen schon")
 	_check(FigurTeile.klasse_erlaubt("novize_m+m1", "blade"), "Männer können Klingentänzer werden")
+	# A4b: Mira kommt beim „leisen Singen“ schnell von oben vom Marktplatz (vorher fast 9 Sekunden Umweg)
+	var w3 := WorldState.new()
+	var m := w3.add_player("m", "Test", "novize_w+w1", Vector2i(59, 53))
+	m.progress.quests = {"korb_fuer_die_wache": "abgegeben", "leises_singen": "aktiv"}
+	m.progress.flags = {"angekommen": true, "ausbildung_morgen": true}
+	var zeit := 0.0
+	while zeit < 10.0 and not m.in_dialog():
+		w3.tick(0.05)
+		zeit += 0.05
+	_check(m.in_dialog() and zeit < 2.5, "Mira ist nach %.1f s da" % zeit)
+	_check(GameData.get_file("kreuzweg").npcs.ren.aussehen == "ren" and ResourceLoader.exists("res://assets/figuren/ren_kampf_attack_anim_f0.png"), "Ren mit eigenen Bildern")
+	_check(GameData.battle("sternenfall").get("rettung", false), "Sternenfall: Ren greift im Kampf ein")
 	print("Alpha-Blocker: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)

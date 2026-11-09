@@ -269,7 +269,12 @@
 				"stand": "aktiv"
 			},
 			"anspringen": {
-				"radius": 7
+				"radius": 7,
+				"richtung": [
+					-1,
+					-1
+				],
+				"abstand": 5
 			}
 		},
 		"marv_fest": {
@@ -294,8 +299,7 @@
 				34,
 				28
 			],
-			"aussehen": "elf_f",
-			"farbe": "b090ff",
+			"aussehen": "ren",
 			"dialog": "ren",
 			"wenn": {
 				"gemerkt": "sternenfall_kampf_vorbei",

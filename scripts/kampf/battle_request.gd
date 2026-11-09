@@ -211,6 +211,7 @@ static func _make_setup(id: String, data: Dictionary, heroes: Array, phases: Arr
 		hinweise = data.get("hinweise", {}),
 		ziel_paraden = int(data.get("ziel_paraden", 0)),
 		kein_nochmal = data.get("kein_nochmal", false),
+		rettung = data.get("rettung", false),
 		hintergrund = data.get("hintergrund", "wiese"),
 		zuerst = data.get("zuerst", ""),
 		gegner_stufe = int(data.get("gegner_stufe", 1)),
