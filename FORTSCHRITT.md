@@ -11,7 +11,19 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Nächster Schritt (09.11.):** S4b (Hinzufügen im Stadt-Editor) und S5 (Spielstand-Editor), danach die Alpha-Aufträge A2 bis A13, E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+- **Nächster Schritt (09.11.):** S5 (Spielstand-Editor), danach die Alpha-Aufträge A2 bis A13, E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Alpha-Liste: `ALPHA_FEEDBACK.md`, Aufträge in BAUAUFTRAEGE.md „Alpha-Test“. Offen von S1: Marcos Google-Formular verbinden.
+
+- **Neu (09.11.): S4b Hinzufügen im Stadt-Editor:** Oben der Knopf „Hinzufügen“ öffnet rechts ein Fenster.
+  - **Teile:** alle Teile aus dem Baukasten als Bilder, mit Filter (Kreuzweg, Grünwacht, Glutoase, Vulkanschmiede) und Suche. Antippen setzt das Teil in die Bildmitte und wählt es, dann verschieben, drehen usw.
+  - **Figuren:** Körper und Kopf wählen (mit Vorschau), Name eingeben, „immer da“, „nur tags“ oder „nur nachts“, dann „Figur hinzufügen“. Neue Figuren sagen vorerst einen allgemeinen Satz, eigene Sätze schreibe ich ihnen später.
+  - **Löschen** geht jetzt auch für Figuren, aber nur für Volk und neue Figuren. Figuren mit Aufträgen (Ye, Ysolde …) bleiben geschützt.
+  - Alles lässt sich rückgängig machen und wird mit gespeichert.
+  - Nebenbei behoben: In Kreuzweg wären Plätze von Figuren, die in der Datei über mehrere Zeilen stehen, beim Speichern nicht übernommen worden.
+  - **So testest du es:**
+    1. Stadt-Editor → Kreuzweg → „Hinzufügen“ → „Teile“: einen Baum suchen („baum“) und antippen, dann an seinen Platz ziehen.
+    2. „Figuren“: einen Körper und Kopf wählen, „Nur nachts“, „Figur hinzufügen“; mit „Tags/Nachts“ prüfen.
+    3. Eine Bürgerin antippen und „Löschen“; dann Ye antippen und „Löschen“: Ye bleibt.
+    4. „Speichern“ und im Spiel nachsehen (am PC in Godot).
 
 - **Neu (09.11.): Drehen im Stadt-Editor** (dein Wunsch): Knopf „Drehen“ neben „Spiegeln“.
   - **Flache Teile** (Gras, Blumen, Lichtung, Steppengras, Karawanenspur …) drehen sich frei in 45°-Schritten auf dem Boden.
@@ -2475,6 +2487,8 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Hinten angestellt: Schnellsätze und Emotes (Vorschläge im Ideen-Parkplatz von design.md).
 
 ## Offene Fragen an Marco
+
+- **Für später am PC (Marco, 09.11.): Häuser von hinten.** Vier Blätter G1 bis G4 in `Spieldesign/GRAFIK_AUFTRAG.md` Teil G (Kreuzweg große Gebäude, Kreuzweg Wohnhäuser und Stände, Wipfelheim, Glutoase). Je Blatt ein ChatGPT-Chat, angehängt die Referenzbilder und die Vorderansichten aus `assets/baukasten/objekte/`. Danach schneidet Claude sie zu und trägt `bild_hinten` ein, dann dreht „Drehen“ im Stadt-Editor die Häuser in alle vier Richtungen.
 
 - ~~**Zweimal Mira (28.10.):**~~ Erledigt (28.10.): Die Novizen-Köpfe sind namenlos (Novize m1, Novizin w1 …), den Namen gibt der Spieler. Mira bleibt die Vorgängerin.
 

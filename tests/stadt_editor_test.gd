@@ -26,9 +26,14 @@ func _run() -> void:
 		_check(StadtEditor.als_text(JSON.parse_string(text), text) == text, "%s: Format bleibt beim Speichern gleich" % pfad)
 	var karten_text := FileAccess.get_file_as_string("res://data/karten.json")
 	_check(StadtEditor.als_text(JSON.parse_string(karten_text), karten_text) == karten_text, "karten.json: Format bleibt gleich")
-	var zeile := '\t\t"ye": {"name": "Ausbilder Ye", "feld": [13, 45], "nachts": [2, 3], "aussehen": "ye"},'
-	_check(StadtEditor._zeile_setzen(zeile, {feld = [14, 40], nachts = [5, 6]}) == '\t\t"ye": {"name": "Ausbilder Ye", "feld": [14, 40], "nachts": [5, 6], "aussehen": "ye"},',
-			"kreuzweg.json: nur Feld und Nachtplatz in der Zeile ändern sich")
+	var kreuzweg_text := FileAccess.get_file_as_string("res://data/kreuzweg.json")
+	_check(StadtEditor.als_text(JSON.parse_string(kreuzweg_text), kreuzweg_text) == kreuzweg_text, "kreuzweg.json: Format bleibt gleich")
+	var npcs := {ye = {name = "Ye", feld = [1, 2], aussehen = "ye", dialog = "ye"}, buerger = {name = "B", feld = [3, 3], aussehen = "x", dialog = "volk_b"}}
+	StadtEditor.figuren_setzen(npcs, {npcs = {ye = {feld = [5, 6], nachts = [7, 8]}, volk_neu_x_1 = {neu = true, name = "Neu", feld = [9, 9],
+			aussehen = "grund_frau+v_w1", dialog = "volk_neu", wenn = {nacht = false}}}, geloescht = ["buerger"]})
+	_check(npcs.ye.feld == [5, 6] and npcs.ye.nachts == [7, 8], "Speichern: Platz tags und nachts übernommen")
+	_check(not npcs.has("buerger") and npcs.volk_neu_x_1.aussehen == "grund_frau+v_w1" and npcs.volk_neu_x_1.wenn == {nacht = false},
+			"Speichern: gelöschte Figur weg, neue Figur dazu")
 
 	# Die Szene: Teil wählen, verschieben, spiegeln, rückgängig, löschen
 	StadtEditor.karte = "wipfelheim"
@@ -108,6 +113,39 @@ func _run() -> void:
 		_check(paket.npcs[mit_nacht].nachts == [nacht_feld.x, nacht_feld.y + 1] and paket.npcs[mit_nacht].feld == [tag_feld.x, tag_feld.y],
 				"Nachts verschoben: nur der Platz nachts ändert sich")
 		StadtEditor.nacht = false
+	# S4b: Hinzufügen und Löschen
+	var teile_vorher: int = editor._daten.objekte.size()
+	editor.teil_hinzufuegen("gw_wohnbaumhaus")
+	_check(editor._daten.objekte.size() == teile_vorher + 1 and editor._auswahl.get("index", -1) == teile_vorher, "Teil hinzugefügt und gewählt")
+	var neu := editor.figur_hinzufuegen("grund_frau+v_w1", "Sammlerin", "nachts")
+	_check(editor._npcs.has(neu) and editor._npcs[neu].wenn == {nacht = true}, "Volks-Figur hinzugefügt (nur nachts): %s" % neu)
+	_check(editor.aenderungen().npcs[neu].get("neu", false) and editor.aenderungen().npcs[neu].dialog == "volk_neu", "Neue Figur wird mit gespeichert")
+	_check(not GameData.dialog("volk_neu").is_empty(), "Neue Figuren haben einen Satz (volk_neu)")
+	editor.waehlen({art = "npc", id = "ysolde"})
+	editor.loeschen()
+	_check(editor._npcs.has("ysolde"), "Ysolde gehört zur Geschichte und bleibt")
+	var volk := ""
+	for id: String in editor._npcs:
+		if str(editor._npcs[id].dialog).begins_with("volk_") and not editor._npcs[id].neu:
+			volk = id
+			break
+	editor.waehlen({art = "npc", id = volk})
+	editor.loeschen()
+	_check(volk != "" and not editor._npcs.has(volk) and editor.aenderungen().geloescht == [volk], "Volk gelöscht: %s" % volk)
+	editor.rueckgaengig()
+	_check(editor._npcs.has(volk) and editor.aenderungen().geloescht.is_empty(), "Löschen rückgängig: wieder da")
+	editor._hinzu_panel.visible = true
+	await process_frame
+	_check(editor._teile_raster.get_child_count() > 100, "Fenster „Hinzufügen“ zeigt die Teile (%d)" % editor._teile_raster.get_child_count())
+	editor._region = 2
+	editor._teile_fuellen()
+	await process_frame
+	await process_frame
+	var nur_gw := true
+	for k: Node in editor._teile_raster.get_children():
+		if not k.is_queued_for_deletion() and not (k as Button).text.begins_with("gw_"):
+			nur_gw = false
+	_check(nur_gw, "Filter Grünwacht zeigt nur Teile aus Grünwacht")
 	editor._geaendert = false
 	editor.queue_free()
 	print("Stadt-Editor: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))

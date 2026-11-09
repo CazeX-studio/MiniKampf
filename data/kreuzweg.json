@@ -425,8 +425,26 @@
 			"farbe": "b0c8d8",
 			"dialog": "torwache_nebelinseln"
 		},
-		"torwache_gruenwacht": {"name": "Torwache", "feld": [2, 29], "aussehen": "grund_wache+v_m2", "farbe": "a8d898", "dialog": "torwache_gruenwacht"},
-		"torwache_glutoase": {"name": "Torwache", "feld": [29, 63], "aussehen": "grund_wache+v_m1", "farbe": "ffb070", "dialog": "torwache_glutoase"},
+		"torwache_gruenwacht": {
+			"name": "Torwache",
+			"feld": [
+				2,
+				29
+			],
+			"aussehen": "grund_wache+v_m2",
+			"farbe": "a8d898",
+			"dialog": "torwache_gruenwacht"
+		},
+		"torwache_glutoase": {
+			"name": "Torwache",
+			"feld": [
+				29,
+				63
+			],
+			"aussehen": "grund_wache+v_m1",
+			"farbe": "ffb070",
+			"dialog": "torwache_glutoase"
+		},
 		"torwache_arkanum": {
 			"name": "Torwache",
 			"feld": [

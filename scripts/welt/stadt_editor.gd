@@ -5,7 +5,8 @@ extends Node2D
 ## Teile lassen sich drehen, spiegeln und löschen, alles lässt sich rückgängig machen.
 ## Speichern: im Godot-Editor direkt in die Kartendaten (data/), sonst (Browser, Werkstatt) als Datei zum Herunterladen,
 ## die Marco Claude schickt; Claude übernimmt sie mit tools/stadt_editor_uebernehmen.py.
-## Hinzufügen neuer Teile und Figuren kommt mit S4b.
+## Hinzufügen (S4b): Teile aus dem Baukasten mit Bild, neue Volks-Figuren aus Körper und Kopf; Volks-Figuren lassen sich
+## auch löschen (Figuren mit Aufträgen nicht).
 
 const SCREEN := Vector2(1280, 720)
 ## Figuren so groß wie in der Welt (kreuzweg.gd: BAUKASTEN_FIGUR)
@@ -29,6 +30,9 @@ var _npc_views: Dictionary = {}
 ## {art = "teil", index} oder {art = "npc", id}, leer = nichts gewählt
 var _auswahl: Dictionary = {}
 var _rueckgaengig: Array[Dictionary] = []
+## Gelöschte Figuren (Kennungen), damit sie beim Speichern aus den Daten verschwinden
+var _geloescht: Array = []
+var _hinzu_panel: PanelContainer
 var _geaendert := false
 
 var _flach: Node2D
@@ -109,8 +113,14 @@ static func figuren_der_karte(id: String) -> Dictionary:
 		liste[npc_id] = {name = str(d.get("name", npc_id)), aussehen = str(d.get("aussehen", "novize")),
 				feld = Vector2i(int(d.feld[0]), int(d.feld[1])),
 				nachts = Vector2i(int(d.nachts[0]), int(d.nachts[1])) if d.has("nachts") else null,
-				liegt = bool(d.get("liegt", false)), bedingt = d.has("wenn")}
+				liegt = bool(d.get("liegt", false)), bedingt = d.has("wenn"), dialog = str(d.get("dialog", npc_id)),
+				wenn = d.get("wenn", {}), neu = false}
 	return liste
+
+
+## Darf man die Figur löschen? Nur Volk (Gespräch „volk_…“) und im Editor neu gesetzte Figuren, keine mit Aufträgen.
+static func loeschbar(n: Dictionary) -> bool:
+	return n.get("neu", false) or str(n.get("dialog", "")).begins_with("volk_")
 
 
 func _laden() -> void:
@@ -204,7 +214,7 @@ func _auswahl_feld() -> Vector2i:
 # --- Ändern ----------------------------------------------------------------------
 
 func _merken() -> void:
-	_rueckgaengig.append({objekte = _daten.objekte.duplicate(true), npcs = _npcs.duplicate(true)})
+	_rueckgaengig.append({objekte = _daten.objekte.duplicate(true), npcs = _npcs.duplicate(true), geloescht = _geloescht.duplicate()})
 	if _rueckgaengig.size() > 100:
 		_rueckgaengig.pop_front()
 
@@ -281,8 +291,21 @@ static func _setzen(o: Dictionary, schluessel: String, an: bool) -> void:
 
 
 func loeschen() -> void:
+	if _auswahl.get("art", "") == "npc":
+		var id: String = _auswahl.id
+		if not loeschbar(_npcs[id]):
+			_melden("Diese Figur gehört zur Geschichte und bleibt (nur Volk lässt sich löschen).")
+			return
+		_merken()
+		if not _npcs[id].neu:
+			_geloescht.append(id)
+		_npcs.erase(id)
+		_npc_views[id].queue_free()
+		_npc_views.erase(id)
+		_geaendert = true
+		waehlen({})
+		return
 	if _auswahl.get("art", "") != "teil":
-		_melden("Figuren löschen kommt mit S4b.")
 		return
 	_merken()
 	var i: int = _auswahl.index
@@ -294,12 +317,49 @@ func loeschen() -> void:
 	waehlen({})
 
 
+## Neues Teil aus dem Baukasten mitten ins Bild setzen und gleich wählen (zum Weiterschieben).
+func teil_hinzufuegen(teil: String) -> void:
+	if not _teile.objekte.has(teil):
+		return
+	_merken()
+	var feld := _maus_feld(_kamera.position)
+	_daten.objekte.append({teil = teil, feld = [feld.x, feld.y]})
+	_teil_views.append({})
+	_teil_bauen(_daten.objekte.size() - 1)
+	_geaendert = true
+	waehlen({art = "teil", index = _daten.objekte.size() - 1})
+
+
+## Neue Volks-Figur (Körper+Kopf) mitten ins Bild; wann: "" = immer da, "tags" oder "nachts".
+## Sie sagt einen allgemeinen Satz (Gespräch „volk_neu“), bis jemand ihr einen eigenen gibt.
+func figur_hinzufuegen(aussehen: String, name: String, wann := "") -> String:
+	_merken()
+	var nummer := 1
+	while _npcs.has("volk_neu_%s_%d" % [karte, nummer]) or _geloescht.has("volk_neu_%s_%d" % [karte, nummer]):
+		nummer += 1
+	var id := "volk_neu_%s_%d" % [karte, nummer]
+	var wenn := {}
+	if wann != "":
+		wenn = {nacht = wann == "nachts"}
+	_npcs[id] = {name = name if name != "" else "Bürger", aussehen = aussehen, feld = _maus_feld(_kamera.position), nachts = null,
+			liegt = false, bedingt = not wenn.is_empty(), dialog = "volk_neu", wenn = wenn, neu = true}
+	_npc_bauen(id)
+	_geaendert = true
+	waehlen({art = "npc", id = id})
+	return id
+
+
 func rueckgaengig() -> void:
 	if _rueckgaengig.is_empty():
 		return
 	var stand: Dictionary = _rueckgaengig.pop_back()
 	_daten.objekte = stand.objekte
 	_npcs = stand.npcs
+	_geloescht = stand.geloescht
+	for id: String in _npc_views:
+		if is_instance_valid(_npc_views[id]):
+			_npc_views[id].queue_free()
+	_npc_views.clear()
 	for t: Dictionary in _teil_views:
 		if t.has("node") and is_instance_valid(t.node):
 			t.node.queue_free()
@@ -334,7 +394,8 @@ static func als_text(daten: Dictionary, vorher: String) -> String:
 	return text + "\n" if vorher.ends_with("\n") else text
 
 
-## Was der Editor geändert hat, als Datei für Claude: {karte, datei, objekte, npcs: {id: {feld, nachts}}}.
+## Was der Editor geändert hat, als Datei für Claude: {karte, datei, objekte, npcs: {id: {feld, nachts}}, geloescht: [id]}.
+## Neue Figuren haben dazu name, aussehen, dialog (und wenn) und "neu": true.
 func aenderungen() -> Dictionary:
 	var figuren := {}
 	for id: String in _npcs:
@@ -342,7 +403,11 @@ func aenderungen() -> Dictionary:
 		figuren[id] = {feld = [n.feld.x, n.feld.y]}
 		if n.nachts != null:
 			figuren[id].nachts = [n.nachts.x, n.nachts.y]
-	return {karte = karte, datei = _dateiname, objekte = ganzzahlen(_daten.objekte), npcs = figuren}
+		if n.neu:
+			figuren[id].merge({neu = true, name = n.name, aussehen = n.aussehen, dialog = n.dialog})
+			if not (n.wenn as Dictionary).is_empty():
+				figuren[id].wenn = n.wenn
+	return {karte = karte, datei = _dateiname, objekte = ganzzahlen(_daten.objekte), npcs = figuren, geloescht = _geloescht.duplicate()}
 
 
 func speichern() -> void:
@@ -379,40 +444,35 @@ static func uebernehmen(paket: Dictionary) -> String:
 	if not _schreiben(datei_pfad, als_text(daten, vorher)):
 		return "Kann nicht schreiben: " + datei_pfad
 	GameData._cache.erase(str(paket.datei))
-	if paket.karte == "kreuzweg":
-		# kreuzweg.json: eine Zeile pro Figur, nur Feld und Nachtplatz in der Zeile ersetzen
-		var pfad := "res://data/kreuzweg.json"
-		var zeilen := FileAccess.get_file_as_string(pfad).split("\n")
-		for i in zeilen.size():
-			for id: String in paket.npcs:
-				if zeilen[i].begins_with('\t\t"%s": {' % id):
-					zeilen[i] = _zeile_setzen(zeilen[i], paket.npcs[id])
-		if not _schreiben(pfad, "\n".join(zeilen)):
-			return "Kann nicht schreiben: " + pfad
-		GameData._cache.erase("kreuzweg")
-	else:
-		var pfad := "res://data/karten.json"
-		var text := FileAccess.get_file_as_string(pfad)
-		var alle: Dictionary = JSON.parse_string(text)
-		var npcs: Dictionary = alle[paket.karte].get("npcs", {})
-		for id: String in paket.npcs:
-			if npcs.has(id):
-				npcs[id].feld = paket.npcs[id].feld
-				if paket.npcs[id].has("nachts"):
-					npcs[id].nachts = paket.npcs[id].nachts
-		if not _schreiben(pfad, als_text(alle, text)):
-			return "Kann nicht schreiben: " + pfad
-		GameData._cache.erase("karten")
+	# Figuren: Kreuzweg in kreuzweg.json, alle anderen Karten in karten.json
+	var datei := "kreuzweg" if paket.karte == "kreuzweg" else "karten"
+	var pfad := "res://data/%s.json" % datei
+	var text := FileAccess.get_file_as_string(pfad)
+	var alle: Dictionary = JSON.parse_string(text)
+	var ort: Dictionary = alle if paket.karte == "kreuzweg" else alle[paket.karte]
+	if not ort.has("npcs"):
+		ort.npcs = {}
+	figuren_setzen(ort.npcs, paket)
+	if not _schreiben(pfad, als_text(alle, text)):
+		return "Kann nicht schreiben: " + pfad
+	GameData._cache.erase(datei)
 	return ""
 
 
-static func _zeile_setzen(zeile: String, figur: Dictionary) -> String:
-	var re := RegEx.create_from_string('"feld": \\[-?\\d+, -?\\d+\\]')
-	zeile = re.sub(zeile, '"feld": [%d, %d]' % [int(figur.feld[0]), int(figur.feld[1])])
-	if figur.has("nachts"):
-		var re_n := RegEx.create_from_string('"nachts": \\[-?\\d+, -?\\d+\\]')
-		zeile = re_n.sub(zeile, '"nachts": [%d, %d]' % [int(figur.nachts[0]), int(figur.nachts[1])])
-	return zeile
+## Plätze, neue und gelöschte Figuren in die Figuren-Liste einer Karte übernehmen.
+static func figuren_setzen(npcs: Dictionary, paket: Dictionary) -> void:
+	for id: String in paket.get("geloescht", []):
+		npcs.erase(id)
+	for id: String in paket.npcs:
+		var f: Dictionary = paket.npcs[id]
+		if f.get("neu", false) and not npcs.has(id):
+			npcs[id] = {name = f.name, feld = f.feld, aussehen = f.aussehen, dialog = f.dialog}
+			if f.has("wenn"):
+				npcs[id].wenn = f.wenn
+		elif npcs.has(id):
+			npcs[id].feld = f.feld
+			if f.has("nachts"):
+				npcs[id].nachts = f.nachts
 
 
 static func _schreiben(pfad: String, text: String) -> bool:
@@ -518,6 +578,8 @@ func _info_zeigen() -> void:
 		text = "Figur: %s (%s)  ·  Feld %d, %d  ·  %s%s" % [n.name, _auswahl.id, feld.x, feld.y,
 				("Platz nachts" if n.nachts != null else "steht tags und nachts hier") if nacht else "Platz tags",
 				"  ·  nur bei einem Stand der Geschichte" if n.bedingt else ""]
+		if not loeschbar(n):
+			text += "  ·  gehört zur Geschichte (nicht löschbar)"
 	_info.text = text
 	for k in _knoepfe_auswahl:
 		k.disabled = _auswahl.is_empty()
@@ -571,6 +633,7 @@ func _leiste_bauen() -> void:
 	reihe.add_child(tag)
 	reihe.add_child(_knopf("−", 40, func() -> void: _zoomen(-1)))
 	reihe.add_child(_knopf("+", 40, func() -> void: _zoomen(1)))
+	reihe.add_child(_knopf("Hinzufügen", 120, func() -> void: _hinzu_panel.visible = not _hinzu_panel.visible))
 	reihe.add_child(_knopf("Rückgängig", 120, rueckgaengig))
 	reihe.add_child(_knopf("Speichern", 120, speichern))
 	_meldung = Label.new()
@@ -580,6 +643,8 @@ func _leiste_bauen() -> void:
 	_meldung.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	reihe.add_child(_meldung)
 	reihe.add_child(_knopf("Zurück", 90, _zurueck))
+
+	_hinzu_bauen(ebene)
 
 	var unten := PanelContainer.new()
 	unten.theme = Combat.make_theme()
@@ -611,6 +676,161 @@ func _leiste_bauen() -> void:
 	for k: Button in [_knopf("Drehen", 110, drehen), _knopf("Spiegeln", 110, spiegeln), _knopf("Löschen", 110, loeschen), _knopf("Abwählen", 110, func() -> void: waehlen({}))]:
 		_knoepfe_auswahl.append(k)
 		aktionen.add_child(k)
+
+
+# --- Fenster „Hinzufügen“ ----------------------------------------------------------
+
+const REGIONEN := [["Alle", ""], ["Kreuzweg und allgemein", "-"], ["Grünwacht", "gw_"], ["Glutoase", "go_"], ["Vulkanschmiede", "vs_"]]
+var _teile_raster: GridContainer
+var _region := 0
+var _suche := ""
+
+
+func _hinzu_bauen(ebene: CanvasLayer) -> void:
+	_hinzu_panel = PanelContainer.new()
+	_hinzu_panel.theme = Combat.make_theme()
+	_hinzu_panel.position = Vector2(880, 62)
+	_hinzu_panel.size = Vector2(396, 544)
+	_hinzu_panel.visible = false
+	ebene.add_child(_hinzu_panel)
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 6)
+	_hinzu_panel.add_child(box)
+	var reiter := HBoxContainer.new()
+	box.add_child(reiter)
+	var teile_box := VBoxContainer.new()
+	var figur_box := VBoxContainer.new()
+	figur_box.visible = false
+	var k_teile := _knopf("Teile", 120, Callable())
+	var k_figur := _knopf("Figuren", 120, Callable())
+	k_teile.pressed.connect(func() -> void:
+		teile_box.visible = true
+		figur_box.visible = false)
+	k_figur.pressed.connect(func() -> void:
+		teile_box.visible = false
+		figur_box.visible = true)
+	reiter.add_child(k_teile)
+	reiter.add_child(k_figur)
+	reiter.add_child(_knopf("✕", 40, func() -> void: _hinzu_panel.visible = false))
+	box.add_child(teile_box)
+	box.add_child(figur_box)
+
+	# Teile: Region, Suche, Bilder zum Antippen
+	var filter := HBoxContainer.new()
+	teile_box.add_child(filter)
+	var region := OptionButton.new()
+	for r: Array in REGIONEN:
+		region.add_item(str(r[0]))
+	region.custom_minimum_size = Vector2(190, 34)
+	region.focus_mode = Control.FOCUS_NONE
+	region.item_selected.connect(func(i: int) -> void:
+		_region = i
+		_teile_fuellen())
+	filter.add_child(region)
+	var suche := LineEdit.new()
+	suche.placeholder_text = "Suchen …"
+	suche.custom_minimum_size = Vector2(150, 34)
+	suche.text_changed.connect(func(t: String) -> void:
+		_suche = t.to_lower()
+		_teile_fuellen())
+	filter.add_child(suche)
+	var rollen := ScrollContainer.new()
+	rollen.custom_minimum_size = Vector2(380, 440)
+	rollen.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	teile_box.add_child(rollen)
+	_teile_raster = GridContainer.new()
+	_teile_raster.columns = 3
+	rollen.add_child(_teile_raster)
+	_hinzu_panel.visibility_changed.connect(func() -> void:
+		if _hinzu_panel.visible and _teile_raster.get_child_count() == 0:
+			_teile_fuellen())
+
+	# Figuren: Körper, Kopf, Name, wann sie da ist
+	var koerper: Array = FigurTeile.koerper_liste().keys().filter(func(k: String) -> bool: return k.begins_with("grund_"))
+	koerper.sort()
+	var koepfe: Array = []
+	var vorschau := TextureRect.new()
+	vorschau.custom_minimum_size = Vector2(120, 140)
+	vorschau.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	vorschau.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	var kopf_wahl := OptionButton.new()
+	var koerper_wahl := OptionButton.new()
+	var aussehen := func() -> String:
+		var k: String = koerper[koerper_wahl.selected]
+		return k + ("+" + str(koepfe[kopf_wahl.selected]) if not koepfe.is_empty() else "")
+	var neu_zeigen := func() -> void:
+		vorschau.texture = FigurTeile.bild(aussehen.call(), "idle_vorn", 0)
+	var koepfe_fuellen := func() -> void:
+		koepfe = FigurTeile.koepfe(koerper[koerper_wahl.selected]).keys()
+		koepfe.sort()
+		kopf_wahl.clear()
+		for k: String in koepfe:
+			kopf_wahl.add_item(str(FigurTeile.koepfe(koerper[koerper_wahl.selected])[k].get("name", k)))
+		neu_zeigen.call()
+	for k: String in koerper:
+		koerper_wahl.add_item(str(FigurTeile.koerper_liste()[k]))
+	for w: OptionButton in [koerper_wahl, kopf_wahl]:
+		w.custom_minimum_size = Vector2(370, 34)
+		w.focus_mode = Control.FOCUS_NONE
+		w.clip_text = true
+		w.fit_to_longest_item = false
+	koerper_wahl.item_selected.connect(func(_i: int) -> void: koepfe_fuellen.call())
+	kopf_wahl.item_selected.connect(func(_i: int) -> void: neu_zeigen.call())
+	figur_box.add_child(_beschriftung("Körper"))
+	figur_box.add_child(koerper_wahl)
+	figur_box.add_child(_beschriftung("Kopf"))
+	figur_box.add_child(kopf_wahl)
+	var name_feld := LineEdit.new()
+	name_feld.text = "Bürger"
+	name_feld.custom_minimum_size = Vector2(370, 34)
+	figur_box.add_child(_beschriftung("Name"))
+	figur_box.add_child(name_feld)
+	var wann := OptionButton.new()
+	for t: String in ["Immer da", "Nur tags", "Nur nachts"]:
+		wann.add_item(t)
+	wann.custom_minimum_size = Vector2(370, 34)
+	wann.focus_mode = Control.FOCUS_NONE
+	figur_box.add_child(wann)
+	figur_box.add_child(vorschau)
+	figur_box.add_child(_knopf("Figur hinzufügen", 370, func() -> void:
+		figur_hinzufuegen(aussehen.call(), name_feld.text.strip_edges(), ["", "tags", "nachts"][wann.selected])))
+	if not koerper.is_empty():
+		koepfe_fuellen.call()
+
+
+func _beschriftung(text: String) -> Label:
+	var l := Label.new()
+	l.text = text
+	l.add_theme_font_size_override("font_size", 14)
+	l.add_theme_color_override("font_color", Color("f2c14e"))
+	return l
+
+
+## Teile im Fenster nach Region und Suche: je Teil ein Knopf mit Bild und Namen.
+func _teile_fuellen() -> void:
+	for kind in _teile_raster.get_children():
+		kind.queue_free()
+	var praefix: String = REGIONEN[_region][1]
+	var ids: Array = _teile.objekte.keys()
+	ids.sort()
+	for id: String in ids:
+		var region_passt := praefix == "" or (praefix == "-" and not (id.substr(0, 3) in ["gw_", "go_", "vs_"])) or id.begins_with(praefix)
+		if not region_passt or (_suche != "" and not id.to_lower().contains(_suche)):
+			continue
+		var knopf := Button.new()
+		knopf.custom_minimum_size = Vector2(120, 108)
+		knopf.icon = load(BaukastenBoden.ASSET_PATH + str(_teile.objekte[id].bild))
+		knopf.expand_icon = true
+		knopf.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		knopf.vertical_icon_alignment = VERTICAL_ALIGNMENT_TOP
+		knopf.text = id
+		knopf.clip_text = true
+		knopf.add_theme_font_size_override("font_size", 11)
+		knopf.focus_mode = Control.FOCUS_NONE
+		knopf.tooltip_text = id
+		var teil := id
+		knopf.pressed.connect(func() -> void: teil_hinzufuegen(teil))
+		_teile_raster.add_child(knopf)
 
 
 func _knopf(text: String, breite: float, aktion: Callable) -> Button:
