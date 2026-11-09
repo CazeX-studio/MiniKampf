@@ -26,7 +26,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt:** Demo-Start S3b (Bewegungen in der Welt), dann S4 und S5 (Editoren), danach E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Offen von S1: Marcos Google-Formular verbinden.
+- **Nächster Schritt:** Demo-Start S4 (Stadt-Editor), dann S5 (Editoren), danach E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Offen von S1: Marcos Google-Formular verbinden.
 
 - **Neu (04.11.): D25b Körper von Rüstungsschmied und Sternensängerin** (2.11): Deine Blätter sind eingebaut: Rüstungsschmied (m) und Rüstungsschmiedin (w) in Rüstung mit Lederschürze und rotem Halstuch, die Sternensängerin (w) im hellen Gewand mit dunkelblauem Schal. Je mit Stehen, Laufen, Abwehr, Treffer, Angriff, Fallen, Sieg und Fähigkeit im Kampf, in der Welt schräg von vorne und hinten. Wer die Klasse gelernt hat, trägt sie mit seinem eigenen Kopf, auch in der Probestunde. Ausgebessert: die gelben Funken im Treffer-Bild des Schmieds und das rote Halstuch in einem Siegesbild der Sängerin. Noch nicht drin: ein männlicher Sternensänger (der kämpft weiter in der Klassenfigur).
   - **So testest du es:**
@@ -62,6 +62,18 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     2. Je ein Monster auf dem Weg nach Grünwacht, im Waldboden, in der Tiefwurzel, in der Aschensteppe (Norden und Süden), in der Palmenrast und auf dem Glutgrat angreifen: überall das gemalte Bild.
     3. Hammerbrüder oder Kettenschmied: Kampf in der Ankerkammer mit den drei Ankern.
     4. Stehen die Figuren überall gut auf dem Boden? Sonst sag Bescheid, dann schiebe ich die Bilder anders.
+
+- **Neu (09.11.): S3b Bewegungen in der Welt** (Editor, dritter Knopf „Bewegungen in der Welt“): links die Figur so groß wie im Spiel, rechts vergrößert.
+  - **Figur:** Novizen, Klassen-Körper, Baukasten-Figuren (je mit wählbarem Kopf), Hauptfiguren und alle Monster.
+  - **Richtung:** von der Seite, schräg von vorne und von hinten, jeweils nach rechts oder links. Fehlen einer Figur Bilder für eine Richtung, ist der Knopf grau.
+  - **Bewegung:** Stehen, Laufen, Sitzen und Liegen (nur wer Liege-Bilder hat), Tempo normal, langsam, sehr langsam.
+  - **Bild für Bild:** Anhalten, dann Bild vor oder zurück (auch Leertaste und Pfeiltasten); unten steht, welches Bild gerade zu sehen ist.
+  - Nebenbei aufgeräumt: Beim Mondschakal und bei den Novizen-Körpern lagen alte Verweise auf Bilder, die es nicht mehr gibt (gab beim Mondschakal einen Fehler). Eine Prüfung passt jetzt darauf auf.
+  - **So testest du es:**
+    1. Werkstatt → Editor → „Bewegungen in der Welt“.
+    2. Novizen, Novizin wählen, „Hinten ←“ und „Laufen“ drücken: Sie läuft von dir weg nach links.
+    3. „Anhalten“, dann ein paar Mal „Bild vor“: Schau, ob ein Bild aus der Reihe fällt.
+    4. Baukasten-Figuren und Hauptfiguren durchklicken, bei jeder einmal vorne und hinten laufen lassen.
 
 - **Neu (08.11.): S3a Bewegungen & Effekte** (Editor, zweiter Knopf): ein Kampf, unten eine Leiste mit vier Spalten.
   - **Figur:** Klasse des Helden, Aussehen (Standard, deine eigene Figur, Vega, Kofi, Kael, Ye) und das Monster gegenüber. Tempo: normal, langsam, sehr langsam.

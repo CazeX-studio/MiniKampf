@@ -43,6 +43,9 @@ const BUBBLE := preload("res://assets/ui/sprechblase.png")
 var idle_fps := 6.0
 ## Abstand zwischen Sortierpunkt und gemalter Figur (siehe versetzen)
 var versatz := 0.0
+## Bewegungs-Editor (S3b): Tempo der Bewegung (1 = normal) und Anhalten, um Bild für Bild weiterzuschalten
+var tempo := 1.0
+var angehalten := false
 
 var _frames := {}
 var _sprite: Sprite2D
@@ -104,7 +107,8 @@ func setup(look: String, p_name: String, tint := Color.WHITE, name_color := Colo
 
 
 func _process(delta: float) -> void:
-	_time += delta
+	if not angehalten:
+		_time += delta * tempo
 	if _bubble != null:
 		_bubble_time -= delta
 		_bubble.modulate.a = clampf(_bubble_time, 0.0, 1.0)
@@ -112,20 +116,9 @@ func _process(delta: float) -> void:
 		if _bubble_time <= 0.0:
 			_bubble.queue_free()
 			_bubble = null
-	var anim := "run" if moving and _frames.run.size() > 0 else "idle"
-	var fps := 12.0 if anim == "run" else idle_fps
-	if liegt and not moving and _frames.liegen.size() > 0:
-		# Langsam atmen
-		anim = "liegen"
-		fps = 1.5
-	elif richtungen:
-		var gerichtet := anim + ("_hinten" if hinten else "_vorn")
-		if _frames[gerichtet].size() > 0:
-			anim = gerichtet
-			# Die Richtungsbilder haben 6 statt 4 Bilder pro Bewegung
-			fps = 10.0 if moving else idle_fps
-	var frames: Array = _frames[anim]
-	var bild: Texture2D = frames[int(_time * fps) % frames.size()]
+	var gezeigt := _anim_und_fps()
+	var frames: Array = _frames[gezeigt[0]]
+	var bild: Texture2D = frames[int(_time * gezeigt[1]) % frames.size()]
 	# Nur rechnen, wenn sich das Bild wirklich ändert (spart Zeit bei vielen Figuren)
 	if bild != _sprite.texture:
 		_sprite.texture = bild
@@ -138,6 +131,44 @@ func _process(delta: float) -> void:
 	# Das Zeichen (! oder ?) wippt, darum nur dann jedes Bild neu malen
 	if marker != "":
 		_overlay.queue_redraw()
+
+
+## Welche Bewegung gerade gezeigt wird und wie schnell: [Name, Bilder pro Sekunde]
+func _anim_und_fps() -> Array:
+	var anim := "run" if moving and _frames.run.size() > 0 else "idle"
+	var fps := 12.0 if anim == "run" else idle_fps
+	if liegt and not moving and _frames.liegen.size() > 0:
+		# Langsam atmen
+		anim = "liegen"
+		fps = 1.5
+	elif richtungen:
+		var gerichtet := anim + ("_hinten" if hinten else "_vorn")
+		if _frames[gerichtet].size() > 0:
+			anim = gerichtet
+			# Die Richtungsbilder haben 6 statt 4 Bilder pro Bewegung
+			fps = 10.0 if moving else idle_fps
+	return [anim, fps]
+
+
+## Hat die Figur Bilder für diese Bewegung (z. B. "run_hinten", "liegen")?
+func hat_bilder(anim: String) -> bool:
+	return _frames.has(anim) and not (_frames[anim] as Array).is_empty()
+
+
+## Bewegungs-Editor: um einige Bilder vor- oder zurückschalten (die Figur bleibt dann auf diesem Bild stehen,
+## solange sie angehalten ist)
+func bild_weiter(schritte := 1) -> void:
+	var gezeigt := _anim_und_fps()
+	var anzahl: int = (_frames[gezeigt[0]] as Array).size()
+	var nummer := posmod(int(_time * gezeigt[1]) + schritte, anzahl)
+	_time = (nummer + 0.5) / gezeigt[1]
+
+
+## Bewegungs-Editor: welche Bewegung und welches Bild gerade zu sehen ist: {anim, bild, von}
+func bild_info() -> Dictionary:
+	var gezeigt := _anim_und_fps()
+	var anzahl: int = (_frames[gezeigt[0]] as Array).size()
+	return {anim = gezeigt[0], bild = int(_time * gezeigt[1]) % anzahl + 1, von = anzahl}
 
 
 func _draw() -> void:

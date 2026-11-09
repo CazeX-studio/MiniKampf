@@ -27,11 +27,12 @@ func _ready() -> void:
 	_label("Zum schnellen Ausprobieren", 20, Color.WHITE, Vector2(0, 108), SCREEN.x)
 
 	_label("Werkzeuge", 22, Color("f2c14e"), Vector2(40, 170), 400)
-	_button("Kampf-Editor\nKämpfe und Probe-Lauf", Vector2(40, 210), func() -> void: _go("res://scenes/kampf_editor.tscn"), 232)
-	_button("Bewegungen & Effekte\nAlles einzeln abspielen", Vector2(280, 210), func() -> void: _go("res://scenes/bewegung_editor.tscn"), 232)
-	_button("Figuren-Teile\nKörper, Kopf, Hut, Farben", Vector2(520, 210), func() -> void: _go("res://scenes/vega_test.tscn"), 232)
-	_button("Baukasten-Testfeld\nKarte aus Einzelbildern", Vector2(760, 210), func() -> void: _go("res://scenes/baukasten_test.tscn"), 232)
-	_button("Kampf-Sandbox\nAlle 11 Klassen, Pilzhöhle", Vector2(1000, 210), func() -> void: _go("res://scenes/auswahl.tscn"), 232)
+	_button("Kampf-Editor\nKämpfe und Probe-Lauf", Vector2(40, 210), func() -> void: _go("res://scenes/kampf_editor.tscn"), 192)
+	_button("Bewegungen im Kampf\nAlles einzeln abspielen", Vector2(240, 210), func() -> void: _go("res://scenes/bewegung_editor.tscn"), 192)
+	_button("Bewegungen in der Welt\nRichtungen, Bild für Bild", Vector2(440, 210), func() -> void: _go("res://scenes/welt_bewegung_editor.tscn"), 192)
+	_button("Figuren-Teile\nKörper, Kopf, Hut, Farben", Vector2(640, 210), func() -> void: _go("res://scenes/vega_test.tscn"), 192)
+	_button("Baukasten-Testfeld\nKarte aus Einzelbildern", Vector2(840, 210), func() -> void: _go("res://scenes/baukasten_test.tscn"), 192)
+	_button("Kampf-Sandbox\nAlle 11 Klassen, Pilzhöhle", Vector2(1040, 210), func() -> void: _go("res://scenes/auswahl.tscn"), 192)
 
 	_label("Demo testen (eigener Spielstand, dein normaler bleibt unberührt)", 22, Color("f2c14e"), Vector2(40, 380), 1200)
 	_button("Akt Kreuzweg\nVon vorne, mit Figur erstellen", Vector2(40, 420), _start_kreuzweg)
