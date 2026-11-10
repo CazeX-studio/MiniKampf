@@ -68,7 +68,18 @@ BLAETTER = {"gegenstaende": [
 ]}
 
 ## Blätter mit Symbolen aus mehreren getrennten Teilen (z. B. drei Pusteblumensamen): Teile näher als so viele Pixel gehören zusammen
-VERBINDEN = {"gegenstaende_6": 15, "gegenstaende_7": 15}
+VERBINDEN = {"gegenstaende_6": 15, "gegenstaende_7": 15, "gegenstaende_8": 15}
+
+## Symbole in Lila/Violett: das normale Freistellen nimmt mit dem Pink zu viel weg. Hier zählt nur, was nahe am Hintergrund-Pink ist.
+SANFT = {"splitterstaub"}
+
+
+def sanft_freistellen(roh, ys, xs):
+	t = roh[ys.min():ys.max() + 1, xs.min():xs.max() + 1].astype(int)
+	hinten = np.median(roh[5:40, 5:40, :3].reshape(-1, 3), 0)
+	abstand = np.abs(t[..., :3] - hinten).sum(-1)
+	t[..., 3] = np.clip((abstand - 40) * 255 // 80, 0, 255)
+	return t.astype(np.uint8)
 
 
 def main():
@@ -80,6 +91,7 @@ def main():
 
 
 def zerlegen(blatt, namen_reihen):
+	roh = np.array(Image.open(WURZEL / "tools" / "vorlagen" / f"{blatt}.png").convert("RGBA"))
 	a = freistellen(Image.open(WURZEL / "tools" / "vorlagen" / f"{blatt}.png"))
 	fest = a[..., 3] > 40
 	lab, _ = ndimage.label(ndimage.binary_dilation(fest, iterations=VERBINDEN.get(blatt, 2)))
@@ -115,6 +127,10 @@ def zerlegen(blatt, namen_reihen):
 			ys, xs = np.where(ziel == i)
 			teil = a[ys.min():ys.max() + 1, xs.min():xs.max() + 1].copy()
 			teil[ziel[ys.min():ys.max() + 1, xs.min():xs.max() + 1] != i, 3] = 0
+			if name in SANFT:
+				teil = sanft_freistellen(roh, np.array([ys.min() - 15, ys.max() + 15]), np.array([xs.min() - 15, xs.max() + 15]))
+				ys2, xs2 = np.where(teil[..., 3] > 40)
+				teil = teil[ys2.min():ys2.max() + 1, xs2.min():xs2.max() + 1]
 			seite = max(teil.shape[:2]) + 4
 			quadrat = Image.new("RGBA", (seite, seite), (0, 0, 0, 0))
 			quadrat.alpha_composite(Image.fromarray(teil), ((seite - teil.shape[1]) // 2, (seite - teil.shape[0]) // 2))
