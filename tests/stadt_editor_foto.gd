@@ -25,6 +25,7 @@ func _ready() -> void:
 	get_tree().reload_current_scene()
 	await get_tree().create_timer(1.0).timeout
 	ed = get_tree().current_scene
+	ed._dazu_panel.visible = true
 	ed.auswahl = {art = "teil", nr = 1}
 	ed._auswahl_zeigen()
 	ed._kamera.position = (ed.objekte[1].bild as Rect2).get_center()

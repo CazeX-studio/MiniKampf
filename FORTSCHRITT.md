@@ -26,7 +26,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt:** Demo-Start S4b (Stadt-Editor: hinzufügen und löschen), dann S5 (Editoren), danach E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Offen von S1: Marcos Google-Formular verbinden.
+- **Nächster Schritt:** Demo-Start S5 (Spielstand-Editor) (Editoren), danach E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Offen von S1: Marcos Google-Formular verbinden.
 
 - **Neu (04.11.): D25b Körper von Rüstungsschmied und Sternensängerin** (2.11): Deine Blätter sind eingebaut: Rüstungsschmied (m) und Rüstungsschmiedin (w) in Rüstung mit Lederschürze und rotem Halstuch, die Sternensängerin (w) im hellen Gewand mit dunkelblauem Schal. Je mit Stehen, Laufen, Abwehr, Treffer, Angriff, Fallen, Sieg und Fähigkeit im Kampf, in der Welt schräg von vorne und hinten. Wer die Klasse gelernt hat, trägt sie mit seinem eigenen Kopf, auch in der Probestunde. Ausgebessert: die gelben Funken im Treffer-Bild des Schmieds und das rote Halstuch in einem Siegesbild der Sängerin. Noch nicht drin: ein männlicher Sternensänger (der kämpft weiter in der Klassenfigur).
   - **So testest du es:**
@@ -62,6 +62,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     2. Je ein Monster auf dem Weg nach Grünwacht, im Waldboden, in der Tiefwurzel, in der Aschensteppe (Norden und Süden), in der Palmenrast und auf dem Glutgrat angreifen: überall das gemalte Bild.
     3. Hammerbrüder oder Kettenschmied: Kampf in der Ankerkammer mit den drei Ankern.
     4. Stehen die Figuren überall gut auf dem Boden? Sonst sag Bescheid, dann schiebe ich die Bilder anders.
+
+- **Neu (10.11.): S4b Stadt-Editor: hinzufügen, löschen, spiegeln**
+  - **Hinzufügen** (oben): ein Teil aus dem Baukasten wählen und „Teil hinstellen“, oder eine Volk-Figur (Körper, Kopf, und welches Volk sie ist: Name und Gespräch wie bei diesem). Sie erscheint in der Bildmitte und ist gleich ausgewählt.
+  - **Spiegeln** stellt ein Teil quer, **Löschen** entfernt Teile und Volk. Figuren der Geschichte (Ye, Hadrak …) lassen sich nur verschieben.
+  - **Rückgängig** nimmt die letzten Schritte zurück (auch nach Stadt- oder Tag/Nacht-Wechsel), „Zurücksetzen“ stellt die ganze Stadt wieder her (zweimal tippen).
+  - Noch nicht: Teile haben im Auswahlfeld nur ihre kurzen Namen (z. B. „fass“), es gibt kein Vorschaubild.
+  - **So testest du es:**
+    1. Editor → Stadt-Editor → Glutoase, „Hinzufügen“, ein Fass hinstellen und mit den Pfeilen schieben.
+    2. Ein Haus antippen, „Spiegeln“; eine Palme antippen, „Löschen“; dann „Rückgängig“: Die Palme ist wieder da.
+    3. Eine Volk-Figur hinstellen, „Speichern“, dann im Spiel in die Glutoase: Figur steht dort und spricht.
 
 - **Neu (10.11.): S4a Stadt-Editor** (Editor, vierter Knopf „Stadt-Editor“):
   - Oben die Stadt wählen (Kreuzweg, Wipfelheim, Glutoase), „Nacht“ zeigt die Figuren an ihren Nachtplätzen. Bild verschieben: auf eine leere Stelle tippen und ziehen, Pfeiltasten; zoomen mit − und + oder dem Mausrad.

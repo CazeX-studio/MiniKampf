@@ -90,8 +90,60 @@ func _run() -> void:
 	_check(ed.figuren[nr].feld == tag and ed.figuren[nr].nachts == [nacht_vorher.x, nacht_vorher.y + 1],
 			"Nachts verschiebt man nur den Nachtplatz (%s)" % ed.figuren[nr].id)
 	ed.speichern()
+	var welt0 := WorldState.new()
+	_check(welt0.npcs[ed.figuren[nr].id].nacht_cell == nacht_vorher + Vector2i(0, 1), "Die Welt kennt den neuen Nachtplatz")
+	ed.an_alten_platz()
+	ed.speichern()
+	# S4b: hinzufügen, spiegeln, löschen, Rückgängig (Glutoase)
+	ed = await _laden("glutoase")
+	var teile_vorher: int = GameData.get_file("karte_glutoase").objekte.size()
+	ed.teil_dazu("fass")
+	var neues_feld: Vector2i = ed.auswahl_feld()
+	ed.schritt(Vector2i(1, 0))
+	var nr_spiegel := -1
+	for i in ed.objekte.size():
+		if ed.objekte[i].von != null and not ed.objekte[i].flach and not ed.objekte[i].o.has("wenn"):
+			nr_spiegel = i
+			break
+	ed.auswahl = {art = "teil", nr = nr_spiegel}
+	ed.spiegeln()
+	var nr_weg := nr_spiegel + 1
+	while ed.objekte[nr_weg].o.has("wenn") or ed.objekte[nr_weg].o.teil == ed.objekte[nr_spiegel].o.teil:
+		nr_weg += 1
+	var weg_teil: Dictionary = ed.objekte[nr_weg].o.duplicate(true)
+	ed.auswahl = {art = "teil", nr = nr_weg}
+	ed.loeschen()
+	var volk: Dictionary = ed.volk_liste()
+	_check(volk.size() >= 5, "Volk zum Hinzufügen: %d Gespräche" % volk.size())
+	ed.figur_dazu("grund_frau+v_w2", "Bürgerin", "volk_buergerin")
+	var neue_id: String = ed.figuren[ed.figuren.size() - 1].id
+	# Figuren der Geschichte lassen sich nicht löschen
+	ed.auswahl = {art = "figur", nr = 0}
+	var anzahl_aend: int = ed.rueckgaengig.size()
+	ed.loeschen()
+	_check(not ed.figuren[0].weg and ed.rueckgaengig.size() == anzahl_aend, "Hadrak lässt sich nicht löschen")
+	# Rückgängig: die neue Figur verschwindet wieder, dann kommt sie zurück
+	ed.zuruecknehmen()
+	await create_timer(0.3).timeout
+	ed = current_scene
+	_check(not ed._figur_id_belegt(neue_id), "Rückgängig nimmt die neue Figur zurück")
+	ed.figur_dazu("grund_frau+v_w2", "Bürgerin", "volk_buergerin")
+	ed.speichern()
+	var karte: Array = GameData.get_file("karte_glutoase").objekte
+	var fass := karte.filter(func(o: Dictionary) -> bool: return o.teil == "fass" and StadtAenderungen.gleiches_feld(o.feld, [neues_feld.x + 1, neues_feld.y]))
+	_check(fass.size() == 1, "Neues Fass steht im Spiel (ein Feld weiter)")
+	var gespiegelt := karte.filter(func(o: Dictionary) -> bool: return o.teil == ed.objekte[nr_spiegel].o.teil and o.get("gespiegelt", false))
+	_check(not gespiegelt.is_empty(), "Gespiegeltes Teil ist im Spiel gespiegelt")
+	var geloescht := karte.filter(func(o: Dictionary) -> bool: return o.teil == weg_teil.teil and StadtAenderungen.gleiches_feld(o.feld, weg_teil.feld))
+	_check(geloescht.is_empty() and karte.size() == teile_vorher, "Gelöschtes Teil fehlt, Fass dazu (%d Teile)" % karte.size())
+	var npcs := StadtAenderungen.figuren_von(GameData.get_file("karten"), StadtAenderungen.STAEDTE.glutoase)
+	_check(npcs.has(neue_id) and npcs[neue_id].dialog == "volk_buergerin", "Neue Bürgerin steht im Spiel")
 	var welt := WorldState.new()
-	_check(welt.npcs[ed.figuren[nr].id].nacht_cell == nacht_vorher + Vector2i(0, 1), "Die Welt kennt den neuen Nachtplatz")
+	_check(welt.npcs.has(neue_id) and welt.npcs[neue_id].map == "glutoase", "Die Welt kennt die neue Bürgerin")
+	# Neu laden: alles wie gespeichert
+	ed = await _laden("glutoase")
+	_check(ed._figur_id_belegt(neue_id) and ed.objekte[nr_weg].weg and ed.objekte[nr_spiegel].o.get("gespiegelt", false),
+			"Nach dem Neuladen: neue Figur, gelöschtes und gespiegeltes Teil")
 	for d: String in [TEST_DATEI, TEST_BROWSER]:
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(d))
 	StadtAenderungen.datei = StadtAenderungen.DATEI
