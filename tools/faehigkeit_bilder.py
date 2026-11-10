@@ -134,7 +134,7 @@ BLAETTER = {
 }
 
 ## Blätter, deren Bilder dicht beieinander stehen: nur kleine Lücken überbrücken (sonst wachsen Nachbarn zusammen)
-ENG = {"tamer": 6}
+ENG = {"tamer": 6, "smith": 6}
 
 ## Bilder mit gewollt lila oder pinken Flächen (Monster, Zielkreuz): dort kein Pink herausrechnen
 LILA = {"archer_durchschlag", "archer_schwachstelle"}
