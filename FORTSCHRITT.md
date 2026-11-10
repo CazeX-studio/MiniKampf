@@ -11,11 +11,11 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Neu (10.11.): Hutmacher Hatta als eigene Figur** (Rest aus D20a, GRAFIK_AUFTRAG.md B6h): Hatta läuft jetzt mit deinem eigenen Welt-Blatt (`haupt_hatta_welt.png`) statt mit Baukasten-Körper, Kopf und Zylinder als Einzelteilen: Weste, gelbes Maßband um den Hals, der riesige Zylinder wird nicht mehr oben abgeschnitten und sitzt von hinten richtig. Noch nicht drin: seine Porträts (Auftrag liegt bei dir).
+- **Neu (10.11.): Hutmacher Hatta als eigene Figur** (Rest aus D20a, GRAFIK_AUFTRAG.md B6h): Hatta läuft jetzt mit deinem eigenen Welt-Blatt (`haupt_hatta_welt.png`) statt mit Baukasten-Körper, Kopf und Zylinder als Einzelteilen: Weste, gelbes Maßband um den Hals, der riesige Zylinder wird nicht mehr oben abgeschnitten und sitzt von hinten richtig. Dazu fünf Porträts im Gespräch (ruhig, lächelnd, wütend, traurig, überrascht), vorher hatte er keine.
   - **So testest du es:**
     1. In Kreuzweg zu Hatta neben Bingos Stand gehen: Zylinder ganz zu sehen, Maßband um den Hals.
     2. Um ihn herumlaufen: Von hinten sitzt der Zylinder auf dem Kopf.
-    3. Mit ihm Hüte tauschen: geht wie vorher.
+    3. Mit ihm Hüte tauschen: geht wie vorher, im Gespräch ist sein Bild zu sehen.
 
 - **Neu (10.11.): Oma Hagebutte mit Strickjacke** (Rest aus D21, GRAFIK_AUFTRAG.md B6g): Hagebutte läuft jetzt mit deinem eigenen Welt-Blatt (`haupt_hagebutte_welt.png`) statt mit Baukasten-Körper: moosgrüne Strickjacke, braunes Kleid, Karten in der Hand. Der Kartenstapel sitzt von hinten nicht mehr auf dem Rücken. Porträts bleiben.
   - **So testest du es:**
