@@ -16,8 +16,11 @@ const DATEN := "res://data/figurteile.json"
 const KOERPER := "res://assets/teile/koerper/%s_%s_f%d.png"
 const ALTER_KOPF := "res://assets/teile/kopf/%s_%s_f%d.png"
 const KOPF := "res://assets/teile/koepfe/%s_%s.png"  # Kopf, Richtung_Gesicht
-## Köpfe, deren Blatt schräg von vorne nach links schaut (die Körper schauen nach rechts): werden gespiegelt (E3b)
-const KOPF_VORN_GESPIEGELT: Array[String] = ["m2", "m3", "w2", "w3", "a_m1", "k_w1", "borko"]
+## Schräg von vorne: Köpfe, deren Bild nach links schaut (E3b; neue Frauen-Köpfe K1, 10.11.2026). Alle anderen schauen nach rechts.
+const KOPF_VORN_LINKS: Array[String] = ["m2", "m3", "w2", "w3", "a_m1", "k_w1", "borko", "layla", "nadia", "salbei"]
+## Schräg von vorne: Körper, die nach links schauen (von Marco bestätigt). Alle anderen schauen nach rechts.
+## Schaut der Kopf anders als der Körper, spiegelt das Spiel den Kopf: Gesicht und Körper zeigen immer in dieselbe Richtung.
+const KOERPER_VORN_LINKS: Array[String] = ["grund_frau"]
 ## Gesicht je Animation (seitlich); fehlt ein Gesicht in einer Richtung, gilt „normal“
 const GESICHT := {
 	"hit": "schmerz", "parry": "entschlossen", "attack": "entschlossen", "attack2": "entschlossen",
@@ -215,7 +218,7 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 				variante = "%s_normal" % info.richtung
 			kopf_bild = _bild_laden(KOPF % [kopf_id, variante])
 			var punkt := Vector2(punkte[variante][0], punkte[variante][1])
-			if kopf_bild != null and info.richtung == "vorn" and kopf_id in KOPF_VORN_GESPIEGELT:
+			if kopf_bild != null and info.richtung == "vorn" and (kopf_id in KOPF_VORN_LINKS) != (figur in KOERPER_VORN_LINKS):
 				kopf_bild = kopf_bild.duplicate()
 				kopf_bild.flip_x()
 				punkt.x = kopf_bild.get_width() - punkt.x

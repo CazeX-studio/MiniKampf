@@ -2604,12 +2604,12 @@
 						58
 					],
 					"vorn_augen_zu": [
-						22.9,
-						54
+						39.4,
+						56
 					],
 					"vorn_normal": [
-						23.1,
-						54
+						36.8,
+						56
 					]
 				},
 				"name": "Wirtin Hanne"
@@ -4075,9 +4075,13 @@
 						26.1,
 						55
 					],
+					"vorn_augen_zu": [
+						28.4,
+						54
+					],
 					"vorn_normal": [
-						38.8,
-						55
+						28.0,
+						54
 					]
 				},
 				"name": "Kräuterhändlerin Salbei"
