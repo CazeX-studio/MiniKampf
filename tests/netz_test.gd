@@ -16,6 +16,7 @@ var _saw_fighting := false
 var _scene_started := false
 var _host_voted := false
 var _scene_ok := false
+var _guest_look := ""
 
 
 func _initialize() -> void:
@@ -48,6 +49,7 @@ func _process(delta: float) -> bool:
 		if id != Netz.my_id and _guest_id == "":
 			_guest_id = id
 			_guest_start = Netz.world.players[id].pos
+			_guest_look = Netz.world.players[id].look
 			# Begrüßung im Chat, zweimal schnell hintereinander (die zweite ist zu schnell und wird verworfen)
 			Netz.chat("Willkommen!")
 			Netz.chat("Zu schnell")
@@ -68,6 +70,7 @@ func _process(delta: float) -> bool:
 	if _pid > 0 and not OS.is_process_running(_pid):
 		var code := OS.get_process_exit_code(_pid)
 		_check(_guest_id != "", "Mitspieler ist beim Gastgeber in Kreuzweg angekommen")
+		_check(_guest_look == "novize_w+w2", "Mitspieler kommt mit seiner eigenen Figur an, nicht als alte Figur (A2a): %s" % _guest_look)
 		_check(_saw_move, "Mitspieler läuft beim Gastgeber (Befehl „steuern“ über das Netz)")
 		_check(_saw_dialog, "Mitspieler redet beim Gastgeber (Einleitung startet)")
 		_check(Netz.world.players.size() == 1, "Mitspieler ist nach dem Verlassen wieder weg")

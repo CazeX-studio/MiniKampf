@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" path="res://tests/stadt_editor_foto.gd" id="1"]
 
-[node name="StadtEditorFoto" type="Node"]
+[node name="StadtEditorFoto" type="Node2D"]
 script = ExtResource("1")

@@ -6,8 +6,6 @@ extends RefCounted
 const FILES := ["beute", "dialoge", "auftraege", "gegenstaende", "stufen", "texte", "kreuzweg", "kaempfe", "laeden", "erfolge", "klassen", "karten", "erinnerungen", "kartenspiel"]
 
 static var _cache := {}
-## Dateien, in denen der Stadt-Editor etwas verschieben kann
-const STADT_DATEIEN := ["kreuzweg", "kreuzweg_karte", "karten", "karte_wipfelheim", "karte_glutoase"]
 
 
 static func get_file(file_name: String) -> Dictionary:
@@ -15,25 +13,11 @@ static func get_file(file_name: String) -> Dictionary:
 		var text := FileAccess.get_file_as_string("res://data/%s.json" % file_name)
 		var parsed: Variant = JSON.parse_string(text)
 		if parsed is Dictionary:
-			# Im Stadt-Editor verschobene Teile und Figuren (S4) darüberlegen
-			if file_name in STADT_DATEIEN:
-				StadtAenderungen.anwenden(file_name, parsed, StadtAenderungen.laden())
 			_cache[file_name] = parsed
 		else:
 			push_error("Datendatei kaputt oder fehlt: data/%s.json" % file_name)
 			_cache[file_name] = {}
 	return _cache[file_name]
-
-
-## Daten neu lesen (nach dem Speichern im Stadt-Editor)
-static func neu_laden() -> void:
-	_cache.clear()
-
-
-## Eine Datendatei so, wie sie im Spiel liegt, ohne die Änderungen aus dem Stadt-Editor (frische Kopie).
-static func roh(file_name: String) -> Dictionary:
-	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/%s.json" % file_name))
-	return parsed if parsed is Dictionary else {}
 
 
 static func dialog(id: String) -> Dictionary:

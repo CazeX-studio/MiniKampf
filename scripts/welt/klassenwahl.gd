@@ -14,6 +14,10 @@ const MAX_VALUE := 5.0
 
 ## Region des Gesandten, dessen Klassen gezeigt werden ("" = Klassenwahl bei Ye mit allen Klassen)
 static var region := ""
+## Nach einer Probestunde beim Gesandten: mit ihm reden (A4, Alpha-Punkt 10: Fenster zu, Abzeichen im Gespräch)
+static var nach_probestunde := ""
+const GESANDTE := {"Glutoase": "gesandte_glutoase", "Grünwacht": "gesandte_gruenwacht", "Arkanum": "gesandte_arkanum",
+		"Messinghafen": "gesandte_messinghafen", "Nebelinseln": "gesandte_nebelinseln"}
 
 var _selected := ""
 var _list_buttons := {}
@@ -24,13 +28,17 @@ var _diagram: Control
 var _portrait: TextureRect
 var _confirm: PanelContainer
 var _confirm_text: Label
+var _choose_button: Button
+var _trial_button: Button
+var _sperre: Label
 
 
 func _ready() -> void:
 	theme = Combat.make_theme()
 	Musik.play("stadt")
 	_build()
-	_select(_classes()[0])
+	var waehlbar := _classes().filter(func(id: String) -> bool: return in_demo(id))
+	_select(waehlbar[0] if not waehlbar.is_empty() else _classes()[0])
 
 
 func _build() -> void:
@@ -65,7 +73,8 @@ func _build() -> void:
 	for id: String in _classes():
 		var data: Dictionary = Sandbox.CLASSES[id]
 		var button := Button.new()
-		button.text = "%s  ·  %s" % [data.title, data.role]
+		button.text = "%s  ·  %s" % [data.title, data.role] + ("" if in_demo(id) else "  ·  später")
+		button.clip_text = true
 		button.custom_minimum_size = Vector2(300, 52 if region == "" else 80)
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		button.add_theme_font_size_override("font_size", 17)
@@ -124,6 +133,15 @@ func _build() -> void:
 	trial.add_theme_font_size_override("font_size", 18)
 	trial.pressed.connect(_trial)
 	add_child(trial)
+	_trial_button = trial
+	# Hinweis, wenn die eigene Figur die Klasse nicht lernen darf (z. B. Sternensängerin nur weiblich)
+	_sperre = Label.new()
+	_sperre.position = Vector2(380, 640)
+	_sperre.size = Vector2(390, 40)
+	_sperre.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_sperre.add_theme_font_size_override("font_size", 15)
+	_sperre.add_theme_color_override("font_color", Color("ff9a7a"))
+	add_child(_sperre)
 
 	var choose := Button.new()
 	choose.text = "Diese Klasse wählen"
@@ -133,6 +151,7 @@ func _build() -> void:
 	choose.add_theme_color_override("font_color", Color("f2c14e"))
 	choose.pressed.connect(_ask_confirm)
 	add_child(choose)
+	_choose_button = choose
 	if region != "":
 		# Beim Gesandten wird nur geschaut und ausprobiert
 		choose.visible = false
@@ -187,7 +206,7 @@ func _classes() -> Array:
 func _select(id: String) -> void:
 	_selected = id
 	for other: String in _list_buttons:
-		_list_buttons[other].modulate = Color.WHITE if other == id else Color(1, 1, 1, 0.65)
+		_list_buttons[other].modulate = Color.WHITE if other == id else Color(1, 1, 1, 0.65 if in_demo(other) else 0.35)
 	var data: Dictionary = Sandbox.CLASSES[id]
 	var extra: Dictionary = GameData.get_file("klassen").get(id, {})
 	_title.text = data.title
@@ -200,6 +219,14 @@ func _select(id: String) -> void:
 		"[b]Reaktion:[/b] %s" % data.reaction_text,
 	])
 	_ult.text = "[b][color=#f2c14e]Ult-Vorschau[/color][/b]\n%s" % extra.get("ult_vorschau", data.ult)
+	var erlaubt := darf_waehlen(id)
+	if _choose_button != null:
+		_choose_button.disabled = not erlaubt
+		_trial_button.disabled = not erlaubt
+		if not in_demo(id):
+			_sperre.text = "Diese Klasse kommt später. In der Demo gibt es die Klassen aus Grünwacht und der Glutoase."
+		else:
+			_sperre.text = "" if erlaubt else str(extra.get("nur_geschlecht_text", "Diese Klasse kann deine Figur nicht lernen."))
 	_diagram.queue_redraw()
 
 
@@ -231,8 +258,28 @@ func _draw_diagram() -> void:
 	_diagram.draw_polyline(points, Sandbox.CLASSES[_selected].color.lightened(0.3), 2.5)
 
 
+## Gibt es die Klasse in der Demo? Nur die Klassen aus Grünwacht und der Glutoase, die anderen sind sichtbar, aber gesperrt
+## (A3, Marco 08.11.: „Klassen auf dem Weg sperren außer die aus den 2 Gebieten“).
+static func in_demo(id: String) -> bool:
+	var regionen: Array = GameData.get_file("klassen").get("demo_regionen", [])
+	return regionen.is_empty() or str(Sandbox.CLASSES.get(id, {}).get("region", "")) in regionen
+
+
+## Darf die eigene Figur diese Klasse wählen und ausprobieren? (in der Demo und, bei der Sternensängerin, weiblich)
+func darf_waehlen(id: String) -> bool:
+	return in_demo(id) and FigurTeile.klasse_erlaubt(eigene_figur(), id)
+
+
+## Die eigene Figur aus dem Spielstand (sonst die im Menü gewählte).
+static func eigene_figur() -> String:
+	var figur: Dictionary = SaveGame._read().get("figur", {})
+	return str(figur.get("aussehen", FigurWahl.gewaehlt()))
+
+
 ## Probestunde direkt von hier: danach zurück zur Klassenwahl.
 func _trial() -> void:
+	if not darf_waehlen(_selected):
+		return
 	var progress: Dictionary = SaveGame.read_progress()
 	var level := int(progress.get("level", 1))
 	var saved := Progress.new()
@@ -240,11 +287,18 @@ func _trial() -> void:
 	var potions := saved.potion_count("heiltrank")
 	if BattleRequest.prepare("probe:" + _selected, level, potions):
 		BattleRequest.return_scene = "res://scenes/klassenwahl.tscn"
+		# Beim Gesandten: danach zurück in die Stadt, der Gesandte spricht einen an
+		if region != "":
+			BattleRequest.return_scene = "res://scenes/kreuzweg.tscn"
+			nach_probestunde = str(GESANDTE.get(region, ""))
+			region = ""
 		get_tree().change_scene_to_file("res://scenes/kampf.tscn")
 
 
 ## Klasse gewählt: im Spielstand merken und zurück zu Ye.
 func _choose() -> void:
+	if not darf_waehlen(_selected):
+		return
 	SaveGame.set_flag("klasse", _selected)
 	SaveGame.set_flag("klasse_gewaehlt", "ja")
 	get_tree().change_scene_to_file("res://scenes/kreuzweg.tscn")

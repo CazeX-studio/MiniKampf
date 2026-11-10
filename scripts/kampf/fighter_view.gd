@@ -213,6 +213,8 @@ const COL_RES_DEF := Color("6fe0ff")
 const COL_GOLD := Color("f2c14e")
 const COL_BLADE := Color("ffb07a")
 const COL_HARD := Color("ff9a5c")
+## Farbe der Schilde (Leiste und Zeichen)
+const COL_SCHILD := Color("7cc8ff")
 const COL_TARGET := Color(0.4, 1.0, 1.0)
 ## Leisten mit Füllung aus dem UI-Set: Farbe (als Hex) -> Bild in assets/ui/
 const BAR_FILLS := {"4cc46a": "fuellung_gruen", "e0533d": "fuellung_rot", "4a8cf0": "fuellung_blau"}
@@ -710,6 +712,16 @@ func _draw_plate() -> void:
 		return
 	var hp_ratio := float(shown_hp()) / fighter.max_hp
 	_draw_bar(Rect2(x0, y + 21, w, 13), hp_ratio, COL_HP if hp_ratio > 0.3 else COL_HP_LOW, "%d / %d" % [shown_hp(), fighter.max_hp])
+	# Schild (A6, Alpha-Punkt 6): hellblaue Leiste direkt über dem Leben und ein Schild-Zeichen mit Zahl beim Namen
+	var schild := fighter.shield_total()
+	if schild > 0 and shown_hp() > 0:
+		var anteil := clampf(float(schild) / fighter.max_hp, 0.06, 1.0)
+		var leiste := Rect2(x0, y + 17, w * anteil, 5)
+		draw_rect(Rect2(x0 - 1, y + 16, w + 2, 7), Color(0, 0, 0, 0.7))
+		draw_rect(leiste, COL_SCHILD)
+		draw_rect(Rect2(leiste.position, Vector2(leiste.size.x, 1)), COL_SCHILD.lightened(0.5))
+		# Abzeichen oben auf dem Rand des Namensschilds (dort verdeckt es weder Namen noch Element)
+		_draw_schild_zeichen(font, Vector2(x0 + w - 44.0, y - 13), schild)
 
 	if shown_hp() <= 0:
 		var text := "kaputt" if fighter.klass == "robot" else ("kampfunfähig" if fighter.owner != null else "besiegt")
@@ -721,6 +733,20 @@ func _draw_plate() -> void:
 		_draw_hero_details(font, x0, y, w)
 	else:
 		_draw_enemy_details(font, x0, y, w)
+
+
+## Kleines Schild mit der Zahl daneben (wie viel Schaden der Schild noch abfängt).
+func _draw_schild_zeichen(font: Font, ort: Vector2, wert: int) -> void:
+	# Dunkles Feld dahinter, damit es auf jedem Hintergrund lesbar ist
+	var text_breite := font.get_string_size(str(wert), HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
+	draw_rect(Rect2(ort + Vector2(-3, -1), Vector2(21 + text_breite, 17)), Color(0.04, 0.06, 0.12, 0.9))
+	draw_rect(Rect2(ort + Vector2(-3, -1), Vector2(21 + text_breite, 17)), COL_SCHILD, false, 1.0)
+	var form := PackedVector2Array([ort + Vector2(0, 1), ort + Vector2(12, 1), ort + Vector2(12, 7), ort + Vector2(6, 14), ort + Vector2(0, 7)])
+	draw_colored_polygon(form, COL_SCHILD)
+	form.append(form[0])
+	draw_polyline(form, Color(0.05, 0.1, 0.2), 1.5)
+	draw_string_outline(font, ort + Vector2(15, 12), str(wert), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, 3, Color.BLACK)
+	draw_string(font, ort + Vector2(15, 12), str(wert), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, COL_SCHILD.lightened(0.3))
 
 
 func _draw_hero_details(font: Font, x0: float, y: float, w: float) -> void:
@@ -779,8 +805,7 @@ func _draw_hero_details(font: Font, x0: float, y: float, w: float) -> void:
 ## Kurze Zustands-Texte (Schild, Bedrohung, Stärkungen …).
 func _status() -> Array[String]:
 	var status: Array[String] = []
-	if fighter.shield_total() > 0:
-		status.append("Schild %d" % fighter.shield_total())
+	# Schild steht als Leiste und Zeichen am Namen (A6)
 	if fighter.taunt > 0:
 		status.append("Bedr. %d" % fighter.taunt)
 	if fighter.fortress:

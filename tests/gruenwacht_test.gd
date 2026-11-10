@@ -121,7 +121,7 @@ func _test_journey() -> void:
 	# Zurück nach Kreuzweg und wieder hinaus geht auch
 	_walk(world, p, Vector2i(59, 9))
 	_check(p.map == "kreuzweg" and p.cell == Vector2i(3, 31), "Nach Osten zurück nach Kreuzweg")
-	_check(notes.has("– Kreuzweg –"), "Meldung beim Betreten einer Karte")
+	_check(not notes.has("– Kreuzweg –"), "Keine kleine Meldung mehr beim Betreten (der große Ortsname reicht, A1b)")
 	_walk(world, p, Vector2i(0, 31))
 	_check(p.map == "weg_gruenwacht", "Weststraße führt nach der Klassenwahl auf den Weg")
 

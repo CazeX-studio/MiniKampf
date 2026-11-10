@@ -65,7 +65,7 @@ func _run() -> void:
 			continue
 		if _pending_scene == "klassenwahl":
 			_pending_scene = ""
-			var classes: Array = GameData.get_file("klassen").reihenfolge
+			var classes: Array = GameData.get_file("klassen").reihenfolge.filter(func(id: String) -> bool: return Klassenwahl.in_demo(id))
 			p.progress.flags["klasse"] = classes[_rng.randi() % classes.size()]
 			p.progress.flags["klasse_gewaehlt"] = "ja"
 			_seconds += 60.0

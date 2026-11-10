@@ -330,7 +330,7 @@
 				"reihe": 1,
 				"max": 5,
 				"passiv": true,
-				"info": "Nach Klingenschritt und Ausfallschritt trifft jede schwebende Klinge nach, jede Stufe 10 % mehr."
+				"info": "Die schwebenden Klingen, die nach Klingenschritt und Ausfallschritt nachtreffen, machen je Stufe 10 % mehr Schaden."
 			},
 			{
 				"id": "whirl",

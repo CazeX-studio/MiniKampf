@@ -267,6 +267,15 @@ func _attack_hint(target: Fighter) -> void:
 		await _show_hint("erste_reaktion")
 
 
+## Zu Beginn jeder Lektion (Phase) alle ihre Erklärungen nacheinander, vor dem ersten Zug (A4, Alpha-Punkt 5).
+## Was im Zug selbst noch einmal gefragt wird, ist dann schon gesehen.
+func _lektion_erklaeren() -> void:
+	if not state.setup.has("phasen"):
+		return
+	for key: String in ["erster_zug", "erste_reaktion"]:
+		await _show_hint(key)
+
+
 ## Erklär-Fenster der Grundausbildung: Der Kampf wartet, bis „Verstanden“ angetippt wird.
 func _show_hint(key: String) -> void:
 	var hints: Dictionary = state.setup.get("hinweise", {})
@@ -356,6 +365,8 @@ func _play_event(event: Dictionary) -> void:
 			if _current == null:
 				_clear_actions()
 			refresh()
+			# Lernkampf: Ye erklärt die ganze Lektion, bevor sich jemand bewegt (A4, Alpha-Punkt 5)
+			await _lektion_erklaeren()
 		"refresh":
 			refresh()
 		"spawn":
@@ -451,6 +462,9 @@ func _play_event(event: Dictionary) -> void:
 				FxBild.spawn(_field, "heilung", v.center() + Vector2(0, -20), 0.7, false, 0.0, 0.7)
 		"end":
 			_clear_actions()
+			# Sternenfall-Nacht: Ren greift ein, als Szene im Kampf (A4b, Alpha-Punkt 14)
+			if not event.aborted and state.setup.get("rettung", false):
+				await _ren_szene(event.won)
 			if not event.aborted:
 				if event.won and state.dungeon != null and Sandbox.pilz_choice != "":
 					SaveGame.set_flag(PILZ_CHOICE_FLAG, Sandbox.pilz_choice)
@@ -461,6 +475,108 @@ func _play_event(event: Dictionary) -> void:
 							view(f).cheer()
 					await wait(VICTORY_POSE)
 				_show_end_screen(event.won)
+
+
+## Ren greift in der Nacht des Sternenfalls ein (A4b): läuft von rechts herein, wirft Kunai. Verloren: Sie erledigt den
+## Sternenfresser und rettet die Gruppe. Gewonnen: Sie zieht den Splitter aus dem Gegner und nimmt ihn mit. Danach läuft
+## sie davon. Was sie sagt, steht auch im Gespräch danach (dialoge.json, ren).
+const REN_BILD := "ren_kampf"
+const REN_GROESSE := 3.0
+
+func _ren_szene(won: bool) -> void:
+	var frames := {}
+	for anim: String in ["idle", "run", "attack", "cast", "victory"]:
+		var liste: Array[Texture2D] = []
+		var i := 0
+		while ResourceLoader.exists(FighterView.sprite_path(REN_BILD, anim, i)):
+			liste.append(FighterView.einzelbild(REN_BILD, anim, i))
+			i += 1
+		frames[anim] = liste
+	if frames.idle.is_empty():
+		return
+	var ren := Sprite2D.new()
+	var erstes: Texture2D = frames.idle[0]
+	ren.scale = Vector2.ONE * REN_GROESSE / FighterView.fein_faktor(erstes)
+	ren.texture = erstes
+	ren.offset = Vector2(0, -erstes.get_height() * 0.5)
+	ren.texture_filter = FighterView.filter_fuer(erstes)
+	# Verbündete schauen nach links (wie die Helden), die Gegner stehen links
+	ren.flip_h = true
+	ren.z_index = 20
+	_field.add_child(ren)
+	var gegner: Fighter = state.enemies[0] if not state.enemies.is_empty() else null
+	var ziel := Vector2(260, 400)
+	if gegner != null and has_view(gegner):
+		ziel = view(gegner).center()
+	var helden_x := 900.0
+	for h: Fighter in state.heroes:
+		if has_view(h):
+			helden_x = minf(helden_x, view(h).home_feet().x + view(h).position.x)
+	var stand := Vector2(helden_x - 110.0, 470.0)
+	var spielen := func(anim: String, sekunden: float, schleifen := 1) -> void:
+		var liste: Array = frames.get(anim, frames.idle)
+		var t := ren.create_tween()
+		t.tween_method(func(x: float) -> void: ren.texture = liste[int(x) % liste.size()], 0.0, float(liste.size() * schleifen) - 0.01, sekunden)
+	# 1. Herein laufen
+	ren.position = Vector2(SCREEN.x + 80.0, stand.y)
+	_ren_sagt(ren, "???: „Weg da!“" if not won else "???: „Nicht schlecht …“")
+	spielen.call("run", 0.9, 3)
+	var lauf := create_tween()
+	lauf.tween_property(ren, "position", stand, 0.9).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	await lauf.finished
+	if not won:
+		# 2. Kunai auf den Sternenfresser, Treffer, er sinkt zusammen
+		Geraeusche.play("schlag")
+		spielen.call("attack", 0.6)
+		await wait(0.3)
+		for k in 3:
+			FxBild.flug(_field, "klinge_flug", ren.position + Vector2(-30, -70), ziel + Vector2(0, -20 + k * 20), 0.25, 0.8)
+			await wait(0.08)
+		await wait(0.2)
+		Fx.spawn(_field, Fx.Kind.GLOW, ziel, Color("c6a6ff"), 300.0, 0.7)
+		Fx.spawn(_field, Fx.Kind.SPARKS, ziel, Color("e8d8ff"), 90.0, 0.6)
+		if gegner != null and has_view(gegner):
+			var v := view(gegner)
+			v.hit_react()
+			var weg := create_tween()
+			weg.tween_property(v, "modulate:a", 0.0, 0.8)
+		await wait(0.6)
+		_ren_sagt(ren, "???: „Steh auf, Novize. Das war knapp.“")
+	else:
+		_ren_sagt(ren, "???: „Den Splitter nehme ich aber mit.“")
+	# 3. Den Splitter zu sich holen
+	spielen.call("cast", 0.8)
+	var splitter := Fx.spawn(_field, Fx.Kind.GLOW, ziel, Color("c6a6ff"), 60.0, 1.2)
+	var flug := create_tween()
+	flug.tween_property(splitter, "position", ren.position + Vector2(-20, -70), 0.8).set_trans(Tween.TRANS_SINE)
+	await wait(1.0)
+	spielen.call("victory", 0.6)
+	await wait(0.9)
+	# 4. Davon
+	ren.flip_h = false
+	spielen.call("run", 0.7, 3)
+	var fort := create_tween()
+	fort.tween_property(ren, "position:x", SCREEN.x + 100.0, 0.7)
+	await fort.finished
+	ren.queue_free()
+
+
+## Sprechblase über Ren (ersetzt die vorige).
+func _ren_sagt(ren: Sprite2D, text: String) -> void:
+	for alt in ren.get_children():
+		alt.queue_free()
+	var label := Label.new()
+	label.text = text
+	label.add_theme_font_size_override("font_size", 20)
+	label.add_theme_color_override("font_color", Color("e8d8ff"))
+	label.add_theme_color_override("font_outline_color", Color.BLACK)
+	label.add_theme_constant_override("outline_size", 8)
+	label.position = Vector2(-160, -ren.texture.get_height() - 30)
+	label.size = Vector2(320, 30)
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	# Die Schrift soll nicht mit Ren mitwachsen
+	label.scale = Vector2.ONE / ren.scale.x
+	ren.add_child(label)
 
 
 ## Wo eine Figur steht ("feet" ist der Punkt, auf dem sie steht).
@@ -708,9 +824,19 @@ func _on_ability_pressed(f: Fighter, ab: Dictionary) -> void:
 	_pending = ab
 	_pending_user = f
 	_clear_actions()
-	_turn_label.text = "%s: Ziel antippen" % ab.name
-	for target in state.skills.valid_targets(f, ab):
+	_turn_label.text = "%s: Ziel wählen (unten oder antippen)" % ab.name
+	# Ziele auch unten als Knöpfe mit Nummer (A6, Alpha-Punkt 43), „Zurück“ immer auf der 6
+	for target: Fighter in state.skills.valid_targets(f, ab):
 		view(target).targetable = true
+		var info := "%d / %d Leben" % [target.hp, target.max_hp]
+		if target.shield_total() > 0:
+			info += " · Schild %d" % target.shield_total()
+		if not target.is_hero and target.element != "":
+			info += " · " + target.element
+		var knopf := _action_button("%s\n%s" % [target.display_name, info])
+		knopf.pressed.connect(_on_fighter_tapped.bind(target))
+		_grid.add_child(knopf)
+	_auffuellen_bis_zurueck()
 	_add_back_button(f)
 
 
@@ -727,6 +853,7 @@ func _show_choices(f: Fighter, ab: Dictionary) -> void:
 		picked.target = choice.get("then", ab.get("then", "none"))
 		button.pressed.connect(_on_ability_pressed.bind(f, picked))
 		_grid.add_child(button)
+	_auffuellen_bis_zurueck()
 	_add_back_button(f)
 
 
@@ -756,13 +883,27 @@ func _grid_buttons() -> Array[Button]:
 	return buttons
 
 
+## Leere Plätze, damit „Zurück“ bei Zielen und Auswahl immer auf der 6 liegt (A6). Bei mehr als 5 Einträgen rutscht es nach hinten.
+const ZURUECK_PLATZ := 6
+
+func _auffuellen_bis_zurueck() -> void:
+	while _grid_buttons().size() < ZURUECK_PLATZ - 1:
+		var leer := _action_button("")
+		leer.disabled = true
+		leer.modulate.a = 0.0
+		leer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		leer.set_meta("platzhalter", true)
+		_grid.add_child(leer)
+
+
 ## Am PC steht vor jedem Knopf seine Zahlentaste.
 func _number_buttons() -> void:
 	if DisplayServer.is_touchscreen_available():
 		return
 	var buttons := _grid_buttons()
 	for i in mini(buttons.size(), 9):
-		buttons[i].text = "%d · %s" % [i + 1, buttons[i].text]
+		if not buttons[i].has_meta("platzhalter"):
+			buttons[i].text = "%d · %s" % [i + 1, buttons[i].text]
 
 
 func _add_back_button(f: Fighter) -> void:
@@ -828,6 +969,9 @@ func _react_grade(attacker: Fighter, target: Fighter, duration: float) -> int:
 			Geraeusche.play("parade")
 		return grade
 	await _show_hint("erste_reaktion")
+	# Paradeschule: Nach den zwei vorgeführten Paraden sagt Ye, dass man jetzt zweimal allein perfekt parieren soll
+	if state.setup.get("paradeschule", false) and state.parry_attempts == 3:
+		await _show_hint("allein")
 	# Paradeschule: Die ersten beiden Angriffe halten an der richtigen Stelle an und erklären sie
 	_guided = state.parry_attempts - 1 if state.setup.get("paradeschule", false) and state.parry_attempts <= 2 else -1
 	_guided_frozen = false
@@ -1048,7 +1192,7 @@ func _draw_parry_school(bar: Rect2, font: Font) -> void:
 		lines = ["Halt! Jetzt steht der Strich in der schmalen grünen Mitte –", "genau wenn der Ring den Kreis berührt.",
 				"Das ist die PERFEKTE Parade: gar kein Schaden.", "Drück jetzt die Leertaste (oder tippe)!"]
 	elif _guided < 0 and state.parry_attempts > 2:
-		lines = ["Übungsversuch %d von %d – jetzt allein!" % [state.parry_attempts - 2, BattleState.PARRY_SCHOOL_ATTACKS - 2]]
+		lines = ["Jetzt du: Versuch, perfekt zu parieren! (Versuch %d von %d)" % [state.parry_attempts - 2, BattleState.PARRY_SCHOOL_ATTACKS - 2]]
 	if lines.is_empty():
 		return
 	# Unter den Figuren, damit Ring und Figuren frei bleiben
@@ -1850,6 +1994,8 @@ func _reward_row() -> HBoxContainer:
 		parts.append(["schluessel", GameData.item_name("monsterkarte")])
 	for level: int in reward.get("stufen", []):
 		parts.append(["pfeil", "Stufe %d erreicht!" % level])
+	if not (reward.get("stufen", []) as Array).is_empty():
+		Geraeusche.play("stufe")
 	for part in parts:
 		var item := HBoxContainer.new()
 		item.add_theme_constant_override("separation", 6)

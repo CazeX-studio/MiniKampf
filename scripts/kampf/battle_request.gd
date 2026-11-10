@@ -142,13 +142,21 @@ static func build_group(id: String, members: Array) -> Dictionary:
 	for m: Dictionary in members:
 		# Im Kampf sieht jeder Spieler aus wie seine Figur in der Stadt (so kann man sich auseinanderhalten)
 		var klasse := fighting_class(data, str(m.get("klasse", "")))
-		var hero := {klasse = klasse, name = m.name, aussehen = str(m.get("aussehen", "novize")) if klasse == "novize" else "", stufe = int(m.stufe),
+		# Mit Klasse: die eigene Figur in Klassenkleidung wie allein (A2b, Alpha-Punkt 16), sonst die Klassenfigur
+		var eigenes := str(m.get("aussehen", "novize"))
+		var aussehen := eigenes
+		if klasse != "novize":
+			var gekleidet := FigurTeile.mit_klasse(eigenes, klasse)
+			aussehen = gekleidet if FigurTeile.KLASSEN_KOERPER.has(klasse) \
+					and FigurTeile.koerper_von(gekleidet).begins_with(str(FigurTeile.KLASSEN_KOERPER[klasse])) else ""
+		var hero := {klasse = klasse, name = m.name, aussehen = aussehen, stufe = int(m.stufe),
 				ult = float(data.get("ult_start", 0))}
 		if data.get("eigene_klasse", false):
 			hero["macht"] = hero_power(int(m.stufe))
 			if klasse == "tamer":
 				hero["monster"] = m.get("monster", [])
-		if klasse == "novize":
+		# Tränke am Gürtel: Novize und jede eigene Klasse (wie allein, D12), nicht die fremde Klasse der Probestunde
+		if klasse == "novize" or klasse == str(m.get("eigene_klasse", "")):
 			hero["traenke"] = int(m.get("traenke", 0))
 		if m.has("ausruestung"):
 			hero["ausruestung"] = m.ausruestung
@@ -203,6 +211,7 @@ static func _make_setup(id: String, data: Dictionary, heroes: Array, phases: Arr
 		hinweise = data.get("hinweise", {}),
 		ziel_paraden = int(data.get("ziel_paraden", 0)),
 		kein_nochmal = data.get("kein_nochmal", false),
+		rettung = data.get("rettung", false),
 		hintergrund = data.get("hintergrund", "wiese"),
 		zuerst = data.get("zuerst", ""),
 		gegner_stufe = int(data.get("gegner_stufe", 1)),

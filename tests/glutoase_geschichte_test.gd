@@ -61,14 +61,11 @@ func _initialize() -> void:
 	var g: Dictionary = GameData.get_file("kaempfe").heisse_quelle
 	_check(g.get("eigene_klasse", false) and g.merken == "quelle_gekuehlt", "Der Kampf an der Quelle ist ein Kampf mit der eigenen Klasse")
 
-	# D29: Der Tanz mit der Pause (nur nachts), Kael provoziert Hadrak, Rivalenkampf in der Schmiede
+	# D29: Der Tanz mit der Pause (seit A1a auch tagsüber), Kael provoziert Hadrak, Rivalenkampf in der Schmiede
 	_reden(world, p, "samira")
 	_check(p.progress.quest_state("fest_der_glut") == "aktiv", "Samira lädt zum Fest ein")
+	# A1a: kein Warten bis nachts mehr, der Tanz geht sofort
 	world.nacht = false
-	world.start_dialog(p, "samira")
-	_check(world.dialog_view(p).text.contains("heute Nacht"), "Tagsüber: erst heute Nacht")
-	world.apply_command("a", {type = "dialog_next"})
-	world.nacht = true
 	# Schritte: einmal falsch (Sprung), dann richtig; in der Pause erst weitertanzen, dann lauschen
 	_reden(world, p, "samira", [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
 	_check(p.progress.flags.has("sechster_ton"), "In der Pause den sechsten Ton gehört")
@@ -79,6 +76,7 @@ func _initialize() -> void:
 	world.apply_command("a", {type = "kampf_ergebnis", kampf = "kael_rivale", gewonnen = true})
 	_reden(world, p, "hadrak")
 	_check(p.progress.quest_state("rivale_kael") == "abgegeben", "Hadrak dankt (in zwei Worten)")
+	world.nacht = true
 	_reden(world, p, "hadrak")
 	_check(p.progress.flags.has("hadrak_gerannt"), "Nachts mit seinem Vertrauen: „Wir sind gerannt.“")
 

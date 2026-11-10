@@ -122,6 +122,18 @@ static func mit_klasse(look: String, klasse: String) -> String:
 	return neu + look.substr(koerper.length())
 
 
+## Geschlecht einer Figur aus Körper und Kopf: "m", "w" oder "" (unbekannt, z. B. alte Pixel-Figuren).
+static func geschlecht(look: String) -> String:
+	return str(_alle().get(koerper_von(look), {}).get("_geschlecht", ""))
+
+
+## Darf diese Figur die Klasse lernen? (Sternensängerin vorerst nur weiblich, Marco 09.11., Alpha-Test)
+static func klasse_erlaubt(look: String, klasse: String) -> bool:
+	var nur: String = str(GameData.get_file("klassen").get(klasse, {}).get("nur_geschlecht", ""))
+	var eigenes := geschlecht(look)
+	return nur == "" or eigenes == "" or eigenes == nur
+
+
 ## Kann diese Figur Aussehen-Teile tragen? (Nur Figuren aus Körper und Kopf, z. B. aus „Figur erstellen“.)
 static func kann_aussehen(look: String) -> bool:
 	return koerper_liste().has(koerper_von(look))

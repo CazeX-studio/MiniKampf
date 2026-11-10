@@ -1,5 +1,6 @@
 extends Control
-## Startmenü: Demo spielen, zusammen spielen und Werkzeuge zum Testen (Editor, nur Werkstatt) oder Dankesliste und Feedback (Demo).
+## Startmenü: nur „Offline“ und „Online“, beide dasselbe Spiel mit demselben Spielstand (A2a, Marco 08.11.);
+## in der Werkstatt dazu der Editor. Feedback gibt es im Spiel oben rechts, die Dankesliste im Abspann am Ende der Demo.
 
 const SCREEN := Vector2(1280, 720)
 const LOGO_GROSS := Rect2(140, 110, 1000, 400)
@@ -37,14 +38,14 @@ func _ready() -> void:
 	add_child(_logo)
 
 	# Neues Spiel (noch kein Spielstand): erst die Figur erstellen (geprüft beim Drücken, der Spielstand-Pfad wird unten gesetzt)
-	_add_button("Kreuzweg-Demo\nDie erste Stunde als Novize", Vector2(40, 300), "",
+	# Editor nur in der Werkstatt-Fassung und im Godot-Editor (S1)
+	var mit_editor := Tester.werkzeuge()
+	var x := 40.0 if mit_editor else 245.0
+	_add_button(GameData.text("menu_offline"), Vector2(x, 300), "",
 			func() -> String: return "res://scenes/kreuzweg.tscn" if SaveGame.exists() else "res://scenes/figur_erstellen.tscn")
-	_add_button("Demo zusammen spielen\nMit bis zu 4 Spielern übers Internet", Vector2(450, 300), "res://scenes/zusammen.tscn")
-	# Editor nur in der Werkstatt-Fassung und im Godot-Editor (S1), in der Demo stattdessen Dankesliste und Feedback
-	if Tester.werkzeuge():
+	_add_button(GameData.text("menu_online"), Vector2(x + 410.0, 300), "res://scenes/zusammen.tscn")
+	if mit_editor:
 		_add_button("Editor\nTesten: Baukasten, Vega, Sandbox, Akte", Vector2(860, 300), "res://scenes/editor.tscn")
-	else:
-		_add_button(GameData.text("menu_danke"), Vector2(860, 300), "", Callable(), _danke_zeigen)
 	_version_zeigen()
 
 	# Server ohne Grafik: Godot --headless --path . -- --server

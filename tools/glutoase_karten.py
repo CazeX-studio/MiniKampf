@@ -329,8 +329,8 @@ def glutoase():
 			"tarek": {"name": "Händler Tarek", "feld": [7, 12], "aussehen": "grund_haendler+tarek#zubehoer=schaerpe&guertelklinge", "dialog": "tarek",
 				"zeichen": "muenze"},
 			"layla": {"name": "Wirtin Layla", "feld": [30, 0], "aussehen": "grund_frau+layla#zubehoer=schuerze_layla&tablett", "dialog": "layla"},
-			"mira_glutoase": {"name": "Mira", "feld": [40, 9], "aussehen": "mira", "dialog": "mira_glutoase", "liegt": True,
-				"wenn": {"nicht_gemerkt": "mira_geheilt"}},
+			"mira_glutoase": {"name": "Mira", "feld": [41, 11], "aussehen": "mira", "dialog": "mira_glutoase", "liegt": True,
+				"wenn": {"nicht_gemerkt": "mira_geheilt"}, "versatz": [14, -22], "vorne": True},
 			# Ohne Splitter gesund (D35): Mira steht wieder
 			"mira_gesund": {"name": "Mira", "feld": [42, 9], "aussehen": "mira", "dialog": "mira_glutoase", "wenn": {"gemerkt": "mira_geheilt"}},
 			# Kael wartet nach dem Fest in Hadraks Schmiede (D29, Rivalenkampf)
@@ -362,6 +362,8 @@ def glutoase():
 	gk.KARTEN.clear()
 	gk.KARTEN.update(karten)
 	k = gk.Karte("glutoase")
+	# Mira liegt krank im Krankenzelt auf dem Bett (A5): ihr Feld liegt im Zelt, das Zelt darf trotzdem stehen
+	k.frei_halten.discard(tuple(karten["glutoase"]["npcs"]["mira_glutoase"]["feld"]))
 	setzen_k = k.setzen
 
 	def setzen(teil, x, y, name="", gespiegelt=False, muss=True):
@@ -524,7 +526,7 @@ def vulkanschmiede():
 		"kampf_hintergrund": "vulkanschmiede", "start": [ex, VH - 2],
 		"raster": ["".join(z) for z in g],
 		"ausgaenge": [{"bereich": [ex - 1, VH - 1, 3, 1], "karte": "glutoase", "feld": spiegeln([22, 43])}],
-		"monster": vulkanschmiede_monster(), "baukasten": "karte_vulkanschmiede",
+		"monster": vulkanschmiede_monster(), "baukasten": "karte_vulkanschmiede", "leere": "lava",
 		# Zwischenboss Hammerbrüder (D33) auf der unteren Plattform der Kettengänge, bis sie in diesem Lauf besiegt sind
 		"orte": [{"art": "hammerbruder_hammer", "feld": [22, 19], "dialog": "vs_hammerbrueder", "wenn": {"nicht_gemerkt": "lauf:hammerbrueder"}},
 			{"art": "hammerbruder_zange", "feld": [24, 22], "dialog": "vs_hammerbrueder", "wenn": {"nicht_gemerkt": "lauf:hammerbrueder"}},

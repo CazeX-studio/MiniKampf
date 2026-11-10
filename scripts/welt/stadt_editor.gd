@@ -1,88 +1,66 @@
+class_name StadtEditor
 extends Node2D
-## Stadt-Editor (S4): eine Stadt (Kreuzweg, Wipfelheim, Glutoase) von oben ansehen, Baukasten-Teile und Figuren
-## antippen und verschieben: mit Maus oder Finger ziehen oder Feld für Feld mit den Pfeil-Knöpfen (fürs Handy).
-## Figuren mit eigenem Platz für die Nacht verschiebt man im Nacht-Modus an ihren Nachtplatz.
-## S4b: Teile aus dem Baukasten und Volk-Figuren hinzufügen, Teile spiegeln, Teile und Volk löschen, Rückgängig.
-## Gespeichert wird nur, was sich geändert hat (StadtAenderungen): am PC in Godot direkt in die Spieldaten,
-## im Browser für diesen Browser und als Datei zum Herunterladen, die Marco Claude schickt.
+## Stadt-Editor (S4a): eine Baukasten-Karte (Kreuzweg, Wipfelheim, Glutoase …) mit allen Teilen und Figuren.
+## Antippen wählt ein Teil oder eine Figur, Ziehen oder die Pfeilknöpfe verschieben es Feld für Feld (auch am Handy),
+## Teile lassen sich drehen, spiegeln und löschen, alles lässt sich rückgängig machen.
+## Speichern: im Godot-Editor direkt in die Kartendaten (data/), sonst (Browser, Werkstatt) als Datei zum Herunterladen,
+## die Marco Claude schickt; Claude übernimmt sie mit tools/stadt_editor_uebernehmen.py.
+## Hinzufügen (S4b): Teile aus dem Baukasten mit Bild, neue Volks-Figuren aus Körper und Kopf; Volks-Figuren lassen sich
+## auch löschen (Figuren mit Aufträgen nicht).
 
-const FIGUR_GROESSE := 0.8
-## Fläche einer Figur auf dem Bildschirm über ihrem Fußpunkt (zum Antippen)
-const FIGUR_RECT := Rect2(-22, -100, 44, 104)
+const SCREEN := Vector2(1280, 720)
+## Figuren so groß wie in der Welt (kreuzweg.gd: BAUKASTEN_FIGUR)
+const FIGUR := 0.8
 const ZOOMS: Array[float] = [0.35, 0.5, 0.7, 1.0, 1.4]
-## Pfeil-Knöpfe: Richtung auf dem Bildschirm -> Schritt in Feldern
-const SCHRITTE := {"↖": Vector2i(-1, 0), "↗": Vector2i(0, -1), "↙": Vector2i(0, 1), "↘": Vector2i(1, 0)}
-const NACHT_FARBE := Color(0.55, 0.6, 0.85)
-## So viele Schritte kann man zurücknehmen
-const RUECKGAENGIG_MAX := 30
 
-## Gewählt (bleibt beim Neuladen der Szene)
-static var stadt := "kreuzweg"
+## Gewählt (bleibt beim Neuaufbau der Szene)
+static var karte := "kreuzweg"
 static var nacht := false
-static var zoom_stufe := 1
-## Noch nicht Gespeichertes bleibt beim Wechsel von Stadt oder Tageszeit erhalten, ebenso der Bildausschnitt
-static var _offen := {}
-static var _offen_geaendert := false
-static var _offen_rueckgaengig: Array = []
-static var _kamera_orte := {}
-
-## Alle Änderungen aller Städte (wie in data/stadt_aenderungen.json)
-var aenderungen := {}
-## Teile der Karte: {o (Teil mit aktuellem Feld), von (Feld in den Kartendaten, null bei neuen Teilen),
-## gespiegelt_vorher, weg, node, bild, rect, flach}
-var objekte: Array[Dictionary] = []
-## Figuren: {id, name, look, dialog, von (null bei neuen), von_nacht (oder null), feld, nachts (oder null), weg, node}
-var figuren: Array[Dictionary] = []
-## Ausgewählt: {art = "teil"/"figur", nr}
-var auswahl := {}
-var geaendert := false
-## Frühere Stände dieser Stadt (für „Rückgängig“)
-var rueckgaengig: Array = []
+static var _zoom := 2
 
 var _teile: Dictionary
-## Ebenen der Stadt (E3h3b, Glutoase), null = flach
+## Ebenen der Karte (E3h3b, z. B. die Glutoase am Berg), null = flach
 var _hoehen: Hoehen = null
+## Die Kartendaten (Kopie der Datei): boden und objekte
+var _daten: Dictionary = {}
+var _dateiname := ""
+## Figuren dieser Karte: Kennung -> {name, aussehen, feld: Vector2i, nachts: Vector2i oder null, liegt}
+var _npcs: Dictionary = {}
+## Aufgebaute Teile, gleiche Reihenfolge wie _daten.objekte: {node, bild, flach}
+var _teil_views: Array[Dictionary] = []
+var _npc_views: Dictionary = {}
+## {art = "teil", index} oder {art = "npc", id}, leer = nichts gewählt
+var _auswahl: Dictionary = {}
+var _rueckgaengig: Array[Dictionary] = []
+## Gelöschte Figuren (Kennungen), damit sie beim Speichern aus den Daten verschwinden
+var _geloescht: Array = []
+var _hinzu_panel: PanelContainer
+var _geaendert := false
+
 var _flach: Node2D
 var _sortiert: Node2D
-var _rahmen: Node2D
+var _markierung: Node2D
 var _kamera: Camera2D
-var _modulate: CanvasModulate
 var _info: Label
 var _meldung: Label
-var _auswahl_knoepfe: Array[Button] = []
-var _spiegel_knopf: Button
-var _loesch_knopf: Button
-var _rueck_knopf: Button
-var _dazu_panel: PanelContainer
-var _teil_wahl: OptionButton
-var _koerper_wahl: OptionButton
-var _kopf_wahl: OptionButton
-var _volk_wahl: OptionButton
-## Ziehen: "teil" (Auswahl verschieben), "kamera" (Bild verschieben) oder ""
-var _ziehen := ""
-var _greif_versatz := Vector2i.ZERO
-var _gezogen := false
+var _knoepfe_auswahl: Array[Button] = []
+
+## Ziehen: mit der Maus oder dem Finger
+var _zieht := false
+var _schiebt_karte := false
+var _griff := Vector2i.ZERO
+var _letzte_maus := Vector2.ZERO
+var _verschoben := false
 
 
 func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color("1b2418"))
-	Tageszeit.feste_stunde = 23.0 if nacht else 12.0
-	aenderungen = _offen if _offen_geaendert else StadtAenderungen.laden().duplicate(true)
-	geaendert = _offen_geaendert
-	rueckgaengig = _offen_rueckgaengig
-	_offen = {}
-	_offen_geaendert = false
-	_offen_rueckgaengig = []
 	_teile = GameData.get_file("baukasten_teile")
-	_modulate = CanvasModulate.new()
-	_modulate.color = NACHT_FARBE if nacht else Color.WHITE
-	add_child(_modulate)
-	var info: Dictionary = StadtAenderungen.STAEDTE[stadt]
-	var karte := GameData.roh(info.karte)
+	if not karten().has(karte):
+		karte = "kreuzweg"
+	_laden()
 	var boden := BaukastenBoden.new()
-	if info.figuren[0] == "karten":
-		_hoehen = Hoehen.aus_daten(GameData.roh("karten").get(stadt, {}).get("hoehen", {}))
-	boden.setup(_teile, PackedStringArray(karte.get("boden", [])), _hoehen)
+	boden.setup(_teile, PackedStringArray(_daten.get("boden", [])), _hoehen)
 	add_child(boden)
 	_flach = Node2D.new()
 	_flach.z_index = -5
@@ -90,656 +68,805 @@ func _ready() -> void:
 	_sortiert = Node2D.new()
 	_sortiert.y_sort_enabled = true
 	add_child(_sortiert)
-	_rahmen = Node2D.new()
-	_rahmen.z_index = 60
-	_rahmen.draw.connect(_rahmen_malen)
-	add_child(_rahmen)
-
-	var aend: Dictionary = aenderungen.get(stadt, {})
-	# Teile aus der Karte, mit den gespeicherten Änderungen
-	for o: Dictionary in karte.get("objekte", []):
-		var e := {o = o, von = [int(o.feld[0]), int(o.feld[1])], gespiegelt_vorher = bool(o.get("gespiegelt", false)), weg = false}
-		for v: Dictionary in aend.get("objekte", []):
-			if v.has("von") and v.get("teil", "") == o.teil and StadtAenderungen.gleiches_feld(e.von, v.von):
-				if v.has("nach"):
-					o.feld = [int(v.nach[0]), int(v.nach[1])]
-				if v.has("gespiegelt"):
-					o.gespiegelt = bool(v.gespiegelt)
-				e.weg = bool(v.get("weg", false))
-		objekte.append(e)
-		_teil_bauen(e)
-	for v: Dictionary in aend.get("objekte", []):
-		if v.has("neu") and _teile.objekte.has(str(v.get("teil", ""))):
-			var e := {o = {teil = str(v.teil), feld = [int(v.neu[0]), int(v.neu[1])], gespiegelt = bool(v.get("gespiegelt", false))},
-					von = null, gespiegelt_vorher = false, weg = false}
-			objekte.append(e)
-			_teil_bauen(e)
-	# Figuren aus den Daten, mit den gespeicherten Änderungen, dazu die neuen
-	var npcs := StadtAenderungen.figuren_von(GameData.roh(info.figuren[0]), info)
-	for id: String in npcs:
-		var d: Dictionary = npcs[id]
-		var f := {id = id, name = str(d.get("name", id)), look = str(d.get("aussehen", "")), dialog = str(d.get("dialog", id)),
-				von = [int(d.feld[0]), int(d.feld[1])], von_nacht = null, nachts = null, farbe = str(d.get("farbe", "ffffff"))}
-		if d.has("nachts"):
-			f.von_nacht = [int(d.nachts[0]), int(d.nachts[1])]
-		var neu: Dictionary = aend.get("figuren", {}).get(id, {})
-		f.feld = _feld(neu.get("feld", f.von))
-		if f.von_nacht != null:
-			f.nachts = _feld(neu.get("nachts", f.von_nacht))
-		f.weg = bool(neu.get("weg", false))
-		_figur_dazu(f)
-	var neue: Dictionary = aend.get("neue_figuren", {})
-	for id: String in neue:
-		var d: Dictionary = neue[id]
-		_figur_dazu({id = id, name = str(d.get("name", "Bürger")), look = str(d.get("aussehen", "grund_mann+v_m1")),
-				dialog = str(d.get("dialog", "volk_buerger")), von = null, von_nacht = null, nachts = null,
-				feld = _feld(d.feld), weg = false, farbe = "ffffff"})
-
+	_markierung = Node2D.new()
+	_markierung.z_index = 50
+	_markierung.draw.connect(_markierung_zeichnen)
+	add_child(_markierung)
+	for i in _daten.get("objekte", []).size():
+		_teil_views.append({})
+		_teil_bauen(i)
+	for id: String in _npcs:
+		_npc_bauen(id)
 	_kamera = Camera2D.new()
-	_kamera.zoom = Vector2.ONE * ZOOMS[zoom_stufe]
+	var groesse := Vector2(_daten.boden[0].length(), _daten.boden.size()) if not _daten.get("boden", []).is_empty() else Vector2(40, 40)
+	_kamera.position = BaukastenBoden.cell_to_screen(groesse * 0.5)
+	_kamera.zoom = Vector2(ZOOMS[_zoom], ZOOMS[_zoom])
 	add_child(_kamera)
-	var groesse := Vector2(karte.boden[0].length(), karte.boden.size()) if not karte.get("boden", []).is_empty() else Vector2.ZERO
-	_kamera.position = _kamera_orte.get(stadt, BaukastenBoden.cell_to_screen(groesse * 0.5))
-	_hud_bauen()
-	_auswahl_zeigen()
+	_leiste_bauen()
+	_info_zeigen()
 
 
-func _exit_tree() -> void:
-	Tageszeit.feste_stunde = -1.0
-	if _kamera != null:
-		_kamera_orte[stadt] = _kamera.position
+# --- Karten und Daten -----------------------------------------------------------
+
+## Alle Karten aus dem Baukasten: Kennung -> Anzeigename (Kreuzweg zuerst).
+static func karten() -> Dictionary:
+	var liste := {"kreuzweg": "Kreuzweg"}
+	var alle := GameData.get_file("karten")
+	for id: String in alle:
+		if alle[id] is Dictionary and alle[id].has("baukasten"):
+			liste[id] = str(alle[id].get("name", id))
+	return liste
 
 
-static func _feld(a: Array) -> Array:
-	return [int(a[0]), int(a[1])]
+## Datei mit Boden und Teilen dieser Karte (ohne .json).
+static func karten_datei(id: String) -> String:
+	if id == "kreuzweg":
+		return "kreuzweg_karte"
+	return str(GameData.get_file("karten").get(id, {}).get("baukasten", ""))
 
 
-# --- Teile und Figuren ----------------------------------------------------------
+## Figuren einer Karte aus den Daten (kreuzweg.json bzw. karten.json).
+static func figuren_der_karte(id: String) -> Dictionary:
+	var quelle: Dictionary = GameData.get_file("kreuzweg").get("npcs", {}) if id == "kreuzweg" \
+			else GameData.get_file("karten").get(id, {}).get("npcs", {})
+	var liste := {}
+	for npc_id: String in quelle:
+		var d: Dictionary = quelle[npc_id]
+		liste[npc_id] = {name = str(d.get("name", npc_id)), aussehen = str(d.get("aussehen", "novize")),
+				feld = Vector2i(int(d.feld[0]), int(d.feld[1])),
+				nachts = Vector2i(int(d.nachts[0]), int(d.nachts[1])) if d.has("nachts") else null,
+				liegt = bool(d.get("liegt", false)), bedingt = d.has("wenn"), dialog = str(d.get("dialog", npc_id)),
+				wenn = d.get("wenn", {}), neu = false}
+	return liste
 
-func _teil_bauen(eintrag: Dictionary) -> void:
-	if eintrag.has("node"):
-		(eintrag.node as Node).queue_free()
-	var hoehe := 0.0
-	if _hoehen != null and _teile.objekte.has(str(eintrag.o.get("teil", ""))):
-		hoehe = _hoehen.teil_px(BaukastenBoden.grundflaeche(eintrag.o, _teile))
-	var fertig := {} if eintrag.weg else BaukastenBoden.teil_bauen(eintrag.o, _teile, hoehe)
+
+## Darf man die Figur löschen? Nur Volk (Gespräch „volk_…“) und im Editor neu gesetzte Figuren, keine mit Aufträgen.
+static func loeschbar(n: Dictionary) -> bool:
+	return n.get("neu", false) or str(n.get("dialog", "")).begins_with("volk_")
+
+
+func _laden() -> void:
+	_dateiname = karten_datei(karte)
+	_daten = GameData.get_file(_dateiname).duplicate(true)
+	_npcs = figuren_der_karte(karte)
+	_hoehen = null if karte == "kreuzweg" else Hoehen.aus_daten(GameData.get_file("karten").get(karte, {}).get("hoehen", {}))
+
+
+# --- Aufbau ----------------------------------------------------------------------
+
+func _teil_bauen(i: int) -> void:
+	var alt: Dictionary = _teil_views[i]
+	if alt.has("node") and is_instance_valid(alt.node):
+		alt.node.queue_free()
+	var o: Dictionary = _daten.objekte[i]
+	var hoehe := _hoehen.teil_px(BaukastenBoden.grundflaeche(o, _teile)) if _hoehen != null and _teile.objekte.has(str(o.get("teil", ""))) else 0.0
+	var fertig := BaukastenBoden.teil_bauen(o, _teile, hoehe)
 	if fertig.is_empty():
-		eintrag.node = Node2D.new()
-		eintrag.bild = Rect2()
-		eintrag.rect = Rect2i()
-		eintrag.flach = true
-		_flach.add_child(eintrag.node)
+		_teil_views[i] = {}
 		return
-	eintrag.node = fertig.node
-	eintrag.bild = fertig.bild
-	eintrag.rect = fertig.rect
-	eintrag.flach = fertig.flach
 	(_flach if fertig.flach else _sortiert).add_child(fertig.node)
+	_teil_views[i] = {node = fertig.node, bild = fertig.bild, flach = fertig.flach}
 
 
-func _figur_dazu(f: Dictionary) -> void:
+func _npc_feld(id: String) -> Vector2i:
+	var n: Dictionary = _npcs[id]
+	return n.nachts if nacht and n.nachts != null else n.feld
+
+
+func _npc_bauen(id: String) -> void:
+	if _npc_views.has(id) and is_instance_valid(_npc_views[id]):
+		_npc_views[id].queue_free()
+	var n: Dictionary = _npcs[id]
 	var view := WorldCharacter.new()
-	view.setup(f.look, f.name, Color(f.farbe), Color("f2c14e"))
-	view.scale = Vector2(FIGUR_GROESSE, FIGUR_GROESSE)
+	view.setup(n.aussehen, n.name, Color.WHITE, Color("f2c14e"))
+	view.liegt = n.liegt
 	view.idle_fps = 3.0
-	view.visible = not f.weg
+	view.scale = Vector2(FIGUR, FIGUR)
+	view.position = _punkt(Vector2(_npc_feld(id)) + Vector2(0.5, 0.5))
 	_sortiert.add_child(view)
-	f.node = view
-	figuren.append(f)
-	_figur_stellen(f)
+	_npc_views[id] = view
 
 
-## Figur an ihren Platz (bei Nacht an den Nachtplatz, wenn sie einen hat)
-func _figur_stellen(f: Dictionary) -> void:
-	var feld: Array = _platz(f)
-	(f.node as Node2D).position = punkt(Vector2(feld[0], feld[1]) + Vector2(0.5, 0.5))
-
+# --- Auswahl ---------------------------------------------------------------------
 
 ## Punkt auf dem Bildschirm zu einer Stelle in Feldern (mit Ebenen höher)
-func punkt(c: Vector2) -> Vector2:
+func _punkt(c: Vector2) -> Vector2:
 	return BaukastenBoden.cell_to_screen(c) - Vector2(0, _hoehen.px(c) if _hoehen != null else 0.0)
 
 
-func _platz(f: Dictionary) -> Array:
-	return f.nachts if nacht and f.nachts != null else f.feld
+func _maus_feld(welt: Vector2) -> Vector2i:
+	if _hoehen != null:
+		return _hoehen.feld_bei(welt)
+	var x := (welt.x / (BaukastenBoden.TILE_W * 0.5) + welt.y / (BaukastenBoden.TILE_H * 0.5)) * 0.5
+	var y := (welt.y / (BaukastenBoden.TILE_H * 0.5) - welt.x / (BaukastenBoden.TILE_W * 0.5)) * 0.5
+	return Vector2i(floori(x), floori(y))
 
 
-## Volk (Dialog „volk_…“) und neue Figuren darf man löschen, Figuren der Geschichte nur verschieben.
-static func loeschbar(f: Dictionary) -> bool:
-	return f.von == null or str(f.dialog).begins_with("volk_")
-
-
-## Was liegt an dieser Stelle (Weltkoordinaten)? Figuren zuerst, dann das kleinste Teil, dessen Bild dort ist.
-func finden(punkt: Vector2) -> Dictionary:
-	for i in range(figuren.size() - 1, -1, -1):
-		if figuren[i].weg:
-			continue
-		var node: Node2D = figuren[i].node
-		var r := Rect2(node.position + FIGUR_RECT.position * FIGUR_GROESSE, FIGUR_RECT.size * FIGUR_GROESSE)
-		if r.has_point(punkt):
-			return {art = "figur", nr = i}
+## Was liegt an dieser Stelle? Figuren vor Teilen, stehende Teile vor flachen, das vorderste zuerst.
+func treffer(welt: Vector2) -> Dictionary:
 	var bestes := {}
-	var flaeche := INF
-	for i in objekte.size():
-		var bild: Rect2 = objekte[i].bild
-		if not objekte[i].weg and bild.has_point(punkt) and bild.get_area() < flaeche:
-			flaeche = bild.get_area()
-			bestes = {art = "teil", nr = i}
-	return bestes
+	var beste_tiefe := -INF
+	for id: String in _npc_views:
+		var v: WorldCharacter = _npc_views[id]
+		if Rect2(v.position + Vector2(-22, -100) * FIGUR, Vector2(44, 104) * FIGUR).has_point(welt) and v.position.y > beste_tiefe:
+			bestes = {art = "npc", id = id}
+			beste_tiefe = v.position.y
+	if not bestes.is_empty():
+		return bestes
+	for flach_runde: bool in [false, true]:
+		for i in _teil_views.size():
+			var t: Dictionary = _teil_views[i]
+			if t.is_empty() or t.flach != flach_runde or not (t.bild as Rect2).has_point(welt):
+				continue
+			if t.node.position.y > beste_tiefe:
+				bestes = {art = "teil", index = i}
+				beste_tiefe = t.node.position.y
+		if not bestes.is_empty():
+			return bestes
+	return {}
 
 
-## Feld unter einem Punkt (Weltkoordinaten)
-func feld_bei(p: Vector2) -> Vector2i:
-	return _hoehen.feld_bei(p) if _hoehen != null else Hoehen.flach_feld(p)
+func waehlen(was: Dictionary) -> void:
+	_auswahl = was
+	_markierung.queue_redraw()
+	_info_zeigen()
 
 
-## Feld der Auswahl (bei Teilen die hintere Ecke der Grundfläche, wie in den Kartendaten)
-func auswahl_feld() -> Vector2i:
-	if auswahl.is_empty():
-		return Vector2i.ZERO
-	var feld: Array = objekte[auswahl.nr].o.feld if auswahl.art == "teil" else _platz(figuren[auswahl.nr])
-	return Vector2i(int(feld[0]), int(feld[1]))
+## Feld der Auswahl (Teil: linke obere Ecke der Grundfläche, Figur: ihr Feld).
+func _auswahl_feld() -> Vector2i:
+	if _auswahl.get("art", "") == "teil":
+		var o: Dictionary = _daten.objekte[_auswahl.index]
+		return Vector2i(int(o.feld[0]), int(o.feld[1]))
+	if _auswahl.get("art", "") == "npc":
+		return _npc_feld(_auswahl.id)
+	return Vector2i.ZERO
 
 
-# --- Ändern ---------------------------------------------------------------------
+# --- Ändern ----------------------------------------------------------------------
 
-## Vor jeder Änderung: den jetzigen Stand für „Rückgängig“ merken
-func merken() -> void:
-	rueckgaengig.append(aenderungen.get(stadt, {}).duplicate(true))
-	if rueckgaengig.size() > RUECKGAENGIG_MAX:
-		rueckgaengig.pop_front()
-	if _rueck_knopf != null:
-		_rueck_knopf.disabled = false
+func _merken() -> void:
+	_rueckgaengig.append({objekte = _daten.objekte.duplicate(true), npcs = _npcs.duplicate(true), geloescht = _geloescht.duplicate()})
+	if _rueckgaengig.size() > 100:
+		_rueckgaengig.pop_front()
 
 
-## Den letzten Schritt zurücknehmen (die Stadt wird mit dem früheren Stand neu aufgebaut)
-func zuruecknehmen() -> void:
-	if rueckgaengig.is_empty():
+## Auswahl um so viele Felder verschieben (Pfeilknöpfe, Ziehen).
+func verschieben(schritt: Vector2i, merken := true) -> void:
+	if _auswahl.is_empty() or schritt == Vector2i.ZERO:
 		return
-	aenderungen[stadt] = rueckgaengig.pop_back()
-	geaendert = true
-	_neu_aufbauen(func() -> void: pass)
-
-
-## Die Auswahl auf ein neues Feld stellen (ohne neuen Rückgängig-Schritt, den setzt der Aufrufer).
-func verschieben(ziel: Vector2i) -> void:
-	if auswahl.is_empty() or ziel == auswahl_feld():
-		return
-	if auswahl.art == "teil":
-		var eintrag: Dictionary = objekte[auswahl.nr]
-		# Gleiche Teile auf demselben Feld (z. B. Marktstand tags offen, nachts zu) wandern zusammen
-		var alt: Array = eintrag.o.feld.duplicate()
-		for e: Dictionary in objekte:
-			if not e.weg and e.o.teil == eintrag.o.teil and StadtAenderungen.gleiches_feld(e.o.feld, alt):
-				e.o.feld = [ziel.x, ziel.y]
-				_teil_bauen(e)
+	if merken:
+		_merken()
+	var ziel := _auswahl_feld() + schritt
+	if _auswahl.art == "teil":
+		_daten.objekte[_auswahl.index].feld = [ziel.x, ziel.y]
+		_teil_bauen(_auswahl.index)
 	else:
-		var f: Dictionary = figuren[auswahl.nr]
-		f["nachts" if nacht and f.nachts != null else "feld"] = [ziel.x, ziel.y]
-		_figur_stellen(f)
-	_uebernehmen()
+		var n: Dictionary = _npcs[_auswahl.id]
+		if nacht and n.nachts != null:
+			n.nachts = ziel
+		else:
+			n.feld = ziel
+		_npc_bauen(_auswahl.id)
+	_geaendert = true
+	_markierung.queue_redraw()
+	_info_zeigen()
 
 
-## Ein Feld weiter (Pfeil-Knöpfe)
-func schritt(richtung: Vector2i) -> void:
-	if auswahl.is_empty():
-		return
-	merken()
-	verschieben(auswahl_feld() + richtung)
-
-
-## Auswahl zurück an den Platz aus den Kartendaten
-func an_alten_platz() -> void:
-	if auswahl.is_empty():
-		return
-	var von: Variant = objekte[auswahl.nr].von if auswahl.art == "teil" else (
-			figuren[auswahl.nr].von_nacht if nacht and figuren[auswahl.nr].nachts != null else figuren[auswahl.nr].von)
-	if von == null:
-		return
-	merken()
-	verschieben(Vector2i(von[0], von[1]))
-
-
-## Teil spiegeln (steht dann quer, z. B. ein Tor an einer anderen Straße)
 func spiegeln() -> void:
-	if auswahl.is_empty() or auswahl.art != "teil":
+	if _auswahl.get("art", "") != "teil":
 		return
-	merken()
-	var e: Dictionary = objekte[auswahl.nr]
-	e.o.gespiegelt = not bool(e.o.get("gespiegelt", false))
-	_teil_bauen(e)
-	_uebernehmen()
+	_merken()
+	var o: Dictionary = _daten.objekte[_auswahl.index]
+	if o.get("gespiegelt", false):
+		o.erase("gespiegelt")
+	else:
+		o.gespiegelt = true
+	_teil_bauen(_auswahl.index)
+	_geaendert = true
+	_markierung.queue_redraw()
+
+
+## Drehen: flache Teile in 45°-Schritten auf dem Boden; stehende Teile reihum vorne, quer (gespiegelt), von hinten
+## und von hinten quer – die Ansicht von hinten nur, wenn es dafür ein Bild gibt („bild_hinten“ in baukasten_teile.json).
+func drehen() -> void:
+	if _auswahl.get("art", "") != "teil":
+		return
+	var o: Dictionary = _daten.objekte[_auswahl.index]
+	var d: Dictionary = _teile.objekte.get(o.teil, {})
+	_merken()
+	# Flache Teile ohne Höhe (Gras, Teppich, Steine) frei drehen; Brücken haben Geländer, die drehen sich wie Häuser
+	if d.get("flach", false) and d.get("drehbar", true):
+		var neu := posmod(int(o.get("drehung", 0)) + 45, 360)
+		if neu == 0:
+			o.erase("drehung")
+		else:
+			o.drehung = neu
+	else:
+		var stufe := (1 if o.get("gespiegelt", false) else 0) + (2 if o.get("hinten", false) else 0)
+		stufe = (stufe + 1) % (4 if d.has("bild_hinten") else 2)
+		_setzen(o, "gespiegelt", stufe % 2 == 1)
+		_setzen(o, "hinten", stufe >= 2)
+		if not d.has("bild_hinten"):
+			_melden("Für die Ansicht von hinten fehlt noch ein Bild, darum nur vorne und quer.")
+	_teil_bauen(_auswahl.index)
+	_geaendert = true
+	_markierung.queue_redraw()
+	_info_zeigen()
+
+
+static func _setzen(o: Dictionary, schluessel: String, an: bool) -> void:
+	if an:
+		o[schluessel] = true
+	else:
+		o.erase(schluessel)
 
 
 func loeschen() -> void:
-	if auswahl.is_empty():
+	if _auswahl.get("art", "") == "npc":
+		var id: String = _auswahl.id
+		if not loeschbar(_npcs[id]):
+			_melden("Diese Figur gehört zur Geschichte und bleibt (nur Volk lässt sich löschen).")
+			return
+		_merken()
+		if not _npcs[id].neu:
+			_geloescht.append(id)
+		_npcs.erase(id)
+		_npc_views[id].queue_free()
+		_npc_views.erase(id)
+		_geaendert = true
+		waehlen({})
 		return
-	if auswahl.art == "figur" and not loeschbar(figuren[auswahl.nr]):
-		_meldung.text = "%s gehört zur Geschichte und lässt sich nur verschieben." % figuren[auswahl.nr].name
+	if _auswahl.get("art", "") != "teil":
 		return
-	merken()
-	if auswahl.art == "teil":
-		objekte[auswahl.nr].weg = true
-		_teil_bauen(objekte[auswahl.nr])
-	else:
-		figuren[auswahl.nr].weg = true
-		(figuren[auswahl.nr].node as Node2D).visible = false
-	auswahl = {}
-	_uebernehmen()
+	_merken()
+	var i: int = _auswahl.index
+	if _teil_views[i].has("node"):
+		_teil_views[i].node.queue_free()
+	_daten.objekte.remove_at(i)
+	_teil_views.remove_at(i)
+	_geaendert = true
+	waehlen({})
 
 
-## Neues Teil aus dem Baukasten in die Bildmitte stellen und auswählen
-func teil_dazu(teil: String) -> void:
+## Neues Teil aus dem Baukasten mitten ins Bild setzen und gleich wählen (zum Weiterschieben).
+func teil_hinzufuegen(teil: String) -> void:
 	if not _teile.objekte.has(teil):
 		return
-	merken()
-	var e := {o = {teil = teil, feld = _mitte_feld(), gespiegelt = false}, von = null, gespiegelt_vorher = false, weg = false}
-	objekte.append(e)
-	_teil_bauen(e)
-	auswahl = {art = "teil", nr = objekte.size() - 1}
-	_uebernehmen()
+	_merken()
+	var feld := _maus_feld(_kamera.position)
+	_daten.objekte.append({teil = teil, feld = [feld.x, feld.y]})
+	_teil_views.append({})
+	_teil_bauen(_daten.objekte.size() - 1)
+	_geaendert = true
+	waehlen({art = "teil", index = _daten.objekte.size() - 1})
 
 
-## Neue Volk-Figur (Baukasten-Körper mit Kopf, Gespräch eines vorhandenen Volks) in die Bildmitte stellen
-func figur_dazu(look: String, name: String, dialog: String) -> void:
-	merken()
+## Neue Volks-Figur (Körper+Kopf) mitten ins Bild; wann: "" = immer da, "tags" oder "nachts".
+## Sie sagt einen allgemeinen Satz (Gespräch „volk_neu“), bis jemand ihr einen eigenen gibt.
+func figur_hinzufuegen(aussehen: String, name: String, wann := "") -> String:
+	_merken()
 	var nummer := 1
-	while _figur_id_belegt("neu_%d" % nummer):
+	while _npcs.has("volk_neu_%s_%d" % [karte, nummer]) or _geloescht.has("volk_neu_%s_%d" % [karte, nummer]):
 		nummer += 1
-	_figur_dazu({id = "neu_%d" % nummer, name = name, look = look, dialog = dialog, von = null, von_nacht = null,
-			nachts = null, feld = _mitte_feld(), weg = false, farbe = "ffffff"})
-	auswahl = {art = "figur", nr = figuren.size() - 1}
-	_uebernehmen()
+	var id := "volk_neu_%s_%d" % [karte, nummer]
+	var wenn := {}
+	if wann != "":
+		wenn = {nacht = wann == "nachts"}
+	_npcs[id] = {name = name if name != "" else "Bürger", aussehen = aussehen, feld = _maus_feld(_kamera.position), nachts = null,
+			liegt = false, bedingt = not wenn.is_empty(), dialog = "volk_neu", wenn = wenn, neu = true}
+	_npc_bauen(id)
+	_geaendert = true
+	waehlen({art = "npc", id = id})
+	return id
 
 
-func _figur_id_belegt(id: String) -> bool:
-	for f in figuren:
-		if f.id == id:
-			return true
-	return false
+func rueckgaengig() -> void:
+	if _rueckgaengig.is_empty():
+		return
+	var stand: Dictionary = _rueckgaengig.pop_back()
+	_daten.objekte = stand.objekte
+	_npcs = stand.npcs
+	_geloescht = stand.geloescht
+	for id: String in _npc_views:
+		if is_instance_valid(_npc_views[id]):
+			_npc_views[id].queue_free()
+	_npc_views.clear()
+	for t: Dictionary in _teil_views:
+		if t.has("node") and is_instance_valid(t.node):
+			t.node.queue_free()
+	_teil_views.clear()
+	for i in _daten.objekte.size():
+		_teil_views.append({})
+		_teil_bauen(i)
+	for id: String in _npcs:
+		_npc_bauen(id)
+	waehlen({})
 
 
-func _mitte_feld() -> Array:
-	var feld := feld_bei(_kamera.position) if _kamera != null else Vector2i(10, 10)
-	return [feld.x, feld.y]
+# --- Speichern -------------------------------------------------------------------
+
+## Ganze Zahlen bleiben ganze Zahlen (Godot liest Zahlen als Kommazahlen, die Dateien haben ganze Zahlen).
+static func ganzzahlen(wert: Variant) -> Variant:
+	if wert is float and is_equal_approx(wert, roundf(wert)):
+		return int(roundf(wert))
+	if wert is Array:
+		return (wert as Array).map(func(v: Variant) -> Variant: return ganzzahlen(v))
+	if wert is Dictionary:
+		var neu := {}
+		for k: Variant in wert:
+			neu[k] = ganzzahlen(wert[k])
+		return neu
+	return wert
 
 
-## Die Änderungen dieser Stadt aus dem, was der Editor zeigt, neu zusammenstellen
-func _uebernehmen() -> void:
-	var liste: Array = []
-	for e: Dictionary in objekte:
-		var gespiegelt := bool(e.o.get("gespiegelt", false))
-		if e.von == null:
-			if not e.weg:
-				var neu := {teil = e.o.teil, neu = _feld(e.o.feld)}
-				if gespiegelt:
-					neu.gespiegelt = true
-				liste.append(neu)
-			continue
-		var v := {teil = e.o.teil, von = e.von.duplicate()}
-		if e.weg:
-			v.weg = true
-		else:
-			if not StadtAenderungen.gleiches_feld(e.o.feld, e.von):
-				v.nach = _feld(e.o.feld)
-			if gespiegelt != e.gespiegelt_vorher:
-				v.gespiegelt = gespiegelt
-		if v.size() > 2:
-			liste.append(v)
-	var verschoben := {}
-	var neue := {}
-	for f: Dictionary in figuren:
-		if f.von == null:
-			if not f.weg:
-				neue[f.id] = {name = f.name, aussehen = f.look, dialog = f.dialog, feld = _feld(f.feld)}
-			continue
-		var v := {}
-		if f.weg:
-			v.weg = true
-		else:
-			if not StadtAenderungen.gleiches_feld(f.feld, f.von):
-				v.feld = _feld(f.feld)
-			if f.nachts != null and not StadtAenderungen.gleiches_feld(f.nachts, f.von_nacht):
-				v.nachts = _feld(f.nachts)
-		if not v.is_empty():
-			verschoben[f.id] = v
-	var aend := {}
-	if not liste.is_empty():
-		aend.objekte = liste
-	if not verschoben.is_empty():
-		aend.figuren = verschoben
-	if not neue.is_empty():
-		aend.neue_figuren = neue
-	if aend.is_empty():
-		aenderungen.erase(stadt)
-	else:
-		aenderungen[stadt] = aend
-	geaendert = true
-	_auswahl_zeigen()
+## Text einer Datendatei im Format der Datei (Tabs, Schlüssel in der alten Reihenfolge, Zeilenende wie vorher).
+static func als_text(daten: Dictionary, vorher: String) -> String:
+	var text := JSON.stringify(ganzzahlen(daten), "\t", false)
+	return text + "\n" if vorher.ends_with("\n") else text
 
 
-func speichern() -> String:
-	var text := StadtAenderungen.speichern(aenderungen)
-	geaendert = false
+## Was der Editor geändert hat, als Datei für Claude: {karte, datei, objekte, npcs: {id: {feld, nachts}}, geloescht: [id]}.
+## Neue Figuren haben dazu name, aussehen, dialog (und wenn) und "neu": true.
+func aenderungen() -> Dictionary:
+	var figuren := {}
+	for id: String in _npcs:
+		var n: Dictionary = _npcs[id]
+		figuren[id] = {feld = [n.feld.x, n.feld.y]}
+		if n.nachts != null:
+			figuren[id].nachts = [n.nachts.x, n.nachts.y]
+		if n.neu:
+			figuren[id].merge({neu = true, name = n.name, aussehen = n.aussehen, dialog = n.dialog})
+			if not (n.wenn as Dictionary).is_empty():
+				figuren[id].wenn = n.wenn
+	return {karte = karte, datei = _dateiname, objekte = ganzzahlen(_daten.objekte), npcs = figuren, geloescht = _geloescht.duplicate()}
+
+
+func speichern() -> void:
+	var paket := aenderungen()
+	if OS.has_feature("editor"):
+		var fehler := uebernehmen(paket)
+		_melden("Gespeichert in data/ (%s)." % _dateiname if fehler == "" else fehler)
+		if fehler == "":
+			_geaendert = false
+		return
+	var text := JSON.stringify(paket, "\t", false)
+	var name := "stadt_%s.json" % karte
 	if OS.has_feature("web"):
-		JavaScriptBridge.download_buffer(text.to_utf8_buffer(), "stadt_aenderungen.json", "application/json")
-		_meldung.text = "Gespeichert (gilt in diesem Browser). Die Datei „stadt_aenderungen.json“ ist heruntergeladen: Schick sie Claude."
-	elif OS.has_feature("editor"):
-		_meldung.text = "Gespeichert in data/stadt_aenderungen.json. Gilt ab dem nächsten Betreten der Stadt."
+		JavaScriptBridge.download_buffer(text.to_utf8_buffer(), name, "application/json")
+		_melden("Datei „%s“ heruntergeladen: bitte Claude schicken." % name)
 	else:
-		_meldung.text = "Gespeichert (gilt auf diesem Gerät)."
-	_auswahl_zeigen()
-	return text
+		var pfad := "user://" + name
+		var datei := FileAccess.open(pfad, FileAccess.WRITE)
+		if datei != null:
+			datei.store_string(text)
+		_melden("Gespeichert: %s" % ProjectSettings.globalize_path(pfad))
+	_geaendert = false
 
 
-# --- Eingabe --------------------------------------------------------------------
+## Änderungen in die Kartendaten schreiben (Godot-Editor; dieselbe Arbeit macht tools/stadt_editor_uebernehmen.py).
+## Gibt "" zurück oder einen Fehlertext.
+static func uebernehmen(paket: Dictionary) -> String:
+	var datei_pfad := "res://data/%s.json" % paket.datei
+	var vorher := FileAccess.get_file_as_string(datei_pfad)
+	var daten: Variant = JSON.parse_string(vorher)
+	if not daten is Dictionary:
+		return "Kartendatei nicht lesbar: " + datei_pfad
+	daten.objekte = paket.objekte
+	if not _schreiben(datei_pfad, als_text(daten, vorher)):
+		return "Kann nicht schreiben: " + datei_pfad
+	GameData._cache.erase(str(paket.datei))
+	# Figuren: Kreuzweg in kreuzweg.json, alle anderen Karten in karten.json
+	var datei := "kreuzweg" if paket.karte == "kreuzweg" else "karten"
+	var pfad := "res://data/%s.json" % datei
+	var text := FileAccess.get_file_as_string(pfad)
+	var alle: Dictionary = JSON.parse_string(text)
+	var ort: Dictionary = alle if paket.karte == "kreuzweg" else alle[paket.karte]
+	if not ort.has("npcs"):
+		ort.npcs = {}
+	figuren_setzen(ort.npcs, paket)
+	if not _schreiben(pfad, als_text(alle, text)):
+		return "Kann nicht schreiben: " + pfad
+	GameData._cache.erase(datei)
+	return ""
+
+
+## Plätze, neue und gelöschte Figuren in die Figuren-Liste einer Karte übernehmen.
+static func figuren_setzen(npcs: Dictionary, paket: Dictionary) -> void:
+	for id: String in paket.get("geloescht", []):
+		npcs.erase(id)
+	for id: String in paket.npcs:
+		var f: Dictionary = paket.npcs[id]
+		if f.get("neu", false) and not npcs.has(id):
+			npcs[id] = {name = f.name, feld = f.feld, aussehen = f.aussehen, dialog = f.dialog}
+			if f.has("wenn"):
+				npcs[id].wenn = f.wenn
+		elif npcs.has(id):
+			npcs[id].feld = f.feld
+			if f.has("nachts"):
+				npcs[id].nachts = f.nachts
+
+
+static func _schreiben(pfad: String, text: String) -> bool:
+	var datei := FileAccess.open(pfad, FileAccess.WRITE)
+	if datei == null:
+		return false
+	datei.store_string(text)
+	return true
+
+
+# --- Eingabe ---------------------------------------------------------------------
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		var mb := event as InputEventMouseButton
-		if mb.button_index == MOUSE_BUTTON_WHEEL_UP and mb.pressed:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
 			_zoomen(1)
-		elif mb.button_index == MOUSE_BUTTON_WHEEL_DOWN and mb.pressed:
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
 			_zoomen(-1)
-		elif mb.button_index == MOUSE_BUTTON_LEFT:
-			if mb.pressed:
-				var punkt := get_global_mouse_position()
-				var treffer := finden(punkt)
-				_gezogen = false
-				if treffer.is_empty():
-					_ziehen = "kamera"
-				else:
-					auswahl = treffer
-					_ziehen = "teil"
-					_greif_versatz = feld_bei(punkt) - auswahl_feld()
-					_auswahl_zeigen()
+		elif event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:
+				_druecken(get_global_mouse_position(), event.position)
 			else:
-				# Antippen ohne Ziehen auf eine leere Stelle: Auswahl aufheben
-				if _ziehen == "kamera" and not _gezogen:
-					auswahl = {}
-					_auswahl_zeigen()
-				_ziehen = ""
-	elif event is InputEventMouseMotion and _ziehen != "":
-		var mm := event as InputEventMouseMotion
-		if _ziehen == "kamera":
-			_gezogen = _gezogen or mm.relative.length() > 2.0
-			_kamera.position -= mm.relative / _kamera.zoom
+				_zieht = false
+				_schiebt_karte = false
+	elif event is InputEventMouseMotion and (_zieht or _schiebt_karte):
+		if _zieht:
+			var feld := _maus_feld(get_global_mouse_position()) - _griff
+			var schritt := feld - _auswahl_feld()
+			if schritt != Vector2i.ZERO:
+				verschieben(schritt, not _verschoben)
+				_verschoben = true
 		else:
-			var ziel := feld_bei(get_global_mouse_position()) - _greif_versatz
-			if ziel != auswahl_feld():
-				# Ein Rückgängig-Schritt pro Ziehen
-				if not _gezogen:
-					merken()
-				_gezogen = true
-				verschieben(ziel)
-	elif event is InputEventKey and event.pressed:
+			_kamera.position -= (event.position - _letzte_maus) / _kamera.zoom
+			_letzte_maus = event.position
+	elif event is InputEventKey and event.pressed and not event.echo:
 		match event.physical_keycode:
 			KEY_ESCAPE:
-				get_tree().change_scene_to_file("res://scenes/editor.tscn")
-			KEY_LEFT:
-				_kamera.position.x -= 200.0 / _kamera.zoom.x
-			KEY_RIGHT:
-				_kamera.position.x += 200.0 / _kamera.zoom.x
-			KEY_UP:
-				_kamera.position.y -= 150.0 / _kamera.zoom.y
-			KEY_DOWN:
-				_kamera.position.y += 150.0 / _kamera.zoom.y
+				_zurueck()
+			KEY_Z when event.ctrl_pressed:
+				rueckgaengig()
 			KEY_DELETE:
 				loeschen()
-			KEY_Z:
-				if event.ctrl_pressed:
-					zuruecknehmen()
+			KEY_UP:
+				verschieben(Vector2i(0, -1))
+			KEY_DOWN:
+				verschieben(Vector2i(0, 1))
+			KEY_LEFT:
+				verschieben(Vector2i(-1, 0))
+			KEY_RIGHT:
+				verschieben(Vector2i(1, 0))
+
+
+func _druecken(welt: Vector2, bildschirm: Vector2) -> void:
+	var was := treffer(welt)
+	_verschoben = false
+	if was.is_empty():
+		waehlen({})
+		_schiebt_karte = true
+		_letzte_maus = bildschirm
+		return
+	waehlen(was)
+	_zieht = true
+	_griff = _maus_feld(welt) - _auswahl_feld()
 
 
 func _zoomen(richtung: int) -> void:
-	zoom_stufe = clampi(zoom_stufe + richtung, 0, ZOOMS.size() - 1)
-	_kamera.zoom = Vector2.ONE * ZOOMS[zoom_stufe]
+	_zoom = clampi(_zoom + richtung, 0, ZOOMS.size() - 1)
+	_kamera.zoom = Vector2(ZOOMS[_zoom], ZOOMS[_zoom])
 
 
-# --- Anzeige --------------------------------------------------------------------
+# --- Anzeige ---------------------------------------------------------------------
 
-## Gelber Rahmen um die Grundfläche der Auswahl (Figur: ihr Feld)
-func _rahmen_malen() -> void:
-	if auswahl.is_empty():
+func _markierung_zeichnen() -> void:
+	if _auswahl.is_empty():
 		return
-	var r := Rect2i(auswahl_feld(), Vector2i.ONE)
-	if auswahl.art == "teil":
-		r = objekte[auswahl.nr].rect
-	var ecken := PackedVector2Array([Vector2(r.position), Vector2(r.end.x, r.position.y), Vector2(r.end), Vector2(r.position.x, r.end.y), Vector2(r.position)])
-	var punkte := PackedVector2Array()
-	var hoehe := _hoehen.teil_px(r) if _hoehen != null else 0.0
-	for e in ecken:
-		punkte.append(BaukastenBoden.cell_to_screen(e) - Vector2(0, hoehe))
-	_rahmen.draw_colored_polygon(punkte.slice(0, 4), Color(1.0, 0.83, 0.3, 0.25))
-	_rahmen.draw_polyline(punkte, Color("ffd34d"), 3.0)
-	if auswahl.art == "teil":
-		var bild: Rect2 = objekte[auswahl.nr].bild
-		_rahmen.draw_rect(bild, Color(1.0, 0.83, 0.3, 0.6), false, 2.0)
+	var rect := Rect2i(_auswahl_feld(), Vector2i.ONE)
+	if _auswahl.art == "teil":
+		rect = BaukastenBoden.grundflaeche(_daten.objekte[_auswahl.index], _teile)
+	var oben := Vector2(0, _hoehen.teil_px(rect) if _hoehen != null else 0.0)
+	var ecken := PackedVector2Array([BaukastenBoden.cell_to_screen(Vector2(rect.position)) - oben,
+			BaukastenBoden.cell_to_screen(Vector2(rect.end.x, rect.position.y)) - oben,
+			BaukastenBoden.cell_to_screen(Vector2(rect.end)) - oben,
+			BaukastenBoden.cell_to_screen(Vector2(rect.position.x, rect.end.y)) - oben])
+	_markierung.draw_colored_polygon(ecken, Color(1.0, 0.85, 0.3, 0.25))
+	ecken.append(ecken[0])
+	_markierung.draw_polyline(ecken, Color("ffd34d"), 3.0)
+	if _auswahl.art == "teil" and _teil_views[_auswahl.index].has("bild"):
+		_markierung.draw_rect(_teil_views[_auswahl.index].bild, Color(1.0, 0.85, 0.3, 0.6), false, 2.0)
 
 
-func _auswahl_zeigen() -> void:
-	_rahmen.queue_redraw()
+func _info_zeigen() -> void:
 	if _info == null:
 		return
-	for k in _auswahl_knoepfe:
-		k.disabled = auswahl.is_empty()
-	_spiegel_knopf.disabled = auswahl.is_empty() or auswahl.art != "teil"
-	_loesch_knopf.disabled = auswahl.is_empty() or (auswahl.art == "figur" and not loeschbar(figuren[auswahl.nr]))
-	_rueck_knopf.disabled = rueckgaengig.is_empty()
-	var kopf := "%s%s%s" % [StadtAenderungen.STAEDTE[stadt].name, ", nachts (Nachtplätze der Figuren)" if nacht else ", tagsüber",
-			"  (nicht gespeichert)" if geaendert else ""]
-	if auswahl.is_empty():
-		_info.text = "%s\nTeil oder Figur antippen, dann ziehen oder mit den Pfeilen verschieben." % kopf
-		return
-	var feld := auswahl_feld()
-	if auswahl.art == "teil":
-		var e: Dictionary = objekte[auswahl.nr]
-		var zusatz := "  (nur zeitweise)" if e.o.has("wenn") else ("  (neu)" if e.von == null else "")
-		var name := "%s „%s“" % [e.o.teil, e.o.name] if e.o.has("name") else str(e.o.teil)
-		var vorher := "neu" if e.von == null else "vorher %d, %d" % [e.von[0], e.von[1]]
-		_info.text = "%s\nTeil: %s%s\nFeld %d, %d (%s)" % [kopf, name, zusatz, feld.x, feld.y, vorher]
-	else:
-		var f: Dictionary = figuren[auswahl.nr]
-		var platz := "Nachtplatz" if nacht and f.nachts != null else ("Platz (Tag und Nacht)" if f.nachts == null else "Tagplatz")
-		var von: Variant = f.von_nacht if nacht and f.nachts != null else f.von
-		var vorher := "neu" if von == null else "vorher %d, %d" % [von[0], von[1]]
-		_info.text = "%s\nFigur: %s, %s\nFeld %d, %d (%s)" % [kopf, f.name, platz, feld.x, feld.y, vorher]
+	var text := "Antippen wählt, Ziehen verschiebt. Leere Stelle ziehen: Karte bewegen. Mausrad oder − +: Zoom."
+	if _auswahl.get("art", "") == "teil":
+		var o: Dictionary = _daten.objekte[_auswahl.index]
+		text = "Teil: %s  ·  Feld %d, %d%s%s" % [o.teil, int(o.feld[0]), int(o.feld[1]),
+				("  ·  gespiegelt" if o.get("gespiegelt", false) else "") + ("  ·  von hinten" if o.get("hinten", false) else "")
+				+ ("  ·  gedreht %d°" % int(o.drehung) if o.has("drehung") else ""),
+				"  ·  nur bei einem Stand der Geschichte" if o.has("wenn") or o.has("nur_stufe") else ""]
+	elif _auswahl.get("art", "") == "npc":
+		var n: Dictionary = _npcs[_auswahl.id]
+		var feld := _npc_feld(_auswahl.id)
+		text = "Figur: %s (%s)  ·  Feld %d, %d  ·  %s%s" % [n.name, _auswahl.id, feld.x, feld.y,
+				("Platz nachts" if n.nachts != null else "steht tags und nachts hier") if nacht else "Platz tags",
+				"  ·  nur bei einem Stand der Geschichte" if n.bedingt else ""]
+		if not loeschbar(n):
+			text += "  ·  gehört zur Geschichte (nicht löschbar)"
+	_info.text = text
+	for k in _knoepfe_auswahl:
+		k.disabled = _auswahl.is_empty()
 
 
-func _hud_bauen() -> void:
+func _melden(text: String) -> void:
+	if _meldung != null:
+		_meldung.text = text
+
+
+func _leiste_bauen() -> void:
 	var ebene := CanvasLayer.new()
-	ebene.layer = 50
+	ebene.layer = 10
 	add_child(ebene)
 	var oben := PanelContainer.new()
 	oben.theme = Combat.make_theme()
 	oben.position = Vector2(4, 4)
-	oben.size = Vector2(1272, 48)
+	oben.size = Vector2(1272, 52)
 	ebene.add_child(oben)
-	var zeile := HBoxContainer.new()
-	zeile.add_theme_constant_override("separation", 6)
-	oben.add_child(zeile)
-	var ids: Array = StadtAenderungen.STAEDTE.keys()
+	var reihe := HBoxContainer.new()
+	reihe.add_theme_constant_override("separation", 8)
+	oben.add_child(reihe)
+	var titel := Label.new()
+	titel.text = "Stadt-Editor"
+	titel.add_theme_font_size_override("font_size", 20)
+	titel.add_theme_color_override("font_color", Color("f2c14e"))
+	reihe.add_child(titel)
+	var ids: Array = karten().keys()
 	var wahl := OptionButton.new()
 	for id: String in ids:
-		wahl.add_item(str(StadtAenderungen.STAEDTE[id].name))
-	wahl.select(ids.find(stadt))
-	wahl.custom_minimum_size = Vector2(230, 34)
+		wahl.add_item(str(karten()[id]))
+	wahl.select(ids.find(karte))
+	wahl.custom_minimum_size = Vector2(190, 36)
 	wahl.focus_mode = Control.FOCUS_NONE
 	wahl.item_selected.connect(func(i: int) -> void:
-		rueckgaengig = []
-		_neu_aufbauen(func() -> void: stadt = ids[i]))
-	zeile.add_child(wahl)
-	zeile.add_child(_knopf("Nacht" if not nacht else "Tag", 80, func() -> void: _neu_aufbauen(func() -> void: nacht = not nacht)))
-	zeile.add_child(_knopf("−", 44, func() -> void: _zoomen(-1)))
-	zeile.add_child(_knopf("+", 44, func() -> void: _zoomen(1)))
-	var dazu := _knopf("Hinzufügen", 130, func() -> void: pass)
-	dazu.pressed.connect(func() -> void: _dazu_panel.visible = not _dazu_panel.visible)
-	zeile.add_child(dazu)
-	_rueck_knopf = _knopf("Rückgängig", 130, zuruecknehmen)
-	zeile.add_child(_rueck_knopf)
-	zeile.add_child(_knopf("Speichern", 120, speichern))
-	var zuruecksetzen := _knopf("Zurücksetzen", 140, func() -> void: pass)
-	zuruecksetzen.pressed.connect(func() -> void:
-		# Zweimal tippen, damit nichts aus Versehen verloren geht
-		if zuruecksetzen.text != "Wirklich?":
-			zuruecksetzen.text = "Wirklich?"
+		if _ungespeichert_warnen():
+			wahl.select(ids.find(karte))
 			return
-		merken()
-		aenderungen.erase(stadt)
-		geaendert = true
-		_neu_aufbauen(func() -> void: pass))
-	zeile.add_child(zuruecksetzen)
-	zeile.add_child(_knopf("Zurück", 100, func() -> void: get_tree().change_scene_to_file("res://scenes/editor.tscn")))
+		karte = ids[i]
+		get_tree().reload_current_scene())
+	reihe.add_child(wahl)
+	var tag := _knopf("Nachts" if nacht else "Tags", 90, Callable())
+	tag.pressed.connect(func() -> void:
+		nacht = not nacht
+		tag.text = "Nachts" if nacht else "Tags"
+		for id: String in _npcs:
+			_npc_bauen(id)
+		_markierung.queue_redraw()
+		_info_zeigen())
+	tag.tooltip_text = "Figuren an ihrem Platz tags oder nachts zeigen und verschieben"
+	reihe.add_child(tag)
+	reihe.add_child(_knopf("−", 40, func() -> void: _zoomen(-1)))
+	reihe.add_child(_knopf("+", 40, func() -> void: _zoomen(1)))
+	reihe.add_child(_knopf("Hinzufügen", 120, func() -> void: _hinzu_panel.visible = not _hinzu_panel.visible))
+	reihe.add_child(_knopf("Rückgängig", 120, rueckgaengig))
+	reihe.add_child(_knopf("Speichern", 120, speichern))
+	_meldung = Label.new()
+	_meldung.custom_minimum_size = Vector2(300, 0)
+	_meldung.add_theme_font_size_override("font_size", 13)
+	_meldung.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_meldung.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	reihe.add_child(_meldung)
+	reihe.add_child(_knopf("Zurück", 90, _zurueck))
+
+	_hinzu_bauen(ebene)
 
 	var unten := PanelContainer.new()
 	unten.theme = Combat.make_theme()
-	unten.position = Vector2(4, 580)
-	unten.size = Vector2(760, 136)
+	unten.position = Vector2(4, 610)
+	unten.size = Vector2(1272, 106)
 	ebene.add_child(unten)
-	var spalte := VBoxContainer.new()
-	unten.add_child(spalte)
+	var zeile := HBoxContainer.new()
+	zeile.add_theme_constant_override("separation", 12)
+	unten.add_child(zeile)
+	# Pfeile wie die Rauten auf dem Bildschirm: ↖ ↗ oben, ↙ ↘ unten
+	var pfeile := GridContainer.new()
+	pfeile.columns = 2
+	for p: Array in [["↖", Vector2i(-1, 0)], ["↗", Vector2i(0, -1)], ["↙", Vector2i(0, 1)], ["↘", Vector2i(1, 0)]]:
+		var schritt: Vector2i = p[1]
+		var k := _knopf(str(p[0]), 56, func() -> void: verschieben(schritt))
+		_knoepfe_auswahl.append(k)
+		pfeile.add_child(k)
+	zeile.add_child(pfeile)
+	var rechts := VBoxContainer.new()
+	rechts.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	zeile.add_child(rechts)
 	_info = Label.new()
-	_info.add_theme_font_size_override("font_size", 16)
 	_info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	spalte.add_child(_info)
-	_meldung = Label.new()
-	_meldung.add_theme_font_size_override("font_size", 13)
-	_meldung.add_theme_color_override("font_color", Color("8affc1"))
-	_meldung.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	spalte.add_child(_meldung)
-
-	# Pfeile wie die Richtungen der Rauten: ↖ ↗ oben, ↙ ↘ unten, dazwischen die übrigen Knöpfe zur Auswahl
-	var pfeile := PanelContainer.new()
-	pfeile.theme = Combat.make_theme()
-	pfeile.position = Vector2(1016, 400)
-	pfeile.size = Vector2(260, 316)
-	ebene.add_child(pfeile)
-	var raster := GridContainer.new()
-	raster.columns = 2
-	raster.add_theme_constant_override("h_separation", 8)
-	raster.add_theme_constant_override("v_separation", 8)
-	pfeile.add_child(raster)
-	for zeichen: String in ["↖", "↗"]:
-		raster.add_child(_pfeil(zeichen))
-	var alter := _knopf("Alter Platz", 116, an_alten_platz)
-	_auswahl_knoepfe.append(alter)
-	raster.add_child(alter)
-	var weg := _knopf("Auswahl weg", 116, func() -> void:
-		auswahl = {}
-		_auswahl_zeigen())
-	_auswahl_knoepfe.append(weg)
-	raster.add_child(weg)
-	_spiegel_knopf = _knopf("Spiegeln", 116, spiegeln)
-	raster.add_child(_spiegel_knopf)
-	_loesch_knopf = _knopf("Löschen", 116, loeschen)
-	raster.add_child(_loesch_knopf)
-	for zeichen: String in ["↙", "↘"]:
-		raster.add_child(_pfeil(zeichen))
-	_dazu_panel_bauen(ebene)
+	_info.add_theme_font_size_override("font_size", 15)
+	rechts.add_child(_info)
+	var aktionen := HBoxContainer.new()
+	aktionen.add_theme_constant_override("separation", 8)
+	rechts.add_child(aktionen)
+	for k: Button in [_knopf("Drehen", 110, drehen), _knopf("Spiegeln", 110, spiegeln), _knopf("Löschen", 110, loeschen), _knopf("Abwählen", 110, func() -> void: waehlen({}))]:
+		_knoepfe_auswahl.append(k)
+		aktionen.add_child(k)
 
 
-## Auswahl zum Hinzufügen: ein Teil aus dem Baukasten oder eine Volk-Figur
-func _dazu_panel_bauen(ebene: CanvasLayer) -> void:
-	_dazu_panel = PanelContainer.new()
-	_dazu_panel.theme = Combat.make_theme()
-	_dazu_panel.position = Vector2(4, 60)
-	_dazu_panel.size = Vector2(300, 300)
-	_dazu_panel.visible = false
-	ebene.add_child(_dazu_panel)
+# --- Fenster „Hinzufügen“ ----------------------------------------------------------
+
+const REGIONEN := [["Alle", ""], ["Kreuzweg und allgemein", "-"], ["Grünwacht", "gw_"], ["Glutoase", "go_"], ["Vulkanschmiede", "vs_"]]
+var _teile_raster: GridContainer
+var _region := 0
+var _suche := ""
+
+
+func _hinzu_bauen(ebene: CanvasLayer) -> void:
+	_hinzu_panel = PanelContainer.new()
+	_hinzu_panel.theme = Combat.make_theme()
+	_hinzu_panel.position = Vector2(880, 62)
+	_hinzu_panel.size = Vector2(396, 544)
+	_hinzu_panel.visible = false
+	ebene.add_child(_hinzu_panel)
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 6)
-	_dazu_panel.add_child(box)
-	box.add_child(_ueberschrift("Teil aus dem Baukasten"))
-	var teile: Array = _teile.objekte.keys()
-	teile.sort()
-	_teil_wahl = _auswahl(teile)
-	box.add_child(_teil_wahl)
-	box.add_child(_knopf("Teil hinstellen", 280, func() -> void: teil_dazu(teile[_teil_wahl.selected])))
-	box.add_child(_ueberschrift("Volk-Figur"))
+	_hinzu_panel.add_child(box)
+	var reiter := HBoxContainer.new()
+	box.add_child(reiter)
+	var teile_box := VBoxContainer.new()
+	var figur_box := VBoxContainer.new()
+	figur_box.visible = false
+	var k_teile := _knopf("Teile", 120, Callable())
+	var k_figur := _knopf("Figuren", 120, Callable())
+	k_teile.pressed.connect(func() -> void:
+		teile_box.visible = true
+		figur_box.visible = false)
+	k_figur.pressed.connect(func() -> void:
+		teile_box.visible = false
+		figur_box.visible = true)
+	reiter.add_child(k_teile)
+	reiter.add_child(k_figur)
+	reiter.add_child(_knopf("✕", 40, func() -> void: _hinzu_panel.visible = false))
+	box.add_child(teile_box)
+	box.add_child(figur_box)
+
+	# Teile: Region, Suche, Bilder zum Antippen
+	var filter := HBoxContainer.new()
+	teile_box.add_child(filter)
+	var region := OptionButton.new()
+	for r: Array in REGIONEN:
+		region.add_item(str(r[0]))
+	region.custom_minimum_size = Vector2(190, 34)
+	region.focus_mode = Control.FOCUS_NONE
+	region.item_selected.connect(func(i: int) -> void:
+		_region = i
+		_teile_fuellen())
+	filter.add_child(region)
+	var suche := LineEdit.new()
+	suche.placeholder_text = "Suchen …"
+	suche.custom_minimum_size = Vector2(150, 34)
+	suche.text_changed.connect(func(t: String) -> void:
+		_suche = t.to_lower()
+		_teile_fuellen())
+	filter.add_child(suche)
+	var rollen := ScrollContainer.new()
+	rollen.custom_minimum_size = Vector2(380, 440)
+	rollen.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	teile_box.add_child(rollen)
+	_teile_raster = GridContainer.new()
+	_teile_raster.columns = 3
+	rollen.add_child(_teile_raster)
+	_hinzu_panel.visibility_changed.connect(func() -> void:
+		if _hinzu_panel.visible and _teile_raster.get_child_count() == 0:
+			_teile_fuellen())
+
+	# Figuren: Körper, Kopf, Name, wann sie da ist
 	var koerper: Array = FigurTeile.koerper_liste().keys().filter(func(k: String) -> bool: return k.begins_with("grund_"))
 	koerper.sort()
-	_koerper_wahl = _auswahl(koerper.map(func(k: String) -> String: return str(FigurTeile.koerper_liste()[k])))
-	box.add_child(_koerper_wahl)
-	_kopf_wahl = _auswahl([])
+	var koepfe: Array = []
+	var vorschau := TextureRect.new()
+	vorschau.custom_minimum_size = Vector2(120, 140)
+	vorschau.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	vorschau.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	var kopf_wahl := OptionButton.new()
+	var koerper_wahl := OptionButton.new()
+	var aussehen := func() -> String:
+		var k: String = koerper[koerper_wahl.selected]
+		return k + ("+" + str(koepfe[kopf_wahl.selected]) if not koepfe.is_empty() else "")
+	var neu_zeigen := func() -> void:
+		vorschau.texture = FigurTeile.bild(aussehen.call(), "idle_vorn", 0)
 	var koepfe_fuellen := func() -> void:
-		_kopf_wahl.clear()
-		var k: String = koerper[_koerper_wahl.selected]
-		var liste: Array = FigurTeile.koepfe(k).keys().filter(func(id: String) -> bool: return not FigurTeile.koepfe(k)[id].get("nur_figur", false))
-		liste.sort()
-		for id: String in liste:
-			_kopf_wahl.add_item(id)
-		var standard := liste.find(FigurTeile.standardkopf(k))
-		_kopf_wahl.select(maxi(0, standard))
-	koepfe_fuellen.call()
-	_koerper_wahl.item_selected.connect(func(_i: int) -> void: koepfe_fuellen.call())
-	box.add_child(_kopf_wahl)
-	var volk := volk_liste()
-	var dialoge: Array = volk.keys()
-	_volk_wahl = _auswahl(dialoge.map(func(d: String) -> String: return "%s (%s)" % [volk[d], d.trim_prefix("volk_")]))
-	_volk_wahl.tooltip_text = "Name und Gespräch wie bei diesem Volk"
-	box.add_child(_volk_wahl)
-	box.add_child(_knopf("Figur hinstellen", 280, func() -> void:
-		var d: String = dialoge[_volk_wahl.selected]
-		figur_dazu("%s+%s" % [koerper[_koerper_wahl.selected], _kopf_wahl.get_item_text(_kopf_wahl.selected)], volk[d], d)))
+		koepfe = FigurTeile.koepfe(koerper[koerper_wahl.selected]).keys()
+		koepfe.sort()
+		kopf_wahl.clear()
+		for k: String in koepfe:
+			kopf_wahl.add_item(str(FigurTeile.koepfe(koerper[koerper_wahl.selected])[k].get("name", k)))
+		neu_zeigen.call()
+	for k: String in koerper:
+		koerper_wahl.add_item(str(FigurTeile.koerper_liste()[k]))
+	for w: OptionButton in [koerper_wahl, kopf_wahl]:
+		w.custom_minimum_size = Vector2(370, 34)
+		w.focus_mode = Control.FOCUS_NONE
+		w.clip_text = true
+		w.fit_to_longest_item = false
+	koerper_wahl.item_selected.connect(func(_i: int) -> void: koepfe_fuellen.call())
+	kopf_wahl.item_selected.connect(func(_i: int) -> void: neu_zeigen.call())
+	figur_box.add_child(_beschriftung("Körper"))
+	figur_box.add_child(koerper_wahl)
+	figur_box.add_child(_beschriftung("Kopf"))
+	figur_box.add_child(kopf_wahl)
+	var name_feld := LineEdit.new()
+	name_feld.text = "Bürger"
+	name_feld.custom_minimum_size = Vector2(370, 34)
+	figur_box.add_child(_beschriftung("Name"))
+	figur_box.add_child(name_feld)
+	var wann := OptionButton.new()
+	for t: String in ["Immer da", "Nur tags", "Nur nachts"]:
+		wann.add_item(t)
+	wann.custom_minimum_size = Vector2(370, 34)
+	wann.focus_mode = Control.FOCUS_NONE
+	figur_box.add_child(wann)
+	figur_box.add_child(vorschau)
+	figur_box.add_child(_knopf("Figur hinzufügen", 370, func() -> void:
+		figur_hinzufuegen(aussehen.call(), name_feld.text.strip_edges(), ["", "tags", "nachts"][wann.selected])))
+	if not koerper.is_empty():
+		koepfe_fuellen.call()
 
 
-## Gespräche des Volks aus allen Städten: Dialog -> Name (z. B. "volk_gast_1" -> "Gast")
-static func volk_liste() -> Dictionary:
-	var liste := {}
-	for s: String in StadtAenderungen.STAEDTE:
-		var info: Dictionary = StadtAenderungen.STAEDTE[s]
-		var npcs := StadtAenderungen.figuren_von(GameData.roh(info.figuren[0]), info)
-		for id: String in npcs:
-			var d := str(npcs[id].get("dialog", ""))
-			if d.begins_with("volk_") and not liste.has(d):
-				liste[d] = str(npcs[id].get("name", "Bürger"))
-	return liste
-
-
-## Stadt, Tageszeit oder Stand wechseln: Ungespeichertes und „Rückgängig“ bleiben erhalten
-func _neu_aufbauen(aenderung: Callable) -> void:
-	_offen = aenderungen
-	_offen_geaendert = geaendert
-	_offen_rueckgaengig = rueckgaengig
-	aenderung.call()
-	get_tree().reload_current_scene()
-
-
-func _pfeil(zeichen: String) -> Button:
-	var b := _knopf(zeichen, 116, func() -> void: schritt(SCHRITTE[zeichen]))
-	b.custom_minimum_size = Vector2(116, 64)
-	b.add_theme_font_size_override("font_size", 30)
-	_auswahl_knoepfe.append(b)
-	return b
-
-
-func _ueberschrift(text: String) -> Label:
+func _beschriftung(text: String) -> Label:
 	var l := Label.new()
 	l.text = text
-	l.add_theme_font_size_override("font_size", 15)
+	l.add_theme_font_size_override("font_size", 14)
 	l.add_theme_color_override("font_color", Color("f2c14e"))
 	return l
 
 
-func _auswahl(eintraege: Array) -> OptionButton:
-	var k := OptionButton.new()
-	for e in eintraege:
-		k.add_item(str(e))
-	if not eintraege.is_empty():
-		k.select(0)
-	k.custom_minimum_size = Vector2(280, 32)
-	k.clip_text = true
-	k.fit_to_longest_item = false
-	k.add_theme_font_size_override("font_size", 14)
-	k.focus_mode = Control.FOCUS_NONE
-	return k
+## Teile im Fenster nach Region und Suche: je Teil ein Knopf mit Bild und Namen.
+func _teile_fuellen() -> void:
+	for kind in _teile_raster.get_children():
+		kind.queue_free()
+	var praefix: String = REGIONEN[_region][1]
+	var ids: Array = _teile.objekte.keys()
+	ids.sort()
+	for id: String in ids:
+		var region_passt := praefix == "" or (praefix == "-" and not (id.substr(0, 3) in ["gw_", "go_", "vs_"])) or id.begins_with(praefix)
+		if not region_passt or (_suche != "" and not id.to_lower().contains(_suche)):
+			continue
+		var knopf := Button.new()
+		knopf.custom_minimum_size = Vector2(120, 108)
+		knopf.icon = load(BaukastenBoden.ASSET_PATH + str(_teile.objekte[id].bild))
+		knopf.expand_icon = true
+		knopf.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		knopf.vertical_icon_alignment = VERTICAL_ALIGNMENT_TOP
+		knopf.text = id
+		knopf.clip_text = true
+		knopf.add_theme_font_size_override("font_size", 11)
+		knopf.focus_mode = Control.FOCUS_NONE
+		knopf.tooltip_text = id
+		var teil := id
+		knopf.pressed.connect(func() -> void: teil_hinzufuegen(teil))
+		_teile_raster.add_child(knopf)
 
 
 func _knopf(text: String, breite: float, aktion: Callable) -> Button:
 	var b := Button.new()
 	b.text = text
-	b.custom_minimum_size = Vector2(breite, 34)
-	b.add_theme_font_size_override("font_size", 15)
+	b.custom_minimum_size = Vector2(breite, 36)
+	b.add_theme_font_size_override("font_size", 16)
 	b.focus_mode = Control.FOCUS_NONE
-	b.pressed.connect(aktion)
+	if aktion.is_valid():
+		b.pressed.connect(aktion)
 	return b
+
+
+func _zurueck() -> void:
+	if _ungespeichert_warnen():
+		return
+	get_tree().change_scene_to_file("res://scenes/editor.tscn")
+
+
+## Beim ersten Versuch mit ungespeicherten Änderungen warnen (true = abbrechen), beim zweiten verwerfen.
+var _gewarnt := false
+func _ungespeichert_warnen() -> bool:
+	if not _geaendert or _gewarnt:
+		return false
+	_gewarnt = true
+	_melden("Nicht gespeichert! Erst „Speichern“ drücken, oder nochmal, um die Änderungen zu verwerfen.")
+	return true

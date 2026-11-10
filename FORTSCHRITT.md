@@ -26,7 +26,147 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt:** Alpha-Test A1 bis A8 (deine 52 Punkte, BAUAUFTRAEGE.md), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: Marcos Google-Formular verbinden. Offen bei den Monster-Blättern: der Rest (Bosse und Start-Monster bleiben), dann die alten Familien-Bilder aufräumen.
+- **Nächster Schritt (10.11.):** Alpha-Aufträge A7 bis A14 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+
+- **Neu (09.11.): A6 Kampf-Anzeige** (Alpha-Punkte 6, 7, 11, 43):
+  - **Schild der Monster (6):** Hat ein Gegner (oder jemand aus der Gruppe) einen Schild, liegt eine hellblaue Leiste direkt über seiner Lebensleiste, und oben auf dem Namensschild sitzt ein Schild-Abzeichen mit der Zahl.
+  - **Ziele unten (43):** Nach dem Antippen einer Fähigkeit stehen alle möglichen Ziele unten als Knöpfe mit Nummer, Leben, Schild und Element („1 · Wiesenhoppler“ …). „Zurück“ liegt immer auf der 6 (auch bei Auswahl-Menüs wie Rüstung oder Ware). Antippen der Figur geht weiterhin.
+  - **Stufen-Klang (11):** kurze Fanfare beim Stufenaufstieg, in der Welt und auf der Kampf-Auswertung (selbst erzeugt wie die anderen Geräusche).
+  - **Auftragsbelohnung (7):** Beim Abgeben erscheint eine Karte „Auftrag abgeschlossen“ mit dem Titel und darunter Geld, Erfahrung und Gegenstände mit ihren Bildern. Sie verschwindet nach ein paar Sekunden oder beim Antippen.
+  - **So testest du es:**
+    1. Gegen ein Monster kämpfen, „Hieb“: Unten stehen die Ziele mit Nummern, „6 · Zurück“.
+    2. Ein Monster, das sich schützt (z. B. Knollenkäfer „Einrollen“): Schild-Leiste und Abzeichen.
+    3. Einen Auftrag abgeben: Belohnungskarte.
+    4. Eine Stufe aufsteigen: Fanfare.
+
+- **Neu (09.11.): A5 Glutoase** (Alpha-Punkte 23, 31, 33, 34):
+  - **Weiter zum nächsten Auftrag (23):** Ist kein Auftrag der Geschichte offen und auf deiner Karte hat niemand ein „!“, zeigt der Wegweiser jetzt zum nächstgelegenen Auftraggeber auf einer anderen Karte. Beispiel Sternensängerin: Nach dem Lernen bei Xavina in der Palmenrast führt er zu Nadia in die Glutoase (bisher zeigte er nichts).
+  - **Mira im Bett (31):** Mira liegt jetzt auf dem Bett im Krankenzelt (das Bett war im Zelt-Bild schon gemalt). Ansprechen kannst du sie vom Zelteingang aus.
+  - **Lava und Weg (33, 34):** In der Vulkanschmiede ist die dunkle Leere um die Steinwege jetzt glühende, langsam wabernde Lava mit hellen Glutadern, an den Wegrändern leuchten Glut-Lichter. Dadurch sieht man die Lava sofort und die Wege heben sich klar ab.
+  - **So testest du es:**
+    1. Spielstand-Editor: Sternensängerin, Punkt „Beim Lehrmeister lernen“; bei Xavina lernen: Der Wegweiser führt in die Glutoase zu Nadia.
+    2. „Miras Lied“: Mira liegt im Zelt auf dem Bett.
+    3. „Die Ketten unter dem Berg“: In der Vulkanschmiede Lava und Wege ansehen.
+
+- **Neu (09.11.): A4b Mira und Ren** (Alpha-Punkte 13, 14):
+  - **Mira (13):** Beim „leisen Singen“ kommt Mira jetzt nach einer Sekunde von oben vom Marktplatz zu dir (vorher lief sie von ihrem Platz am Tor einen Umweg von fast neun Sekunden).
+  - **Rettung in der Sternenfall-Nacht (14):** Ren greift jetzt im Kampf selbst ein, als Szene: Sie rennt von rechts herein („Weg da!“), wirft drei Kunai auf den Sternenfresser, der verblasst, dann „Steh auf, Novize. Das war knapp.“ Gewinnt ihr, zieht sie den Splitter aus dem Gegner zu sich („Den Splitter nehme ich aber mit.“). Danach läuft sie davon, dann kommt die Auswertung.
+  - **Ren mit eigenen Bildern:** Deine Blätter `haupt_ren_kampf_a/b`, `haupt_ren_welt` und `haupt_ren_portraets` sind eingebaut (Kampf, Welt, Porträts). In Kreuzweg ist Ren nicht mehr die alte Elfe.
+  - **So testest du es:**
+    1. Den Korb bei der Wache abgeben: Mira kommt gleich von oben.
+    2. Nacht des Sternenfalls (Spielstand-Editor: Punkt „Das Fest der fünf Wege“): Kampf verlieren oder gewinnen, Ren greift ein.
+    3. Nach dem Kampf in der Stadt: Ren steht mit eigener Figur da.
+
+- **Neu (09.11.): A4a Ye's Erklärungen und das Abzeichen** (Alpha-Punkte 5, 10):
+  - **Erklärungen vor dem Kampf (5):** In Ye's Grundausbildung kommen die Erklärungen einer Lektion jetzt gleich zu Beginn, bevor sich jemand bewegt (bisher erst bei deinem Zug oder kurz vor dem ersten Angriff). In der Paradeschule sagt Ye nach den zwei vorgeführten Paraden in einem eigenen Fenster: „Jetzt du – versuch zweimal, PERFEKT zu parieren“, die Leiste zeigt „Jetzt du: Versuch, perfekt zu parieren! (Versuch 1 von 2)“.
+  - **Abzeichen (10):** Nach einer Probestunde bei Nalia (Glutoase) oder Aske (Grünwacht) geht es zurück in die Stadt statt in die Klassenliste. Beim ersten Mal überreicht der Gesandte das **Probestunden-Abzeichen** (in der Tasche) und sagt, dass du es der Schreiberin zeigen sollst; sprichst du ihn wieder an, kannst du weitere Klassen ausprobieren. Texte sind Platzhalter.
+  - **So testest du es:**
+    1. Ye's Grundausbildung: Zu Beginn jeder Lektion kommt erst Ye's Erklärung.
+    2. Lektion 2 (Parieren): Nach den zwei vorgeführten Paraden kommt „Jetzt du …“.
+    3. Bei Nalia eine Probestunde machen: Danach stehst du in der Stadt, sie gibt dir das Abzeichen.
+    4. Nalia nochmal ansprechen: wieder „Zeig mir eure Klassen“.
+
+- **Neu (09.11.): A3 Klassen der Demo** (Alpha-Punkte 9, 15):
+  - **Klassenwahl:** Die sechs Klassen aus Arkanum, Messinghafen und von den Nebelinseln stehen weiter in der Liste, aber blasser und mit „später“. Beim Antippen siehst du alles über sie, aber „Probestunde“ und „Diese Klasse wählen“ sind gesperrt, mit dem Hinweis, dass es in der Demo die Klassen aus Grünwacht und der Glutoase gibt.
+  - **Lehrmeister (deine Änderung):** Diese Klassen haben in der Welt keine eigenen Lehrmeister. Ihre „Lehrmeister“ sind die Gesandten in Kreuzweg. Ilwen (Arkanum), Pim (Messinghafen) und Mei (Nebelinseln) bleiben stehen; bei „Zeig mir eure Klassen“ sagen sie jetzt, dass ihre Wege noch verschlossen sind (Platzhalter-Texte). Die Gesandten von Grünwacht und der Glutoase zeigen ihre Klassen wie bisher.
+  - **So testest du es:**
+    1. Bei Ye die Klassenwahl öffnen: Kunoichi antippen, beide Knöpfe gesperrt.
+    2. Mit Ilwen, Pim oder Mei reden, „Zeig mir eure Klassen“: Sie bieten noch nichts an.
+    3. Mit Nalia (Glutoase) reden: Ihre drei Klassen und die Probestunde gehen wie bisher.
+
+- **Neu (09.11.): A2b Fleck, gemeinsamer Kampf, Gruppenfenster** (Alpha-Punkte 4, 8, 16):
+  - **Weißer Fleck (4):** Das war das Silberkraut, aber nicht wegen des Online-Spiels: Im Browser (einfache Grafik) wurde sein Bild in jedem Bild neu geladen und sofort wieder vergessen, die Grafik zeigte dann ein weißes Viereck. Jetzt bleibt es geladen (betrifft auch das Wiesenkraut).
+  - **Gemeinsamer Kampf (16):** Mitspieler mit Klasse kämpften als allgemeine Klassenfigur (andere Größe, anderer Stil). Jetzt kämpft jeder mit seiner eigenen Figur in Klassenkleidung, wie allein, und hat seine Tränke am Gürtel.
+  - **Gruppenfenster (8):** halb durchsichtig, mit „–“ einklappbar (dann nur die Namen), „+“ klappt es wieder auf. „Gruppe verlassen“ ist jetzt ein kleiner Knopf.
+  - **So testest du es:**
+    1. Im Browser (Demo) in Kreuzweg ein Silberkraut ansehen: Pflanze statt weißem Fleck.
+    2. Online zu zweit eine Gruppe bilden: Fenster mit „–“ einklappen, mit „+“ wieder auf.
+    3. Zu zweit mit gelernter Klasse gemeinsam kämpfen: Beide in eigener Figur und Klassenkleidung.
+
+- **Neu (09.11.): A2a Offline und Online** (Alpha-Punkte 3, 24, 48, 49):
+  - **Startmenü:** nur noch „Offline spielen“ und „Online spielen“ (in der Werkstatt dazu „Editor“). Feedback gibt es im Spiel oben rechts, die **Dankesliste** steht jetzt im Abspann am Ende der Demo.
+  - **Online = dasselbe Spiel:** Du spielst online mit deiner eigenen Figur und deinem Spielstand weiter. Wer noch keine Figur hat, erstellt sie zuerst („Figur erstellen“), danach geht es zurück zu „Online spielen“. Die alte Auswahl (Vega, Elfen, Ritter …) ist weg.
+  - **Alte Modelle online behoben:** Der Server hat jede eigene Figur durch eine alte Elfe ersetzt. Darum habt ihr euch als alte Modelle gesehen und es gab online keine Klassenkleidung (dein Klingentänzer als Novize). Jetzt kommt jeder mit seiner Figur an, und nach dem Lernen der Klasse trägt man auch online die Klassenkleidung.
+  - **So testest du es:**
+    1. Spiel starten: nur „Offline spielen“ und „Online spielen“.
+    2. „Online spielen“ → „Online spielen (übers Internet)“ mit zwei Geräten: Ihr seht euch mit euren eigenen Figuren.
+    3. Online mit einer Figur, die schon eine Klasse gelernt hat: Der andere sieht dich in Klassenkleidung.
+    4. Demo zu Ende spielen (oder im Spielstand-Editor kurz vor Schluss starten): Die Dankesliste steht im Abspann.
+
+- **Neu (09.11.): S5 Spielstand-Editor** (Editor, „Demo testen“, vierter Knopf): an jede Stelle der Demo springen, dein normaler Spielstand bleibt unberührt.
+  - Links **Klasse** (die fünf der Demo; Sternensängerin nur mit Novizin), **Figur**, **Stufe**, **Geld**, **Heil- und Manatränke** und beliebige **weitere Gegenstände** („Dazu“).
+  - Rechts die **Punkte der Geschichte** in der Reihenfolge deiner Klasse (Bogenschütze und Zähmer erst Grünwacht, alle anderen erst Glutoase). Beim Antippen schlägt der Editor eine passende Stufe vor.
+  - „Spielstand bauen und spielen“: Alle Aufträge davor sind erledigt, der gewählte läuft, und du stehst neben der Figur, bei der es weitergeht (Wegweiser zeigt hin). Die Nacht des Sternenfalls beginnt nach dem Kampf (bei Ren), die Dungeons am Eingang.
+  - Nebenbei: Bei „Die Ketten unter dem Berg“ und „Der Splitter im Urbaum“ zeigt der Wegweiser jetzt auch im Spiel zum Eingang des Dungeons.
+  - Das Editor-Menü hat jetzt zwei Reihen Werkzeuge, damit nichts übereinanderliegt.
+  - **So testest du es:**
+    1. Werkstatt → Editor → „Spielstand-Editor“.
+    2. Klasse Klingentänzerin, Punkt „Der Tanz mit der Pause“, „Spielstand bauen und spielen“: Du stehst in der Glutoase bei Samira.
+    3. Bogenschütze, Punkt „Das leere Grab“: Du bist in Grünwacht, Stufe passend vorgeschlagen.
+    4. Ein paar Gegenstände mit „Dazu“ hinzufügen und in der Tasche nachsehen.
+
+- **Neu (09.11.): S4b Hinzufügen im Stadt-Editor:** Oben der Knopf „Hinzufügen“ öffnet rechts ein Fenster.
+  - **Teile:** alle Teile aus dem Baukasten als Bilder, mit Filter (Kreuzweg, Grünwacht, Glutoase, Vulkanschmiede) und Suche. Antippen setzt das Teil in die Bildmitte und wählt es, dann verschieben, drehen usw.
+  - **Figuren:** Körper und Kopf wählen (mit Vorschau), Name eingeben, „immer da“, „nur tags“ oder „nur nachts“, dann „Figur hinzufügen“. Neue Figuren sagen vorerst einen allgemeinen Satz, eigene Sätze schreibe ich ihnen später.
+  - **Löschen** geht jetzt auch für Figuren, aber nur für Volk und neue Figuren. Figuren mit Aufträgen (Ye, Ysolde …) bleiben geschützt.
+  - Alles lässt sich rückgängig machen und wird mit gespeichert.
+  - Nebenbei behoben: In Kreuzweg wären Plätze von Figuren, die in der Datei über mehrere Zeilen stehen, beim Speichern nicht übernommen worden.
+  - **So testest du es:**
+    1. Stadt-Editor → Kreuzweg → „Hinzufügen“ → „Teile“: einen Baum suchen („baum“) und antippen, dann an seinen Platz ziehen.
+    2. „Figuren“: einen Körper und Kopf wählen, „Nur nachts“, „Figur hinzufügen“; mit „Tags/Nachts“ prüfen.
+    3. Eine Bürgerin antippen und „Löschen“; dann Ye antippen und „Löschen“: Ye bleibt.
+    4. „Speichern“ und im Spiel nachsehen (am PC in Godot).
+
+- **Neu (09.11.): Drehen im Stadt-Editor** (dein Wunsch): Knopf „Drehen“ neben „Spiegeln“.
+  - **Flache Teile** (Gras, Blumen, Lichtung, Steppengras, Karawanenspur …) drehen sich frei in 45°-Schritten auf dem Boden.
+  - **Stehende Teile** (Häuser, Stände) und Brücken (wegen der Geländer): reihum vorne → quer → von hinten → von hinten quer. Die Ansichten von hinten brauchen eigene Bilder: Prompts in `GRAFIK_AUFTRAG.md` Teil G (G1 bis G4, je Stadt ein Blatt). Bis sie da sind, wechselt „Drehen“ nur zwischen vorne und quer.
+  - **Online speichern** (für Katie und fürs Handy) steht als S4c „erst besprechen“ in den Bauaufträgen.
+  - **So testest du es:**
+    1. Stadt-Editor → „Aschensteppe“ oder „Glutoase“, Steppengras oder Karawanenspur antippen, mehrmals „Drehen“.
+    2. Ein Haus antippen und „Drehen“: Es steht quer, nochmal: wieder vorne.
+
+- **Neu (09.11.): S4a Stadt-Editor** (Editor, vierter Knopf): Jede Karte aus dem Baukasten (Kreuzweg, Wipfelheim, Glutoase, Wege und Höhlen) mit allen Teilen und Figuren.
+  - **Antippen** wählt ein Teil oder eine Figur (gelber Rahmen), **Ziehen** verschiebt es, die vier **Pfeilknöpfe** ↖ ↗ ↙ ↘ schieben Feld für Feld (fürs Handy). Leere Stelle ziehen bewegt die Karte, − + zoomen.
+  - Teile **spiegeln** und **löschen**, **Rückgängig** (auch Strg+Z). „Tags/Nachts“ zeigt und verschiebt die Figuren an ihrem Platz bei Tag oder bei Nacht.
+  - **Speichern:** am PC im Godot-Editor direkt in die Kartendaten. Im Browser (Werkstatt) lädt es eine Datei „stadt_<ort>.json“ herunter: die schickst du mir, ich übernehme sie mit einem Befehl.
+  - Hinzufügen neuer Teile und Figuren kommt mit S4b.
+  - **So testest du es:**
+    1. Werkstatt → Editor → „Stadt-Editor“, oben „Kreuzweg“.
+    2. Einen Marktstand antippen und mit den Pfeilknöpfen zwei Felder verschieben, dann „Rückgängig“.
+    3. Auf „Nachts“ stellen und eine Figur an einen anderen Platz ziehen.
+    4. „Speichern“: am PC in Godot danach die Demo starten und schauen, ob es dort steht; im Browser kommt eine Datei.
+
+- **Neu (09.11.): S3b Bewegungen in der Welt** (Editor, dritter Knopf): Die gewählte Figur steht viermal nebeneinander: nach links, nach rechts, schräg von vorne und schräg von hinten. Unter jeder steht, welche Bilder gerade laufen und wie viele es sind.
+  - **Figur:** Novizen, Klassen-Körper (je mit jedem wählbaren Kopf), Baukasten-Körper (mit den Volks-Köpfen) oder eine der 69 Figuren aus der Welt (Ye, Mira, Hatta …).
+  - **Bewegung:** Stehen, Laufen, Liegen, Sitzen. **Tempo:** normal, langsam, sehr langsam oder „Bild für Bild“ mit ◀ ▶ (auch Pfeiltasten).
+  - Gut zu wissen: Im Spiel nutzen Figuren mit Seiten-Bildern (Novizen, Klassen) beim Laufen nur die Seiten-Bilder, die Bilder von vorne und hinten bisher nur der Baukasten.
+  - **So testest du es:**
+    1. Werkstatt → Editor → „Bewegungen in der Welt“.
+    2. „Novizen“, Kopf m1, „Laufen“, dann „Bild für Bild“ und mit ▶ durchblättern: Sitzen Kopf und Schwert in jedem Bild?
+    3. „Figuren aus der Welt“ → z. B. Ye wählen und „sehr langsam“ laufen lassen.
+    4. „Baukasten-Körper“ mit verschiedenen Köpfen ansehen.
+
+- **Neu (09.11.): A1b Blocker in Kampf und Menüs** (Alpha-Punkte 28, 29, 35, 36, 46):
+  - **Menüs anklicken (28, 29):** Tasche, Kartenalbum, Fähigkeiten, Werte und Auftragsbuch wurden in jedem Bild neu aufgebaut. Ein Klick traf so nie denselben Knopf beim Drücken und Loslassen. Jetzt baut sich ein Fenster nur neu auf, wenn sich etwas ändert: Seiten im Album wechseln, Fähigkeiten anklicken usw. geht wieder.
+  - **Heiltrank (35):** Tränke am Gürtel heilten nur beim Novizen, bei allen Klassen passierte nichts. Jetzt heilen Heil- und Manatrank bei jeder Klasse.
+  - **Klingenschritt (36):** Die schwebenden Klingen trafen nur nach, wenn man Klingenkranz gelernt hatte. Jetzt treffen sie immer nach (wie der Knopf sagt), Klingenkranz macht sie je Stufe 10 % stärker.
+  - **Ortsname (46):** Die kleine Meldung „– Kreuzweg –“ beim Betreten ist weg, nur der große Name bleibt.
+  - **So testest du es:**
+    1. L drücken und im Kartenalbum auf eine andere Seite klicken, dann K drücken und eine Fähigkeit anklicken.
+    2. Als Klingentänzerin (oder andere Klasse) im Kampf verletzt einen Heiltrank vom Gürtel trinken: Das Leben steigt.
+    3. Mit Klingen über dir einen Klingenschritt machen: Die Klingen fliegen hinterher und treffen.
+    4. Durch ein Tor gehen: nur noch der große Ortsname.
+
+- **Neu (09.11.): A1a Blocker beim Weiterkommen** (Alpha-Punkte 24, 30, 32, 40):
+  - **Seilaufzug (40):** Der Wegweiser zeigt jetzt den ganzen Weg bis Wipfelheim, auch im Wald auf den Seilaufzug (bisher hörte er hinter dem Westtor auf). Den Aufzug kann man jetzt auch auf seinem Bild antippen, nicht nur auf dem kleinen Feld davor.
+  - **Tanz (32):** „Der Tanz mit der Pause“ geht sofort, man muss nicht mehr bis nachts warten.
+  - **Kochende Brunnen (30):** Der Wegweiser zeigt erst zur Wasserstelle im Nordwesten, dann zur dampfenden im Nordosten der Palmenrast.
+  - **Sternensängerin nur für Frauen (24, dein Beschluss):** Ist die eigene Figur männlich, sind bei der Klassenwahl „Diese Klasse wählen“ und „Probestunde“ der Sternensängerin gesperrt, mit Hinweis. Dass dein Klingentänzer als Novize herumlief, kam vermutlich vom Online-Spiel (alte Figuren), das kommt mit A2.
+  - **So testest du es:**
+    1. Nach dem Ende der Glutoase am Westtor mit der Wache reden und dem Wegweiser folgen: Er führt bis zum Seilaufzug im Wald, Antippen bringt einen nach Wipfelheim.
+    2. Bei Samira „Der Tanz mit der Pause“ tagsüber annehmen und gleich tanzen.
+    3. „Kochende Brunnen“ annehmen: Der Wegweiser zeigt in der Palmenrast zu den Wasserstellen.
+    4. Mit einer männlichen Figur bei Ye die Klassenwahl öffnen: Die Sternensängerin ist gesperrt.
 
 - **Neu (04.11.): D25b Körper von Rüstungsschmied und Sternensängerin** (2.11): Deine Blätter sind eingebaut: Rüstungsschmied (m) und Rüstungsschmiedin (w) in Rüstung mit Lederschürze und rotem Halstuch, die Sternensängerin (w) im hellen Gewand mit dunkelblauem Schal. Je mit Stehen, Laufen, Abwehr, Treffer, Angriff, Fallen, Sieg und Fähigkeit im Kampf, in der Welt schräg von vorne und hinten. Wer die Klasse gelernt hat, trägt sie mit seinem eigenen Kopf, auch in der Probestunde. Ausgebessert: die gelben Funken im Treffer-Bild des Schmieds und das rote Halstuch in einem Siegesbild der Sängerin. Noch nicht drin: ein männlicher Sternensänger (der kämpft weiter in der Klassenfigur).
   - **So testest du es:**
@@ -104,50 +244,6 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     2. Nachts: Die Stände in der Marktgasse sind zu, Rosa und Jost sind weg.
     3. An der Gilde: Ye, Lene, Tessa und Gorm stehen einzeln und sind gut zu sehen.
     4. Im Stadt-Editor kannst du alles weiter verschieben.
-
-- **Neu (10.11.): S5 Spielstand-Editor** (Editor, unten links „Spielstand-Editor“):
-  - **Klasse** wählen (Rüstungsschmied, Klingentänzerin, Sternensängerin, Bogenschütze, Monster-Zähmer oder Novize), dann **Springen zu** einem Hauptauftrag der Geschichte: alles davor gilt als erledigt. Hat der Auftrag einen Auftraggeber, steht man vor ihm und er hat ein „!“, sonst ist der Auftrag gleich aktiv. Die Reihenfolge passt zur Klasse (Glutoase zuerst oder Grünwacht zuerst).
-  - **Stufe** (−, +, 10, 15, 20), **Gold** (±100, ±1000), **Gegenstände** in die Tasche (+1, +10). Nach dem Lernen der Klasse passt die Klassenstufe zur Stufe.
-  - Oben umschaltbar: Editor-Spielstand (Standard) oder dein eigener Spielstand. „Spielen“ speichert und startet.
-  - Entscheidungen unterwegs (Silberhirsch, Splittertier, Urbaum, Mira) gelten als mit der ersten Antwort getroffen. Nebenaufträge und Ye's Lektionen bleiben offen.
-  - **So testest du es:**
-    1. Editor → „Spielstand-Editor“, Klasse Klingentänzerin, „Glutoase: Miras Lied“, „Hierhin springen“, Stufe 15, „Spielen“: Du stehst neben Mira, sie hat ein „!“.
-    2. Zurück, Klasse Bogenschütze, „Grünwacht: Die Wahrheit über Rowan“ springen und spielen: Kael wartet mit „!“.
-    3. Einen Heiltrank +10 geben, spielen, Tasche (I) ansehen.
-
-- **Neu (10.11.): S4b Stadt-Editor: hinzufügen, löschen, spiegeln**
-  - **Hinzufügen** (oben): ein Teil aus dem Baukasten wählen und „Teil hinstellen“, oder eine Volk-Figur (Körper, Kopf, und welches Volk sie ist: Name und Gespräch wie bei diesem). Sie erscheint in der Bildmitte und ist gleich ausgewählt.
-  - **Spiegeln** stellt ein Teil quer, **Löschen** entfernt Teile und Volk. Figuren der Geschichte (Ye, Hadrak …) lassen sich nur verschieben.
-  - **Rückgängig** nimmt die letzten Schritte zurück (auch nach Stadt- oder Tag/Nacht-Wechsel), „Zurücksetzen“ stellt die ganze Stadt wieder her (zweimal tippen).
-  - Noch nicht: Teile haben im Auswahlfeld nur ihre kurzen Namen (z. B. „fass“), es gibt kein Vorschaubild.
-  - **So testest du es:**
-    1. Editor → Stadt-Editor → Glutoase, „Hinzufügen“, ein Fass hinstellen und mit den Pfeilen schieben.
-    2. Ein Haus antippen, „Spiegeln“; eine Palme antippen, „Löschen“; dann „Rückgängig“: Die Palme ist wieder da.
-    3. Eine Volk-Figur hinstellen, „Speichern“, dann im Spiel in die Glutoase: Figur steht dort und spricht.
-
-- **Neu (10.11.): S4a Stadt-Editor** (Editor, vierter Knopf „Stadt-Editor“):
-  - Oben die Stadt wählen (Kreuzweg, Wipfelheim, Glutoase), „Nacht“ zeigt die Figuren an ihren Nachtplätzen. Bild verschieben: auf eine leere Stelle tippen und ziehen, Pfeiltasten; zoomen mit − und + oder dem Mausrad.
-  - Ein Haus, Baum, Stand oder eine Figur antippen: gelber Rahmen. Dann ziehen oder mit den Pfeil-Knöpfen Feld für Feld schieben (fürs Handy). „Alter Platz“ stellt es zurück. Gleiche Teile auf demselben Feld (Marktstand tags offen, nachts zu) wandern zusammen.
-  - **Speichern:** In Godot am PC landet es direkt im Spiel (`data/stadt_aenderungen.json`). Im Browser gilt es in diesem Browser, und die Datei `stadt_aenderungen.json` wird heruntergeladen: die schickst du mir. Die Änderungen liegen getrennt von den Karten, darum gehen sie nicht verloren, wenn ich eine Karte neu erzeuge.
-  - Noch nicht: hinzufügen, löschen, spiegeln (S4b). Der Editor prüft noch nicht, ob etwas auf einem anderen Teil oder im Wasser steht.
-  - **So testest du es:**
-    1. Werkstatt → Editor → „Stadt-Editor“, Kreuzweg.
-    2. Den Brunnen antippen und zwei Felder verschieben, dann eine Figur ziehen. „Speichern“.
-    3. Zurück, „Akt Kreuzweg“ starten: Brunnen und Figur stehen am neuen Platz, man kann nicht durch den Brunnen laufen.
-    4. Im Editor beides mit „Alter Platz“ zurückstellen und speichern (oder „Stadt zurücksetzen“, zweimal tippen).
-  - Nebenbei (Bildaufträge): Teil H in `Spieldesign/GRAFIK_AUFTRAG.md` hat die Prompts für Sitzen und 8 Laufbilder aller Figuren (neuer Bauauftrag S6, ganz am Ende).
-
-- **Neu (09.11.): S3b Bewegungen in der Welt** (Editor, dritter Knopf „Bewegungen in der Welt“): links die Figur so groß wie im Spiel, rechts vergrößert.
-  - **Figur:** Novizen, Klassen-Körper, Baukasten-Figuren (je mit wählbarem Kopf), Hauptfiguren und alle Monster.
-  - **Richtung:** von der Seite, schräg von vorne und von hinten, jeweils nach rechts oder links. Fehlen einer Figur Bilder für eine Richtung, ist der Knopf grau.
-  - **Bewegung:** Stehen, Laufen, Sitzen und Liegen (nur wer Liege-Bilder hat), Tempo normal, langsam, sehr langsam.
-  - **Bild für Bild:** Anhalten, dann Bild vor oder zurück (auch Leertaste und Pfeiltasten); unten steht, welches Bild gerade zu sehen ist.
-  - Nebenbei aufgeräumt: Beim Mondschakal und bei den Novizen-Körpern lagen alte Verweise auf Bilder, die es nicht mehr gibt (gab beim Mondschakal einen Fehler). Eine Prüfung passt jetzt darauf auf.
-  - **So testest du es:**
-    1. Werkstatt → Editor → „Bewegungen in der Welt“.
-    2. Novizen, Novizin wählen, „Hinten ←“ und „Laufen“ drücken: Sie läuft von dir weg nach links.
-    3. „Anhalten“, dann ein paar Mal „Bild vor“: Schau, ob ein Bild aus der Reihe fällt.
-    4. Baukasten-Figuren und Hauptfiguren durchklicken, bei jeder einmal vorne und hinten laufen lassen.
 
 - **Neu (08.11.): S3a Bewegungen & Effekte** (Editor, zweiter Knopf): ein Kampf, unten eine Leiste mit vier Spalten.
   - **Figur:** Klasse des Helden, Aussehen (Standard, deine eigene Figur, Vega, Kofi, Kael, Ye) und das Monster gegenüber. Tempo: normal, langsam, sehr langsam.
@@ -2525,6 +2621,10 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Hinten angestellt: Schnellsätze und Emotes (Vorschläge im Ideen-Parkplatz von design.md).
 
 ## Offene Fragen an Marco
+
+- **Für dich (09.11.): Klassenbilder für die Klassenwahl.** Prompts in `Spieldesign/GRAFIK_AUFTRAG.md` Teil H: zuerst H1 (Bogenschütze, Monster-Zähmer, Rüstungsschmied, Klingentänzer, Sternensängerin), dann H2 (die sechs späteren Klassen). Je Bild ein ChatGPT-Chat, die Dateien zum Anhängen stehen über jedem Prompt. Fertige Bilder als `tools/vorlagen/klassenbild_<klasse>.png` schicken, dann baue ich A3b (Klassenwahl mit großem Bild).
+
+- **Für später am PC (Marco, 09.11.): Häuser von hinten.** Vier Blätter G1 bis G4 in `Spieldesign/GRAFIK_AUFTRAG.md` Teil G (Kreuzweg große Gebäude, Kreuzweg Wohnhäuser und Stände, Wipfelheim, Glutoase). Je Blatt ein ChatGPT-Chat, angehängt die Referenzbilder und die Vorderansichten aus `assets/baukasten/objekte/`. Danach schneidet Claude sie zu und trägt `bild_hinten` ein, dann dreht „Drehen“ im Stadt-Editor die Häuser in alle vier Richtungen.
 
 - ~~**Zweimal Mira (28.10.):**~~ Erledigt (28.10.): Die Novizen-Köpfe sind namenlos (Novize m1, Novizin w1 …), den Namen gibt der Spieler. Mira bleibt die Vorgängerin.
 

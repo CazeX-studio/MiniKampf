@@ -27,19 +27,19 @@ func _ready() -> void:
 	_label("Zum schnellen Ausprobieren", 20, Color.WHITE, Vector2(0, 108), SCREEN.x)
 
 	_label("Werkzeuge", 22, Color("f2c14e"), Vector2(40, 170), 400)
-	_button("Kampf-Editor\nKämpfe, Probe-Lauf", Vector2(40, 210), func() -> void: _go("res://scenes/kampf_editor.tscn"), 164)
-	_button("Bewegungen im Kampf\nAlles einzeln", Vector2(212, 210), func() -> void: _go("res://scenes/bewegung_editor.tscn"), 164)
-	_button("Bewegungen in der Welt\nBild für Bild", Vector2(384, 210), func() -> void: _go("res://scenes/welt_bewegung_editor.tscn"), 164)
-	_button("Stadt-Editor\nTeile und Figuren verschieben", Vector2(556, 210), func() -> void: _go("res://scenes/stadt_editor.tscn"), 164)
-	_button("Figuren-Teile\nKörper, Kopf, Hut", Vector2(728, 210), func() -> void: _go("res://scenes/vega_test.tscn"), 164)
-	_button("Baukasten-Testfeld\nEinzelbilder", Vector2(900, 210), func() -> void: _go("res://scenes/baukasten_test.tscn"), 164)
-	_button("Kampf-Sandbox\n11 Klassen, Pilzhöhle", Vector2(1072, 210), func() -> void: _go("res://scenes/auswahl.tscn"), 164)
+	_button("Kampf-Editor\nKämpfe und Probe-Lauf", Vector2(40, 205), func() -> void: _go("res://scenes/kampf_editor.tscn"), 290, 80)
+	_button("Bewegungen & Effekte\nIm Kampf einzeln abspielen", Vector2(340, 205), func() -> void: _go("res://scenes/bewegung_editor.tscn"), 290, 80)
+	_button("Bewegungen in der Welt\nStehen und Laufen", Vector2(640, 205), func() -> void: _go("res://scenes/welt_bewegung.tscn"), 290, 80)
+	_button("Stadt-Editor\nTeile und Figuren setzen", Vector2(940, 205), func() -> void: _go("res://scenes/stadt_editor.tscn"), 290, 80)
+	_button("Figuren-Teile\nKörper, Kopf, Hut, Farben", Vector2(40, 295), func() -> void: _go("res://scenes/vega_test.tscn"), 290, 80)
+	_button("Baukasten-Testfeld\nKarte aus Einzelbildern", Vector2(340, 295), func() -> void: _go("res://scenes/baukasten_test.tscn"), 290, 80)
+	_button("Kampf-Sandbox\nAlle 11 Klassen, Pilzhöhle", Vector2(640, 295), func() -> void: _go("res://scenes/auswahl.tscn"), 290, 80)
 
-	_label("Demo testen (eigener Spielstand, dein normaler bleibt unberührt)", 22, Color("f2c14e"), Vector2(40, 380), 1200)
-	_button("Spielstand-Editor\nStufe, Klasse, Gold, an jede Stelle springen", Vector2(40, 420), func() -> void: _go("res://scenes/spielstand_editor.tscn"), 290)
-	_button("Akt Kreuzweg\nVon vorne, mit Figur erstellen", Vector2(340, 420), _start_kreuzweg, 290)
-	_button("Akt Grünwacht\nAls Bogenschütze", Vector2(640, 420), func() -> void: _start_gruenwacht("archer"), 290)
-	_button("Akt Grünwacht\nAls Monster-Zähmer", Vector2(940, 420), func() -> void: _start_gruenwacht("tamer"), 290)
+	_label("Demo testen (eigener Spielstand, dein normaler bleibt unberührt)", 22, Color("f2c14e"), Vector2(40, 392), 1200)
+	_button("Akt Kreuzweg\nVon vorne, mit Figur erstellen", Vector2(40, 432), _start_kreuzweg, 290, 110)
+	_button("Akt Grünwacht\nAls Bogenschütze", Vector2(340, 432), func() -> void: _start_gruenwacht("archer"), 290, 110)
+	_button("Akt Grünwacht\nAls Monster-Zähmer", Vector2(640, 432), func() -> void: _start_gruenwacht("tamer"), 290, 110)
+	_button("Spielstand-Editor\nAn jede Stelle der Demo springen", Vector2(940, 432), func() -> void: _go("res://scenes/spielstand_editor.tscn"), 290, 110)
 
 	# Eigene Figur für die Demo und die Animationen (die andere läuft als Begleiter mit)
 	var figur := Button.new()
@@ -124,12 +124,12 @@ func _label(text: String, font_size: int, color: Color, pos: Vector2, width: flo
 	add_child(label)
 
 
-func _button(text: String, pos: Vector2, action: Callable, breite := 380.0) -> void:
+func _button(text: String, pos: Vector2, action: Callable, breite := 380.0, hoehe := 130.0) -> void:
 	var button := Button.new()
 	button.text = text
 	button.position = pos
-	button.size = Vector2(breite, 130)
+	button.size = Vector2(breite, hoehe)
 	button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	button.add_theme_font_size_override("font_size", 22 if breite >= 380.0 else (17 if breite >= 200.0 else 15))
+	button.add_theme_font_size_override("font_size", 22 if breite >= 380.0 else 17)
 	button.pressed.connect(action)
 	add_child(button)

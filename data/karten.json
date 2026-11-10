@@ -2510,15 +2510,20 @@
 			"mira_glutoase": {
 				"name": "Mira",
 				"feld": [
-					40,
-					36
+					41,
+					34
 				],
 				"aussehen": "mira",
 				"dialog": "mira_glutoase",
 				"liegt": true,
 				"wenn": {
 					"nicht_gemerkt": "mira_geheilt"
-				}
+				},
+				"versatz": [
+					14,
+					-22
+				],
+				"vorne": true
 			},
 			"mira_gesund": {
 				"name": "Mira",
@@ -3107,6 +3112,7 @@
 					"nicht_gemerkt": "lauf:splitter"
 				}
 			}
-		]
+		],
+		"leere": "lava"
 	}
 }

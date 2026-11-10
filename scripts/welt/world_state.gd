@@ -212,7 +212,9 @@ func _add_things(map_id: String, data: Dictionary) -> void:
 		var cell := Vector2i(int(d.feld[0]), int(d.feld[1]))
 		npcs[id] = {name = d.name, cell = cell, map = map_id, look = d.aussehen, tint = Color(d.get("farbe", "ffffff")),
 				dialog = d.get("dialog", id), cond = d.get("wenn", {}), approach = d.get("anspringen", {}),
-				zeichen = str(d.get("zeichen", "")), liegt = bool(d.get("liegt", false)), tag_cell = cell}
+				zeichen = str(d.get("zeichen", "")), liegt = bool(d.get("liegt", false)), tag_cell = cell,
+				versatz = Vector2(float(d.versatz[0]), float(d.versatz[1])) if d.has("versatz") else Vector2.ZERO,
+				vorne = bool(d.get("vorne", false))}
 		m.block(cell)
 		# {"nachts": [x, y]}: nachts steht die Figur dort (Steckbriefe in NPC.md, D20d)
 		if d.has("nachts"):
@@ -325,7 +327,7 @@ func change_map(p: PlayerState, map_id: String, cell: Vector2i) -> void:
 	p.safe_time = maxf(p.safe_time, 3.0)
 	p.npc_walk = {}
 	p.pos = Vector2(cell)
-	_say(p, GameData.text("karte_betreten", [m.title]))
+	# Der Ortsname kommt groß in der Bildmitte (E3c), die alte kleine Meldung „– Ort –“ ist weg (A1b, Alpha-Punkt 46)
 	# Für Aufträge wie „Reise nach Wipfelheim“
 	p.progress.flags["besucht:" + map_id] = true
 	_update_quests(p)
@@ -1511,7 +1513,44 @@ func objective_place(p: PlayerState) -> Dictionary:
 		if npc_marker(p, id) == "!" and not npc_marker_side(p, id) \
 				and (best.is_empty() or (Vector2(npcs[id].cell) - p.pos).length() < (Vector2(best.feld) - p.pos).length()):
 			best = {karte = npcs[id].map, feld = npcs[id].cell}
+	if not best.is_empty():
+		return best
+	# Niemand auf dieser Karte: zum nächsten Auftraggeber der Geschichte auf einer anderen Karte (A5, Alpha-Punkt 23:
+	# nach dem Abschluss eines Auftrags soll der Weg zum nächsten führen, z. B. von Xavina zu Nadia in die Glutoase)
+	var alle := GameData.get_file("auftraege")
+	var bester_abstand := 999
+	for id: String in alle:
+		var q = alle[id]
+		if not q is Dictionary or q.get("neben", false) or not q.has("start_bei") or p.progress.quest_state(id) != "neu":
+			continue
+		if q.has("voraussetzung") and p.progress.quest_state(str(q.voraussetzung)) != "abgegeben":
+			continue
+		var geber := str(q.start_bei)
+		if not npcs.has(geber) or npcs[geber].map == p.map or not check(p, npcs[geber].cond) or not check(p, q.get("start_wenn", {})):
+			continue
+		# Der nächstgelegene (wenigste Kartenwechsel) gewinnt
+		var abstand := _karten_abstand(p, str(npcs[geber].map))
+		if abstand >= 0 and abstand < bester_abstand:
+			bester_abstand = abstand
+			best = {karte = npcs[geber].map, feld = npcs[geber].cell}
 	return best
+
+
+## Wie viele Kartenwechsel bis zu dieser Karte (-1 = nicht erreichbar).
+func _karten_abstand(p: PlayerState, ziel: String) -> int:
+	var abstand := {p.map: 0}
+	var queue: Array[String] = [p.map]
+	while not queue.is_empty():
+		var map_id: String = queue.pop_front()
+		if map_id == ziel:
+			return int(abstand[map_id])
+		if not maps.has(map_id):
+			continue
+		for link: Array in _links(p, map_id, map_id == p.map):
+			if not abstand.has(link[0]):
+				abstand[link[0]] = int(abstand[map_id]) + 1
+				queue.append(link[0])
+	return -1
 
 
 ## Wohin man für diesen (laufenden) Auftrag als Nächstes muss: {karte, feld} oder leer.
@@ -1530,12 +1569,43 @@ func _quest_place(p: PlayerState, id: String) -> Dictionary:
 			return _npc_goal(p, [goal.bei])
 		if goal.has("wegweiser"):
 			return _npc_goal(p, goal.wegweiser)
+		# {"karte": "pilzhoehle"}: das Ziel liegt auf einer anderen Karte (Dungeon), der Wegweiser zeigt zum Eingang
+		if goal.has("karte") and maps.has(str(goal.karte)) and p.map != str(goal.karte):
+			return {karte = str(goal.karte), feld = get_map(str(goal.karte)).start}
 		if goal.art == "gemerkt":
 			# Ein Ort, der das Ziel erfüllt (z. B. ein Laternenhaken)
 			for place: Dictionary in places:
-				if check(p, place.cond) and place.actions.any(func(a: Dictionary) -> bool: return a.get("merken", "") == goal.merken):
+				if check(p, place.cond) and _ort_merkt(place).has(str(goal.merken)):
 					return {karte = place.map, feld = place.cell}
 	return {}
+
+
+## Was ein Ort sich merken kann: direkt, über sein Gespräch oder einen Kampf daraus (z. B. die Wasserstellen, A1a).
+var _ort_merker := {}
+func _ort_merkt(place: Dictionary) -> Dictionary:
+	var key := "%s:%s" % [place.map, place.cell]
+	if not _ort_merker.has(key):
+		var flags := {}
+		_merker_sammeln(place.actions, flags)
+		if place.dialog != "":
+			_merker_sammeln(GameData.dialog(place.dialog).get("knoten", {}), flags)
+		_ort_merker[key] = flags
+	return _ort_merker[key]
+
+
+func _merker_sammeln(wert: Variant, flags: Dictionary) -> void:
+	if wert is Dictionary:
+		if wert.has("merken"):
+			flags[str(wert.merken)] = true
+		if wert.has("kampf"):
+			var kampf: Dictionary = GameData.get_file("kaempfe").get(str(wert.kampf), {})
+			if kampf.has("merken"):
+				flags[str(kampf.merken)] = true
+		for v: Variant in wert.values():
+			_merker_sammeln(v, flags)
+	elif wert is Array:
+		for v: Variant in wert:
+			_merker_sammeln(v, flags)
 
 
 ## Wegweiser der Nebenaufträge: [{nummer, feld}] auf der eigenen Karte (oder der Ausgang dorthin).
@@ -1599,13 +1669,14 @@ func _nearest_pickup(p: PlayerState, item: String) -> Dictionary:
 
 ## Ausgang der eigenen Karte, über den man (auch über mehrere Karten hinweg) zur Zielkarte kommt, oder (-1, -1).
 func _exit_towards(p: PlayerState, target_map: String) -> Vector2i:
-	# Breitensuche über die Ausgänge aller Karten; gemerkt wird, über welchen Ausgang der eigenen Karte man losging
+	# Breitensuche über die Ausgänge aller Karten; gemerkt wird, über welchen Ausgang der eigenen Karte man losging.
+	# Orte, die woandershin bringen (z. B. der Seilaufzug nach Wipfelheim), zählen auch als Ausgang (A1a).
 	var first := {}
 	var queue: Array[String] = []
-	for e: Dictionary in get_map(p.map).exits:
-		if check(p, e.cond) and not first.has(e.karte) and e.karte != p.map:
-			first[e.karte] = e.rect.get_center()
-			queue.append(e.karte)
+	for link: Array in _links(p, p.map):
+		if not first.has(link[0]) and link[0] != p.map:
+			first[link[0]] = link[1]
+			queue.append(link[0])
 	while not queue.is_empty():
 		var map_id: String = queue.pop_front()
 		if map_id == target_map:
@@ -1613,11 +1684,27 @@ func _exit_towards(p: PlayerState, target_map: String) -> Vector2i:
 			return Vector2i(c.round())
 		if not maps.has(map_id):
 			continue
-		for e: Dictionary in get_map(map_id).exits:
-			if not first.has(e.karte) and e.karte != p.map:
-				first[e.karte] = first[map_id]
-				queue.append(e.karte)
+		for link: Array in _links(p, map_id, false):
+			if not first.has(link[0]) and link[0] != p.map:
+				first[link[0]] = first[map_id]
+				queue.append(link[0])
 	return Vector2i(-1, -1)
+
+
+## Wege von einer Karte weg: [[Zielkarte, Stelle], ...] aus Ausgängen und Reise-Orten (Seilaufzug).
+## pruefen: Bedingungen für den Spieler beachten (nur auf der eigenen Karte, wie bisher bei den Ausgängen).
+func _links(p: PlayerState, map_id: String, pruefen := true) -> Array:
+	var result := []
+	for e: Dictionary in get_map(map_id).exits:
+		if not pruefen or check(p, e.cond):
+			result.append([str(e.karte), e.rect.get_center()])
+	for place: Dictionary in places:
+		if place.map != map_id or (pruefen and not (check(p, place.cond) and check(p, place.entry))):
+			continue
+		for a: Dictionary in place.actions:
+			if a.has("reisen"):
+				result.append([str(a.reisen), Vector2(place.cell)])
+	return result
 
 
 ## Zeichen über einem NPC: "!" = neuer Auftrag, "?" = hier etwas erledigen oder abgeben, "" = nichts.
@@ -2231,9 +2318,14 @@ func _check_approach(p: PlayerState) -> void:
 func _start_walk_in(p: PlayerState, npc_id: String) -> void:
 	var home: Vector2i = npcs[npc_id].cell
 	var dir := (Vector2(home) - p.pos).normalized()
+	# "anspringen": {"richtung": [-1, -1], "abstand": 5}: kommt aus dieser Richtung (z. B. Mira von oben vom Marktplatz,
+	# A4b: vorher lief sie von ihrem Platz am Tor einen langen Umweg)
+	var approach: Dictionary = npcs[npc_id].approach
+	if approach.has("richtung"):
+		dir = Vector2(float(approach.richtung[0]), float(approach.richtung[1])).normalized()
 	if dir == Vector2.ZERO:
 		dir = Vector2(1, 0)
-	var start := _nearest_walkable(Vector2i((p.pos + dir * WALK_IN_DISTANCE).round()), p.map)
+	var start := _nearest_walkable(Vector2i((p.pos + dir * float(approach.get("abstand", WALK_IN_DISTANCE))).round()), p.map)
 	var goal := _free_neighbor(p.cell, start, p.map) if start != Vector2i(-1, -1) else Vector2i(-1, -1)
 	var route: Array[Vector2i] = []
 	if goal != Vector2i(-1, -1):

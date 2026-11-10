@@ -1,6 +1,6 @@
 extends Node
 ## Übersicht einer Stadt (E3h): die ganze Karte und neun Ausschnitte, ohne Knöpfe. -- <Ordner> <stadt> [nacht]
-## Städte: kreuzweg, wipfelheim, glutoase
+## Karten: kreuzweg und jede Baukasten-Karte aus data/karten.json (z. B. wipfelheim, glutoase)
 
 func _ready() -> void:
 	var args := OS.get_cmdline_user_args()
@@ -10,16 +10,15 @@ func _ready() -> void:
 	await get_tree().process_frame
 	get_tree().current_scene = platzhalter
 	var skript: GDScript = load("res://scripts/welt/stadt_editor.gd")
-	skript.stadt = args[1]
+	skript.karte = args[1]
 	skript.nacht = args.size() > 2
 	get_tree().change_scene_to_file("res://scenes/stadt_editor.tscn")
 	await get_tree().create_timer(1.0).timeout
 	var ed: Node = get_tree().current_scene
-	ed.get_child(ed.get_child_count() - 1).visible = false
 	for c in ed.get_children():
 		if c is CanvasLayer:
 			c.visible = false
-	var karte: Dictionary = GameData.roh(StadtAenderungen.STAEDTE[args[1]].karte)
+	var karte: Dictionary = GameData.get_file(skript.karten_datei(args[1]))
 	var groesse := Vector2(karte.boden[0].length(), karte.boden.size())
 	ed._kamera.zoom = Vector2.ONE * 0.3
 	ed._kamera.position = BaukastenBoden.cell_to_screen(groesse * 0.5)

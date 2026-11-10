@@ -197,6 +197,8 @@ const CHAT_FADE_SECONDS := 20.0
 ## Gruppe beim Zusammenspielen: Fenster mit den Mitgliedern, Menü beim Antippen eines Mitspielers, Einladung
 var _group_panel: PanelContainer
 var _group_box: VBoxContainer
+## Gruppenfenster eingeklappt (nur Namen)? Bleibt beim Kartenwechsel
+static var _gruppe_eingeklappt := false
 var _player_menu: PanelContainer
 var _player_menu_box: VBoxContainer
 var _invite_panel: PanelContainer
@@ -245,6 +247,11 @@ func _ready() -> void:
 	var local: PlayerState
 	if Netz.online():
 		local = state.add_player(local_id, Netz.my_name, Netz.my_look, WorldState.start_cell())
+		# Neues Spiel nach „Figur erstellen“ auch online: diese Figur nehmen (A2a, dasselbe Spiel wie allein)
+		if not FigurWahl.neue_figur.is_empty():
+			local.look = FigurWahl.neue_figur.aussehen
+			local.figur_name = FigurWahl.neue_figur.name
+			FigurWahl.neue_figur = {}
 		SaveGame.load_into(local)
 		state.fix_position(local)
 		Netz.enter_world(local)
@@ -305,6 +312,10 @@ func _ready() -> void:
 		_send({type = "karten_ergebnis", gegner = KartenTisch.ergebnis.gegner, gewonnen = KartenTisch.ergebnis.gewonnen,
 				unentschieden = KartenTisch.ergebnis.unentschieden})
 		KartenTisch.ergebnis = {}
+	# Zurück von einer Probestunde beim Gesandten: er spricht einen an (Abzeichen beim ersten Mal)
+	if Klassenwahl.nach_probestunde != "":
+		_send({type = "talk", npc = Klassenwahl.nach_probestunde})
+		Klassenwahl.nach_probestunde = ""
 	# Beim ersten Betreten der Stadt kommt die Einleitung
 	_send({type = "start"})
 
@@ -369,6 +380,9 @@ func _build_map_view() -> void:
 	_figur_groesse = BAUKASTEN_FIGUR if not m.baukasten.is_empty() else 1.0
 	if not m.baukasten.is_empty():
 		_add_baukasten(m.baukasten)
+		# Leere um die Wege als Lava (Vulkanschmiede, A5: Lava war kaum zu erkennen, der Weg ging im Dunkeln unter)
+		if GameData.get_file("karten").get(local.map, {}).get("leere", "") == "lava":
+			_add_lava(m.baukasten)
 	for b: Dictionary in m.buildings:
 		_add_building(b)
 	for prop: Dictionary in m.props:
@@ -390,6 +404,9 @@ func _build_map_view() -> void:
 		view.setup(npc.look, npc.name, npc.tint, Color("f2c14e"))
 		view.zeichen = str(npc.get("zeichen", ""))
 		view.liegt = npc.get("liegt", false)
+		# "vorne": über den Teilen gemalt (z. B. Mira auf dem Bett im Krankenzelt, A5)
+		if npc.get("vorne", false):
+			view.z_index = 1
 		view.idle_fps = NPC_IDLE_FPS
 		# Jeder NPC beginnt an einer anderen Stelle der Animation, damit nicht alle im Gleichtakt wippen
 		view.time_offset(randf() * 4.0)
@@ -426,6 +443,61 @@ static func _danger_color(monster_level: int, player_level: int) -> Color:
 	if diff <= 4:
 		return Color("ffb050")
 	return Color("ff6060")
+
+
+## Lava in allen leeren Feldern einer Baukasten-Karte: glüht und wabert langsam, dazu einzelne Glut-Lichter am Rand
+## der Wege. Liegt unter dem Boden, damit die Ränder der Steinwege darüber auslaufen.
+const LAVA_DUNKEL := Color("7a1a08")
+const LAVA_HELL := Color("ff8a1e")
+const LAVA_GLUT := Color("ffd060")
+
+func _add_lava(karte: Dictionary) -> void:
+	var zeilen: Array = karte.get("boden", [])
+	var leer: Array[Vector2i] = []
+	for y in zeilen.size():
+		var zeile: String = zeilen[y]
+		for x in zeile.length():
+			if zeile[x] == " ":
+				leer.append(Vector2i(x, y))
+	if leer.is_empty():
+		return
+	var lava := Node2D.new()
+	lava.z_index = -11
+	lava.draw.connect(func() -> void:
+		for c: Vector2i in leer:
+			# Breite, langsame Wellen: benachbarte Felder haben fast dieselbe Farbe (sonst sieht es kariert aus)
+			var welle := 0.5 + 0.25 * sin(_time * 0.9 + c.x * 0.22 + c.y * 0.15) + 0.25 * sin(_time * 0.6 - c.x * 0.12 + c.y * 0.25)
+			var farbe := LAVA_DUNKEL.lerp(LAVA_HELL, welle)
+			# Hier und da eine helle Glutader
+			var ader := sin(c.x * 0.9 + c.y * 0.55 + _time * 0.7) * sin(c.y * 0.8 - c.x * 0.35)
+			if ader > 0.75:
+				farbe = farbe.lerp(LAVA_GLUT, (ader - 0.75) * 2.4)
+			var mitte := cell_to_screen(Vector2(c) + Vector2(0.5, 0.5))
+			lava.draw_colored_polygon(PackedVector2Array([mitte + Vector2(0, -TILE_H * 0.5 - 1), mitte + Vector2(TILE_W * 0.5 + 1, 0),
+					mitte + Vector2(0, TILE_H * 0.5 + 1), mitte + Vector2(-TILE_W * 0.5 - 1, 0)]), farbe))
+	add_child(lava)
+	_map_nodes.append(lava)
+	_lava_node = lava
+	# Glut-Lichter an leeren Feldern neben einem Weg (jedes vierte), damit die Ränder leuchten
+	var zaehler := 0
+	for c: Vector2i in leer:
+		var am_weg := false
+		for d: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+			var n := c + d
+			if n.y >= 0 and n.y < zeilen.size() and n.x >= 0 and n.x < str(zeilen[n.y]).length() and str(zeilen[n.y])[n.x] != " ":
+				am_weg = true
+		if am_weg:
+			zaehler += 1
+			if zaehler % 4 == 0:
+				var halter := Node2D.new()
+				halter.position = cell_to_screen(Vector2(c) + Vector2(0.5, 0.5))
+				add_child(halter)
+				_map_nodes.append(halter)
+				_add_light(halter, "glut", Vector2.ZERO)
+
+
+var _lava_node: Node2D
+var _lava_takt := 0.0
 
 
 ## Baukasten-Karte aufbauen: Boden, flache Teile, stehende Teile (nach Tiefe sortiert) mit Namensschildern.
@@ -482,6 +554,11 @@ func _exit_tree() -> void:
 
 func _process(delta: float) -> void:
 	_time += delta
+	# Lava wabert (zehnmal pro Sekunde neu malen reicht)
+	_lava_takt -= delta
+	if _lava_takt <= 0.0 and _lava_node != null and is_instance_valid(_lava_node):
+		_lava_takt = 0.1
+		_lava_node.queue_redraw()
 	_update_steer()
 	_update_skip(delta)
 	if not Netz.online():
@@ -622,7 +699,7 @@ func _sync() -> void:
 		_side_waypoints = state.side_objectives(local)
 		var goal := state.objective(local)
 		_goal.text = "Ziel: " + goal if goal != "" else ""
-	_update_hud()
+	_update_hud(langsam)
 	_figuren_sortieren()
 
 
@@ -630,7 +707,8 @@ func _sync() -> void:
 func _place_npc(npc_view: WorldCharacter, id: String, local: PlayerState) -> void:
 	var walk := local.npc_walk
 	if walk.get("id", "") != id:
-		npc_view.position = cell_center(Vector2(state.npcs[id].cell))
+		# "versatz": [x, y] Bildpunkte, z. B. damit Mira genau auf dem gemalten Bett im Zelt liegt
+		npc_view.position = cell_center(Vector2(state.npcs[id].cell)) + state.npcs[id].get("versatz", Vector2.ZERO)
 		npc_view.moving = false
 		return
 	var target := cell_center(walk.pos)
@@ -855,7 +933,7 @@ func _tap_at(world: Vector2) -> void:
 	# Sammelpunkt angetippt? Dann hinlaufen und einsammeln
 	for target: String in _pickup_nodes:
 		var node: Node2D = _pickup_nodes[target]
-		if node.visible and (world - (node.position + Vector2(0, -12))).length() < 26.0:
+		if node.visible and (world - (node.position + Vector2(0, -12))).length() < 26.0 or _ort_als_teil_getroffen(target, node, world):
 			_send({type = "use", target = target})
 			_show_marker(node.position)
 			return
@@ -863,6 +941,16 @@ func _tap_at(world: Vector2) -> void:
 	if state.is_walkable(cell, local_player().map):
 		_send({type = "move", cell = cell})
 		_show_marker(cell_center(Vector2(cell)))
+
+
+## Orte, die als gemaltes Teil dastehen (Seilaufzug, Grab, Höhle …): Das ganze Bild darüber zählt beim Antippen (A1a).
+func _ort_als_teil_getroffen(target: String, node: Node2D, world: Vector2) -> bool:
+	if not node.visible or not target.begins_with("ort:"):
+		return false
+	var place: Dictionary = state.places[int(target.substr(4))]
+	if not place.art in ORTE_ALS_TEIL or state.get_map(place.map).baukasten.is_empty():
+		return false
+	return absf(world.x - node.position.x) < 56.0 and world.y > node.position.y - 170.0 and world.y < node.position.y + 16.0
 
 
 func _show_marker(pos: Vector2) -> void:
@@ -1345,6 +1433,17 @@ func _add_pickup(target: String) -> void:
 const KRAUT_BILD := "res://assets/sammeln/%s_f%d.png"
 
 
+## Kräuter-Bilder bleiben geladen (A2b, Alpha-Punkt 4): Wurden sie in jedem Bild neu geladen und gleich wieder
+## freigegeben, zeigte die Browser-Grafik statt des Silberkrauts ein weißes Viereck.
+var _kraut_bilder := {}
+func _kraut_bild(art: String, nr: int) -> Texture2D:
+	var schluessel := "%s_%d" % [art, nr]
+	if not _kraut_bilder.has(schluessel):
+		var pfad := KRAUT_BILD % [art, nr]
+		_kraut_bilder[schluessel] = load(pfad) if ResourceLoader.exists(pfad) else null
+	return _kraut_bilder[schluessel]
+
+
 func _draw_pickup(node: Node2D, art: String) -> void:
 	var glow := 0.5 + 0.5 * sin(_time * 3.0 + node.position.x)
 	# Bosse in Dungeons (die Figur selbst hängt als Kind am Knoten): nur ein leichtes Leuchten darunter
@@ -1486,9 +1585,8 @@ func _draw_pickup(node: Node2D, art: String) -> void:
 		"leer":
 			return
 	# Kräuter mit eigenem Bild (E3f, Marcos Blatt kraeuter_welt.png): zwei Bilder wechseln sich im Wind ab
-	if ResourceLoader.exists(KRAUT_BILD % [art, 0]):
-		var bild_nr := posmod(int(_time * 1.2 + node.position.x * 0.01), 2)
-		var textur: Texture2D = load(KRAUT_BILD % [art, bild_nr])
+	var textur := _kraut_bild(art, posmod(int(_time * 1.2 + node.position.x * 0.01), 2))
+	if textur != null:
 		var hoehe := 44.0
 		var breite := hoehe * textur.get_width() / float(textur.get_height())
 		node.draw_circle(Vector2(0, -16), 26.0, Color(0.8, 1.0, 0.9, 0.06 + 0.08 * glow))
@@ -2148,11 +2246,30 @@ func _update_group() -> void:
 	_group_panel.visible = not members.is_empty()
 	if members.is_empty():
 		return
-	_group_box.add_child(_label("Gruppe (%d/%d)" % [members.size(), Gruppen.MAX_SIZE], 17, Color("f2c14e")))
+	# Kopfzeile mit Knopf zum Ein- und Ausklappen (A2b, Alpha-Punkt 8); das Fenster ist halb durchsichtig
+	_group_panel.modulate.a = 0.82
+	var kopf := HBoxContainer.new()
+	kopf.add_child(_label("Gruppe (%d/%d)" % [members.size(), Gruppen.MAX_SIZE], 17, Color("f2c14e")))
+	var platz := Control.new()
+	platz.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	kopf.add_child(platz)
+	var klappen := Button.new()
+	klappen.text = "+" if _gruppe_eingeklappt else "–"
+	klappen.tooltip_text = "Gruppenfenster ausklappen" if _gruppe_eingeklappt else "Gruppenfenster einklappen"
+	klappen.custom_minimum_size = Vector2(40, 30)
+	klappen.add_theme_font_size_override("font_size", 18)
+	klappen.focus_mode = Control.FOCUS_NONE
+	klappen.pressed.connect(func() -> void:
+		_gruppe_eingeklappt = not _gruppe_eingeklappt
+		_update_group())
+	kopf.add_child(klappen)
+	_group_box.add_child(kopf)
 	for m: Dictionary in members:
 		var star := "★ " if m.id == Netz.group.leader else ""
 		var color := Color("8affc1") if m.id == local_id else GROUP_NAME_COLOR
-		_group_box.add_child(_label(star + str(m.name), 16, color))
+		_group_box.add_child(_label(star + str(m.name), 16 if not _gruppe_eingeklappt else 14, color))
+		if _gruppe_eingeklappt:
+			continue
 		var info := "Stufe %d · Leben %d" % [m.level, m.leben]
 		if not m.in_stadt:
 			info += " · kämpft gerade"
@@ -2163,7 +2280,17 @@ func _update_group() -> void:
 		bar.custom_minimum_size = Vector2(200, 5)
 		bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_group_box.add_child(bar)
-	_group_box.add_child(_menu_button("Gruppe verlassen", func() -> void: Netz.group_action("verlassen")))
+	if not _gruppe_eingeklappt:
+		# Kleiner Knopf zum Verlassen (vorher so groß wie die übrigen Knöpfe)
+		var verlassen := Button.new()
+		verlassen.text = "Gruppe verlassen"
+		verlassen.custom_minimum_size = Vector2(130, 26)
+		verlassen.add_theme_font_size_override("font_size", 12)
+		verlassen.focus_mode = Control.FOCUS_NONE
+		verlassen.size_flags_horizontal = Control.SIZE_SHRINK_END
+		verlassen.pressed.connect(func() -> void: Netz.group_action("verlassen"))
+		_group_box.add_child(verlassen)
+	_group_panel.size = Vector2.ZERO
 	_group_panel.reset_size()
 
 
@@ -2615,8 +2742,107 @@ func _shop_row(text: String, button_text: String, item_id := "") -> Dictionary:
 	return {box = box, button = button}
 
 
-func _update_hud() -> void:
+## Stand, mit dem das offene Fenster zuletzt gefüllt wurde (A1b: nur bei Änderungen neu aufbauen, sonst lassen sich
+## Knöpfe nicht anklicken, weil sie zwischen Drücken und Loslassen ersetzt werden)
+var _panel_stand := 0
+
+
+func _panel_stand_jetzt() -> int:
+	var p := local_player()
+	return hash([p.progress.to_dict(), p.shop, p.map, _panel_mode, Netz.online()])
+
+
+## Aufträge, die beim letzten Blick schon abgegeben waren (null = noch nicht geschaut, beim Laden nichts zeigen)
+var _schon_abgegeben: Variant = null
+var _belohnungs_karte: PanelContainer
+
+
+func _abgegebene_pruefen(progress: Progress) -> void:
+	var jetzt := {}
+	for id: String in progress.quests:
+		if progress.quests[id] == "abgegeben":
+			jetzt[id] = true
+	if _schon_abgegeben != null:
+		for id: String in jetzt:
+			if not (_schon_abgegeben as Dictionary).has(id) and not (GameData.quest(id).get("belohnung", {}) as Dictionary).is_empty():
+				_belohnung_zeigen(id)
+				break
+	_schon_abgegeben = jetzt
+
+
+## Karte „Auftrag abgeschlossen“: Titel, darunter Geld, Erfahrung und Gegenstände mit Bild. Verschwindet nach ein paar
+## Sekunden oder beim Antippen.
+func _belohnung_zeigen(id: String) -> void:
+	var q := GameData.quest(id)
+	var reward: Dictionary = q.get("belohnung", {})
+	if _belohnungs_karte != null and is_instance_valid(_belohnungs_karte):
+		_belohnungs_karte.queue_free()
+	var karte := _framed_panel()
+	karte.custom_minimum_size = Vector2(460, 0)
+	karte.mouse_filter = Control.MOUSE_FILTER_STOP
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 8)
+	box.alignment = BoxContainer.ALIGNMENT_CENTER
+	karte.add_child(box)
+	var kopf := _label(GameData.text("auftrag_abgeschlossen_titel"), 16, Color("8affc1"))
+	kopf.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	box.add_child(kopf)
+	var titel := _label(str(q.get("titel", id)), 24, Color("f2c14e"))
+	titel.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	box.add_child(titel)
+	var reihe := HBoxContainer.new()
+	reihe.alignment = BoxContainer.ALIGNMENT_CENTER
+	reihe.add_theme_constant_override("separation", 22)
+	box.add_child(reihe)
+	var teile: Array[Array] = []
+	if int(reward.get("gold", 0)) > 0:
+		teile.append([UiStil.symbol("gold"), "+" + Geld.text(int(reward.gold))])
+	if int(reward.get("erfahrung", 0)) > 0:
+		teile.append([UiStil.symbol("kristall"), "+%d Erfahrung" % int(reward.erfahrung)])
+	var gegenstaende: Dictionary = reward.get("gegenstaende", {})
+	for item_id: String in gegenstaende:
+		var bild := BagSlot.icon_texture(item_id)
+		teile.append([bild if bild != null else UiStil.symbol("tasche"), "%d× %s" % [int(gegenstaende[item_id]), GameData.item_name(item_id)]])
+	for teil: Array in teile:
+		var eintrag := HBoxContainer.new()
+		eintrag.add_theme_constant_override("separation", 6)
+		var symbol := TextureRect.new()
+		symbol.texture = teil[0]
+		symbol.custom_minimum_size = Vector2(30, 30)
+		symbol.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		symbol.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		symbol.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		eintrag.add_child(symbol)
+		eintrag.add_child(_label(str(teil[1]), 19, Color.WHITE))
+		reihe.add_child(eintrag)
+	_ui_root.add_child(karte)
+	karte.reset_size()
+	karte.position = Vector2((1280 - karte.size.x) * 0.5, 165)
+	_belohnungs_karte = karte
+	Geraeusche.play("heilung", 1.3)
+	karte.modulate.a = 0.0
+	var t := karte.create_tween()
+	t.tween_property(karte, "modulate:a", 1.0, 0.25)
+	t.tween_interval(4.0)
+	t.tween_property(karte, "modulate:a", 0.0, 0.6)
+	t.tween_callback(karte.queue_free)
+	karte.gui_input.connect(func(event: InputEvent) -> void:
+		if event is InputEventMouseButton and event.pressed:
+			karte.queue_free())
+
+
+## Stufe beim letzten Blick: steigt sie, kommt der Stufen-Klang (A6, Alpha-Punkt 11)
+var _letzte_stufe := -1
+
+
+func _update_hud(langsam := false) -> void:
 	var progress := local_player().progress
+	if _letzte_stufe >= 0 and progress.level > _letzte_stufe:
+		Geraeusche.play("stufe")
+	_letzte_stufe = progress.level
+	# Gerade abgegebene Aufträge: Belohnungskarte zeigen (A6, Alpha-Punkt 7)
+	if langsam:
+		_abgegebene_pruefen(progress)
 	var xp_span := progress.xp_range()
 	var xp_text := GameData.text("hud_max") if xp_span.y < 0 else GameData.text("hud_erfahrung", [progress.xp, xp_span.y])
 	_hud.text = GameData.text("hud", [progress.level, xp_text, Geld.text(progress.gold)])
@@ -2624,8 +2850,10 @@ func _update_hud() -> void:
 	var max_mana := progress.max_mana()
 	if max_mana > 0 and progress.mana_anteil < 1.0:
 		_hud.text += GameData.text("hud_mana", [roundi(max_mana * progress.mana_anteil), max_mana])
-	if _panel.visible:
-		_fill_panel()
+	if _panel.visible and langsam:
+		var stand := _panel_stand_jetzt()
+		if stand != _panel_stand:
+			_fill_panel()
 
 
 func _on_notice(player_id: String, text: String) -> void:
@@ -2844,6 +3072,7 @@ func _toggle_panel(mode: String) -> void:
 
 func _fill_panel() -> void:
 	var p := local_player()
+	_panel_stand = _panel_stand_jetzt()
 	var lines: PackedStringArray = []
 	var quest_list := _panel_mode == "auftraege" and _quest_tab != "erfolge"
 	_quest_tabs.visible = _panel_mode == "auftraege"
