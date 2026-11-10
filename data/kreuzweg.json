@@ -330,7 +330,7 @@
 				38,
 				8
 			],
-			"aussehen": "grund_alter_mensch+ilse#zubehoer=schluesselbund",
+			"aussehen": "ilse",
 			"dialog": "bank",
 			"zeichen": "truhe"
 		},
