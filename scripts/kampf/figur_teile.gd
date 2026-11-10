@@ -17,7 +17,7 @@ const KOERPER := "res://assets/teile/koerper/%s_%s_f%d.png"
 const ALTER_KOPF := "res://assets/teile/kopf/%s_%s_f%d.png"
 const KOPF := "res://assets/teile/koepfe/%s_%s.png"  # Kopf, Richtung_Gesicht
 ## Köpfe, deren Blatt schräg von vorne nach links schaut (die Körper schauen nach rechts): werden gespiegelt (E3b)
-const KOPF_VORN_GESPIEGELT: Array[String] = ["m1", "m2", "m3", "w1", "w2", "w3", "v_w3"]
+const KOPF_VORN_GESPIEGELT: Array[String] = ["m2", "m3", "w2", "w3", "a_m1", "k_w1", "borko"]
 ## Gesicht je Animation (seitlich); fehlt ein Gesicht in einer Richtung, gilt „normal“
 const GESICHT := {
 	"hit": "schmerz", "parry": "entschlossen", "attack": "entschlossen", "attack2": "entschlossen",
@@ -327,10 +327,26 @@ static func _hut_aufsetzen(kopf_bild: Image, hut_id: String, richtung: String, p
 	if hut_bild == null or daten.is_empty():
 		return {bild = kopf_bild, verschoben = Vector2.ZERO}
 	hut_bild = _schicht_faerben(hut_bild, _alle_schichten().hut[hut_id], palette)
+	var anker := Vector2(daten.anker[0], daten.anker[1])
+	# "innen_frei": [x, y] als Anteil des Bildes: das dunkle Innere eines Helms freischneiden, damit das Gesicht
+	# durchscheint (Broms Helm, A7)
+	if daten.has("innen_frei"):
+		hut_bild = _innen_frei(hut_bild, Vector2(daten.innen_frei[0], daten.innen_frei[1]))
+	# "spiegeln": Hut-Bild schaut in die andere Richtung als der Kopf (z. B. Broms Helm, A7)
+	if daten.get("spiegeln", false):
+		hut_bild = hut_bild.duplicate()
+		hut_bild.flip_x()
+		anker.x = hut_bild.get_width() - anker.x
+	# "groesse": Hut größer oder kleiner zeichnen, damit er über die Haare passt
+	var groesse := float(daten.get("groesse", 1.0))
+	if not is_equal_approx(groesse, 1.0):
+		hut_bild = hut_bild.duplicate()
+		hut_bild.resize(roundi(hut_bild.get_width() * groesse), roundi(hut_bild.get_height() * groesse), Image.INTERPOLATE_LANCZOS)
+		anker *= groesse
 	var sichtbar := kopf_bild.get_used_rect()
 	var ziel := Vector2(sichtbar.position.x + sichtbar.size.x / 2.0,
 			sichtbar.position.y + sichtbar.size.y * float(daten.get("sitz", 0.3)))
-	var hut_ecke := Vector2i((ziel - Vector2(daten.anker[0], daten.anker[1])).round())
+	var hut_ecke := Vector2i((ziel - anker).round())
 	# Neues Bild, in das Kopf und Hut beide passen
 	var links := mini(0, hut_ecke.x)
 	var oben := mini(0, hut_ecke.y)
@@ -339,12 +355,32 @@ static func _hut_aufsetzen(kopf_bild: Image, hut_id: String, richtung: String, p
 	var neu := Image.create_empty(rechts - links, unten - oben, false, Image.FORMAT_RGBA8)
 	var verschoben := Vector2i(-links, -oben)
 	# Stirnbänder (Kartenalbum): Der hintere Teil des Rings (Zeilen über "hinten_bis") liegt hinter dem Kopf
-	var hinten := int(daten.get("hinten_bis", 0))
+	var hinten := roundi(float(daten.get("hinten_bis", 0)) * groesse)
 	if hinten > 0:
 		neu.blend_rect(hut_bild, Rect2i(0, 0, hut_bild.get_width(), hinten), hut_ecke + verschoben)
 	neu.blend_rect(kopf_bild, Rect2i(Vector2i.ZERO, kopf_bild.get_size()), verschoben)
 	neu.blend_rect(hut_bild, Rect2i(0, hinten, hut_bild.get_width(), hut_bild.get_height() - hinten), hut_ecke + verschoben + Vector2i(0, hinten))
 	return {bild = neu, verschoben = Vector2(verschoben)}
+
+
+## Dunkle, zusammenhängende Fläche ab einem Punkt (Anteil des Bildes) durchsichtig machen.
+static func _innen_frei(bild: Image, start_anteil: Vector2) -> Image:
+	var neu := bild.duplicate()
+	var start := Vector2i(roundi(start_anteil.x * (neu.get_width() - 1)), roundi(start_anteil.y * (neu.get_height() - 1)))
+	var offen: Array[Vector2i] = [start]
+	var gesehen := {start: true}
+	while not offen.is_empty():
+		var p: Vector2i = offen.pop_back()
+		var c: Color = neu.get_pixelv(p)
+		if c.a < 0.5 or c.get_luminance() > 0.33:
+			continue
+		neu.set_pixelv(p, Color(0, 0, 0, 0))
+		for d: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+			var n := p + d
+			if n.x >= 0 and n.y >= 0 and n.x < neu.get_width() and n.y < neu.get_height() and not gesehen.has(n):
+				gesehen[n] = true
+				offen.append(n)
+	return neu
 
 
 ## Rückenteil für ein Bild: {bild, ecke, vorne} oder leer. Es hängt am Halspunkt und neigt sich mit dem Körper.

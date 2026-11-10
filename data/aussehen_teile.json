@@ -313,14 +313,20 @@
 					26,
 					51
 				],
-				"sitz": 0.36
+				"sitz": 0.62,
+				"groesse": 1.4,
+				"innen_frei": [
+					0.62,
+					0.75
+				]
 			},
 			"hinten": {
 				"anker": [
 					24,
 					51
 				],
-				"sitz": 0.36
+				"sitz": 0.55,
+				"groesse": 1.4
 			}
 		},
 		"lotte_krone": {

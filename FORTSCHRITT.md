@@ -26,7 +26,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (10.11.):** Alpha-Aufträge A7 bis A14 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+- **Nächster Schritt (10.11.):** Alpha-Aufträge A8 bis A15 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+
+- **Neu (10.11.): A7 Figuren richten** (Alpha-Punkte 1, 2, 12, 19–22, 25):
+  - **Novize m1 und Novizin w1:** Schräg von vorne schaut der Kopf jetzt in dieselbe Richtung wie der Körper, im Stehen und Laufen. Die Ursache: Das Spiel hat alle sechs wählbaren Köpfe gespiegelt, gezeichnet sind aber nur m2, m3, w2 und w3 nach links. Jetzt werden genau die Köpfe gespiegelt, die nach links schauen (dazu a_m1, k_w1 und Borko).
+  - **Broms Helm** ist größer, sitzt tiefer auf der Stirn, und das Innere des Helms ist ausgeschnitten, damit sein Gesicht durchschaut.
+  - **Für dich, Bilder (Teil K in `Spieldesign/GRAFIK_AUFTRAG.md`):** K1 Köpfe von vorne für die Frauen (Layla, Nadia, Hanne und die anderen schauen stärker zur Seite als ihr Körper, das geht nur mit neuen Köpfen), K2 die Zielscheiben für Fenns Prüfung, K3 Bilder für alle 60 Monster-Beuten (fünf Blätter, die Glutoase mit Echsenschuppe und Sonnenmähne zuerst). Das Zuschneiden ist vorbereitet.
+  - **So testest du es:**
+    1. Neue Figur mit Kopf m1 oder w1 erstellen und in Kreuzweg schräg nach vorne laufen: Kopf und Körper schauen gleich.
+    2. Zu Torwache Brom am Südosttor: Der Helm sitzt auf dem Kopf, das Gesicht ist frei.
+    3. Im Editor unter „Bewegungen in der Welt“ Novizin w2 ansehen: schaut weiter richtig.
 
 - **Neu (09.11.): A6 Kampf-Anzeige** (Alpha-Punkte 6, 7, 11, 43):
   - **Schild der Monster (6):** Hat ein Gegner (oder jemand aus der Gruppe) einen Schild, liegt eine hellblaue Leiste direkt über seiner Lebensleiste, und oben auf dem Namensschild sitzt ein Schild-Abzeichen mit der Zahl.

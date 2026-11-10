@@ -32,6 +32,33 @@ BLAETTER = {"gegenstaende": [
 ], "gegenstaende_3": [
 	# Grundmaterialien und Salbeis Waldpilze (D13, Auftrag B6c)
 	["garn", "oel", "leder", "waldpilze"],
+], "gegenstaende_4": [
+	# Beute der Aschensteppe und Palmenrast (A7, Auftrag K3)
+	["echsenschuppe", "sonnenmaehne", "struppiges_fell", "trockenzweig"],
+	["kaktusbluete", "aschefell", "schwarzer_panzer", "wurmhaut"],
+	["feuerschuppe", "blitzglas", "oasenschleim", "geisterstaub"],
+], "gegenstaende_5": [
+	# Beute von Glutgrat und Vulkanschmiede (A7, Auftrag K3)
+	["schakalfell", "stachelflitzer_bluete", "lavahorn", "salamanderhaut"],
+	["russfeder", "quellstein", "glutfluegel", "obsidian"],
+	["wyvernschuppe", "schlackenbrocken", "glutkern", "alte_zahnraeder"],
+	["ascheschuppen", "magmaschleim", "messingzahnrad"],
+], "gegenstaende_6": [
+	# Beute der Kreuzwegfelder (A7, Auftrag K3)
+	["schleimklecks", "weiches_fell", "kaeferpanzer", "pusteblumensamen"],
+	["leuchtstaub", "gluehender_stachel", "schleimkrone_splitter"],
+], "gegenstaende_7": [
+	# Beute von Hirschtal und Wachtwald (A7, Auftrag K3)
+	["borsten", "dornenzweig", "krebsschere", "schillernde_feder"],
+	["kronhirsch_geweih", "schildpatt", "moosstein", "wolfspelz"],
+	["irrlichtfunke", "eulenfeder", "funkenfell", "falkenfeder"],
+	["kroetenstein"],
+], "gegenstaende_8": [
+	# Beute von Tiefwurzel und Pilzhöhle (A7, Auftrag K3)
+	["sporenkappe", "borkenstueck", "donnergeweih", "pilzfell"],
+	["leuchtschuppen", "wurzelknolle", "glimmerfluegel", "rankenstrang"],
+	["splitterstaub", "falterschuppen", "luchsohr", "grosser_splitterkristall"],
+	["goldspore"],
 ]}
 
 
