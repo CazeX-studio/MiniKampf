@@ -3,10 +3,9 @@ extends SceneTree
 ## Aufruf: Godot --headless --path . -s tests/kreuzweg_figuren_test.gd
 
 const NEBEN := {"schreiberin": "grund_gelehrter+lene", "hanne": "grund_frau+hanne#zubehoer=schuerze&kochloeffel",
-	"edmar": "grund_mann+edmar#zubehoer=amtskette",
 	"wache": "grund_wache+brom#hut=brom_helm", "quill": "grund_handwerker+quill#zubehoer=meissel",
 	"pip": "grund_kind+pip#zubehoer=holzschwert", "lotte": "grund_kind+lotte#hut=lotte_krone"}
-const HAUPT := {"bank_kreuzweg": "ilse", "bingo": "bingo", "marv": "marv", "marv_fest": "marv", "marv_abschied": "marv", "mira": "mira"}
+const HAUPT := {"bank_kreuzweg": "ilse", "edmar": "edmar", "bingo": "bingo", "marv": "marv", "marv_fest": "marv", "marv_abschied": "marv", "mira": "mira"}
 
 var _failed := 0
 

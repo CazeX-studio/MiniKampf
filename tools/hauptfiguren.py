@@ -49,6 +49,8 @@ FIGUREN = {
 	"hatta": (1.45, []),
 	# Bankhüterin Ilse mit Ärmelschonern (B6i, 10.11.): eigenes Welt-Blatt, Porträts bleiben aus neben_ilse.png
 	"ilse": (0.95, []),
+	# Vogt Edmar mit Festschärpe (B6j, 10.11.): eigenes Welt-Blatt, Porträts bleiben aus neben_edmar.png
+	"edmar": (1.04, []),
 }
 ## Kampf-Blätter: Figur -> Liste (Blatt, Reihen); alle Blätter einer Figur landen unter <figur>_kampf
 KAMPF = {

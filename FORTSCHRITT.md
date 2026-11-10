@@ -11,6 +11,12 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
+- **Neu (10.11.): Vogt Edmar mit Festschärpe** (Rest aus D20c2, GRAFIK_AUFTRAG.md B6j): Edmar läuft jetzt mit deinem eigenen Welt-Blatt (`haupt_edmar_welt.png`) statt mit Baukasten-Körper: Amtskette und Festschärpe in den fünf Farben der Regionen. Porträts bleiben.
+  - **So testest du es:**
+    1. Tagsüber in Kreuzweg zur Festbühne gehen: Edmar mit bunter Schärpe und Amtskette.
+    2. Um ihn herumlaufen: Die Schärpe ist auch von hinten zu sehen.
+    3. Mit ihm sprechen: Gespräch geht wie vorher.
+
 - **Neu (10.11.): Bankhüterin Ilse mit Ärmelschonern** (Rest aus D20c2, GRAFIK_AUFTRAG.md B6i): Ilse läuft jetzt mit deinem eigenen Welt-Blatt (`haupt_ilse_welt.png`) statt mit Baukasten-Körper: Ärmelschoner und Schlüsselbund am Gürtel. Porträts bleiben.
   - **So testest du es:**
     1. In Kreuzweg in die Bank gehen: Ilse mit Ärmelschonern und Schlüsselbund.

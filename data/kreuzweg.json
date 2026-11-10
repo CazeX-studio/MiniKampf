@@ -349,7 +349,7 @@
 				33,
 				36
 			],
-			"aussehen": "grund_mann+edmar#zubehoer=amtskette",
+			"aussehen": "edmar",
 			"dialog": "edmar",
 			"wenn": {
 				"oder": [
