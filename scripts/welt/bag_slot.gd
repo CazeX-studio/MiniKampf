@@ -24,6 +24,8 @@ static var _icons := {}
 
 ## Gürtelplatz: leer zeigt er die leere Lederschlaufe, man kann nichts hineinziehen
 var belt := false
+## Ausrüstungsplatz (A8b): nicht ziehen, leer steht der Name des Platzes blass im Kästchen
+var platz_name := ""
 
 
 func _init() -> void:
@@ -75,12 +77,12 @@ func _make_custom_tooltip(_for_text: String) -> Object:
 
 
 func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed and item_id != "":
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed and (item_id != "" or platz_name != ""):
 		picked.emit(index)
 
 
 func _get_drag_data(_at_position: Vector2) -> Variant:
-	if item_id == "" or belt:
+	if item_id == "" or belt or platz_name != "":
 		return null
 	# Vorschau unter dem Mauszeiger: dasselbe Bild etwas durchsichtig
 	var preview := BagSlot.new()
@@ -94,7 +96,7 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
-	return not belt and data is Dictionary and data.has("tasche")
+	return not belt and platz_name == "" and data is Dictionary and data.has("tasche")
 
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
@@ -105,6 +107,8 @@ func _draw() -> void:
 	# Kästchen aus dem UI-Set: normal oder golden leuchtend, wenn ausgewählt
 	draw_style_box(UiStil.feld_stil(selected), Rect2(Vector2.ZERO, size))
 	if item_id == "":
+		if platz_name != "":
+			draw_string(ThemeDB.fallback_font, Vector2(0, size.y * 0.58), platz_name, HORIZONTAL_ALIGNMENT_CENTER, size.x, 12, Color(1, 1, 1, 0.35))
 		if belt and icon_texture("guertel_platz") != null:
 			draw_texture_rect(icon_texture("guertel_platz"), Rect2(Vector2(9, 9), size - Vector2(18, 18)), false, Color(1, 1, 1, 0.35))
 		return

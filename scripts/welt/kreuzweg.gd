@@ -3432,30 +3432,10 @@ func _wrapped(text: String, font_size: int, color: Color) -> RichTextLabel:
 func _ausruestung_zeilen(p: PlayerState) -> void:
 	_rep_box.add_child(_label(GameData.text("ausruestung_titel"), 17, Color("f2c14e")))
 	var angelegt: Dictionary = p.progress.ausruestung
-	for platz: String in Ausruestung.PLAETZE:
-		var id := str(angelegt.get(platz, ""))
-		var row := HBoxContainer.new()
-		row.add_theme_constant_override("separation", 8)
-		var name_label := _label(Ausruestung.PLATZ_NAMEN[platz], 15, Color("c8c8c8"))
-		name_label.custom_minimum_size.x = 80
-		row.add_child(name_label)
-		var text := RichTextLabel.new()
-		text.bbcode_enabled = true
-		text.fit_content = true
-		text.scroll_active = false
-		text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		text.add_theme_font_size_override("normal_font_size", 15)
-		text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		text.custom_minimum_size.x = 100
-		text.text = "%s  [color=#a0a0a0]%s[/color]" % [Ausruestung.name_farbig(id), Ausruestung.werte_text(id)] if id != "" else "[color=#707070]–[/color]"
-		row.add_child(text)
-		if id != "":
-			var button := _small_button(GameData.text("ablegen"), func() -> void:
-				_send({type = "ablegen", platz = platz})
-				_fill_panel())
-			button.custom_minimum_size = Vector2(90, 28)
-			row.add_child(button)
-		_rep_box.add_child(row)
+	# Plätze mit Bildern rund um die eigene Figur (A8b)
+	var puppe := AusruestungPuppe.new()
+	_rep_box.add_child(puppe)
+	puppe.bauen(p.progress, p.look, func(befehl: Dictionary) -> void: _send(befehl), _fill_panel)
 	var s := Ausruestung.summe(angelegt)
 	var summe := _label(GameData.text("ausruestung_summe", [s.waffenkraft, s.verteidigung, s.widerstand,
 			Ausruestung.TEMPO_NAMEN.get(s.waffen_tempo, "normal")]), 14, Color("a0a0a0"))

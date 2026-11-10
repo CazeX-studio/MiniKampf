@@ -59,6 +59,12 @@ BLAETTER = {"gegenstaende": [
 	["leuchtschuppen", "wurzelknolle", "glimmerfluegel", "rankenstrang"],
 	["splitterstaub", "falterschuppen", "luchsohr", "grosser_splitterkristall"],
 	["goldspore"],
+], "gegenstaende_9": [
+	# Ausrüstung (A8b, Auftrag K3f): Waffen, Kopf, Körper, Schuhe, Schmuck
+	["kurzschwert", "stoffkappe", "lederweste", "lederstiefel"],
+	["breitschwert", "flinker_dolch", "kettenhemd", "wollrobe"],
+	["glueckskette", "kettenbrecher", "kettenhelm", "kettenpanzer"],
+	["kettenstiefel"],
 ]}
 
 

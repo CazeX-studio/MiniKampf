@@ -70,6 +70,8 @@
 	"mana_voll": "Dein Mana ist wieder voll.",
 	"hud_mana": " · Mana %d / %d",
 	"ausruestung_titel": "Ausrüstung",
+	"ausruestung_leer": "leer",
+	"ausruestung_antippen": "Tippe einen Platz an, um zu sehen, was du trägst.",
 	"ausruestung_summe": "Zusammen: Waffenkraft %d · Verteidigung %d · Widerstand %d · Waffen-Tempo: %s. Etwa ein Drittel deiner Kraft kommt aus der Ausrüstung.",
 	"anlegen": "Anlegen",
 	"ablegen": "Ablegen",

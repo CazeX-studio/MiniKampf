@@ -26,7 +26,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (10.11.):** Alpha-Aufträge A8b bis A15 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+- **Nächster Schritt (10.11.):** Alpha-Aufträge A9 bis A15 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+
+- **Neu (10.11.): A8b Ausrüstung als Plätze** (Taste C, Alpha-Punkt 27):
+  - Im Werte-Fenster steht unter dem Aussehen jetzt deine Figur, links die Plätze Kopf, Körper und Schuhe, rechts Waffe und zwei Schmuckplätze, jeweils mit dem Bild des Teils. Leere Plätze zeigen blass ihren Namen.
+  - Einen Platz antippen zeigt darunter Name, Seltenheit und Werte, dazu „Ablegen“. Anlegen geht wie bisher in der Tasche.
+  - **Für dich:** Die 13 Ausrüstungsteile (Kurzschwert, Kappe, Weste, Stiefel, Kettenglut-Set …) haben noch gezeichnete Platzhalter. Prompt K3f in `Spieldesign/GRAFIK_AUFTRAG.md`, das Zuschneiden ist vorbereitet.
+  - **So testest du es:**
+    1. Taste C, nach unten rollen: Figur mit sechs Plätzen.
+    2. Die Waffe antippen: Werte und „Ablegen“ erscheinen. Ablegen, dann ist der Platz leer.
+    3. In der Tasche (I) die Waffe wieder anlegen: Sie steht wieder im Platz.
 
 - **Neu (10.11.): A8a Fähigkeiten-Baum mit Feldern** (Taste K, Alpha-Punkt 26):
   - Statt der Textliste: oben die Leiste mit sechs Feldern, darunter die Grundreihe und die Reihen 1 bis 4 von oben nach unten. Jede Fähigkeit ist ein Feld mit Stufe (z. B. 2/5), gesperrte Reihen sind grau, Linien zeigen, welche Fähigkeit eine andere voraussetzt.

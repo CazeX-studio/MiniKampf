@@ -28,8 +28,13 @@ func _process(delta: float) -> void:
 		[2.5, func() -> void: _foto("ausruestung_tasche")],
 		[2.7, func() -> void:
 			_send({type = "anlegen", gegenstand = "wollrobe"})
+			AusruestungPuppe.gewaehlt = "koerper"
 			_toggle_panel("werte")],
-		[3.5, func() -> void:
+		[3.2, func() -> void:
+			# Zur Ausrüstung hinunterrollen (sie steht unter dem Aussehen)
+			for c in find_children("*", "ScrollContainer", true, false):
+				(c as ScrollContainer).scroll_vertical = 100000],
+		[3.8, func() -> void:
 			_foto("ausruestung_werte")
 			get_tree().quit()],
 	]
@@ -40,8 +45,8 @@ func _process(delta: float) -> void:
 
 
 func _foto(name: String) -> void:
-	get_viewport().get_texture().get_image().save_png("user://%s.png" % name)
-	print("Foto: ", ProjectSettings.globalize_path("user://%s.png" % name))
+	var ordner := OS.get_cmdline_user_args()[0] if not OS.get_cmdline_user_args().is_empty() else "user:/"
+	get_viewport().get_texture().get_image().save_png("%s/%s.png" % [ordner, name])
 
 
 func _exit_tree() -> void:
