@@ -11,6 +11,12 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
+- **Neu (10.11.): Oma Hagebutte mit Strickjacke** (Rest aus D21, GRAFIK_AUFTRAG.md B6g): Hagebutte läuft jetzt mit deinem eigenen Welt-Blatt (`haupt_hagebutte_welt.png`) statt mit Baukasten-Körper: moosgrüne Strickjacke, braunes Kleid, Karten in der Hand. Der Kartenstapel sitzt von hinten nicht mehr auf dem Rücken. Porträts bleiben.
+  - **So testest du es:**
+    1. In Wipfelheim zu Oma Hagebutte gehen: Sie trägt die grüne Strickjacke.
+    2. Um sie herumlaufen: Von hinten keine Karten am Rücken.
+    3. Nachts beim Gasthaus nachsehen: Dort steht sie genauso.
+
 - **Neu (10.11.): Zaid mit Reiseumhang** (Rest aus D27, GRAFIK_AUFTRAG.md B6f): Karawanenführer Zaid läuft jetzt mit deinem eigenen Welt-Blatt (`haupt_zaid_welt.png`) statt mit Baukasten-Körper und Kopf, mit sandgelbem Umhang und rotem Saum. Ein einzelner Umhang auf dem Händler-Körper saß nicht sauber, darum ist er ganz neu gemalt. Dazu fünf neue Porträts im Gespräch (ruhig, lächelnd, wütend, traurig, überrascht) passend zum neuen Gesicht.
   - **So testest du es:**
     1. In der Stadt Glutoase zum Karawanenplatz gehen: Zaid steht dort mit Umhang.

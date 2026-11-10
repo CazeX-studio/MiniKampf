@@ -43,6 +43,8 @@ FIGUREN = {
 	"ren": (1.04, []),
 	# Zaid mit Reiseumhang (B6f, 10.11.): eigenes Welt-Blatt statt Baukasten-Körper, Porträts bleiben aus neben_zaid.png
 	"zaid": (1.0, []),
+	# Oma Hagebutte mit Strickjacke (B6g, 10.11.): eigenes Welt-Blatt, Porträts bleiben aus neben_hagebutte.png
+	"hagebutte": (0.95, []),
 }
 ## Kampf-Blätter: Figur -> Liste (Blatt, Reihen); alle Blätter einer Figur landen unter <figur>_kampf
 KAMPF = {

@@ -3,7 +3,7 @@ extends SceneTree
 ## Aufruf: Godot --headless --path . -s tests/gruenwacht_figuren_test.gd
 
 const NEBEN := {"salbei": "grund_haendler+salbei#zubehoer=kraeuterbuendel&korb", "bank_wipfelheim": "grund_alter_mensch+tamm#hut=tamm_moos_hut",
-	"oma_hagebutte": "grund_alter_mensch+hagebutte#zubehoer=kartenstapel", "kobalt": "zaehmer_m+kobalt",
+	"kobalt": "zaehmer_m+kobalt",
 	"borko": "grund_mann+borko#hut=borko_kochmuetze,zubehoer=schoepfkelle"}
 const HAUPT := ["ysolde", "fenn", "tilda", "esche", "kael"]
 
@@ -26,6 +26,9 @@ func _initialize() -> void:
 			_check(FigurTeile.bild(world.npcs[npc].look, anim, 0) != null, "%s lässt sich zeichnen (%s)" % [npc, anim])
 	for npc: String in HAUPT:
 		_check(world.npcs[npc].look == npc and ResourceLoader.exists(FighterView.sprite_path(npc, "run_hinten", 3)), "%s mit eigenen Bildern" % npc)
+	# Oma Hagebutte mit Strickjacke: eigenes Welt-Blatt seit 10.11. (GRAFIK_AUFTRAG.md B6g)
+	_check(world.npcs.oma_hagebutte.look == "hagebutte" and ResourceLoader.exists(FighterView.sprite_path("hagebutte", "run_hinten", 3)),
+			"oma_hagebutte mit eigenen Bildern")
 	for wer: String in ["Ysolde", "Fenn", "Tilda", "Esche", "Kael", "Salbei", "Borko", "Oma Hagebutte", "Kobalt"]:
 		_check(WorldState.portraet({wer = wer}) != "", "Porträt von %s" % wer)
 	_check(FighterView.look_data("kobalt").sprite == "zaehmer_m+kobalt" and FigurTeile.bild("zaehmer_m+kobalt", "idle", 0) != null,
