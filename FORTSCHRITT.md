@@ -119,7 +119,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 - **Neu (09.11.): Drehen im Stadt-Editor** (dein Wunsch): Knopf „Drehen“ neben „Spiegeln“.
   - **Flache Teile** (Gras, Blumen, Lichtung, Steppengras, Karawanenspur …) drehen sich frei in 45°-Schritten auf dem Boden.
-  - **Stehende Teile** (Häuser, Stände) und Brücken (wegen der Geländer): reihum vorne → quer → von hinten → von hinten quer. Die Ansichten von hinten brauchen eigene Bilder: Prompts in `GRAFIK_AUFTRAG.md` Teil G (G1 bis G4, je Stadt ein Blatt). Bis sie da sind, wechselt „Drehen“ nur zwischen vorne und quer.
+  - **Stehende Teile** (Häuser, Stände) und Brücken (wegen der Geländer): reihum vorne → quer → von hinten → von hinten quer. Die Ansichten von hinten brauchen eigene Bilder: Prompts in `GRAFIK_AUFTRAG.md` Teil J (G1 bis G4, je Stadt ein Blatt). Bis sie da sind, wechselt „Drehen“ nur zwischen vorne und quer.
   - **Online speichern** (für Katie und fürs Handy) steht als S4c „erst besprechen“ in den Bauaufträgen.
   - **So testest du es:**
     1. Stadt-Editor → „Aschensteppe“ oder „Glutoase“, Steppengras oder Karawanenspur antippen, mehrmals „Drehen“.
@@ -2624,7 +2624,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 
 - **Für dich (09.11.): Klassenbilder für die Klassenwahl.** Prompts in `Spieldesign/GRAFIK_AUFTRAG.md` Teil H: zuerst H1 (Bogenschütze, Monster-Zähmer, Rüstungsschmied, Klingentänzer, Sternensängerin), dann H2 (die sechs späteren Klassen). Je Bild ein ChatGPT-Chat, die Dateien zum Anhängen stehen über jedem Prompt. Fertige Bilder als `tools/vorlagen/klassenbild_<klasse>.png` schicken, dann baue ich A3b (Klassenwahl mit großem Bild).
 
-- **Für später am PC (Marco, 09.11.): Häuser von hinten.** Vier Blätter G1 bis G4 in `Spieldesign/GRAFIK_AUFTRAG.md` Teil G (Kreuzweg große Gebäude, Kreuzweg Wohnhäuser und Stände, Wipfelheim, Glutoase). Je Blatt ein ChatGPT-Chat, angehängt die Referenzbilder und die Vorderansichten aus `assets/baukasten/objekte/`. Danach schneidet Claude sie zu und trägt `bild_hinten` ein, dann dreht „Drehen“ im Stadt-Editor die Häuser in alle vier Richtungen.
+- **Für später am PC (Marco, 09.11.): Häuser von hinten.** Vier Blätter J1 bis J4 in `Spieldesign/GRAFIK_AUFTRAG.md` Teil J (Kreuzweg große Gebäude, Kreuzweg Wohnhäuser und Stände, Wipfelheim, Glutoase). Je Blatt ein ChatGPT-Chat, angehängt die Referenzbilder und die Vorderansichten aus `assets/baukasten/objekte/`. Danach schneidet Claude sie zu und trägt `bild_hinten` ein, dann dreht „Drehen“ im Stadt-Editor die Häuser in alle vier Richtungen.
 
 - ~~**Zweimal Mira (28.10.):**~~ Erledigt (28.10.): Die Novizen-Köpfe sind namenlos (Novize m1, Novizin w1 …), den Namen gibt der Spieler. Mira bleibt die Vorgängerin.
 
