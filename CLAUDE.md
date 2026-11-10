@@ -32,6 +32,7 @@ Das gilt genauso in Claude Code in der Cloud (vom Handy): dort direkt im GitHub-
 - Commits: Dateien gezielt hinzufügen (`tools/referenz/*.png.import` nicht mitnehmen), auf `main` pushen.
 - Google Doc „CazeX MMO – Brainstorming“: ID `1yVavfCZW8AntSBdW14AA6RUH6KY50G1L9OGxyzEUawg`. Es ist zu groß zum direkten Lesen: Das gespeicherte Ergebnis mit Python öffnen.
 - Neue gemalte Bilder (Figuren, Porträts, Figurteile, Baukasten-Objekte) nach dem Import mit `tools/web_bilder.py` aufs kleinere Web-Format stellen (der Web-Export macht es sonst selbst).
+- Neue oder geänderte Köpfe: danach das Foto aller Köpfe (`tests/alle_koepfe_foto.tscn`) ansehen. Schräg von vorne müssen Gesicht und Körper in dieselbe Richtung schauen (nach rechts). Köpfe, die nach links gezeichnet sind, kommen in `KOPF_VORN_GESPIEGELT` (scripts/kampf/figur_teile.gd).
 - Datei aus Marcos Stadt-Editor (stadt_<ort>.json) übernehmen: `python3 tools/stadt_editor_uebernehmen.py <datei>`.
 - Karten von Grünwacht neu erzeugen: `tools/gruenwacht_karten.py`. Bilder zuschneiden: `tools/baukasten_zuschneiden.py <blatt>`.
 
