@@ -136,7 +136,8 @@ def main():
 		if not koerper.startswith("grund_"):
 			# Nicht bei „Figur erstellen“ wählbar
 			daten[koerper]["_koepfe"][figur]["nur_figur"] = True
-		for stimmung, (i, _) in zip(stimmungen, reihen[1]):
+		# Eigene Porträts (z. B. Zaid seit 10.11., tools/hauptfiguren.py) nicht mit den alten überschreiben
+		for stimmung, (i, _) in zip(stimmungen if not (VORLAGEN / f"haupt_{figur}_portraets.png").exists() else [], reihen[1]):
 			bild = Image.fromarray(ausschneiden(a, ziel, i))
 			f = PORTRAET_HOEHE / bild.height
 			bild.resize((round(bild.width * f), PORTRAET_HOEHE), Image.LANCZOS).save(PORTRAETS / f"{SPRECHER.get(figur, figur)}_{stimmung}.png")
