@@ -57,10 +57,15 @@ export -f eine
 
 tests=$(ls tests/*_test.gd | grep -- "$filter")
 gesamt_start="$(date +%s)"
+# Die Netz-Prüfungen starten einen eigenen Server und warten auf ihn: Ist der Rechner voll ausgelastet (Marcos PC),
+# kommen sie sonst zu spät an. Darum laufen sie in einer eigenen Runde nach den übrigen (11.11.2026).
+netz=$(echo "$tests" | grep -E "/netz_" || true)
+rest=$(echo "$tests" | grep -vE "/netz_" || true)
 # Die langen zuerst starten, damit am Ende nicht eine allein übrig bleibt
-lang=$(echo "$tests" | grep -E "/(netz_|wildnis|faehigkeit_fx|aussehen_schichten)" || true)
-kurz=$(echo "$tests" | grep -vE "/(netz_|wildnis|faehigkeit_fx|aussehen_schichten)" || true)
+lang=$(echo "$rest" | grep -E "/(wildnis|faehigkeit_fx|aussehen_schichten)" || true)
+kurz=$(echo "$rest" | grep -vE "/(wildnis|faehigkeit_fx|aussehen_schichten)" || true)
 printf '%s\n%s\n' "$lang" "$kurz" | grep . | xargs -P "$kerne" -I{} bash -c 'eine "$@"' _ {}
+echo "$netz" | grep . | xargs -P "$kerne" -I{} bash -c 'eine "$@"' _ {}
 
 anzahl=$(echo "$tests" | grep -c . || true)
 # Nur die Fehler mit ihren Zeilen zeigen
