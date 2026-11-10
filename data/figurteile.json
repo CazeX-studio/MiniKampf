@@ -2813,9 +2813,13 @@
 						29.0,
 						47
 					],
+					"vorn_augen_zu": [
+						23.4,
+						45
+					],
 					"vorn_normal": [
-						37.9,
-						46
+						23.2,
+						45
 					]
 				},
 				"name": "Brunnenhüterin Nadia"

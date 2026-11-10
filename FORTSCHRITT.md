@@ -11,11 +11,12 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
-- **Neu (10.11.): Laylas Kopf schaut nach vorne** (Alpha 19–21, GRAFIK_AUFTRAG.md K1): Wirtin Layla hat einen neuen Kopf von vorne, der wie ihr Körper nach vorne links schaut, dazu Blinzeln. Neues Werkzeug `tools/koepfe_vorn.py` für die übrigen Frauen-Köpfe (Blätter `kopf_vorn_<figur>.png`).
+- **Neu (10.11.): Köpfe von Layla und Nadia schauen nach vorne** (Alpha 19–21, GRAFIK_AUFTRAG.md K1): Wirtin Layla und Brunnenhüterin Nadia haben neue Köpfe von vorne, die wie ihr Körper nach vorne links schauen, dazu Blinzeln. Neues Werkzeug `tools/koepfe_vorn.py` für die übrigen Frauen-Köpfe (Blätter `kopf_vorn_<figur>.png`).
   - **So testest du es:**
     1. In der Glutoase zur Glutstube gehen: Laylas Gesicht und Körper schauen in dieselbe Richtung.
     2. Kurz warten: Sie blinzelt.
     3. Nachts wiederkommen: Sie schenkt Hadrak nach, der Kopf sitzt auch dann richtig.
+    4. Zum Brunnen gehen: Nadia schaut ebenfalls in Körper-Richtung.
 
 - **Neu (10.11.): Vogt Edmar mit Festschärpe** (Rest aus D20c2, GRAFIK_AUFTRAG.md B6j): Edmar läuft jetzt mit deinem eigenen Welt-Blatt (`haupt_edmar_welt.png`) statt mit Baukasten-Körper: Amtskette und Festschärpe in den fünf Farben der Regionen. Porträts bleiben.
   - **So testest du es:**
