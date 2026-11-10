@@ -26,7 +26,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (10.11.):** Alpha-Aufträge A9 bis A15 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+- **Nächster Schritt (10.11.):** Alpha-Aufträge A9b bis A15 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+
+- **Neu (10.11.): A9a Begleiter im Dungeon** (Alpha-Punkt 37, Pilzhöhle und Vulkanschmiede):
+  - Am Eingang beider Dungeons fragt das Spiel, wer mitkommt: „Allein“, „Mit Tessa“, „Mit Gorm“ oder „Mit Tessa und Gorm“. Die Wahl gilt für den ganzen Durchgang, bei den Bossen und bei jedem Monster dort. Beim nächsten Betreten wählst du neu.
+  - Vorher war es uneinheitlich: gegen die Monster immer allein, bei den Bossen fest zu dritt.
+  - **So testest du es:**
+    1. Mit dem Spielstand-Editor zu „Der Splitter im Urbaum“ springen, zum Höhleneingang im Waldboden: Die Frage erscheint.
+    2. „Mit Gorm“ wählen und ein Monster in der Höhle angreifen: Gorm kämpft mit.
+    3. Hinter Hadraks Schmiede in die Vulkanschmiede: dieselbe Frage, „Allein“ wählen, die Hammerbrüder allein angehen.
 
 - **Neu (10.11.): A8b Ausrüstung als Plätze** (Taste C, Alpha-Punkt 27):
   - Im Werte-Fenster steht unter dem Aussehen jetzt deine Figur, links die Plätze Kopf, Körper und Schuhe, rechts Waffe und zwei Schmuckplätze, jeweils mit dem Bild des Teils. Leere Plätze zeigen blass ihren Namen.

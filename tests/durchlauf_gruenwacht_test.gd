@@ -164,6 +164,10 @@ func _answer() -> void:
 		world.apply_command("spieler", {type = "dialog_next"})
 		return
 	var node := "%s/%s" % [p.dialog.id, p.dialog.node]
+	# Am Eingang eines Dungeons: mit Tessa und Gorm (A9a), wie die Bosse bisher immer
+	if str(p.dialog.id).begins_with("eingang_") and str(p.dialog.node) == "wer":
+		world.apply_command("spieler", {type = "dialog_choose", index = 3})
+		return
 	var count: int = view.antworten.size()
 	var best := 0
 	var best_score := 1e9
@@ -333,6 +337,13 @@ func _edges(map_id: String) -> Array:
 		for action: Dictionary in place.actions:
 			if action.has("reisen"):
 				result.append([str(action.reisen), {ort = "ort:%d" % i}])
+		# Eingang der Pilzhöhle mit Gespräch (A9a): Das Ziel steht in den Antworten (die Vulkanschmiede gehört nicht zu Grünwacht)
+		if str(place.get("dialog", "")).begins_with("eingang_"):
+			for knoten: Dictionary in GameData.dialog(place.dialog).get("knoten", {}).values():
+				for antwort: Dictionary in knoten.get("antworten", []):
+					for action: Dictionary in antwort.get("aktionen", []):
+						if action.has("reisen") and action.reisen == "pilzhoehle" and action.reisen != map_id:
+							result.append([str(action.reisen), {ort = "ort:%d" % i}])
 	return result
 
 

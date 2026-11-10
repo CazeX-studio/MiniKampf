@@ -3538,6 +3538,11 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 	for pfeil: String in Skills.MUNITION:
 		if local_player().progress.item_count(pfeil) > 0:
 			BattleRequest.player_munition[pfeil] = local_player().progress.item_count(pfeil)
+	# Im Dungeon: die am Eingang gewählten Begleiter (A9a)
+	var flags: Dictionary = local_player().progress.flags
+	BattleRequest.dungeon_begleiter = null
+	if flags.has("lauf:begleiter_gewaehlt"):
+		BattleRequest.dungeon_begleiter = BattleRequest.DUNGEON_BEGLEITER.keys().filter(func(id: String) -> bool: return flags.has("lauf:mit:" + id))
 	_prepare_reward(kampf_id)
 	if BattleRequest.prepare(kampf_id, progress.level, progress.potion_count("heiltrank"), progress.battle_class(),
 			progress.flags.get("monster", [])):

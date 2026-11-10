@@ -46,6 +46,22 @@ static var player_novize: Array = []
 static var player_munition := {}
 ## Band des Zähmers: wie viele Kämpfe jedes Monster schon im Rudel war (Monster -> Anzahl)
 static var player_band := {}
+## Begleiter im Dungeon (A9a): am Eingang gewählt, gelten für alle Kämpfe des Durchgangs. null = nicht gewählt
+## (dann wie bisher: allein gegen Monster, bei Bossen die Begleiter aus data/kaempfe.json)
+static var dungeon_begleiter: Variant = null
+## Wer am Eingang eines Dungeons mitkommen kann
+const DUNGEON_BEGLEITER := {"tessa": {name = "Tessa", aussehen = "novize_tessa"}, "gorm": {name = "Gorm", aussehen = "novize_gorm"}}
+
+
+## Begleiter eines Kampfes: im Dungeon die am Eingang gewählten, sonst die aus den Kampfdaten.
+static func begleiter_fuer(data: Dictionary) -> Array:
+	if str(data.get("dungeon", "")) != "" and dungeon_begleiter is Array:
+		var liste: Array = []
+		for id: String in dungeon_begleiter:
+			if DUNGEON_BEGLEITER.has(id):
+				liste.append(DUNGEON_BEGLEITER[id])
+		return liste
+	return data.get("begleiter", [])
 
 
 static func active() -> bool:
@@ -121,7 +137,7 @@ static func prepare(id: String, level: int, potions := 0, own_class := "", own_m
 	if not phases.is_empty():
 		waves = phases.map(func(ph: Dictionary) -> Array: return ph.gegner)
 	var heroes: Array = [player]
-	for b: Dictionary in data.get("begleiter", []):
+	for b: Dictionary in begleiter_fuer(data):
 		heroes.append({klasse = "novize", name = b.name, aussehen = b.get("aussehen", "novize"), stufe = level, computer = true})
 	kampf_id = id
 	result = {}

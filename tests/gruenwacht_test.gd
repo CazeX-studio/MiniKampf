@@ -693,9 +693,14 @@ func _test_dungeon(choice: String) -> void:
 	world.apply_command("a", {type = "use", target = door})
 	for i in 400:
 		world.tick(0.05)
+		# Am Eingang die Begleiter wählen (A9a): mit Tessa und Gorm
+		if p.in_dialog() and str(p.dialog.get("id", "")) == "eingang_pilzhoehle":
+			world.apply_command("a", {type = "dialog_choose", index = 3})
 		if p.map != "waldboden":
 			break
 	_check(p.map == "pilzhoehle", "Zwischen den Wurzeln hinab in die Pilzhöhle")
+	_check(p.progress.flags.has("lauf:begleiter_gewaehlt") and p.progress.flags.has("lauf:mit:tessa") and p.progress.flags.has("lauf:mit:gorm"),
+			"Am Eingang gewählt: Tessa und Gorm kommen mit")
 	_check(world.get_map("pilzhoehle").dungeon == "pilzhoehle", "Die Karte ist ein Dungeon")
 	_check(GameData.battle("wild:%d" % _wild_index(world, "pilzhoehle")).dungeon == "pilzhoehle", "Monster der Höhle kämpfen mit Dungeon-Regeln")
 	var queen := _place_target(world, "pilzhoehle", "sporenkoenigin")
