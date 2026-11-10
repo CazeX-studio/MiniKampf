@@ -10,7 +10,7 @@ Status: offen / in Arbeit / fertig
 
 **Marcos Beschluss (02.11.2026): Alle Testtage stehen am Ende.** Nirgends wegen eines Testtags anhalten, D10 bis D36 der Reihe nach bauen. Marco testet am Schluss das volle Spiel zusammen (T1 bis T4). Die Testpunkte gesammelt in FORTSCHRITT.md eintragen.
 
-Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D12“: **Diese Liste gilt zuerst.** Den obersten offenen Punkt nehmen, die Einzelheiten stehen beim genannten Projekt oder im Brainstorm-Doc unter „Fahrplan zur Demo“. T-Punkte sind Testtage: Dort hält Claude an, nennt Marco, was zu testen ist, und baut erst nach seiner Rückmeldung weiter. Braucht ein Punkt Bilder, die noch nicht da sind, wird er mit Platzhalter gebaut oder übersprungen, und Marco bekommt den fertigen Prompt.
+Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D12“: **Diese Liste gilt zuerst.** Den obersten offenen Punkt nehmen, die Einzelheiten stehen beim genannten Projekt oder im Brainstorm-Doc unter „Fahrplan zur Demo“. T-Punkte sind Testtage: Dort hält Claude an, nennt Marco, was zu testen ist, und baut erst nach seiner Rückmeldung weiter. Braucht ein Punkt Bilder, die noch nicht da sind, wird er mit Platzhalter gebaut oder übersprungen, der fertige Prompt kommt in `Spieldesign/GRAFIK_AUFTRAG.md` (im Chat nur, wenn Marco nach Prompts fragt).
 
 ### Vorbereitung
 
