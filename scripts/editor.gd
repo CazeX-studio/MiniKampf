@@ -36,9 +36,10 @@ func _ready() -> void:
 	_button("Kampf-Sandbox\n11 Klassen, Pilzhöhle", Vector2(1072, 210), func() -> void: _go("res://scenes/auswahl.tscn"), 164)
 
 	_label("Demo testen (eigener Spielstand, dein normaler bleibt unberührt)", 22, Color("f2c14e"), Vector2(40, 380), 1200)
-	_button("Akt Kreuzweg\nVon vorne, mit Figur erstellen", Vector2(40, 420), _start_kreuzweg)
-	_button("Akt Grünwacht\nAls Bogenschütze", Vector2(450, 420), func() -> void: _start_gruenwacht("archer"))
-	_button("Akt Grünwacht\nAls Monster-Zähmer", Vector2(860, 420), func() -> void: _start_gruenwacht("tamer"))
+	_button("Spielstand-Editor\nStufe, Klasse, Gold, an jede Stelle springen", Vector2(40, 420), func() -> void: _go("res://scenes/spielstand_editor.tscn"), 290)
+	_button("Akt Kreuzweg\nVon vorne, mit Figur erstellen", Vector2(340, 420), _start_kreuzweg, 290)
+	_button("Akt Grünwacht\nAls Bogenschütze", Vector2(640, 420), func() -> void: _start_gruenwacht("archer"), 290)
+	_button("Akt Grünwacht\nAls Monster-Zähmer", Vector2(940, 420), func() -> void: _start_gruenwacht("tamer"), 290)
 
 	# Eigene Figur für die Demo und die Animationen (die andere läuft als Begleiter mit)
 	var figur := Button.new()
