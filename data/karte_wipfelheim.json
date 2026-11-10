@@ -650,7 +650,7 @@
 		{
 			"teil": "gw_laubbaum",
 			"feld": [
-				35,
+				36,
 				4
 			]
 		},
@@ -732,27 +732,6 @@
 			]
 		},
 		{
-			"teil": "baum",
-			"feld": [
-				35,
-				7
-			]
-		},
-		{
-			"teil": "gw_laubbaum",
-			"feld": [
-				39,
-				7
-			]
-		},
-		{
-			"teil": "gw_laubbaum",
-			"feld": [
-				44,
-				7
-			]
-		},
-		{
 			"teil": "gw_laubbaum",
 			"feld": [
 				45,
@@ -762,21 +741,21 @@
 		{
 			"teil": "gw_laubbaum",
 			"feld": [
-				6,
+				46,
+				7
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				7,
 				8
 			]
 		},
 		{
 			"teil": "baum",
 			"feld": [
-				15,
-				8
-			]
-		},
-		{
-			"teil": "gw_laubbaum",
-			"feld": [
-				37,
+				16,
 				8
 			]
 		},
@@ -790,19 +769,19 @@
 		{
 			"teil": "gw_laubbaum",
 			"feld": [
-				5,
+				39,
+				8
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				6,
 				9
 			]
 		},
 		{
 			"teil": "baum",
-			"feld": [
-				35,
-				9
-			]
-		},
-		{
-			"teil": "gw_laubbaum",
 			"feld": [
 				36,
 				9
@@ -810,51 +789,51 @@
 		},
 		{
 			"teil": "gw_laubbaum",
-			"feld": [
-				40,
-				9
-			]
-		},
-		{
-			"teil": "gw_laubbaum",
-			"feld": [
-				7,
-				10
-			]
-		},
-		{
-			"teil": "baum",
 			"feld": [
 				37,
+				9
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				41,
+				9
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				8,
 				10
 			]
 		},
 		{
 			"teil": "baum",
 			"feld": [
-				3,
+				38,
+				10
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				4,
 				11
 			]
 		},
 		{
 			"teil": "gw_laubbaum",
 			"feld": [
-				36,
+				37,
 				11
 			]
 		},
 		{
 			"teil": "gw_laubbaum",
 			"feld": [
-				45,
+				46,
 				11
-			]
-		},
-		{
-			"teil": "gw_laubbaum",
-			"feld": [
-				5,
-				12
 			]
 		},
 		{
@@ -867,22 +846,43 @@
 		{
 			"teil": "gw_laubbaum",
 			"feld": [
-				40,
+				7,
+				12
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				41,
 				12
 			]
 		},
 		{
 			"teil": "baum",
 			"feld": [
-				0,
+				1,
 				13
 			]
 		},
 		{
 			"teil": "baum",
 			"feld": [
-				5,
+				6,
 				13
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				0,
+				14
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				4,
+				14
 			]
 		},
 		{
@@ -928,57 +928,15 @@
 			]
 		},
 		{
-			"teil": "baum",
-			"feld": [
-				35,
-				27
-			]
-		},
-		{
-			"teil": "baum",
-			"feld": [
-				2,
-				28
-			]
-		},
-		{
 			"teil": "gw_laubbaum",
 			"feld": [
-				6,
-				29
-			]
-		},
-		{
-			"teil": "gw_laubbaum",
-			"feld": [
-				15,
-				29
-			]
-		},
-		{
-			"teil": "gw_laubbaum",
-			"feld": [
-				37,
+				39,
 				30
 			]
 		},
 		{
 			"teil": "baum",
 			"feld": [
-				17,
-				31
-			]
-		},
-		{
-			"teil": "gw_laubbaum",
-			"feld": [
-				36,
-				31
-			]
-		},
-		{
-			"teil": "gw_laubbaum",
-			"feld": [
 				41,
 				31
 			]
@@ -986,119 +944,105 @@
 		{
 			"teil": "gw_laubbaum",
 			"feld": [
-				45,
-				31
-			]
-		},
-		{
-			"teil": "gw_laubbaum",
-			"feld": [
-				38,
+				0,
 				32
 			]
 		},
 		{
 			"teil": "gw_laubbaum",
 			"feld": [
-				0,
+				41,
+				32
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				3,
 				33
 			]
 		},
 		{
 			"teil": "baum",
 			"feld": [
-				17,
-				33
-			]
-		},
-		{
-			"teil": "baum",
-			"feld": [
-				2,
+				6,
 				34
 			]
 		},
 		{
 			"teil": "gw_laubbaum",
 			"feld": [
-				8,
+				12,
 				34
-			]
-		},
-		{
-			"teil": "baum",
-			"feld": [
-				47,
-				34
-			]
-		},
-		{
-			"teil": "gw_laubbaum",
-			"feld": [
-				42,
-				35
-			]
-		},
-		{
-			"teil": "gw_laubbaum",
-			"feld": [
-				9,
-				37
-			]
-		},
-		{
-			"teil": "gw_laubbaum",
-			"feld": [
-				10,
-				37
-			]
-		},
-		{
-			"teil": "gw_laubbaum",
-			"feld": [
-				11,
-				37
-			]
-		},
-		{
-			"teil": "gw_laubbaum",
-			"feld": [
-				16,
-				37
-			]
-		},
-		{
-			"teil": "gw_laubbaum",
-			"feld": [
-				17,
-				37
-			]
-		},
-		{
-			"teil": "gw_laubbaum",
-			"feld": [
-				44,
-				37
 			]
 		},
 		{
 			"teil": "baum",
 			"feld": [
 				3,
+				35
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				46,
+				35
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				13,
+				37
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				14,
+				37
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				15,
+				37
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				40,
+				37
+			]
+		},
+		{
+			"teil": "gw_laubbaum",
+			"feld": [
+				1,
+				38
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				8,
 				38
 			]
 		},
 		{
 			"teil": "gw_laubbaum",
 			"feld": [
-				7,
+				12,
 				38
 			]
 		},
 		{
 			"teil": "gw_laubbaum",
 			"feld": [
-				9,
+				14,
 				38
 			]
 		},
@@ -1112,56 +1056,49 @@
 		{
 			"teil": "gw_laubbaum",
 			"feld": [
-				44,
-				38
+				1,
+				39
 			]
 		},
 		{
 			"teil": "baum",
 			"feld": [
-				7,
+				12,
 				39
 			]
 		},
 		{
 			"teil": "gw_laubbaum",
 			"feld": [
-				11,
+				16,
 				40
 			]
 		},
 		{
 			"teil": "baum",
 			"feld": [
-				39,
+				44,
 				40
 			]
 		},
 		{
 			"teil": "gw_laubbaum",
 			"feld": [
-				3,
+				8,
 				41
 			]
 		},
 		{
 			"teil": "gw_laubbaum",
 			"feld": [
-				5,
+				10,
 				41
 			]
 		},
 		{
 			"teil": "gw_laubbaum",
 			"feld": [
-				41,
-				41
-			]
-		},
-		{
-			"teil": "gw_laubbaum",
-			"feld": [
-				44,
+				46,
 				41
 			]
 		}

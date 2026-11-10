@@ -1476,8 +1476,8 @@
 			"sammlerin_2": {
 				"name": "Sammlerin",
 				"feld": [
-					28,
-					26
+					29,
+					37
 				],
 				"aussehen": "grund_frau+v_w1#zubehoer=korb",
 				"dialog": "volk_gw_sammlerin_2",
@@ -1536,8 +1536,8 @@
 			"gast_gw_3": {
 				"name": "Gast",
 				"feld": [
-					8,
-					21
+					14,
+					18
 				],
 				"aussehen": "grund_frau+v_w2",
 				"dialog": "volk_gw_gast_3"

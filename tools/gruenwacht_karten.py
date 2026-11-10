@@ -249,6 +249,9 @@ def wipfelheim():
 		for x in range(k.b):
 			if k.zeichen(x, y) == "~" and r.random() < 0.09:
 				nah = {(x + i, y + j) for i in range(-2, 3) for j in range(-2, 3)}
+				# Vor einer Plattform (sie liegt schräg dahinter) drei Felder Abstand, damit keine Krone Häuser,
+				# Stände und Figuren verdeckt (E3h2)
+				nah |= {(x - i, y - j) for i in range(0, 4) for j in range(0, 4)}
 				if not any(0 <= a < k.b and 0 <= c < k.h and k.zeichen(a, c) in "#-OZ" for a, c in nah):
 					k.setzen(r.choice(["gw_laubbaum", "baum", "gw_laubbaum"]), x, y, muss=False)
 	k.erreichbar()

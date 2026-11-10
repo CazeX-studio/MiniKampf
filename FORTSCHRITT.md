@@ -26,7 +26,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt:** E3h2 Wipfelheim umbauen, dann E3h3 Glutoase (Feinschliff jeweils im Stadt-Editor), danach E4 (Balancing), E5 und S6 (Editoren), danach E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Offen von S1: Marcos Google-Formular verbinden.
+- **Nächster Schritt:** E3h3 Glutoase umbauen (Feinschliff jeweils im Stadt-Editor), danach E4 (Balancing), E5 und S6 (Editoren), danach E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Offen von S1: Marcos Google-Formular verbinden.
 
 - **Neu (04.11.): D25b Körper von Rüstungsschmied und Sternensängerin** (2.11): Deine Blätter sind eingebaut: Rüstungsschmied (m) und Rüstungsschmiedin (w) in Rüstung mit Lederschürze und rotem Halstuch, die Sternensängerin (w) im hellen Gewand mit dunkelblauem Schal. Je mit Stehen, Laufen, Abwehr, Treffer, Angriff, Fallen, Sieg und Fähigkeit im Kampf, in der Welt schräg von vorne und hinten. Wer die Klasse gelernt hat, trägt sie mit seinem eigenen Kopf, auch in der Probestunde. Ausgebessert: die gelben Funken im Treffer-Bild des Schmieds und das rote Halstuch in einem Siegesbild der Sängerin. Noch nicht drin: ein männlicher Sternensänger (der kämpft weiter in der Klassenfigur).
   - **So testest du es:**
@@ -62,6 +62,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     2. Je ein Monster auf dem Weg nach Grünwacht, im Waldboden, in der Tiefwurzel, in der Aschensteppe (Norden und Süden), in der Palmenrast und auf dem Glutgrat angreifen: überall das gemalte Bild.
     3. Hammerbrüder oder Kettenschmied: Kampf in der Ankerkammer mit den drei Ankern.
     4. Stehen die Figuren überall gut auf dem Boden? Sonst sag Bescheid, dann schiebe ich die Bilder anders.
+
+- **Neu (10.11.): E3h2 Wipfelheim umgebaut** (grob, Feinschliff im Stadt-Editor):
+  - **Bäume:** Kein Baum steht mehr direkt vor einer Plattform und verdeckt Häuser, Stände oder Figuren (z. B. der Baum vor Salbeis Stand und der Bank). Im Wald drumherum bleiben sie dicht.
+  - **Figuren:** Ein Gast steht jetzt an der Ecke des Gasthauses statt am Eingang, eine Sammlerin ist vom Hauptplatz zu Esches Labor gegangen.
+  - Wipfelheim war deutlich weniger voll als Kreuzweg, darum ist der Umbau klein. Alle Figuren stehen mindestens drei Felder auseinander (das prüft eine Prüfung).
+  - **So testest du es:**
+    1. Mit dem Seilaufzug nach Wipfelheim: Der Hauptplatz mit Halle, Bank und Salbeis Stand ist frei zu sehen.
+    2. Zum Gasthaus: Kael, Borko, Oma Hagebutte und die Gäste stehen einzeln.
+    3. Was dir noch zu eng ist, im Stadt-Editor verschieben.
 
 - **Neu (10.11.): E3h1 Kreuzweg umgebaut** (grob, den Feinschliff machst du im Stadt-Editor):
   - **Marktplatz freier:** Die beiden Marktstände mit Marktfrau Rosa und Gemüsehändler Jost stehen jetzt in einer Marktgasse im Nordosten, gleich neben Bingo und Hatta. Auf dem Platz bleiben Statue, Brunnen, Bühne und Splitterkreis.
