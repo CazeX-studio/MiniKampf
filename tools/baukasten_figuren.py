@@ -8,7 +8,7 @@
   darunter schräg von hinten. Gleiche Größe wie die Novizen-Köpfe (gemessen am Kopf-Blatt kofi_kopf.png).
 Ergebnis: assets/figuren/grund_*, assets/teile/koerper/grund_*, assets/teile/koepfe/<kopf>_vorn_normal.png usw.,
 data/figurteile.json (Körper mit _koepfe: Volks-Köpfe und Novizen-Köpfe).
-Aufruf: python3 tools/baukasten_figuren.py   (braucht numpy, scipy und Pillow)
+Aufruf: python3 tools/baukasten_figuren.py [körper …]   (mit Körper, z. B. frau_korpulent: nur diesen schneiden; braucht numpy, scipy und Pillow)
 """
 import json
 import sys
@@ -29,6 +29,8 @@ from monster_bilder import ausschneiden, bilder_finden, freistellen, speichern  
 KOERPER = {
 	"mann": ("Mann", "v_m1"), "frau": ("Frau", "v_w1"), "kind": ("Kind", "k_m1"), "alter_mensch": ("Alter Mensch", "a_m1"),
 	"wache": ("Wache", "v_m2"), "haendler": ("Händler", "v_m3"), "handwerker": ("Handwerker", "v_m2"), "gelehrter": ("Gelehrter", "a_m2"),
+	# GRAFIK_AUFTRAG.md K1c (10.11.2026): eigener Körper für Kräuterhändlerin Salbei
+	"frau_korpulent": ("Frau, korpulent", "v_w2"),
 }
 REIHEN = [[("idle_vorn", 4), ("run_vorn", 4)], [("idle_hinten", 4), ("run_hinten", 4)]]
 ## Kopf-Blätter: Blatt -> Köpfe von links nach rechts (Kennung, Name, Geschlecht)
@@ -149,7 +151,20 @@ def koerper_schneiden(art, novize_oval, daten, volk):
 
 
 def main():
-	daten = json.loads(DATEN.read_text())
+	daten = json.loads(DATEN.read_text(encoding="utf-8"))
+	if len(sys.argv) > 1:
+		# Nur einzelne neue Körper schneiden: Köpfe und andere Körper bleiben, wie sie sind.
+		# Die Köpfe kommen vom Frauen-Körper (dort stimmen die Halspunkte der neuen Köpfe von vorne), dazu fehlende von den anderen
+		novize = np.array(Image.open(WURZEL / "assets" / "figuren" / "novize_m_idle_vorn_anim_f0.png").convert("RGBA"))
+		for art in sys.argv[1:]:
+			koerper_schneiden(art, oval_hoehe(novize), daten, {})
+			koepfe = json.loads(json.dumps(daten["grund_frau"]["_koepfe"]))
+			for k in KOERPER:
+				for kopf, werte in daten.get(f"grund_{k}", {}).get("_koepfe", {}).items():
+					koepfe.setdefault(kopf, json.loads(json.dumps(werte)))
+			daten[f"grund_{art}"]["_koepfe"] = koepfe
+		DATEN.write_text(json.dumps(daten, ensure_ascii=False, indent="\t", sort_keys=True), encoding="utf-8")
+		return
 	volk = koepfe_schneiden()
 	novize = np.array(Image.open(WURZEL / "assets" / "figuren" / "novize_m_idle_vorn_anim_f0.png").convert("RGBA"))
 	novize_oval = oval_hoehe(novize)

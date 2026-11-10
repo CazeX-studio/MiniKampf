@@ -2,7 +2,7 @@ extends SceneTree
 ## D21 und D21b: Grünwacht-Figuren nach Steckbrief (NPC.md): eigene Bilder, Köpfe, Porträts, Plätze bei Tag und Nacht, Wirt Borko.
 ## Aufruf: Godot --headless --path . -s tests/gruenwacht_figuren_test.gd
 
-const NEBEN := {"salbei": "grund_haendler+salbei#zubehoer=kraeuterbuendel&korb", "bank_wipfelheim": "grund_alter_mensch+tamm#hut=tamm_moos_hut",
+const NEBEN := {"salbei": "grund_frau_korpulent+salbei", "bank_wipfelheim": "grund_alter_mensch+tamm#hut=tamm_moos_hut",
 	"kobalt": "zaehmer_m+kobalt",
 	"borko": "grund_mann+borko#hut=borko_kochmuetze,zubehoer=schoepfkelle"}
 const HAUPT := ["ysolde", "fenn", "tilda", "esche", "kael"]
