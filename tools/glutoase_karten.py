@@ -75,7 +75,7 @@ def aschensteppe():
 		"name": "Aschensteppe", "musik": "wald", "grund": "wiese", "licht": "fff0d8", "start": [14, 1],
 		"raster": ["".join(z) for z in g],
 		"ausgaenge": [{"bereich": [12, 0, 6, 1], "karte": "kreuzweg", "feld": [31, 63]},
-			{"bereich": [11, H - 1, 7, 1], "karte": "glutoase", "feld": [23, 1]}],
+			{"bereich": [11, H - 1, 7, 1], "karte": "glutoase", "feld": spiegeln([23, 1])}],
 		"kampf_hintergrund": "wiese", "sicher": RASTPLATZ,
 		"orte": [{"art": "wegelaterne", "feld": [11, 28], "dialog": "wegelaterne_aschensteppe", "zeichen": "laterne"}],
 		# Rastplatz-Händler (D27, NPC.md „Überall gleich“): an jedem Rastplatz dieselbe Figur
@@ -176,7 +176,7 @@ def palmenrast():
 	karten["palmenrast"] = {
 		"name": "Palmenrast", "musik": "wald", "grund": "wiese", "licht": "fff4e0", "start": [20, 1],
 		"raster": ["".join(z) for z in g],
-		"ausgaenge": [{"bereich": [17, 0, 7, 1], "karte": "glutoase", "feld": [GB - 3, 11]}],
+		"ausgaenge": [{"bereich": [17, 0, 7, 1], "karte": "glutoase", "feld": spiegeln([GB - 3, 11])}],
 		"kampf_hintergrund": "wiese", "monster": palmenrast_monster(), "baukasten": "karte_palmenrast",
 		"npcs": {"xavina": {"name": "Hohe Sängerin Xavina", "feld": [30, 28], "aussehen": "xavina", "dialog": "xavina"}},
 		# Kochende Brunnen (D28): zwei Wasserstellen, an denen man das Wasser prüft
@@ -222,7 +222,10 @@ def palmenrast():
 	k.speichern(boden)
 
 
-## Die drei Stufen der Terrassenstadt (Zeilen): unten die Oase, in der Mitte das Schmiedeviertel, oben Hadraks Schmiede
+## Die drei Stufen der Terrassenstadt (Zeilen): unten die Oase, in der Mitte das Schmiedeviertel, oben Hadraks Schmiede.
+## Alle Zahlen hier und in glutoase() sind im ersten Plan gezählt (Oase bei Zeile 0). Seit E3h3a dreht spiegeln() die Stadt
+## beim Speichern um: Die Oase mit dem Tor liegt vorne (unten im Bild), Hadraks Schmiede hinten oben am Berg. So zeigen die
+## Terrassenmauern zum Betrachter, und es geht zur Schmiede hin aufwärts.
 OASE, SCHMIEDEVIERTEL, HADRAK = (0, 17), (20, 33), (36, 45)
 ## Terrassenkanten (Mauern zwischen den Stufen) mit einer Treppe in der Mitte
 KANTEN = [18, 34]
@@ -231,7 +234,7 @@ TREPPE_X = 22
 GEBAEUDE = [
 	# Unten: die Oase
 	("go_karawanenplatz", 4, 3, "Karawanenplatz"), ("go_brunnen", 21, 8, "Großer Brunnen"), ("go_tanzplatz", 30, 9, "Tanzplatz"),
-	("go_basar_a", 7, 9, "Basar"), ("go_basar_b", 11, 9, ""), ("go_tareks_laden", 5, 13, "Tareks Laden"), ("go_bank", 37, 2, "Bank"),
+	("go_basar_a", 7, 9, "Basar"), ("go_basar_b", 11, 9, ""), ("go_tareks_laden", 5, 13, "Tareks Laden"), ("go_bank", 41, 1, "Bank"),
 	("go_gasthaus", 28, 1, "Gasthaus Glutstube"), ("go_krankenzelt", 38, 10, "Krankenzelt"), ("lagerfeuer", 26, 7, ""),
 	("go_aufzug_unten", 40, 14, "Lastenaufzug"), ("go_tor_duerrewald", 0, 16, "Tor zum Dürrewald"), ("go_sonnensegel", 15, 3, ""),
 	# Mitte: das Schmiedeviertel
@@ -244,12 +247,21 @@ GEBAEUDE = [
 ]
 
 
+def spiegeln(feld, hoehe=1):
+	"""Feld (oder linke obere Ecke einer Fläche mit dieser Höhe) aus dem ersten Plan in der umgedrehten Stadt."""
+	return [feld[0], GH - feld[1] - hoehe]
+
+
+def spiegeln_bereich(b):
+	return [b[0], GH - b[1] - b[3], b[2], b[3]]
+
+
 def glutoase_orte():
 	return [
 		{"art": "wegelaterne", "feld": [19, 4], "dialog": "wegelaterne_glutoase", "zeichen": "laterne"},
 		# Lastenaufzug der Schmiede: Abkürzung zwischen der Oase und Hadraks Schmiede
-		{"art": "aufzug", "feld": [41, 17], "meldung": "Der Lastenaufzug rattert nach oben zu Hadraks Schmiede.", "aktionen": [{"reisen": "glutoase", "feld": [41, 40]}]},
-		{"art": "aufzug", "feld": [41, 39], "meldung": "Der Lastenaufzug rattert hinunter zur Oase.", "aktionen": [{"reisen": "glutoase", "feld": [41, 18 - 1]}]},
+		{"art": "aufzug", "feld": [41, 13], "meldung": "Der Lastenaufzug rattert nach oben zu Hadraks Schmiede.", "aktionen": [{"reisen": "glutoase", "feld": spiegeln([41, 35])}]},
+		{"art": "aufzug", "feld": [41, 35], "meldung": "Der Lastenaufzug rattert hinunter zur Oase.", "aktionen": [{"reisen": "glutoase", "feld": spiegeln([41, 13])}]},
 		{"art": "tor", "feld": [3, 15], "dialog": "tor_duerrewald"},
 		{"art": "bergpfad", "feld": [42, 25], "meldung": "Du steigst den Bergpfad hinauf auf den Glutgrat.",
 			"aktionen": [{"reisen": "glutgrat", "feld": [GGB // 2, GGH - 3]}]},
@@ -283,53 +295,65 @@ def glutoase():
 		g[0][x] = "."
 	for y in range(9, 14):
 		g[y][GB - 1] = "."
+	g.reverse()
 	karten = json.loads((gk.DATEN / "karten.json").read_text(encoding="utf-8"))
 	karten["glutoase"] = {
-		"name": "Glutoase", "musik": "stadt", "grund": "wiese", "licht": "fff0dc", "start": [23, 1],
+		"name": "Glutoase", "musik": "stadt", "grund": "wiese", "licht": "fff0dc", "start": spiegeln([23, 1]),
 		"raster": ["".join(z) for z in g],
-		"ausgaenge": [{"bereich": [20, 0, 7, 1], "karte": "aschensteppe", "feld": [14, H - 2]},
-			{"bereich": [GB - 1, 9, 1, 5], "karte": "palmenrast", "feld": [20, 1]}],
-		"kampf_hintergrund": "wiese", "orte": glutoase_orte(), "baukasten": "karte_glutoase",
+		"ausgaenge": [{"bereich": spiegeln_bereich([20, 0, 7, 1]), "karte": "aschensteppe", "feld": [14, H - 2]},
+			{"bereich": spiegeln_bereich([GB - 1, 9, 1, 5]), "karte": "palmenrast", "feld": [20, 1]}],
+		"kampf_hintergrund": "glutoase_stadt", "orte": glutoase_orte(), "baukasten": "karte_glutoase",
 		# Oberhaupt und Lehrmeister (D26); die übrigen Figuren kommen mit D27
 		"npcs": {
-			"hadrak": {"name": "Hadrak Glutherz", "feld": [26, 43], "nachts": [31, 7], "aussehen": "hadrak", "dialog": "hadrak"},
-			"brakkus": {"name": "Essenmeister Brakkus", "feld": [32, 26], "aussehen": "brakkus", "dialog": "brakkus"},
+			"hadrak": {"name": "Hadrak Glutherz", "feld": [25, 35], "nachts": [31, 7], "aussehen": "hadrak", "dialog": "hadrak"},
+			"brakkus": {"name": "Essenmeister Brakkus", "feld": [32, 20], "aussehen": "brakkus", "dialog": "brakkus"},
 			"samira": {"name": "Tanzmeisterin Samira", "feld": [32, 11], "aussehen": "samira", "dialog": "samira"},
 			# Figuren nach Steckbrief (D27, NPC.md)
-			"nadia": {"name": "Brunnenhüterin Nadia", "feld": [25, 12], "aussehen": "grund_frau+nadia#zubehoer=wasserkrug", "dialog": "nadia"},
+			"nadia": {"name": "Brunnenhüterin Nadia", "feld": [25, 7], "aussehen": "grund_frau+nadia#zubehoer=wasserkrug", "dialog": "nadia"},
 			"zaid": {"name": "Karawanenführer Zaid", "feld": [6, 7], "aussehen": "grund_haendler+zaid", "dialog": "zaid"},
-			"bank_glutoase": {"name": "Bankhüter Rashid", "feld": [38, 6], "aussehen": "grund_alter_mensch+rashid#hut=rashid_kopftuch,zubehoer=bankschluessel",
+			"bank_glutoase": {"name": "Bankhüter Rashid", "feld": [42, 0], "aussehen": "grund_alter_mensch+rashid#hut=rashid_kopftuch,zubehoer=bankschluessel",
 				"dialog": "rashid", "zeichen": "truhe"},
-			"tarek": {"name": "Händler Tarek", "feld": [7, 16], "aussehen": "grund_haendler+tarek#zubehoer=schaerpe&guertelklinge", "dialog": "tarek",
+			"tarek": {"name": "Händler Tarek", "feld": [7, 12], "aussehen": "grund_haendler+tarek#zubehoer=schaerpe&guertelklinge", "dialog": "tarek",
 				"zeichen": "muenze"},
-			"layla": {"name": "Wirtin Layla", "feld": [29, 6], "aussehen": "grund_frau+layla#zubehoer=schuerze_layla&tablett", "dialog": "layla"},
-			"mira_glutoase": {"name": "Mira", "feld": [40, 13], "aussehen": "mira", "dialog": "mira_glutoase", "liegt": True,
+			"layla": {"name": "Wirtin Layla", "feld": [30, 0], "aussehen": "grund_frau+layla#zubehoer=schuerze_layla&tablett", "dialog": "layla"},
+			"mira_glutoase": {"name": "Mira", "feld": [40, 9], "aussehen": "mira", "dialog": "mira_glutoase", "liegt": True,
 				"wenn": {"nicht_gemerkt": "mira_geheilt"}},
 			# Ohne Splitter gesund (D35): Mira steht wieder
-			"mira_gesund": {"name": "Mira", "feld": [41, 13], "aussehen": "mira", "dialog": "mira_glutoase", "wenn": {"gemerkt": "mira_geheilt"}},
+			"mira_gesund": {"name": "Mira", "feld": [42, 9], "aussehen": "mira", "dialog": "mira_glutoase", "wenn": {"gemerkt": "mira_geheilt"}},
 			# Kael wartet nach dem Fest in Hadraks Schmiede (D29, Rivalenkampf)
-			"kael_glutoase": {"name": "Kael", "feld": [24, 43], "aussehen": "kael", "dialog": "kael_glutoase",
+			"kael_glutoase": {"name": "Kael", "feld": [19, 35], "aussehen": "kael", "dialog": "kael_glutoase",
 				"wenn": {"oder": [{"auftrag": "rivale_kael", "stand": "aktiv"}, {"auftrag": "rivale_kael", "stand": "fertig"}]}},
 			# Volk: Schmiede, Tänzer (nachts), Basar- und Karawanenleute, Aufzugwärter, Gäste (vor allem nachts)
-			"schmied_1": {"name": "Schmied", "feld": [8, 26], "aussehen": "grund_handwerker+v_m2#zubehoer=schuerze", "dialog": "volk_go_schmied_1"},
-			"schmied_2": {"name": "Schmied", "feld": [12, 26], "aussehen": "grund_handwerker+v_m3#zubehoer=schuerze", "dialog": "volk_go_schmied_2"},
+			"schmied_1": {"name": "Schmied", "feld": [6, 20], "aussehen": "grund_handwerker+v_m2#zubehoer=schuerze", "dialog": "volk_go_schmied_1"},
+			"schmied_2": {"name": "Schmied", "feld": [13, 20], "aussehen": "grund_handwerker+v_m3#zubehoer=schuerze", "dialog": "volk_go_schmied_2"},
 			"schmied_3": {"name": "Schmiedin", "feld": [27, 26], "aussehen": "grund_frau+v_w2#zubehoer=schuerze", "dialog": "volk_go_schmied_3"},
 			"taenzer_1": {"name": "Tänzer", "feld": [30, 9], "aussehen": "klingentaenzer_m+m3", "dialog": "volk_go_taenzer", "wenn": {"nacht": True}},
 			"taenzer_2": {"name": "Tänzerin", "feld": [34, 13], "aussehen": "klingentaenzer_w+w3", "dialog": "volk_go_taenzer", "wenn": {"nacht": True}},
-			"basar_1": {"name": "Basarhändlerin", "feld": [8, 11], "aussehen": "grund_haendler+v_w3", "dialog": "volk_go_basar_1", "wenn": {"nacht": False}},
-			"basar_2": {"name": "Basarhändler", "feld": [12, 11], "aussehen": "grund_haendler+v_m1", "dialog": "volk_go_basar_2", "wenn": {"nacht": False}},
+			"basar_1": {"name": "Basarhändlerin", "feld": [8, 8], "aussehen": "grund_haendler+v_w3", "dialog": "volk_go_basar_1", "wenn": {"nacht": False}},
+			"basar_2": {"name": "Basarhändler", "feld": [12, 8], "aussehen": "grund_haendler+v_m1", "dialog": "volk_go_basar_2", "wenn": {"nacht": False}},
 			"karawane_1": {"name": "Karawanenmann", "feld": [10, 4], "aussehen": "grund_mann+v_m3", "dialog": "volk_go_karawane_1"},
 			"karawane_2": {"name": "Karawanenfrau", "feld": [3, 7], "aussehen": "grund_frau+v_w1", "dialog": "volk_go_karawane_2"},
-			"aufzugwaerter": {"name": "Aufzugwärter", "feld": [39, 17], "aussehen": "grund_handwerker+a_m2", "dialog": "volk_go_aufzug"},
-			"gast_go_1": {"name": "Gast", "feld": [33, 6], "aussehen": "grund_mann+v_m1", "dialog": "volk_go_gast_1"},
+			"aufzugwaerter": {"name": "Aufzugwärter", "feld": [38, 13], "aussehen": "grund_handwerker+a_m2", "dialog": "volk_go_aufzug"},
+			"gast_go_1": {"name": "Gast", "feld": [16, 6], "aussehen": "grund_mann+v_m1", "dialog": "volk_go_gast_1"},
 			"gast_go_2": {"name": "Gast", "feld": [35, 6], "aussehen": "grund_frau+v_w3", "dialog": "volk_go_gast_2", "wenn": {"nacht": True}},
 			"gast_go_3": {"name": "Gast", "feld": [28, 9], "aussehen": "grund_handwerker+v_m2", "dialog": "volk_go_gast_3", "wenn": {"nacht": True}},
 		},
 	}
+	for o in karten["glutoase"]["orte"]:
+		o["feld"] = spiegeln(o["feld"])
+	for n in karten["glutoase"]["npcs"].values():
+		for platz in ("feld", "nachts"):
+			if platz in n:
+				n[platz] = spiegeln(n[platz])
 	(gk.DATEN / "karten.json").write_text(json.dumps(karten, ensure_ascii=False, indent="\t") + "\n", encoding="utf-8")
 	gk.KARTEN.clear()
 	gk.KARTEN.update(karten)
 	k = gk.Karte("glutoase")
+	setzen_k = k.setzen
+
+	def setzen(teil, x, y, name="", gespiegelt=False, muss=True):
+		return setzen_k(teil, x, GH - y - tk[teil].get("flaeche", [1, 1])[1], name, gespiegelt, muss)
+	k.setzen = setzen
 	boden = []
 	for y in range(GH):
 		zeile = ""
@@ -345,6 +369,7 @@ def glutoase():
 			else:
 				zeile += "i"
 		boden.append(zeile)
+	boden.reverse()
 	for teil, x, y, name in GEBAEUDE:
 		k.setzen(teil, x, y, name, muss=False)
 	# Terrassenkanten aus Lehmziegeln, in der Mitte die Treppen
@@ -353,9 +378,9 @@ def glutoase():
 			if not (x <= TREPPE_X + 1 and x + 3 >= TREPPE_X):
 				k.setzen("go_terrassenkante", x, y, muss=False)
 		k.setzen("go_treppe", TREPPE_X, y, muss=False)
-		k.gesperrt -= {(TREPPE_X + i, y + j) for i in range(2) for j in range(2)}
+		k.gesperrt -= {(TREPPE_X + i, GH - y - 2 + j) for i in range(2) for j in range(2)}
 	# Palmen, Krüge, Teppiche und Fackeln
-	for x, y in [(3, 1), (18, 6), (27, 12), (35, 8), (16, 14), (43, 5), (2, 9), (25, 15)]:
+	for x, y in [(3, 1), (18, 6), (27, 12), (35, 8), (16, 14), (35, 1), (2, 9), (25, 15)]:
 		k.setzen("go_palme_gross" if (x + y) % 2 else "go_palme_klein", x, y, muss=False)
 	for x, y in [(14, 12), (10, 13), (34, 3), (38, 17)]:
 		k.setzen("go_tonkruege", x, y, muss=False)
@@ -414,7 +439,7 @@ def glutgrat():
 	karten["glutgrat"] = {
 		"name": "Glutgrat", "musik": "wald", "grund": "wiese", "licht": "ffd8c0", "start": [GGB // 2, GGH - 2],
 		"raster": ["".join(z) for z in g],
-		"ausgaenge": [{"bereich": [GGB // 2 - 3, GGH - 1, 7, 1], "karte": "glutoase", "feld": [41, 25]}],
+		"ausgaenge": [{"bereich": [GGB // 2 - 3, GGH - 1, 7, 1], "karte": "glutoase", "feld": spiegeln([41, 25])}],
 		"kampf_hintergrund": "wiese", "monster": glutgrat_monster(), "baukasten": "karte_glutgrat",
 	}
 	(gk.DATEN / "karten.json").write_text(json.dumps(karten, ensure_ascii=False, indent="\t") + "\n", encoding="utf-8")
@@ -485,7 +510,7 @@ def vulkanschmiede():
 		"name": "Vulkanschmiede der Ketten", "musik": "wald_nacht", "grund": "hoehle", "licht": "b07a64", "dungeon": "vulkanschmiede",
 		"kampf_hintergrund": "vulkanschmiede", "start": [ex, VH - 2],
 		"raster": ["".join(z) for z in g],
-		"ausgaenge": [{"bereich": [ex - 1, VH - 1, 3, 1], "karte": "glutoase", "feld": [22, 43]}],
+		"ausgaenge": [{"bereich": [ex - 1, VH - 1, 3, 1], "karte": "glutoase", "feld": spiegeln([22, 43])}],
 		"monster": vulkanschmiede_monster(), "baukasten": "karte_vulkanschmiede",
 		# Zwischenboss Hammerbrüder (D33) auf der unteren Plattform der Kettengänge, bis sie in diesem Lauf besiegt sind
 		"orte": [{"art": "hammerbruder_hammer", "feld": [22, 19], "dialog": "vs_hammerbrueder", "wenn": {"nicht_gemerkt": "lauf:hammerbrueder"}},

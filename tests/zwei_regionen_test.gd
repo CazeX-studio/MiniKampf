@@ -33,7 +33,7 @@ func _initialize() -> void:
 	var p := world.add_player("a", "Test", "novize_w+w1", Vector2i(23, 2))
 	p.progress.flags = {"klasse": "blade", "klasse_gelernt": true, "tor_glutoase": true, "mira_entschieden": true}
 	p.progress.quests = {"abreise": "abgegeben", "nach_glutoase": "abgegeben", "miras_splitter": "fertig"}
-	world.change_map(p, "glutoase", Vector2i(25, 13))
+	world.change_map(p, "glutoase", Vector2i(25, 32))
 	_reden(world, p, "hadrak")
 	_check(p.progress.quest_state("miras_splitter") == "abgegeben", "Ende der Glutoase")
 	_check(p.progress.quest_state("nach_gruenwacht") == "aktiv", "Danach: Der Weg nach Grünwacht")
@@ -69,7 +69,7 @@ func _initialize() -> void:
 	q.progress.quests["nach_glutoase"] = "abgegeben"
 	q.progress.quests["miras_splitter"] = "fertig"
 	q.progress.flags["mira_entschieden"] = true
-	world2.change_map(q, "glutoase", Vector2i(25, 13))
+	world2.change_map(q, "glutoase", Vector2i(25, 32))
 	_reden(world2, q, "hadrak")
 	_check(q.progress.quest_state("rueckkehr_gruenwacht") == "aktiv" and q.progress.quest_state("nach_gruenwacht") == "abgegeben", "Hadrak schickt einen zurück nach Grünwacht")
 	world2.change_map(q, "wipfelheim", Vector2i(16, 15))

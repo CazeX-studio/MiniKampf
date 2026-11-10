@@ -15,7 +15,7 @@ func _initialize() -> void:
 	Tageszeit.feste_stunde = 12.0
 	var world := WorldState.new()
 	var p := world.add_player("a", "Test", "novize_m+m1", Vector2i(23, 2))
-	world.change_map(p, "glutoase", Vector2i(23, 2))
+	world.change_map(p, "glutoase", Vector2i(23, 43))
 	world.nacht = false
 	for id: String in world.npcs:
 		var npc: Dictionary = world.npcs[id]
@@ -39,7 +39,7 @@ func _initialize() -> void:
 	for id: String in ["taenzer_1", "taenzer_2", "gast_go_2", "gast_go_3", "samira"]:
 		_check(world._npc_present(p, id), "Nachts da: %s" % id)
 	_check(not world._npc_present(p, "basar_1"), "Nachts ist der Basar leer")
-	_check(world.npcs.hadrak.cell == Vector2i(31, 7), "Nachts sitzt Hadrak beim Gasthaus")
+	_check(world.npcs.hadrak.cell == Vector2i(31, 38), "Nachts sitzt Hadrak beim Gasthaus")
 	world.start_dialog(p, "layla")
 	_check(world.dialog_view(p).text.contains("Hadrak"), "Layla nachts")
 	Tageszeit.feste_stunde = -1.0

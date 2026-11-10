@@ -38,7 +38,7 @@ func _initialize() -> void:
 	p.progress.flags["klasse"] = "blade"
 	p.progress.flags["klasse_gelernt"] = true
 	p.progress.quests = {"abreise": "abgegeben", "nach_glutoase": "abgegeben", "klasse_lernen": "abgegeben"}
-	world.change_map(p, "glutoase", Vector2i(25, 13))
+	world.change_map(p, "glutoase", Vector2i(25, 32))
 	_check(_ort(world, "wasserstelle_nordwest") >= 0 and _ort(world, "wasserstelle_nordost") >= 0, "Zwei Wasserstellen in der Palmenrast")
 
 	_reden(world, p, "nadia")
@@ -73,7 +73,7 @@ func _initialize() -> void:
 	_reden(world, p, "samira", [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
 	_check(p.progress.flags.has("sechster_ton"), "In der Pause den sechsten Ton gehört")
 	_check(p.progress.quest_state("fest_der_glut") == "abgegeben" and p.progress.quest_state("rivale_kael") == "aktiv", "Kael fordert Hadrak heraus")
-	world.change_map(p, "glutoase", Vector2i(26, 40))
+	world.change_map(p, "glutoase", Vector2i(26, 5))
 	_check(world._npc_present(p, "kael_glutoase"), "Kael wartet in Hadraks Schmiede")
 	_check(Sandbox.ENEMIES.has("kael_rivale") and ResourceLoader.exists("res://assets/figuren/kael_kampf_attack_anim_f3.png"), "Kael kämpft mit seinen eigenen Bildern")
 	world.apply_command("a", {type = "kampf_ergebnis", kampf = "kael_rivale", gewonnen = true})
@@ -92,14 +92,14 @@ func _initialize() -> void:
 	_check(p.progress.quest_state("die_ketten") == "fertig", "Die Ketten halten wieder")
 	var splitter := p.progress.item_count("sternensplitter")
 	for teil: String in ["kettenhelm", "kettenpanzer", "kettenstiefel"]:
-		world.change_map(p, "glutoase", Vector2i(22, 43))
+		world.change_map(p, "glutoase", Vector2i(22, 2))
 		world.change_map(p, "vulkanschmiede", Vector2i(37, 15))
 		p.progress.flags["lauf:kettenschmied"] = true
 		_reden(world, p, "vs_glutsplitter")
 		_check(p.progress.item_count(teil) == 1, "Weiterer Lauf: ein Teil des Kettenglut-Sets (%s)" % teil)
 	_check(p.progress.item_count("sternensplitter") == splitter + 3, "Jeder Lauf bringt einen Sternensplitter")
 	_check(Ausruestung.teil("kettenbrecher").seltenheit == "episch" and Ausruestung.teil("kettenpanzer").get("set", "") == "kettenglut", "Klinge und Set sind Ausrüstung")
-	world.change_map(p, "glutoase", Vector2i(23, 6))
+	world.change_map(p, "glutoase", Vector2i(23, 39))
 	world.nacht = false
 	_reden(world, p, "hadrak")
 	_check(p.progress.quest_state("die_ketten") == "abgegeben" and p.progress.quest_state("miras_splitter") == "aktiv", "Hadrak: „Mira. … Schlimmer.“")

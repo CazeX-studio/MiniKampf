@@ -61,7 +61,7 @@ func _initialize() -> void:
 	_check(b.map == "aschensteppe", "Klingentänzerin läuft durchs Südtor in die Aschensteppe")
 	_check(b.progress.quest_state("nach_glutoase") == "aktiv" and b.progress.quest_state("nach_gruenwacht") == "neu"
 			and b.progress.quest_state("klasse_lernen") == "aktiv", "Auftrag „Der Weg in die Glutoase“ läuft")
-	world.change_map(b, "glutoase", Vector2i(26, 42))
+	world.change_map(b, "glutoase", Vector2i(26, 3))
 	world.tick(0.1)
 	world.apply_command("b", {type = "talk", npc = "hadrak"})
 	for i in 100:

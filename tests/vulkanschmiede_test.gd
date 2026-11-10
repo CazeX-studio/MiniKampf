@@ -14,7 +14,7 @@ func _check(ok: bool, text: String) -> void:
 
 
 func _eingang(world: WorldState, p: PlayerState) -> void:
-	world.change_map(p, "glutoase", Vector2i(22, 43))
+	world.change_map(p, "glutoase", Vector2i(22, 2))
 	for i in world.places.size():
 		var o: Dictionary = world.places[i]
 		if o.map == "glutoase" and o.art == "schmiede_eingang":

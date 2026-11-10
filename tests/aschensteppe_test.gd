@@ -59,8 +59,8 @@ func _initialize() -> void:
 	for i in 300:
 		world.tick(0.05)
 	_check(p.map == "glutoase" and world.get_map("glutoase").title == "Glutoase", "Von der Aschensteppe nach Süden in die Glutoase (D24)")
-	world.change_map(p, "glutoase", Vector2i(43, 11))
-	world.apply_command("a", {type = "move", cell = Vector2i(45, 11)})
+	world.change_map(p, "glutoase", Vector2i(43, 34))
+	world.apply_command("a", {type = "move", cell = Vector2i(45, 34)})
 	for i in 300:
 		world.tick(0.05)
 	_check(p.map == "palmenrast" and world.get_map("palmenrast").title == "Palmenrast", "Durch das Osttor der Stadt in die Palmenrast")
@@ -84,25 +84,25 @@ func _initialize() -> void:
 			"go_tareks_laden", "go_brakkus_werkstatt", "go_clan_werkstatt", "go_hadraks_schmiede", "go_treppe", "go_terrassenkante",
 			"go_aufzug_unten", "go_aufzug_oben", "go_bergpfad", "go_tor_duerrewald"]:
 		_check(teile.has(teil), "In der Stadt steht %s" % teil)
-	world.change_map(p, "glutoase", Vector2i(23, 6))
-	var oben: PackedVector2Array = stadt.astar.get_point_path(Vector2i(23, 6), Vector2i(22, 44))
+	world.change_map(p, "glutoase", Vector2i(23, 39))
+	var oben: PackedVector2Array = stadt.astar.get_point_path(Vector2i(23, 39), Vector2i(22, 1))
 	_check(oben.size() > 0, "Über die Treppen von der Oase bis hinauf zu Hadraks Schmiede")
 	var aufzug := -1
 	for i in world.places.size():
-		if world.places[i].map == "glutoase" and world.places[i].art == "aufzug" and world.places[i].cell.y < 20:
+		if world.places[i].map == "glutoase" and world.places[i].art == "aufzug" and world.places[i].cell.y > 20:
 			aufzug = i
-	world.change_map(p, "glutoase", Vector2i(41, 18 - 1))
+	world.change_map(p, "glutoase", Vector2i(41, 33))
 	world.apply_command("a", {type = "use", target = "ort:%d" % aufzug})
 	for i in 100:
 		world.tick(0.05)
-	_check(p.cell.y > 36, "Mit dem Lastenaufzug nach oben")
+	_check(p.cell.y < 11, "Mit dem Lastenaufzug nach oben")
 
 	# D30: Über den Bergpfad am Schmiedeviertel auf den Glutgrat (Wildes Land, Stufe 15–20)
 	var pfad := -1
 	for i in world.places.size():
 		if world.places[i].map == "glutoase" and world.places[i].art == "bergpfad":
 			pfad = i
-	world.change_map(p, "glutoase", Vector2i(41, 25))
+	world.change_map(p, "glutoase", Vector2i(41, 20))
 	world.apply_command("a", {type = "use", target = "ort:%d" % pfad})
 	for i in 100:
 		world.tick(0.05)

@@ -1811,7 +1811,7 @@
 				"karte": "glutoase",
 				"feld": [
 					23,
-					1
+					44
 				]
 			}
 		],
@@ -2042,7 +2042,7 @@
 				"karte": "glutoase",
 				"feld": [
 					43,
-					11
+					34
 				]
 			}
 		],
@@ -2228,61 +2228,61 @@
 		"licht": "fff0dc",
 		"start": [
 			23,
-			1
+			44
 		],
 		"raster": [
-			"X............................................X",
-			"X...........................XXXXXX...........X",
-			"X...........................XXXXXX...XXXX....X",
-			"X...XXXXX......XXX..........XXXXXX...XXXX....X",
-			"X...XXXXX......XXX..........XXXXXX...XXXX....X",
-			"X...XXXXX...................XXXXXX...XXXX....X",
-			"X............................................X",
-			"X.........................XX.................X",
-			"X....................XXXX.XX.................X",
-			"X......XXX.XXX.......XXXX.....................",
-			"X......XXX.XXX.......XXXX.............XXXX....",
-			"X....................XXXX.............XXXX....",
-			"X.....................................XXXX....",
-			"X....XXXX.....................................",
-			"X....XXXX...............................XXX..X",
-			"X....XXXX...............................XXX..X",
-			"XXXXXX..................................XXX..X",
+			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+			"X.......XXXXX...................XXXXX........X",
+			"X.......XXXXX...................XXXXX........X",
+			"X..................XXXXXXX...................X",
+			"X..................XXXXXXX...XX..............X",
+			"X..................XXXXXXX...XX..............X",
+			"X...........XXX....XXXXXXX...................X",
+			"X..................XXXXXXX.......XXX....XXX..X",
+			"X..................XXXXXXX..............XXX..X",
+			"X.......................................XXX..X",
 			"X............................................X",
 			"XXXXXXXXXXXXXXXXXXXXXX..XXXXXXXXXXXXXXXXXXXXXX",
 			"X............................................X",
 			"X............................................X",
+			"X.............XXX............................X",
+			"X.....XXX.....XXX........XX.........XXXXX....X",
+			"X.....XXX.....XXX........XX.........XXXXX....X",
+			"X...................................XXXXX....X",
+			"X...................................XXXXX....X",
+			"X............................................X",
+			"X..................XX..XX.....XXXXX..........X",
+			"X..XXXXX..XXXXX....XX.........XXXXX........XXX",
 			"X..XXXXX..XXXXX...............XXXXX..........X",
 			"X..XXXXX..XXXXX..XX...........XXXXX..........X",
 			"X..XXXXX..XXXXX...............XXXXX..........X",
-			"X..XXXXX..XXXXX....XX.........XXXXX........XXX",
-			"X..................XX..XX.....XXXXX..........X",
-			"X............................................X",
-			"X...................................XXXXX....X",
-			"X...................................XXXXX....X",
-			"X.....XXX.....XXX........XX.........XXXXX....X",
-			"X.....XXX.....XXX........XX.........XXXXX....X",
-			"X.............XXX............................X",
 			"X............................................X",
 			"X............................................X",
 			"XXXXXXXXXXXXXXXXXXXXXX..XXXXXXXXXXXXXXXXXXXXXX",
 			"X............................................X",
-			"X.......................................XXX..X",
-			"X..................XXXXXXX..............XXX..X",
-			"X..................XXXXXXX.......XXX....XXX..X",
-			"X...........XXX....XXXXXXX...................X",
-			"X..................XXXXXXX...XX..............X",
-			"X..................XXXXXXX...XX..............X",
-			"X..................XXXXXXX...................X",
-			"X.......XXXXX...................XXXXX........X",
-			"X.......XXXXX...................XXXXX........X",
-			"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+			"XXXXXX..................................XXX..X",
+			"X....XXXX...............................XXX..X",
+			"X....XXXX...............................XXX..X",
+			"X....XXXX.....................................",
+			"X.....................................XXXX....",
+			"X....................XXXX.............XXXX....",
+			"X......XXX.XXX.......XXXX.............XXXX....",
+			"X......XXX.XXX.......XXXX.....................",
+			"X....................XXXX.XX.................X",
+			"X.........................XX.................X",
+			"X............................................X",
+			"X...XXXXX...................XXXXXX...........X",
+			"X...XXXXX......XXX..........XXXXXX.......XXXXX",
+			"X...XXXXX......XXX..........XXXXXX.......XXXXX",
+			"X...........................XXXXXX.......XXXXX",
+			"X...........................XXXXXX.......XXXXX",
+			"X............................................X"
 		],
 		"ausgaenge": [
 			{
 				"bereich": [
 					20,
-					0,
+					45,
 					7,
 					1
 				],
@@ -2295,7 +2295,7 @@
 			{
 				"bereich": [
 					45,
-					9,
+					32,
 					1,
 					5
 				],
@@ -2312,7 +2312,7 @@
 				"art": "wegelaterne",
 				"feld": [
 					19,
-					4
+					41
 				],
 				"dialog": "wegelaterne_glutoase",
 				"zeichen": "laterne"
@@ -2321,7 +2321,7 @@
 				"art": "aufzug",
 				"feld": [
 					41,
-					17
+					32
 				],
 				"meldung": "Der Lastenaufzug rattert nach oben zu Hadraks Schmiede.",
 				"aktionen": [
@@ -2329,7 +2329,7 @@
 						"reisen": "glutoase",
 						"feld": [
 							41,
-							40
+							10
 						]
 					}
 				]
@@ -2338,7 +2338,7 @@
 				"art": "aufzug",
 				"feld": [
 					41,
-					39
+					10
 				],
 				"meldung": "Der Lastenaufzug rattert hinunter zur Oase.",
 				"aktionen": [
@@ -2346,7 +2346,7 @@
 						"reisen": "glutoase",
 						"feld": [
 							41,
-							17
+							32
 						]
 					}
 				]
@@ -2355,7 +2355,7 @@
 				"art": "tor",
 				"feld": [
 					3,
-					15
+					30
 				],
 				"dialog": "tor_duerrewald"
 			},
@@ -2363,7 +2363,7 @@
 				"art": "bergpfad",
 				"feld": [
 					42,
-					25
+					20
 				],
 				"meldung": "Du steigst den Bergpfad hinauf auf den Glutgrat.",
 				"aktionen": [
@@ -2380,7 +2380,7 @@
 				"art": "schmiede_eingang",
 				"feld": [
 					22,
-					44
+					1
 				],
 				"dialog": "eingang_vulkanschmiede"
 			}
@@ -2390,12 +2390,12 @@
 			"hadrak": {
 				"name": "Hadrak Glutherz",
 				"feld": [
-					26,
-					43
+					25,
+					10
 				],
 				"nachts": [
 					31,
-					7
+					38
 				],
 				"aussehen": "hadrak",
 				"dialog": "hadrak"
@@ -2404,7 +2404,7 @@
 				"name": "Essenmeister Brakkus",
 				"feld": [
 					32,
-					26
+					25
 				],
 				"aussehen": "brakkus",
 				"dialog": "brakkus"
@@ -2413,7 +2413,7 @@
 				"name": "Tanzmeisterin Samira",
 				"feld": [
 					32,
-					11
+					34
 				],
 				"aussehen": "samira",
 				"dialog": "samira"
@@ -2422,7 +2422,7 @@
 				"name": "Brunnenhüterin Nadia",
 				"feld": [
 					25,
-					12
+					38
 				],
 				"aussehen": "grund_frau+nadia#zubehoer=wasserkrug",
 				"dialog": "nadia"
@@ -2431,7 +2431,7 @@
 				"name": "Karawanenführer Zaid",
 				"feld": [
 					6,
-					7
+					38
 				],
 				"aussehen": "grund_haendler+zaid",
 				"dialog": "zaid"
@@ -2439,8 +2439,8 @@
 			"bank_glutoase": {
 				"name": "Bankhüter Rashid",
 				"feld": [
-					38,
-					6
+					42,
+					45
 				],
 				"aussehen": "grund_alter_mensch+rashid#hut=rashid_kopftuch,zubehoer=bankschluessel",
 				"dialog": "rashid",
@@ -2450,7 +2450,7 @@
 				"name": "Händler Tarek",
 				"feld": [
 					7,
-					16
+					33
 				],
 				"aussehen": "grund_haendler+tarek#zubehoer=schaerpe&guertelklinge",
 				"dialog": "tarek",
@@ -2459,8 +2459,8 @@
 			"layla": {
 				"name": "Wirtin Layla",
 				"feld": [
-					29,
-					6
+					30,
+					45
 				],
 				"aussehen": "grund_frau+layla#zubehoer=schuerze_layla&tablett",
 				"dialog": "layla"
@@ -2469,7 +2469,7 @@
 				"name": "Mira",
 				"feld": [
 					40,
-					13
+					36
 				],
 				"aussehen": "mira",
 				"dialog": "mira_glutoase",
@@ -2481,8 +2481,8 @@
 			"mira_gesund": {
 				"name": "Mira",
 				"feld": [
-					41,
-					13
+					42,
+					36
 				],
 				"aussehen": "mira",
 				"dialog": "mira_glutoase",
@@ -2493,8 +2493,8 @@
 			"kael_glutoase": {
 				"name": "Kael",
 				"feld": [
-					24,
-					43
+					19,
+					10
 				],
 				"aussehen": "kael",
 				"dialog": "kael_glutoase",
@@ -2514,8 +2514,8 @@
 			"schmied_1": {
 				"name": "Schmied",
 				"feld": [
-					8,
-					26
+					6,
+					25
 				],
 				"aussehen": "grund_handwerker+v_m2#zubehoer=schuerze",
 				"dialog": "volk_go_schmied_1"
@@ -2523,8 +2523,8 @@
 			"schmied_2": {
 				"name": "Schmied",
 				"feld": [
-					12,
-					26
+					13,
+					25
 				],
 				"aussehen": "grund_handwerker+v_m3#zubehoer=schuerze",
 				"dialog": "volk_go_schmied_2"
@@ -2533,7 +2533,7 @@
 				"name": "Schmiedin",
 				"feld": [
 					27,
-					26
+					19
 				],
 				"aussehen": "grund_frau+v_w2#zubehoer=schuerze",
 				"dialog": "volk_go_schmied_3"
@@ -2542,7 +2542,7 @@
 				"name": "Tänzer",
 				"feld": [
 					30,
-					9
+					36
 				],
 				"aussehen": "klingentaenzer_m+m3",
 				"dialog": "volk_go_taenzer",
@@ -2554,7 +2554,7 @@
 				"name": "Tänzerin",
 				"feld": [
 					34,
-					13
+					32
 				],
 				"aussehen": "klingentaenzer_w+w3",
 				"dialog": "volk_go_taenzer",
@@ -2566,7 +2566,7 @@
 				"name": "Basarhändlerin",
 				"feld": [
 					8,
-					11
+					37
 				],
 				"aussehen": "grund_haendler+v_w3",
 				"dialog": "volk_go_basar_1",
@@ -2578,7 +2578,7 @@
 				"name": "Basarhändler",
 				"feld": [
 					12,
-					11
+					37
 				],
 				"aussehen": "grund_haendler+v_m1",
 				"dialog": "volk_go_basar_2",
@@ -2590,7 +2590,7 @@
 				"name": "Karawanenmann",
 				"feld": [
 					10,
-					4
+					41
 				],
 				"aussehen": "grund_mann+v_m3",
 				"dialog": "volk_go_karawane_1"
@@ -2599,7 +2599,7 @@
 				"name": "Karawanenfrau",
 				"feld": [
 					3,
-					7
+					38
 				],
 				"aussehen": "grund_frau+v_w1",
 				"dialog": "volk_go_karawane_2"
@@ -2607,8 +2607,8 @@
 			"aufzugwaerter": {
 				"name": "Aufzugwärter",
 				"feld": [
-					39,
-					17
+					38,
+					32
 				],
 				"aussehen": "grund_handwerker+a_m2",
 				"dialog": "volk_go_aufzug"
@@ -2616,8 +2616,8 @@
 			"gast_go_1": {
 				"name": "Gast",
 				"feld": [
-					33,
-					6
+					16,
+					39
 				],
 				"aussehen": "grund_mann+v_m1",
 				"dialog": "volk_go_gast_1"
@@ -2626,7 +2626,7 @@
 				"name": "Gast",
 				"feld": [
 					35,
-					6
+					39
 				],
 				"aussehen": "grund_frau+v_w3",
 				"dialog": "volk_go_gast_2",
@@ -2638,7 +2638,7 @@
 				"name": "Gast",
 				"feld": [
 					28,
-					9
+					36
 				],
 				"aussehen": "grund_handwerker+v_m2",
 				"dialog": "volk_go_gast_3",
@@ -2706,7 +2706,7 @@
 				"karte": "glutoase",
 				"feld": [
 					41,
-					25
+					20
 				]
 			}
 		],
@@ -2911,7 +2911,7 @@
 				"karte": "glutoase",
 				"feld": [
 					22,
-					43
+					2
 				]
 			}
 		],

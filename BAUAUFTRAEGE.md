@@ -120,7 +120,9 @@ Wenig Tokens übrig: Arbeit in wenigen großen Blöcken statt vieler kleiner Run
   - **E3h:** (nach S1 bis S5) Städte umbauen: zu viele Figuren und zu viele Deko-Teile auf einem Fleck (Kreuzweg, Wipfelheim, Glutoase), Figuren und Deko verteilen, Plätze freier lassen. – Status: geteilt (10.11.2026), Claude baut grob um, Marco macht den Feinschliff im Stadt-Editor:
     - **E3h1:** Kreuzweg. – Status: fertig (10.11.2026; Marktstände mit Rosa und Jost vom Marktplatz in eine Marktgasse neben Bingo und Hatta, Pip und Lotte zum Brunnen, Pavillons von Ilwen und Mei auseinander, Tessa und Gorm an die Übungspuppen, Lene ans Auftragsbrett, Bäume beim neuen Markt verteilt)
     - **E3h2:** Wipfelheim. – Status: fertig (10.11.2026; keine Baumkronen mehr vor den Plattformen, Salbeis Stand frei sichtbar; ein Gast vom Gasthaus-Eingang an die Ecke des Gasthauses, eine Sammlerin zu Esches Labor. Wipfelheim war weniger voll als Kreuzweg, die Abstände der Figuren prüft eine Prüfung)
-    - **E3h3:** Glutoase. – Status: offen
+    - **E3h3:** Glutoase, mit Ebenen, die zur Schmiede hin ansteigen (Marco, 10.11.). – Status: geteilt (10.11.2026):
+      - **E3h3a:** Stadt umdrehen: Oase mit Tor vorne, Hadraks Schmiede hinten oben, damit die Terrassenmauern zum Betrachter zeigen; Figuren vor ihre Häuser, Bank etwas abgerückt. – Status: fertig (10.11.2026; im Kartenwerkzeug `tools/glutoase_karten.py`, `spiegeln()`)
+      - **E3h3b:** Echte Höhen: Die drei Stufen werden höher gezeichnet (Boden, Teile, Figuren), die Mauern werden zur Felswand, Treppen steigen sichtbar an, Antippen trifft das richtige Feld. Gilt in der Welt und im Stadt-Editor. – Status: offen
 - **E4:** Eine Balancing-Runde: Marcos Liste plus die Zahlen aus den Prüfungen (Kael, Glasskorpion, Vulkanschmiede allein, Ritualist/Zwielicht), alle Werte in einer Sitzung. Dazu (Marco, 07.11.): Grünwacht ist jetzt das zweite Gebiet, Monster und Bosse dort auf Stufe 20–25 heben (man kommt mit etwa 20 aus der Glutoase). – Status: offen
 - **E5:** T3 und T4 am Stück spielen, danach wieder eine Liste und eine Sitzung für die Korrekturen. – Status: offen
 
