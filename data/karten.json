@@ -2386,6 +2386,48 @@
 			}
 		],
 		"baukasten": "karte_glutoase",
+		"hoehen": {
+			"stufe": 48,
+			"zeilen": [
+				[
+					0,
+					10,
+					2
+				],
+				[
+					11,
+					26,
+					1
+				],
+				[
+					27,
+					45,
+					0
+				]
+			],
+			"rampen": [
+				{
+					"feld": [
+						22,
+						26,
+						2,
+						2
+					],
+					"oben": 1,
+					"unten": 0
+				},
+				{
+					"feld": [
+						22,
+						10,
+						2,
+						2
+					],
+					"oben": 2,
+					"unten": 1
+				}
+			]
+		},
 		"npcs": {
 			"hadrak": {
 				"name": "Hadrak Glutherz",

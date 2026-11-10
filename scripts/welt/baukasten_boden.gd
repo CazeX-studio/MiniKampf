@@ -23,7 +23,15 @@ const KACHEL := 8
 const UFER_WEITE := 0.5
 const UFER_SCHATTEN := Color(0.0, 0.03, 0.08, 0.45)
 
+## Felswände zwischen den Ebenen (E3h3b): Lehm und Fels, die Seite nach rechts etwas dunkler
+const WAND_LINKS := Color("9a6440")
+const WAND_RECHTS := Color("7a4c30")
+const WAND_FUGE := Color(0.25, 0.12, 0.05, 0.35)
+const WAND_KANTE := Color("d9a46a")
+
 var _teile: Dictionary
+## Ebenen der Karte (null = alles flach)
+var hoehen: Hoehen = null
 var _size := Vector2i.ZERO
 var _rows: PackedStringArray
 var _ground_colors := {}
@@ -31,8 +39,9 @@ var _ground_colors := {}
 var _rand_bilder := {}
 
 
-func setup(teile: Dictionary, rows: PackedStringArray) -> void:
+func setup(teile: Dictionary, rows: PackedStringArray, p_hoehen: Hoehen = null) -> void:
 	_teile = teile
+	hoehen = p_hoehen
 	_rows = rows
 	_size = Vector2i(rows[0].length() if rows.size() > 0 else 0, rows.size())
 	z_index = -10
@@ -42,7 +51,10 @@ func setup(teile: Dictionary, rows: PackedStringArray) -> void:
 	for ky in range(0, _size.y, KACHEL):
 		for kx in range(0, _size.x, KACHEL):
 			bereiche.append(Rect2i(kx, ky, mini(KACHEL, _size.x - kx), mini(KACHEL, _size.y - ky)))
-	for ebene: Callable in [_zeichne_boden, _zeichne_uebergaenge]:
+	var ebenen: Array[Callable] = [_zeichne_boden, _zeichne_uebergaenge]
+	if hoehen != null:
+		ebenen.append(_zeichne_waende)
+	for ebene: Callable in ebenen:
 		for bereich in bereiche:
 			var kachel := Node2D.new()
 			kachel.draw.connect(ebene.bind(kachel, bereich))
@@ -51,6 +63,11 @@ func setup(teile: Dictionary, rows: PackedStringArray) -> void:
 
 static func cell_to_screen(c: Vector2) -> Vector2:
 	return Vector2((c.x - c.y) * TILE_W * 0.5, (c.x + c.y) * TILE_H * 0.5)
+
+
+## Höhe eines Feldes in Bildpunkten (0 ohne Ebenen)
+func feld_hoehe(cell: Vector2i) -> float:
+	return hoehen.stufe_feld(cell) * hoehen.stufe if hoehen != null else 0.0
 
 
 ## Grundfläche eines Teils in Feldern.
@@ -80,7 +97,8 @@ static func gesperrte_felder(o: Dictionary, teile: Dictionary) -> Array[Vector2i
 
 
 ## Baut ein Teil als Grafik: {node, rect, bild (Bildschirm-Fläche), flach, lichter}. Null-Wörterbuch, wenn das Bild fehlt.
-static func teil_bauen(o: Dictionary, teile: Dictionary) -> Dictionary:
+## hoehe: um so viele Bildpunkte höher zeichnen (Ebenen, E3h3b).
+static func teil_bauen(o: Dictionary, teile: Dictionary, hoehe := 0.0) -> Dictionary:
 	var teil: String = o.get("teil", "")
 	if not teile.objekte.has(teil):
 		push_warning("Baukasten: unbekanntes Teil '%s'" % teil)
@@ -93,8 +111,8 @@ static func teil_bauen(o: Dictionary, teile: Dictionary) -> Dictionary:
 		return {}
 	var node := Node2D.new()
 	# Sortierpunkt: die vorderste Ecke der Grundfläche
-	node.position = cell_to_screen(Vector2(rect.end))
-	var center := cell_to_screen(Vector2(rect.position) + Vector2(rect.size) * 0.5) - node.position
+	node.position = cell_to_screen(Vector2(rect.end)) - Vector2(0, hoehe)
+	var center := cell_to_screen(Vector2(rect.position) + Vector2(rect.size) * 0.5) - Vector2(0, hoehe) - node.position
 	var massstab: float = d.get("massstab", MASSSTAB)
 	var gespiegelt: bool = o.get("gespiegelt", false)
 	# Der Fußpunkt (fuss = Pixel im Bild, sonst unten in der Mitte, fuss_y Pixel über dem Rand) steht auf der Mitte der Grundfläche
@@ -153,7 +171,7 @@ func _zeichne_boden(kachel: Node2D, bereich: Rect2i) -> void:
 				continue
 			# Abwechslung: jedes Feld nimmt immer dasselbe, aber zufällig wirkende Bild
 			var tex: Texture2D = load(ASSET_PATH + bilder[(x * 7 + y * 13 + x * y) % bilder.size()])
-			var top := cell_to_screen(Vector2(cell))
+			var top := cell_to_screen(Vector2(cell)) - Vector2(0, feld_hoehe(cell))
 			# Darunter eine Raute in der Grundfarbe, damit zwischen den Pixel-Rauten keine Ritzen bleiben
 			var diamond := PackedVector2Array([top, top + Vector2(TILE_W * 0.5, TILE_H * 0.5),
 					top + Vector2(0, TILE_H), top + Vector2(-TILE_W * 0.5, TILE_H * 0.5)])
@@ -187,13 +205,17 @@ func _draw_uebergaenge(kachel: Node2D, cell: Vector2i) -> void:
 	if mein.is_empty():
 		return
 	var rang: int = mein.get("vorrang", 0)
-	var rect := Rect2(cell_to_screen(Vector2(cell)) - Vector2(TILE_W * 0.5, 0), Vector2(TILE_W, TILE_H))
+	var hoehe := feld_hoehe(cell)
+	var rect := Rect2(cell_to_screen(Vector2(cell)) - Vector2(TILE_W * 0.5, hoehe), Vector2(TILE_W, TILE_H))
 	var wasser: bool = not mein.get("begehbar", true)
 	var richtungen: Array[Vector2i] = []
 	for d in KANTEN:
-		if _ground_def(cell + d).get("vorrang", 0) > rang:
+		# Über eine Felskante hinweg wächst nichts
+		if _ground_def(cell + d).get("vorrang", 0) > rang and feld_hoehe(cell + d) == hoehe:
 			richtungen.append(d)
 	for d in ECKEN:
+		if feld_hoehe(cell + d) != hoehe:
+			continue
 		# Eine Ecke nur, wenn die beiden Kanten daneben nicht schon denselben Boden zeigen
 		var art := _ground_char(cell + d)
 		if _ground_def(cell + d).get("vorrang", 0) > rang and _ground_char(cell + Vector2i(d.x, 0)) != art \
@@ -206,6 +228,34 @@ func _draw_uebergaenge(kachel: Node2D, cell: Vector2i) -> void:
 				kachel.draw_texture_rect(_rand(_boden_bild(cell + d), d, UFER_WEITE), rect, false, UFER_SCHATTEN)
 	for d in richtungen:
 		kachel.draw_texture_rect(_rand(_boden_bild(cell + d), d, RAND_WEITE), rect, false)
+
+
+## Felswände (E3h3b): Wo ein Feld höher liegt als sein vorderer Nachbar (oder der Kartenrand), sieht man die Wand
+## darunter. Nur die zwei zum Betrachter zeigenden Seiten (+y vorne links, +x vorne rechts).
+func _zeichne_waende(kachel: Node2D, bereich: Rect2i) -> void:
+	for y in range(bereich.position.y, bereich.end.y):
+		for x in range(bereich.position.x, bereich.end.x):
+			var cell := Vector2i(x, y)
+			var h := feld_hoehe(cell)
+			if h <= 0.0:
+				continue
+			for d: Vector2i in [Vector2i(0, 1), Vector2i(1, 0)]:
+				var n := cell + d
+				var aussen := n.x >= _size.x or n.y >= _size.y
+				var hn := 0.0 if aussen else feld_hoehe(n)
+				if hn >= h:
+					continue
+				var a := cell_to_screen(Vector2(cell.x, cell.y + 1)) if d.y == 1 else cell_to_screen(Vector2(cell.x + 1, cell.y))
+				var b := cell_to_screen(Vector2(cell.x + 1, cell.y + 1))
+				var wand := PackedVector2Array([a - Vector2(0, h), b - Vector2(0, h), b - Vector2(0, hn), a - Vector2(0, hn)])
+				kachel.draw_colored_polygon(wand, WAND_LINKS if d.y == 1 else WAND_RECHTS)
+				# Fugen wie Lehmziegel und Fels, oben eine helle Kante
+				var reihe := 12.0
+				var z := hn + reihe
+				while z < h - 2.0:
+					kachel.draw_line(a - Vector2(0, z), b - Vector2(0, z), WAND_FUGE, 1.5)
+					z += reihe
+				kachel.draw_line(a - Vector2(0, h), b - Vector2(0, h), WAND_KANTE, 2.0)
 
 
 func _ground_char(cell: Vector2i) -> String:

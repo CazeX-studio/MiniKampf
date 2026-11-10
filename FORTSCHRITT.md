@@ -26,7 +26,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt:** E3h3b echte Höhen in der Glutoase (Feinschliff jeweils im Stadt-Editor), danach E4 (Balancing), E5 und S6 (Editoren), danach E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Offen von S1: Marcos Google-Formular verbinden.
+- **Nächster Schritt:** E4 (Balancing), danach E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder) (Feinschliff jeweils im Stadt-Editor), danach E4 (Balancing), E5 und S6 (Editoren), danach E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Offen von S1: Marcos Google-Formular verbinden.
 
 - **Neu (04.11.): D25b Körper von Rüstungsschmied und Sternensängerin** (2.11): Deine Blätter sind eingebaut: Rüstungsschmied (m) und Rüstungsschmiedin (w) in Rüstung mit Lederschürze und rotem Halstuch, die Sternensängerin (w) im hellen Gewand mit dunkelblauem Schal. Je mit Stehen, Laufen, Abwehr, Treffer, Angriff, Fallen, Sieg und Fähigkeit im Kampf, in der Welt schräg von vorne und hinten. Wer die Klasse gelernt hat, trägt sie mit seinem eigenen Kopf, auch in der Probestunde. Ausgebessert: die gelben Funken im Treffer-Bild des Schmieds und das rote Halstuch in einem Siegesbild der Sängerin. Noch nicht drin: ein männlicher Sternensänger (der kämpft weiter in der Klassenfigur).
   - **So testest du es:**
@@ -62,6 +62,18 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     2. Je ein Monster auf dem Weg nach Grünwacht, im Waldboden, in der Tiefwurzel, in der Aschensteppe (Norden und Süden), in der Palmenrast und auf dem Glutgrat angreifen: überall das gemalte Bild.
     3. Hammerbrüder oder Kettenschmied: Kampf in der Ankerkammer mit den drei Ankern.
     4. Stehen die Figuren überall gut auf dem Boden? Sonst sag Bescheid, dann schiebe ich die Bilder anders.
+
+- **Neu (10.11.): E3h3b Ebenen in der Glutoase** (dein Wunsch: zur Schmiede immer höher):
+  - Die Stadt hat jetzt drei echte Höhen: unten die Oase, eine Stufe höher das Schmiedeviertel, ganz oben Hadraks Schmiede. Boden, Häuser und Figuren der oberen Stufen liegen sichtbar höher, unter jeder Kante sieht man eine Lehm- und Felswand, an der rechten Seite fällt der Berg ab.
+  - Auf den Treppen steigt die Figur gleichmäßig hinauf. Antippen zum Laufen trifft auf jeder Stufe das richtige Feld.
+  - Der Stadt-Editor zeigt die Glutoase genauso mit Ebenen.
+  - Die anderen Städte bleiben flach. Ebenen kann jetzt jede Karte bekommen (Angabe „hoehen“ in den Kartendaten).
+  - Noch nicht: Die Felswände sind vom Spiel gemalt (Flächen mit Fugen), ein gemaltes Felswand-Bild gibt es noch nicht.
+  - **So testest du es:**
+    1. In die Glutoase: Von der Oase aus sieht man die Stadt nach hinten ansteigen.
+    2. Die Treppe hinauf ins Schmiedeviertel und weiter zu Hadrak: Die Figur steigt sichtbar.
+    3. Auf der oberen Stufe irgendwo hintippen: Die Figur läuft genau dorthin.
+    4. Editor → Stadt-Editor → Glutoase: dieselben Ebenen, Teile lassen sich wie gewohnt verschieben.
 
 - **Neu (10.11.): E3h3a Glutoase umgedreht** (erster Teil deines Wunschs mit den Ebenen):
   - Die Oase mit dem Tor zur Aschensteppe liegt jetzt vorne (unten im Bild), darüber das Schmiedeviertel, ganz hinten oben Hadraks Schmiede am Krater. Die Terrassenmauern zeigen jetzt zu dir, so wirkt jede Stufe höher als die davor. Echte Höhen (die Stufen auch höher gezeichnet) kommen mit E3h3b.

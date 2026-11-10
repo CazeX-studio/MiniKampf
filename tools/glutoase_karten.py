@@ -256,6 +256,17 @@ def spiegeln_bereich(b):
 	return [b[0], GH - b[1] - b[3], b[2], b[3]]
 
 
+def glutoase_hoehen():
+	"""Stufen der umgedrehten Stadt: Oase 0, Schmiedeviertel 1, Hadraks Schmiede 2 (eine Stufe = 48 Bildpunkte)."""
+	unten, oben = sorted(GH - 1 - y for y in KANTEN)  # Mauerzeilen: 11 (Schmiede/Hadrak) und 27 (Oase/Schmiede)
+	return {
+		"stufe": 48,
+		"zeilen": [[0, unten - 1, 2], [unten, oben - 1, 1], [oben, GH - 1, 0]],
+		"rampen": [{"feld": [TREPPE_X, GH - y - 2, 2, 2], "oben": 2 if GH - 1 - y == unten else 1, "unten": 1 if GH - 1 - y == unten else 0}
+			for y in KANTEN],
+	}
+
+
 def glutoase_orte():
 	return [
 		{"art": "wegelaterne", "feld": [19, 4], "dialog": "wegelaterne_glutoase", "zeichen": "laterne"},
@@ -303,6 +314,8 @@ def glutoase():
 		"ausgaenge": [{"bereich": spiegeln_bereich([20, 0, 7, 1]), "karte": "aschensteppe", "feld": [14, H - 2]},
 			{"bereich": spiegeln_bereich([GB - 1, 9, 1, 5]), "karte": "palmenrast", "feld": [20, 1]}],
 		"kampf_hintergrund": "glutoase_stadt", "orte": glutoase_orte(), "baukasten": "karte_glutoase",
+		# Ebenen (E3h3b): Jede Mauer liegt auf der unteren Stufe, die Treppen steigen gleichmäßig an
+		"hoehen": glutoase_hoehen(),
 		# Oberhaupt und Lehrmeister (D26); die übrigen Figuren kommen mit D27
 		"npcs": {
 			"hadrak": {"name": "Hadrak Glutherz", "feld": [25, 35], "nachts": [31, 7], "aussehen": "hadrak", "dialog": "hadrak"},

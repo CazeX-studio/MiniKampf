@@ -31,6 +31,8 @@ var dungeon := ""
 var sicher := Rect2i()
 ## Karte aus dem Baukasten: Inhalt von data/kreuzweg_karte.json ({boden, objekte}), sonst leer (gemalt aus tiles und Häusern)
 var baukasten: Dictionary = {}
+## Ebenen (E3h3b, z. B. die Glutoase am Berg), null = flach. Nur fürs Zeichnen.
+var hoehen: Hoehen = null
 
 var astar := AStarGrid2D.new()
 
@@ -65,6 +67,7 @@ static func from_data(p_id: String, data: Dictionary, legend: Dictionary) -> Wor
 	# Karte aus dem Baukasten: Das Raster bestimmt weiter, wo man laufen kann, gezeichnet werden die Teile
 	if data.has("baukasten"):
 		m.baukasten = GameData.get_file(data.baukasten)
+	m.hoehen = Hoehen.aus_daten(data.get("hoehen", {}))
 	var start: Array = data.get("start", [1, 1])
 	m.start = Vector2i(int(start[0]), int(start[1]))
 	for y in raster.size():

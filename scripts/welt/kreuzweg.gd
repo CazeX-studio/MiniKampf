@@ -218,6 +218,8 @@ var _stick_origin := Vector2.ZERO
 var _stick_vec := Vector2.ZERO
 var _stick_moved := false
 var _figur_groesse := 1.0
+## Ebenen der gezeigten Karte (E3h3b), null = flach
+var _hoehen: Hoehen = null
 
 
 func _ready() -> void:
@@ -363,6 +365,7 @@ func _build_map_view() -> void:
 		if id.begins_with("npc:") or id.begins_with("monster:"):
 			_characters.erase(id)
 	var m := state.get_map(local.map)
+	_hoehen = m.hoehen
 	_figur_groesse = BAUKASTEN_FIGUR if not m.baukasten.is_empty() else 1.0
 	if not m.baukasten.is_empty():
 		_add_baukasten(m.baukasten)
@@ -429,7 +432,7 @@ static func _danger_color(monster_level: int, player_level: int) -> Color:
 func _add_baukasten(karte: Dictionary) -> void:
 	var teile := GameData.get_file("baukasten_teile")
 	var boden := BaukastenBoden.new()
-	boden.setup(teile, PackedStringArray(karte.get("boden", [])))
+	boden.setup(teile, PackedStringArray(karte.get("boden", [])), _hoehen)
 	add_child(boden)
 	_map_nodes.append(boden)
 	var flach := Node2D.new()
@@ -437,7 +440,8 @@ func _add_baukasten(karte: Dictionary) -> void:
 	add_child(flach)
 	_map_nodes.append(flach)
 	for o: Dictionary in karte.get("objekte", []):
-		var fertig := BaukastenBoden.teil_bauen(o, teile)
+		var hoehe := _hoehen.teil_px(BaukastenBoden.grundflaeche(o, teile)) if _hoehen != null and teile.objekte.has(o.get("teil", "")) else 0.0
+		var fertig := BaukastenBoden.teil_bauen(o, teile, hoehe)
 		if fertig.is_empty():
 			continue
 		var node: Node2D = fertig.node
@@ -654,8 +658,10 @@ func _drive_bot(delta: float) -> void:
 
 # --- Umrechnung Feld <-> Bildschirm (schräg von oben) --------------------------
 
+## Mit Ebenen (E3h3b) liegt alles auf höheren Stufen weiter oben.
 func cell_to_screen(c: Vector2) -> Vector2:
-	return Vector2((c.x - c.y) * TILE_W * 0.5, (c.x + c.y) * TILE_H * 0.5)
+	var p := Vector2((c.x - c.y) * TILE_W * 0.5, (c.x + c.y) * TILE_H * 0.5)
+	return p - Vector2(0, _hoehen.px(c)) if _hoehen != null else p
 
 
 func cell_center(c: Vector2) -> Vector2:
@@ -663,6 +669,8 @@ func cell_center(c: Vector2) -> Vector2:
 
 
 func screen_to_cell(p: Vector2) -> Vector2i:
+	if _hoehen != null:
+		return _hoehen.feld_bei(p)
 	var x := (p.x / (TILE_W * 0.5) + p.y / (TILE_H * 0.5)) * 0.5
 	var y := (p.y / (TILE_H * 0.5) - p.x / (TILE_W * 0.5)) * 0.5
 	return Vector2i(floori(x), floori(y))

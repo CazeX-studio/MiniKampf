@@ -40,6 +40,8 @@ var geaendert := false
 var rueckgaengig: Array = []
 
 var _teile: Dictionary
+## Ebenen der Stadt (E3h3b, Glutoase), null = flach
+var _hoehen: Hoehen = null
 var _flach: Node2D
 var _sortiert: Node2D
 var _rahmen: Node2D
@@ -78,7 +80,9 @@ func _ready() -> void:
 	var info: Dictionary = StadtAenderungen.STAEDTE[stadt]
 	var karte := GameData.roh(info.karte)
 	var boden := BaukastenBoden.new()
-	boden.setup(_teile, PackedStringArray(karte.get("boden", [])))
+	if info.figuren[0] == "karten":
+		_hoehen = Hoehen.aus_daten(GameData.roh("karten").get(stadt, {}).get("hoehen", {}))
+	boden.setup(_teile, PackedStringArray(karte.get("boden", [])), _hoehen)
 	add_child(boden)
 	_flach = Node2D.new()
 	_flach.z_index = -5
@@ -155,7 +159,10 @@ static func _feld(a: Array) -> Array:
 func _teil_bauen(eintrag: Dictionary) -> void:
 	if eintrag.has("node"):
 		(eintrag.node as Node).queue_free()
-	var fertig := {} if eintrag.weg else BaukastenBoden.teil_bauen(eintrag.o, _teile)
+	var hoehe := 0.0
+	if _hoehen != null and _teile.objekte.has(str(eintrag.o.get("teil", ""))):
+		hoehe = _hoehen.teil_px(BaukastenBoden.grundflaeche(eintrag.o, _teile))
+	var fertig := {} if eintrag.weg else BaukastenBoden.teil_bauen(eintrag.o, _teile, hoehe)
 	if fertig.is_empty():
 		eintrag.node = Node2D.new()
 		eintrag.bild = Rect2()
@@ -185,7 +192,12 @@ func _figur_dazu(f: Dictionary) -> void:
 ## Figur an ihren Platz (bei Nacht an den Nachtplatz, wenn sie einen hat)
 func _figur_stellen(f: Dictionary) -> void:
 	var feld: Array = _platz(f)
-	(f.node as Node2D).position = BaukastenBoden.cell_to_screen(Vector2(feld[0], feld[1]) + Vector2(0.5, 0.5))
+	(f.node as Node2D).position = punkt(Vector2(feld[0], feld[1]) + Vector2(0.5, 0.5))
+
+
+## Punkt auf dem Bildschirm zu einer Stelle in Feldern (mit Ebenen höher)
+func punkt(c: Vector2) -> Vector2:
+	return BaukastenBoden.cell_to_screen(c) - Vector2(0, _hoehen.px(c) if _hoehen != null else 0.0)
 
 
 func _platz(f: Dictionary) -> Array:
@@ -217,10 +229,8 @@ func finden(punkt: Vector2) -> Dictionary:
 
 
 ## Feld unter einem Punkt (Weltkoordinaten)
-static func feld_bei(punkt: Vector2) -> Vector2i:
-	var x := (punkt.x / (BaukastenBoden.TILE_W * 0.5) + punkt.y / (BaukastenBoden.TILE_H * 0.5)) * 0.5
-	var y := (punkt.y / (BaukastenBoden.TILE_H * 0.5) - punkt.x / (BaukastenBoden.TILE_W * 0.5)) * 0.5
-	return Vector2i(floori(x), floori(y))
+func feld_bei(p: Vector2) -> Vector2i:
+	return _hoehen.feld_bei(p) if _hoehen != null else Hoehen.flach_feld(p)
 
 
 ## Feld der Auswahl (bei Teilen die hintere Ecke der Grundfläche, wie in den Kartendaten)
@@ -497,8 +507,9 @@ func _rahmen_malen() -> void:
 		r = objekte[auswahl.nr].rect
 	var ecken := PackedVector2Array([Vector2(r.position), Vector2(r.end.x, r.position.y), Vector2(r.end), Vector2(r.position.x, r.end.y), Vector2(r.position)])
 	var punkte := PackedVector2Array()
+	var hoehe := _hoehen.teil_px(r) if _hoehen != null else 0.0
 	for e in ecken:
-		punkte.append(BaukastenBoden.cell_to_screen(e))
+		punkte.append(BaukastenBoden.cell_to_screen(e) - Vector2(0, hoehe))
 	_rahmen.draw_colored_polygon(punkte.slice(0, 4), Color(1.0, 0.83, 0.3, 0.25))
 	_rahmen.draw_polyline(punkte, Color("ffd34d"), 3.0)
 	if auswahl.art == "teil":
