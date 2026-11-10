@@ -67,6 +67,9 @@ BLAETTER = {"gegenstaende": [
 	["kettenstiefel"],
 ]}
 
+## Blätter mit Symbolen aus mehreren getrennten Teilen (z. B. drei Pusteblumensamen): Teile näher als so viele Pixel gehören zusammen
+VERBINDEN = {"gegenstaende_6": 15}
+
 
 def main():
 	for blatt, reihen in BLAETTER.items():
@@ -79,7 +82,7 @@ def main():
 def zerlegen(blatt, namen_reihen):
 	a = freistellen(Image.open(WURZEL / "tools" / "vorlagen" / f"{blatt}.png"))
 	fest = a[..., 3] > 40
-	lab, _ = ndimage.label(ndimage.binary_dilation(fest, iterations=2))
+	lab, _ = ndimage.label(ndimage.binary_dilation(fest, iterations=VERBINDEN.get(blatt, 2)))
 	lab[~fest] = 0
 	gross, klein = [], []
 	for i, sl in enumerate(ndimage.find_objects(lab)):
