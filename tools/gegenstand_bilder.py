@@ -68,7 +68,7 @@ BLAETTER = {"gegenstaende": [
 ]}
 
 ## Blätter mit Symbolen aus mehreren getrennten Teilen (z. B. drei Pusteblumensamen): Teile näher als so viele Pixel gehören zusammen
-VERBINDEN = {"gegenstaende_6": 15}
+VERBINDEN = {"gegenstaende_6": 15, "gegenstaende_7": 15}
 
 
 def main():
