@@ -107,6 +107,11 @@ MONSTER = {
 	"wurzelkriecher": {"loecher": True, "hoehe": 84, "reihen": EINZELN[:4] + [("spezial", 7)]},
 	"sporenwolf": {"hoehe": 84, "reihen": EINZELN},
 	"schatzpilzling": {"hoehe": 56, "reihen": EINZELN},
+	# Fenns Prüfung (GRAFIK_AUFTRAG.md K2, 10.11.2026): ein Blatt, oben die Zielscheibe, unten die laufende Scheibe
+	"zielscheibe": {"vorlage": "zielscheiben_kampf", "weg": [(0, 520, 1536, 1024)], "hoehe": 60,
+		"reihen": [("idle", 4), ("hit", 1), ("death", 4)]},
+	"laufscheibe": {"vorlage": "zielscheiben_kampf", "weg": [(0, 0, 1536, 520)], "hoehe": 52,
+		"reihen": [("idle", 4), ("hit", 1), ("death", 4)]},
 	# Nebenfiguren: Bienenschwarm (Bienenstock) und Splitter-Knoten der Wurzelmutter (greifen nie an)
 	"bienenschwarm": {"hoehe": 56, "reihen": EINZELN},
 	"knoten": {"loecher": True, "hoehe": 84, "reihen": [("idle", 4), ("hit", 1), ("death", 4), ("spezial", 6)]},

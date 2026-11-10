@@ -118,9 +118,9 @@ const LOOKS := {
 	"kael_rivale": {sprite = "kael_kampf", scale = 3.0, angriffe = {"Klingenwirbel": "cast"}},
 	"sternenfresser": {sprite = "sternenfresser", scale = 1.0,
 		angriffe = {"Leuchtender Biss": "attack2", "Splitterregen": "spezial"}},
-	# Fenns Prüfung (Platzhalter-Bilder: Strohpuppen)
-	"zielscheibe": {sprite = "zombie", scale = 4.0, tint = Color(1.0, 0.88, 0.55)},
-	"laufscheibe": {sprite = "goblin", scale = 4.0, tint = Color(1.0, 0.9, 0.6)},
+	# Fenns Prüfung: Zielscheibe und laufende Scheibe (GRAFIK_AUFTRAG.md K2, tools/monster_bilder.py)
+	"zielscheibe": {sprite = "zielscheibe", scale = 1.0},
+	"laufscheibe": {sprite = "laufscheibe", scale = 1.0},
 	"splitterbaer": {sprite = "splitterbaer", scale = 1.0},
 	# Splitterbär in Tiefwurzel (seltenes Monster, D22b); der Splitter-Rindenbär der Geschichte heißt „splitterbaer“
 	"splitterbaer_wild": {sprite = "splitterbaer", scale = 1.0},
