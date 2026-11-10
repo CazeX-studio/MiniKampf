@@ -55,6 +55,54 @@ static func abspielen(kampf: Control, feld: Control, ansicht: FighterView, klass
 	film.queue_free()
 
 
+## Film beim Wechsel eines Endbosses in Phase 2 (A9b, Alpha-Punkt 38): Das Bild bebt und dunkelt ab, Kino-Streifen,
+## die Kamera rückt an den neuen Gegner, sein Bild gleitet herein mit Name und einer Zeile darunter.
+## Beim ersten Mal ganz, danach wie die Ult in den Einstellungen auf kurz stellbar.
+static func phase_abspielen(kampf: Control, feld: Control, ansicht: FighterView, farbe: Color, motiv: String,
+		titel: String, zeile: String) -> void:
+	var dauer := Musik.ult_dauer("phase_" + ansicht.fighter.klass, LANG + 0.6, KURZ + 0.4)
+	var film := UltFilm.new()
+	film._bild = {farbe = farbe, motiv = motiv}
+	film._dauer = dauer
+	film._zentrum = ansicht.center()
+	film.size = kampf.size
+	film.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	film.z_index = 18
+	feld.add_child(film)
+	var alte_ebene := ansicht.z_index
+	ansicht.z_index = 19
+	var oben := film._schrift(kampf, ansicht, titel)
+	if zeile != "":
+		var unter := Label.new()
+		unter.text = zeile
+		unter.add_theme_font_size_override("font_size", 22)
+		unter.add_theme_color_override("font_color", Color(1, 1, 1, 0.9))
+		unter.add_theme_color_override("font_outline_color", Color.BLACK)
+		unter.add_theme_constant_override("outline_size", 6)
+		unter.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		unter.size = Vector2(kampf.size.x - 280, 30)
+		unter.position = Vector2(240, kampf.size.y - 72)
+		unter.modulate.a = 0.0
+		oben.add_child(unter)
+		oben.create_tween().tween_property(unter, "modulate:a", 1.0, minf(0.5, dauer * 0.2)).set_delay(minf(0.4, dauer * 0.25))
+	# Der neue Gegner wächst aus dem Nichts heran (das Beben macht der Kampf)
+	var gross := ansicht.scale
+	ansicht.scale = gross * 0.6
+	feld.pivot_offset = ansicht.center()
+	var ein := minf(0.45, dauer * 0.25)
+	var tween := film.create_tween().set_parallel()
+	tween.tween_property(feld, "scale", Vector2.ONE * ZOOM, ein).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_property(ansicht, "scale", gross, dauer * 0.45).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(film, "_zeit", dauer, dauer)
+	tween.tween_property(feld, "scale", Vector2.ONE, ein).set_delay(dauer - ein).set_trans(Tween.TRANS_SINE)
+	await tween.finished
+	feld.scale = Vector2.ONE
+	ansicht.scale = gross
+	ansicht.z_index = alte_ebene
+	oben.queue_free()
+	film.queue_free()
+
+
 func _ready() -> void:
 	var zufall := RandomNumberGenerator.new()
 	zufall.seed = 7

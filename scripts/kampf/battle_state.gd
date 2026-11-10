@@ -263,6 +263,11 @@ func hop(f: Fighter) -> void:
 	_emit({type = "hop", f = f})
 
 
+## Film beim Wechsel eines Endbosses in Phase 2 (A9b): f ist der neue Gegner, motiv wie bei der Ult (UltFilm.BILD).
+func phase_film(f: Fighter, titel: String, zeile: String, farbe: Color, motiv: String) -> void:
+	_emit({type = "phase_film", f = f, titel = titel, zeile = zeile, farbe = farbe, motiv = motiv})
+
+
 ## Großer Schriftzug in der Bildmitte (z. B. "Welle 2").
 func banner(text: String) -> void:
 	_emit({type = "banner", text = text})

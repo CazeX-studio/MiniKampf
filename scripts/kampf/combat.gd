@@ -386,6 +386,14 @@ func _play_event(event: Dictionary) -> void:
 			_cast(event.f, event.ult, str(event.get("name", "")))
 			if event.ult and has_view(event.f):
 				await UltFilm.abspielen(self, _field, view(event.f), event.f.klass, event.get("name", ""))
+		"phase_film":
+			# Endboss geht in Phase 2 (A9b): Beben, dann der Film
+			Geraeusche.play("zauber", 0.6)
+			_shake(SHAKE_PIXELS * 2.0)
+			if has_view(event.f):
+				await UltFilm.phase_abspielen(self, _field, view(event.f), event.farbe, event.motiv, event.titel, event.zeile)
+			else:
+				_banner(event.titel)
 		"projectile":
 			Geraeusche.play("wurf")
 			# Monster mit eigenen Bildern zeigen beim Werfen oder Zaubern ihre Animation

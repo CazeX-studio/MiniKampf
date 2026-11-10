@@ -12,6 +12,9 @@ extends DungeonRegeln
 ## - Am Rand das Kühlbecken: Wer es angreift, wird nass (kommt später dran, zwei seiner Züge lang).
 ## - Die glühende Kette lässt sich erst zerschlagen, wenn beide Angeketteten nass sind.
 ## - Ein nasser Held, der den Kettenschmied hart trifft, sprengt ein Stück seiner Panzerung ab.
+## A9b (Alpha-Punkte 38, 39): Film beim Wechsel in Phase 2. Fesseln stärker: Die glühende Kette leitet jeden Schlag voll
+## an den Partner weiter und brennt bei jedem seiner Züge. Phase 2 nur mit der Mechanik: Solange Panzer da ist,
+## kommt nur ein Fünftel des Schadens durch, und die Lava steigt schneller.
 
 const ANKER := 3
 ## Jeder so vielte Zug des Kettenschmieds: zwei Helden aneinanderketten
@@ -22,12 +25,18 @@ const LAVA_STEIGT_ALLE := 3
 const LAVA_SCHADEN_JE_STUFE := 2
 ## Panzer in Phase 2: Stücke, und welcher Anteil des Schadens durchkommt, solange noch Panzer da ist
 const PANZER := 3
-const PANZER_DURCH := 0.75
+const PANZER_DURCH := 0.2
+## Jedes abgesprengte Stück Panzer kostet ihn zusätzlich diesen Anteil seines Lebens
+const PANZER_WUNDE := 0.12
 ## Ab so viel Schaden (vor dem Panzer) zählt ein Treffer als hart
-const HARTER_TREFFER := 18
+const HARTER_TREFFER := 12
 ## Nass: so viele Züge des Kettenschmieds lang, und so weit rutscht man auf der Zugleiste zurück
-const NASS_ZUEGE := 2
+const NASS_ZUEGE := 3
 const NASS_VERZOEGERUNG := 0.5
+## Die glühende Kette leitet diesen Anteil jedes Schlags an den Partner weiter (der Getroffene bekommt alles)
+const KETTE_WEITER := 0.5
+## Die glühende Kette brennt bei jedem Zug des Kettenschmieds (Phase 1, Phase 2)
+const KETTE_BRENNT: Array[int] = [3, 5]
 
 ## Zustand der Anker: "fest", "wackelt" oder "lose"
 var anker: Array[String] = []
@@ -54,7 +63,8 @@ func on_wave(_index: int) -> void:
 	c.add_log("[b]Endboss: Der Kettenschmied![/b] Ein Wesen aus Schlacke und Glut, geboren aus Splitterstaub.")
 	c.add_log("[color=#ffb070]Lavaflut:[/color] Er reißt an den drei Ankerketten. Hämmert den wackelnden Anker fest, bevor er wieder dran ist – "
 			+ "lösen sich alle drei, flutet die Lava die Kammer.")
-	c.add_log("[color=#ffb070]Gefesselt:[/color] Aneinandergekettete teilen jeden Schaden. Ein Dritter kann die Kette zerschlagen.")
+	c.add_log("[color=#ffb070]Gefesselt:[/color] Die glühende Kette leitet jeden Schlag an den anderen weiter und brennt. "
+			+ "Ein Dritter kann sie zerschlagen.")
 	_update_intents()
 
 
@@ -66,11 +76,15 @@ func _anker_text() -> String:
 
 
 func intent(e: Fighter) -> String:
+	var kette := ""
+	if gefesselt.size() == 2:
+		kette = "\nGefesselt: %s und %s" % [gefesselt[0].display_name, gefesselt[1].display_name]
 	match e.klass:
 		"kettenschmied_1":
-			return "%s\n%s" % [_anker_text(), "Kettenhieb" if e.step % 2 == 0 else "Glutwelle (alle)"]
+			return "%s\n%s%s" % [_anker_text(), "Kettenhieb" if e.step % 2 == 0 else "Glutwelle (alle)", kette]
 		"kettenschmied_2":
-			return "Lava: Stufe %d von %d · Panzer: %d\n%s" % [lava_stufe, LAVA_STUFEN, panzer, "Schlackenfaust" if e.step % 2 == 0 else "Glutsturm (alle)"]
+			var schutz := "Panzer: %d (hält fast alles ab)" % panzer if panzer > 0 else "Panzer zerbrochen!"
+			return "Lava: Stufe %d von %d · %s\n%s%s" % [lava_stufe, LAVA_STUFEN, schutz, "Schlackenfaust" if e.step % 2 == 0 else "Glutsturm (alle)", kette]
 		"kuehlbecken":
 			return "Angreifen macht nass"
 	return ""
@@ -164,8 +178,19 @@ func _zug_phase2(e: Fighter) -> void:
 
 
 ## Gefesselt: jeder dritte Zug zwei Helden aneinanderketten (wenn noch niemand gefesselt ist).
+## Wer schon gefesselt ist, verbrennt sich an der glühenden Kette.
 func _fessel_pruefen(e: Fighter) -> void:
 	_fessel_aufraeumen()
+	if gefesselt.size() == 2:
+		var brennt: int = KETTE_BRENNT[1 if phase2 else 0]
+		c.add_log("[color=#ffb070]Die Kette glüht:[/color] %s und %s verbrennen sich (je %d)." % [gefesselt[0].display_name, gefesselt[1].display_name, brennt])
+		var paar := gefesselt.duplicate()
+		_teilt = true
+		for h: Fighter in paar:
+			c.float_text(h, "Kette brennt", Color("ff8a3d"), 30)
+			c.apply_damage(h, brennt, e, "magic")
+		_teilt = false
+		_fessel_aufraeumen()
 	if not gefesselt.is_empty() or e.step % FESSELN_ALLE != FESSELN_ALLE - 1:
 		return
 	var helden := c.allies()
@@ -175,8 +200,9 @@ func _fessel_pruefen(e: Fighter) -> void:
 	gefesselt.assign([helden[0], helden[1]])
 	for h in gefesselt:
 		c.float_text(h, "Gefesselt!", Color("ffb070"), 40)
-	c.add_log("[color=#ffb070][b]Gefesselt![/b] %s und %s hängen an einer glühenden Kette und teilen jeden Schaden.[/color]"
-			% [gefesselt[0].display_name, gefesselt[1].display_name])
+	c.add_log("[color=#ffb070][b]Gefesselt![/b] %s und %s hängen an einer glühenden Kette: Jeder Schlag trifft beide, "
+			% [gefesselt[0].display_name, gefesselt[1].display_name] + "und die Kette brennt. Zerschlagt sie![/color]")
+	c.banner("Gefesselt!")
 	if phase2:
 		c.add_log("Die Kette glüht: Zerschlagen geht erst, wenn beide nass sind (Kühlbecken).")
 
@@ -204,6 +230,10 @@ func check_phase() -> void:
 		c.refresh()
 
 
+func in_phase2() -> bool:
+	return phase2
+
+
 func _starte_phase2() -> void:
 	phase2 = true
 	lava_stufe = 0
@@ -214,16 +244,18 @@ func _starte_phase2() -> void:
 	c.add_log("\n[color=#ff8a3d][b]Phase 2: Entfesselt![/b][/color] Die Ketten reißen, der Kettenschmied glüht auf. Die Lava steigt Stufe für Stufe – "
 			+ "auf Stufe %d schmilzt alles." % LAVA_STUFEN)
 	c.add_log("[color=#8fd3ff]Kühlbecken:[/color] Wer es angreift, wird nass. Nasse Helden sprengen mit harten Treffern seine Panzerung ab.")
+	c.add_log("[color=#ffb070]Panzer:[/color] Solange er noch Panzer trägt, kommt nur ein Fünftel des Schadens durch.")
 	c.screen_flash(Color("401000"))
-	c.wait(0.8)
-	c.banner("Der Kettenschmied – entfesselt")
+	c.wait(0.5)
 	c.spawn_enemies(["kettenschmied_2", "kuehlbecken"])
+	c.phase_film(_find("kettenschmied_2"), "Der Kettenschmied – entfesselt", "Die Ketten reißen. Die Lava beginnt zu steigen.",
+			Color("ff7a2a"), "esse")
 	_update_intents()
 	c.refresh()
 	c.wait(1.0)
 
 
-## Gefesselte teilen den Schaden; das Kühlbecken nimmt keinen Schaden; der Panzer hält einen Teil ab.
+## Gefesselte bekommen beide den vollen Schaden; das Kühlbecken nimmt keinen Schaden; der Panzer hält das meiste ab.
 func absorbs(target: Fighter, amount: int, source: Fighter) -> bool:
 	if _teilt:
 		return false
@@ -237,8 +269,13 @@ func absorbs(target: Fighter, amount: int, source: Fighter) -> bool:
 			c.float_text(target, "Panzer splittert!", Color("8fd3ff"), 52)
 			c.burst(target, Color("8fd3ff"), 180.0)
 			c.add_log("[color=#8fd3ff][b]%s sprengt ein Stück Panzer ab![/b][/color] (noch %d)" % [source.display_name, panzer])
+			# Das abgesprengte Stück reißt eine Wunde in die Glut (lohnt sich wie ein zerstörtes Knotenpaar)
+			_teilt = true
+			var wunde := c.apply_damage(target, amount + roundi(target.max_hp * PANZER_WUNDE), source)
+			_teilt = false
+			source.credit().stat_damage += wunde
 			_update_intents()
-			return false
+			return true
 		_teilt = true
 		c.apply_damage(target, maxi(1, roundi(amount * PANZER_DURCH)), source)
 		_teilt = false
@@ -247,8 +284,10 @@ func absorbs(target: Fighter, amount: int, source: Fighter) -> bool:
 	if target.is_ally() and gefesselt.has(target) and amount > 1:
 		var partner: Fighter = gefesselt[1] if gefesselt[0] == target else gefesselt[0]
 		_teilt = true
-		c.apply_damage(target, amount - amount / 2, source)
-		c.apply_damage(partner, amount / 2, source)
+		c.apply_damage(target, amount, source)
+		if partner.is_alive():
+			c.float_text(partner, "Die Kette reißt mit!", Color("ffb070"), 52)
+			c.apply_damage(partner, maxi(1, roundi(amount * KETTE_WEITER)), source)
 		_teilt = false
 		return true
 	return false

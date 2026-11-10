@@ -7,7 +7,9 @@ extends DungeonRegeln
 ## - Endboss Phase 1 Wurzelmutter: Rinde heilt, Splitter-Knoten treffen,
 ##     Wipe „Verschlingen“ und Zusammenspiel „Zwillingsknoten“
 ## - Endboss Phase 2 Vorbote: Dunkelheit, keine Zugleiste,
-##     Wipe „Lichtfraß“ und Zusammenspiel „Das letzte Licht“
+##     Wipe „Lichtfraß“ und Zusammenspiel „Das letzte Licht“.
+##     Seit A9b (Alpha-Punkt 39) nur mit der Mechanik zu schaffen: Im Dunkeln schluckt die Leere die meisten Treffer,
+##     voll trifft nur, wer im Licht kämpft (Laternen) oder das Splitterlicht hält.
 
 ## Die Monster der Höhle (Leuchtmotte, Wurzelkriecher, Sporenwolf, Glimmerkäfer, Schatzpilzling) kämpfen seit D22c
 ## nach ihrem Steckbrief (data/monster.json); hier stehen nur noch die Bosse mit ihren Mechaniken.
@@ -22,6 +24,9 @@ const DEVOUR_TURNS := 3
 const PAIR_DAMAGE := 0.25
 const MAX_DARKNESS := 6
 const DARKNESS_STEP := 0.13
+## Bis zu dieser Dunkelheit trifft man den Vorboten voll, darüber kommt nur dieser Anteil an (A9b)
+const HELL_GENUG := 2
+const LEERE_DURCH := 0.2
 
 ## Mechanik der Sporenkönigin in diesem Kampf: "bluete" (Wipe) oder "zwillinge" (Zusammenspiel)
 var queen_mode := ""
@@ -31,6 +36,7 @@ var pairs_since_warning := 0
 var pair_broken := false
 var phase2 := false
 var darkness := 0
+var _schluckt := false
 
 
 ## Züge bis „Verschlingen“. In der Welt (setup.verschlingen_zuege) kann es mehr sein: Allein helfen dort nur
@@ -97,7 +103,8 @@ func intent(e: Fighter) -> String:
 		"knoten_vorne", "knoten_hinten":
 			return "Splitter-Knoten"
 		"vorbote":
-			return "Dunkelheit %d / %d\n%s" % [darkness, MAX_DARKNESS, "Schattenwelle (alle)" if e.step % 2 == 0 else "Leerengriff"]
+			var schutz := "Im Dunkeln geschützt!" if darkness > HELL_GENUG else "Im Licht verwundbar"
+			return "Dunkelheit %d / %d · %s\n%s" % [darkness, MAX_DARKNESS, schutz, "Schattenwelle (alle)" if e.step % 2 == 0 else "Leerengriff"]
 	return ""
 
 
@@ -312,16 +319,22 @@ func check_phase() -> void:
 			c.add_log("Das Splitterlicht springt zu %s." % next.display_name)
 
 
+func in_phase2() -> bool:
+	return phase2
+
+
 func _start_phase2() -> void:
 	phase2 = true
 	c.add_log("\n[color=#c8a0ff][b]Phase 2: Aus dem Splitter bricht etwas hervor … der Vorbote![/b][/color]")
 	c.add_log("Ein Wesen der Leere. Es frisst das Licht: Das Feld wird dunkler, die Zugleiste verschwindet.")
 	c.add_log("[color=#fff3b0]Das letzte Licht:[/color] Wer das Splitterlicht hält, ist vor dem Vorboten sicher, "
 		+ "brennt aber immer stärker. Reicht es weiter! Laternen entzünden vertreibt die Dunkelheit.")
+	c.add_log("[color=#c8a0ff]Die Leere schluckt:[/color] Im Dunkeln kommt kaum ein Schlag an. Voll trifft nur, wer das Splitterlicht hält, "
+		+ "oder alle, solange Laternen das Feld hell halten (Dunkelheit höchstens %d)." % HELL_GENUG)
 	c.screen_flash(Color("200030"))
-	c.wait(0.8)
-	c.banner("Der Vorbote")
+	c.wait(0.5)
 	c.spawn_enemies(["vorbote"])
+	c.phase_film(_find("vorbote"), "Der Vorbote", "Aus dem Splitter bricht ein Wesen der Leere hervor.", Color("b48cff"), "ringe")
 	darkness = 1
 	c.set_darkness(darkness * DARKNESS_STEP)
 	c.set_order_visible(false)
@@ -337,7 +350,15 @@ func _start_phase2() -> void:
 
 
 ## Schläge auf die Rinde der Wurzelmutter heilen sie (nur Angriffe der Helden).
+## Der Vorbote im Dunkeln: Die Leere schluckt die meisten Treffer, außer vom Träger des Splitterlichts (A9b).
 func absorbs(target: Fighter, amount: int, source: Fighter) -> bool:
+	if target.klass == "vorbote" and source != null and source.is_ally() and not _schluckt \
+			and darkness > HELL_GENUG and not source.light:
+		_schluckt = true
+		c.apply_damage(target, maxi(1, roundi(amount * LEERE_DURCH)), source)
+		_schluckt = false
+		c.float_text(target, "Die Leere schluckt den Schlag", Color("b48cff"), 52)
+		return true
 	if target.klass != "wurzelmutter" or source == null or not source.is_ally():
 		return false
 	var healed := target.heal(maxi(1, amount / 2))

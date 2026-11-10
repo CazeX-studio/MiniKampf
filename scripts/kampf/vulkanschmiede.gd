@@ -141,6 +141,10 @@ func check_phase() -> void:
 	ks.check_phase()
 
 
+func in_phase2() -> bool:
+	return ks.in_phase2()
+
+
 func absorbs(target: Fighter, amount: int, source: Fighter) -> bool:
 	return ks.absorbs(target, amount, source)
 

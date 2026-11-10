@@ -26,7 +26,20 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (10.11.):** Alpha-Aufträge A9b bis A15 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+- **Nächster Schritt (10.11.):** Alpha-Aufträge A10 bis A15 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+
+- **Neu (10.11.): A9b Endbosse der Dungeons** (Alpha-Punkte 38, 39):
+  - **Film beim Wechsel in Phase 2:** Das Bild bebt, Kino-Streifen, die Kamera rückt an den neuen Gegner, Name und eine Zeile darunter (Vorbote in der Pilzhöhle, entfesselter Kettenschmied in der Vulkanschmiede). Beim ersten Mal ganz, danach wie die Ult in den Einstellungen auf kurz stellbar.
+  - **Vorbote nur mit Mechanik:** Im Dunkeln schluckt die Leere die meisten Treffer (nur ein Fünftel kommt an, „Die Leere schluckt den Schlag“). Voll trifft, wer das Splitterlicht hält, oder jeder, solange Laternen das Feld hell halten (Dunkelheit höchstens 2). Über ihm steht „Im Dunkeln geschützt“ oder „Im Licht verwundbar“.
+  - **Kettenschmied nur mit Mechanik:** Solange er Panzer trägt, kommt nur ein Fünftel des Schadens durch. Nass (Kühlbecken) und hart treffen sprengt ein Stück ab und reißt eine große Wunde.
+  - **Fesseln stärker:** Die glühende Kette gibt die Hälfte jedes Schlags an den Partner weiter (vorher wurde der Schaden nur geteilt) und brennt bei jedem Zug des Kettenschmieds. „Gefesselt!“ erscheint groß in der Mitte und steht beim Kettenschmied, wer an der Kette hängt.
+  - Tessa und Gorm entzünden jetzt selbst Laternen und reichen das Licht weiter.
+  - Probe-Läufe (Computer spielt, zu dritt auf Stufe 20): Vorbote mit Laternen 90 % gewonnen, ohne 20 %; von 151 Siegen gegen den entfesselten Kettenschmied nur 2, ohne den Panzer ganz abzusprengen. Allein bleibt der Kettenschmied sehr schwer.
+  - **So testest du es:**
+    1. Mit dem Spielstand-Editor zu „Der Splitter im Urbaum“, in die Pilzhöhle (mit Tessa und Gorm), die Wurzelmutter besiegen: Der Film zeigt den Vorboten.
+    2. Den Vorboten im Dunkeln angreifen: „Die Leere schluckt den Schlag“, kaum Schaden. „Laterne entzünden“, dann wieder angreifen: voller Schaden.
+    3. In der Vulkanschmiede beim Kettenschmied warten, bis zwei gefesselt werden: Ein Schlag trifft beide, die Kette brennt. „Kette zerschlagen“ befreit sie.
+    4. Phase 2: Den Kettenschmied angreifen, kaum Schaden. Erst ins Kühlbecken schlagen (nass), dann hart zuschlagen: „Panzer splittert!“ mit großem Schaden.
 
 - **Neu (10.11.): A9a Begleiter im Dungeon** (Alpha-Punkt 37, Pilzhöhle und Vulkanschmiede):
   - Am Eingang beider Dungeons fragt das Spiel, wer mitkommt: „Allein“, „Mit Tessa“, „Mit Gorm“ oder „Mit Tessa und Gorm“. Die Wahl gilt für den ganzen Durchgang, bei den Bossen und bei jedem Monster dort. Beim nächsten Betreten wählst du neu.

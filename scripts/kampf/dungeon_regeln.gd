@@ -31,6 +31,11 @@ func check_phase() -> void:
 	pass
 
 
+## Läuft gerade die zweite Phase eines Endbosses?
+func in_phase2() -> bool:
+	return false
+
+
 func final_choice() -> void:
 	pass
 
