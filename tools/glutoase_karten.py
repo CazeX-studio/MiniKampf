@@ -323,7 +323,7 @@ def glutoase():
 			"samira": {"name": "Tanzmeisterin Samira", "feld": [32, 11], "aussehen": "samira", "dialog": "samira"},
 			# Figuren nach Steckbrief (D27, NPC.md)
 			"nadia": {"name": "Brunnenhüterin Nadia", "feld": [25, 7], "aussehen": "grund_frau+nadia#zubehoer=wasserkrug", "dialog": "nadia"},
-			"zaid": {"name": "Karawanenführer Zaid", "feld": [6, 7], "aussehen": "grund_haendler+zaid", "dialog": "zaid"},
+			"zaid": {"name": "Karawanenführer Zaid", "feld": [6, 7], "aussehen": "zaid", "dialog": "zaid"},
 			"bank_glutoase": {"name": "Bankhüter Rashid", "feld": [42, 0], "aussehen": "grund_alter_mensch+rashid#hut=rashid_kopftuch,zubehoer=bankschluessel",
 				"dialog": "rashid", "zeichen": "truhe"},
 			"tarek": {"name": "Händler Tarek", "feld": [7, 12], "aussehen": "grund_haendler+tarek#zubehoer=schaerpe&guertelklinge", "dialog": "tarek",

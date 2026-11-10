@@ -41,6 +41,8 @@ FIGUREN = {
 	"xavina": (1.04, []),
 	# Ren (A4b, Rettung in der Sternenfall-Nacht)
 	"ren": (1.04, []),
+	# Zaid mit Reiseumhang (B6f, 10.11.): eigenes Welt-Blatt statt Baukasten-Körper, Porträts bleiben aus neben_zaid.png
+	"zaid": (1.0, []),
 }
 ## Kampf-Blätter: Figur -> Liste (Blatt, Reihen); alle Blätter einer Figur landen unter <figur>_kampf
 KAMPF = {
@@ -96,7 +98,8 @@ def main():
 		bilder(figur, [("welt", WELT + extra)], figur, groesse)
 		if figur in KAMPF:
 			bilder(figur, KAMPF[figur], f"{figur}_kampf", groesse)
-		portraets(figur)
+		if (VORLAGEN / f"haupt_{figur}_portraets.png").exists():
+			portraets(figur)
 
 
 if __name__ == "__main__":

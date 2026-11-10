@@ -84,7 +84,7 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 - **D25a:** Körper der Klingentänzerin (m und w) aus Marcos Blättern. – Status: fertig (04.11.2026)
 - **D25b:** Körper von Rüstungsschmied (m und w) und Sternensängerin (w). – Status: fertig (04.11.2026; Bilder lagen schon unter `tools/vorlagen/`; ein Sternensänger (m) bleibt vorerst in der Klassenfigur)
 - **D26:** Klassen lernen in der Glutoase. (2.3) – Status: fertig (04.11.2026; Rüstungsschmied und Sternensängerin kämpfen bis D25b noch in der Platzhalter-Figur)
-- **D27:** Glutoase-Figuren nach Steckbrief, Rastplatz-Händler. (2.13, vorgezogen) – Status: fertig (04.11.2026; Zaids Reiseumhang fehlt, die Aufträge der Figuren kommen mit der Geschichte)
+- **D27:** Glutoase-Figuren nach Steckbrief, Rastplatz-Händler. (2.13, vorgezogen) – Status: fertig (04.11.2026; Zaids Reiseumhang seit 10.11. als eigenes Welt-Blatt, die Aufträge der Figuren kommen mit der Geschichte)
 - **D28:** Geschichte Teil 1: Kochende Brunnen, Miras Lied. (2.4) – Status: fertig (04.11.2026)
 - **D29:** Geschichte Teil 2: Tanz mit der Pause, Rivalenkampf gegen Kael. (2.5) – Status: fertig (04.11.2026)
 - **D30:** Glutgrat über den Bergpfad. (2.6) – Status: fertig (04.11.2026)
