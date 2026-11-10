@@ -28,7 +28,8 @@ func _initialize() -> void:
 	_check(world.npcs.bingo.zeichen == "muenze" and world.npcs.bank_kreuzweg.zeichen == "truhe" and world.npcs.salbei.zeichen == "muenze"
 			and world.npcs.bank_wipfelheim.zeichen == "truhe", "Zeichen über Bingo, Salbei und den Banken")
 	_check(world.places.any(func(o: Dictionary) -> bool: return o.zeichen == "laterne"), "Laterne über der Wegelaterne")
-	_check(FigurTeile.bild(world.npcs.hatta.look, "idle_vorn", 0) != null, "Hatta lässt sich zeichnen (Händler, eigener Kopf, Zylinder)")
+	# Seit 10.11. eigenes Welt-Blatt mit Zylinder und Maßband (GRAFIK_AUFTRAG.md B6h)
+	_check(world.npcs.hatta.look == "hatta" and ResourceLoader.exists(FighterView.sprite_path("hatta", "run_hinten", 3)), "Hatta mit eigenen Bildern")
 
 	# Beute: Nach Siegen in der Wildnis fällt Material
 	var p := world.add_player("a", "Test", "novize_m+m1", Vector2i(6, 15))

@@ -45,6 +45,8 @@ FIGUREN = {
 	"zaid": (1.0, []),
 	# Oma Hagebutte mit Strickjacke (B6g, 10.11.): eigenes Welt-Blatt, Porträts bleiben aus neben_hagebutte.png
 	"hagebutte": (0.95, []),
+	# Hutmacher Hatta (B6h, 10.11.): eigenes Welt-Blatt, der riesige Zylinder zählt bei der Höhe mit, darum größer
+	"hatta": (1.45, []),
 }
 ## Kampf-Blätter: Figur -> Liste (Blatt, Reihen); alle Blätter einer Figur landen unter <figur>_kampf
 KAMPF = {

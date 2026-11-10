@@ -105,7 +105,7 @@
 				44,
 				15
 			],
-			"aussehen": "grund_haendler+hatta#hut=hatta_zylinder",
+			"aussehen": "hatta",
 			"dialog": "hatta",
 			"zeichen": "hut"
 		},
