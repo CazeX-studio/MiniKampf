@@ -3,8 +3,9 @@
 Hier steht, was fertig ist, was als Nächstes kommt und welche Fragen offen sind.
 Wird nach jedem Arbeitsschritt aktualisiert.
 
-## Aktueller Stand (2026-10-27, ergänzt 02.11.)
+## Aktueller Stand (2026-10-27, ergänzt 11.11.)
 
+- **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** A9b (Bosse beider Dungeons), danach A10 bis A16 (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
 - **Bilder von Marco (02.11. abends):** 38 Blätter liegen unter `tools/vorlagen/`: alle sechs Novizen-Blätter ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen.
   - Dazu der Baukasten (02.11.): acht Grundkörper (`grund_*.png`), Köpfe (`koepfe_*.png`), Hüte (`huete_regionen.png`), Zeichen (`zeichen_dienste.png`) und die Klingentänzerin Blatt 1. Bei den Fäusten der Abwehr-Bilder von Blatt 1 prüft Claude beim Einbauen, ob sie am Oval stören.
   - Dazu Figuren 4 und 5 (02.11.): 22 Blätter Nebenfiguren (`neben_*.png`) und 42 Blätter Hauptfiguren (`haupt_*.png`) aller drei Städte, damit ist Teil D vollständig. `neben_reserve_rashid_tarek.png` ist ein doppeltes Sammelblatt und bleibt Reserve.
