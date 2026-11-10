@@ -20,7 +20,7 @@ from monster_bilder import ausschneiden, bilder_finden, freistellen  # noqa: E40
 
 KOEPFE = WURZEL / "assets" / "teile" / "koepfe"
 FIGURTEILE = WURZEL / "data" / "figurteile.json"
-## Blätter, deren Kopf nach rechts gemalt ist: gespiegelt, damit er wie der Körper nach vorne links schaut
+## Blätter, deren Kopf falsch herum gemalt ist: gespiegelt, damit er wie der Körper schaut (grund_frau nach vorne links, grund_gelehrter nach vorne rechts)
 SPIEGELN = {"hanne"}
 
 
