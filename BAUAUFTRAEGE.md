@@ -117,7 +117,10 @@ Wenig Tokens übrig: Arbeit in wenigen großen Blöcken statt vieler kleiner Run
   - **E3f:** Kräuter sammeln: neues Bild für die Kräuter in der Welt (Prompt für Marco). – Status: fertig (05.11.2026)
   - **E3g:** Laufbewegung der Novizen sieht schlecht aus: feiner, ggf. mit mehr Bildern (Prompt für Marco). – Status: fertig (05.11.2026)
   - **E3i:** Abschied von Kreuzweg ohne Versetzen: Ye schickt einen nach dem Abschied zur Torwache in Richtung der eigenen Region (West-/Südtor, mit Wegweiser), man läuft selbst hin und durchs Tor. Die Wache nennt die Richtung. „Ende von Akt 1“ erscheint erst beim ersten Gang durchs Tor (Vorschlag, sonst ganz weglassen). Heute steht in Yes Abschied `reisen` nach weg_gruenwacht bzw. aschensteppe (data/dialoge.json, ye_tor). – Status: fertig (05.11.2026)
-  - **E3h:** (nach S1 bis S5) Städte umbauen: zu viele Figuren und zu viele Deko-Teile auf einem Fleck (Kreuzweg, Wipfelheim, Glutoase), Figuren und Deko verteilen, Plätze freier lassen. – Status: offen (groß, pro Stadt eine Sitzung)
+  - **E3h:** (nach S1 bis S5) Städte umbauen: zu viele Figuren und zu viele Deko-Teile auf einem Fleck (Kreuzweg, Wipfelheim, Glutoase), Figuren und Deko verteilen, Plätze freier lassen. – Status: geteilt (10.11.2026), Claude baut grob um, Marco macht den Feinschliff im Stadt-Editor:
+    - **E3h1:** Kreuzweg. – Status: fertig (10.11.2026; Marktstände mit Rosa und Jost vom Marktplatz in eine Marktgasse neben Bingo und Hatta, Pip und Lotte zum Brunnen, Pavillons von Ilwen und Mei auseinander, Tessa und Gorm an die Übungspuppen, Lene ans Auftragsbrett, Bäume beim neuen Markt verteilt)
+    - **E3h2:** Wipfelheim. – Status: offen
+    - **E3h3:** Glutoase. – Status: offen
 - **E4:** Eine Balancing-Runde: Marcos Liste plus die Zahlen aus den Prüfungen (Kael, Glasskorpion, Vulkanschmiede allein, Ritualist/Zwielicht), alle Werte in einer Sitzung. Dazu (Marco, 07.11.): Grünwacht ist jetzt das zweite Gebiet, Monster und Bosse dort auf Stufe 20–25 heben (man kommt mit etwa 20 aus der Glutoase). – Status: offen
 - **E5:** T3 und T4 am Stück spielen, danach wieder eine Liste und eine Sitzung für die Korrekturen. – Status: offen
 

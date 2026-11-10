@@ -73,7 +73,7 @@
 		"schreiberin": {
 			"name": "Schreiberin Lene",
 			"feld": [
-				15,
+				10,
 				45
 			],
 			"aussehen": "grund_gelehrter+lene",
@@ -140,8 +140,8 @@
 		"gesandte_arkanum": {
 			"name": "Magistra Ilwen",
 			"feld": [
-				51,
-				35
+				53,
+				36
 			],
 			"aussehen": "wizzard_f",
 			"farbe": "b8b0ff",
@@ -228,8 +228,8 @@
 		"gesandte_nebelinseln": {
 			"name": "Schreindienerin Mei",
 			"feld": [
-				58,
-				35
+				59,
+				36
 			],
 			"aussehen": "elf_f",
 			"farbe": "ffb8d8",
@@ -380,8 +380,8 @@
 		"pip": {
 			"name": "Pip",
 			"feld": [
-				29,
-				26
+				21,
+				36
 			],
 			"aussehen": "grund_kind+pip#zubehoer=holzschwert",
 			"dialog": "pip",
@@ -399,8 +399,8 @@
 		"lotte": {
 			"name": "Lotte",
 			"feld": [
-				30,
-				26
+				22,
+				36
 			],
 			"aussehen": "grund_kind+lotte#hut=lotte_krone",
 			"dialog": "lotte",
@@ -450,8 +450,8 @@
 		"tessa": {
 			"name": "Tessa",
 			"feld": [
-				15,
-				47
+				19,
+				42
 			],
 			"nachts": [
 				7,
@@ -467,8 +467,8 @@
 		"gorm": {
 			"name": "Gorm",
 			"feld": [
-				12,
-				47
+				19,
+				44
 			],
 			"nachts": [
 				11,
@@ -484,8 +484,8 @@
 		"marktfrau": {
 			"name": "Marktfrau Rosa",
 			"feld": [
-				37,
-				23
+				47,
+				15
 			],
 			"aussehen": "grund_haendler+v_w2",
 			"dialog": "volk_marktfrau",
@@ -496,8 +496,8 @@
 		"marktmann": {
 			"name": "Gemüsehändler Jost",
 			"feld": [
-				41,
-				27
+				56,
+				15
 			],
 			"aussehen": "grund_haendler+v_m3",
 			"dialog": "volk_marktmann",

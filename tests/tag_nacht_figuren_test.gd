@@ -57,7 +57,7 @@ func _initialize() -> void:
 				offen += 1
 				_check(o.wenn == {"nacht": false}, "%s nur tags" % o.teil)
 	_check(offen == 2 and zu == 2, "Zwei Marktstände, je offen und zu")
-	_check(world.blocked.has(Vector2i(39, 22)), "Marktstand-Feld gesperrt")
+	_check(world.blocked.has(Vector2i(49, 14)), "Marktstand-Feld gesperrt")
 	Tageszeit.feste_stunde = -1.0
 	print("Tag und Nacht: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)

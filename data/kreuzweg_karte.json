@@ -194,8 +194,8 @@
 		{
 			"teil": "marktstand_rot",
 			"feld": [
-				38,
-				21
+				48,
+				13
 			],
 			"wenn": {
 				"nacht": false
@@ -205,8 +205,8 @@
 		{
 			"teil": "marktstand_rot_zu",
 			"feld": [
-				38,
-				21
+				48,
+				13
 			],
 			"wenn": {
 				"nacht": true
@@ -216,8 +216,8 @@
 		{
 			"teil": "marktstand_blau",
 			"feld": [
-				38,
-				25
+				53,
+				13
 			],
 			"wenn": {
 				"nacht": false
@@ -227,8 +227,8 @@
 		{
 			"teil": "marktstand_blau_zu",
 			"feld": [
-				38,
-				25
+				53,
+				13
 			],
 			"wenn": {
 				"nacht": true
@@ -238,15 +238,15 @@
 		{
 			"teil": "fass",
 			"feld": [
-				42,
-				21
+				51,
+				14
 			]
 		},
 		{
 			"teil": "kiste",
 			"feld": [
-				42,
-				25
+				56,
+				13
 			]
 		},
 		{
@@ -472,15 +472,15 @@
 		{
 			"teil": "pavillon_arkanum",
 			"feld": [
-				49,
-				36
+				51,
+				37
 			]
 		},
 		{
 			"teil": "pavillon_nebelinseln",
 			"feld": [
-				56,
-				36
+				57,
+				37
 			]
 		},
 		{
@@ -724,8 +724,8 @@
 		{
 			"teil": "tanne",
 			"feld": [
-				53,
-				18
+				61,
+				8
 			]
 		},
 		{
@@ -955,8 +955,8 @@
 		{
 			"teil": "baum",
 			"feld": [
-				57,
-				13
+				60,
+				11
 			]
 		},
 		{
@@ -1032,8 +1032,8 @@
 		{
 			"teil": "tanne_gross",
 			"feld": [
-				14,
-				46
+				5,
+				48
 			]
 		},
 		{
@@ -1074,8 +1074,8 @@
 		{
 			"teil": "busch_bluete",
 			"feld": [
-				50,
-				15
+				45,
+				18
 			]
 		},
 		{
@@ -1235,8 +1235,8 @@
 		{
 			"teil": "busch",
 			"feld": [
-				55,
-				39
+				52,
+				45
 			]
 		},
 		{
@@ -1389,8 +1389,8 @@
 		{
 			"teil": "busch",
 			"feld": [
-				57,
-				40
+				61,
+				41
 			]
 		},
 		{
@@ -1424,8 +1424,8 @@
 		{
 			"teil": "blumen",
 			"feld": [
-				53,
-				15
+				51,
+				18
 			]
 		},
 		{

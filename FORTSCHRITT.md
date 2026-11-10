@@ -26,7 +26,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt:** E3h Städte umbauen (Kreuzweg, dann Wipfelheim, dann Glutoase; Feinschliff im Stadt-Editor), danach E4 (Balancing), E5 und S6 (Editoren), danach E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Offen von S1: Marcos Google-Formular verbinden.
+- **Nächster Schritt:** E3h2 Wipfelheim umbauen, dann E3h3 Glutoase (Feinschliff jeweils im Stadt-Editor), danach E4 (Balancing), E5 und S6 (Editoren), danach E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Offen von S1: Marcos Google-Formular verbinden.
 
 - **Neu (04.11.): D25b Körper von Rüstungsschmied und Sternensängerin** (2.11): Deine Blätter sind eingebaut: Rüstungsschmied (m) und Rüstungsschmiedin (w) in Rüstung mit Lederschürze und rotem Halstuch, die Sternensängerin (w) im hellen Gewand mit dunkelblauem Schal. Je mit Stehen, Laufen, Abwehr, Treffer, Angriff, Fallen, Sieg und Fähigkeit im Kampf, in der Welt schräg von vorne und hinten. Wer die Klasse gelernt hat, trägt sie mit seinem eigenen Kopf, auch in der Probestunde. Ausgebessert: die gelben Funken im Treffer-Bild des Schmieds und das rote Halstuch in einem Siegesbild der Sängerin. Noch nicht drin: ein männlicher Sternensänger (der kämpft weiter in der Klassenfigur).
   - **So testest du es:**
@@ -62,6 +62,18 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     2. Je ein Monster auf dem Weg nach Grünwacht, im Waldboden, in der Tiefwurzel, in der Aschensteppe (Norden und Süden), in der Palmenrast und auf dem Glutgrat angreifen: überall das gemalte Bild.
     3. Hammerbrüder oder Kettenschmied: Kampf in der Ankerkammer mit den drei Ankern.
     4. Stehen die Figuren überall gut auf dem Boden? Sonst sag Bescheid, dann schiebe ich die Bilder anders.
+
+- **Neu (10.11.): E3h1 Kreuzweg umgebaut** (grob, den Feinschliff machst du im Stadt-Editor):
+  - **Marktplatz freier:** Die beiden Marktstände mit Marktfrau Rosa und Gemüsehändler Jost stehen jetzt in einer Marktgasse im Nordosten, gleich neben Bingo und Hatta. Auf dem Platz bleiben Statue, Brunnen, Bühne und Splitterkreis.
+  - **Kinder:** Pip und Lotte spielen jetzt am Brunnen statt mitten auf dem Platz.
+  - **Gesandte:** Die Pavillons von Magistra Ilwen und Schreindienerin Mei stehen weiter auseinander und nicht mehr an der Schmiede.
+  - **Gilde:** Tessa und Gorm stehen an den Übungspuppen, Lene am Auftragsbrett, Ye bleibt am Eingang. Eine Tanne, die Gorm verdeckte, steht jetzt weiter hinten.
+  - Ein paar Bäume und Büsche beim neuen Markt sind verteilt, damit die Stände Luft haben.
+  - **So testest du es:**
+    1. Kreuzweg tagsüber: Der Marktplatz hat Platz zum Laufen, die Marktgasse liegt am Weg zu Bingo.
+    2. Nachts: Die Stände in der Marktgasse sind zu, Rosa und Jost sind weg.
+    3. An der Gilde: Ye, Lene, Tessa und Gorm stehen einzeln und sind gut zu sehen.
+    4. Im Stadt-Editor kannst du alles weiter verschieben.
 
 - **Neu (10.11.): S5 Spielstand-Editor** (Editor, unten links „Spielstand-Editor“):
   - **Klasse** wählen (Rüstungsschmied, Klingentänzerin, Sternensängerin, Bogenschütze, Monster-Zähmer oder Novize), dann **Springen zu** einem Hauptauftrag der Geschichte: alles davor gilt als erledigt. Hat der Auftrag einen Auftraggeber, steht man vor ihm und er hat ein „!“, sonst ist der Auftrag gleich aktiv. Die Reihenfolge passt zur Klasse (Glutoase zuerst oder Grünwacht zuerst).
