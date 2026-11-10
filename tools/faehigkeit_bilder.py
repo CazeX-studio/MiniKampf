@@ -133,6 +133,9 @@ BLAETTER = {
 	]
 }
 
+## Blätter, deren Bilder dicht beieinander stehen: nur kleine Lücken überbrücken (sonst wachsen Nachbarn zusammen)
+ENG = {"tamer": 6}
+
 ## Bilder mit gewollt lila oder pinken Flächen (Monster, Zielkreuz): dort kein Pink herausrechnen
 LILA = {"archer_durchschlag", "archer_schwachstelle"}
 
@@ -155,7 +158,7 @@ def main():
 			print(f"{blatt}.png fehlt noch, übersprungen")
 			continue
 		# Fähigkeits-Bilder haben oft lose Teile (Wirbel, Funken, Staub): nahe Teile gehören zum selben Bild
-		gb.VERBINDEN.setdefault(blatt, 15)
+		gb.VERBINDEN.setdefault(blatt, ENG.get(klasse, 15))
 		gb.zerlegen(blatt, [[f"{klasse}_{i}" for i in reihe] for reihe in BLAETTER[klasse]])
 		for reihe in BLAETTER[klasse]:
 			for i in reihe:
