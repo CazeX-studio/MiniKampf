@@ -26,7 +26,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (10.11.):** Alpha-Aufträge A10 bis A15 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+- **Nächster Schritt (10.11.):** Alpha-Aufträge A11 bis A15 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+
+- **Neu (10.11.): A10 Monster-Bilder abgeschlossen** (Alpha-Punkte 44, 45):
+  - Alle Monster laufen mit ihren eigenen Blättern. Die alten Familien-Grundkörper (Käfer, Blütenwesen, Igel, Marder, Falter, Wyvern) und das Familien-Werkzeug sind entfernt. Deine Familien-Blätter bleiben in `tools/vorlagen/` als Referenz.
+  - Abwehr und Geschosse: Das Spiel nimmt gemalte Bildfolgen für Parieren, perfektes Parieren, Ausweichen und die Geschosse der neun Elemente, sobald sie da sind. Bis dahin bleiben die gezeichneten Ringe, Funken und Kugeln.
+  - **Für dich:** 12 Blätter in `Spieldesign/GRAFIK_AUFTRAG.md` Teil M, alles in einem ChatGPT-Chat mit dem Schwerthieb als Vorlage.
+  - **So testest du es** (erst, wenn die Bilder eingebaut sind):
+    1. Gegen einen Glimmerkäfer oder eine Funkenechse kämpfen: Ihr Geschoss ist ein gemaltes Bild statt einer leuchtenden Kugel.
+    2. Normal parieren: kurze Funken an der Klinge. Perfekt parieren: großer goldener Blitz mit Ring.
+    3. Mit dem Bogenschützen ausweichen: Luftstriche statt des blauen Rings.
 
 - **Neu (10.11.): A9b Endbosse der Dungeons** (Alpha-Punkte 38, 39):
   - **Film beim Wechsel in Phase 2:** Das Bild bebt, Kino-Streifen, die Kamera rückt an den neuen Gegner, Name und eine Zeile darunter (Vorbote in der Pilzhöhle, entfesselter Kettenschmied in der Vulkanschmiede). Beim ersten Mal ganz, danach wie die Ult in den Einstellungen auf kurz stellbar.

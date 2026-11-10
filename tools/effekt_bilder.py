@@ -23,6 +23,10 @@ BILDER = {
 	"schneise": 6, "waldlicht": 6, "rote_funken": 6, "bruellen": 6, "wachstum": 6, "futter": 4, "hammer_funken": 6,
 	"amboss": 4, "risse": 6, "kuehlung": 6, "goldregen": 6, "kreuzschnitt": 6, "wirbelkreis": 6, "sichel": 4,
 	"klinge_flug": 4, "noten": 6, "mond": 4, "komet": 4,
+	# A10 (Alpha-Punkt 45): Abwehr und Geschosse der Elemente (GRAFIK_AUFTRAG.md Teil M)
+	"abwehr": 4, "abwehr_perfekt": 6, "ausweichen": 4,
+	"geschoss_feuer": 4, "geschoss_wasser": 4, "geschoss_pflanze": 4, "geschoss_wind": 4, "geschoss_erde": 4,
+	"geschoss_blitz": 4, "geschoss_licht": 4, "geschoss_schatten": 4, "geschoss_sternenkraft": 4,
 }
 # Blätter mit zwei Reihen: Namen für die Reihen
 REIHEN = {"bruellen": ["bruellen", "bruellen_rot"], "noten": ["noten", "noten_gold"]}

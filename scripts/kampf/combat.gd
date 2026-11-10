@@ -1084,11 +1084,13 @@ func _input(event: InputEvent) -> void:
 		BattleState.REACT_PERFECT:
 			_react_feedback = "PERFEKT!"
 			Geraeusche.play("perfekt")
-			Fx.spawn(_field, Fx.Kind.RING, c, Color("6dff8a"), 150.0, 0.45)
-			Fx.spawn(_field, Fx.Kind.GLOW, c, Color("6dff8a"), 120.0, 0.4)
-			# Heller Funkenregen, ein kurzer weißer Blitz und ein Moment Zeitlupe
-			Fx.spawn(_field, Fx.Kind.SPARKS, c, Color("fff6c0"), 150.0, 0.6)
-			Fx.spawn(_field, Fx.Kind.GLOW, c, Color("ffffff"), 70.0, 0.25)
+			# Gemalte Bildfolge (A10, Alpha-Punkt 45), solange sie fehlt die gezeichneten Ringe und Funken
+			if not _abwehr_bild("abwehr_perfekt" if _react_target.reaction == "parry" else "ausweichen", c):
+				Fx.spawn(_field, Fx.Kind.RING, c, Color("6dff8a"), 150.0, 0.45)
+				Fx.spawn(_field, Fx.Kind.GLOW, c, Color("6dff8a"), 120.0, 0.4)
+				# Heller Funkenregen, ein kurzer weißer Blitz und ein Moment Zeitlupe
+				Fx.spawn(_field, Fx.Kind.SPARKS, c, Color("fff6c0"), 150.0, 0.6)
+				Fx.spawn(_field, Fx.Kind.GLOW, c, Color("ffffff"), 70.0, 0.25)
 			_flash_rect.color = Color(1, 1, 1, 0.22)
 			create_tween().tween_property(_flash_rect, "color:a", 0.0, 0.3)
 			_slow_motion()
@@ -1096,13 +1098,26 @@ func _input(event: InputEvent) -> void:
 			var parry := _react_target.reaction == "parry"
 			_react_feedback = "Pariert!" if parry else "Ausgewichen!"
 			Geraeusche.play("parade" if parry else "wurf", 1.0 if parry else 1.3)
-			Fx.spawn(_field, Fx.Kind.RING, c, Color("9fd0ff"), 110.0, 0.35)
-			if parry:
+			if _abwehr_bild("abwehr" if parry else "ausweichen", c):
+				pass
+			else:
+				Fx.spawn(_field, Fx.Kind.RING, c, Color("9fd0ff"), 110.0, 0.35)
+			if parry and FxBild.bilder("abwehr").is_empty():
 				# Kurzer Funkenblitz, wo die Klingen aufeinandertreffen
 				Fx.spawn(_field, Fx.Kind.SPARKS, c, Color("ffe2a0"), 90.0, 0.35)
 				Fx.spawn(_field, Fx.Kind.GLOW, c, Color("ffd9a0"), 50.0, 0.18)
 		_:
 			_react_feedback = "Zu früh!" if _react_press < _react_duration else "Zu spät!"
+
+
+## Abwehr als gemalte Bildfolge (A10, Alpha-Punkt 45): assets/fx/abwehr, abwehr_perfekt, ausweichen.
+## Gibt false zurück, solange die Bilder fehlen (dann zeichnet das Spiel wie bisher).
+func _abwehr_bild(name: String, ort: Vector2) -> bool:
+	if FxBild.bilder(name).is_empty():
+		return false
+	# Zur Seite des Angreifers hin, also vor der Figur
+	FxBild.spawn(_field, name, ort + Vector2(-28 if _react_target.is_ally() else 28, 0), 0.4, not _react_target.is_ally())
+	return true
 
 
 ## Kurzes Aufblitzen im Zielkreis, genau wenn die Perfekt-Zone aufgeht.
@@ -1249,6 +1264,12 @@ func projectile(from: Fighter, to: Fighter, color: Color, duration := 0.3) -> vo
 	if not has_view(from) or not has_view(to):
 		await wait(duration)
 		return
+	# Gemaltes Geschoss je Element (A10, Alpha-Punkt 45), solange es fehlt die gezeichnete Kugel
+	var bild := geschoss_bild(color)
+	if bild != "":
+		await FxBild.flug(_field, bild, view(from).center(), view(to).center(), duration, 0.6)
+		FxBild.spawn(_field, "treffer_funken", view(to).center(), 0.3, false, 0.0, 0.6)
+		return
 	var orb := Node2D.new()
 	orb.position = view(from).center()
 	orb.z_index = 7
@@ -1288,6 +1309,15 @@ func projectile(from: Fighter, to: Fighter, color: Color, duration := 0.3) -> vo
 	await tween.finished
 	Fx.spawn(_field, Fx.Kind.GLOW, end, color, 90.0, 0.35)
 	orb.queue_free()
+
+
+## Name der Bildfolge für ein Geschoss in dieser Farbe (die Farben der Elemente), leer wenn es keine gibt.
+static func geschoss_bild(color: Color) -> String:
+	for element: String in Elements.COLORS:
+		if Elements.COLORS[element].is_equal_approx(color):
+			var name := "geschoss_" + element.to_lower().replace("ä", "ae").replace("ö", "oe").replace("ü", "ue")
+			return name if not FxBild.bilder(name).is_empty() else ""
+	return ""
 
 
 ## Leuchten an einer Figur (z. B. bei Siegeln oder Explosionen).
