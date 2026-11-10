@@ -49,7 +49,7 @@ Das gilt genauso in Claude Code in der Cloud (vom Handy): dort direkt im GitHub-
 - „Mach weiter“ heißt: Skill `bauauftrag`, obersten offenen Punkt der Demo-Reihenfolge bauen. Alle Testtage kommen am Ende (Marcos Beschluss 02.11.2026), nicht anhalten.
 - Antworten knapp halten: was jetzt geht, was fehlt, was seine Sache ist.
 - Entscheidungen ohne Spoiler: Knöpfe und Fragen nennen nur die Handlung, Folgen erst nach der Wahl.
-- Prompts (Grafik-Nachbesserungen, fehlende oder neue Bilder) immer fertig in `GRAFIK_AUFTRAG.md` (Repo Spieldesign) speichern, nicht in den Chat schreiben. Erst wenn Marco nach Prompts fragt, sie im Chat zum Kopieren abliefern (Marco, 10.11.2026).
+- Prompts (Grafik-Nachbesserungen, fehlende oder neue Bilder) immer fertig in `GRAFIK_AUFTRAG.md` (Repo Spieldesign) speichern und zusätzlich jedes Mal im Chat zum Kopieren abliefern, zusammen mit den Bildern zum Mitschicken als Anhang (Marco, 10.11.2026).
 - Marco testet zwischendurch nicht, die Testpunkte (3 bis 5, in einfachen Worten) nur in `FORTSCHRITT.md` eintragen. Nur bei Testtagen im Chat nennen, mit Link zum Spiel.
 - Nicht ans Hochladen von design.md als Wissensdatei erinnern.
 - Bilder: itch.io ist gesperrt, freie Bilder nur von OpenGameArt oder GitHub (CC0), Quellen in `CREDITS.md`.
