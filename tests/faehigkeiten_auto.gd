@@ -23,6 +23,7 @@ func _process(delta: float) -> void:
 			p.progress.klassen_xp = 4100
 			p.progress.faehigkeiten = {shot = 3, charge = 2, net = 1}
 			p.progress.leiste = ["charge", "net", "", "", "", ""]
+			FaehigkeitenBaum.gewaehlt = "rapid"
 			_toggle_panel("faehigkeiten")],
 		[2.0, func() -> void:
 			_foto("faehigkeiten")
@@ -35,8 +36,8 @@ func _process(delta: float) -> void:
 
 
 func _foto(name: String) -> void:
-	get_viewport().get_texture().get_image().save_png("user://%s.png" % name)
-	print("Foto: ", ProjectSettings.globalize_path("user://%s.png" % name))
+	var ordner := OS.get_cmdline_user_args()[0] if not OS.get_cmdline_user_args().is_empty() else "user:/"
+	get_viewport().get_texture().get_image().save_png("%s/%s.png" % [ordner, name])
 
 
 func _exit_tree() -> void:

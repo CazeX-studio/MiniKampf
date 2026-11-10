@@ -3407,68 +3407,10 @@ func _faehigkeiten_zeilen(p: PlayerState) -> void:
 	if baum.is_empty():
 		_rep_box.add_child(_wrapped(GameData.text("faehigkeiten_ohne_baum"), 15, Color("c8c8c8")))
 		return
-	_rep_box.add_child(_label(GameData.text("faehigkeiten_kopf", [p.progress.klassenstufe(), p.progress.freie_punkte()]), 17, Color("f2c14e")))
-	# Die feste Leiste: sechs Plätze, ein Klick nimmt eine Fähigkeit herunter
-	_rep_box.add_child(_wrapped(GameData.text("leiste_titel"), 15, Color("f3ead8")))
-	var bar := HBoxContainer.new()
-	bar.add_theme_constant_override("separation", 6)
-	for i in p.progress.leiste.size():
-		var id := str(p.progress.leiste[i])
-		var slot := _small_button("%d: %s" % [i + 1, Faehigkeiten.eintrag(klasse, id).get("name", "–") if id != "" else "–"], func() -> void:
-			if id != "":
-				_send({type = "leiste", faehigkeit = id, platz = i})
-				_fill_panel())
-		slot.custom_minimum_size = Vector2(98, 30)
-		slot.add_theme_font_size_override("font_size", 12)
-		slot.clip_text = true
-		bar.add_child(slot)
-	_rep_box.add_child(bar)
-	var grund: Dictionary = baum.get("grundreihe", {})
-	if not grund.is_empty():
-		_rep_box.add_child(_wrapped("%s: [b]%s[/b] – %s" % [GameData.text("faehigkeiten_grundreihe"), grund.name, grund.get("info", "")], 14, Color("c8c8c8")))
-	var reihe := 0
-	for f: Dictionary in baum.get("faehigkeiten", []):
-		if int(f.reihe) != reihe:
-			reihe = int(f.reihe)
-			var frei := p.progress.klassenstufe() >= Faehigkeiten.reihe_ab(reihe)
-			_rep_box.add_child(_label(GameData.text("faehigkeiten_reihe", [reihe, Faehigkeiten.reihe_ab(reihe)]), 15,
-					Color("f3ead8") if frei else Color("808080")))
-		var row := HBoxContainer.new()
-		row.add_theme_constant_override("separation", 8)
-		var stufe := int(p.progress.faehigkeiten.get(f.id, 0))
-		var text := "[b]%s[/b]%s  %d / %d" % [f.name, " (passiv)" if f.get("passiv", false) else "", stufe, int(f.get("max", 5))]
-		var braucht: Dictionary = f.get("braucht", {})
-		for andere: String in braucht:
-			text += "  [color=#a0a0a0]braucht %s %d[/color]" % [Faehigkeiten.eintrag(klasse, andere).get("name", andere), int(braucht[andere])]
-		if f.has("info"):
-			text += "\n[color=#a0a0a0]%s[/color]" % f.info
-		var label := _wrapped(text, 14, Color("e8e8e8") if stufe > 0 else Color("b0b0b0"))
-		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		row.add_child(label)
-		var grund_gegen := Faehigkeiten.grund_gegen(p.progress, f.id)
-		var button := _small_button("+" if grund_gegen == "" else grund_gegen, func() -> void:
-			_send({type = "lernen", faehigkeit = f.id})
-			_fill_panel())
-		button.disabled = grund_gegen != ""
-		button.custom_minimum_size = Vector2(150, 28)
-		button.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-		row.add_child(button)
-		if Faehigkeiten.fuer_leiste(p.progress, f.id):
-			var drauf: bool = f.id in p.progress.leiste
-			var leiste_knopf := _small_button(GameData.text("leiste_runter" if drauf else "leiste_drauf"), func() -> void:
-				_send({type = "leiste", faehigkeit = f.id, platz = -1})
-				_fill_panel())
-			leiste_knopf.custom_minimum_size = Vector2(110, 28)
-			leiste_knopf.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-			row.add_child(leiste_knopf)
-		_rep_box.add_child(row)
-	var preis := Faehigkeiten.preis_neu_verteilen(p.progress)
-	var neu := _small_button(GameData.text("faehigkeiten_neu_verteilen", [GameData.text("faehigkeiten_kostenlos") if preis == 0 else Geld.text(preis)]),
-			func() -> void:
-				_send({type = "neu_verteilen"})
-				_fill_panel())
-	neu.custom_minimum_size = Vector2(260, 32)
-	_rep_box.add_child(neu)
+	# Baum mit Symbolen wie in World of Warcraft (A8a): Reihen von oben nach unten, Linien zu den Voraussetzungen
+	var ansicht := FaehigkeitenBaum.new()
+	_rep_box.add_child(ansicht)
+	ansicht.bauen(p.progress, func(befehl: Dictionary) -> void: _send(befehl), _fill_panel)
 
 
 ## Text mit Zeilenumbruch und BBCode für die Fenster.

@@ -26,7 +26,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (10.11.):** Alpha-Aufträge A8 bis A15 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+- **Nächster Schritt (10.11.):** Alpha-Aufträge A8b bis A15 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+
+- **Neu (10.11.): A8a Fähigkeiten-Baum mit Feldern** (Taste K, Alpha-Punkt 26):
+  - Statt der Textliste: oben die Leiste mit sechs Feldern, darunter die Grundreihe und die Reihen 1 bis 4 von oben nach unten. Jede Fähigkeit ist ein Feld mit Stufe (z. B. 2/5), gesperrte Reihen sind grau, Linien zeigen, welche Fähigkeit eine andere voraussetzt.
+  - Drüberfahren zeigt den Namen, Antippen zeigt unten die Beschreibung mit „Lernen (+1)“ und „Auf die Leiste“. Ein Feld der Leiste antippen nimmt die Fähigkeit wieder herunter.
+  - Bis deine Bilder da sind, stehen auf den Feldern Anfangsbuchstaben (braun = aktiv, blau = passiv, grün = Grundreihe). Sobald die Bilder da sind, erscheinen sie auch im Kampf auf den Knöpfen. **Für dich:** Prompts in `Spieldesign/GRAFIK_AUFTRAG.md` Teil L, ein Blatt pro Klasse und eins für den Novizen.
+  - **So testest du es:**
+    1. Mit dem Spielstand-Editor als Bogenschütze mit Stufe 15 in die Welt, Taste K.
+    2. „SS“ (Schneller Schuss) antippen, „Lernen (+1)“: Die Stufe auf dem Feld steigt.
+    3. Eine Fähigkeit mit „Auf die Leiste“ hinzufügen und in einem Kampf ansehen.
 
 - **Neu (10.11.): A7 Figuren richten** (Alpha-Punkte 1, 2, 12, 19–22, 25):
   - **Novize m1 und Novizin w1:** Schräg von vorne schaut der Kopf jetzt in dieselbe Richtung wie der Körper, im Stehen und Laufen. Die Ursache: Das Spiel hat alle sechs wählbaren Köpfe gespiegelt, gezeichnet sind aber nur m2, m3, w2 und w3 nach links. Jetzt werden genau die Köpfe gespiegelt, die nach links schauen (dazu a_m1, k_w1 und Borko).
