@@ -127,6 +127,7 @@ Marcos Beschluss (09.11.): **Erst die Blocker (A1a, A1b), dann S3b, S4 und S5, d
 - **A12:** Gebäude betreten: zuerst je Stadt die Taverne (Wegrast in Kreuzweg, Gasthaus in Wipfelheim, Taverne der Glutoase) mit Innenraum und den Figuren, die dort sind (47). – Status: offen
 - **A13:** Neues Gebiet zwischen Glutoase und Grünwacht (51): eigene Karte mit Übergang Steppe → Wald (im Süden trockenes Gras, nach Norden lichter Wald), Monster um Stufe 20, neue Übergangs-Böden (52, Prompts für Marco). – Status: offen
 - **A14:** Kreuzwegfelder als eigenes Gebiet vor der Stadt (design.md: durch das Südtor auf die Felder und weiter in die Aschensteppe, vom Trainingsplatz der Gilde ein Seitentor). Die Monster dort haben schon ihre eigenen Blätter, sie kommen bisher nur in Ye's Lektionen vor (Marco, 10.11.). – Status: offen
+- **A15:** Nachholen vom 21.10. (lagen auf dem Zweig `ccr-3050ae70-usmme8` und kamen nie ins Spiel, design.md hat sie beschlossen): Nebenauftrag „Ein Brief vom Tor“ (Brom bittet einen, einen Brief an Hanne zu bringen), Sternenfresser mit „Sternenschlund“ (ohne perfekte Parade sofort besiegt, Explosion nach 8 Zügen), Empfehlungsschreiben von Ye beim Abschied. Auf dem heutigen Stand neu bauen, der Zweig dient als Vorlage. – Status: offen
 - Punkt 50 (Städte umbauen) ist E3h. Fertig (E3h1 bis E3h3b, 10.11.).
 
 ### Endspurt (Plan vom 04.11.2026, sparsam mit Tokens)
