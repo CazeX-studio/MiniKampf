@@ -8,6 +8,9 @@ Aufruf: python3 tools/faehigkeit_bilder.py [klasse …]   (ohne Angabe alle, der
 import sys
 from pathlib import Path
 
+import numpy as np
+from PIL import Image
+
 WURZEL = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(WURZEL / "tools"))
 import gegenstand_bilder as gb  # noqa: E402
@@ -130,6 +133,18 @@ BLAETTER = {
 	]
 }
 
+## Bilder mit gewollt lila oder pinken Flächen (Monster, Zielkreuz): dort kein Pink herausrechnen
+LILA = {"archer_durchschlag", "archer_schwachstelle"}
+
+
+def entrosen(datei):
+	"""Rosa Schimmer vom pinken Hintergrund in Leuchtspuren und Rändern herausrechnen (Farbe Richtung Grün angleichen)."""
+	a = np.array(Image.open(datei).convert("RGBA")).astype(int)
+	zu = np.clip(np.minimum(a[..., 0], a[..., 2]) - a[..., 1], 0, None)
+	a[..., 0] -= zu
+	a[..., 2] -= zu
+	Image.fromarray(a.astype(np.uint8)).save(datei)
+
 
 def main():
 	gb.ZIEL = WURZEL / "assets" / "faehigkeiten"
@@ -139,7 +154,13 @@ def main():
 		if not (WURZEL / "tools" / "vorlagen" / f"{blatt}.png").exists():
 			print(f"{blatt}.png fehlt noch, übersprungen")
 			continue
+		# Fähigkeits-Bilder haben oft lose Teile (Wirbel, Funken, Staub): nahe Teile gehören zum selben Bild
+		gb.VERBINDEN.setdefault(blatt, 15)
 		gb.zerlegen(blatt, [[f"{klasse}_{i}" for i in reihe] for reihe in BLAETTER[klasse]])
+		for reihe in BLAETTER[klasse]:
+			for i in reihe:
+				if f"{klasse}_{i}" not in LILA:
+					entrosen(gb.ZIEL / f"{klasse}_{i}.png")
 
 
 if __name__ == "__main__":
