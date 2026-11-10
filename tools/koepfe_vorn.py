@@ -20,6 +20,8 @@ from monster_bilder import ausschneiden, bilder_finden, freistellen  # noqa: E40
 
 KOEPFE = WURZEL / "assets" / "teile" / "koepfe"
 FIGURTEILE = WURZEL / "data" / "figurteile.json"
+## Blätter, deren Kopf nach rechts gemalt ist: gespiegelt, damit er wie der Körper nach vorne links schaut
+SPIEGELN = {"hanne"}
 
 
 def hoehe(t):
@@ -37,6 +39,8 @@ def main():
 			raise SystemExit(f"kopf_vorn_{figur}: {len(stuecke)} Köpfe erkannt, erwartet 2")
 		alt = np.array(Image.open(KOEPFE / f"{figur}_vorn_normal.png").convert("RGBA"))
 		offen, zu = [ausschneiden(a, ziel, i) for i in stuecke]
+		if figur in SPIEGELN:
+			offen, zu = offen[:, ::-1].copy(), zu[:, ::-1].copy()
 		faktor = hoehe(alt) / hoehe(offen)
 		offen, zu = verkleinern(offen, faktor), verkleinern(zu, faktor)
 		Image.fromarray(offen).save(KOEPFE / f"{figur}_vorn_normal.png")
