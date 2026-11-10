@@ -1,7 +1,7 @@
 # Alpha-Test – erstes Feedback
 
 Eingegangen am 08.11.2026 (Marcos Notizen, wörtlich übernommen).
-Noch nicht in Bauaufträge umgewandelt – das ist der nächste Schritt.
+Umgewandelt am 10.11.2026 in die Bauaufträge A1 bis A8 (BAUAUFTRAEGE.md, Abschnitt „Alpha-Test“). Erledigt: 17, 18, 44, 50.
 
 ## Rückmeldungen
 
