@@ -26,7 +26,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt:** Demo-Start S4 (Stadt-Editor), dann S5 (Editoren), danach E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Offen von S1: Marcos Google-Formular verbinden.
+- **Nächster Schritt:** Demo-Start S4b (Stadt-Editor: hinzufügen und löschen), dann S5 (Editoren), danach E3h (Städte, Feinschliff im Stadt-Editor) und E4 (Balancing). Offen von S1: Marcos Google-Formular verbinden.
 
 - **Neu (04.11.): D25b Körper von Rüstungsschmied und Sternensängerin** (2.11): Deine Blätter sind eingebaut: Rüstungsschmied (m) und Rüstungsschmiedin (w) in Rüstung mit Lederschürze und rotem Halstuch, die Sternensängerin (w) im hellen Gewand mit dunkelblauem Schal. Je mit Stehen, Laufen, Abwehr, Treffer, Angriff, Fallen, Sieg und Fähigkeit im Kampf, in der Welt schräg von vorne und hinten. Wer die Klasse gelernt hat, trägt sie mit seinem eigenen Kopf, auch in der Probestunde. Ausgebessert: die gelben Funken im Treffer-Bild des Schmieds und das rote Halstuch in einem Siegesbild der Sängerin. Noch nicht drin: ein männlicher Sternensänger (der kämpft weiter in der Klassenfigur).
   - **So testest du es:**
@@ -62,6 +62,18 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     2. Je ein Monster auf dem Weg nach Grünwacht, im Waldboden, in der Tiefwurzel, in der Aschensteppe (Norden und Süden), in der Palmenrast und auf dem Glutgrat angreifen: überall das gemalte Bild.
     3. Hammerbrüder oder Kettenschmied: Kampf in der Ankerkammer mit den drei Ankern.
     4. Stehen die Figuren überall gut auf dem Boden? Sonst sag Bescheid, dann schiebe ich die Bilder anders.
+
+- **Neu (10.11.): S4a Stadt-Editor** (Editor, vierter Knopf „Stadt-Editor“):
+  - Oben die Stadt wählen (Kreuzweg, Wipfelheim, Glutoase), „Nacht“ zeigt die Figuren an ihren Nachtplätzen. Bild verschieben: auf eine leere Stelle tippen und ziehen, Pfeiltasten; zoomen mit − und + oder dem Mausrad.
+  - Ein Haus, Baum, Stand oder eine Figur antippen: gelber Rahmen. Dann ziehen oder mit den Pfeil-Knöpfen Feld für Feld schieben (fürs Handy). „Alter Platz“ stellt es zurück. Gleiche Teile auf demselben Feld (Marktstand tags offen, nachts zu) wandern zusammen.
+  - **Speichern:** In Godot am PC landet es direkt im Spiel (`data/stadt_aenderungen.json`). Im Browser gilt es in diesem Browser, und die Datei `stadt_aenderungen.json` wird heruntergeladen: die schickst du mir. Die Änderungen liegen getrennt von den Karten, darum gehen sie nicht verloren, wenn ich eine Karte neu erzeuge.
+  - Noch nicht: hinzufügen, löschen, spiegeln (S4b). Der Editor prüft noch nicht, ob etwas auf einem anderen Teil oder im Wasser steht.
+  - **So testest du es:**
+    1. Werkstatt → Editor → „Stadt-Editor“, Kreuzweg.
+    2. Den Brunnen antippen und zwei Felder verschieben, dann eine Figur ziehen. „Speichern“.
+    3. Zurück, „Akt Kreuzweg“ starten: Brunnen und Figur stehen am neuen Platz, man kann nicht durch den Brunnen laufen.
+    4. Im Editor beides mit „Alter Platz“ zurückstellen und speichern (oder „Stadt zurücksetzen“, zweimal tippen).
+  - Nebenbei (Bildaufträge): Teil H in `Spieldesign/GRAFIK_AUFTRAG.md` hat die Prompts für Sitzen und 8 Laufbilder aller Figuren (neuer Bauauftrag S6, ganz am Ende).
 
 - **Neu (09.11.): S3b Bewegungen in der Welt** (Editor, dritter Knopf „Bewegungen in der Welt“): links die Figur so groß wie im Spiel, rechts vergrößert.
   - **Figur:** Novizen, Klassen-Körper, Baukasten-Figuren (je mit wählbarem Kopf), Hauptfiguren und alle Monster.
