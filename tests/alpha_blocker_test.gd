@@ -97,8 +97,8 @@ func _initialize() -> void:
 	var ziel := w4.objective_place(s)
 	_check(ziel.get("karte", "") == "glutoase" and ziel.get("feld") == w4.npcs.nadia.cell, "Nach Xavina: Wegweiser zu Nadia in der Glutoase (%s)" % ziel)
 	var mira: Dictionary = GameData.get_file("karten").glutoase.npcs.mira_glutoase
-	_check(mira.get("vorne", false) and Vector2i(int(mira.feld[0]), int(mira.feld[1])) == Vector2i(41, 11), "Mira liegt auf dem Bett im Krankenzelt")
-	_check(w4.is_walkable(Vector2i(42, 11), "glutoase"), "Mira ist vom Zelteingang aus ansprechbar")
+	_check(mira.get("vorne", false) and Vector2i(int(mira.feld[0]), int(mira.feld[1])) == Vector2i(41, 34), "Mira liegt auf dem Bett im Krankenzelt")
+	_check(w4.is_walkable(Vector2i(42, 34), "glutoase"), "Mira ist vom Zelteingang aus ansprechbar")
 	_check(GameData.get_file("karten").vulkanschmiede.get("leere", "") == "lava", "Vulkanschmiede: Lava um die Wege")
 	print("Alpha-Blocker: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)
