@@ -660,23 +660,29 @@ def duerrewald():
 			zeile += art
 		boden.append(zeile)
 	# Unten das Gegenstück zum Tor der Oase, oben der Wegweiser nach Grünwacht, dazwischen eine alte Ruine
+	# Dazu (A13b, Auftrag P2) der Grenzstein am Weg, wo die Steppe zum Wald wird, ein versandeter Zaun und ein umgestürzter Baum
+	weg_mitte = next(x2 for x2 in range(DWB) if g[wald_ab][x2] == "=")
 	for teil, x, y in [("go_ruine", 4, 40), ("go_felsbrocken", 23, 50), ("go_verlassener_wagen", 20, 38), ("geweih_wegweiser", oben_x + 3, 3),
-			("baumstamm", 5, 20), ("gw_baumstumpf", 23, 24)]:
+			("dw_grenzstein", weg_mitte + 3, wald_ab), ("dw_versandeter_zaun", 9, 44), ("dw_versandeter_zaun", 19, 47),
+			("dw_umgestuerzter_baum", 5, 20), ("gw_baumstumpf", 23, 24)]:
 		k.setzen(teil, x, y, muss=False)
 	for y in range(DWH):
 		for x in range(DWB):
 			z = g[y][x]
 			if z == "s":
-				k.setzen("go_felsbrocken" if r.random() < 0.25 else ("go_kakteen" if y > DWH - 10 and r.random() < 0.3 else "go_trockenbusch"),
-						x, y, muss=False)
+				if y < wald_ab + 10 and r.random() < 0.35:
+					k.setzen(r.choice(["dw_duerrer_baum", "dw_erwachender_busch"]), x, y, muss=False)
+				else:
+					k.setzen("go_felsbrocken" if r.random() < 0.25 else ("go_kakteen" if y > DWH - 10 and r.random() < 0.3 else "go_trockenbusch"),
+							x, y, muss=False)
 			elif z == "T":
-				wahl = ["tanne", "baum", "gw_laubbaum", "busch"] if y < wald_ab - 6 else ["baum_herbst", "busch", "dornengebuesch"]
+				wahl = ["tanne", "baum", "gw_laubbaum", "busch"] if y < wald_ab - 6 else ["dw_steppenbaum", "dw_duerrer_baum", "dw_erwachender_busch", "baum_herbst", "busch"]
 				k.setzen(r.choice(wahl), x, y, muss=False)
 			elif z == "." and r.random() < 0.06:
 				if y > wald_ab + 6:
 					k.setzen(r.choice(["go_steppengras", "go_gras_zu_sand"]), x, y, muss=False)
 				elif y > wald_ab - 6:
-					k.setzen(r.choice(["go_steppengras", "grasbueschel", "blumen"]), x, y, muss=False)
+					k.setzen(r.choice(["go_steppengras", "grasbueschel", "blumen", "dw_erwachender_busch", "dw_duerrer_baum"]), x, y, muss=False)
 				else:
 					k.setzen(r.choice(["gw_farn", "grasbueschel", "busch_bluete"]), x, y, muss=False)
 	k.erreichbar()

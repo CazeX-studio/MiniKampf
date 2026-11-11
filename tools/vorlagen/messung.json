@@ -2672,5 +2672,89 @@
 			142,
 			147
 		]
+	},
+	"dw_duerrer_baum": {
+		"groesse": [
+			69,
+			98
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			36,
+			81
+		]
+	},
+	"dw_steppenbaum": {
+		"groesse": [
+			202,
+			149
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			97,
+			116
+		]
+	},
+	"dw_erwachender_busch": {
+		"groesse": [
+			71,
+			75
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			34,
+			58
+		]
+	},
+	"dw_grenzstein": {
+		"groesse": [
+			66,
+			76
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			32,
+			59
+		]
+	},
+	"dw_versandeter_zaun": {
+		"groesse": [
+			96,
+			72
+		],
+		"flaeche": [
+			1,
+			2
+		],
+		"fuss": [
+			42,
+			47
+		]
+	},
+	"dw_umgestuerzter_baum": {
+		"groesse": [
+			129,
+			76
+		],
+		"flaeche": [
+			1,
+			3
+		],
+		"fuss": [
+			54,
+			43
+		]
 	}
 }
