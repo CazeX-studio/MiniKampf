@@ -2938,5 +2938,187 @@
 			56,
 			44
 		]
+	},
+	"in_gw_wand": {
+		"groesse": [
+			162,
+			165
+		],
+		"flaeche": [
+			1,
+			4
+		],
+		"fuss": [
+			60,
+			124
+		]
+	},
+	"in_gw_ecke": {
+		"groesse": [
+			47,
+			110
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			24,
+			93
+		]
+	},
+	"in_gw_wand_regal": {
+		"groesse": [
+			146,
+			159
+		],
+		"flaeche": [
+			1,
+			3
+		],
+		"fuss": [
+			47,
+			126
+		]
+	},
+	"in_gw_tuer": {
+		"groesse": [
+			68,
+			127
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			22,
+			110
+		]
+	},
+	"in_gw_mooteppich": {
+		"groesse": [
+			129,
+			72
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			62,
+			55
+		]
+	},
+	"in_gw_feuerstelle": {
+		"groesse": [
+			128,
+			109
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			57,
+			76
+		]
+	},
+	"in_gw_kochtisch": {
+		"groesse": [
+			129,
+			74
+		],
+		"flaeche": [
+			2,
+			1
+		],
+		"fuss": [
+			85,
+			49
+		]
+	},
+	"in_gw_topf": {
+		"groesse": [
+			64,
+			71
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			32,
+			54
+		]
+	},
+	"in_gw_stumpftisch": {
+		"groesse": [
+			104,
+			65
+		],
+		"flaeche": [
+			2,
+			1
+		],
+		"fuss": [
+			50,
+			40
+		]
+	},
+	"in_gw_bank": {
+		"groesse": [
+			127,
+			79
+		],
+		"flaeche": [
+			3,
+			1
+		],
+		"fuss": [
+			62,
+			46
+		]
+	},
+	"in_gw_theke": {
+		"groesse": [
+			130,
+			67
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			74,
+			34
+		]
+	},
+	"in_gw_kraeuter": {
+		"groesse": [
+			102,
+			98
+		],
+		"flaeche": [
+			3,
+			1
+		],
+		"fuss": [
+			50,
+			65
+		]
+	},
+	"in_gw_leiter": {
+		"groesse": [
+			52,
+			111
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			38,
+			94
+		]
 	}
 }

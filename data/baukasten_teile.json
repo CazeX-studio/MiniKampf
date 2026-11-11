@@ -178,6 +178,17 @@
 				"boden/in_wr_dielen_3.png"
 			],
 			"vorrang": 3
+		},
+		"j": {
+			"name": "Baumdielen",
+			"bilder": [
+				"boden/in_gw_dielen_1.png",
+				"boden/in_gw_dielen_1.png",
+				"boden/in_gw_dielen_2.png",
+				"boden/in_gw_dielen_2.png",
+				"boden/in_gw_dielen_3.png"
+			],
+			"vorrang": 3
 		}
 	},
 	"objekte": {
@@ -2966,6 +2977,160 @@
 			"fuss": [
 				56,
 				44
+			]
+		},
+		"in_gw_wand": {
+			"bild": "objekte/in_gw_wand.png",
+			"flaeche": [
+				1,
+				4
+			],
+			"fuss": [
+				60,
+				124
+			]
+		},
+		"in_gw_wand_regal": {
+			"bild": "objekte/in_gw_wand_regal.png",
+			"flaeche": [
+				1,
+				4
+			],
+			"fuss": [
+				47,
+				126
+			]
+		},
+		"in_gw_ecke": {
+			"bild": "objekte/in_gw_ecke.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				24,
+				93
+			]
+		},
+		"in_gw_tuer": {
+			"bild": "objekte/in_gw_tuer.png",
+			"flaeche": [
+				1,
+				2
+			],
+			"fuss": [
+				22,
+				110
+			]
+		},
+		"in_gw_mooteppich": {
+			"bild": "objekte/in_gw_mooteppich.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				62,
+				55
+			],
+			"flach": true,
+			"blockiert": false
+		},
+		"in_gw_feuerstelle": {
+			"bild": "objekte/in_gw_feuerstelle.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				57,
+				76
+			],
+			"lichter": [
+				{
+					"art": "glut",
+					"bild": [
+						65,
+						68
+					]
+				}
+			]
+		},
+		"in_gw_kochtisch": {
+			"bild": "objekte/in_gw_kochtisch.png",
+			"flaeche": [
+				3,
+				1
+			],
+			"fuss": [
+				85,
+				49
+			]
+		},
+		"in_gw_topf": {
+			"bild": "objekte/in_gw_topf.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				32,
+				54
+			]
+		},
+		"in_gw_stumpftisch": {
+			"bild": "objekte/in_gw_stumpftisch.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				50,
+				40
+			]
+		},
+		"in_gw_bank": {
+			"bild": "objekte/in_gw_bank.png",
+			"flaeche": [
+				3,
+				1
+			],
+			"fuss": [
+				62,
+				46
+			]
+		},
+		"in_gw_theke": {
+			"bild": "objekte/in_gw_theke.png",
+			"flaeche": [
+				3,
+				1
+			],
+			"fuss": [
+				74,
+				34
+			]
+		},
+		"in_gw_kraeuter": {
+			"bild": "objekte/in_gw_kraeuter.png",
+			"flaeche": [
+				2,
+				1
+			],
+			"fuss": [
+				50,
+				65
+			]
+		},
+		"in_gw_leiter": {
+			"bild": "objekte/in_gw_leiter.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				38,
+				94
 			]
 		}
 	}
