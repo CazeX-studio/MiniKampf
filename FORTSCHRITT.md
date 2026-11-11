@@ -71,7 +71,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Figuren und Figurteile werden jetzt etwas stärker gepackt (Qualität 0,7 statt 0,8). Weil das Spiel sie auf ein Drittel verkleinert zeigt, sieht man keinen Unterschied (im Spiel weichen die Farben im Schnitt um 2,4 statt 2,1 von 255 ab). Das Paket ist jetzt 74,5 MB.
   - Beim ersten Start lädt der Browser damit rund 85 MB (Spielpaket und Godot, das GitHub gepackt schickt), mit guter Leitung etwa 10 bis 20 Sekunden, im Mobilfunk deutlich länger.
   - Alle Figuren-Bilder werden benutzt, es gab nichts zu streichen.
-  - **Vorschlag für dich:** Die Figuren sind dreimal so groß gespeichert, wie das Spiel sie zeigt. Auf zwei Drittel verkleinert würde das Paket noch etwa 20 MB kleiner (rund 55 MB). Das ist ein größerer Umbau (alle Figuren, Figurteile und ihre Ausrichtung); sag Bescheid, ob ich das machen soll.
+  - **Für später (Marco, 11.11.: nach der Demo):** Die Figuren sind dreimal so groß gespeichert, wie das Spiel sie zeigt. Auf zwei Drittel verkleinert würde das Paket noch etwa 20 MB kleiner (rund 55 MB). Steht als N2 in BAUAUFTRAEGE.md unter „Nach der Demo“.
   - **So testest du es:** Die Demo im Browser öffnen und die Ladezeit beobachten; im Kampf und in der Welt sehen die Figuren aus wie vorher.
 
 - **Neu (11.11.): A17 Nachts im Gasthaus:**
