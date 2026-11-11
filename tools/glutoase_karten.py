@@ -641,17 +641,23 @@ def duerrewald():
 	gk.KARTEN.clear()
 	gk.KARTEN.update(karten)
 	k = gk.Karte("duerrewald")
-	# Boden: unten Sand, darüber trockenes Oasengras und Gras, oben Waldboden und Laub, in Flecken statt Feld für Feld
+	# Boden in Flecken statt Feld für Feld, von unten nach oben mit den Übergangsböden (A13b, Auftrag P1):
+	# Sand, Steppengras, Trockengras, Gras, Waldrand, oben Waldboden und Laub (das kräftige Oasengras stach heraus). Der Weg ist in der Steppe
+	# rissige Erde, im Wald Erde; dazu ein paar kahle Stellen.
+	stufen = [(0.12, "s"), (0.28, "d"), (0.47, "a"), (0.57, "."), (0.7, "n")]
 	boden = []
 	for y in range(DWH):
 		zeile = ""
 		for x in range(DWB):
 			if g[y][x] == "=":
-				zeile += "e"
+				zeile += "k" if y > wald_ab else "e"
 				continue
 			fleck = ((x // 3) * 37 + (y // 3) * 61 + (x // 3) * (y // 3) * 13) % 100 / 100.0
 			hoehe = 1.0 - y / (DWH - 1) + (fleck - 0.5) * 0.25
-			zeile += "s" if hoehe < 0.18 else ("g" if hoehe < 0.36 else ("." if hoehe < 0.55 else ("w" if hoehe < 0.8 or fleck < 0.5 else "l")))
+			art = next((z for grenze, z in stufen if hoehe < grenze), "w" if hoehe < 0.85 or fleck < 0.5 else "l")
+			if art in "da" and fleck > 0.93:
+				art = "k"
+			zeile += art
 		boden.append(zeile)
 	# Unten das Gegenstück zum Tor der Oase, oben der Wegweiser nach Grünwacht, dazwischen eine alte Ruine
 	for teil, x, y in [("go_ruine", 4, 40), ("go_felsbrocken", 23, 50), ("go_verlassener_wagen", 20, 38), ("geweih_wegweiser", oben_x + 3, 3),

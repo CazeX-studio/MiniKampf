@@ -137,6 +137,38 @@
 				"boden/vs_stein_2.png"
 			],
 			"vorrang": 2
+		},
+		"d": {
+			"name": "Steppengras",
+			"bilder": [
+				"boden/dw_steppengras_1.png",
+				"boden/dw_steppengras_2.png"
+			],
+			"vorrang": 5
+		},
+		"a": {
+			"name": "Trockengras",
+			"bilder": [
+				"boden/dw_trockengras_1.png",
+				"boden/dw_trockengras_2.png"
+			],
+			"vorrang": 6
+		},
+		"k": {
+			"name": "Rissige Erde",
+			"bilder": [
+				"boden/dw_erde_1.png",
+				"boden/dw_erde_2.png"
+			],
+			"vorrang": 3
+		},
+		"n": {
+			"name": "Waldrand",
+			"bilder": [
+				"boden/dw_waldrand_1.png",
+				"boden/dw_waldrand_2.png"
+			],
+			"vorrang": 6
 		}
 	},
 	"objekte": {

@@ -374,7 +374,17 @@ BLAETTER.update({'gruenwacht_g2': {'massstab': 0.3,
                            'go_gras_2': (667, 704),
                            'go_wasser_1': (1111, 704),
                            'go_wasser_2': (1552, 704)}},
- 'schmiede_v1a': {'boden': True, 'teile': {'vs_stein_1': (443, 476), 'vs_stein_2': (1330, 476)}}})
+ 'schmiede_v1a': {'boden': True, 'teile': {'vs_stein_1': (443, 476), 'vs_stein_2': (1330, 476)}},
+ # Dürrewald (A13b, Auftrag P1): Übergangsböden Sand -> Wald
+ 'boden_duerrewald': {'boden': True, 'schwarz': True,
+                      'teile': {'dw_steppengras_1': (224, 200),
+                                'dw_steppengras_2': (666, 200),
+                                'dw_trockengras_1': (1110, 200),
+                                'dw_trockengras_2': (1552, 200),
+                                'dw_erde_1': (224, 645),
+                                'dw_erde_2': (666, 645),
+                                'dw_waldrand_1': (1110, 645),
+                                'dw_waldrand_2': (1552, 645)}}})
 BLAETTER["gruenwacht_halle"] = {"massstab": 0.2, "kern": True, "look": True, "massstaebe": {"gw_dornfeders_halle": 0.2},
 	"teile": {"gw_dornfeders_halle": (720, 540)}}
 
@@ -504,7 +514,12 @@ def main():
 	for blatt in namen:
 		info = BLAETTER[blatt]
 		bild = Image.open(VORLAGEN / f"{blatt}.png")
-		if info.get("kern"):
+		if info.get("schwarz"):
+			# Schwarzer statt durchsichtiger Hintergrund: alles, was nicht fast schwarz ist, gehört zum Motiv
+			a = np.array(bild.convert("RGBA"))
+			fest = ndimage.binary_fill_holes(ndimage.binary_closing(a[..., :3].max(-1) > 40, iterations=3))
+			a[..., 3] = np.where(fest, 255, 0)
+		elif info.get("kern"):
 			# "kern": True oder die Deckkraft, ab der ein Pixel zum Motiv zählt; Blätter ohne Durchsichtigkeit werden freigestellt
 			a = kern_behalten(bild, 128 if info["kern"] is True else info["kern"]) if bild.mode == "RGBA" else freistellen(bild)
 		else:
