@@ -64,7 +64,19 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (11.11., nach Teil N):** Alle gelieferten Bilder haben jetzt einen Bauauftrag. A3b (Klassenbilder) und A9c1 (Effekte der Vulkanschmiede) sind fertig. Der Reihe nach: A9c2 (Effekte der Pilzhöhle aus Teil M), A20 (Ladebildschirme aus Teil S), A21 (deine zwei Zusatz-Effekte: goldenes Nachbild bei perfekter Abwehr und mächtiger Blitzeinschlag). Danach E4 (Balancing, braucht viele Tests), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden. Noch zu malen ist für die Demo nichts; später kommen Teil R, H2 und S3 (sechs spätere Klassen) und Teil I.
+- **Nächster Schritt (11.11., nach Teil N):** Alle gelieferten Bilder haben jetzt einen Bauauftrag. A3b (Klassenbilder) und A9c (alle Dungeon-Effekte aus Teil M) sind fertig. Der Reihe nach: A20 (Ladebildschirme aus Teil S), A21 (deine zwei Zusatz-Effekte: goldenes Nachbild bei perfekter Abwehr und mächtiger Blitzeinschlag). Danach E4 (Balancing, braucht viele Tests), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden. Noch zu malen ist für die Demo nichts; später kommen Teil R, H2 und S3 (sechs spätere Klassen) und Teil I.
+
+- **Neu (11.11.): A9c2 Gemalte Effekte in der Pilzhöhle** (Teil M2):
+  - Sporenkönigin: Jede Giftwolke hängt jetzt sichtbar als gemalte, wabernde Wolke über den Helden (bis zu fünf). Vertriebene verwehen. Heilt eine Sporenknospe, öffnet sie sich und leuchtende Sporen steigen auf.
+  - Wurzelmutter: Reißt sie jemanden nach vorne, brechen Wurzeln unter ihm aus dem Boden. Bei „Verschlingen“ unter allen Helden.
+  - Vorbote: Im Film „Der Vorbote“ öffnet sich der gemalte Riss der Leere, Ranken greifen heraus. Bei jedem seiner Züge flackert ein Riss an ihm, beim Leerengriff am Getroffenen, beim Lichtfraß verschlingt die Leere alle.
+  - Laternen sind gemalt und flackern. Über dem Helden mit dem Splitterlicht schwebt der gemalte Splitter. Beim Weiterreichen fliegt er zum anderen.
+  - **So testest du es:**
+    1. Gegen die Sporenkönigin mit Feuer angreifen (wenn ihre Mechanik heute Sporenblüte ist): Über den Helden quellen Giftwolken auf. „Giftwolke vertreiben“ lässt eine verwehen.
+    2. Warten, bis eine Sporenknospe heilt: Die Blüte öffnet sich und Sporen steigen auf.
+    3. Bei der Wurzelmutter jemanden in die hintere Reihe stellen: Wurzeln reißen ihn nach vorne.
+    4. Phase 2 starten: Film mit dem Riss der Leere, danach über dem Lichtträger der schwebende Splitter. „Laterne entzünden“: flackernde Laterne.
+    5. „Licht weiterreichen“: Der Splitter fliegt zum anderen Helden.
 
 - **Neu (11.11.): A9c1 Gemalte Effekte in der Vulkanschmiede** (Teil M1):
   - Film „Entfesselt!“: Die drei Ketten sind jetzt gemalte Kettenglieder, glühen von kaltem Eisen bis weiß auf, reißen an mehreren Stellen mit Funken, die glühenden Glieder fliegen davon.
