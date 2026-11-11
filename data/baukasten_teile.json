@@ -233,7 +233,13 @@
 						160
 					]
 				}
-			]
+			],
+			"bild_hinten": "objekte/haus_klein_hinten.png",
+			"fuss_hinten": [
+				117,
+				195
+			],
+			"lichter_hinten": []
 		},
 		"haus_mittel": {
 			"bild": "objekte/haus_mittel.png",
@@ -244,7 +250,13 @@
 			"fuss": [
 				128,
 				207
-			]
+			],
+			"bild_hinten": "objekte/haus_mittel_hinten.png",
+			"fuss_hinten": [
+				138,
+				234
+			],
+			"lichter_hinten": []
 		},
 		"marktstand_rot": {
 			"bild": "objekte/marktstand_rot.png",
@@ -255,7 +267,13 @@
 			"fuss": [
 				100,
 				125
-			]
+			],
+			"bild_hinten": "objekte/marktstand_rot_hinten.png",
+			"fuss_hinten": [
+				116,
+				137
+			],
+			"lichter_hinten": []
 		},
 		"marktstand_blau": {
 			"bild": "objekte/marktstand_blau.png",
@@ -266,7 +284,13 @@
 			"fuss": [
 				100,
 				135
-			]
+			],
+			"bild_hinten": "objekte/marktstand_blau_hinten.png",
+			"fuss_hinten": [
+				99,
+				129
+			],
+			"lichter_hinten": []
 		},
 		"bingos_stand": {
 			"bild": "objekte/bingos_stand.png",
@@ -293,7 +317,13 @@
 						95
 					]
 				}
-			]
+			],
+			"bild_hinten": "objekte/bingos_stand_hinten.png",
+			"fuss_hinten": [
+				199,
+				179
+			],
+			"lichter_hinten": []
 		},
 		"brunnen": {
 			"bild": "objekte/brunnen.png",
@@ -992,7 +1022,13 @@
 						175
 					]
 				}
-			]
+			],
+			"bild_hinten": "objekte/eckhaus_hinten.png",
+			"fuss_hinten": [
+				149,
+				183
+			],
+			"lichter_hinten": []
 		},
 		"wegelaterne": {
 			"bild": "objekte/wegelaterne.png",
