@@ -1,0 +1,17 @@
+{
+	"hinweis": "Ladebildschirme (A20): Szenenbilder aus assets/ladebildschirme/<name>.png (GRAFIK_AUFTRAG.md Teil S). 'klassen': welche Szene zu welcher Klasse gehört (nach der Klassenwahl kommt meist sie). 'tipps': kurze Hinweise, einer davon zufällig unter dem Ortsnamen. Neue Klassen-Szenen (S3) hier eintragen.",
+	"bilder": ["gruppe", "bogen", "zaehmer", "schmied", "klingentaenzer", "saengerin"],
+	"klassen": {"archer": "bogen", "tamer": "zaehmer", "smith": "schmied", "blade": "klingentaenzer", "singer": "saengerin"},
+	"tipps": [
+		"Parieren oder Ausweichen im richtigen Moment macht Treffer schwächer. Der perfekte Moment lohnt sich am meisten.",
+		"Mit M öffnest du die große Karte, mit J deine Aufträge.",
+		"Monsterkarten findest du unterwegs. Im Kartenalbum (L) siehst du, welche dir noch fehlen.",
+		"Nachts sind andere Leute und andere Monster unterwegs.",
+		"Elemente zählen: Manches Monster nimmt von einem Element viel mehr Schaden.",
+		"Bosse schafft man mit ihrer Mechanik, nicht mit Kraft allein. Lies, was beim Boss steht.",
+		"In den Fähigkeiten (K) legst du fest, was auf deiner Leiste im Kampf liegt.",
+		"Abends ist im Gasthaus mehr los.",
+		"Etwas gefunden oder eine Idee? Oben rechts auf Feedback drücken.",
+		"Tränke im Gürtel sind im Kampf schnell zur Hand."
+	]
+}

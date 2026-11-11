@@ -329,6 +329,8 @@ func _ready() -> void:
 
 ## Ortsname groß in der Bildmitte, wenn man ein Gebiet betritt (E3c): Schrift Cinzel (SIL Open Font License).
 const ORTSNAME_SCHRIFT := "res://assets/schrift/Cinzel.ttf"
+## Ladebildschirme nur im echten Spiel, nicht in Prüfungen, die dieses Skript erweitern
+const KREUZWEG_SKRIPT := "res://scripts/welt/kreuzweg.gd"
 var _ortsname: Label
 ## Wo der Spieler gerade ist (für das Feedback-Formular, S1)
 var _ort_jetzt := "Kreuzweg"
@@ -371,7 +373,10 @@ func _build_map_view() -> void:
 	_nacht_war = state.nacht
 	var local := local_player()
 	if local.map != _shown_map:
-		_ortsname_zeigen.call_deferred(state.get_map(local.map).title)
+		# Beim Spielstart und beim Wechsel in eine andere Region oder einen Dungeon: Ladebildschirm mit Ortsnamen (A20)
+		var titel: String = state.get_map(local.map).title
+		if not ((get_script() as Script).resource_path == KREUZWEG_SKRIPT and Ladebildschirm.pruefen(self, local.map, titel)):
+			_ortsname_zeigen.call_deferred(titel)
 	_shown_map = local.map
 	for node in _map_nodes:
 		if is_instance_valid(node):
