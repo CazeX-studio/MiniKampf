@@ -489,7 +489,7 @@ _Am 28.10. geteilt: Kofis Kopf-Blatt kam zuerst._
 ### Schritt 6: Körper der übrigen Klassen
 - **Ziel:** Die übrigen neun Klassen je männlich und weiblich, Region für Region.
 - **So testest du es:** Jede Klasse in der Kampf-Sandbox mit eigenem Körper ansehen.
-- **Status:** offen
+- **Status:** offen, wartet auf Bilder (11.11.2026: die fünf Demo-Klassen sind fertig; Bildaufträge für die sechs späteren Klassen, Körper und Fähigkeiten-Symbole, in `Spieldesign/GRAFIK_AUFTRAG.md` Teil R, Anhänge in `tools/referenz/teil_r/`; nach der Demo)
 
 ## Projekt 12: Grünwacht nachbessern (Beschluss 29.10.)
 

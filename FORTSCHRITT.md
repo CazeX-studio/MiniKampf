@@ -66,6 +66,11 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 - **Nächster Schritt (11.11.):** E4 später (viele Tests), E5 und S6 am Ende von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
 
+- **Neu (11.11.): Bildaufträge für die sechs späteren Klassen** (`Spieldesign/GRAFIK_AUFTRAG.md` Teil R, nicht eilig, nach der Demo):
+  - R1: je Klasse ein Blatt Fähigkeiten-Symbole (Runenwächter, Mechaniker mit Roboter, Zwielicht-Wandler, Ritualist, Quartiermeister, Kunoichi). Sobald ein Blatt zugeschnitten ist (`tools/faehigkeit_bilder.py <klasse>`), zeigen die Kampfknöpfe die Bilder.
+  - R2: je Klasse männlich und weiblich drei Körper-Blätter (zwei Kampf, eins Welt), nach demselben Muster wie bei den Demo-Klassen. Roboter, Karren und Waffen kommen später als eigene Blätter.
+  - Die Anhänge liegen in `tools/referenz/teil_r/` (Novizen-Blätter ohne Schwert, Vega, zwei fertige Symbol-Blätter als Stil).
+
 - **Neu (11.11.): A19 Die Stadtwachen verlangen das Empfehlungsschreiben** (design.md: Novizen kommen ohne nicht in die Städte):
   - An den Eingängen von der Straße (Aschensteppe und Dürrewald in die Glutoase, Seilaufzug nach Wipfelheim) prüft die Stadtwache Ye's Schreiben. Beim ersten Mal: „Die Stadtwache wirft einen Blick auf Yes Empfehlungsschreiben und winkt dich hinein.“
   - Ohne Schreiben: „Halt! Ohne Empfehlungsschreiben kommen Novizen nicht in die Stadt. Lene in der Gilde von Kreuzweg stellt dir eins aus.“ Lene schreibt dann ein neues.

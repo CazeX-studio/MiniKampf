@@ -2,7 +2,7 @@
 
 Gleiches Verfahren wie bei den Gegenständen (tools/gegenstand_bilder.py): pinker Hintergrund, jedes Bild freigestellt und
 quadratisch zugeschnitten, hier 128 × 128 Pixel. Ergebnis: assets/faehigkeiten/<klasse>_<fähigkeit>.png, Kennungen wie in
-data/faehigkeiten.json („_grund“ = Grundreihe). Die Bildaufträge stehen in Spieldesign/GRAFIK_AUFTRAG.md Teil L.
+data/faehigkeiten.json („_grund“ = Grundreihe). Die Bildaufträge stehen in Spieldesign/GRAFIK_AUFTRAG.md Teil L (Demo-Klassen) und Teil R (die sechs späteren).
 Aufruf: python3 tools/faehigkeit_bilder.py [klasse …]   (ohne Angabe alle, deren Blatt schon da ist)
 """
 import sys
@@ -120,6 +120,14 @@ BLAETTER = {
 			"dissonanz"
 		]
 	],
+	# Teil R (die sechs späteren Klassen, noch ohne Baum): Kennungen wie in scripts/kampf/skills.gd; „@…“ = voller Name
+	# (die Fähigkeiten des Roboters Zahnrad liegen auf dem Blatt des Mechanikers)
+	"tank": [["arcane_strike", "ban", "barrier", "condense"], ["ult"]],
+	"mechanic": [["wrench", "hook", "guard", "repair"], ["ult", "@robot_drill", "@robot_guardmode"]],
+	"twilight": [["light", "shadow", "blind", "veil"], ["turn", "ult"]],
+	"ritualist": [["bite", "gift", "circle", "pact"], ["ult"]],
+	"quartermaster": [["ware", "delivery", "appraise", "coins"], ["ult"]],
+	"kunoichi": [["kunai", "talisman", "release", "smoke"], ["ult"]],
 	"novize": [
 		[
 			"schlag",
@@ -159,11 +167,12 @@ def main():
 			continue
 		# Fähigkeits-Bilder haben oft lose Teile (Wirbel, Funken, Staub): nahe Teile gehören zum selben Bild
 		gb.VERBINDEN.setdefault(blatt, ENG.get(klasse, 15))
-		gb.zerlegen(blatt, [[f"{klasse}_{i}" for i in reihe] for reihe in BLAETTER[klasse]])
+		gb.zerlegen(blatt, [[i[1:] if i.startswith("@") else f"{klasse}_{i}" for i in reihe] for reihe in BLAETTER[klasse]])
 		for reihe in BLAETTER[klasse]:
 			for i in reihe:
-				if f"{klasse}_{i}" not in LILA:
-					entrosen(gb.ZIEL / f"{klasse}_{i}.png")
+				name = i[1:] if i.startswith("@") else f"{klasse}_{i}"
+				if name not in LILA:
+					entrosen(gb.ZIEL / f"{name}.png")
 
 
 if __name__ == "__main__":
