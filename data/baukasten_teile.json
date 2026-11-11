@@ -2041,7 +2041,13 @@
 			"fuss": [
 				114,
 				200
-			]
+			],
+			"bild_hinten": "objekte/go_lehmhaus_gross_hinten.png",
+			"fuss_hinten": [
+				174,
+				169
+			],
+			"lichter_hinten": []
 		},
 		"go_lehmhaus_klein": {
 			"bild": "objekte/go_lehmhaus_klein.png",
@@ -2052,7 +2058,13 @@
 			"fuss": [
 				90,
 				149
-			]
+			],
+			"bild_hinten": "objekte/go_lehmhaus_klein_hinten.png",
+			"fuss_hinten": [
+				102,
+				156
+			],
+			"lichter_hinten": []
 		},
 		"go_gasthaus": {
 			"bild": "objekte/go_gasthaus.png",
@@ -2063,7 +2075,13 @@
 			"fuss": [
 				172,
 				225
-			]
+			],
+			"bild_hinten": "objekte/go_gasthaus_hinten.png",
+			"fuss_hinten": [
+				180,
+				196
+			],
+			"lichter_hinten": []
 		},
 		"go_bank": {
 			"bild": "objekte/go_bank.png",
@@ -2074,7 +2092,13 @@
 			"fuss": [
 				129,
 				157
-			]
+			],
+			"bild_hinten": "objekte/go_bank_hinten.png",
+			"fuss_hinten": [
+				127,
+				142
+			],
+			"lichter_hinten": []
 		},
 		"go_tareks_laden": {
 			"bild": "objekte/go_tareks_laden.png",
@@ -2085,7 +2109,13 @@
 			"fuss": [
 				96,
 				150
-			]
+			],
+			"bild_hinten": "objekte/go_tareks_laden_hinten.png",
+			"fuss_hinten": [
+				128,
+				117
+			],
+			"lichter_hinten": []
 		},
 		"go_clan_werkstatt": {
 			"bild": "objekte/go_clan_werkstatt.png",
@@ -2162,7 +2192,13 @@
 			"fuss": [
 				137,
 				158
-			]
+			],
+			"bild_hinten": "objekte/go_hadraks_schmiede_hinten.png",
+			"fuss_hinten": [
+				279,
+				177
+			],
+			"lichter_hinten": []
 		},
 		"go_kettenamboss": {
 			"bild": "objekte/go_kettenamboss.png",
@@ -2195,7 +2231,13 @@
 			"fuss": [
 				97,
 				65
-			]
+			],
+			"bild_hinten": "objekte/go_schmiede_offen_hinten.png",
+			"fuss_hinten": [
+				63,
+				68
+			],
+			"lichter_hinten": []
 		},
 		"go_bergpfad": {
 			"bild": "objekte/go_bergpfad.png",

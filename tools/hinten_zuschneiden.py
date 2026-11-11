@@ -6,7 +6,8 @@ Vorderansicht durch Schilder oder Vordächer breiter ist). Der Fuß (Mitte der G
 übernommen und waagrecht gespiegelt. Schreibt bild_hinten, fuss_hinten und lichter_hinten (leer, wenn nicht anders
 angegeben) nach data/baukasten_teile.json.
 
-Aufruf: python tools/hinten_zuschneiden.py <blatt.png> <teil>[:m]=<x>,<y> ...
+Aufruf: python tools/hinten_zuschneiden.py [--abstand N] <blatt.png> <teil>[:m]=<x>,<y> ...
+  --abstand: wie weit Teilstücke zusammengefasst werden (Bildpunkte, Standard 6; kleiner, wenn Teile eng stehen).
   x,y: ungefährer Punkt im Blatt, der im Teil liegt.
 Danach: Bilder importieren, tools/web_bilder.py, Foto tests/haeuser_hinten_foto.tscn ansehen.
 """
@@ -46,13 +47,18 @@ def freistellen(blatt: Image.Image) -> Image.Image:
 
 
 def main() -> None:
-	blatt = freistellen(Image.open(sys.argv[1]))
+	args = sys.argv[1:]
+	abstand = 6
+	if args[0] == "--abstand":
+		abstand = int(args[1])
+		args = args[2:]
+	blatt = freistellen(Image.open(args[0]))
 	alpha = np.array(blatt)[:, :, 3] > 20
-	lab, n = ndimage.label(ndimage.binary_dilation(alpha, iterations=6))
+	lab, n = ndimage.label(ndimage.binary_dilation(alpha, iterations=abstand))
 	stuecke = ndimage.find_objects(lab)
 	groesse = ndimage.sum(alpha, lab, range(1, n + 1))
 	daten = json.loads(DATEN.read_text(encoding="utf-8"))
-	for arg in sys.argv[2:]:
+	for arg in args[1:]:
 		name, punkt = arg.split("=")
 		mittel = name.endswith(":m")
 		name = name.removesuffix(":m")
