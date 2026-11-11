@@ -26,7 +26,7 @@ BILDER = {
 	# Teil N (A10b): Geschosse der Monster je Element, Parade und Ausweichen
 	"geschoss_feuer": 4, "geschoss_erde": 4, "geschoss_pflanze": 4, "geschoss_blitz": 4, "geschoss_wasser": 4,
 	"geschoss_wind": 4, "geschoss_licht": 4, "geschoss_schatten": 4, "geschoss_sternenkraft": 4,
-	"parade_perfekt": 6, "parade": 6, "ausweichen": 6,
+	"parade_perfekt": 6, "parade": 6, "ausweichen": 6, "blitz_einschlag": 8, "nachbild": 8,
 	# Teil M (A9b): Effekte der Dungeons
 	"kette_glied": 4, "kette_reisst": 6, "lava": 4, "lavaflut": 6, "nass": 6, "panzer_splitter": 6,
 	"laterne": 4, "splitterlicht": 4, "giftwolke": 6, "heilsporen": 6, "wurzelgriff": 6, "leere": 6,
