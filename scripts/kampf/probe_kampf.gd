@@ -56,7 +56,9 @@ static func einmal(eltern: Node, p_setup: Dictionary, seed_value: int) -> Dictio
 	for h: Fighter in k.state.heroes:
 		leben += maxf(0.0, h.hp)
 		gesamt += h.max_hp
-	var ergebnis := {gewonnen = k.state.won, zuege = k.state.turns, leben = leben / maxf(1.0, gesamt)}
+	var d: DungeonRegeln = k.state.dungeon
+	var phase2 := (d is Vulkanschmiede and (d as Vulkanschmiede).ks.phase2) or (d is Pilzhoehle and (d as Pilzhoehle).phase2)
+	var ergebnis := {gewonnen = k.state.won, zuege = k.state.turns, leben = leben / maxf(1.0, gesamt), phase2 = phase2}
 	eltern.remove_child(k)
 	k.free()
 	return ergebnis

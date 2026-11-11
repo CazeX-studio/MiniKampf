@@ -418,6 +418,9 @@ func _play_event(event: Dictionary) -> void:
 				view(event.f).cast_hop()
 		"banner":
 			_banner(event.text)
+		"phasen_film":
+			await PhasenFilm.abspielen(self, _field, view(event.f) if has_view(event.f) else null, str(event.motiv), str(event.titel),
+					str(event.untertitel), event.farbe)
 		"row":
 			await move_to_row(event.f)
 		"lava":

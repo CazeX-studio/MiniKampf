@@ -5,7 +5,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 11.11.)
 
-- **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** A9b (Bosse beider Dungeons), danach A10 bis A16 (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
+- **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** A9b2 (Wurzelmutter und Vorbote), dann A9b3 (Sporenkönigin und Hammerbrüder), danach A10 bis A16 (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
 - **Bilder von Marco (02.11. abends):** 38 Blätter liegen unter `tools/vorlagen/`: alle sechs Novizen-Blätter ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen.
   - Dazu der Baukasten (02.11.): acht Grundkörper (`grund_*.png`), Köpfe (`koepfe_*.png`), Hüte (`huete_regionen.png`), Zeichen (`zeichen_dienste.png`) und die Klingentänzerin Blatt 1. Bei den Fäusten der Abwehr-Bilder von Blatt 1 prüft Claude beim Einbauen, ob sie am Oval stören.
   - Dazu Figuren 4 und 5 (02.11.): 22 Blätter Nebenfiguren (`neben_*.png`) und 42 Blätter Hauptfiguren (`haupt_*.png`) aller drei Städte, damit ist Teil D vollständig. `neben_reserve_rashid_tarek.png` ist ein doppeltes Sammelblatt und bleibt Reserve.
@@ -64,7 +64,20 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (10.11.):** Alpha-Aufträge A9b bis A15 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+- **Nächster Schritt (11.11.):** Alpha-Aufträge A9b2 bis A16 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+
+- **Neu (11.11.): A9b1 Kettenschmied schwerer, mit Film** (Alpha-Punkte 38 und 39):
+  - Geht der Kettenschmied in Phase 2, läuft ein kurzer Film: Das Bild wird dunkel, die drei Ketten glühen auf und reißen, die Glieder fliegen davon, groß erscheint „Entfesselt!“.
+  - Fesseln sind jetzt gefährlich: Die beiden Gefesselten bekommen zusammen mehr Schaden ab als einer allein, und die glühende Kette brennt bei jedem Zug des Kettenschmieds. Er fesselt früher wieder.
+  - Phase 2 geht nur noch mit dem Kühlbecken: Solange sein Panzer hält, kommt nur ein Zehntel des Schadens durch, auch bei Brennen und Gift. Nass wird nur, wer das Becken gezielt angreift. Dafür steigt die Lava langsamer und er schlägt etwas schwächer zu.
+  - Gemessen (je 150 Kämpfe zu dritt auf Stufe 20): mit Kühlbecken 85 von 100 gewonnen, ohne keiner (vorher 87 und 91, die Mechanik war egal).
+  - Für E4: Allein schafft man ihn selten, schon Phase 1 ist allein zu schwer. Der Rüstungsschmied gewinnt auch zu dritt selten.
+  - **So testest du es:**
+    1. Mit dem Spielstand-Editor zur Vulkanschmiede springen, in der Ankerkammer den Kettenschmied angreifen (mit Tessa und Gorm).
+    2. Ihn in Phase 1 besiegen: Der Film mit den reißenden Ketten läuft, danach steht er mit dem Kühlbecken da.
+    3. Nur auf ihn einschlagen: Es kommen fast keine Schadenszahlen durch, die Lava steigt.
+    4. Erst ins Kühlbecken schlagen (nass), dann ihn hart treffen: Ein Stück Panzer splittert ab, nach drei Stücken trifft man voll.
+    5. Werden zwei gefesselt: Beide verlieren bei jedem seiner Züge Leben, bis ein Dritter die Kette zerschlägt.
 
 - **Neu (10.11.): A9a Begleiter im Dungeon** (Alpha-Punkt 37, Pilzhöhle und Vulkanschmiede):
   - Am Eingang beider Dungeons fragt das Spiel, wer mitkommt: „Allein“, „Mit Tessa“, „Mit Gorm“ oder „Mit Tessa und Gorm“. Die Wahl gilt für den ganzen Durchgang, bei den Bossen und bei jedem Monster dort. Beim nächsten Betreten wählst du neu.

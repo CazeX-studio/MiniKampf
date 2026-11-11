@@ -148,11 +148,21 @@ func _kettenschmied() -> void:
 	for h in k.heroes:
 		h.hp = h.max_hp
 	# Gefesselt: geteilter Schaden, ein Dritter zerschlägt die Kette
+	var allein := a.hp
+	k.apply_damage(a, 20)
+	allein -= a.hp
+	a.hp = a.max_hp
 	ks.gefesselt.assign([a, b])
 	var la := a.hp
 	var lb := b.hp
 	k.apply_damage(a, 20)
 	_check(la - a.hp > 0 and lb - b.hp > 0 and absi((la - a.hp) - (lb - b.hp)) <= 12, "Gefesselt: beide teilen den Schaden")
+	_check((la - a.hp) + (lb - b.hp) > allein, "A9b: Gefesselt schützt nicht mehr, zusammen nehmen beide mehr Schaden")
+	la = a.hp
+	lb = b.hp
+	boss.step = 1
+	ks._fessel_pruefen(boss)
+	_check(a.hp < la and b.hp < lb and ks.gefesselt.size() == 2, "A9b: Die glühende Kette brennt bei jedem Zug des Kettenschmieds")
 	_check(v.extra_abilities(a).all(func(x: Dictionary) -> bool: return x.id != "kette"), "Die Gefesselten selbst können die Kette nicht zerschlagen")
 	var kette := v.extra_abilities(dritter).filter(func(x: Dictionary) -> bool: return x.id == "kette")
 	_check(kette.size() == 1, "Ein Dritter kann die Kette zerschlagen")
@@ -164,12 +174,24 @@ func _kettenschmied() -> void:
 	var zwei := v._find("kettenschmied_2")
 	var becken := v._find("kuehlbecken")
 	_check(ks.phase2 and zwei != null and becken != null and k.lava == null, "Phase 2: entfesselt, mit Kühlbecken, die Lava steigt jetzt stufenweise")
+	_check(k._events.any(func(ev: Dictionary) -> bool: return ev.type == "phasen_film" and ev.f == zwei and ev.motiv == "ketten"),
+			"A9b: Beim Wechsel in Phase 2 läuft ein Film, die Ketten reißen")
 	var vorher := becken.hp
+	# Ein Rundumschlag, der das Becken nur streift, macht nicht nass (A9b)
+	k.held_handelt = true
+	k.aktions_ziel = zwei
+	k.apply_damage(becken, 15, a)
+	_check(not a.has_meta("nass"), "A9b: Nur wer das Kühlbecken gezielt angreift, wird nass")
+	k.held_handelt = false
+	k.aktions_ziel = null
 	k.apply_damage(becken, 15, a)
 	_check(becken.hp == vorher and a.has_meta("nass"), "Wer ins Kühlbecken schlägt, wird nass")
 	var leben := zwei.hp
 	k.apply_damage(zwei, 20, dritter)
-	_check(leben - zwei.hp == roundi(20 * Kettenschmied.PANZER_DURCH) and ks.panzer == Kettenschmied.PANZER, "Der Panzer hält einen Teil ab")
+	_check(leben - zwei.hp == roundi(20 * Kettenschmied.PANZER_DURCH) and ks.panzer == Kettenschmied.PANZER, "Der Panzer hält fast alles ab")
+	leben = zwei.hp
+	k.apply_damage(zwei, 40)
+	_check(leben - zwei.hp == roundi(40 * Kettenschmied.PANZER_DURCH), "A9b: Auch Brennen und Gift kommen kaum durch den Panzer")
 	k.apply_damage(zwei, 30, a)
 	_check(ks.panzer == Kettenschmied.PANZER - 1, "Nass und hart getroffen: ein Stück Panzer splittert ab")
 	ks.gefesselt.assign([a, b])

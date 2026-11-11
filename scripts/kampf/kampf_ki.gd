@@ -5,6 +5,9 @@ extends RefCounted
 ## "rules" ist das Objekt mit abilities / blocked_reason / choice_blocked / valid_targets (Skills).
 
 var rng := RandomNumberGenerator.new()
+## Nur für Messungen (tests/boss_messen.gd): Diese Boss-Mechaniken ignoriert der Computer (Aktionen wie "anker", "kette"
+## oder Ziele wie "kuehlbecken"), so zeigt sich, ob ein Boss auch ohne sie zu schaffen ist.
+static var ohne_mechanik: Array[String] = []
 
 
 func _init(p_seed: int) -> void:
@@ -16,6 +19,8 @@ func choose(rules: Skills, f: Fighter) -> Dictionary:
 	var options: Array[Dictionary] = []
 	for ab in rules.abilities(f):
 			# Abwarten und Deckung geben nimmt der Computer nicht (er soll mitkämpfen und seinen Platz halten)
+		if ohne_mechanik.has(str(ab.id)):
+			continue
 		if rules.blocked_reason(f, ab) != "" or ab.id == "abwarten" or ab.id == "deckung":
 			continue
 		if ab.target == "choice":
@@ -39,7 +44,7 @@ func choose(rules: Skills, f: Fighter) -> Dictionary:
 	if pick.is_empty():
 		for ab in options:
 			# Kettenschmied: wackelnden Anker festhämmern, Gefesselte befreien
-			if ab.id in ["stoeren", "anker", "kette"]:
+			if ab.id in ["stoeren", "anker", "kette"] and not ohne_mechanik.has(str(ab.id)):
 				pick = ab
 			# Sporenkönigin: ab drei Giftwolken eine vertreiben (bei fünf fällt die Gruppe)
 			if ab.id == "clear_cloud" and rules.c.dungeon is Pilzhoehle and (rules.c.dungeon as Pilzhoehle).clouds >= 3:
@@ -68,12 +73,26 @@ func choose(rules: Skills, f: Fighter) -> Dictionary:
 	var target: Fighter = null
 	if pick.target != "none":
 		var targets := rules.valid_targets(f, pick)
-		# Kühlbecken (Kettenschmied): nur ab und zu hineinschlagen, um nass zu werden, und nicht, wenn man schon nass ist
+		# Kühlbecken (Kettenschmied): hineinschlagen, um nass zu werden, solange er noch Panzer hat (A9b: sonst kommt
+		# kaum Schaden durch), nicht, wenn man schon nass ist; nass gezielt den Kettenschmied treffen
 		var ohne_becken := targets.filter(func(t: Fighter) -> bool: return t.klass != "kuehlbecken")
-		if not ohne_becken.is_empty() and ohne_becken.size() < targets.size() and (f.has_meta("nass") or rng.randf() < 0.75):
-			targets.assign(ohne_becken)
+		if not ohne_becken.is_empty() and ohne_becken.size() < targets.size():
+			var ks := _kettenschmied(rules)
+			var panzer := ks != null and ks.panzer > 0
+			if ohne_mechanik.has("kuehlbecken") or f.has_meta("nass") or rng.randf() < (0.4 if panzer else 0.85):
+				targets.assign(ohne_becken)
+				var boss := ohne_becken.filter(func(t: Fighter) -> bool: return t.klass == "kettenschmied_2")
+				if panzer and f.has_meta("nass") and not boss.is_empty() and not ohne_mechanik.has("kuehlbecken"):
+					targets.assign(boss)
+			else:
+				targets.assign(targets.filter(func(t: Fighter) -> bool: return t.klass == "kuehlbecken"))
 		target = targets[rng.randi() % targets.size()]
 	return {ab = pick, target = target}
+
+
+func _kettenschmied(rules: Skills) -> Kettenschmied:
+	var d: DungeonRegeln = rules.c.dungeon
+	return (d as Vulkanschmiede).ks if d is Vulkanschmiede else null
 
 
 ## Perfekte Reaktion: klappt mit der angegebenen Wahrscheinlichkeit (Tests: die Hälfte, Mitstreiter: selten).

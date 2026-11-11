@@ -263,6 +263,11 @@ func hop(f: Fighter) -> void:
 	_emit({type = "hop", f = f})
 
 
+## Kurzer Film, wenn ein Boss in Phase 2 geht (PhasenFilm, A9b). Die Anzeige wartet, bis er vorbei ist.
+func phasen_film(f: Fighter, motiv: String, titel: String, untertitel: String, farbe: Color) -> void:
+	_emit({type = "phasen_film", f = f, motiv = motiv, titel = titel, untertitel = untertitel, farbe = farbe})
+
+
 ## Großer Schriftzug in der Bildmitte (z. B. "Welle 2").
 func banner(text: String) -> void:
 	_emit({type = "banner", text = text})
@@ -743,6 +748,10 @@ func gain_mana(f: Fighter, share: float) -> int:
 var _gelaehmt := false
 ## Wer vom letzten Gegner-Angriff wirklich getroffen wurde (für Effekte, die am Angriff hängen)
 var _getroffen: Array[Fighter] = []
+## Das Ziel, das ein Held für seine Fähigkeit gewählt hat, solange sie läuft (null sonst). Das Kühlbecken des
+## Kettenschmieds macht nur nass, wer es gezielt angreift, nicht wer es mit einem Rundumschlag streift (A9b).
+var aktions_ziel: Fighter = null
+var held_handelt := false
 
 
 ## Ein Effekt aus der Effekt-Liste wird sichtbar (gleich für alle, die ihn auslösen).
@@ -931,7 +940,11 @@ func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 	elif ab.has("duet"):
 		add_log("[color=#ffa8e0][b]Duett: %s![/b][/color]" % ab.name)
 
+	aktions_ziel = target
+	held_handelt = true
 	skills.execute(f, ab, target)
+	held_handelt = false
+	aktions_ziel = null
 	refresh()
 	wait(0.35)
 
