@@ -982,7 +982,7 @@ func _enemy_turn(e: Fighter) -> void:
 			_weglaufen(e)
 			return
 		if not await _monster_faehigkeit(e, attack):
-			var targets := _monster_ziele(attack)
+			var targets := _monster_ziele(attack, e)
 			var schaden := _monster_schaden(e, attack)
 			for n in maxi(int(attack.get("treffer", 1)), 1):
 				if targets.is_empty() or not e.is_alive():
@@ -1023,8 +1023,13 @@ func faehigkeit_waehlen(e: Fighter) -> Dictionary:
 
 
 ## Ziele eines Monster-Angriffs (MONSTER.md): alle, vordere/hintere Reihe, das schwächste Ziel oder mehrere verschiedene.
-func _monster_ziele(attack: Dictionary) -> Array[Fighter]:
+func _monster_ziele(attack: Dictionary, e: Fighter = null) -> Array[Fighter]:
 	var targets: Array[Fighter] = []
+	# Sternenfresser (Marco, 11.11.): greift öfter die Hauptperson an, damit sie perfekt parieren und den Panzer öffnen kann
+	var vorliebe: float = Sandbox.ENEMIES.get(e.klass, {}).get("spieler_bevorzugt", 0.0) if e != null else 0.0
+	if vorliebe > 0.0 and str(attack.get("ziel", "")) == "" and not attack.get("all", false) and zufall() < vorliebe:
+		attack = attack.duplicate()
+		attack.ziel = "spieler"
 	match str(attack.get("ziel", "")):
 		"spieler":
 			# Ein echter Spieler, kein Mitstreiter des Computers (Sternenschlund, A15)
@@ -1273,14 +1278,21 @@ func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String
 			_last_eff = 1.0
 			skills.on_perfect_reaction(t, e)
 		elif e.deadly:
-			# Tödlicher Angriff: normal pariert bleiben 10 % des Lebens übrig, sonst fällt das Ziel sofort
+			# Tödlicher Angriff: normal pariert bleiben 10 % des Lebens übrig, sonst fällt das Ziel sofort.
+			# Einen ungeblockten Treffer übersteht jeder einmal mit 10 % (Marco, 11.11.); der Sternenschlund bleibt streng.
 			var parried: bool = grade == REACT_NORMAL and t.reaction != "" and not e.get_meta("streng", false)
-			float_text(t, "Pariert – aber hart getroffen!" if parried else "TÖDLICH!", Color("cfe2ff") if parried else Color("ff4d4d"), 78)
+			var knapp: bool = not parried and not e.get_meta("streng", false) and not t.has_meta("toedlich_ueberlebt")
+			if knapp:
+				t.set_meta("toedlich_ueberlebt", true)
+				parried = true
+			float_text(t, ("Knapp überlebt!" if knapp else "Pariert – aber hart getroffen!") if parried else "TÖDLICH!",
+					Color("cfe2ff") if parried else Color("ff4d4d"), 78)
 			_last_crit = false
 			_last_eff = 1.0
 			# Schilde helfen gegen diesen Angriff nicht
 			t.shields.clear()
-			apply_damage(t, roundi(t.max_hp * DEADLY_PARRIED) if parried else t.hp, e)
+			var rest := mini(t.hp, maxi(roundi(t.max_hp * (1.0 - DEADLY_PARRIED)), 1))
+			apply_damage(t, t.hp - rest if knapp else (roundi(t.max_hp * DEADLY_PARRIED) if parried else t.hp), e)
 		elif grade == REACT_NORMAL and t.reaction != "":
 			# Normal pariert oder ausgewichen: nur ein Teil des Schadens kommt an
 			float_text(t, "Pariert" if t.reaction == "parry" else "Ausgewichen", Color("cfe2ff"), 78)

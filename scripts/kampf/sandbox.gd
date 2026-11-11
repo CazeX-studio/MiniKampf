@@ -297,7 +297,7 @@ const FESTE_GEGNER := {
 			effekt = {art = "schutz", anteil = 0.15}, einmal = true}]},
 	# Nacht des Sternenfalls (Kreuzweg-Demo): Ein Feldschleim hat einen Splitter gefressen
 	"sternenfresser": {name = "Der Sternenfresser", element = "Sternenkraft", hp = 240, tempo = 9, big = true,
-		panzer = 0.1, erschuettert = 2, wipe_nach = 8, toedlich = true, wipe_text = "Der Splitter im Bauch des Sternenfressers explodiert!",
+		panzer = 0.1, erschuettert = 2, wipe_nach = 8, toedlich = true, spieler_bevorzugt = 0.7, wipe_text = "Der Splitter im Bauch des Sternenfressers explodiert!",
 		# Sternenschlund (design.md, 21.10., A15): einen Zug vorher angekündigt, trifft einen Spieler, ohne PERFEKTE Parade sofort besiegt
 		attacks = [{name = "Sternenschlag", base = 28, kind = "melee"}, {name = "Splitterregen", base = 14, kind = "magic", all = true},
 			{name = "Sternenschlund", base = 28, kind = "melee", ziel = "spieler", streng = true}, {name = "Leuchtender Biss", base = 20, kind = "melee"}]},

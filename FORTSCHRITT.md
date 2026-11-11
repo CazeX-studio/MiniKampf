@@ -2856,12 +2856,11 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 ## Offene Fragen an Marco (aufgeräumt 11.11.2026)
 
 ### Deine Entscheidungen
-1. **Sternenfresser:** Seit dem 22.10. ist jeder seiner Treffer tödlich (normal pariert bleibt ein Rest Leben), dazu seit A15 der angekündigte Sternenschlund (nur die perfekte Parade rettet) und die Explosion nach 8 Zügen. design.md wollte nur den Sternenschlund tödlich. So streng lassen oder wie in design.md?
-2. **Wipfelheim (offen seit 29.10.):** Passen die Plätze (Ysolde in der Mitte, Fenn im Norden, Tilda im Osten, Esche im Süden, Borko jetzt im Baumhaus-Gasthaus)? Und ist Marv, der dir nach Wipfelheim nachreist, lustig oder zu viel?
-3. **Lichter in Kreuzweg (offen seit 04.11.):** Durch Leuchtflecken ersetzen? Die Vergleichsbilder hast du; ohne Zusage bleiben die echten Lichter.
-4. **Stadt-Editor online speichern (S4c):** Erst besprechen, damit Katie mithelfen kann.
-5. **Feedback-Formular (S1):** Sobald du den „vorausgefüllten Link“ deines Google-Formulars schickst, verbinde ich den Knopf.
-6. **Texte:** Alle Gespräche sind Platzhalter; die Hauptfiguren schreibst du selbst (`data/LIESMICH.md`). Neu dazugekommen: Broms Brief, Lenes Ersatz-Empfehlungsschreiben, die Wache vor den Städten.
+- **Feedback-Formular (S1):** Müssen wir noch zusammen erstellen. Sag Bescheid, dann schreibe ich die Fragen und eine Anleitung.
+- **Texte:** Die Hauptfiguren schreibst du selbst (`data/LIESMICH.md`). Broms Brief, Lenes Empfehlungsschreiben und die Wache stehen fürs Brainstorming im Google Doc.
+
+### Im Alpha-Test bewerten
+- Wipfelheim: Plätze der Leute, und ob Marv dir nachreisen soll.
 
 ### Deine Bilder (`Spieldesign/GRAFIK_AUFTRAG.md`, Prompts schicke ich dir auf Nachfrage)
 - **Für die Demo:** H (Klassenbilder, A3b), M (Effekte der Dungeons), N (Monster-Geschosse und Abwehr, A10b), O (Innenräume der drei Gasthäuser), P (Dürrewald-Übergänge, A13b), Q (Brief und Empfehlungsschreiben), J (Häuser von hinten), zuletzt I (Sitzen und Laufen, S6).
@@ -2874,7 +2873,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - Glasskorpion-Gruppen in der Palmenrast (50–60 %), Gruppen der Vulkanschmiede allein (51–100 %). Dein Hinweis vom 04.11.: Stärkere Monster dürfen bleiben.
 
 ### Nach der Demo
-- N1 Server und Konten, N2 Figuren-Bilder auf zwei Drittel (Web-Paket etwa 20 MB kleiner), Monster des Zähmers mit Stufen, Entwicklung und Ei (design.md), Set-Boni, Waffen nur für die eigene Klasse, zufällige Bonus-Werte bei Beute, eigener Körper für Kobalt.
+- S4c Stadt-Editor online speichern (für Katie), N1 Server und Konten, N2 Figuren-Bilder auf zwei Drittel (Web-Paket etwa 20 MB kleiner), Monster des Zähmers mit Stufen, Entwicklung und Ei (design.md), Set-Boni, Waffen nur für die eigene Klasse, zufällige Bonus-Werte bei Beute, eigener Körper für Kobalt.
 
 ### Erledigt (beim Aufräumen abgehakt)
 - Zweimal Mira: Novizen-Köpfe sind namenlos (28.10.).
@@ -2887,3 +2886,18 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 - „2 Runden“ in der Wildnis: eine Welle und 3 Sekunden Ruhe nach jedem Kampf, seitdem keine Rückmeldung.
 - Sporenkönigin mit Mechanik in der Welt, Glutgeist, Namen der Hammerbrüder (E1, 04.11.); Sternensängerin nur weiblich.
 - Novizen-Fähigkeiten über die Leiste (A16, so bleibt es), Figuren-Bilder verkleinern nach der Demo (N2).
+- Sternenfresser leicht abgeschwächt (11.11., siehe unten).
+- Lichter in Kreuzweg: bleiben echte Lichter, keine Leuchtflecken (11.11.).
+- Stadt-Editor online speichern (S4c): nach der Demo (11.11.).
+
+## Sternenfresser leicht abgeschwächt (Marco, 11.11.2026)
+- Einen ungeblockten Treffer übersteht jeder einmal pro Kampf mit einem Rest Leben („Knapp überlebt!“); erst der zweite ist tödlich. Normal pariert bleibt wie bisher ein Rest Leben.
+- Er greift meist (etwa 7 von 10 Einzelangriffen) die Hauptperson an, also echte Spieler statt der Mitstreiter des Computers. So kannst du öfter perfekt parieren und seinen Panzer öffnen.
+- Der angekündigte Sternenschlund bleibt streng (nur die perfekte Parade rettet), die Explosion nach 8 Zügen auch.
+- Prüfung: `tests/sternenfresser_test.gd`.
+
+**So testest du es**
+1. Spiel bis zur Nacht des Sternenfalls und kämpfe gegen den Sternenfresser.
+2. Lass einen Treffer absichtlich ohne Parade durch: Du solltest „Knapp überlebt!“ sehen und weiterkämpfen können.
+3. Achte darauf, wen er angreift: meistens dich.
+4. Pariere perfekt: Der Panzer bekommt Risse, jetzt angreifen.
