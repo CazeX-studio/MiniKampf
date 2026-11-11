@@ -3,33 +3,19 @@
 		"titel": "Ankunft in Kreuzweg",
 		"beschreibung": "Melde dich in der Abenteurergilde an. Lene, die Gildenschreiberin, wartet vor dem Eingang.",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "gilde_angemeldet",
-				"bei": "schreiberin",
-				"text": "Bei Schreiberin Lene anmelden"
-			}
+			{"art": "gemerkt", "merken": "gilde_angemeldet", "bei": "schreiberin", "text": "Bei Schreiberin Lene anmelden"}
 		],
 		"abgeben_bei": "schreiberin",
-		"belohnung": {
-			"erfahrung": 20
-		}
+		"belohnung": {"erfahrung": 20}
 	},
 	"zu_ye": {
 		"titel": "Der Novizen-Ausbilder",
 		"beschreibung": "Schreiberin Lene schickt dich zu Ausbilder Ye. Er steht neben der Gilde.",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "bei_ye_gemeldet",
-				"bei": "ye",
-				"text": "Bei Ausbilder Ye melden"
-			}
+			{"art": "gemerkt", "merken": "bei_ye_gemeldet", "bei": "ye", "text": "Bei Ausbilder Ye melden"}
 		],
 		"abgeben_bei": "ye",
-		"belohnung": {
-			"erfahrung": 10
-		}
+		"belohnung": {"erfahrung": 10}
 	},
 	"erster_auftrag": {
 		"titel": "Die Stadt kennenlernen",
@@ -37,26 +23,11 @@
 		"start_bei": "ye",
 		"voraussetzung": "zu_ye",
 		"ziele": [
-			{
-				"art": "sammeln",
-				"gegenstand": "kraut",
-				"anzahl": 3
-			},
-			{
-				"art": "gemerkt",
-				"merken": "schmiedin_bescheid",
-				"bei": "schmiedin",
-				"text": "Schmiedin Marta Bescheid sagen"
-			}
+			{"art": "sammeln", "gegenstand": "kraut", "anzahl": 3},
+			{"art": "gemerkt", "merken": "schmiedin_bescheid", "bei": "schmiedin", "text": "Schmiedin Marta Bescheid sagen"}
 		],
 		"abgeben_bei": "ye",
-		"belohnung": {
-			"gold": 250,
-			"erfahrung": 70,
-			"gegenstaende": {
-				"heiltrank": 1
-			}
-		}
+		"belohnung": {"gold": 250, "erfahrung": 70, "gegenstaende": {"heiltrank": 1}}
 	},
 	"grundausbildung": {
 		"titel": "Grundausbildung",
@@ -64,18 +35,10 @@
 		"start_bei": "ye_tor",
 		"voraussetzung": "erster_auftrag",
 		"ziele": [
-			{
-				"art": "kampf",
-				"kampf": "grundausbildung",
-				"bei": "ye_tor",
-				"text": "Den Übungskampf bei Ye bestehen"
-			}
+			{"art": "kampf", "kampf": "grundausbildung", "bei": "ye_tor", "text": "Den Übungskampf bei Ye bestehen"}
 		],
 		"abgeben_bei": "ye_tor",
-		"belohnung": {
-			"gold": 200,
-			"erfahrung": 100
-		}
+		"belohnung": {"gold": 200, "erfahrung": 100}
 	},
 	"erster_gruppenkampf": {
 		"titel": "Der erste Gruppenkampf",
@@ -83,37 +46,19 @@
 		"start_bei": "ye_tor",
 		"voraussetzung": "grundausbildung",
 		"ziele": [
-			{
-				"art": "kampf",
-				"kampf": "gruppenkampf",
-				"bei": "ye_tor",
-				"text": "Monster mit Tessa und Gorm vertreiben"
-			}
+			{"art": "kampf", "kampf": "gruppenkampf", "bei": "ye_tor", "text": "Monster mit Tessa und Gorm vertreiben"}
 		],
 		"abgeben_bei": "ye_tor",
-		"belohnung": {
-			"gold": 300,
-			"erfahrung": 100,
-			"gegenstaende": {
-				"heiltrank": 2
-			}
-		}
+		"belohnung": {"gold": 300, "erfahrung": 100, "gegenstaende": {"heiltrank": 2}}
 	},
 	"marvs_traum": {
 		"titel": "Marvs großer Traum",
 		"beschreibung": "Marv will unbedingt Kreuzweg-Karten mit dir spielen. Dafür braucht man eine Sternentafel – und die gibt es nur bei Handelsherr Bingo.",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "sternentafel_gesehen",
-				"bei": "bingo",
-				"text": "Bei Bingo nach der Sternentafel fragen"
-			}
+			{"art": "gemerkt", "merken": "sternentafel_gesehen", "bei": "bingo", "text": "Bei Bingo nach der Sternentafel fragen"}
 		],
 		"abgeben_bei": "marv",
-		"belohnung": {
-			"erfahrung": 50
-		}
+		"belohnung": {"erfahrung": 50}
 	},
 	"gesandte": {
 		"titel": "Die Gesandten der fünf Regionen",
@@ -121,24 +66,11 @@
 		"start_bei": "schreiberin",
 		"voraussetzung": "erster_gruppenkampf",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "probestunde_gemacht",
-				"text": "An einer Probestunde teilnehmen (Gesandte an den fünf Straßen)",
-				"wegweiser": [
-					"gesandte_arkanum",
-					"gesandte_messinghafen",
-					"gesandte_glutoase",
-					"gesandte_gruenwacht",
-					"gesandte_nebelinseln"
-				]
-			}
+			{"art": "gemerkt", "merken": "probestunde_gemacht", "text": "An einer Probestunde teilnehmen (Gesandte an den fünf Straßen)",
+				"wegweiser": ["gesandte_arkanum", "gesandte_messinghafen", "gesandte_glutoase", "gesandte_gruenwacht", "gesandte_nebelinseln"]}
 		],
 		"abgeben_bei": "schreiberin",
-		"belohnung": {
-			"gold": 500,
-			"erfahrung": 300
-		}
+		"belohnung": {"gold": 500, "erfahrung": 300}
 	},
 	"korb_fuer_die_wache": {
 		"titel": "Ein Korb für die Wache",
@@ -146,33 +78,19 @@
 		"start_bei": "schreiberin",
 		"voraussetzung": "gesandte",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "korb_abgegeben",
-				"bei": "wache",
-				"text": "Den Korb zur Wache am alten Südost-Weg bringen"
-			}
+			{"art": "gemerkt", "merken": "korb_abgegeben", "bei": "wache", "text": "Den Korb zur Wache am alten Südost-Weg bringen"}
 		],
 		"abgeben_bei": "wache",
-		"belohnung": {
-			"erfahrung": 200
-		}
+		"belohnung": {"erfahrung": 200}
 	},
 	"leises_singen": {
 		"titel": "Ein leises Singen",
 		"beschreibung": "Als die Wache dich wegschickt, hörst du ganz leise ein Singen. Woher kommt es?",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "mira_getroffen",
-				"bei": "mira",
-				"text": "Dem leisen Singen folgen"
-			}
+			{"art": "gemerkt", "merken": "mira_getroffen", "bei": "mira", "text": "Dem leisen Singen folgen"}
 		],
 		"abgeben_bei": "mira",
-		"belohnung": {
-			"erfahrung": 250
-		}
+		"belohnung": {"erfahrung": 250}
 	},
 	"fest": {
 		"titel": "Das Fest der fünf Wege",
@@ -180,33 +98,19 @@
 		"start_bei": "schreiberin",
 		"voraussetzung": "leises_singen",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "marv_fest",
-				"bei": "marv_fest",
-				"text": "Das Fest auf dem Marktplatz besuchen"
-			}
+			{"art": "gemerkt", "merken": "marv_fest", "bei": "marv_fest", "text": "Das Fest auf dem Marktplatz besuchen"}
 		],
 		"abgeben_bei": "marv_fest",
-		"belohnung": {
-			"erfahrung": 100
-		}
+		"belohnung": {"erfahrung": 100}
 	},
 	"sternenfall": {
 		"titel": "Die Nacht des Sternenfalls",
 		"beschreibung": "Sterne fallen vom Himmel. Ein Splitter hat einen Feldschleim in den Sternenfresser verwandelt!",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "ren_getroffen",
-				"bei": "ren",
-				"text": "Den Sternenfall überstehen"
-			}
+			{"art": "gemerkt", "merken": "ren_getroffen", "bei": "ren", "text": "Den Sternenfall überstehen"}
 		],
 		"abgeben_bei": "ren",
-		"belohnung": {
-			"erfahrung": 500
-		}
+		"belohnung": {"erfahrung": 500}
 	},
 	"abreise": {
 		"titel": "Die Abreise",
@@ -214,84 +118,14 @@
 		"start_bei": "schreiberin",
 		"voraussetzung": "sternenfall",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "klasse_bestaetigt",
-				"bei": "ye_tor",
-				"text": "Bei Ye am Tor deinen Weg wählen"
-			}
+			{"art": "gemerkt", "merken": "klasse_bestaetigt", "bei": "ye_tor", "text": "Bei Ye am Tor deinen Weg wählen"}
 		],
 		"abgeben_bei": "ye_tor",
-		"belohnung": {
-			"erfahrung": 300
-		}
+		"belohnung": {"erfahrung": 300}
 	},
-	"lektion_doppelschlag": {
-		"titel": "Ye's Lektion: Doppelschlag",
-		"neben": true,
-		"beschreibung": "Ye will dir auf der Übungswiese den Doppelschlag zeigen: zwei schnelle Hiebe, die Mana kosten. (ab Stufe 4)",
-		"start_bei": "ye_tor",
-		"voraussetzung": "grundausbildung",
-		"start_wenn": {
-			"stufe_ab": 4
-		},
-		"ziele": [
-			{
-				"art": "kampf",
-				"kampf": "lektion_doppelschlag",
-				"bei": "ye_tor",
-				"text": "Bei Ye den Doppelschlag üben"
-			}
-		],
-		"abgeben_bei": "ye_tor",
-		"belohnung": {
-			"gold": 50
-		}
-	},
-	"lektion_erste_hilfe": {
-		"titel": "Ye's Lektion: Erste Hilfe",
-		"neben": true,
-		"beschreibung": "Ye zeigt dir, wie du dich und andere im Kampf verbindest. (ab Stufe 6)",
-		"start_bei": "ye_tor",
-		"voraussetzung": "lektion_doppelschlag",
-		"start_wenn": {
-			"stufe_ab": 6
-		},
-		"ziele": [
-			{
-				"art": "kampf",
-				"kampf": "lektion_erste_hilfe",
-				"bei": "ye_tor",
-				"text": "Bei Ye die Erste Hilfe üben"
-			}
-		],
-		"abgeben_bei": "ye_tor",
-		"belohnung": {
-			"gold": 50
-		}
-	},
-	"lektion_deckung": {
-		"titel": "Ye's Lektion: Deckung geben",
-		"neben": true,
-		"beschreibung": "Mit Tessa und Gorm übst du, einen Treffer für jemand anderen abzufangen. (ab Stufe 8)",
-		"start_bei": "ye_tor",
-		"voraussetzung": "lektion_erste_hilfe",
-		"start_wenn": {
-			"stufe_ab": 8
-		},
-		"ziele": [
-			{
-				"art": "kampf",
-				"kampf": "lektion_deckung",
-				"bei": "ye_tor",
-				"text": "Bei Ye mit Tessa und Gorm Deckung geben üben"
-			}
-		],
-		"abgeben_bei": "ye_tor",
-		"belohnung": {
-			"gold": 50
-		}
-	},
+	"lektion_doppelschlag": {"titel": "Ye's Lektion: Doppelschlag", "neben": true, "beschreibung": "Ye will dir auf der Übungswiese den Doppelschlag zeigen: zwei schnelle Hiebe, die Mana kosten. (ab Stufe 4)", "start_bei": "ye_tor", "voraussetzung": "grundausbildung", "start_wenn": {"stufe_ab": 4}, "ziele": [{"art": "kampf", "kampf": "lektion_doppelschlag", "bei": "ye_tor", "text": "Bei Ye den Doppelschlag üben"}], "abgeben_bei": "ye_tor", "belohnung": {"gold": 50}},
+	"lektion_erste_hilfe": {"titel": "Ye's Lektion: Erste Hilfe", "neben": true, "beschreibung": "Ye zeigt dir, wie du dich und andere im Kampf verbindest. (ab Stufe 6)", "start_bei": "ye_tor", "voraussetzung": "lektion_doppelschlag", "start_wenn": {"stufe_ab": 6}, "ziele": [{"art": "kampf", "kampf": "lektion_erste_hilfe", "bei": "ye_tor", "text": "Bei Ye die Erste Hilfe üben"}], "abgeben_bei": "ye_tor", "belohnung": {"gold": 50}},
+	"lektion_deckung": {"titel": "Ye's Lektion: Deckung geben", "neben": true, "beschreibung": "Mit Tessa und Gorm übst du, einen Treffer für jemand anderen abzufangen. (ab Stufe 8)", "start_bei": "ye_tor", "voraussetzung": "lektion_erste_hilfe", "start_wenn": {"stufe_ab": 8}, "ziele": [{"art": "kampf", "kampf": "lektion_deckung", "bei": "ye_tor", "text": "Bei Ye mit Tessa und Gorm Deckung geben üben"}], "abgeben_bei": "ye_tor", "belohnung": {"gold": 50}},
 	"hannes_kater": {
 		"titel": "Hannes Kater",
 		"neben": true,
@@ -299,23 +133,11 @@
 		"start_bei": "hanne",
 		"voraussetzung": "ankunft",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "kater_spur",
-				"bei": "lotte",
-				"text": "Pip und Lotte nach dem Kater fragen"
-			},
-			{
-				"art": "gemerkt",
-				"merken": "kater_gefunden",
-				"text": "Den Kater in der Gasse neben Bingos Laden finden (E / Leertaste)"
-			}
+			{"art": "gemerkt", "merken": "kater_spur", "bei": "lotte", "text": "Pip und Lotte nach dem Kater fragen"},
+			{"art": "gemerkt", "merken": "kater_gefunden", "text": "Den Kater in der Gasse neben Bingos Laden finden (E / Leertaste)"}
 		],
 		"abgeben_bei": "hanne",
-		"belohnung": {
-			"gold": 100,
-			"erfahrung": 40
-		}
+		"belohnung": {"gold": 100, "erfahrung": 40}
 	},
 	"festmahl": {
 		"titel": "Ein Festmahl",
@@ -324,25 +146,11 @@
 		"start_bei": "hanne",
 		"voraussetzung": "hannes_kater",
 		"ziele": [
-			{
-				"art": "sammeln",
-				"gegenstand": "wiesenkraut",
-				"anzahl": 3
-			},
-			{
-				"art": "sammeln",
-				"gegenstand": "wildfleisch",
-				"anzahl": 2
-			}
+			{"art": "sammeln", "gegenstand": "wiesenkraut", "anzahl": 3},
+			{"art": "sammeln", "gegenstand": "wildfleisch", "anzahl": 2}
 		],
 		"abgeben_bei": "hanne",
-		"belohnung": {
-			"gold": 200,
-			"erfahrung": 80,
-			"gegenstaende": {
-				"heiltrank": 1
-			}
-		}
+		"belohnung": {"gold": 200, "erfahrung": 80, "gegenstaende": {"heiltrank": 1}}
 	},
 	"glanz_fuer_die_fuenf": {
 		"titel": "Glanz für die Fünf",
@@ -351,17 +159,10 @@
 		"start_bei": "quill",
 		"voraussetzung": "erster_auftrag",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "statue_geputzt",
-				"text": "Die Statue mit der Bürste putzen (Tasche → Benutzen)"
-			}
+			{"art": "gemerkt", "merken": "statue_geputzt", "text": "Die Statue mit der Bürste putzen (Tasche → Benutzen)"}
 		],
 		"abgeben_bei": "quill",
-		"belohnung": {
-			"gold": 150,
-			"erfahrung": 60
-		}
+		"belohnung": {"gold": 150, "erfahrung": 60}
 	},
 	"fuenf_farben": {
 		"titel": "Fünf Farben",
@@ -370,60 +171,16 @@
 		"start_bei": "edmar",
 		"voraussetzung": "erster_gruppenkampf",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "laterne_arkanum",
-				"text": "Violette Laterne (Arkanum) aufhängen – Norden"
-			},
-			{
-				"art": "gemerkt",
-				"merken": "laterne_messinghafen",
-				"text": "Kupferne Laterne (Messinghafen) aufhängen – Osten"
-			},
-			{
-				"art": "gemerkt",
-				"merken": "laterne_glutoase",
-				"text": "Glutrote Laterne (Glutoase) aufhängen – Süden"
-			},
-			{
-				"art": "gemerkt",
-				"merken": "laterne_gruenwacht",
-				"text": "Grüne Laterne (Grünwacht) aufhängen – Westen"
-			},
-			{
-				"art": "gemerkt",
-				"merken": "laterne_nebelinseln",
-				"text": "Rosa Laterne (Nebelinseln) aufhängen – Nordwesten"
-			},
-			{
-				"art": "gemerkt",
-				"merken": "ye_laternen",
-				"bei": "ye_tor",
-				"text": "Ye am Stadttor fragen, was er davon hält",
-				"wenn": {
-					"gemerkt": "laterne_arkanum",
-					"und": [
-						{
-							"gemerkt": "laterne_messinghafen"
-						},
-						{
-							"gemerkt": "laterne_glutoase"
-						},
-						{
-							"gemerkt": "laterne_gruenwacht"
-						},
-						{
-							"gemerkt": "laterne_nebelinseln"
-						}
-					]
-				}
-			}
+			{"art": "gemerkt", "merken": "laterne_arkanum", "text": "Violette Laterne (Arkanum) aufhängen – Norden"},
+			{"art": "gemerkt", "merken": "laterne_messinghafen", "text": "Kupferne Laterne (Messinghafen) aufhängen – Osten"},
+			{"art": "gemerkt", "merken": "laterne_glutoase", "text": "Glutrote Laterne (Glutoase) aufhängen – Süden"},
+			{"art": "gemerkt", "merken": "laterne_gruenwacht", "text": "Grüne Laterne (Grünwacht) aufhängen – Westen"},
+			{"art": "gemerkt", "merken": "laterne_nebelinseln", "text": "Rosa Laterne (Nebelinseln) aufhängen – Nordwesten"},
+			{"art": "gemerkt", "merken": "ye_laternen", "bei": "ye_tor", "text": "Ye am Stadttor fragen, was er davon hält",
+				"wenn": {"gemerkt": "laterne_arkanum", "und": [{"gemerkt": "laterne_messinghafen"}, {"gemerkt": "laterne_glutoase"}, {"gemerkt": "laterne_gruenwacht"}, {"gemerkt": "laterne_nebelinseln"}]}}
 		],
 		"abgeben_bei": "edmar",
-		"belohnung": {
-			"gold": 200,
-			"erfahrung": 80
-		}
+		"belohnung": {"gold": 200, "erfahrung": 80}
 	},
 	"dunkelheit_spielen": {
 		"titel": "Die Dunkelheit spielen",
@@ -432,266 +189,51 @@
 		"start_bei": "pip",
 		"voraussetzung": "ankunft",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "dunkelheit_gespielt",
-				"bei": "pip",
-				"text": "Mit Pip und Lotte spielen und verlieren"
-			}
+			{"art": "gemerkt", "merken": "dunkelheit_gespielt", "bei": "pip", "text": "Mit Pip und Lotte spielen und verlieren"}
 		],
 		"abgeben_bei": "pip",
-		"belohnung": {
-			"erfahrung": 30
-		}
+		"belohnung": {"erfahrung": 30}
 	},
-	"essen_fuer_brom": {
-		"titel": "Essen für Brom",
-		"neben": true,
-		"beschreibung": "Während ganz Kreuzweg feiert, steht Torwache Brom allein am alten Südost-Weg. Wirtin Hanne hat ihm eine Schüssel vom Festmahl zurückgelegt. Bring sie ihm, solange sie noch warm ist.",
-		"start_bei": "hanne",
-		"voraussetzung": "leises_singen",
-		"start_wenn": {
-			"gemerkt": "nacht"
-		},
-		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "brom_festessen",
-				"bei": "wache",
-				"text": "Brom die Festschüssel an den alten Südost-Weg bringen"
-			}
-		],
-		"abgeben_bei": "wache",
-		"belohnung": {
-			"gold": 10,
-			"erfahrung": 60
-		}
-	},
-	"nach_gruenwacht": {
-		"titel": "Der Weg nach Grünwacht",
-		"start_bei": "ye_tor",
-		"voraussetzung": "abreise",
-		"beschreibung": "Deine Reise führt nach Grünwacht. Folge der Weststraße aus Kreuzweg hinaus, durch den Wald bis zum Seilaufzug. Oben in den Baumkronen liegt Wipfelheim, dort wacht Ysolde Dornfeder.",
-		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "tor_gruenwacht",
-				"nur_wenn": {
-					"nicht_gemerkt": "besucht:weg_gruenwacht",
-					"und": [
-						{
-							"nicht_gemerkt": "besucht:wipfelheim"
-						}
-					]
-				},
-				"bei": "torwache_gruenwacht",
-				"text": "Zur Torwache am Westtor"
-			},
-			{
-				"art": "gemerkt",
-				"merken": "besucht:wipfelheim",
-				"text": "Über den Weg und den Seilaufzug im Wald nach Wipfelheim",
-				"wegweiser": [
-					"ysolde"
-				]
-			},
-			{
-				"art": "reden",
-				"npc": "ysolde",
-				"bei": "ysolde"
-			}
-		],
-		"abgeben_bei": "ysolde",
-		"belohnung": {
-			"gold": 500,
-			"erfahrung": 100
-		}
-	},
-	"klasse_lernen": {
-		"titel": "Beim Lehrmeister lernen",
-		"voraussetzung": "abreise",
-		"beschreibung": "Du hast deinen Weg gewählt, aber noch kämpfst du als Novize. Deine Klasse lernst du erst bei deinem Lehrmeister in deiner Region. Sprich vorher mit dem Oberhaupt der Region (Ysolde in Wipfelheim, Hadrak in der Glutoase).",
-		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "klasse_gelernt",
-				"wegweiser": [
-					"fenn"
-				],
-				"nur_wenn": {
-					"klasse": "archer"
-				},
-				"wenn": {
-					"auftrag": "nach_gruenwacht",
-					"stand": "abgegeben",
-					"und": [
-						{
-							"auftrag": "fenns_pruefung",
-							"stand": "neu"
-						}
-					]
-				},
-				"text": "Bei Pfadmeister Fenn die Prüfung der drei Ziele bestehen"
-			},
-			{
-				"art": "gemerkt",
-				"merken": "tilda_gelehrt",
-				"bei": "tilda",
-				"wegweiser": [
-					"tilda"
-				],
-				"nur_wenn": {
-					"klasse": "tamer"
-				},
-				"wenn": {
-					"auftrag": "nach_gruenwacht",
-					"stand": "abgegeben"
-				},
-				"text": "Bei Rudelmeisterin Tilda das Zähmen lernen"
-			},
-			{
-				"art": "gemerkt",
-				"merken": "klasse_gelernt",
-				"wegweiser": [
-					"esche"
-				],
-				"nur_wenn": {
-					"klasse": "tamer"
-				},
-				"wenn": {
-					"gemerkt": "tilda_gelehrt",
-					"auftrag": "esches_monster",
-					"stand": "neu"
-				},
-				"text": "Bei Professor Esche dein erstes Monster wählen"
-			},
-			{
-				"art": "gemerkt",
-				"merken": "klasse_gelernt",
-				"wegweiser": [
-					"brakkus"
-				],
-				"nur_wenn": {
-					"klasse": "smith"
-				},
-				"wenn": {
-					"auftrag": "nach_glutoase",
-					"stand": "abgegeben"
-				},
-				"text": "Bei Essenmeister Brakkus die Prüfung am Amboss bestehen"
-			},
-			{
-				"art": "gemerkt",
-				"merken": "klasse_gelernt",
-				"wegweiser": [
-					"samira"
-				],
-				"nur_wenn": {
-					"klasse": "blade"
-				},
-				"wenn": {
-					"auftrag": "nach_glutoase",
-					"stand": "abgegeben"
-				},
-				"text": "Bei Tanzmeisterin Samira die Schrittfolge im Takt tanzen"
-			},
-			{
-				"art": "gemerkt",
-				"merken": "klasse_gelernt",
-				"wegweiser": [
-					"xavina"
-				],
-				"nur_wenn": {
-					"klasse": "singer"
-				},
-				"wenn": {
-					"auftrag": "nach_glutoase",
-					"stand": "abgegeben"
-				},
-				"text": "Bei der Hohen Sängerin Xavina auf der Sternendüne singen"
-			}
-		],
-		"abgeben_bei": "ysolde",
-		"belohnung": {
-			"erfahrung": 100
-		}
-	},
+	"essen_fuer_brom": {"titel": "Essen für Brom", "neben": true, "beschreibung": "Während ganz Kreuzweg feiert, steht Torwache Brom allein am alten Südost-Weg. Wirtin Hanne hat ihm eine Schüssel vom Festmahl zurückgelegt. Bring sie ihm, solange sie noch warm ist.", "start_bei": "hanne", "voraussetzung": "leises_singen", "start_wenn": {"gemerkt": "nacht"}, "ziele": [{"art": "gemerkt", "merken": "brom_festessen", "bei": "wache", "text": "Brom die Festschüssel an den alten Südost-Weg bringen"}], "abgeben_bei": "wache", "belohnung": {"gold": 10, "erfahrung": 60}},
+	"nach_gruenwacht": {"titel": "Der Weg nach Grünwacht", "start_bei": "ye_tor", "voraussetzung": "abreise", "beschreibung": "Deine Reise führt nach Grünwacht. Folge der Weststraße aus Kreuzweg hinaus, durch den Wald bis zum Seilaufzug. Oben in den Baumkronen liegt Wipfelheim, dort wacht Ysolde Dornfeder.", "ziele": [{"art": "gemerkt", "merken": "tor_gruenwacht", "nur_wenn": {"nicht_gemerkt": "besucht:weg_gruenwacht", "und": [{"nicht_gemerkt": "besucht:wipfelheim"}]}, "bei": "torwache_gruenwacht", "text": "Zur Torwache am Westtor"}, {"art": "gemerkt", "merken": "besucht:wipfelheim", "text": "Über den Weg und den Seilaufzug im Wald nach Wipfelheim", "wegweiser": ["ysolde"]}, {"art": "reden", "npc": "ysolde", "bei": "ysolde"}], "abgeben_bei": "ysolde", "belohnung": {"gold": 500, "erfahrung": 100}},
+	"klasse_lernen": {"titel": "Beim Lehrmeister lernen", "voraussetzung": "abreise", "beschreibung": "Du hast deinen Weg gewählt, aber noch kämpfst du als Novize. Deine Klasse lernst du erst bei deinem Lehrmeister in deiner Region. Sprich vorher mit dem Oberhaupt der Region (Ysolde in Wipfelheim, Hadrak in der Glutoase).", "ziele": [{"art": "gemerkt", "merken": "klasse_gelernt", "wegweiser": ["fenn"], "nur_wenn": {"klasse": "archer"}, "wenn": {"auftrag": "nach_gruenwacht", "stand": "abgegeben", "und": [{"auftrag": "fenns_pruefung", "stand": "neu"}]}, "text": "Bei Pfadmeister Fenn die Prüfung der drei Ziele bestehen"}, {"art": "gemerkt", "merken": "tilda_gelehrt", "bei": "tilda", "wegweiser": ["tilda"], "nur_wenn": {"klasse": "tamer"}, "wenn": {"auftrag": "nach_gruenwacht", "stand": "abgegeben"}, "text": "Bei Rudelmeisterin Tilda das Zähmen lernen"}, {"art": "gemerkt", "merken": "klasse_gelernt", "wegweiser": ["esche"], "nur_wenn": {"klasse": "tamer"}, "wenn": {"gemerkt": "tilda_gelehrt", "auftrag": "esches_monster", "stand": "neu"}, "text": "Bei Professor Esche dein erstes Monster wählen"}, {"art": "gemerkt", "merken": "klasse_gelernt", "wegweiser": ["brakkus"], "nur_wenn": {"klasse": "smith"}, "wenn": {"auftrag": "nach_glutoase", "stand": "abgegeben"}, "text": "Bei Essenmeister Brakkus die Prüfung am Amboss bestehen"}, {"art": "gemerkt", "merken": "klasse_gelernt", "wegweiser": ["samira"], "nur_wenn": {"klasse": "blade"}, "wenn": {"auftrag": "nach_glutoase", "stand": "abgegeben"}, "text": "Bei Tanzmeisterin Samira die Schrittfolge im Takt tanzen"}, {"art": "gemerkt", "merken": "klasse_gelernt", "wegweiser": ["xavina"], "nur_wenn": {"klasse": "singer"}, "wenn": {"auftrag": "nach_glutoase", "stand": "abgegeben"}, "text": "Bei der Hohen Sängerin Xavina auf der Sternendüne singen"}], "abgeben_bei": "ysolde", "belohnung": {"erfahrung": 100}},
 	"fenns_pruefung": {
 		"titel": "Die Prüfung der drei Ziele",
 		"beschreibung": "Pfadmeister Fenn prüft jeden Bogenschützen mit drei Zielen: stehende Scheiben, laufende Scheiben – und ein drittes Ziel im Wald.",
 		"start_bei": "fenn",
-		"start_wenn": {
-			"klasse": "archer"
-		},
+		"start_wenn": {"klasse": "archer"},
 		"voraussetzung": "nach_gruenwacht",
 		"ziele": [
-			{
-				"art": "kampf",
-				"kampf": "fenns_pruefung",
-				"bei": "fenn",
-				"text": "Das erste und zweite Ziel an Fenns Schießstand"
-			},
-			{
-				"art": "gemerkt",
-				"merken": "pruefung_hirsch",
-				"text": "Das dritte Ziel: den Silberhirsch im Wald aufspüren (Westen)"
-			}
+			{"art": "kampf", "kampf": "fenns_pruefung", "bei": "fenn", "text": "Das erste und zweite Ziel an Fenns Schießstand"},
+			{"art": "gemerkt", "merken": "pruefung_hirsch", "text": "Das dritte Ziel: den Silberhirsch im Wald aufspüren (Westen)"}
 		],
 		"abgeben_bei": "fenn",
-		"belohnung": {
-			"gold": 600,
-			"erfahrung": 500
-		}
+		"belohnung": {"gold": 600, "erfahrung": 500}
 	},
 	"esches_monster": {
 		"titel": "Professor Esches Monster",
 		"beschreibung": "Tilda schickt dich zu Professor Esche. Er hat drei Start-Monster für Zähmer. Such dir eins aus – und pass auf Kobalt auf, Esches Neffen.",
 		"start_bei": "esche",
-		"start_wenn": {
-			"klasse": "tamer",
-			"gemerkt": "tilda_gelehrt"
-		},
+		"start_wenn": {"klasse": "tamer", "gemerkt": "tilda_gelehrt"},
 		"voraussetzung": "nach_gruenwacht",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "starter_gewaehlt",
-				"bei": "esche",
-				"text": "Bei Professor Esche ein Start-Monster wählen"
-			},
-			{
-				"art": "gemerkt",
-				"merken": "kobalt_gekaempft",
-				"bei": "kobalt",
-				"text": "Gegen Kobalt antreten"
-			}
+			{"art": "gemerkt", "merken": "starter_gewaehlt", "bei": "esche", "text": "Bei Professor Esche ein Start-Monster wählen"},
+			{"art": "gemerkt", "merken": "kobalt_gekaempft", "bei": "kobalt", "text": "Gegen Kobalt antreten"}
 		],
 		"abgeben_bei": "esche",
-		"belohnung": {
-			"gold": 400,
-			"erfahrung": 300
-		}
+		"belohnung": {"gold": 400, "erfahrung": 300}
 	},
 	"tildas_unterricht": {
 		"titel": "Tildas Unterricht",
 		"beschreibung": "Rudelmeisterin Tilda bringt dir das Zähmen bei: Ein Monster in der Wildnis erst schwächen (unter halbes Leben), dann „Zähmen“. Je schwächer, desto sicherer.",
 		"start_bei": "tilda",
-		"start_wenn": {
-			"klasse": "tamer"
-		},
+		"start_wenn": {"klasse": "tamer"},
 		"voraussetzung": "esches_monster",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "erstes_zaehmen",
-				"text": "Ein Monster auf dem Weg oder im Wald zähmen"
-			}
+			{"art": "gemerkt", "merken": "erstes_zaehmen", "text": "Ein Monster auf dem Weg oder im Wald zähmen"}
 		],
 		"abgeben_bei": "tilda",
-		"belohnung": {
-			"gold": 600,
-			"erfahrung": 500
-		}
+		"belohnung": {"gold": 600, "erfahrung": 500}
 	},
 	"veraenderte_tiere": {
 		"titel": "Leuchtende Tiere",
@@ -699,84 +241,33 @@
 		"start_bei": "ysolde",
 		"voraussetzung": "nach_gruenwacht",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "tilda_tiere",
-				"bei": "tilda",
-				"text": "Tilda nach den Tieren fragen (Rudelhof im Osten)"
-			},
-			{
-				"art": "gemerkt",
-				"merken": "tier_besiegt",
-				"text": "Das veränderte Tier im Nordosten des Waldbodens finden"
-			}
+			{"art": "gemerkt", "merken": "tilda_tiere", "bei": "tilda", "text": "Tilda nach den Tieren fragen (Rudelhof im Osten)"},
+			{"art": "gemerkt", "merken": "tier_besiegt", "text": "Das veränderte Tier im Nordosten des Waldbodens finden"}
 		],
 		"abgeben_bei": "ysolde",
-		"belohnung": {
-			"gold": 500,
-			"erfahrung": 900
-		}
+		"belohnung": {"gold": 500, "erfahrung": 900}
 	},
-	"der_fremde": {
-		"titel": "Kael in Wipfelheim",
-		"start_bei": "ysolde",
-		"start_wenn": {
-			"nicht_gemerkt": "kael_getroffen"
-		},
-		"voraussetzung": "veraenderte_tiere",
-		"beschreibung": "Auf der Westplattform beim Seilaufzug treibt sich Kael herum, dein Rivale aus der Glutoase. Ysolde will wissen, was er in Wipfelheim sucht.",
-		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "kael_getroffen",
-				"bei": "kael",
-				"text": "Auf der Westplattform (beim Seilaufzug) Kael zur Rede stellen"
-			}
-		],
-		"abgeben_bei": "ysolde",
-		"belohnung": {
-			"erfahrung": 150
-		}
-	},
+	"der_fremde": {"titel": "Kael in Wipfelheim", "start_bei": "ysolde", "start_wenn": {"nicht_gemerkt": "kael_getroffen"}, "voraussetzung": "veraenderte_tiere", "beschreibung": "Auf der Westplattform beim Seilaufzug treibt sich Kael herum, dein Rivale aus der Glutoase. Ysolde will wissen, was er in Wipfelheim sucht.", "ziele": [{"art": "gemerkt", "merken": "kael_getroffen", "bei": "kael", "text": "Auf der Westplattform (beim Seilaufzug) Kael zur Rede stellen"}], "abgeben_bei": "ysolde", "belohnung": {"erfahrung": 150}},
 	"das_leere_grab": {
 		"titel": "Das leere Grab",
 		"beschreibung": "Kael sagt, das Grab von Ysoldes Bruder Rowan liegt unten im Wald – und es ist leer. Sieh es dir an.",
 		"voraussetzung": "veraenderte_tiere",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "erinnerung_rowan",
-				"text": "Rowans Grab im Nordwesten des Waldbodens finden"
-			}
+			{"art": "gemerkt", "merken": "erinnerung_rowan", "text": "Rowans Grab im Nordwesten des Waldbodens finden"}
 		],
 		"abgeben_bei": "kael",
-		"belohnung": {
-			"gold": 400,
-			"erfahrung": 800
-		}
+		"belohnung": {"gold": 400, "erfahrung": 800}
 	},
 	"der_urbaum": {
 		"titel": "Der Splitter im Urbaum",
 		"beschreibung": "Unter dem Urbaum, tief in den Wurzeln, liegt ein großer Splitter. Der Eingang zur Pilzhöhle liegt zwischen den Wurzeln eines Riesenbaums im Süden des Waldbodens. Das ist ein Dungeon: Geht am besten zu mehreren (allein helfen Tessa und Gorm bei den Bossen).",
 		"voraussetzung": "das_leere_grab",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "pilzhoehle_abgeschlossen",
-				"karte": "pilzhoehle",
-				"text": "In der Pilzhöhle die Sporenkönigin und die Wurzelmutter besiegen"
-			},
-			{
-				"art": "gemerkt",
-				"merken": "urbaum_entschieden",
-				"text": "Am Herz des Urbaums entscheiden"
-			}
+			{"art": "gemerkt", "merken": "pilzhoehle_abgeschlossen", "karte": "pilzhoehle", "text": "In der Pilzhöhle die Sporenkönigin und die Wurzelmutter besiegen"},
+			{"art": "gemerkt", "merken": "urbaum_entschieden", "text": "Am Herz des Urbaums entscheiden"}
 		],
 		"abgeben_bei": "ysolde",
-		"belohnung": {
-			"gold": 1500,
-			"erfahrung": 1600
-		}
+		"belohnung": {"gold": 1500, "erfahrung": 1600}
 	},
 	"die_wahrheit": {
 		"titel": "Die Wahrheit über Rowan",
@@ -784,18 +275,10 @@
 		"start_bei": "kael",
 		"voraussetzung": "der_urbaum",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "wahrheit_entschieden",
-				"bei": "ysolde",
-				"text": "Ysolde und Kael vor Dornfeders Halle gegenüberstellen"
-			}
+			{"art": "gemerkt", "merken": "wahrheit_entschieden", "bei": "ysolde", "text": "Ysolde und Kael vor Dornfeders Halle gegenüberstellen"}
 		],
 		"abgeben_bei": "ysolde",
-		"belohnung": {
-			"gold": 1000,
-			"erfahrung": 1200
-		}
+		"belohnung": {"gold": 1000, "erfahrung": 1200}
 	},
 	"marvs_partie": {
 		"titel": "Marvs Partie",
@@ -805,22 +288,11 @@
 		"start_bei": "marv_gruenwacht",
 		"voraussetzung": "nach_gruenwacht",
 		"ziele": [
-			{
-				"art": "besitzen",
-				"gegenstand": "sternentafel",
-				"text": "Bei Bingo in Kreuzweg eine Sternentafel kaufen"
-			},
-			{
-				"art": "gemerkt",
-				"merken": "gespielt:marv",
-				"bei": "marv_gruenwacht",
-				"text": "Eine Partie gegen Marv in Wipfelheim"
-			}
+			{"art": "besitzen", "gegenstand": "sternentafel", "text": "Bei Bingo in Kreuzweg eine Sternentafel kaufen"},
+			{"art": "gemerkt", "merken": "gespielt:marv", "bei": "marv_gruenwacht", "text": "Eine Partie gegen Marv in Wipfelheim"}
 		],
 		"abgeben_bei": "marv_gruenwacht",
-		"belohnung": {
-			"erfahrung": 200
-		}
+		"belohnung": {"erfahrung": 200}
 	},
 	"kobalts_revanche": {
 		"titel": "Kobalts Revanche",
@@ -828,23 +300,13 @@
 		"gebiet": "gruenwacht",
 		"beschreibung": "Kobalt hat trainiert und will eine Revanche – sein Monster ist viel stärker geworden.",
 		"start_bei": "kobalt",
-		"start_wenn": {
-			"klasse": "tamer"
-		},
+		"start_wenn": {"klasse": "tamer"},
 		"voraussetzung": "der_urbaum",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "kobalt_revanche_gekaempft",
-				"bei": "kobalt",
-				"text": "Die Revanche gegen Kobalt"
-			}
+			{"art": "gemerkt", "merken": "kobalt_revanche_gekaempft", "bei": "kobalt", "text": "Die Revanche gegen Kobalt"}
 		],
 		"abgeben_bei": "kobalt",
-		"belohnung": {
-			"gold": 800,
-			"erfahrung": 300
-		}
+		"belohnung": {"gold": 800, "erfahrung": 300}
 	},
 	"omas_herausforderung": {
 		"titel": "Oma Hagebuttes Herausforderung",
@@ -852,23 +314,13 @@
 		"gebiet": "gruenwacht",
 		"beschreibung": "Oma Hagebutte spielt seit vierzig Jahren Kreuzweg-Karten und verliert nicht gern. Schlag sie einmal.",
 		"start_bei": "oma_hagebutte",
-		"start_wenn": {
-			"hat": "sternentafel"
-		},
+		"start_wenn": {"hat": "sternentafel"},
 		"voraussetzung": "nach_gruenwacht",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "karten_sieg:oma_hagebutte",
-				"bei": "oma_hagebutte",
-				"text": "Oma Hagebutte bei Kreuzweg-Karten schlagen"
-			}
+			{"art": "gemerkt", "merken": "karten_sieg:oma_hagebutte", "bei": "oma_hagebutte", "text": "Oma Hagebutte bei Kreuzweg-Karten schlagen"}
 		],
 		"abgeben_bei": "oma_hagebutte",
-		"belohnung": {
-			"gold": 600,
-			"erfahrung": 300
-		}
+		"belohnung": {"gold": 600, "erfahrung": 300}
 	},
 	"bienenstock": {
 		"titel": "Der verrückte Bienenstock",
@@ -876,253 +328,21 @@
 		"gebiet": "gruenwacht",
 		"beschreibung": "Professor Esche sagt, ein Bienenstock ganz im Südosten des Waldbodens summt seit Tagen dasselbe Lied. Sieh nach.",
 		"start_bei": "esche",
-		"start_wenn": {
-			"oder": [
-				{
-					"nicht_region": "Grünwacht"
-				},
-				{
-					"auftrag": "esches_monster",
-					"stand": "abgegeben"
-				},
-				{
-					"klasse": "archer"
-				}
-			]
-		},
+		"start_wenn": {"oder": [{"nicht_region": "Grünwacht"}, {"auftrag": "esches_monster", "stand": "abgegeben"}, {"klasse": "archer"}]},
 		"voraussetzung": "nach_gruenwacht",
 		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "bienen_beobachtet",
-				"text": "Den Bienenstock im Südosten des Waldbodens untersuchen"
-			}
+			{"art": "gemerkt", "merken": "bienen_beobachtet", "text": "Den Bienenstock im Südosten des Waldbodens untersuchen"}
 		],
 		"abgeben_bei": "esche",
-		"belohnung": {
-			"gold": 300,
-			"erfahrung": 250,
-			"gegenstaende": {
-				"honigwabe": 2
-			}
-		}
+		"belohnung": {"gold": 300, "erfahrung": 250, "gegenstaende": {"honigwabe": 2}}
 	},
-	"nach_glutoase": {
-		"titel": "Der Weg in die Glutoase",
-		"start_bei": "ye_tor",
-		"voraussetzung": "abreise",
-		"beschreibung": "Deine Reise führt in die Glutoase. Folge der Südstraße aus Kreuzweg hinaus durch die Aschensteppe, vorbei am Rastplatz der Karawanen, bis zur Oasenstadt am Vulkan. Ganz oben in seiner Schmiede wacht Hadrak Glutherz.",
-		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "tor_glutoase",
-				"nur_wenn": {
-					"nicht_gemerkt": "besucht:aschensteppe",
-					"und": [
-						{
-							"nicht_gemerkt": "besucht:glutoase"
-						}
-					]
-				},
-				"bei": "torwache_glutoase",
-				"text": "Zur Torwache am Südtor"
-			},
-			{
-				"art": "gemerkt",
-				"merken": "besucht:glutoase",
-				"text": "Durch die Aschensteppe in die Glutoase",
-				"wegweiser": [
-					"hadrak"
-				]
-			},
-			{
-				"art": "reden",
-				"npc": "hadrak",
-				"bei": "hadrak"
-			}
-		],
-		"abgeben_bei": "hadrak",
-		"belohnung": {
-			"gold": 500,
-			"erfahrung": 100
-		}
-	},
-	"kochende_brunnen": {
-		"titel": "Kochende Brunnen",
-		"beschreibung": "Nadia misst jeden Morgen das Wasser des großen Brunnens, und jeden Morgen ist es wärmer. Sieh nach, ob auch die Wasserstellen draußen in der Palmenrast fiebern.",
-		"start_bei": "nadia",
-		"voraussetzung": "nach_glutoase",
-		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "wasserstelle_nordwest",
-				"text": "Die Wasserstelle im Nordwesten der Palmenrast prüfen"
-			},
-			{
-				"art": "gemerkt",
-				"merken": "quelle_gekuehlt",
-				"text": "Die dampfende Wasserstelle im Nordosten der Palmenrast"
-			},
-			{
-				"art": "gemerkt",
-				"merken": "brakkus_ketten",
-				"bei": "brakkus",
-				"wegweiser": [
-					"brakkus"
-				],
-				"wenn": {
-					"gemerkt": "quelle_gekuehlt"
-				},
-				"text": "Brakkus im Schmiedeviertel fragen, was er davon hält"
-			}
-		],
-		"abgeben_bei": "nadia",
-		"belohnung": {
-			"gold": 600,
-			"erfahrung": 900
-		}
-	},
-	"miras_lied": {
-		"titel": "Miras Lied",
-		"beschreibung": "Mira liegt im Fieber vor dem Krankenzelt und summt eine Melodie, die sie aus den Splittern kennt. Schreib sie mit ihr auf.",
-		"start_bei": "mira_glutoase",
-		"voraussetzung": "kochende_brunnen",
-		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "fuenf_toene",
-				"bei": "mira_glutoase",
-				"text": "Mit Mira die Töne ihrer Melodie aufschreiben"
-			}
-		],
-		"abgeben_bei": "mira_glutoase",
-		"belohnung": {
-			"gold": 400,
-			"erfahrung": 800
-		}
-	},
-	"fest_der_glut": {
-		"titel": "Der Tanz mit der Pause",
-		"beschreibung": "Samira lädt zum Fest auf dem Tanzplatz ein. Die ganze Oase tanzt ihre fünf Schritte – und dann kommt die Pause.",
-		"start_bei": "samira",
-		"voraussetzung": "miras_lied",
-		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "sechster_ton",
-				"bei": "samira",
-				"wegweiser": [
-					"samira"
-				],
-				"text": "Mit Samira beim Fest tanzen"
-			}
-		],
-		"abgeben_bei": "samira",
-		"belohnung": {
-			"gold": 400,
-			"erfahrung": 700
-		}
-	},
-	"rivale_kael": {
-		"titel": "Kael in Hadraks Schmiede",
-		"beschreibung": "Kael ist beim Fest aufgetaucht und hat Hadrak herausgefordert. Er wartet oben in Hadraks Schmiede.",
-		"voraussetzung": "fest_der_glut",
-		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "kael_besiegt_glutoase",
-				"bei": "kael_glutoase",
-				"wegweiser": [
-					"kael_glutoase"
-				],
-				"text": "Kael in Hadraks Schmiede stellen"
-			}
-		],
-		"abgeben_bei": "hadrak",
-		"belohnung": {
-			"gold": 800,
-			"erfahrung": 1200
-		}
-	},
-	"die_ketten": {
-		"titel": "Die Ketten unter dem Berg",
-		"beschreibung": "Hadraks alte Ankerketten unter dem Glutgrat geben nach, die Lava steigt. Der Gang hinter seiner Schmiede führt hinab in die Vulkanschmiede der Ketten. Das ist ein Dungeon: Geht am besten zu mehreren (allein helfen Tessa und Gorm bei den Bossen).",
-		"voraussetzung": "rivale_kael",
-		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "vulkanschmiede_abgeschlossen",
-				"karte": "vulkanschmiede",
-				"text": "In der Vulkanschmiede die Hammerbrüder und den Kettenschmied besiegen"
-			}
-		],
-		"abgeben_bei": "hadrak",
-		"belohnung": {
-			"gold": 1500,
-			"erfahrung": 1600
-		}
-	},
-	"miras_splitter": {
-		"titel": "Miras Splitter",
-		"beschreibung": "Mira geht es schlechter. Der Splitter, den sie seit Kreuzweg in sich trägt, singt immer lauter. Sie liegt vor dem Krankenzelt in der Oase.",
-		"voraussetzung": "die_ketten",
-		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "mira_entschieden",
-				"bei": "mira_glutoase",
-				"wegweiser": [
-					"mira_glutoase"
-				],
-				"text": "Bei Mira entscheiden, was mit dem Splitter geschieht"
-			}
-		],
-		"abgeben_bei": "hadrak",
-		"belohnung": {
-			"gold": 1000,
-			"erfahrung": 1200
-		}
-	},
-	"bericht_ysolde": {
-		"titel": "Bericht bei Ysolde",
-		"start_bei": "fenn",
-		"voraussetzung": "klasse_lernen",
-		"beschreibung": "Du hast deine Klasse gelernt. Ysolde will davon hören, oben in Wipfelheim.",
-		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "ysolde_bericht",
-				"bei": "ysolde",
-				"wegweiser": [
-					"ysolde"
-				],
-				"text": "Ysolde in Wipfelheim berichten"
-			}
-		],
-		"abgeben_bei": "ysolde",
-		"belohnung": {
-			"erfahrung": 100
-		}
-	},
-	"rueckkehr_gruenwacht": {
-		"titel": "Zurück nach Grünwacht",
-		"start_bei": "hadrak",
-		"voraussetzung": "miras_splitter",
-		"beschreibung": "Die Glutoase ist gerettet, vorerst. Kehr heim nach Grünwacht: durch das Tor zum Dürrewald am Westrand der Oase, wo die Steppe langsam zum Wald wird, über Tiefwurzel hinauf nach Wipfelheim zu Ysolde. (Der alte Weg über Kreuzweg geht auch.)",
-		"ziele": [
-			{
-				"art": "gemerkt",
-				"merken": "ysolde_heimkehr",
-				"bei": "ysolde",
-				"wegweiser": [
-					"ysolde"
-				],
-				"text": "Zurück nach Wipfelheim zu Ysolde"
-			}
-		],
-		"abgeben_bei": "ysolde",
-		"belohnung": {
-			"erfahrung": 100
-		}
-	}
+	"nach_glutoase": {"titel": "Der Weg in die Glutoase", "start_bei": "ye_tor", "voraussetzung": "abreise", "beschreibung": "Deine Reise führt in die Glutoase. Folge der Südstraße aus Kreuzweg hinaus durch die Aschensteppe, vorbei am Rastplatz der Karawanen, bis zur Oasenstadt am Vulkan. Ganz oben in seiner Schmiede wacht Hadrak Glutherz.", "ziele": [{"art": "gemerkt", "merken": "tor_glutoase", "nur_wenn": {"nicht_gemerkt": "besucht:aschensteppe", "und": [{"nicht_gemerkt": "besucht:glutoase"}]}, "bei": "torwache_glutoase", "text": "Zur Torwache am Südtor"}, {"art": "gemerkt", "merken": "besucht:glutoase", "text": "Durch die Aschensteppe in die Glutoase", "wegweiser": ["hadrak"]}, {"art": "reden", "npc": "hadrak", "bei": "hadrak"}], "abgeben_bei": "hadrak", "belohnung": {"gold": 500, "erfahrung": 100}},
+	"kochende_brunnen": {"titel": "Kochende Brunnen", "beschreibung": "Nadia misst jeden Morgen das Wasser des großen Brunnens, und jeden Morgen ist es wärmer. Sieh nach, ob auch die Wasserstellen draußen in der Palmenrast fiebern.", "start_bei": "nadia", "voraussetzung": "nach_glutoase", "ziele": [{"art": "gemerkt", "merken": "wasserstelle_nordwest", "text": "Die Wasserstelle im Nordwesten der Palmenrast prüfen"}, {"art": "gemerkt", "merken": "quelle_gekuehlt", "text": "Die dampfende Wasserstelle im Nordosten der Palmenrast"}, {"art": "gemerkt", "merken": "brakkus_ketten", "bei": "brakkus", "wegweiser": ["brakkus"], "wenn": {"gemerkt": "quelle_gekuehlt"}, "text": "Brakkus im Schmiedeviertel fragen, was er davon hält"}], "abgeben_bei": "nadia", "belohnung": {"gold": 600, "erfahrung": 900}},
+	"miras_lied": {"titel": "Miras Lied", "beschreibung": "Mira liegt im Fieber vor dem Krankenzelt und summt eine Melodie, die sie aus den Splittern kennt. Schreib sie mit ihr auf.", "start_bei": "mira_glutoase", "voraussetzung": "kochende_brunnen", "ziele": [{"art": "gemerkt", "merken": "fuenf_toene", "bei": "mira_glutoase", "text": "Mit Mira die Töne ihrer Melodie aufschreiben"}], "abgeben_bei": "mira_glutoase", "belohnung": {"gold": 400, "erfahrung": 800}},
+	"fest_der_glut": {"titel": "Der Tanz mit der Pause", "beschreibung": "Samira lädt zum Fest auf dem Tanzplatz ein. Die ganze Oase tanzt ihre fünf Schritte – und dann kommt die Pause.", "start_bei": "samira", "voraussetzung": "miras_lied", "ziele": [{"art": "gemerkt", "merken": "sechster_ton", "bei": "samira", "wegweiser": ["samira"], "text": "Mit Samira beim Fest tanzen"}], "abgeben_bei": "samira", "belohnung": {"gold": 400, "erfahrung": 700}},
+	"rivale_kael": {"titel": "Kael in Hadraks Schmiede", "beschreibung": "Kael ist beim Fest aufgetaucht und hat Hadrak herausgefordert. Er wartet oben in Hadraks Schmiede.", "voraussetzung": "fest_der_glut", "ziele": [{"art": "gemerkt", "merken": "kael_besiegt_glutoase", "bei": "kael_glutoase", "wegweiser": ["kael_glutoase"], "text": "Kael in Hadraks Schmiede stellen"}], "abgeben_bei": "hadrak", "belohnung": {"gold": 800, "erfahrung": 1200}},
+	"die_ketten": {"titel": "Die Ketten unter dem Berg", "beschreibung": "Hadraks alte Ankerketten unter dem Glutgrat geben nach, die Lava steigt. Der Gang hinter seiner Schmiede führt hinab in die Vulkanschmiede der Ketten. Das ist ein Dungeon: Geht am besten zu mehreren (allein helfen Tessa und Gorm bei den Bossen).", "voraussetzung": "rivale_kael", "ziele": [{"art": "gemerkt", "merken": "vulkanschmiede_abgeschlossen", "karte": "vulkanschmiede", "text": "In der Vulkanschmiede die Hammerbrüder und den Kettenschmied besiegen"}], "abgeben_bei": "hadrak", "belohnung": {"gold": 1500, "erfahrung": 1600}},
+	"miras_splitter": {"titel": "Miras Splitter", "beschreibung": "Mira geht es schlechter. Der Splitter, den sie seit Kreuzweg in sich trägt, singt immer lauter. Sie liegt vor dem Krankenzelt in der Oase.", "voraussetzung": "die_ketten", "ziele": [{"art": "gemerkt", "merken": "mira_entschieden", "bei": "mira_glutoase", "wegweiser": ["mira_glutoase"], "text": "Bei Mira entscheiden, was mit dem Splitter geschieht"}], "abgeben_bei": "hadrak", "belohnung": {"gold": 1000, "erfahrung": 1200}},
+	"bericht_ysolde": {"titel": "Bericht bei Ysolde", "start_bei": "fenn", "voraussetzung": "klasse_lernen", "beschreibung": "Du hast deine Klasse gelernt. Ysolde will davon hören, oben in Wipfelheim.", "ziele": [{"art": "gemerkt", "merken": "ysolde_bericht", "bei": "ysolde", "wegweiser": ["ysolde"], "text": "Ysolde in Wipfelheim berichten"}], "abgeben_bei": "ysolde", "belohnung": {"erfahrung": 100}},
+	"rueckkehr_gruenwacht": {"titel": "Zurück nach Grünwacht", "start_bei": "hadrak", "voraussetzung": "miras_splitter", "beschreibung": "Die Glutoase ist gerettet, vorerst. Kehr heim nach Grünwacht: durch das Tor zum Dürrewald am Westrand der Oase, wo die Steppe langsam zum Wald wird, über Tiefwurzel hinauf nach Wipfelheim zu Ysolde. (Der alte Weg über Kreuzweg geht auch.)", "ziele": [{"art": "gemerkt", "merken": "ysolde_heimkehr", "bei": "ysolde", "wegweiser": ["ysolde"], "text": "Zurück nach Wipfelheim zu Ysolde"}], "abgeben_bei": "ysolde", "belohnung": {"erfahrung": 100}}
 }
