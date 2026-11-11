@@ -1,0 +1,22 @@
+{
+	"hinweis": "Große Karte (Taste M, A11): wo jede Karte auf der Weltkarte steht (Bildpunkte auf 1280 x 720), zu welcher Region sie gehört und welche Art sie ist (stadt, gebiet, dungeon). Die Wege zwischen den Karten kommen aus den Ausgängen und Reise-Orten (Seilaufzug, Bergpfad); 'zusatz_wege' sind Eingänge, die das Spiel nicht als Ausgang kennt (Dungeons). Neue Karten hier eintragen, sonst fehlen sie auf der großen Karte.",
+	"regionen": {
+		"Grünwacht": {"pos": [300, 520], "farbe": "8fd36b"},
+		"Kreuzweg": {"pos": [960, 240], "farbe": "f2c14e"},
+		"Glutoase": {"pos": [1010, 450], "farbe": "ff9a3c"}
+	},
+	"karten": {
+		"kreuzweg": {"pos": [700, 300], "region": "Kreuzweg", "art": "stadt"},
+		"weg_gruenwacht": {"pos": [480, 280], "region": "Grünwacht", "art": "gebiet"},
+		"waldboden": {"pos": [300, 255], "region": "Grünwacht", "art": "gebiet"},
+		"wipfelheim": {"pos": [300, 140], "region": "Grünwacht", "art": "stadt"},
+		"pilzhoehle": {"pos": [135, 195], "region": "Grünwacht", "art": "dungeon"},
+		"tiefwurzel": {"pos": [240, 400], "region": "Grünwacht", "art": "gebiet"},
+		"aschensteppe": {"pos": [700, 420], "region": "Glutoase", "art": "gebiet"},
+		"glutoase": {"pos": [700, 530], "region": "Glutoase", "art": "stadt"},
+		"palmenrast": {"pos": [930, 590], "region": "Glutoase", "art": "gebiet"},
+		"glutgrat": {"pos": [470, 600], "region": "Glutoase", "art": "gebiet"},
+		"vulkanschmiede": {"pos": [700, 645], "region": "Glutoase", "art": "dungeon"}
+	},
+	"zusatz_wege": [["waldboden", "pilzhoehle"], ["glutoase", "vulkanschmiede"]]
+}

@@ -106,6 +106,9 @@ var _marker_time := 0.0
 var _marker_node: Node2D
 ## Wegweiser zum nächsten Ziel der Hauptgeschichte: Ring und Pfeil an der Stelle, Pfeil am Bildrand, wenn sie nicht zu sehen ist
 var _waypoint := Vector2i(-1, -1)
+## Kleine Karte oben rechts und große Karte auf M (A11)
+var _minikarte: Minikarte
+var _weltkarte: Weltkarte
 ## Wegweiser der Nebenaufträge (blau, mit Nummer): [{nummer, feld}]
 var _side_waypoints: Array[Dictionary] = []
 ## Auftragsbuch: welcher Reiter offen ist ("offen", "fertig", "erfolge")
@@ -696,6 +699,8 @@ func _sync() -> void:
 		npc_view.set_name_alpha(clampf((NAME_FADE_END - distance) / (NAME_FADE_END - NAME_FADE_START), 0.0, 1.0))
 	if langsam:
 		_waypoint = state.objective_cell(local)
+		if _minikarte != null:
+			_minikarte.ziel = _waypoint
 		_side_waypoints = state.side_objectives(local)
 		var goal := state.objective(local)
 		_goal.text = "Ziel: " + goal if goal != "" else ""
@@ -757,7 +762,7 @@ func screen_to_cell(p: Vector2) -> Vector2i:
 
 # --- Eingabe --------------------------------------------------------------------
 # PC: Klicken = hinlaufen, WASD/Pfeiltasten = laufen, E/Leertaste = reden bzw. weiter,
-#     1–4 = Antwort wählen, J = Auftragsbuch, I = Tasche, C = Werte, X = hinsetzen, Esc = Fenster schließen.
+#     1–4 = Antwort wählen, J = Auftragsbuch, I = Tasche, C = Werte, X = hinsetzen, M = große Karte, Esc = Fenster schließen.
 # Handy: Antippen = hinlaufen, Steuerknopf unten links (erscheint unter dem Daumen), Aktions-Knopf unten rechts.
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -782,6 +787,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			_toggle_panel("faehigkeiten")
 		elif key == KEY_L:
 			_toggle_panel("album")
+		elif key == KEY_M:
+			_toggle_weltkarte()
+		elif key == KEY_ESCAPE and _weltkarte != null and _weltkarte.visible:
+			_weltkarte.schliessen()
 		elif key == KEY_R and _is_tamer():
 			_pack_open = not _pack_open
 		elif key == KEY_ESCAPE and local_player().shop != "":
@@ -837,8 +846,8 @@ func _update_steer() -> void:
 	var dir := Vector2.ZERO
 	var typing := _chat_input != null and _chat_input.has_focus()
 	if not local_player().in_dialog() and not local_player().awaiting_npc():
-		# Beim Schreiben im Chat laufen die Buchstaben nicht mit
-		if not typing:
+		# Beim Schreiben im Chat laufen die Buchstaben nicht mit, bei offener großer Karte auch nicht
+		if not typing and not (_weltkarte != null and _weltkarte.visible):
 			if Input.is_physical_key_pressed(KEY_A) or Input.is_physical_key_pressed(KEY_LEFT):
 				dir.x -= 1.0
 			if Input.is_physical_key_pressed(KEY_D) or Input.is_physical_key_pressed(KEY_RIGHT):
@@ -1639,6 +1648,7 @@ func _build_ui() -> void:
 			["X", "sanduhr", "Hinsetzen (X): füllt das Mana, am Lagerfeuer schneller", 72, func() -> void: _send({type = "hinsetzen"})],
 			["K", "rolle", "Fähigkeiten (K)", 72, _toggle_panel.bind("faehigkeiten")],
 			["L", "kristall", "Kartenalbum (L)", 72, _toggle_panel.bind("album")],
+			["Karte", "", "Große Karte (M)", 80, _toggle_weltkarte],
 			["C", "schild", "Werte (C)", 72, _toggle_panel.bind("werte")], ["J", "ausrufe", "Aufträge (J)", 72, _toggle_panel.bind("auftraege")],
 			[GameData.text("feedback"), "", GameData.text("feedback_titel"), 96, func() -> void: Tester.feedback(_ui_root, _ort_jetzt)],
 			[GameData.text("neu_beginnen"), "", GameData.text("neu_beginnen"), 124, _restart]]:
@@ -1676,6 +1686,14 @@ func _build_ui() -> void:
 	_pack_box = VBoxContainer.new()
 	_pack_box.add_theme_constant_override("separation", 5)
 	_pack_panel.add_child(_pack_box)
+
+	# Kleine Karte oben rechts unter der Schnellleiste (A11); Antippen öffnet die große Karte
+	_minikarte = Minikarte.new()
+	_minikarte.state = state
+	_minikarte.spieler_id = local_id
+	_minikarte.position = Vector2(1270.0 - Minikarte.BREITE, 64)
+	_minikarte.grosse_karte_gewuenscht.connect(_toggle_weltkarte)
+	root.add_child(_minikarte)
 
 
 	# Handy: Steuerknopf (unten links, erscheint unter dem Daumen) und Aktions-Knopf (unten rechts)
@@ -1957,6 +1975,20 @@ func _label(text: String, font_size: int, color: Color) -> Label:
 	return label
 
 
+## Große Karte (A11) auf- und zuklappen. Sie entsteht erst beim ersten Öffnen und liegt über allem.
+func _toggle_weltkarte() -> void:
+	if _weltkarte == null:
+		_weltkarte = Weltkarte.new()
+		_weltkarte.state = state
+		_weltkarte.spieler_id = local_id
+		_weltkarte.visible = false
+		_ui_root.add_child(_weltkarte)
+	if _weltkarte.visible:
+		_weltkarte.schliessen()
+	else:
+		_weltkarte.oeffnen()
+
+
 func _framed_panel() -> PanelContainer:
 	# Rahmen kommt aus dem UI-Theme (assets/ui/asterfall_theme.tres)
 	return PanelContainer.new()
@@ -2151,7 +2183,7 @@ func _update_chat() -> void:
 
 func _build_group(root: Control) -> void:
 	_group_panel = _framed_panel()
-	_group_panel.position = Vector2(1040, 66)
+	_group_panel.position = Vector2(1040, 250)
 	_group_panel.custom_minimum_size = Vector2(226, 0)
 	_group_panel.visible = false
 	root.add_child(_group_panel)

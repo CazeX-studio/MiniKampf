@@ -2,7 +2,7 @@ class_name Musik
 extends Node
 ## Musik für das ganze Spiel: spielt ein Stück in Schleife und blendet beim Wechsel sanft über.
 ## Aufruf von überall: Musik.play("stadt"). Der Spieler hängt sich beim ersten Aufruf selbst an die Wurzel
-## des Spiels und bleibt beim Szenenwechsel bestehen. Taste M schaltet die Musik an und aus (wird gemerkt).
+## des Spiels und bleibt beim Szenenwechsel bestehen. Taste N schaltet die Musik an und aus (M ist seit A11 die große Karte) (wird gemerkt).
 ## Die Stücke sind Platzhalter, erzeugt mit tools/musik_erzeugen.gd.
 
 const TRACKS := {
@@ -103,7 +103,7 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_M:
+	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_N:
 		Musik.toggle()
 
 

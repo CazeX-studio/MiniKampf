@@ -57,15 +57,15 @@ func _ready() -> void:
 		SaveGame.path = SaveGame.DEFAULT_PATH
 		FigurErstellen.zurueck_zu = "res://scenes/menu.tscn"
 
-	# Musik an/aus (überall auch mit Taste M)
+	# Musik an/aus (überall auch mit Taste N)
 	var music := Button.new()
 	music.position = Vector2(540, 470)
 	music.size = Vector2(200, 50)
 	music.add_theme_font_size_override("font_size", 18)
-	music.text = "Musik: an (M)" if Musik.enabled else "Musik: aus (M)"
+	music.text = "Musik: an (N)" if Musik.enabled else "Musik: aus (N)"
 	music.pressed.connect(func() -> void:
 		Musik.toggle()
-		music.text = "Musik: an (M)" if Musik.enabled else "Musik: aus (M)")
+		music.text = "Musik: an (N)" if Musik.enabled else "Musik: aus (N)")
 	_inhalt.add_child(music)
 	var volume := Musik.make_slider(220.0)
 	volume.position = Vector2(470, 535)

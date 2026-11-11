@@ -2,7 +2,7 @@ class_name Geraeusche
 extends Node
 ## Geräusche im Kampf (Schlag, Treffer, Parade, Zauber …). Aufruf von überall: Geraeusche.play("treffer").
 ## Hängt sich wie die Musik beim ersten Aufruf selbst an die Wurzel des Spiels. Die Lautstärke kommt vom
-## gemeinsamen Regler (Musik.volume); Taste M schaltet nur die Musik ab, nicht die Geräusche.
+## gemeinsamen Regler (Musik.volume); Taste N schaltet nur die Musik ab, nicht die Geräusche.
 ## Die Geräusche sind Platzhalter, erzeugt mit tools/sounds_erzeugen.gd.
 
 const SOUNDS := ["schlag", "wurf", "treffer", "kritisch", "parade", "perfekt", "zauber", "heilung", "stufe"]
