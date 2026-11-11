@@ -155,7 +155,8 @@ static func teil_bauen(o: Dictionary, teile: Dictionary, hoehe := 0.0) -> Dictio
 			bild_rect = bild_rect.expand(e)
 	else:
 		node.add_child(sprite)
-	var lichter: Array = d.get("lichter", []).duplicate()
+	# Von hinten sitzen die Laternen woanders (lichter_hinten), sonst gelten die Lichter von vorne
+	var lichter: Array = (d.lichter_hinten if hinten and d.has("lichter_hinten") else d.get("lichter", [])).duplicate()
 	if d.has("licht"):
 		lichter.append({art = d.licht.art, hoehe = d.licht.get("hoehe", 0)})
 	var neue_lichter: Array[Licht] = []

@@ -165,6 +165,20 @@
 						280
 					]
 				}
+			],
+			"bild_hinten": "objekte/gilde_hinten.png",
+			"fuss_hinten": [
+				218,
+				277
+			],
+			"lichter_hinten": [
+				{
+					"art": "laterne",
+					"bild": [
+						319,
+						297
+					]
+				}
 			]
 		},
 		"wegrast": {
@@ -183,6 +197,20 @@
 					"bild": [
 						107,
 						223
+					]
+				}
+			],
+			"bild_hinten": "objekte/wegrast_hinten.png",
+			"fuss_hinten": [
+				180,
+				222
+			],
+			"lichter_hinten": [
+				{
+					"art": "laterne",
+					"bild": [
+						248,
+						217
 					]
 				}
 			]
@@ -873,6 +901,20 @@
 						150
 					]
 				}
+			],
+			"bild_hinten": "objekte/bankhaus_hinten.png",
+			"fuss_hinten": [
+				139,
+				196
+			],
+			"lichter_hinten": [
+				{
+					"art": "laterne",
+					"bild": [
+						55,
+						165
+					]
+				}
 			]
 		},
 		"bingos_laden": {
@@ -924,7 +966,13 @@
 						150
 					]
 				}
-			]
+			],
+			"bild_hinten": "objekte/haus_gross_hinten.png",
+			"fuss_hinten": [
+				157,
+				207
+			],
+			"lichter_hinten": []
 		},
 		"eckhaus": {
 			"bild": "objekte/eckhaus.png",
