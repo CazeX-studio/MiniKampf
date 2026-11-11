@@ -40,6 +40,8 @@ Damit Marco beim Brainstormen immer den echten Stand sieht, müssen **drei Stell
 
 ## Regeln
 
+- Braucht ein Schritt neue Bilder: Skill `grafikauftrag` (Prompt mit Referenzbild speichern, Platzhalter einbauen).
+
 - Im Doc nichts löschen oder umformulieren außer dem Status (Ideen werden nie gestrichen).
 - Ist der Google-Docs-Connector nicht verfügbar: Marco sagen, dass das Doc noch nachgezogen werden muss, und den
   fertigen Status-Text zum Einfügen mitgeben.
