@@ -7,6 +7,7 @@ func _ready() -> void:
 	var args := OS.get_cmdline_user_args()
 	var klasse: String = args[1] if args.size() > 1 else "blade"
 	BattleRequest.prepare("kettenschmied", 20, 2, klasse)
+	BattleRequest.setup.helden[0]["macht"] = 1.6
 	var kampf: Node = load("res://scenes/kampf.tscn").instantiate()
 	add_child(kampf)
 	var c := kampf as Combat
@@ -20,4 +21,9 @@ func _ready() -> void:
 		knoepfe[1].mouse_entered.emit()
 	await get_tree().create_timer(0.3).timeout
 	get_viewport().get_texture().get_image().save_png(args[0] + "/symbolleiste_%s.png" % klasse)
+	# Taste D gedrückt: Einzelheiten (A23)
+	c._details = true
+	c._hinweis_neu()
+	await get_tree().create_timer(0.3).timeout
+	get_viewport().get_texture().get_image().save_png(args[0] + "/symbolleiste_%s_details.png" % klasse)
 	get_tree().quit()

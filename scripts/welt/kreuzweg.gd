@@ -3530,7 +3530,7 @@ func _ausruestung_zeilen(p: PlayerState) -> void:
 	_rep_box.add_child(puppe)
 	puppe.bauen(p.progress, p.look, func(befehl: Dictionary) -> void: _send(befehl), _fill_panel)
 	var s := Ausruestung.summe(angelegt)
-	var summe := _label(GameData.text("ausruestung_summe", [s.waffenkraft, s.verteidigung, s.widerstand,
+	var summe := _label(GameData.text("ausruestung_summe", [s.waffenkraft + s.zauberkraft, s.verteidigung, s.widerstand,
 			Ausruestung.TEMPO_NAMEN.get(s.waffen_tempo, "normal")]), 14, Color("a0a0a0"))
 	summe.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	summe.custom_minimum_size.x = 100

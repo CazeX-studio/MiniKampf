@@ -338,6 +338,7 @@ func _create_heroes() -> void:
 			h = Fighter.new(spec.get("name", data.hero), id, data.title, true, stats.leben, stats.tempo, data.color)
 			h.max_mana = stats.mana
 			h.power = Grundwerte.power(level_bonus + 1)
+			h.set_meta("faktor_stufe", h.power)
 		else:
 			h = Fighter.new(spec.get("name", data.hero), id, data.title, true, data.hp + LEVEL_HP * level_bonus, data.tempo, data.color)
 			h.max_mana = data.mana + LEVEL_MANA * level_bonus if data.mana > 0 else 0
@@ -392,9 +393,12 @@ func _create_heroes() -> void:
 		# Roboter und Monster des Helden werden genauso stärker (spec.macht, siehe BattleRequest)
 		if spec.has("macht"):
 			h.power = float(spec.macht)
+			h.set_meta("faktor_stufe", h.power)
 			# Stufenabstand zu den Gegnern (nur wenn die Gegner eine Stufe haben)
 			if setup.has("gegner_stufe"):
-				h.power *= gap_hero_factor(level_gap(int(setup.gegner_stufe), level_bonus + 1))
+				var abstand := gap_hero_factor(level_gap(int(setup.gegner_stufe), level_bonus + 1))
+				h.power *= abstand
+				h.set_meta("faktor_abstand", abstand)
 				_gap_levels.append(level_bonus + 1)
 			var buddies: Array[Fighter] = h.monsters.duplicate()
 			if h.robot != null:
@@ -411,6 +415,8 @@ func _create_heroes() -> void:
 		# Waffenkraft: mehr Schaden und Heilung (mit der Grundausrüstung bleibt alles wie vorher)
 		if not gear.is_empty():
 			h.power *= float(gear.get("macht", 1.0))
+			# Für die Zahlen in den Beschreibungen (A23): Anteil von Waffen- bzw. Zauberkraft
+			h.set_meta("faktor_kraft", float(gear.get("macht", 1.0)))
 		_emit({type = "spawn", f = h, place = "hero", index = i, hp = h.hp})
 		h.next_time = h.turn_delay() * zufall_range(0.2, 1.0)
 
@@ -912,6 +918,8 @@ func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 	# Stufe der Fähigkeit im Baum: jede Stufe über 1 mehr Schaden und Heilung
 	if f.has_meta("faehigkeiten"):
 		f.set_meta("stufen_mult", 1.0 + Faehigkeiten.stufen_bonus() * maxi(skills.skill_level(f, id) - 1, 0))
+	# Fähigkeiten aus vielen kleinen Treffern wachsen mit dem Tempo (A23b)
+	f.set_meta("tempo_mult", FaehigkeitZahlen.tempo_faktor(f) if id in FaehigkeitZahlen.TEMPO_FAEHIGKEITEN else 1.0)
 	if ab.has("cd"):
 		f.cooldowns[id] = ab.cd + 1
 	# Normaler Angriff gibt etwas Mana zurück
@@ -1372,7 +1380,7 @@ func calc_damage(attacker: Fighter, target: Fighter, base: float, kind: String, 
 	dmg *= _last_eff
 	dmg *= skills.damage_bonus(attacker) * attacker.power
 	# Fähigkeit auf höherer Stufe (Fähigkeiten-Baum): mehr Schaden
-	dmg *= float(attacker.get_meta("stufen_mult", 1.0))
+	dmg *= float(attacker.get_meta("stufen_mult", 1.0)) * float(attacker.get_meta("tempo_mult", 1.0))
 	if attacker.is_ally():
 		# Passive "Ruhige Hand": Der Bogenschütze trifft aus der hinteren Reihe öfter kritisch.
 		var chance := CRIT_CHANCE

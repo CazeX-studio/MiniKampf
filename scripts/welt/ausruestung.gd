@@ -24,7 +24,7 @@ const TEMPO_NAMEN := {schnell = "schnell", normal = "normal", schwer = "schwer"}
 const TEMPO_WERT := {schnell = 2, normal = 0, schwer = -2}
 
 ## Bonus-Werte, die ein Teil haben kann
-const BONUS_NAMEN := {angriff = "Angriff", leben = "Leben", mana = "Mana", tempo = "Tempo", verteidigung = "Verteidigung", widerstand = "Widerstand"}
+const BONUS_NAMEN := {angriff = "Angriff", zauberkraft = "Zauberkraft", leben = "Leben", mana = "Mana", tempo = "Tempo", verteidigung = "Verteidigung", widerstand = "Widerstand"}
 ## Verteidigung und Widerstand: Schaden mal (GRUNDSCHUTZ + Startwert) / (GRUNDSCHUTZ + eigener Wert)
 const GRUNDSCHUTZ := 50.0
 
@@ -48,12 +48,14 @@ static func platz_fuer(id: String, angelegt: Dictionary) -> String:
 
 ## Summe aller angelegten Teile: {waffenkraft, verteidigung, widerstand, waffen_tempo, boni = {angriff, leben, …}}.
 static func summe(angelegt: Dictionary) -> Dictionary:
-	var ergebnis := {waffenkraft = 0, verteidigung = 0, widerstand = 0, waffen_tempo = "normal", boni = {}}
+	var ergebnis := {waffenkraft = 0, zauberkraft = 0, verteidigung = 0, widerstand = 0, waffen_tempo = "normal", boni = {}}
 	for platz: String in PLAETZE:
 		var t := teil(str(angelegt.get(platz, "")))
 		if t.is_empty():
 			continue
 		ergebnis.waffenkraft += int(t.get("waffenkraft", 0))
+		# Waffen der Zauberklassen (Instrumente, Stäbe) geben Zauberkraft statt Waffenkraft (A23b, Marco 11.11.)
+		ergebnis.zauberkraft += int(t.get("zauberkraft", 0))
 		ergebnis.verteidigung += int(t.get("verteidigung", 0))
 		ergebnis.widerstand += int(t.get("widerstand", 0))
 		if platz == "waffe":
@@ -61,6 +63,7 @@ static func summe(angelegt: Dictionary) -> Dictionary:
 		var boni: Dictionary = t.get("boni", {})
 		for wert: String in boni:
 			ergebnis.boni[wert] = int(ergebnis.boni.get(wert, 0)) + int(boni[wert])
+	ergebnis.zauberkraft += int(ergebnis.boni.get("zauberkraft", 0))
 	ergebnis.verteidigung += int(ergebnis.boni.get("verteidigung", 0))
 	ergebnis.widerstand += int(ergebnis.boni.get("widerstand", 0))
 	return ergebnis
@@ -78,7 +81,8 @@ static func kampfwerte(angelegt: Dictionary, karten_boni: Dictionary = {}) -> Di
 	for wert: String in karten_boni:
 		boni[wert] = int(boni.get(wert, 0)) + int(karten_boni[wert])
 	return {
-		macht = (basis + s.waffenkraft + int(boni.get("angriff", 0))) / (basis + start.waffenkraft),
+		# Waffen- und Zauberkraft zählen gleich: Jede Klasse trägt nur Waffen, die ihr eine davon geben
+		macht = (basis + s.waffenkraft + s.zauberkraft + int(boni.get("angriff", 0))) / (basis + start.waffenkraft + start.zauberkraft),
 		schutz = (GRUNDSCHUTZ + start.verteidigung) / (GRUNDSCHUTZ + s.verteidigung),
 		magieschutz = (GRUNDSCHUTZ + start.widerstand) / (GRUNDSCHUTZ + s.widerstand),
 		tempo = int(TEMPO_WERT.get(s.waffen_tempo, 0)) + int(boni.get("tempo", 0)),
@@ -103,6 +107,8 @@ static func werte_text(id: String) -> String:
 	teile.append(SELTENHEIT_NAMEN.get(str(t.get("seltenheit", "gewoehnlich")), ""))
 	if t.has("waffenkraft"):
 		teile.append("Waffenkraft %d" % int(t.waffenkraft))
+	if t.has("zauberkraft"):
+		teile.append("Zauberkraft %d" % int(t.zauberkraft))
 	if t.has("verteidigung"):
 		teile.append("Verteidigung %d" % int(t.verteidigung))
 	if t.has("widerstand"):
@@ -128,7 +134,7 @@ static func vergleich(id: String, angelegt: Dictionary) -> String:
 	var vorher := summe(angelegt)
 	var nachher := summe(neu)
 	var teile: PackedStringArray = []
-	for wert: String in ["waffenkraft", "verteidigung", "widerstand"]:
+	for wert: String in ["waffenkraft", "zauberkraft", "verteidigung", "widerstand"]:
 		_pfeil(teile, wert.capitalize(), int(nachher[wert]) - int(vorher[wert]))
 	for wert: String in ["angriff", "leben", "mana"]:
 		_pfeil(teile, BONUS_NAMEN[wert], int(nachher.boni.get(wert, 0)) - int(vorher.boni.get(wert, 0)))

@@ -806,6 +806,10 @@ const HALTEN_SEKUNDEN := 0.45
 var _hinweis: PanelContainer
 var _hinweis_text: RichTextLabel
 var _gehalten := false
+## Einzelheiten zu den Zahlen zeigen (Taste D bzw. Gedrückthalten am Handy, A23) und was der Hinweis gerade zeigt
+var _details := false
+var _hinweis_knopf: Control
+var _hinweis_daten: Array = []
 
 
 ## Fähigkeiten als große Bilder ohne Schrift (A22). Gesperrte sind dunkel, Abklingzeit steht groß darauf.
@@ -859,8 +863,7 @@ func _zeige_symbolleiste(f: Fighter, list: Array) -> void:
 			zahl.add_theme_constant_override("outline_size", 8)
 			zahl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			button.add_child(zahl)
-		var text := _hinweis_fuer(f, ab, reason)
-		button.mouse_entered.connect(_hinweis_zeigen.bind(button, text))
+		button.mouse_entered.connect(_hinweis_ueber.bind(button, f, ab, reason, false))
 		button.mouse_exited.connect(_hinweis_verstecken)
 		# Handy: Gedrückthalten zeigt die Beschreibung, ohne die Fähigkeit zu benutzen
 		button.button_down.connect(func() -> void:
@@ -868,7 +871,8 @@ func _zeige_symbolleiste(f: Fighter, list: Array) -> void:
 			get_tree().create_timer(HALTEN_SEKUNDEN).timeout.connect(func() -> void:
 				if is_instance_valid(button) and button.is_pressed():
 					_gehalten = true
-					_hinweis_zeigen(button, text)))
+					# Am Handy gibt es keine Taste D: beim Gedrückthalten gleich mit Einzelheiten
+					_hinweis_ueber(button, f, ab, reason, true)))
 		button.pressed.connect(func() -> void:
 			if _gehalten:
 				_gehalten = false
@@ -878,8 +882,23 @@ func _zeige_symbolleiste(f: Fighter, list: Array) -> void:
 	_number_buttons()
 
 
-## Was beim Drüberfahren steht: Name, was die Fähigkeit im Kampf macht, die Beschreibung aus dem Baum und warum sie gesperrt ist.
-func _hinweis_fuer(f: Fighter, ab: Dictionary, reason: String) -> String:
+## Hinweis zu einer Fähigkeit zeigen (merkt sich, welche, damit D ihn neu aufbauen kann).
+func _hinweis_ueber(knopf: Control, f: Fighter, ab: Dictionary, reason: String, immer_details: bool) -> void:
+	_hinweis_knopf = knopf
+	_hinweis_daten = [f, ab, reason, immer_details]
+	_hinweis_zeigen(knopf, _hinweis_fuer(f, ab, reason, _details or immer_details))
+
+
+## D gedrückt oder losgelassen: offenen Hinweis neu aufbauen.
+func _hinweis_neu() -> void:
+	if _hinweis == null or not _hinweis.visible or _hinweis_daten.is_empty() or not is_instance_valid(_hinweis_knopf):
+		return
+	_hinweis_ueber(_hinweis_knopf, _hinweis_daten[0], _hinweis_daten[1], _hinweis_daten[2], _hinweis_daten[3])
+
+
+## Was beim Drüberfahren steht: Name, was die Fähigkeit im Kampf macht (Zahlen fertig und farbig, A23), die Beschreibung
+## aus dem Baum und warum sie gesperrt ist. details: Grundwerte und Prozente, dazu die Farben erklärt.
+func _hinweis_fuer(f: Fighter, ab: Dictionary, reason: String, details := false) -> String:
 	var farbe := "f3ead8"
 	var art := ""
 	if ab.id == "ult":
@@ -892,13 +911,18 @@ func _hinweis_fuer(f: Fighter, ab: Dictionary, reason: String) -> String:
 		farbe = "9fe8ff"
 		art = "  [color=#9fe8ff](hier im Dungeon)[/color]"
 	var zeilen: Array[String] = ["[b][color=#%s]%s[/color][/b]%s" % [farbe, ab.name, art]]
+	var stufe := state.skills.skill_level(f, str(ab.id)) if f.has_meta("faehigkeiten") else 1
 	if str(ab.get("info", "")) != "":
-		zeilen.append(str(ab.info))
+		zeilen.append(FaehigkeitZahlen.text(f, ab, str(ab.info), stufe, details))
 	var baum := _baum_info(f.klass, str(ab.id))
 	if baum != "" and baum != str(ab.get("info", "")):
 		zeilen.append("[color=#b8b0a0]%s[/color]" % baum)
 	if reason != "":
 		zeilen.append("[color=#ff9a7a]%s[/color]" % reason)
+	if details:
+		zeilen.append("[font_size=12]%s[/font_size]" % FaehigkeitZahlen.legende())
+	elif not DisplayServer.is_touchscreen_available():
+		zeilen.append("[font_size=12][color=#8a8478]D halten: Einzelheiten[/color][/font_size]")
 	return "\n".join(zeilen)
 
 
@@ -945,6 +969,7 @@ func _hinweis_zeigen(knopf: Control, text: String) -> void:
 func _hinweis_verstecken() -> void:
 	if _hinweis != null:
 		_hinweis.visible = false
+	_hinweis_daten = []
 
 
 ## Symbol für einen Fähigkeits-Knopf (aus dem UI-Set), grob nach Art der Fähigkeit.
@@ -1240,6 +1265,10 @@ func _end_guided_pause() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	# Taste D gedrückt halten: Einzelheiten der Zahlen im Hinweis (A23)
+	if event is InputEventKey and event.keycode == KEY_D and not event.echo:
+		_details = event.pressed
+		_hinweis_neu()
 	if not _reacting:
 		_number_key(event)
 		return
