@@ -38,7 +38,11 @@ func _initialize() -> void:
 	var p := world.add_player("a", "Test", "novize_m+m1", Vector2i(20, 20))
 	world.change_map(p, "wipfelheim", Vector2i(24, 24))
 	var tag: Vector2i = world.npcs.ysolde.cell
-	_check(world._npc_present(p, "kobalt") and world._npc_present(p, "borko"), "Tags: Kobalt und Borko da")
+	_check(world._npc_present(p, "kobalt"), "Tags: Kobalt da")
+	# Borko und die Gäste stehen seit A12b drinnen im Baumhaus-Gasthaus
+	p.map = "gasthaus_wipfelheim"
+	_check(world._npc_present(p, "borko"), "Tags: Borko im Baumhaus-Gasthaus")
+	p.map = "wipfelheim"
 	world.nacht = true
 	_check(world.npcs.ysolde.cell == Vector2i(30, 28) and world.npcs.ysolde.cell != tag, "Nachts: Ysolde am Rand des Dorfs")
 	_check(world.npcs.fenn.cell == Vector2i(21, 27) and world.npcs.oma_hagebutte.cell == Vector2i(10, 23), "Nachts: Fenn am Rand, Oma beim Gasthaus")
@@ -55,15 +59,20 @@ func _initialize() -> void:
 	# D21b: Volk in Grünwacht
 	world.nacht = false
 	for id: String in ["jaeger_1", "jaeger_2", "sammlerin_1", "sammlerin_2", "kind_gw_1", "kind_gw_2", "gast_gw_3"]:
+		p.map = "gasthaus_wipfelheim" if id.begins_with("gast") else "wipfelheim"
 		_check(world._npc_present(p, id), "Tags da: %s" % id)
 		_check(FigurTeile.bild(world.npcs[id].look, "idle_vorn", 0) != null, "Aus dem Baukasten: %s" % id)
+	p.map = "gasthaus_wipfelheim"
 	for id: String in ["gast_gw_1", "gast_gw_2"]:
 		_check(not world._npc_present(p, id), "Tags nicht da: %s" % id)
+	p.map = "wipfelheim"
 	world.nacht = true
 	for id: String in ["sammlerin_1", "sammlerin_2", "kind_gw_1", "kind_gw_2"]:
 		_check(not world._npc_present(p, id), "Nachts nicht da: %s" % id)
 	for id: String in ["jaeger_1", "jaeger_2", "gast_gw_1", "gast_gw_2", "gast_gw_3"]:
+		p.map = "gasthaus_wipfelheim" if id.begins_with("gast") else "wipfelheim"
 		_check(world._npc_present(p, id), "Nachts da: %s" % id)
+	p.map = "wipfelheim"
 	world.nacht = false
 	Tageszeit.feste_stunde = -1.0
 	print("Grünwacht-Figuren: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))

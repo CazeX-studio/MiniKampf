@@ -1425,15 +1425,6 @@
 					"radius": 6
 				}
 			},
-			"borko": {
-				"name": "Wirt Borko",
-				"feld": [
-					14,
-					22
-				],
-				"aussehen": "grund_mann+borko#hut=borko_kochmuetze,zubehoer=schoepfkelle",
-				"dialog": "borko"
-			},
 			"jaeger_1": {
 				"name": "Jäger",
 				"feld": [
@@ -1499,43 +1490,26 @@
 				"wenn": {
 					"nacht": false
 				}
-			},
-			"gast_gw_1": {
-				"name": "Gast",
-				"feld": [
-					7,
-					26
-				],
-				"aussehen": "grund_mann+v_m1",
-				"dialog": "volk_gw_gast_1",
-				"wenn": {
-					"nacht": true
-				}
-			},
-			"gast_gw_2": {
-				"name": "Gast",
-				"feld": [
-					14,
-					25
-				],
-				"aussehen": "grund_handwerker+v_m3",
-				"dialog": "volk_gw_gast_2",
-				"wenn": {
-					"nacht": true
-				}
-			},
-			"gast_gw_3": {
-				"name": "Gast",
-				"feld": [
-					14,
-					18
-				],
-				"aussehen": "grund_frau+v_w2",
-				"dialog": "volk_gw_gast_3"
 			}
 		},
 		"baukasten": "karte_wipfelheim",
-		"kampf_hintergrund": "wipfelheim"
+		"kampf_hintergrund": "wipfelheim",
+		"ausgaenge": [
+			{
+				"bereich": [
+					14,
+					20,
+					1,
+					1
+				],
+				"karte": "gasthaus_wipfelheim",
+				"feld": [
+					10,
+					6
+				],
+				"tuer": true
+			}
+		]
 	},
 	"tiefwurzel": {
 		"name": "Tiefwurzel",
@@ -3192,5 +3166,91 @@
 			}
 		},
 		"baukasten": "karte_wegrast"
+	},
+	"gasthaus_wipfelheim": {
+		"name": "Baumhaus-Gasthaus",
+		"innen": "wipfelheim",
+		"musik": "wald",
+		"grund": "planken",
+		"licht": "ffe0b0",
+		"start": [
+			10,
+			6
+		],
+		"raster": [
+			"XXXXXXXXXXXX",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########"
+		],
+		"ausgaenge": [
+			{
+				"bereich": [
+					11,
+					5,
+					1,
+					3
+				],
+				"karte": "wipfelheim",
+				"feld": [
+					15,
+					20
+				]
+			}
+		],
+		"kampf_hintergrund": "wipfelheim",
+		"npcs": {
+			"borko": {
+				"name": "Wirt Borko",
+				"feld": [
+					6,
+					3
+				],
+				"aussehen": "grund_mann+borko#hut=borko_kochmuetze,zubehoer=schoepfkelle",
+				"dialog": "borko"
+			},
+			"gast_gw_1": {
+				"name": "Gast",
+				"feld": [
+					5,
+					8
+				],
+				"aussehen": "grund_mann+v_m1",
+				"dialog": "volk_gw_gast_1",
+				"wenn": {
+					"nacht": true
+				}
+			},
+			"gast_gw_2": {
+				"name": "Gast",
+				"feld": [
+					9,
+					7
+				],
+				"aussehen": "grund_handwerker+v_m3",
+				"dialog": "volk_gw_gast_2",
+				"wenn": {
+					"nacht": true
+				}
+			},
+			"gast_gw_3": {
+				"name": "Gast",
+				"feld": [
+					4,
+					6
+				],
+				"aussehen": "grund_frau+v_w2",
+				"dialog": "volk_gw_gast_3"
+			}
+		},
+		"baukasten": "karte_gasthaus_wipfelheim"
 	}
 }

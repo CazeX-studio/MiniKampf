@@ -1,0 +1,155 @@
+{
+	"_hinweis": "Innenraum des Baumhaus-Gasthauses in Wipfelheim (A12b). Bis die gemalten Innenraum-Teile aus GRAFIK_AUFTRAG.md Teil O da sind, mit vorhandenen Teilen gebaut: Wurzelwände als Wände, Feuerstelle als Kochstelle, Holzbänke und Baumstümpfe.",
+	"boden": [
+		"pppppppppppp",
+		"pppppppppppp",
+		"pppppppppppp",
+		"pppppppppppp",
+		"pppppppppppp",
+		"pppppppppppp",
+		"pppppppppppp",
+		"pppppppppppp",
+		"pppppppppppp",
+		"pppppppppppp",
+		"pppppppppppp",
+		"pppppppppppp"
+	],
+	"objekte": [
+		{
+			"teil": "gw_wurzelwand",
+			"feld": [
+				1,
+				0
+			]
+		},
+		{
+			"teil": "gw_wurzelwand",
+			"feld": [
+				5,
+				0
+			]
+		},
+		{
+			"teil": "gw_wurzelwand",
+			"feld": [
+				8,
+				0
+			]
+		},
+		{
+			"teil": "gw_wurzelwand",
+			"feld": [
+				0,
+				1
+			],
+			"gespiegelt": true
+		},
+		{
+			"teil": "gw_wurzelwand",
+			"feld": [
+				0,
+				5
+			],
+			"gespiegelt": true
+		},
+		{
+			"teil": "gw_wurzelwand",
+			"feld": [
+				0,
+				8
+			],
+			"gespiegelt": true
+		},
+		{
+			"teil": "feuerstelle",
+			"feld": [
+				4,
+				2
+			]
+		},
+		{
+			"teil": "gw_pilzkoerbe",
+			"feld": [
+				2,
+				1
+			]
+		},
+		{
+			"teil": "gw_kraeuterkisten",
+			"feld": [
+				3,
+				1
+			]
+		},
+		{
+			"teil": "fass",
+			"feld": [
+				1,
+				2
+			]
+		},
+		{
+			"teil": "gw_jagdtrophaee",
+			"feld": [
+				8,
+				1
+			]
+		},
+		{
+			"teil": "holzbank",
+			"feld": [
+				3,
+				7
+			]
+		},
+		{
+			"teil": "holzbank",
+			"feld": [
+				7,
+				5
+			]
+		},
+		{
+			"teil": "gw_baumstumpf",
+			"feld": [
+				2,
+				9
+			]
+		},
+		{
+			"teil": "gw_baumstumpf",
+			"feld": [
+				6,
+				9
+			]
+		},
+		{
+			"teil": "gw_lichtlaterne",
+			"feld": [
+				1,
+				5
+			]
+		},
+		{
+			"teil": "gw_lichtlaterne",
+			"feld": [
+				10,
+				1
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_klein",
+			"feld": [
+				1,
+				10
+			]
+		},
+		{
+			"teil": "gw_farn",
+			"feld": [
+				10,
+				10
+			]
+		}
+	]
+}

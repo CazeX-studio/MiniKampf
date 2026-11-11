@@ -1,5 +1,5 @@
 extends SceneTree
-## A12a: Gasthaus Wegrast betreten (Tür in Kreuzweg, Innenraum mit Hanne und den Gästen).
+## A12: Gasthäuser betreten. A12a Wegrast (Tür in Kreuzweg, Hanne und die Gäste), A12b Baumhaus-Gasthaus in Wipfelheim (Borko).
 ## Aufruf: Godot --headless --path . -s tests/wegrast_test.gd
 
 var _failed := 0
@@ -46,6 +46,22 @@ func _initialize() -> void:
 	_tick(w, 8.0)
 	_check(p.map == "kreuzweg" and w.get_map("kreuzweg").is_walkable(p.cell) and not tuer.rect.has_point(p.cell),
 			"Hinaus: wieder in Kreuzweg vor der Tür")
+	_gasthaus_wipfelheim(w, p)
 	Tageszeit.feste_stunde = -1.0
 	print("Wegrast: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)
+
+
+## A12b: Baumhaus-Gasthaus in Wipfelheim, Tür an der rechten Seite bei den Stufen
+func _gasthaus_wipfelheim(w: WorldState, p: PlayerState) -> void:
+	w.change_map(p, "wipfelheim", Vector2i(16, 22))
+	p.dialog = {}
+	var tueren: Array = w.get_map("wipfelheim").exits.filter(func(e: Dictionary) -> bool: return e.karte == "gasthaus_wipfelheim")
+	_check(tueren.size() == 1 and tueren[0].tuer, "Wipfelheim: Tür ins Baumhaus-Gasthaus")
+	w.apply_command("a", {type = "move", cell = tueren[0].rect.position})
+	_tick(w, 8.0)
+	_check(p.map == "gasthaus_wipfelheim", "Zur Tür gegangen: im Baumhaus-Gasthaus")
+	_check(w.npc_visible(p, "borko") and w.npc_visible(p, "gast_gw_3"), "Borko an der Kochstelle, ein Gast am Tisch")
+	w.apply_command("a", {type = "move", cell = w.get_map("gasthaus_wipfelheim").exits[0].rect.position})
+	_tick(w, 8.0)
+	_check(p.map == "wipfelheim" and w.get_map("wipfelheim").is_walkable(p.cell), "Hinaus: wieder in Wipfelheim")
