@@ -1773,10 +1773,10 @@
 					6,
 					1
 				],
-				"karte": "kreuzweg",
+				"karte": "kreuzwegfelder",
 				"feld": [
-					31,
-					63
+					20,
+					34
 				]
 			},
 			{
@@ -3579,5 +3579,256 @@
 			}
 		],
 		"baukasten": "karte_duerrewald"
+	},
+	"kreuzwegfelder": {
+		"name": "Kreuzwegfelder",
+		"musik": "wald",
+		"grund": "wiese",
+		"licht": "fff8e8",
+		"start": [
+			20,
+			2
+		],
+		"raster": [
+			"TTTT==TTTTTTTTTTTTTT==TTTTTTTTTTTTTTTTTT",
+			"TT..==T..T.T.T.T.TTT==...TT.TTT.T.TT..TT",
+			"T...==.........T....==................TT",
+			"TT..==..............==.................T",
+			"TT..==..............==................TT",
+			"TT..==....T.........==................TT",
+			"TT..==..........T...==.................T",
+			"T...==.......T......==.................T",
+			"TT..==================................TT",
+			"TT..==================................TT",
+			"TT..T..........T....==.............T..TT",
+			"TT...T..............==............T....T",
+			"T...................==T........T.T.T..TT",
+			"T...................==...............TTT",
+			"TT..................==.................T",
+			"TT................T.==................TT",
+			"T...................==..............T..T",
+			"T...................==................TT",
+			"TT.T................==.................T",
+			"TT.T................==................TT",
+			"T...................==................TT",
+			"ssssssssssssssssssss==ssssssssssssssssss",
+			"T......T............==.T..............TT",
+			"TT..................==................TT",
+			"TT..................==................TT",
+			"T...................==................TT",
+			"T...................==............T...TT",
+			"T...................==.................T",
+			"T...................==................TT",
+			"TT.T......T.........==....T......T.....T",
+			"TT.................T==.................T",
+			"TT..................==................TT",
+			"TT.T................==................TT",
+			"TT.........T........==.T...............T",
+			"T.TTT.TTT.TT.TTTTT.T==T.T.TT.TTT......TT",
+			"TTTTTTTTTTTTTTTTTTTT==TTTTTTTTTTTTTTTTTT"
+		],
+		"ausgaenge": [
+			{
+				"bereich": [
+					20,
+					0,
+					2,
+					1
+				],
+				"karte": "kreuzweg",
+				"feld": [
+					31,
+					63
+				]
+			},
+			{
+				"bereich": [
+					4,
+					0,
+					2,
+					1
+				],
+				"karte": "kreuzweg",
+				"feld": [
+					2,
+					45
+				]
+			},
+			{
+				"bereich": [
+					20,
+					35,
+					2,
+					1
+				],
+				"karte": "aschensteppe",
+				"feld": [
+					14,
+					1
+				],
+				"wenn": {
+					"gemerkt": "klasse_bestaetigt"
+				}
+			}
+		],
+		"kampf_hintergrund": "kreuzwegfelder",
+		"monster": [
+			{
+				"feld": [
+					10,
+					7
+				],
+				"gegner": [
+					"tauschleim"
+				],
+				"stufe": 1,
+				"hintergrund": "kreuzwegfelder"
+			},
+			{
+				"feld": [
+					30,
+					6
+				],
+				"gegner": [
+					"tauschleim",
+					"tauschleim"
+				],
+				"stufe": 2,
+				"hintergrund": "kreuzwegfelder"
+			},
+			{
+				"feld": [
+					14,
+					13
+				],
+				"gegner": [
+					"wiesenhoppler"
+				],
+				"stufe": 3,
+				"hintergrund": "kreuzwegfelder"
+			},
+			{
+				"feld": [
+					31,
+					14
+				],
+				"gegner": [
+					"wiesenhoppler",
+					"tauschleim"
+				],
+				"stufe": 4,
+				"hintergrund": "kreuzwegfelder"
+			},
+			{
+				"feld": [
+					8,
+					27
+				],
+				"gegner": [
+					"knollenkaefer"
+				],
+				"stufe": 5,
+				"hintergrund": "kreuzwegfelder"
+			},
+			{
+				"feld": [
+					32,
+					26
+				],
+				"gegner": [
+					"loewenzahnling",
+					"knollenkaefer"
+				],
+				"stufe": 6,
+				"hintergrund": "kreuzwegfelder"
+			},
+			{
+				"feld": [
+					13,
+					31
+				],
+				"gegner": [
+					"knollenkaefer",
+					"wiesenhoppler"
+				],
+				"stufe": 6,
+				"hintergrund": "kreuzwegfelder"
+			},
+			{
+				"feld": [
+					28,
+					31
+				],
+				"gegner": [
+					"loewenzahnling",
+					"knollenkaefer",
+					"tauschleim"
+				],
+				"stufe": 7,
+				"hintergrund": "kreuzwegfelder"
+			},
+			{
+				"feld": [
+					30,
+					6
+				],
+				"gegner": [
+					"funkenflirr"
+				],
+				"stufe": 4,
+				"hintergrund": "kreuzwegfelder",
+				"zeit": "nacht"
+			},
+			{
+				"feld": [
+					14,
+					13
+				],
+				"gegner": [
+					"funkenflirr",
+					"funkenflirr"
+				],
+				"stufe": 5,
+				"hintergrund": "kreuzwegfelder",
+				"zeit": "nacht"
+			},
+			{
+				"feld": [
+					32,
+					26
+				],
+				"gegner": [
+					"glutigel"
+				],
+				"stufe": 6,
+				"hintergrund": "kreuzwegfelder",
+				"zeit": "nacht"
+			},
+			{
+				"feld": [
+					28,
+					31
+				],
+				"gegner": [
+					"glutigel",
+					"funkenflirr"
+				],
+				"stufe": 7,
+				"hintergrund": "kreuzwegfelder",
+				"zeit": "nacht"
+			},
+			{
+				"feld": [
+					36,
+					33
+				],
+				"gegner": [
+					"kronenschleim"
+				],
+				"stufe": 8,
+				"hintergrund": "kreuzwegfelder"
+			}
+		],
+		"baukasten": "karte_kreuzwegfelder"
 	}
 }

@@ -286,7 +286,8 @@ func _test_wild() -> void:
 		elif m.karte == "waldboden":
 			_check(m.stufe >= 12 and m.stufe <= 20, "Monster im Wald (Wachtwald und Tiefwurzel, MONSTER.md): Stufe 12–20 (%d)" % m.stufe)
 		levels.append(m.stufe)
-	_check(levels.min() == 9 and levels.max() == 20, "Monster von Stufe 9 bis 20")
+	# Seit A14 gibt es auch die Kreuzwegfelder (Stufe 1–8)
+	_check(levels.min() == 1 and levels.max() == 20, "Monster von Stufe 1 bis 20")
 
 	# Kampf mit der eigenen Klasse, Stärke nach Stufe
 	_check(BattleRequest.prepare("wild:0", 12, 0, "archer"), "Kampf gegen ein Monster lässt sich vorbereiten")

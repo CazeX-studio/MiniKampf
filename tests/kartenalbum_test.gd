@@ -236,8 +236,8 @@ func _process(_delta: float) -> bool:
 		_check(_town._panel.visible and _town._panel_title.text == "Kartenalbum", "Album-Fenster öffnet sich")
 	if _frame == 24:
 		var reiter: Array = _town._album_tabs.get_children()
-		_check(reiter.size() >= 2 and reiter[0].text == "Kreuzweg: 2 / 7", "Reiter mit Zähler (%s)" % (reiter[0].text if not reiter.is_empty() else "–"))
-		_check(_town._album_grid.get_child_count() == 7, "Kreuzweg-Seite: 7 feste Plätze")
+		_check(reiter.size() >= 2 and reiter[0].text == "Kreuzweg: 2 / 14", "Reiter mit Zähler (%s)" % (reiter[0].text if not reiter.is_empty() else "–"))
+		_check(_town._album_grid.get_child_count() == 14, "Kreuzweg-Seite: 14 feste Plätze (seit A14 mit den Monstern der Kreuzwegfelder)")
 		_town._album_karte = "feldschleim"
 		_town._fill_panel()
 	if _frame == 28:

@@ -142,7 +142,7 @@
 	"festmahl": {
 		"titel": "Ein Festmahl",
 		"neben": true,
-		"beschreibung": "Hanne kocht für das Fest der fünf Wege. Sammle Wiesenkraut und das Wildfleisch, das der Jäger bereitgelegt hat – draußen auf den Kreuzwegfeldern am Rand der Stadt. Wo es etwas zu sammeln gibt, leuchtet es.",
+		"beschreibung": "Hanne kocht für das Fest der fünf Wege. Sammle Wiesenkraut und das Wildfleisch, das der Jäger bereitgelegt hat – am grünen Rand der Stadt, innerhalb der Mauern. Wo es etwas zu sammeln gibt, leuchtet es.",
 		"start_bei": "hanne",
 		"voraussetzung": "hannes_kater",
 		"ziele": [

@@ -22,11 +22,15 @@ func _initialize() -> void:
 	world.apply_command("a", {type = "move", cell = Vector2i(31, 65)})
 	for i in 300:
 		world.tick(0.05)
-	_check(p.map == "aschensteppe", "Durch das Südtor von Kreuzweg in die Aschensteppe")
+	_check(p.map == "kreuzwegfelder", "Durch das Südtor von Kreuzweg auf die Kreuzwegfelder (A14)")
+	world.apply_command("a", {type = "move", cell = Vector2i(20, 35)})
+	for i in 600:
+		world.tick(0.05)
+	_check(p.map == "aschensteppe", "Über die Felder in die Aschensteppe")
 	world.apply_command("a", {type = "move", cell = Vector2i(14, 0)})
 	for i in 300:
 		world.tick(0.05)
-	_check(p.map == "kreuzweg", "Und zurück nach Kreuzweg")
+	_check(p.map == "kreuzwegfelder", "Und zurück auf die Kreuzwegfelder")
 
 	# Rastplatz der Karawanen: dort greifen keine Monster an, mit Wegelaterne
 	var m: WorldMap = world.get_map("aschensteppe")

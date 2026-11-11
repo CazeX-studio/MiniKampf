@@ -1596,6 +1596,14 @@
 				51
 			],
 			"gespiegelt": true
+		},
+		{
+			"teil": "seitentor",
+			"feld": [
+				0,
+				44
+			],
+			"name": "Seitentor zu den Feldern"
 		}
 	]
 }

@@ -1,0 +1,2052 @@
+{
+	"boden": [
+		":::.ee...:::........ee...........:::....",
+		":::.ee...:::........ee...........:::....",
+		":::.ee...:::........ee...........:::....",
+		"...:ee...:::...:::..ee::...:::...:::...:",
+		"...:ee...:::...:::..ee::...:::...:::...:",
+		"...:ee...:::...:::..ee::...:::...:::...:",
+		"....ee...:::......::ee...........:::....",
+		"....ee...:::......::ee...........:::....",
+		"....eeeeeeeeeeeeeeeeee...........:::....",
+		"....eeeeeeeeeeeeeeeeee::.........:::....",
+		".........:::........ee::.........:::....",
+		".........:::........ee::.........:::....",
+		".........::::::.....ee..............::::",
+		".........::::::.....ee..............::::",
+		".........::::::.....ee..............::::",
+		"::::::::::::::::::::ee:::::.............",
+		"::::::::::::::::::::ee:::::.............",
+		"::::::::::::::::::::ee:::::.............",
+		".........:::........ee.....::::::.......",
+		".........:::........ee.....::::::.......",
+		".........:::........ee.....::::::.......",
+		"~~~~~~~~~~~~~~~~~~~~ee~~~~~~~~~~~~~~~~~~",
+		".........:::........ee........:::.......",
+		".........:::........ee........:::.......",
+		".........:::........ee..:::............:",
+		".........:::........ee..:::............:",
+		".........:::........ee..:::............:",
+		"...:::...:::...:::..ee..................",
+		"...:::...:::...:::..ee..................",
+		"...:::...:::...:::..ee..................",
+		":::......:::......::ee.....:::......:::.",
+		":::......:::......::ee.....:::......:::.",
+		":::......:::......::ee.....:::......:::.",
+		".........:::........ee..:::............:",
+		".........:::........ee..:::............:",
+		".........:::........ee..:::............:"
+	],
+	"objekte": [
+		{
+			"teil": "steg",
+			"feld": [
+				20,
+				20
+			]
+		},
+		{
+			"teil": "wegweiser",
+			"feld": [
+				22,
+				10
+			],
+			"name": "Kreuzweg · Aschensteppe"
+		},
+		{
+			"teil": "heuballen",
+			"feld": [
+				26,
+				11
+			]
+		},
+		{
+			"teil": "heuballen",
+			"feld": [
+				27,
+				11
+			]
+		},
+		{
+			"teil": "heuballen",
+			"feld": [
+				11,
+				17
+			]
+		},
+		{
+			"teil": "heuballen",
+			"feld": [
+				34,
+				29
+			]
+		},
+		{
+			"teil": "heuballen",
+			"feld": [
+				6,
+				33
+			]
+		},
+		{
+			"teil": "zaun",
+			"feld": [
+				24,
+				3
+			]
+		},
+		{
+			"teil": "zaun",
+			"feld": [
+				24,
+				5
+			]
+		},
+		{
+			"teil": "zaun",
+			"feld": [
+				16,
+				15
+			]
+		},
+		{
+			"teil": "zaun",
+			"feld": [
+				16,
+				17
+			]
+		},
+		{
+			"teil": "zaun",
+			"feld": [
+				25,
+				24
+			]
+		},
+		{
+			"teil": "zaun",
+			"feld": [
+				25,
+				26
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				0,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				1,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				2,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				3,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				6,
+				0
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				7,
+				0
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				8,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				9,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				10,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				11,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				12,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				13,
+				0
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				14,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				15,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				16,
+				0
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				17,
+				0
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				18,
+				0
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				19,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				22,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				23,
+				0
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				24,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				25,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				26,
+				0
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				27,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				28,
+				0
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				29,
+				0
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				30,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				31,
+				0
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				32,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				33,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				34,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				35,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				36,
+				0
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				37,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				38,
+				0
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				39,
+				0
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				0,
+				1
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				1,
+				1
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				6,
+				1
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				9,
+				1
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				11,
+				1
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				13,
+				1
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				15,
+				1
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				17,
+				1
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				18,
+				1
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				19,
+				1
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				25,
+				1
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				26,
+				1
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				28,
+				1
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				29,
+				1
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				30,
+				1
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				32,
+				1
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				34,
+				1
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				35,
+				1
+			]
+		},
+		{
+			"teil": "grasbueschel",
+			"feld": [
+				37,
+				1
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				38,
+				1
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				39,
+				1
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				0,
+				2
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				15,
+				2
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				38,
+				2
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				39,
+				2
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				0,
+				3
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				1,
+				3
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				11,
+				3
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				39,
+				3
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				0,
+				4
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				1,
+				4
+			]
+		},
+		{
+			"teil": "grasbueschel",
+			"feld": [
+				35,
+				4
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				38,
+				4
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				39,
+				4
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				0,
+				5
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				1,
+				5
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				10,
+				5
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				38,
+				5
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				39,
+				5
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				0,
+				6
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				1,
+				6
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				16,
+				6
+			]
+		},
+		{
+			"teil": "grasbueschel",
+			"feld": [
+				36,
+				6
+			]
+		},
+		{
+			"teil": "grasbueschel",
+			"feld": [
+				37,
+				6
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				39,
+				6
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				0,
+				7
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				13,
+				7
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				39,
+				7
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				0,
+				8
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				1,
+				8
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				38,
+				8
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				39,
+				8
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				0,
+				9
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				1,
+				9
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				28,
+				9
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				38,
+				9
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				39,
+				9
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				0,
+				10
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				1,
+				10
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				4,
+				10
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				15,
+				10
+			]
+		},
+		{
+			"teil": "grasbueschel",
+			"feld": [
+				24,
+				10
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				35,
+				10
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				38,
+				10
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				39,
+				10
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				0,
+				11
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				1,
+				11
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				3,
+				11
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				5,
+				11
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				34,
+				11
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				39,
+				11
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				0,
+				12
+			]
+		},
+		{
+			"teil": "grasbueschel",
+			"feld": [
+				8,
+				12
+			]
+		},
+		{
+			"teil": "grasbueschel",
+			"feld": [
+				11,
+				12
+			]
+		},
+		{
+			"teil": "grasbueschel",
+			"feld": [
+				19,
+				12
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				22,
+				12
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				31,
+				12
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				33,
+				12
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				35,
+				12
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				38,
+				12
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				39,
+				12
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				0,
+				13
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				37,
+				13
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				38,
+				13
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				39,
+				13
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				0,
+				14
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				1,
+				14
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				39,
+				14
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				0,
+				15
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				1,
+				15
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				18,
+				15
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				37,
+				15
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				38,
+				15
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				39,
+				15
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				0,
+				16
+			]
+		},
+		{
+			"teil": "grasbueschel",
+			"feld": [
+				15,
+				16
+			]
+		},
+		{
+			"teil": "grasbueschel",
+			"feld": [
+				33,
+				16
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				36,
+				16
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				39,
+				16
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				0,
+				17
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				18,
+				17
+			]
+		},
+		{
+			"teil": "grasbueschel",
+			"feld": [
+				36,
+				17
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				38,
+				17
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				39,
+				17
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				0,
+				18
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				1,
+				18
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				3,
+				18
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				39,
+				18
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				0,
+				19
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				1,
+				19
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				3,
+				19
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				38,
+				19
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				39,
+				19
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				0,
+				20
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				5,
+				20
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				16,
+				20
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				38,
+				20
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				39,
+				20
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				0,
+				22
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				5,
+				22
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				7,
+				22
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				23,
+				22
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				38,
+				22
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				39,
+				22
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				0,
+				23
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				1,
+				23
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				38,
+				23
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				39,
+				23
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				0,
+				24
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				1,
+				24
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				9,
+				24
+			]
+		},
+		{
+			"teil": "grasbueschel",
+			"feld": [
+				16,
+				24
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				38,
+				24
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				39,
+				24
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				0,
+				25
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				14,
+				25
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				38,
+				25
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				39,
+				25
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				0,
+				26
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				2,
+				26
+			]
+		},
+		{
+			"teil": "grasbueschel",
+			"feld": [
+				19,
+				26
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				34,
+				26
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				38,
+				26
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				39,
+				26
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				0,
+				27
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				39,
+				27
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				0,
+				28
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				5,
+				28
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				38,
+				28
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				39,
+				28
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				0,
+				29
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				1,
+				29
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				3,
+				29
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				10,
+				29
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				26,
+				29
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				33,
+				29
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				39,
+				29
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				0,
+				30
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				1,
+				30
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				19,
+				30
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				39,
+				30
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				0,
+				31
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				1,
+				31
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				38,
+				31
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				39,
+				31
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				0,
+				32
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				1,
+				32
+			]
+		},
+		{
+			"teil": "blumen",
+			"feld": [
+				2,
+				32
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				3,
+				32
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				38,
+				32
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				39,
+				32
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				0,
+				33
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				1,
+				33
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				11,
+				33
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				23,
+				33
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				39,
+				33
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				0,
+				34
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				2,
+				34
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				3,
+				34
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				4,
+				34
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				6,
+				34
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				7,
+				34
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				8,
+				34
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				10,
+				34
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				11,
+				34
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				13,
+				34
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				14,
+				34
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				15,
+				34
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				16,
+				34
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				17,
+				34
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				19,
+				34
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				22,
+				34
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				24,
+				34
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				26,
+				34
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				27,
+				34
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				29,
+				34
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				30,
+				34
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				31,
+				34
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				38,
+				34
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				39,
+				34
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				0,
+				35
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				1,
+				35
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				2,
+				35
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				3,
+				35
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				4,
+				35
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				5,
+				35
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				6,
+				35
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				7,
+				35
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				8,
+				35
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				9,
+				35
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				10,
+				35
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				11,
+				35
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				12,
+				35
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				13,
+				35
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				14,
+				35
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				15,
+				35
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				16,
+				35
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				17,
+				35
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				18,
+				35
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				19,
+				35
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				22,
+				35
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				23,
+				35
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				24,
+				35
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				25,
+				35
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				26,
+				35
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				27,
+				35
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				28,
+				35
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				29,
+				35
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				30,
+				35
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				31,
+				35
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				32,
+				35
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				33,
+				35
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				34,
+				35
+			]
+		},
+		{
+			"teil": "busch",
+			"feld": [
+				35,
+				35
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				36,
+				35
+			]
+		},
+		{
+			"teil": "baum",
+			"feld": [
+				37,
+				35
+			]
+		},
+		{
+			"teil": "busch_bluete",
+			"feld": [
+				38,
+				35
+			]
+		},
+		{
+			"teil": "tanne",
+			"feld": [
+				39,
+				35
+			]
+		}
+	]
+}

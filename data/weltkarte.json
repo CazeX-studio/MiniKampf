@@ -7,6 +7,7 @@
 	},
 	"karten": {
 		"kreuzweg": {"pos": [700, 300], "region": "Kreuzweg", "art": "stadt"},
+		"kreuzwegfelder": {"pos": [820, 360], "region": "Kreuzweg", "art": "gebiet"},
 		"weg_gruenwacht": {"pos": [480, 280], "region": "Grünwacht", "art": "gebiet"},
 		"waldboden": {"pos": [300, 255], "region": "Grünwacht", "art": "gebiet"},
 		"wipfelheim": {"pos": [300, 140], "region": "Grünwacht", "art": "stadt"},

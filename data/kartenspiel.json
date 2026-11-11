@@ -780,6 +780,90 @@
 			"bonus": {
 				"leben": 10
 			}
+		},
+		"tauschleim": {
+			"name": "Tauschleim",
+			"werte": [
+				2,
+				3,
+				2,
+				3
+			],
+			"bonus": {
+				"leben": 1
+			}
+		},
+		"wiesenhoppler": {
+			"name": "Wiesenhoppler",
+			"werte": [
+				3,
+				2,
+				3,
+				2
+			],
+			"bonus": {
+				"tempo": 1
+			}
+		},
+		"knollenkaefer": {
+			"name": "Knollenkäfer",
+			"werte": [
+				2,
+				4,
+				3,
+				3
+			],
+			"bonus": {
+				"leben": 2
+			}
+		},
+		"loewenzahnling": {
+			"name": "Löwenzahnling",
+			"werte": [
+				3,
+				3,
+				2,
+				4
+			],
+			"bonus": {
+				"mana": 1
+			}
+		},
+		"funkenflirr": {
+			"name": "Funkenflirr",
+			"werte": [
+				4,
+				2,
+				3,
+				2
+			],
+			"bonus": {
+				"angriff": 1
+			}
+		},
+		"glutigel": {
+			"name": "Glutigel",
+			"werte": [
+				3,
+				4,
+				4,
+				2
+			],
+			"bonus": {
+				"angriff": 1
+			}
+		},
+		"kronenschleim": {
+			"name": "Kronenschleim",
+			"werte": [
+				5,
+				5,
+				4,
+				5
+			],
+			"bonus": {
+				"leben": 4
+			}
 		}
 	},
 	"startkarten": [
@@ -833,7 +917,14 @@
 				"glutkobold",
 				"sumpfschleim",
 				"dornling",
-				"sturmkobold"
+				"sturmkobold",
+				"tauschleim",
+				"wiesenhoppler",
+				"knollenkaefer",
+				"loewenzahnling",
+				"funkenflirr",
+				"glutigel",
+				"kronenschleim"
 			],
 			"belohnung": {
 				"titel": "Kenner von Kreuzweg",

@@ -40,7 +40,7 @@ func _initialize() -> void:
 	var wege := Weltkarte.wege_fuer(w, daten)
 	var hat := func(a: String, b: String) -> bool:
 		return wege.any(func(x: Array) -> bool: return (x[0] == a and x[1] == b) or (x[0] == b and x[1] == a))
-	for paar: Array in [["kreuzweg", "weg_gruenwacht"], ["kreuzweg", "aschensteppe"], ["waldboden", "wipfelheim"],
+	for paar: Array in [["kreuzweg", "weg_gruenwacht"], ["kreuzweg", "kreuzwegfelder"], ["kreuzwegfelder", "aschensteppe"], ["waldboden", "wipfelheim"],
 			["glutoase", "glutgrat"], ["glutoase", "vulkanschmiede"], ["waldboden", "pilzhoehle"]]:
 		_check(hat.call(paar[0], paar[1]), "Weg %s – %s" % paar)
 	# Was man weiß: hier, besucht, nebenan (???), verborgen

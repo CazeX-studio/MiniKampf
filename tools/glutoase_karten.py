@@ -77,7 +77,7 @@ def aschensteppe():
 	karten["aschensteppe"] = {
 		"name": "Aschensteppe", "musik": "wald", "grund": "wiese", "licht": "fff0d8", "start": [14, 1],
 		"raster": ["".join(z) for z in g],
-		"ausgaenge": [{"bereich": [12, 0, 6, 1], "karte": "kreuzweg", "feld": [31, 63]},
+		"ausgaenge": [{"bereich": [12, 0, 6, 1], "karte": "kreuzwegfelder", "feld": [20, 34]},
 			{"bereich": [11, H - 1, 7, 1], "karte": "glutoase", "feld": spiegeln([23, 1])}],
 		"kampf_hintergrund": "wiese", "sicher": RASTPLATZ,
 		"orte": [{"art": "wegelaterne", "feld": [11, 28], "dialog": "wegelaterne_aschensteppe", "zeichen": "laterne"}],

@@ -30,6 +30,13 @@ func _abreise(world: WorldState, id: String, klasse: String) -> PlayerState:
 		world.tick(0.05)
 		if p.map != "kreuzweg":
 			break
+	# Seit A14 liegen zwischen Südtor und Aschensteppe die Kreuzwegfelder
+	if p.map == "kreuzwegfelder":
+		world.apply_command(id, {type = "move", cell = Vector2i(20, 35)})
+		for i in 1200:
+			world.tick(0.05)
+			if p.map != "kreuzwegfelder":
+				break
 	return p
 
 

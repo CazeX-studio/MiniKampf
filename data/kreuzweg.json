@@ -31,13 +31,20 @@
 				2,
 				1
 			],
-			"karte": "aschensteppe",
+			"karte": "kreuzwegfelder",
 			"feld": [
-				14,
+				20,
 				1
 			],
 			"wenn": {
-				"gemerkt": "klasse_bestaetigt"
+				"oder": [
+					{
+						"gemerkt": "gilde_angemeldet"
+					},
+					{
+						"gemerkt": "klasse_bestaetigt"
+					}
+				]
 			}
 		},
 		{
@@ -53,6 +60,29 @@
 				11
 			],
 			"tuer": true
+		},
+		{
+			"bereich": [
+				0,
+				45,
+				1,
+				2
+			],
+			"karte": "kreuzwegfelder",
+			"feld": [
+				4,
+				1
+			],
+			"wenn": {
+				"oder": [
+					{
+						"gemerkt": "gilde_angemeldet"
+					},
+					{
+						"gemerkt": "klasse_bestaetigt"
+					}
+				]
+			}
 		}
 	],
 	"npcs": {

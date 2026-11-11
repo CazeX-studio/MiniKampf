@@ -5,7 +5,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 11.11.)
 
-- **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** A14 (Kreuzwegfelder als eigenes Gebiet), danach A15 und A16; neu für dich: Teil M, N, O und P in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
+- **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** A15 (Nachholen: Brief vom Tor, Sternenschlund, Empfehlungsschreiben), danach A16; neu für dich: Teil M, N, O und P in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
 - **Bilder von Marco (02.11. abends):** 38 Blätter liegen unter `tools/vorlagen/`: alle sechs Novizen-Blätter ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen.
   - Dazu der Baukasten (02.11.): acht Grundkörper (`grund_*.png`), Köpfe (`koepfe_*.png`), Hüte (`huete_regionen.png`), Zeichen (`zeichen_dienste.png`) und die Klingentänzerin Blatt 1. Bei den Fäusten der Abwehr-Bilder von Blatt 1 prüft Claude beim Einbauen, ob sie am Oval stören.
   - Dazu Figuren 4 und 5 (02.11.): 22 Blätter Nebenfiguren (`neben_*.png`) und 42 Blätter Hauptfiguren (`haupt_*.png`) aller drei Städte, damit ist Teil D vollständig. `neben_reserve_rashid_tarek.png` ist ein doppeltes Sammelblatt und bleibt Reserve.
@@ -64,7 +64,19 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (11.11.):** Alpha-Aufträge A14 bis A16 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+- **Nächster Schritt (11.11.):** Alpha-Aufträge A15 und A16 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+
+- **Neu (11.11.): A14 Kreuzwegfelder als eigenes Gebiet** (Marco, 10.11.):
+  - Durch das Südtor kommst du jetzt auf die Kreuzwegfelder: Wiesen mit Feldwegen, Zäunen, Heuballen, einem Bach mit Steg und einem Wegweiser. Vom Trainingsplatz der Gilde führt ein Seitentor (Westrand, neben der Gilde) auf die Felder. Unten geht es weiter in die Aschensteppe.
+  - Das Südtor ist offen, sobald du dich bei Lene in der Gilde angemeldet hast; weiter in die Aschensteppe geht es wie bisher erst nach der Klassenwahl.
+  - Monster nach Steckbrief (Stufe 1–8): nah an der Stadt Tauschleime und Wiesenhoppler, hinter dem Bach Knollenkäfer und Löwenzahnlinge, nachts Funkenflirr und Glutigel, ganz hinten selten der Kronenschleim. Alle sieben haben jetzt eine Karte, die Kreuzweg-Seite im Album hat 14 Plätze.
+  - Auf der großen Karte liegen die Felder unter Kreuzweg, der Weg in die Glutoase führt über sie.
+  - **So testest du es:**
+    1. Neu beginnen, bei Lene anmelden, dann durch das Südtor: Du stehst auf den Kreuzwegfeldern.
+    2. Einen Tauschleim nahe der Stadt angreifen (Stufe 1), dann über den Steg: Dort sind die Käfer und Löwenzahnlinge stärker.
+    3. Zurück, auf dem Trainingsplatz hinter der Gilde zum Seitentor am Westrand: Es führt ebenfalls auf die Felder.
+    4. Nachts (nach 21 Uhr) noch einmal hinaus: Funkenflirr und Glutigel sind unterwegs.
+    5. Ganz unten auf den Feldern: Vor der Klassenwahl geht es nicht weiter, danach in die Aschensteppe.
 
 - **Neu (11.11.): A13a Dürrewald zwischen Glutoase und Grünwacht** (Alpha-Punkte 51 und 52):
   - Das Tor zum Dürrewald am Westrand der Oase ist offen. Dahinter liegt ein langes Gebiet: unten Sand, Kakteen und Felsen, in der Mitte Steppengras mit ersten Bäumen, oben lichter Wald. Am Nordende geht es nach Tiefwurzel (dort ist unten ein neuer Pfad).
