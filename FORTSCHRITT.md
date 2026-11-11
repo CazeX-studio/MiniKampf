@@ -70,7 +70,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Im Kästchen über einer Fähigkeit steht jetzt der fertige Wert, so wie er mit deiner Stufe, Waffe und Fähigkeitsstufe wirkt (z. B. Wirbel auf Stufe 20: „11 an alle“ statt „7 an alle“).
   - Die Farbe zeigt, womit die Zahl wächst: Waffenkraft orange, Zauberkraft blau-violett, Tempo türkis, Stufe gold. Feste Werte (Mana, Runden, Schilde, Anzahl) bleiben weiß.
   - Taste D gedrückt halten: Hinter jeder Zahl steht der Grundwert und um wie viel Prozent ihn Stufe, Waffen-/Zauberkraft, Tempo und Fähigkeitsstufe erhöhen, darunter die Farben erklärt. Am Handy steht das beim Gedrückthalten gleich mit da.
-  - Zauberkraft: Sternensängerin, Magier-Tank, Ritualist und Zwielicht wachsen mit Zauberkraft. Ausrüstung kann Zauberkraft haben (Waffe oder Bonus-Wert). Eigene Zauber-Waffen gibt es noch nicht, die Sternensängerin trägt weiter die Grundwaffe.
+  - Zauberkraft: Sternensängerin, Magier-Tank, Ritualist und Zwielicht wachsen mit Zauberkraft. Ausrüstung kann Zauberkraft haben (Waffe oder Bonus-Wert). Acht Zauber-Gegenstände sind angelegt (Wanderleier, Sternenharfe, Schellenleier, Sternenamulett und vier für spätere Klassen), noch mit gezeichnetem Bild; der Bildauftrag liegt in `Spieldesign/GRAFIK_AUFTRAG.md` Teil T. Bekommen kann man sie noch nicht (nur über den Werkstatt-Editor), das entscheidest du.
   - Tempo: Schnellfeuer (Bogenschütze) und Sturmschritte (Klingentänzerin) machen 4 % mehr Schaden je Tempo-Punkt über dem Grundtempo der Klasse (z. B. mit schneller Waffe +2 Tempo = +8 %).
   - **So testest du es:**
     1. Im Kampf mit der Maus über eine Fähigkeit: Schaden in Orange (oder Blau-Violett bei der Sternensängerin), Mana weiß.

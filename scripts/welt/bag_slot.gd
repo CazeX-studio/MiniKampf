@@ -213,6 +213,19 @@ static func draw_icon(node: CanvasItem, c: Vector2, form: String, color: Color) 
 			node.draw_line(ansatz, spitze, color, 4.0 if form == "schwert" else 3.0)
 			node.draw_line(c + Vector2(-10, -2), c + Vector2(2, 10), Color("8a6a2c"), 4.0)
 			node.draw_line(ansatz, c + Vector2(-12, 12), Color("6e4a2c"), 4.0)
+		"leier":
+			# Zauber-Waffe der Sternensängerin (Platzhalter bis GRAFIK_AUFTRAG.md Teil T): Bogen mit leuchtenden Saiten
+			node.draw_arc(c + Vector2(0, -2), 12.0, PI * 0.15, PI * 0.85, 12, dark, 6.0)
+			node.draw_arc(c + Vector2(0, -2), 12.0, PI * 0.15, PI * 0.85, 12, color, 4.0)
+			node.draw_line(c + Vector2(-10, -14), c + Vector2(10, -14), color.darkened(0.2), 4.0)
+			for x: float in [-5.0, 0.0, 5.0]:
+				node.draw_line(c + Vector2(x, -13), c + Vector2(x * 0.6, 8), Color("fff3b0"), 1.5)
+		"stab":
+			# Zauber-Stab (Platzhalter bis Teil T): schräger Stab mit leuchtendem Stein oben
+			node.draw_line(c + Vector2(-12, 14), c + Vector2(8, -8), dark, 6.0)
+			node.draw_line(c + Vector2(-12, 14), c + Vector2(8, -8), Color("8a6a2c"), 4.0)
+			node.draw_circle(c + Vector2(10, -10), 7.0, dark)
+			node.draw_circle(c + Vector2(10, -10), 5.5, color)
 		"pfeil":
 			# Pfeil schräg mit farbiger Spitze und Federn
 			node.draw_line(c + Vector2(-13, 13), c + Vector2(10, -10), Color("8a6a44"), 3.0)

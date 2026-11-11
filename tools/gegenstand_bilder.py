@@ -68,6 +68,10 @@ BLAETTER = {"gegenstaende": [
 ], "gegenstaende_10": [
 	# Briefe (A15, Auftrag Q1)
 	["brief", "empfehlungsschreiben"],
+], "gegenstaende_11": [
+	# Zauber-Waffen (A23b, Auftrag T1): Sternensängerin, Schmuck mit Zauberkraft, Waffen der späteren Zauberklassen
+	["wanderleier", "sternenharfe", "schellenleier", "sternenamulett"],
+	["runenstab", "zwielichtstab", "ritualdolch", "gelehrtenring"],
 ]}
 
 ## Blätter mit Symbolen aus mehreren getrennten Teilen (z. B. drei Pusteblumensamen): Teile näher als so viele Pixel gehören zusammen
