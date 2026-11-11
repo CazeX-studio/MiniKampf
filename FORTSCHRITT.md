@@ -2853,50 +2853,37 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
   Stück, dann kommen seine Rückmeldungen und die echten Texte.
 - Hinten angestellt: Schnellsätze und Emotes (Vorschläge im Ideen-Parkplatz von design.md).
 
-## Offene Fragen an Marco
+## Offene Fragen an Marco (aufgeräumt 11.11.2026)
 
-- **Für dich (09.11.): Klassenbilder für die Klassenwahl.** Prompts in `Spieldesign/GRAFIK_AUFTRAG.md` Teil H: zuerst H1 (Bogenschütze, Monster-Zähmer, Rüstungsschmied, Klingentänzer, Sternensängerin), dann H2 (die sechs späteren Klassen). Je Bild ein ChatGPT-Chat, die Dateien zum Anhängen stehen über jedem Prompt. Fertige Bilder als `tools/vorlagen/klassenbild_<klasse>.png` schicken, dann baue ich A3b (Klassenwahl mit großem Bild).
+### Deine Entscheidungen
+1. **Sternenfresser:** Seit dem 22.10. ist jeder seiner Treffer tödlich (normal pariert bleibt ein Rest Leben), dazu seit A15 der angekündigte Sternenschlund (nur die perfekte Parade rettet) und die Explosion nach 8 Zügen. design.md wollte nur den Sternenschlund tödlich. So streng lassen oder wie in design.md?
+2. **Wipfelheim (offen seit 29.10.):** Passen die Plätze (Ysolde in der Mitte, Fenn im Norden, Tilda im Osten, Esche im Süden, Borko jetzt im Baumhaus-Gasthaus)? Und ist Marv, der dir nach Wipfelheim nachreist, lustig oder zu viel?
+3. **Lichter in Kreuzweg (offen seit 04.11.):** Durch Leuchtflecken ersetzen? Die Vergleichsbilder hast du; ohne Zusage bleiben die echten Lichter.
+4. **Stadt-Editor online speichern (S4c):** Erst besprechen, damit Katie mithelfen kann.
+5. **Feedback-Formular (S1):** Sobald du den „vorausgefüllten Link“ deines Google-Formulars schickst, verbinde ich den Knopf.
+6. **Texte:** Alle Gespräche sind Platzhalter; die Hauptfiguren schreibst du selbst (`data/LIESMICH.md`). Neu dazugekommen: Broms Brief, Lenes Ersatz-Empfehlungsschreiben, die Wache vor den Städten.
 
-- **Für später am PC (Marco, 09.11.): Häuser von hinten.** Vier Blätter J1 bis J4 in `Spieldesign/GRAFIK_AUFTRAG.md` Teil J (Kreuzweg große Gebäude, Kreuzweg Wohnhäuser und Stände, Wipfelheim, Glutoase). Je Blatt ein ChatGPT-Chat, angehängt die Referenzbilder und die Vorderansichten aus `assets/baukasten/objekte/`. Danach schneidet Claude sie zu und trägt `bild_hinten` ein, dann dreht „Drehen“ im Stadt-Editor die Häuser in alle vier Richtungen.
+### Deine Bilder (`Spieldesign/GRAFIK_AUFTRAG.md`, Prompts schicke ich dir auf Nachfrage)
+- **Für die Demo:** H (Klassenbilder, A3b), M (Effekte der Dungeons), N (Monster-Geschosse und Abwehr, A10b), O (Innenräume der drei Gasthäuser), P (Dürrewald-Übergänge, A13b), Q (Brief und Empfehlungsschreiben), J (Häuser von hinten), zuletzt I (Sitzen und Laufen, S6).
+- **Nach der Demo:** R (Fähigkeiten-Symbole und Körper der sechs späteren Klassen).
 
-- ~~**Zweimal Mira (28.10.):**~~ Erledigt (28.10.): Die Novizen-Köpfe sind namenlos (Novize m1, Novizin w1 …), den Namen gibt der Spieler. Mira bleibt die Vorgängerin.
+### Für die Balancing-Runde E4 gesammelt (kommt später, braucht viele Tests)
+- Grünwacht auf Stufe 20–25 heben (man kommt mit etwa 20 aus der Glutoase), Dürrewald mit.
+- Kettenschmied allein (schon Phase 1 zu schwer), Zwillinge der Sporenkönigin eher schwer, Kael für den Rüstungsschmied.
+- Rüstungsschmied gewinnt selten, Ritualist und Zwielicht allein schwächer, Quartiermeister schwach.
+- Glasskorpion-Gruppen in der Palmenrast (50–60 %), Gruppen der Vulkanschmiede allein (51–100 %). Dein Hinweis vom 04.11.: Stärkere Monster dürfen bleiben.
 
-- **Grünwacht Schritt 11 (entschieden 21.10.):** Die Stufe soll mehr zählen → eingebaut (Stufenabstand, siehe
-  „Nach deinem Test-Feedback“ bei Schritt 11). Der Zähmer bleibt allein schwächer; seine Monster bekommen später
-  Stufen, Entwicklungsstufen und werden beim Tod zum Ei (steht in design.md, Details noch offen).
-- **Grünwacht Schritt 2 (vorläufig, Feinschliff am Ende):** Der Ritualist ist allein am schwächsten. Soll er für das
-  Allein-Spielen etwas mehr Schaden bekommen? Und sollen alle Klassen in der Wildnis Heiltränke benutzen dürfen
-  (design.md: Verbrauchsgegenstände für alle, vier Gürtelplätze)? Bisher kann das nur der Novize.
-- **Grünwacht Schritt 1:** Passen die Plätze in Wipfelheim (Ysolde in der Mitte, Fenn im Norden, Tilda im Osten,
-  Esche im Süden, Koch-Stand an der Ankunft)? Ist Marv, der dir nach Wipfelheim nachgereist ist, lustig oder zu viel?
+### Nach der Demo
+- N1 Server und Konten, N2 Figuren-Bilder auf zwei Drittel (Web-Paket etwa 20 MB kleiner), Monster des Zähmers mit Stufen, Entwicklung und Ei (design.md), Set-Boni, Waffen nur für die eigene Klasse, zufällige Bonus-Werte bei Beute, eigener Körper für Kobalt.
 
-
-- **Zusammen spielen:** Die vier Entscheidungen sind getroffen (20.10.). Auch geklärt: Bei Gleichstand entscheidet der
-  Gruppenführer, wer eine Szene schon erlebt hat, stimmt nicht mehr mit ab. Schnellsätze sind hinten angestellt
-  (Vorschläge in design.md im Ideen-Parkplatz).
-
-- **Pilzhöhle – was ich selbst ergänzt habe** (bitte prüfen; alle Zahlen **vorläufig, Feinschliff am Ende**):
-  - Gegen Giftwolken gibt es für jede Klasse „Giftwolke vertreiben“ (kostet den Zug), Wind-Treffer vertreiben auch eine.
-    Jede Wolke macht bei jedem Zug der Königin 2 Schaden an allen.
-  - „Dieselbe Runde“ heißt im Prototyp: bevor der überlebende Sporenknospe bzw. die Wurzelmutter wieder dran ist.
-  - Ein zerstörtes Knotenpaar kostet die Wurzelmutter 25 % Leben, danach wachsen neue Knoten.
-  - Splitterlicht: Der Halter wird vom Vorboten nicht angegriffen, verliert aber jeden Vorboten-Zug mehr Leben (8, 12, 16 …).
-    Weiterreichen kostet den Zug.
-  - Monsterkarten der Dungeon-Monster gibt es in der Sandbox noch nicht (Zähmen schon).
-
-
-- **Sitzung 21 in der Demo:**
-  - **Farbe der Nebenaufträge:** Ich habe **Blau** genommen, weil Grün schon für „erfüllt“ im Auftragsbuch und für deinen
-    eigenen Namen steht. Passt das?
-  - **„Essen für Brom“** ist in der Demo schon der Hauptauftrag „Ein Korb für die Wache“ (führt zu Mira). Soll er so
-    bleiben, oder möchtest du zusätzlich einen kleinen Nebenauftrag, z. B. Brom in der Festnacht einen Teller von Hanne bringen?
-  - **Tessa und Gorm:** In der Demo kämpfen drei Novizen mit (Ida, Bo, Tom). Sollen sie Tessa und Gorm heißen
-    (dann zu zweit statt zu dritt), oder bleiben Ida, Bo und Tom?
-  - Passen die Plätze (Wegrast an der Weststraße, Edmar am Brunnen, Quill vor der Statue, Kinder im Südwesten des Marktplatzes)?
-
-- **Kreuzweg-Demo:** Passen die Positionen (Gilde im Nordosten, Bingos Laden im Westen, die sechste,
-  zugewachsene Straße nach Südosten, Gesandte an „ihren“ Straßen)?
-- **Sternenfresser:** Jetzt tödlich ohne perfekte Parade (22.10.). Ist er so noch fair genug?
-- **„2 Runden“ in der Wildnis (22.10.):** Monster in der Wildnis haben nur eine Welle. Ich habe den Gruppenkampf auf
-  eine Welle gekürzt und nach jedem Kampf 3 Sekunden Ruhe eingebaut (falls direkt danach ein zweiter Kampf losging).
-  Meintest du noch etwas anderes, z. B. die Grundausbildung (4 Lektionen) oder Fenns Prüfung (2 Teile)?
+### Erledigt (beim Aufräumen abgehakt)
+- Zweimal Mira: Novizen-Köpfe sind namenlos (28.10.).
+- Die Stufe zählt mehr (Stufenabstand, 21.10.).
+- Heiltränke für alle Klassen: seit A1b (09.11.) heilen sie bei jeder Klasse, jede Klasse hat einen Gürtel.
+- Zusammen spielen: alle Entscheidungen getroffen (20.10.).
+- Pilzhöhle: Regeln eingebaut, seit A9b2/A9b3 mit Film und Pflicht-Mechanik; Dungeon-Monster haben Karten im Album.
+- Sitzung 21: Nebenaufträge blau (nie beanstandet), „Essen für Brom“ ist ein eigener Nebenauftrag, Tessa und Gorm statt Ida, Bo und Tom.
+- Plätze in Kreuzweg: mit E3h1 und dem Stadt-Editor neu verteilt.
+- „2 Runden“ in der Wildnis: eine Welle und 3 Sekunden Ruhe nach jedem Kampf, seitdem keine Rückmeldung.
+- Sporenkönigin mit Mechanik in der Welt, Glutgeist, Namen der Hammerbrüder (E1, 04.11.); Sternensängerin nur weiblich.
+- Novizen-Fähigkeiten über die Leiste (A16, so bleibt es), Figuren-Bilder verkleinern nach der Demo (N2).
