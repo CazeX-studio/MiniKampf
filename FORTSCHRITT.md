@@ -2931,3 +2931,12 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 1. Geh in Wipfelheim ins Baumhaus-Gasthaus.
 2. Borko steht an seinem Kochtisch, die Gäste stecken nicht in Möbeln.
 3. Lauf herum: Über den Mooteppich kann man gehen.
+
+## Glutstube mit gemalten Innenraum-Teilen (Teil O, IN5 und IN6, 11.11.2026)
+- Lehmwände mit Nischen, Krügen und Gitterfenster, Tonfliesen, roter Teppich, Lehmtheke vor Layla, Krugregal, Feuergrube mit Braten (glüht), Sitzkreis mit Kissen, Kissenbank, Hadraks Ecke mit Amboss, Laternenständer (leuchten), Palme.
+- Damit haben alle drei Gasthäuser gemalte Innenräume (Teil O fertig). Im Stadt-Editor: Teile „in_go_“, Boden „Tonfliesen“.
+
+**So testest du es**
+1. Geh in der Glutoase in die Glutstube.
+2. Layla steht hinter der Theke, nachts sitzt Hadrak an seinem Amboss.
+3. Die Feuergrube und die Laternen leuchten, die Gäste stecken nicht in Möbeln.
