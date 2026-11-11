@@ -141,6 +141,13 @@ var _fessel_glut := 0
 var _fessel_bild: Node2D
 ## Entzündete Laternen auf dem Feld (Pilzhöhle)
 var _lanterns: Array[Node2D] = []
+## Gemalte Laterne: so groß wie im Bild mal dieser Wert
+const LATERNE_GROESSE := 0.8
+## Giftwolken der Sporenkönigin (A9c2): wo sie hängen, je Wolke {zeit, weg}; weg >= 0: verweht seit dann
+const WOLKEN_ORTE: Array[Vector2] = [Vector2(780, 200), Vector2(960, 170), Vector2(1110, 230), Vector2(860, 330), Vector2(1040, 360)]
+var _wolken: Array[Dictionary] = []
+var _wolken_bild: Node2D
+var _wolken_zeit := 0.0
 var _light_time := 0.0
 var _backdrop: Backdrop
 ## Wackeln: Restzeit und Stärke; Zeitlupe/Anhalten aktiv (Engine.time_scale ist verändert)
@@ -346,6 +353,7 @@ func _process(delta: float) -> void:
 	_update_darkness(delta)
 	_update_shake(delta)
 	_update_lava(delta)
+	_update_wolken(delta)
 
 
 # --- Ereignisse abspielen -----------------------------------------------------
@@ -434,6 +442,8 @@ func _play_event(event: Dictionary) -> void:
 			await move_to_row(event.f)
 		"lava":
 			_zeige_lava(str(event.reihe), str(event.stufe))
+		"wolken":
+			_setze_wolken(int(event.anzahl))
 		"fessel":
 			_fessel_a = event.a
 			_fessel_b = event.b
@@ -1371,6 +1381,48 @@ func _male_lava() -> void:
 					Color(1, 1, 1, deckung))
 
 
+## Giftwolken: neue quellen auf (Bild 1 bis 4), dann wabern sie (Bild 5 und 6); vertriebene verwehen.
+func _setze_wolken(anzahl: int) -> void:
+	var da := _wolken.filter(func(w: Dictionary) -> bool: return float(w.weg) < 0.0)
+	while da.size() < anzahl:
+		var w := {zeit = _wolken_zeit, weg = -1.0, ort = WOLKEN_ORTE[_wolken.size() % WOLKEN_ORTE.size()]}
+		# Freien Platz suchen
+		for ort: Vector2 in WOLKEN_ORTE:
+			if not da.any(func(d: Dictionary) -> bool: return d.ort == ort):
+				w.ort = ort
+				break
+		_wolken.append(w)
+		da.append(w)
+	while da.size() > anzahl:
+		var w: Dictionary = da.pop_back()
+		w.weg = _wolken_zeit
+		Geraeusche.play("wurf", 0.7)
+
+
+func _update_wolken(delta: float) -> void:
+	if _wolken.is_empty():
+		return
+	_wolken_zeit += delta
+	_wolken = _wolken.filter(func(w: Dictionary) -> bool: return float(w.weg) < 0.0 or _wolken_zeit - float(w.weg) < 0.6)
+	_wolken_bild.queue_redraw()
+
+
+func _male_wolken() -> void:
+	var bilder := FxBild.bilder("giftwolke")
+	if bilder.size() < 6:
+		return
+	for w: Dictionary in _wolken:
+		var alter := _wolken_zeit - float(w.zeit)
+		var nummer := int(alter * 8.0) if alter < 0.5 else 4 + int(_wolken_zeit * 3.0 + float(w.zeit)) % 2
+		var deckung := 0.85
+		if float(w.weg) >= 0.0:
+			deckung *= 1.0 - (_wolken_zeit - float(w.weg)) / 0.6
+		var tex: Texture2D = bilder[mini(nummer, 5)]
+		var groesse := tex.get_size() * 1.8
+		var ort: Vector2 = w.ort + Vector2(sin(_wolken_zeit * 0.8 + w.ort.x) * 6.0, 0)
+		_wolken_bild.draw_texture_rect(tex, Rect2(ort - groesse * 0.5, groesse), false, Color(1, 1, 1, deckung))
+
+
 ## Die gemalte Kette zwischen den beiden Gefesselten; sie pulsiert zwischen zwei Glutstufen.
 func _male_fessel() -> void:
 	if _fessel_glut <= 0 or _fessel_a == null or _fessel_b == null or not has_view(_fessel_a) or not has_view(_fessel_b):
@@ -1389,9 +1441,10 @@ func _update_darkness(delta: float) -> void:
 	var radius := lerpf(LIGHT_RADIUS_BRIGHT, LIGHT_RADIUS_DARK, t)
 	var lights: Array[Vector4] = []
 	for i in _lanterns.size():
+		_lanterns[i].queue_redraw()
 		var flicker := 0.92 + 0.08 * sin(_light_time * 9.0 + i * 2.1)
 		var spot := _lanterns[i].position
-		lights.append(Vector4(spot.x, spot.y - 20.0, radius * flicker, 0.95))
+		lights.append(Vector4(spot.x, spot.y - 50.0, radius * flicker, 0.95))
 	# Wer das Splitterlicht hält, leuchtet selbst und steht in einem lila Lichtkreis
 	for f: Fighter in _views:
 		if f.light and f.is_alive() and lights.size() < 8:
@@ -1419,14 +1472,19 @@ func _add_lantern() -> void:
 	lantern.position = spot
 	lantern.z_index = 16
 	lantern.draw.connect(func() -> void:
-		lantern.draw_rect(Rect2(-2, -44, 4, 44), Color("3a2a1a"))
-		lantern.draw_rect(Rect2(-8, -4, 16, 4), Color("3a2a1a"))
-		lantern.draw_rect(Rect2(-7, -58, 14, 14), Color("ffd36b"))
-		lantern.draw_rect(Rect2(-9, -61, 18, 3), Color("3a2a1a")))
+		# Gemalte Laterne (Teil M, fx_laterne, A9c2), die Flamme flackert
+		var bilder := FxBild.bilder("laterne")
+		if bilder.is_empty():
+			return
+		var tex: Texture2D = bilder[int(_light_time * 8.0 + lantern.get_index()) % bilder.size()]
+		var groesse := tex.get_size() * LATERNE_GROESSE
+		lantern.draw_texture_rect(tex, Rect2(Vector2(-groesse.x * 0.5, -groesse.y), groesse), false))
+	lantern.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	var glow := Node2D.new()
 	glow.material = Fx.add_material()
+	glow.show_behind_parent = true
 	glow.draw.connect(func() -> void:
-		glow.draw_texture_rect(Fx.glow_texture(), Rect2(-60, -110, 120, 100), false, Color(1.0, 0.8, 0.4, 0.55)))
+		glow.draw_texture_rect(Fx.glow_texture(), Rect2(-60, -120, 120, 100), false, Color(1.0, 0.8, 0.4, 0.55)))
 	lantern.add_child(glow)
 	add_child(lantern)
 	_lanterns.append(lantern)
@@ -1685,6 +1743,11 @@ func _build_ui() -> void:
 	_lava_bild.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	_lava_bild.draw.connect(_male_lava)
 	_field.add_child(_lava_bild)
+	_wolken_bild = Node2D.new()
+	# Hinter den Figuren und ihren Namensschildern, damit die Werte lesbar bleiben
+	_wolken_bild.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_wolken_bild.draw.connect(_male_wolken)
+	_field.add_child(_wolken_bild)
 	_fessel_bild = Node2D.new()
 	_fessel_bild.z_index = 9
 	_fessel_bild.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST

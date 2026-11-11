@@ -6,8 +6,8 @@ extends Control
 ## Motive: "ketten" (Kettenschmied: drei Ketten reißen), "leere" (Vorbote: ein Riss der Leere öffnet sich, schwarze
 ## Ranken greifen heraus), "sporen" (Sporenkönigin: Sporenwolken quellen auf und platzen), "amboss" (Hammerbrüder:
 ## zwei Hämmer schlagen zusammen auf den Amboss, Funken stieben).
-## Die Ketten sind gemalt (Teil M, fx_kette_glied und fx_kette_reisst, A9c1); Risse und Ranken sind noch gezeichnete
-## Platzhalter, bis die gemalten Effekte der Pilzhöhle eingebaut sind (A9c2).
+## Ketten und Riss der Leere sind gemalt (Teil M: fx_kette_glied, fx_kette_reisst, fx_leere; A9c1 und A9c2).
+## Sporen und Amboss zeichnet das Spiel selbst.
 
 const DAUER := 3.6
 ## Ab hier bricht es (Sekunden)
@@ -26,9 +26,6 @@ var _gebrochen := false
 var _ketten: Array[Array] = []
 ## Fliegende Glieder nach dem Bruch: {pos, vel, dreh, drehung}
 var _glieder: Array[Dictionary] = []
-## Leere: Zacken des Risses (von oben nach unten) und Ranken (Winkel, Länge, Krümmung)
-var _riss: PackedVector2Array = []
-var _ranken: Array[Vector3] = []
 var _ansicht: FighterView
 var _ansicht_pos := Vector2.ZERO
 var _kampf: Control
@@ -66,14 +63,6 @@ static func abspielen(kampf: Control, feld: Control, ansicht: FighterView, motiv
 
 
 func _ready() -> void:
-	var zufall := RandomNumberGenerator.new()
-	zufall.seed = 38
-	# Riss der Leere: senkrecht durch den Boss, mit Zacken
-	for i in 13:
-		var y := lerpf(-260.0, 190.0, i / 12.0)
-		_riss.append(_zentrum + Vector2(zufall.randf_range(-24.0, 24.0) * sin(PI * i / 12.0), y))
-	for i in 9:
-		_ranken.append(Vector3(zufall.randf_range(0.0, TAU), zufall.randf_range(180.0, 380.0), zufall.randf_range(-1.2, 1.2)))
 	# Drei Ketten zu den Ankern hinter dem Boss: Wand links, Decke, Decke weiter rechts
 	_ketten = [[Vector2(-20, _zentrum.y - 60), _zentrum], [Vector2(_zentrum.x - 30, -20), _zentrum],
 			[Vector2(_zentrum.x + 320, -20), _zentrum]]
@@ -209,37 +198,23 @@ func _amboss(deckung: float) -> void:
 		draw_rect(Rect2(kopf - Vector2(30, 22), Vector2(60, 44)), Color(_farbe, 0.7 * glut * deckung), false, 4.0)
 
 
-## Der Riss öffnet sich bis zum Bruch immer weiter; danach greifen schwarze Ranken nach außen und ziehen sich zurück.
+## Der gemalte Riss der Leere (Teil M, fx_leere, A9c2) öffnet sich bis zum Bruch immer weiter; danach greifen die
+## Ranken heraus und wabern, zum Ende schließt er sich wieder zu einem schmalen Spalt.
 func _leere(deckung: float) -> void:
-	var auf := clampf(_zeit / BRUCH, 0.0, 1.0)
-	var breite := 4.0 + 46.0 * auf * auf
-	if _gebrochen:
-		breite = 50.0 + 12.0 * sin(_zeit * 6.0)
-	var links := PackedVector2Array()
-	var rechts := PackedVector2Array()
-	for i in _riss.size():
-		var bauch := sin(PI * i / (_riss.size() - 1.0))
-		links.append(_riss[i] + Vector2(-breite * bauch, 0))
-		rechts.insert(0, _riss[i] + Vector2(breite * bauch, 0))
-	var flaeche := links + rechts
-	# Violetter Schein um den Riss, dann der schwarze Spalt
-	draw_circle(_zentrum, 60.0 + 140.0 * auf, Color(_farbe, 0.18 * deckung))
-	draw_colored_polygon(flaeche, Color(0.02, 0.0, 0.05, deckung))
-	draw_polyline(links, Color(_farbe.lightened(0.3), deckung), 3.0)
-	draw_polyline(rechts, Color(_farbe.lightened(0.3), deckung), 3.0)
-	if not _gebrochen:
+	var bilder := FxBild.bilder("leere")
+	if bilder.size() < 6:
 		return
-	# Ranken: wachsen bis kurz nach dem Bruch, ziehen sich am Ende wieder zurück
-	var t := _zeit - BRUCH
-	var laenge := clampf(t / 0.5, 0.0, 1.0) * clampf((DAUER - _zeit) / 0.8, 0.0, 1.0)
-	for r in _ranken:
-		var punkte := PackedVector2Array()
-		for i in 12:
-			var anteil := i / 11.0 * laenge
-			var winkel := r.x + r.z * anteil + sin(_zeit * 4.0 + r.x + anteil * 6.0) * 0.15
-			punkte.append(_zentrum + Vector2.from_angle(winkel) * r.y * anteil)
-		draw_polyline(punkte, Color(0.03, 0.0, 0.06, deckung), 14.0)
-		draw_polyline(punkte, Color(_farbe, 0.6 * deckung), 3.0)
+	var auf := clampf(_zeit / BRUCH, 0.0, 1.0)
+	var nummer := mini(int(auf * 3.0), 2)
+	if _gebrochen:
+		nummer = 3 + int((_zeit - BRUCH) * 5.0) % 2
+		if _zeit > DAUER - 0.5:
+			nummer = 5
+	# Violetter Schein um den Riss
+	draw_circle(_zentrum, 60.0 + 140.0 * auf, Color(_farbe, 0.18 * deckung))
+	var tex: Texture2D = bilder[nummer]
+	var groesse := tex.get_size() * (2.4 + 1.6 * auf)
+	draw_texture_rect(tex, Rect2(_zentrum - groesse * 0.5, groesse), false, Color(1, 1, 1, deckung))
 
 
 ## Ein abgerissenes, glühendes Glied (erstes Bild von fx_kette_reisst)

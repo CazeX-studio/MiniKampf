@@ -1498,6 +1498,11 @@ func _beim_tod(e: Fighter) -> void:
 		apply_damage(h, maxi(1, roundi(float(tod.base) * e.power)), e, "magic")
 
 
+## Giftwolken der Sporenkönigin im Bild (A9c2): so viele hängen gerade über den Helden.
+func wolken(anzahl: int) -> void:
+	_emit({type = "wolken", anzahl = anzahl})
+
+
 ## Glühende Kette zwischen zwei Helden zeigen (Kettenschmied „Gefesselt“); a = null nimmt sie weg. glut 1 oder 2 (Phase 2).
 func fessel(a: Fighter, b: Fighter, glut: int) -> void:
 	_emit({type = "fessel", a = a, b = b, glut = glut})

@@ -39,6 +39,7 @@ static var modus_fest := ""
 ## Mechanik der Sporenkönigin in diesem Kampf: "bluete" (Wipe) oder "zwillinge" (Zusammenspiel)
 var queen_mode := ""
 var clouds := 0
+var _gezeigte_wolken := 0
 ## Sporenkönigin in der Wut-Phase (A9b3)
 var queen_wut := false
 var devour := DEVOUR_TURNS
@@ -131,6 +132,10 @@ func intent(e: Fighter) -> String:
 func _update_intents() -> void:
 	for e in c.enemies:
 		e.intent = intent(e)
+	# Gemalte Giftwolken über den Helden (A9c2)
+	if clouds != _gezeigte_wolken:
+		_gezeigte_wolken = clouds
+		c.wolken(clouds)
 
 
 # --- Gegner-Züge --------------------------------------------------------------
@@ -186,6 +191,7 @@ func _sporeling_turn(e: Fighter) -> void:
 	if queen != null and queen.is_alive():
 		# Die Sporenknospe zeigt beim Heilen ihre eigene Bewegung (D22c)
 		c._emit({type = "cast", f = e, ult = false, name = "Heilsporen"})
+		c.zeige("heilsporen", e, queen)
 		c.heal(null, queen, roundi(queen.max_hp * SPORE_HEAL))
 		c.add_log("Die Sporenknospe heilt die Sporenkönigin.")
 	c.wait(0.3)
@@ -238,7 +244,7 @@ func _mother_turn(e: Fighter) -> void:
 		else:
 			# Besondere Bewegung der Wurzelmutter (D22c)
 			c._emit({type = "cast", f = e, ult = false, name = "Verschlingen"})
-			c.burst(e, Color("4a2a10"), 300.0)
+			c.zeige("verschlingen", e)
 			c.wipe("Verschlingen! Die Wurzeln ziehen alle unter die Erde.")
 			return
 	elif devour == 1:
@@ -252,6 +258,7 @@ func _mother_turn(e: Fighter) -> void:
 		if target.back_row:
 			target.back_row = false
 			c.add_log("[color=yellow]Wurzeln reißen %s nach vorne![/color]" % target.display_name)
+			c.zeige("wurzelgriff", target)
 			c.move_to_row(target)
 		await c.enemy_attack(e, [target], 8, "melee", "Wurzelzug")
 
@@ -264,10 +271,12 @@ func _regrow(knot: Fighter) -> void:
 
 
 func _herald_turn(e: Fighter) -> void:
+	c.zeige("leere", e)
 	darkness += 1
 	c.set_darkness(darkness * DARKNESS_STEP)
 	if darkness >= MAX_DARKNESS:
 		c._emit({type = "cast", f = e, ult = false, name = "Lichtfraß"})
+		c.zeige("lichtfrass", e)
 		c.wipe("Lichtfraß! Die Dunkelheit verschlingt die Gruppe.")
 		return
 	if darkness == MAX_DARKNESS - 1:
@@ -289,7 +298,9 @@ func _herald_turn(e: Fighter) -> void:
 	if e.step % 2 == 0:
 		await c.enemy_attack(e, typed, 11, "magic", "Schattenwelle")
 	else:
-		await c.enemy_attack(e, [c.pick(typed)], 20, "magic", "Leerengriff")
+		var opfer: Fighter = c.pick(typed)
+		c.zeige("leere", opfer)
+		await c.enemy_attack(e, [opfer], 20, "magic", "Leerengriff")
 
 
 func _light_holder() -> Fighter:
@@ -310,6 +321,7 @@ func check_phase() -> void:
 		var queen := _find("sporenkoenigin")
 		if queen != null and queen.is_alive():
 			clouds = 0
+			_update_intents()
 			c.wipe("Sporenblüte! Fünf Giftwolken erblühen gleichzeitig.")
 			return
 
@@ -456,7 +468,7 @@ func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 			f.light_turns = 0
 			target.light = true
 			target.light_turns = 0
-			c.burst(target, Color("fff3b0"), 120.0)
+			c.zeige("splitterlicht", f, target)
 			c.add_log("%s reicht das Splitterlicht an %s weiter." % [f.display_name, target.display_name])
 	_update_intents()
 	c.wait(0.3)

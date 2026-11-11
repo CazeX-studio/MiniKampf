@@ -510,6 +510,43 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 					FxBild.am_boden(feld, "lavaflut", andere.home_feet() + Vector2(0, 30), 1.1, 1.6, false, 0.5).z_index = 17
 			await k.wait(1.0)
 
+		# --- Pilzhöhle (A9c2, gemalte Effekte aus Teil M2) ---
+		"heilsporen":
+			# Die Sporenknospe öffnet sich, leuchtende Sporen steigen auf
+			Geraeusche.play("zauber", 1.3)
+			FxBild.am_boden(feld, "heilsporen", v.home_feet() + Vector2(0, 8), 0.9, 0.7)
+			if ziel_ansicht != null:
+				FxBild.spawn(feld, "heilung", ziel_ansicht.center(), 0.7, false, 0.0, 0.8)
+		"wurzelgriff":
+			# Wurzeln brechen unter dem Helden aus dem Boden und packen zu
+			Geraeusche.play("treffer", 0.6)
+			FxBild.am_boden(feld, "wurzelgriff", v.home_feet() + Vector2(0, 10), 0.8, 1.3).z_index = 9
+		"verschlingen":
+			# Unter allen Helden greifen die Wurzeln zu, der Boden bebt
+			k.call("_shake", 12.0)
+			Geraeusche.play("kritisch", 0.5)
+			for andere: FighterView in k._views.values():
+				if andere.fighter.is_ally():
+					FxBild.am_boden(feld, "wurzelgriff", andere.home_feet() + Vector2(0, 10), 1.0, 1.8, false, 0.3).z_index = 9
+			await k.wait(0.9)
+		"leere":
+			# Ein Riss der Leere öffnet sich (Lichtfraß am Vorboten, Leerengriff am Ziel)
+			Geraeusche.play("zauber", 0.5)
+			FxBild.spawn(feld, "leere", v.center(), 0.8, false, 0.0, 1.0 if v.fighter.is_ally() else 1.4).z_index = 9
+		"lichtfrass":
+			# Die Leere verschlingt alles Licht
+			k.call("_shake", 10.0)
+			FxBild.spawn(feld, "leere", v.center(), 1.2, false, 0.0, 2.4, 0.3).z_index = 17
+			for andere: FighterView in k._views.values():
+				if andere.fighter.is_ally():
+					FxBild.spawn(feld, "leere", andere.center(), 1.0, false, 0.0, 1.2, 0.3).z_index = 17
+			await k.wait(1.0)
+		"splitterlicht":
+			# Das Splitterlicht schwebt zum nächsten Helden
+			if ziel_ansicht != null:
+				Geraeusche.play("zauber", 1.5)
+				await FxBild.flug(feld, "splitterlicht", v.center() + Vector2(0, -60), ziel_ansicht.center() + Vector2(0, -60), 0.5, 0.8, 60.0)
+
 
 ## Kleiner Sprung. Bewegt die ganze Ansicht, damit er neben einem laufenden Angriff funktioniert.
 static func _huepfer(v: FighterView, hoehe: float, sekunden: float) -> void:

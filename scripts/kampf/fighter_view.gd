@@ -221,6 +221,7 @@ var _glow_color := Color.WHITE
 ## Hält das Splitterlicht (Pilzhöhle, Vorbote): leuchtet selbst lila (wird von der Kampfanzeige gesetzt)
 var splitter_light := false
 var _halo: Node2D
+var _splitter: Node2D
 var _glow := 0.0
 var _flash := 0.0
 ## Lebenspunkte, die gerade angezeigt werden. Die Anzeige setzt sie im Takt der abgespielten Treffer,
@@ -277,6 +278,20 @@ func setup(p_fighter: Fighter) -> void:
 		var c := body.position + Vector2(0, -sprite_size.y * 0.45)
 		_halo.draw_texture_rect(Fx.glow_texture(), Rect2(c - Vector2(r, r), Vector2(r, r) * 2.0), false, Color(0.8, 0.6, 1.0, 0.55)))
 	add_child(_halo)
+	# Gemaltes Splitterlicht (Teil M, fx_splitterlicht, A9c2) schwebt über dem Kopf
+	_splitter = Node2D.new()
+	_splitter.visible = false
+	_splitter.z_index = 2
+	_splitter.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_splitter.draw.connect(func() -> void:
+		var bilder := FxBild.bilder("splitterlicht")
+		if bilder.is_empty():
+			return
+		var tex: Texture2D = bilder[int(_time * 7.0) % bilder.size()]
+		var groesse := tex.get_size() * 0.9
+		var ort := body.position + Vector2(0, -sprite_size.y * 0.95 + 4.0 * sin(_time * 3.0))
+		_splitter.draw_texture_rect(tex, Rect2(ort - groesse * 0.5, groesse), false))
+	add_child(_splitter)
 
 	if _compact:
 		_plate = Rect2()
@@ -332,6 +347,8 @@ func _process(delta: float) -> void:
 	_halo.visible = splitter_light
 	if splitter_light:
 		_halo.queue_redraw()
+		_splitter.queue_redraw()
+	_splitter.visible = splitter_light
 	_shader.set_shader_parameter("outline_color", outline)
 	_shader.set_shader_parameter("flash", _flash)
 	queue_redraw()
