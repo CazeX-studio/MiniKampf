@@ -65,6 +65,9 @@ BLAETTER = {"gegenstaende": [
 	["breitschwert", "flinker_dolch", "kettenhemd", "wollrobe"],
 	["glueckskette", "kettenbrecher", "kettenhelm", "kettenpanzer"],
 	["kettenstiefel"],
+], "gegenstaende_10": [
+	# Briefe (A15, Auftrag Q1)
+	["brief", "empfehlungsschreiben"],
 ]}
 
 ## Blätter mit Symbolen aus mehreren getrennten Teilen (z. B. drei Pusteblumensamen): Teile näher als so viele Pixel gehören zusammen
