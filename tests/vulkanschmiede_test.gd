@@ -73,6 +73,39 @@ func _lava_takt() -> void:
 
 
 ## D33: Zwischenboss Hammerbrüder (Doppelschlag oder Gleichschritt)
+## A9b3: Hammerwut ab halbem Leben beider Brüder
+func _hammerwut() -> void:
+	for modus: String in ["doppelschlag", "gleichschritt"]:
+		Vulkanschmiede.modus_fest = modus
+		var k := BattleState.new(null, [] as Array[String], "", 17)
+		k.setup = {gegner_stufe = 18, dungeon = "vulkanschmiede", helden = [{klasse = "tank", name = "A", stufe = 18},
+				{klasse = "smith", name = "B", stufe = 18}]}
+		k._create_heroes()
+		var v := Vulkanschmiede.new(k)
+		k.dungeon = v
+		k.spawn_enemies(["hammerbruder_hammer", "hammerbruder_zange"])
+		v.on_wave(0)
+		var hammer := v._find("hammerbruder_hammer")
+		var zange := v._find("hammerbruder_zange")
+		hammer.hp = hammer.max_hp / 2
+		zange.hp = zange.max_hp / 2
+		v.check_phase()
+		_check(v.wut and k._events.any(func(ev: Dictionary) -> bool: return ev.type == "phasen_film" and ev.motiv == "amboss"),
+				"%s: Ab halbem Leben Hammerwut, mit Film" % modus)
+		if modus == "doppelschlag":
+			_check(v.schlag_in <= Vulkanschmiede.WUT_DOPPELSCHLAG_ALLE, "Hammerwut: Der Doppelschlag kommt viel öfter")
+		else:
+			zange.set_meta("rasend", true)
+			var leben := zange.hp
+			k.apply_damage(zange, 50, k.heroes[0])
+			var rasend := leben - zange.hp
+			leben = hammer.hp
+			k.apply_damage(hammer, 50, k.heroes[0])
+			_check(rasend * 3 < leben - hammer.hp, "Hammerwut: Ein rasender Bruder steckt viel weg (%d statt %d)" % [rasend, leben - hammer.hp])
+		k.cleanup()
+	Vulkanschmiede.modus_fest = ""
+
+
 func _hammerbrueder() -> void:
 	var k := BattleState.new(null, [] as Array[String], "", 11)
 	k.setup = {gegner_stufe = 18, dungeon = "vulkanschmiede", helden = [{klasse = "tank", name = "A", stufe = 18},
@@ -245,6 +278,7 @@ func _initialize() -> void:
 	_check(Backdrop.fighter_light("vulkanschmiede") != Color.WHITE, "Eigenes Licht im Kampf")
 	_lava_takt()
 	_hammerbrueder()
+	_hammerwut()
 	_kettenschmied()
 	world.change_map(p, "vulkanschmiede", Vector2i(8, 28))
 	world.apply_command("a", {type = "move", cell = Vector2i(8, 29)})

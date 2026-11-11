@@ -12,7 +12,46 @@ func _check(ok: bool, text: String) -> void:
 		_failed += 1
 
 
+## A9b3: Sporenkönigin ab halbem Leben wütend
+func _koenigin() -> void:
+	for modus: String in ["bluete", "zwillinge"]:
+		Pilzhoehle.modus_fest = modus
+		var k := BattleState.new(null, [] as Array[String], "", 23)
+		k.setup = {gegner_stufe = 19, dungeon = "pilzhoehle", helden = [{klasse = "tank", name = "A", stufe = 19},
+				{klasse = "archer", name = "B", stufe = 19}]}
+		k._create_heroes()
+		var p := Pilzhoehle.new(k)
+		k.dungeon = p
+		k.spawn_enemies(["sporenkoenigin", "sporenling", "sporenling"])
+		p.on_wave(0)
+		var koenigin := p._find("sporenkoenigin")
+		koenigin.hp = koenigin.max_hp * 6 / 10
+		p.check_phase()
+		_check(not p.queen_wut, "%s: Über halbem Leben noch keine Wut" % modus)
+		koenigin.hp = koenigin.max_hp / 2
+		p.check_phase()
+		_check(p.queen_wut and k._events.any(func(ev: Dictionary) -> bool: return ev.type == "phasen_film" and ev.motiv == "sporen"),
+				"%s: Ab halbem Leben wütend, mit Film" % modus)
+		var a: Fighter = k.heroes[0]
+		if modus == "bluete":
+			_check(p.intent(koenigin).begins_with("WÜTEND"), "Sporenblüte in Wut: Die Anzeige zeigt die Wut")
+		else:
+			var leben := koenigin.hp
+			k.apply_damage(koenigin, 50, a)
+			var geschuetzt := leben - koenigin.hp
+			for e in k.enemies:
+				if e.klass == "sporenling":
+					e.hp = 0
+			leben = koenigin.hp
+			k.apply_damage(koenigin, 50, a)
+			_check(geschuetzt * 3 < leben - koenigin.hp, "Zwillinge in Wut: Solange Knospen leben, kommt kaum Schaden an (%d statt %d)"
+					% [geschuetzt, leben - koenigin.hp])
+		k.cleanup()
+	Pilzhoehle.modus_fest = ""
+
+
 func _initialize() -> void:
+	_koenigin()
 	var k := BattleState.new(null, [] as Array[String], "", 21)
 	k.setup = {gegner_stufe = 20, dungeon = "pilzhoehle", helden = [{klasse = "tank", name = "A", stufe = 20},
 			{klasse = "archer", name = "B", stufe = 20}]}

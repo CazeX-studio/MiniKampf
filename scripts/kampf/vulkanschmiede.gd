@@ -6,6 +6,8 @@ extends DungeonRegeln
 ##     tödlich für alle – außer jemand bringt einen der beiden aus dem Takt („Bruder stören“, kostet den Zug).
 ## - Zusammenspiel „Gleichschritt“: Liegt einer im Leben deutlich vorn, wird der schwächere rasend.
 ##     Beide gleichmäßig schwächen. Fällt einer, während der andere noch viel Leben hat, tobt der andere.
+## Ab halbem Leben (beide zusammen) Hammerwut (A9b3, kurzer Film, Motiv „amboss“): Der Doppelschlag kommt viel
+## öfter, beim Gleichschritt werden sie früher und stärker rasend, und ein rasender Bruder steckt viel weg. Die Mechanik wird Pflicht.
 ## Der Lava-Takt (lava_takt.gd) läuft in allen Kämpfen hier weiter.
 ## Endboss Kettenschmied (D34): eigene Datei kettenschmied.gd, hier nur weitergereicht.
 
@@ -17,11 +19,23 @@ const ANKUENDIGUNG := 2
 const ABSTAND_RASEND := 0.25
 const ABSTAND_RUHIG := 0.12
 const RASEND_SCHADEN := 1.7
+## Hammerwut (A9b3): ab diesem Anteil Leben beider Brüder zusammen; dann gelten diese Werte
+const WUT_AB := 0.5
+const WUT_DOPPELSCHLAG_ALLE := 3
+const WUT_ABSTAND_RASEND := 0.15
+const WUT_RASEND_SCHADEN := 2.3
+## In der Hammerwut kommt an einem rasenden Bruder nur dieser Anteil des Schadens an
+const WUT_RASEND_SCHUTZ := 0.2
 
+## Nur für Messungen (tests/boss_messen.gd): immer diese Mechanik statt einer zufälligen
+static var modus_fest := ""
 ## Mechanik in diesem Kampf: "doppelschlag" (Wipe) oder "gleichschritt" (Zusammenspiel)
 var modus := ""
 ## Züge des Hammer-Bruders bis zum Doppelschlag
 var schlag_in := DOPPELSCHLAG_ALLE
+## Hammerwut (A9b3)
+var wut := false
+var _teilt := false
 ## Endboss
 var ks: Kettenschmied
 
@@ -38,9 +52,10 @@ func handles(e: Fighter) -> bool:
 func on_wave(index: int) -> void:
 	ks.on_wave(index)
 	modus = ""
+	wut = false
 	if _find(BRUEDER[0]) == null:
 		return
-	modus = c.pick(["doppelschlag", "gleichschritt"])
+	modus = c.pick(["doppelschlag", "gleichschritt"]) if modus_fest == "" else modus_fest
 	schlag_in = DOPPELSCHLAG_ALLE
 	c.add_log("[b]Zwischenboss: Die Hammerbrüder![/b] Zwei alte Ambossknechte aus Hadraks Schmiede.")
 	if modus == "doppelschlag":
@@ -61,6 +76,8 @@ func intent(e: Fighter) -> String:
 			else ("Zangengriff (hält fest)" if e.step % 2 == 0 else "Funkenregen (hinten)")
 	if e.has_meta("rasend"):
 		text = "RASEND! " + text
+	elif wut:
+		text = "Hammerwut! " + text
 	if modus == "doppelschlag":
 		if e.has_meta("holt_aus"):
 			text += "\nDOPPELSCHLAG in %d Zügen!" % schlag_in
@@ -87,11 +104,11 @@ func enemy_turn(e: Fighter) -> void:
 			_ausholen()
 		elif schlag_in <= 0:
 			await _doppelschlag(e)
-			schlag_in = DOPPELSCHLAG_ALLE
+			schlag_in = WUT_DOPPELSCHLAG_ALLE if wut else DOPPELSCHLAG_ALLE
 			e.step += 1
 			_update_intents()
 			return
-	var mal := RASEND_SCHADEN if e.has_meta("rasend") else 1.0
+	var mal := (WUT_RASEND_SCHADEN if wut else RASEND_SCHADEN) if e.has_meta("rasend") else 1.0
 	if e.klass == BRUEDER[0]:
 		if e.step % 2 == 0:
 			await c.enemy_attack(e, [c.pick_target()], roundi(18 * mal), "melee", "Hammerschlag")
@@ -139,9 +156,43 @@ func _doppelschlag(e: Fighter) -> void:
 
 func check_phase() -> void:
 	ks.check_phase()
+	if modus != "" and not wut:
+		var leben := 0
+		var gesamt := 0
+		for name: String in BRUEDER:
+			var b := _find(name)
+			if b != null:
+				leben += maxi(0, b.hp)
+				gesamt += b.max_hp
+		if gesamt > 0 and leben > 0 and leben <= gesamt * WUT_AB:
+			_wut_start()
+
+
+## Hammerwut (A9b3): kurzer Film, danach wird die Mechanik Pflicht.
+func _wut_start() -> void:
+	wut = true
+	var hammer := _find(BRUEDER[0])
+	var bruder := hammer if hammer != null and hammer.is_alive() else _find(BRUEDER[1])
+	var unter := "Der Doppelschlag kommt jetzt viel öfter. Stört sie!" if modus == "doppelschlag" \
+			else "Wer zurückliegt, rast und steckt viel weg. Schwächt beide gleich!"
+	c.phasen_film(bruder, "amboss", "Hammerwut!", unter, Color("ffb070"))
+	c.add_log("\n[color=#ff8a3d][b]Die Hammerbrüder geraten in Hammerwut![/b][/color]")
+	if modus == "doppelschlag":
+		schlag_in = mini(schlag_in, WUT_DOPPELSCHLAG_ALLE)
+		c.add_log("Der Doppelschlag kommt jetzt alle %d Züge. Ohne „Bruder stören“ übersteht ihn niemand." % WUT_DOPPELSCHLAG_ALLE)
+	else:
+		c.add_log("Schon bei kleinem Abstand im Leben wird der schwächere rasend: Er schlägt viel härter zu und steckt viel weg.")
+	_update_intents()
+	c.refresh()
 
 
 func absorbs(target: Fighter, amount: int, source: Fighter) -> bool:
+	# Hammerwut: Ein rasender Bruder steckt viel weg (A9b3), darum beide gleichmäßig schwächen
+	if wut and not _teilt and target.klass in BRUEDER and target.has_meta("rasend"):
+		_teilt = true
+		c.apply_damage(target, maxi(1, roundi(amount * WUT_RASEND_SCHUTZ)), source)
+		_teilt = false
+		return true
 	return ks.absorbs(target, amount, source)
 
 
@@ -164,7 +215,7 @@ func on_hit(_attacker: Fighter, target: Fighter, _element: String, _lost: int) -
 	var schwach := a if anteil_a < anteil_b else b
 	var stark := b if schwach == a else a
 	var abstand := absf(anteil_a - anteil_b)
-	if abstand > ABSTAND_RASEND and not schwach.has_meta("rasend"):
+	if abstand > (WUT_ABSTAND_RASEND if wut else ABSTAND_RASEND) and not schwach.has_meta("rasend"):
 		_rasend(schwach, "wird rasend! Sein Bruder ist noch viel stärker.")
 	elif abstand <= ABSTAND_RUHIG:
 		for f: Fighter in [schwach, stark]:

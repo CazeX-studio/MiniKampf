@@ -4,7 +4,8 @@ extends Control
 ## und glüht auf, dann bricht etwas (Glut bzw. Nebel steigt vom Boden) (beim Kettenschmied reißen die drei Ketten, die Glieder fliegen davon), das Bild
 ## wackelt und der Name der neuen Phase erscheint groß in der Mitte. Rund 3,6 Sekunden, kommt in jedem Kampf nur einmal.
 ## Motive: "ketten" (Kettenschmied: drei Ketten reißen), "leere" (Vorbote: ein Riss der Leere öffnet sich, schwarze
-## Ranken greifen heraus). Weitere Bosse bekommen ihr eigenes Motiv (A9b3).
+## Ranken greifen heraus), "sporen" (Sporenkönigin: Sporenwolken quellen auf und platzen), "amboss" (Hammerbrüder:
+## zwei Hämmer schlagen zusammen auf den Amboss, Funken stieben).
 ## Die gezeichneten Ketten, Risse und Ranken sind Platzhalter, bis die gemalten Effekte aus GRAFIK_AUFTRAG.md Teil M da sind.
 
 const DAUER := 3.6
@@ -80,7 +81,7 @@ func _process(delta: float) -> void:
 	if not _gebrochen and _zeit >= BRUCH:
 		_brechen()
 	for g in _glieder:
-		g.vel.y += SCHWERKRAFT * delta
+		g.vel.y += SCHWERKRAFT * float(g.get("schwer", 1.0)) * delta
 		g.pos += g.vel * delta
 		g.drehung += g.dreh * delta
 	# Der Boss bebt immer stärker, bis es bricht
@@ -102,6 +103,19 @@ func _brechen() -> void:
 	Fx.spawn(feld, Fx.Kind.RING, _zentrum, _farbe.lightened(0.4), 520.0, 0.8)
 	Fx.spawn(feld, Fx.Kind.SPARKS, _zentrum, _farbe.lightened(0.3), 160.0, 0.9)
 	match _motiv:
+		"sporen":
+			# Die Wolken platzen: Sporen schweben langsam nach außen
+			for i in 70:
+				var weg := Vector2.from_angle(randf_range(0.0, TAU))
+				_glieder.append({pos = _zentrum + weg * randf_range(10.0, 90.0), vel = weg * randf_range(60.0, 320.0) + Vector2(0, -60.0),
+						dreh = 0.0, drehung = 0.0, schwer = 0.06, groesse = randf_range(3.0, 8.0)})
+		"amboss":
+			# Gemalte Hammerfunken (Teil E) und dazu Funken, die vom Amboss nach oben stieben und wieder fallen
+			FxBild.spawn(feld, "hammer_funken", _amboss_ort() + Vector2(0, -20), 0.8, false, 0.0, 1.4).z_index = 20
+			for i in 60:
+				var weg := Vector2.from_angle(randf_range(PI * 1.1, PI * 1.9))
+				_glieder.append({pos = _amboss_ort(), vel = weg * randf_range(200.0, 700.0), dreh = 0.0, drehung = 0.0, schwer = 1.0,
+						groesse = randf_range(3.0, 6.0)})
 		"ketten":
 			# Jedes Glied fliegt vom Riss weg nach außen
 			for kette in _ketten:
@@ -147,6 +161,46 @@ func _draw() -> void:
 				_glied(g.pos, g.drehung, Color(_farbe.lightened(0.2), deckung))
 		"leere":
 			_leere(deckung)
+		"sporen":
+			if not _gebrochen:
+				# Sporenwolken quellen rund um die Königin auf
+				var auf := clampf(_zeit / BRUCH, 0.0, 1.0)
+				for i in 7:
+					var ort := _zentrum + Vector2.from_angle(TAU * i / 7.0 + _zeit * 0.6) * (40.0 + 50.0 * auf)
+					draw_circle(ort, 20.0 + 45.0 * auf + 6.0 * sin(_zeit * 5.0 + i), Color(_farbe.darkened(0.3), 0.45 * deckung))
+					draw_circle(ort, 8.0 + 20.0 * auf, Color(_farbe, 0.5 * deckung))
+			for g in _glieder:
+				draw_circle(g.pos, g.groesse, Color(_farbe.lightened(0.2), 0.8 * deckung))
+		"amboss":
+			_amboss(deckung)
+			for g in _glieder:
+				draw_rect(Rect2(g.pos, Vector2.ONE * g.groesse), Color(_farbe.lightened(0.4), deckung))
+
+
+func _amboss_ort() -> Vector2:
+	# Vor den Brüdern, zur Mitte des Feldes hin
+	return _zentrum + Vector2(190, 40)
+
+
+## Ein glühender Amboss unter den Brüdern, zwei Hämmer holen von links und rechts aus und treffen beim Bruch zusammen.
+func _amboss(deckung: float) -> void:
+	var ort := _amboss_ort()
+	var glut := clampf(_zeit / BRUCH, 0.0, 1.0)
+	var eisen := Color("2e2a28").lerp(_farbe, glut * 0.6)
+	draw_rect(Rect2(ort + Vector2(-70, 0), Vector2(140, 26)), Color(eisen, deckung))
+	draw_rect(Rect2(ort + Vector2(-34, 26), Vector2(68, 34)), Color(eisen.darkened(0.3), deckung))
+	draw_rect(Rect2(ort + Vector2(-70, 0), Vector2(140, 5)), Color(_farbe.lightened(0.3), glut * deckung))
+	if _gebrochen and _zeit > BRUCH + 0.6:
+		return
+	# Hämmer: weit ausgeholt, dann schnell zusammen (kurz vor dem Bruch)
+	var schwung := clampf((_zeit - BRUCH * 0.55) / (BRUCH * 0.45), 0.0, 1.0)
+	schwung = schwung * schwung
+	for seite: float in [-1.0, 1.0]:
+		var kopf := ort + Vector2(seite * lerpf(200.0, 34.0, schwung), lerpf(-170.0, -24.0, schwung))
+		var griff := kopf + Vector2(seite * 80.0, -70.0)
+		draw_line(griff, kopf, Color("5a3b22", deckung), 10.0)
+		draw_rect(Rect2(kopf - Vector2(30, 22), Vector2(60, 44)), Color("3a3533", deckung))
+		draw_rect(Rect2(kopf - Vector2(30, 22), Vector2(60, 44)), Color(_farbe, 0.7 * glut * deckung), false, 4.0)
 
 
 ## Der Riss öffnet sich bis zum Bruch immer weiter; danach greifen schwarze Ranken nach außen und ziehen sich zurück.

@@ -4,6 +4,8 @@ extends DungeonRegeln
 ## - Eigene Monster: Leuchtmotte, Wurzelkriecher, Sporenwolf, Glimmerkäfer
 ## - Zwischenboss Sporenkönigin: pro Kampf zufällig EINE Mechanik
 ##     Wipe „Sporenblüte“ (5 Giftwolken) oder Zusammenspiel (Sporenknospen in derselben Runde besiegen)
+##     Ab halbem Leben Wut (A9b3, kurzer Film, Motiv „sporen“): Sporenblüte stößt bei jedem Zug eine Wolke aus,
+##     bei den Zwillingen schützen die lebenden Knospen sie (nur ein Fünftel des Schadens kommt durch).
 ## - Endboss Phase 1 Wurzelmutter: Rinde heilt, Splitter-Knoten treffen,
 ##     Wipe „Verschlingen“ und Zusammenspiel „Zwillingsknoten“
 ## - Endboss Phase 2 Vorbote: Dunkelheit, keine Zugleiste,
@@ -20,6 +22,9 @@ const MAX_CLOUDS := 5
 const CLOUD_DAMAGE := 2
 const SPORE_HEAL := 0.08
 const DEVOUR_TURNS := 3
+## Sporenkönigin: ab diesem Anteil Leben wütend (A9b3); dann schützen lebende Knospen sie so stark
+const WUT_AB := 0.5
+const KNOSPEN_SCHUTZ := 0.2
 ## Ein zerstörtes Knotenpaar kostet die Wurzelmutter diesen Anteil ihres Lebens.
 const PAIR_DAMAGE := 0.25
 const MAX_DARKNESS := 6
@@ -29,9 +34,13 @@ const DARKNESS_STEP := 0.13
 const HELL_GENUG := 1
 const DUNKEL_DURCH := 0.2
 
+## Nur für Messungen (tests/boss_messen.gd): immer diese Mechanik der Sporenkönigin statt einer zufälligen
+static var modus_fest := ""
 ## Mechanik der Sporenkönigin in diesem Kampf: "bluete" (Wipe) oder "zwillinge" (Zusammenspiel)
 var queen_mode := ""
 var clouds := 0
+## Sporenkönigin in der Wut-Phase (A9b3)
+var queen_wut := false
 var devour := DEVOUR_TURNS
 var pairs_since_warning := 0
 var pair_broken := false
@@ -59,8 +68,9 @@ func handles(e: Fighter) -> bool:
 func on_wave(_index: int) -> void:
 	queen_mode = ""
 	clouds = 0
+	queen_wut = false
 	if _find("sporenkoenigin") != null:
-		queen_mode = c.pick(["bluete", "zwillinge"])
+		queen_mode = c.pick(["bluete", "zwillinge"]) if modus_fest == "" else modus_fest
 		clouds = 0
 		c.add_log("[b]Zwischenboss: Die Sporenkönigin![/b] Ihre Sporenknospen heilen sie.")
 		if queen_mode == "bluete":
@@ -101,6 +111,10 @@ func intent(e: Fighter) -> String:
 			return "Heilt die Königin"
 		"sporenkoenigin":
 			var text := "Nächster Zug: %s" % ("Sporenpeitsche" if e.step % 2 == 0 else "Giftsporen (alle)")
+			if queen_wut:
+				text = "WÜTEND! " + text
+				if queen_mode == "zwillinge" and _knospen_leben():
+					text += "\nDie Knospen schützen sie"
 			if queen_mode == "bluete":
 				text += "\nGiftwolken: %d / %d" % [clouds, MAX_CLOUDS]
 			return text
@@ -187,6 +201,9 @@ func _queen_turn(e: Fighter) -> void:
 			return
 	if e.step % 2 == 0:
 		await c.enemy_attack(e, [c.pick_target()], 16, "melee", "Sporenpeitsche")
+		# Wut (A9b3): Bei der Sporenblüte kommt jetzt bei jedem Zug eine Wolke dazu
+		if queen_mode == "bluete" and queen_wut and not c.allies().is_empty():
+			_add_cloud(e, "Wütend schüttelt die Königin ihre Sporen ab!")
 	else:
 		await c.enemy_attack(e, c.allies(), 7, "magic", "Giftsporen")
 		if queen_mode == "bluete":
@@ -286,6 +303,9 @@ func _light_holder() -> Fighter:
 
 ## Wird nach jeder Aktion geprüft: Phasenwechsel, Knotenpaare, Wipe durch Giftwolken.
 func check_phase() -> void:
+	var koenigin := _find("sporenkoenigin")
+	if koenigin != null and koenigin.is_alive() and not queen_wut and koenigin.hp <= koenigin.max_hp * WUT_AB:
+		_queen_wut_start(koenigin)
 	if queen_mode == "bluete" and clouds >= MAX_CLOUDS and not c.alive(c.allies()).is_empty():
 		var queen := _find("sporenkoenigin")
 		if queen != null and queen.is_alive():
@@ -325,6 +345,25 @@ func check_phase() -> void:
 			c.add_log("Das Splitterlicht springt zu %s." % next.display_name)
 
 
+## Sporenkönigin ab halbem Leben (A9b3): kurzer Film, danach wird ihre Mechanik Pflicht.
+func _queen_wut_start(koenigin: Fighter) -> void:
+	queen_wut = true
+	var unter := "Fünf Wolken sind ihr Ende. Vertreibt sie!" if queen_mode == "bluete" \
+			else "Ihre Knospen schützen sie. Besiegt beide zugleich!"
+	c.phasen_film(koenigin, "sporen", "Die Königin erblüht!", unter, Color("b0ff70"))
+	c.add_log("\n[color=#b0ff70][b]Die Sporenkönigin wird wütend![/b][/color]")
+	if queen_mode == "bluete":
+		c.add_log("Ab jetzt stößt sie bei jedem Zug eine Giftwolke aus. Vertreibt sie, sonst erblühen alle fünf.")
+	else:
+		c.add_log("Solange eine Sporenknospe lebt, kommt an der Königin kaum Schaden an. Besiegt beide in derselben Runde!")
+	_update_intents()
+	c.refresh()
+
+
+func _knospen_leben() -> bool:
+	return c.enemies.any(func(o: Fighter) -> bool: return o.klass == "sporenling" and o.is_alive())
+
+
 func _start_phase2() -> void:
 	phase2 = true
 	c.add_log("\n[color=#c8a0ff][b]Phase 2: Aus dem Splitter bricht etwas hervor … der Vorbote![/b][/color]")
@@ -352,6 +391,11 @@ func _start_phase2() -> void:
 
 ## Schläge auf die Rinde der Wurzelmutter heilen sie (nur Angriffe der Helden). Den Vorboten trifft man im Dunkeln kaum.
 func absorbs(target: Fighter, amount: int, source: Fighter) -> bool:
+	if target.klass == "sporenkoenigin" and queen_wut and queen_mode == "zwillinge" and not _teilt and _knospen_leben():
+		_teilt = true
+		c.apply_damage(target, maxi(1, roundi(amount * KNOSPEN_SCHUTZ)), source)
+		_teilt = false
+		return true
 	if target.klass == "vorbote" and not _teilt and not im_licht(source):
 		_teilt = true
 		c.apply_damage(target, maxi(1, roundi(amount * DUNKEL_DURCH)), source)

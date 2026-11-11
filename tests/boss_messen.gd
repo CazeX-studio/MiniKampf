@@ -1,6 +1,7 @@
 extends SceneTree
 ## A9b: Wie oft schafft eine Gruppe einen Boss, mit und ohne seine Mechanik? Spielt Kämpfe ohne Grafik durch.
 ## Aufruf: Godot --headless --path . -s tests/boss_messen.gd -- <kampf> [anzahl] [stufe] [ohne]
+## Ein sechstes Wort legt die Mechanik fest (z. B. doppelschlag, gleichschritt, bluete, zwillinge), sonst zufällig.
 ## Mit „allein“ als fünftem Wort kämpft die Klasse ohne die beiden Novizen.
 ## ohne: Mechaniken, die der Computer im zweiten Durchgang auslässt, mit Komma getrennt (Standard: kuehlbecken).
 ## Gruppe: jede Demo-Klasse auf der Stufe, dazu zwei Novizen vom Computer (wie Tessa und Gorm).
@@ -20,6 +21,9 @@ func _run() -> void:
 	var auslassen: Array[String] = []
 	auslassen.assign((args[3] if args.size() > 3 else "kuehlbecken").split(","))
 	var allein := args.size() > 4 and args[4] == "allein"
+	var fest := args[5] if args.size() > 5 else ""
+	Vulkanschmiede.modus_fest = fest if fest in ["doppelschlag", "gleichschritt"] else ""
+	Pilzhoehle.modus_fest = fest if fest in ["bluete", "zwillinge"] else ""
 	for ohne: bool in [false, true]:
 		KampfKI.ohne_mechanik = auslassen if ohne else ([] as Array[String])
 		var siege := 0

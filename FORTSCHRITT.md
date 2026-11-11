@@ -5,7 +5,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 11.11.)
 
-- **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** A9b3 (Sporenkönigin und Hammerbrüder), danach A10 bis A16; neu für dich: Teil M in `GRAFIK_AUFTRAG.md` (Effekte der Dungeons) (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
+- **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** A10 (Monster-Bilder: Abwehr und Fernkampf, alte Familien-Bilder aufräumen), danach A11 bis A16; neu für dich: Teil M in `GRAFIK_AUFTRAG.md` (Effekte der Dungeons) (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
 - **Bilder von Marco (02.11. abends):** 38 Blätter liegen unter `tools/vorlagen/`: alle sechs Novizen-Blätter ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen.
   - Dazu der Baukasten (02.11.): acht Grundkörper (`grund_*.png`), Köpfe (`koepfe_*.png`), Hüte (`huete_regionen.png`), Zeichen (`zeichen_dienste.png`) und die Klingentänzerin Blatt 1. Bei den Fäusten der Abwehr-Bilder von Blatt 1 prüft Claude beim Einbauen, ob sie am Oval stören.
   - Dazu Figuren 4 und 5 (02.11.): 22 Blätter Nebenfiguren (`neben_*.png`) und 42 Blätter Hauptfiguren (`haupt_*.png`) aller drei Städte, damit ist Teil D vollständig. `neben_reserve_rashid_tarek.png` ist ein doppeltes Sammelblatt und bleibt Reserve.
@@ -64,7 +64,17 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (11.11.):** Alpha-Aufträge A9b3 bis A16 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+- **Nächster Schritt (11.11.):** Alpha-Aufträge A10 bis A16 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+
+- **Neu (11.11.): A9b3 Wut-Phase für Sporenkönigin und Hammerbrüder** (Alpha-Punkte 38 und 39, dein Beschluss):
+  - Ab halbem Leben läuft ein kurzer Film: Bei der Sporenkönigin quellen Sporenwolken auf und platzen („Die Königin erblüht!“), bei den Hammerbrüdern schlagen zwei Hämmer auf einen glühenden Amboss („Hammerwut!“).
+  - Danach ist die Mechanik Pflicht. Sporenblüte: Sie stößt bei jedem Zug eine Giftwolke aus. Zwillinge: Solange eine Sporenknospe lebt, kommt an ihr kaum Schaden an. Doppelschlag: Er kommt alle 3 statt alle 5 Züge. Gleichschritt: Der Schwächere rast schon bei kleinem Abstand und steckt dann viel weg.
+  - Gemessen (je 150 Kämpfe zu dritt), gewonnen mit / ohne Mechanik: Sporenblüte 79 / 0, Zwillinge 59 / 11, Doppelschlag 95 / 0, Gleichschritt 94 / 15 von 100.
+  - **So testest du es:**
+    1. Mit dem Spielstand-Editor zur Pilzhöhle springen und die Sporenkönigin angreifen: Bei halbem Leben läuft der Sporen-Film, über ihr steht „WÜTEND!“.
+    2. Bei den Zwillingen nur auf die Königin schlagen: Es kommt kaum Schaden an, bis beide Knospen in derselben Runde fallen.
+    3. In der Vulkanschmiede die Hammerbrüder auf halbes Leben bringen: Der Amboss-Film läuft, über ihnen steht „Hammerwut!“.
+    4. Beim Doppelschlag nicht stören: Er kommt schnell und besiegt alle.
 
 - **Neu (11.11.): A9b2 Vorbote schwerer, mit Film** (Alpha-Punkte 38 und 39, Pilzhöhle):
   - Stirbt die Wurzelmutter, läuft ein kurzer Film: Ein schwarzer Riss mit violettem Rand öffnet sich, schwarze Ranken greifen heraus, groß erscheint „Der Vorbote“.

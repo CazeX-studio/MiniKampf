@@ -94,8 +94,35 @@ func choose(rules: Skills, f: Fighter) -> Dictionary:
 					targets.assign(boss)
 			else:
 				targets.assign(targets.filter(func(t: Fighter) -> bool: return t.klass == "kuehlbecken"))
+		targets.assign(_boss_ziele(rules, targets))
 		target = targets[rng.randi() % targets.size()]
 	return {ab = pick, target = target}
+
+
+## Wut-Phasen (A9b3): Was jede Gruppe tun würde. Hammerbrüder im Gleichschritt: den gesünderen Bruder schlagen.
+## Sporenkönigin mit Zwillingen in Wut: die Knospen zuerst. Mit ohne_mechanik ("gleichschritt", "knospen") das Gegenteil.
+func _boss_ziele(rules: Skills, targets: Array[Fighter]) -> Array[Fighter]:
+	var d: DungeonRegeln = rules.c.dungeon
+	if d is Vulkanschmiede and (d as Vulkanschmiede).modus == "gleichschritt":
+		var brueder := targets.filter(func(t: Fighter) -> bool: return t.klass in Vulkanschmiede.BRUEDER)
+		if brueder.size() == 2:
+			brueder.sort_custom(func(a: Fighter, b: Fighter) -> bool: return float(a.hp) / a.max_hp > float(b.hp) / b.max_hp)
+			if ohne_mechanik.has("gleichschritt"):
+				return [brueder[1]] as Array[Fighter]
+			if rng.randf() < 0.7:
+				return [brueder[0]] as Array[Fighter]
+	if d is Pilzhoehle and (d as Pilzhoehle).queen_mode == "zwillinge":
+		var knospen := targets.filter(func(t: Fighter) -> bool: return t.klass == "sporenling")
+		var rest := targets.filter(func(t: Fighter) -> bool: return t.klass != "sporenling")
+		if ohne_mechanik.has("knospen") and not rest.is_empty():
+			var r: Array[Fighter] = []
+			r.assign(rest)
+			return r
+		if (d as Pilzhoehle).queen_wut and not knospen.is_empty() and rng.randf() < 0.7 and not ohne_mechanik.has("knospen"):
+			var k: Array[Fighter] = []
+			k.assign(knospen)
+			return k
+	return targets
 
 
 func _kettenschmied(rules: Skills) -> Kettenschmied:
