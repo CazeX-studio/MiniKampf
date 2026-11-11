@@ -2901,3 +2901,14 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 2. Lass einen Treffer absichtlich ohne Parade durch: Du solltest „Knapp überlebt!“ sehen und weiterkämpfen können.
 3. Achte darauf, wen er angreift: meistens dich.
 4. Pariere perfekt: Der Panzer bekommt Risse, jetzt angreifen.
+
+## A13b Dürrewald: neue Böden und Pflanzen (11.11.2026)
+- Vier neue Böden machen den Übergang von der Oase zum Wald weicher: Steppengras, Trockengras, Waldrand und rissige Erde (für den Weg durch die Steppe). Das kräftige Oasengras ist hier weggelassen.
+- Neue Teile: dürrer Baum, Steppenbaum (Schirmkrone), erwachender Busch, Grenzstein mit Flamme und Blatt am Weg, versandeter Zaun, umgestürzter Baum mit Moos.
+- Im Stadt-Editor sind die Böden und Teile auch einzeln da (Teile beginnen mit „dw_“).
+
+**So testest du es**
+1. Reise von der Glutoase durch das Tor in den Dürrewald.
+2. Geh den Weg nach Norden: Der Boden sollte von Sand über trockenes Gras bis zum Waldboden fließend übergehen, ohne grelle grüne Flecken.
+3. Etwa in der Mitte steht rechts vom Weg der Grenzstein, dort beginnen die ersten Bäume.
+4. Schau, ob die Steppenbäume und der Zaun gut auf ihren Feldern stehen.
