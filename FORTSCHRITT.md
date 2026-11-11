@@ -64,7 +64,20 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (11.11., nach Teil N):** Alle gelieferten Bilder haben jetzt einen Bauauftrag. A3b (Klassenbilder) ist fertig. Der Reihe nach: A9c (Dungeon-Effekte aus Teil M), A20 (Ladebildschirme aus Teil S), A21 (deine zwei Zusatz-Effekte: goldenes Nachbild bei perfekter Abwehr und mächtiger Blitzeinschlag). Danach E4 (Balancing, braucht viele Tests), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden. Noch zu malen ist für die Demo nichts; später kommen Teil R, H2 und S3 (sechs spätere Klassen) und Teil I.
+- **Nächster Schritt (11.11., nach Teil N):** Alle gelieferten Bilder haben jetzt einen Bauauftrag. A3b (Klassenbilder) und A9c1 (Effekte der Vulkanschmiede) sind fertig. Der Reihe nach: A9c2 (Effekte der Pilzhöhle aus Teil M), A20 (Ladebildschirme aus Teil S), A21 (deine zwei Zusatz-Effekte: goldenes Nachbild bei perfekter Abwehr und mächtiger Blitzeinschlag). Danach E4 (Balancing, braucht viele Tests), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden. Noch zu malen ist für die Demo nichts; später kommen Teil R, H2 und S3 (sechs spätere Klassen) und Teil I.
+
+- **Neu (11.11.): A9c1 Gemalte Effekte in der Vulkanschmiede** (Teil M1):
+  - Film „Entfesselt!“: Die drei Ketten sind jetzt gemalte Kettenglieder, glühen von kaltem Eisen bis weiß auf, reißen an mehreren Stellen mit Funken, die glühenden Glieder fliegen davon.
+  - „Gefesselt“: Zwischen den beiden Gefesselten hängt eine gemalte, pulsierende Glutkette (in Phase 2 heller). Wird sie zerschlagen oder fällt einer, bricht sie mit einem Funkenregen.
+  - Lava-Takt und steigende Lava: unter den Füßen der bedrohten Reihe glühende Risse im Boden (Warnung) bzw. brodelnde Lava (Lava oben), statt nur rotem Leuchten.
+  - Lavaflut und „Alles schmilzt“: unter jedem Helden bäumt sich eine Lavawelle auf, das Bild wackelt.
+  - Kühlbecken: Wasserschwall mit Dampf am Helden, der nass wird. Panzer: ein Stück Schlacke platzt mit Dampf vom Kettenschmied ab.
+  - **So testest du es:**
+    1. In der Vulkanschmiede zum Kettenschmied (oder im Kampf-Editor „kettenschmied“ wählen) und warten, bis ein Anker wackelt: Unter der Reihe glüht der Boden auf, danach brodelt dort Lava.
+    2. Warten, bis er zwei Helden fesselt: glühende Kette zwischen ihnen; „Kette zerschlagen“ wählen: Sie reißt mit Funken.
+    3. Phase 1 gewinnen: Im Film reißen die gemalten Ketten.
+    4. In Phase 2 das Kühlbecken angreifen (Wasserschwall), dann nass den Kettenschmied hart treffen (Panzer platzt ab).
+    5. Absichtlich drei Anker lose lassen: Lavawellen fluten das Feld.
 
 - **Neu (11.11.): A3b Klassenwahl mit gemalten Klassenbildern** (Teil H1):
   - In der Klassenwahl steht bei den fünf Klassen der Demo (Rüstungsschmied, Bogenschütze, Klingentänzerin, Monster-Zähmer, Sternensängerin) jetzt oben rechts dein großes gemaltes Bild mit Mann und Frau der Klasse statt der kleinen Pixel-Figur. Beim Schmied ist es `klassenbild_schmied.png` (nicht `_v2`).
