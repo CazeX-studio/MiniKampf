@@ -5,7 +5,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 11.11.)
 
-- **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** Die Alpha-Aufträge sind fertig (A3b, A10b, A13b warten auf deine Bilder). E4 (Balancing) kommt später (Marco, 11.11.: braucht viele Tests), dann E5 (T3 und T4 am Stück); neu für dich: Teil M bis Q in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
+- **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** Die Alpha-Aufträge sind fertig (A3b wartet auf deine Bilder; A10b und A13b sind fertig). E4 (Balancing) kommt später (Marco, 11.11.: braucht viele Tests), dann E5 (T3 und T4 am Stück); neu für dich: Teil M bis Q in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
 - **Bilder von Marco (02.11. abends):** 38 Blätter liegen unter `tools/vorlagen/`: alle sechs Novizen-Blätter ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen.
   - Dazu der Baukasten (02.11.): acht Grundkörper (`grund_*.png`), Köpfe (`koepfe_*.png`), Hüte (`huete_regionen.png`), Zeichen (`zeichen_dienste.png`) und die Klingentänzerin Blatt 1. Bei den Fäusten der Abwehr-Bilder von Blatt 1 prüft Claude beim Einbauen, ob sie am Oval stören.
   - Dazu Figuren 4 und 5 (02.11.): 22 Blätter Nebenfiguren (`neben_*.png`) und 42 Blätter Hauptfiguren (`haupt_*.png`) aller drei Städte, damit ist Teil D vollständig. `neben_reserve_rashid_tarek.png` ist ein doppeltes Sammelblatt und bleibt Reserve.
@@ -65,6 +65,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
 - **Nächster Schritt (11.11.):** E4 später (viele Tests), E5 und S6 am Ende von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+
+- **Neu (11.11.): A10b Monster-Geschosse, Parade und Ausweichen gemalt** (Teil N, alle 12 Blätter):
+  - Monster mit Fernkampf oder Zauber werfen jetzt ein gemaltes Geschoss in ihrem Element: Feuerball, Steinbrocken, Dorn mit Blättern, Blitzkugel, Wasserblase, Windklinge, Lichtball, Schattenkugel oder Sternensplitter. Die gezeichnete Leuchtkugel bleibt nur noch bei den Helden.
+  - Bei einer perfekten Parade blitzt ein großer goldener Stern mit Ring auf, bei einer normalen Parade sprühen Funken mit einem blauen Bogen, beim Ausweichen ziehen Luftstreifen und eine kleine Staubwolke.
+  - **So testest du es:**
+    1. In der Aschensteppe gegen Feuer-Monster kämpfen und warten, bis eins aus der Ferne oder mit einem Zauber angreift: Ein Feuerball fliegt auf dich zu.
+    2. Dasselbe bei Monstern anderer Elemente (die Farbe am Namen): Jedes wirft sein eigenes Geschoss.
+    3. Beim Angriff eines Monsters genau im grünen Moment tippen: großer Stern mit Ring (perfekte Parade).
+    4. Etwas früher oder später tippen: kleiner Funkenstoß (Parade); als Bogenschütze ausweichen: Luftstreifen mit Staub.
 
 - **Neu (11.11.): Bildaufträge für die sechs späteren Klassen** (`Spieldesign/GRAFIK_AUFTRAG.md` Teil R, nicht eilig, nach der Demo):
   - R1: je Klasse ein Blatt Fähigkeiten-Symbole (Runenwächter, Mechaniker mit Roboter, Zwielicht-Wandler, Ritualist, Quartiermeister, Kunoichi). Sobald ein Blatt zugeschnitten ist (`tools/faehigkeit_bilder.py <klasse>`), zeigen die Kampfknöpfe die Bilder.
