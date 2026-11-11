@@ -5,7 +5,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 11.11.)
 
-- **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** A13 (neues Gebiet zwischen Glutoase und Grünwacht), danach A14 bis A16; neu für dich: Teil M, N und O in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
+- **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** A14 (Kreuzwegfelder als eigenes Gebiet), danach A15 und A16; neu für dich: Teil M, N, O und P in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
 - **Bilder von Marco (02.11. abends):** 38 Blätter liegen unter `tools/vorlagen/`: alle sechs Novizen-Blätter ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen.
   - Dazu der Baukasten (02.11.): acht Grundkörper (`grund_*.png`), Köpfe (`koepfe_*.png`), Hüte (`huete_regionen.png`), Zeichen (`zeichen_dienste.png`) und die Klingentänzerin Blatt 1. Bei den Fäusten der Abwehr-Bilder von Blatt 1 prüft Claude beim Einbauen, ob sie am Oval stören.
   - Dazu Figuren 4 und 5 (02.11.): 22 Blätter Nebenfiguren (`neben_*.png`) und 42 Blätter Hauptfiguren (`haupt_*.png`) aller drei Städte, damit ist Teil D vollständig. `neben_reserve_rashid_tarek.png` ist ein doppeltes Sammelblatt und bleibt Reserve.
@@ -64,7 +64,18 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (11.11.):** Alpha-Aufträge A13 bis A16 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+- **Nächster Schritt (11.11.):** Alpha-Aufträge A14 bis A16 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+
+- **Neu (11.11.): A13a Dürrewald zwischen Glutoase und Grünwacht** (Alpha-Punkte 51 und 52):
+  - Das Tor zum Dürrewald am Westrand der Oase ist offen. Dahinter liegt ein langes Gebiet: unten Sand, Kakteen und Felsen, in der Mitte Steppengras mit ersten Bäumen, oben lichter Wald. Am Nordende geht es nach Tiefwurzel (dort ist unten ein neuer Pfad).
+  - Monster aus Steppe und Wald gemischt: Steppenhyäne, Staubgeist, Sonnenlöwe im Süden, Heulwolf, Dornenranke, Rindenbär, Windfalke im Norden, nachts Aschefuchs, Mondschakal und Nachtuhu. Stufe 18 bis 20 (die Demo endet bei 20; Grünwacht auf 20–25 heben gehört zu E4). Kämpfe im Süden zeigen die Steppe, im Norden den Wald.
+  - Der Heimweg „Zurück nach Grünwacht“ führt jetzt hier entlang (der Wegweiser nimmt den kürzeren Weg); der alte Weg über Kreuzweg geht weiter.
+  - A13b: Die harten Kanten zwischen Sand, Gras und Wald werden mit neuen Übergangsböden weicher. Die Bildaufträge stehen in `Spieldesign/GRAFIK_AUFTRAG.md` Teil P (Böden, Pflanzen und ein Grenzstein).
+  - **So testest du es:**
+    1. Mit dem Spielstand-Editor in die Glutoase, ganz links am Westrand zum Tor zum Dürrewald: Es öffnet sich.
+    2. Nach Norden laufen: Der Sand wird zu Gras und dann zu Wald, die Monster wechseln mit.
+    3. Ein Monster im Süden und eins im Norden angreifen: unterschiedliche Kampf-Hintergründe.
+    4. Oben durch den Ausgang: Du kommst in Tiefwurzel an. M drücken: Der Dürrewald liegt zwischen Glutoase und Grünwacht.
 
 - **Neu (11.11.): A12c Gasthaus Glutstube in der Glutoase betreten** (Alpha-Punkt 47, damit hat jede Stadt ihr Gasthaus):
   - Die Tür ist an der rechten Seite der Glutstube beim großen Torbogen (unten in der Oase). Hingehen bringt dich hinein, Vorbeilaufen nicht.

@@ -1443,27 +1443,6 @@
 		{
 			"teil": "gw_dunkler_baum",
 			"feld": [
-				18,
-				28
-			]
-		},
-		{
-			"teil": "tanne",
-			"feld": [
-				19,
-				28
-			]
-		},
-		{
-			"teil": "tanne_gross",
-			"feld": [
-				20,
-				28
-			]
-		},
-		{
-			"teil": "gw_dunkler_baum",
-			"feld": [
 				24,
 				28
 			]
@@ -1647,34 +1626,6 @@
 			"teil": "tanne",
 			"feld": [
 				17,
-				29
-			]
-		},
-		{
-			"teil": "tanne",
-			"feld": [
-				18,
-				29
-			]
-		},
-		{
-			"teil": "gw_dunkler_baum",
-			"feld": [
-				19,
-				29
-			]
-		},
-		{
-			"teil": "tanne_gross",
-			"feld": [
-				20,
-				29
-			]
-		},
-		{
-			"teil": "tanne_gross",
-			"feld": [
-				21,
 				29
 			]
 		},

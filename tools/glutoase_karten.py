@@ -11,7 +11,10 @@ Glutgrat (D30): Wildes Land der Glutoase (Stufe 15–20) über dem Bergpfad am S
 Felsgrate, heiße Quellen, Obsidian und oben der Kraterrand.
 Vulkanschmiede der Ketten (D32): Dungeon hinter Hadraks Schmiede (Stufe 15–20) mit drei Abschnitten: Schmiedehallen,
 Kettengänge (Brücken über dem Abgrund) und Ankerkammer.
-Aufruf: python3 tools/glutoase_karten.py [karte …]   (ohne Angabe alle)
+Dürrewald (A13): Übergang von der Glutoase nach Grünwacht (Stufe 18–20, Höchststufe der Demo; E4 hebt Grünwacht an). Vom Tor der Oase im Süden Sand und trockenes
+Gras, nach Norden immer mehr Grün und lichter Wald; oben geht es nach Tiefwurzel.
+Aufruf: python3 tools/glutoase_karten.py [karte …]   (ohne Angabe alle; die Glutoase selbst nur, wenn sie neu soll:
+Marcos Änderungen aus dem Stadt-Editor gingen dabei verloren)
 """
 import json
 import random
@@ -273,7 +276,9 @@ def glutoase_orte():
 		# Lastenaufzug der Schmiede: Abkürzung zwischen der Oase und Hadraks Schmiede
 		{"art": "aufzug", "feld": [41, 13], "meldung": "Der Lastenaufzug rattert nach oben zu Hadraks Schmiede.", "aktionen": [{"reisen": "glutoase", "feld": spiegeln([41, 35])}]},
 		{"art": "aufzug", "feld": [41, 35], "meldung": "Der Lastenaufzug rattert hinunter zur Oase.", "aktionen": [{"reisen": "glutoase", "feld": spiegeln([41, 13])}]},
-		{"art": "tor", "feld": [3, 15], "dialog": "tor_duerrewald"},
+		# Tor zum Dürrewald (A13): Übergang nach Grünwacht
+		{"art": "tor", "feld": [3, 15], "meldung": "Du öffnest das Tor zum Dürrewald. Dahinter wird die Steppe langsam zum Wald.",
+			"aktionen": [{"reisen": "duerrewald", "feld": [DWB // 2, DWH - 3]}]},
 		{"art": "bergpfad", "feld": [42, 25], "meldung": "Du steigst den Bergpfad hinauf auf den Glutgrat.",
 			"aktionen": [{"reisen": "glutgrat", "feld": [GGB // 2, GGH - 3]}]},
 		# Vulkanschmiede der Ketten (D32): Das Gespräch am Eingang lässt hinein, sobald Kael besiegt ist
@@ -569,7 +574,111 @@ def vulkanschmiede():
 	k.speichern(boden)
 
 
+DWB, DWH = 30, 56
+## Wo auf der Karte die Steppe zum Wald wird (Anteil von unten): darunter Sand und trockenes Gras, darüber Wald
+DW_WALD_AB = 0.55
+
+
+def duerrewald_monster():
+	M = lambda feld, gegner, stufe, **kw: dict({"feld": feld, "gegner": gegner, "stufe": stufe}, **kw)
+	sand = {"hintergrund": "aschensteppe_sand"}
+	steppe = {"hintergrund": "aschensteppe"}
+	wald = {"hintergrund": "wald"}
+	return [
+		# Süden: Steppe
+		M([8, 48], ["steppenhyaene", "staubgeist"], 18, **sand), M([22, 44], ["sonnenloewe"], 19, **sand),
+		M([7, 37], ["steppenhyaene", "steppenhyaene"], 19, **steppe),
+		# Mitte: Steppe und Wald mischen sich
+		M([22, 31], ["heulwolf", "steppenhyaene"], 20, **steppe), M([9, 26], ["dornenranke", "staubgeist"], 20, **steppe),
+		# Norden: lichter Wald
+		M([20, 18], ["rindenbaer"], 20, **wald), M([8, 12], ["heulwolf", "heulwolf"], 20, **wald),
+		M([21, 7], ["windfalke", "dornenranke"], 20, **wald),
+		# Nachts
+		M([8, 48], ["aschefuchs", "mondschakal"], 18, zeit="nacht", **sand), M([22, 31], ["mondschakal", "heulwolf"], 20, zeit="nacht", **steppe),
+		M([20, 18], ["nachtuhu", "heulwolf"], 20, zeit="nacht", **wald), M([8, 12], ["nachtuhu", "nachtuhu"], 20, zeit="nacht", **wald),
+	]
+
+
+def duerrewald():
+	"""Dürrewald (A13, Alpha-Punkte 51 und 52): zwischen Glutoase und Grünwacht, die Steppe wird zum Wald."""
+	r = random.Random(51)
+	wald_ab = int(DWH * (1 - DW_WALD_AB))
+	g = [["."] * DWB for _ in range(DWH)]
+	for y in range(DWH):
+		dichte = 0.03 if y > wald_ab + 6 else (0.06 if y > wald_ab - 4 else 0.1)
+		for x in range(DWB):
+			rand = x in (0, DWB - 1) or ((x in (1, DWB - 2)) and r.random() < 0.6)
+			if rand or r.random() < dichte:
+				g[y][x] = "s" if y > wald_ab + 4 or (y > wald_ab - 4 and r.random() < 0.5) else "T"
+	# Ein ausgetretener Weg vom Tor (unten) nach Tiefwurzel (oben), leicht geschwungen
+	x = DWB // 2
+	for y in range(DWH - 1, -1, -1):
+		for dx in (0, 1):
+			g[y][x + dx] = "="
+		if y % 7 == 3:
+			x = max(9, min(DWB - 11, x + r.choice([-1, 1])))
+	oben_x = x
+	# Plätze der Monster frei lassen
+	for m in duerrewald_monster():
+		mx, my = m["feld"]
+		for dx in (-1, 0, 1):
+			for dy in (-1, 0, 1):
+				if g[my + dy][mx + dx] in "sT":
+					g[my + dy][mx + dx] = "."
+	for y in (0, DWH - 1):
+		for x2 in range(DWB):
+			if g[y][x2] != "=":
+				g[y][x2] = "s" if y == DWH - 1 else "T"
+	karten = json.loads((gk.DATEN / "karten.json").read_text(encoding="utf-8"))
+	karten["duerrewald"] = {
+		"name": "Dürrewald", "musik": "wald", "grund": "wiese", "licht": "fff2dc", "start": [DWB // 2, DWH - 3],
+		"raster": ["".join(z) for z in g],
+		"ausgaenge": [{"bereich": [DWB // 2, DWH - 1, 2, 1], "karte": "glutoase", "feld": [4, 30]},
+			{"bereich": [oben_x, 0, 2, 1], "karte": "tiefwurzel", "feld": [19, 27]}],
+		"kampf_hintergrund": "aschensteppe", "monster": duerrewald_monster(), "baukasten": "karte_duerrewald",
+	}
+	(gk.DATEN / "karten.json").write_text(json.dumps(karten, ensure_ascii=False, indent="\t") + "\n", encoding="utf-8")
+	gk.KARTEN.clear()
+	gk.KARTEN.update(karten)
+	k = gk.Karte("duerrewald")
+	# Boden: unten Sand, darüber trockenes Oasengras und Gras, oben Waldboden und Laub, in Flecken statt Feld für Feld
+	boden = []
+	for y in range(DWH):
+		zeile = ""
+		for x in range(DWB):
+			if g[y][x] == "=":
+				zeile += "e"
+				continue
+			fleck = ((x // 3) * 37 + (y // 3) * 61 + (x // 3) * (y // 3) * 13) % 100 / 100.0
+			hoehe = 1.0 - y / (DWH - 1) + (fleck - 0.5) * 0.25
+			zeile += "s" if hoehe < 0.18 else ("g" if hoehe < 0.36 else ("." if hoehe < 0.55 else ("w" if hoehe < 0.8 or fleck < 0.5 else "l")))
+		boden.append(zeile)
+	# Unten das Gegenstück zum Tor der Oase, oben der Wegweiser nach Grünwacht, dazwischen eine alte Ruine
+	for teil, x, y in [("go_ruine", 4, 40), ("go_felsbrocken", 23, 50), ("go_verlassener_wagen", 20, 38), ("geweih_wegweiser", oben_x + 3, 3),
+			("baumstamm", 5, 20), ("gw_baumstumpf", 23, 24)]:
+		k.setzen(teil, x, y, muss=False)
+	for y in range(DWH):
+		for x in range(DWB):
+			z = g[y][x]
+			if z == "s":
+				k.setzen("go_felsbrocken" if r.random() < 0.25 else ("go_kakteen" if y > DWH - 10 and r.random() < 0.3 else "go_trockenbusch"),
+						x, y, muss=False)
+			elif z == "T":
+				wahl = ["tanne", "baum", "gw_laubbaum", "busch"] if y < wald_ab - 6 else ["baum_herbst", "busch", "dornengebuesch"]
+				k.setzen(r.choice(wahl), x, y, muss=False)
+			elif z == "." and r.random() < 0.06:
+				if y > wald_ab + 6:
+					k.setzen(r.choice(["go_steppengras", "go_gras_zu_sand"]), x, y, muss=False)
+				elif y > wald_ab - 6:
+					k.setzen(r.choice(["go_steppengras", "grasbueschel", "blumen"]), x, y, muss=False)
+				else:
+					k.setzen(r.choice(["gw_farn", "grasbueschel", "busch_bluete"]), x, y, muss=False)
+	k.erreichbar()
+	k.speichern(boden)
+
+
 if __name__ == "__main__":
-	alle = {"aschensteppe": aschensteppe, "palmenrast": palmenrast, "glutoase": glutoase, "glutgrat": glutgrat, "vulkanschmiede": vulkanschmiede}
-	for name in sys.argv[1:] or list(alle):
+	alle = {"aschensteppe": aschensteppe, "palmenrast": palmenrast, "glutoase": glutoase, "glutgrat": glutgrat, "vulkanschmiede": vulkanschmiede, "duerrewald": duerrewald}
+	# Ohne Angabe alles außer der Glutoase (die enthält Marcos Feinschliff aus dem Stadt-Editor)
+	for name in sys.argv[1:] or [n for n in alle if n != "glutoase"]:
 		alle[name]()

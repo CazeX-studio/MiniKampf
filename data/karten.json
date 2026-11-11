@@ -1549,8 +1549,8 @@
 			"t,,,,,,,,,,,=,,,,p,,,,,,,,,,,,,,,,,,,,,t",
 			"t,,,,,,,,,,,,,,,,,,,,,,,,,,,t,,,,,,,,,,t",
 			"tt,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,t",
-			"t,t,ttt,tt,,t,ttttttt,,,tt,t,tt,,,,tt,tt",
-			"tttttttttttttttttttttttttttttttttttttttt"
+			"t,t,ttt,tt,,t,tttt,,,,,,tt,t,tt,,,,tt,tt",
+			"tttttttttttttttttt,,,,tttttttttttttttttt"
 		],
 		"ausgaenge": [
 			{
@@ -1564,6 +1564,19 @@
 				"feld": [
 					21,
 					36
+				]
+			},
+			{
+				"bereich": [
+					18,
+					29,
+					4,
+					1
+				],
+				"karte": "duerrewald",
+				"feld": [
+					15,
+					1
 				]
 			}
 		],
@@ -2336,7 +2349,16 @@
 					3,
 					30
 				],
-				"dialog": "tor_duerrewald"
+				"meldung": "Du öffnest das Tor zum Dürrewald. Dahinter wird die Steppe langsam zum Wald.",
+				"aktionen": [
+					{
+						"reisen": "duerrewald",
+						"feld": [
+							15,
+							53
+						]
+					}
+				]
 			},
 			{
 				"art": "bergpfad",
@@ -3311,5 +3333,251 @@
 			}
 		},
 		"baukasten": "karte_glutstube"
+	},
+	"duerrewald": {
+		"name": "Dürrewald",
+		"musik": "wald",
+		"grund": "wiese",
+		"licht": "fff2dc",
+		"start": [
+			15,
+			53
+		],
+		"raster": [
+			"TTTTTTTTTTTTTTT==TTTTTTTTTTTTT",
+			"T............T.==............T",
+			"T........T.T...==....T......TT",
+			"TT.......T....==.....T.......T",
+			"TT........T...==..T...T.T...TT",
+			"T....T........==............TT",
+			"T.............==.......T...TTT",
+			"T.T.......T...==...T...T.....T",
+			"TT......T.....==.............T",
+			"TT....T.......==.....T.....TTT",
+			"TT.............==...T.......TT",
+			"TT.............==T...........T",
+			"TT........T....==...........TT",
+			"TT.............==...T........T",
+			"T.T..T........T==......T.....T",
+			"T.T............==T...TTT.T..TT",
+			"TTT.T..TT.T....==.T.........TT",
+			"T.....T.......==..........T..T",
+			"TT.T......T..T==.......T....TT",
+			"TT..T..T......==........T.TT.T",
+			"T.......T.....==.......TT..TTT",
+			"TT.T.....T....==............TT",
+			"Ts............==s..s.....Ts.ss",
+			"sss...........==.........s..Ts",
+			"s......T..s..==.........T....s",
+			"T...s..T.....==.....s.....s.TT",
+			"ss...........==.............Ts",
+			"Ts...........==............TTT",
+			"s............==..............T",
+			"s....s.......==..............s",
+			"s.........s..==.........ss..ss",
+			"s............s==............ss",
+			"s.............==.............s",
+			"ss...........s==....s.......ss",
+			"ss............==............ss",
+			"sss...........==...........sss",
+			"s.............==............ss",
+			"s...s.........==s.......s...ss",
+			"ss.............==............s",
+			"ss.............==....s......ss",
+			"s..............==...........ss",
+			"s....sss.......==...........ss",
+			"s..............==............s",
+			"ss.............==............s",
+			"ss....s........==............s",
+			"ss............==............ss",
+			"ss............==.............s",
+			"ss............==............ss",
+			"s.............==.............s",
+			"ss............==............ss",
+			"ss............==.........s..ss",
+			"ss...........s==............ss",
+			"ss.............==...........ss",
+			"ss.............==...........ss",
+			"s..............==...........ss",
+			"sssssssssssssss==sssssssssssss"
+		],
+		"ausgaenge": [
+			{
+				"bereich": [
+					15,
+					55,
+					2,
+					1
+				],
+				"karte": "glutoase",
+				"feld": [
+					4,
+					30
+				]
+			},
+			{
+				"bereich": [
+					15,
+					0,
+					2,
+					1
+				],
+				"karte": "tiefwurzel",
+				"feld": [
+					19,
+					27
+				]
+			}
+		],
+		"kampf_hintergrund": "aschensteppe",
+		"monster": [
+			{
+				"feld": [
+					8,
+					48
+				],
+				"gegner": [
+					"steppenhyaene",
+					"staubgeist"
+				],
+				"stufe": 18,
+				"hintergrund": "aschensteppe_sand"
+			},
+			{
+				"feld": [
+					22,
+					44
+				],
+				"gegner": [
+					"sonnenloewe"
+				],
+				"stufe": 19,
+				"hintergrund": "aschensteppe_sand"
+			},
+			{
+				"feld": [
+					7,
+					37
+				],
+				"gegner": [
+					"steppenhyaene",
+					"steppenhyaene"
+				],
+				"stufe": 19,
+				"hintergrund": "aschensteppe"
+			},
+			{
+				"feld": [
+					22,
+					31
+				],
+				"gegner": [
+					"heulwolf",
+					"steppenhyaene"
+				],
+				"stufe": 20,
+				"hintergrund": "aschensteppe"
+			},
+			{
+				"feld": [
+					9,
+					26
+				],
+				"gegner": [
+					"dornenranke",
+					"staubgeist"
+				],
+				"stufe": 20,
+				"hintergrund": "aschensteppe"
+			},
+			{
+				"feld": [
+					20,
+					18
+				],
+				"gegner": [
+					"rindenbaer"
+				],
+				"stufe": 20,
+				"hintergrund": "wald"
+			},
+			{
+				"feld": [
+					8,
+					12
+				],
+				"gegner": [
+					"heulwolf",
+					"heulwolf"
+				],
+				"stufe": 20,
+				"hintergrund": "wald"
+			},
+			{
+				"feld": [
+					21,
+					7
+				],
+				"gegner": [
+					"windfalke",
+					"dornenranke"
+				],
+				"stufe": 20,
+				"hintergrund": "wald"
+			},
+			{
+				"feld": [
+					8,
+					48
+				],
+				"gegner": [
+					"aschefuchs",
+					"mondschakal"
+				],
+				"stufe": 18,
+				"zeit": "nacht",
+				"hintergrund": "aschensteppe_sand"
+			},
+			{
+				"feld": [
+					22,
+					31
+				],
+				"gegner": [
+					"mondschakal",
+					"heulwolf"
+				],
+				"stufe": 20,
+				"zeit": "nacht",
+				"hintergrund": "aschensteppe"
+			},
+			{
+				"feld": [
+					20,
+					18
+				],
+				"gegner": [
+					"nachtuhu",
+					"heulwolf"
+				],
+				"stufe": 20,
+				"zeit": "nacht",
+				"hintergrund": "wald"
+			},
+			{
+				"feld": [
+					8,
+					12
+				],
+				"gegner": [
+					"nachtuhu",
+					"nachtuhu"
+				],
+				"stufe": 20,
+				"zeit": "nacht",
+				"hintergrund": "wald"
+			}
+		],
+		"baukasten": "karte_duerrewald"
 	}
 }

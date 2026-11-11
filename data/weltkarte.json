@@ -16,6 +16,7 @@
 		"glutoase": {"pos": [700, 530], "region": "Glutoase", "art": "stadt"},
 		"palmenrast": {"pos": [930, 590], "region": "Glutoase", "art": "gebiet"},
 		"glutgrat": {"pos": [470, 600], "region": "Glutoase", "art": "gebiet"},
+		"duerrewald": {"pos": [430, 470], "region": "Glutoase", "art": "gebiet"},
 		"vulkanschmiede": {"pos": [700, 645], "region": "Glutoase", "art": "dungeon"}
 	},
 	"zusatz_wege": [["waldboden", "pilzhoehle"], ["glutoase", "vulkanschmiede"]]
