@@ -2912,3 +2912,13 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 2. Geh den Weg nach Norden: Der Boden sollte von Sand über trockenes Gras bis zum Waldboden fließend übergehen, ohne grelle grüne Flecken.
 3. Etwa in der Mitte steht rechts vom Weg der Grenzstein, dort beginnen die ersten Bäume.
 4. Schau, ob die Steppenbäume und der Zaun gut auf ihren Feldern stehen.
+
+## Gasthaus Wegrast mit gemalten Innenraum-Teilen (Teil O, IN1 und IN2, 11.11.2026)
+- Statt Stadtmauer, Fässern und Holzbänken: Fachwerkwände mit Fenstern und Krugregalen, Eichendielen, roter Teppich, Theke mit Zapfhahn vor Hanne, Fassregal, gemauerter Kamin mit Glut, zwei runde Tische, ein langer Tisch mit Bänken, Treppe, schwarzes Brett, Hocker mit Gemüsekisten.
+- Die Teile gibt es auch im Stadt-Editor (beginnen mit „in_wr_“), die Dielen als Boden „Holzdielen“.
+
+**So testest du es**
+1. Geh in Kreuzweg ins Gasthaus Wegrast.
+2. Schau, ob Hanne hinter der Theke steht und die Gäste nicht in Möbeln stecken (abends auch Marv, Tessa und Gorm).
+3. Lauf durch den Raum: Über den Teppich kann man gehen, um Tische und Theke herum.
+4. Nachts sollte der Kamin glühen.
