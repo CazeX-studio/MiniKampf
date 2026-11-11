@@ -8,6 +8,8 @@ extends DungeonRegeln
 ##     Wipe „Verschlingen“ und Zusammenspiel „Zwillingsknoten“
 ## - Endboss Phase 2 Vorbote: Dunkelheit, keine Zugleiste,
 ##     Wipe „Lichtfraß“ und Zusammenspiel „Das letzte Licht“
+##     Im Dunkeln trifft man ihn kaum (A9b2): voll nur mit dem Splitterlicht oder wenn Laternen das Feld hell halten.
+##     Beim Wechsel läuft ein kurzer Film (PhasenFilm, Motiv „leere“).
 
 ## Die Monster der Höhle (Leuchtmotte, Wurzelkriecher, Sporenwolf, Glimmerkäfer, Schatzpilzling) kämpfen seit D22c
 ## nach ihrem Steckbrief (data/monster.json); hier stehen nur noch die Bosse mit ihren Mechaniken.
@@ -22,6 +24,10 @@ const DEVOUR_TURNS := 3
 const PAIR_DAMAGE := 0.25
 const MAX_DARKNESS := 6
 const DARKNESS_STEP := 0.13
+## A9b2: Der Vorbote ist ein Wesen der Leere. Im Dunkeln trifft man ihn kaum: Voll trifft nur, wer das Splitterlicht
+## hält, oder alle, solange die Dunkelheit höchstens HELL_GENUG ist (Laternen). Sonst kommt nur DUNKEL_DURCH an.
+const HELL_GENUG := 1
+const DUNKEL_DURCH := 0.2
 
 ## Mechanik der Sporenkönigin in diesem Kampf: "bluete" (Wipe) oder "zwillinge" (Zusammenspiel)
 var queen_mode := ""
@@ -31,6 +37,12 @@ var pairs_since_warning := 0
 var pair_broken := false
 var phase2 := false
 var darkness := 0
+var _teilt := false
+
+
+## Trifft dieser Angreifer den Vorboten voll? (hält das Splitterlicht, oder das Feld ist hell genug)
+func im_licht(source: Fighter) -> bool:
+	return darkness <= HELL_GENUG or (source != null and source.light)
 
 
 ## Züge bis „Verschlingen“. In der Welt (setup.verschlingen_zuege) kann es mehr sein: Allein helfen dort nur
@@ -97,7 +109,8 @@ func intent(e: Fighter) -> String:
 		"knoten_vorne", "knoten_hinten":
 			return "Splitter-Knoten"
 		"vorbote":
-			return "Dunkelheit %d / %d\n%s" % [darkness, MAX_DARKNESS, "Schattenwelle (alle)" if e.step % 2 == 0 else "Leerengriff"]
+			return "Dunkelheit %d / %d%s\n%s" % [darkness, MAX_DARKNESS, "" if darkness <= HELL_GENUG else " · im Dunkeln kaum zu treffen",
+					"Schattenwelle (alle)" if e.step % 2 == 0 else "Leerengriff"]
 	return ""
 
 
@@ -318,10 +331,11 @@ func _start_phase2() -> void:
 	c.add_log("Ein Wesen der Leere. Es frisst das Licht: Das Feld wird dunkler, die Zugleiste verschwindet.")
 	c.add_log("[color=#fff3b0]Das letzte Licht:[/color] Wer das Splitterlicht hält, ist vor dem Vorboten sicher, "
 		+ "brennt aber immer stärker. Reicht es weiter! Laternen entzünden vertreibt die Dunkelheit.")
-	c.screen_flash(Color("200030"))
-	c.wait(0.8)
-	c.banner("Der Vorbote")
+	c.add_log("[color=#fff3b0]Im Dunkeln trifft man ihn kaum:[/color] Voll trifft nur, wer das Splitterlicht hält, "
+		+ "oder alle, solange Laternen das Feld fast ganz hell halten.")
 	c.spawn_enemies(["vorbote"])
+	# Film: Ein Riss der Leere öffnet sich, der Vorbote bricht hervor (A9b2, Alpha-Punkt 38)
+	c.phasen_film(_find("vorbote"), "leere", "Der Vorbote", "Er frisst das Licht. Nur im Licht trifft man ihn.", Color("b48cff"))
 	darkness = 1
 	c.set_darkness(darkness * DARKNESS_STEP)
 	c.set_order_visible(false)
@@ -336,8 +350,13 @@ func _start_phase2() -> void:
 	c.wait(1.0)
 
 
-## Schläge auf die Rinde der Wurzelmutter heilen sie (nur Angriffe der Helden).
+## Schläge auf die Rinde der Wurzelmutter heilen sie (nur Angriffe der Helden). Den Vorboten trifft man im Dunkeln kaum.
 func absorbs(target: Fighter, amount: int, source: Fighter) -> bool:
+	if target.klass == "vorbote" and not _teilt and not im_licht(source):
+		_teilt = true
+		c.apply_damage(target, maxi(1, roundi(amount * DUNKEL_DURCH)), source)
+		_teilt = false
+		return true
 	if target.klass != "wurzelmutter" or source == null or not source.is_ally():
 		return false
 	var healed := target.heal(maxi(1, amount / 2))

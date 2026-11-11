@@ -107,6 +107,9 @@ func _zug_phase1(e: Fighter) -> void:
 	if not anker_ziehen(e):
 		return
 	_fessel_pruefen(e)
+	# (Die glühende Kette kann die letzten Helden besiegen)
+	if c.allies().is_empty():
+		return
 	if e.step % 2 == 0:
 		await c.enemy_attack(e, [c.pick_target()], 16, "melee", "Kettenhieb")
 	else:
@@ -164,6 +167,9 @@ func _zug_phase2(e: Fighter) -> void:
 		if c.allies().is_empty():
 			return
 	_fessel_pruefen(e)
+	# (Die glühende Kette kann die letzten Helden besiegen)
+	if c.allies().is_empty():
+		return
 	if e.step % 2 == 0:
 		await c.enemy_attack(e, [c.pick_target()], 17, "melee", "Schlackenfaust")
 	else:

@@ -1,9 +1,11 @@
 class_name PhasenFilm
 extends Control
 ## Kurzer Film, wenn ein Boss in Phase 2 geht (A9b, Alpha-Punkt 38): Kinostreifen, das Feld dunkelt ab, der Boss bebt
-## und glüht auf, dann bricht etwas (beim Kettenschmied reißen die drei Ketten, die Glieder fliegen davon), das Bild
+## und glüht auf, dann bricht etwas (Glut bzw. Nebel steigt vom Boden) (beim Kettenschmied reißen die drei Ketten, die Glieder fliegen davon), das Bild
 ## wackelt und der Name der neuen Phase erscheint groß in der Mitte. Rund 3,6 Sekunden, kommt in jedem Kampf nur einmal.
-## Motive: "ketten" (Kettenschmied). Weitere Bosse bekommen ihr eigenes Motiv (A9b2, A9b3).
+## Motive: "ketten" (Kettenschmied: drei Ketten reißen), "leere" (Vorbote: ein Riss der Leere öffnet sich, schwarze
+## Ranken greifen heraus). Weitere Bosse bekommen ihr eigenes Motiv (A9b3).
+## Die gezeichneten Ketten, Risse und Ranken sind Platzhalter, bis die gemalten Effekte aus GRAFIK_AUFTRAG.md Teil M da sind.
 
 const DAUER := 3.6
 ## Ab hier bricht es (Sekunden)
@@ -22,6 +24,9 @@ var _gebrochen := false
 var _ketten: Array[Array] = []
 ## Fliegende Glieder nach dem Bruch: {pos, vel, dreh, drehung}
 var _glieder: Array[Dictionary] = []
+## Leere: Zacken des Risses (von oben nach unten) und Ranken (Winkel, Länge, Krümmung)
+var _riss: PackedVector2Array = []
+var _ranken: Array[Vector3] = []
 var _ansicht: FighterView
 var _ansicht_pos := Vector2.ZERO
 var _kampf: Control
@@ -58,6 +63,14 @@ static func abspielen(kampf: Control, feld: Control, ansicht: FighterView, motiv
 
 
 func _ready() -> void:
+	var zufall := RandomNumberGenerator.new()
+	zufall.seed = 38
+	# Riss der Leere: senkrecht durch den Boss, mit Zacken
+	for i in 13:
+		var y := lerpf(-260.0, 190.0, i / 12.0)
+		_riss.append(_zentrum + Vector2(zufall.randf_range(-24.0, 24.0) * sin(PI * i / 12.0), y))
+	for i in 9:
+		_ranken.append(Vector3(zufall.randf_range(0.0, TAU), zufall.randf_range(180.0, 380.0), zufall.randf_range(-1.2, 1.2)))
 	# Drei Ketten zu den Ankern hinter dem Boss: Wand links, Decke, Decke weiter rechts
 	_ketten = [[Vector2(-20, _zentrum.y - 60), _zentrum], [Vector2(_zentrum.x - 30, -20), _zentrum],
 			[Vector2(_zentrum.x + 320, -20), _zentrum]]
@@ -118,7 +131,9 @@ func _draw() -> void:
 	if _gebrochen:
 		# Glut steigt vom Boden auf
 		var hoehe := clampf((_zeit - BRUCH) / 0.8, 0.0, 1.0) * 120.0
-		draw_rect(Rect2(0, boden - hoehe, size.x, hoehe), Color(_farbe, 0.35 * deckung))
+		# (Leere: dunkler Nebel statt Glut)
+		var boden_farbe := Color(0.06, 0.0, 0.12, 0.7) if _motiv == "leere" else Color(_farbe, 0.35)
+		draw_rect(Rect2(0, boden - hoehe, size.x, hoehe), Color(boden_farbe, boden_farbe.a * deckung))
 		draw_rect(Rect2(0, boden - hoehe, size.x, 6), Color(_farbe.lightened(0.4), 0.8 * deckung))
 	match _motiv:
 		"ketten":
@@ -130,6 +145,41 @@ func _draw() -> void:
 					_kette(kette[0], kette[1], farbe, glut)
 			for g in _glieder:
 				_glied(g.pos, g.drehung, Color(_farbe.lightened(0.2), deckung))
+		"leere":
+			_leere(deckung)
+
+
+## Der Riss öffnet sich bis zum Bruch immer weiter; danach greifen schwarze Ranken nach außen und ziehen sich zurück.
+func _leere(deckung: float) -> void:
+	var auf := clampf(_zeit / BRUCH, 0.0, 1.0)
+	var breite := 4.0 + 46.0 * auf * auf
+	if _gebrochen:
+		breite = 50.0 + 12.0 * sin(_zeit * 6.0)
+	var links := PackedVector2Array()
+	var rechts := PackedVector2Array()
+	for i in _riss.size():
+		var bauch := sin(PI * i / (_riss.size() - 1.0))
+		links.append(_riss[i] + Vector2(-breite * bauch, 0))
+		rechts.insert(0, _riss[i] + Vector2(breite * bauch, 0))
+	var flaeche := links + rechts
+	# Violetter Schein um den Riss, dann der schwarze Spalt
+	draw_circle(_zentrum, 60.0 + 140.0 * auf, Color(_farbe, 0.18 * deckung))
+	draw_colored_polygon(flaeche, Color(0.02, 0.0, 0.05, deckung))
+	draw_polyline(links, Color(_farbe.lightened(0.3), deckung), 3.0)
+	draw_polyline(rechts, Color(_farbe.lightened(0.3), deckung), 3.0)
+	if not _gebrochen:
+		return
+	# Ranken: wachsen bis kurz nach dem Bruch, ziehen sich am Ende wieder zurück
+	var t := _zeit - BRUCH
+	var laenge := clampf(t / 0.5, 0.0, 1.0) * clampf((DAUER - _zeit) / 0.8, 0.0, 1.0)
+	for r in _ranken:
+		var punkte := PackedVector2Array()
+		for i in 12:
+			var anteil := i / 11.0 * laenge
+			var winkel := r.x + r.z * anteil + sin(_zeit * 4.0 + r.x + anteil * 6.0) * 0.15
+			punkte.append(_zentrum + Vector2.from_angle(winkel) * r.y * anteil)
+		draw_polyline(punkte, Color(0.03, 0.0, 0.06, deckung), 14.0)
+		draw_polyline(punkte, Color(_farbe, 0.6 * deckung), 3.0)
 
 
 func _kette(von: Vector2, bis: Vector2, farbe: Color, glut: float) -> void:

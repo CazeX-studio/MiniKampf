@@ -49,6 +49,14 @@ func choose(rules: Skills, f: Fighter) -> Dictionary:
 			# Sporenkönigin: ab drei Giftwolken eine vertreiben (bei fünf fällt die Gruppe)
 			if ab.id == "clear_cloud" and rules.c.dungeon is Pilzhoehle and (rules.c.dungeon as Pilzhoehle).clouds >= 3:
 				pick = ab
+			# Vorbote (A9b2): Wer das Splitterlicht hält, greift an und reicht es weiter, bevor es zu sehr brennt;
+			# die anderen halten mit Laternen das Feld hell
+			if rules.c.dungeon is Pilzhoehle and not ohne_mechanik.has(str(ab.id)):
+				var dunkel := (rules.c.dungeon as Pilzhoehle).darkness
+				if ab.id == "pass_light" and f.light_turns >= 2 and rng.randf() < 0.7:
+					pick = ab
+				if ab.id == "lantern" and not f.light and dunkel > Pilzhoehle.HELL_GENUG and rng.randf() < 0.6:
+					pick = ab
 	# Lava-Takt (Vulkanschmiede): Ist die Lava in der eigenen Reihe angekündigt, meist die Reihe wechseln
 	# (mit wenig Leben immer, sonst in der Hälfte der Fälle; ein Zug zum Ausweichen lohnt sich nicht immer)
 	if pick.is_empty() and rules.c.lava != null and rules.c.lava.angekuendigt == ("hinten" if f.back_row else "vorne") \
