@@ -29,6 +29,8 @@ func _initialize() -> void:
 	var p := world.add_player("a", "Test", "novize_w+w1", Vector2i(23, 2))
 	p.progress.flags = {"klasse": "blade", "klasse_gelernt": true, "klasse_bestaetigt": true, "tor_glutoase": true, "mira_entschieden": true}
 	p.progress.quests = {"abreise": "abgegeben", "nach_glutoase": "abgegeben", "miras_splitter": "fertig"}
+	# Ye's Empfehlungsschreiben (A15): ohne lässt die Stadtwache einen nicht nach Wipfelheim (A19)
+	p.progress.add_item("empfehlungsschreiben", 1)
 	world.change_map(p, "glutoase", Vector2i(25, 13))
 	_reden(world, p, "hadrak")
 	world.change_map(p, "kreuzweg", Vector2i(4, 29))

@@ -66,6 +66,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 - **Nächster Schritt (11.11.):** E4 später (viele Tests), E5 und S6 am Ende von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
 
+- **Neu (11.11.): A19 Die Stadtwachen verlangen das Empfehlungsschreiben** (design.md: Novizen kommen ohne nicht in die Städte):
+  - An den Eingängen von der Straße (Aschensteppe und Dürrewald in die Glutoase, Seilaufzug nach Wipfelheim) prüft die Stadtwache Ye's Schreiben. Beim ersten Mal: „Die Stadtwache wirft einen Blick auf Yes Empfehlungsschreiben und winkt dich hinein.“
+  - Ohne Schreiben: „Halt! Ohne Empfehlungsschreiben kommen Novizen nicht in die Stadt. Lene in der Gilde von Kreuzweg stellt dir eins aus.“ Lene schreibt dann ein neues.
+  - Auf dem Rückweg aus den Gebieten einer Stadt (Glutgrat, Vulkanschmiede, Palmenrast) und aus Gasthäusern fragt niemand.
+  - Alte Spielstände, die sich schon von Ye verabschiedet haben, und der Spielstand-Editor geben das Schreiben von selbst, damit niemand festsitzt.
+  - **So testest du es:**
+    1. Bei Ye den Abschied nehmen, durch die Aschensteppe zur Glutoase: Die Wache winkt dich hinein.
+    2. Im Werkstatt-Editor das Empfehlungsschreiben aus der Tasche wegwerfen und wieder zur Glutoase: Die Wache hält dich auf.
+    3. Zu Lene in die Gilde: Sie schreibt dir ein neues.
+
 - **Neu (11.11.): A18 Web-Version geprüft und kleiner** (deine Wahl):
   - Gemessen an einem eigenen Web-Export wie auf GitHub: Das Spielpaket war seit D36 von 73 auf 80,7 MB gewachsen (die vielen neuen Monster, Effekte und Karten). Zwei Drittel davon sind die gemalten Figuren.
   - Figuren und Figurteile werden jetzt etwas stärker gepackt (Qualität 0,7 statt 0,8). Weil das Spiel sie auf ein Drittel verkleinert zeigt, sieht man keinen Unterschied (im Spiel weichen die Farben im Schnitt um 2,4 statt 2,1 von 255 ab). Das Paket ist jetzt 74,5 MB.

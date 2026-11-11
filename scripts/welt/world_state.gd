@@ -345,6 +345,23 @@ func change_map(p: PlayerState, map_id: String, cell: Vector2i) -> void:
 	progress_changed.emit(p.id)
 
 
+## Stadtwache am Eingang einer Stadt (design.md: Novizen dürfen auf die Straßen, aber nicht in die Städte, erst mit einem
+## Empfehlungsschreiben von Ye oder Lene; A19). Geprüft wird nur an Ausgängen und Reise-Orten mit "wache": true
+## (von der Straße in die Stadt), nicht auf dem Rückweg aus Gebieten der Stadt oder aus Innenräumen.
+## Beim ersten Mal nickt die Wache einen durch, ohne Schreiben hält sie einen auf (die Meldung höchstens alle 3 Sekunden).
+func stadt_zutritt(p: PlayerState, ziel: String) -> bool:
+	if p.progress.item_count("empfehlungsschreiben") > 0:
+		if not p.progress.flags.has("wache_durch:" + ziel):
+			p.progress.flags["wache_durch:" + ziel] = true
+			_say(p, GameData.text("wache_durch"))
+		return true
+	var jetzt := Time.get_ticks_msec()
+	if jetzt - int(p.get_meta("wache_zeit", -10000)) > 3000:
+		p.set_meta("wache_zeit", jetzt)
+		_say(p, GameData.text("wache_halt"))
+	return false
+
+
 ## Steht der Spieler in einem Ausgang seiner Karte, kommt er auf die nächste.
 func _check_exits(p: PlayerState) -> void:
 	if p.in_dialog():
@@ -354,6 +371,8 @@ func _check_exits(p: PlayerState) -> void:
 			# Türen (A12): nur hinein, wenn man dorthin wollte, nicht beim Vorbeilaufen
 			if e.tuer and not p.path.is_empty() and not e.rect.has_point(p.path[-1]):
 				continue
+			if e.wache and not stadt_zutritt(p, str(e.karte)):
+				return
 			change_map(p, e.karte, e.feld)
 			return
 
@@ -1394,7 +1413,8 @@ func run_actions(p: PlayerState, actions: Array) -> void:
 		if action.has("reisen"):
 			# {"reisen": "wipfelheim", "feld": [x, y]}: auf eine andere Karte (z. B. mit dem Seilaufzug)
 			var to: Array = action.get("feld", [-1, -1])
-			change_map(p, action.reisen, Vector2i(int(to[0]), int(to[1])))
+			if not action.get("wache", false) or stadt_zutritt(p, str(action.reisen)):
+				change_map(p, action.reisen, Vector2i(int(to[0]), int(to[1])))
 	_update_quests(p)
 	progress_changed.emit(p.id)
 

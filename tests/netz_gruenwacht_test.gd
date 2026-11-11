@@ -29,7 +29,7 @@ func _process(delta: float) -> bool:
 				var file := FileAccess.open(SAVE, FileAccess.WRITE)
 				file.store_string(JSON.stringify({version = SaveGame.VERSION, karte = "weg_gruenwacht", feld = [2, 9],
 						progress = {level = 10, flags = {"angekommen": true, "klasse": "archer", "klasse_bestaetigt": true},
-							quests = {nach_gruenwacht = "aktiv"}}}))
+							quests = {nach_gruenwacht = "aktiv"}, items = {empfehlungsschreiben = 1}}}))
 				file.close()
 				Netz._node().connected.connect(func() -> void:
 					change_scene_to_file("res://scenes/kreuzweg.tscn")

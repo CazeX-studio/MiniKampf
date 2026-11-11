@@ -718,7 +718,8 @@
 						"feld": [
 							9,
 							23
-						]
+						],
+						"wache": true
 					}
 				]
 			},
@@ -1790,7 +1791,8 @@
 				"feld": [
 					23,
 					44
-				]
+				],
+				"wache": true
 			}
 		],
 		"kampf_hintergrund": "aschensteppe",
@@ -3413,7 +3415,8 @@
 				"feld": [
 					4,
 					30
-				]
+				],
+				"wache": true
 			},
 			{
 				"bereich": [

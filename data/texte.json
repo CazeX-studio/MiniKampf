@@ -59,6 +59,8 @@
 	"faehigkeiten_reihe": "Reihe %d (ab Klassenstufe %d)",
 	"faehigkeiten_grundreihe": "Grundreihe",
 	"faehigkeiten_novize": "Novize (von Ye)",
+	"wache_durch": "Die Stadtwache wirft einen Blick auf Yes Empfehlungsschreiben und winkt dich hinein.",
+	"wache_halt": "Halt! Ohne Empfehlungsschreiben kommen Novizen nicht in die Stadt. Lene in der Gilde von Kreuzweg stellt dir eins aus.",
 	"faehigkeiten_lernen": "Lernen (+1)",
 	"faehigkeiten_antippen": "Tippe eine Fähigkeit an, um sie zu sehen und zu lernen.",
 	"faehigkeiten_neu_verteilen": "Neu verteilen (%s)",

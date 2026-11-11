@@ -13,6 +13,7 @@
 	"schreiberin": {
 		"hinweis": "PLATZHALTER-TEXTE",
 		"einstieg": [
+			{"wenn": {"gemerkt": "klasse_bestaetigt", "nicht_hat": "empfehlungsschreiben"}, "knoten": "empfehlung_neu"},
 			{"wenn": {"auftrag": "ankunft", "stand": "aktiv"}, "knoten": "anmeldung"},
 			{"wenn": {"auftrag": "zu_ye", "stand": "aktiv"}, "knoten": "erinnerung"},
 			{"wenn": {"auftrag": "erster_gruppenkampf", "stand": "abgegeben", "nicht_gemerkt": "gesandte_angekuendigt"}, "knoten": "gesandte_neu"},
@@ -29,6 +30,7 @@
 			{"knoten": "allgemein"}
 		],
 		"knoten": {
+			"empfehlung_neu": {"wer": "Lene", "text": "Dein Empfehlungsschreiben ist weg? Hm. Ye wird schimpfen. … Hier, ich schreibe dir ein neues. Mit Siegel der Gilde.", "aktionen": [{"gegenstand": "empfehlungsschreiben", "anzahl": 1}]},
 			"anmeldung": {"wer": "Lene", "text": "Noch ein Novize! Willkommen in der Abenteurergilde von Kreuzweg. Soll ich dich eintragen?", "antworten": [
 				{"text": "Ja, bitte.", "weiter": "eingetragen", "aktionen": [{"merken": "gilde_angemeldet"}, {"auftrag_abgeben": "ankunft"}]},
 				{"text": "Was macht die Gilde eigentlich?", "weiter": "gilde"}

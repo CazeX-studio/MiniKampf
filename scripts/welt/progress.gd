@@ -371,6 +371,10 @@ func load_dict(data: Dictionary) -> void:
 			flags[flag] = true
 		if level >= 8:
 			flags["lektion_deckung"] = true
+	# Ältere Spielstände (vor A15): Wer sich schon von Ye verabschiedet hat, hat sein Empfehlungsschreiben (sonst lassen
+	# ihn die Stadtwachen nicht hinein)
+	if quest_state("abreise") == "abgegeben" and item_count("empfehlungsschreiben") == 0:
+		add_item("empfehlungsschreiben", 1)
 	# Ältere Spielstände ohne Leiste: gelernte Fähigkeiten kommen von selbst darauf
 	if not data.has("leiste"):
 		for id: String in faehigkeiten:

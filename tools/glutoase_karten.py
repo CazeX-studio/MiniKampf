@@ -78,7 +78,7 @@ def aschensteppe():
 		"name": "Aschensteppe", "musik": "wald", "grund": "wiese", "licht": "fff0d8", "start": [14, 1],
 		"raster": ["".join(z) for z in g],
 		"ausgaenge": [{"bereich": [12, 0, 6, 1], "karte": "kreuzwegfelder", "feld": [20, 34]},
-			{"bereich": [11, H - 1, 7, 1], "karte": "glutoase", "feld": spiegeln([23, 1])}],
+			{"bereich": [11, H - 1, 7, 1], "karte": "glutoase", "feld": spiegeln([23, 1]), "wache": True}],
 		"kampf_hintergrund": "wiese", "sicher": RASTPLATZ,
 		"orte": [{"art": "wegelaterne", "feld": [11, 28], "dialog": "wegelaterne_aschensteppe", "zeichen": "laterne"}],
 		# Rastplatz-Händler (D27, NPC.md „Überall gleich“): an jedem Rastplatz dieselbe Figur
@@ -633,7 +633,7 @@ def duerrewald():
 	karten["duerrewald"] = {
 		"name": "Dürrewald", "musik": "wald", "grund": "wiese", "licht": "fff2dc", "start": [DWB // 2, DWH - 3],
 		"raster": ["".join(z) for z in g],
-		"ausgaenge": [{"bereich": [DWB // 2, DWH - 1, 2, 1], "karte": "glutoase", "feld": [4, 30]},
+		"ausgaenge": [{"bereich": [DWB // 2, DWH - 1, 2, 1], "karte": "glutoase", "feld": [4, 30], "wache": True},
 			{"bereich": [oben_x, 0, 2, 1], "karte": "tiefwurzel", "feld": [19, 27]}],
 		"kampf_hintergrund": "aschensteppe", "monster": duerrewald_monster(), "baukasten": "karte_duerrewald",
 	}

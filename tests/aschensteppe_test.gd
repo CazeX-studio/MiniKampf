@@ -19,6 +19,9 @@ func _initialize() -> void:
 	_check(world.maps.has("aschensteppe") and world.get_map("aschensteppe").title == "Aschensteppe", "Karte Aschensteppe")
 	var p := world.add_player("a", "Test", "novize_m+m1", Vector2i(31, 62))
 	p.progress.flags["klasse_bestaetigt"] = true
+	# Ye's Empfehlungsschreiben (A15): ohne hält die Stadtwache einen vor der Glutoase auf (A19)
+	_check(world.stadt_zutritt(p, "glutoase") == false, "Ohne Empfehlungsschreiben hält die Stadtwache einen auf (A19)")
+	p.progress.add_item("empfehlungsschreiben", 1)
 	world.apply_command("a", {type = "move", cell = Vector2i(31, 65)})
 	for i in 300:
 		world.tick(0.05)

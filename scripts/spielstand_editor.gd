@@ -115,6 +115,9 @@ static func bauen(k: String, look: String, index: int, stufe: int, gold: int, ge
 	if p.progress.flags.has("klasse_gelernt"):
 		p.progress.klassen_xp = maxi(0, p.progress.xp - int(tabelle[mini(9, tabelle.size() - 1)]))
 	p.progress.gold = gold
+	# Nach dem Abschied von Ye hat man sein Empfehlungsschreiben (A15), sonst lassen die Stadtwachen einen nicht hinein
+	if "abreise" in fertig:
+		p.progress.add_item("empfehlungsschreiben", 1)
 	for id: String in gegenstaende:
 		if int(gegenstaende[id]) > 0:
 			p.progress.add_item(id, int(gegenstaende[id]))
