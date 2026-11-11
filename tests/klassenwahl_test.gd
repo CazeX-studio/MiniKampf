@@ -121,6 +121,11 @@ func _run() -> void:
 	_check(texts.contains("Bogenschütze") and texts.contains("nach Grünwacht") and texts.contains("Pfadmeister Fenn"), "Abspann nennt Klasse, Region, Lehrmeister")
 
 	SaveGame.delete()
+	# A3b: die fünf Demo-Klassen haben ein gemaltes Klassenbild, die späteren noch nicht
+	for id: String in ["smith", "archer", "blade", "tamer", "singer"]:
+		_check(Klassenwahl.klassenbild(id) != null, "Klassenbild fehlt: %s" % id)
+	_check(Klassenwahl.klassenbild("tank") == null, "Magier-Tank hat noch kein Klassenbild")
+
 	print("Klassenwahl: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)
 

@@ -11,6 +11,11 @@ const SCREEN := Vector2(1280, 720)
 const AXES: Array[String] = ["schaden", "schutz", "heilung", "unterstuetzung", "schwierigkeit"]
 const AXIS_NAMES := {schaden = "Schaden", schutz = "Schutz", heilung = "Heilung", unterstuetzung = "Unterstützung", schwierigkeit = "Schwierigkeit"}
 const MAX_VALUE := 5.0
+## Gemalte Klassenbilder (A3b, GRAFIK_AUFTRAG.md Teil H): assets/klassenbilder/<klasse>.png.
+## Klassen ohne Bild zeigen noch ihre kleine Figur.
+const BILD_ORDNER := "res://assets/klassenbilder/"
+const BILD_BEREICH := Rect2(836, 72, 404, 270)
+const FIGUR_BEREICH := Rect2(946, 92, 180, 230)
 
 ## Region des Gesandten, dessen Klassen gezeigt werden ("" = Klassenwahl bei Ye mit allen Klassen)
 static var region := ""
@@ -91,23 +96,21 @@ func _build() -> void:
 	add_child(panel)
 
 	_portrait = TextureRect.new()
-	_portrait.position = Vector2(372, 84)
-	_portrait.size = Vector2(110, 140)
 	_portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	_portrait.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_portrait.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_portrait)
 
 	_title = Label.new()
-	_title.position = Vector2(500, 84)
+	_title.position = Vector2(372, 80)
 	_title.add_theme_font_size_override("font_size", 30)
 	_title.add_theme_color_override("font_color", Color("f2c14e"))
 	add_child(_title)
 
 	_info = RichTextLabel.new()
 	_info.bbcode_enabled = true
-	_info.position = Vector2(500, 130)
-	_info.size = Vector2(730, 200)
+	_info.position = Vector2(372, 126)
+	_info.size = Vector2(450, 210)
 	_info.add_theme_font_size_override("normal_font_size", 17)
 	_info.add_theme_font_size_override("bold_font_size", 17)
 	add_child(_info)
@@ -210,8 +213,7 @@ func _select(id: String) -> void:
 	var data: Dictionary = Sandbox.CLASSES[id]
 	var extra: Dictionary = GameData.get_file("klassen").get(id, {})
 	_title.text = data.title
-	_portrait.texture = FighterView.portrait(id)
-	_portrait.self_modulate = FighterView.tint(id)
+	_zeige_bild(id)
 	_info.text = "\n".join([
 		"[color=#%s]%s[/color]  ·  %s" % [Sandbox.ROLE_COLORS[data.role].lightened(0.3).to_html(false), data.role, data.region],
 		"[b]Lehrmeister:[/b] %s" % extra.get("lehrmeister", "?"),
@@ -228,6 +230,30 @@ func _select(id: String) -> void:
 		else:
 			_sperre.text = "" if erlaubt else str(extra.get("nur_geschlecht_text", "Diese Klasse kann deine Figur nicht lernen."))
 	_diagram.queue_redraw()
+
+
+## Großes gemaltes Klassenbild, sonst die kleine Figur der Klasse (gesperrte Klassen etwas dunkler).
+func _zeige_bild(id: String) -> void:
+	var bild := klassenbild(id)
+	var bereich := BILD_BEREICH if bild != null else FIGUR_BEREICH
+	_portrait.position = bereich.position
+	_portrait.size = bereich.size
+	if bild != null:
+		_portrait.texture = bild
+		_portrait.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		_portrait.self_modulate = Color.WHITE
+	else:
+		_portrait.texture = FighterView.portrait(id)
+		_portrait.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		_portrait.self_modulate = FighterView.tint(id)
+	if not in_demo(id):
+		_portrait.self_modulate = _portrait.self_modulate * Color(0.6, 0.6, 0.6)
+
+
+## Das gemalte Bild der Klasse, falls es eins gibt.
+static func klassenbild(id: String) -> Texture2D:
+	var pfad := BILD_ORDNER + id + ".png"
+	return load(pfad) as Texture2D if ResourceLoader.exists(pfad) else null
 
 
 ## Fünfeck-Diagramm mit den fünf Werten der Klasse.

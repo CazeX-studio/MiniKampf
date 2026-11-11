@@ -13,7 +13,7 @@ import sys
 from pathlib import Path
 
 WURZEL = Path(__file__).resolve().parent.parent
-ORDNER = ["assets/figuren", "assets/portraets", "assets/teile", "assets/baukasten/objekte", "assets/kampf_hintergruende"]
+ORDNER = ["assets/figuren", "assets/portraets", "assets/teile", "assets/baukasten/objekte", "assets/kampf_hintergruende", "assets/klassenbilder"]
 QUALITAET = "0.8"
 ## Figuren und Figurteile zeigt das Spiel auf ein Drittel verkleinert: Dort reicht 0,7 (11 % kleiner, die Farben weichen
 ## im Spiel im Schnitt um 2,4 statt 2,1 von 255 ab, das sieht man nicht; gemessen 11.11.2026)
