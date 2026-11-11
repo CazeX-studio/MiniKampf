@@ -169,6 +169,15 @@
 				"boden/dw_waldrand_2.png"
 			],
 			"vorrang": 6
+		},
+		"h": {
+			"name": "Holzdielen",
+			"bilder": [
+				"boden/in_wr_dielen_1.png",
+				"boden/in_wr_dielen_2.png",
+				"boden/in_wr_dielen_3.png"
+			],
+			"vorrang": 3
 		}
 	},
 	"objekte": {
@@ -2792,6 +2801,171 @@
 			"fuss": [
 				54,
 				43
+			]
+		},
+		"in_wr_wand_links": {
+			"bild": "objekte/in_wr_wand_links.png",
+			"flaeche": [
+				1,
+				4
+			],
+			"fuss": [
+				43,
+				151
+			]
+		},
+		"in_wr_wand_rechts": {
+			"bild": "objekte/in_wr_wand_rechts.png",
+			"flaeche": [
+				4,
+				1
+			],
+			"fuss": [
+				118,
+				151
+			]
+		},
+		"in_wr_wand_regal": {
+			"bild": "objekte/in_wr_wand_regal.png",
+			"flaeche": [
+				2,
+				1
+			],
+			"fuss": [
+				64,
+				164
+			]
+		},
+		"in_wr_ecke": {
+			"bild": "objekte/in_wr_ecke.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				38,
+				101
+			]
+		},
+		"in_wr_tuer": {
+			"bild": "objekte/in_wr_tuer.png",
+			"flaeche": [
+				1,
+				2
+			],
+			"fuss": [
+				41,
+				119
+			]
+		},
+		"in_wr_teppich": {
+			"bild": "objekte/in_wr_teppich.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				62,
+				59
+			],
+			"flach": true,
+			"blockiert": false
+		},
+		"in_wr_theke": {
+			"bild": "objekte/in_wr_theke.png",
+			"flaeche": [
+				4,
+				1
+			],
+			"fuss": [
+				96,
+				70
+			]
+		},
+		"in_wr_fassregal": {
+			"bild": "objekte/in_wr_fassregal.png",
+			"flaeche": [
+				2,
+				1
+			],
+			"fuss": [
+				68,
+				67
+			]
+		},
+		"in_wr_kamin": {
+			"bild": "objekte/in_wr_kamin.png",
+			"flaeche": [
+				3,
+				1
+			],
+			"fuss": [
+				79,
+				117
+			],
+			"lichter": [
+				{
+					"art": "glut",
+					"bild": [
+						55,
+						98
+					]
+				}
+			]
+		},
+		"in_wr_tisch": {
+			"bild": "objekte/in_wr_tisch.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				54,
+				34
+			]
+		},
+		"in_wr_langer_tisch": {
+			"bild": "objekte/in_wr_langer_tisch.png",
+			"flaeche": [
+				3,
+				2
+			],
+			"fuss": [
+				68,
+				59
+			]
+		},
+		"in_wr_treppe": {
+			"bild": "objekte/in_wr_treppe.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				62,
+				97
+			]
+		},
+		"in_wr_brett": {
+			"bild": "objekte/in_wr_brett.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				34,
+				81
+			]
+		},
+		"in_wr_hocker_kisten": {
+			"bild": "objekte/in_wr_hocker_kisten.png",
+			"flaeche": [
+				2,
+				1
+			],
+			"fuss": [
+				56,
+				44
 			]
 		}
 	}

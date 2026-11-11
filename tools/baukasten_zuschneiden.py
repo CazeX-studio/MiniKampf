@@ -375,6 +375,32 @@ BLAETTER.update({'gruenwacht_g2': {'massstab': 0.3,
                            'go_wasser_1': (1111, 704),
                            'go_wasser_2': (1552, 704)}},
  'schmiede_v1a': {'boden': True, 'teile': {'vs_stein_1': (443, 476), 'vs_stein_2': (1330, 476)}},
+ # Gasthaus Wegrast innen (A12a, Auftrag IN1): Wände im Maßstab der linken Wand (4 Felder lang), die rechte Wand ist kürzer gemalt
+ 'innen_wegrast_1': {'massstab': 0.327,
+                     'kern': True,
+                     'look': True,
+                     'massstaebe': {'in_wr_teppich': 0.27},
+                     'teile': {'in_wr_wand_links': (280, 400),
+                               'in_wr_wand_regal': (700, 320),
+                               'in_wr_ecke': (985, 420),
+                               'in_wr_tuer': (1310, 400),
+                               'in_wr_teppich': (1265, 835)}},
+ 'innen_wegrast_1b': {'boden': True, 'datei': 'innen_wegrast_1',
+                      'teile': {'in_wr_dielen_1': (180, 850),
+                                'in_wr_dielen_2': (515, 850),
+                                'in_wr_dielen_3': (845, 850)}},
+ # Gasthaus Wegrast innen (A12a, Auftrag IN2): Einrichtung
+ 'innen_wegrast_2': {'massstab': 0.3,
+                     'kern': True,
+                     'look': True,
+                     'teile': {'in_wr_theke': (300, 200),
+                               'in_wr_fassregal': (830, 190),
+                               'in_wr_kamin': (1270, 260),
+                               'in_wr_tisch': (290, 480),
+                               'in_wr_langer_tisch': (800, 490),
+                               'in_wr_treppe': (260, 800),
+                               'in_wr_brett': (720, 800),
+                               'in_wr_hocker_kisten': (1250, 860)}},
  # Dürrewald (A13b, Auftrag P2): Pflanzen und Grenzstein; Maßstab je Teil so, dass die gemalte Grundfläche auf die Felder passt
  'duerrewald_teile': {'massstab': 0.24,
                       'kern': True,
@@ -529,7 +555,8 @@ def main():
 	regeln = look_pruefen.lade_regeln()
 	for blatt in namen:
 		info = BLAETTER[blatt]
-		bild = Image.open(VORLAGEN / f"{blatt}.png")
+		# "datei": ein anderes Blatt, z. B. wenn auf einem Blatt Böden und Teile zusammen liegen
+		bild = Image.open(VORLAGEN / f"{info.get('datei', blatt)}.png")
 		if info.get("schwarz"):
 			# Schwarzer statt durchsichtiger Hintergrund: alles, was nicht fast schwarz ist, gehört zum Motiv
 			a = np.array(bild.convert("RGBA"))
