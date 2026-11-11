@@ -106,6 +106,8 @@ func _test_journey() -> void:
 	p.progress.flags["klasse_gewaehlt"] = true
 	world.start_dialog(p, "ye_tor")
 	world.apply_command("a", {type = "dialog_choose", index = 0})
+	# Empfehlungsschreiben (A15)
+	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "dialog_choose", index = 0})
 	world.apply_command("a", {type = "dialog_next"})
 	_check(p.progress.quest_state("abreise") == "abgegeben", "Abreise abgeschlossen")

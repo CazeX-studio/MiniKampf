@@ -5,7 +5,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 11.11.)
 
-- **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** A15 (Nachholen: Brief vom Tor, Sternenschlund, Empfehlungsschreiben), danach A16; neu für dich: Teil M, N, O und P in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
+- **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** A16 (Novizen-Fähigkeiten nach der Klassenwahl behalten), danach E4 (Balancing) und E5; neu für dich: Teil M bis Q in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
 - **Bilder von Marco (02.11. abends):** 38 Blätter liegen unter `tools/vorlagen/`: alle sechs Novizen-Blätter ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen.
   - Dazu der Baukasten (02.11.): acht Grundkörper (`grund_*.png`), Köpfe (`koepfe_*.png`), Hüte (`huete_regionen.png`), Zeichen (`zeichen_dienste.png`) und die Klingentänzerin Blatt 1. Bei den Fäusten der Abwehr-Bilder von Blatt 1 prüft Claude beim Einbauen, ob sie am Oval stören.
   - Dazu Figuren 4 und 5 (02.11.): 22 Blätter Nebenfiguren (`neben_*.png`) und 42 Blätter Hauptfiguren (`haupt_*.png`) aller drei Städte, damit ist Teil D vollständig. `neben_reserve_rashid_tarek.png` ist ein doppeltes Sammelblatt und bleibt Reserve.
@@ -64,7 +64,18 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (11.11.):** Alpha-Aufträge A15 und A16 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+- **Nächster Schritt (11.11.):** Alpha-Auftrag A16 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+
+- **Neu (11.11.): A15 Nachgeholt vom 21.10.** (Beschlüsse aus design.md, die nie ins Spiel kamen):
+  - **Ein Brief vom Tor** (Nebenauftrag): Nach dem Essenskorb bittet Torwache Brom dich, einen Brief zu Wirtin Hanne ins Wegrast zu bringen („Ein Liebesbrief?“ – „Ein … Dienstschreiben. Nicht lesen!“). Hanne schickt eine Antwort zurück, Brom freut sich. 10 Bronze und 60 Erfahrung.
+  - **Sternenschlund:** Der Sternenfresser kündigt ihn einen Zug vorher an („Nur eine PERFEKTE Parade rettet dich!“). Er trifft einen Spieler, nie Tessa oder Gorm; wer ihn nicht perfekt pariert, ist sofort besiegt. Der Splitter explodiert jetzt nach 8 statt 10 Zügen. Seine anderen Treffer bleiben so tödlich wie seit dem 22.10. (normal pariert bleibt ein Rest Leben).
+  - **Empfehlungsschreiben:** Ye gibt es dir beim Abschied („Ohne das lassen dich die Stadtwachen nicht hinein. Novizen gibt es viele.“). Es liegt in der Tasche; dass die Wachen es wirklich verlangen, kommt später.
+  - Die beiden neuen Gegenstände sind noch gezeichnete Tafeln, die Bilder stehen in `Spieldesign/GRAFIK_AUFTRAG.md` Teil Q.
+  - **So testest du es:**
+    1. Den Korb zu Brom bringen, ihn noch einmal ansprechen: Er bittet um den Brief.
+    2. Den Brief zu Hanne ins Wegrast bringen, dann zurück zu Brom: Auftrag abgeschlossen.
+    3. In der Festnacht gegen den Sternenfresser: Über ihm steht vorher „Sternenschlund“, nur eine perfekte Parade rettet dich; „EXPLOSION in 8 Zügen“.
+    4. Bei Ye den Abschied nehmen: Das Empfehlungsschreiben liegt danach in der Tasche (I).
 
 - **Neu (11.11.): A14 Kreuzwegfelder als eigenes Gebiet** (Marco, 10.11.):
   - Durch das Südtor kommst du jetzt auf die Kreuzwegfelder: Wiesen mit Feldwegen, Zäunen, Heuballen, einem Bach mit Steg und einem Wegweiser. Vom Trainingsplatz der Gilde führt ein Seitentor (Westrand, neben der Gilde) auf die Felder. Unten geht es weiter in die Aschensteppe.

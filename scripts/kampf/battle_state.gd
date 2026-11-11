@@ -987,7 +987,10 @@ func _enemy_turn(e: Fighter) -> void:
 			for n in maxi(int(attack.get("treffer", 1)), 1):
 				if targets.is_empty() or not e.is_alive():
 					break
+				# Sternenschlund (A15): auch normal pariert ist man besiegt, nur die perfekte Parade rettet
+				e.set_meta("streng", attack.get("streng", false))
 				await enemy_attack(e, targets, schaden, attack.kind, attack.name)
+				e.remove_meta("streng")
 				# Effekt am Angriff (Effekt-Liste): trifft nur, wer nicht perfekt pariert oder ausgewichen ist
 				for t in _getroffen:
 					_monster_effekte(e, t, attack)
@@ -1023,6 +1026,11 @@ func faehigkeit_waehlen(e: Fighter) -> Dictionary:
 func _monster_ziele(attack: Dictionary) -> Array[Fighter]:
 	var targets: Array[Fighter] = []
 	match str(attack.get("ziel", "")):
+		"spieler":
+			# Ein echter Spieler, kein Mitstreiter des Computers (Sternenschlund, A15)
+			var spieler := allies().filter(func(h: Fighter) -> bool: return not computer.has(h))
+			targets = [pick(spieler) if not spieler.is_empty() else pick_target()]
+			return targets
 		"vorne":
 			targets.assign(allies().filter(func(h: Fighter) -> bool: return not h.back_row))
 			if targets.is_empty():
@@ -1266,7 +1274,7 @@ func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String
 			skills.on_perfect_reaction(t, e)
 		elif e.deadly:
 			# Tödlicher Angriff: normal pariert bleiben 10 % des Lebens übrig, sonst fällt das Ziel sofort
-			var parried := grade == REACT_NORMAL and t.reaction != ""
+			var parried: bool = grade == REACT_NORMAL and t.reaction != "" and not e.get_meta("streng", false)
 			float_text(t, "Pariert – aber hart getroffen!" if parried else "TÖDLICH!", Color("cfe2ff") if parried else Color("ff4d4d"), 78)
 			_last_crit = false
 			_last_eff = 1.0

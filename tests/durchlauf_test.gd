@@ -81,6 +81,8 @@ func _run() -> void:
 
 	_check(finished, "Die erste Stunde endet mit dem Abspann")
 	_check(p.progress.flags.has("klasse"), "Eine Klasse wurde gewählt")
+	_check(p.progress.item_count("empfehlungsschreiben") == 1, "A15: Ye gibt zum Abschied das Empfehlungsschreiben")
+	_check(p.progress.quest_state("brief_vom_tor") == "abgegeben", "A15: Broms Brief ist bei Hanne angekommen")
 	for id: String in GameData.get_file("auftraege"):
 		# Nur die Nebenaufträge der ersten Stunde (Grünwacht-Aufträge haben ein eigenes Gebiet)
 		if GameData.quest(id).get("neben", false) and not GameData.quest(id).has("gebiet"):

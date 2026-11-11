@@ -19,6 +19,8 @@ func _abreise(world: WorldState, id: String, klasse: String) -> PlayerState:
 	p.progress.flags["klasse_gewaehlt"] = true
 	world.start_dialog(p, "ye_tor")
 	world.apply_command(id, {type = "dialog_choose", index = 0})
+	# Empfehlungsschreiben (A15)
+	world.apply_command(id, {type = "dialog_next"})
 	world.apply_command(id, {type = "dialog_choose", index = 0})
 	world.apply_command(id, {type = "dialog_next"})
 	# Kein Versetzen (E3i): zur Torwache, dann selbst durchs Tor (West- oder Südtor)
