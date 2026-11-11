@@ -80,7 +80,9 @@ static func wege_fuer(w: WorldState, daten: Dictionary) -> Array:
 
 ## Was der Spieler von einer Karte weiß: "hier", "besucht", "nachbar" (nebenan, Name unbekannt) oder "" (verborgen).
 static func bekannt(p: PlayerState, karte: String, wege: Array) -> String:
-	if p.map == karte:
+	# In einem Innenraum (A12, z. B. Gasthaus Wegrast) ist man „in“ seiner Stadt
+	var draussen := str(GameData.get_file("karten").get(p.map, {}).get("innen", ""))
+	if p.map == karte or draussen == karte:
 		return "hier"
 	if p.progress.flags.get("besucht:" + karte, false) or karte == WorldState.KREUZWEG:
 		return "besucht"
@@ -129,6 +131,7 @@ func _draw() -> void:
 		_strichlinie(_pos(weg[0]), _pos(weg[1]), Color("6b4a2a", 0.45 if unbekannt else 0.9), 4.0)
 	# Ziel der Geschichte
 	var ziel_karte := str(state.objective_place(p).get("karte", ""))
+	ziel_karte = str(GameData.get_file("karten").get(ziel_karte, {}).get("innen", ziel_karte)) if ziel_karte != "" else ""
 	for karte: String in _karten:
 		if stand[karte] != "":
 			_schild(karte, stand[karte], karte == ziel_karte)

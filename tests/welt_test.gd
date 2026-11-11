@@ -471,10 +471,13 @@ func _test_side_quests() -> void:
 	var p := world.add_player("a", "Test", "elf_m", WorldState.start_cell())
 	var notices: Array[String] = []
 	world.notice.connect(func(_id: String, text: String) -> void: notices.append(text))
-	_check(world.npc_marker(p, "hanne") == "", "Hanne hat vor der Anmeldung noch keinen Auftrag")
-	p.progress.quests["ankunft"] = "abgegeben"
-	_check(world.npc_marker(p, "hanne") == "!" and world.npc_marker_side(p, "hanne"), "Blaues ! über Hanne (Nebenauftrag)")
 	_check(world.npc_marker(p, "schreiberin") == "" or not world.npc_marker_side(p, "schreiberin"), "Lene hat kein blaues Zeichen")
+	# Hanne steht seit A12 drinnen im Gasthaus Wegrast; über der Tür zeigt sich, dass sie etwas hat
+	_check(world.innen_zeichen(p, "wegrast") == "", "Vor der Anmeldung kein Zeichen über der Tür des Wegrast")
+	p.progress.quests["ankunft"] = "abgegeben"
+	_check(world.innen_zeichen(p, "wegrast") == "!", "Danach ein ! über der Tür des Wegrast")
+	world.change_map(p, "wegrast", Vector2i(6, 10))
+	_check(world.npc_marker(p, "hanne") == "!" and world.npc_marker_side(p, "hanne"), "Blaues ! über Hanne (Nebenauftrag)")
 
 	# Hannes Kater: Lotte fragen, Kater in der Gasse finden (Aktions-Taste), zurück zu Hanne
 	_talk(world, p, "hanne")
@@ -483,6 +486,7 @@ func _test_side_quests() -> void:
 	_check(p.progress.quest_state("hannes_kater") == "aktiv", "Hannes Kater angenommen")
 	_check(notices.has("Neuer Nebenauftrag: Hannes Kater"), "Meldung „Neuer Nebenauftrag“")
 	_check(world.objective(p).begins_with("Nebenbei: "), "Ziel zeigt den Nebenauftrag als „Nebenbei“")
+	world.change_map(p, "kreuzweg", WorldState.start_cell())
 	_check(world.npc_marker(p, "lotte") == "?" and world.npc_marker_side(p, "lotte"), "Blaues ? über Lotte")
 	_talk(world, p, "lotte")
 	world.apply_command("a", {type = "dialog_next"})
@@ -494,7 +498,7 @@ func _test_side_quests() -> void:
 	_check(p.in_dialog() and world.dialog_view(p).wer == "Brösel", "Aktions-Taste am Kater")
 	world.apply_command("a", {type = "dialog_next"})
 	_check(not world.can_use(p, "ort:0") and p.progress.quest_state("hannes_kater") == "fertig", "Kater gefunden, ist danach weg")
-	_check(world.npc_marker(p, "hanne") == "?" and world.npc_marker_side(p, "hanne"), "Blaues ? über Hanne")
+	_check(world.innen_zeichen(p, "wegrast") == "?", "Blaues ? über Hanne: ? über der Tür des Wegrast")
 
 	# Hauptaufträge gehen beim Zeichen und beim Ziel vor
 	p.progress.quests["zu_ye"] = "aktiv"

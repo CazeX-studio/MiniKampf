@@ -108,6 +108,8 @@ var _marker_node: Node2D
 var _waypoint := Vector2i(-1, -1)
 ## Kleine Karte oben rechts und große Karte auf M (A11)
 var _minikarte: Minikarte
+## Türen zu Innenräumen (A12): [Knoten, Innenraum, Zeichen]
+var _tueren: Array = []
 var _weltkarte: Weltkarte
 ## Wegweiser der Nebenaufträge (blau, mit Nummer): [{nummer, feld}]
 var _side_waypoints: Array[Dictionary] = []
@@ -399,6 +401,15 @@ func _build_map_view() -> void:
 	for deco: Dictionary in state.decorations:
 		if deco.map == local.map:
 			_add_decoration(deco)
+	# Türen zu Innenräumen (A12): Hat drinnen jemand etwas für dich, steht „!“ oder „?“ über der Tür
+	_tueren.clear()
+	for e: Dictionary in m.exits:
+		if e.tuer:
+			_add_tuerzeichen(e)
+	# Innenräume (A12): An der Tür fällt Tageslicht herein, darüber steht „Hinaus“
+	if str(GameData.get_file("karten").get(local.map, {}).get("innen", "")) != "":
+		for e: Dictionary in m.exits:
+			_add_tuerlicht(e.rect)
 	for id: String in state.npcs:
 		var npc: Dictionary = state.npcs[id]
 		if npc.map != local.map:
@@ -434,6 +445,40 @@ func _build_map_view() -> void:
 		_add_map_node(view)
 		_characters["monster:%d" % i] = view
 	_ground.queue_redraw()
+
+
+func _add_tuerzeichen(e: Dictionary) -> void:
+	var node := Node2D.new()
+	node.position = cell_center(Vector2(e.rect.position))
+	node.z_index = 5
+	var eintrag := [node, str(e.karte), ""]
+	node.draw.connect(func() -> void:
+		if eintrag[2] == "":
+			return
+		var farbe := Color("f2c14e") if eintrag[2] == "!" else Color("fff3b0")
+		node.draw_string_outline(ThemeDB.fallback_font, Vector2(-30, -120), str(eintrag[2]), HORIZONTAL_ALIGNMENT_CENTER, 60, 40,
+				6, Color.BLACK)
+		node.draw_string(ThemeDB.fallback_font, Vector2(-30, -120), str(eintrag[2]), HORIZONTAL_ALIGNMENT_CENTER, 60, 40,
+				farbe))
+	_add_map_node(node)
+	_tueren.append(eintrag)
+
+
+## Lichtschein an der Tür eines Innenraums (bis die gemalten Türen aus GRAFIK_AUFTRAG.md Teil O da sind).
+func _add_tuerlicht(rect: Rect2i) -> void:
+	var node := Node2D.new()
+	node.position = cell_center(Vector2(rect.position) + Vector2(rect.size) * 0.5 - Vector2(0.5, 0.5))
+	var felder: Array[Vector2] = []
+	for y in range(rect.position.y, rect.end.y):
+		for x in range(rect.position.x, rect.end.x):
+			felder.append(cell_center(Vector2(x, y)) - node.position)
+	node.draw.connect(func() -> void:
+		for f in felder:
+			var raute := PackedVector2Array([f + Vector2(0, -16), f + Vector2(32, 0), f + Vector2(0, 16), f + Vector2(-32, 0)])
+			node.draw_colored_polygon(raute, Color(1.0, 0.92, 0.7, 0.35))
+		node.draw_string(ThemeDB.fallback_font, Vector2(-60, -26), "Hinaus", HORIZONTAL_ALIGNMENT_CENTER, 120, 16,
+				Color(1.0, 0.95, 0.8, 0.9)))
+	_add_map_node(node)
 
 
 ## Farbe des Monsternamens: grau = leicht, weiß = passend, orange = schwer, rot = sehr schwer.
@@ -701,6 +746,11 @@ func _sync() -> void:
 		_waypoint = state.objective_cell(local)
 		if _minikarte != null:
 			_minikarte.ziel = _waypoint
+		for tuer: Array in _tueren:
+			var z := state.innen_zeichen(local, tuer[1])
+			if z != tuer[2] and is_instance_valid(tuer[0]):
+				tuer[2] = z
+				(tuer[0] as Node2D).queue_redraw()
 		_side_waypoints = state.side_objectives(local)
 		var goal := state.objective(local)
 		_goal.text = "Ziel: " + goal if goal != "" else ""

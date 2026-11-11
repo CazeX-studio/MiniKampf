@@ -39,6 +39,20 @@
 			"wenn": {
 				"gemerkt": "klasse_bestaetigt"
 			}
+		},
+		{
+			"bereich": [
+				10,
+				28,
+				1,
+				1
+			],
+			"karte": "wegrast",
+			"feld": [
+				6,
+				11
+			],
+			"tuer": true
 		}
 	],
 	"npcs": {
@@ -334,15 +348,6 @@
 			"dialog": "bank",
 			"zeichen": "truhe"
 		},
-		"hanne": {
-			"name": "Wirtin Hanne",
-			"feld": [
-				10,
-				28
-			],
-			"aussehen": "grund_frau+hanne#zubehoer=schuerze&kochloeffel",
-			"dialog": "hanne"
-		},
 		"edmar": {
 			"name": "Vogt Edmar",
 			"feld": [
@@ -570,39 +575,6 @@
 			"dialog": "volk_junge",
 			"wenn": {
 				"nacht": false
-			}
-		},
-		"gast_1": {
-			"name": "Gast",
-			"feld": [
-				14,
-				27
-			],
-			"aussehen": "grund_handwerker+v_m2",
-			"dialog": "volk_gast_1"
-		},
-		"gast_2": {
-			"name": "Gast",
-			"feld": [
-				8,
-				28
-			],
-			"aussehen": "grund_frau+v_w3",
-			"dialog": "volk_gast_2",
-			"wenn": {
-				"nacht": true
-			}
-		},
-		"gast_3": {
-			"name": "Gast",
-			"feld": [
-				12,
-				30
-			],
-			"aussehen": "grund_mann+v_m3",
-			"dialog": "volk_gast_3",
-			"wenn": {
-				"nacht": true
 			}
 		}
 	},

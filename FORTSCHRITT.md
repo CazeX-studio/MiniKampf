@@ -5,7 +5,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 11.11.)
 
-- **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** A12 (Tavernen betreten), danach A13 bis A16; neu für dich: Teil M (Effekte der Dungeons) und Teil N (Monster-Geschosse und Abwehr) in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
+- **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** A12b (Gasthaus Wipfelheim), dann A12c (Taverne der Glutoase), danach A13 bis A16; neu für dich: Teil O (Innenraum Wegrast); neu für dich: Teil M, N und O in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
 - **Bilder von Marco (02.11. abends):** 38 Blätter liegen unter `tools/vorlagen/`: alle sechs Novizen-Blätter ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen.
   - Dazu der Baukasten (02.11.): acht Grundkörper (`grund_*.png`), Köpfe (`koepfe_*.png`), Hüte (`huete_regionen.png`), Zeichen (`zeichen_dienste.png`) und die Klingentänzerin Blatt 1. Bei den Fäusten der Abwehr-Bilder von Blatt 1 prüft Claude beim Einbauen, ob sie am Oval stören.
   - Dazu Figuren 4 und 5 (02.11.): 22 Blätter Nebenfiguren (`neben_*.png`) und 42 Blätter Hauptfiguren (`haupt_*.png`) aller drei Städte, damit ist Teil D vollständig. `neben_reserve_rashid_tarek.png` ist ein doppeltes Sammelblatt und bleibt Reserve.
@@ -64,7 +64,19 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (11.11.):** Alpha-Aufträge A12 bis A16 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+- **Nächster Schritt (11.11.):** Alpha-Aufträge A12b bis A16 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+
+- **Neu (11.11.): A12a Gasthaus Wegrast betreten** (Alpha-Punkt 47):
+  - Vor der Tür des Wegrast (Südwesten von Kreuzweg) geht es hinein. Wer nur vorbeiläuft, bleibt draußen; wer zur Tür geht oder sie antippt, ist drinnen.
+  - Drinnen steht Wirtin Hanne hinter der Theke, tagsüber sitzt ein Gast an den Tischen, abends sind es drei. Hannes Aufträge (Kater, Festmahl, Essen für Brom) gibt es jetzt drinnen; hat sie etwas für dich, steht ein „!“ oder „?“ über der Tür.
+  - An der Tür drinnen fällt Licht herein und „Hinaus“ steht darüber. Die kleine Karte zeigt den Raum, die große Karte zählt ihn zu Kreuzweg.
+  - Der Raum ist noch aus vorhandenen Teilen gebaut (Stadtmauer als Wände, Fässer und Kisten als Theke, Holzbänke). Die gemalten Innenraum-Teile stehen in `Spieldesign/GRAFIK_AUFTRAG.md` Teil O, mit Anhängen in `tools/referenz/teil_o/`.
+  - **So testest du es:**
+    1. Nach der Anmeldung bei Lene zum Wegrast gehen: Über der Tür steht ein blaues „!“.
+    2. An der Tür vorbeilaufen: Du bleibst draußen. Zur Tür laufen: Du bist im Gasthaus, der Ortsname erscheint.
+    3. Hanne ansprechen und „Hannes Kater“ annehmen, dann über „Hinaus“ zurück nach Kreuzweg.
+    4. Abends (nach 21 Uhr) noch einmal hinein: Jetzt sitzen drei Gäste da.
+    5. M drücken: Auf der großen Karte bist du „in“ Kreuzweg.
 
 - **Neu (11.11.): A11 Kleine und große Karte** (Alpha-Punkte 41 und 42):
   - Oben rechts unter der Leiste liegt eine kleine Karte der Gegend, schräg wie die Welt: Wege und Böden in ihren Farben, Häuser und Wald dunkler, Ausgänge gold. Darauf du (weißer Punkt), andere Spieler (blau), Leute mit Auftrag (gold „!“, hell „?“, blau Nebenaufträge) und das Ziel des Wegweisers (orange Raute). Der Knopf mit dem Ortsnamen klappt sie ein und aus.

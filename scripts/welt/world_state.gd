@@ -340,6 +340,9 @@ func _check_exits(p: PlayerState) -> void:
 		return
 	for e: Dictionary in get_map(p.map).exits:
 		if e.rect.has_point(p.cell) and check(p, e.cond):
+			# Türen (A12): nur hinein, wenn man dorthin wollte, nicht beim Vorbeilaufen
+			if e.tuer and not p.path.is_empty() and not e.rect.has_point(p.path[-1]):
+				continue
 			change_map(p, e.karte, e.feld)
 			return
 
@@ -1705,6 +1708,24 @@ func _links(p: PlayerState, map_id: String, pruefen := true) -> Array:
 			if a.has("reisen"):
 				result.append([str(a.reisen), Vector2(place.cell)])
 	return result
+
+
+## Zeichen für einen Innenraum (A12): "?" oder "!", wenn dort drinnen jemand etwas für den Spieler hat, sonst "".
+## Steht über der Tür, damit man von draußen sieht, dass sich das Hineingehen lohnt.
+func innen_zeichen(p: PlayerState, map_id: String) -> String:
+	var alt := p.map
+	p.map = map_id
+	var zeichen := ""
+	for id: String in npcs:
+		if npcs[id].map == map_id:
+			var m := npc_marker(p, id)
+			if m == "?":
+				zeichen = "?"
+				break
+			if m == "!":
+				zeichen = "!"
+	p.map = alt
+	return zeichen
 
 
 ## Zeichen über einem NPC: "!" = neuer Auftrag, "?" = hier etwas erledigen oder abgeben, "" = nichts.

@@ -126,6 +126,15 @@ func _next_goal() -> void:
 			if world.npc_marker(p, id) == mark:
 				world.apply_command("spieler", {type = "talk", npc = id})
 				return
+	# Innenräume (A12): Hat drinnen jemand etwas, durch die Tür hinein; drinnen nichts mehr zu tun, wieder hinaus
+	for e: Dictionary in world.get_map(p.map).exits:
+		if e.tuer and world.innen_zeichen(p, e.karte) != "":
+			world.apply_command("spieler", {type = "move", cell = e.rect.position})
+			return
+	if str(GameData.get_file("karten").get(p.map, {}).get("innen", "")) != "" and not _innen_zu_tun(p):
+		var raus: Dictionary = world.get_map(p.map).exits[0]
+		world.apply_command("spieler", {type = "move", cell = raus.rect.position})
+		return
 	for id: String in p.progress.quests:
 		if p.progress.quests[id] != "aktiv":
 			continue
@@ -210,3 +219,14 @@ func _check(condition: bool, text: String) -> void:
 	if not condition:
 		_failed += 1
 		print("FEHLER: " + text)
+
+
+## Gibt es in diesem Innenraum noch etwas zu sammeln oder zu benutzen? (Sonst geht der Computer-Spieler wieder hinaus.)
+func _innen_zu_tun(p: PlayerState) -> bool:
+	for i in world.pickups.size():
+		if world.pickups[i].map == p.map and world.can_use(p, "punkt:%d" % i):
+			return true
+	for i in world.places.size():
+		if world.places[i].map == p.map and world.can_use(p, "ort:%d" % i):
+			return true
+	return false

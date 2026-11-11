@@ -3105,5 +3105,92 @@
 			}
 		],
 		"leere": "lava"
+	},
+	"wegrast": {
+		"name": "Gasthaus Wegrast",
+		"innen": "kreuzweg",
+		"musik": "stadt",
+		"grund": "planken",
+		"licht": "ffe2b8",
+		"start": [
+			6,
+			11
+		],
+		"raster": [
+			"XXXXXXXXXXXXX",
+			"X############",
+			"X############",
+			"X############",
+			"X############",
+			"X############",
+			"X############",
+			"X############",
+			"X############",
+			"X############",
+			"X############",
+			"X############",
+			"X############"
+		],
+		"ausgaenge": [
+			{
+				"bereich": [
+					5,
+					12,
+					3,
+					1
+				],
+				"karte": "kreuzweg",
+				"feld": [
+					9,
+					29
+				]
+			}
+		],
+		"kampf_hintergrund": "kreuzwegfelder",
+		"npcs": {
+			"hanne": {
+				"name": "Wirtin Hanne",
+				"feld": [
+					4,
+					2
+				],
+				"aussehen": "grund_frau+hanne#zubehoer=schuerze&kochloeffel",
+				"dialog": "hanne"
+			},
+			"gast_1": {
+				"name": "Gast",
+				"feld": [
+					5,
+					8
+				],
+				"aussehen": "grund_handwerker+v_m2",
+				"dialog": "volk_gast_1"
+			},
+			"gast_2": {
+				"name": "Gast",
+				"feld": [
+					7,
+					7
+				],
+				"aussehen": "grund_frau+v_w3",
+				"dialog": "volk_gast_2",
+				"wenn": {
+					"nacht": true
+				}
+			},
+			"gast_3": {
+				"name": "Gast",
+				"feld": [
+					10,
+					10
+				],
+				"aussehen": "grund_mann+v_m3",
+				"dialog": "volk_gast_3",
+				"wenn": {
+					"nacht": true
+				}
+			}
+		},
+		"baukasten": "karte_wegrast"
 	}
 }

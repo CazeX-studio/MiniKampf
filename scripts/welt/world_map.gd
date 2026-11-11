@@ -135,7 +135,7 @@ static func _tile_of(boden: String) -> int:
 func add_exit(d: Dictionary) -> void:
 	var r: Array = d.bereich
 	exits.append({rect = Rect2i(int(r[0]), int(r[1]), int(r[2]), int(r[3])), karte = d.karte,
-			feld = Vector2i(int(d.feld[0]), int(d.feld[1])), cond = d.get("wenn", {})})
+			feld = Vector2i(int(d.feld[0]), int(d.feld[1])), cond = d.get("wenn", {}), tuer = d.get("tuer", false)})
 
 
 func add_building(p_name: String, rect: Rect2i, height: float, color: Color, art := "haus", roof := Color("6a3a2a")) -> void:

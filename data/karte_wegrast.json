@@ -1,0 +1,181 @@
+{
+	"_hinweis": "Innenraum des Gasthauses Wegrast in Kreuzweg (A12a). Bis die gemalten Innenraum-Teile aus GRAFIK_AUFTRAG.md Teil O da sind, mit vorhandenen Teilen gebaut: Mauern als Rückwände, Fässer und Kisten als Theke, Holzbänke als Tische.",
+	"boden": [
+		"ppppppppppppp",
+		"ppppppppppppp",
+		"ppppppppppppp",
+		"ppppppppppppp",
+		"ppppppppppppp",
+		"ppppppppppppp",
+		"ppppppppppppp",
+		"ppppppppppppp",
+		"ppppppppppppp",
+		"ppppppppppppp",
+		"ppppppppppppp",
+		"ppppppppppppp",
+		"ppppppppppppp"
+	],
+	"objekte": [
+		{
+			"teil": "mauer_gerade_a",
+			"feld": [
+				1,
+				0
+			]
+		},
+		{
+			"teil": "mauer_gerade_a",
+			"feld": [
+				5,
+				0
+			]
+		},
+		{
+			"teil": "mauer_gerade_a",
+			"feld": [
+				9,
+				0
+			]
+		},
+		{
+			"teil": "mauer_gerade_b",
+			"feld": [
+				0,
+				1
+			]
+		},
+		{
+			"teil": "mauer_gerade_b",
+			"feld": [
+				0,
+				5
+			]
+		},
+		{
+			"teil": "mauer_gerade_b",
+			"feld": [
+				0,
+				9
+			]
+		},
+		{
+			"teil": "fass",
+			"feld": [
+				2,
+				3
+			]
+		},
+		{
+			"teil": "kiste",
+			"feld": [
+				3,
+				3
+			]
+		},
+		{
+			"teil": "kiste",
+			"feld": [
+				4,
+				3
+			]
+		},
+		{
+			"teil": "kiste",
+			"feld": [
+				5,
+				3
+			]
+		},
+		{
+			"teil": "fass",
+			"feld": [
+				6,
+				3
+			]
+		},
+		{
+			"teil": "fass",
+			"feld": [
+				1,
+				1
+			]
+		},
+		{
+			"teil": "fass",
+			"feld": [
+				2,
+				1
+			]
+		},
+		{
+			"teil": "go_tonkruege",
+			"feld": [
+				3,
+				1
+			]
+		},
+		{
+			"teil": "feuerstelle",
+			"feld": [
+				9,
+				2
+			]
+		},
+		{
+			"teil": "holzbank",
+			"feld": [
+				3,
+				7
+			]
+		},
+		{
+			"teil": "holzbank",
+			"feld": [
+				8,
+				6
+			]
+		},
+		{
+			"teil": "holzbank",
+			"feld": [
+				8,
+				9
+			]
+		},
+		{
+			"teil": "go_teppiche",
+			"feld": [
+				6,
+				6
+			]
+		},
+		{
+			"teil": "laterne",
+			"feld": [
+				1,
+				6
+			]
+		},
+		{
+			"teil": "laterne",
+			"feld": [
+				12,
+				1
+			]
+		},
+		{
+			"teil": "heuballen",
+			"feld": [
+				1,
+				11
+			]
+		},
+		{
+			"teil": "banner",
+			"feld": [
+				7,
+				1
+			]
+		}
+	]
+}

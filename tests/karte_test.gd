@@ -18,7 +18,8 @@ func _initialize() -> void:
 	var daten := GameData.get_file("weltkarte")
 	# Jede Karte der Welt steht auf der großen Karte
 	for id: String in w.maps:
-		_check(daten.karten.has(id), "%s steht auf der großen Karte (data/weltkarte.json)" % id)
+		var innen := str(GameData.get_file("karten").get(id, {}).get("innen", ""))
+		_check(daten.karten.has(id) or daten.karten.has(innen), "%s steht auf der großen Karte (data/weltkarte.json)" % id)
 	# Kleine Karte: ein Bildpunkt je Feld, Ausgänge gold
 	var m := w.get_map("kreuzweg")
 	var bild := Minikarte.bild_fuer(m)

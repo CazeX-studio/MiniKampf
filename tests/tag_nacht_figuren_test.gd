@@ -19,11 +19,14 @@ func _initialize() -> void:
 	p.progress.flags["ausbildung_morgen"] = true
 	world.nacht = false
 	var tag: Vector2i = world.npcs.ye_tor.cell
-	for id: String in ["marktfrau", "marktmann", "buerger_1", "buerger_2", "buerger_3", "buerger_4", "gast_1", "pip", "lotte", "quill", "edmar",
+	for id: String in ["marktfrau", "marktmann", "buerger_1", "buerger_2", "buerger_3", "buerger_4", "pip", "lotte", "quill", "edmar",
 			"tessa", "gorm"]:
 		_check(world.npc_visible(p, id), "Tags da: %s" % id)
+	p.map = "wegrast"
+	_check(world.npc_visible(p, "gast_1") and world.npc_visible(p, "hanne"), "Tags im Wegrast: Hanne und ein Gast")
 	for id: String in ["gast_2", "gast_3"]:
 		_check(not world.npc_visible(p, id), "Tags nicht da: %s" % id)
+	p.map = "kreuzweg"
 	for id: String in ["marktfrau", "marktmann", "buerger_1", "gast_1", "tessa", "gorm", "torwache_arkanum"]:
 		_check(FigurTeile.bild(world.npcs[id].look, "idle_vorn", 0) != null, "Aus dem Baukasten: %s" % id)
 
@@ -33,8 +36,13 @@ func _initialize() -> void:
 	_check(world.npcs.tessa.cell == Vector2i(7, 30) and world.npcs.gorm.cell == Vector2i(11, 30), "Nachts: Tessa und Gorm im Wegrast")
 	for id: String in ["marktfrau", "marktmann", "buerger_1", "buerger_2", "buerger_4", "pip", "lotte", "quill", "edmar"]:
 		_check(not world.npc_visible(p, id), "Nachts nicht da: %s" % id)
-	for id: String in ["buerger_3", "gast_1", "gast_2", "gast_3", "hanne", "bingo", "hatta", "schreiberin", "bank_kreuzweg", "wache"]:
+	for id: String in ["buerger_3", "bingo", "hatta", "schreiberin", "bank_kreuzweg", "wache"]:
 		_check(world.npc_visible(p, id), "Nachts da: %s" % id)
+	# Hanne und die Gäste stehen seit A12 drinnen im Gasthaus Wegrast
+	p.map = "wegrast"
+	for id: String in ["gast_1", "gast_2", "gast_3", "hanne"]:
+		_check(world.npc_visible(p, id), "Nachts im Wegrast: %s" % id)
+	p.map = "kreuzweg"
 	world.start_dialog(p, "tessa")
 	_check(world.dialog_view(p).text.begins_with("Schlafen?"), "Tessa nachts")
 	world.apply_command("a", {type = "dialog_next"})
