@@ -5,7 +5,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 11.11.)
 
-- **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** A10 (Monster-Bilder: Abwehr und Fernkampf, alte Familien-Bilder aufräumen), danach A11 bis A16; neu für dich: Teil M in `GRAFIK_AUFTRAG.md` (Effekte der Dungeons) (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
+- **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** A11 (kleine Karte und große Karte auf M), danach A12 bis A16; neu für dich: Teil M (Effekte der Dungeons) und Teil N (Monster-Geschosse und Abwehr) in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
 - **Bilder von Marco (02.11. abends):** 38 Blätter liegen unter `tools/vorlagen/`: alle sechs Novizen-Blätter ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen.
   - Dazu der Baukasten (02.11.): acht Grundkörper (`grund_*.png`), Köpfe (`koepfe_*.png`), Hüte (`huete_regionen.png`), Zeichen (`zeichen_dienste.png`) und die Klingentänzerin Blatt 1. Bei den Fäusten der Abwehr-Bilder von Blatt 1 prüft Claude beim Einbauen, ob sie am Oval stören.
   - Dazu Figuren 4 und 5 (02.11.): 22 Blätter Nebenfiguren (`neben_*.png`) und 42 Blätter Hauptfiguren (`haupt_*.png`) aller drei Städte, damit ist Teil D vollständig. `neben_reserve_rashid_tarek.png` ist ein doppeltes Sammelblatt und bleibt Reserve.
@@ -64,7 +64,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (11.11.):** Alpha-Aufträge A10 bis A16 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+- **Nächster Schritt (11.11.):** Alpha-Aufträge A11 bis A16 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+
+- **Neu (11.11.): A10 Monster-Bilder aufgeräumt, Abwehr und Geschosse vorbereitet** (Alpha-Punkte 44 und 45):
+  - A10a: Die alten Familien-Grundkörper (Schleim, Hase, Käfer, Wolf, Bär … 30 Stück, 898 Bilddateien) sind raus. Jedes Monster hat sein eigenes Blatt, nur der Hirsch bleibt für einen Fähigkeiten-Effekt.
+  - A10b: Die Bildaufträge stehen in `Spieldesign/GRAFIK_AUFTRAG.md` Teil N: ein Geschoss je Element (Feuerball, Steinbrocken, Dorn, Blitzkugel, Wasserblase, Windklinge, Lichtball, Schattenkugel, Sternensplitter) und drei Abwehr-Bilder (perfekte Parade, Parade, Ausweichen). Das Spiel nimmt jedes Blatt, sobald es zugeschnitten ist; bis dahin bleiben die gezeichneten Kugeln und Funken.
+  - **So testest du es:**
+    1. Im Kampf-Editor ein paar Monster zusammenstellen (z. B. Wiesenhoppler und Knollenkäfer) und kämpfen: Alle sehen aus wie vorher, mit ihren eigenen Bildern.
+    2. Im Bewegungs-Editor die Monster-Liste durchsehen: Die alten Familien (Schleim, Hase …) tauchen nicht mehr auf.
+    3. Wenn die Bilder aus Teil N eingebaut sind: Ein Feuer-Monster (z. B. Glutigel) aus der Ferne angreifen lassen, es wirft einen gemalten Feuerball; bei einer perfekten Parade erscheint der gemalte Glanzstern.
 
 - **Neu (11.11.): A9b3 Wut-Phase für Sporenkönigin und Hammerbrüder** (Alpha-Punkte 38 und 39, dein Beschluss):
   - Ab halbem Leben läuft ein kurzer Film: Bei der Sporenkönigin quellen Sporenwolken auf und platzen („Die Königin erblüht!“), bei den Hammerbrüdern schlagen zwei Hämmer auf einen glühenden Amboss („Hammerwut!“).

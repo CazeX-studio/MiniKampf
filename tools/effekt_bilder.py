@@ -23,9 +23,16 @@ BILDER = {
 	"schneise": 6, "waldlicht": 6, "rote_funken": 6, "bruellen": 6, "wachstum": 6, "futter": 4, "hammer_funken": 6,
 	"amboss": 4, "risse": 6, "kuehlung": 6, "goldregen": 6, "kreuzschnitt": 6, "wirbelkreis": 6, "sichel": 4,
 	"klinge_flug": 4, "noten": 6, "mond": 4, "komet": 4,
+	# Teil N (A10b): Geschosse der Monster je Element, Parade und Ausweichen
+	"geschoss_feuer": 4, "geschoss_erde": 4, "geschoss_pflanze": 4, "geschoss_blitz": 4, "geschoss_wasser": 4,
+	"geschoss_wind": 4, "geschoss_licht": 4, "geschoss_schatten": 4, "geschoss_sternenkraft": 4,
+	"parade_perfekt": 6, "parade": 6, "ausweichen": 6,
+	# Teil M (A9b): Effekte der Dungeons
+	"kette_glied": 4, "kette_reisst": 6, "lava": 4, "lavaflut": 6, "nass": 6, "panzer_splitter": 6,
+	"laterne": 4, "splitterlicht": 4, "giftwolke": 6, "heilsporen": 6, "wurzelgriff": 6, "leere": 6,
 }
 # Blätter mit zwei Reihen: Namen für die Reihen
-REIHEN = {"bruellen": ["bruellen", "bruellen_rot"], "noten": ["noten", "noten_gold"]}
+REIHEN = {"bruellen": ["bruellen", "bruellen_rot"], "noten": ["noten", "noten_gold"], "lava": ["lava_warnung", "lava_oben"]}
 # Blätter mit mitgemaltem Schachbrett im Schein: halb durchsichtiges fällt dort ganz weg
 SCHLEIER_EXTRA = {"noten": 150}
 

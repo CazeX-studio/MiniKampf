@@ -1079,6 +1079,8 @@ func _input(event: InputEvent) -> void:
 		BattleState.REACT_PERFECT:
 			_react_feedback = "PERFEKT!"
 			Geraeusche.play("perfekt")
+			# Gemalte Parade (Teil N, A10b), solange sie fehlt nur die gezeichneten Ringe und Funken
+			_abwehr_bild("parade_perfekt", c, 1.0)
 			Fx.spawn(_field, Fx.Kind.RING, c, Color("6dff8a"), 150.0, 0.45)
 			Fx.spawn(_field, Fx.Kind.GLOW, c, Color("6dff8a"), 120.0, 0.4)
 			# Heller Funkenregen, ein kurzer weißer Blitz und ein Moment Zeitlupe
@@ -1091,6 +1093,7 @@ func _input(event: InputEvent) -> void:
 			var parry := _react_target.reaction == "parry"
 			_react_feedback = "Pariert!" if parry else "Ausgewichen!"
 			Geraeusche.play("parade" if parry else "wurf", 1.0 if parry else 1.3)
+			_abwehr_bild("parade" if parry else "ausweichen", c, 0.8)
 			Fx.spawn(_field, Fx.Kind.RING, c, Color("9fd0ff"), 110.0, 0.35)
 			if parry:
 				# Kurzer Funkenblitz, wo die Klingen aufeinandertreffen
@@ -1098,6 +1101,12 @@ func _input(event: InputEvent) -> void:
 				Fx.spawn(_field, Fx.Kind.GLOW, c, Color("ffd9a0"), 50.0, 0.18)
 		_:
 			_react_feedback = "Zu früh!" if _react_press < _react_duration else "Zu spät!"
+
+
+## Gemaltes Abwehr-Bild (Parade, perfekte Parade, Ausweichen; GRAFIK_AUFTRAG.md Teil N), wenn es schon da ist.
+func _abwehr_bild(name: String, ort: Vector2, groesse: float) -> void:
+	if not FxBild.bilder(name).is_empty():
+		FxBild.spawn(_field, name, ort, 0.4, false, 0.0, groesse).z_index = 9
 
 
 ## Kurzes Aufblitzen im Zielkreis, genau wenn die Perfekt-Zone aufgeht.
@@ -1243,6 +1252,12 @@ func lunge(f: Fighter, target: Fighter, duration: float, attack_name := "") -> v
 func projectile(from: Fighter, to: Fighter, color: Color, duration := 0.3) -> void:
 	if not has_view(from) or not has_view(to):
 		await wait(duration)
+		return
+	# Gemalte Geschosse der Monster je Element (GRAFIK_AUFTRAG.md Teil N, A10b); bis sie da sind, die gezeichnete Kugel
+	var gemalt := "geschoss_" + from.element.to_lower()
+	if not from.is_ally() and not FxBild.bilder(gemalt).is_empty():
+		await FxBild.flug(_field, gemalt, view(from).center(), view(to).center(), duration, 0.9)
+		Fx.spawn(_field, Fx.Kind.GLOW, view(to).center(), color, 90.0, 0.35)
 		return
 	var orb := Node2D.new()
 	orb.position = view(from).center()

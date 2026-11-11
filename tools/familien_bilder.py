@@ -1,4 +1,7 @@
-"""Baut die Monster einer Familie aus zwei Blättern (MONSTER.md, Abschnitt 7; GRAFIK_AUFTRAG.md, Teil C).
+"""ALT (seit A10, 11.11.2026 nicht mehr benutzen): Jedes Monster hat inzwischen sein eigenes Blatt (tools/monster_bilder.py,
+GRAFIK_AUFTRAG.md Teil G). Dieses Werkzeug würde die eigenen Bilder überschreiben, darum bricht es ab.
+
+Baut die Monster einer Familie aus zwei Blättern (MONSTER.md, Abschnitt 7; GRAFIK_AUFTRAG.md, Teil C).
 
 Blatt 1 (tools/vorlagen/familie_<familie>_1.png) hat den Grundkörper mit Stehen, Angriff, Getroffen und Fallen.
 Die weiteren Blätter haben je Art das Zusatzteil, die Art im Stehen und die besondere Bewegung.
@@ -8,6 +11,9 @@ Aufruf: python3 tools/familien_bilder.py [art …]   (ohne Angabe alle; braucht 
 """
 import colorsys
 import sys
+
+if __name__ == "__main__" and "--trotzdem" not in sys.argv:
+	sys.exit("familien_bilder.py ist alt: Jedes Monster hat sein eigenes Blatt (tools/monster_bilder.py). Abbruch.")
 from pathlib import Path
 
 import numpy as np
