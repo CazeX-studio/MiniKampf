@@ -2922,3 +2922,12 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 2. Schau, ob Hanne hinter der Theke steht und die Gäste nicht in Möbeln stecken (abends auch Marv, Tessa und Gorm).
 3. Lauf durch den Raum: Über den Teppich kann man gehen, um Tische und Theke herum.
 4. Nachts sollte der Kamin glühen.
+
+## Baumhaus-Gasthaus mit gemalten Innenraum-Teilen (Teil O, IN3 und IN4, 11.11.2026)
+- Wurzelwände mit runden Fenstern und Kräuterregal, helle Baumdielen, Mooteppich, Feuerstelle mit Kessel (glüht), Borkos Kochtisch, Kupfertopf, Wurzeltheke, zwei Baumstumpf-Tische, Moosbank, Kräuterständer, Strickleiter.
+- Im Stadt-Editor: Teile „in_gw_“, Boden „Baumdielen“.
+
+**So testest du es**
+1. Geh in Wipfelheim ins Baumhaus-Gasthaus.
+2. Borko steht an seinem Kochtisch, die Gäste stecken nicht in Möbeln.
+3. Lauf herum: Über den Mooteppich kann man gehen.
