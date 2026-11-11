@@ -486,6 +486,11 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 			if ziel_ansicht != null:
 				_lichtstrahl(feld, ziel_ansicht, 0.6)
 				FxBild.spawn(feld, "heilung", ziel_ansicht.center() + Vector2(0, -20), 0.7, false, 0.0, 0.7)
+		"blitz_einschlag":
+			# Ein mächtiger Blitz schlägt unter dem Ziel ein, Steine fliegen, das Bild wackelt (A21)
+			Geraeusche.play("kritisch", 1.2)
+			FxBild.am_boden(feld, "blitz_einschlag", v.home_feet() + Vector2(0, 14), 0.6, 1.6).z_index = 9
+			k.call("_shake", 9.0)
 		# --- Vulkanschmiede (A9c1, gemalte Effekte aus GRAFIK_AUFTRAG.md Teil M) ---
 		"nass":
 			# Kühlbecken: ein Wasserschwall spritzt am Helden hoch, Tropfen zischen auf dem heißen Stein

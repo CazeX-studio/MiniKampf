@@ -1199,6 +1199,13 @@ func pick_target(prefer_back := false, anyone := false) -> Fighter:
 
 
 ## Ein Gegner-Angriff mit Chance auf perfekte Reaktion.
+## Angriffe mit dem gemalten Blitzeinschlag (A21, Marco 11.11.: bis er andere wählt, der stärkste Angriff jedes Blitz-Monsters)
+## Funkenflirr und Messingwächter: Funkenschlag, Funkenmarder: Funkenfell, Donnerhirsch: Blitzgeweih, Funkenechse: Funkenzunge,
+## Glasskorpion: Blitzstachel, Gewitterwyvern: Aschegewitter, Glimmerkäfer: Entladung, Funkenwicht: Kettenblitz.
+const BLITZ_EINSCHLAG: Array[String] = ["Funkenschlag", "Funkenfell", "Blitzgeweih", "Donnerruf", "Funkenzunge", "Blitzstachel",
+		"Aschegewitter", "Entladung", "Kettenblitz"]
+
+
 func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String, attack_name: String) -> void:
 	# Der Roboter fängt Angriffe auf den Verbündeten ab, den er beschützt
 	var targets: Array[Fighter] = []
@@ -1254,6 +1261,11 @@ func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String
 	# Effekt „Verfehlen“ auf dem Angreifer: Dieser Angriff geht daneben
 	var daneben := Effekte.verfehlt(self, e)
 	_getroffen.clear()
+	# Mächtiger Blitzeinschlag (A21) bei den stärksten Angriffen der Blitz-Monster
+	if attack_name in BLITZ_EINSCHLAG and not daneben:
+		for t in targets:
+			if t.is_alive():
+				zeige("blitz_einschlag", t)
 
 	for t in targets:
 		if not t.is_alive():

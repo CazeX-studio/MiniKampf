@@ -1105,6 +1105,9 @@ func _input(event: InputEvent) -> void:
 			Geraeusche.play("perfekt")
 			# Gemalte Parade (Teil N, A10b), solange sie fehlt nur die gezeichneten Ringe und Funken
 			_abwehr_bild("parade_perfekt", c, 1.0)
+			# Goldenes Nachbild (A21, Marcos Zusatz-Effekt): bleibt kurz stehen und verweht, zur Figur gespiegelt
+			if not FxBild.bilder("nachbild").is_empty():
+				FxBild.spawn(_field, "nachbild", c + Vector2(14, 6), 0.7, true, 0.0, 1.2).z_index = 8
 			Fx.spawn(_field, Fx.Kind.RING, c, Color("6dff8a"), 150.0, 0.45)
 			Fx.spawn(_field, Fx.Kind.GLOW, c, Color("6dff8a"), 120.0, 0.4)
 			# Heller Funkenregen, ein kurzer weißer Blitz und ein Moment Zeitlupe
