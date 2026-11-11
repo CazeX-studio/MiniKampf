@@ -40,7 +40,7 @@ static func pruefen(welt: Node, karte: String, titel: String) -> bool:
 	var schirm := Ladebildschirm.new()
 	schirm.layer = 90
 	welt.add_child(schirm)
-	schirm._aufbauen(load(ORDNER % bild), titel, _tipp())
+	schirm._aufbauen(load(ORDNER % bild), titel, _tipp(), GameData.get_file("ladebildschirm").get("zuschnitt", {}).get(bild, 0.5))
 	return true
 
 
@@ -74,7 +74,8 @@ static func _tipp() -> String:
 	return "" if tipps.is_empty() else str(tipps.pick_random())
 
 
-func _aufbauen(bild: Texture2D, titel: String, tipp: String) -> void:
+## zuschnitt: Anteil des Überstands, der oben wegfällt, oder "ganz" (ganzes Bild mit dunklen Rändern).
+func _aufbauen(bild: Texture2D, titel: String, tipp: String, zuschnitt: Variant = 0.5) -> void:
 	var ebene := Control.new()
 	ebene.size = SCREEN
 	ebene.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -89,9 +90,15 @@ func _aufbauen(bild: Texture2D, titel: String, tipp: String) -> void:
 	ebene.add_child(grund)
 	var szene := TextureRect.new()
 	szene.texture = bild
-	szene.size = SCREEN
 	szene.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	szene.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	szene.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	if str(zuschnitt) == "ganz":
+		szene.size = SCREEN
+	else:
+		# Bildschirmbreit, der Überstand fällt oben und unten weg (Anteil oben laut zuschnitt)
+		var hoehe := SCREEN.x * bild.get_height() / bild.get_width()
+		szene.size = Vector2(SCREEN.x, hoehe)
+		szene.position.y = -(hoehe - SCREEN.y) * clampf(float(zuschnitt), 0.0, 1.0)
 	szene.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ebene.add_child(szene)
 	# Dunkler Verlauf unten, damit Name und Tipp lesbar sind
@@ -135,7 +142,7 @@ func _aufbauen(bild: Texture2D, titel: String, tipp: String) -> void:
 	hinweis.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ebene.add_child(hinweis)
 	# Langsames Heranfahren an das Bild, dann ausblenden
-	szene.pivot_offset = SCREEN * 0.5
+	szene.pivot_offset = szene.size * 0.5
 	create_tween().tween_property(szene, "scale", Vector2.ONE * 1.04, STEHT + AUSBLENDEN)
 	var warten := create_tween()
 	warten.tween_interval(STEHT)
