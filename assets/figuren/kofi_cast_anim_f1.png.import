@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/kofi_cast_anim_f1.png-d6e5f3c3cd3373363d778ed
 
 compress/mode=0
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

@@ -66,6 +66,14 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 - **Nächster Schritt (11.11.):** E4 später (viele Tests), E5 und S6 am Ende von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
 
+- **Neu (11.11.): A18 Web-Version geprüft und kleiner** (deine Wahl):
+  - Gemessen an einem eigenen Web-Export wie auf GitHub: Das Spielpaket war seit D36 von 73 auf 80,7 MB gewachsen (die vielen neuen Monster, Effekte und Karten). Zwei Drittel davon sind die gemalten Figuren.
+  - Figuren und Figurteile werden jetzt etwas stärker gepackt (Qualität 0,7 statt 0,8). Weil das Spiel sie auf ein Drittel verkleinert zeigt, sieht man keinen Unterschied (im Spiel weichen die Farben im Schnitt um 2,4 statt 2,1 von 255 ab). Das Paket ist jetzt 74,5 MB.
+  - Beim ersten Start lädt der Browser damit rund 85 MB (Spielpaket und Godot, das GitHub gepackt schickt), mit guter Leitung etwa 10 bis 20 Sekunden, im Mobilfunk deutlich länger.
+  - Alle Figuren-Bilder werden benutzt, es gab nichts zu streichen.
+  - **Vorschlag für dich:** Die Figuren sind dreimal so groß gespeichert, wie das Spiel sie zeigt. Auf zwei Drittel verkleinert würde das Paket noch etwa 20 MB kleiner (rund 55 MB). Das ist ein größerer Umbau (alle Figuren, Figurteile und ihre Ausrichtung); sag Bescheid, ob ich das machen soll.
+  - **So testest du es:** Die Demo im Browser öffnen und die Ladezeit beobachten; im Kampf und in der Welt sehen die Figuren aus wie vorher.
+
 - **Neu (11.11.): A17 Nachts im Gasthaus:**
   - Marv, Tessa und Gorm sind nachts jetzt drinnen im Wegrast (vorher standen sie davor). Morgens sind sie wieder draußen.
   - Stehst du in einem Gasthaus, wenn es 21 Uhr oder Morgen wird, kommen und gehen die Gäste sofort (vorher erst nach dem Hinausgehen). Gilt auch für Hadrak in der Glutstube.

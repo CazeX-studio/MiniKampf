@@ -1,7 +1,7 @@
 """Bilder für das Web kleiner machen (D36), ohne ihre Größe im Spiel zu ändern.
 
 Gemalte Bilder (Figuren, Porträts, Figurteile, Baukasten-Objekte, Kampf-Hintergründe) werden beim Import verlustbehaftet gespeichert
-(WebP, Qualität 0,8) statt verlustfrei. Das macht sie etwa viermal kleiner, man sieht keinen Unterschied.
+(WebP, Qualität 0,8, Figuren und Figurteile 0,7) statt verlustfrei. Das macht sie etwa viermal kleiner, man sieht keinen Unterschied.
 Pixel-Grafik, Oberfläche, Effekte und Bodenkacheln bleiben verlustfrei (dort würden Ränder und Nähte unscharf),
 ebenso kleine Bilder unter KLEIN Punkten und die Probe-Figur Kofi (sparen kaum etwas, dort sieht man die Abweichung eher).
 Das Werkzeug ändert nur die .import-Dateien; Godot importiert danach neu. Der Web-Export auf GitHub ruft es vor dem
@@ -15,6 +15,9 @@ from pathlib import Path
 WURZEL = Path(__file__).resolve().parent.parent
 ORDNER = ["assets/figuren", "assets/portraets", "assets/teile", "assets/baukasten/objekte", "assets/kampf_hintergruende"]
 QUALITAET = "0.8"
+## Figuren und Figurteile zeigt das Spiel auf ein Drittel verkleinert: Dort reicht 0,7 (11 % kleiner, die Farben weichen
+## im Spiel im Schnitt um 2,4 statt 2,1 von 255 ab, das sieht man nicht; gemessen 11.11.2026)
+QUALITAET_ORDNER = {"assets/figuren": "0.7", "assets/teile": "0.7"}
 ## Bilder, deren längere Seite kleiner ist, bleiben verlustfrei
 KLEIN = 100
 ## Bilder, die verlustfrei bleiben müssen: Kofi ist die Probe-Figur, an der figurteile_test Kopf und Körper Punkt für Punkt
@@ -43,7 +46,8 @@ def main():
 				neu = text.replace("compress/mode=1", "compress/mode=0")
 			else:
 				neu = text.replace("compress/mode=0", "compress/mode=1")
-			neu = "\n".join(f"compress/lossy_quality={QUALITAET}" if z.startswith("compress/lossy_quality=") else z for z in neu.split("\n"))
+			qualitaet = QUALITAET_ORDNER.get(ordner, QUALITAET)
+			neu = "\n".join(f"compress/lossy_quality={qualitaet}" if z.startswith("compress/lossy_quality=") else z for z in neu.split("\n"))
 			if neu != text:
 				offen += 1
 				if not pruefen:

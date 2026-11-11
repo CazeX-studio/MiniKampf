@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/hatta_zylinder_vorn.png-80e35d688d8fe313b5bd3
 
 compress/mode=0
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

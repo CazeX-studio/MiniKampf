@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/w3_vorn_normal.png-21c5a1514c1e86e707e0d95d2c
 
 compress/mode=0
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

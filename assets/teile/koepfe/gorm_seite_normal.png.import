@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/gorm_seite_normal.png-cf6de3aab0e8f67c800ecf2
 
 compress/mode=0
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

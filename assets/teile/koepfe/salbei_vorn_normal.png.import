@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/salbei_vorn_normal.png-31a44d50db83dcbb65e77d
 
 compress/mode=0
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

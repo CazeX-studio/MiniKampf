@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/w1_vorn_schmerz.png-4028fe355dc47c3b1cc469a57
 
 compress/mode=0
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

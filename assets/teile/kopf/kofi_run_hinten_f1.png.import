@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/kofi_run_hinten_f1.png-792128f45f54d4315e0c4f
 
 compress/mode=0
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
