@@ -64,7 +64,20 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (11.11., nach Teil N):** Alle gelieferten Bilder haben jetzt einen Bauauftrag. A3b (Klassenbilder), A9c (alle Dungeon-Effekte aus Teil M), A20 (Ladebildschirme) A21 (Nachbild, Blitzeinschlag) und A22 (Fähigkeiten als große Bilder) sind fertig. Als Nächstes A23 (farbige Zahlen in den Beschreibungen, beschlossen 11.11., wartet auf dein OK zu den Farben und zur Zauberkraft). Danach E4 (Balancing). Danach E4 (Balancing, braucht viele Tests), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden. Noch zu malen ist für die Demo nichts; später kommen Teil R, H2 und S3 (sechs spätere Klassen) und Teil I.
+- **Nächster Schritt (11.11., nach Teil N):** Alle gelieferten Bilder haben jetzt einen Bauauftrag. A3b (Klassenbilder), A9c (alle Dungeon-Effekte aus Teil M), A20 (Ladebildschirme) A21 (Nachbild, Blitzeinschlag) und A22 (Fähigkeiten als große Bilder) sind fertig. A23 (farbige Zahlen in den Beschreibungen) ist fertig. Als Nächstes E4 (Balancing). Danach E4 (Balancing, braucht viele Tests), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden. Noch zu malen ist für die Demo nichts; später kommen Teil R, H2 und S3 (sechs spätere Klassen) und Teil I.
+
+- **Neu (11.11.): A23 Farbige Zahlen in den Fähigkeiten** (deine Entscheidung):
+  - Im Kästchen über einer Fähigkeit steht jetzt der fertige Wert, so wie er mit deiner Stufe, Waffe und Fähigkeitsstufe wirkt (z. B. Wirbel auf Stufe 20: „11 an alle“ statt „7 an alle“).
+  - Die Farbe zeigt, womit die Zahl wächst: Waffenkraft orange, Zauberkraft blau-violett, Tempo türkis, Stufe gold. Feste Werte (Mana, Runden, Schilde, Anzahl) bleiben weiß.
+  - Taste D gedrückt halten: Hinter jeder Zahl steht der Grundwert und um wie viel Prozent ihn Stufe, Waffen-/Zauberkraft, Tempo und Fähigkeitsstufe erhöhen, darunter die Farben erklärt. Am Handy steht das beim Gedrückthalten gleich mit da.
+  - Zauberkraft: Sternensängerin, Magier-Tank, Ritualist und Zwielicht wachsen mit Zauberkraft. Ausrüstung kann Zauberkraft haben (Waffe oder Bonus-Wert). Eigene Zauber-Waffen gibt es noch nicht, die Sternensängerin trägt weiter die Grundwaffe.
+  - Tempo: Schnellfeuer (Bogenschütze) und Sturmschritte (Klingentänzerin) machen 4 % mehr Schaden je Tempo-Punkt über dem Grundtempo der Klasse (z. B. mit schneller Waffe +2 Tempo = +8 %).
+  - **So testest du es:**
+    1. Im Kampf mit der Maus über eine Fähigkeit: Schaden in Orange (oder Blau-Violett bei der Sternensängerin), Mana weiß.
+    2. D gedrückt halten: In Klammern Grundwert und Prozente, darunter die Farben. D loslassen: wieder kurz.
+    3. Als Bogenschütze über Schnellfeuer: die Zahl pro Pfeil in Türkis.
+    4. Als Novize (Kreuzweg): Zahlen in Gold.
+    5. Eine schnellere Waffe anlegen und wieder über Schnellfeuer fahren: Mit D steht „Tempo … +8 %“.
 
 - **Neu (11.11.): A22 Fähigkeiten im Kampf wie in einem MMORPG** (dein Wunsch):
   - Unter „Fähigkeiten“ stehen jetzt nur noch die Bilder, groß (72 × 72), acht in einer Reihe, ohne Schrift im Kästchen.
