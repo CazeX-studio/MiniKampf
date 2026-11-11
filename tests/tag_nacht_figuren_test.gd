@@ -32,8 +32,10 @@ func _initialize() -> void:
 
 	world.nacht = true
 	_check(world.npcs.ye_tor.cell == Vector2i(12, 44) and world.npcs.ye_tor.cell != tag, "Nachts: Ye in der Gilde")
-	_check(world.npcs.marv.cell == Vector2i(12, 28), "Nachts: Marv im Wegrast")
-	_check(world.npcs.tessa.cell == Vector2i(7, 30) and world.npcs.gorm.cell == Vector2i(11, 30), "Nachts: Tessa und Gorm im Wegrast")
+	_check(world.npcs.marv.map == "wegrast" and world.npcs.marv.cell == Vector2i(6, 9), "Nachts: Marv drinnen im Wegrast (A17)")
+	_check(world.npcs.tessa.map == "wegrast" and world.npcs.gorm.map == "wegrast", "Nachts: Tessa und Gorm drinnen im Wegrast")
+	for id: String in ["marv", "tessa", "gorm"]:
+		_check(not world.get_map("wegrast").is_walkable(world.npcs[id].nacht_cell), "%s: Platz im Wegrast ist frei und gesperrt" % id)
 	for id: String in ["marktfrau", "marktmann", "buerger_1", "buerger_2", "buerger_4", "pip", "lotte", "quill", "edmar"]:
 		_check(not world.npc_visible(p, id), "Nachts nicht da: %s" % id)
 	for id: String in ["buerger_3", "bingo", "hatta", "schreiberin", "bank_kreuzweg", "wache"]:
@@ -51,6 +53,7 @@ func _initialize() -> void:
 	p.progress.flags.erase("nacht")
 	world.nacht = false
 	_check(world.npcs.ye_tor.cell == tag, "Morgens: Ye wieder am Tor")
+	_check(world.npcs.tessa.map == "kreuzweg" and world.npcs.marv.map == "kreuzweg", "Morgens: Tessa und Marv wieder draußen")
 
 	# Marktstände: tags offen, nachts zu, der Platz bleibt immer gesperrt
 	var offen := 0

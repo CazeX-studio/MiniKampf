@@ -177,9 +177,10 @@
 				"radius": 5
 			},
 			"nachts": [
-				12,
-				28
-			]
+				6,
+				9
+			],
+			"nachts_karte": "wegrast"
 		},
 		"gesandte_arkanum": {
 			"name": "Magistra Ilwen",
@@ -511,15 +512,16 @@
 				42
 			],
 			"nachts": [
-				7,
-				30
+				2,
+				10
 			],
 			"aussehen": "novize_w+tessa",
 			"dialog": "tessa",
 			"wenn": {
 				"gemerkt": "gilde_angemeldet",
 				"nicht_gemerkt": "klasse_bestaetigt"
-			}
+			},
+			"nachts_karte": "wegrast"
 		},
 		"gorm": {
 			"name": "Gorm",
@@ -528,15 +530,16 @@
 				44
 			],
 			"nachts": [
-				11,
-				30
+				4,
+				10
 			],
 			"aussehen": "novize_m+gorm",
 			"dialog": "gorm",
 			"wenn": {
 				"gemerkt": "gilde_angemeldet",
 				"nicht_gemerkt": "klasse_bestaetigt"
-			}
+			},
+			"nachts_karte": "wegrast"
 		},
 		"marktfrau": {
 			"name": "Marktfrau Rosa",

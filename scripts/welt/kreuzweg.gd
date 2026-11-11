@@ -108,6 +108,8 @@ var _marker_node: Node2D
 var _waypoint := Vector2i(-1, -1)
 ## Kleine Karte oben rechts und große Karte auf M (A11)
 var _minikarte: Minikarte
+## Stand von Tag/Nacht beim letzten Aufbau der Karte (wechselt er, kommen und gehen Figuren in Innenräumen)
+var _nacht_war := false
 ## Türen zu Innenräumen (A12): [Knoten, Innenraum, Zeichen]
 var _tueren: Array = []
 var _weltkarte: Weltkarte
@@ -366,6 +368,7 @@ func _ortsname_zeigen(name: String) -> void:
 
 ## Baut die Karte des eigenen Spielers auf (beim Start und nach jedem Kartenwechsel).
 func _build_map_view() -> void:
+	_nacht_war = state.nacht
 	var local := local_player()
 	if local.map != _shown_map:
 		_ortsname_zeigen.call_deferred(state.get_map(local.map).title)
@@ -743,6 +746,9 @@ func _sync() -> void:
 		var distance := (Vector2(state.npcs[id].cell) - local.pos).length()
 		npc_view.set_name_alpha(clampf((NAME_FADE_END - distance) / (NAME_FADE_END - NAME_FADE_START), 0.0, 1.0))
 	if langsam:
+		# Tag und Nacht wechseln: Manche Figuren gehen nachts in ein Gasthaus und kommen morgens heraus (A12, A17)
+		if state.nacht != _nacht_war:
+			_build_map_view()
 		_waypoint = state.objective_cell(local)
 		if _minikarte != null:
 			_minikarte.ziel = _waypoint
