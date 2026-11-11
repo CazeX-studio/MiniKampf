@@ -64,7 +64,19 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (11.11., nach Teil N):** Alle gelieferten Bilder haben jetzt einen Bauauftrag. A3b (Klassenbilder), A9c (alle Dungeon-Effekte aus Teil M), A20 (Ladebildschirme) und A21 (Nachbild, Blitzeinschlag) sind fertig. Als Nächstes: A22 (Fähigkeiten-Knöpfe im Kampf nur mit großem Bild, Beschreibung beim Drüberfahren). Danach E4 (Balancing, braucht viele Tests), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden. Noch zu malen ist für die Demo nichts; später kommen Teil R, H2 und S3 (sechs spätere Klassen) und Teil I.
+- **Nächster Schritt (11.11., nach Teil N):** Alle gelieferten Bilder haben jetzt einen Bauauftrag. A3b (Klassenbilder), A9c (alle Dungeon-Effekte aus Teil M), A20 (Ladebildschirme) A21 (Nachbild, Blitzeinschlag) und A22 (Fähigkeiten als große Bilder) sind fertig. Offen zu besprechen: farbige Zahlen in den Beschreibungen. Danach E4 (Balancing). Danach E4 (Balancing, braucht viele Tests), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden. Noch zu malen ist für die Demo nichts; später kommen Teil R, H2 und S3 (sechs spätere Klassen) und Teil I.
+
+- **Neu (11.11.): A22 Fähigkeiten im Kampf wie in einem MMORPG** (dein Wunsch):
+  - Unter „Fähigkeiten“ stehen jetzt nur noch die Bilder, groß (72 × 72), acht in einer Reihe, ohne Schrift im Kästchen.
+  - Fährst du mit der Maus drüber, erscheint darüber ein Kästchen: Name, was die Fähigkeit im Kampf macht (Schaden, Mana), die Beschreibung aus dem Fähigkeiten-Baum und, falls sie gerade nicht geht, warum. Am Handy: Fähigkeit gedrückt halten, loslassen benutzt sie dann nicht.
+  - Taste (1 bis 9) klein oben links, gesperrte Fähigkeiten dunkel, Abklingzeit als große Zahl auf dem Bild. Ult mit Goldrahmen, Duett rosa, Dungeon-Aktionen (z. B. Anker festhämmern) hellblau.
+  - Gegenstände, Zielwahl und Auswahl-Menüs bleiben wie bisher mit Text.
+  - **So testest du es:**
+    1. Einen Kampf beginnen, „Fähigkeiten“: nur Bilder, groß.
+    2. Mit der Maus über ein Bild fahren: Beschreibung erscheint darüber, beim Wegfahren verschwindet sie.
+    3. Über eine dunkle (gesperrte) Fähigkeit fahren: In Rot steht, warum sie nicht geht.
+    4. Taste 2 drücken: Die zweite Fähigkeit wird benutzt wie vorher.
+    5. Am Handy eine Fähigkeit gedrückt halten: Beschreibung, aber kein Angriff.
 
 - **Neu (11.11.): A21 Goldenes Nachbild und Blitzeinschlag** (deine zwei Zusatz-Effekte):
   - Bei jeder perfekten Parade und jedem perfekten Ausweichen bleibt kurz eine goldene Silhouette stehen und verweht (zusätzlich zum großen Stern).
