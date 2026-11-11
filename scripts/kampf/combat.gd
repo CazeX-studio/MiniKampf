@@ -764,6 +764,10 @@ func _show_actions(f: Fighter, category := "faehigkeiten") -> void:
 		list = list.filter(func(ab: Dictionary) -> bool: return ab.id == "trank" or ab.id == "manatrank_trinken")
 		if list.is_empty():
 			_turn_label.text = "Keine Gegenstände für den Kampf in der Tasche"
+	# Fähigkeiten wie in einem MMORPG (A22, Marco 11.11.): nur große Bilder, die Beschreibung kommt beim Drüberfahren
+	if category == "faehigkeiten":
+		_zeige_symbolleiste(f, list)
+		return
 	# Mehr als 8 Knöpfe (z. B. mit Dungeon-Aktionen): kleiner, damit 3 Reihen passen
 	var compact := list.size() > 8
 	for ab in list:
@@ -791,6 +795,156 @@ func _show_actions(f: Fighter, category := "faehigkeiten") -> void:
 		button.pressed.connect(_on_ability_pressed.bind(f, ab))
 		_grid.add_child(button)
 	_number_buttons()
+
+
+## Größe der Symbol-Knöpfe (A22) und wie viele in eine Reihe passen
+const SYMBOL_GROESSE := 72.0
+const SYMBOL_SPALTEN := 8
+## So lange halten (Handy), bis die Beschreibung kommt, statt die Fähigkeit zu benutzen
+const HALTEN_SEKUNDEN := 0.45
+
+var _hinweis: PanelContainer
+var _hinweis_text: RichTextLabel
+var _gehalten := false
+
+
+## Fähigkeiten als große Bilder ohne Schrift (A22). Gesperrte sind dunkel, Abklingzeit steht groß darauf.
+func _zeige_symbolleiste(f: Fighter, list: Array) -> void:
+	_grid.columns = SYMBOL_SPALTEN
+	var groesse := SYMBOL_GROESSE if list.size() <= SYMBOL_SPALTEN * 2 else 56.0
+	for ab in list:
+		var reason := state.skills.blocked_reason(f, ab)
+		var button := Button.new()
+		button.set_meta("symbol", true)
+		button.custom_minimum_size = Vector2(groesse, groesse)
+		button.focus_mode = Control.FOCUS_NONE
+		var eigenes := FaehigkeitenBaum.bild("novize" if ab.get("novize", false) else f.klass, str(ab.id))
+		button.icon = eigenes if eigenes != null else UiStil.symbol(_skill_icon(f, ab))
+		button.expand_icon = true
+		button.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		button.vertical_icon_alignment = VERTICAL_ALIGNMENT_CENTER
+		button.add_theme_constant_override("icon_max_width", int(groesse - (8 if eigenes != null else 22)))
+		button.disabled = reason != ""
+		if reason != "":
+			button.add_theme_color_override("icon_disabled_color", Color(0.45, 0.45, 0.5, 0.8))
+		# Rahmenfarbe nach Art: Ult gold, Duett rosa, Dungeon-Aktion hellblau
+		var rand := Color(0, 0, 0, 0)
+		if ab.id == "ult":
+			rand = Color("f2c14e")
+		elif ab.has("duet"):
+			rand = Color("ffa8e0")
+		elif ab.has("dungeon"):
+			rand = Color("9fe8ff")
+		if rand.a > 0.0:
+			var rahmen := Panel.new()
+			var stil := StyleBoxFlat.new()
+			stil.draw_center = false
+			stil.border_color = rand
+			stil.set_border_width_all(3)
+			stil.set_corner_radius_all(6)
+			rahmen.add_theme_stylebox_override("panel", stil)
+			rahmen.set_anchors_preset(Control.PRESET_FULL_RECT)
+			rahmen.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			button.add_child(rahmen)
+		# Abklingzeit: Zahl groß auf dem Bild
+		var warten := f.cooldown(str(ab.id))
+		if warten > 0:
+			var zahl := Label.new()
+			zahl.text = str(warten)
+			zahl.set_anchors_preset(Control.PRESET_FULL_RECT)
+			zahl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			zahl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			zahl.add_theme_font_size_override("font_size", 30)
+			zahl.add_theme_color_override("font_outline_color", Color.BLACK)
+			zahl.add_theme_constant_override("outline_size", 8)
+			zahl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			button.add_child(zahl)
+		var text := _hinweis_fuer(f, ab, reason)
+		button.mouse_entered.connect(_hinweis_zeigen.bind(button, text))
+		button.mouse_exited.connect(_hinweis_verstecken)
+		# Handy: Gedrückthalten zeigt die Beschreibung, ohne die Fähigkeit zu benutzen
+		button.button_down.connect(func() -> void:
+			_gehalten = false
+			get_tree().create_timer(HALTEN_SEKUNDEN).timeout.connect(func() -> void:
+				if is_instance_valid(button) and button.is_pressed():
+					_gehalten = true
+					_hinweis_zeigen(button, text)))
+		button.pressed.connect(func() -> void:
+			if _gehalten:
+				_gehalten = false
+				return
+			_on_ability_pressed(f, ab))
+		_grid.add_child(button)
+	_number_buttons()
+
+
+## Was beim Drüberfahren steht: Name, was die Fähigkeit im Kampf macht, die Beschreibung aus dem Baum und warum sie gesperrt ist.
+func _hinweis_fuer(f: Fighter, ab: Dictionary, reason: String) -> String:
+	var farbe := "f3ead8"
+	var art := ""
+	if ab.id == "ult":
+		farbe = "f2c14e"
+		art = "  [color=#f2c14e](Ult)[/color]"
+	elif ab.has("duet"):
+		farbe = "ffa8e0"
+		art = "  [color=#ffa8e0](Duett)[/color]"
+	elif ab.has("dungeon"):
+		farbe = "9fe8ff"
+		art = "  [color=#9fe8ff](hier im Dungeon)[/color]"
+	var zeilen: Array[String] = ["[b][color=#%s]%s[/color][/b]%s" % [farbe, ab.name, art]]
+	if str(ab.get("info", "")) != "":
+		zeilen.append(str(ab.info))
+	var baum := _baum_info(f.klass, str(ab.id))
+	if baum != "" and baum != str(ab.get("info", "")):
+		zeilen.append("[color=#b8b0a0]%s[/color]" % baum)
+	if reason != "":
+		zeilen.append("[color=#ff9a7a]%s[/color]" % reason)
+	return "\n".join(zeilen)
+
+
+## Beschreibung der Fähigkeit aus dem Fähigkeiten-Baum (data/faehigkeiten.json), falls es eine gibt.
+func _baum_info(klasse: String, id: String) -> String:
+	var klasse_daten: Variant = GameData.get_file("faehigkeiten").get(klasse, {})
+	if not klasse_daten is Dictionary:
+		return ""
+	for eintrag: Dictionary in klasse_daten.get("faehigkeiten", []):
+		if str(eintrag.get("id", "")) == id:
+			return str(eintrag.get("info", ""))
+	return ""
+
+
+## Kästchen mit der Beschreibung über dem Knopf (nicht über den Rand hinaus).
+func _hinweis_zeigen(knopf: Control, text: String) -> void:
+	if _hinweis == null:
+		_hinweis = PanelContainer.new()
+		_hinweis.z_index = 30
+		_hinweis.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_hinweis_text = RichTextLabel.new()
+		_hinweis_text.bbcode_enabled = true
+		_hinweis_text.fit_content = true
+		_hinweis_text.custom_minimum_size = Vector2(340, 0)
+		_hinweis_text.scroll_active = false
+		_hinweis_text.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_hinweis_text.add_theme_font_size_override("normal_font_size", 15)
+		_hinweis_text.add_theme_font_size_override("bold_font_size", 17)
+		_hinweis.add_child(_hinweis_text)
+		add_child(_hinweis)
+	_hinweis_text.text = text
+	_hinweis.visible = true
+	_hinweis.reset_size()
+	await get_tree().process_frame
+	if not is_instance_valid(knopf) or not _hinweis.visible:
+		return
+	_hinweis.reset_size()
+	var ort := knopf.global_position + Vector2(knopf.size.x * 0.5 - _hinweis.size.x * 0.5, -_hinweis.size.y - 8.0)
+	ort.x = clampf(ort.x, 8.0, SCREEN.x - _hinweis.size.x - 8.0)
+	ort.y = maxf(ort.y, 8.0)
+	_hinweis.global_position = ort
+
+
+func _hinweis_verstecken() -> void:
+	if _hinweis != null:
+		_hinweis.visible = false
 
 
 ## Symbol für einen Fähigkeits-Knopf (aus dem UI-Set), grob nach Art der Fähigkeit.
@@ -931,7 +1085,17 @@ func _number_buttons() -> void:
 		return
 	var buttons := _grid_buttons()
 	for i in mini(buttons.size(), 9):
-		if not buttons[i].has_meta("platzhalter"):
+		if buttons[i].has_meta("symbol"):
+			# Symbol-Knopf (A22): die Taste klein in der Ecke statt vor dem Text
+			var taste := Label.new()
+			taste.text = str(i + 1)
+			taste.position = Vector2(5, 1)
+			taste.add_theme_font_size_override("font_size", 14)
+			taste.add_theme_color_override("font_outline_color", Color.BLACK)
+			taste.add_theme_constant_override("outline_size", 5)
+			taste.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			buttons[i].add_child(taste)
+		elif not buttons[i].has_meta("platzhalter"):
 			buttons[i].text = "%d · %s" % [i + 1, buttons[i].text]
 
 
@@ -1936,6 +2100,8 @@ func _update_rotate_hint() -> void:
 
 
 func _clear_actions() -> void:
+	_grid.columns = 4
+	_hinweis_verstecken()
 	for child in _grid.get_children():
 		if child is Button:
 			child.disabled = true
