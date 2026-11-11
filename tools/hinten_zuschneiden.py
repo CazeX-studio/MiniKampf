@@ -31,9 +31,14 @@ def freistellen(blatt: Image.Image) -> Image.Image:
 	rgb = a[:, :, :3]
 	mn = rgb.min(axis=2)
 	hell = (mn >= 232) & ((rgb.max(axis=2) - mn) <= 10)
-	lab, _ = ndimage.label(hell)
+	lab, n = ndimage.label(hell)
 	rand = set(np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))) - {0}
-	bg = np.isin(lab, list(rand))
+	# Eingeschlossene Reste (z. B. zwischen Blättern): helle Flächen mit Karomuster (zwei Grautöne gemischt)
+	groesse = ndimage.sum(hell, lab, range(1, n + 1))
+	grau = ndimage.mean((mn >= 243) & (mn <= 250), lab, range(1, n + 1))
+	weiss = ndimage.mean(mn >= 252, lab, range(1, n + 1))
+	karo = {i + 1 for i in range(n) if groesse[i] >= 10 and grau[i] > 0.15 and weiss[i] > 0.15}
+	bg = np.isin(lab, list(rand | karo))
 	for _ in range(2):
 		bg |= ndimage.binary_dilation(bg) & ~bg & (mn >= 200) & ((rgb.max(axis=2) - mn) <= 25)
 	a[:, :, 3] = np.where(bg, 0, 255)

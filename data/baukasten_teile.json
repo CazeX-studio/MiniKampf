@@ -1431,7 +1431,13 @@
 			"fuss": [
 				160,
 				140
-			]
+			],
+			"bild_hinten": "objekte/gw_gasthaus_hinten.png",
+			"fuss_hinten": [
+				147,
+				168
+			],
+			"lichter_hinten": []
 		},
 		"gw_bank": {
 			"bild": "objekte/gw_bank.png",
@@ -1442,7 +1448,13 @@
 			"fuss": [
 				111,
 				146
-			]
+			],
+			"bild_hinten": "objekte/gw_bank_hinten.png",
+			"fuss_hinten": [
+				137,
+				163
+			],
+			"lichter_hinten": []
 		},
 		"gw_stand_salbei": {
 			"bild": "objekte/gw_stand_salbei.png",
@@ -1453,7 +1465,13 @@
 			"fuss": [
 				36,
 				91
-			]
+			],
+			"bild_hinten": "objekte/gw_stand_salbei_hinten.png",
+			"fuss_hinten": [
+				134,
+				78
+			],
+			"lichter_hinten": []
 		},
 		"gw_esches_huette": {
 			"bild": "objekte/gw_esches_huette.png",
@@ -1486,7 +1504,13 @@
 			"fuss": [
 				121,
 				155
-			]
+			],
+			"bild_hinten": "objekte/gw_wohnbaumhaus_hinten.png",
+			"fuss_hinten": [
+				68,
+				167
+			],
+			"lichter_hinten": []
 		},
 		"gw_urbaum": {
 			"bild": "objekte/gw_urbaum.png",
@@ -2600,7 +2624,13 @@
 			"fuss": [
 				142,
 				147
-			]
+			],
+			"bild_hinten": "objekte/gw_dornfeders_halle_hinten.png",
+			"fuss_hinten": [
+				116,
+				131
+			],
+			"lichter_hinten": []
 		},
 		"marktstand_rot_zu": {
 			"bild": "objekte/marktstand_rot_zu.png",
