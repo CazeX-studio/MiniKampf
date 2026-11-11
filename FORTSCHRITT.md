@@ -64,7 +64,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (11.11., nach Teil N):** Alle gelieferten Bilder haben jetzt einen Bauauftrag. A3b (Klassenbilder), A9c (alle Dungeon-Effekte aus Teil M) und A20 (Ladebildschirme) sind fertig. Als Nächstes: A21 (deine zwei Zusatz-Effekte: goldenes Nachbild bei perfekter Abwehr und mächtiger Blitzeinschlag). Danach E4 (Balancing, braucht viele Tests), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden. Noch zu malen ist für die Demo nichts; später kommen Teil R, H2 und S3 (sechs spätere Klassen) und Teil I.
+- **Nächster Schritt (11.11., nach Teil N):** Alle gelieferten Bilder haben jetzt einen Bauauftrag. A3b (Klassenbilder), A9c (alle Dungeon-Effekte aus Teil M), A20 (Ladebildschirme) und A21 (Nachbild, Blitzeinschlag) sind fertig. Als Nächstes: A22 (Fähigkeiten-Knöpfe im Kampf nur mit großem Bild, Beschreibung beim Drüberfahren). Danach E4 (Balancing, braucht viele Tests), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden. Noch zu malen ist für die Demo nichts; später kommen Teil R, H2 und S3 (sechs spätere Klassen) und Teil I.
+
+- **Neu (11.11.): A21 Goldenes Nachbild und Blitzeinschlag** (deine zwei Zusatz-Effekte):
+  - Bei jeder perfekten Parade und jedem perfekten Ausweichen bleibt kurz eine goldene Silhouette stehen und verweht (zusätzlich zum großen Stern).
+  - Der stärkste Blitz-Angriff jedes Blitz-Monsters schlägt jetzt als mächtiger Blitz von oben unter dem Ziel ein, mit Steinen, Staub und Wackeln: Funkenflirr und Messingwächter (Funkenschlag), Funkenmarder (Funkenfell), Donnerhirsch (Blitzgeweih), Funkenechse (Funkenzunge), Glasskorpion (Blitzstachel), Gewitterwyvern (Aschegewitter), Glimmerkäfer (Entladung), Funkenwicht (Kettenblitz). Andere Angriffe kannst du jederzeit nennen.
+  - **So testest du es:**
+    1. Einen Angriff perfekt parieren: goldenes Nachbild hinter dem Stern.
+    2. Als Bogenschütze perfekt ausweichen: dasselbe Nachbild.
+    3. Auf den Kreuzwegfeldern nachts gegen Funkenflirr kämpfen und warten, bis er „Funkenschlag“ macht: Blitzeinschlag unter dir.
+    4. In der Pilzhöhle beim Glimmerkäfer die „Entladung“ abwarten: Blitze unter allen Helden.
 
 - **Neu (11.11.): A20 Ladebildschirme mit deinen gemalten Szenen** (Teil S):
   - Beim Spielstart (aus dem Menü) und wenn du in eine andere Region (Kreuzweg, Grünwacht, Glutoase) oder in einen Dungeon gehst, kommt kurz ein Szenenbild über den ganzen Bildschirm, groß der Ortsname, darunter ein Tipp. Nach etwa 2,5 Sekunden blendet es aus, Antippen oder eine Taste schließt es früher.
