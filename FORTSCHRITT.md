@@ -64,7 +64,20 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (11.11., nach Teil N):** Alle gelieferten Bilder haben jetzt einen Bauauftrag. A3b (Klassenbilder) und A9c (alle Dungeon-Effekte aus Teil M) sind fertig. Der Reihe nach: A20 (Ladebildschirme aus Teil S), A21 (deine zwei Zusatz-Effekte: goldenes Nachbild bei perfekter Abwehr und mächtiger Blitzeinschlag). Danach E4 (Balancing, braucht viele Tests), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden. Noch zu malen ist für die Demo nichts; später kommen Teil R, H2 und S3 (sechs spätere Klassen) und Teil I.
+- **Nächster Schritt (11.11., nach Teil N):** Alle gelieferten Bilder haben jetzt einen Bauauftrag. A3b (Klassenbilder), A9c (alle Dungeon-Effekte aus Teil M) und A20 (Ladebildschirme) sind fertig. Als Nächstes: A21 (deine zwei Zusatz-Effekte: goldenes Nachbild bei perfekter Abwehr und mächtiger Blitzeinschlag). Danach E4 (Balancing, braucht viele Tests), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden. Noch zu malen ist für die Demo nichts; später kommen Teil R, H2 und S3 (sechs spätere Klassen) und Teil I.
+
+- **Neu (11.11.): A20 Ladebildschirme mit deinen gemalten Szenen** (Teil S):
+  - Beim Spielstart (aus dem Menü) und wenn du in eine andere Region (Kreuzweg, Grünwacht, Glutoase) oder in einen Dungeon gehst, kommt kurz ein Szenenbild über den ganzen Bildschirm, groß der Ortsname, darunter ein Tipp. Nach etwa 2,5 Sekunden blendet es aus, Antippen oder eine Taste schließt es früher.
+  - Zwischen Karten derselben Region (z. B. Glutoase → Palmenrast), in Gasthäusern und nach Kämpfen kommt keiner, damit es nicht nervt.
+  - Bildwahl: Vor der Klassenwahl beim ersten Mal das Gruppenbild, sonst zufällig. Nach der Klassenwahl meist die Szene deiner Klasse.
+  - Bilder und Tipps stehen in `data/ladebildschirm.json`, dort kannst du Tipps ändern oder neue Szenen eintragen.
+  - Das Gruppenbild steht jetzt auch oben auf der Web-Startseite.
+  - **So testest du es:**
+    1. Im Menü „Kreuzweg-Demo“ starten: Gruppenbild mit „Kreuzweg“ und einem Tipp, danach die Stadt.
+    2. Durchs Südtor auf die Kreuzwegfelder: kein Ladebildschirm (gleiche Region). Weiter in die Aschensteppe: Ladebildschirm „Aschensteppe“.
+    3. Einmal antippen, während er da ist: Er schließt sofort.
+    4. Mit gewählter Klasse mehrmals die Region wechseln: Meist kommt die Szene deiner Klasse.
+    5. Die Web-Startseite öffnen: Das Gruppenbild steht über dem Titel.
 
 - **Neu (11.11.): A9c2 Gemalte Effekte in der Pilzhöhle** (Teil M2):
   - Sporenkönigin: Jede Giftwolke hängt jetzt sichtbar als gemalte, wabernde Wolke über den Helden (bis zu fünf). Vertriebene verwehen. Heilt eine Sporenknospe, öffnet sie sich und leuchtende Sporen steigen auf.
