@@ -114,6 +114,9 @@ static func prepare(id: String, level: int, potions := 0, own_class := "", own_m
 	# Novize: nur, was er bei Ye schon gelernt hat (Lektionen und Lernkämpfe mit Phasen zeigen, was sie erlauben)
 	if klasse == "novize" and not player_novize.is_empty() and not data.has("phasen") and not data.get("lektion", false):
 		player["novize_gelernt"] = player_novize.duplicate()
+	# A16: Auch eine Klasse behält, was sie bei Ye gelernt hat (im Kampf nur, was auf ihrer Leiste liegt)
+	elif klasse != "novize" and klasse == own_class and not player_novize.is_empty() and not data.has("phasen"):
+		player["novize_gelernt"] = player_novize.duplicate()
 	if klasse == "tamer" and not player_band.is_empty():
 		player["band"] = player_band.duplicate()
 	if klasse == "archer" and not player_munition.is_empty():

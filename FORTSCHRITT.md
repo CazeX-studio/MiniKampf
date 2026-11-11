@@ -5,7 +5,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 11.11.)
 
-- **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** A16 (Novizen-Fähigkeiten nach der Klassenwahl behalten), danach E4 (Balancing) und E5; neu für dich: Teil M bis Q in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
+- **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** Die Alpha-Aufträge sind fertig (A3b, A10b, A13b warten auf deine Bilder). Als Nächstes E4 (Balancing-Runde), dann E5 (T3 und T4 am Stück); neu für dich: Teil M bis Q in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
 - **Bilder von Marco (02.11. abends):** 38 Blätter liegen unter `tools/vorlagen/`: alle sechs Novizen-Blätter ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen.
   - Dazu der Baukasten (02.11.): acht Grundkörper (`grund_*.png`), Köpfe (`koepfe_*.png`), Hüte (`huete_regionen.png`), Zeichen (`zeichen_dienste.png`) und die Klingentänzerin Blatt 1. Bei den Fäusten der Abwehr-Bilder von Blatt 1 prüft Claude beim Einbauen, ob sie am Oval stören.
   - Dazu Figuren 4 und 5 (02.11.): 22 Blätter Nebenfiguren (`neben_*.png`) und 42 Blätter Hauptfiguren (`haupt_*.png`) aller drei Städte, damit ist Teil D vollständig. `neben_reserve_rashid_tarek.png` ist ein doppeltes Sammelblatt und bleibt Reserve.
@@ -64,7 +64,17 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (11.11.):** Alpha-Auftrag A16 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+- **Nächster Schritt (11.11.):** E4 (Balancing), danach E5 und S6 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+
+- **Neu (11.11.): A16 Novizen-Fähigkeiten nach der Klassenwahl behalten** (dein Beschluss vom 11.11.):
+  - Im Fähigkeiten-Baum (K) steht jetzt oben die Reihe „Novize (von Ye)“ mit allem, was du bei Ye gelernt hast: Schildstoß, Doppelschlag, Erste Hilfe, Deckung geben. Sie sind schon gelernt und kosten keine Punkte. Antippen zeigt die Beschreibung und „Auf die Leiste“.
+  - Was auf der Leiste liegt, kannst du im Kampf als Klasse benutzen, mit den gemalten Novizen-Bildern auf den Knöpfen. Sie wirken wie beim Novizen und werden mit deiner Stärke besser. Der Hieb bleibt beim Novizen, jede Klasse hat ihren eigenen Grundangriff.
+  - So hatte es der Bauauftrag vorgeschlagen; willst du es anders (z. B. immer da, ohne Leiste), sag Bescheid.
+  - **So testest du es:**
+    1. Mit dem Spielstand-Editor eine Klasse nehmen (z. B. Bogenschütze, nach dem Lernen beim Lehrmeister) und K drücken: Oben steht die Reihe „Novize (von Ye)“.
+    2. Schildstoß antippen, „Auf die Leiste“: Er liegt auf einem der sechs Plätze, das Feld zeigt „Leiste“.
+    3. Ein Monster angreifen: Schildstoß ist als Knopf da und schiebt den Gegner auf der Zugleiste zurück.
+    4. Schildstoß wieder von der Leiste nehmen: Im nächsten Kampf ist er nicht mehr da.
 
 - **Neu (11.11.): A15 Nachgeholt vom 21.10.** (Beschlüsse aus design.md, die nie ins Spiel kamen):
   - **Ein Brief vom Tor** (Nebenauftrag): Nach dem Essenskorb bittet Torwache Brom dich, einen Brief zu Wirtin Hanne ins Wegrast zu bringen („Ein Liebesbrief?“ – „Ein … Dienstschreiben. Nicht lesen!“). Hanne schickt eine Antwort zurück, Brom freut sich. 10 Bronze und 60 Erfahrung.

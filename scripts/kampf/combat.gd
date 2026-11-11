@@ -761,7 +761,7 @@ func _show_actions(f: Fighter, category := "faehigkeiten") -> void:
 		elif reason == "" and ab.has("dungeon"):
 			button.add_theme_color_override("font_color", Color("9fe8ff"))
 		# Gemaltes Bild der Fähigkeit (A8a, dasselbe wie im Fähigkeiten-Baum), sonst ein Symbol aus dem UI-Set
-		var eigenes := FaehigkeitenBaum.bild(f.klass, str(ab.id))
+		var eigenes := FaehigkeitenBaum.bild("novize" if ab.get("novize", false) else f.klass, str(ab.id))
 		button.icon = eigenes if eigenes != null else UiStil.symbol(_skill_icon(f, ab))
 		button.add_theme_constant_override("icon_max_width", 34 if eigenes != null else 26)
 		button.pressed.connect(_on_ability_pressed.bind(f, ab))

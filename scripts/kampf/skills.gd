@@ -262,13 +262,7 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 				{id = "ult", name = "Tausend Siegel", info = "Jeder Gegner 22 mit seiner Schwäche, alle +18 LP", target = "none"},
 			]
 		"novize":
-			list = [
-				{id = "schlag", name = "Hieb", info = "%d Nahkampf mit dem Kurzschwert" % roundi(NOVIZE.schlag * f.power), target = "enemy"},
-				{id = "schildstoss", name = "Schildstoß", info = "%d Nahkampf, Ziel rutscht auf der Zugleiste zurück" % roundi(NOVIZE.schildstoss * f.power), target = "enemy"},
-				{id = "doppelschlag", name = "Doppelschlag", info = "Zwei Hiebe à %d · 10 Mana" % roundi(NOVIZE.doppelschlag * f.power), target = "enemy", mana = 10},
-				{id = "erste_hilfe", name = "Erste Hilfe", info = "Heilt dich oder einen Verbündeten um %d · 12 Mana" % roundi(NOVIZE.erste_hilfe * f.power), target = "ally", mana = 12},
-				{id = "deckung", name = "Deckung geben", info = "Nach vorne, fängt bis zu deinem nächsten Zug einen Treffer für einen Verbündeten ab · 8 Mana", target = "ally_other", mana = 8},
-			]
+			list = novize_liste(f)
 			# Nur, was der Novize bei Ye schon gelernt hat
 			if f.has_meta("novize_gelernt"):
 				var gelernt: Array = f.get_meta("novize_gelernt")
@@ -303,6 +297,14 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 					{id = "pet_attack", name = tame.name, info = "%d %s" % [tame.base, f.element], target = "enemy"},
 					{id = "pet_guard", name = "Beschützen", info = "Zieht 2 Angriffe auf sich, Abwehr+", target = "none", cd = 2},
 				]
+	# A16: Novizen-Fähigkeiten, die eine Klasse bei Ye gelernt hat und auf ihre Leiste gelegt hat (ohne Baum: alle)
+	if f.is_hero and f.klass != "novize" and f.has_meta("novize_gelernt"):
+		var gelernt: Array = f.get_meta("novize_gelernt")
+		var leiste: Array = f.get_meta("leiste", [])
+		for ab: Dictionary in novize_liste(f):
+			if ab.id in Faehigkeiten.NOVIZE and ab.id in gelernt and (ab.id in leiste or not Faehigkeiten.hat_baum(f.klass)):
+				ab["novize"] = true
+				list.append(ab)
 	# Tränke am Gürtel: für jede Klasse, die welche dabei hat (Projekt 5). Der Quartiermeister hat stattdessen seinen Karren.
 	if f.is_hero and not is_pet(f) and f.klass != "quartermaster":
 		var free := "gratis, du bist noch dran" if not f.belt_free_used else "kostet den Zug"
@@ -560,6 +562,10 @@ func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 		partner.cooldowns[id] = Sandbox.DUET_CD + 1
 		c.delay(partner, 0.3)
 		return
+	# Behaltene Novizen-Fähigkeiten einer Klasse (A16) wirken wie beim Novizen
+	if ab.get("novize", false):
+		_novize(f, id, target)
+		return
 	# Tränke am Gürtel kann jede Klasse trinken (A1b: bisher heilten sie nur beim Novizen)
 	if id in ["trank", "manatrank_trinken"] and not ab.has("choice"):
 		_novize(f, id, target)
@@ -595,6 +601,17 @@ func execute(f: Fighter, ab: Dictionary, target: Fighter) -> void:
 		_:
 			if is_pet(f):
 				_monster_action(f, id, target)
+
+
+## Die Fähigkeiten des Novizen (auch für Klassen, die sie behalten haben, A16). Zahlen nach der Stärke der Figur.
+func novize_liste(f: Fighter) -> Array[Dictionary]:
+	return [
+		{id = "schlag", name = "Hieb", info = "%d Nahkampf mit dem Kurzschwert" % roundi(NOVIZE.schlag * f.power), target = "enemy"},
+		{id = "schildstoss", name = "Schildstoß", info = "%d Nahkampf, Ziel rutscht auf der Zugleiste zurück" % roundi(NOVIZE.schildstoss * f.power), target = "enemy"},
+		{id = "doppelschlag", name = "Doppelschlag", info = "Zwei Hiebe à %d · 10 Mana" % roundi(NOVIZE.doppelschlag * f.power), target = "enemy", mana = 10},
+		{id = "erste_hilfe", name = "Erste Hilfe", info = "Heilt dich oder einen Verbündeten um %d · 12 Mana" % roundi(NOVIZE.erste_hilfe * f.power), target = "ally", mana = 12},
+		{id = "deckung", name = "Deckung geben", info = "Nach vorne, fängt bis zu deinem nächsten Zug einen Treffer für einen Verbündeten ab · 8 Mana", target = "ally_other", mana = 8},
+	]
 
 
 ## Monster des Zähmers (Start-Monster und gezähmte).

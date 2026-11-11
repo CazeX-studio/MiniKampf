@@ -34,7 +34,7 @@ func bauen(p: Progress, senden: Callable, neu: Callable) -> void:
 	_neu = neu
 	add_theme_constant_override("separation", 6)
 	var baum := Faehigkeiten.baum(_klasse)
-	if gewaehlt != "_grund" and Faehigkeiten.eintrag(_klasse, gewaehlt).is_empty():
+	if gewaehlt != "_grund" and Faehigkeiten.anzeige(_klasse, gewaehlt).is_empty():
 		gewaehlt = ""
 	add_child(_text(GameData.text("faehigkeiten_kopf", [p.klassenstufe(), p.freie_punkte()]), 17, RAHMEN))
 	_leiste_bauen()
@@ -49,6 +49,12 @@ func bauen(p: Progress, senden: Callable, neu: Callable) -> void:
 		_baum_flaeche.custom_minimum_size = spalte.size
 		_baum_flaeche.queue_redraw())
 	add_child(_baum_flaeche)
+	# A16: oben die Novizen-Fähigkeiten aus der Grundausbildung (schon gelernt, frei auf die Leiste)
+	var novize := Faehigkeiten.novize_behalten(p)
+	if not novize.is_empty():
+		var zeile := _reihe(spalte, GameData.text("faehigkeiten_novize"), true)
+		for id: String in novize:
+			zeile.add_child(_feld(Faehigkeiten.anzeige(_klasse, id)))
 	var grund: Dictionary = baum.get("grundreihe", {})
 	if not grund.is_empty():
 		var zeile := _reihe(spalte, GameData.text("faehigkeiten_grundreihe"), true)
@@ -103,12 +109,13 @@ func _feld(f: Dictionary) -> Button:
 func _feld_zeichnen(b: Button, f: Dictionary) -> void:
 	var r := Rect2(Vector2.ZERO, b.size)
 	var grund := bool(f.get("grund", false))
-	var stufe := 1 if grund else int(_progress.faehigkeiten.get(f.id, 0))
+	var novize := bool(f.get("novize", false))
+	var stufe := 1 if grund or novize else int(_progress.faehigkeiten.get(f.id, 0))
 	var frei := grund or _progress.klassenstufe() >= Faehigkeiten.reihe_ab(int(f.get("reihe", 1)))
 	var farbe := FARBE_GRUND if grund else (FARBE_PASSIV if f.get("passiv", false) else FARBE_AKTIV)
 	if not frei:
 		farbe = GESPERRT
-	var tex := bild(_klasse, f.id)
+	var tex := bild("novize" if novize else _klasse, f.id)
 	var innen := r.grow(-4)
 	b.draw_rect(r, Color(0.05, 0.05, 0.08))
 	if tex != null:
@@ -122,7 +129,9 @@ func _feld_zeichnen(b: Button, f: Dictionary) -> void:
 		b.draw_string(schrift, Vector2(0, r.size.y * 0.55), kurz.substr(0, 3), HORIZONTAL_ALIGNMENT_CENTER, r.size.x, 24,
 				Color(1, 1, 1, 0.9 if stufe > 0 else 0.5))
 	b.draw_rect(r, RAHMEN if f.id == gewaehlt else Color(0.6, 0.5, 0.3, 0.7), false, 3.0 if f.id == gewaehlt else 1.5)
-	if not grund:
+	if novize and f.id in _progress.leiste:
+		b.draw_string(b.get_theme_default_font(), Vector2(4, 14), "Leiste", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, RAHMEN)
+	if not grund and not novize:
 		var text := "%d/%d" % [stufe, int(f.get("max", 5))]
 		var schrift := b.get_theme_default_font()
 		b.draw_rect(Rect2(r.size.x - 34, r.size.y - 18, 32, 16), Color(0, 0, 0, 0.7))
@@ -152,7 +161,7 @@ func _leiste_bauen() -> void:
 	zeile.add_theme_constant_override("separation", 6)
 	for i in _progress.leiste.size():
 		var id := str(_progress.leiste[i])
-		var f := Faehigkeiten.eintrag(_klasse, id)
+		var f := Faehigkeiten.anzeige(_klasse, id)
 		var platz := Button.new()
 		platz.custom_minimum_size = Vector2(52, 52)
 		platz.flat = true
@@ -163,7 +172,7 @@ func _leiste_bauen() -> void:
 			var r := Rect2(Vector2.ZERO, platz.size)
 			platz.draw_rect(r, Color(0.05, 0.05, 0.08))
 			if not f.is_empty():
-				var tex := bild(_klasse, id)
+				var tex := bild("novize" if f.get("novize", false) else _klasse, id)
 				if tex != null:
 					platz.draw_texture_rect(tex, r.grow(-3), false)
 				else:
@@ -182,7 +191,7 @@ func _leiste_bauen() -> void:
 
 ## Beschreibung der gewählten Fähigkeit mit „Lernen“ und „Auf die Leiste“
 func _beschreibung_bauen() -> void:
-	var f := Faehigkeiten.eintrag(_klasse, gewaehlt)
+	var f := Faehigkeiten.anzeige(_klasse, gewaehlt)
 	if gewaehlt == "_grund":
 		var grund: Dictionary = Faehigkeiten.baum(_klasse).get("grundreihe", {})
 		f = {name = grund.get("name", ""), info = grund.get("info", "")}
@@ -191,7 +200,9 @@ func _beschreibung_bauen() -> void:
 		return
 	var stufe := int(_progress.faehigkeiten.get(gewaehlt, 0))
 	var text := "[b]%s[/b]%s" % [f.name, " (passiv)" if f.get("passiv", false) else ""]
-	if gewaehlt != "_grund":
+	if f.get("novize", false):
+		text += "  ·  [color=#8affc1]aus der Grundausbildung bei Ye, schon gelernt[/color]"
+	elif gewaehlt != "_grund":
 		text += "  ·  Stufe %d / %d" % [stufe, int(f.get("max", 5))]
 	var braucht: Dictionary = f.get("braucht", {})
 	for andere: String in braucht:
@@ -209,12 +220,14 @@ func _beschreibung_bauen() -> void:
 		return
 	var knoepfe := HBoxContainer.new()
 	knoepfe.add_theme_constant_override("separation", 8)
-	var grund_gegen := Faehigkeiten.grund_gegen(_progress, gewaehlt)
 	var id := gewaehlt
-	var lernen := _knopf(GameData.text("faehigkeiten_lernen") if grund_gegen == "" else grund_gegen, 200,
-			func() -> void: _senden.call({type = "lernen", faehigkeit = id}))
-	lernen.disabled = grund_gegen != ""
-	knoepfe.add_child(lernen)
+	# Novizen-Fähigkeiten sind schon gelernt: nur „Auf die Leiste“
+	if not f.get("novize", false):
+		var grund_gegen := Faehigkeiten.grund_gegen(_progress, gewaehlt)
+		var lernen := _knopf(GameData.text("faehigkeiten_lernen") if grund_gegen == "" else grund_gegen, 200,
+				func() -> void: _senden.call({type = "lernen", faehigkeit = id}))
+		lernen.disabled = grund_gegen != ""
+		knoepfe.add_child(lernen)
 	if Faehigkeiten.fuer_leiste(_progress, id):
 		var drauf: bool = id in _progress.leiste
 		knoepfe.add_child(_knopf(GameData.text("leiste_runter" if drauf else "leiste_drauf"), 150,
