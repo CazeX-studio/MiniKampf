@@ -3120,5 +3120,187 @@
 			38,
 			94
 		]
+	},
+	"in_go_wand": {
+		"groesse": [
+			161,
+			197
+		],
+		"flaeche": [
+			1,
+			3
+		],
+		"fuss": [
+			44,
+			164
+		]
+	},
+	"in_go_wand_fenster": {
+		"groesse": [
+			94,
+			190
+		],
+		"flaeche": [
+			2,
+			1
+		],
+		"fuss": [
+			66,
+			165
+		]
+	},
+	"in_go_ecke": {
+		"groesse": [
+			65,
+			115
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			27,
+			98
+		]
+	},
+	"in_go_tuer": {
+		"groesse": [
+			118,
+			163
+		],
+		"flaeche": [
+			1,
+			3
+		],
+		"fuss": [
+			46,
+			130
+		]
+	},
+	"in_go_teppich": {
+		"groesse": [
+			130,
+			77
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			62,
+			60
+		]
+	},
+	"in_go_theke": {
+		"groesse": [
+			159,
+			116
+		],
+		"flaeche": [
+			3,
+			1
+		],
+		"fuss": [
+			100,
+			83
+		]
+	},
+	"in_go_krugregal": {
+		"groesse": [
+			97,
+			104
+		],
+		"flaeche": [
+			2,
+			1
+		],
+		"fuss": [
+			64,
+			79
+		]
+	},
+	"in_go_feuergrube": {
+		"groesse": [
+			127,
+			110
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			61,
+			77
+		]
+	},
+	"in_go_sitzkreis": {
+		"groesse": [
+			129,
+			82
+		],
+		"flaeche": [
+			2,
+			1
+		],
+		"fuss": [
+			56,
+			57
+		]
+	},
+	"in_go_bank": {
+		"groesse": [
+			127,
+			72
+		],
+		"flaeche": [
+			2,
+			1
+		],
+		"fuss": [
+			89,
+			47
+		]
+	},
+	"in_go_hadraks_ecke": {
+		"groesse": [
+			63,
+			64
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			50,
+			47
+		]
+	},
+	"in_go_laterne": {
+		"groesse": [
+			62,
+			101
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			42,
+			84
+		]
+	},
+	"in_go_palme": {
+		"groesse": [
+			66,
+			72
+		],
+		"flaeche": [
+			1,
+			1
+		],
+		"fuss": [
+			42,
+			55
+		]
 	}
 }

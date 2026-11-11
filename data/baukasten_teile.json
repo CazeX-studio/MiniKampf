@@ -189,6 +189,17 @@
 				"boden/in_gw_dielen_3.png"
 			],
 			"vorrang": 3
+		},
+		"f": {
+			"name": "Tonfliesen",
+			"bilder": [
+				"boden/in_go_fliesen_1.png",
+				"boden/in_go_fliesen_1.png",
+				"boden/in_go_fliesen_3.png",
+				"boden/in_go_fliesen_3.png",
+				"boden/in_go_fliesen_2.png"
+			],
+			"vorrang": 3
 		}
 	},
 	"objekte": {
@@ -3131,6 +3142,164 @@
 			"fuss": [
 				38,
 				94
+			]
+		},
+		"in_go_wand": {
+			"bild": "objekte/in_go_wand.png",
+			"flaeche": [
+				1,
+				4
+			],
+			"fuss": [
+				44,
+				164
+			]
+		},
+		"in_go_wand_fenster": {
+			"bild": "objekte/in_go_wand_fenster.png",
+			"flaeche": [
+				2,
+				1
+			],
+			"fuss": [
+				66,
+				165
+			]
+		},
+		"in_go_ecke": {
+			"bild": "objekte/in_go_ecke.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				27,
+				98
+			]
+		},
+		"in_go_tuer": {
+			"bild": "objekte/in_go_tuer.png",
+			"flaeche": [
+				1,
+				2
+			],
+			"fuss": [
+				46,
+				130
+			]
+		},
+		"in_go_teppich": {
+			"bild": "objekte/in_go_teppich.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				62,
+				60
+			],
+			"flach": true,
+			"blockiert": false
+		},
+		"in_go_theke": {
+			"bild": "objekte/in_go_theke.png",
+			"flaeche": [
+				4,
+				1
+			],
+			"fuss": [
+				100,
+				83
+			]
+		},
+		"in_go_krugregal": {
+			"bild": "objekte/in_go_krugregal.png",
+			"flaeche": [
+				2,
+				1
+			],
+			"fuss": [
+				64,
+				79
+			]
+		},
+		"in_go_feuergrube": {
+			"bild": "objekte/in_go_feuergrube.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				61,
+				77
+			],
+			"lichter": [
+				{
+					"art": "glut",
+					"bild": [
+						64,
+						82
+					]
+				}
+			]
+		},
+		"in_go_sitzkreis": {
+			"bild": "objekte/in_go_sitzkreis.png",
+			"flaeche": [
+				2,
+				2
+			],
+			"fuss": [
+				56,
+				57
+			]
+		},
+		"in_go_bank": {
+			"bild": "objekte/in_go_bank.png",
+			"flaeche": [
+				3,
+				1
+			],
+			"fuss": [
+				89,
+				47
+			]
+		},
+		"in_go_hadraks_ecke": {
+			"bild": "objekte/in_go_hadraks_ecke.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				50,
+				47
+			]
+		},
+		"in_go_laterne": {
+			"bild": "objekte/in_go_laterne.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				42,
+				84
+			],
+			"licht": {
+				"art": "laterne",
+				"hoehe": 50
+			}
+		},
+		"in_go_palme": {
+			"bild": "objekte/in_go_palme.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				42,
+				55
 			]
 		}
 	}
