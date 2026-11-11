@@ -64,7 +64,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (11.11., nach Teil N):** Alle gelieferten Bilder haben jetzt einen Bauauftrag. Der Reihe nach: A3b (Klassenwahl mit den fünf gemalten Klassenbildern), A9c (Dungeon-Effekte aus Teil M), A20 (Ladebildschirme aus Teil S), A21 (deine zwei Zusatz-Effekte: goldenes Nachbild bei perfekter Abwehr und mächtiger Blitzeinschlag). Danach E4 (Balancing, braucht viele Tests), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden. Noch zu malen ist für die Demo nichts; später kommen Teil R, H2 und S3 (sechs spätere Klassen) und Teil I.
+- **Nächster Schritt (11.11., nach Teil N):** Alle gelieferten Bilder haben jetzt einen Bauauftrag. A3b (Klassenbilder) ist fertig. Der Reihe nach: A9c (Dungeon-Effekte aus Teil M), A20 (Ladebildschirme aus Teil S), A21 (deine zwei Zusatz-Effekte: goldenes Nachbild bei perfekter Abwehr und mächtiger Blitzeinschlag). Danach E4 (Balancing, braucht viele Tests), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden. Noch zu malen ist für die Demo nichts; später kommen Teil R, H2 und S3 (sechs spätere Klassen) und Teil I.
+
+- **Neu (11.11.): A3b Klassenwahl mit gemalten Klassenbildern** (Teil H1):
+  - In der Klassenwahl steht bei den fünf Klassen der Demo (Rüstungsschmied, Bogenschütze, Klingentänzerin, Monster-Zähmer, Sternensängerin) jetzt oben rechts dein großes gemaltes Bild mit Mann und Frau der Klasse statt der kleinen Pixel-Figur. Beim Schmied ist es `klassenbild_schmied.png` (nicht `_v2`).
+  - Die sechs späteren Klassen zeigen noch ihre alte kleine Figur, etwas abgedunkelt, weil sie gesperrt sind. Sobald ihre Bilder (H2) kommen, reicht es, sie als `assets/klassenbilder/<klasse>.png` abzulegen.
+  - Die Bilder sind fürs Spiel verkleinert (rund 800 × 540), damit die Web-Version kaum größer wird.
+  - **So testest du es:**
+    1. Bei Ye am Tag der Abreise die Klassenwahl öffnen (oder bei einem Gesandten „Klassen ansehen“).
+    2. Die fünf Demo-Klassen nacheinander antippen: Jede zeigt ihr gemaltes Bild oben rechts, der Text daneben ist vollständig lesbar.
+    3. Eine spätere Klasse antippen (z. B. Magier-Tank): kleine, dunklere Pixel-Figur, „kommt später“ unten.
 
 - **Neu (11.11.): A10b Monster-Geschosse, Parade und Ausweichen gemalt** (Teil N, alle 12 Blätter):
   - Monster mit Fernkampf oder Zauber werfen jetzt ein gemaltes Geschoss in ihrem Element: Feuerball, Steinbrocken, Dorn mit Blättern, Blitzkugel, Wasserblase, Windklinge, Lichtball, Schattenkugel oder Sternensplitter. Die gezeichnete Leuchtkugel bleibt nur noch bei den Helden.
