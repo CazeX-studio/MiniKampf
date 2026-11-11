@@ -126,6 +126,7 @@ func anker_ziehen(e: Fighter) -> bool:
 		c.float_text(e, "Anker lose!", Color("ff8a3d"), 52)
 		if anker.count("lose") >= ANKER:
 			c._emit({type = "cast", f = e, ult = false, name = "Lavaflut"})
+			c.zeige("lavaflut", e)
 			c.burst(e, Color("ff5a2a"), 360.0)
 			c.wipe("Lavaflut! Alle drei Anker sind lose, die Lava flutet die Kammer.")
 			return false
@@ -156,6 +157,7 @@ func _zug_phase2(e: Fighter) -> void:
 		if lava_stufe >= LAVA_STUFEN:
 			c.zeige_lava("vorne", "oben")
 			c.zeige_lava("hinten", "oben")
+			c.zeige("lavaflut", e)
 			c.wipe("Die Lava erreicht die höchste Stufe. Alles schmilzt.")
 			return
 		if lava_stufe >= LAVA_STUFEN - 2:
@@ -199,6 +201,7 @@ func _fessel_pruefen(e: Fighter) -> void:
 	gefesselt.assign([helden[0], helden[1]])
 	for h in gefesselt:
 		c.float_text(h, "Gefesselt!", Color("ffb070"), 40)
+	_kette_zeigen()
 	c.add_log("[color=#ffb070][b]Gefesselt![/b] %s und %s hängen an einer glühenden Kette und teilen jeden Schaden.[/color]"
 			% [gefesselt[0].display_name, gefesselt[1].display_name])
 	if phase2:
@@ -207,7 +210,9 @@ func _fessel_pruefen(e: Fighter) -> void:
 
 func _fessel_aufraeumen() -> void:
 	if gefesselt.size() == 2 and (not gefesselt[0].is_alive() or not gefesselt[1].is_alive()):
+		c.zeige("kette_reisst", gefesselt[0], gefesselt[1])
 		gefesselt.clear()
+		_kette_zeigen()
 		c.add_log("Die Kette fällt klirrend zu Boden.")
 
 
@@ -240,6 +245,7 @@ func _starte_phase2() -> void:
 	c.add_log("[color=#8fd3ff]Kühlbecken:[/color] Wer es gezielt angreift, wird nass. Nasse Helden sprengen mit harten Treffern seine "
 			+ "Panzerung ab. Solange sie hält, kommt kaum Schaden durch.")
 	c.spawn_enemies(["kettenschmied_2", "kuehlbecken"])
+	_kette_zeigen()
 	# Film: Die drei Ketten glühen auf und reißen (A9b, Alpha-Punkt 38)
 	c.phasen_film(_find("kettenschmied_2"), "ketten", "Entfesselt!", "Die Ketten reißen. Nur das Kühlbecken bricht seinen Panzer.",
 			Color("ff8a3d"))
@@ -261,7 +267,7 @@ func absorbs(target: Fighter, amount: int, source: Fighter) -> bool:
 		if source != null and source.is_ally() and source.has_meta("nass") and amount >= HARTER_TREFFER:
 			panzer -= 1
 			c.float_text(target, "Panzer splittert!", Color("8fd3ff"), 52)
-			c.burst(target, Color("8fd3ff"), 180.0)
+			c.zeige("panzer_splitter", target)
 			c.add_log("[color=#8fd3ff][b]%s sprengt ein Stück Panzer ab![/b][/color] (noch %d)" % [source.display_name, panzer])
 			_update_intents()
 			return false
@@ -280,10 +286,19 @@ func absorbs(target: Fighter, amount: int, source: Fighter) -> bool:
 	return false
 
 
+## Die glühende Kette zwischen den Gefesselten im Bild (gemalte Glieder, A9c1); in Phase 2 glüht sie heller.
+func _kette_zeigen() -> void:
+	if gefesselt.size() == 2:
+		c.fessel(gefesselt[0], gefesselt[1], 2 if phase2 else 1)
+	else:
+		c.fessel(null, null, 0)
+
+
 func _nass(f: Fighter) -> void:
 	if not f.has_meta("nass"):
 		c.delay(f, NASS_VERZOEGERUNG)
 	f.set_meta("nass", NASS_ZUEGE)
+	c.zeige("nass", f)
 	c.float_text(f, "Nass!", Color("8fd3ff"), 40)
 	c.add_log("%s ist klatschnass." % f.display_name)
 
@@ -317,6 +332,8 @@ func execute(f: Fighter, ab: Dictionary, _target: Fighter) -> void:
 			c.add_log("[color=#8affc1]%s zerschlägt die Kette zwischen %s und %s![/color]" % [f.display_name, gefesselt[0].display_name, gefesselt[1].display_name])
 			for h in gefesselt:
 				c.float_text(h, "Befreit!", Color("8affc1"), 40)
+			c.zeige("kette_reisst", gefesselt[0], gefesselt[1])
 			gefesselt.clear()
+			_kette_zeigen()
 	_update_intents()
 	c.wait(0.3)

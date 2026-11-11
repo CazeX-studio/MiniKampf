@@ -486,6 +486,29 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 			if ziel_ansicht != null:
 				_lichtstrahl(feld, ziel_ansicht, 0.6)
 				FxBild.spawn(feld, "heilung", ziel_ansicht.center() + Vector2(0, -20), 0.7, false, 0.0, 0.7)
+		# --- Vulkanschmiede (A9c1, gemalte Effekte aus GRAFIK_AUFTRAG.md Teil M) ---
+		"nass":
+			# Kühlbecken: ein Wasserschwall spritzt am Helden hoch, Tropfen zischen auf dem heißen Stein
+			Geraeusche.play("wurf", 0.5)
+			FxBild.am_boden(feld, "nass", v.home_feet() + Vector2(0, 10), 0.75, 0.8)
+		"panzer_splitter":
+			# Ein Stück Schlacke-Panzer platzt am Kettenschmied ab
+			Geraeusche.play("kritisch", 0.8)
+			FxBild.spawn(feld, "panzer_splitter", v.center() + Vector2(randf_range(-30, 30), randf_range(-30, 20)), 0.7, false, 0.0, 1.0)
+			k.call("_shake", 6.0)
+		"kette_reisst":
+			# Die glühende Kette zwischen zwei Helden bricht in der Mitte
+			var mitte := v.center().lerp(ziel_ansicht.center(), 0.5) if ziel_ansicht != null else v.center()
+			Geraeusche.play("parade", 0.6)
+			FxBild.spawn(feld, "kette_reisst", mitte, 0.6, false, 0.0, 0.6).z_index = 17
+		"lavaflut":
+			# Die Lava flutet die Kammer: unter jedem Helden bäumt sich eine Glutwelle auf
+			Geraeusche.play("kritisch", 0.5)
+			k.call("_shake", 14.0)
+			for andere: FighterView in k._views.values():
+				if andere.fighter.is_ally():
+					FxBild.am_boden(feld, "lavaflut", andere.home_feet() + Vector2(0, 30), 1.1, 1.6, false, 0.5).z_index = 17
+			await k.wait(1.0)
 
 
 ## Kleiner Sprung. Bewegt die ganze Ansicht, damit er neben einem laufenden Angriff funktioniert.

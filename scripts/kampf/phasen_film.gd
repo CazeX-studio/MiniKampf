@@ -6,7 +6,8 @@ extends Control
 ## Motive: "ketten" (Kettenschmied: drei Ketten reißen), "leere" (Vorbote: ein Riss der Leere öffnet sich, schwarze
 ## Ranken greifen heraus), "sporen" (Sporenkönigin: Sporenwolken quellen auf und platzen), "amboss" (Hammerbrüder:
 ## zwei Hämmer schlagen zusammen auf den Amboss, Funken stieben).
-## Die gezeichneten Ketten, Risse und Ranken sind Platzhalter, bis die gemalten Effekte aus GRAFIK_AUFTRAG.md Teil M da sind.
+## Die Ketten sind gemalt (Teil M, fx_kette_glied und fx_kette_reisst, A9c1); Risse und Ranken sind noch gezeichnete
+## Platzhalter, bis die gemalten Effekte der Pilzhöhle eingebaut sind (A9c2).
 
 const DAUER := 3.6
 ## Ab hier bricht es (Sekunden)
@@ -44,6 +45,7 @@ static func abspielen(kampf: Control, feld: Control, ansicht: FighterView, motiv
 	film._zentrum = ansicht.center() if ansicht != null else kampf.size * 0.5
 	film.size = kampf.size
 	film.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	film.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	film.z_index = 18
 	feld.add_child(film)
 	var alte_ebene := 0
@@ -117,11 +119,14 @@ func _brechen() -> void:
 				_glieder.append({pos = _amboss_ort(), vel = weg * randf_range(200.0, 700.0), dreh = 0.0, drehung = 0.0, schwer = 1.0,
 						groesse = randf_range(3.0, 6.0)})
 		"ketten":
-			# Jedes Glied fliegt vom Riss weg nach außen
+			# Jede Kette reißt an drei Stellen (gemalt), die Glieder fliegen vom Riss weg nach außen
+			for kette in _ketten:
+				for anteil: float in [0.3, 0.6, 0.85]:
+					FxBild.spawn(feld, "kette_reisst", (kette[0] as Vector2).lerp(kette[1], anteil), 0.7, false, 0.0, 0.55).z_index = 20
 			for kette in _ketten:
 				var von: Vector2 = kette[0]
 				var bis: Vector2 = kette[1]
-				var anzahl := int(von.distance_to(bis) / GLIED)
+				var anzahl := int(von.distance_to(bis) / (GLIED * 3.0))
 				for i in anzahl:
 					var pos := von.lerp(bis, float(i) / anzahl)
 					var weg := (pos - _zentrum).normalized()
@@ -152,13 +157,14 @@ func _draw() -> void:
 	match _motiv:
 		"ketten":
 			if not _gebrochen:
-				# Die Ketten glühen von dunklem Eisen zu heller Glut auf
+				# Die Ketten glühen von dunklem Eisen zu weißer Glut auf, spannen sich und zittern kurz vor dem Bruch
 				var glut := clampf(_zeit / BRUCH, 0.0, 1.0)
-				var farbe := Color("3a3330").lerp(_farbe.lightened(0.2), glut)
 				for kette in _ketten:
-					_kette(kette[0], kette[1], farbe, glut)
+					if glut > 0.3:
+						draw_line(kette[0], kette[1], Color(_farbe, 0.25 * glut), 14.0)
+					KetteBild.zeichnen(self, kette[0], kette[1], mini(int(glut * 4.0), 3), 0.8, glut * glut * 3.0, deckung)
 			for g in _glieder:
-				_glied(g.pos, g.drehung, Color(_farbe.lightened(0.2), deckung))
+				_glied(g.pos, g.drehung, deckung)
 		"leere":
 			_leere(deckung)
 		"sporen":
@@ -236,22 +242,14 @@ func _leere(deckung: float) -> void:
 		draw_polyline(punkte, Color(_farbe, 0.6 * deckung), 3.0)
 
 
-func _kette(von: Vector2, bis: Vector2, farbe: Color, glut: float) -> void:
-	var anzahl := int(von.distance_to(bis) / GLIED)
-	var winkel := (bis - von).angle()
-	# Die Kette spannt sich und zittert kurz vor dem Bruch
-	var zittern := glut * glut * 3.0
-	for i in anzahl:
-		var pos := von.lerp(bis, float(i) / anzahl) + Vector2(randf_range(-zittern, zittern), randf_range(-zittern, zittern))
-		_glied(pos, winkel + (PI * 0.5 if i % 2 == 1 else 0.0), farbe)
-	if glut > 0.3:
-		draw_line(von, bis, Color(_farbe, 0.25 * glut), 10.0)
-
-
-func _glied(pos: Vector2, winkel: float, farbe: Color) -> void:
-	draw_set_transform(pos, winkel)
-	draw_rect(Rect2(-GLIED * 0.55, -6, GLIED * 1.1, 12), farbe, false, 4.0)
-	draw_set_transform(Vector2.ZERO, 0.0)
+## Ein abgerissenes, glühendes Glied (erstes Bild von fx_kette_reisst)
+func _glied(pos: Vector2, winkel: float, deckung: float) -> void:
+	var bilder := FxBild.bilder("kette_reisst")
+	if bilder.is_empty():
+		return
+	draw_set_transform(pos, winkel, Vector2.ONE * 0.7)
+	draw_texture(bilder[0], -bilder[0].get_size() * 0.5, Color(1, 1, 1, deckung))
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 
 ## Kinostreifen oben und unten, Titel und Untertitel in der Mitte (über allem, ohne Wackeln)

@@ -130,6 +130,15 @@ var _darkness := 0.0
 var _lava_glow := {}
 var _lava_stufe := {}
 var _lava_time := 0.0
+## Gemalte Lava unter den Füßen (A9c1): Deckung je Reihe und die zuletzt gezeigte Stufe (zum Ausblenden)
+var _lava_deckung := {}
+var _lava_bild_stufe := {}
+var _lava_bild: Node2D
+## Glühende Kette zwischen zwei Gefesselten (Kettenschmied), glut 0 = keine
+var _fessel_a: Fighter
+var _fessel_b: Fighter
+var _fessel_glut := 0
+var _fessel_bild: Node2D
 ## Entzündete Laternen auf dem Feld (Pilzhöhle)
 var _lanterns: Array[Node2D] = []
 var _light_time := 0.0
@@ -425,6 +434,11 @@ func _play_event(event: Dictionary) -> void:
 			await move_to_row(event.f)
 		"lava":
 			_zeige_lava(str(event.reihe), str(event.stufe))
+		"fessel":
+			_fessel_a = event.a
+			_fessel_b = event.b
+			_fessel_glut = int(event.glut) if event.a != null else 0
+			_fessel_bild.queue_redraw()
 		"darkness":
 			var target := clampf(event.amount, 0.0, MAX_DARK_ALPHA)
 			create_tween().tween_property(self, "_darkness", target, 0.5)
@@ -1331,7 +1345,38 @@ func _update_lava(delta: float) -> void:
 				ziel = 0.35 + 0.25 * sin(_lava_time * 5.0)
 			"oben":
 				ziel = 0.95 + 0.05 * sin(_lava_time * 9.0)
-		glut.modulate.a = move_toward(glut.modulate.a, ziel, delta * 2.5)
+		glut.modulate.a = move_toward(glut.modulate.a, ziel * 0.6, delta * 2.5)
+		if str(_lava_stufe[r]) != "":
+			_lava_bild_stufe[r] = _lava_stufe[r]
+		_lava_deckung[r] = move_toward(float(_lava_deckung[r]), 1.0 if str(_lava_stufe[r]) != "" else 0.0, delta * 3.0)
+	_lava_bild.queue_redraw()
+	if _fessel_glut > 0:
+		_fessel_bild.queue_redraw()
+
+
+## Gemalte Lava (Teil M, fx_lava): unter jedem Platz der Reihe glühende Risse (Warnung) oder brodelnde Lava (oben).
+func _male_lava() -> void:
+	for r: String in _lava_deckung:
+		var deckung := float(_lava_deckung[r])
+		if deckung <= 0.0:
+			continue
+		var bilder := FxBild.bilder("lava_" + str(_lava_bild_stufe.get(r, "warnung")))
+		if bilder.is_empty():
+			continue
+		var tex: Texture2D = bilder[int(_lava_time * 7.0) % bilder.size()]
+		var x := FRONT_X if r == "vorne" else BACK_X
+		for fuss_y: float in HERO_FEET_Y:
+			var groesse := Vector2(230.0, 230.0 * tex.get_height() / tex.get_width())
+			_lava_bild.draw_texture_rect(tex, Rect2(Vector2(x - groesse.x * 0.5, fuss_y + 24.0 - groesse.y), groesse), false,
+					Color(1, 1, 1, deckung))
+
+
+## Die gemalte Kette zwischen den beiden Gefesselten; sie pulsiert zwischen zwei Glutstufen.
+func _male_fessel() -> void:
+	if _fessel_glut <= 0 or _fessel_a == null or _fessel_b == null or not has_view(_fessel_a) or not has_view(_fessel_b):
+		return
+	var stufe := _fessel_glut + (1 if sin(_lava_time * 6.0) > 0.0 else 0)
+	KetteBild.zeichnen(_fessel_bild, view(_fessel_a).center(), view(_fessel_b).center(), stufe, 0.7)
 
 
 ## Dunkelheit und Lichtkreise: Je dunkler es ist, desto kleiner werden die Kreise um Laternen und Splitterlicht.
@@ -1635,6 +1680,16 @@ func _build_ui() -> void:
 		_field.add_child(glut)
 		_lava_glow[reihe] = glut
 		_lava_stufe[reihe] = ""
+		_lava_deckung[reihe] = 0.0
+	_lava_bild = Node2D.new()
+	_lava_bild.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_lava_bild.draw.connect(_male_lava)
+	_field.add_child(_lava_bild)
+	_fessel_bild = Node2D.new()
+	_fessel_bild.z_index = 9
+	_fessel_bild.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_fessel_bild.draw.connect(_male_fessel)
+	_field.add_child(_fessel_bild)
 
 	# Dunkelheit (Vorbote in der Pilzhöhle)
 	# Dunkelheit (Vorbote in der Pilzhöhle): nur um Laternen und das Splitterlicht bleibt es hell
