@@ -5,7 +5,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 11.11.)
 
-- **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** A12c (Taverne der Glutoase), danach A13 bis A16; neu für dich: Teil M, N und O in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
+- **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** A13 (neues Gebiet zwischen Glutoase und Grünwacht), danach A14 bis A16; neu für dich: Teil M, N und O in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
 - **Bilder von Marco (02.11. abends):** 38 Blätter liegen unter `tools/vorlagen/`: alle sechs Novizen-Blätter ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen.
   - Dazu der Baukasten (02.11.): acht Grundkörper (`grund_*.png`), Köpfe (`koepfe_*.png`), Hüte (`huete_regionen.png`), Zeichen (`zeichen_dienste.png`) und die Klingentänzerin Blatt 1. Bei den Fäusten der Abwehr-Bilder von Blatt 1 prüft Claude beim Einbauen, ob sie am Oval stören.
   - Dazu Figuren 4 und 5 (02.11.): 22 Blätter Nebenfiguren (`neben_*.png`) und 42 Blätter Hauptfiguren (`haupt_*.png`) aller drei Städte, damit ist Teil D vollständig. `neben_reserve_rashid_tarek.png` ist ein doppeltes Sammelblatt und bleibt Reserve.
@@ -64,7 +64,17 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (11.11.):** Alpha-Aufträge A12c bis A16 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+- **Nächster Schritt (11.11.):** Alpha-Aufträge A13 bis A16 von oben nach unten (A3b wartet auf deine Klassenbilder), danach E4 (Balancing), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden.
+
+- **Neu (11.11.): A12c Gasthaus Glutstube in der Glutoase betreten** (Alpha-Punkt 47, damit hat jede Stadt ihr Gasthaus):
+  - Die Tür ist an der rechten Seite der Glutstube beim großen Torbogen (unten in der Oase). Hingehen bringt dich hinein, Vorbeilaufen nicht.
+  - Drinnen steht Wirtin Layla hinter der Theke, ein Gast sitzt tagsüber am Feuer, abends zwei mehr. Nachts trinkt Hadrak drinnen statt vor dem Haus (Figuren können jetzt nachts in einen Innenraum wechseln).
+  - Der Raum ist aus vorhandenen Teilen gebaut (Terrassenkanten als Wände, Fässer und Tonkrüge, Lagerfeuer, Teppiche, Tanzlaternen). Die gemalten Teile stehen in `Spieldesign/GRAFIK_AUFTRAG.md` Teil O (Blätter IN5 und IN6).
+  - **So testest du es:**
+    1. Mit dem Spielstand-Editor in die Glutoase, unten rechts zur Glutstube.
+    2. An der rechten Seite zur Tür gehen: Du bist in der Glutstube, Layla steht hinter der Theke.
+    3. Nachts (nach 21 Uhr) hinein: Hadrak sitzt in der Ecke und trinkt, Layla erzählt von ihm.
+    4. Über „Hinaus“ zurück in die Glutoase.
 
 - **Neu (11.11.): A12b Baumhaus-Gasthaus in Wipfelheim betreten** (Alpha-Punkt 47):
   - Die Tür ist an der rechten Seite des Baumhaus-Gasthauses bei den Stufen. Wie beim Wegrast: Hingehen bringt dich hinein, Vorbeilaufen nicht; hat drinnen jemand etwas für dich, steht „!“ oder „?“ über der Tür.

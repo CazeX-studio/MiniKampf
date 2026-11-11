@@ -1,0 +1,176 @@
+{
+	"_hinweis": "Innenraum des Gasthauses Glutstube in der Glutoase (A12c). Bis die gemalten Innenraum-Teile aus GRAFIK_AUFTRAG.md Teil O da sind, mit vorhandenen Teilen gebaut: Terrassenkanten als Wände, Fässer und Tonkrüge als Theke, Lagerfeuer in der Mitte.",
+	"boden": [
+		"LLLLLLLLLLLL",
+		"LLLLLLLLLLLL",
+		"LLLLLLLLLLLL",
+		"LLLLLLLLLLLL",
+		"LLLLLLLLLLLL",
+		"LLLLLLLLLLLL",
+		"LLLLLLLLLLLL",
+		"LLLLLLLLLLLL",
+		"LLLLLLLLLLLL",
+		"LLLLLLLLLLLL",
+		"LLLLLLLLLLLL",
+		"LLLLLLLLLLLL"
+	],
+	"objekte": [
+		{
+			"teil": "go_terrassenkante",
+			"feld": [
+				1,
+				0
+			]
+		},
+		{
+			"teil": "go_terrassenkante",
+			"feld": [
+				5,
+				0
+			]
+		},
+		{
+			"teil": "go_terrassenkante",
+			"feld": [
+				8,
+				0
+			]
+		},
+		{
+			"teil": "go_terrassenkante",
+			"feld": [
+				0,
+				1
+			],
+			"gespiegelt": true
+		},
+		{
+			"teil": "go_terrassenkante",
+			"feld": [
+				0,
+				5
+			],
+			"gespiegelt": true
+		},
+		{
+			"teil": "go_terrassenkante",
+			"feld": [
+				0,
+				8
+			],
+			"gespiegelt": true
+		},
+		{
+			"teil": "fass",
+			"feld": [
+				2,
+				3
+			]
+		},
+		{
+			"teil": "go_tonkruege",
+			"feld": [
+				3,
+				3
+			]
+		},
+		{
+			"teil": "go_tonkruege",
+			"feld": [
+				4,
+				3
+			]
+		},
+		{
+			"teil": "fass",
+			"feld": [
+				5,
+				3
+			]
+		},
+		{
+			"teil": "go_kohlesaecke",
+			"feld": [
+				1,
+				1
+			]
+		},
+		{
+			"teil": "go_tonkruege",
+			"feld": [
+				2,
+				1
+			]
+		},
+		{
+			"teil": "lagerfeuer",
+			"feld": [
+				6,
+				6
+			]
+		},
+		{
+			"teil": "go_teppiche",
+			"feld": [
+				3,
+				7
+			]
+		},
+		{
+			"teil": "go_teppiche",
+			"feld": [
+				4,
+				8
+			]
+		},
+		{
+			"teil": "go_teppiche",
+			"feld": [
+				9,
+				4
+			]
+		},
+		{
+			"teil": "holzbank",
+			"feld": [
+				2,
+				8
+			]
+		},
+		{
+			"teil": "holzbank",
+			"feld": [
+				8,
+				8
+			]
+		},
+		{
+			"teil": "go_tanzlaterne",
+			"feld": [
+				1,
+				6
+			]
+		},
+		{
+			"teil": "go_tanzlaterne",
+			"feld": [
+				10,
+				1
+			]
+		},
+		{
+			"teil": "go_palme_klein",
+			"feld": [
+				1,
+				10
+			]
+		},
+		{
+			"teil": "go_palme_klein",
+			"feld": [
+				7,
+				1
+			]
+		}
+	]
+}

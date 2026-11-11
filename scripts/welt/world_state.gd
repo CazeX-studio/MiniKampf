@@ -188,6 +188,9 @@ func _init() -> void:
 		if all_maps[id] is Dictionary and all_maps[id].has("raster"):
 			maps[id] = WorldMap.from_data(id, all_maps[id], legend)
 			_add_things(id, all_maps[id])
+	for npc: Dictionary in npcs.values():
+		if npc.has("nacht_map") and maps.has(npc.nacht_map):
+			get_map(npc.nacht_map).block(npc.nacht_cell)
 	_npc_orte()
 	# Wer irgendwo hintippt, läuft um Monster herum statt mitten hindurch (nur wer sie antippt, läuft hin)
 	for m: Dictionary in monsters:
@@ -201,6 +204,9 @@ func _npc_orte() -> void:
 	for npc: Dictionary in npcs.values():
 		if npc.has("nacht_cell"):
 			npc.cell = npc.nacht_cell if nacht else npc.tag_cell
+			# {"nachts_karte": "glutstube"}: nachts in einem Innenraum (A12c, Hadrak trinkt in der Glutstube)
+			if npc.has("nacht_map"):
+				npc.map = npc.nacht_map if nacht else npc.tag_map
 
 
 ## NPCs, Sammelpunkte, Orte und Schmuck einer Karte aus ihren Daten.
@@ -219,7 +225,12 @@ func _add_things(map_id: String, data: Dictionary) -> void:
 		# {"nachts": [x, y]}: nachts steht die Figur dort (Steckbriefe in NPC.md, D20d)
 		if d.has("nachts"):
 			npcs[id].nacht_cell = Vector2i(int(d.nachts[0]), int(d.nachts[1]))
-			m.block(npcs[id].nacht_cell)
+			npcs[id].tag_map = map_id
+			if d.has("nachts_karte"):
+				# Das Feld auf der anderen Karte sperrt _nachts_sperren, wenn alle Karten da sind
+				npcs[id].nacht_map = str(d.nachts_karte)
+			else:
+				m.block(npcs[id].nacht_cell)
 	for d: Dictionary in data.get("deko", []):
 		decorations.append({art = d.art, cell = Vector2i(int(d.feld[0]), int(d.feld[1])), map = map_id, cond = d.get("wenn", {}),
 				text = d.get("text", "")})

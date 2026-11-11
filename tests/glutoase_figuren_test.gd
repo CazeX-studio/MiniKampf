@@ -36,10 +36,15 @@ func _initialize() -> void:
 	for id: String in ["taenzer_1", "taenzer_2", "gast_go_2"]:
 		_check(not world._npc_present(p, id), "Tags nicht da: %s" % id)
 	world.nacht = true
-	for id: String in ["taenzer_1", "taenzer_2", "gast_go_2", "gast_go_3", "samira"]:
+	for id: String in ["taenzer_1", "taenzer_2", "samira"]:
 		_check(world._npc_present(p, id), "Nachts da: %s" % id)
 	_check(not world._npc_present(p, "basar_1"), "Nachts ist der Basar leer")
-	_check(world.npcs.hadrak.cell == Vector2i(31, 38), "Nachts sitzt Hadrak beim Gasthaus")
+	# Seit A12c: Layla, die Gäste und nachts Hadrak drinnen in der Glutstube
+	p.map = "glutstube"
+	for id: String in ["gast_go_2", "gast_go_3", "hadrak", "layla"]:
+		_check(world._npc_present(p, id), "Nachts in der Glutstube: %s" % id)
+	_check(world.npcs.hadrak.map == "glutstube", "Nachts trinkt Hadrak in der Glutstube")
+	p.map = "glutoase"
 	world.start_dialog(p, "layla")
 	_check(world.dialog_view(p).text.contains("Hadrak"), "Layla nachts")
 	Tageszeit.feste_stunde = -1.0

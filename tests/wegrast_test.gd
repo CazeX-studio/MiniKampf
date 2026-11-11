@@ -1,5 +1,6 @@
 extends SceneTree
-## A12: Gasthäuser betreten. A12a Wegrast (Tür in Kreuzweg, Hanne und die Gäste), A12b Baumhaus-Gasthaus in Wipfelheim (Borko).
+## A12: Gasthäuser betreten. A12a Wegrast (Tür in Kreuzweg, Hanne und die Gäste), A12b Baumhaus-Gasthaus in Wipfelheim (Borko),
+## A12c Glutstube in der Glutoase (Layla, nachts Hadrak).
 ## Aufruf: Godot --headless --path . -s tests/wegrast_test.gd
 
 var _failed := 0
@@ -47,6 +48,7 @@ func _initialize() -> void:
 	_check(p.map == "kreuzweg" and w.get_map("kreuzweg").is_walkable(p.cell) and not tuer.rect.has_point(p.cell),
 			"Hinaus: wieder in Kreuzweg vor der Tür")
 	_gasthaus_wipfelheim(w, p)
+	_glutstube(w, p)
 	Tageszeit.feste_stunde = -1.0
 	print("Wegrast: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)
@@ -65,3 +67,26 @@ func _gasthaus_wipfelheim(w: WorldState, p: PlayerState) -> void:
 	w.apply_command("a", {type = "move", cell = w.get_map("gasthaus_wipfelheim").exits[0].rect.position})
 	_tick(w, 8.0)
 	_check(p.map == "wipfelheim" and w.get_map("wipfelheim").is_walkable(p.cell), "Hinaus: wieder in Wipfelheim")
+
+
+## A12c: Gasthaus Glutstube in der Glutoase, Tür an der rechten Seite; nachts trinkt Hadrak drinnen
+func _glutstube(w: WorldState, p: PlayerState) -> void:
+	w.change_map(p, "glutoase", Vector2i(36, 43))
+	p.dialog = {}
+	var tueren: Array = w.get_map("glutoase").exits.filter(func(e: Dictionary) -> bool: return e.karte == "glutstube")
+	_check(tueren.size() == 1 and tueren[0].tuer, "Glutoase: Tür in die Glutstube")
+	w.apply_command("a", {type = "move", cell = tueren[0].rect.position})
+	_tick(w, 8.0)
+	_check(p.map == "glutstube", "Zur Tür gegangen: in der Glutstube")
+	_check(w.npc_visible(p, "layla") and w.npc_visible(p, "gast_go_1"), "Layla hinter der Theke, ein Gast am Feuer")
+	_check(not w.npc_visible(p, "hadrak") and w.npcs.hadrak.map == "glutoase", "Tagsüber ist Hadrak in seiner Schmiede")
+	w.nacht = true
+	w._npc_orte()
+	_check(w.npcs.hadrak.map == "glutstube" and w.npc_visible(p, "hadrak"), "Nachts trinkt Hadrak in der Glutstube")
+	_check(not w.get_map("glutstube").is_walkable(w.npcs.hadrak.cell), "Man läuft nicht durch Hadrak hindurch")
+	w.nacht = false
+	w._npc_orte()
+	_check(w.npcs.hadrak.map == "glutoase" and w.npcs.hadrak.cell == w.npcs.hadrak.tag_cell, "Morgens wieder in der Schmiede")
+	w.apply_command("a", {type = "move", cell = w.get_map("glutstube").exits[0].rect.position})
+	_tick(w, 8.0)
+	_check(p.map == "glutoase" and w.get_map("glutoase").is_walkable(p.cell), "Hinaus: wieder in der Glutoase")

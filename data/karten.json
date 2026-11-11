@@ -2269,6 +2269,20 @@
 					20,
 					1
 				]
+			},
+			{
+				"bereich": [
+					34,
+					43,
+					1,
+					1
+				],
+				"karte": "glutstube",
+				"feld": [
+					10,
+					6
+				],
+				"tuer": true
 			}
 		],
 		"kampf_hintergrund": "glutoase_stadt",
@@ -2401,11 +2415,12 @@
 					10
 				],
 				"nachts": [
-					31,
-					38
+					9,
+					10
 				],
 				"aussehen": "hadrak",
-				"dialog": "hadrak"
+				"dialog": "hadrak",
+				"nachts_karte": "glutstube"
 			},
 			"brakkus": {
 				"name": "Essenmeister Brakkus",
@@ -2462,15 +2477,6 @@
 				"aussehen": "grund_haendler+tarek#zubehoer=schaerpe&guertelklinge",
 				"dialog": "tarek",
 				"zeichen": "muenze"
-			},
-			"layla": {
-				"name": "Wirtin Layla",
-				"feld": [
-					30,
-					45
-				],
-				"aussehen": "grund_frau+layla#zubehoer=schuerze_layla&tablett",
-				"dialog": "layla"
 			},
 			"mira_glutoase": {
 				"name": "Mira",
@@ -2624,39 +2630,6 @@
 				],
 				"aussehen": "grund_handwerker+a_m2",
 				"dialog": "volk_go_aufzug"
-			},
-			"gast_go_1": {
-				"name": "Gast",
-				"feld": [
-					16,
-					39
-				],
-				"aussehen": "grund_mann+v_m1",
-				"dialog": "volk_go_gast_1"
-			},
-			"gast_go_2": {
-				"name": "Gast",
-				"feld": [
-					35,
-					39
-				],
-				"aussehen": "grund_frau+v_w3",
-				"dialog": "volk_go_gast_2",
-				"wenn": {
-					"nacht": true
-				}
-			},
-			"gast_go_3": {
-				"name": "Gast",
-				"feld": [
-					28,
-					36
-				],
-				"aussehen": "grund_handwerker+v_m2",
-				"dialog": "volk_go_gast_3",
-				"wenn": {
-					"nacht": true
-				}
 			}
 		}
 	},
@@ -3252,5 +3225,91 @@
 			}
 		},
 		"baukasten": "karte_gasthaus_wipfelheim"
+	},
+	"glutstube": {
+		"name": "Gasthaus Glutstube",
+		"innen": "glutoase",
+		"musik": "stadt",
+		"grund": "platz",
+		"licht": "ffd8a0",
+		"start": [
+			10,
+			6
+		],
+		"raster": [
+			"XXXXXXXXXXXX",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########"
+		],
+		"ausgaenge": [
+			{
+				"bereich": [
+					11,
+					5,
+					1,
+					3
+				],
+				"karte": "glutoase",
+				"feld": [
+					35,
+					43
+				]
+			}
+		],
+		"kampf_hintergrund": "glutoase_stadt",
+		"npcs": {
+			"layla": {
+				"name": "Wirtin Layla",
+				"feld": [
+					4,
+					2
+				],
+				"aussehen": "grund_frau+layla#zubehoer=schuerze_layla&tablett",
+				"dialog": "layla"
+			},
+			"gast_go_1": {
+				"name": "Gast",
+				"feld": [
+					3,
+					6
+				],
+				"aussehen": "grund_mann+v_m1",
+				"dialog": "volk_go_gast_1"
+			},
+			"gast_go_2": {
+				"name": "Gast",
+				"feld": [
+					9,
+					7
+				],
+				"aussehen": "grund_frau+v_w3",
+				"dialog": "volk_go_gast_2",
+				"wenn": {
+					"nacht": true
+				}
+			},
+			"gast_go_3": {
+				"name": "Gast",
+				"feld": [
+					5,
+					10
+				],
+				"aussehen": "grund_handwerker+v_m2",
+				"dialog": "volk_go_gast_3",
+				"wenn": {
+					"nacht": true
+				}
+			}
+		},
+		"baukasten": "karte_glutstube"
 	}
 }
