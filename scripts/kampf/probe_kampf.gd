@@ -45,7 +45,8 @@ func choose_option(_title: String, options: Array[Dictionary]) -> String:
 	return _ki.choose_option(options)
 
 
-## Spielt einen Kampf durch und gibt {gewonnen, zuege, leben} zurück (leben: Anteil Leben der Helden am Ende, 0–1).
+## Spielt einen Kampf durch und gibt {gewonnen, zuege, leben, schaden} zurück (leben: Anteil Leben der Helden am Ende,
+## 0–1; schaden: was der erste Held samt seinen Monstern ausgeteilt hat).
 static func einmal(eltern: Node, p_setup: Dictionary, seed_value: int) -> Dictionary:
 	var k := ProbeKampf.new()
 	k.start_seed = seed_value
@@ -59,7 +60,8 @@ static func einmal(eltern: Node, p_setup: Dictionary, seed_value: int) -> Dictio
 	var d: DungeonRegeln = k.state.dungeon
 	var phase2 := (d is Vulkanschmiede and ((d as Vulkanschmiede).ks.phase2 or (d as Vulkanschmiede).wut)) \
 			or (d is Pilzhoehle and ((d as Pilzhoehle).phase2 or (d as Pilzhoehle).queen_wut))
-	var ergebnis := {gewonnen = k.state.won, zuege = k.state.turns, leben = leben / maxf(1.0, gesamt), phase2 = phase2}
+	var ergebnis := {gewonnen = k.state.won, zuege = k.state.turns, leben = leben / maxf(1.0, gesamt), phase2 = phase2,
+			schaden = k.state.heroes[0].stat_damage if not k.state.heroes.is_empty() else 0}
 	eltern.remove_child(k)
 	k.free()
 	return ergebnis

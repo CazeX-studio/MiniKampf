@@ -5,11 +5,19 @@ extends SceneTree
 ## braucht), zum Schluss „alles“ (jede Fähigkeit Stufe 2). Der Computer wählt zufällig unter dem, was auf der Leiste liegt.
 ## Aufruf: Godot --headless --path . -s tests/klassen_messen.gd -- [anzahl] [stufe] [monster_stufe] [monster,monster,…] [klasse] [allein] [ohne] [rudel] [wachstum]
 ## Mit „ohne“ als siebtem Wort kommt die Gegenprobe dazu: alles gelernt, nur je eine Fähigkeit fehlt.
-## Ausgabe je Zeile: Siege in %, Leben der Gruppe am Ende (nur Siege), Züge je Sieg.
+## Ausgabe je Zeile: Siege in %, Leben der Gruppe am Ende (nur Siege), Züge je Sieg, Schaden der Klasse je 10 Züge.
+## Boss-Messung (12.11.): Statt der Monster-Liste „kampf:<kennung>“ (ein Kampf aus dem Spiel, z. B. kampf:kettenschmied).
+## Zusätzliche Wörter an beliebiger Stelle: „leben=3“ (Leben der Gegner mal 3, für einen dicken Einzelgegner) und
+## „spielweise=wahllos|klug|beide“ (klug: KampfKI.klug, Schutz und Schwächen nur, wenn sie etwas bringen).
 
 const KLASSEN := ["archer", "tamer", "smith", "blade", "singer"]
 
 var _rudel: Array = []
+## Kampf aus dem Spiel statt freier Monster ("" = freie Monster)
+var _kampf := ""
+## Leben der Gegner mal diesen Wert
+var _leben := 1.0
+var _spielweisen: Array = ["wahllos"]
 
 
 func _initialize() -> void:
@@ -17,19 +25,30 @@ func _initialize() -> void:
 
 
 func _run() -> void:
-	var args := OS.get_cmdline_user_args()
-	var anzahl := int(args[0]) if args.size() > 0 else 40
-	var stufe := int(args[1]) if args.size() > 1 else 20
-	var monster_stufe := int(args[2]) if args.size() > 2 else 20
-	var monster: Array = Array((args[3] if args.size() > 3 else "wiesenhoppler,knollenkaefer").split(","))
-	var nur := args[4] if args.size() > 4 else ""
+	var args := PackedStringArray()
+	for wort: String in OS.get_cmdline_user_args():
+		if wort.begins_with("leben="):
+			_leben = float(wort.trim_prefix("leben="))
+		elif wort.begins_with("spielweise="):
+			var w := wort.trim_prefix("spielweise=")
+			_spielweisen = ["wahllos", "klug"] if w == "beide" else [w]
+		else:
+			args.append(wort)
+	var anzahl := int(str(args[0])) if args.size() > 0 else 40
+	var stufe := int(str(args[1])) if args.size() > 1 else 20
+	var monster_stufe := int(str(args[2])) if args.size() > 2 else 20
+	var monster: Array = Array(str(args[3] if args.size() > 3 else "wiesenhoppler,knollenkaefer").split(","))
+	if str(monster[0]).begins_with("kampf:"):
+		_kampf = str(monster[0]).trim_prefix("kampf:")
+		monster = [_kampf]
+	var nur: String = args[4] if args.size() > 4 else ""
 	var allein := args.size() > 5 and args[5] == "allein"
 	var ohne := args.size() > 6 and args[6] == "ohne"
 	# Achtes Wort: das Rudel des Zähmers, mit + getrennt (z. B. glutwelpe oder glutwelpe+moosling), sonst alle drei Start-Monster
-	_rudel = Array(args[7].split("+")) if args.size() > 7 and args[7] != "alle" else []
+	_rudel = Array(str(args[7]).split("+")) if args.size() > 7 and args[7] != "alle" else []
 	# Neuntes Wort: Wachstum der Zähmer-Monster zum Ausprobieren (Sandbox.zaehmer_monster_wachstum, z. B. 1.0 für früher)
 	if args.size() > 8:
-		Sandbox.zaehmer_monster_wachstum = float(args[8])
+		Sandbox.zaehmer_monster_wachstum = float(str(args[8]))
 	if nur == "liste":
 		print(", ".join(KampfEditor.monster_liste()))
 		quit(0)
@@ -44,8 +63,10 @@ func _run() -> void:
 		for f: Dictionary in baum:
 			if f.get("grundangriff", false):
 				grund = str(f.id)
-		print("## %s (Stufe %d, Gegner %s Stufe %d, %d Kämpfe%s)" % [klasse, stufe, ",".join(monster.filter(func(m: String) -> bool: return m != "")),
-				monster_stufe, anzahl, ", allein" if allein else ""])
+		var gegner_text := "Kampf " + _kampf if _kampf != "" else "Gegner %s Stufe %d" % [
+				",".join(monster.filter(func(m: String) -> bool: return m != "")), monster_stufe]
+		print("## %s (Stufe %d, %s%s, %d Kämpfe%s; Spalten: %s)" % [klasse, stufe, gegner_text, ", Leben ×%s" % _leben if _leben != 1.0 else "",
+				anzahl, ", allein" if allein else "", " | ".join(_spielweisen)])
 		_messen(klasse, stufe, monster_stufe, monster, allein, anzahl, "nur Grundangriff", {grund: 3}, [])
 		var alles := {grund: 2}
 		var leiste_alles: Array = []
@@ -81,24 +102,40 @@ func _run() -> void:
 func _messen(klasse: String, stufe: int, monster_stufe: int, monster: Array, allein: bool, anzahl: int, titel: String,
 		gelernt: Dictionary, leiste: Array) -> void:
 	var a := KampfEditor.standard()
+	if _kampf != "":
+		a.art = "spiel"
+		a.kampf = _kampf
 	a.monster = monster
 	a.monster_stufe = monster_stufe
 	a.gruppe = [{klasse = klasse, stufe = stufe}, {klasse = "" if allein else "novize", stufe = stufe},
 			{klasse = "" if allein else "novize", stufe = stufe}, {klasse = "", stufe = 1}]
 	var s := KampfEditor.setup_bauen(a)
+	if s.is_empty():
+		print("  Kampf oder Monster nicht gefunden.")
+		return
+	s["gegner_leben"] = float(s.get("gegner_leben", 1.0)) * _leben
 	var held: Dictionary = s.helden[0]
 	held["faehigkeiten"] = gelernt
 	held["leiste"] = leiste
 	if klasse == "tamer" and not _rudel.is_empty():
 		held["monster"] = _rudel
-	var siege := 0
-	var leben := 0.0
-	var zuege := 0
-	for i in anzahl:
-		var e := ProbeKampf.einmal(root, s, 100 + i)
-		if e.gewonnen:
-			siege += 1
-			leben += float(e.leben)
-			zuege += int(e.zuege)
-	print("  %-34s %3d %%   Leben %3d %%   Züge %3d" % [titel, roundi(100.0 * siege / anzahl), roundi(100.0 * leben / maxi(1, siege)),
-			zuege / maxi(1, siege)])
+	var zeile := "  %-34s" % titel
+	for weise: String in _spielweisen:
+		KampfKI.klug = weise == "klug"
+		var siege := 0
+		var leben := 0.0
+		var zuege := 0
+		var alle_zuege := 0
+		var schaden := 0
+		for i in anzahl:
+			var e := ProbeKampf.einmal(root, s, 100 + i)
+			alle_zuege += int(e.zuege)
+			schaden += int(e.schaden)
+			if e.gewonnen:
+				siege += 1
+				leben += float(e.leben)
+				zuege += int(e.zuege)
+		zeile += "  | %3d %%  Leben %3d %%  Züge %3d  Schaden %3d" % [roundi(100.0 * siege / anzahl), roundi(100.0 * leben / maxi(1, siege)),
+				zuege / maxi(1, siege), roundi(10.0 * schaden / maxi(1, alle_zuege))]
+	KampfKI.klug = false
+	print(zeile)

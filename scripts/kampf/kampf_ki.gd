@@ -8,6 +8,10 @@ var rng := RandomNumberGenerator.new()
 ## Nur für Messungen (tests/boss_messen.gd): Diese Boss-Mechaniken ignoriert der Computer (Aktionen wie "anker", "kette"
 ## oder Ziele wie "kuehlbecken"), so zeigt sich, ob ein Boss auch ohne sie zu schaffen ist.
 static var ohne_mechanik: Array[String] = []
+## Nur für Messungen (tests/klassen_messen.gd, BALANCING.md): kluge Spielweise. Der Computer drückt Schutz und Schwächen
+## nur, wenn sie gerade etwas bringen, spannt den Bogen vor dem Schuss und zielt mit Einzelziel-Fähigkeiten auf den
+## stärksten Gegner. Im Spiel bleibt es aus (die Mitstreiter spielen wie bisher).
+static var klug := false
 
 
 func _init(p_seed: int) -> void:
@@ -34,6 +38,10 @@ func choose(rules: Skills, f: Fighter) -> Dictionary:
 					options.append(picked)
 		elif ab.target == "none" or not rules.valid_targets(f, ab).is_empty():
 			options.append(ab)
+	if klug:
+		var sinnvoll := options.filter(func(ab: Dictionary) -> bool: return _klug_erlaubt(rules, f, ab))
+		if not sinnvoll.is_empty():
+			options = sinnvoll
 	# Rüstungsschmied: die Rüstung tragen, die zu den meisten Gegnern passt, und sonst nicht wechseln
 	# (jeder Wechsel kostet einen Zug und die ganze Härte)
 	var pick: Dictionary = {}
@@ -93,6 +101,11 @@ func choose(rules: Skills, f: Fighter) -> Dictionary:
 				if rules.blocked_reason(f, ab) == "":
 					weighted.append(ab)
 		pick = weighted[rng.randi() % weighted.size()]
+		# Klug: Der Bogen wird vor dem Schuss gespannt, ein gespannter Bogen schießt
+		if klug and f.klass == "archer":
+			for ab in options:
+				if (ab.id == "charge" and pick.id == "shot" and not f.charged) or (ab.id == "shot" and f.charged):
+					pick = ab
 	var target: Fighter = null
 	if pick.target != "none":
 		var targets := rules.valid_targets(f, pick)
@@ -110,8 +123,92 @@ func choose(rules: Skills, f: Fighter) -> Dictionary:
 			else:
 				targets.assign(targets.filter(func(t: Fighter) -> bool: return t.klass == "kuehlbecken"))
 		targets.assign(_boss_ziele(rules, targets))
+		if klug:
+			targets.assign(_kluge_ziele(f, pick, targets))
 		target = targets[rng.randi() % targets.size()]
 	return {ab = pick, target = target}
+
+
+## Kluge Spielweise: Lohnt sich diese Fähigkeit gerade? (Schutz nur, wenn keiner wirkt; Bedrohung nur, wenn ein
+## Verbündeter wenig Leben hat; Gesammeltes erst ausgeben, wenn genug da ist.)
+func _klug_erlaubt(rules: Skills, f: Fighter, ab: Dictionary) -> bool:
+	var m: Fighter = f.active_monster
+	var gegner: Array[Fighter] = rules.c.alive(rules.c.enemies)
+	match str(ab.id):
+		"schwachstelle", "kaefig", "dissonanz", "reinforce", "abfangen", "polar", "partner":
+			if not _passende_ziele(str(ab.id), rules.valid_targets(f, ab)).is_empty():
+				return str(ab.id) != "polar" or f.res_def >= 3
+			return false
+		"anvil":
+			return f.taunt == 0 and rules.c.allies().any(func(h: Fighter) -> bool: return h != f and h.is_alive() and h.hp * 2 < h.max_hp)
+		"gluehend":
+			return not f.has_meta("gluehend")
+		"gemeinsame_haerte":
+			return f.hard >= 3 and f.def_buff_turns == 0
+		"storm":
+			return f.blades >= Fighter.MAX_BLADES
+		"mondschild":
+			return f.res_def >= 3 and f.shield_total() == 0
+		"comet":
+			return f.res_off >= 3 and f.atk_buff_turns == 0
+		"meteor":
+			return f.res_off >= 3
+		"lullaby":
+			return not f.has_meta("wiegenlied")
+		"care":
+			return m != null and m.hp * 10 < m.max_hp * 6
+		"cheer":
+			return m != null and m.atk_buff_turns == 0
+		"wachstum":
+			return m != null and not m.has_meta("wachstum")
+		"einschuechtern":
+			return gegner.any(func(e: Fighter) -> bool: return e.schwach_turns == 0)
+	return true
+
+
+## Kluge Spielweise: Ziele, bei denen die Fähigkeit etwas bringt (noch nicht geschwächt, noch nicht geschützt).
+func _passende_ziele(id: String, targets: Array[Fighter]) -> Array[Fighter]:
+	var gut: Array[Fighter] = []
+	for t: Fighter in targets:
+		var passt := true
+		match id:
+			"schwachstelle":
+				passt = t.vuln_turns == 0 and not t.passive
+			"kaefig":
+				passt = not t.has_meta("kaefig") and not t.passive
+			"dissonanz":
+				passt = t.schwach_turns == 0 and not t.passive
+			"net":
+				passt = not t.passive
+			"reinforce":
+				passt = t.def_buff_turns == 0 and t.shield_total() == 0
+			"abfangen":
+				passt = t.hp * 10 < t.max_hp * 6 and not t.has_meta("gedeckt_von")
+			"polar":
+				passt = t.def_buff_turns == 0
+			"partner":
+				passt = t.atk_buff_turns == 0
+		if passt:
+			gut.append(t)
+	return gut
+
+
+## Kluge Spielweise: Schwächen auf den stärksten Gegner, Schutz auf den Verbündeten mit dem wenigsten Leben.
+func _kluge_ziele(f: Fighter, pick: Dictionary, targets: Array[Fighter]) -> Array[Fighter]:
+	var id := str(pick.id)
+	if not id in ["schwachstelle", "kaefig", "dissonanz", "net", "reinforce", "abfangen", "polar", "partner"]:
+		return targets
+	var gut := _passende_ziele(id, targets)
+	if gut.is_empty():
+		return targets
+	if id == "partner":
+		return gut
+	var feind := id in ["schwachstelle", "kaefig", "dissonanz", "net"]
+	var bestes: Fighter = gut[0]
+	for t: Fighter in gut:
+		if (feind and t.hp > bestes.hp) or (not feind and float(t.hp) / t.max_hp < float(bestes.hp) / bestes.max_hp):
+			bestes = t
+	return [bestes] as Array[Fighter]
 
 
 ## Wut-Phasen (A9b3): Was jede Gruppe tun würde. Hammerbrüder im Gleichschritt: den gesünderen Bruder schlagen.
