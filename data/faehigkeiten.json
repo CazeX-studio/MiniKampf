@@ -92,7 +92,7 @@
 				"name": "Schwachstelle markieren",
 				"reihe": 4,
 				"max": 5,
-				"info": "Markiert ein Ziel: 3 Runden nimmt es von allen mehr Schaden."
+				"info": "Markiert ein Ziel: 4 Runden nimmt es von allen mehr Schaden."
 			},
 			{
 				"id": "elementpfeil",
@@ -387,14 +387,14 @@
 				"name": "Partnertanz",
 				"reihe": 4,
 				"max": 5,
-				"info": "Ein Verbündeter bekommt eine ihrer Klingen, sein nächster Angriff ist stärker."
+				"info": "Ein Verbündeter bekommt eine ihrer Klingen: Er ist sofort dran und greift 3 Runden stärker an."
 			},
 			{
 				"id": "kaefig",
 				"name": "Klingenkäfig",
 				"reihe": 4,
 				"max": 5,
-				"info": "Verbraucht drei Klingen: 2 Runden werden sie dem Gegner zum Käfig, greift er an, wird er geschnitten."
+				"info": "Verbraucht drei Klingen: 3 Runden werden sie dem Gegner zum Käfig, greift er an, wird er geschnitten."
 			}
 		],
 		"ult": "Tanz der tausend Klingen"

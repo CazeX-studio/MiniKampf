@@ -3042,3 +3042,16 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 1. Geh in der Glutoase in die Glutstube.
 2. Layla steht hinter der Theke, nachts sitzt Hadrak an seinem Amboss.
 3. Die Feuergrube und die Laternen leuchten, die Gäste stecken nicht in Möbeln.
+
+## Balancing: Boss-Messung und drei nachgebesserte Fähigkeiten (E4, 12.11.2026)
+- Die Klassen-Messung prüft jede Fähigkeit jetzt auch gegen Bosse (Kettenschmied, Sporenkönigin, Wurzelmutter, Hammerbrüder), einen dicken Golem und eine gemischte Gruppe, einmal wahllos und einmal klug gespielt. Alle Zahlen und Befehle stehen in `BALANCING.md`.
+- **Schwachstelle markieren** (Bogenschütze): 10 statt 4 Schaden, wirkt 4 statt 3 Runden.
+- **Partnertanz** (Klingentänzerin): Der Partner ist sofort dran und 3 Runden stärker, kostet nur noch 4 Mana.
+- **Klingenkäfig** (Klingentänzerin): schneidet 3 Runden lang mit 14 statt 2 Runden mit 8.
+- Offen für Marco: Schmied und Zähmer sind gegen Bosse schwach, Mondschild, Polarstern und Aufgeladener Schuss bringen wenig (Vorschläge in `BALANCING.md`, „Offen nach der Boss-Messung“).
+
+**So testest du es**
+1. Im Kampf-Editor eine Klingentänzerin (Stufe 20) mit einem Mitstreiter gegen ein starkes Monster stellen, Partnertanz und Klingenkäfig auf die Leiste legen.
+2. Partnertanz drücken: Der Mitstreiter rückt auf der Zugleiste ganz nach vorne und ist gleich dran.
+3. Mit drei Klingen den Klingenkäfig setzen: Der Gegner wird drei Runden lang geschnitten, wenn er angreift.
+4. Mit dem Bogenschützen Schwachstelle markieren: Der Treffer macht spürbar Schaden, die Markierung hält vier Runden.

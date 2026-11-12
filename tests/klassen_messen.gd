@@ -8,6 +8,7 @@ extends SceneTree
 ## Ausgabe je Zeile: Siege in %, Leben der Gruppe am Ende (nur Siege), Züge je Sieg, Schaden der Klasse je 10 Züge.
 ## Boss-Messung (12.11.): Statt der Monster-Liste „kampf:<kennung>“ (ein Kampf aus dem Spiel, z. B. kampf:kettenschmied).
 ## Zusätzliche Wörter an beliebiger Stelle: „leben=3“ (Leben der Gegner mal 3, für einen dicken Einzelgegner) und
+## „nur=partner,kaefig“ (nur diese Fähigkeiten einzeln und in der Gegenprobe, spart Zeit) und
 ## „spielweise=wahllos|klug|beide“ (klug: KampfKI.klug, Schutz und Schwächen nur, wenn sie etwas bringen).
 
 const KLASSEN := ["archer", "tamer", "smith", "blade", "singer"]
@@ -18,6 +19,8 @@ var _kampf := ""
 ## Leben der Gegner mal diesen Wert
 var _leben := 1.0
 var _spielweisen: Array = ["wahllos"]
+## Nur diese Fähigkeiten einzeln messen (Kennungen, mit „nur=a,b“), leer = alle
+var _nur_faehigkeiten: Array = []
 
 
 func _initialize() -> void:
@@ -32,6 +35,8 @@ func _run() -> void:
 		elif wort.begins_with("spielweise="):
 			var w := wort.trim_prefix("spielweise=")
 			_spielweisen = ["wahllos", "klug"] if w == "beide" else [w]
+		elif wort.begins_with("nur="):
+			_nur_faehigkeiten = Array(wort.trim_prefix("nur=").split(","))
 		else:
 			args.append(wort)
 	var anzahl := int(str(args[0])) if args.size() > 0 else 40
@@ -77,16 +82,20 @@ func _run() -> void:
 			for b: String in (f.get("braucht", {}) as Dictionary):
 				gelernt[b] = maxi(int(gelernt.get(b, 0)), int(f.braucht[b]))
 			var passiv: bool = f.get("passiv", false)
-			_messen(klasse, stufe, monster_stufe, monster, allein, anzahl, "%s%s (R%d)" % [f.name, " [passiv]" if passiv else "", int(f.reihe)],
-					gelernt, [] if passiv else [str(f.id)])
 			alles[str(f.id)] = 2
 			if not passiv:
 				leiste_alles.append(str(f.id))
+			if not _nur_faehigkeiten.is_empty() and not str(f.id) in _nur_faehigkeiten:
+				continue
+			_messen(klasse, stufe, monster_stufe, monster, allein, anzahl, "%s%s (R%d)" % [f.name, " [passiv]" if passiv else "", int(f.reihe)],
+					gelernt, [] if passiv else [str(f.id)])
 		_messen(klasse, stufe, monster_stufe, monster, allein, anzahl, "alles auf Stufe 2", alles, leiste_alles)
 		# Gegenprobe: alles gelernt, nur diese eine Fähigkeit fehlt (zeigt, was sie im fertigen Baum noch ausmacht)
 		if ohne:
 			for f: Dictionary in baum:
 				if f.get("grundangriff", false) or f.get("bald", false):
+					continue
+				if not _nur_faehigkeiten.is_empty() and not str(f.id) in _nur_faehigkeiten:
 					continue
 				var rest := alles.duplicate()
 				rest.erase(str(f.id))

@@ -16,6 +16,8 @@ const BLADE_HIT := 2
 ## Passende Rüstung fängt so viel Schaden ab, jede Härte zusätzlich HARD_STEP.
 const ARMOR_BLOCK := 0.4
 ## Härten (Rüstungsschmied): Funken auf jeden Gegner
+## Klingenkäfig: Schaden je Schnitt (E4, 12.11.: 14 statt 8, drei statt zwei Runden)
+const KAEFIG_SCHNITT := 14
 const HAERTEN_FUNKEN := 5
 const HARD_STEP := 0.06
 
@@ -160,7 +162,7 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 				{id = "net", name = "Netzpfeil", info = "6 Schaden, Ziel rutscht auf der Leiste zurück · 10 Mana", target = "enemy", mana = 10, cd = 3},
 				{id = "rapid", name = "Schnellfeuer", info = "%d schnelle Pfeile à 5 auf ein Ziel · 12 Mana" % _rapid_hits(f), target = "enemy", mana = 12},
 				{id = "durchschlag", name = "Durchschlag", info = "24 Fernkampf, durchbohrt das Ziel und trifft einen zweiten Gegner · 14 Mana", target = "enemy", mana = 14, cd = 3},
-				{id = "schwachstelle", name = "Schwachstelle markieren", info = "4 Fernkampf, 3 Runden nimmt das Ziel von allen mehr Schaden · 10 Mana", target = "enemy", mana = 10, cd = 3},
+				{id = "schwachstelle", name = "Schwachstelle markieren", info = "10 Fernkampf, 4 Runden nimmt das Ziel von allen mehr Schaden · 10 Mana", target = "enemy", mana = 10, cd = 3},
 				{id = "ult", name = "Jägerpfeil", info = "70 Fernkampf", target = "enemy"},
 			]
 			# Elementpfeil: nur mit besonderer Munition aus der Tasche
@@ -180,8 +182,8 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 				{id = "storm", name = "Klingensturm", info = "Verbraucht alle Klingen: %d Schaden" % (9 * f.blades), target = "enemy"},
 				{id = "sturmschritte", name = "Sturmschritte", info = "%d Sprünge à 8 auf zufällige Gegner, +1 Klinge · 12 Mana" % _sturm_hits(f), target = "none", mana = 12},
 				{id = "faecher", name = "Fächerschnitt", info = "Verbraucht 2 Klingen: 18 an alle Gegner · 10 Mana", target = "none", mana = 10},
-				{id = "partner", name = "Partnertanz", info = "Gibt einem Verbündeten eine Klinge: sein nächster Angriff ist stärker · 8 Mana", target = "ally_other", mana = 8},
-				{id = "kaefig", name = "Klingenkäfig", info = "Verbraucht 3 Klingen: 2 Runden schneiden sie das Ziel, wenn es angreift · 12 Mana", target = "enemy", mana = 12},
+				{id = "partner", name = "Partnertanz", info = "Gibt einem Verbündeten eine Klinge: Er ist sofort dran und 3 Runden stärker · 4 Mana", target = "ally_other", mana = 4},
+				{id = "kaefig", name = "Klingenkäfig", info = "Verbraucht 3 Klingen: 3 Runden schneiden sie das Ziel, wenn es angreift (je %d) · 12 Mana" % KAEFIG_SCHNITT, target = "enemy", mana = 12},
 				{id = "ult", name = "Tanz der 1000 Klingen", info = "5 Klingen, 3× 10 an alle Gegner, zum Schluss der Klingensturm", target = "none"},
 			]
 		"twilight":
@@ -848,11 +850,12 @@ func _archer(f: Fighter, id: String, target: Fighter) -> void:
 				c.hit(f, behind, 16, "ranged")
 		"schwachstelle":
 			c.zeige("schwachstelle", f, target)
-			c.hit(f, target, 4, "ranged")
+			# E4 (12.11., Boss-Messung): 10 statt 4 Schaden und 4 statt 3 Runden, sonst lohnt der Zug nicht
+			c.hit(f, target, 10, "ranged")
 			if target.is_alive():
-				target.vuln_turns = maxi(target.vuln_turns, 3)
+				target.vuln_turns = maxi(target.vuln_turns, 4)
 				c.float_text(target, "Schwachstelle!", Color("ff5050"), 30)
-				c.add_log("%s ist markiert: Alle machen 3 Runden mehr Schaden." % target.display_name)
+				c.add_log("%s ist markiert: Alle machen 4 Runden mehr Schaden." % target.display_name)
 		"elementpfeil":
 			var art: Dictionary = MUNITION.get(str(ab_choice), {})
 			if art.is_empty() or int(f.wares.get(str(ab_choice), 0)) <= 0:
@@ -915,13 +918,16 @@ func _blade(f: Fighter, id: String, target: Fighter) -> void:
 				c.hit(f, enemy, 18, "melee", element)
 		"partner":
 			f.blades -= 1
-			target.atk_buff_turns = maxi(target.atk_buff_turns, BattleState.BUFF_TURNS)
+			# E4 (12.11., Boss-Messung): Der Partner ist sofort dran und eine Runde länger stärker, sonst kostet der
+			# Tanz die Gruppe mehr, als er bringt
+			target.atk_buff_turns = maxi(target.atk_buff_turns, BattleState.BUFF_TURNS + 1)
+			c.hasten(target, 1.0)
 			c.zeige("partnertanz", f, target)
 			c.float_text(target, "Klinge geliehen", Color("ffd0a0"), 30)
 			c.add_log("%s tanzt mit %s und leiht eine Klinge." % [f.display_name, target.display_name])
 		"kaefig":
 			f.blades -= 3
-			target.set_meta("kaefig", {zuege = 2, quelle = f})
+			target.set_meta("kaefig", {zuege = 3, quelle = f})
 			c.zeige("kaefig", f, target)
 			Effekte.anwenden(c, f, target, "festhalten", 0.0, 2)
 			c.float_text(target, "Klingenkäfig", Color("ffd0a0"), 30)

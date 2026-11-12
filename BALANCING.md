@@ -13,13 +13,17 @@ gegen frei gewählte Monster. Je Klasse:
 3. **alles auf Stufe 2**,
 4. mit dem Wort `ohne` die **Gegenprobe**: alles gelernt, nur je eine Fähigkeit fehlt.
 
-Ausgabe je Zeile: Siege in %, Leben der Gruppe am Ende (nur Siege), Züge je Sieg.
+Ausgabe je Zeile: Siege in %, Leben der Gruppe am Ende (nur Siege), Züge je Sieg, Schaden der Klasse je 10 Züge.
 
 Aufruf (Godot auf dem PC: `C:/GameDev/Godot/Godot_v4.7.2-stable_win64_console.exe`, in der Cloud: `~/godot/godot`):
 
 ```
 <Godot> --headless --path . -s tests/klassen_messen.gd -- [anzahl] [stufe] [monster_stufe] [monster,…] [klasse] [allein] [ohne] [rudel] [wachstum]
 ```
+
+Dazu an beliebiger Stelle (seit 12.11., Boss-Messung): `leben=3` (Leben der Gegner mal 3), `spielweise=wahllos|klug|beide`,
+`nur=partner,kaefig` (nur diese Fähigkeiten messen, spart Zeit). Statt der Monster-Liste geht `kampf:<kennung>` für einen
+Kampf aus dem Spiel (`kettenschmied`, `pilz_koenigin`, `pilz_urbaum`, `hammerbrueder`).
 
 | Wort | Bedeutung | Beispiel |
 |---|---|---|
@@ -117,29 +121,98 @@ Schmied 20.
 - **Schilde wachsen nicht mit der Stufe** (ein Schild von 24 bleibt 24, Gegner auf Stufe 20 treffen etwa doppelt so
   hart). Das trifft Mondschild, Rüstung verstärken, Gemeinsame Härte und Meisterstück. In `design.md` steht seit
   11.11. ausdrücklich, dass Schilde feste Werte sind: Marco entscheidet, ob das so bleibt.
-- Vor Änderungen an den drei offenen Klassen erst die Boss-Messung unten bauen: Die meisten schwachen Fähigkeiten zielen
-  auf einen einzelnen Gegner.
+- Seit der Boss-Messung (unten) ist klarer, was davon wirklich schwach ist: siehe „Was die Boss-Messung zeigt“.
 
-## Idee: Boss-Messung je Fähigkeit (noch nicht gebaut)
+## Boss-Messung je Fähigkeit (gebaut 12.11.2026)
 
-Ziel: zeigen, was Fähigkeiten gegen **ein starkes Einzelziel** wert sind (Aufgeladener Schuss, Netzpfeil, Schwachstelle
-markieren, Klingenkäfig, Klingensturm, Dissonanz, Polarstern, Abfangen, Amboss aufstellen).
+Zeigt, was Fähigkeiten gegen **starke Einzelziele** wert sind. Dieselben Zeilen wie oben (nur Grundangriff, jede
+Fähigkeit einzeln, alles, Gegenprobe), aber gegen sechs Gegner-Arten und in **zwei Spielweisen** nebeneinander:
 
-So könnte sie aussehen:
+- **wahllos:** Der Computer drückt zufällig (wie bisher).
+- **klug** (`KampfKI.klug`, nur für Messungen): Schutz nur, wenn keiner wirkt; Bedrohung und Abfangen nur, wenn ein
+  Verbündeter wenig Leben hat; Bogen spannen vor dem Schuss; Klingensturm erst mit fünf Klingen; Lieder, die Resonanz
+  verbrauchen, erst ab drei; Schwächen auf den stärksten Gegner, der sie noch nicht hat.
 
-1. `tests/klassen_messen.gd` bekommt eine zweite Art von Gegner: statt freier Monster ein **Kampf aus dem Spiel**
-   (wie `tests/boss_messen.gd`: `a.art = "spiel"`, `a.kampf = "<kennung>"`). Vorschlag für den Aufruf: als viertes Wort
-   `kampf:kettenschmied` statt der Monster-Liste.
-2. Dieselben Zeilen wie bisher: nur Grundangriff, jede Fähigkeit einzeln, alles, Gegenprobe.
-3. Drei Gegner-Arten, damit nichts einseitig ist:
-   - **ein Boss mit Mechanik** (Kettenschmied, Sporenkönigin, Wurzelmutter, Hammerbrüder; die Mechaniken spielt der
-     Computer schon richtig),
-   - **ein dicker Einzelgegner ohne Mechanik** (z. B. `obsidiangolem` allein; dafür `gegner_leben` hochsetzen statt nur
-     die Stufe, auf Stufe 44 war er noch zu leicht),
-   - **gemischte Gruppe** mit Nahkampf, Fernkampf und Magie (damit der Schmied nicht mit einer Rüstung alles abdeckt).
-4. Zusätzlich zur Siegquote **Schaden je Zug** ausgeben. Bei Bossen liegen die Siegquoten oft nahe 100 %, dann zeigt nur
-   die Zahl der Züge je Sieg den Unterschied.
-5. Damit Schutz-Fähigkeiten fair gemessen werden, einen **klügeren Computer** als zweite Spielweise: Schutz nur drücken,
-   wenn gerade keiner wirkt, Bedrohung nur, wenn ein Verbündeter wenig Leben hat, Aufladen immer vor dem Schuss. Beide
-   Spielweisen nebeneinander ausgeben („wahllos“ und „klug“).
-6. Ergebnis wie oben als Tabelle hier eintragen, dann entscheidet Marco je Fähigkeit.
+Die sechs Messungen (Gruppe Stufe 20 mit zwei Novizen, je 100 Kämpfe; die Bosse bekommen mehr Leben, weil sie sonst fast
+immer fallen und man keinen Unterschied sieht). `<K>` ist die Klasse; alle 30 Läufe dauern auf vier Kernen rund 20 Minuten:
+
+```
+<Godot> --headless --path . -s tests/klassen_messen.gd -- 100 20 20 kampf:kettenschmied <K> gruppe ohne leben=1.6 spielweise=beide
+<Godot> --headless --path . -s tests/klassen_messen.gd -- 100 20 20 kampf:pilz_koenigin <K> gruppe ohne spielweise=beide
+<Godot> --headless --path . -s tests/klassen_messen.gd -- 100 20 20 kampf:pilz_urbaum <K> gruppe ohne leben=1.6 spielweise=beide
+<Godot> --headless --path . -s tests/klassen_messen.gd -- 100 20 20 kampf:hammerbrueder <K> gruppe ohne leben=2 spielweise=beide
+<Godot> --headless --path . -s tests/klassen_messen.gd -- 100 20 55 obsidiangolem <K> gruppe ohne leben=3 spielweise=beide
+<Godot> --headless --path . -s tests/klassen_messen.gd -- 100 20 24 steppenhyaene,dornling,schattenhexe,sturmkobold <K> gruppe ohne spielweise=beide
+```
+
+Der Golem fällt immer (dort zählen die Züge je Sieg), die gemischte Gruppe hat Nahkampf, Fernkampf und Magie.
+Unterschiede unter etwa 12 Punkten sind bei 100 Kämpfen Zufall.
+
+### Ergebnisse vom 12.11.2026 (Siege in %, wahllos / klug)
+
+| Klasse | Zeile | Kettenschmied | Sporenkönigin | Wurzelmutter | Hammerbrüder | Golem (Züge) | Gemischt |
+|---|---|---|---|---|---|---|---|
+| Bogenschütze | nur Grundangriff | 58 / 60 | 68 / 68 | 47 / 47 | 61 / 61 | 121 | 57 / 57 |
+| | alles auf Stufe 2 | 86 / 87 | 90 / 88 | 92 / 78 | 97 / 100 | 97 | 83 / 86 |
+| Klingentänzerin | nur Grundangriff | 70 / 67 | 80 / 80 | 81 / 81 | 86 / 86 | 110 | 64 / 64 |
+| | alles auf Stufe 2 | 64 / 52 | 87 / 86 | 91 / 93 | 97 / 93 | 115 | 83 / 88 |
+| Sternensängerin | nur Grundangriff | 40 / 38 | 71 / 71 | 50 / 50 | 65 / 65 | 119 | 49 / 49 |
+| | alles auf Stufe 2 | 96 / 100 | 80 / 86 | 50 / 63 | 100 / 100 | 130 / 114 | 84 / 95 |
+| Rüstungsschmied | nur Grundangriff | 31 / 39 | 71 / 71 | 33 / 33 | 84 / 84 | 125 | 49 / 49 |
+| | alles auf Stufe 2 | 27 / 40 | 38 / 41 | 18 / 31 | 100 / 100 | 142 / 139 | 98 / 95 |
+| Monster-Zähmer | nur Grundangriff | 28 / 24 | 28 / 28 | 89 / 89 | 93 / 93 | 100 | 75 / 75 |
+| | alles auf Stufe 2 | 42 / 55 | 31 / 35 | 60 / 64 | 95 / 89 | 132 / 128 | 49 / 52 |
+
+Die einzelnen Fähigkeiten, die vorher „bringt nichts“ hießen (einzeln zum Grundangriff, wahllos / klug):
+
+| Fähigkeit (Grundangriff) | Kettenschmied | Sporenkönigin | Wurzelmutter | Hammerbrüder | Urteil |
+|---|---|---|---|---|---|
+| Netzpfeil (58 / 68 / 47 / 61) | 87 / 88 | 73 / 76 | 72 / 78 | 80 / 78 | **gut gegen Bosse**, bleibt |
+| Aufgeladener Schuss | 36 / 37 | 76 / 84 | 31 / 44 | 81 / 75 | mal besser, mal schlechter; offen |
+| Schwachstelle markieren, vorher | 61 / 53 | 76 / 82 | 55 / 39 | 76 / 77 | brachte nichts |
+| Schwachstelle markieren, **jetzt** | 83 / 83 | 79 / 75 | 67 / 40 | 87 / 89 | lohnt sich |
+| Klingensturm (70 / 80 / 81 / 86) | 57 / 79 | 84 / 83 | 70 / 81 | 89 / 98 | klug gespielt gut, bleibt |
+| Partnertanz, vorher | 24 / 26 | 68 / 71 | 33 / 33 | 33 / 41 | schadete stark |
+| Partnertanz, **jetzt** | 67 / 61 | 78 / 78 | 53 / 53 | 65 / 82 | etwa gleichauf (Partner sind hier Novizen) |
+| Klingenkäfig, vorher | 48 / 41 | 67 / 71 | 40 / 48 | 64 / 57 | schadete |
+| Klingenkäfig, **jetzt** | 71 / 70 | 73 / 76 | 45 / 60 | 90 / 88 | gleichauf, gegen die Wurzelmutter schwach |
+| Dissonanz (40 / 71 / 50 / 65) | 84 / 78 | 84 / 78 | 70 / 75 | 77 / 73 | **gut gegen Bosse**, bleibt |
+| Mondschild | 41 / 53 | 71 / 70 | 55 / 50 | 75 / 73 | bringt nichts (Schild wächst nicht mit) |
+| Polarstern | 34 / 41 | 74 / 74 | 41 / 51 | 64 / 68 | bringt nichts |
+| Amboss aufstellen (31 / 71 / 33 / 84) | 33 / 29 | 74 / 70 | 21 / 32 | 91 / 89 | bringt nichts |
+| Abfangen | 15 / 21 | 64 / 73 | 14 / 31 | 78 / 86 | wahllos schädlich, klug gleichauf |
+| Rüstung verstärken | 44 / 60 | 69 / 70 | 12 / 27 | 94 / 100 | klug gegen zwei Bosse gut |
+| Härten | 6 / 11 | 42 / 42 | 26 / 26 | 83 / 83 | gegen Bosse schädlich (Funken zu schwach für ein Ziel) |
+| Pflege (28 / 28 / 89 / 93) | 8 / 24 | 22 / 28 | 77 / 89 | 92 / 93 | wahllos schädlich, klug gleichauf |
+| Wechsel | 38 / 26 | 22 / 22 | 56 / 56 | 88 / 88 | kostet gegen Bosse Züge |
+
+### Was die Boss-Messung zeigt
+
+- **Netzpfeil und Dissonanz sind keine schwachen Fähigkeiten:** Gegen Bosse gehören sie zu den besten. Nicht ändern.
+- **Klingensturm ist in Ordnung**, wenn man ihn mit vollen Klingen einsetzt.
+- **Kluges Spielen hilft der Sängerin am meisten** (Kometenlied 59 → 78, voller Baum gemischt 84 → 95), dem Schmied bei
+  Rüstung verstärken und Abfangen. Bei Bogenschütze und Zähmer macht es kaum einen Unterschied.
+- **Der Rüstungsschmied ist gegen Bosse die schwächste Klasse:** voller Baum 27 bis 40 % gegen Kettenschmied,
+  Sporenkönigin und Wurzelmutter, teils schlechter als nur mit dem Hammer (er macht mit Schutz-Knöpfen zu wenig Schaden,
+  Schaden je 10 Züge 13 bis 24, die anderen 50 bis 100). Gegen Gruppen bleibt er der Stärkste.
+- **Der Monster-Zähmer ist seit der Abschwächung gegen Bosse schwach** (Kettenschmied und Sporenkönigin um 30 %), und
+  sein voller Baum ist gegen Wurzelmutter und gemischte Gruppe schlechter als nur der Grundangriff (89 → 60, 75 → 49).
+- **Die Klingentänzerin verliert mit vollem Baum gegen den Kettenschmied** (70 → 64 / 52), ohne Partnertanz 71 bis 82.
+- **Die Sängerin** hängt weiter am Mondwiegenlied; gegen die Wurzelmutter singt sie zu viel und trifft zu wenig (50 / 63).
+
+### Geändert am 12.11.2026 nach der Boss-Messung
+
+- **Schwachstelle markieren:** 10 statt 4 Schaden, 4 statt 3 Runden. Gegen Gruppen (Standard-Messung) 33 → 42 %.
+- **Partnertanz:** Der Partner ist sofort dran und 3 statt 2 Runden stärker, kostet 4 statt 8 Mana. Gruppen 40 → 53 %.
+- **Klingenkäfig:** schneidet 3 statt 2 Runden mit 14 statt 8 (`Skills.KAEFIG_SCHNITT`). Gruppen 39 → 59 %.
+
+### Offen nach der Boss-Messung (Marco entscheidet)
+
+1. **Rüstungsschmied gegen Bosse stärken?** Vorschlag: Härten gibt dem nächsten Hammerschlag mehr Schaden, Amboss
+   aufstellen schlägt beim Aufstellen einmal zu.
+2. **Zähmer gegen Bosse:** Monster-Wachstum von 0,1 etwas anheben (z. B. 0,3) oder nur gegen Bosse voll wachsen lassen.
+3. **Mondschild und Polarstern:** Bringen nichts, solange Schilde und Abwehr nicht mit der Stufe wachsen (design.md: feste
+   Werte).
+4. **Aufgeladener Schuss:** 30 Schaden in zwei Zügen sind kaum mehr als zwei Schüsse (24), und ein Treffer unterbricht.
+   Vorschlag: 36 Schaden oder der Treffer unterbricht nicht mehr.
+5. **Partnertanz** mit einem echten Schadens-Partner messen (bisher nur mit Novizen).
