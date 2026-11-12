@@ -142,10 +142,14 @@ BLAETTER = {
 }
 
 ## Blätter, deren Bilder dicht beieinander stehen: nur kleine Lücken überbrücken (sonst wachsen Nachbarn zusammen)
-ENG = {"tamer": 6, "smith": 6, "blade": 9, "novize": 10}
+ENG = {"tamer": 6, "smith": 6, "blade": 9, "novize": 10, "tank": 6, "mechanic": 6, "ritualist": 6}
 
 ## Bilder mit gewollt lila oder pinken Flächen (Monster, Zielkreuz): dort kein Pink herausrechnen
 LILA = {"archer_durchschlag", "archer_schwachstelle"}
+
+## Bilder, die fast ganz aus Violett bestehen (Schatten des Zwielicht-Wandlers, Lupenglas, Siegel-Wirbel): sanft freistellen
+## (nur das reine Hintergrund-Pink fällt weg) und kein Pink herausrechnen
+VIOLETT = {"twilight_shadow", "twilight_veil", "twilight_turn", "twilight_ult", "quartermaster_appraise", "kunoichi_ult"}
 
 
 def entrosen(datei):
@@ -160,6 +164,7 @@ def entrosen(datei):
 def main():
 	gb.ZIEL = WURZEL / "assets" / "faehigkeiten"
 	gb.GROESSE = 128
+	gb.SANFT |= VIOLETT
 	for klasse in sys.argv[1:] or BLAETTER:
 		blatt = f"faehigkeiten_{klasse}"
 		if not (WURZEL / "tools" / "vorlagen" / f"{blatt}.png").exists():
@@ -171,7 +176,7 @@ def main():
 		for reihe in BLAETTER[klasse]:
 			for i in reihe:
 				name = i[1:] if i.startswith("@") else f"{klasse}_{i}"
-				if name not in LILA:
+				if name not in LILA and name not in VIOLETT:
 					entrosen(gb.ZIEL / f"{name}.png")
 
 
