@@ -15,6 +15,8 @@ const ARMORS := {
 const BLADE_HIT := 2
 ## Passende Rüstung fängt so viel Schaden ab, jede Härte zusätzlich HARD_STEP.
 const ARMOR_BLOCK := 0.4
+## Härten (Rüstungsschmied): Funken auf jeden Gegner
+const HAERTEN_FUNKEN := 5
 const HARD_STEP := 0.06
 
 const WARES := {
@@ -141,8 +143,8 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 				{id = "armor", name = "Rüstung wechseln", info = "Jetzt: %s" % ARMORS[f.armor].name, target = "choice", cd = _armor_cd(f), choices = choices},
 				{id = "reinforce", name = "Rüstung verstärken", info = "Verbündeter 2 Runden Abwehr+, Schild 24 · 12 Mana", target = "ally", mana = 12},
 				{id = "anvil", name = "Amboss aufstellen", info = "Zieht 3 Angriffe auf sich, +1 Härte · 10 Mana", target = "none", mana = 10, cd = 3},
-				{id = "abfangen", name = "Abfangen", info = "Fängt bis zu deinem nächsten Zug den ersten Treffer gegen einen Verbündeten ab · 8 Mana", target = "ally_other", mana = 8},
-				{id = "haerten", name = "Härten", info = "Sofort zwei Stufen Gehärtet · 8 Mana", target = "none", mana = 8},
+				{id = "abfangen", name = "Abfangen", info = "Fängt bis zu deinem nächsten Zug jeden Treffer gegen einen Verbündeten ab · 8 Mana", target = "ally_other", mana = 8},
+				{id = "haerten", name = "Härten", info = "Sofort zwei Stufen Gehärtet, Funken treffen alle Gegner mit %d Feuer · 8 Mana" % HAERTEN_FUNKEN, target = "none", mana = 8},
 				{id = "gluehend", name = "Glühende Rüstung", info = "3 Runden: Wer dich im Nahkampf trifft, verbrennt sich · 14 Mana", target = "none", mana = 14, cd = 3},
 				{id = "ambossschlag", name = "Ambossschlag", info = "12 an alle Gegner, betäubt sie kurz (Bosse nicht) · 16 Mana", target = "none", mana = 16, cd = 3},
 				{id = "gemeinsame_haerte", name = "Gemeinsame Härte", info = "Gibt deine Härte (%d) 2 Runden als Schutz an alle · 10 Mana" % f.hard, target = "none", mana = 10},
@@ -718,11 +720,16 @@ func _smith(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 		"abfangen":
 			c.zeige("abfangen", f, target)
 			target.set_meta("gedeckt_von", f)
+			# E4 (12.11.): nicht nur der erste, sondern jeder Treffer bis zum nächsten Zug des Schmieds
+			target.set_meta("gedeckt_alle", true)
 			c.float_text(target, "Abgefangen", Color("ffb070"), 30)
 			c.add_log("%s hält den Hammer vor %s." % [f.display_name, target.display_name])
 		"haerten":
 			c.zeige("haerten", f)
 			_add_hard(f, 2)
+			# E4 (12.11.): Beim Härten sprühen Funken auf alle Gegner, sonst ist der Zug schlechter als ein Hammerschlag
+			for e in c.alive(c.enemies):
+				c.hit(f, e, HAERTEN_FUNKEN, "magic", "Feuer")
 		"gluehend":
 			f.set_meta("gluehend", 3)
 			c.zeige("gluehend", f)

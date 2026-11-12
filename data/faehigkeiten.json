@@ -248,7 +248,7 @@
 				"name": "Abfangen",
 				"reihe": 2,
 				"max": 5,
-				"info": "Fängt bis zu deinem nächsten Zug den ersten Treffer gegen einen Verbündeten ab, auch in der hinteren Reihe."
+				"info": "Fängt bis zu deinem nächsten Zug jeden Treffer gegen einen Verbündeten ab, auch in der hinteren Reihe."
 			},
 			{
 				"id": "meisterhand",
@@ -266,7 +266,7 @@
 				"braucht": {
 					"hammer": 3
 				},
-				"info": "Sofort zwei Stufen Gehärtet."
+				"info": "Sofort zwei Stufen Gehärtet, dabei sprühen Funken auf alle Gegner."
 			},
 			{
 				"id": "gluehend",

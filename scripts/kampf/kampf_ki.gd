@@ -34,11 +34,26 @@ func choose(rules: Skills, f: Fighter) -> Dictionary:
 					options.append(picked)
 		elif ab.target == "none" or not rules.valid_targets(f, ab).is_empty():
 			options.append(ab)
-	# Ult immer sofort, sonst zufällig (Reihe wechseln nur selten)
+	# Rüstungsschmied: die Rüstung tragen, die zu den meisten Gegnern passt, und sonst nicht wechseln
+	# (jeder Wechsel kostet einen Zug und die ganze Härte)
 	var pick: Dictionary = {}
+	if f.klass == "smith":
+		var passend := _beste_ruestung(rules)
+		for ab in options:
+			if ab.id == "armor" and str(ab.get("choice", "")) == passend and f.armor != passend and not f.has_meta("meisterstueck"):
+				pick = ab
+		options = options.filter(func(ab: Dictionary) -> bool: return ab.id != "armor")
+		# Allein kämpfend: keine Schutz-Knöpfe, die nichts bringen (Bedrohung ohne Gruppe, Schutz, der schon wirkt),
+		# sonst schlägt er kaum zu und der Kampf zieht sich endlos
+		if rules.c.allies().filter(func(h: Fighter) -> bool: return h != f and h.is_alive()).is_empty():
+			var schon_geschuetzt := f.def_buff_turns > 0 or f.shield_total() > 0
+			options = options.filter(func(ab: Dictionary) -> bool:
+				return not (ab.id in ["anvil", "gemeinsame_haerte"] or (ab.id == "reinforce" and schon_geschuetzt)
+						or (ab.id == "gluehend" and f.has_meta("gluehend"))))
+	# Ult immer sofort, sonst zufällig (Reihe wechseln nur selten)
 	for ab in options:
 		# (Meisterstück des Rüstungsschmieds nicht, solange noch ein Schild hält: sonst greift er nie an)
-		if ab.id == "ult" and not (f.klass == "smith" and f.shield_total() > 0):
+		if ab.id == "ult" and not (f.klass == "smith" and f.shield_total() > 0) and pick.is_empty():
 			pick = ab
 	# Hammerbrüder: Holen beide zum Doppelschlag aus, einen stören (das täte jede Gruppe)
 	if pick.is_empty():
@@ -123,6 +138,21 @@ func _boss_ziele(rules: Skills, targets: Array[Fighter]) -> Array[Fighter]:
 			k.assign(knospen)
 			return k
 	return targets
+
+
+## Welche Rüstung des Schmieds zu den meisten lebenden Gegnern passt (nach der Art ihres ersten Angriffs).
+func _beste_ruestung(rules: Skills) -> String:
+	var zahl := {"melee": 0, "magic": 0, "ranged": 0}
+	for e: Fighter in rules.c.alive(rules.c.enemies):
+		var angriffe: Array = Sandbox.ENEMIES.get(e.klass, {}).get("attacks", [])
+		var art := str(angriffe[0].get("kind", "melee")) if not angriffe.is_empty() else "melee"
+		if zahl.has(art):
+			zahl[art] += 1
+	var beste := "melee"
+	for art: String in zahl:
+		if int(zahl[art]) > int(zahl[beste]):
+			beste = art
+	return beste
 
 
 func _kettenschmied(rules: Skills) -> Kettenschmied:

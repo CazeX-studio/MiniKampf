@@ -820,6 +820,7 @@ func _begin_turn(f: Fighter) -> void:
 	for other in all_fighters():
 		if other.has_meta("gedeckt_von") and other.get_meta("gedeckt_von") == f:
 			other.remove_meta("gedeckt_von")
+			other.remove_meta("gedeckt_alle")
 	_gelaehmt = Effekte.zug_beginn(self, f)
 	skills.begin_turn(f)
 	refresh()
@@ -1241,7 +1242,10 @@ func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String
 		elif t.has_meta("gedeckt_von"):
 			# Deckung geben (Novize): einen Treffer fängt der Deckende ab
 			var cover: Fighter = t.get_meta("gedeckt_von")
-			t.remove_meta("gedeckt_von")
+			# Deckung (Novize) hält einen Treffer, Abfangen (Rüstungsschmied) alle bis zu seinem nächsten Zug
+			if not t.has_meta("gedeckt_alle") or not cover.is_alive():
+				t.remove_meta("gedeckt_von")
+				t.remove_meta("gedeckt_alle")
 			if cover.is_alive() and cover != t:
 				float_text(t, "Deckung!", Color("8fd3ff"), 26)
 				zeige("deckung_funke", cover)
