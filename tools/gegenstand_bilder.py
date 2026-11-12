@@ -78,7 +78,7 @@ BLAETTER = {"gegenstaende": [
 VERBINDEN = {"gegenstaende_6": 15, "gegenstaende_7": 15, "gegenstaende_8": 15}
 
 ## Symbole in Lila/Violett: das normale Freistellen nimmt mit dem Pink zu viel weg. Hier zählt nur, was nahe am Hintergrund-Pink ist.
-SANFT = {"splitterstaub"}
+SANFT = {"splitterstaub", "zwielichtstab"}
 
 
 def sanft_freistellen(roh, ys, xs):
