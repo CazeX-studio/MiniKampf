@@ -3,7 +3,7 @@
 Versionsnummer: **0.Stufe.Korrektur** (beschlossen 12.11.2026). 0.1 war der erste Alpha-Test, 0.2 ist Alpha 2,
 0.3 wird die Beta (nach Balancing und Testtagen), 1.0 ist der Start des Spiels. Kleine Korrekturen zählen hinten
 hoch (0.2.1, 0.2.2 …). Die Nummer steht in `data/version.json`, im Spiel unten rechts im Startmenü und auf der
-Startseite. Zu jeder Nummer gibt es im Repo eine Markierung `v<nummer>`.
+Startseite. Zu jeder Nummer setzt der Web-Export auf GitHub im Repo eine Markierung `v<nummer>`.
 
 ## 0.2.0 · Alpha 2 (12.11.2026)
 

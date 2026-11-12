@@ -1,5 +1,5 @@
 {
-	"hinweis": "Versionsnummer (beschlossen 12.11.2026): 0.Stufe.Korrektur. Stufe: 0.1 erster Alpha-Test (08.11.), 0.2 Alpha 2 (nach A1 bis A23), 0.3 Beta (nach Balancing und Testtagen), 1.0 Start des Spiels. Kleine Korrekturen zählen hinten hoch (0.2.1 ...). Bei neuer Nummer: hier ändern, in AENDERUNGEN.md eintragen, im Repo eine Markierung v<nummer> setzen. Der Web-Export ergänzt 'version' um Datum und Stand, am PC steht dort 'Entwicklung'.",
+	"hinweis": "Versionsnummer (beschlossen 12.11.2026): 0.Stufe.Korrektur. Stufe: 0.1 erster Alpha-Test (08.11.), 0.2 Alpha 2 (nach A1 bis A23), 0.3 Beta (nach Balancing und Testtagen), 1.0 Start des Spiels. Kleine Korrekturen zählen hinten hoch (0.2.1 ...). Bei neuer Nummer: hier ändern, in AENDERUNGEN.md eintragen, die Markierung v<nummer> setzt der Web-Export auf GitHub dann selbst. Der Web-Export ergänzt 'version' um Datum und Stand, am PC steht dort 'Entwicklung'.",
 	"nummer": "0.2.0",
 	"stufe": "Alpha 2",
 	"version": "Entwicklung"

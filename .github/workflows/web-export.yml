@@ -83,3 +83,26 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # Versionsnummer (A24): Steht in data/version.json eine neue Nummer, setzt GitHub die Markierung v<nummer> selbst
+  # auf diesen Stand (aus der Cloud dürfen keine Markierungen hochgeladen werden). Gibt es sie schon, passiert nichts.
+  markierung:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Markierung für die Versionsnummer setzen
+        run: |
+          nummer="$(python3 -c "import json; print(json.load(open('data/version.json'))['nummer'])")"
+          stufe="$(python3 -c "import json; print(json.load(open('data/version.json'))['stufe'])")"
+          if git rev-parse -q --verify "refs/tags/v$nummer" >/dev/null; then
+            echo "v$nummer gibt es schon"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git tag -a "v$nummer" -m "$nummer $stufe (siehe AENDERUNGEN.md)"
+            git push origin "v$nummer"
+          fi
