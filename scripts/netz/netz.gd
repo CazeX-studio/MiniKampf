@@ -72,6 +72,9 @@ const CHAT_HISTORY := 30
 const MAX_PLAYERS := 4
 ## So oft pro Sekunde schickt der Gastgeber, wo alle stehen
 const SNAPSHOT_RATE := 15.0
+## Zwischenspeicher der Verbindung (Bytes). Godots Vorgabe (64 KB) läuft voll, sobald ein Mitspieler ein, zwei Sekunden
+## lädt (z. B. Kreuzweg öffnen): Dann gingen Nachrichten wie Gruppen-Einladungen verloren.
+const PUFFER := 4 * 1024 * 1024
 ## Diese Figuren kann man sich aussuchen (eigene Figuren aus assets/figuren/, sonst Namen aus dem 0x72-Paket)
 const LOOKS: Array[String] = ["vega", "kofi", "elf_m", "elf_f", "knight_m", "knight_f", "wizzard_m", "wizzard_f", "lizard_m", "lizard_f"]
 
@@ -161,6 +164,9 @@ static func serve() -> Error:
 static func _start_server(p_name: String, look: String, p_mode: Mode) -> Error:
 	stop()
 	var peer := WebSocketMultiplayerPeer.new()
+	peer.inbound_buffer_size = PUFFER
+	peer.outbound_buffer_size = PUFFER
+	peer.max_queued_packets = 16384
 	var port := server_port()
 	var err := peer.create_server(port)
 	if err != OK:
@@ -245,6 +251,9 @@ static func _connect(url: String) -> Error:
 	_url = url
 	_ready_to_send = false
 	var peer := WebSocketMultiplayerPeer.new()
+	peer.inbound_buffer_size = PUFFER
+	peer.outbound_buffer_size = PUFFER
+	peer.max_queued_packets = 16384
 	# Ein Server im Internet darf länger brauchen (er wacht vielleicht gerade auf)
 	peer.handshake_timeout = ONLINE_WAIT if url.begins_with("wss://") else 5.0
 	var err := peer.create_client(url)

@@ -81,7 +81,8 @@ func _process(delta: float) -> bool:
 				Netz.world.group_battle_requested.emit(ids, "gruppenkampf")
 				_step = 2
 				_t = 0.0
-			elif _t > 20.0:
+			# Großzügig warten: Die Zeit läuft vierfach, und die Mitspieler laden Kreuzweg je nach PC einige Sekunden
+			elif _t > 80.0:
 				_check(false, "Gruppe steht")
 				return _finish()
 		2:

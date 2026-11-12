@@ -34,7 +34,9 @@ func _process(delta: float) -> bool:
 				_check(false, "Verbindung zum Server")
 				return _finish()
 		2:
-			if _time > 1.5:
+			# Warten, bis Kreuzweg geladen ist und die Einleitung vom Server da ist (das Laden dauert je nach PC länger)
+			var bereit: bool = current_scene != null and current_scene.has_method("local_player") and current_scene.local_player() != null and current_scene.local_player().in_dialog()
+			if _time > 1.5 and (bereit or _time > 15.0):
 				var town := current_scene
 				_check(town != null and town.has_method("local_player"), "Kreuzweg ist offen")
 				if town == null or not town.has_method("local_player"):
