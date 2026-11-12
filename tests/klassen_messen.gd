@@ -3,11 +3,13 @@ extends SceneTree
 ## Gruppe: die Klasse auf der Stufe, dazu zwei Novizen vom Computer. Gegner: frei gewählte Monster auf einer Stufe.
 ## Je Klasse: „nur Grundangriff“ (Stufe 3), dann jede Fähigkeit einzeln dazu (Stufe 3, auf der Leiste, samt dem, was sie
 ## braucht), zum Schluss „alles“ (jede Fähigkeit Stufe 2). Der Computer wählt zufällig unter dem, was auf der Leiste liegt.
-## Aufruf: Godot --headless --path . -s tests/klassen_messen.gd -- [anzahl] [stufe] [monster_stufe] [monster,monster,…] [klasse] [allein] [ohne]
+## Aufruf: Godot --headless --path . -s tests/klassen_messen.gd -- [anzahl] [stufe] [monster_stufe] [monster,monster,…] [klasse] [allein] [ohne] [rudel] [wachstum]
 ## Mit „ohne“ als siebtem Wort kommt die Gegenprobe dazu: alles gelernt, nur je eine Fähigkeit fehlt.
 ## Ausgabe je Zeile: Siege in %, Leben der Gruppe am Ende (nur Siege), Züge je Sieg.
 
 const KLASSEN := ["archer", "tamer", "smith", "blade", "singer"]
+
+var _rudel: Array = []
 
 
 func _initialize() -> void:
@@ -23,6 +25,11 @@ func _run() -> void:
 	var nur := args[4] if args.size() > 4 else ""
 	var allein := args.size() > 5 and args[5] == "allein"
 	var ohne := args.size() > 6 and args[6] == "ohne"
+	# Achtes Wort: das Rudel des Zähmers, mit + getrennt (z. B. glutwelpe oder glutwelpe+moosling), sonst alle drei Start-Monster
+	_rudel = Array(args[7].split("+")) if args.size() > 7 and args[7] != "alle" else []
+	# Neuntes Wort: Wachstum der Zähmer-Monster zum Ausprobieren (Sandbox.zaehmer_monster_wachstum, z. B. 1.0 für früher)
+	if args.size() > 8:
+		Sandbox.zaehmer_monster_wachstum = float(args[8])
 	if nur == "liste":
 		print(", ".join(KampfEditor.monster_liste()))
 		quit(0)
@@ -82,6 +89,8 @@ func _messen(klasse: String, stufe: int, monster_stufe: int, monster: Array, all
 	var held: Dictionary = s.helden[0]
 	held["faehigkeiten"] = gelernt
 	held["leiste"] = leiste
+	if klasse == "tamer" and not _rudel.is_empty():
+		held["monster"] = _rudel
 	var siege := 0
 	var leben := 0.0
 	var zuege := 0

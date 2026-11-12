@@ -404,8 +404,13 @@ func _create_heroes() -> void:
 			if h.robot != null:
 				buddies.append(h.robot)
 			for b in buddies:
-				b.power = h.power
-				b.max_hp = roundi(b.max_hp * float(spec.macht))
+				# Monster des Zähmers wachsen nur zu einem kleinen Teil mit der Stufe des Helden (E4, siehe
+				# Sandbox.zaehmer_monster_wachstum); auf Stufe 1 ändert sich nichts, gegen einen anderen Zähmer auch nicht
+				var anteil := 1.0
+				if b != h.robot and not _rivalenkampf():
+					anteil = (1.0 + Sandbox.zaehmer_monster_wachstum * (float(spec.macht) - 1.0)) / float(spec.macht)
+				b.power = h.power * anteil
+				b.max_hp = roundi(b.max_hp * float(spec.macht) * anteil)
 				b.hp = b.max_hp
 		# Band (passiv, Zähmer): Monster, die schon lange im Rudel sind, sind stärker (höchstens 30 %)
 		var band: Dictionary = spec.get("band", {})
@@ -427,6 +432,15 @@ func _create_heroes() -> void:
 	if tamer != null:
 		add_companion(tamer.active_monster)
 		show_supporters(tamer)
+
+
+## Tritt ein anderer Zähmer an (Rivale Kobalt)? Dann kämpft Monster gegen Monster, und die eigenen Monster wachsen voll mit.
+func _rivalenkampf() -> bool:
+	for welle: Array in setup.get("wellen", []):
+		for id: Variant in welle:
+			if id is String and Sandbox.ENEMIES.get(id, {}).get("trainer", false):
+				return true
+	return false
 
 
 func add_companion(f: Fighter) -> void:
