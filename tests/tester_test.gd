@@ -38,12 +38,13 @@ func _initialize() -> void:
 	failed += _check("Noch kein Formular", Tester.formular_link("Feedback", "Kreuzweg"), "")
 	GameData.get_file("demo")["formular_vorlage"] = "https://docs.google.com/forms/d/e/X/viewform?usp=pp_url&entry.1=SPITZNAME&entry.2=NUMMER&entry.3=ART&entry.4=CODE&entry.5=VERSION&entry.6=ORT"
 	var link := Tester.formular_link("Demo durchgespielt", "Ende der Glutoase")
-	failed += _check("Link ausgefüllt", link, "https://docs.google.com/forms/d/e/X/viewform?usp=pp_url&entry.1=Sternchen&entry.2=%s&entry.3=Demo%%20durchgespielt&entry.4=%s&entry.5=Entwicklung&entry.6=Ende%%20der%%20Glutoase" % [nummer, code])
+	failed += _check("Link ausgefüllt", link, "https://docs.google.com/forms/d/e/X/viewform?usp=pp_url&entry.1=Sternchen&entry.2=%s&entry.3=Demo%%20durchgespielt&entry.4=%s&entry.5=%s&entry.6=Ende%%20der%%20Glutoase" % [nummer, code, Tester.version().uri_encode()])
 	GameData.get_file("demo")["formular_vorlage"] = ""
 	# Im Godot-Editor (Prüfung) gibt es Werkzeuge und keine Spitznamen-Frage
 	failed += _check("Werkzeuge im Editor", Tester.werkzeuge(), true)
 	failed += _check("Keine Frage im Editor", Tester.spitzname_noetig(), false)
-	failed += _check("Version", Tester.version(), "Entwicklung")
+	var v: Dictionary = GameData.get_file("version")
+	failed += _check("Version", Tester.version(), "%s %s · Entwicklung" % [v.nummer, v.stufe])
 	failed += _check("Dankesliste lesbar", Tester.dankesliste() is Array, true)
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(Tester.datei))
 	print("Tester: %s" % ("alles richtig" if failed == 0 else "%d Fehler" % failed))

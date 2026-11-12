@@ -53,9 +53,10 @@ jobs:
           # Gemalte Bilder verlustbehaftet speichern (etwa viermal kleiner, tools/web_bilder.py)
           python3 tools/web_bilder.py
           ~/godot/godot --headless --import || true
-          # Versionsnummer (S1): Datum und Stand, steht im Spiel und auf der Startseite
-          version="Demo $(date -u +%Y-%m-%d) ($(git rev-parse --short HEAD))"
-          printf '{\n\t"version": "%s"\n}\n' "$version" > data/version.json
+          # Versionsnummer (S1, 0.Stufe.Korrektur seit 12.11.): Nummer und Stufe aus data/version.json, dazu Datum und Stand
+          stand="$(date -u +%Y-%m-%d) ($(git rev-parse --short HEAD))"
+          python3 -c "import json,sys; p='data/version.json'; d=json.load(open(p)); d['version']=sys.argv[1]; json.dump(d, open(p,'w'), ensure_ascii=False, indent='\t')" "$stand"
+          version="$(python3 -c "import json; d=json.load(open('data/version.json')); print(d['nummer'], d['stufe'], '·', d['version'])")"
           # Die Demo liegt unter spiel/ (ohne Editor und Testknöpfe), davor die Startseite (web/index.html, D36)
           mkdir -p builds/web/spiel
           ~/godot/godot --headless --export-release "Web" builds/web/spiel/index.html

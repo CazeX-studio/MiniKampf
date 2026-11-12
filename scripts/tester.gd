@@ -29,8 +29,10 @@ static func spitzname_noetig() -> bool:
 	return (als_demo or not OS.is_debug_build()) and spitzname() == ""
 
 
+## Versionsnummer mit Stufe, z. B. „0.2.0 Alpha 2 · 2026-11-12 (01b201a)“ (am PC: „0.2.0 Alpha 2 · Entwicklung“).
 static func version() -> String:
-	return str(GameData.get_file("version").get("version", "Entwicklung"))
+	var daten: Dictionary = GameData.get_file("version")
+	return "%s %s · %s" % [daten.get("nummer", "0"), daten.get("stufe", ""), daten.get("version", "Entwicklung")]
 
 
 static func _laden() -> void:

@@ -64,7 +64,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
     11. Beim Bienenstock in Grünwacht näher herangehen: Es kommen zwei wütende Bienen statt der alten Ersatzbilder.
     12. Bei der Wurzelmutter einen Knoten zerstören und den anderen stehen lassen: Der zerstörte wächst sichtbar aus dem Stumpf nach.
 
-- **Nächster Schritt (11.11., nach Teil N):** Alle gelieferten Bilder haben jetzt einen Bauauftrag. A3b (Klassenbilder), A9c (alle Dungeon-Effekte aus Teil M), A20 (Ladebildschirme) A21 (Nachbild, Blitzeinschlag) und A22 (Fähigkeiten als große Bilder) sind fertig. A23 (farbige Zahlen in den Beschreibungen) ist fertig. Als Nächstes E4 (Balancing). Danach E4 (Balancing, braucht viele Tests), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden. Noch zu malen ist für die Demo nichts; später kommen Teil R, H2 und S3 (sechs spätere Klassen) und Teil I.
+- **Nächster Schritt (11.11., nach Teil N):** Alle gelieferten Bilder haben jetzt einen Bauauftrag. A3b (Klassenbilder), A9c (alle Dungeon-Effekte aus Teil M), A20 (Ladebildschirme) A21 (Nachbild, Blitzeinschlag) und A22 (Fähigkeiten als große Bilder) sind fertig. A23 (farbige Zahlen in den Beschreibungen) ist fertig, seit 12.11. heißt der Stand Version 0.2.0 (Alpha 2). Als Nächstes E4 (Balancing). Danach E4 (Balancing, braucht viele Tests), E5 (T3 und T4 am Stück) und S6 (Sitzen und Laufen, wartet auf Bilder). Offen von S1: dein Google-Formular verbinden. Noch zu malen ist für die Demo nichts; später kommen Teil R, H2 und S3 (sechs spätere Klassen) und Teil I.
+
+- **Neu (12.11.): A24 Version 0.2.0 (Alpha 2)** (deine Entscheidung):
+  - Das Spiel hat jetzt eine Versionsnummer nach dem Muster 0.Stufe.Korrektur: 0.1 war dein erster Alpha-Test, jetzt gilt **0.2.0 Alpha 2**, die Beta wird 0.3, der Start des Spiels 1.0. Kleine Korrekturen zählen hinten hoch (0.2.1 …).
+  - Im Startmenü unten rechts und auf der Startseite steht z. B. „0.2.0 Alpha 2 · 2026-11-12 (Stand)“, im Feedback-Formular wird sie mitgeschickt.
+  - Was in jeder Version neu ist, steht in `AENDERUNGEN.md`; auf der Startseite gibt es den Abschnitt „Neu in 0.2.0“. Im Repo markiert `v0.2.0` diesen Stand.
+  - **So testest du es:**
+    1. Die Startseite öffnen: oben „Version: 0.2.0 Alpha 2 · …“, darunter „Neu in 0.2.0“.
+    2. Das Spiel starten: im Startmenü unten rechts dieselbe Nummer.
+    3. Feedback schicken: Im Formular steht die Nummer schon drin.
 
 - **Neu (11.11.): A23 Farbige Zahlen in den Fähigkeiten** (deine Entscheidung):
   - Im Kästchen über einer Fähigkeit steht jetzt der fertige Wert, so wie er mit deiner Stufe, Waffe und Fähigkeitsstufe wirkt (z. B. Wirbel auf Stufe 20: „11 an alle“ statt „7 an alle“).
