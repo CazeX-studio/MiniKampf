@@ -27,7 +27,7 @@
 				"name": "Aufgeladener Schuss",
 				"reihe": 1,
 				"max": 5,
-				"info": "Bogen spannen: Der nächste Schuss trifft 2,5-mal so hart. Jede Stufe mehr: 10 % mehr Schaden."
+				"info": "Bogen spannen: Der nächste Schuss macht 300 % vom Schnellen Schuss (ein Treffer unterbricht das Spannen). Jede Stufe mehr: 10 % mehr Schaden."
 			},
 			{
 				"id": "ruhige_hand",
@@ -241,7 +241,7 @@
 				"name": "Amboss aufstellen",
 				"reihe": 2,
 				"max": 5,
-				"info": "Alle Gegner müssen eine Weile dich angreifen."
+				"info": "Du schlägst einmal zu, dann müssen alle Gegner eine Weile dich angreifen."
 			},
 			{
 				"id": "abfangen",

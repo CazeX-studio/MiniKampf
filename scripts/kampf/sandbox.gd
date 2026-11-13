@@ -143,7 +143,7 @@ const MONSTER_ORDER: Array[String] = ["moosling", "glutwelpe", "bachotter"]
 ## diesem Anteil mit der Stufe des Helden (Schaden und Leben; 1.0 = so stark wie der Held, 0.0 = gar nicht).
 ## Mit vollem Wachstum war der Zähmer mit seinem Monster zwei volle Kämpfer in einem: Zu dritt brauchte er Gegner auf
 ## Stufe 40 für 50 % Siege, die anderen Klassen Stufe 27. Veränderbar, damit Messungen andere Werte ausprobieren können.
-static var zaehmer_monster_wachstum := 0.1
+static var zaehmer_monster_wachstum := 0.3
 ## So viele Monster kann der Zähmer höchstens dabeihaben (3 Start-Monster + 2 gezähmte).
 ## So viele Monster nimmt der Zähmer mit (3 im Kampf: eins kämpft, 2 unterstützen; 3 zum Tauschen).
 ## Weitere warten im Stall bei Tilda (design.md, 25.10.)

@@ -1570,5 +1570,8 @@ func heal(source: Fighter, target: Fighter, amount: int) -> int:
 
 
 func give_shield(source: Fighter, target: Fighter, amount: int) -> void:
+	# Schilde wachsen wie Heilung mit Stufe, Ausrüstung und Fähigkeitsstufe (Marco, 13.11.; der Novize rechnet selbst)
+	if source != null and source.klass != "novize":
+		amount = roundi(amount * source.power * float(source.get_meta("stufen_mult", 1.0)))
 	target.add_shield(source, amount)
 	float_text(target, "Schild +%d" % amount, Color("6fa8ff"))

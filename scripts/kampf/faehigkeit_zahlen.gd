@@ -3,7 +3,7 @@ extends RefCounted
 ## Zahlen in den Fähigkeiten-Beschreibungen (A23, design.md „Zahlen in den Fähigkeiten-Beschreibungen“, Marco 11.11.):
 ## Jede Zahl, die wächst, steht als fertiger Wert da (mit Stufe, Ausrüstung und Fähigkeitsstufe) und hat die Farbe
 ## dessen, womit sie wächst: Waffenkraft orange, Zauberkraft blau-violett, Tempo türkis, Stufe gold. Feste Werte
-## (Mana, Runden, Schilde, Anzahl) bleiben weiß. Mit Einzelheiten (Taste D, am Handy beim Gedrückthalten) steht dahinter
+## (Mana, Runden, Anzahl) bleiben weiß; Schilde wachsen seit 13.11. mit (Marco). Mit Einzelheiten (Taste D, am Handy beim Gedrückthalten) steht dahinter
 ## der Grundwert und um wie viel Prozent ihn jede Sache erhöht.
 
 const FARBEN := {waffe = "ff9a4c", zauber = "a99bff", tempo = "5fe0d0", stufe = "f2c14e"}
@@ -16,8 +16,8 @@ const TEMPO_FAEHIGKEITEN: Array[String] = ["rapid", "sturmschritte"]
 const TEMPO_JE_PUNKT := 0.04
 const TEMPO_MIN := 0.8
 const TEMPO_MAX := 1.4
-## Zahlen, die wachsen: Schaden (vor Nahkampf, Fernkampf, Magie, Element, „an alle“), „à“/„je“ (Einzeltreffer), Heilung (LP)
-const MUSTER := "(?<=à |je |[Hh]eilt |Stabschlag )(\\d+)(?!\\d)(?! Mana| Härte| Klinge| Runde| Zug| Angriff)|(\\d+)(?= (?:Nahkampf|Fernkampf|Magie|Schaden|an alle|LP|Licht|Feuer|Wasser|Erde|Wind|Blitz|Pflanze|Schatten|Sternenkraft))"
+## Zahlen, die wachsen: Schilde (seit 13.11.), Schaden (vor Nahkampf, Fernkampf, Magie, Element, „an alle“), „à“/„je“ (Einzeltreffer), Heilung (LP)
+const MUSTER := "(?<=à |je |[Hh]eilt |Stabschlag |Schild )(\\d+)(?!\\d)(?! Mana| Härte| Klinge| Runde| Zug| Angriff)|(\\d+)(?= (?:Nahkampf|Fernkampf|Magie|Schaden|an alle|LP|Licht|Feuer|Wasser|Erde|Wind|Blitz|Pflanze|Schatten|Sternenkraft))"
 
 static var _regex: RegEx
 

@@ -18,6 +18,10 @@ const ARMOR_BLOCK := 0.4
 ## Härten (Rüstungsschmied): Funken auf jeden Gegner
 ## Klingenkäfig: Schaden je Schnitt (E4, 12.11.: 14 statt 8, drei statt zwei Runden)
 const KAEFIG_SCHNITT := 14
+## Härten: Der nächste Hammerschlag trifft so viel härter (E4, 13.11.)
+const HAERTEN_SCHLAG := 2.0
+## Aufgeladener Schuss: so viel vom Schnellen Schuss (E4, 13.11., Marco: mehr als zwei Schüsse, als Anteil vom Angriff)
+const LADESCHUSS_MAL := 3.0
 const HAERTEN_FUNKEN := 5
 const HARD_STEP := 0.06
 
@@ -144,9 +148,9 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 				{id = "hammer", name = "Hammerschlag", info = "15 Nahkampf, viel Bedrohung", target = "enemy"},
 				{id = "armor", name = "Rüstung wechseln", info = "Jetzt: %s" % ARMORS[f.armor].name, target = "choice", cd = _armor_cd(f), choices = choices},
 				{id = "reinforce", name = "Rüstung verstärken", info = "Verbündeter 2 Runden Abwehr+, Schild 24 · 12 Mana", target = "ally", mana = 12},
-				{id = "anvil", name = "Amboss aufstellen", info = "Zieht 3 Angriffe auf sich, +1 Härte · 10 Mana", target = "none", mana = 10, cd = 3},
+				{id = "anvil", name = "Amboss aufstellen", info = "Schlägt einmal zu (15 Nahkampf), zieht 3 Angriffe auf sich, +1 Härte · 10 Mana", target = "none", mana = 10, cd = 3},
 				{id = "abfangen", name = "Abfangen", info = "Fängt bis zu deinem nächsten Zug jeden Treffer gegen einen Verbündeten ab · 8 Mana", target = "ally_other", mana = 8},
-				{id = "haerten", name = "Härten", info = "Sofort zwei Stufen Gehärtet, Funken treffen alle Gegner mit %d Feuer · 8 Mana" % HAERTEN_FUNKEN, target = "none", mana = 8},
+				{id = "haerten", name = "Härten", info = "Sofort zwei Stufen Gehärtet, Funken treffen alle Gegner mit %d Feuer, der nächste Hammerschlag trifft doppelt · 8 Mana" % HAERTEN_FUNKEN, target = "none", mana = 8},
 				{id = "gluehend", name = "Glühende Rüstung", info = "3 Runden: Wer dich im Nahkampf trifft, verbrennt sich · 14 Mana", target = "none", mana = 14, cd = 3},
 				{id = "ambossschlag", name = "Ambossschlag", info = "12 an alle Gegner, betäubt sie kurz (Bosse nicht) · 16 Mana", target = "none", mana = 16, cd = 3},
 				{id = "gemeinsame_haerte", name = "Gemeinsame Härte", info = "Gibt deine Härte (%d) 2 Runden als Schutz an alle · 10 Mana" % f.hard, target = "none", mana = 10},
@@ -154,10 +158,10 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 			]
 		"archer":
 			var shot_name := "Aufgeladener Schuss" if f.charged else "Schneller Schuss"
-			var shot_info := "30 Fernkampf" if f.charged else "12 Fernkampf"
+			var shot_info := "%d Fernkampf (%d %% vom Schnellen Schuss)" % [roundi(12 * LADESCHUSS_MAL), roundi(100 * LADESCHUSS_MAL)] if f.charged else "12 Fernkampf"
 			list = [
 				{id = "shot", name = shot_name, info = shot_info, target = "enemy"},
-				{id = "charge", name = "Bogen spannen", info = "Nächster Schuss ×2,5 (Treffer unterbricht)", target = "none"},
+				{id = "charge", name = "Bogen spannen", info = "Nächster Schuss macht %d %% Schaden (Treffer unterbricht)" % roundi(100 * LADESCHUSS_MAL), target = "none"},
 				{id = "volley", name = "Pfeilhagel", info = "9 an alle Gegner · 15 Mana", target = "none", mana = 15, cd = 2},
 				{id = "net", name = "Netzpfeil", info = "6 Schaden, Ziel rutscht auf der Leiste zurück · 10 Mana", target = "enemy", mana = 10, cd = 3},
 				{id = "rapid", name = "Schnellfeuer", info = "%d schnelle Pfeile à 5 auf ein Ziel · 12 Mana" % _rapid_hits(f), target = "enemy", mana = 12},
@@ -698,7 +702,12 @@ func _smith(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 		"hammer":
 			c.lunge(f, target, 0.3)
 			c.zeige("hammer_treffer", f, target)
-			c.hit(f, target, 15, "melee")
+			# E4 (13.11.): Nach dem Härten trifft der nächste Hammerschlag doppelt
+			var hart := f.has_meta("haerten_schlag")
+			f.remove_meta("haerten_schlag")
+			if hart:
+				c.float_text(f, "Gehärteter Schlag!", Color("ffb070"), 30)
+			c.hit(f, target, 15 * (HAERTEN_SCHLAG if hart else 1.0), "melee")
 			# Viel Bedrohung: der Gegner greift danach eher den Schmied an
 			f.taunt = maxi(f.taunt, 1)
 		"armor":
@@ -712,6 +721,10 @@ func _smith(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 			for e in c.alive(c.enemies):
 				c.zeige("bedroht", f, e)
 			_add_hard(f, 1)
+			# E4 (13.11.): Beim Aufstellen schlägt der Schmied einmal zu (wie ein Hammerschlag), damit der Zug nicht leer ist
+			var vor_dem_amboss := c.alive(c.enemies).filter(func(e: Fighter) -> bool: return not e.passive)
+			if not vor_dem_amboss.is_empty():
+				c.hit(f, c.pick(vor_dem_amboss), 15, "melee")
 			c.add_log("%s stellt den Amboss auf: Gegner müssen sie angreifen." % f.display_name)
 		"reinforce":
 			# Steckbrief: zwei Runden mehr Verteidigung (dazu ein kleiner Schild)
@@ -732,6 +745,7 @@ func _smith(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 			# E4 (12.11.): Beim Härten sprühen Funken auf alle Gegner, sonst ist der Zug schlechter als ein Hammerschlag
 			for e in c.alive(c.enemies):
 				c.hit(f, e, HAERTEN_FUNKEN, "magic", "Feuer")
+			f.set_meta("haerten_schlag", true)
 		"gluehend":
 			f.set_meta("gluehend", 3)
 			c.zeige("gluehend", f)
@@ -808,7 +822,7 @@ func _archer(f: Fighter, id: String, target: Fighter) -> void:
 		"shot":
 			var base := 12.0
 			if f.charged:
-				base = 30.0
+				base = 12.0 * LADESCHUSS_MAL
 				f.charged = false
 				f.add_ult(30)
 			c.zeige("ladeschuss" if base > 12.0 else "schnellschuss", f, target)

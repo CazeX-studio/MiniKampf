@@ -118,9 +118,7 @@ Schmied 20.
 - **Sternensängerin:** Mondschild und Dissonanz bringen nichts; die Klasse hängt am Mondwiegenlied.
 - **Bogenschütze:** Aufgeladener Schuss, Netzpfeil, Schwachstelle markieren bringen gegen Gruppen nichts.
 - **Rüstungsschmied:** Amboss aufstellen bringt nichts Messbares.
-- **Schilde wachsen nicht mit der Stufe** (ein Schild von 24 bleibt 24, Gegner auf Stufe 20 treffen etwa doppelt so
-  hart). Das trifft Mondschild, Rüstung verstärken, Gemeinsame Härte und Meisterstück. In `design.md` steht seit
-  11.11. ausdrücklich, dass Schilde feste Werte sind: Marco entscheidet, ob das so bleibt.
+- Schilde wuchsen bis 13.11. nicht mit der Stufe; seitdem wachsen sie mit (siehe „Geändert am 13.11.2026“).
 - Seit der Boss-Messung (unten) ist klarer, was davon wirklich schwach ist: siehe „Was die Boss-Messung zeigt“.
 
 ## Boss-Messung je Fähigkeit (gebaut 12.11.2026)
@@ -206,13 +204,37 @@ Die einzelnen Fähigkeiten, die vorher „bringt nichts“ hießen (einzeln zum 
 - **Partnertanz:** Der Partner ist sofort dran und 3 statt 2 Runden stärker, kostet 4 statt 8 Mana. Gruppen 40 → 53 %.
 - **Klingenkäfig:** schneidet 3 statt 2 Runden mit 14 statt 8 (`Skills.KAEFIG_SCHNITT`). Gruppen 39 → 59 %.
 
-### Offen nach der Boss-Messung (Marco entscheidet)
+### Geändert am 13.11.2026 (Marcos Entscheidungen zur Liste)
 
-1. **Rüstungsschmied gegen Bosse stärken?** Vorschlag: Härten gibt dem nächsten Hammerschlag mehr Schaden, Amboss
-   aufstellen schlägt beim Aufstellen einmal zu.
-2. **Zähmer gegen Bosse:** Monster-Wachstum von 0,1 etwas anheben (z. B. 0,3) oder nur gegen Bosse voll wachsen lassen.
-3. **Mondschild und Polarstern:** Bringen nichts, solange Schilde und Abwehr nicht mit der Stufe wachsen (design.md: feste
-   Werte).
-4. **Aufgeladener Schuss:** 30 Schaden in zwei Zügen sind kaum mehr als zwei Schüsse (24), und ein Treffer unterbricht.
-   Vorschlag: 36 Schaden oder der Treffer unterbricht nicht mehr.
+- **Rüstungsschmied:** Nach dem Härten trifft der nächste Hammerschlag doppelt (`Skills.HAERTEN_SCHLAG`), beim Amboss
+  aufstellen schlägt er einmal zu. Er bleibt Tank und hängt gegen Bosse an den Mitstreitern (Marco).
+- **Monster-Zähmer:** Monster wachsen zu drei Zehnteln mit (`Sandbox.zaehmer_monster_wachstum = 0.3`). Die eigenen
+  Monster-Stufen kommen später.
+- **Schilde wachsen mit** Stufe, Ausrüstung und Fähigkeitsstufe wie Heilung (`BattleState.give_shield`), in den
+  Beschreibungen farbig. Betrifft Rüstung verstärken, Gemeinsame Härte, Meisterstück, Mondschild und die Schilde der
+  anderen Klassen (nicht den Novizen).
+- **Aufgeladener Schuss:** 300 % vom Schnellen Schuss statt 250 % (`Skills.LADESCHUSS_MAL`), ein Treffer unterbricht
+  weiterhin. Marco: Werte künftig als Anteil vom Angriff angeben statt als feste Zahl.
+
+Nachgemessen (Siege in %, wahllos / klug; in Klammern vorher):
+
+| Zeile | Kettenschmied | Sporenkönigin | Wurzelmutter | Hammerbrüder | Gemischt | Standard-Gruppe |
+|---|---|---|---|---|---|---|
+| Schmied, alles | 61 / 64 (27 / 40) | 40 / 51 (38 / 41) | 21 / 47 (18 / 31) | 100 / 100 | 100 / 97 | 100 |
+| Schmied, Rüstung verstärken | 83 / 91 (44 / 60) | 70 / 66 | 19 / 44 (12 / 27) | 100 / 100 | 77 / 86 (46 / 59) | |
+| Schmied, Härten | 22 / 24 (6 / 11) | 46 / 46 | 38 / 38 (26 / 26) | 99 / 99 | 67 / 67 (40 / 40) | 85 (66) |
+| Schmied, Amboss aufstellen | 44 / 39 (33 / 29) | 75 / 68 | 32 / 35 (21 / 32) | 100 / 97 | 64 / 58 | 87 (59) |
+| Zähmer, nur Grundangriff | 49 / 49 (28 / 24) | 34 / 34 (28 / 28) | 93 / 93 | 99 / 99 | 79 / 79 | 91 (84) |
+| Zähmer, alles | 62 / 73 (42 / 55) | 33 / 37 (31 / 35) | 67 / 65 (60 / 64) | 99 / 96 | 55 / 68 (49 / 52) | 97 (90) |
+| Sängerin, Mondschild | 64 / 53 (41 / 53) | 73 / 70 | 60 / 51 | 95 / 81 (75 / 73) | 73 / 68 (57 / 63) | 33 (24) |
+| Bogenschütze, Aufgeladener Schuss | 47 / 31 (36 / 37) | 76 / 79 | 32 / 45 | 83 / 87 | 44 / 45 | 41 (35) |
+
+### Offen (Stand 13.11.2026)
+
+1. **Aufgeladener Schuss** lohnt sich gegen Sporenkönigin und Hammerbrüder (Schaden je 10 Züge 76 bis 96 statt 61 bis
+   72), gegen Kettenschmied und Wurzelmutter nicht: Dort wird der Bogenschütze zu oft getroffen und verliert das Spannen.
+2. **Sporenkönigin** bleibt für Schmied (40 / 51) und Zähmer (33 / 37) schwer, die **Wurzelmutter** für den Schmied.
+3. **Zähmer gegen Gruppen** ist mit 0,3 wieder vorn (97 %), aber weit weg von früher (Gegner Stufe 40 nötig).
+4. **Polarstern** bringt weiter nichts Messbares (Abwehr+ ist schon ein Anteil, daran liegt es nicht).
 5. **Partnertanz** mit einem echten Schadens-Partner messen (bisher nur mit Novizen).
+6. **Übrige feste Zahlen auf „Anteil vom Angriff“ umstellen** (Marco, 13.11.): bisher nur der Aufgeladene Schuss.

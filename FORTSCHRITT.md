@@ -3055,3 +3055,17 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 2. Partnertanz drücken: Der Mitstreiter rückt auf der Zugleiste ganz nach vorne und ist gleich dran.
 3. Mit drei Klingen den Klingenkäfig setzen: Der Gegner wird drei Runden lang geschnitten, wenn er angreift.
 4. Mit dem Bogenschützen Schwachstelle markieren: Der Treffer macht spürbar Schaden, die Markierung hält vier Runden.
+
+## Balancing: Marcos Entscheidungen nach der Boss-Messung (E4, 13.11.2026)
+- **Rüstungsschmied:** Nach dem Härten trifft der nächste Hammerschlag doppelt. Beim Amboss aufstellen schlägt er einmal zu.
+- **Monster-Zähmer:** Seine Monster wachsen wieder etwas mehr mit seiner Stufe mit (drei Zehntel statt ein Zehntel).
+- **Schilde wachsen mit:** Alle Schilde der Klassen werden mit Stufe und Ausrüstung größer, die Zahl in der Beschreibung ist farbig.
+- **Aufgeladener Schuss:** macht 300 % vom Schnellen Schuss. Ein Treffer unterbricht das Spannen weiterhin.
+- Gemessen: Schmied gegen den Kettenschmied 27 → 61 % Siege, Zähmer 42 → 62 %. Alle Zahlen in `BALANCING.md`.
+
+**So testest du es**
+1. Im Kampf-Editor einen Rüstungsschmied auf Stufe 20 nehmen, Härten drücken und danach den Hammerschlag: Es erscheint „Gehärteter Schlag!“ und der Treffer ist etwa doppelt so groß.
+2. Amboss aufstellen: Der Schmied schlägt dabei einmal zu.
+3. Rüstung verstärken auf Stufe 20: Der Schild ist deutlich größer als 24, die Zahl in der Beschreibung ist farbig.
+4. Mit dem Bogenschützen den Bogen spannen und schießen: Der Schuss macht etwa dreimal so viel wie ein Schneller Schuss.
+5. Mit dem Zähmer auf Stufe 20 kämpfen: Sein Monster trifft etwas härter als vorher.

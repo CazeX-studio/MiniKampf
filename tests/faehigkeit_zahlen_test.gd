@@ -21,7 +21,8 @@ func _initialize() -> void:
 	var saengerin := Fighter.new("Du", "singer", "Sternensängerin", true, 100, 10, Color.WHITE)
 	var heil := FaehigkeitZahlen.text(saengerin, {id = "x"}, "14 Licht, heilt 10 LP, Schild 20", 1)
 	_check(heil.contains("[color=#a99bff]14[/color] Licht"), "Zauberkraft blau-violett: " + heil)
-	_check(heil.contains("Schild 20"), "Schild ist ein fester Wert: " + heil)
+	# Schilde wachsen seit 13.11. mit (Marco: Werte sollen nicht fest sein)
+	_check(heil.contains("Schild [color=#a99bff]20[/color]"), "Schild wächst mit der Zauberkraft: " + heil)
 	# Tempo: Schnellfeuer wächst mit dem Tempo über dem Grundtempo der Klasse
 	var bogen := Fighter.new("Du", "archer", "Bogenschütze", true, 100, int(Sandbox.CLASSES.archer.tempo) + 5, Color.WHITE)
 	_check(is_equal_approx(FaehigkeitZahlen.tempo_faktor(bogen), 1.2), "5 Tempo mehr: 20 % mehr")
