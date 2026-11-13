@@ -12,17 +12,20 @@ const ARMORS := {
 	"ranged": {name = "Schuppenpanzer", info = "gegen Fernkampf"},
 }
 ## Klingentänzerin: Schaden jeder schwebenden Klinge, die nach Klingenschritt und Ausfallschritt nachtrifft
-const BLADE_HIT := 2
+const BLADE_HIT := 22
 ## Passende Rüstung fängt so viel Schaden ab, jede Härte zusätzlich HARD_STEP.
 const ARMOR_BLOCK := 0.4
-## Härten (Rüstungsschmied): Funken auf jeden Gegner
-## Klingenkäfig: Schaden je Schnitt (E4, 12.11.: 14 statt 8, drei statt zwei Runden)
-const KAEFIG_SCHNITT := 14
+## Härten (Rüstungsschmied): Funken auf jeden Gegner, in Prozent vom Hammerschlag
+## Klingenkäfig: Schaden je Schnitt (E4, 12.11.: in Prozent vom Klingenschritt, 14 statt 8, drei statt zwei Runden)
+const KAEFIG_SCHNITT := 156
 ## Härten: Der nächste Hammerschlag trifft so viel härter (E4, 13.11.)
 const HAERTEN_SCHLAG := 2.0
+## Normaler Angriff der fünf Demo-Klassen. Alle ihre Schadens-, Heil- und Schildwerte sind ein Anteil davon
+## (Marco, 13.11.: Werte als Prozent vom Angriff statt als feste Zahl), siehe an() und wert().
+const GRUNDANGRIFF := {smith = 15.0, archer = 12.0, blade = 9.0, singer = 14.0, tamer = 8.0}
 ## Aufgeladener Schuss: so viel vom Schnellen Schuss (E4, 13.11., Marco: mehr als zwei Schüsse, als Anteil vom Angriff)
 const LADESCHUSS_MAL := 3.0
-const HAERTEN_FUNKEN := 5
+const HAERTEN_FUNKEN := 33
 const HARD_STEP := 0.06
 
 const WARES := {
@@ -145,50 +148,50 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 			for id: String in ARMORS:
 				choices.append({id = id, name = ARMORS[id].name, info = ARMORS[id].info})
 			list = [
-				{id = "hammer", name = "Hammerschlag", info = "15 Nahkampf, viel Bedrohung", target = "enemy"},
+				{id = "hammer", name = "Hammerschlag", info = "%d Nahkampf, viel Bedrohung" % wert(f, 100), target = "enemy"},
 				{id = "armor", name = "Rüstung wechseln", info = "Jetzt: %s" % ARMORS[f.armor].name, target = "choice", cd = _armor_cd(f), choices = choices},
-				{id = "reinforce", name = "Rüstung verstärken", info = "Verbündeter 2 Runden Abwehr+, Schild 24 · 12 Mana", target = "ally", mana = 12},
-				{id = "anvil", name = "Amboss aufstellen", info = "Schlägt einmal zu (15 Nahkampf), zieht 3 Angriffe auf sich, +1 Härte · 10 Mana", target = "none", mana = 10, cd = 3},
+				{id = "reinforce", name = "Rüstung verstärken", info = "Verbündeter 2 Runden Abwehr+, Schild %d · 12 Mana" % wert(f, 160), target = "ally", mana = 12},
+				{id = "anvil", name = "Amboss aufstellen", info = "Schlägt einmal zu (%d Nahkampf), zieht 3 Angriffe auf sich, +1 Härte · 10 Mana" % wert(f, 100), target = "none", mana = 10, cd = 3},
 				{id = "abfangen", name = "Abfangen", info = "Fängt bis zu deinem nächsten Zug jeden Treffer gegen einen Verbündeten ab · 8 Mana", target = "ally_other", mana = 8},
-				{id = "haerten", name = "Härten", info = "Sofort zwei Stufen Gehärtet, Funken treffen alle Gegner mit %d Feuer, der nächste Hammerschlag trifft doppelt · 8 Mana" % HAERTEN_FUNKEN, target = "none", mana = 8},
+				{id = "haerten", name = "Härten", info = "Sofort zwei Stufen Gehärtet, Funken treffen alle Gegner mit %d Feuer, der nächste Hammerschlag trifft doppelt · 8 Mana" % wert(f, HAERTEN_FUNKEN), target = "none", mana = 8},
 				{id = "gluehend", name = "Glühende Rüstung", info = "3 Runden: Wer dich im Nahkampf trifft, verbrennt sich · 14 Mana", target = "none", mana = 14, cd = 3},
-				{id = "ambossschlag", name = "Ambossschlag", info = "12 an alle Gegner, betäubt sie kurz (Bosse nicht) · 16 Mana", target = "none", mana = 16, cd = 3},
+				{id = "ambossschlag", name = "Ambossschlag", info = "%d an alle Gegner, betäubt sie kurz (Bosse nicht) · 16 Mana" % wert(f, 80), target = "none", mana = 16, cd = 3},
 				{id = "gemeinsame_haerte", name = "Gemeinsame Härte", info = "Gibt deine Härte (%d) 2 Runden als Schutz an alle · 10 Mana" % f.hard, target = "none", mana = 10},
-				{id = "ult", name = "Meisterstück", info = "3 Runden Meisterrüstung: schützt gegen alles, Härte voll, Schild 40", target = "none"},
+				{id = "ult", name = "Meisterstück", info = "3 Runden Meisterrüstung: schützt gegen alles, Härte voll, Schild %d" % wert(f, 267), target = "none"},
 			]
 		"archer":
 			var shot_name := "Aufgeladener Schuss" if f.charged else "Schneller Schuss"
-			var shot_info := "%d Fernkampf (%d %% vom Schnellen Schuss)" % [roundi(12 * LADESCHUSS_MAL), roundi(100 * LADESCHUSS_MAL)] if f.charged else "12 Fernkampf"
+			var shot_info := "%d Fernkampf (%d %% vom Schnellen Schuss)" % [wert(f, 100 * LADESCHUSS_MAL), roundi(100 * LADESCHUSS_MAL)] if f.charged else "%d Fernkampf" % wert(f, 100)
 			list = [
 				{id = "shot", name = shot_name, info = shot_info, target = "enemy"},
 				{id = "charge", name = "Bogen spannen", info = "Nächster Schuss macht %d %% Schaden (Treffer unterbricht)" % roundi(100 * LADESCHUSS_MAL), target = "none"},
-				{id = "volley", name = "Pfeilhagel", info = "9 an alle Gegner · 15 Mana", target = "none", mana = 15, cd = 2},
-				{id = "net", name = "Netzpfeil", info = "6 Schaden, Ziel rutscht auf der Leiste zurück · 10 Mana", target = "enemy", mana = 10, cd = 3},
-				{id = "rapid", name = "Schnellfeuer", info = "%d schnelle Pfeile à 5 auf ein Ziel · 12 Mana" % _rapid_hits(f), target = "enemy", mana = 12},
-				{id = "durchschlag", name = "Durchschlag", info = "24 Fernkampf, durchbohrt das Ziel und trifft einen zweiten Gegner · 14 Mana", target = "enemy", mana = 14, cd = 3},
-				{id = "schwachstelle", name = "Schwachstelle markieren", info = "10 Fernkampf, 4 Runden nimmt das Ziel von allen mehr Schaden · 10 Mana", target = "enemy", mana = 10, cd = 3},
-				{id = "ult", name = "Jägerpfeil", info = "70 Fernkampf", target = "enemy"},
+				{id = "volley", name = "Pfeilhagel", info = "%d an alle Gegner · 15 Mana" % wert(f, 75), target = "none", mana = 15, cd = 2},
+				{id = "net", name = "Netzpfeil", info = "%d Schaden, Ziel rutscht auf der Leiste zurück · 10 Mana" % wert(f, 50), target = "enemy", mana = 10, cd = 3},
+				{id = "rapid", name = "Schnellfeuer", info = "%d schnelle Pfeile à %d auf ein Ziel · 12 Mana" % [_rapid_hits(f), wert(f, 42)], target = "enemy", mana = 12},
+				{id = "durchschlag", name = "Durchschlag", info = "%d Fernkampf, durchbohrt das Ziel und trifft einen zweiten Gegner · 14 Mana" % wert(f, 200), target = "enemy", mana = 14, cd = 3},
+				{id = "schwachstelle", name = "Schwachstelle markieren", info = "%d Fernkampf, 4 Runden nimmt das Ziel von allen mehr Schaden · 10 Mana" % wert(f, 83), target = "enemy", mana = 10, cd = 3},
+				{id = "ult", name = "Jägerpfeil", info = "%d Fernkampf" % wert(f, 583), target = "enemy"},
 			]
 			# Elementpfeil: nur mit besonderer Munition aus der Tasche
 			var pfeile: Array = []
 			for pfeil: String in MUNITION:
 				if int(f.wares.get(pfeil, 0)) > 0:
 					var art: Dictionary = MUNITION[pfeil]
-					pfeile.append({id = pfeil, name = "%s (%d)" % [art.name, int(f.wares[pfeil])], info = "14 %s, dazu %s" % [art.element, Effekte.ARTEN[art.effekt].name], then = "enemy"})
+					pfeile.append({id = pfeil, name = "%s (%d)" % [art.name, int(f.wares[pfeil])], info = "%d %s, dazu %s" % [wert(f, 117), art.element, Effekte.ARTEN[art.effekt].name], then = "enemy"})
 			if not pfeile.is_empty():
 				list.insert(list.size() - 1, {id = "elementpfeil", name = "Elementpfeil", info = "Pfeil mit Element und Effekt · besondere Munition", target = "choice", choices = pfeile})
 		"blade":
 			var step := " (Tanzschritt %d/3)" % (f.dance.size() + 1)
 			list = [
-				{id = "step", name = "Klingenschritt", info = "9 Nahkampf, jede Klinge trifft nach (je %d), +1 Klinge" % BLADE_HIT + step, target = "enemy"},
-				{id = "whirl", name = "Wirbel", info = "7 an alle, +1 Klinge · 8 Mana" + step, target = "none", mana = 8, cd = 1},
-				{id = "lunge", name = "Ausfallschritt", info = "13 Nahkampf, jede Klinge trifft nach · 6 Mana" + step, target = "enemy", mana = 6},
-				{id = "storm", name = "Klingensturm", info = "Verbraucht alle Klingen: %d Schaden" % (9 * f.blades), target = "enemy"},
-				{id = "sturmschritte", name = "Sturmschritte", info = "%d Sprünge à 8 auf zufällige Gegner, +1 Klinge · 12 Mana" % _sturm_hits(f), target = "none", mana = 12},
-				{id = "faecher", name = "Fächerschnitt", info = "Verbraucht 2 Klingen: 18 an alle Gegner · 10 Mana", target = "none", mana = 10},
+				{id = "step", name = "Klingenschritt", info = "%d Nahkampf, jede Klinge trifft nach (je %d), +1 Klinge" % [wert(f, 100), wert(f, BLADE_HIT)] + step, target = "enemy"},
+				{id = "whirl", name = "Wirbel", info = "%d an alle, +1 Klinge · 8 Mana" % wert(f, 78) + step, target = "none", mana = 8, cd = 1},
+				{id = "lunge", name = "Ausfallschritt", info = "%d Nahkampf, jede Klinge trifft nach · 6 Mana" % wert(f, 144) + step, target = "enemy", mana = 6},
+				{id = "storm", name = "Klingensturm", info = "Verbraucht alle Klingen: %d Schaden" % (wert(f, 100) * f.blades), target = "enemy"},
+				{id = "sturmschritte", name = "Sturmschritte", info = "%d Sprünge à %d auf zufällige Gegner, +1 Klinge · 12 Mana" % [_sturm_hits(f), wert(f, 89)], target = "none", mana = 12},
+				{id = "faecher", name = "Fächerschnitt", info = "Verbraucht 2 Klingen: %d an alle Gegner · 10 Mana" % wert(f, 200), target = "none", mana = 10},
 				{id = "partner", name = "Partnertanz", info = "Gibt einem Verbündeten eine Klinge: Er ist sofort dran und 3 Runden stärker · 4 Mana", target = "ally_other", mana = 4},
-				{id = "kaefig", name = "Klingenkäfig", info = "Verbraucht 3 Klingen: 3 Runden schneiden sie das Ziel, wenn es angreift (je %d) · 12 Mana" % KAEFIG_SCHNITT, target = "enemy", mana = 12},
-				{id = "ult", name = "Tanz der 1000 Klingen", info = "5 Klingen, 3× 10 an alle Gegner, zum Schluss der Klingensturm", target = "none"},
+				{id = "kaefig", name = "Klingenkäfig", info = "Verbraucht 3 Klingen: 3 Runden schneiden sie das Ziel, wenn es angreift (je %d) · 12 Mana" % wert(f, KAEFIG_SCHNITT), target = "enemy", mana = 12},
+				{id = "ult", name = "Tanz der 1000 Klingen", info = "5 Klingen, 3× %d an alle Gegner, zum Schluss der Klingensturm" % wert(f, 111), target = "none"},
 			]
 		"twilight":
 			list = [
@@ -208,12 +211,12 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 					fallen.append({id = m.klass, name = m.display_name, info = "kommt mit wenig Leben zurück", then = "none"})
 			# Steckbrief (Sitzung 28): Das Monster hat einen eigenen Zug, „Befehl“ entfällt. Zähmen ist die Grundreihe.
 			list = [
-				{id = "sling", name = "Schleuder", info = "8 Fernkampf", target = "enemy"},
+				{id = "sling", name = "Schleuder", info = "%d Fernkampf" % wert(f, 100), target = "enemy"},
 				{id = "switch", name = "Wechsel", info = "Anderes Monster schicken, es greift beim Auftritt gleich an", target = "choice", cd = 1, choices = choices},
-				{id = "cheer", name = "Anfeuern", info = "Monster Angriff+, +10 LP · 8 Mana", target = "none", mana = 8},
-				{id = "care", name = "Pflege", info = "Monster +30 LP · 10 Mana", target = "none", mana = 10},
+				{id = "cheer", name = "Anfeuern", info = "Monster Angriff+, +%d LP · 8 Mana" % wert(f, 125), target = "none", mana = 8},
+				{id = "care", name = "Pflege", info = "Monster +%d LP · 10 Mana" % wert(f, 375), target = "none", mana = 10},
 				{id = "lockfutter", name = "Lockfutter", info = "Wilder Gegner ist 2 Runden abgelenkt, Zähmen klappt leichter · 8 Mana", target = "enemy_wild", mana = 8},
-				{id = "gemeinsam", name = "Gemeinsamer Angriff", info = "Stabschlag 8, dann das Monster (%d Treffer) · 12 Mana" % _gemeinsam_hits(f), target = "enemy", mana = 12},
+				{id = "gemeinsam", name = "Gemeinsamer Angriff", info = "Stabschlag %d, dann das Monster (%d Treffer) · 12 Mana" % [wert(f, 100), _gemeinsam_hits(f)], target = "enemy", mana = 12},
 				{id = "wachstum", name = "Wachstumsschub", info = "Monster 3 Runden größer: mehr Leben und Schaden · 14 Mana", target = "none", mana = 14, cd = 3},
 				{id = "einschuechtern", name = "Einschüchtern", info = "Monster brüllt: alle Gegner 2 Runden schwächer · 12 Mana", target = "none", mana = 12, cd = 3},
 				{id = "tame", name = "Zähmen", info = "Geschwächtes Monster (unter 50 % LP) fangen · 10 Mana", target = "enemy_tamable", mana = 10, cd = 2},
@@ -287,15 +290,15 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 				polar_info = "Sternenglanz: Abwehr+ für die GANZE Gruppe, %d Runden · 10 Mana" % (2 + f.res_def + _nachhall(f))
 			var comet_info := "Verbraucht Kometen-Resonanz (%d): Angriff+ für alle, %d Runden · 10 Mana" % [f.res_off, 1 + f.res_off + _nachhall(f)]
 			list = [
-				{id = "spark", name = "Sternenfunke", info = "14 Magie, +1 Kometen-Sternbild", target = "enemy"},
+				{id = "spark", name = "Sternenfunke", info = "%d Magie, +1 Kometen-Sternbild" % wert(f, 100), target = "enemy"},
 				{id = "lullaby", name = "Mondwiegenlied", info = lullaby_info, target = "none", mana = 8},
 				{id = "polar", name = "Polarstern", info = polar_info, target = "ally", mana = 10},
 				{id = "comet", name = "Kometenlied", info = comet_info, target = "none", mana = 10},
-				{id = "mondschild", name = "Mondschild", info = "Verbraucht Mond-Resonanz: Schild %d für alle · 12 Mana" % (8 * f.res_def), target = "none", mana = 12},
-				{id = "meteor", name = "Sternschnuppenregen", info = "Verbraucht Kometen-Resonanz: %d Sternschnuppen à 14 auf alle Gegner · 12 Mana" % f.res_off, target = "none", mana = 12},
+				{id = "mondschild", name = "Mondschild", info = "Verbraucht Mond-Resonanz: Schild %d für alle · 12 Mana" % (wert(f, 57) * f.res_def), target = "none", mana = 12},
+				{id = "meteor", name = "Sternschnuppenregen", info = "Verbraucht Kometen-Resonanz: %d Sternschnuppen à %d auf alle Gegner · 12 Mana" % [f.res_off, wert(f, 100)], target = "none", mana = 12},
 				{id = "rueckkehr", name = "Lied der Rückkehr", info = "Holt einen Gefallenen zurück, halbe Sternbilder · einmal pro Kampf · 16 Mana", target = "ally_fallen", mana = 16},
-				{id = "dissonanz", name = "Dissonanz", info = "8 Magie, Ziel rutscht zurück und macht weniger Schaden · 8 Mana", target = "enemy", mana = 8},
-				{id = "ult", name = "Himmelszelt", info = "Alle +%d LP und stark gestärkt, 22 Sternenkraft an alle Gegner, leert beide Sternbilder" % (20 + 6 * (f.res_off + f.res_def)), target = "none"},
+				{id = "dissonanz", name = "Dissonanz", info = "%d Magie, Ziel rutscht zurück und macht weniger Schaden · 8 Mana" % wert(f, 57), target = "enemy", mana = 8},
+				{id = "ult", name = "Himmelszelt", info = "Alle +%d LP und stark gestärkt, %d Sternenkraft an alle Gegner, leert beide Sternbilder" % [wert(f, 143) + wert(f, 43) * (f.res_off + f.res_def), wert(f, 157)], target = "none"},
 			]
 		_:
 			# Gezähmtes Monster: kämpft mit seinem eigenen Angriff für den Zähmer
@@ -359,6 +362,16 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 
 
 ## Stufe einer Fähigkeit aus dem Baum (0 = nicht gelernt). Ohne Baum-Angaben zählt alles als Stufe 1.
+## So viel Prozent vom normalen Angriff der Klasse (Grundwert, vor Stufe und Ausrüstung).
+func an(f: Fighter, prozent: float) -> float:
+	return float(GRUNDANGRIFF.get(f.klass, 10.0)) * prozent / 100.0
+
+
+## Dasselbe gerundet, für Heilung, Schilde und die Beschreibungen.
+func wert(f: Fighter, prozent: float) -> int:
+	return roundi(an(f, prozent))
+
+
 func skill_level(f: Fighter, id: String) -> int:
 	if not f.has_meta("faehigkeiten"):
 		return 1
@@ -707,7 +720,7 @@ func _smith(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 			f.remove_meta("haerten_schlag")
 			if hart:
 				c.float_text(f, "Gehärteter Schlag!", Color("ffb070"), 30)
-			c.hit(f, target, 15 * (HAERTEN_SCHLAG if hart else 1.0), "melee")
+			c.hit(f, target, an(f, 100) * (HAERTEN_SCHLAG if hart else 1.0), "melee")
 			# Viel Bedrohung: der Gegner greift danach eher den Schmied an
 			f.taunt = maxi(f.taunt, 1)
 		"armor":
@@ -724,13 +737,13 @@ func _smith(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 			# E4 (13.11.): Beim Aufstellen schlägt der Schmied einmal zu (wie ein Hammerschlag), damit der Zug nicht leer ist
 			var vor_dem_amboss := c.alive(c.enemies).filter(func(e: Fighter) -> bool: return not e.passive)
 			if not vor_dem_amboss.is_empty():
-				c.hit(f, c.pick(vor_dem_amboss), 15, "melee")
+				c.hit(f, c.pick(vor_dem_amboss), an(f, 100), "melee")
 			c.add_log("%s stellt den Amboss auf: Gegner müssen sie angreifen." % f.display_name)
 		"reinforce":
 			# Steckbrief: zwei Runden mehr Verteidigung (dazu ein kleiner Schild)
 			target.def_buff_turns = maxi(target.def_buff_turns, BattleState.BUFF_TURNS + 1)
 			c.zeige("verstaerken", f, target)
-			c.give_shield(f, target, 24)
+			c.give_shield(f, target, wert(f, 160))
 			c.float_text(target, "Abwehr+", Color("c8d0e0"), 30)
 		"abfangen":
 			c.zeige("abfangen", f, target)
@@ -744,7 +757,7 @@ func _smith(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 			_add_hard(f, 2)
 			# E4 (12.11.): Beim Härten sprühen Funken auf alle Gegner, sonst ist der Zug schlechter als ein Hammerschlag
 			for e in c.alive(c.enemies):
-				c.hit(f, e, HAERTEN_FUNKEN, "magic", "Feuer")
+				c.hit(f, e, an(f, HAERTEN_FUNKEN), "magic", "Feuer")
 			f.set_meta("haerten_schlag", true)
 		"gluehend":
 			f.set_meta("gluehend", 3)
@@ -753,13 +766,13 @@ func _smith(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 		"ambossschlag":
 			c.zeige("ambossschlag", f)
 			for e in c.alive(c.enemies):
-				c.hit(f, e, 12, "melee")
+				c.hit(f, e, an(f, 80), "melee")
 				if e.is_alive() and Sandbox.ENEMIES.get(e.klass, {}).has("tame"):
 					c.zeige("betaeubt", f, e)
 					Effekte.anwenden(c, f, e, "laehmen")
 		"gemeinsame_haerte":
 			if f.hard > 0:
-				var schutz := 6 * f.hard
+				var schutz := wert(f, 40) * f.hard
 				c.zeige("haerte_geben", f)
 				for a in c.allies():
 					c.zeige("haerte_splitter", f, a)
@@ -772,7 +785,7 @@ func _smith(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 			f.set_meta("meisterstueck", 3)
 			c.zeige("meisterstueck", f)
 			f.hard = _max_hard(f)
-			c.give_shield(f, f, 40)
+			c.give_shield(f, f, wert(f, 267))
 			c.float_text(f, "Meisterstück!", Color("f2c14e"), 30)
 			c.add_log("Meisterstück! %s schmiedet eine Meisterrüstung." % f.display_name)
 
@@ -794,7 +807,7 @@ func after_enemy_hit(attacker: Fighter, target: Fighter, kind: String) -> void:
 	blade_hit_taken(target)
 	if kind == "melee" and target.has_meta("gluehend") and attacker.is_alive():
 		c.zeige("angesengt", target, attacker)
-		c.hit(target, attacker, 6, "magic", "Feuer")
+		c.hit(target, attacker, an(target, 40), "magic", "Feuer")
 		if attacker.is_alive():
 			Effekte.anwenden(c, target, attacker, "brennen", 3.0, 2)
 
@@ -820,12 +833,12 @@ var ab_choice: Variant = null
 func _archer(f: Fighter, id: String, target: Fighter) -> void:
 	match id:
 		"shot":
-			var base := 12.0
+			var base := an(f, 100)
 			if f.charged:
-				base = 12.0 * LADESCHUSS_MAL
+				base = an(f, 100 * LADESCHUSS_MAL)
 				f.charged = false
 				f.add_ult(30)
-			c.zeige("ladeschuss" if base > 12.0 else "schnellschuss", f, target)
+			c.zeige("ladeschuss" if base > an(f, 100) else "schnellschuss", f, target)
 			c.hit(f, target, base, "ranged")
 		"charge":
 			f.charged = true
@@ -838,10 +851,10 @@ func _archer(f: Fighter, id: String, target: Fighter) -> void:
 				c.zeige("hagel_regen", f, enemy)
 			c.wait(0.6)
 			for enemy in c.alive(c.enemies):
-				c.hit(f, enemy, 9, "ranged")
+				c.hit(f, enemy, an(f, 75), "ranged")
 		"net":
 			c.zeige("netzpfeil", f, target)
-			c.hit(f, target, 6, "ranged")
+			c.hit(f, target, an(f, 50), "ranged")
 			c.delay(target, 0.7)
 			c.float_text(target, "Gefesselt", Color.WHITE, 30)
 			c.add_log("%s rutscht auf der Zugleiste nach hinten." % target.display_name)
@@ -851,21 +864,21 @@ func _archer(f: Fighter, id: String, target: Fighter) -> void:
 				if not target.is_alive():
 					break
 				c.zeige("schnellfeuer", f, target, i)
-				c.hit(f, target, 5, "ranged")
+				c.hit(f, target, an(f, 42), "ranged")
 			c.zeige("schnellfeuer_ende", f)
 		"durchschlag":
 			# Durchbohrt das Ziel und trifft den Gegner dahinter
 			c.zeige("durchschlag", f, target)
-			c.hit(f, target, 24, "ranged")
+			c.hit(f, target, an(f, 200), "ranged")
 			var others := c.alive(c.enemies).filter(func(e: Fighter) -> bool: return e != target)
 			if not others.is_empty():
 				var behind: Fighter = c.pick(others)
 				c.zeige("durchschlag_weiter", f, behind)
-				c.hit(f, behind, 16, "ranged")
+				c.hit(f, behind, an(f, 133), "ranged")
 		"schwachstelle":
 			c.zeige("schwachstelle", f, target)
 			# E4 (12.11., Boss-Messung): 10 statt 4 Schaden und 4 statt 3 Runden, sonst lohnt der Zug nicht
-			c.hit(f, target, 10, "ranged")
+			c.hit(f, target, an(f, 83), "ranged")
 			if target.is_alive():
 				target.vuln_turns = maxi(target.vuln_turns, 4)
 				c.float_text(target, "Schwachstelle!", Color("ff5050"), 30)
@@ -876,11 +889,11 @@ func _archer(f: Fighter, id: String, target: Fighter) -> void:
 				return
 			f.wares[str(ab_choice)] = int(f.wares[str(ab_choice)]) - 1
 			c.zeige("elementpfeil", f, target, 0, Color(art.farbe))
-			if c.hit(f, target, 14, "ranged", str(art.element)) > 0 and target.is_alive():
+			if c.hit(f, target, an(f, 117), "ranged", str(art.element)) > 0 and target.is_alive():
 				Effekte.anwenden(c, f, target, str(art.effekt))
 		"ult":
 			c.zeige("jaegerpfeil", f, target)
-			c.hit(f, target, 70, "ranged")
+			c.hit(f, target, an(f, 583), "ranged")
 	f.add_ult(20 * c.crits)
 
 
@@ -894,20 +907,20 @@ func _blade(f: Fighter, id: String, target: Fighter) -> void:
 			c.zeige("nachbild", f)
 			c.lunge(f, target, 0.25)
 			c.zeige("kreuzschnitt", f, target)
-			c.hit(f, target, 9 * mult, "melee", element)
+			c.hit(f, target, an(f, 100) * mult, "melee", element)
 			_blade_follow_up(f, target, element)
 			_add_blades(f, 1)
 		"whirl":
 			var mult := _dance_step(f, id)
 			c.zeige("wirbel", f)
 			for enemy in c.alive(c.enemies):
-				c.hit(f, enemy, 7 * mult, "melee", element)
+				c.hit(f, enemy, an(f, 78) * mult, "melee", element)
 			_add_blades(f, 1)
 		"lunge":
 			var mult := _dance_step(f, id)
 			c.zeige("nachbild", f)
 			c.lunge(f, target, 0.2)
-			c.hit(f, target, 13 * mult, "melee", element)
+			c.hit(f, target, an(f, 144) * mult, "melee", element)
 			_blade_follow_up(f, target, element)
 			# Steckbrief: weicht zurück, der nächste Angriff auf sie verfehlt eher, plus eine Klinge
 			if f.has_meta("faehigkeiten"):
@@ -923,13 +936,13 @@ func _blade(f: Fighter, id: String, target: Fighter) -> void:
 				var t: Fighter = c.pick(ziele)
 				c.zeige("sturm_schritt", f, null, i)
 				c.lunge(f, t, 0.12)
-				c.hit(f, t, 8, "melee", element)
+				c.hit(f, t, an(f, 89), "melee", element)
 			_add_blades(f, 1)
 		"faecher":
 			f.blades -= 2
 			c.zeige("faecher", f)
 			for enemy in c.alive(c.enemies):
-				c.hit(f, enemy, 18, "melee", element)
+				c.hit(f, enemy, an(f, 200), "melee", element)
 		"partner":
 			f.blades -= 1
 			# E4 (12.11., Boss-Messung): Der Partner ist sofort dran und eine Runde länger stärker, sonst kostet der
@@ -950,7 +963,7 @@ func _blade(f: Fighter, id: String, target: Fighter) -> void:
 			f.blades = 0
 			f.add_ult(8 * count)
 			c.zeige("klingensturm", f, target, count)
-			c.hit(f, target, 9 * count, "ranged", element)
+			c.hit(f, target, an(f, 100) * count, "ranged", element)
 			c.add_log("Klingensturm mit %d Klingen!" % count)
 		"ult":
 			f.blades = Fighter.MAX_BLADES
@@ -959,7 +972,7 @@ func _blade(f: Fighter, id: String, target: Fighter) -> void:
 					c.zeige("schwarm", f, enemy)
 				c.wait(0.25)
 				for enemy in c.alive(c.enemies):
-					c.hit(f, enemy, 10, "melee", element)
+					c.hit(f, enemy, an(f, 111), "melee", element)
 				c.wait(0.15)
 			# Steckbrief: zum Schluss fallen alle Klingen in den Klingensturm (auf den stärksten Gegner)
 			var rest := c.alive(c.enemies)
@@ -968,7 +981,7 @@ func _blade(f: Fighter, id: String, target: Fighter) -> void:
 				var count := f.blades
 				f.blades = 0
 				c.zeige("klingensturm", f, rest[0], count)
-				c.hit(f, rest[0], 9 * count, "ranged", element)
+				c.hit(f, rest[0], an(f, 100) * count, "ranged", element)
 
 
 ## Tanzfolge: Klingenschritt, Wirbel und Ausfallschritt in beliebiger Reihenfolge hintereinander.
@@ -999,7 +1012,7 @@ func _blade_follow_up(f: Fighter, target: Fighter, element: String) -> void:
 			return
 		c.zeige("klinge_flug", f, target)
 		c.wait(0.1)
-		c.hit(f, target, BLADE_HIT * (1.0 + 0.1 * kranz), "melee", element)
+		c.hit(f, target, an(f, BLADE_HIT) * (1.0 + 0.1 * kranz), "melee", element)
 
 
 ## Sturmschritte: 3 Sprünge, je zwei Stufen einer mehr, schnelle Waffe einer mehr (höchstens 5).
@@ -1090,7 +1103,7 @@ func _tamer(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 	match id:
 		"sling":
 			c.zeige("schleuder", f, target)
-			c.hit(f, target, 8, "ranged")
+			c.hit(f, target, an(f, 100), "ranged")
 		"switch":
 			var next := _monster(f, ab.choice)
 			c.zeige("pfiff", f)
@@ -1119,11 +1132,11 @@ func _tamer(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 		"cheer":
 			m.atk_buff_turns = BattleState.BUFF_TURNS + 1
 			c.zeige("anfeuern", f, m)
-			c.heal(f, m, 10)
+			c.heal(f, m, wert(f, 125))
 			c.float_text(m, "Angriff+", Color("ff8080"), 30)
 		"care":
 			c.zeige("pflege", f, m)
-			c.heal(f, m, 30)
+			c.heal(f, m, wert(f, 375))
 		"lockfutter":
 			c.zeige("lockfutter", f, target)
 			target.set_meta("lockfutter", 2)
@@ -1132,7 +1145,7 @@ func _tamer(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 		"gemeinsam":
 			# Zähmer und Monster greifen zusammen an: Stabschlag, dann das Monster (öfter mit schneller Waffe)
 			c.lunge(f, target, 0.2)
-			c.hit(f, target, 8, "melee")
+			c.hit(f, target, an(f, 100), "melee")
 			for i in _gemeinsam_hits(f) - 1:
 				if not target.is_alive() or not m.is_alive():
 					break
@@ -1193,7 +1206,7 @@ func _tamer(f: Fighter, id: String, target: Fighter, ab: Dictionary) -> void:
 			c.zeige("rudelruf_ende", f, target)
 			for monster in f.monsters:
 				if monster.is_alive():
-					c.heal(f, monster, 15)
+					c.heal(f, monster, wert(f, 188))
 
 
 func _monster_action(f: Fighter, id: String, target: Fighter) -> void:
@@ -1413,7 +1426,7 @@ func _singer(f: Fighter, id: String, target: Fighter) -> void:
 	match id:
 		"spark":
 			c.zeige("sternenfunke", f, target)
-			c.hit(f, target, 14, "magic")
+			c.hit(f, target, an(f, 100), "magic")
 			_add_resonance(f, true)
 		"lullaby":
 			# Heilung über drei Runden für die ganze Gruppe (Nachhall: eine Runde länger)
@@ -1454,7 +1467,7 @@ func _singer(f: Fighter, id: String, target: Fighter) -> void:
 			c.zeige("lied", f, null, 0, FaehigkeitFx.MOND)
 			for a in c.allies():
 				c.zeige("mondkuppel", f, a)
-				c.give_shield(f, a, 8 * used)
+				c.give_shield(f, a, wert(f, 57) * used)
 			c.add_log("Mondschild: Eine silberne Kuppel legt sich über die Gruppe.")
 		"meteor":
 			# Sternschnuppen: so viele wie Kometen-Resonanz, verteilt auf alle Gegner
@@ -1468,7 +1481,7 @@ func _singer(f: Fighter, id: String, target: Fighter) -> void:
 					break
 				var t: Fighter = ziele[i % ziele.size()]
 				c.zeige("schnuppe", f, t, i)
-				c.hit(f, t, 14, "magic", "Sternenkraft")
+				c.hit(f, t, an(f, 100), "magic", "Sternenkraft")
 		"rueckkehr":
 			if not target.is_alive():
 				f.set_meta("rueckkehr_benutzt", true)
@@ -1483,7 +1496,7 @@ func _singer(f: Fighter, id: String, target: Fighter) -> void:
 				c.refresh()
 		"dissonanz":
 			c.zeige("dissonanz", f, target)
-			c.hit(f, target, 8, "magic")
+			c.hit(f, target, an(f, 57), "magic")
 			if target.is_alive():
 				c.delay(target, 0.5)
 				target.schwach_turns = maxi(target.schwach_turns, 1)
@@ -1493,7 +1506,7 @@ func _singer(f: Fighter, id: String, target: Fighter) -> void:
 			var total := f.res_off + f.res_def
 			for a in c.allies():
 				c.zeige("sternenlicht", f, a)
-				c.heal(f, a, 20 + 6 * total)
+				c.heal(f, a, wert(f, 143) + wert(f, 43) * total)
 				a.atk_buff_turns = maxi(a.atk_buff_turns, BattleState.BUFF_TURNS + 1 + total / 3)
 				a.def_buff_turns = maxi(a.def_buff_turns, BattleState.BUFF_TURNS + 1 + total / 3)
 			f.res_off = 0
@@ -1504,7 +1517,7 @@ func _singer(f: Fighter, id: String, target: Fighter) -> void:
 				c.zeige("sternenlicht", f, enemy)
 			c.wait(0.3)
 			for enemy in c.alive(c.enemies):
-				c.hit(f, enemy, 22, "magic", "Sternenkraft")
+				c.hit(f, enemy, an(f, 157), "magic", "Sternenkraft")
 	c.wait(0.1)
 
 
@@ -1520,7 +1533,7 @@ func _nachhall(f: Fighter) -> int:
 
 ## Heilung des Mondwiegenlieds je Runde, mit vollem Mond-Sternbild (Sternenglanz) stärker.
 func _wiegen_heal(f: Fighter) -> int:
-	return 15 if _sternenglanz(f) and f.res_def >= Fighter.MAX_RES else 11
+	return wert(f, 107) if _sternenglanz(f) and f.res_def >= Fighter.MAX_RES else wert(f, 79)
 
 
 func _add_resonance(f: Fighter, offensive: bool) -> void:

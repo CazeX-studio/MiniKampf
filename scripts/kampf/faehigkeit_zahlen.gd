@@ -73,7 +73,10 @@ static func text(f: Fighter, ab: Dictionary, info: String, faehigkeit_stufe: int
 		ergebnis += info.substr(ende, anfang - ende)
 		ergebnis += "[color=#%s]%d[/color]" % [farbe, maxi(1, roundi(grundwert * gesamt))]
 		if details:
-			ergebnis += " [color=#9a9384](%d%s)[/color]" % [grundwert, _prozente(liste)]
+			# Die fünf Demo-Klassen: Grundwert als Anteil vom normalen Angriff (Marco, 13.11.)
+			var grund := float(Skills.GRUNDANGRIFF.get(f.klass, 0.0))
+			var anteil := " = %d %% vom Angriff" % roundi(100.0 * grundwert / grund) if grund > 0.0 else ""
+			ergebnis += " [color=#9a9384](%d%s%s)[/color]" % [grundwert, anteil, _prozente(liste)]
 		ende = treffer.get_end(gruppe)
 	ergebnis += info.substr(ende)
 	return ergebnis

@@ -1344,7 +1344,7 @@ func enemy_attack(e: Fighter, p_targets: Array[Fighter], base: int, kind: String
 	# Klingenkäfig: Wer im Käfig angreift, wird von den kreisenden Klingen geschnitten
 	if e.has_meta("kaefig") and e.is_alive():
 		var kaefig: Dictionary = e.get_meta("kaefig")
-		hit(kaefig.quelle, e, Skills.KAEFIG_SCHNITT, "melee")
+		hit(kaefig.quelle, e, skills.an(kaefig.quelle, Skills.KAEFIG_SCHNITT), "melee")
 		kaefig.zuege = int(kaefig.zuege) - 1
 		if int(kaefig.zuege) <= 0:
 			e.remove_meta("kaefig")

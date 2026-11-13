@@ -237,4 +237,16 @@ Nachgemessen (Siege in %, wahllos / klug; in Klammern vorher):
 3. **Zähmer gegen Gruppen** ist mit 0,3 wieder vorn (97 %), aber weit weg von früher (Gegner Stufe 40 nötig).
 4. **Polarstern** bringt weiter nichts Messbares (Abwehr+ ist schon ein Anteil, daran liegt es nicht).
 5. **Partnertanz** mit einem echten Schadens-Partner messen (bisher nur mit Novizen).
-6. **Übrige feste Zahlen auf „Anteil vom Angriff“ umstellen** (Marco, 13.11.): bisher nur der Aufgeladene Schuss.
+
+### Werte als Anteil vom Angriff (13.11.2026, Marco)
+
+Alle Schadens-, Heil- und Schildwerte der fünf Demo-Klassen sind jetzt ein **Prozentsatz vom normalen Angriff** der Klasse
+(`Skills.GRUNDANGRIFF`: Hammerschlag 15, Schneller Schuss 12, Klingenschritt 9, Sternenfunke 14, Schleuder 8), im Code
+`an(f, 200)` für Schaden und `wert(f, 160)` für Heilung, Schilde und Beschreibungen. Beispiele: Durchschlag 200 %,
+Pfeilhagel 75 %, Jägerpfeil 583 %, Ambossschlag 80 %, Fächerschnitt 200 %, Rüstung verstärken Schild 160 %.
+Wer den normalen Angriff einer Klasse ändert, ändert damit alle ihre Fähigkeiten im selben Verhältnis.
+
+Die Stärke ist gleich geblieben (gegengemessen, Standard-Gruppe, 200 Kämpfe: Bogenschütze 31 / 83, Klingentänzerin
+54 / 87, Sängerin 32 / 92, Schmied 71 / 100, wie vorher). In den Beschreibungen steht weiter der fertige, farbige Wert;
+mit Einzelheiten (Taste D) steht dahinter z. B. „24 = 200 % vom Angriff · Stufe 20 +… %“. Die Monster des Zähmers
+behalten ihre eigenen Angriffswerte.

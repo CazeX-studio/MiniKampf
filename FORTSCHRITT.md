@@ -3069,3 +3069,12 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 3. Rüstung verstärken auf Stufe 20: Der Schild ist deutlich größer als 24, die Zahl in der Beschreibung ist farbig.
 4. Mit dem Bogenschützen den Bogen spannen und schießen: Der Schuss macht etwa dreimal so viel wie ein Schneller Schuss.
 5. Mit dem Zähmer auf Stufe 20 kämpfen: Sein Monster trifft etwas härter als vorher.
+
+## Balancing: Alle Werte als Anteil vom Angriff (E4, 13.11.2026)
+- Bei den fünf Demo-Klassen ist jeder Schaden, jede Heilung und jeder Schild jetzt ein Prozentsatz vom normalen Angriff der Klasse (z. B. Durchschlag 200 %, Pfeilhagel 75 %). Die Stärke ist gleich geblieben, das ist nachgemessen.
+- In der Beschreibung steht wie bisher der fertige, farbige Wert. Mit den Einzelheiten steht dahinter, wie viel Prozent vom Angriff das ist.
+
+**So testest du es**
+1. Im Spiel das Fähigkeiten-Fenster öffnen (Taste K) und mit der Maus über eine Fähigkeit fahren: Die Zahl ist farbig wie bisher.
+2. Taste D gedrückt halten: Hinter der Zahl steht z. B. „24 = 200 % vom Angriff“ und was Stufe und Ausrüstung dazugeben.
+3. Eine bessere Waffe anlegen: Die Zahlen aller Fähigkeiten werden größer.

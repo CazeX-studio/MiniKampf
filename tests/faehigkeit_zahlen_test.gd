@@ -16,7 +16,7 @@ func _initialize() -> void:
 	_check(text.contains("(je [color=#ff9a4c]4[/color])"), "Einzeltreffer wachsen mit: " + text)
 	_check(text.contains("+1 Klinge") and text.contains("8 Mana"), "Feste Werte bleiben weiß: " + text)
 	var details := FaehigkeitZahlen.text(held, ab, "9 Nahkampf", 3, true)
-	_check(details.contains("(9 · Stufe 10 +50 % · Waffenkraft +20 % · Fähigkeitsstufe 3 +20 %)"), "Einzelheiten mit Prozenten: " + details)
+	_check(details.contains("(9 = 100 % vom Angriff · Stufe 10 +50 % · Waffenkraft +20 % · Fähigkeitsstufe 3 +20 %)"), "Einzelheiten mit Prozenten: " + details)
 	# Zauberklasse: blau-violett, Heilung wächst mit
 	var saengerin := Fighter.new("Du", "singer", "Sternensängerin", true, 100, 10, Color.WHITE)
 	var heil := FaehigkeitZahlen.text(saengerin, {id = "x"}, "14 Licht, heilt 10 LP, Schild 20", 1)
