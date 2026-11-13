@@ -151,7 +151,7 @@ ersten Blatt jeder Größe per Vergleichsbild mit Marco festgelegt.
 
 Dieser Text kommt **wörtlich** in jeden Bild-Prompt (in ChatGPT als Projekt-Anweisung, siehe
 `Spieldesign/GRAFIK_AUFTRAG.md`, Teil A). Er wird nie umformuliert. Ändern darf ihn nur Marco; dann wird er hier und
-in GRAFIK_AUFTRAG.md gleichzeitig geändert. Stand: GRAFIK_AUFTRAG.md Teil A vom 02.11.2026.
+in GRAFIK_AUFTRAG.md gleichzeitig geändert. Stand: GRAFIK_AUFTRAG.md Teil A vom 13.11.2026 (Zusatz „Blätter mit Bewegung“, von Marco freigegeben).
 
 ```
 Du malst Grafiken für „Asterfall“, ein düster-episches 2D-Fantasy-Rollenspiel (MMO) von CazeX Studio. Halte dich bei JEDEM Bild an diese Regeln, auch wenn ich sie in einer Nachricht nicht wiederhole.
@@ -188,6 +188,14 @@ FIGUREN (Spieler und Figuren der Welt)
 - Den Rücken frei lassen: kein Umhang, kein Köcher, keine Flügel, kein Rucksack. Dort kommt später ein eigenes Teil hin.
 - Kleidung aus wenigen klaren Farbflächen: eine Hauptfarbe, eine Zweitfarbe, Metall, Leder und Haut. Jede Fläche nur in 3 bis 4 Tönen (hell, mittel, dunkel, Schatten), keine Muster, keine Verläufe, keine Stickerei.
 - Keine Effekte im Figurenbild: keine Funken, Blitze, Schwungbögen oder Sterne. Die macht das Spiel.
+
+BLÄTTER MIT BEWEGUNG (Sprite-Sheets)
+- Liegt eine Posen-Vorlage mit Gliederpuppen bei, gilt sie Feld für Feld für Aufteilung, Platz, Größe, Blickrichtung und Beinstellung. Rot ist die rechte Körperseite der Figur, Blau die linke. Jeder Fuß steht dort, wo der Fuß der Puppe steht. Die Puppen und ihre Farben kommen nie ins Bild.
+- Liegt ein Figuren-Blatt bei, ist es die einzige Quelle für Aussehen und Malstil. Nichts dazuerfinden, nichts weglassen.
+- Die Figur ist in jedem Feld dieselbe: gleiche Größe, gleiche Farben, gleiche Kleidung. Nur die Pose ändert sich.
+- Gehen ist ruhiges Gehen (aufrecht, kleine Schritte, immer ein Fuß am Boden), kein Rennen, außer ich verlange es.
+- Hintergrund bei Blättern mit Bewegung: einfarbig reines Pink (#FF00FF) statt durchsichtig, ohne Verlauf und ohne Bodenschatten.
+- Vor der Abgabe selbst prüfen: Anzahl der Reihen und Felder stimmt, kein Feld leer oder doppelt, nichts abgeschnitten, nichts berührt sich. Stimmt etwas nicht, neu malen statt abgeben.
 
 Wenn ich ein Vorbild-Bild anhänge, übernimm Gesicht, Haare, Kleidung, Waffe und Farben exakt und ändere nur die Pose.
 ```
