@@ -35,11 +35,16 @@ func _initialize() -> void:
 		if not zeichen in Tester.ZEICHEN:
 			failed += _check("Nur eindeutige Zeichen", zeichen, "aus ZEICHEN")
 	# Formular: ohne Vorlage kein Link, mit Vorlage alle Platzhalter ersetzt
-	failed += _check("Noch kein Formular", Tester.formular_link("Feedback", "Kreuzweg"), "")
+	var echte_vorlage := str(GameData.get_file("demo").get("formular_vorlage", ""))
+	failed += _check("Echtes Formular verbunden", echte_vorlage.begins_with("https://docs.google.com/forms/"), true)
+	for platzhalter: String in ["SPITZNAME", "NUMMER", "ART", "CODE", "VERSION", "ORT"]:
+		failed += _check("Vorlage hat " + platzhalter, echte_vorlage.contains("=" + platzhalter), true)
+	GameData.get_file("demo")["formular_vorlage"] = ""
+	failed += _check("Ohne Vorlage kein Link", Tester.formular_link("Feedback", "Kreuzweg"), "")
 	GameData.get_file("demo")["formular_vorlage"] = "https://docs.google.com/forms/d/e/X/viewform?usp=pp_url&entry.1=SPITZNAME&entry.2=NUMMER&entry.3=ART&entry.4=CODE&entry.5=VERSION&entry.6=ORT"
 	var link := Tester.formular_link("Demo durchgespielt", "Ende der Glutoase")
 	failed += _check("Link ausgefüllt", link, "https://docs.google.com/forms/d/e/X/viewform?usp=pp_url&entry.1=Sternchen&entry.2=%s&entry.3=Demo%%20durchgespielt&entry.4=%s&entry.5=%s&entry.6=Ende%%20der%%20Glutoase" % [nummer, code, Tester.version().uri_encode()])
-	GameData.get_file("demo")["formular_vorlage"] = ""
+	GameData.get_file("demo")["formular_vorlage"] = echte_vorlage
 	# Im Godot-Editor (Prüfung) gibt es Werkzeuge und keine Spitznamen-Frage
 	failed += _check("Werkzeuge im Editor", Tester.werkzeuge(), true)
 	failed += _check("Keine Frage im Editor", Tester.spitzname_noetig(), false)

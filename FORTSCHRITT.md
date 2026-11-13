@@ -2958,7 +2958,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 ## Offene Fragen an Marco (aufgeräumt 11.11.2026)
 
 ### Deine Entscheidungen
-- **Feedback-Formular (S1):** Müssen wir noch zusammen erstellen. Sag Bescheid, dann schreibe ich die Fragen und eine Anleitung.
+- **Feedback-Formular (S1):** Fertig seit 13.11.2026. Google-Formular „Asterfall Demo – Feedback“ (zehn Fragen, ohne E-Mail-Adresse), der Link steht in `data/demo.json`. Der Feedback-Knopf und „Abschluss melden“ öffnen es ausgefüllt. So testest du es: 1. Demo öffnen, in der Welt oben rechts „Feedback“ drücken. 2. Im Formular stehen Spitzname, Tester-Nummer, „Feedback“, Version und Ort schon drin. 3. Abschicken und in Google Formulare unter „Antworten“ nachsehen. Noch deine Sache: dort „Mit Tabellen verknüpfen“ drücken.
 - **Texte:** Die Hauptfiguren schreibst du selbst (`data/LIESMICH.md`). Broms Brief, Lenes Empfehlungsschreiben und die Wache stehen fürs Brainstorming im Google Doc.
 
 ### Im Alpha-Test bewerten

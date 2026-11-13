@@ -1,5 +1,5 @@
 {
 	"hinweis": "Demo-Start (S1). formular_vorlage: Marcos vorausgefüllter Link zum Google-Formular, in den Feldern die Platzhalter SPITZNAME, NUMMER, ART, CODE, VERSION, ORT (das Spiel setzt die echten Werte ein). Leer = noch kein Formular. werkstatt: Ordner der Fassung mit Editor auf der Webseite (nicht verlinkt).",
-	"formular_vorlage": "",
+	"formular_vorlage": "https://docs.google.com/forms/d/e/1FAIpQLScEaUhZTr0VRkGabNeUF-gl3lLMzC3gsTxRaQomINPZQRfPnA/viewform?usp=pp_url&entry.1342925156=SPITZNAME&entry.1226197033=NUMMER&entry.1179579415=ART&entry.1222599624=CODE&entry.119269901=VERSION&entry.976133927=ORT",
 	"werkstatt": "werkstatt-glutfunke"
 }
