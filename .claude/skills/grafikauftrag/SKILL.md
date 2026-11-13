@@ -16,6 +16,27 @@ Marcos Regel (11.11.2026): **Jeder Prompt wird gespeichert, immer mit Referenzbi
 5. **Committen und pushen:** Spieldesign (`GRAFIK_AUFTRAG.md`) und MiniKampf (`tools/referenz/teil_<buchstabe>/*.png`, ohne `.import`-Dateien).
 6. **Im Chat:** Marco nur kurz sagen, dass neue Bildaufträge in Teil X liegen. Die Prompts und Anhänge schickt Claude erst, wenn Marco danach fragt (dann alle Prompts zum Kopieren und die Referenzbilder als Dateien).
 
+## Bilder selbst bei ChatGPT machen (Marco, 13.11.2026)
+
+Sagt Marco, dass Claude seinen Browser nutzen darf, schickt Claude die Aufträge selbst ab (Claude in Chrome, chatgpt.com, Projekt „AsterFall Design“). Marco ist dort angemeldet, das Projekt ist mit Katie geteilt.
+
+1. **Erst eine Probe.** Bei einer neuen Art von Blatt ein einziges Blatt machen und Marco zeigen. Die übrigen erst nach seinem Ja.
+2. **Ein Chat je Figur oder Familie**, im Projekt öffnen (Stift neben dem Projektnamen). Anhänge über das Datei-Feld „Dateien anhängen“ hochladen, den Prompt einfügen (nicht tippen, die Eingabetaste schickt sonst zu früh ab), dann senden. Ein Bild dauert ein bis zwei Minuten.
+3. **Prüfen, bevor Marco es sieht:** Bild groß öffnen und zählen. Reihen und Felder wie verlangt, kein Feld leer oder doppelt, Figur überall gleich groß und gleich angezogen, Füße auf einer Höhe, nichts abgeschnitten, Hintergrund einfarbig, Blickrichtungen richtig, Kopf-Oval reines Grün.
+4. **Nachbessern:** höchstens zweimal im selben Chat, mit genau dem Fehler („Reihe 2, Bild 5: …“). Wird es nicht besser, neuer Chat mit geschärftem Prompt. Was geholfen hat, in den Prompt in `GRAFIK_AUFTRAG.md` übernehmen.
+5. **Herunterladen und Einbauen** erst nach Marcos Ja. Bis dahin eine Vorschau (Bildschirmfoto) nach `tools/referenz/teil_<buchstabe>/` legen und in der Liste zum Abhaken vermerken, in welchem Chat das Bild liegt.
+6. **Projekt-Anweisung** (Teil A, steht wörtlich auch in `LOOK.md` Abschnitt 9) nie selbst ändern. Vorschläge in `GRAFIK_AUFTRAG.md` schreiben, Marco entscheidet, dann an allen drei Stellen gleich eintragen.
+
+## So wird ein Prompt gut
+
+- **Jeder Anhang bekommt eine Rolle:** „1. `<blatt>` = die FIGUR (Aussehen und Malstil exakt übernehmen). 2. `<vorlage>` = die AUFTEILUNG und die POSEN.“ Ohne Rolle mischt ChatGPT die Bilder.
+- **Blätter mit Bewegung bekommen eine Posen-Vorlage:** Strichfiguren an den Plätzen und in den Posen, die gemalt werden sollen (`tools/posen_vorlage.py`, 1536 × 1024, 3 Reihen mit 8 Feldern). Rot ist die rechte Körperseite, Blau die linke. Im Prompt steht, dass die Strichfiguren nicht ins Bild kommen.
+- **Format festlegen:** Querformat 3:2, Zahl der Reihen und Felder, Hintergrund reines Pink (#FF00FF).
+- **Reihen Bild für Bild beschreiben**, bei Schleifen die Schlüsselbilder nennen (welches Bein setzt auf, welches schwingt durch).
+- **Sagen, was es nicht sein soll** („ruhiges Gehen, kein Rennen“).
+- **Prüfliste am Ende:** Anzahl der Figuren, nichts abgeschnitten, kein Feld leer.
+- Ragnarok und andere Spiele nur als Vorbild für Richtungen und Posen nennen. Ihre Bilder nie anhängen und nie abmalen lassen.
+
 ## Wenn Bilder kommen
 
 Bilder aus dem Chat unter `tools/vorlagen/` mit sprechendem Namen ablegen, zuschneiden (z. B. `tools/effekt_bilder.py`, `tools/faehigkeit_bilder.py`), einbauen, mit `tools/web_bilder.py` aufs Web-Format stellen und in der Liste zum Abhaken auf „eingebaut“ setzen.
