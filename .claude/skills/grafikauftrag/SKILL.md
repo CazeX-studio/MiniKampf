@@ -30,7 +30,9 @@ Sagt Marco, dass Claude seinen Browser nutzen darf, schickt Claude die Aufträge
 ## So wird ein Prompt gut
 
 - **Jeder Anhang bekommt eine Rolle:** „1. `<blatt>` = die FIGUR (Aussehen und Malstil exakt übernehmen). 2. `<vorlage>` = die AUFTEILUNG und die POSEN.“ Ohne Rolle mischt ChatGPT die Bilder.
-- **Blätter mit Bewegung bekommen eine Posen-Vorlage:** Strichfiguren an den Plätzen und in den Posen, die gemalt werden sollen (`tools/posen_vorlage.py`, 1536 × 1024, 3 Reihen mit 8 Feldern). Rot ist die rechte Körperseite, Blau die linke. Im Prompt steht, dass die Strichfiguren nicht ins Bild kommen.
+- **Blätter mit Bewegung bekommen eine Posen-Vorlage:** selbst gerechnete Gliederpuppen an den Plätzen und in den Posen, die gemalt werden sollen (`tools/posen_vorlage.py`, 1536 × 1024; je Geschlecht drei Blätter: Gehen 1, Gehen 2, Stehen und Sitzen; fünf Richtungen wie in Ragnarok). Rot ist die rechte Körperseite, Blau die linke. Im Prompt steht, dass die Puppen nicht ins Bild kommen und dass jeder Fuß dort steht, wo der Fuß der Puppe steht.
+- **Text und Vorlage müssen dasselbe sagen.** Bei der ersten Probe (13.11.) stand im Text „Bild 1: rechtes Bein vorne“, die Vorlage zeigte in Bild 1 aber geschlossene Beine. ChatGPT hat gemischt, die Beine standen falsch. Vor dem Abschicken die Vorlage ansehen und Bild für Bild mit dem Text vergleichen.
+- **Höchstens 24 Figuren je Blatt**, lieber weniger und dafür größer. Weibliche Figuren bekommen die w-Vorlage und den Zusatz aus Teil U5 (schmale Schultern, Taille, Hüfte, anmutige Haltung).
 - **Format festlegen:** Querformat 3:2, Zahl der Reihen und Felder, Hintergrund reines Pink (#FF00FF).
 - **Reihen Bild für Bild beschreiben**, bei Schleifen die Schlüsselbilder nennen (welches Bein setzt auf, welches schwingt durch).
 - **Sagen, was es nicht sein soll** („ruhiges Gehen, kein Rennen“).
