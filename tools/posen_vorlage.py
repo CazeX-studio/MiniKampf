@@ -10,6 +10,7 @@ Drei Blätter je Geschlecht (alle 1536 x 1024, Hintergrund Pink), m = männlich,
   posen_<m|w>_gehen_1.png   3 Reihen x 8: Gehen von vorne, schräg von vorne, von der Seite
   posen_<m|w>_gehen_2.png   2 Reihen x 8: Gehen schräg von hinten, von hinten
   posen_<m|w>_stehen_sitzen.png  2 Reihen x 5: Stehen und Sitzen in den fünf Richtungen
+  posen_<m|w>_gehen_<richtung>.png  2 Reihen x 4: Gehen in einer Richtung, groß (seit 14.11.2026)
 
 Farben der Puppe: Kopf grün (wie das Kopf-Oval), Rumpf grau, rechter Arm und rechtes Bein rot,
 linker Arm und linkes Bein blau. Alle Figuren schauen nach LINKS (oder gerade zum Betrachter
@@ -129,6 +130,7 @@ def skelett(pose: str, bild_nr: int, geschlecht: str):
 def aufs_blatt(punkt, drehung, mitte_x, boden_y, mass):
 	"""Körper-Punkt auf das Blatt: Figur um die Hochachse drehen, dann von schräg oben ansehen."""
 	x, y, z = punkt
+	x = -x   # Blick auf die Figur: ihre rechte Seite liegt von vorne gesehen links im Bild (bis 14.11. vertauscht)
 	c, s = math.cos(drehung), math.sin(drehung)
 	wx = x * c + z * s
 	wz = -x * s + z * c          # wz > 0 heißt: näher am Betrachter
@@ -180,14 +182,14 @@ def figur(zeichnung, pose: str, bild_nr: int, richtung: str, mitte_x: float, bod
 	zeichnung.ellipse([kx - 46 * d, ky - 54 * d, kx + 46 * d, ky + 54 * d], fill=GRUEN)
 
 
-def blatt(reihen: list, spalten: int, mass: float, geschlecht: str) -> Image.Image:
+def blatt(reihen: list, spalten: int, mass: float, geschlecht: str, boden_anteil: float = 0.16) -> Image.Image:
 	"""reihen: je Reihe eine Liste von (pose, bild_nr, richtung)."""
 	bild = Image.new("RGB", (BREIT, HOCH), PINK)
 	zeichnung = ImageDraw.Draw(bild)
 	zelle_b, zelle_h = BREIT / spalten, HOCH / len(reihen)
 	for r, reihe in enumerate(reihen):
 		for s, (pose, bild_nr, richtung) in enumerate(reihe):
-			boden_y = r * zelle_h + zelle_h - 0.16 * zelle_h - (0.10 * zelle_h if pose == "sitzen" else 0)
+			boden_y = r * zelle_h + zelle_h - boden_anteil * zelle_h - (0.10 * zelle_h if pose == "sitzen" else 0)
 			# Sitzende, die nach links schauen, etwas nach rechts rücken (die Beine ragen nach links)
 			versatz = 0.08 * zelle_b if pose == "sitzen" and richtung in ("schraeg_vorne", "seite", "schraeg_hinten") else 0
 			figur(zeichnung, pose, bild_nr, richtung, s * zelle_b + zelle_b / 2 + versatz, boden_y, mass, geschlecht)
@@ -206,6 +208,11 @@ if __name__ == "__main__":
 			f"posen_{g}_gehen_2.png": blatt([gehen("schraeg_hinten"), gehen("hinten")], 8, 118, g),
 			f"posen_{g}_stehen_sitzen.png": blatt([[("stehen", 0, r) for r in RICHTUNGEN], [("sitzen", 0, r) for r in RICHTUNGEN]], 5, 150, g),
 		}
+		# Seit 14.11.: ein Blatt je Richtung, 2 Reihen x 4 (Bild 1-4 oben, 5-8 unten), große Puppen,
+		# damit ChatGPT die Beinstellung genauer trifft.
+		for r in RICHTUNGEN:
+			bilder = gehen(r)
+			blaetter[f"posen_{g}_gehen_{r}.png"] = blatt([bilder[:4], bilder[4:]], 4, 125, g, 0.12)
 		for name, bild in blaetter.items():
 			bild.save(f"{ordner}/{name}")
 			print("gespeichert:", f"{ordner}/{name}")
