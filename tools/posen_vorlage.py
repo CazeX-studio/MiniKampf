@@ -192,6 +192,9 @@ def blatt(reihen: list, spalten: int, mass: float, geschlecht: str, boden_anteil
 			boden_y = r * zelle_h + zelle_h - boden_anteil * zelle_h - (0.10 * zelle_h if pose == "sitzen" else 0)
 			# Sitzende, die nach links schauen, etwas nach rechts rücken (die Beine ragen nach links)
 			versatz = 0.08 * zelle_b if pose == "sitzen" and richtung in ("schraeg_vorne", "seite", "schraeg_hinten") else 0
+			# Sitzende Frau: die Beine liegen seitlich, von vorne ragen sie nach links, von hinten nach rechts
+			if pose == "sitzen" and geschlecht == "w":
+				versatz = {"vorne": 0.16, "hinten": -0.16}.get(richtung, versatz / zelle_b) * zelle_b
 			figur(zeichnung, pose, bild_nr, richtung, s * zelle_b + zelle_b / 2 + versatz, boden_y, mass, geschlecht)
 	return bild
 
