@@ -22,6 +22,11 @@ var hinten := false
 ## bzw. hinten, je nach hinten) oder "seite" (eigene Welt-Seitenbilder). Fehlen der Figur diese Bilder, gilt schräg.
 var blick := "schraeg"
 ## Endung der Bilder je Blick: [nach vorne, nach hinten]
+## Figuren mit Bildern in fünf Richtungen (Novizen seit 14.11.2026) nutzen sie überall in der Welt, auch in den Städten:
+## Die Richtung kommt dann von selbst aus dem Weg, den die Figur auf dem Bildschirm zurücklegt. Aus = wie bisher
+## (Seitenbilder, nur nach links/rechts). Der Bewegungs-Editor schaltet es für die Kampf-Ansichten aus.
+var welt_richtungen := false
+var _letzte_position := Vector2.INF
 const BLICK_ENDUNG := {"schraeg": ["_vorn", "_hinten"], "gerade": ["_gerade_vorn", "_gerade_hinten"], "seite": ["_welt_seite", "_welt_seite"]}
 ## Zeichen über dem Kopf: "!" = neuer Auftrag, "?" = hier etwas erledigen, "" = nichts
 var marker := "":
@@ -82,6 +87,7 @@ func setup(look: String, p_name: String, tint := Color.WHITE, name_color := Colo
 			frames.append(FighterView.einzelbild(look, anim, i))
 			i += 1
 		_frames[anim] = frames
+	welt_richtungen = not _frames.run_gerade_vorn.is_empty()
 	# Figuren nur mit Welt-Ansichten (Figuren-Baukasten, D19): Stehen und Laufen schräg von vorne bzw. hinten
 	if _frames.idle.is_empty() and not _frames.idle_vorn.is_empty():
 		richtungen = true
@@ -127,6 +133,12 @@ func _process(delta: float) -> void:
 		if _bubble_time <= 0.0:
 			_bubble.queue_free()
 			_bubble = null
+	# Fünf Richtungen: Blick aus dem Weg seit dem letzten Bild (große Sprünge, z. B. Kartenwechsel, zählen nicht)
+	if welt_richtungen:
+		var weg := position - _letzte_position
+		if moving and weg.length() > 0.05 and weg.length() < 200.0:
+			blick_setzen(weg)
+		_letzte_position = position
 	var anim := "run" if moving and _frames.run.size() > 0 else "idle"
 	var fps := 12.0 if anim == "run" else idle_fps
 	if liegt and not moving and _frames.liegen.size() > 0:
@@ -136,7 +148,7 @@ func _process(delta: float) -> void:
 	elif sitzt and not moving and _frames[_gerichtet("sitzen")].size() > 0:
 		anim = _gerichtet("sitzen")
 		fps = 1.0
-	elif richtungen:
+	elif richtungen or welt_richtungen:
 		var gerichtet := _gerichtet(anim)
 		if _frames[gerichtet].size() > 0:
 			anim = gerichtet

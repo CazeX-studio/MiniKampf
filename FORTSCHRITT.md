@@ -12,6 +12,13 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
+- **Neu (14.11.): Fünf Richtungen auch in den Städten:** Novizen (Spieler, Mitspieler) laufen jetzt überall in der Welt in fünf Richtungen. Die Richtung ergibt sich von selbst aus dem Weg auf dem Bildschirm (gerade nach unten = von vorne, waagerecht = Seite, dazwischen schräg). Beim Stehenbleiben schaut die Figur weiter dorthin, wohin sie zuletzt lief, beim Hinsetzen auch. Figuren ohne diese Bilder (Klassen, Leute im Dorf) laufen wie bisher mit Seitenbildern.
+  - **So testest du es:**
+    1. Mit einer Novizen-Figur in Kreuzweg oder Wipfelheim nach unten laufen: Man sieht das Gesicht von vorne.
+    2. Nach oben laufen: Man sieht den Hinterkopf.
+    3. Waagerecht und schräg laufen: Seite bzw. schräge Ansicht, nach links gespiegelt.
+    4. Stehen bleiben und hinsetzen: Die Figur bleibt in der letzten Richtung.
+
 - **Neu (14.11.): Novizen in fünf Richtungen wie bei Ragnarok** (GRAFIK_AUFTRAG.md Teil U7): Alle sechs Novizen-Köpfe (w1–w3, m1–m3) gibt es jetzt auch gerade von vorne und gerade von hinten. Die Novizen-Körper laufen, stehen und sitzen in fünf Richtungen: gerade von vorne, schräg von vorne, von der Seite, schräg von hinten, gerade von hinten (die andere Seite gespiegelt, also acht Richtungen). Im Baukasten-Testfeld sucht die Figur die Richtung selbst aus der Laufrichtung aus. Der Editor „Bewegungen in der Welt“ zeigt alle sieben Ansichten nebeneinander. Hüte, Umhänge und Zubehör nehmen gerade von vorne/hinten vorerst ihr schräges Bild. Neues Werkzeug `tools/koepfe_u.py`.
   - **So testest du es:**
     1. Editor → „Bewegungen in der Welt“, Novize (m): Von vorne, Schräg vorne, Seite, Schräg hinten und Von hinten stehen nebeneinander, der Kopf schaut jedes Mal mit.

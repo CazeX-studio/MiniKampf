@@ -70,5 +70,21 @@ func _run() -> void:
 	for anim: String in ["idle_gerade_vorn", "idle_welt_seite", "idle_gerade_hinten", "sitzen_welt_seite", "sitzen_gerade_hinten"]:
 		_check(f.hat_bilder(anim), "Novizin hat Bilder %s" % anim)
 	f.queue_free()
+	# In den Städten: Die Richtung kommt aus dem Weg auf dem Bildschirm, ohne dass jemand blick_setzen aufruft
+	var g := WorldCharacter.new()
+	g.setup("novize_m+m2", "Probe")
+	root.add_child(g)
+	_check(g.welt_richtungen and not g.richtungen, "Novize nutzt die fünf Richtungen von selbst")
+	g.moving = true
+	for weg: Array in [[Vector2(0, 3), "run_gerade_vorn", 1], [Vector2(-3, 0), "run_welt_seite", -1], [Vector2(3, -2), "run_hinten", 1],
+			[Vector2(0, -3), "run_gerade_hinten", 1]]:
+		for i in 3:
+			g.position += weg[0]
+			await process_frame
+		_check(g.aktuelle_anim == weg[1] and g.facing == weg[2], "Weg %s zeigt %s (ist %s, facing %d)" % [weg[0], weg[1], g.aktuelle_anim, g.facing])
+	g.moving = false
+	await process_frame
+	_check(g.aktuelle_anim == "idle_gerade_hinten", "Stehen bleibt in der letzten Richtung (ist %s)" % g.aktuelle_anim)
+	g.queue_free()
 	print("Welt-Bewegungen: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)

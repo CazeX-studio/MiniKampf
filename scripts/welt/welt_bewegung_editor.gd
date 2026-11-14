@@ -188,6 +188,8 @@ func _figuren_bauen() -> void:
 		f.richtungen = bool(r[2]) or f.richtungen
 		f.hinten = bool(r[3])
 		f.blick = str(r[4])
+		# Kampf-Ansichten: die Seitenbilder aus dem Kampf, auch bei Figuren mit fünf Welt-Richtungen
+		f.welt_richtungen = f.welt_richtungen and bool(r[2])
 		f.moving = bewegung == "laufen"
 		f.liegt = bewegung == "liegen"
 		f.sitzt = bewegung == "sitzen"
