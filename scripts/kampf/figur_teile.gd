@@ -147,6 +147,21 @@ static func hat_teile(figur: String) -> bool:
 	return _alle().has(koerper_von(figur))
 
 
+## Hat der Kopf dieser Figur ein Bild in dieser Richtung (z. B. „gerade_vorn“)? Figuren ohne Teile: ja.
+## Story-Köpfe wie Kobalt gibt es nur schräg und von der Seite, solche Figuren laufen in der Welt weiter mit Seitenbildern.
+static func kopf_kann(figur: String, richtung: String) -> bool:
+	var kopf_wahl := kopf
+	if "#" in figur or "+" in figur:
+		figur = ohne_aussehen(figur)
+	if "+" in figur:
+		kopf_wahl = figur.get_slice("+", 1)
+		figur = koerper_von(figur)
+	if not hat_teile(figur):
+		return true
+	var kopf_id := kopf_wahl if koepfe(figur).has(kopf_wahl) else standardkopf(figur)
+	return not koepfe(figur).has(kopf_id) or koepfe(figur)[kopf_id].hals.has(richtung + "_normal")
+
+
 ## Einzelbild einer Figur je nach eingestellter Art; null = kein Bild (dann gilt das ganze Bild).
 ## figur kann auch „Körper+Kopf“ sein (z. B. „novize_w+mira“, so speichert „Figur erstellen“ das Aussehen):
 ## dann gilt dieser Kopf statt des im Editor gewählten.
@@ -219,6 +234,9 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 			var variante := "%s_%s" % [info.richtung, gesicht(anim, frame)]
 			if not punkte.has(variante):
 				variante = "%s_normal" % info.richtung
+			if not punkte.has(variante):
+				# Köpfe nur in drei Richtungen (z. B. Kobalt auf dem Zähmer-Körper): gerade von vorne/hinten → schräg
+				variante = "%s_normal" % str(info.richtung).trim_prefix("gerade_")
 			kopf_bild = _bild_laden(KOPF % [kopf_id, variante])
 			var punkt := Vector2(punkte[variante][0], punkte[variante][1])
 			if kopf_bild != null and hut_jetzt == "" and info.richtung in ["hinten", "gerade_hinten", "seite"]:

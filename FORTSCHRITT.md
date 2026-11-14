@@ -12,6 +12,13 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
+- **Neu (14.11.): Monster-Zähmer (m) in fünf Richtungen wie der Bogenschütze** (GRAFIK_AUFTRAG.md Teil U10): Laufen, Stehen und Sitzen in allen fünf Richtungen, ohne Schleuder in der Welt, im Kampf mit Schleuder wie bisher. Story-Figuren auf diesem Körper, deren Kopf es nur schräg und von der Seite gibt (Kobalt), laufen in der Welt weiter wie bisher mit Seitenbildern. Übersicht `tools/referenz/teil_u/uebersicht_zaehmer_m.png`, Foto `zaehmer_m_eingebaut.png`.
+  - **So testest du es:**
+    1. Editor → „Bewegungen in der Welt“ → Klassen-Körper → Monster-Zähmer (m): fünf Richtungen nebeneinander, der Kopf schaut mit.
+    2. „Laufen“ und „Sitzen“ drücken: In allen fünf Richtungen läuft bzw. sitzt er, Halstuch und Gürteltaschen sehen überall gleich aus.
+    3. Mit einem Zähmer in Kreuzweg nach unten, oben und zur Seite laufen: Gesicht, Rücken bzw. Profil.
+    4. Einen Kampf beginnen: Er hält die Schleuder wie vorher. Kobalt in Grünwacht sieht aus wie vorher.
+
 - **Neu (14.11.): Bogenschützin (w) in fünf Richtungen wie der Bogenschütze** (GRAFIK_AUFTRAG.md Teil U10): Laufen, Stehen und Sitzen (im Schneidersitz) in allen fünf Richtungen, ohne Bogen in der Welt, im Kampf mit Bogen wie bisher. Übersicht `tools/referenz/teil_u/uebersicht_bogen_w.png`, Foto `bogen_w_eingebaut.png`.
   - **So testest du es:**
     1. Editor → „Bewegungen in der Welt“ → Klassen-Körper → Bogenschütze (w): fünf Richtungen nebeneinander, der Kopf schaut mit.

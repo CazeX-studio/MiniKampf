@@ -40,7 +40,7 @@ KLASSEN = {
 }
 ## Körper mit Welt-Bildern nach Teil U (fünf Richtungen, Sitzen; tools/welt_u_blatt.py): dort ist keine Waffe in der Hand
 ## gemalt und die Hand-Suche passt nicht auf alle Richtungen. In der Welt darum vorerst ohne Waffe, im Kampf wie bisher (14.11.2026).
-WELT_U = {"bogen_m", "bogen_w"}
+WELT_U = {"bogen_m", "bogen_w", "zaehmer_m"}
 WELT_ENDUNGEN = ("_vorn", "_hinten", "_seite")
 
 

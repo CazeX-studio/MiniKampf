@@ -80,9 +80,13 @@ func setup(look: String, p_name: String, tint := Color.WHITE, name_color := Colo
 			for art: String in ["idle", "run", "sitzen"]:
 				if not namen.has(art + endung):
 					namen.append(art + endung)
+	var gerade_ok := FigurTeile.kopf_kann(look, "gerade_vorn") and FigurTeile.kopf_kann(look, "gerade_hinten")
 	for anim: String in namen:
 		var frames: Array[Texture2D] = []
 		var i := 0
+		if not gerade_ok and ("_gerade_" in anim or anim.ends_with("_welt_seite")):
+			_frames[anim] = frames
+			continue
 		while ResourceLoader.exists(FighterView.sprite_path(look, anim, i)):
 			frames.append(FighterView.einzelbild(look, anim, i))
 			i += 1
