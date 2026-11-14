@@ -7,7 +7,8 @@ const FAELLE := [[0, "novize_m", "laufen", false], [1, "klingentaenzer_w", "lauf
 		[1, "bogen_m", "stehen", false], [1, "bogen_m", "laufen", false], [1, "bogen_m", "sitzen", false],
 		[1, "bogen_w", "stehen", false], [1, "bogen_w", "laufen", false], [1, "bogen_w", "sitzen", false],
 		[1, "zaehmer_m", "stehen", false], [1, "zaehmer_m", "laufen", false], [1, "zaehmer_m", "sitzen", false],
-		[1, "zaehmer_w", "stehen", false], [1, "zaehmer_w", "laufen", false], [1, "zaehmer_w", "sitzen", false]]
+		[1, "zaehmer_w", "stehen", false], [1, "zaehmer_w", "laufen", false], [1, "zaehmer_w", "sitzen", false],
+		[1, "klingentaenzer_m", "stehen", false], [1, "klingentaenzer_m", "laufen", false], [1, "klingentaenzer_m", "sitzen", false]]
 
 
 func _ready() -> void:
