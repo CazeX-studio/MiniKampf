@@ -146,7 +146,9 @@ static func formular_oeffnen(art: String, ort: String) -> bool:
 	var link := formular_link(art, ort)
 	if link == "":
 		return false
-	OS.shell_open(link)
+	# Prüfungen laufen ohne Bildschirm und spielen die Demo durch: dort nicht den Browser öffnen (Marco, 14.11.2026)
+	if DisplayServer.get_name() != "headless":
+		OS.shell_open(link)
 	return true
 
 
