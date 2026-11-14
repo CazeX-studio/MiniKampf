@@ -6,6 +6,8 @@ Ausgang: tools/vorlagen/<körper>_welt_u.png mit
   Reihe 1: run_vorn (8 Bilder, schräg von vorne)
   Reihe 2: run_hinten (8 Bilder, schräg von hinten)
   Reihe 3: idle_vorn, idle_hinten, sitzen_vorn, sitzen_hinten (je 1 Bild)
+  Reihe 4 bis 6: run_gerade_vorn, run_welt_seite, run_gerade_hinten (je 8 Bilder, seit Teil U7)
+  Reihe 7: idle_gerade_vorn, idle_welt_seite, idle_gerade_hinten, sitzen_gerade_vorn, sitzen_welt_seite, sitzen_gerade_hinten
 Die neuen Figuren schauen nach links, die alten Körper nach rechts: jedes Bild wird gespiegelt (das Spiel spiegelt ohnehin für die andere Seite).
 Das Stehen/Sitzen-Blatt wird auf die Größe der Laufbilder gebracht (Oberkante des grünen Ovals bis zu den Füßen).
 Danach: tools/koerper_blatt.py novize_m novize_w und tools/novize_welt2.py alt.json (siehe dort).
@@ -48,8 +50,9 @@ def oval_bis_fuss(t):
 
 def main():
 	for koerper in sys.argv[1:] or ["novize_m", "novize_w"]:
-		vorn = felder(Image.open(QUELLE / f"{koerper}_gehen_schraeg_vorne.png"), 2, 4)
-		hinten = felder(Image.open(QUELLE / f"{koerper}_gehen_schraeg_hinten.png"), 2, 4)
+		gehen = {r: felder(Image.open(QUELLE / f"{koerper}_gehen_{r}.png"), 2, 4)
+				for r in ["vorne", "schraeg_vorne", "seite", "schraeg_hinten", "hinten"]}
+		vorn, hinten = gehen["schraeg_vorne"], gehen["schraeg_hinten"]
 		stehen_sitzen = felder(Image.open(QUELLE / f"{koerper}_stehen_sitzen.png"), 2, 5)
 		lauf = vorn[0] + vorn[1]
 		faktor = np.median([oval_bis_fuss(t) for t in lauf]) / np.median([oval_bis_fuss(stehen_sitzen[0][i]) for i in (1, 3)])
@@ -61,7 +64,9 @@ def main():
 
 		reihen = [lauf, hinten[0] + hinten[1],
 				[gross(stehen_sitzen[0][1]), gross(stehen_sitzen[0][3]), gross(stehen_sitzen[1][1]), gross(stehen_sitzen[1][3])]]
-		blatt = Image.new("RGB", (FELD_B * 8, FELD_H * 3), PINK)
+		reihen += [gehen[r][0] + gehen[r][1] for r in ["vorne", "seite", "hinten"]]
+		reihen.append([gross(stehen_sitzen[z][s]) for z in (0, 1) for s in (0, 2, 4)])
+		blatt = Image.new("RGB", (FELD_B * 8, FELD_H * len(reihen)), PINK)
 		for r, reihe in enumerate(reihen):
 			for s, t in enumerate(reihe):
 				bild = Image.fromarray(t).transpose(Image.FLIP_LEFT_RIGHT)

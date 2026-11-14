@@ -22,6 +22,8 @@ from waffe_punkte import HAND_SEITE, gold, ohne_stiefel  # noqa: E402
 
 FIGUR = WURZEL / "assets" / "figuren"
 WELT = ["idle_vorn", "run_vorn", "idle_hinten", "run_hinten"]
+## Kampf-Bewegungen (alles andere ist Welt)
+KAMPF = ["idle", "run", "hit", "parry", "attack", "death", "victory", "cast"]
 
 
 def griff_von(bild, anim):
@@ -57,7 +59,13 @@ def main():
 				for feld in ["griff", "waffe_winkel"]:
 					if feld in alt[koerper][name]:
 						eintrag[feld] = alt[koerper][name][feld]
-		for anim in WELT:
+		# Seit Teil U6/U7 (14.11.2026) tragen die Novizen in der Welt kein Schwert: Die neuen Welt-Bilder haben keins,
+		# und das gesuchte Gold wäre der Schildrand
+		for name, eintrag in neu.items():
+			if not name.startswith("_") and not name.rsplit("_f", 1)[0] in KAMPF:
+				eintrag.pop("griff", None)
+				eintrag.pop("waffe_winkel", None)
+		for anim in []:
 			alte = sorted((k for k in alt[koerper] if k.rsplit("_f", 1)[0] == anim and "waffe_winkel" in alt[koerper][k]),
 					key=lambda k: int(k.rsplit("_f", 1)[1]))
 			neue = sorted((k for k in neu if k.rsplit("_f", 1)[0] == anim), key=lambda k: int(k.rsplit("_f", 1)[1]))

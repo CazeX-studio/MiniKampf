@@ -44,10 +44,31 @@ func _run() -> void:
 	root.add_child(szene)
 	await process_frame
 	await process_frame
-	_check(szene._figuren.size() == 4, "Vier Richtungen nebeneinander")
+	_check(szene._figuren.size() == 7, "Sieben Richtungen nebeneinander (Kampf links/rechts, fünf Welt-Richtungen)")
 	szene._schritt(1)
 	_check(editor.bild_fuer_bild, "◀ ▶ schaltet auf Bild für Bild")
 	editor.bild_fuer_bild = false
 	editor.bild = 0
+	# Teil U7: Novizen in fünf Welt-Richtungen, Blick aus der Bewegung auf dem Bildschirm
+	var f := WorldCharacter.new()
+	f.setup("novize_w+w1", "Probe")
+	root.add_child(f)
+	f.richtungen = true
+	f.moving = true
+	var faelle := [[Vector2(0, 1), "run_gerade_vorn", 1], [Vector2(1, 0.5), "run_vorn", 1], [Vector2(-1, 0), "run_welt_seite", -1],
+			[Vector2(-1, -0.5), "run_hinten", -1], [Vector2(0, -1), "run_gerade_hinten", -1]]
+	for fall: Array in faelle:
+		f.blick_setzen(fall[0])
+		await process_frame
+		_check(f.aktuelle_anim == fall[1] and f.facing == fall[2], "Bewegung %s zeigt %s (ist %s)" % [fall[0], fall[1], f.aktuelle_anim])
+		_check(f.bild_anzahl() == 8, "%s hat 8 Bilder" % fall[1])
+	f.moving = false
+	f.sitzt = true
+	f.blick_setzen(Vector2(0, 1))
+	await process_frame
+	_check(f.aktuelle_anim == "sitzen_gerade_vorn", "Sitzen gerade von vorne (ist %s)" % f.aktuelle_anim)
+	for anim: String in ["idle_gerade_vorn", "idle_welt_seite", "idle_gerade_hinten", "sitzen_welt_seite", "sitzen_gerade_hinten"]:
+		_check(f.hat_bilder(anim), "Novizin hat Bilder %s" % anim)
+	f.queue_free()
 	print("Welt-Bewegungen: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)

@@ -18,6 +18,11 @@ var facing := 1
 var richtungen := false
 ## Läuft bzw. schaut die Figur nach hinten (vom Betrachter weg)?
 var hinten := false
+## Welt in fünf Richtungen (Teil U7, wie bei Ragnarok): "schraeg" (Bilder _vorn/_hinten), "gerade" (gerade von vorne
+## bzw. hinten, je nach hinten) oder "seite" (eigene Welt-Seitenbilder). Fehlen der Figur diese Bilder, gilt schräg.
+var blick := "schraeg"
+## Endung der Bilder je Blick: [nach vorne, nach hinten]
+const BLICK_ENDUNG := {"schraeg": ["_vorn", "_hinten"], "gerade": ["_gerade_vorn", "_gerade_hinten"], "seite": ["_welt_seite", "_welt_seite"]}
 ## Zeichen über dem Kopf: "!" = neuer Auftrag, "?" = hier etwas erledigen, "" = nichts
 var marker := "":
 	set(value):
@@ -64,7 +69,13 @@ var _bubble_time := 0.0
 
 
 func setup(look: String, p_name: String, tint := Color.WHITE, name_color := Color.WHITE) -> void:
-	for anim: String in ["idle", "run", "idle_vorn", "run_vorn", "idle_hinten", "run_hinten", "liegen", "sitzen_vorn", "sitzen_hinten"]:
+	var namen: Array[String] = ["idle", "run", "liegen"]
+	for endungen: Array in BLICK_ENDUNG.values():
+		for endung: String in endungen:
+			for art: String in ["idle", "run", "sitzen"]:
+				if not namen.has(art + endung):
+					namen.append(art + endung)
+	for anim: String in namen:
 		var frames: Array[Texture2D] = []
 		var i := 0
 		while ResourceLoader.exists(FighterView.sprite_path(look, anim, i)):
@@ -122,11 +133,11 @@ func _process(delta: float) -> void:
 		# Langsam atmen
 		anim = "liegen"
 		fps = 1.5
-	elif sitzt and not moving and _frames["sitzen_hinten" if hinten else "sitzen_vorn"].size() > 0:
-		anim = "sitzen_hinten" if hinten else "sitzen_vorn"
+	elif sitzt and not moving and _frames[_gerichtet("sitzen")].size() > 0:
+		anim = _gerichtet("sitzen")
 		fps = 1.0
 	elif richtungen:
-		var gerichtet := anim + ("_hinten" if hinten else "_vorn")
+		var gerichtet := _gerichtet(anim)
 		if _frames[gerichtet].size() > 0:
 			anim = gerichtet
 			# Die Richtungsbilder haben 6 statt 4 Bilder pro Bewegung
@@ -198,6 +209,28 @@ func versetzen(dy: float) -> void:
 	versatz = dy
 	_sprite.position.y = dy
 	_overlay.position.y = dy
+
+
+## Name der Bilder für eine Bewegung („idle“, „run“, „sitzen“) in der aktuellen Blickrichtung; hat die Figur für
+## gerade bzw. seitlich keine Bilder, die schrägen.
+func _gerichtet(art: String) -> String:
+	var name: String = art + BLICK_ENDUNG.get(blick, BLICK_ENDUNG.schraeg)[1 if hinten else 0]
+	if _frames.has(name) and not (_frames[name] as Array).is_empty():
+		return name
+	return art + ("_hinten" if hinten else "_vorn")
+
+
+## Blickrichtung aus einer Bewegung auf dem Bildschirm (x nach rechts, y nach unten) setzen: acht Richtungen wie bei Ragnarok.
+## Gerade nach unten/oben = Bilder von vorne/hinten, waagerecht = Seite, dazwischen schräg; links wird gespiegelt.
+func blick_setzen(bewegung: Vector2) -> void:
+	if bewegung.length() < 0.001:
+		return
+	if absf(bewegung.x) > 0.001:
+		facing = 1 if bewegung.x > 0 else -1
+	if absf(bewegung.y) > 0.001:
+		hinten = bewegung.y < 0
+	var winkel := rad_to_deg(atan2(absf(bewegung.y), absf(bewegung.x)))
+	blick = "seite" if winkel < 22.5 else ("gerade" if winkel > 67.5 else "schraeg")
 
 
 ## Wie viele Bilder hat die Bewegung, die gerade läuft? (Editor S3b)

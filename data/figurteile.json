@@ -7,6 +7,18 @@
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.6,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						25.3,
+						58
+					],
+					"gerade_vorn_normal": [
+						25.4,
+						57
+					],
 					"hinten_geneigt": [
 						33.7,
 						54
@@ -57,6 +69,18 @@
 			"m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
 					"hinten_geneigt": [
 						43.5,
 						53
@@ -107,6 +131,18 @@
 			"m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
 					"hinten_geneigt": [
 						46.1,
 						57
@@ -157,6 +193,18 @@
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.8,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						25.2,
+						52
+					],
+					"gerade_vorn_normal": [
+						25.2,
+						52
+					],
 					"hinten_geneigt": [
 						39.3,
 						45
@@ -207,6 +255,18 @@
 			"w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
 					"hinten_geneigt": [
 						49.8,
 						57
@@ -257,6 +317,18 @@
 			"w3": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
 					"hinten_geneigt": [
 						51.3,
 						59
@@ -945,6 +1017,18 @@
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.6,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						25.3,
+						58
+					],
+					"gerade_vorn_normal": [
+						25.4,
+						57
+					],
 					"hinten_geneigt": [
 						33.7,
 						54
@@ -995,6 +1079,18 @@
 			"m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
 					"hinten_geneigt": [
 						43.5,
 						53
@@ -1045,6 +1141,18 @@
 			"m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
 					"hinten_geneigt": [
 						46.1,
 						57
@@ -1095,6 +1203,18 @@
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.8,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						25.2,
+						52
+					],
+					"gerade_vorn_normal": [
+						25.2,
+						52
+					],
 					"hinten_geneigt": [
 						39.3,
 						45
@@ -1145,6 +1265,18 @@
 			"w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
 					"hinten_geneigt": [
 						49.8,
 						57
@@ -1195,6 +1327,18 @@
 			"w3": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
 					"hinten_geneigt": [
 						51.3,
 						59
@@ -2007,6 +2151,18 @@
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.6,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						25.3,
+						58
+					],
+					"gerade_vorn_normal": [
+						25.4,
+						57
+					],
 					"hinten_geneigt": [
 						33.7,
 						54
@@ -2057,6 +2213,18 @@
 			"m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
 					"hinten_geneigt": [
 						43.5,
 						53
@@ -2107,6 +2275,18 @@
 			"m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
 					"hinten_geneigt": [
 						46.1,
 						57
@@ -2281,6 +2461,18 @@
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.8,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						25.2,
+						52
+					],
+					"gerade_vorn_normal": [
+						25.2,
+						52
+					],
 					"hinten_geneigt": [
 						39.3,
 						45
@@ -2331,6 +2523,18 @@
 			"w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
 					"hinten_geneigt": [
 						49.8,
 						57
@@ -2381,6 +2585,18 @@
 			"w3": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
 					"hinten_geneigt": [
 						51.3,
 						59
@@ -2699,6 +2915,18 @@
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.6,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						25.3,
+						58
+					],
+					"gerade_vorn_normal": [
+						25.4,
+						57
+					],
 					"hinten_geneigt": [
 						33.7,
 						54
@@ -2749,6 +2977,18 @@
 			"m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
 					"hinten_geneigt": [
 						43.5,
 						53
@@ -2799,6 +3039,18 @@
 			"m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
 					"hinten_geneigt": [
 						46.1,
 						57
@@ -2963,6 +3215,18 @@
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.8,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						25.2,
+						52
+					],
+					"gerade_vorn_normal": [
+						25.2,
+						52
+					],
 					"hinten_geneigt": [
 						39.3,
 						45
@@ -3013,6 +3277,18 @@
 			"w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
 					"hinten_geneigt": [
 						49.8,
 						57
@@ -3063,6 +3339,18 @@
 			"w3": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
 					"hinten_geneigt": [
 						51.3,
 						59
@@ -3501,6 +3789,18 @@
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.6,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						25.3,
+						58
+					],
+					"gerade_vorn_normal": [
+						25.4,
+						57
+					],
 					"hinten_geneigt": [
 						33.7,
 						54
@@ -3551,6 +3851,18 @@
 			"m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
 					"hinten_geneigt": [
 						43.5,
 						53
@@ -3601,6 +3913,18 @@
 			"m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
 					"hinten_geneigt": [
 						46.1,
 						57
@@ -3853,6 +4177,18 @@
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.8,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						25.2,
+						52
+					],
+					"gerade_vorn_normal": [
+						25.2,
+						52
+					],
 					"hinten_geneigt": [
 						39.3,
 						45
@@ -3903,6 +4239,18 @@
 			"w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
 					"hinten_geneigt": [
 						49.8,
 						57
@@ -3953,6 +4301,18 @@
 			"w3": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
 					"hinten_geneigt": [
 						51.3,
 						59
@@ -4267,6 +4627,18 @@
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.6,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						25.3,
+						58
+					],
+					"gerade_vorn_normal": [
+						25.4,
+						57
+					],
 					"hinten_geneigt": [
 						33.7,
 						54
@@ -4317,6 +4689,18 @@
 			"m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
 					"hinten_geneigt": [
 						43.5,
 						53
@@ -4367,6 +4751,18 @@
 			"m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
 					"hinten_geneigt": [
 						46.1,
 						57
@@ -4513,6 +4909,18 @@
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.8,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						25.2,
+						52
+					],
+					"gerade_vorn_normal": [
+						25.2,
+						52
+					],
 					"hinten_geneigt": [
 						39.3,
 						45
@@ -4563,6 +4971,18 @@
 			"w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
 					"hinten_geneigt": [
 						49.8,
 						57
@@ -4613,6 +5033,18 @@
 			"w3": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
 					"hinten_geneigt": [
 						51.3,
 						59
@@ -4909,6 +5341,18 @@
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.6,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						25.3,
+						58
+					],
+					"gerade_vorn_normal": [
+						25.4,
+						57
+					],
 					"hinten_geneigt": [
 						33.7,
 						54
@@ -4959,6 +5403,18 @@
 			"m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
 					"hinten_geneigt": [
 						43.5,
 						53
@@ -5009,6 +5465,18 @@
 			"m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
 					"hinten_geneigt": [
 						46.1,
 						57
@@ -5187,6 +5655,18 @@
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.8,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						25.2,
+						52
+					],
+					"gerade_vorn_normal": [
+						25.2,
+						52
+					],
 					"hinten_geneigt": [
 						39.3,
 						45
@@ -5237,6 +5717,18 @@
 			"w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
 					"hinten_geneigt": [
 						49.8,
 						57
@@ -5287,6 +5779,18 @@
 			"w3": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
 					"hinten_geneigt": [
 						51.3,
 						59
@@ -5583,6 +6087,18 @@
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.6,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						25.3,
+						58
+					],
+					"gerade_vorn_normal": [
+						25.4,
+						57
+					],
 					"hinten_geneigt": [
 						33.7,
 						54
@@ -5633,6 +6149,18 @@
 			"m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
 					"hinten_geneigt": [
 						43.5,
 						53
@@ -5683,6 +6211,18 @@
 			"m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
 					"hinten_geneigt": [
 						46.1,
 						57
@@ -5843,6 +6383,18 @@
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.8,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						25.2,
+						52
+					],
+					"gerade_vorn_normal": [
+						25.2,
+						52
+					],
 					"hinten_geneigt": [
 						39.3,
 						45
@@ -5893,6 +6445,18 @@
 			"w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
 					"hinten_geneigt": [
 						49.8,
 						57
@@ -5943,6 +6507,18 @@
 			"w3": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
 					"hinten_geneigt": [
 						51.3,
 						59
@@ -6243,6 +6819,18 @@
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.6,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						25.3,
+						58
+					],
+					"gerade_vorn_normal": [
+						25.4,
+						57
+					],
 					"hinten_geneigt": [
 						33.7,
 						54
@@ -6293,6 +6881,18 @@
 			"m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
 					"hinten_geneigt": [
 						43.5,
 						53
@@ -6343,6 +6943,18 @@
 			"m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
 					"hinten_geneigt": [
 						46.1,
 						57
@@ -6503,6 +7115,18 @@
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.8,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						25.2,
+						52
+					],
+					"gerade_vorn_normal": [
+						25.2,
+						52
+					],
 					"hinten_geneigt": [
 						39.3,
 						45
@@ -6553,6 +7177,18 @@
 			"w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
 					"hinten_geneigt": [
 						49.8,
 						57
@@ -6603,6 +7239,18 @@
 			"w3": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
 					"hinten_geneigt": [
 						51.3,
 						59
@@ -6913,6 +7561,18 @@
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.6,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						25.3,
+						58
+					],
+					"gerade_vorn_normal": [
+						25.4,
+						57
+					],
 					"hinten_geneigt": [
 						33.7,
 						54
@@ -6963,6 +7623,18 @@
 			"m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
 					"hinten_geneigt": [
 						43.5,
 						53
@@ -7013,6 +7685,18 @@
 			"m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
 					"hinten_geneigt": [
 						46.1,
 						57
@@ -7159,6 +7843,18 @@
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.8,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						25.2,
+						52
+					],
+					"gerade_vorn_normal": [
+						25.2,
+						52
+					],
 					"hinten_geneigt": [
 						39.3,
 						45
@@ -7209,6 +7905,18 @@
 			"w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
 					"hinten_geneigt": [
 						49.8,
 						57
@@ -7259,6 +7967,18 @@
 			"w3": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
 					"hinten_geneigt": [
 						51.3,
 						59
@@ -7555,6 +8275,18 @@
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.6,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						25.3,
+						58
+					],
+					"gerade_vorn_normal": [
+						25.4,
+						57
+					],
 					"hinten_geneigt": [
 						33.7,
 						54
@@ -7605,6 +8337,18 @@
 			"m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
 					"hinten_geneigt": [
 						43.5,
 						53
@@ -7655,6 +8399,18 @@
 			"m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
 					"hinten_geneigt": [
 						46.1,
 						57
@@ -7801,6 +8557,18 @@
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.8,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						25.2,
+						52
+					],
+					"gerade_vorn_normal": [
+						25.2,
+						52
+					],
 					"hinten_geneigt": [
 						39.3,
 						45
@@ -7851,6 +8619,18 @@
 			"w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
 					"hinten_geneigt": [
 						49.8,
 						57
@@ -7901,6 +8681,18 @@
 			"w3": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
 					"hinten_geneigt": [
 						51.3,
 						59
@@ -8086,6 +8878,18 @@
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.6,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						25.3,
+						58
+					],
+					"gerade_vorn_normal": [
+						25.4,
+						57
+					],
 					"hinten_geneigt": [
 						33.7,
 						54
@@ -8136,6 +8940,18 @@
 			"m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
 					"hinten_geneigt": [
 						43.5,
 						53
@@ -8186,6 +9002,18 @@
 			"m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
 					"hinten_geneigt": [
 						46.1,
 						57
@@ -8236,6 +9064,18 @@
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.8,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						25.2,
+						52
+					],
+					"gerade_vorn_normal": [
+						25.2,
+						52
+					],
 					"hinten_geneigt": [
 						39.3,
 						45
@@ -8286,6 +9126,18 @@
 			"w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
 					"hinten_geneigt": [
 						49.8,
 						57
@@ -8336,6 +9188,18 @@
 			"w3": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
 					"hinten_geneigt": [
 						51.3,
 						59
@@ -8817,6 +9681,18 @@
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.6,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						25.3,
+						58
+					],
+					"gerade_vorn_normal": [
+						25.4,
+						57
+					],
 					"hinten_geneigt": [
 						33.7,
 						54
@@ -8867,6 +9743,18 @@
 			"m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
 					"hinten_geneigt": [
 						43.5,
 						53
@@ -8917,6 +9805,18 @@
 			"m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
 					"hinten_geneigt": [
 						46.1,
 						57
@@ -8967,6 +9867,18 @@
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.8,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						25.2,
+						52
+					],
+					"gerade_vorn_normal": [
+						25.2,
+						52
+					],
 					"hinten_geneigt": [
 						39.3,
 						45
@@ -9017,6 +9929,18 @@
 			"w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
 					"hinten_geneigt": [
 						49.8,
 						57
@@ -9067,6 +9991,18 @@
 			"w3": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
 					"hinten_geneigt": [
 						51.3,
 						59
@@ -9548,6 +10484,18 @@
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.6,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						25.3,
+						58
+					],
+					"gerade_vorn_normal": [
+						25.4,
+						57
+					],
 					"hinten_geneigt": [
 						33.7,
 						54
@@ -9598,6 +10546,18 @@
 			"m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
 					"hinten_geneigt": [
 						43.5,
 						53
@@ -9648,6 +10608,18 @@
 			"m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
 					"hinten_geneigt": [
 						46.1,
 						57
@@ -9698,6 +10670,18 @@
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.8,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						25.2,
+						52
+					],
+					"gerade_vorn_normal": [
+						25.2,
+						52
+					],
 					"hinten_geneigt": [
 						39.3,
 						45
@@ -9748,6 +10732,18 @@
 			"w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
 					"hinten_geneigt": [
 						49.8,
 						57
@@ -9798,6 +10794,18 @@
 			"w3": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
 					"hinten_geneigt": [
 						51.3,
 						59
@@ -10377,6 +11385,18 @@
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.6,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						25.3,
+						58
+					],
+					"gerade_vorn_normal": [
+						25.4,
+						57
+					],
 					"hinten_geneigt": [
 						33.7,
 						54
@@ -10427,6 +11447,18 @@
 			"m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
 					"hinten_geneigt": [
 						43.5,
 						53
@@ -10477,6 +11509,18 @@
 			"m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
 					"hinten_geneigt": [
 						46.1,
 						57
@@ -10527,6 +11571,18 @@
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.8,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						25.2,
+						52
+					],
+					"gerade_vorn_normal": [
+						25.2,
+						52
+					],
 					"hinten_geneigt": [
 						39.3,
 						45
@@ -10577,6 +11633,18 @@
 			"w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
 					"hinten_geneigt": [
 						49.8,
 						57
@@ -10627,6 +11695,18 @@
 			"w3": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
 					"hinten_geneigt": [
 						51.3,
 						59
@@ -10913,6 +11993,22 @@
 			"waffe_winkel": 116.0,
 			"winkel": -0.0
 		},
+		"idle_gerade_hinten_f0": {
+			"hals": [
+				35.0,
+				44.3
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.4
+		},
+		"idle_gerade_vorn_f0": {
+			"hals": [
+				31.5,
+				45.4
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -2.2
+		},
 		"idle_hinten_f0": {
 			"hals": [
 				22.8,
@@ -10928,6 +12024,14 @@
 			],
 			"richtung": "vorn",
 			"winkel": -2.7
+		},
+		"idle_welt_seite_f0": {
+			"hals": [
+				20.5,
+				45.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
 		},
 		"parry_f0": {
 			"griff": [
@@ -11032,6 +12136,134 @@
 			"richtung": "seite",
 			"waffe_winkel": 99.5,
 			"winkel": -0.0
+		},
+		"run_gerade_hinten_f0": {
+			"hals": [
+				39.9,
+				42.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -3.6
+		},
+		"run_gerade_hinten_f1": {
+			"hals": [
+				39.6,
+				43.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -2.7
+		},
+		"run_gerade_hinten_f2": {
+			"hals": [
+				40.0,
+				43.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -4.2
+		},
+		"run_gerade_hinten_f3": {
+			"hals": [
+				39.2,
+				43.0
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -4.0
+		},
+		"run_gerade_hinten_f4": {
+			"hals": [
+				39.7,
+				42.2
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -2.6
+		},
+		"run_gerade_hinten_f5": {
+			"hals": [
+				39.6,
+				46.0
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -2.9
+		},
+		"run_gerade_hinten_f6": {
+			"hals": [
+				41.8,
+				43.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -3.2
+		},
+		"run_gerade_hinten_f7": {
+			"hals": [
+				39.9,
+				44.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -3.3
+		},
+		"run_gerade_vorn_f0": {
+			"hals": [
+				37.3,
+				45.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -2.6
+		},
+		"run_gerade_vorn_f1": {
+			"hals": [
+				37.5,
+				47.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -1.2
+		},
+		"run_gerade_vorn_f2": {
+			"hals": [
+				38.6,
+				47.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -2.3
+		},
+		"run_gerade_vorn_f3": {
+			"hals": [
+				37.6,
+				45.0
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 2.9
+		},
+		"run_gerade_vorn_f4": {
+			"hals": [
+				36.9,
+				44.2
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 2.7
+		},
+		"run_gerade_vorn_f5": {
+			"hals": [
+				37.8,
+				44.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 3.0
+		},
+		"run_gerade_vorn_f6": {
+			"hals": [
+				38.9,
+				44.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -1.7
+		},
+		"run_gerade_vorn_f7": {
+			"hals": [
+				35.4,
+				43.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -1.4
 		},
 		"run_hinten_f0": {
 			"hals": [
@@ -11161,6 +12393,86 @@
 			"richtung": "vorn",
 			"winkel": -1.3
 		},
+		"run_welt_seite_f0": {
+			"hals": [
+				53.3,
+				42.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f1": {
+			"hals": [
+				53.4,
+				42.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f2": {
+			"hals": [
+				53.2,
+				42.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f3": {
+			"hals": [
+				52.6,
+				42.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f4": {
+			"hals": [
+				53.4,
+				42.0
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f5": {
+			"hals": [
+				53.7,
+				42.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f6": {
+			"hals": [
+				55.2,
+				42.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f7": {
+			"hals": [
+				53.9,
+				42.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"sitzen_gerade_hinten_f0": {
+			"hals": [
+				28.9,
+				44.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.2
+		},
+		"sitzen_gerade_vorn_f0": {
+			"hals": [
+				44.9,
+				44.2
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -1.4
+		},
 		"sitzen_hinten_f0": {
 			"hals": [
 				22.1,
@@ -11176,6 +12488,14 @@
 			],
 			"richtung": "vorn",
 			"winkel": -3.0
+		},
+		"sitzen_welt_seite_f0": {
+			"hals": [
+				19.5,
+				45.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
 		},
 		"victory_f0": {
 			"griff": [
@@ -11237,6 +12557,18 @@
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.6,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						25.3,
+						58
+					],
+					"gerade_vorn_normal": [
+						25.4,
+						57
+					],
 					"hinten_geneigt": [
 						33.7,
 						54
@@ -11287,6 +12619,18 @@
 			"m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
 					"hinten_geneigt": [
 						43.5,
 						53
@@ -11337,6 +12681,18 @@
 			"m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
 					"hinten_geneigt": [
 						46.1,
 						57
@@ -11387,6 +12743,18 @@
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.8,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						25.2,
+						52
+					],
+					"gerade_vorn_normal": [
+						25.2,
+						52
+					],
 					"hinten_geneigt": [
 						39.3,
 						45
@@ -11437,6 +12805,18 @@
 			"w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
 					"hinten_geneigt": [
 						49.8,
 						57
@@ -11487,6 +12867,18 @@
 			"w3": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
 					"hinten_geneigt": [
 						51.3,
 						59
@@ -11763,6 +13155,22 @@
 			"waffe_winkel": 117.3,
 			"winkel": -0.0
 		},
+		"idle_gerade_hinten_f0": {
+			"hals": [
+				38.0,
+				39.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -5.6
+		},
+		"idle_gerade_vorn_f0": {
+			"hals": [
+				41.6,
+				40.4
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -5.1
+		},
 		"idle_hinten_f0": {
 			"hals": [
 				41.6,
@@ -11778,6 +13186,14 @@
 			],
 			"richtung": "vorn",
 			"winkel": -9.8
+		},
+		"idle_welt_seite_f0": {
+			"hals": [
+				40.9,
+				39.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
 		},
 		"parry_f0": {
 			"griff": [
@@ -11882,6 +13298,134 @@
 			"richtung": "seite",
 			"waffe_winkel": 97.4,
 			"winkel": -0.0
+		},
+		"run_gerade_hinten_f0": {
+			"hals": [
+				35.9,
+				38.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.8
+		},
+		"run_gerade_hinten_f1": {
+			"hals": [
+				39.0,
+				38.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.9
+		},
+		"run_gerade_hinten_f2": {
+			"hals": [
+				37.1,
+				38.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -2.6
+		},
+		"run_gerade_hinten_f3": {
+			"hals": [
+				37.4,
+				36.3
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -3.4
+		},
+		"run_gerade_hinten_f4": {
+			"hals": [
+				36.6,
+				37.2
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.6
+		},
+		"run_gerade_hinten_f5": {
+			"hals": [
+				38.7,
+				38.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.2
+		},
+		"run_gerade_hinten_f6": {
+			"hals": [
+				35.9,
+				38.0
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.8
+		},
+		"run_gerade_hinten_f7": {
+			"hals": [
+				36.2,
+				39.2
+			],
+			"richtung": "gerade_hinten",
+			"winkel": 0.3
+		},
+		"run_gerade_vorn_f0": {
+			"hals": [
+				42.1,
+				38.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.6
+		},
+		"run_gerade_vorn_f1": {
+			"hals": [
+				40.7,
+				40.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 1.4
+		},
+		"run_gerade_vorn_f2": {
+			"hals": [
+				42.7,
+				41.2
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 1.3
+		},
+		"run_gerade_vorn_f3": {
+			"hals": [
+				41.9,
+				38.2
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.1
+		},
+		"run_gerade_vorn_f4": {
+			"hals": [
+				42.8,
+				38.5
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.4
+		},
+		"run_gerade_vorn_f5": {
+			"hals": [
+				42.8,
+				39.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 1.0
+		},
+		"run_gerade_vorn_f6": {
+			"hals": [
+				42.8,
+				41.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.3
+		},
+		"run_gerade_vorn_f7": {
+			"hals": [
+				43.0,
+				37.4
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.8
 		},
 		"run_hinten_f0": {
 			"hals": [
@@ -12011,6 +13555,86 @@
 			"richtung": "vorn",
 			"winkel": -0.2
 		},
+		"run_welt_seite_f0": {
+			"hals": [
+				45.6,
+				40.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f1": {
+			"hals": [
+				49.6,
+				38.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f2": {
+			"hals": [
+				49.4,
+				38.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f3": {
+			"hals": [
+				46.2,
+				40.4
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f4": {
+			"hals": [
+				47.5,
+				39.4
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f5": {
+			"hals": [
+				56.1,
+				38.0
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f6": {
+			"hals": [
+				49.4,
+				38.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f7": {
+			"hals": [
+				50.5,
+				40.4
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"sitzen_gerade_hinten_f0": {
+			"hals": [
+				53.1,
+				40.2
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -5.9
+		},
+		"sitzen_gerade_vorn_f0": {
+			"hals": [
+				33.9,
+				40.2
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -5.1
+		},
 		"sitzen_hinten_f0": {
 			"hals": [
 				40.7,
@@ -12026,6 +13650,14 @@
 			],
 			"richtung": "vorn",
 			"winkel": -7.4
+		},
+		"sitzen_welt_seite_f0": {
+			"hals": [
+				42.0,
+				39.4
+			],
+			"richtung": "seite",
+			"winkel": 0.0
 		},
 		"victory_f0": {
 			"griff": [
@@ -12086,6 +13718,18 @@
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.6,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						25.3,
+						58
+					],
+					"gerade_vorn_normal": [
+						25.4,
+						57
+					],
 					"hinten_geneigt": [
 						33.7,
 						54
@@ -12136,6 +13780,18 @@
 			"m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
 					"hinten_geneigt": [
 						43.5,
 						53
@@ -12186,6 +13842,18 @@
 			"m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
 					"hinten_geneigt": [
 						46.1,
 						57
@@ -12236,6 +13904,18 @@
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.8,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						25.2,
+						52
+					],
+					"gerade_vorn_normal": [
+						25.2,
+						52
+					],
 					"hinten_geneigt": [
 						39.3,
 						45
@@ -12286,6 +13966,18 @@
 			"w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
 					"hinten_geneigt": [
 						49.8,
 						57
@@ -12336,6 +14028,18 @@
 			"w3": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
 					"hinten_geneigt": [
 						51.3,
 						59
@@ -12817,6 +14521,18 @@
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.6,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						25.3,
+						58
+					],
+					"gerade_vorn_normal": [
+						25.4,
+						57
+					],
 					"hinten_geneigt": [
 						33.7,
 						54
@@ -12867,6 +14583,18 @@
 			"m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
 					"hinten_geneigt": [
 						43.5,
 						53
@@ -12917,6 +14645,18 @@
 			"m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
 					"hinten_geneigt": [
 						46.1,
 						57
@@ -12967,6 +14707,18 @@
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.8,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						25.2,
+						52
+					],
+					"gerade_vorn_normal": [
+						25.2,
+						52
+					],
 					"hinten_geneigt": [
 						39.3,
 						45
@@ -13017,6 +14769,18 @@
 			"w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
 					"hinten_geneigt": [
 						49.8,
 						57
@@ -13067,6 +14831,18 @@
 			"w3": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
 					"hinten_geneigt": [
 						51.3,
 						59
@@ -13548,6 +15324,18 @@
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.6,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						25.3,
+						58
+					],
+					"gerade_vorn_normal": [
+						25.4,
+						57
+					],
 					"hinten_geneigt": [
 						33.7,
 						54
@@ -13598,6 +15386,18 @@
 			"m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
 					"hinten_geneigt": [
 						43.5,
 						53
@@ -13648,6 +15448,18 @@
 			"m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
 					"hinten_geneigt": [
 						46.1,
 						57
@@ -13698,6 +15510,18 @@
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.8,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						25.2,
+						52
+					],
+					"gerade_vorn_normal": [
+						25.2,
+						52
+					],
 					"hinten_geneigt": [
 						39.3,
 						45
@@ -13748,6 +15572,18 @@
 			"w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
 					"hinten_geneigt": [
 						49.8,
 						57
@@ -13798,6 +15634,18 @@
 			"w3": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
 					"hinten_geneigt": [
 						51.3,
 						59
@@ -14299,6 +16147,18 @@
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.6,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						25.3,
+						58
+					],
+					"gerade_vorn_normal": [
+						25.4,
+						57
+					],
 					"hinten_geneigt": [
 						33.7,
 						54
@@ -14349,6 +16209,18 @@
 			"m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
 					"hinten_geneigt": [
 						43.5,
 						53
@@ -14399,6 +16271,18 @@
 			"m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
 					"hinten_geneigt": [
 						46.1,
 						57
@@ -14449,6 +16333,18 @@
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.8,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						25.2,
+						52
+					],
+					"gerade_vorn_normal": [
+						25.2,
+						52
+					],
 					"hinten_geneigt": [
 						39.3,
 						45
@@ -14499,6 +16395,18 @@
 			"w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
 					"hinten_geneigt": [
 						49.8,
 						57
@@ -14549,6 +16457,18 @@
 			"w3": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
 					"hinten_geneigt": [
 						51.3,
 						59
@@ -15242,6 +17162,18 @@
 			"m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.6,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						25.3,
+						58
+					],
+					"gerade_vorn_normal": [
+						25.4,
+						57
+					],
 					"hinten_geneigt": [
 						33.7,
 						54
@@ -15292,6 +17224,18 @@
 			"m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
 					"hinten_geneigt": [
 						43.5,
 						53
@@ -15342,6 +17286,18 @@
 			"m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
 					"hinten_geneigt": [
 						46.1,
 						57
@@ -15392,6 +17348,18 @@
 			"w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.8,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						25.2,
+						52
+					],
+					"gerade_vorn_normal": [
+						25.2,
+						52
+					],
 					"hinten_geneigt": [
 						39.3,
 						45
@@ -15442,6 +17410,18 @@
 			"w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
 					"hinten_geneigt": [
 						49.8,
 						57
@@ -15492,6 +17472,18 @@
 			"w3": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
 					"hinten_geneigt": [
 						51.3,
 						59

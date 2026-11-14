@@ -131,6 +131,10 @@ def suchen(bild, kopf):
 def richtung_von(anim):
 	if anim in RICHTUNG:
 		return RICHTUNG[anim]
+	# Welt in fünf Richtungen (Teil U7): gerade von vorne/hinten haben eigene Köpfe, die Welt-Seite nutzt die Kampf-Köpfe
+	for ende, richtung in [("_gerade_vorn", "gerade_vorn"), ("_gerade_hinten", "gerade_hinten"), ("_welt_seite", "seite")]:
+		if anim.endswith(ende):
+			return richtung
 	if anim.endswith("_vorn"):
 		return "vorn"
 	if anim.endswith("_hinten"):

@@ -12,6 +12,13 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
+- **Neu (14.11.): Novizen in fünf Richtungen wie bei Ragnarok** (GRAFIK_AUFTRAG.md Teil U7): Alle sechs Novizen-Köpfe (w1–w3, m1–m3) gibt es jetzt auch gerade von vorne und gerade von hinten. Die Novizen-Körper laufen, stehen und sitzen in fünf Richtungen: gerade von vorne, schräg von vorne, von der Seite, schräg von hinten, gerade von hinten (die andere Seite gespiegelt, also acht Richtungen). Im Baukasten-Testfeld sucht die Figur die Richtung selbst aus der Laufrichtung aus. Der Editor „Bewegungen in der Welt“ zeigt alle sieben Ansichten nebeneinander. Hüte, Umhänge und Zubehör nehmen gerade von vorne/hinten vorerst ihr schräges Bild. Neues Werkzeug `tools/koepfe_u.py`.
+  - **So testest du es:**
+    1. Editor → „Bewegungen in der Welt“, Novize (m): Von vorne, Schräg vorne, Seite, Schräg hinten und Von hinten stehen nebeneinander, der Kopf schaut jedes Mal mit.
+    2. „Laufen“ und „Sitzen“ drücken: In allen fünf Richtungen bewegt bzw. setzt sich die Figur.
+    3. Oben den Kopf wechseln (z. B. Novizin w2 mit Pferdeschwanz): Auch von hinten sieht man die passende Frisur.
+    4. Im Baukasten-Testfeld mit den Pfeiltasten in alle Richtungen laufen: gerade nach unten zeigt das Gesicht, gerade nach oben den Hinterkopf.
+
 - **Neu (14.11.): Novize und Novizin mit neuen Welt-Bildern** (GRAFIK_AUFTRAG.md Teil U6): Schräg von vorne und schräg von hinten laufen beide mit den neuen Bildern aus ChatGPT (8 Schritte, Schild am Arm), stehen ruhig und haben jetzt echte Sitz-Bilder statt der gestauchten Figur. In der Welt tragen sie dabei kein Schwert (die neuen Bilder haben keins), im Kampf bleibt alles wie vorher. Gerade von vorne, von der Seite und gerade von hinten sind gemalt, aber noch nicht im Spiel: dafür fehlen Köpfe, Hüte und Zubehör in diesen Richtungen (Bauauftrag „acht Richtungen in der Welt“). Neues Werkzeug `tools/welt_u_blatt.py`.
   - **So testest du es:**
     1. Im Editor „Bewegungen in der Welt“ Novize (m) wählen, „Laufen“: schräg von vorne und schräg von hinten laufen mit 8 Bildern.

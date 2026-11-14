@@ -371,13 +371,9 @@ func step_by(move: Vector2) -> void:
 
 
 func _face(move: Vector2) -> void:
-	var screen_x := move.x - move.y
-	if absf(screen_x) > 0.001:
-		_player.facing = 1 if screen_x > 0 else -1
-	# Nach oben auf dem Bildschirm = vom Betrachter weg (Bilder von hinten)
-	var screen_y := move.x + move.y
-	if absf(screen_y) > 0.001:
-		_player.hinten = screen_y < 0
+	# Richtung auf dem Bildschirm (Felder sind doppelt so breit wie hoch); nach oben = vom Betrachter weg (Bilder von hinten).
+	# Acht Richtungen wie bei Ragnarok (Teil U7): gerade, schräg oder seitlich, je nach Winkel
+	_player.blick_setzen(Vector2(move.x - move.y, (move.x + move.y) * 0.5))
 
 
 ## Figur richtig einsortieren: Steht sie vor einem Ding, wird sie danach gemalt, sonst davor.

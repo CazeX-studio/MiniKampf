@@ -8,8 +8,10 @@ extends Node2D
 const SCREEN := Vector2(1280, 720)
 const ZEITLUPEN: Array[float] = [1.0, 0.3, 0.1]
 const GRUPPEN := ["Novizen", "Klassen-Körper", "Baukasten-Körper", "Figuren aus der Welt"]
-const RICHTUNGEN := [["Nach links", -1, false, false], ["Nach rechts", 1, false, false],
-		["Schräg von vorne", 1, true, false], ["Schräg von hinten", 1, true, true]]
+## Name, facing, Welt-Richtungsbilder?, hinten, Blick (Teil U7: fünf Richtungen wie bei Ragnarok)
+const RICHTUNGEN := [["Kampf links", -1, false, false, "schraeg"], ["Kampf rechts", 1, false, false, "schraeg"],
+		["Von vorne", 1, true, false, "gerade"], ["Schräg vorne", 1, true, false, "schraeg"], ["Seite", 1, true, false, "seite"],
+		["Schräg hinten", 1, true, true, "schraeg"], ["Von hinten", 1, true, true, "gerade"]]
 const BEWEGUNGEN := [["Stehen", "stehen"], ["Laufen", "laufen"], ["Liegen", "liegen"], ["Sitzen", "sitzen"]]
 const KLASSEN_NAMEN := {"bogen": "Bogenschütze", "zaehmer": "Monster-Zähmer", "klingentaenzer": "Klingentänzer",
 		"schmied": "Rüstungsschmied", "saengerin": "Sternensängerin"}
@@ -79,12 +81,18 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Welche Bilder gerade laufen, in Worten (für die Anzeige unter jeder Figur)
 static func _anim_name(anim: String) -> String:
 	var name := "Laufen" if anim.begins_with("run") else ("Liegen" if anim == "liegen" else ("Sitzen" if anim.begins_with("sitzen") else "Stehen"))
-	if anim.ends_with("_vorn"):
-		name += " (Bilder von vorne)"
+	if anim.ends_with("_gerade_vorn"):
+		name += " (gerade von vorne)"
+	elif anim.ends_with("_gerade_hinten"):
+		name += " (gerade von hinten)"
+	elif anim.ends_with("_welt_seite"):
+		name += " (Welt-Seite)"
+	elif anim.ends_with("_vorn"):
+		name += " (schräg von vorne)"
 	elif anim.ends_with("_hinten"):
-		name += " (Bilder von hinten)"
+		name += " (schräg von hinten)"
 	else:
-		name += " (Bilder von der Seite)"
+		name += " (Kampf-Seite)"
 	return name
 
 
@@ -174,11 +182,12 @@ func _figuren_bauen() -> void:
 		var r: Array = RICHTUNGEN[i]
 		var f := WorldCharacter.new()
 		f.setup(look, look)
-		f.position = Vector2(170 + i * 300, 370)
+		f.position = Vector2(95 + i * 182, 370)
 		f.scale = Vector2(ZOOM, ZOOM)
 		f.facing = int(r[1])
 		f.richtungen = bool(r[2]) or f.richtungen
 		f.hinten = bool(r[3])
+		f.blick = str(r[4])
 		f.moving = bewegung == "laufen"
 		f.liegt = bewegung == "liegen"
 		f.sitzt = bewegung == "sitzen"
@@ -186,10 +195,11 @@ func _figuren_bauen() -> void:
 		add_child(f)
 		_figuren.append(f)
 		var hinweis := Label.new()
-		hinweis.position = Vector2(f.position.x - 140, 400)
-		hinweis.size = Vector2(280, 50)
+		hinweis.position = Vector2(f.position.x - 90, 400)
+		hinweis.size = Vector2(180, 80)
+		hinweis.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		hinweis.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		hinweis.add_theme_font_size_override("font_size", 15)
+		hinweis.add_theme_font_size_override("font_size", 13)
 		hinweis.add_theme_color_override("font_outline_color", Color.BLACK)
 		hinweis.add_theme_constant_override("outline_size", 6)
 		add_child(hinweis)

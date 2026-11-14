@@ -224,7 +224,7 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 				punkt.x = kopf_bild.get_width() - punkt.x
 			if kopf_bild != null and hut_jetzt != "":
 				# Den Hut auf den noch ungedrehten Kopf setzen, dann dreht er sich mit
-				var mit_hut := _hut_aufsetzen(kopf_bild, hut_jetzt, info.richtung, farben_jetzt)
+				var mit_hut := _hut_aufsetzen(kopf_bild, hut_jetzt, schicht_richtung(info.richtung), farben_jetzt)
 				kopf_bild = mit_hut.bild
 				punkt += mit_hut.verschoben
 			var winkel: float = info.get("winkel", 0.0)
@@ -386,10 +386,16 @@ static func _innen_frei(bild: Image, start_anteil: Vector2) -> Image:
 	return neu
 
 
+## Hüte, Rückenteile und Zubehör gibt es nur seitlich, schräg von vorne und schräg von hinten. Gerade von vorne bzw.
+## hinten (Welt in fünf Richtungen, Teil U7) nehmen sie die schräge Ansicht, bis es eigene Bilder gibt.
+static func schicht_richtung(richtung: String) -> String:
+	return {"gerade_vorn": "vorn", "gerade_hinten": "hinten"}.get(richtung, richtung)
+
+
 ## Rückenteil für ein Bild: {bild, ecke, vorne} oder leer. Es hängt am Halspunkt und neigt sich mit dem Körper.
 ## Im Laufen weht es: Stehen und Laufen haben eigene Bilder.
 static func _rueckenteil(id: String, info: Dictionary, rand: int, palette: String, anim: String, frame: int) -> Dictionary:
-	var richtung: String = info.richtung
+	var richtung := schicht_richtung(info.richtung)
 	var daten: Dictionary = _alle_schichten().ruecken[id].get(richtung, {})
 	var nummer := RUECKEN_STEHEN + frame % RUECKEN_LAUFEN if anim.begins_with("run") else frame % RUECKEN_STEHEN
 	var bild := _bild_laden(RUECKEN_BILD % [id, richtung, nummer])
@@ -418,8 +424,9 @@ static func _rueckenteil(id: String, info: Dictionary, rand: int, palette: Strin
 static func _zubehoer_zeichnen(ziel: Image, ids: String, info: Dictionary, koerper_hoehe: int, rand: int) -> void:
 	var alle: Dictionary = _alle_schichten().get("zubehoer", {})
 	for id: String in ids.split("&", false):
-		var daten: Dictionary = alle.get(id, {}).get(str(info.richtung), {})
-		var bild := _bild_laden(ZUBEHOER_BILD % [id, info.richtung]) if not daten.is_empty() else null
+		var richtung := schicht_richtung(info.richtung)
+		var daten: Dictionary = alle.get(id, {}).get(richtung, {})
+		var bild := _bild_laden(ZUBEHOER_BILD % [id, richtung]) if not daten.is_empty() else null
 		if bild == null:
 			continue
 		var hals := Vector2(info.hals[0], info.hals[1])

@@ -54,16 +54,23 @@ REIHEN = {k: dict(KLASSEN_REIHEN) for k in ["bogen_m", "bogen_w", "zaehmer_m", "
 # Bogenschütze (m und w), Blatt 2: der Sieg hat 5 Bilder (Faust hoch und wieder herunter)
 REIHEN["bogen_m"]["kampf_b"] = [[("attack", 6)], [("death", 6)], [("victory", 5), ("cast", 4)]]
 REIHEN["bogen_w"]["kampf_b"] = REIHEN["bogen_m"]["kampf_b"]
+## Teil U7: Stehen und Sitzen gerade von vorne, von der Seite und gerade von hinten
+WELT_U_STEHEN = [("idle_gerade_vorn", 1), ("idle_welt_seite", 1), ("idle_gerade_hinten", 1),
+		("sitzen_gerade_vorn", 1), ("sitzen_welt_seite", 1), ("sitzen_gerade_hinten", 1)]
 REIHEN.update({
 	"novize_m": {
 		"kampf_b": [[("attack", 6)], [("death", 6)], [("victory", 4), ("cast", 3)]],
-		"welt": [[("run_vorn", 8)], [("run_hinten", 8)], [("idle_vorn", 1), ("idle_hinten", 1), ("sitzen_vorn", 1), ("sitzen_hinten", 1)]],
+		"welt": [[("run_vorn", 8)], [("run_hinten", 8)], [("idle_vorn", 1), ("idle_hinten", 1), ("sitzen_vorn", 1), ("sitzen_hinten", 1)],
+				[("run_gerade_vorn", 8)], [("run_welt_seite", 8)], [("run_gerade_hinten", 8)], WELT_U_STEHEN],
 	},
 	"novize_w": {
 		"kampf_b": [[("attack", 6)], [("death", 6)], [("victory", 4), ("cast", 3)]],
-		"welt": [[("run_vorn", 8)], [("run_hinten", 8)], [("idle_vorn", 1), ("idle_hinten", 1), ("sitzen_vorn", 1), ("sitzen_hinten", 1)]],
+		"welt": [[("run_vorn", 8)], [("run_hinten", 8)], [("idle_vorn", 1), ("idle_hinten", 1), ("sitzen_vorn", 1), ("sitzen_hinten", 1)],
+				[("run_gerade_vorn", 8)], [("run_welt_seite", 8)], [("run_gerade_hinten", 8)], WELT_U_STEHEN],
 	},
 })
+## Welt-Seite (Teil U7): Das grüne Oval ist dort schräg gemalt, der Kopf soll aber aufrecht sitzen wie bei Ragnarok
+KOPF_GERADE = ("_welt_seite",)
 ## Mit dieser Animation wird jedes weitere Blatt auf die Größe von Blatt 1 gebracht (aufrecht stehend, Kopf frei)
 GROESSE_VON = {"kampf_a": "idle", "kampf_b": "cast", "welt": "idle_vorn"}
 ## Blätter mit runden Kreisen statt länglicher Ovale (gezeichnet vor dem Hinweis vom 28.10.): Kopf bleibt dort gerade
@@ -229,6 +236,8 @@ def main():
 					eintrag[name] = {"ganz": True}
 					continue
 				hals, winkel = neigung(bild, platz & (bild[..., 3] > 128), anim in runde)
+				if anim.endswith(KOPF_GERADE):
+					winkel = 0.0
 				# Grünliche Ränder des Ovals mit wegnehmen
 				farbe = bild[..., :3].astype(int)
 				gruenlich = farbe[..., 1] > np.maximum(farbe[..., 0], farbe[..., 2]) + 15
