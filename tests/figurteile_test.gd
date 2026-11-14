@@ -147,7 +147,14 @@ func _klassen_waffen() -> int:
 		if FigurTeile._waffe_von(koerper + "+m1#waffe=krummklinge", "krummklinge") != waffe:
 			print("FEHLER: %s trägt nicht immer %s" % [koerper, waffe])
 			fehler += 1
+		# Welt-Bilder nach Teil U (Bogenschütze m seit 14.11.2026): in der Welt vorerst ohne Waffe
+		var welt_u: bool = daten[koerper].has("run_gerade_vorn_f0")
 		for bild: String in ["idle_f0", "run_f1", "attack_f2", "idle_vorn_f0"]:
+			if welt_u and bild == "idle_vorn_f0":
+				if daten[koerper][bild].has("griff"):
+					print("FEHLER: %s hält in der Welt eine Waffe, obwohl keine gemalt ist" % koerper)
+					fehler += 1
+				continue
 			if not daten[koerper].get(bild, {}).has("griff"):
 				print("FEHLER: %s %s hat keinen Handpunkt" % [koerper, bild])
 				fehler += 1

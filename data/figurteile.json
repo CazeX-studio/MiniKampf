@@ -625,135 +625,45 @@
 			"waffe_winkel": 0.0,
 			"winkel": -2.8
 		},
-		"idle_hinten_f0": {
-			"griff": [
-				57.0,
-				84.5
-			],
+		"idle_gerade_hinten_f0": {
 			"hals": [
-				34.0,
-				41.3
+				32.6,
+				40.2
 			],
-			"richtung": "hinten",
-			"waffe_winkel": 0.0,
-			"winkel": -1.3
+			"richtung": "gerade_hinten",
+			"winkel": -0.2
 		},
-		"idle_hinten_f1": {
-			"griff": [
-				56.0,
-				84.5
-			],
+		"idle_gerade_vorn_f0": {
 			"hals": [
-				32.7,
-				42.4
+				32.0,
+				40.1
 			],
-			"richtung": "hinten",
-			"waffe_winkel": 0.0,
-			"winkel": -1.2
-		},
-		"idle_hinten_f2": {
-			"griff": [
-				57.0,
-				84.5
-			],
-			"hals": [
-				33.0,
-				41.0
-			],
-			"richtung": "hinten",
-			"waffe_winkel": 0.0,
-			"winkel": 0.8
-		},
-		"idle_hinten_f3": {
-			"griff": [
-				56.0,
-				85.0
-			],
-			"hals": [
-				32.8,
-				42.2
-			],
-			"richtung": "hinten",
-			"waffe_winkel": 0.0,
-			"winkel": -1.2
-		},
-		"idle_hinten_f4": {
-			"griff": [
-				56.0,
-				84.5
-			],
-			"hals": [
-				32.7,
-				41.3
-			],
-			"richtung": "hinten",
-			"waffe_winkel": 0.0,
-			"winkel": -1.5
-		},
-		"idle_vorn_f0": {
-			"griff": [
-				8.0,
-				83.6
-			],
-			"hals": [
-				36.9,
-				44.3
-			],
-			"richtung": "vorn",
-			"waffe_winkel": 0.0,
+			"richtung": "gerade_vorn",
 			"winkel": -0.7
 		},
-		"idle_vorn_f1": {
-			"griff": [
-				8.0,
-				84.5
-			],
+		"idle_hinten_f0": {
 			"hals": [
-				35.7,
-				44.3
+				30.8,
+				39.1
+			],
+			"richtung": "hinten",
+			"winkel": -2.9
+		},
+		"idle_vorn_f0": {
+			"hals": [
+				25.4,
+				40.2
 			],
 			"richtung": "vorn",
-			"waffe_winkel": 0.0,
 			"winkel": -1.4
 		},
-		"idle_vorn_f2": {
-			"griff": [
-				8.0,
-				84.5
-			],
+		"idle_welt_seite_f0": {
 			"hals": [
-				35.6,
-				44.5
+				24.4,
+				39.4
 			],
-			"richtung": "vorn",
-			"waffe_winkel": 0.0,
-			"winkel": -1.5
-		},
-		"idle_vorn_f3": {
-			"griff": [
-				7.0,
-				82.5
-			],
-			"hals": [
-				36.0,
-				44.5
-			],
-			"richtung": "vorn",
-			"waffe_winkel": 0.0,
-			"winkel": -1.6
-		},
-		"idle_vorn_f4": {
-			"griff": [
-				8.0,
-				84.0
-			],
-			"hals": [
-				35.8,
-				44.4
-			],
-			"richtung": "vorn",
-			"waffe_winkel": 0.0,
-			"winkel": -1.7
+			"richtung": "seite",
+			"winkel": 0.0
 		},
 		"parry_f0": {
 			"hals": [
@@ -839,135 +749,365 @@
 			"waffe_winkel": 0.0,
 			"winkel": -3.1
 		},
-		"run_hinten_f0": {
-			"griff": [
-				69.0,
-				85.5
-			],
+		"run_gerade_hinten_f0": {
 			"hals": [
-				62.9,
-				40.4
+				32.4,
+				36.4
 			],
-			"richtung": "hinten",
-			"waffe_winkel": 0.0,
-			"winkel": 0.7
+			"richtung": "gerade_hinten",
+			"winkel": -0.6
 		},
-		"run_hinten_f1": {
-			"griff": [
-				63.0,
-				84.0
-			],
+		"run_gerade_hinten_f1": {
 			"hals": [
-				56.8,
-				40.1
+				32.2,
+				36.5
 			],
-			"richtung": "hinten",
-			"waffe_winkel": 0.0,
-			"winkel": 0.2
+			"richtung": "gerade_hinten",
+			"winkel": -0.4
 		},
-		"run_hinten_f2": {
-			"griff": [
-				64.0,
-				90.6
-			],
+		"run_gerade_hinten_f2": {
 			"hals": [
-				57.4,
-				40.3
+				33.3,
+				36.5
 			],
-			"richtung": "hinten",
-			"waffe_winkel": 0.0,
-			"winkel": -1.7
+			"richtung": "gerade_hinten",
+			"winkel": -0.8
 		},
-		"run_hinten_f3": {
-			"griff": [
-				71.0,
-				108.0
-			],
+		"run_gerade_hinten_f3": {
 			"hals": [
-				53.2,
-				42.2
+				33.8,
+				36.5
 			],
-			"richtung": "hinten",
-			"waffe_winkel": 0.0,
-			"winkel": -1.2
+			"richtung": "gerade_hinten",
+			"winkel": -1.1
 		},
-		"run_hinten_f4": {
-			"griff": [
-				66.0,
-				87.5
-			],
+		"run_gerade_hinten_f4": {
 			"hals": [
-				59.0,
-				39.1
+				34.1,
+				36.4
 			],
-			"richtung": "hinten",
-			"waffe_winkel": 0.0,
-			"winkel": 0.4
-		},
-		"run_vorn_f0": {
-			"griff": [
-				23.0,
-				100.0
-			],
-			"hals": [
-				65.5,
-				46.2
-			],
-			"richtung": "vorn",
-			"waffe_winkel": 0.0,
+			"richtung": "gerade_hinten",
 			"winkel": -0.5
 		},
-		"run_vorn_f1": {
-			"griff": [
-				25.0,
-				97.0
-			],
+		"run_gerade_hinten_f5": {
 			"hals": [
-				63.8,
+				32.9,
+				38.0
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.1
+		},
+		"run_gerade_hinten_f6": {
+			"hals": [
+				35.3,
+				37.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.6
+		},
+		"run_gerade_hinten_f7": {
+			"hals": [
+				32.7,
+				36.5
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.9
+		},
+		"run_gerade_vorn_f0": {
+			"hals": [
+				25.9,
+				37.2
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.8
+		},
+		"run_gerade_vorn_f1": {
+			"hals": [
+				26.7,
+				38.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -1.2
+		},
+		"run_gerade_vorn_f2": {
+			"hals": [
+				29.8,
+				41.2
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.7
+		},
+		"run_gerade_vorn_f3": {
+			"hals": [
+				30.7,
+				38.0
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.6
+		},
+		"run_gerade_vorn_f4": {
+			"hals": [
+				29.7,
+				37.5
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.1
+		},
+		"run_gerade_vorn_f5": {
+			"hals": [
+				28.5,
+				40.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.5
+		},
+		"run_gerade_vorn_f6": {
+			"hals": [
+				29.8,
+				37.2
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.1
+		},
+		"run_gerade_vorn_f7": {
+			"hals": [
+				29.8,
+				37.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -1.3
+		},
+		"run_hinten_f0": {
+			"hals": [
+				43.5,
+				35.2
+			],
+			"richtung": "hinten",
+			"winkel": -1.7
+		},
+		"run_hinten_f1": {
+			"hals": [
+				48.7,
+				36.3
+			],
+			"richtung": "hinten",
+			"winkel": -3.1
+		},
+		"run_hinten_f2": {
+			"hals": [
+				45.7,
+				36.2
+			],
+			"richtung": "hinten",
+			"winkel": -4.0
+		},
+		"run_hinten_f3": {
+			"hals": [
+				47.7,
+				35.0
+			],
+			"richtung": "hinten",
+			"winkel": -3.4
+		},
+		"run_hinten_f4": {
+			"hals": [
+				45.1,
+				34.2
+			],
+			"richtung": "hinten",
+			"winkel": -2.3
+		},
+		"run_hinten_f5": {
+			"hals": [
+				49.6,
+				40.2
+			],
+			"richtung": "hinten",
+			"winkel": -2.6
+		},
+		"run_hinten_f6": {
+			"hals": [
+				45.8,
+				36.1
+			],
+			"richtung": "hinten",
+			"winkel": -3.1
+		},
+		"run_hinten_f7": {
+			"hals": [
+				46.1,
+				35.2
+			],
+			"richtung": "hinten",
+			"winkel": -2.7
+		},
+		"run_vorn_f0": {
+			"hals": [
+				32.4,
+				49.4
+			],
+			"richtung": "vorn",
+			"winkel": -4.3
+		},
+		"run_vorn_f1": {
+			"hals": [
+				32.4,
+				49.2
+			],
+			"richtung": "vorn",
+			"winkel": -3.0
+		},
+		"run_vorn_f2": {
+			"hals": [
+				36.4,
+				49.3
+			],
+			"richtung": "vorn",
+			"winkel": -3.4
+		},
+		"run_vorn_f3": {
+			"hals": [
+				34.4,
+				45.3
+			],
+			"richtung": "vorn",
+			"winkel": -2.8
+		},
+		"run_vorn_f4": {
+			"hals": [
+				33.6,
 				45.4
 			],
 			"richtung": "vorn",
-			"waffe_winkel": 0.0,
-			"winkel": -0.0
+			"winkel": -2.9
 		},
-		"run_vorn_f2": {
-			"griff": [
-				39.0,
-				102.0
-			],
+		"run_vorn_f5": {
 			"hals": [
-				70.6,
-				45.2
+				32.9,
+				47.3
 			],
 			"richtung": "vorn",
-			"waffe_winkel": 0.0,
-			"winkel": -1.2
+			"winkel": -2.3
 		},
-		"run_vorn_f3": {
-			"griff": [
-				24.0,
-				98.0
-			],
+		"run_vorn_f6": {
 			"hals": [
-				65.8,
-				45.1
+				34.5,
+				47.3
 			],
 			"richtung": "vorn",
-			"waffe_winkel": 0.0,
-			"winkel": -0.5
+			"winkel": -3.2
 		},
-		"run_vorn_f4": {
-			"griff": [
-				30.0,
-				98.5
-			],
+		"run_vorn_f7": {
 			"hals": [
-				70.4,
-				45.2
+				30.6,
+				50.4
 			],
 			"richtung": "vorn",
-			"waffe_winkel": 0.0,
-			"winkel": -1.8
+			"winkel": -2.9
+		},
+		"run_welt_seite_f0": {
+			"hals": [
+				39.7,
+				39.4
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f1": {
+			"hals": [
+				41.7,
+				39.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f2": {
+			"hals": [
+				42.9,
+				39.4
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f3": {
+			"hals": [
+				38.9,
+				39.5
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f4": {
+			"hals": [
+				41.2,
+				39.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f5": {
+			"hals": [
+				42.1,
+				40.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f6": {
+			"hals": [
+				42.8,
+				39.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f7": {
+			"hals": [
+				40.0,
+				40.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"sitzen_gerade_hinten_f0": {
+			"hals": [
+				30.1,
+				40.3
+			],
+			"richtung": "gerade_hinten",
+			"winkel": 0.4
+		},
+		"sitzen_gerade_vorn_f0": {
+			"hals": [
+				28.2,
+				40.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.3
+		},
+		"sitzen_hinten_f0": {
+			"hals": [
+				34.6,
+				39.3
+			],
+			"richtung": "hinten",
+			"winkel": -1.9
+		},
+		"sitzen_vorn_f0": {
+			"hals": [
+				27.4,
+				40.5
+			],
+			"richtung": "vorn",
+			"winkel": -2.3
+		},
+		"sitzen_welt_seite_f0": {
+			"hals": [
+				28.2,
+				40.4
+			],
+			"richtung": "seite",
+			"winkel": 0.0
 		},
 		"victory_f0": {
 			"hals": [

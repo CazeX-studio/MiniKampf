@@ -41,7 +41,8 @@ OHNE_ZUSATZ = set(DATEINAMEN)
 ## Welt-Blätter der Novizen nach Teil U6 (14.11.2026, gebaut von tools/welt_u_blatt.py): 8 Bilder Laufen je Richtung, Stehen und Sitzen, ohne Klinge.
 ## Vorher (E3g, 05.11.): Blatt welt2.
 ## Schwert-Punkte dafür setzt tools/novize_welt2.py (die Blätter haben keine Klinge zum Messen).
-WELT2 = {"novize_m": "welt_u", "novize_w": "welt_u"}
+## Seit 14.11.2026 (Teil U10) auch die Klassen, sobald ihre sechs Blätter da sind: Bogenschütze (m).
+WELT2 = {"novize_m": "welt_u", "novize_w": "welt_u", "bogen_m": "welt_u"}
 ## Die Klinge kommt als eigenes Teil dazu (Projekt 13, Schritt 3), der Griff bleibt in der Hand
 ZUSATZ = "_ohne_klinge"
 ## Abweichende Reihen einzelner Blätter (sonst wie Kofi): Körper -> Blatt -> Reihen
@@ -69,6 +70,9 @@ REIHEN.update({
 				[("run_gerade_vorn", 8)], [("run_welt_seite", 8)], [("run_gerade_hinten", 8)], WELT_U_STEHEN],
 	},
 })
+## Welt-Blätter nach Teil U (wie die Novizen): gleiche Reihen für alle Körper aus WELT2
+for _k in WELT2:
+	REIHEN.setdefault(_k, {})["welt"] = REIHEN["novize_m"]["welt"]
 ## Welt-Seite (Teil U7): Das grüne Oval ist dort schräg gemalt, der Kopf soll aber aufrecht sitzen wie bei Ragnarok
 KOPF_GERADE = ("_welt_seite",)
 ## Halspunkt verschieben (Körper, Ende der Animation) -> (x, y) in Bildpunkten. Novizin seitlich: Kopf saß zu weit vorne und

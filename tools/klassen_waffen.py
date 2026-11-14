@@ -38,6 +38,10 @@ KLASSEN = {
 			"anders": {"attack": ([1, 2, 3], "langbogen_gespannt"), "cast": (None, "langbogen_gespannt")}},
 	"zaehmer": {"waffe": "schleuder", "ohne": ["death", "victory", "hit"], "anders": {}},
 }
+## Körper mit Welt-Bildern nach Teil U (fünf Richtungen, Sitzen; tools/welt_u_blatt.py): dort ist keine Waffe in der Hand
+## gemalt und die Hand-Suche passt nicht auf alle Richtungen. In der Welt darum vorerst ohne Waffe, im Kampf wie bisher (14.11.2026).
+WELT_U = {"bogen_m"}
+WELT_ENDUNGEN = ("_vorn", "_hinten", "_seite")
 
 
 def waffen_schneiden():
@@ -140,7 +144,7 @@ def main():
 				anim, nummer = name.rsplit("_f", 1)
 				for alt in ["griff", "waffe_winkel", "waffe_bild"]:
 					info.pop(alt, None)
-				if anim in regeln["ohne"] or "hals" not in info:
+				if anim in regeln["ohne"] or "hals" not in info or (koerper in WELT_U and anim.endswith(WELT_ENDUNGEN)):
 					continue
 				a = np.array(Image.open(KOERPER_BILD / f"{koerper}_{name}.png").convert("RGBA"))
 				punkt = hand(a, info, art_fuer(klasse, anim, info, a))
