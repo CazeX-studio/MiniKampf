@@ -1,7 +1,8 @@
 extends "res://scripts/welt/welt_bewegung_editor.gd"
 ## Fotos vom Bewegungs-Editor in der Welt (S3b): Ordner als Argument nach --
 
-const FAELLE := [[0, "novize_m", "laufen", false], [1, "klingentaenzer_w", "laufen", true], [2, "", "stehen", false], [3, "ye", "laufen", false]]
+const FAELLE := [[0, "novize_m", "laufen", false], [1, "klingentaenzer_w", "laufen", true], [2, "", "stehen", false], [3, "ye", "laufen", false],
+		[0, "novize_w", "sitzen", false], [0, "novize_m", "stehen", false], [0, "novize_w", "laufen", true]]
 
 
 func _ready() -> void:

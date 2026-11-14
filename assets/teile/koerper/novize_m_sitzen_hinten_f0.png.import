@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ki3mggvtk5x7"
-path="res://.godot/imported/novize_m_idle_vorn_anim_f1.png-06810686b92fc9b04a5edb940534a44b.ctex"
+uid="uid://di56xjnlrj203"
+path="res://.godot/imported/novize_m_sitzen_hinten_f0.png-3b3fc8faf3c4c329a10492d7338b280b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/figuren/novize_m_idle_vorn_anim_f1.png"
-dest_files=["res://.godot/imported/novize_m_idle_vorn_anim_f1.png-06810686b92fc9b04a5edb940534a44b.ctex"]
+source_file="res://assets/teile/koerper/novize_m_sitzen_hinten_f0.png"
+dest_files=["res://.godot/imported/novize_m_sitzen_hinten_f0.png-3b3fc8faf3c4c329a10492d7338b280b.ctex"]
 
 [params]
 
-compress/mode=1
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

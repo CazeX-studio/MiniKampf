@@ -78,7 +78,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 ## Welche Bilder gerade laufen, in Worten (für die Anzeige unter jeder Figur)
 static func _anim_name(anim: String) -> String:
-	var name := "Laufen" if anim.begins_with("run") else ("Liegen" if anim == "liegen" else "Stehen")
+	var name := "Laufen" if anim.begins_with("run") else ("Liegen" if anim == "liegen" else ("Sitzen" if anim.begins_with("sitzen") else "Stehen"))
 	if anim.ends_with("_vorn"):
 		name += " (Bilder von vorne)"
 	elif anim.ends_with("_hinten"):

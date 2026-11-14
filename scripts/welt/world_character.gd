@@ -8,7 +8,7 @@ const SCALE := 3.0
 const OWN_SCALE := 2.0
 
 var moving := false
-## Sitzt die Figur (Hinsetzen)? Vorerst etwas gestaucht gezeigt, bis es eigene Sitz-Bilder gibt.
+## Sitzt die Figur (Hinsetzen)? Mit eigenen Sitz-Bildern (sitzen_vorn/_hinten, z. B. Novizen seit 14.11.2026), sonst etwas gestaucht.
 var sitzt := false
 ## Liegt (z. B. Mira krank im Bett, "liegt": true beim NPC): zeigt die Bilder „liegen“, wenn die Figur welche hat
 var liegt := false
@@ -64,7 +64,7 @@ var _bubble_time := 0.0
 
 
 func setup(look: String, p_name: String, tint := Color.WHITE, name_color := Color.WHITE) -> void:
-	for anim: String in ["idle", "run", "idle_vorn", "run_vorn", "idle_hinten", "run_hinten", "liegen"]:
+	for anim: String in ["idle", "run", "idle_vorn", "run_vorn", "idle_hinten", "run_hinten", "liegen", "sitzen_vorn", "sitzen_hinten"]:
 		var frames: Array[Texture2D] = []
 		var i := 0
 		while ResourceLoader.exists(FighterView.sprite_path(look, anim, i)):
@@ -122,6 +122,9 @@ func _process(delta: float) -> void:
 		# Langsam atmen
 		anim = "liegen"
 		fps = 1.5
+	elif sitzt and not moving and _frames["sitzen_hinten" if hinten else "sitzen_vorn"].size() > 0:
+		anim = "sitzen_hinten" if hinten else "sitzen_vorn"
+		fps = 1.0
 	elif richtungen:
 		var gerichtet := anim + ("_hinten" if hinten else "_vorn")
 		if _frames[gerichtet].size() > 0:
@@ -138,7 +141,8 @@ func _process(delta: float) -> void:
 		_sprite.texture_filter = FighterView.filter_fuer(bild)
 	# Fein gezeichnete Bilder (z. B. Vega aus Marcos Bildblättern): gleich groß, aber weich verkleinert
 	var groesse := _base_scale / FighterView.fein_faktor(bild)
-	_sprite.scale = Vector2(groesse, groesse * (0.8 if sitzt and not moving else 1.0))
+	var gestaucht := sitzt and not moving and not anim.begins_with("sitzen")
+	_sprite.scale = Vector2(groesse, groesse * (0.8 if gestaucht else 1.0))
 	_sprite.flip_h = facing < 0
 	# Das Zeichen (! oder ?) wippt, darum nur dann jedes Bild neu malen
 	if marker != "":

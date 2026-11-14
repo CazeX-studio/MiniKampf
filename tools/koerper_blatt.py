@@ -38,9 +38,10 @@ GESCHLECHT = {"novize_m": "m", "novize_w": "w", "bogen_m": "m", "bogen_w": "w", 
 DATEINAMEN = {k: {"kampf_a": "blatt1", "kampf_b": "blatt2", "welt": "welt"} for k in ["bogen_m", "bogen_w", "zaehmer_m", "zaehmer_w", "klingentaenzer_m", "klingentaenzer_w",
 		"schmied_m", "schmied_w", "saengerin_w"]}
 OHNE_ZUSATZ = set(DATEINAMEN)
-## Neue Welt-Blätter der Novizen mit feinerem Laufen (E3g, 05.11.): 8 Bilder Laufen je Richtung, schon ohne Klinge.
+## Welt-Blätter der Novizen nach Teil U6 (14.11.2026, gebaut von tools/welt_u_blatt.py): 8 Bilder Laufen je Richtung, Stehen und Sitzen, ohne Klinge.
+## Vorher (E3g, 05.11.): Blatt welt2.
 ## Schwert-Punkte dafür setzt tools/novize_welt2.py (die Blätter haben keine Klinge zum Messen).
-WELT2 = {"novize_m": "welt2", "novize_w": "welt2"}
+WELT2 = {"novize_m": "welt_u", "novize_w": "welt_u"}
 ## Die Klinge kommt als eigenes Teil dazu (Projekt 13, Schritt 3), der Griff bleibt in der Hand
 ZUSATZ = "_ohne_klinge"
 ## Abweichende Reihen einzelner Blätter (sonst wie Kofi): Körper -> Blatt -> Reihen
@@ -56,11 +57,11 @@ REIHEN["bogen_w"]["kampf_b"] = REIHEN["bogen_m"]["kampf_b"]
 REIHEN.update({
 	"novize_m": {
 		"kampf_b": [[("attack", 6)], [("death", 6)], [("victory", 4), ("cast", 3)]],
-		"welt": [[("run_vorn", 8)], [("run_hinten", 8)], [("idle_vorn", 4), ("idle_hinten", 5)]],
+		"welt": [[("run_vorn", 8)], [("run_hinten", 8)], [("idle_vorn", 1), ("idle_hinten", 1), ("sitzen_vorn", 1), ("sitzen_hinten", 1)]],
 	},
 	"novize_w": {
 		"kampf_b": [[("attack", 6)], [("death", 6)], [("victory", 4), ("cast", 3)]],
-		"welt": [[("run_vorn", 8)], [("run_hinten", 8)], [("idle_vorn", 4), ("idle_hinten", 5)]],
+		"welt": [[("run_vorn", 8)], [("run_hinten", 8)], [("idle_vorn", 1), ("idle_hinten", 1), ("sitzen_vorn", 1), ("sitzen_hinten", 1)]],
 	},
 })
 ## Mit dieser Animation wird jedes weitere Blatt auf die Größe von Blatt 1 gebracht (aufrecht stehend, Kopf frei)
