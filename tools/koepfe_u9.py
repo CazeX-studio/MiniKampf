@@ -26,6 +26,20 @@ from kopf_koerper import hals, koepfe_schneiden, suchen, verkleinern  # noqa: E4
 KOEPFE = WURZEL / "assets" / "teile" / "koepfe"
 DATEN = WURZEL / "data" / "figurteile.json"
 MUSTER = {"w1": "w2", "m1": "m2"}
+## Gesichter, bei denen ChatGPT die Augenfarbe falsch gemalt hat (w1 entschlossen: braun statt grün). Die Augen werden
+## dort umgefärbt, wo der normale Kopf derselben Richtung grüne Augen hat (Rot und Grün tauschen).
+AUGEN_GRUEN = {"w1": ["seite_entschlossen"]}
+
+
+def augen_gruen(bild, normal):
+	gruen = (normal[..., 1].astype(int) > normal[..., 0].astype(int) + 10) & (normal[..., 3] > 128)
+	ys, xs = np.where(gruen)
+	y0, y1, x0, x1 = ys.min() - 3, ys.max() + 4, xs.min() - 3, xs.max() + 4
+	t = bild[y0:y1, x0:x1].astype(int)
+	r, g, b = t[..., 0], t[..., 1], t[..., 2]
+	iris = (r > g) & (g > b) & (r < 200) & (r + g + b > 90) & (t[..., 3] > 128)
+	t[iris, 0], t[iris, 1] = g[iris], r[iris]
+	bild[y0:y1, x0:x1] = t.astype(np.uint8)
 
 
 def hoehe(bild):
@@ -43,6 +57,8 @@ def main():
 			spiel = np.array(Image.open(KOEPFE / f"{muster}_{richtung}_normal.png").convert("RGBA"))
 			faktoren[richtung] = hoehe(spiel) / hoehe(gross_muster[f"{richtung}_normal"])
 		teile = {name: verkleinern(k, faktoren[name.split("_")[0]]) for name, k in koepfe_schneiden(kopf).items()}
+		for name in AUGEN_GRUEN.get(kopf, []):
+			augen_gruen(teile[name], teile[name.split("_")[0] + "_normal"])
 		punkte = {}
 		for name, bild in teile.items():
 			Image.fromarray(bild).save(KOEPFE / f"{kopf}_{name}.png")

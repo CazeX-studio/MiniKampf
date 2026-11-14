@@ -7,6 +7,7 @@ Jeder Kopf wird gespiegelt (w1 und m1 schauen im Spiel schräg nach rechts, sie 
 und so verkleinert, dass er so hoch ist wie der bisherige Kopf schräg von vorne. Die Halspunkte kommen in
 data/figurteile.json zu jedem Körper, der diesen Kopf kennt (_koepfe.<kopf>.hals.vorn_<gesicht>).
 Aufruf: python3 tools/koepfe_u8.py [kopf …]
+Ersetzt seit 14.11.2026 durch tools/koepfe_u9.py (w1 und m1 im Muster von m2/w2). Nicht mehr ausführen.
 """
 import json
 import sys
