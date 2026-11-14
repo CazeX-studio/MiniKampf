@@ -8,7 +8,8 @@ Ausgang: tools/vorlagen/<körper>_welt_u.png mit
   Reihe 3: idle_vorn, idle_hinten, sitzen_vorn, sitzen_hinten (je 1 Bild)
   Reihe 4 bis 6: run_gerade_vorn, run_welt_seite, run_gerade_hinten (je 8 Bilder, seit Teil U7)
   Reihe 7: idle_gerade_vorn, idle_welt_seite, idle_gerade_hinten, sitzen_gerade_vorn, sitzen_welt_seite, sitzen_gerade_hinten
-Die neuen Figuren schauen nach links, die alten Körper nach rechts: jedes Bild wird gespiegelt (das Spiel spiegelt ohnehin für die andere Seite).
+Die neuen Figuren schauen nach links, die alten Körper nach rechts: die Bilder werden gespiegelt (das Spiel spiegelt ohnehin für die andere Seite),
+nur schräg von vorne nicht (siehe NICHT_SPIEGELN).
 Das Stehen/Sitzen-Blatt wird auf die Größe der Laufbilder gebracht (Oberkante des grünen Ovals bis zu den Füßen).
 Danach: tools/koerper_blatt.py novize_m novize_w und tools/novize_welt2.py alt.json (siehe dort).
 Aufruf: python3 tools/welt_u_blatt.py [körper …]
@@ -23,6 +24,9 @@ WURZEL = Path(__file__).resolve().parent.parent
 QUELLE = WURZEL / "tools" / "vorlagen" / "welt_u"
 ZIEL = WURZEL / "tools" / "vorlagen"
 PINK = (255, 0, 255)
+## Laufen schräg von vorne (Reihe 0) bleibt ungespiegelt: ChatGPT hat es nach unten rechts gemalt (Stehen nach unten links). Marco (14.11.) sah
+## den gespiegelten Körper nach unten links schauen, während Kopf und Laufweg nach unten rechts gehen
+NICHT_SPIEGELN = {(0, s) for s in range(8)}
 ## Platz je Bild im neuen Blatt (genug Abstand, damit die Bilder getrennt erkannt werden)
 FELD_B, FELD_H = 420, 560
 
@@ -69,7 +73,9 @@ def main():
 		blatt = Image.new("RGB", (FELD_B * 8, FELD_H * len(reihen)), PINK)
 		for r, reihe in enumerate(reihen):
 			for s, t in enumerate(reihe):
-				bild = Image.fromarray(t).transpose(Image.FLIP_LEFT_RIGHT)
+				bild = Image.fromarray(t)
+				if (r, s) not in NICHT_SPIEGELN:
+					bild = bild.transpose(Image.FLIP_LEFT_RIGHT)
 				# Füße unten im Feld, waagrecht in der Mitte
 				blatt.paste(bild, (s * FELD_B + (FELD_B - bild.width) // 2, r * FELD_H + FELD_H - 20 - bild.height))
 		blatt.save(ZIEL / f"{koerper}_welt_u.png")
