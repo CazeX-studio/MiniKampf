@@ -24,9 +24,10 @@ WURZEL = Path(__file__).resolve().parent.parent
 QUELLE = WURZEL / "tools" / "vorlagen" / "welt_u"
 ZIEL = WURZEL / "tools" / "vorlagen"
 PINK = (255, 0, 255)
-## Laufen schräg von vorne (Reihe 0) bleibt ungespiegelt: ChatGPT hat es nach unten rechts gemalt (Stehen nach unten links). Marco (14.11.) sah
-## den gespiegelten Körper nach unten links schauen, während Kopf und Laufweg nach unten rechts gehen
-NICHT_SPIEGELN = {(0, s) for s in range(8)}
+## Bilder, die nicht gespiegelt werden (Reihe, Platz). Leer seit 14.11.: Laufen schräg von vorne ungespiegelt war falsch herum
+## (Marco: Körper nach unten links, Kopf nach unten rechts). Erkennen lässt es sich am Schild: Er muss in jeder Richtung
+## auf derselben Seite sein wie beim Stehen.
+NICHT_SPIEGELN: set = set()
 ## Platz je Bild im neuen Blatt (genug Abstand, damit die Bilder getrennt erkannt werden)
 FELD_B, FELD_H = 420, 560
 

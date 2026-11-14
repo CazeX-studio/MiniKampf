@@ -206,6 +206,8 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 			rand += RAND_SCHICHT
 		ergebnis = Image.create_empty(koerper.get_width() + 2 * rand, koerper.get_height() + rand, false, Image.FORMAT_RGBA8)
 		var kopf_bild: Image
+		# Von hinten liegen lange Haare über dem Körper (tools/haar_hinten.py): Bild ohne Haut, nach dem Körper aufgelegt
+		var haar_bild: Image
 		var ecke: Vector2i
 		if art_jetzt == Art.TEILE:
 			kopf_bild = _bild_laden(ALTER_KOPF % [figur, anim, frame])
@@ -218,6 +220,8 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 				variante = "%s_normal" % info.richtung
 			kopf_bild = _bild_laden(KOPF % [kopf_id, variante])
 			var punkt := Vector2(punkte[variante][0], punkte[variante][1])
+			if kopf_bild != null and hut_jetzt == "" and info.richtung in ["hinten", "gerade_hinten"]:
+				haar_bild = _bild_laden(KOPF % [kopf_id, variante + "_haar"])
 			if kopf_bild != null and info.richtung == "vorn" and (kopf_id in KOPF_VORN_LINKS) != (figur in KOERPER_VORN_LINKS):
 				kopf_bild = kopf_bild.duplicate()
 				kopf_bild.flip_x()
@@ -233,6 +237,8 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 				var radius := ceili(maxf(maxf(punkt.length(), (Vector2(kopf_bild.get_size()) - punkt).length()),
 						maxf(Vector2(kopf_bild.get_width() - punkt.x, punkt.y).length(), Vector2(punkt.x, kopf_bild.get_height() - punkt.y).length())))
 				kopf_bild = _drehen(kopf_bild, punkt, winkel, radius)
+				if haar_bild != null:
+					haar_bild = _drehen(haar_bild, punkt, winkel, radius)
 				punkt = Vector2(radius, radius)
 			ecke = Vector2i(roundi(info.hals[0] - punkt.x), roundi(info.hals[1] - punkt.y)) + Vector2i(rand, rand)
 		# Rückenteil: von der Seite und von vorne hinter allem, von hinten über dem Körper
@@ -244,6 +250,8 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 		if kopf_bild != null:
 			ergebnis.blend_rect(kopf_bild, Rect2i(Vector2i.ZERO, kopf_bild.get_size()), ecke)
 		ergebnis.blend_rect(koerper, Rect2i(Vector2i.ZERO, koerper.get_size()), Vector2i(rand, rand))
+		if haar_bild != null:
+			ergebnis.blend_rect(haar_bild, Rect2i(Vector2i.ZERO, haar_bild.get_size()), ecke)
 		if zubehoer_jetzt != "" and info.has("hals"):
 			_zubehoer_zeichnen(ergebnis, zubehoer_jetzt, info, koerper.get_height(), rand)
 		if not umhang.is_empty() and umhang.vorne:

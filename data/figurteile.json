@@ -12331,67 +12331,67 @@
 		},
 		"run_vorn_f0": {
 			"hals": [
-				44.5,
+				34.5,
 				48.3
 			],
 			"richtung": "vorn",
-			"winkel": -0.2
+			"winkel": 0.2
 		},
 		"run_vorn_f1": {
 			"hals": [
-				45.2,
+				33.8,
 				46.4
 			],
 			"richtung": "vorn",
-			"winkel": 0.3
+			"winkel": -0.3
 		},
 		"run_vorn_f2": {
 			"hals": [
-				44.0,
+				35.0,
 				52.2
 			],
 			"richtung": "vorn",
-			"winkel": 0.5
+			"winkel": -0.5
 		},
 		"run_vorn_f3": {
 			"hals": [
-				42.1,
+				36.9,
 				46.3
 			],
 			"richtung": "vorn",
-			"winkel": 0.3
+			"winkel": -0.3
 		},
 		"run_vorn_f4": {
 			"hals": [
-				45.1,
+				33.9,
 				46.0
 			],
 			"richtung": "vorn",
-			"winkel": 0.5
+			"winkel": -0.5
 		},
 		"run_vorn_f5": {
 			"hals": [
-				42.0,
+				37.0,
 				46.0
 			],
 			"richtung": "vorn",
-			"winkel": 0.7
+			"winkel": -0.7
 		},
 		"run_vorn_f6": {
 			"hals": [
-				41.9,
+				37.1,
 				47.0
 			],
 			"richtung": "vorn",
-			"winkel": 0.8
+			"winkel": -0.8
 		},
 		"run_vorn_f7": {
 			"hals": [
-				44.7,
+				34.3,
 				49.2
 			],
 			"richtung": "vorn",
-			"winkel": 1.3
+			"winkel": -1.3
 		},
 		"run_welt_seite_f0": {
 			"hals": [
@@ -13189,8 +13189,8 @@
 		},
 		"idle_welt_seite_f0": {
 			"hals": [
-				40.9,
-				39.1
+				34.9,
+				44.1
 			],
 			"richtung": "seite",
 			"winkel": 0.0
@@ -13493,128 +13493,128 @@
 		},
 		"run_vorn_f0": {
 			"hals": [
-				42.7,
+				32.3,
 				42.4
 			],
 			"richtung": "vorn",
-			"winkel": 1.3
+			"winkel": -1.3
 		},
 		"run_vorn_f1": {
 			"hals": [
-				42.6,
+				32.4,
 				43.1
 			],
 			"richtung": "vorn",
-			"winkel": 1.0
+			"winkel": -1.0
 		},
 		"run_vorn_f2": {
 			"hals": [
-				38.4,
+				37.6,
 				46.1
 			],
 			"richtung": "vorn",
-			"winkel": 1.5
+			"winkel": -1.5
 		},
 		"run_vorn_f3": {
 			"hals": [
-				38.6,
+				36.4,
 				40.3
 			],
 			"richtung": "vorn",
-			"winkel": 1.0
+			"winkel": -1.0
 		},
 		"run_vorn_f4": {
 			"hals": [
-				40.6,
+				33.4,
 				40.5
 			],
 			"richtung": "vorn",
-			"winkel": 0.8
+			"winkel": -0.8
 		},
 		"run_vorn_f5": {
 			"hals": [
-				39.5,
+				35.5,
 				40.1
 			],
 			"richtung": "vorn",
-			"winkel": 1.0
+			"winkel": -1.0
 		},
 		"run_vorn_f6": {
 			"hals": [
-				35.4,
+				39.6,
 				44.2
 			],
 			"richtung": "vorn",
-			"winkel": 1.8
+			"winkel": -1.8
 		},
 		"run_vorn_f7": {
 			"hals": [
-				42.1,
+				32.9,
 				44.3
 			],
 			"richtung": "vorn",
-			"winkel": 0.2
+			"winkel": -0.2
 		},
 		"run_welt_seite_f0": {
 			"hals": [
-				45.6,
-				40.2
+				39.6,
+				45.2
 			],
 			"richtung": "seite",
 			"winkel": 0.0
 		},
 		"run_welt_seite_f1": {
 			"hals": [
-				49.6,
-				38.2
+				43.6,
+				43.2
 			],
 			"richtung": "seite",
 			"winkel": 0.0
 		},
 		"run_welt_seite_f2": {
 			"hals": [
-				49.4,
-				38.2
+				43.4,
+				43.2
 			],
 			"richtung": "seite",
 			"winkel": 0.0
 		},
 		"run_welt_seite_f3": {
 			"hals": [
-				46.2,
-				40.4
+				40.2,
+				45.4
 			],
 			"richtung": "seite",
 			"winkel": 0.0
 		},
 		"run_welt_seite_f4": {
 			"hals": [
-				47.5,
-				39.4
+				41.5,
+				44.4
 			],
 			"richtung": "seite",
 			"winkel": 0.0
 		},
 		"run_welt_seite_f5": {
 			"hals": [
-				56.1,
-				38.0
+				50.1,
+				43.0
 			],
 			"richtung": "seite",
 			"winkel": 0.0
 		},
 		"run_welt_seite_f6": {
 			"hals": [
-				49.4,
-				38.2
+				43.4,
+				43.2
 			],
 			"richtung": "seite",
 			"winkel": 0.0
 		},
 		"run_welt_seite_f7": {
 			"hals": [
-				50.5,
-				40.4
+				44.5,
+				45.4
 			],
 			"richtung": "seite",
 			"winkel": 0.0
@@ -13653,8 +13653,8 @@
 		},
 		"sitzen_welt_seite_f0": {
 			"hals": [
-				42.0,
-				39.4
+				36.0,
+				44.4
 			],
 			"richtung": "seite",
 			"winkel": 0.0

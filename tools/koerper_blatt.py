@@ -71,6 +71,9 @@ REIHEN.update({
 })
 ## Welt-Seite (Teil U7): Das grüne Oval ist dort schräg gemalt, der Kopf soll aber aufrecht sitzen wie bei Ragnarok
 KOPF_GERADE = ("_welt_seite",)
+## Halspunkt verschieben (Körper, Ende der Animation) -> (x, y) in Bildpunkten. Novizin seitlich: Kopf saß zu weit vorne und
+## zu hoch, der Hals wirkte zu lang (Marco, 14.11.2026)
+HALS_VERSATZ = {("novize_w", "_welt_seite"): (-6, 5)}
 ## Mit dieser Animation wird jedes weitere Blatt auf die Größe von Blatt 1 gebracht (aufrecht stehend, Kopf frei)
 GROESSE_VON = {"kampf_a": "idle", "kampf_b": "cast", "welt": "idle_vorn"}
 ## Blätter mit runden Kreisen statt länglicher Ovale (gezeichnet vor dem Hinweis vom 28.10.): Kopf bleibt dort gerade
@@ -238,6 +241,9 @@ def main():
 				hals, winkel = neigung(bild, platz & (bild[..., 3] > 128), anim in runde)
 				if anim.endswith(KOPF_GERADE):
 					winkel = 0.0
+				for (k, ende), (dx, dy) in HALS_VERSATZ.items():
+					if k == koerper and anim.endswith(ende):
+						hals = [round(hals[0] + dx, 1), round(hals[1] + dy, 1)]
 				# Grünliche Ränder des Ovals mit wegnehmen
 				farbe = bild[..., :3].astype(int)
 				gruenlich = farbe[..., 1] > np.maximum(farbe[..., 0], farbe[..., 2]) + 15
