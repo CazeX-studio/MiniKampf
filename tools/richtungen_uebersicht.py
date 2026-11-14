@@ -4,9 +4,11 @@ Aufruf: python3 tools/richtungen_uebersicht.py tools/referenz/teil_u
 import sys
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
-W = Path("C:/GameDev/MiniKampf")
+W = Path(__file__).resolve().parent.parent
 K = W / "assets/teile/koepfe"; B = W / "assets/teile/koerper"
-LINKS = ["m2", "m3", "w2", "w3"]
+import re
+## Köpfe, deren Bild schräg von vorne nach links schaut: wie im Spiel aus scripts/kampf/figur_teile.gd lesen
+LINKS = re.findall(r'"(\w+)"', re.search(r"KOPF_VORN_LINKS[^=]*=\s*\[(.*?)\]", (W / "scripts/kampf/figur_teile.gd").read_text(encoding="utf-8")).group(1))
 RICHT = [("gerade_vorn", "1: gerade nach unten"), ("vorn", "2: nach unten rechts"), ("seite", "3: nach rechts"),
          ("hinten", "4: nach oben rechts"), ("gerade_hinten", "5: gerade nach oben")]
 f = ImageFont.truetype("arial.ttf", 18); fk = ImageFont.truetype("arial.ttf", 22)

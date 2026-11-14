@@ -17,6 +17,8 @@ from scipy import ndimage
 WURZEL = Path(__file__).resolve().parent.parent
 KOEPFE = WURZEL / "assets" / "teile" / "koepfe"
 LANGE_HAARE = ["w1", "w2", "w3"]
+## Auch von der Seite liegt der Zopf über der Kleidung (w1, Marco 14.11.2026)
+SEITE = {"w1": ["seite_normal", "seite_schmerz", "seite_freude", "seite_augen_zu", "seite_entschlossen"]}
 ANSICHTEN = ["hinten_normal", "hinten_geneigt", "gerade_hinten_normal"]
 
 
@@ -38,7 +40,7 @@ def haarfarbe(a):
 def main():
 	for kopf in sys.argv[1:] or LANGE_HAARE:
 		haut = hautfarbe(kopf)
-		for ansicht in ANSICHTEN:
+		for ansicht in ANSICHTEN + SEITE.get(kopf, []):
 			pfad = KOEPFE / f"{kopf}_{ansicht}.png"
 			if not pfad.exists():
 				continue

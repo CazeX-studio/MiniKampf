@@ -29,6 +29,9 @@ MUSTER = {"w1": "w2", "m1": "m2"}
 ## Gesichter, bei denen ChatGPT die Augenfarbe falsch gemalt hat (w1 entschlossen: braun statt grün). Die Augen werden
 ## dort umgefärbt, wo der normale Kopf derselben Richtung grüne Augen hat (Rot und Grün tauschen).
 AUGEN_GRUEN = {"w1": ["seite_entschlossen"]}
+## Halspunkt verschieben (Kopf, Richtung) -> (x, y) im Kopfbild. w1 seitlich: Halsansatz zu lang (Marco, 14.11.2026),
+## der Punkt rückt nach oben, damit sitzt der Kopf tiefer und das Kinn liegt auf dem Halstuch wie bei w2
+HALS_VERSATZ = {("w1", "seite"): (0, -7)}
 
 
 def augen_gruen(bild, normal):
@@ -65,7 +68,8 @@ def main():
 			normal = teile[name.split("_")[0] + "_normal"]
 			punkt = hals(normal)
 			_, dx, dy = suchen(normal, bild)
-			punkte[name] = [round(punkt[0] - dx, 1), int(punkt[1] - dy)]
+			vx, vy = HALS_VERSATZ.get((kopf, name.split("_")[0]), (0, 0))
+			punkte[name] = [round(punkt[0] - dx + vx, 1), int(punkt[1] - dy + vy)]
 		n = 0
 		for eintrag in daten.values():
 			if isinstance(eintrag, dict) and kopf in eintrag.get("_koepfe", {}):

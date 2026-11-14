@@ -206,7 +206,8 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 			rand += RAND_SCHICHT
 		ergebnis = Image.create_empty(koerper.get_width() + 2 * rand, koerper.get_height() + rand, false, Image.FORMAT_RGBA8)
 		var kopf_bild: Image
-		# Von hinten liegen lange Haare über dem Körper (tools/haar_hinten.py): Bild ohne Haut, nach dem Körper aufgelegt
+		# Von hinten (und bei w1 von der Seite) liegen lange Haare über dem Körper (tools/haar_hinten.py): Bild ohne Haut,
+		# nach dem Körper aufgelegt
 		var haar_bild: Image
 		var ecke: Vector2i
 		if art_jetzt == Art.TEILE:
@@ -220,7 +221,7 @@ static func bild(figur: String, anim: String, frame: int) -> Texture2D:
 				variante = "%s_normal" % info.richtung
 			kopf_bild = _bild_laden(KOPF % [kopf_id, variante])
 			var punkt := Vector2(punkte[variante][0], punkte[variante][1])
-			if kopf_bild != null and hut_jetzt == "" and info.richtung in ["hinten", "gerade_hinten"]:
+			if kopf_bild != null and hut_jetzt == "" and info.richtung in ["hinten", "gerade_hinten", "seite"]:
 				haar_bild = _bild_laden(KOPF % [kopf_id, variante + "_haar"])
 			if kopf_bild != null and info.richtung == "vorn" and (kopf_id in KOPF_VORN_LINKS) != (figur in KOERPER_VORN_LINKS):
 				kopf_bild = kopf_bild.duplicate()
