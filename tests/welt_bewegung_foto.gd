@@ -4,7 +4,8 @@ extends "res://scripts/welt/welt_bewegung_editor.gd"
 const FAELLE := [[0, "novize_m", "laufen", false], [1, "klingentaenzer_w", "laufen", true], [2, "", "stehen", false], [3, "ye", "laufen", false],
 		[0, "novize_w", "sitzen", false], [0, "novize_m", "stehen", false], [0, "novize_w", "laufen", true],
 		[0, "novize_m", "sitzen", false], [0, "novize_w", "stehen", false],
-		[1, "bogen_m", "stehen", false], [1, "bogen_m", "laufen", false], [1, "bogen_m", "sitzen", false]]
+		[1, "bogen_m", "stehen", false], [1, "bogen_m", "laufen", false], [1, "bogen_m", "sitzen", false],
+		[1, "bogen_w", "stehen", false], [1, "bogen_w", "laufen", false], [1, "bogen_w", "sitzen", false]]
 
 
 func _ready() -> void:
