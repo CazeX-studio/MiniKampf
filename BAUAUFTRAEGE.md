@@ -6,7 +6,7 @@ Sagt Marco „Mach den nächsten Bauauftrag“: kurz FORTSCHRITT.md prüfen, den
 
 Status: offen / in Arbeit / fertig
 
-## Demo-Reihenfolge (Stand 01.11.2026)
+## Demo-Reihenfolge (Stand 01.11.2026, ergänzt 16.11.: Playtest P1 bis P22)
 
 **Marcos Beschluss (02.11.2026): Alle Testtage stehen am Ende.** Nirgends wegen eines Testtags anhalten, D10 bis D36 der Reihe nach bauen. Marco testet am Schluss das volle Spiel zusammen (T1 bis T4). Die Testpunkte gesammelt in FORTSCHRITT.md eintragen.
 
@@ -97,6 +97,35 @@ Sagt Marco „Mach weiter“, „Mach den nächsten Bauauftrag“ oder „Mach D
 ### Demo abschließen
 
 - **D36:** Bilder für das Web verkleinern, Ladezeit prüfen, von Marco offene Punkte aus FORTSCHRITT.md einsammeln, Demo-Seite vorbereiten. (neu) – Status: fertig (04.11.2026)
+### Playtest 16.11.2026 (Marcos Rückmeldungen)
+
+Marcos Playtest vom 16.11.2026: Aus jeder Rückmeldung ist ein eigener Auftrag geworden. **Diese Punkte kommen vor den Testtagen**, von oben nach unten (erst die drei Blocker P1 bis P3, dann Marcos Reihenfolge). Beschlüsse dazu stehen in design.md (Tagebuch 16.11.), die Bildaufträge in `Spieldesign/GRAFIK_AUFTRAG.md` Teil V (Anhänge in `tools/referenz/teil_v/`). Punkte mit Bild werden mit Platzhalter gebaut, bis das Bild da ist.
+
+- **P1:** Wegweiser nach Kaels Erinnerung: Nach der Erinnerungs-Szene am leeren Grab (Rowan) und Kaels Gespräch („Der Splitter im Urbaum“) zeigt kein Wegweiser mehr, wohin es geht. Der Auftrag bekommt seinen Wegweiser zum Eingang der Pilzhöhle; dabei alle Aufträge von Grünwacht Teil 2 auf fehlende Wegweiser prüfen. – Status: offen
+- **P2:** Aufträge nur für die eigene Klasse (Beschluss 16.11.): Fenn zeigt ein gelbes „!“, obwohl man bei ihm nichts annehmen kann (man ist kein Bogenschütze). „!“ und „?“ über Lehrmeistern und Klassen-Auftraggebern nur, wenn die Klasse passt, für alle Klassen und Gebiete; Prüfung dazu. – Status: offen
+- **P3:** Abschluss melden ohne Klicken: Am Ende der Demo öffnet sich heute das Feedback-Formular und man muss „Worum geht es“ wählen. Neu: ein zweites, eigenes Formular nur für den Abschluss, das das Spiel von selbst abschickt (Spitzname, Tester-Nummer, Version, Code). Der Tester muss nichts anklicken und bekommt nur seinen Belohnungs-Code angezeigt. Das Feedback-Formular bleibt für Rückmeldungen. **Für Marco:** das zweite Google-Formular anlegen (Claude sagt beim Bauen genau, welche Fragen es braucht). – Status: offen
+- **P4:** Ausrüstung zeigt ihre Werte: Im Werte-Fenster sieht man die Werte der angelegten Teile nicht. Jedes Teil zeigt beim Drüberfahren oder Antippen seine Werte (Waffenkraft oder Zauberkraft, Verteidigung, Widerstand, Bonus-Werte, Waffen-Tempo), dazu die Summe aus der Ausrüstung. – Status: offen
+- **P5:** Ausrüstung und Tasche gleichzeitig: Beide Fenster stehen nebeneinander, damit man Teile direkt aus der Tasche anlegt und ablegt (Antippen oder Ziehen), mit Vergleich (grüne und rote Pfeile). – Status: offen
+- **P6:** Symbole für die Werte: Angriff, Waffenkraft, Zauberkraft, Verteidigung, Widerstand, Tempo, Leben, Mana, kritische Treffer und die übrigen Werte bekommen gemalte Symbole, im Werte-Fenster, bei der Ausrüstung und in den Kästchen. Bild: Teil V1. – Status: offen
+- **P7:** Miras Notenblatt bekommt ein Bild (heute nur eine Tafel als Platzhalter). Bild: Teil V2. – Status: offen
+- **P8:** Klänge nachbessern: alle Klänge durchgehen (Kampf, Menüs, Schritte, Parade, Stufe, Beute), schwache oder fehlende durch bessere freie Klänge (CC0, Quellen in `CREDITS.md`) ersetzen, Lautstärken angleichen; in FORTSCHRITT.md eine Liste zum Probehören. – Status: offen
+- **P9:** Fähigkeiten im Baum ohne Bild: Bei Marco sind die Felder im Fähigkeitenbaum weiß. Alle 56 Bilder der fünf Demo-Klassen und des Novizen liegen in `assets/faehigkeiten/` (geprüft 16.11.), also zuerst den Fehler suchen (auch in der Web-Version). Fehlt wirklich ein Bild: Teil V3. – Status: offen
+- **P10:** Menü aufräumen: Die Knöpfe oben neu ordnen und schöner machen; das „X“ zum Hinsetzen steht nicht mehr neben Aufträgen und Tasche, sondern bei den Bewegungen (oder nur als Taste mit Hinweis). Vorschlag mit Foto für Marco, bevor alles umgestellt wird. – Status: offen
+- **P11:** Fähigkeiten zeigen im Baum ihre Werte: Schaden oder Heilung (farbige Zahlen wie im Kampf, A23), Mana, Abklingzeit, Ziele und was die nächste Stufe bringt. – Status: offen
+- **P12:** Pfeile im Fähigkeitenbaum: Die Felder liegen zu nah beieinander, die Linien zu den Voraussetzungen sieht man kaum. Mehr Abstand zwischen den Feldern und gemalte Pfeile wie im klassischen WoW-Talentbaum (Pfeil von der Voraussetzung zur Fähigkeit, ausgegraut, solange sie fehlt). Bild: Teil V4. – Status: offen
+- **P13:** Splitter-Rindenbär (Grünwacht, Ysoldes und Tildas Auftrag): Er steht versteckt hinter einem Baum, also an eine freie Stelle setzen; dazu ein gemaltes Welt-Bild statt der gezeichneten Kreise. Bild: Teil V5. – Status: offen
+- **P14:** Die Erinnerungs-Szene („das Video“ am leeren Grab: Rowan, Ysolde, Fliehende) ist noch von Claude gezeichnet und zeigt alte Figuren. Neu mit gemalten Bildern von ChatGPT (Szenen-Bilder wie die Ladebildschirme), Text und Ablauf bleiben. Bild: Teil V8. – Status: offen
+- **P15:** Ult verbessern (Beschluss 16.11.): Die Ult-Bewegung und der Film dazu werden schöner (mehr Wucht, Licht, Kamera). Weil man die Ult selten hat, behält die Ult-Leiste ihre Ladung zwischen den Kämpfen (sie wird nur beim Benutzen leer). – Status: offen
+- **P16:** Bosse und Dungeon-Eingänge leichter anklicken: Bosse in der Welt (Pilzhöhle und Vulkanschmiede) und der Eingang der Pilzhöhle bekommen eine größere Klickfläche, passend zu ihrer Größe. Die Eingänge beider Dungeons stehen mit einem Boss-Symbol auf der kleinen und der großen Karte. – Status: offen
+- **P17:** Wurzelmutter: Sind die Splitter-Knoten zerstört, kann man nur noch sie angreifen und sie heilt sich trotzdem. Anpassen, z. B. ohne Knoten heilt sie sich nicht oder viel weniger, bis die Knoten nachwachsen; danach mit `tests/boss_messen.gd` messen. – Status: offen
+- **P18:** Der Vorbote (Phase 2 der Pilzhöhle) ist zu schwach: stärker machen und messen (`tests/boss_messen.gd`, Ergebnis in `BALANCING.md`). – Status: offen
+- **P19:** Zerstörter Splitterkristall: Ist ein Splitter-Knoten der Wurzelmutter besiegt, soll ein eigenes Bild bleiben (zerbrochener Kristall in den Wurzeln), bis er nachwächst. Bild: Teil V6. – Status: offen
+- **P20:** Aussehen im Charakter-Menü (Beschluss 16.11.): Bisher ändert sich nur der Hut wirklich. Vorerst bleibt dort nur der Hut, die übrigen Aussehen-Plätze werden ausgeblendet, bis es Bilder dafür gibt. – Status: offen
+- **P21:** Alte gezeichnete Blumen raus: Die Blumen und das welke Laub, die Claude selbst gezeichnet hat (Grünwacht blüht auf / Urbaum gefällt, dazu alle anderen gezeichneten Blumen in den Karten), werden durch gemalte ersetzt. Bild: Teil V7. – Status: offen
+- **P22:** Abschluss bei Ysolde: Beim letzten Gespräch mit Ysolde (Ende von Grünwacht) läuft Kael dazu, steht beim Gespräch dabei und geht danach wieder. – Status: offen
+
+### Testtage (am Ende)
+
 - **T1:** Testtag Aussehen (Marco). – Status: offen
 - **T2:** Testtag Kampfgefühl (Marco). – Status: offen
 - **T3:** Testtag 1 (Marco): Kreuzweg und Grünwacht komplett, allein und in der Gruppe, dazu der Sternenfresser. – Status: offen
