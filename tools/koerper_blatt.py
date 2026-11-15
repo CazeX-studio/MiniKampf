@@ -43,7 +43,7 @@ OHNE_ZUSATZ = set(DATEINAMEN)
 ## Schwert-Punkte dafür setzt tools/novize_welt2.py (die Blätter haben keine Klinge zum Messen).
 ## Seit 14.11.2026 (Teil U10) auch die Klassen, sobald ihre sechs Blätter da sind: Bogenschütze (m).
 WELT2 = {"novize_m": "welt_u", "novize_w": "welt_u", "bogen_m": "welt_u", "bogen_w": "welt_u", "zaehmer_m": "welt_u", "zaehmer_w": "welt_u",
-		"klingentaenzer_m": "welt_u", "klingentaenzer_w": "welt_u"}
+		"klingentaenzer_m": "welt_u", "klingentaenzer_w": "welt_u", "schmied_m": "welt_u"}
 ## Die Klinge kommt als eigenes Teil dazu (Projekt 13, Schritt 3), der Griff bleibt in der Hand
 ZUSATZ = "_ohne_klinge"
 ## Abweichende Reihen einzelner Blätter (sonst wie Kofi): Körper -> Blatt -> Reihen
