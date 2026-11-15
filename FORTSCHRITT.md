@@ -12,6 +12,13 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
+- **Neu (15.11.): Die Leute aus dem Baukasten laufen in fünf Richtungen** (GRAFIK_AUFTRAG.md Teil U11): Mann, Frau, Kind, alter Mensch, Wache, Händler, Handwerker, Gelehrter und Frau korpulent haben neue Körper mit 8 Bildern Laufen, Stehen und Sitzen in allen fünf Richtungen. Frau und Frau korpulent schauen schräg von vorne jetzt wie alle anderen nach rechts. Die Köpfe der Leute gibt es bisher nur schräg von vorne und von hinten: Bis ihre neuen Köpfe da sind, laufen die Leute gerade nach unten, seitlich und gerade nach oben mit den schrägen Bildern. Übersicht `tools/referenz/teil_u/uebersicht_grund_koerper.png`.
+  - **So testest du es:**
+    1. Editor → „Bewegungen in der Welt“ → Baukasten-Körper → einen Körper wählen und „Laufen“ drücken: Die Figur läuft flüssiger als vorher (8 statt 4 Bilder).
+    2. „Sitzen“ drücken: Die Figur sitzt, der Kopf sitzt richtig auf dem Hals.
+    3. Frau und Frau korpulent: Gesicht und Körper schauen schräg von vorne in dieselbe Richtung.
+    4. In Kreuzweg oder Grünwacht herumlaufen: Die Leute im Ort sehen aus wie vorher, nur mit den neuen Kleidern, und kein Kopf schwebt neben dem Hals.
+
 - **Neu (15.11.): Sternensängerin (w) in fünf Richtungen – damit haben alle Klassen ihre Welt-Bilder** (GRAFIK_AUFTRAG.md Teil U10): Laufen, Stehen und Sitzen (Beine seitlich angewinkelt) in allen fünf Richtungen, in der Welt ohne Instrument. Schal-Enden mit Quasten in jeder Richtung auf derselben Seite. Übersicht `tools/referenz/teil_u/uebersicht_saengerin_w.png`, Foto `saengerin_w_eingebaut.png`.
   - **So testest du es:**
     1. Editor → „Bewegungen in der Welt“ → Klassen-Körper → Sternensängerin (w): fünf Richtungen nebeneinander, der Kopf schaut mit.

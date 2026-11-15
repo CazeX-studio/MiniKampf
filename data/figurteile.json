@@ -2368,6 +2368,48 @@
 				},
 				"name": "Alte Frau, Kopftuch"
 			},
+			"borko": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						33.0,
+						50
+					],
+					"vorn_normal": [
+						42.9,
+						50
+					]
+				},
+				"name": "Wirt Borko"
+			},
+			"brom": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						30.5,
+						55
+					],
+					"vorn_normal": [
+						35.0,
+						55
+					]
+				},
+				"name": "Torwache Brom"
+			},
+			"edmar": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						29.0,
+						50
+					],
+					"vorn_normal": [
+						38.7,
+						51
+					]
+				},
+				"name": "Vogt Edmar"
+			},
 			"hagebutte": {
 				"geschlecht": "w",
 				"hals": {
@@ -2381,748 +2423,6 @@
 					]
 				},
 				"name": "Oma Hagebutte"
-			},
-			"ilse": {
-				"geschlecht": "w",
-				"hals": {
-					"hinten_normal": [
-						32.5,
-						56
-					],
-					"vorn_normal": [
-						40.3,
-						56
-					]
-				},
-				"name": "Bankhüterin Ilse"
-			},
-			"k_m1": {
-				"geschlecht": "m",
-				"hals": {
-					"hinten_normal": [
-						33.7,
-						59
-					],
-					"vorn_normal": [
-						33.5,
-						58
-					]
-				},
-				"name": "Junge"
-			},
-			"k_w1": {
-				"geschlecht": "w",
-				"hals": {
-					"hinten_normal": [
-						30.5,
-						56
-					],
-					"vorn_augen_zu": [
-						30.6,
-						56
-					],
-					"vorn_normal": [
-						30.1,
-						55
-					]
-				},
-				"name": "Mädchen"
-			},
-			"m1": {
-				"geschlecht": "m",
-				"hals": {
-					"gerade_hinten_normal": [
-						30.9,
-						66
-					],
-					"gerade_vorn_augen_zu": [
-						29.2,
-						66
-					],
-					"gerade_vorn_normal": [
-						29.1,
-						66
-					],
-					"hinten_geneigt": [
-						41.2,
-						55
-					],
-					"hinten_normal": [
-						42.2,
-						56
-					],
-					"seite_augen_zu": [
-						39.3,
-						62
-					],
-					"seite_entschlossen": [
-						39.3,
-						62
-					],
-					"seite_freude": [
-						39.3,
-						62
-					],
-					"seite_normal": [
-						39.3,
-						62
-					],
-					"seite_schmerz": [
-						38.3,
-						62
-					],
-					"vorn_augen_zu": [
-						32.2,
-						66
-					],
-					"vorn_freude": [
-						31.2,
-						66
-					],
-					"vorn_normal": [
-						31.2,
-						66
-					],
-					"vorn_schmerz": [
-						31.2,
-						66
-					]
-				},
-				"name": "Novize m1"
-			},
-			"m2": {
-				"geschlecht": "m",
-				"hals": {
-					"gerade_hinten_normal": [
-						33.5,
-						64
-					],
-					"gerade_vorn_augen_zu": [
-						32.4,
-						65
-					],
-					"gerade_vorn_normal": [
-						31.5,
-						64
-					],
-					"hinten_geneigt": [
-						43.5,
-						53
-					],
-					"hinten_normal": [
-						43.5,
-						54
-					],
-					"seite_augen_zu": [
-						41.8,
-						63
-					],
-					"seite_entschlossen": [
-						41.8,
-						63
-					],
-					"seite_freude": [
-						42.8,
-						63
-					],
-					"seite_normal": [
-						41.8,
-						63
-					],
-					"seite_schmerz": [
-						41.8,
-						63
-					],
-					"vorn_augen_zu": [
-						31.2,
-						63
-					],
-					"vorn_freude": [
-						32.2,
-						63
-					],
-					"vorn_normal": [
-						32.2,
-						63
-					],
-					"vorn_schmerz": [
-						32.2,
-						64
-					]
-				},
-				"name": "Novize m2"
-			},
-			"m3": {
-				"geschlecht": "m",
-				"hals": {
-					"gerade_hinten_normal": [
-						32.4,
-						65
-					],
-					"gerade_vorn_augen_zu": [
-						29.8,
-						64
-					],
-					"gerade_vorn_normal": [
-						29.1,
-						65
-					],
-					"hinten_geneigt": [
-						46.1,
-						57
-					],
-					"hinten_normal": [
-						47.1,
-						57
-					],
-					"seite_augen_zu": [
-						43.7,
-						66
-					],
-					"seite_entschlossen": [
-						42.7,
-						66
-					],
-					"seite_freude": [
-						42.7,
-						66
-					],
-					"seite_normal": [
-						43.7,
-						66
-					],
-					"seite_schmerz": [
-						43.7,
-						66
-					],
-					"vorn_augen_zu": [
-						34.8,
-						65
-					],
-					"vorn_freude": [
-						34.8,
-						65
-					],
-					"vorn_normal": [
-						34.8,
-						65
-					],
-					"vorn_schmerz": [
-						34.8,
-						65
-					]
-				},
-				"name": "Novize m3"
-			},
-			"rashid": {
-				"geschlecht": "m",
-				"hals": {
-					"hinten_normal": [
-						31.5,
-						50
-					],
-					"vorn_normal": [
-						32.2,
-						53
-					]
-				},
-				"name": "Bankhüter Rashid"
-			},
-			"tamm": {
-				"geschlecht": "m",
-				"hals": {
-					"hinten_normal": [
-						35.0,
-						55
-					],
-					"vorn_normal": [
-						37.8,
-						55
-					]
-				},
-				"name": "Bankhüter Tamm"
-			},
-			"v_m1": {
-				"geschlecht": "m",
-				"hals": {
-					"hinten_normal": [
-						30.0,
-						55
-					],
-					"vorn_normal": [
-						31.6,
-						58
-					]
-				},
-				"name": "Mann, kurze braune Haare"
-			},
-			"v_m2": {
-				"geschlecht": "m",
-				"hals": {
-					"hinten_normal": [
-						25.2,
-						49
-					],
-					"vorn_normal": [
-						27.7,
-						53
-					]
-				},
-				"name": "Mann, Glatze mit Bart"
-			},
-			"v_m3": {
-				"geschlecht": "m",
-				"hals": {
-					"hinten_normal": [
-						31.9,
-						56
-					],
-					"vorn_normal": [
-						33.2,
-						58
-					]
-				},
-				"name": "Mann, schwarze Locken"
-			},
-			"v_w1": {
-				"geschlecht": "w",
-				"hals": {
-					"hinten_normal": [
-						34.0,
-						53
-					],
-					"vorn_augen_zu": [
-						36.0,
-						53
-					],
-					"vorn_normal": [
-						35.8,
-						53
-					]
-				},
-				"name": "Frau, langer Zopf"
-			},
-			"v_w2": {
-				"geschlecht": "w",
-				"hals": {
-					"hinten_normal": [
-						31.5,
-						56
-					],
-					"vorn_augen_zu": [
-						34.1,
-						59
-					],
-					"vorn_normal": [
-						34.3,
-						58
-					]
-				},
-				"name": "Frau, Haarknoten"
-			},
-			"v_w3": {
-				"geschlecht": "w",
-				"hals": {
-					"hinten_normal": [
-						30.5,
-						53
-					],
-					"vorn_augen_zu": [
-						35.3,
-						61
-					],
-					"vorn_normal": [
-						35.4,
-						60
-					]
-				},
-				"name": "Frau, offene rote Haare"
-			},
-			"w1": {
-				"geschlecht": "w",
-				"hals": {
-					"gerade_hinten_normal": [
-						34.0,
-						62
-					],
-					"gerade_vorn_augen_zu": [
-						30.5,
-						62
-					],
-					"gerade_vorn_normal": [
-						30.5,
-						62
-					],
-					"hinten_geneigt": [
-						30.5,
-						55
-					],
-					"hinten_normal": [
-						29.5,
-						55
-					],
-					"seite_augen_zu": [
-						30.2,
-						61
-					],
-					"seite_entschlossen": [
-						30.2,
-						61
-					],
-					"seite_freude": [
-						29.2,
-						60
-					],
-					"seite_normal": [
-						30.2,
-						60
-					],
-					"seite_schmerz": [
-						30.2,
-						60
-					],
-					"vorn_augen_zu": [
-						33.5,
-						62
-					],
-					"vorn_freude": [
-						33.5,
-						62
-					],
-					"vorn_normal": [
-						33.5,
-						62
-					],
-					"vorn_schmerz": [
-						33.5,
-						62
-					]
-				},
-				"name": "Novizin w1"
-			},
-			"w2": {
-				"geschlecht": "w",
-				"hals": {
-					"gerade_hinten_normal": [
-						31.9,
-						67
-					],
-					"gerade_vorn_augen_zu": [
-						24.6,
-						67
-					],
-					"gerade_vorn_normal": [
-						24.6,
-						67
-					],
-					"hinten_geneigt": [
-						49.8,
-						57
-					],
-					"hinten_normal": [
-						45.8,
-						57
-					],
-					"seite_augen_zu": [
-						42.8,
-						69
-					],
-					"seite_entschlossen": [
-						41.8,
-						70
-					],
-					"seite_freude": [
-						43.8,
-						69
-					],
-					"seite_normal": [
-						42.8,
-						69
-					],
-					"seite_schmerz": [
-						41.8,
-						69
-					],
-					"vorn_augen_zu": [
-						34.8,
-						68
-					],
-					"vorn_freude": [
-						33.8,
-						67
-					],
-					"vorn_normal": [
-						35.8,
-						68
-					],
-					"vorn_schmerz": [
-						36.8,
-						68
-					]
-				},
-				"name": "Novizin w2"
-			},
-			"w3": {
-				"geschlecht": "w",
-				"hals": {
-					"gerade_hinten_normal": [
-						33.4,
-						68
-					],
-					"gerade_vorn_augen_zu": [
-						31.4,
-						68
-					],
-					"gerade_vorn_normal": [
-						31.1,
-						68
-					],
-					"hinten_geneigt": [
-						51.3,
-						59
-					],
-					"hinten_normal": [
-						51.3,
-						60
-					],
-					"seite_augen_zu": [
-						49.4,
-						67
-					],
-					"seite_entschlossen": [
-						48.4,
-						67
-					],
-					"seite_freude": [
-						48.4,
-						67
-					],
-					"seite_normal": [
-						48.4,
-						67
-					],
-					"seite_schmerz": [
-						48.4,
-						67
-					],
-					"vorn_augen_zu": [
-						34.1,
-						69
-					],
-					"vorn_freude": [
-						34.1,
-						69
-					],
-					"vorn_normal": [
-						35.1,
-						69
-					],
-					"vorn_schmerz": [
-						34.1,
-						69
-					]
-				},
-				"name": "Novizin w3"
-			}
-		},
-		"_name": "Alter Mensch (Baukasten)",
-		"_nur_teile": true,
-		"idle_hinten_f0": {
-			"hals": [
-				38.9,
-				38.1
-			],
-			"richtung": "hinten",
-			"winkel": -2.4
-		},
-		"idle_hinten_f1": {
-			"hals": [
-				38.1,
-				35.1
-			],
-			"richtung": "hinten",
-			"winkel": -4.5
-		},
-		"idle_hinten_f2": {
-			"hals": [
-				38.7,
-				35.4
-			],
-			"richtung": "hinten",
-			"winkel": -11.3
-		},
-		"idle_hinten_f3": {
-			"hals": [
-				40.4,
-				36.3
-			],
-			"richtung": "hinten",
-			"winkel": -15.6
-		},
-		"idle_vorn_f0": {
-			"hals": [
-				37.7,
-				46.0
-			],
-			"richtung": "vorn",
-			"winkel": 2.8
-		},
-		"idle_vorn_f1": {
-			"hals": [
-				37.4,
-				46.2
-			],
-			"richtung": "vorn",
-			"winkel": 2.7
-		},
-		"idle_vorn_f2": {
-			"hals": [
-				38.2,
-				47.4
-			],
-			"richtung": "vorn",
-			"winkel": -0.3
-		},
-		"idle_vorn_f3": {
-			"hals": [
-				40.1,
-				48.2
-			],
-			"richtung": "vorn",
-			"winkel": -7.0
-		},
-		"run_hinten_f0": {
-			"hals": [
-				48.0,
-				36.4
-			],
-			"richtung": "hinten",
-			"winkel": -9.7
-		},
-		"run_hinten_f1": {
-			"hals": [
-				47.8,
-				34.4
-			],
-			"richtung": "hinten",
-			"winkel": -13.5
-		},
-		"run_hinten_f2": {
-			"hals": [
-				49.4,
-				37.2
-			],
-			"richtung": "hinten",
-			"winkel": -11.4
-		},
-		"run_hinten_f3": {
-			"hals": [
-				51.7,
-				35.4
-			],
-			"richtung": "hinten",
-			"winkel": -10.8
-		},
-		"run_vorn_f0": {
-			"hals": [
-				33.5,
-				47.0
-			],
-			"richtung": "vorn",
-			"winkel": 6.2
-		},
-		"run_vorn_f1": {
-			"hals": [
-				33.9,
-				46.2
-			],
-			"richtung": "vorn",
-			"winkel": 4.8
-		},
-		"run_vorn_f2": {
-			"hals": [
-				35.4,
-				47.2
-			],
-			"richtung": "vorn",
-			"winkel": 2.9
-		},
-		"run_vorn_f3": {
-			"hals": [
-				34.4,
-				46.0
-			],
-			"richtung": "vorn",
-			"winkel": 1.4
-		}
-	},
-	"grund_frau": {
-		"_baukasten": true,
-		"_eigener_kopf": "v_w1",
-		"_koepfe": {
-			"a_m1": {
-				"geschlecht": "m",
-				"hals": {
-					"hinten_normal": [
-						36.9,
-						61
-					],
-					"vorn_normal": [
-						29.9,
-						62
-					]
-				},
-				"name": "Alter Mann, weißer Bart"
-			},
-			"a_m2": {
-				"geschlecht": "m",
-				"hals": {
-					"hinten_normal": [
-						34.3,
-						55
-					],
-					"vorn_normal": [
-						39.0,
-						56
-					]
-				},
-				"name": "Alter Mann, Halbglatze"
-			},
-			"a_w1": {
-				"geschlecht": "w",
-				"hals": {
-					"hinten_normal": [
-						33.5,
-						59
-					],
-					"vorn_augen_zu": [
-						32.7,
-						60
-					],
-					"vorn_normal": [
-						32.6,
-						59
-					]
-				},
-				"name": "Alte Frau, grauer Dutt"
-			},
-			"a_w2": {
-				"geschlecht": "w",
-				"hals": {
-					"hinten_normal": [
-						36.0,
-						60
-					],
-					"vorn_augen_zu": [
-						35.9,
-						59
-					],
-					"vorn_normal": [
-						35.8,
-						58
-					]
-				},
-				"name": "Alte Frau, Kopftuch"
 			},
 			"hanne": {
 				"geschlecht": "w",
@@ -3141,6 +2441,34 @@
 					]
 				},
 				"name": "Wirtin Hanne"
+			},
+			"hatta": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						40.6,
+						34
+					],
+					"vorn_normal": [
+						44.5,
+						66
+					]
+				},
+				"name": "Hutmacher Hatta"
+			},
+			"ilse": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						32.5,
+						56
+					],
+					"vorn_normal": [
+						40.3,
+						56
+					]
+				},
+				"name": "Bankhüterin Ilse"
 			},
 			"k_m1": {
 				"geschlecht": "m",
@@ -3191,6 +2519,42 @@
 					]
 				},
 				"name": "Wirtin Layla"
+			},
+			"lene": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						34.0,
+						59
+					],
+					"vorn_augen_zu": [
+						37.2,
+						60
+					],
+					"vorn_normal": [
+						37.1,
+						60
+					]
+				},
+				"name": "Schreiberin Lene"
+			},
+			"lotte": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						25.3,
+						56
+					],
+					"vorn_augen_zu": [
+						32.3,
+						55
+					],
+					"vorn_normal": [
+						32.6,
+						55
+					]
+				},
+				"name": "Lotte"
 			},
 			"m1": {
 				"geschlecht": "m",
@@ -3396,6 +2760,94 @@
 				},
 				"name": "Brunnenhüterin Nadia"
 			},
+			"pip": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						34.9,
+						57
+					],
+					"vorn_normal": [
+						38.9,
+						57
+					]
+				},
+				"name": "Pip"
+			},
+			"quill": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						30.0,
+						49
+					],
+					"vorn_normal": [
+						43.9,
+						51
+					]
+				},
+				"name": "Steinmetz Quill"
+			},
+			"rashid": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						31.5,
+						50
+					],
+					"vorn_normal": [
+						32.2,
+						53
+					]
+				},
+				"name": "Bankhüter Rashid"
+			},
+			"salbei": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						26.1,
+						55
+					],
+					"vorn_augen_zu": [
+						28.4,
+						54
+					],
+					"vorn_normal": [
+						28.0,
+						54
+					]
+				},
+				"name": "Kräuterhändlerin Salbei"
+			},
+			"tamm": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						35.0,
+						55
+					],
+					"vorn_normal": [
+						37.8,
+						55
+					]
+				},
+				"name": "Bankhüter Tamm"
+			},
+			"tarek": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						32.5,
+						54
+					],
+					"vorn_normal": [
+						35.6,
+						57
+					]
+				},
+				"name": "Händler Tarek"
+			},
 			"v_m1": {
 				"geschlecht": "m",
 				"hals": {
@@ -3677,137 +3129,1671 @@
 					]
 				},
 				"name": "Novizin w3"
+			},
+			"zaid": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						21.5,
+						44
+					],
+					"vorn_normal": [
+						28.5,
+						44
+					]
+				},
+				"name": "Karawanenführer Zaid"
+			}
+		},
+		"_name": "Alter Mensch (Baukasten)",
+		"_nur_teile": true,
+		"idle_gerade_hinten_f0": {
+			"hals": [
+				32.0,
+				40.2
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.0
+		},
+		"idle_gerade_vorn_f0": {
+			"hals": [
+				32.4,
+				45.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.2
+		},
+		"idle_hinten_f0": {
+			"hals": [
+				31.8,
+				38.1
+			],
+			"richtung": "hinten",
+			"winkel": -3.0
+		},
+		"idle_vorn_f0": {
+			"hals": [
+				35.2,
+				45.2
+			],
+			"richtung": "vorn",
+			"winkel": -1.6
+		},
+		"idle_welt_seite_f0": {
+			"hals": [
+				29.9,
+				40.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_gerade_hinten_f0": {
+			"hals": [
+				33.5,
+				41.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.6
+		},
+		"run_gerade_hinten_f1": {
+			"hals": [
+				34.9,
+				46.0
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.1
+		},
+		"run_gerade_hinten_f2": {
+			"hals": [
+				35.3,
+				46.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.4
+		},
+		"run_gerade_hinten_f3": {
+			"hals": [
+				34.8,
+				44.2
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.0
+		},
+		"run_gerade_hinten_f4": {
+			"hals": [
+				37.3,
+				43.3
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.1
+		},
+		"run_gerade_hinten_f5": {
+			"hals": [
+				37.1,
+				42.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.9
+		},
+		"run_gerade_hinten_f6": {
+			"hals": [
+				35.9,
+				47.3
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.5
+		},
+		"run_gerade_hinten_f7": {
+			"hals": [
+				37.0,
+				43.3
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.3
+		},
+		"run_gerade_vorn_f0": {
+			"hals": [
+				32.4,
+				42.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -1.0
+		},
+		"run_gerade_vorn_f1": {
+			"hals": [
+				32.7,
+				45.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.3
+		},
+		"run_gerade_vorn_f2": {
+			"hals": [
+				35.0,
+				47.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -1.2
+		},
+		"run_gerade_vorn_f3": {
+			"hals": [
+				34.1,
+				45.2
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.2
+		},
+		"run_gerade_vorn_f4": {
+			"hals": [
+				34.2,
+				43.0
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.2
+		},
+		"run_gerade_vorn_f5": {
+			"hals": [
+				31.5,
+				47.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.1
+		},
+		"run_gerade_vorn_f6": {
+			"hals": [
+				33.4,
+				47.2
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.1
+		},
+		"run_gerade_vorn_f7": {
+			"hals": [
+				31.6,
+				43.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.5
+		},
+		"run_hinten_f0": {
+			"hals": [
+				39.9,
+				35.3
+			],
+			"richtung": "hinten",
+			"winkel": -3.7
+		},
+		"run_hinten_f1": {
+			"hals": [
+				41.6,
+				40.2
+			],
+			"richtung": "hinten",
+			"winkel": -3.4
+		},
+		"run_hinten_f2": {
+			"hals": [
+				40.9,
+				41.3
+			],
+			"richtung": "hinten",
+			"winkel": -3.0
+		},
+		"run_hinten_f3": {
+			"hals": [
+				38.6,
+				41.2
+			],
+			"richtung": "hinten",
+			"winkel": -4.1
+		},
+		"run_hinten_f4": {
+			"hals": [
+				39.6,
+				41.0
+			],
+			"richtung": "hinten",
+			"winkel": -3.1
+		},
+		"run_hinten_f5": {
+			"hals": [
+				40.5,
+				41.1
+			],
+			"richtung": "hinten",
+			"winkel": -1.7
+		},
+		"run_hinten_f6": {
+			"hals": [
+				42.6,
+				43.0
+			],
+			"richtung": "hinten",
+			"winkel": -1.7
+		},
+		"run_hinten_f7": {
+			"hals": [
+				41.9,
+				36.1
+			],
+			"richtung": "hinten",
+			"winkel": -2.6
+		},
+		"run_vorn_f0": {
+			"hals": [
+				39.5,
+				46.3
+			],
+			"richtung": "vorn",
+			"winkel": -4.0
+		},
+		"run_vorn_f1": {
+			"hals": [
+				41.3,
+				47.2
+			],
+			"richtung": "vorn",
+			"winkel": -2.4
+		},
+		"run_vorn_f2": {
+			"hals": [
+				39.8,
+				51.0
+			],
+			"richtung": "vorn",
+			"winkel": -3.4
+		},
+		"run_vorn_f3": {
+			"hals": [
+				39.8,
+				45.4
+			],
+			"richtung": "vorn",
+			"winkel": -2.4
+		},
+		"run_vorn_f4": {
+			"hals": [
+				40.1,
+				46.4
+			],
+			"richtung": "vorn",
+			"winkel": -2.0
+		},
+		"run_vorn_f5": {
+			"hals": [
+				39.4,
+				48.2
+			],
+			"richtung": "vorn",
+			"winkel": -2.9
+		},
+		"run_vorn_f6": {
+			"hals": [
+				40.2,
+				49.2
+			],
+			"richtung": "vorn",
+			"winkel": -2.0
+		},
+		"run_vorn_f7": {
+			"hals": [
+				39.8,
+				46.1
+			],
+			"richtung": "vorn",
+			"winkel": -3.6
+		},
+		"run_welt_seite_f0": {
+			"hals": [
+				42.7,
+				43.5
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f1": {
+			"hals": [
+				44.0,
+				42.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f2": {
+			"hals": [
+				45.8,
+				42.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f3": {
+			"hals": [
+				39.8,
+				44.4
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f4": {
+			"hals": [
+				43.1,
+				43.5
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f5": {
+			"hals": [
+				45.9,
+				42.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f6": {
+			"hals": [
+				40.0,
+				42.0
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f7": {
+			"hals": [
+				41.1,
+				42.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"sitzen_gerade_hinten_f0": {
+			"hals": [
+				34.0,
+				43.0
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.6
+		},
+		"sitzen_gerade_vorn_f0": {
+			"hals": [
+				34.8,
+				45.2
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.7
+		},
+		"sitzen_hinten_f0": {
+			"hals": [
+				40.8,
+				39.5
+			],
+			"richtung": "hinten",
+			"winkel": -1.7
+		},
+		"sitzen_vorn_f0": {
+			"hals": [
+				34.7,
+				46.0
+			],
+			"richtung": "vorn",
+			"winkel": -0.9
+		},
+		"sitzen_welt_seite_f0": {
+			"hals": [
+				35.7,
+				45.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		}
+	},
+	"grund_frau": {
+		"_baukasten": true,
+		"_eigener_kopf": "v_w1",
+		"_koepfe": {
+			"a_m1": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						36.9,
+						61
+					],
+					"vorn_normal": [
+						29.9,
+						62
+					]
+				},
+				"name": "Alter Mann, weißer Bart"
+			},
+			"a_m2": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						34.3,
+						55
+					],
+					"vorn_normal": [
+						39.0,
+						56
+					]
+				},
+				"name": "Alter Mann, Halbglatze"
+			},
+			"a_w1": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						33.5,
+						59
+					],
+					"vorn_augen_zu": [
+						32.7,
+						60
+					],
+					"vorn_normal": [
+						32.6,
+						59
+					]
+				},
+				"name": "Alte Frau, grauer Dutt"
+			},
+			"a_w2": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						36.0,
+						60
+					],
+					"vorn_augen_zu": [
+						35.9,
+						59
+					],
+					"vorn_normal": [
+						35.8,
+						58
+					]
+				},
+				"name": "Alte Frau, Kopftuch"
+			},
+			"borko": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						33.0,
+						50
+					],
+					"vorn_normal": [
+						42.9,
+						50
+					]
+				},
+				"name": "Wirt Borko"
+			},
+			"brom": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						30.5,
+						55
+					],
+					"vorn_normal": [
+						35.0,
+						55
+					]
+				},
+				"name": "Torwache Brom"
+			},
+			"edmar": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						29.0,
+						50
+					],
+					"vorn_normal": [
+						38.7,
+						51
+					]
+				},
+				"name": "Vogt Edmar"
+			},
+			"hagebutte": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						33.5,
+						56
+					],
+					"vorn_normal": [
+						39.6,
+						53
+					]
+				},
+				"name": "Oma Hagebutte"
+			},
+			"hanne": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						36.9,
+						58
+					],
+					"vorn_augen_zu": [
+						39.4,
+						56
+					],
+					"vorn_normal": [
+						36.8,
+						56
+					]
+				},
+				"name": "Wirtin Hanne"
+			},
+			"hatta": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						40.6,
+						34
+					],
+					"vorn_normal": [
+						44.5,
+						66
+					]
+				},
+				"name": "Hutmacher Hatta"
+			},
+			"ilse": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						32.5,
+						56
+					],
+					"vorn_normal": [
+						40.3,
+						56
+					]
+				},
+				"name": "Bankhüterin Ilse"
+			},
+			"k_m1": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						33.7,
+						59
+					],
+					"vorn_normal": [
+						33.5,
+						58
+					]
+				},
+				"name": "Junge"
+			},
+			"k_w1": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						30.5,
+						56
+					],
+					"vorn_augen_zu": [
+						30.6,
+						56
+					],
+					"vorn_normal": [
+						30.1,
+						55
+					]
+				},
+				"name": "Mädchen"
+			},
+			"layla": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						36.5,
+						56
+					],
+					"vorn_augen_zu": [
+						25.6,
+						54
+					],
+					"vorn_normal": [
+						24.8,
+						54
+					]
+				},
+				"name": "Wirtin Layla"
+			},
+			"lene": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						34.0,
+						59
+					],
+					"vorn_augen_zu": [
+						37.2,
+						60
+					],
+					"vorn_normal": [
+						37.1,
+						60
+					]
+				},
+				"name": "Schreiberin Lene"
+			},
+			"lotte": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						25.3,
+						56
+					],
+					"vorn_augen_zu": [
+						32.3,
+						55
+					],
+					"vorn_normal": [
+						32.6,
+						55
+					]
+				},
+				"name": "Lotte"
+			},
+			"m1": {
+				"geschlecht": "m",
+				"hals": {
+					"gerade_hinten_normal": [
+						30.9,
+						66
+					],
+					"gerade_vorn_augen_zu": [
+						29.2,
+						66
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						66
+					],
+					"hinten_geneigt": [
+						41.2,
+						55
+					],
+					"hinten_normal": [
+						42.2,
+						56
+					],
+					"seite_augen_zu": [
+						39.3,
+						62
+					],
+					"seite_entschlossen": [
+						39.3,
+						62
+					],
+					"seite_freude": [
+						39.3,
+						62
+					],
+					"seite_normal": [
+						39.3,
+						62
+					],
+					"seite_schmerz": [
+						38.3,
+						62
+					],
+					"vorn_augen_zu": [
+						32.2,
+						66
+					],
+					"vorn_freude": [
+						31.2,
+						66
+					],
+					"vorn_normal": [
+						31.2,
+						66
+					],
+					"vorn_schmerz": [
+						31.2,
+						66
+					]
+				},
+				"name": "Novize m1"
+			},
+			"m2": {
+				"geschlecht": "m",
+				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
+					"hinten_geneigt": [
+						43.5,
+						53
+					],
+					"hinten_normal": [
+						43.5,
+						54
+					],
+					"seite_augen_zu": [
+						41.8,
+						63
+					],
+					"seite_entschlossen": [
+						41.8,
+						63
+					],
+					"seite_freude": [
+						42.8,
+						63
+					],
+					"seite_normal": [
+						41.8,
+						63
+					],
+					"seite_schmerz": [
+						41.8,
+						63
+					],
+					"vorn_augen_zu": [
+						31.2,
+						63
+					],
+					"vorn_freude": [
+						32.2,
+						63
+					],
+					"vorn_normal": [
+						32.2,
+						63
+					],
+					"vorn_schmerz": [
+						32.2,
+						64
+					]
+				},
+				"name": "Novize m2"
+			},
+			"m3": {
+				"geschlecht": "m",
+				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
+					"hinten_geneigt": [
+						46.1,
+						57
+					],
+					"hinten_normal": [
+						47.1,
+						57
+					],
+					"seite_augen_zu": [
+						43.7,
+						66
+					],
+					"seite_entschlossen": [
+						42.7,
+						66
+					],
+					"seite_freude": [
+						42.7,
+						66
+					],
+					"seite_normal": [
+						43.7,
+						66
+					],
+					"seite_schmerz": [
+						43.7,
+						66
+					],
+					"vorn_augen_zu": [
+						34.8,
+						65
+					],
+					"vorn_freude": [
+						34.8,
+						65
+					],
+					"vorn_normal": [
+						34.8,
+						65
+					],
+					"vorn_schmerz": [
+						34.8,
+						65
+					]
+				},
+				"name": "Novize m3"
+			},
+			"nadia": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						29.0,
+						47
+					],
+					"vorn_augen_zu": [
+						23.4,
+						45
+					],
+					"vorn_normal": [
+						23.2,
+						45
+					]
+				},
+				"name": "Brunnenhüterin Nadia"
+			},
+			"pip": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						34.9,
+						57
+					],
+					"vorn_normal": [
+						38.9,
+						57
+					]
+				},
+				"name": "Pip"
+			},
+			"quill": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						30.0,
+						49
+					],
+					"vorn_normal": [
+						43.9,
+						51
+					]
+				},
+				"name": "Steinmetz Quill"
+			},
+			"rashid": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						31.5,
+						50
+					],
+					"vorn_normal": [
+						32.2,
+						53
+					]
+				},
+				"name": "Bankhüter Rashid"
+			},
+			"salbei": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						26.1,
+						55
+					],
+					"vorn_augen_zu": [
+						28.4,
+						54
+					],
+					"vorn_normal": [
+						28.0,
+						54
+					]
+				},
+				"name": "Kräuterhändlerin Salbei"
+			},
+			"tamm": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						35.0,
+						55
+					],
+					"vorn_normal": [
+						37.8,
+						55
+					]
+				},
+				"name": "Bankhüter Tamm"
+			},
+			"tarek": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						32.5,
+						54
+					],
+					"vorn_normal": [
+						35.6,
+						57
+					]
+				},
+				"name": "Händler Tarek"
+			},
+			"v_m1": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						30.0,
+						55
+					],
+					"vorn_normal": [
+						31.6,
+						58
+					]
+				},
+				"name": "Mann, kurze braune Haare"
+			},
+			"v_m2": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						25.2,
+						49
+					],
+					"vorn_normal": [
+						27.7,
+						53
+					]
+				},
+				"name": "Mann, Glatze mit Bart"
+			},
+			"v_m3": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						31.9,
+						56
+					],
+					"vorn_normal": [
+						33.2,
+						58
+					]
+				},
+				"name": "Mann, schwarze Locken"
+			},
+			"v_w1": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						34.0,
+						53
+					],
+					"vorn_augen_zu": [
+						36.0,
+						53
+					],
+					"vorn_normal": [
+						35.8,
+						53
+					]
+				},
+				"name": "Frau, langer Zopf"
+			},
+			"v_w2": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						31.5,
+						56
+					],
+					"vorn_augen_zu": [
+						34.1,
+						59
+					],
+					"vorn_normal": [
+						34.3,
+						58
+					]
+				},
+				"name": "Frau, Haarknoten"
+			},
+			"v_w3": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						30.5,
+						53
+					],
+					"vorn_augen_zu": [
+						35.3,
+						61
+					],
+					"vorn_normal": [
+						35.4,
+						60
+					]
+				},
+				"name": "Frau, offene rote Haare"
+			},
+			"w1": {
+				"geschlecht": "w",
+				"hals": {
+					"gerade_hinten_normal": [
+						34.0,
+						62
+					],
+					"gerade_vorn_augen_zu": [
+						30.5,
+						62
+					],
+					"gerade_vorn_normal": [
+						30.5,
+						62
+					],
+					"hinten_geneigt": [
+						30.5,
+						55
+					],
+					"hinten_normal": [
+						29.5,
+						55
+					],
+					"seite_augen_zu": [
+						30.2,
+						61
+					],
+					"seite_entschlossen": [
+						30.2,
+						61
+					],
+					"seite_freude": [
+						29.2,
+						60
+					],
+					"seite_normal": [
+						30.2,
+						60
+					],
+					"seite_schmerz": [
+						30.2,
+						60
+					],
+					"vorn_augen_zu": [
+						33.5,
+						62
+					],
+					"vorn_freude": [
+						33.5,
+						62
+					],
+					"vorn_normal": [
+						33.5,
+						62
+					],
+					"vorn_schmerz": [
+						33.5,
+						62
+					]
+				},
+				"name": "Novizin w1"
+			},
+			"w2": {
+				"geschlecht": "w",
+				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
+					"hinten_geneigt": [
+						49.8,
+						57
+					],
+					"hinten_normal": [
+						45.8,
+						57
+					],
+					"seite_augen_zu": [
+						42.8,
+						69
+					],
+					"seite_entschlossen": [
+						41.8,
+						70
+					],
+					"seite_freude": [
+						43.8,
+						69
+					],
+					"seite_normal": [
+						42.8,
+						69
+					],
+					"seite_schmerz": [
+						41.8,
+						69
+					],
+					"vorn_augen_zu": [
+						34.8,
+						68
+					],
+					"vorn_freude": [
+						33.8,
+						67
+					],
+					"vorn_normal": [
+						35.8,
+						68
+					],
+					"vorn_schmerz": [
+						36.8,
+						68
+					]
+				},
+				"name": "Novizin w2"
+			},
+			"w3": {
+				"geschlecht": "w",
+				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
+					"hinten_geneigt": [
+						51.3,
+						59
+					],
+					"hinten_normal": [
+						51.3,
+						60
+					],
+					"seite_augen_zu": [
+						49.4,
+						67
+					],
+					"seite_entschlossen": [
+						48.4,
+						67
+					],
+					"seite_freude": [
+						48.4,
+						67
+					],
+					"seite_normal": [
+						48.4,
+						67
+					],
+					"seite_schmerz": [
+						48.4,
+						67
+					],
+					"vorn_augen_zu": [
+						34.1,
+						69
+					],
+					"vorn_freude": [
+						34.1,
+						69
+					],
+					"vorn_normal": [
+						35.1,
+						69
+					],
+					"vorn_schmerz": [
+						34.1,
+						69
+					]
+				},
+				"name": "Novizin w3"
+			},
+			"zaid": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						21.5,
+						44
+					],
+					"vorn_normal": [
+						28.5,
+						44
+					]
+				},
+				"name": "Karawanenführer Zaid"
 			}
 		},
 		"_name": "Frau (Baukasten)",
 		"_nur_teile": true,
+		"idle_gerade_hinten_f0": {
+			"hals": [
+				32.6,
+				45.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.9
+		},
+		"idle_gerade_vorn_f0": {
+			"hals": [
+				34.1,
+				46.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -3.3
+		},
 		"idle_hinten_f0": {
 			"hals": [
-				29.3,
-				44.5
+				34.2,
+				44.3
 			],
 			"richtung": "hinten",
-			"winkel": 1.7
-		},
-		"idle_hinten_f1": {
-			"hals": [
-				29.5,
-				44.0
-			],
-			"richtung": "hinten",
-			"winkel": 0.7
-		},
-		"idle_hinten_f2": {
-			"hals": [
-				29.1,
-				44.4
-			],
-			"richtung": "hinten",
-			"winkel": 2.1
-		},
-		"idle_hinten_f3": {
-			"hals": [
-				29.9,
-				44.4
-			],
-			"richtung": "hinten",
-			"winkel": 2.2
+			"winkel": -4.4
 		},
 		"idle_vorn_f0": {
 			"hals": [
-				29.7,
-				46.0
+				38.4,
+				45.0
 			],
 			"richtung": "vorn",
-			"winkel": 2.8
+			"winkel": -8.1
 		},
-		"idle_vorn_f1": {
+		"idle_welt_seite_f0": {
 			"hals": [
-				28.9,
-				47.4
+				33.2,
+				44.4
 			],
-			"richtung": "vorn",
-			"winkel": 2.5
+			"richtung": "seite",
+			"winkel": 0.0
 		},
-		"idle_vorn_f2": {
+		"run_gerade_hinten_f0": {
 			"hals": [
-				28.2,
-				46.4
+				35.1,
+				49.2
 			],
-			"richtung": "vorn",
-			"winkel": 3.0
+			"richtung": "gerade_hinten",
+			"winkel": -0.0
 		},
-		"idle_vorn_f3": {
+		"run_gerade_hinten_f1": {
 			"hals": [
-				28.5,
-				46.5
+				37.1,
+				49.1
 			],
-			"richtung": "vorn",
-			"winkel": 2.9
+			"richtung": "gerade_hinten",
+			"winkel": -0.0
+		},
+		"run_gerade_hinten_f2": {
+			"hals": [
+				38.0,
+				49.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.0
+		},
+		"run_gerade_hinten_f3": {
+			"hals": [
+				41.6,
+				49.2
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.0
+		},
+		"run_gerade_hinten_f4": {
+			"hals": [
+				42.0,
+				49.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.0
+		},
+		"run_gerade_hinten_f5": {
+			"hals": [
+				40.4,
+				49.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.0
+		},
+		"run_gerade_hinten_f6": {
+			"hals": [
+				39.3,
+				55.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.0
+		},
+		"run_gerade_hinten_f7": {
+			"hals": [
+				41.2,
+				49.2
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.0
+		},
+		"run_gerade_vorn_f0": {
+			"hals": [
+				31.6,
+				52.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.1
+		},
+		"run_gerade_vorn_f1": {
+			"hals": [
+				34.5,
+				59.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.1
+		},
+		"run_gerade_vorn_f2": {
+			"hals": [
+				32.9,
+				61.2
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.1
+		},
+		"run_gerade_vorn_f3": {
+			"hals": [
+				35.1,
+				52.4
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.5
+		},
+		"run_gerade_vorn_f4": {
+			"hals": [
+				31.3,
+				54.4
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.2
+		},
+		"run_gerade_vorn_f5": {
+			"hals": [
+				36.6,
+				56.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.4
+		},
+		"run_gerade_vorn_f6": {
+			"hals": [
+				34.8,
+				60.4
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.5
+		},
+		"run_gerade_vorn_f7": {
+			"hals": [
+				37.1,
+				56.5
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.4
 		},
 		"run_hinten_f0": {
 			"hals": [
-				32.9,
-				45.4
+				40.9,
+				51.0
 			],
 			"richtung": "hinten",
-			"winkel": 0.4
+			"winkel": -3.1
 		},
 		"run_hinten_f1": {
 			"hals": [
-				31.6,
-				46.3
+				47.2,
+				54.2
 			],
 			"richtung": "hinten",
-			"winkel": 1.1
+			"winkel": -3.7
 		},
 		"run_hinten_f2": {
 			"hals": [
-				33.8,
-				45.4
+				45.6,
+				54.2
 			],
 			"richtung": "hinten",
-			"winkel": 0.8
+			"winkel": -2.3
 		},
 		"run_hinten_f3": {
 			"hals": [
-				30.9,
-				45.3
+				43.5,
+				51.1
 			],
 			"richtung": "hinten",
-			"winkel": 0.2
+			"winkel": -2.6
+		},
+		"run_hinten_f4": {
+			"hals": [
+				40.5,
+				53.5
+			],
+			"richtung": "hinten",
+			"winkel": -2.3
+		},
+		"run_hinten_f5": {
+			"hals": [
+				46.5,
+				53.1
+			],
+			"richtung": "hinten",
+			"winkel": -2.0
+		},
+		"run_hinten_f6": {
+			"hals": [
+				45.5,
+				53.3
+			],
+			"richtung": "hinten",
+			"winkel": -2.7
+		},
+		"run_hinten_f7": {
+			"hals": [
+				44.7,
+				50.3
+			],
+			"richtung": "hinten",
+			"winkel": -1.6
 		},
 		"run_vorn_f0": {
 			"hals": [
-				30.0,
-				46.2
+				36.6,
+				51.1
 			],
 			"richtung": "vorn",
-			"winkel": 3.4
+			"winkel": -2.4
 		},
 		"run_vorn_f1": {
 			"hals": [
-				29.5,
-				48.5
+				38.8,
+				53.5
 			],
 			"richtung": "vorn",
-			"winkel": 2.7
+			"winkel": -2.2
 		},
 		"run_vorn_f2": {
 			"hals": [
-				29.8,
-				46.3
+				38.4,
+				56.1
 			],
 			"richtung": "vorn",
-			"winkel": 3.2
+			"winkel": -2.6
 		},
 		"run_vorn_f3": {
 			"hals": [
-				31.1,
-				46.2
+				36.6,
+				52.5
 			],
 			"richtung": "vorn",
-			"winkel": 3.1
+			"winkel": -2.4
+		},
+		"run_vorn_f4": {
+			"hals": [
+				40.5,
+				50.4
+			],
+			"richtung": "vorn",
+			"winkel": -2.0
+		},
+		"run_vorn_f5": {
+			"hals": [
+				40.9,
+				53.4
+			],
+			"richtung": "vorn",
+			"winkel": -2.2
+		},
+		"run_vorn_f6": {
+			"hals": [
+				42.5,
+				56.4
+			],
+			"richtung": "vorn",
+			"winkel": -2.1
+		},
+		"run_vorn_f7": {
+			"hals": [
+				38.0,
+				53.5
+			],
+			"richtung": "vorn",
+			"winkel": -2.3
+		},
+		"run_welt_seite_f0": {
+			"hals": [
+				39.7,
+				51.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f1": {
+			"hals": [
+				48.9,
+				50.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f2": {
+			"hals": [
+				46.6,
+				50.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f3": {
+			"hals": [
+				41.4,
+				49.0
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f4": {
+			"hals": [
+				42.3,
+				48.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f5": {
+			"hals": [
+				47.5,
+				48.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f6": {
+			"hals": [
+				46.0,
+				48.0
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f7": {
+			"hals": [
+				35.9,
+				50.4
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"sitzen_gerade_hinten_f0": {
+			"hals": [
+				51.7,
+				46.2
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.6
+		},
+		"sitzen_gerade_vorn_f0": {
+			"hals": [
+				39.8,
+				45.0
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -3.8
+		},
+		"sitzen_hinten_f0": {
+			"hals": [
+				51.4,
+				45.5
+			],
+			"richtung": "hinten",
+			"winkel": -1.2
+		},
+		"sitzen_vorn_f0": {
+			"hals": [
+				41.2,
+				45.2
+			],
+			"richtung": "vorn",
+			"winkel": -4.7
+		},
+		"sitzen_welt_seite_f0": {
+			"hals": [
+				33.6,
+				45.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
 		}
 	},
 	"grund_frau_korpulent": {
@@ -4657,133 +5643,405 @@
 		},
 		"_name": "Frau, korpulent (Baukasten)",
 		"_nur_teile": true,
+		"idle_gerade_hinten_f0": {
+			"hals": [
+				32.2,
+				44.2
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -2.9
+		},
+		"idle_gerade_vorn_f0": {
+			"hals": [
+				32.9,
+				45.2
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -3.2
+		},
 		"idle_hinten_f0": {
 			"hals": [
-				32.8,
-				41.0
+				28.7,
+				44.2
 			],
 			"richtung": "hinten",
-			"winkel": 1.6
-		},
-		"idle_hinten_f1": {
-			"hals": [
-				32.3,
-				41.0
-			],
-			"richtung": "hinten",
-			"winkel": 1.5
-		},
-		"idle_hinten_f2": {
-			"hals": [
-				31.8,
-				40.3
-			],
-			"richtung": "hinten",
-			"winkel": 2.0
-		},
-		"idle_hinten_f3": {
-			"hals": [
-				32.1,
-				41.4
-			],
-			"richtung": "hinten",
-			"winkel": 1.7
+			"winkel": -4.7
 		},
 		"idle_vorn_f0": {
 			"hals": [
 				32.1,
-				43.3
+				45.2
 			],
 			"richtung": "vorn",
-			"winkel": 2.6
+			"winkel": -4.7
 		},
-		"idle_vorn_f1": {
+		"idle_welt_seite_f0": {
 			"hals": [
-				31.9,
-				42.3
+				26.4,
+				45.4
 			],
-			"richtung": "vorn",
-			"winkel": 2.3
+			"richtung": "seite",
+			"winkel": 0.0
 		},
-		"idle_vorn_f2": {
+		"run_gerade_hinten_f0": {
 			"hals": [
-				31.7,
-				42.4
+				37.6,
+				41.4
 			],
-			"richtung": "vorn",
-			"winkel": 2.5
+			"richtung": "gerade_hinten",
+			"winkel": -0.0
 		},
-		"idle_vorn_f3": {
+		"run_gerade_hinten_f1": {
 			"hals": [
-				31.4,
-				43.3
+				36.8,
+				46.4
 			],
-			"richtung": "vorn",
-			"winkel": 1.5
+			"richtung": "gerade_hinten",
+			"winkel": -0.3
+		},
+		"run_gerade_hinten_f2": {
+			"hals": [
+				37.4,
+				45.5
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.6
+		},
+		"run_gerade_hinten_f3": {
+			"hals": [
+				37.3,
+				41.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.4
+		},
+		"run_gerade_hinten_f4": {
+			"hals": [
+				37.5,
+				41.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.0
+		},
+		"run_gerade_hinten_f5": {
+			"hals": [
+				35.9,
+				44.5
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.0
+		},
+		"run_gerade_hinten_f6": {
+			"hals": [
+				37.7,
+				46.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": 0.0
+		},
+		"run_gerade_hinten_f7": {
+			"hals": [
+				35.9,
+				41.3
+			],
+			"richtung": "gerade_hinten",
+			"winkel": 0.3
+		},
+		"run_gerade_vorn_f0": {
+			"hals": [
+				36.4,
+				39.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.1
+		},
+		"run_gerade_vorn_f1": {
+			"hals": [
+				37.9,
+				43.5
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.1
+		},
+		"run_gerade_vorn_f2": {
+			"hals": [
+				37.2,
+				44.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.3
+		},
+		"run_gerade_vorn_f3": {
+			"hals": [
+				39.5,
+				39.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.1
+		},
+		"run_gerade_vorn_f4": {
+			"hals": [
+				39.7,
+				38.5
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.1
+		},
+		"run_gerade_vorn_f5": {
+			"hals": [
+				37.7,
+				43.5
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.0
+		},
+		"run_gerade_vorn_f6": {
+			"hals": [
+				36.2,
+				43.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.2
+		},
+		"run_gerade_vorn_f7": {
+			"hals": [
+				38.9,
+				38.0
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.3
 		},
 		"run_hinten_f0": {
 			"hals": [
-				35.6,
-				41.1
+				38.0,
+				42.4
 			],
 			"richtung": "hinten",
-			"winkel": 1.6
+			"winkel": 0.5
 		},
 		"run_hinten_f1": {
 			"hals": [
-				34.7,
-				41.0
+				42.1,
+				47.3
 			],
 			"richtung": "hinten",
-			"winkel": 1.2
+			"winkel": -0.2
 		},
 		"run_hinten_f2": {
 			"hals": [
-				34.4,
-				41.0
+				41.8,
+				45.4
 			],
 			"richtung": "hinten",
-			"winkel": 1.6
+			"winkel": 0.2
 		},
 		"run_hinten_f3": {
 			"hals": [
-				34.1,
-				43.1
+				40.2,
+				42.4
 			],
 			"richtung": "hinten",
-			"winkel": 1.2
+			"winkel": 0.3
+		},
+		"run_hinten_f4": {
+			"hals": [
+				38.6,
+				43.2
+			],
+			"richtung": "hinten",
+			"winkel": 0.3
+		},
+		"run_hinten_f5": {
+			"hals": [
+				38.7,
+				44.2
+			],
+			"richtung": "hinten",
+			"winkel": 0.4
+		},
+		"run_hinten_f6": {
+			"hals": [
+				40.5,
+				45.3
+			],
+			"richtung": "hinten",
+			"winkel": 0.7
+		},
+		"run_hinten_f7": {
+			"hals": [
+				39.0,
+				42.3
+			],
+			"richtung": "hinten",
+			"winkel": 0.3
 		},
 		"run_vorn_f0": {
 			"hals": [
-				35.1,
-				42.1
+				37.9,
+				41.5
 			],
 			"richtung": "vorn",
-			"winkel": 2.0
+			"winkel": 2.1
 		},
 		"run_vorn_f1": {
 			"hals": [
-				33.6,
-				43.5
+				40.7,
+				44.4
 			],
 			"richtung": "vorn",
-			"winkel": 2.5
+			"winkel": 1.0
 		},
 		"run_vorn_f2": {
 			"hals": [
-				32.2,
-				42.3
+				40.9,
+				43.4
 			],
 			"richtung": "vorn",
-			"winkel": 2.8
+			"winkel": 1.1
 		},
 		"run_vorn_f3": {
 			"hals": [
-				33.9,
-				42.1
+				40.3,
+				41.4
 			],
 			"richtung": "vorn",
-			"winkel": 3.2
+			"winkel": 1.4
+		},
+		"run_vorn_f4": {
+			"hals": [
+				40.4,
+				42.2
+			],
+			"richtung": "vorn",
+			"winkel": 1.1
+		},
+		"run_vorn_f5": {
+			"hals": [
+				41.0,
+				45.1
+			],
+			"richtung": "vorn",
+			"winkel": 1.2
+		},
+		"run_vorn_f6": {
+			"hals": [
+				39.7,
+				45.2
+			],
+			"richtung": "vorn",
+			"winkel": 0.6
+		},
+		"run_vorn_f7": {
+			"hals": [
+				39.3,
+				43.2
+			],
+			"richtung": "vorn",
+			"winkel": 0.7
+		},
+		"run_welt_seite_f0": {
+			"hals": [
+				32.8,
+				42.4
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f1": {
+			"hals": [
+				37.4,
+				42.4
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f2": {
+			"hals": [
+				39.5,
+				42.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f3": {
+			"hals": [
+				33.7,
+				41.4
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f4": {
+			"hals": [
+				33.3,
+				39.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f5": {
+			"hals": [
+				39.6,
+				42.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f6": {
+			"hals": [
+				35.3,
+				42.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f7": {
+			"hals": [
+				34.5,
+				42.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"sitzen_gerade_hinten_f0": {
+			"hals": [
+				55.8,
+				44.3
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -2.5
+		},
+		"sitzen_gerade_vorn_f0": {
+			"hals": [
+				32.2,
+				45.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -4.1
+		},
+		"sitzen_hinten_f0": {
+			"hals": [
+				42.9,
+				45.3
+			],
+			"richtung": "hinten",
+			"winkel": -5.1
+		},
+		"sitzen_vorn_f0": {
+			"hals": [
+				31.1,
+				45.2
+			],
+			"richtung": "vorn",
+			"winkel": -4.4
+		},
+		"sitzen_welt_seite_f0": {
+			"hals": [
+				25.3,
+				46.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
 		}
 	},
 	"grund_gelehrter": {
@@ -4854,6 +6112,108 @@
 				},
 				"name": "Alte Frau, Kopftuch"
 			},
+			"borko": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						33.0,
+						50
+					],
+					"vorn_normal": [
+						42.9,
+						50
+					]
+				},
+				"name": "Wirt Borko"
+			},
+			"brom": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						30.5,
+						55
+					],
+					"vorn_normal": [
+						35.0,
+						55
+					]
+				},
+				"name": "Torwache Brom"
+			},
+			"edmar": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						29.0,
+						50
+					],
+					"vorn_normal": [
+						38.7,
+						51
+					]
+				},
+				"name": "Vogt Edmar"
+			},
+			"hagebutte": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						33.5,
+						56
+					],
+					"vorn_normal": [
+						39.6,
+						53
+					]
+				},
+				"name": "Oma Hagebutte"
+			},
+			"hanne": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						36.9,
+						58
+					],
+					"vorn_augen_zu": [
+						39.4,
+						56
+					],
+					"vorn_normal": [
+						36.8,
+						56
+					]
+				},
+				"name": "Wirtin Hanne"
+			},
+			"hatta": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						40.6,
+						34
+					],
+					"vorn_normal": [
+						44.5,
+						66
+					]
+				},
+				"name": "Hutmacher Hatta"
+			},
+			"ilse": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						32.5,
+						56
+					],
+					"vorn_normal": [
+						40.3,
+						56
+					]
+				},
+				"name": "Bankhüterin Ilse"
+			},
 			"k_m1": {
 				"geschlecht": "m",
 				"hals": {
@@ -4886,6 +6246,24 @@
 				},
 				"name": "Mädchen"
 			},
+			"layla": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						36.5,
+						56
+					],
+					"vorn_augen_zu": [
+						25.6,
+						54
+					],
+					"vorn_normal": [
+						24.8,
+						54
+					]
+				},
+				"name": "Wirtin Layla"
+			},
 			"lene": {
 				"geschlecht": "w",
 				"hals": {
@@ -4903,6 +6281,24 @@
 					]
 				},
 				"name": "Schreiberin Lene"
+			},
+			"lotte": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						25.3,
+						56
+					],
+					"vorn_augen_zu": [
+						32.3,
+						55
+					],
+					"vorn_normal": [
+						32.6,
+						55
+					]
+				},
+				"name": "Lotte"
 			},
 			"m1": {
 				"geschlecht": "m",
@@ -5089,6 +6485,112 @@
 					]
 				},
 				"name": "Novize m3"
+			},
+			"nadia": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						29.0,
+						47
+					],
+					"vorn_augen_zu": [
+						23.4,
+						45
+					],
+					"vorn_normal": [
+						23.2,
+						45
+					]
+				},
+				"name": "Brunnenhüterin Nadia"
+			},
+			"pip": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						34.9,
+						57
+					],
+					"vorn_normal": [
+						38.9,
+						57
+					]
+				},
+				"name": "Pip"
+			},
+			"quill": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						30.0,
+						49
+					],
+					"vorn_normal": [
+						43.9,
+						51
+					]
+				},
+				"name": "Steinmetz Quill"
+			},
+			"rashid": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						31.5,
+						50
+					],
+					"vorn_normal": [
+						32.2,
+						53
+					]
+				},
+				"name": "Bankhüter Rashid"
+			},
+			"salbei": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						26.1,
+						55
+					],
+					"vorn_augen_zu": [
+						28.4,
+						54
+					],
+					"vorn_normal": [
+						28.0,
+						54
+					]
+				},
+				"name": "Kräuterhändlerin Salbei"
+			},
+			"tamm": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						35.0,
+						55
+					],
+					"vorn_normal": [
+						37.8,
+						55
+					]
+				},
+				"name": "Bankhüter Tamm"
+			},
+			"tarek": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						32.5,
+						54
+					],
+					"vorn_normal": [
+						35.6,
+						57
+					]
+				},
+				"name": "Händler Tarek"
 			},
 			"v_m1": {
 				"geschlecht": "m",
@@ -5371,137 +6873,423 @@
 					]
 				},
 				"name": "Novizin w3"
+			},
+			"zaid": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						21.5,
+						44
+					],
+					"vorn_normal": [
+						28.5,
+						44
+					]
+				},
+				"name": "Karawanenführer Zaid"
 			}
 		},
 		"_name": "Gelehrter (Baukasten)",
 		"_nur_teile": true,
+		"idle_gerade_hinten_f0": {
+			"hals": [
+				33.3,
+				41.5
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -2.0
+		},
+		"idle_gerade_vorn_f0": {
+			"hals": [
+				29.7,
+				45.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.4
+		},
 		"idle_hinten_f0": {
 			"hals": [
-				25.5,
-				43.2
+				29.6,
+				41.0
 			],
 			"richtung": "hinten",
-			"winkel": 1.0
-		},
-		"idle_hinten_f1": {
-			"hals": [
-				25.3,
-				43.1
-			],
-			"richtung": "hinten",
-			"winkel": 1.1
-		},
-		"idle_hinten_f2": {
-			"hals": [
-				24.9,
-				43.3
-			],
-			"richtung": "hinten",
-			"winkel": 1.4
-		},
-		"idle_hinten_f3": {
-			"hals": [
-				24.9,
-				43.3
-			],
-			"richtung": "hinten",
-			"winkel": 1.7
+			"winkel": -0.7
 		},
 		"idle_vorn_f0": {
 			"hals": [
-				27.6,
+				27.3,
+				41.5
+			],
+			"richtung": "vorn",
+			"winkel": -0.8
+		},
+		"idle_welt_seite_f0": {
+			"hals": [
+				21.6,
+				41.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_gerade_hinten_f0": {
+			"hals": [
+				34.3,
+				37.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.2
+		},
+		"run_gerade_hinten_f1": {
+			"hals": [
+				32.5,
+				37.0
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.1
+		},
+		"run_gerade_hinten_f2": {
+			"hals": [
+				34.7,
+				37.0
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.3
+		},
+		"run_gerade_hinten_f3": {
+			"hals": [
+				34.1,
+				37.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.1
+		},
+		"run_gerade_hinten_f4": {
+			"hals": [
+				34.8,
+				37.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.2
+		},
+		"run_gerade_hinten_f5": {
+			"hals": [
+				33.8,
+				37.3
+			],
+			"richtung": "gerade_hinten",
+			"winkel": 0.1
+		},
+		"run_gerade_hinten_f6": {
+			"hals": [
+				34.9,
+				37.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.1
+		},
+		"run_gerade_hinten_f7": {
+			"hals": [
+				36.7,
+				37.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.1
+		},
+		"run_gerade_vorn_f0": {
+			"hals": [
+				29.6,
+				41.2
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -1.0
+		},
+		"run_gerade_vorn_f1": {
+			"hals": [
+				30.1,
+				41.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -1.7
+		},
+		"run_gerade_vorn_f2": {
+			"hals": [
+				32.4,
+				41.4
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -2.3
+		},
+		"run_gerade_vorn_f3": {
+			"hals": [
+				35.4,
+				40.0
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -1.7
+		},
+		"run_gerade_vorn_f4": {
+			"hals": [
+				36.0,
+				40.4
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -2.0
+		},
+		"run_gerade_vorn_f5": {
+			"hals": [
+				33.8,
+				41.5
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -2.1
+		},
+		"run_gerade_vorn_f6": {
+			"hals": [
+				31.8,
+				41.5
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -1.6
+		},
+		"run_gerade_vorn_f7": {
+			"hals": [
+				31.9,
+				41.5
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -2.5
+		},
+		"run_hinten_f0": {
+			"hals": [
+				39.8,
+				37.1
+			],
+			"richtung": "hinten",
+			"winkel": -0.9
+		},
+		"run_hinten_f1": {
+			"hals": [
+				44.7,
+				38.4
+			],
+			"richtung": "hinten",
+			"winkel": -1.2
+		},
+		"run_hinten_f2": {
+			"hals": [
+				41.0,
+				40.2
+			],
+			"richtung": "hinten",
+			"winkel": -0.8
+		},
+		"run_hinten_f3": {
+			"hals": [
+				38.6,
+				42.5
+			],
+			"richtung": "hinten",
+			"winkel": -0.4
+		},
+		"run_hinten_f4": {
+			"hals": [
+				43.1,
+				41.2
+			],
+			"richtung": "hinten",
+			"winkel": 0.2
+		},
+		"run_hinten_f5": {
+			"hals": [
+				42.7,
+				39.2
+			],
+			"richtung": "hinten",
+			"winkel": 0.5
+		},
+		"run_hinten_f6": {
+			"hals": [
+				41.2,
+				39.3
+			],
+			"richtung": "hinten",
+			"winkel": -1.0
+		},
+		"run_hinten_f7": {
+			"hals": [
+				41.7,
+				37.1
+			],
+			"richtung": "hinten",
+			"winkel": -0.1
+		},
+		"run_vorn_f0": {
+			"hals": [
+				28.0,
+				46.5
+			],
+			"richtung": "vorn",
+			"winkel": 1.0
+		},
+		"run_vorn_f1": {
+			"hals": [
+				29.1,
+				45.3
+			],
+			"richtung": "vorn",
+			"winkel": -0.2
+		},
+		"run_vorn_f2": {
+			"hals": [
+				31.5,
+				46.2
+			],
+			"richtung": "vorn",
+			"winkel": -0.7
+		},
+		"run_vorn_f3": {
+			"hals": [
+				32.8,
+				43.3
+			],
+			"richtung": "vorn",
+			"winkel": -0.5
+		},
+		"run_vorn_f4": {
+			"hals": [
+				29.4,
 				44.5
 			],
 			"richtung": "vorn",
-			"winkel": 2.2
+			"winkel": 0.3
 		},
-		"idle_vorn_f1": {
+		"run_vorn_f5": {
 			"hals": [
-				28.4,
+				31.2,
 				44.3
+			],
+			"richtung": "vorn",
+			"winkel": 1.1
+		},
+		"run_vorn_f6": {
+			"hals": [
+				30.6,
+				44.4
 			],
 			"richtung": "vorn",
 			"winkel": 1.2
 		},
-		"idle_vorn_f2": {
+		"run_vorn_f7": {
+			"hals": [
+				30.1,
+				48.3
+			],
+			"richtung": "vorn",
+			"winkel": -0.1
+		},
+		"run_welt_seite_f0": {
+			"hals": [
+				35.3,
+				41.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f1": {
+			"hals": [
+				36.4,
+				41.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f2": {
+			"hals": [
+				36.5,
+				40.4
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f3": {
+			"hals": [
+				34.4,
+				41.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f4": {
+			"hals": [
+				39.3,
+				40.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f5": {
+			"hals": [
+				40.4,
+				41.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f6": {
+			"hals": [
+				36.8,
+				40.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f7": {
+			"hals": [
+				36.4,
+				41.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"sitzen_gerade_hinten_f0": {
+			"hals": [
+				30.6,
+				42.2
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.3
+		},
+		"sitzen_gerade_vorn_f0": {
 			"hals": [
 				29.1,
-				45.2
+				46.3
 			],
-			"richtung": "vorn",
-			"winkel": 0.9
+			"richtung": "gerade_vorn",
+			"winkel": -0.1
 		},
-		"idle_vorn_f3": {
-			"hals": [
-				28.5,
-				45.4
-			],
-			"richtung": "vorn",
-			"winkel": 0.8
-		},
-		"run_hinten_f0": {
-			"hals": [
-				32.6,
-				43.2
-			],
-			"richtung": "hinten",
-			"winkel": 1.5
-		},
-		"run_hinten_f1": {
-			"hals": [
-				36.1,
-				43.3
-			],
-			"richtung": "hinten",
-			"winkel": 1.3
-		},
-		"run_hinten_f2": {
-			"hals": [
-				36.2,
-				46.4
-			],
-			"richtung": "hinten",
-			"winkel": 1.7
-		},
-		"run_hinten_f3": {
-			"hals": [
-				33.7,
-				43.4
-			],
-			"richtung": "hinten",
-			"winkel": 1.4
-		},
-		"run_vorn_f0": {
-			"hals": [
-				34.0,
-				44.5
-			],
-			"richtung": "vorn",
-			"winkel": 1.9
-		},
-		"run_vorn_f1": {
-			"hals": [
-				35.4,
-				45.3
-			],
-			"richtung": "vorn",
-			"winkel": 2.1
-		},
-		"run_vorn_f2": {
-			"hals": [
-				35.4,
-				44.5
-			],
-			"richtung": "vorn",
-			"winkel": 0.7
-		},
-		"run_vorn_f3": {
+		"sitzen_hinten_f0": {
 			"hals": [
 				31.8,
-				45.2
+				42.5
+			],
+			"richtung": "hinten",
+			"winkel": -1.3
+		},
+		"sitzen_vorn_f0": {
+			"hals": [
+				28.6,
+				43.2
 			],
 			"richtung": "vorn",
 			"winkel": 0.5
+		},
+		"sitzen_welt_seite_f0": {
+			"hals": [
+				26.5,
+				42.5
+			],
+			"richtung": "seite",
+			"winkel": 0.0
 		}
 	},
 	"grund_haendler": {
@@ -5572,6 +7360,80 @@
 				},
 				"name": "Alte Frau, Kopftuch"
 			},
+			"borko": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						33.0,
+						50
+					],
+					"vorn_normal": [
+						42.9,
+						50
+					]
+				},
+				"name": "Wirt Borko"
+			},
+			"brom": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						30.5,
+						55
+					],
+					"vorn_normal": [
+						35.0,
+						55
+					]
+				},
+				"name": "Torwache Brom"
+			},
+			"edmar": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						29.0,
+						50
+					],
+					"vorn_normal": [
+						38.7,
+						51
+					]
+				},
+				"name": "Vogt Edmar"
+			},
+			"hagebutte": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						33.5,
+						56
+					],
+					"vorn_normal": [
+						39.6,
+						53
+					]
+				},
+				"name": "Oma Hagebutte"
+			},
+			"hanne": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						36.9,
+						58
+					],
+					"vorn_augen_zu": [
+						39.4,
+						56
+					],
+					"vorn_normal": [
+						36.8,
+						56
+					]
+				},
+				"name": "Wirtin Hanne"
+			},
 			"hatta": {
 				"geschlecht": "m",
 				"hals": {
@@ -5585,6 +7447,20 @@
 					]
 				},
 				"name": "Hutmacher Hatta"
+			},
+			"ilse": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						32.5,
+						56
+					],
+					"vorn_normal": [
+						40.3,
+						56
+					]
+				},
+				"name": "Bankhüterin Ilse"
 			},
 			"k_m1": {
 				"geschlecht": "m",
@@ -5617,6 +7493,60 @@
 					]
 				},
 				"name": "Mädchen"
+			},
+			"layla": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						36.5,
+						56
+					],
+					"vorn_augen_zu": [
+						25.6,
+						54
+					],
+					"vorn_normal": [
+						24.8,
+						54
+					]
+				},
+				"name": "Wirtin Layla"
+			},
+			"lene": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						34.0,
+						59
+					],
+					"vorn_augen_zu": [
+						37.2,
+						60
+					],
+					"vorn_normal": [
+						37.1,
+						60
+					]
+				},
+				"name": "Schreiberin Lene"
+			},
+			"lotte": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						25.3,
+						56
+					],
+					"vorn_augen_zu": [
+						32.3,
+						55
+					],
+					"vorn_normal": [
+						32.6,
+						55
+					]
+				},
+				"name": "Lotte"
 			},
 			"m1": {
 				"geschlecht": "m",
@@ -5804,6 +7734,66 @@
 				},
 				"name": "Novize m3"
 			},
+			"nadia": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						29.0,
+						47
+					],
+					"vorn_augen_zu": [
+						23.4,
+						45
+					],
+					"vorn_normal": [
+						23.2,
+						45
+					]
+				},
+				"name": "Brunnenhüterin Nadia"
+			},
+			"pip": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						34.9,
+						57
+					],
+					"vorn_normal": [
+						38.9,
+						57
+					]
+				},
+				"name": "Pip"
+			},
+			"quill": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						30.0,
+						49
+					],
+					"vorn_normal": [
+						43.9,
+						51
+					]
+				},
+				"name": "Steinmetz Quill"
+			},
+			"rashid": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						31.5,
+						50
+					],
+					"vorn_normal": [
+						32.2,
+						53
+					]
+				},
+				"name": "Bankhüter Rashid"
+			},
 			"salbei": {
 				"geschlecht": "w",
 				"hals": {
@@ -5821,6 +7811,20 @@
 					]
 				},
 				"name": "Kräuterhändlerin Salbei"
+			},
+			"tamm": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						35.0,
+						55
+					],
+					"vorn_normal": [
+						37.8,
+						55
+					]
+				},
+				"name": "Bankhüter Tamm"
 			},
 			"tarek": {
 				"geschlecht": "m",
@@ -6135,133 +8139,405 @@
 		},
 		"_name": "Händler (Baukasten)",
 		"_nur_teile": true,
-		"idle_hinten_f0": {
+		"idle_gerade_hinten_f0": {
 			"hals": [
-				40.7,
-				36.4
-			],
-			"richtung": "hinten",
-			"winkel": -3.2
-		},
-		"idle_hinten_f1": {
-			"hals": [
-				40.4,
-				35.2
-			],
-			"richtung": "hinten",
-			"winkel": -6.3
-		},
-		"idle_hinten_f2": {
-			"hals": [
-				40.5,
-				35.3
-			],
-			"richtung": "hinten",
-			"winkel": -10.1
-		},
-		"idle_hinten_f3": {
-			"hals": [
-				39.7,
+				42.0,
 				36.0
 			],
+			"richtung": "gerade_hinten",
+			"winkel": 1.0
+		},
+		"idle_gerade_vorn_f0": {
+			"hals": [
+				44.2,
+				45.4
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -2.1
+		},
+		"idle_hinten_f0": {
+			"hals": [
+				33.9,
+				38.3
+			],
 			"richtung": "hinten",
-			"winkel": -11.1
+			"winkel": -6.6
 		},
 		"idle_vorn_f0": {
 			"hals": [
-				39.5,
-				46.2
+				38.7,
+				45.4
 			],
 			"richtung": "vorn",
-			"winkel": 3.5
+			"winkel": -5.2
 		},
-		"idle_vorn_f1": {
+		"idle_welt_seite_f0": {
 			"hals": [
-				38.5,
-				46.1
+				34.3,
+				45.3
 			],
-			"richtung": "vorn",
-			"winkel": 2.5
+			"richtung": "seite",
+			"winkel": 0.0
 		},
-		"idle_vorn_f2": {
+		"run_gerade_hinten_f0": {
 			"hals": [
-				38.1,
-				46.1
+				41.3,
+				37.1
 			],
-			"richtung": "vorn",
-			"winkel": 2.0
+			"richtung": "gerade_hinten",
+			"winkel": -1.2
 		},
-		"idle_vorn_f3": {
+		"run_gerade_hinten_f1": {
 			"hals": [
-				39.6,
-				48.4
+				41.2,
+				38.2
 			],
-			"richtung": "vorn",
-			"winkel": -2.9
+			"richtung": "gerade_hinten",
+			"winkel": -1.4
+		},
+		"run_gerade_hinten_f2": {
+			"hals": [
+				41.1,
+				40.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.3
+		},
+		"run_gerade_hinten_f3": {
+			"hals": [
+				42.3,
+				37.0
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.5
+		},
+		"run_gerade_hinten_f4": {
+			"hals": [
+				40.8,
+				36.0
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -2.1
+		},
+		"run_gerade_hinten_f5": {
+			"hals": [
+				39.1,
+				40.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.5
+		},
+		"run_gerade_hinten_f6": {
+			"hals": [
+				41.1,
+				38.0
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.7
+		},
+		"run_gerade_hinten_f7": {
+			"hals": [
+				42.9,
+				36.0
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.7
+		},
+		"run_gerade_vorn_f0": {
+			"hals": [
+				42.4,
+				47.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -2.2
+		},
+		"run_gerade_vorn_f1": {
+			"hals": [
+				41.5,
+				46.0
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.7
+		},
+		"run_gerade_vorn_f2": {
+			"hals": [
+				40.7,
+				47.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.5
+		},
+		"run_gerade_vorn_f3": {
+			"hals": [
+				43.7,
+				47.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.2
+		},
+		"run_gerade_vorn_f4": {
+			"hals": [
+				42.7,
+				46.0
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.0
+		},
+		"run_gerade_vorn_f5": {
+			"hals": [
+				42.4,
+				47.2
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.7
+		},
+		"run_gerade_vorn_f6": {
+			"hals": [
+				42.1,
+				47.5
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.3
+		},
+		"run_gerade_vorn_f7": {
+			"hals": [
+				40.1,
+				46.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.5
 		},
 		"run_hinten_f0": {
 			"hals": [
-				47.2,
-				37.2
+				44.1,
+				35.4
 			],
 			"richtung": "hinten",
-			"winkel": -9.3
+			"winkel": 6.7
 		},
 		"run_hinten_f1": {
 			"hals": [
-				44.8,
-				36.3
+				44.2,
+				40.5
 			],
 			"richtung": "hinten",
-			"winkel": -9.7
+			"winkel": 6.0
 		},
 		"run_hinten_f2": {
 			"hals": [
-				48.1,
-				37.1
+				48.6,
+				40.4
 			],
 			"richtung": "hinten",
-			"winkel": -11.4
+			"winkel": 5.7
 		},
 		"run_hinten_f3": {
 			"hals": [
-				46.3,
-				38.2
+				45.1,
+				35.0
 			],
 			"richtung": "hinten",
-			"winkel": -10.7
+			"winkel": 6.8
+		},
+		"run_hinten_f4": {
+			"hals": [
+				47.1,
+				35.1
+			],
+			"richtung": "hinten",
+			"winkel": 7.5
+		},
+		"run_hinten_f5": {
+			"hals": [
+				44.2,
+				40.4
+			],
+			"richtung": "hinten",
+			"winkel": 6.9
+		},
+		"run_hinten_f6": {
+			"hals": [
+				44.6,
+				40.4
+			],
+			"richtung": "hinten",
+			"winkel": 6.1
+		},
+		"run_hinten_f7": {
+			"hals": [
+				47.0,
+				35.5
+			],
+			"richtung": "hinten",
+			"winkel": 7.4
 		},
 		"run_vorn_f0": {
 			"hals": [
-				39.1,
-				46.1
+				42.2,
+				49.3
 			],
 			"richtung": "vorn",
-			"winkel": 5.1
+			"winkel": 0.2
 		},
 		"run_vorn_f1": {
 			"hals": [
-				40.3,
-				46.2
+				44.0,
+				50.3
 			],
 			"richtung": "vorn",
-			"winkel": 4.4
+			"winkel": 0.4
 		},
 		"run_vorn_f2": {
 			"hals": [
-				41.4,
-				46.5
+				41.7,
+				51.3
 			],
 			"richtung": "vorn",
-			"winkel": 3.9
+			"winkel": 1.2
 		},
 		"run_vorn_f3": {
 			"hals": [
-				40.2,
-				46.1
+				43.2,
+				48.2
 			],
 			"richtung": "vorn",
-			"winkel": 2.4
+			"winkel": -0.6
+		},
+		"run_vorn_f4": {
+			"hals": [
+				43.4,
+				48.4
+			],
+			"richtung": "vorn",
+			"winkel": 0.7
+		},
+		"run_vorn_f5": {
+			"hals": [
+				41.6,
+				49.4
+			],
+			"richtung": "vorn",
+			"winkel": 0.2
+		},
+		"run_vorn_f6": {
+			"hals": [
+				44.2,
+				52.2
+			],
+			"richtung": "vorn",
+			"winkel": 0.5
+		},
+		"run_vorn_f7": {
+			"hals": [
+				42.4,
+				48.5
+			],
+			"richtung": "vorn",
+			"winkel": 0.7
+		},
+		"run_welt_seite_f0": {
+			"hals": [
+				41.1,
+				47.4
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f1": {
+			"hals": [
+				42.3,
+				46.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f2": {
+			"hals": [
+				44.4,
+				45.0
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f3": {
+			"hals": [
+				40.7,
+				47.4
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f4": {
+			"hals": [
+				41.0,
+				45.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f5": {
+			"hals": [
+				42.8,
+				46.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f6": {
+			"hals": [
+				42.5,
+				47.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f7": {
+			"hals": [
+				41.8,
+				47.5
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"sitzen_gerade_hinten_f0": {
+			"hals": [
+				40.8,
+				38.2
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.0
+		},
+		"sitzen_gerade_vorn_f0": {
+			"hals": [
+				42.1,
+				45.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -3.1
+		},
+		"sitzen_hinten_f0": {
+			"hals": [
+				39.6,
+				38.1
+			],
+			"richtung": "hinten",
+			"winkel": -4.5
+		},
+		"sitzen_vorn_f0": {
+			"hals": [
+				41.3,
+				45.2
+			],
+			"richtung": "vorn",
+			"winkel": -3.8
+		},
+		"sitzen_welt_seite_f0": {
+			"hals": [
+				39.6,
+				44.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
 		}
 	},
 	"grund_handwerker": {
@@ -6332,719 +8608,107 @@
 				},
 				"name": "Alte Frau, Kopftuch"
 			},
-			"k_m1": {
+			"borko": {
 				"geschlecht": "m",
 				"hals": {
 					"hinten_normal": [
-						33.7,
-						59
+						33.0,
+						50
 					],
 					"vorn_normal": [
-						33.5,
-						58
+						42.9,
+						50
 					]
 				},
-				"name": "Junge"
+				"name": "Wirt Borko"
 			},
-			"k_w1": {
-				"geschlecht": "w",
+			"brom": {
+				"geschlecht": "m",
 				"hals": {
 					"hinten_normal": [
 						30.5,
-						56
-					],
-					"vorn_augen_zu": [
-						30.6,
-						56
+						55
 					],
 					"vorn_normal": [
-						30.1,
+						35.0,
 						55
 					]
 				},
-				"name": "Mädchen"
+				"name": "Torwache Brom"
 			},
-			"m1": {
-				"geschlecht": "m",
-				"hals": {
-					"gerade_hinten_normal": [
-						30.9,
-						66
-					],
-					"gerade_vorn_augen_zu": [
-						29.2,
-						66
-					],
-					"gerade_vorn_normal": [
-						29.1,
-						66
-					],
-					"hinten_geneigt": [
-						41.2,
-						55
-					],
-					"hinten_normal": [
-						42.2,
-						56
-					],
-					"seite_augen_zu": [
-						39.3,
-						62
-					],
-					"seite_entschlossen": [
-						39.3,
-						62
-					],
-					"seite_freude": [
-						39.3,
-						62
-					],
-					"seite_normal": [
-						39.3,
-						62
-					],
-					"seite_schmerz": [
-						38.3,
-						62
-					],
-					"vorn_augen_zu": [
-						32.2,
-						66
-					],
-					"vorn_freude": [
-						31.2,
-						66
-					],
-					"vorn_normal": [
-						31.2,
-						66
-					],
-					"vorn_schmerz": [
-						31.2,
-						66
-					]
-				},
-				"name": "Novize m1"
-			},
-			"m2": {
-				"geschlecht": "m",
-				"hals": {
-					"gerade_hinten_normal": [
-						33.5,
-						64
-					],
-					"gerade_vorn_augen_zu": [
-						32.4,
-						65
-					],
-					"gerade_vorn_normal": [
-						31.5,
-						64
-					],
-					"hinten_geneigt": [
-						43.5,
-						53
-					],
-					"hinten_normal": [
-						43.5,
-						54
-					],
-					"seite_augen_zu": [
-						41.8,
-						63
-					],
-					"seite_entschlossen": [
-						41.8,
-						63
-					],
-					"seite_freude": [
-						42.8,
-						63
-					],
-					"seite_normal": [
-						41.8,
-						63
-					],
-					"seite_schmerz": [
-						41.8,
-						63
-					],
-					"vorn_augen_zu": [
-						31.2,
-						63
-					],
-					"vorn_freude": [
-						32.2,
-						63
-					],
-					"vorn_normal": [
-						32.2,
-						63
-					],
-					"vorn_schmerz": [
-						32.2,
-						64
-					]
-				},
-				"name": "Novize m2"
-			},
-			"m3": {
-				"geschlecht": "m",
-				"hals": {
-					"gerade_hinten_normal": [
-						32.4,
-						65
-					],
-					"gerade_vorn_augen_zu": [
-						29.8,
-						64
-					],
-					"gerade_vorn_normal": [
-						29.1,
-						65
-					],
-					"hinten_geneigt": [
-						46.1,
-						57
-					],
-					"hinten_normal": [
-						47.1,
-						57
-					],
-					"seite_augen_zu": [
-						43.7,
-						66
-					],
-					"seite_entschlossen": [
-						42.7,
-						66
-					],
-					"seite_freude": [
-						42.7,
-						66
-					],
-					"seite_normal": [
-						43.7,
-						66
-					],
-					"seite_schmerz": [
-						43.7,
-						66
-					],
-					"vorn_augen_zu": [
-						34.8,
-						65
-					],
-					"vorn_freude": [
-						34.8,
-						65
-					],
-					"vorn_normal": [
-						34.8,
-						65
-					],
-					"vorn_schmerz": [
-						34.8,
-						65
-					]
-				},
-				"name": "Novize m3"
-			},
-			"quill": {
+			"edmar": {
 				"geschlecht": "m",
 				"hals": {
 					"hinten_normal": [
-						30.0,
-						49
+						29.0,
+						50
 					],
 					"vorn_normal": [
-						43.9,
+						38.7,
 						51
 					]
 				},
-				"name": "Steinmetz Quill"
+				"name": "Vogt Edmar"
 			},
-			"v_m1": {
-				"geschlecht": "m",
+			"hagebutte": {
+				"geschlecht": "w",
 				"hals": {
 					"hinten_normal": [
-						30.0,
-						55
-					],
-					"vorn_normal": [
-						31.6,
-						58
-					]
-				},
-				"name": "Mann, kurze braune Haare"
-			},
-			"v_m2": {
-				"geschlecht": "m",
-				"hals": {
-					"hinten_normal": [
-						25.2,
-						49
-					],
-					"vorn_normal": [
-						27.7,
-						53
-					]
-				},
-				"name": "Mann, Glatze mit Bart"
-			},
-			"v_m3": {
-				"geschlecht": "m",
-				"hals": {
-					"hinten_normal": [
-						31.9,
+						33.5,
 						56
 					],
 					"vorn_normal": [
-						33.2,
-						58
-					]
-				},
-				"name": "Mann, schwarze Locken"
-			},
-			"v_w1": {
-				"geschlecht": "w",
-				"hals": {
-					"hinten_normal": [
-						34.0,
-						53
-					],
-					"vorn_augen_zu": [
-						36.0,
-						53
-					],
-					"vorn_normal": [
-						35.8,
+						39.6,
 						53
 					]
 				},
-				"name": "Frau, langer Zopf"
+				"name": "Oma Hagebutte"
 			},
-			"v_w2": {
+			"hanne": {
 				"geschlecht": "w",
-				"hals": {
-					"hinten_normal": [
-						31.5,
-						56
-					],
-					"vorn_augen_zu": [
-						34.1,
-						59
-					],
-					"vorn_normal": [
-						34.3,
-						58
-					]
-				},
-				"name": "Frau, Haarknoten"
-			},
-			"v_w3": {
-				"geschlecht": "w",
-				"hals": {
-					"hinten_normal": [
-						30.5,
-						53
-					],
-					"vorn_augen_zu": [
-						35.3,
-						61
-					],
-					"vorn_normal": [
-						35.4,
-						60
-					]
-				},
-				"name": "Frau, offene rote Haare"
-			},
-			"w1": {
-				"geschlecht": "w",
-				"hals": {
-					"gerade_hinten_normal": [
-						34.0,
-						62
-					],
-					"gerade_vorn_augen_zu": [
-						30.5,
-						62
-					],
-					"gerade_vorn_normal": [
-						30.5,
-						62
-					],
-					"hinten_geneigt": [
-						30.5,
-						55
-					],
-					"hinten_normal": [
-						29.5,
-						55
-					],
-					"seite_augen_zu": [
-						30.2,
-						61
-					],
-					"seite_entschlossen": [
-						30.2,
-						61
-					],
-					"seite_freude": [
-						29.2,
-						60
-					],
-					"seite_normal": [
-						30.2,
-						60
-					],
-					"seite_schmerz": [
-						30.2,
-						60
-					],
-					"vorn_augen_zu": [
-						33.5,
-						62
-					],
-					"vorn_freude": [
-						33.5,
-						62
-					],
-					"vorn_normal": [
-						33.5,
-						62
-					],
-					"vorn_schmerz": [
-						33.5,
-						62
-					]
-				},
-				"name": "Novizin w1"
-			},
-			"w2": {
-				"geschlecht": "w",
-				"hals": {
-					"gerade_hinten_normal": [
-						31.9,
-						67
-					],
-					"gerade_vorn_augen_zu": [
-						24.6,
-						67
-					],
-					"gerade_vorn_normal": [
-						24.6,
-						67
-					],
-					"hinten_geneigt": [
-						49.8,
-						57
-					],
-					"hinten_normal": [
-						45.8,
-						57
-					],
-					"seite_augen_zu": [
-						42.8,
-						69
-					],
-					"seite_entschlossen": [
-						41.8,
-						70
-					],
-					"seite_freude": [
-						43.8,
-						69
-					],
-					"seite_normal": [
-						42.8,
-						69
-					],
-					"seite_schmerz": [
-						41.8,
-						69
-					],
-					"vorn_augen_zu": [
-						34.8,
-						68
-					],
-					"vorn_freude": [
-						33.8,
-						67
-					],
-					"vorn_normal": [
-						35.8,
-						68
-					],
-					"vorn_schmerz": [
-						36.8,
-						68
-					]
-				},
-				"name": "Novizin w2"
-			},
-			"w3": {
-				"geschlecht": "w",
-				"hals": {
-					"gerade_hinten_normal": [
-						33.4,
-						68
-					],
-					"gerade_vorn_augen_zu": [
-						31.4,
-						68
-					],
-					"gerade_vorn_normal": [
-						31.1,
-						68
-					],
-					"hinten_geneigt": [
-						51.3,
-						59
-					],
-					"hinten_normal": [
-						51.3,
-						60
-					],
-					"seite_augen_zu": [
-						49.4,
-						67
-					],
-					"seite_entschlossen": [
-						48.4,
-						67
-					],
-					"seite_freude": [
-						48.4,
-						67
-					],
-					"seite_normal": [
-						48.4,
-						67
-					],
-					"seite_schmerz": [
-						48.4,
-						67
-					],
-					"vorn_augen_zu": [
-						34.1,
-						69
-					],
-					"vorn_freude": [
-						34.1,
-						69
-					],
-					"vorn_normal": [
-						35.1,
-						69
-					],
-					"vorn_schmerz": [
-						34.1,
-						69
-					]
-				},
-				"name": "Novizin w3"
-			}
-		},
-		"_name": "Handwerker (Baukasten)",
-		"_nur_teile": true,
-		"idle_hinten_f0": {
-			"hals": [
-				35.8,
-				39.1
-			],
-			"richtung": "hinten",
-			"winkel": -2.6
-		},
-		"idle_hinten_f1": {
-			"hals": [
-				36.3,
-				38.3
-			],
-			"richtung": "hinten",
-			"winkel": -4.5
-		},
-		"idle_hinten_f2": {
-			"hals": [
-				35.7,
-				39.2
-			],
-			"richtung": "hinten",
-			"winkel": -9.3
-		},
-		"idle_hinten_f3": {
-			"hals": [
-				35.6,
-				39.1
-			],
-			"richtung": "hinten",
-			"winkel": -9.6
-		},
-		"idle_vorn_f0": {
-			"hals": [
-				39.0,
-				46.1
-			],
-			"richtung": "vorn",
-			"winkel": 2.0
-		},
-		"idle_vorn_f1": {
-			"hals": [
-				40.0,
-				47.1
-			],
-			"richtung": "vorn",
-			"winkel": 1.1
-		},
-		"idle_vorn_f2": {
-			"hals": [
-				39.6,
-				48.2
-			],
-			"richtung": "vorn",
-			"winkel": -1.4
-		},
-		"idle_vorn_f3": {
-			"hals": [
-				39.9,
-				49.2
-			],
-			"richtung": "vorn",
-			"winkel": -3.2
-		},
-		"run_hinten_f0": {
-			"hals": [
-				44.2,
-				38.1
-			],
-			"richtung": "hinten",
-			"winkel": -8.4
-		},
-		"run_hinten_f1": {
-			"hals": [
-				42.6,
-				36.2
-			],
-			"richtung": "hinten",
-			"winkel": -9.4
-		},
-		"run_hinten_f2": {
-			"hals": [
-				45.4,
-				38.3
-			],
-			"richtung": "hinten",
-			"winkel": -10.4
-		},
-		"run_hinten_f3": {
-			"hals": [
-				44.6,
-				38.3
-			],
-			"richtung": "hinten",
-			"winkel": -9.4
-		},
-		"run_vorn_f0": {
-			"hals": [
-				38.8,
-				46.3
-			],
-			"richtung": "vorn",
-			"winkel": 3.1
-		},
-		"run_vorn_f1": {
-			"hals": [
-				39.3,
-				46.0
-			],
-			"richtung": "vorn",
-			"winkel": 3.5
-		},
-		"run_vorn_f2": {
-			"hals": [
-				39.2,
-				47.2
-			],
-			"richtung": "vorn",
-			"winkel": 1.0
-		},
-		"run_vorn_f3": {
-			"hals": [
-				39.9,
-				46.4
-			],
-			"richtung": "vorn",
-			"winkel": 1.2
-		}
-	},
-	"grund_kind": {
-		"_baukasten": true,
-		"_eigener_kopf": "k_m1",
-		"_koepfe": {
-			"a_m1": {
-				"geschlecht": "m",
 				"hals": {
 					"hinten_normal": [
 						36.9,
-						61
+						58
+					],
+					"vorn_augen_zu": [
+						39.4,
+						56
 					],
 					"vorn_normal": [
-						29.9,
-						62
-					]
-				},
-				"name": "Alter Mann, weißer Bart"
-			},
-			"a_m2": {
-				"geschlecht": "m",
-				"hals": {
-					"hinten_normal": [
-						34.3,
-						55
-					],
-					"vorn_normal": [
-						39.0,
+						36.8,
 						56
 					]
 				},
-				"name": "Alter Mann, Halbglatze"
+				"name": "Wirtin Hanne"
 			},
-			"a_w1": {
+			"hatta": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						40.6,
+						34
+					],
+					"vorn_normal": [
+						44.5,
+						66
+					]
+				},
+				"name": "Hutmacher Hatta"
+			},
+			"ilse": {
 				"geschlecht": "w",
 				"hals": {
 					"hinten_normal": [
-						33.5,
-						59
-					],
-					"vorn_augen_zu": [
-						32.7,
-						60
+						32.5,
+						56
 					],
 					"vorn_normal": [
-						32.6,
-						59
+						40.3,
+						56
 					]
 				},
-				"name": "Alte Frau, grauer Dutt"
-			},
-			"a_w2": {
-				"geschlecht": "w",
-				"hals": {
-					"hinten_normal": [
-						36.0,
-						60
-					],
-					"vorn_augen_zu": [
-						35.9,
-						59
-					],
-					"vorn_normal": [
-						35.8,
-						58
-					]
-				},
-				"name": "Alte Frau, Kopftuch"
+				"name": "Bankhüterin Ilse"
 			},
 			"k_m1": {
 				"geschlecht": "m",
@@ -7077,6 +8741,42 @@
 					]
 				},
 				"name": "Mädchen"
+			},
+			"layla": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						36.5,
+						56
+					],
+					"vorn_augen_zu": [
+						25.6,
+						54
+					],
+					"vorn_normal": [
+						24.8,
+						54
+					]
+				},
+				"name": "Wirtin Layla"
+			},
+			"lene": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						34.0,
+						59
+					],
+					"vorn_augen_zu": [
+						37.2,
+						60
+					],
+					"vorn_normal": [
+						37.1,
+						60
+					]
+				},
+				"name": "Schreiberin Lene"
 			},
 			"lotte": {
 				"geschlecht": "w",
@@ -7282,6 +8982,24 @@
 				},
 				"name": "Novize m3"
 			},
+			"nadia": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						29.0,
+						47
+					],
+					"vorn_augen_zu": [
+						23.4,
+						45
+					],
+					"vorn_normal": [
+						23.2,
+						45
+					]
+				},
+				"name": "Brunnenhüterin Nadia"
+			},
 			"pip": {
 				"geschlecht": "m",
 				"hals": {
@@ -7295,6 +9013,80 @@
 					]
 				},
 				"name": "Pip"
+			},
+			"quill": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						30.0,
+						49
+					],
+					"vorn_normal": [
+						43.9,
+						51
+					]
+				},
+				"name": "Steinmetz Quill"
+			},
+			"rashid": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						31.5,
+						50
+					],
+					"vorn_normal": [
+						32.2,
+						53
+					]
+				},
+				"name": "Bankhüter Rashid"
+			},
+			"salbei": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						26.1,
+						55
+					],
+					"vorn_augen_zu": [
+						28.4,
+						54
+					],
+					"vorn_normal": [
+						28.0,
+						54
+					]
+				},
+				"name": "Kräuterhändlerin Salbei"
+			},
+			"tamm": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						35.0,
+						55
+					],
+					"vorn_normal": [
+						37.8,
+						55
+					]
+				},
+				"name": "Bankhüter Tamm"
+			},
+			"tarek": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						32.5,
+						54
+					],
+					"vorn_normal": [
+						35.6,
+						57
+					]
+				},
+				"name": "Händler Tarek"
 			},
 			"v_m1": {
 				"geschlecht": "m",
@@ -7577,137 +9369,1671 @@
 					]
 				},
 				"name": "Novizin w3"
+			},
+			"zaid": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						21.5,
+						44
+					],
+					"vorn_normal": [
+						28.5,
+						44
+					]
+				},
+				"name": "Karawanenführer Zaid"
+			}
+		},
+		"_name": "Handwerker (Baukasten)",
+		"_nur_teile": true,
+		"idle_gerade_hinten_f0": {
+			"hals": [
+				36.5,
+				45.2
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -2.0
+		},
+		"idle_gerade_vorn_f0": {
+			"hals": [
+				37.3,
+				45.4
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -2.0
+		},
+		"idle_hinten_f0": {
+			"hals": [
+				32.5,
+				45.3
+			],
+			"richtung": "hinten",
+			"winkel": -4.0
+		},
+		"idle_vorn_f0": {
+			"hals": [
+				30.0,
+				45.5
+			],
+			"richtung": "vorn",
+			"winkel": -3.1
+		},
+		"idle_welt_seite_f0": {
+			"hals": [
+				23.8,
+				45.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_gerade_hinten_f0": {
+			"hals": [
+				40.3,
+				43.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.9
+		},
+		"run_gerade_hinten_f1": {
+			"hals": [
+				42.2,
+				47.5
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.5
+		},
+		"run_gerade_hinten_f2": {
+			"hals": [
+				42.6,
+				48.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.1
+		},
+		"run_gerade_hinten_f3": {
+			"hals": [
+				44.1,
+				43.5
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.7
+		},
+		"run_gerade_hinten_f4": {
+			"hals": [
+				44.5,
+				44.2
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.1
+		},
+		"run_gerade_hinten_f5": {
+			"hals": [
+				42.7,
+				46.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.4
+		},
+		"run_gerade_hinten_f6": {
+			"hals": [
+				42.3,
+				47.5
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.5
+		},
+		"run_gerade_hinten_f7": {
+			"hals": [
+				43.5,
+				44.2
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.4
+		},
+		"run_gerade_vorn_f0": {
+			"hals": [
+				36.0,
+				45.5
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.4
+		},
+		"run_gerade_vorn_f1": {
+			"hals": [
+				37.6,
+				45.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.2
+		},
+		"run_gerade_vorn_f2": {
+			"hals": [
+				38.8,
+				48.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.4
+		},
+		"run_gerade_vorn_f3": {
+			"hals": [
+				41.0,
+				45.5
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.6
+		},
+		"run_gerade_vorn_f4": {
+			"hals": [
+				39.7,
+				44.4
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.5
+		},
+		"run_gerade_vorn_f5": {
+			"hals": [
+				41.0,
+				44.0
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.6
+		},
+		"run_gerade_vorn_f6": {
+			"hals": [
+				39.0,
+				48.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.9
+		},
+		"run_gerade_vorn_f7": {
+			"hals": [
+				40.8,
+				44.4
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.4
+		},
+		"run_hinten_f0": {
+			"hals": [
+				45.1,
+				43.0
+			],
+			"richtung": "hinten",
+			"winkel": -7.6
+		},
+		"run_hinten_f1": {
+			"hals": [
+				43.9,
+				43.4
+			],
+			"richtung": "hinten",
+			"winkel": -8.2
+		},
+		"run_hinten_f2": {
+			"hals": [
+				42.9,
+				43.0
+			],
+			"richtung": "hinten",
+			"winkel": -6.8
+		},
+		"run_hinten_f3": {
+			"hals": [
+				42.5,
+				46.1
+			],
+			"richtung": "hinten",
+			"winkel": -6.3
+		},
+		"run_hinten_f4": {
+			"hals": [
+				47.8,
+				44.2
+			],
+			"richtung": "hinten",
+			"winkel": -6.3
+		},
+		"run_hinten_f5": {
+			"hals": [
+				44.0,
+				43.2
+			],
+			"richtung": "hinten",
+			"winkel": -6.7
+		},
+		"run_hinten_f6": {
+			"hals": [
+				44.0,
+				43.0
+			],
+			"richtung": "hinten",
+			"winkel": -7.3
+		},
+		"run_hinten_f7": {
+			"hals": [
+				45.9,
+				42.0
+			],
+			"richtung": "hinten",
+			"winkel": -7.6
+		},
+		"run_vorn_f0": {
+			"hals": [
+				42.5,
+				45.1
+			],
+			"richtung": "vorn",
+			"winkel": -18.4
+		},
+		"run_vorn_f1": {
+			"hals": [
+				44.2,
+				47.3
+			],
+			"richtung": "vorn",
+			"winkel": -11.5
+		},
+		"run_vorn_f2": {
+			"hals": [
+				42.7,
+				47.0
+			],
+			"richtung": "vorn",
+			"winkel": -5.8
+		},
+		"run_vorn_f3": {
+			"hals": [
+				39.8,
+				44.2
+			],
+			"richtung": "vorn",
+			"winkel": -2.5
+		},
+		"run_vorn_f4": {
+			"hals": [
+				39.6,
+				42.2
+			],
+			"richtung": "vorn",
+			"winkel": -2.6
+		},
+		"run_vorn_f5": {
+			"hals": [
+				44.1,
+				46.2
+			],
+			"richtung": "vorn",
+			"winkel": -2.0
+		},
+		"run_vorn_f6": {
+			"hals": [
+				41.4,
+				48.1
+			],
+			"richtung": "vorn",
+			"winkel": -3.2
+		},
+		"run_vorn_f7": {
+			"hals": [
+				41.1,
+				44.0
+			],
+			"richtung": "vorn",
+			"winkel": -2.9
+		},
+		"run_welt_seite_f0": {
+			"hals": [
+				40.3,
+				47.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f1": {
+			"hals": [
+				45.1,
+				44.0
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f2": {
+			"hals": [
+				43.6,
+				46.0
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f3": {
+			"hals": [
+				40.2,
+				44.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f4": {
+			"hals": [
+				40.1,
+				43.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f5": {
+			"hals": [
+				42.0,
+				44.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f6": {
+			"hals": [
+				45.5,
+				44.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f7": {
+			"hals": [
+				40.8,
+				44.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"sitzen_gerade_hinten_f0": {
+			"hals": [
+				36.3,
+				45.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.8
+		},
+		"sitzen_gerade_vorn_f0": {
+			"hals": [
+				35.5,
+				45.7
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -1.3
+		},
+		"sitzen_hinten_f0": {
+			"hals": [
+				34.7,
+				46.2
+			],
+			"richtung": "hinten",
+			"winkel": 0.0
+		},
+		"sitzen_vorn_f0": {
+			"hals": [
+				29.2,
+				45.3
+			],
+			"richtung": "vorn",
+			"winkel": -1.9
+		},
+		"sitzen_welt_seite_f0": {
+			"hals": [
+				28.8,
+				46.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		}
+	},
+	"grund_kind": {
+		"_baukasten": true,
+		"_eigener_kopf": "k_m1",
+		"_koepfe": {
+			"a_m1": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						36.9,
+						61
+					],
+					"vorn_normal": [
+						29.9,
+						62
+					]
+				},
+				"name": "Alter Mann, weißer Bart"
+			},
+			"a_m2": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						34.3,
+						55
+					],
+					"vorn_normal": [
+						39.0,
+						56
+					]
+				},
+				"name": "Alter Mann, Halbglatze"
+			},
+			"a_w1": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						33.5,
+						59
+					],
+					"vorn_augen_zu": [
+						32.7,
+						60
+					],
+					"vorn_normal": [
+						32.6,
+						59
+					]
+				},
+				"name": "Alte Frau, grauer Dutt"
+			},
+			"a_w2": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						36.0,
+						60
+					],
+					"vorn_augen_zu": [
+						35.9,
+						59
+					],
+					"vorn_normal": [
+						35.8,
+						58
+					]
+				},
+				"name": "Alte Frau, Kopftuch"
+			},
+			"borko": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						33.0,
+						50
+					],
+					"vorn_normal": [
+						42.9,
+						50
+					]
+				},
+				"name": "Wirt Borko"
+			},
+			"brom": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						30.5,
+						55
+					],
+					"vorn_normal": [
+						35.0,
+						55
+					]
+				},
+				"name": "Torwache Brom"
+			},
+			"edmar": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						29.0,
+						50
+					],
+					"vorn_normal": [
+						38.7,
+						51
+					]
+				},
+				"name": "Vogt Edmar"
+			},
+			"hagebutte": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						33.5,
+						56
+					],
+					"vorn_normal": [
+						39.6,
+						53
+					]
+				},
+				"name": "Oma Hagebutte"
+			},
+			"hanne": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						36.9,
+						58
+					],
+					"vorn_augen_zu": [
+						39.4,
+						56
+					],
+					"vorn_normal": [
+						36.8,
+						56
+					]
+				},
+				"name": "Wirtin Hanne"
+			},
+			"hatta": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						40.6,
+						34
+					],
+					"vorn_normal": [
+						44.5,
+						66
+					]
+				},
+				"name": "Hutmacher Hatta"
+			},
+			"ilse": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						32.5,
+						56
+					],
+					"vorn_normal": [
+						40.3,
+						56
+					]
+				},
+				"name": "Bankhüterin Ilse"
+			},
+			"k_m1": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						33.7,
+						59
+					],
+					"vorn_normal": [
+						33.5,
+						58
+					]
+				},
+				"name": "Junge"
+			},
+			"k_w1": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						30.5,
+						56
+					],
+					"vorn_augen_zu": [
+						30.6,
+						56
+					],
+					"vorn_normal": [
+						30.1,
+						55
+					]
+				},
+				"name": "Mädchen"
+			},
+			"layla": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						36.5,
+						56
+					],
+					"vorn_augen_zu": [
+						25.6,
+						54
+					],
+					"vorn_normal": [
+						24.8,
+						54
+					]
+				},
+				"name": "Wirtin Layla"
+			},
+			"lene": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						34.0,
+						59
+					],
+					"vorn_augen_zu": [
+						37.2,
+						60
+					],
+					"vorn_normal": [
+						37.1,
+						60
+					]
+				},
+				"name": "Schreiberin Lene"
+			},
+			"lotte": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						25.3,
+						56
+					],
+					"vorn_augen_zu": [
+						32.3,
+						55
+					],
+					"vorn_normal": [
+						32.6,
+						55
+					]
+				},
+				"name": "Lotte"
+			},
+			"m1": {
+				"geschlecht": "m",
+				"hals": {
+					"gerade_hinten_normal": [
+						30.9,
+						66
+					],
+					"gerade_vorn_augen_zu": [
+						29.2,
+						66
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						66
+					],
+					"hinten_geneigt": [
+						41.2,
+						55
+					],
+					"hinten_normal": [
+						42.2,
+						56
+					],
+					"seite_augen_zu": [
+						39.3,
+						62
+					],
+					"seite_entschlossen": [
+						39.3,
+						62
+					],
+					"seite_freude": [
+						39.3,
+						62
+					],
+					"seite_normal": [
+						39.3,
+						62
+					],
+					"seite_schmerz": [
+						38.3,
+						62
+					],
+					"vorn_augen_zu": [
+						32.2,
+						66
+					],
+					"vorn_freude": [
+						31.2,
+						66
+					],
+					"vorn_normal": [
+						31.2,
+						66
+					],
+					"vorn_schmerz": [
+						31.2,
+						66
+					]
+				},
+				"name": "Novize m1"
+			},
+			"m2": {
+				"geschlecht": "m",
+				"hals": {
+					"gerade_hinten_normal": [
+						33.5,
+						64
+					],
+					"gerade_vorn_augen_zu": [
+						32.4,
+						65
+					],
+					"gerade_vorn_normal": [
+						31.5,
+						64
+					],
+					"hinten_geneigt": [
+						43.5,
+						53
+					],
+					"hinten_normal": [
+						43.5,
+						54
+					],
+					"seite_augen_zu": [
+						41.8,
+						63
+					],
+					"seite_entschlossen": [
+						41.8,
+						63
+					],
+					"seite_freude": [
+						42.8,
+						63
+					],
+					"seite_normal": [
+						41.8,
+						63
+					],
+					"seite_schmerz": [
+						41.8,
+						63
+					],
+					"vorn_augen_zu": [
+						31.2,
+						63
+					],
+					"vorn_freude": [
+						32.2,
+						63
+					],
+					"vorn_normal": [
+						32.2,
+						63
+					],
+					"vorn_schmerz": [
+						32.2,
+						64
+					]
+				},
+				"name": "Novize m2"
+			},
+			"m3": {
+				"geschlecht": "m",
+				"hals": {
+					"gerade_hinten_normal": [
+						32.4,
+						65
+					],
+					"gerade_vorn_augen_zu": [
+						29.8,
+						64
+					],
+					"gerade_vorn_normal": [
+						29.1,
+						65
+					],
+					"hinten_geneigt": [
+						46.1,
+						57
+					],
+					"hinten_normal": [
+						47.1,
+						57
+					],
+					"seite_augen_zu": [
+						43.7,
+						66
+					],
+					"seite_entschlossen": [
+						42.7,
+						66
+					],
+					"seite_freude": [
+						42.7,
+						66
+					],
+					"seite_normal": [
+						43.7,
+						66
+					],
+					"seite_schmerz": [
+						43.7,
+						66
+					],
+					"vorn_augen_zu": [
+						34.8,
+						65
+					],
+					"vorn_freude": [
+						34.8,
+						65
+					],
+					"vorn_normal": [
+						34.8,
+						65
+					],
+					"vorn_schmerz": [
+						34.8,
+						65
+					]
+				},
+				"name": "Novize m3"
+			},
+			"nadia": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						29.0,
+						47
+					],
+					"vorn_augen_zu": [
+						23.4,
+						45
+					],
+					"vorn_normal": [
+						23.2,
+						45
+					]
+				},
+				"name": "Brunnenhüterin Nadia"
+			},
+			"pip": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						34.9,
+						57
+					],
+					"vorn_normal": [
+						38.9,
+						57
+					]
+				},
+				"name": "Pip"
+			},
+			"quill": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						30.0,
+						49
+					],
+					"vorn_normal": [
+						43.9,
+						51
+					]
+				},
+				"name": "Steinmetz Quill"
+			},
+			"rashid": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						31.5,
+						50
+					],
+					"vorn_normal": [
+						32.2,
+						53
+					]
+				},
+				"name": "Bankhüter Rashid"
+			},
+			"salbei": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						26.1,
+						55
+					],
+					"vorn_augen_zu": [
+						28.4,
+						54
+					],
+					"vorn_normal": [
+						28.0,
+						54
+					]
+				},
+				"name": "Kräuterhändlerin Salbei"
+			},
+			"tamm": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						35.0,
+						55
+					],
+					"vorn_normal": [
+						37.8,
+						55
+					]
+				},
+				"name": "Bankhüter Tamm"
+			},
+			"tarek": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						32.5,
+						54
+					],
+					"vorn_normal": [
+						35.6,
+						57
+					]
+				},
+				"name": "Händler Tarek"
+			},
+			"v_m1": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						30.0,
+						55
+					],
+					"vorn_normal": [
+						31.6,
+						58
+					]
+				},
+				"name": "Mann, kurze braune Haare"
+			},
+			"v_m2": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						25.2,
+						49
+					],
+					"vorn_normal": [
+						27.7,
+						53
+					]
+				},
+				"name": "Mann, Glatze mit Bart"
+			},
+			"v_m3": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						31.9,
+						56
+					],
+					"vorn_normal": [
+						33.2,
+						58
+					]
+				},
+				"name": "Mann, schwarze Locken"
+			},
+			"v_w1": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						34.0,
+						53
+					],
+					"vorn_augen_zu": [
+						36.0,
+						53
+					],
+					"vorn_normal": [
+						35.8,
+						53
+					]
+				},
+				"name": "Frau, langer Zopf"
+			},
+			"v_w2": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						31.5,
+						56
+					],
+					"vorn_augen_zu": [
+						34.1,
+						59
+					],
+					"vorn_normal": [
+						34.3,
+						58
+					]
+				},
+				"name": "Frau, Haarknoten"
+			},
+			"v_w3": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						30.5,
+						53
+					],
+					"vorn_augen_zu": [
+						35.3,
+						61
+					],
+					"vorn_normal": [
+						35.4,
+						60
+					]
+				},
+				"name": "Frau, offene rote Haare"
+			},
+			"w1": {
+				"geschlecht": "w",
+				"hals": {
+					"gerade_hinten_normal": [
+						34.0,
+						62
+					],
+					"gerade_vorn_augen_zu": [
+						30.5,
+						62
+					],
+					"gerade_vorn_normal": [
+						30.5,
+						62
+					],
+					"hinten_geneigt": [
+						30.5,
+						55
+					],
+					"hinten_normal": [
+						29.5,
+						55
+					],
+					"seite_augen_zu": [
+						30.2,
+						61
+					],
+					"seite_entschlossen": [
+						30.2,
+						61
+					],
+					"seite_freude": [
+						29.2,
+						60
+					],
+					"seite_normal": [
+						30.2,
+						60
+					],
+					"seite_schmerz": [
+						30.2,
+						60
+					],
+					"vorn_augen_zu": [
+						33.5,
+						62
+					],
+					"vorn_freude": [
+						33.5,
+						62
+					],
+					"vorn_normal": [
+						33.5,
+						62
+					],
+					"vorn_schmerz": [
+						33.5,
+						62
+					]
+				},
+				"name": "Novizin w1"
+			},
+			"w2": {
+				"geschlecht": "w",
+				"hals": {
+					"gerade_hinten_normal": [
+						31.9,
+						67
+					],
+					"gerade_vorn_augen_zu": [
+						24.6,
+						67
+					],
+					"gerade_vorn_normal": [
+						24.6,
+						67
+					],
+					"hinten_geneigt": [
+						49.8,
+						57
+					],
+					"hinten_normal": [
+						45.8,
+						57
+					],
+					"seite_augen_zu": [
+						42.8,
+						69
+					],
+					"seite_entschlossen": [
+						41.8,
+						70
+					],
+					"seite_freude": [
+						43.8,
+						69
+					],
+					"seite_normal": [
+						42.8,
+						69
+					],
+					"seite_schmerz": [
+						41.8,
+						69
+					],
+					"vorn_augen_zu": [
+						34.8,
+						68
+					],
+					"vorn_freude": [
+						33.8,
+						67
+					],
+					"vorn_normal": [
+						35.8,
+						68
+					],
+					"vorn_schmerz": [
+						36.8,
+						68
+					]
+				},
+				"name": "Novizin w2"
+			},
+			"w3": {
+				"geschlecht": "w",
+				"hals": {
+					"gerade_hinten_normal": [
+						33.4,
+						68
+					],
+					"gerade_vorn_augen_zu": [
+						31.4,
+						68
+					],
+					"gerade_vorn_normal": [
+						31.1,
+						68
+					],
+					"hinten_geneigt": [
+						51.3,
+						59
+					],
+					"hinten_normal": [
+						51.3,
+						60
+					],
+					"seite_augen_zu": [
+						49.4,
+						67
+					],
+					"seite_entschlossen": [
+						48.4,
+						67
+					],
+					"seite_freude": [
+						48.4,
+						67
+					],
+					"seite_normal": [
+						48.4,
+						67
+					],
+					"seite_schmerz": [
+						48.4,
+						67
+					],
+					"vorn_augen_zu": [
+						34.1,
+						69
+					],
+					"vorn_freude": [
+						34.1,
+						69
+					],
+					"vorn_normal": [
+						35.1,
+						69
+					],
+					"vorn_schmerz": [
+						34.1,
+						69
+					]
+				},
+				"name": "Novizin w3"
+			},
+			"zaid": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						21.5,
+						44
+					],
+					"vorn_normal": [
+						28.5,
+						44
+					]
+				},
+				"name": "Karawanenführer Zaid"
 			}
 		},
 		"_name": "Kind (Baukasten)",
 		"_nur_teile": true,
+		"idle_gerade_hinten_f0": {
+			"hals": [
+				29.8,
+				45.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -3.7
+		},
+		"idle_gerade_vorn_f0": {
+			"hals": [
+				28.1,
+				45.4
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -1.9
+		},
 		"idle_hinten_f0": {
 			"hals": [
-				29.5,
-				46.3
+				26.2,
+				45.1
 			],
 			"richtung": "hinten",
-			"winkel": -0.6
-		},
-		"idle_hinten_f1": {
-			"hals": [
-				28.4,
-				46.3
-			],
-			"richtung": "hinten",
-			"winkel": -0.4
-		},
-		"idle_hinten_f2": {
-			"hals": [
-				28.3,
-				46.3
-			],
-			"richtung": "hinten",
-			"winkel": -1.3
-		},
-		"idle_hinten_f3": {
-			"hals": [
-				28.4,
-				46.2
-			],
-			"richtung": "hinten",
-			"winkel": -0.5
+			"winkel": -4.4
 		},
 		"idle_vorn_f0": {
 			"hals": [
-				27.2,
-				45.1
+				24.4,
+				45.3
 			],
 			"richtung": "vorn",
-			"winkel": -1.3
+			"winkel": -3.4
 		},
-		"idle_vorn_f1": {
+		"idle_welt_seite_f0": {
 			"hals": [
-				25.7,
-				45.2
+				21.3,
+				45.0
 			],
-			"richtung": "vorn",
-			"winkel": -0.5
+			"richtung": "seite",
+			"winkel": 0.0
 		},
-		"idle_vorn_f2": {
+		"run_gerade_hinten_f0": {
 			"hals": [
-				26.2,
-				46.2
+				28.1,
+				43.1
 			],
-			"richtung": "vorn",
+			"richtung": "gerade_hinten",
+			"winkel": -0.1
+		},
+		"run_gerade_hinten_f1": {
+			"hals": [
+				28.9,
+				45.3
+			],
+			"richtung": "gerade_hinten",
+			"winkel": 1.0
+		},
+		"run_gerade_hinten_f2": {
+			"hals": [
+				28.0,
+				44.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.4
+		},
+		"run_gerade_hinten_f3": {
+			"hals": [
+				28.4,
+				42.3
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.8
+		},
+		"run_gerade_hinten_f4": {
+			"hals": [
+				27.9,
+				43.2
+			],
+			"richtung": "gerade_hinten",
+			"winkel": 0.0
+		},
+		"run_gerade_hinten_f5": {
+			"hals": [
+				29.4,
+				45.3
+			],
+			"richtung": "gerade_hinten",
+			"winkel": 0.7
+		},
+		"run_gerade_hinten_f6": {
+			"hals": [
+				30.6,
+				44.3
+			],
+			"richtung": "gerade_hinten",
+			"winkel": 0.2
+		},
+		"run_gerade_hinten_f7": {
+			"hals": [
+				28.2,
+				43.2
+			],
+			"richtung": "gerade_hinten",
+			"winkel": 0.1
+		},
+		"run_gerade_vorn_f0": {
+			"hals": [
+				27.3,
+				40.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.7
+		},
+		"run_gerade_vorn_f1": {
+			"hals": [
+				26.5,
+				41.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.2
+		},
+		"run_gerade_vorn_f2": {
+			"hals": [
+				29.8,
+				43.4
+			],
+			"richtung": "gerade_vorn",
 			"winkel": -1.2
 		},
-		"idle_vorn_f3": {
+		"run_gerade_vorn_f3": {
 			"hals": [
-				26.0,
-				46.1
+				27.6,
+				40.4
 			],
-			"richtung": "vorn",
-			"winkel": -1.2
+			"richtung": "gerade_vorn",
+			"winkel": -0.3
+		},
+		"run_gerade_vorn_f4": {
+			"hals": [
+				28.1,
+				40.4
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -1.0
+		},
+		"run_gerade_vorn_f5": {
+			"hals": [
+				26.8,
+				43.0
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.2
+		},
+		"run_gerade_vorn_f6": {
+			"hals": [
+				26.7,
+				43.5
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.6
+		},
+		"run_gerade_vorn_f7": {
+			"hals": [
+				26.6,
+				40.5
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.0
 		},
 		"run_hinten_f0": {
 			"hals": [
-				30.1,
-				46.2
+				37.4,
+				41.0
+			],
+			"richtung": "hinten",
+			"winkel": -0.7
+		},
+		"run_hinten_f1": {
+			"hals": [
+				32.3,
+				43.4
+			],
+			"richtung": "hinten",
+			"winkel": -1.2
+		},
+		"run_hinten_f2": {
+			"hals": [
+				33.0,
+				42.4
+			],
+			"richtung": "hinten",
+			"winkel": -0.5
+		},
+		"run_hinten_f3": {
+			"hals": [
+				32.9,
+				42.1
+			],
+			"richtung": "hinten",
+			"winkel": -0.7
+		},
+		"run_hinten_f4": {
+			"hals": [
+				31.1,
+				41.1
+			],
+			"richtung": "hinten",
+			"winkel": -1.0
+		},
+		"run_hinten_f5": {
+			"hals": [
+				33.6,
+				42.5
+			],
+			"richtung": "hinten",
+			"winkel": -0.7
+		},
+		"run_hinten_f6": {
+			"hals": [
+				34.8,
+				42.0
+			],
+			"richtung": "hinten",
+			"winkel": -0.9
+		},
+		"run_hinten_f7": {
+			"hals": [
+				34.5,
+				41.4
 			],
 			"richtung": "hinten",
 			"winkel": -0.6
 		},
-		"run_hinten_f1": {
-			"hals": [
-				34.1,
-				46.1
-			],
-			"richtung": "hinten",
-			"winkel": -0.9
-		},
-		"run_hinten_f2": {
-			"hals": [
-				31.5,
-				48.3
-			],
-			"richtung": "hinten",
-			"winkel": -0.1
-		},
-		"run_hinten_f3": {
-			"hals": [
-				31.0,
-				46.1
-			],
-			"richtung": "hinten",
-			"winkel": -0.3
-		},
 		"run_vorn_f0": {
 			"hals": [
-				33.2,
-				46.2
+				27.5,
+				45.1
 			],
 			"richtung": "vorn",
-			"winkel": -0.5
+			"winkel": -1.8
 		},
 		"run_vorn_f1": {
 			"hals": [
-				31.0,
-				47.3
+				28.6,
+				45.5
 			],
 			"richtung": "vorn",
-			"winkel": -0.4
+			"winkel": -3.4
 		},
 		"run_vorn_f2": {
 			"hals": [
-				32.4,
-				46.4
+				29.7,
+				46.3
 			],
 			"richtung": "vorn",
-			"winkel": -1.3
+			"winkel": -1.7
 		},
 		"run_vorn_f3": {
 			"hals": [
-				30.0,
-				47.3
+				29.6,
+				45.3
 			],
 			"richtung": "vorn",
-			"winkel": -0.9
+			"winkel": -2.1
+		},
+		"run_vorn_f4": {
+			"hals": [
+				27.7,
+				44.1
+			],
+			"richtung": "vorn",
+			"winkel": -2.7
+		},
+		"run_vorn_f5": {
+			"hals": [
+				28.3,
+				43.4
+			],
+			"richtung": "vorn",
+			"winkel": -2.8
+		},
+		"run_vorn_f6": {
+			"hals": [
+				30.8,
+				45.3
+			],
+			"richtung": "vorn",
+			"winkel": -1.8
+		},
+		"run_vorn_f7": {
+			"hals": [
+				28.2,
+				50.4
+			],
+			"richtung": "vorn",
+			"winkel": -1.6
+		},
+		"run_welt_seite_f0": {
+			"hals": [
+				28.6,
+				40.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f1": {
+			"hals": [
+				29.1,
+				39.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f2": {
+			"hals": [
+				28.6,
+				40.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f3": {
+			"hals": [
+				26.8,
+				40.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f4": {
+			"hals": [
+				27.4,
+				40.5
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f5": {
+			"hals": [
+				31.9,
+				40.0
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f6": {
+			"hals": [
+				30.5,
+				40.5
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f7": {
+			"hals": [
+				28.6,
+				40.5
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"sitzen_gerade_hinten_f0": {
+			"hals": [
+				30.0,
+				45.2
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -3.2
+		},
+		"sitzen_gerade_vorn_f0": {
+			"hals": [
+				28.0,
+				45.0
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -2.7
+		},
+		"sitzen_hinten_f0": {
+			"hals": [
+				26.2,
+				45.2
+			],
+			"richtung": "hinten",
+			"winkel": -5.1
+		},
+		"sitzen_vorn_f0": {
+			"hals": [
+				24.8,
+				45.1
+			],
+			"richtung": "vorn",
+			"winkel": -4.6
+		},
+		"sitzen_welt_seite_f0": {
+			"hals": [
+				22.9,
+				45.5
+			],
+			"richtung": "seite",
+			"winkel": 0.0
 		}
 	},
 	"grund_mann": {
@@ -7792,6 +11118,20 @@
 				},
 				"name": "Wirt Borko"
 			},
+			"brom": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						30.5,
+						55
+					],
+					"vorn_normal": [
+						35.0,
+						55
+					]
+				},
+				"name": "Torwache Brom"
+			},
 			"edmar": {
 				"geschlecht": "m",
 				"hals": {
@@ -7805,6 +11145,66 @@
 					]
 				},
 				"name": "Vogt Edmar"
+			},
+			"hagebutte": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						33.5,
+						56
+					],
+					"vorn_normal": [
+						39.6,
+						53
+					]
+				},
+				"name": "Oma Hagebutte"
+			},
+			"hanne": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						36.9,
+						58
+					],
+					"vorn_augen_zu": [
+						39.4,
+						56
+					],
+					"vorn_normal": [
+						36.8,
+						56
+					]
+				},
+				"name": "Wirtin Hanne"
+			},
+			"hatta": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						40.6,
+						34
+					],
+					"vorn_normal": [
+						44.5,
+						66
+					]
+				},
+				"name": "Hutmacher Hatta"
+			},
+			"ilse": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						32.5,
+						56
+					],
+					"vorn_normal": [
+						40.3,
+						56
+					]
+				},
+				"name": "Bankhüterin Ilse"
 			},
 			"k_m1": {
 				"geschlecht": "m",
@@ -7837,6 +11237,60 @@
 					]
 				},
 				"name": "Mädchen"
+			},
+			"layla": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						36.5,
+						56
+					],
+					"vorn_augen_zu": [
+						25.6,
+						54
+					],
+					"vorn_normal": [
+						24.8,
+						54
+					]
+				},
+				"name": "Wirtin Layla"
+			},
+			"lene": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						34.0,
+						59
+					],
+					"vorn_augen_zu": [
+						37.2,
+						60
+					],
+					"vorn_normal": [
+						37.1,
+						60
+					]
+				},
+				"name": "Schreiberin Lene"
+			},
+			"lotte": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						25.3,
+						56
+					],
+					"vorn_augen_zu": [
+						32.3,
+						55
+					],
+					"vorn_normal": [
+						32.6,
+						55
+					]
+				},
+				"name": "Lotte"
 			},
 			"m1": {
 				"geschlecht": "m",
@@ -8023,6 +11477,112 @@
 					]
 				},
 				"name": "Novize m3"
+			},
+			"nadia": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						29.0,
+						47
+					],
+					"vorn_augen_zu": [
+						23.4,
+						45
+					],
+					"vorn_normal": [
+						23.2,
+						45
+					]
+				},
+				"name": "Brunnenhüterin Nadia"
+			},
+			"pip": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						34.9,
+						57
+					],
+					"vorn_normal": [
+						38.9,
+						57
+					]
+				},
+				"name": "Pip"
+			},
+			"quill": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						30.0,
+						49
+					],
+					"vorn_normal": [
+						43.9,
+						51
+					]
+				},
+				"name": "Steinmetz Quill"
+			},
+			"rashid": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						31.5,
+						50
+					],
+					"vorn_normal": [
+						32.2,
+						53
+					]
+				},
+				"name": "Bankhüter Rashid"
+			},
+			"salbei": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						26.1,
+						55
+					],
+					"vorn_augen_zu": [
+						28.4,
+						54
+					],
+					"vorn_normal": [
+						28.0,
+						54
+					]
+				},
+				"name": "Kräuterhändlerin Salbei"
+			},
+			"tamm": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						35.0,
+						55
+					],
+					"vorn_normal": [
+						37.8,
+						55
+					]
+				},
+				"name": "Bankhüter Tamm"
+			},
+			"tarek": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						32.5,
+						54
+					],
+					"vorn_normal": [
+						35.6,
+						57
+					]
+				},
+				"name": "Händler Tarek"
 			},
 			"v_m1": {
 				"geschlecht": "m",
@@ -8305,137 +11865,423 @@
 					]
 				},
 				"name": "Novizin w3"
+			},
+			"zaid": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						21.5,
+						44
+					],
+					"vorn_normal": [
+						28.5,
+						44
+					]
+				},
+				"name": "Karawanenführer Zaid"
 			}
 		},
 		"_name": "Mann (Baukasten)",
 		"_nur_teile": true,
+		"idle_gerade_hinten_f0": {
+			"hals": [
+				32.5,
+				45.3
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -2.3
+		},
+		"idle_gerade_vorn_f0": {
+			"hals": [
+				32.8,
+				45.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -2.1
+		},
 		"idle_hinten_f0": {
 			"hals": [
-				27.6,
-				44.3
+				29.7,
+				45.3
 			],
 			"richtung": "hinten",
-			"winkel": 0.5
-		},
-		"idle_hinten_f1": {
-			"hals": [
-				27.3,
-				43.3
-			],
-			"richtung": "hinten",
-			"winkel": 1.6
-		},
-		"idle_hinten_f2": {
-			"hals": [
-				26.5,
-				43.3
-			],
-			"richtung": "hinten",
-			"winkel": 1.4
-		},
-		"idle_hinten_f3": {
-			"hals": [
-				26.3,
-				43.4
-			],
-			"richtung": "hinten",
-			"winkel": 0.0
+			"winkel": -7.1
 		},
 		"idle_vorn_f0": {
 			"hals": [
-				27.3,
-				45.1
+				28.9,
+				45.4
 			],
 			"richtung": "vorn",
-			"winkel": 2.2
+			"winkel": -7.1
 		},
-		"idle_vorn_f1": {
+		"idle_welt_seite_f0": {
 			"hals": [
-				27.7,
-				45.3
-			],
-			"richtung": "vorn",
-			"winkel": 3.0
-		},
-		"idle_vorn_f2": {
-			"hals": [
-				29.5,
+				24.2,
 				46.3
 			],
-			"richtung": "vorn",
-			"winkel": 2.7
+			"richtung": "seite",
+			"winkel": 0.0
 		},
-		"idle_vorn_f3": {
+		"run_gerade_hinten_f0": {
 			"hals": [
-				28.7,
-				45.1
+				41.1,
+				46.2
 			],
-			"richtung": "vorn",
-			"winkel": 2.0
+			"richtung": "gerade_hinten",
+			"winkel": -1.3
+		},
+		"run_gerade_hinten_f1": {
+			"hals": [
+				37.8,
+				46.2
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.7
+		},
+		"run_gerade_hinten_f2": {
+			"hals": [
+				35.5,
+				47.5
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.2
+		},
+		"run_gerade_hinten_f3": {
+			"hals": [
+				34.4,
+				46.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": 0.4
+		},
+		"run_gerade_hinten_f4": {
+			"hals": [
+				34.7,
+				46.0
+			],
+			"richtung": "gerade_hinten",
+			"winkel": 0.3
+		},
+		"run_gerade_hinten_f5": {
+			"hals": [
+				39.1,
+				46.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.7
+		},
+		"run_gerade_hinten_f6": {
+			"hals": [
+				37.2,
+				48.0
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.7
+		},
+		"run_gerade_hinten_f7": {
+			"hals": [
+				38.5,
+				46.3
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.2
+		},
+		"run_gerade_vorn_f0": {
+			"hals": [
+				32.8,
+				44.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.6
+		},
+		"run_gerade_vorn_f1": {
+			"hals": [
+				32.2,
+				44.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.5
+		},
+		"run_gerade_vorn_f2": {
+			"hals": [
+				32.6,
+				44.4
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.4
+		},
+		"run_gerade_vorn_f3": {
+			"hals": [
+				31.7,
+				42.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.0
+		},
+		"run_gerade_vorn_f4": {
+			"hals": [
+				31.3,
+				44.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.6
+		},
+		"run_gerade_vorn_f5": {
+			"hals": [
+				33.9,
+				44.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.4
+		},
+		"run_gerade_vorn_f6": {
+			"hals": [
+				33.7,
+				44.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.0
+		},
+		"run_gerade_vorn_f7": {
+			"hals": [
+				32.3,
+				42.2
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.2
 		},
 		"run_hinten_f0": {
 			"hals": [
-				31.5,
-				44.5
+				36.5,
+				44.2
 			],
 			"richtung": "hinten",
-			"winkel": 1.1
+			"winkel": -5.2
 		},
 		"run_hinten_f1": {
 			"hals": [
-				32.9,
-				44.5
+				42.1,
+				46.3
 			],
 			"richtung": "hinten",
-			"winkel": 1.2
+			"winkel": -5.1
 		},
 		"run_hinten_f2": {
 			"hals": [
-				33.4,
-				47.0
+				41.4,
+				48.2
 			],
 			"richtung": "hinten",
-			"winkel": 1.4
+			"winkel": -5.0
 		},
 		"run_hinten_f3": {
 			"hals": [
-				32.9,
-				43.4
+				39.8,
+				45.2
 			],
 			"richtung": "hinten",
-			"winkel": 0.4
+			"winkel": -4.0
+		},
+		"run_hinten_f4": {
+			"hals": [
+				39.9,
+				45.1
+			],
+			"richtung": "hinten",
+			"winkel": -5.0
+		},
+		"run_hinten_f5": {
+			"hals": [
+				43.2,
+				44.3
+			],
+			"richtung": "hinten",
+			"winkel": -4.6
+		},
+		"run_hinten_f6": {
+			"hals": [
+				40.5,
+				45.2
+			],
+			"richtung": "hinten",
+			"winkel": -4.9
+		},
+		"run_hinten_f7": {
+			"hals": [
+				40.4,
+				43.2
+			],
+			"richtung": "hinten",
+			"winkel": -4.1
 		},
 		"run_vorn_f0": {
 			"hals": [
-				31.1,
-				45.3
+				31.9,
+				52.1
 			],
 			"richtung": "vorn",
-			"winkel": 3.1
+			"winkel": -5.5
 		},
 		"run_vorn_f1": {
 			"hals": [
-				32.4,
-				46.4
+				33.3,
+				52.0
 			],
 			"richtung": "vorn",
-			"winkel": 2.4
+			"winkel": -6.9
 		},
 		"run_vorn_f2": {
 			"hals": [
-				31.8,
-				45.2
+				36.7,
+				55.3
 			],
 			"richtung": "vorn",
-			"winkel": 2.4
+			"winkel": -6.2
 		},
 		"run_vorn_f3": {
 			"hals": [
-				30.7,
-				47.2
+				32.8,
+				49.4
 			],
 			"richtung": "vorn",
-			"winkel": 2.1
+			"winkel": -6.8
+		},
+		"run_vorn_f4": {
+			"hals": [
+				32.2,
+				47.5
+			],
+			"richtung": "vorn",
+			"winkel": -4.4
+		},
+		"run_vorn_f5": {
+			"hals": [
+				35.9,
+				49.1
+			],
+			"richtung": "vorn",
+			"winkel": -6.2
+		},
+		"run_vorn_f6": {
+			"hals": [
+				37.0,
+				51.2
+			],
+			"richtung": "vorn",
+			"winkel": -6.1
+		},
+		"run_vorn_f7": {
+			"hals": [
+				31.7,
+				57.0
+			],
+			"richtung": "vorn",
+			"winkel": -3.4
+		},
+		"run_welt_seite_f0": {
+			"hals": [
+				34.9,
+				48.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f1": {
+			"hals": [
+				36.2,
+				47.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f2": {
+			"hals": [
+				40.2,
+				46.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f3": {
+			"hals": [
+				35.4,
+				48.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f4": {
+			"hals": [
+				40.0,
+				46.4
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f5": {
+			"hals": [
+				42.5,
+				46.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f6": {
+			"hals": [
+				37.8,
+				46.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f7": {
+			"hals": [
+				36.0,
+				48.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"sitzen_gerade_hinten_f0": {
+			"hals": [
+				31.6,
+				46.5
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -2.5
+		},
+		"sitzen_gerade_vorn_f0": {
+			"hals": [
+				30.8,
+				45.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -2.1
+		},
+		"sitzen_hinten_f0": {
+			"hals": [
+				27.9,
+				45.3
+			],
+			"richtung": "hinten",
+			"winkel": -5.1
+		},
+		"sitzen_vorn_f0": {
+			"hals": [
+				28.0,
+				45.4
+			],
+			"richtung": "vorn",
+			"winkel": -5.5
+		},
+		"sitzen_welt_seite_f0": {
+			"hals": [
+				22.1,
+				46.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
 		}
 	},
 	"grund_wache": {
@@ -8506,6 +12352,20 @@
 				},
 				"name": "Alte Frau, Kopftuch"
 			},
+			"borko": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						33.0,
+						50
+					],
+					"vorn_normal": [
+						42.9,
+						50
+					]
+				},
+				"name": "Wirt Borko"
+			},
 			"brom": {
 				"geschlecht": "m",
 				"hals": {
@@ -8519,6 +12379,80 @@
 					]
 				},
 				"name": "Torwache Brom"
+			},
+			"edmar": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						29.0,
+						50
+					],
+					"vorn_normal": [
+						38.7,
+						51
+					]
+				},
+				"name": "Vogt Edmar"
+			},
+			"hagebutte": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						33.5,
+						56
+					],
+					"vorn_normal": [
+						39.6,
+						53
+					]
+				},
+				"name": "Oma Hagebutte"
+			},
+			"hanne": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						36.9,
+						58
+					],
+					"vorn_augen_zu": [
+						39.4,
+						56
+					],
+					"vorn_normal": [
+						36.8,
+						56
+					]
+				},
+				"name": "Wirtin Hanne"
+			},
+			"hatta": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						40.6,
+						34
+					],
+					"vorn_normal": [
+						44.5,
+						66
+					]
+				},
+				"name": "Hutmacher Hatta"
+			},
+			"ilse": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						32.5,
+						56
+					],
+					"vorn_normal": [
+						40.3,
+						56
+					]
+				},
+				"name": "Bankhüterin Ilse"
 			},
 			"k_m1": {
 				"geschlecht": "m",
@@ -8551,6 +12485,60 @@
 					]
 				},
 				"name": "Mädchen"
+			},
+			"layla": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						36.5,
+						56
+					],
+					"vorn_augen_zu": [
+						25.6,
+						54
+					],
+					"vorn_normal": [
+						24.8,
+						54
+					]
+				},
+				"name": "Wirtin Layla"
+			},
+			"lene": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						34.0,
+						59
+					],
+					"vorn_augen_zu": [
+						37.2,
+						60
+					],
+					"vorn_normal": [
+						37.1,
+						60
+					]
+				},
+				"name": "Schreiberin Lene"
+			},
+			"lotte": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						25.3,
+						56
+					],
+					"vorn_augen_zu": [
+						32.3,
+						55
+					],
+					"vorn_normal": [
+						32.6,
+						55
+					]
+				},
+				"name": "Lotte"
 			},
 			"m1": {
 				"geschlecht": "m",
@@ -8737,6 +12725,112 @@
 					]
 				},
 				"name": "Novize m3"
+			},
+			"nadia": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						29.0,
+						47
+					],
+					"vorn_augen_zu": [
+						23.4,
+						45
+					],
+					"vorn_normal": [
+						23.2,
+						45
+					]
+				},
+				"name": "Brunnenhüterin Nadia"
+			},
+			"pip": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						34.9,
+						57
+					],
+					"vorn_normal": [
+						38.9,
+						57
+					]
+				},
+				"name": "Pip"
+			},
+			"quill": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						30.0,
+						49
+					],
+					"vorn_normal": [
+						43.9,
+						51
+					]
+				},
+				"name": "Steinmetz Quill"
+			},
+			"rashid": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						31.5,
+						50
+					],
+					"vorn_normal": [
+						32.2,
+						53
+					]
+				},
+				"name": "Bankhüter Rashid"
+			},
+			"salbei": {
+				"geschlecht": "w",
+				"hals": {
+					"hinten_normal": [
+						26.1,
+						55
+					],
+					"vorn_augen_zu": [
+						28.4,
+						54
+					],
+					"vorn_normal": [
+						28.0,
+						54
+					]
+				},
+				"name": "Kräuterhändlerin Salbei"
+			},
+			"tamm": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						35.0,
+						55
+					],
+					"vorn_normal": [
+						37.8,
+						55
+					]
+				},
+				"name": "Bankhüter Tamm"
+			},
+			"tarek": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						32.5,
+						54
+					],
+					"vorn_normal": [
+						35.6,
+						57
+					]
+				},
+				"name": "Händler Tarek"
 			},
 			"v_m1": {
 				"geschlecht": "m",
@@ -9019,137 +13113,423 @@
 					]
 				},
 				"name": "Novizin w3"
+			},
+			"zaid": {
+				"geschlecht": "m",
+				"hals": {
+					"hinten_normal": [
+						21.5,
+						44
+					],
+					"vorn_normal": [
+						28.5,
+						44
+					]
+				},
+				"name": "Karawanenführer Zaid"
 			}
 		},
 		"_name": "Wache (Baukasten)",
 		"_nur_teile": true,
+		"idle_gerade_hinten_f0": {
+			"hals": [
+				34.5,
+				45.5
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.2
+		},
+		"idle_gerade_vorn_f0": {
+			"hals": [
+				33.3,
+				45.0
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.5
+		},
 		"idle_hinten_f0": {
 			"hals": [
-				30.1,
-				44.0
+				28.6,
+				45.0
 			],
 			"richtung": "hinten",
-			"winkel": 1.4
-		},
-		"idle_hinten_f1": {
-			"hals": [
-				30.3,
-				45.2
-			],
-			"richtung": "hinten",
-			"winkel": 0.6
-		},
-		"idle_hinten_f2": {
-			"hals": [
-				30.4,
-				45.2
-			],
-			"richtung": "hinten",
-			"winkel": 0.1
-		},
-		"idle_hinten_f3": {
-			"hals": [
-				30.0,
-				45.2
-			],
-			"richtung": "hinten",
-			"winkel": 0.7
+			"winkel": -0.7
 		},
 		"idle_vorn_f0": {
 			"hals": [
-				31.1,
-				45.3
+				26.4,
+				45.2
+			],
+			"richtung": "vorn",
+			"winkel": -0.0
+		},
+		"idle_welt_seite_f0": {
+			"hals": [
+				22.0,
+				45.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_gerade_hinten_f0": {
+			"hals": [
+				38.3,
+				43.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.7
+		},
+		"run_gerade_hinten_f1": {
+			"hals": [
+				37.2,
+				43.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.5
+		},
+		"run_gerade_hinten_f2": {
+			"hals": [
+				36.6,
+				45.5
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.4
+		},
+		"run_gerade_hinten_f3": {
+			"hals": [
+				36.3,
+				44.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.9
+		},
+		"run_gerade_hinten_f4": {
+			"hals": [
+				35.7,
+				43.5
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.4
+		},
+		"run_gerade_hinten_f5": {
+			"hals": [
+				38.2,
+				44.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.3
+		},
+		"run_gerade_hinten_f6": {
+			"hals": [
+				39.3,
+				43.5
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.6
+		},
+		"run_gerade_hinten_f7": {
+			"hals": [
+				39.0,
+				43.4
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -1.8
+		},
+		"run_gerade_vorn_f0": {
+			"hals": [
+				38.9,
+				47.2
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.3
+		},
+		"run_gerade_vorn_f1": {
+			"hals": [
+				39.0,
+				48.0
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.2
+		},
+		"run_gerade_vorn_f2": {
+			"hals": [
+				38.8,
+				48.0
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.2
+		},
+		"run_gerade_vorn_f3": {
+			"hals": [
+				39.8,
+				47.5
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.0
+		},
+		"run_gerade_vorn_f4": {
+			"hals": [
+				39.3,
+				46.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.0
+		},
+		"run_gerade_vorn_f5": {
+			"hals": [
+				39.1,
+				47.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.0
+		},
+		"run_gerade_vorn_f6": {
+			"hals": [
+				40.6,
+				47.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.2
+		},
+		"run_gerade_vorn_f7": {
+			"hals": [
+				40.8,
+				46.5
+			],
+			"richtung": "gerade_vorn",
+			"winkel": 0.0
+		},
+		"run_hinten_f0": {
+			"hals": [
+				41.4,
+				47.2
+			],
+			"richtung": "hinten",
+			"winkel": -4.5
+		},
+		"run_hinten_f1": {
+			"hals": [
+				40.1,
+				46.3
+			],
+			"richtung": "hinten",
+			"winkel": -3.0
+		},
+		"run_hinten_f2": {
+			"hals": [
+				41.6,
+				48.3
+			],
+			"richtung": "hinten",
+			"winkel": -4.0
+		},
+		"run_hinten_f3": {
+			"hals": [
+				42.4,
+				46.2
+			],
+			"richtung": "hinten",
+			"winkel": -2.8
+		},
+		"run_hinten_f4": {
+			"hals": [
+				39.8,
+				48.3
+			],
+			"richtung": "hinten",
+			"winkel": -3.4
+		},
+		"run_hinten_f5": {
+			"hals": [
+				41.2,
+				46.3
+			],
+			"richtung": "hinten",
+			"winkel": -2.7
+		},
+		"run_hinten_f6": {
+			"hals": [
+				43.3,
+				47.3
+			],
+			"richtung": "hinten",
+			"winkel": -4.1
+		},
+		"run_hinten_f7": {
+			"hals": [
+				46.6,
+				46.3
+			],
+			"richtung": "hinten",
+			"winkel": -3.4
+		},
+		"run_vorn_f0": {
+			"hals": [
+				31.4,
+				46.3
+			],
+			"richtung": "vorn",
+			"winkel": -1.2
+		},
+		"run_vorn_f1": {
+			"hals": [
+				35.4,
+				46.4
+			],
+			"richtung": "vorn",
+			"winkel": -0.9
+		},
+		"run_vorn_f2": {
+			"hals": [
+				38.9,
+				49.3
+			],
+			"richtung": "vorn",
+			"winkel": -1.1
+		},
+		"run_vorn_f3": {
+			"hals": [
+				38.6,
+				45.4
 			],
 			"richtung": "vorn",
 			"winkel": -0.5
 		},
-		"idle_vorn_f1": {
+		"run_vorn_f4": {
 			"hals": [
-				32.2,
+				40.5,
 				45.4
 			],
 			"richtung": "vorn",
-			"winkel": -2.0
+			"winkel": -1.2
 		},
-		"idle_vorn_f2": {
+		"run_vorn_f5": {
 			"hals": [
-				32.5,
-				46.2
+				38.1,
+				45.4
 			],
 			"richtung": "vorn",
-			"winkel": -1.4
+			"winkel": 0.0
 		},
-		"idle_vorn_f3": {
+		"run_vorn_f6": {
 			"hals": [
-				32.8,
-				46.1
-			],
-			"richtung": "vorn",
-			"winkel": -1.6
-		},
-		"run_hinten_f0": {
-			"hals": [
-				34.3,
-				45.2
-			],
-			"richtung": "hinten",
-			"winkel": 1.2
-		},
-		"run_hinten_f1": {
-			"hals": [
-				38.5,
-				45.2
-			],
-			"richtung": "hinten",
-			"winkel": 0.7
-		},
-		"run_hinten_f2": {
-			"hals": [
-				37.0,
-				47.1
-			],
-			"richtung": "hinten",
-			"winkel": 0.2
-		},
-		"run_hinten_f3": {
-			"hals": [
-				36.3,
-				45.3
-			],
-			"richtung": "hinten",
-			"winkel": 1.6
-		},
-		"run_vorn_f0": {
-			"hals": [
-				35.8,
+				42.2,
 				46.4
 			],
 			"richtung": "vorn",
+			"winkel": -0.8
+		},
+		"run_vorn_f7": {
+			"hals": [
+				34.2,
+				47.5
+			],
+			"richtung": "vorn",
+			"winkel": -0.4
+		},
+		"run_welt_seite_f0": {
+			"hals": [
+				42.0,
+				48.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f1": {
+			"hals": [
+				44.9,
+				47.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f2": {
+			"hals": [
+				42.4,
+				49.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f3": {
+			"hals": [
+				42.1,
+				48.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f4": {
+			"hals": [
+				39.8,
+				47.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f5": {
+			"hals": [
+				50.1,
+				47.4
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f6": {
+			"hals": [
+				47.3,
+				47.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f7": {
+			"hals": [
+				43.9,
+				48.4
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"sitzen_gerade_hinten_f0": {
+			"hals": [
+				38.1,
+				46.3
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.7
+		},
+		"sitzen_gerade_vorn_f0": {
+			"hals": [
+				31.8,
+				45.1
+			],
+			"richtung": "gerade_vorn",
 			"winkel": -0.1
 		},
-		"run_vorn_f1": {
+		"sitzen_hinten_f0": {
 			"hals": [
-				39.1,
-				46.0
-			],
-			"richtung": "vorn",
-			"winkel": -2.3
-		},
-		"run_vorn_f2": {
-			"hals": [
-				36.4,
-				45.2
-			],
-			"richtung": "vorn",
-			"winkel": -1.7
-		},
-		"run_vorn_f3": {
-			"hals": [
-				36.0,
+				31.6,
 				46.1
 			],
+			"richtung": "hinten",
+			"winkel": -1.0
+		},
+		"sitzen_vorn_f0": {
+			"hals": [
+				27.4,
+				45.4
+			],
 			"richtung": "vorn",
-			"winkel": -2.5
+			"winkel": -0.8
+		},
+		"sitzen_welt_seite_f0": {
+			"hals": [
+				28.4,
+				45.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
 		}
 	},
 	"klingentaenzer_m": {

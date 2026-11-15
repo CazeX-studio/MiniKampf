@@ -188,8 +188,8 @@ func _baukasten() -> int:
 				print("FEHLER: %s kennt den Kopf %s nicht" % [koerper, kopf])
 				fehler += 1
 				continue
-			for anim: String in ["idle_vorn", "run_hinten"]:
-				if FigurTeile.bild("%s+%s" % [koerper, kopf], anim, 1) == null:
+			for anim: String in ["idle_vorn", "run_hinten", "run_gerade_vorn", "sitzen_vorn"]:
+				if FigurTeile.bild("%s+%s" % [koerper, kopf], anim, 0) == null:
 					print("FEHLER: %s mit %s (%s) lässt sich nicht zeichnen" % [koerper, kopf, anim])
 					fehler += 1
 		if FighterView.sprite_path(koerper + "+v_m1", "idle_vorn", 0).find("/figuren/") < 0:

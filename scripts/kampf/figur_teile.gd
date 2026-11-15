@@ -20,7 +20,8 @@ const KOPF := "res://assets/teile/koepfe/%s_%s.png"  # Kopf, Richtung_Gesicht
 const KOPF_VORN_LINKS: Array[String] = ["m1", "m2", "m3", "w1", "w2", "w3", "a_m1", "borko", "layla", "nadia", "salbei"]
 ## Schräg von vorne: Körper, die nach links schauen (von Marco bestätigt). Alle anderen schauen nach rechts.
 ## Schaut der Kopf anders als der Körper, spiegelt das Spiel den Kopf: Gesicht und Körper zeigen immer in dieselbe Richtung.
-const KOERPER_VORN_LINKS: Array[String] = ["grund_frau", "grund_frau_korpulent"]
+## Seit U11 (15.11.2026, Übersicht von Marco bestätigt) schauen auch Frau und Frau korpulent nach rechts.
+const KOERPER_VORN_LINKS: Array[String] = []
 ## Gesicht je Animation (seitlich); fehlt ein Gesicht in einer Richtung, gilt „normal“
 const GESICHT := {
 	"hit": "schmerz", "parry": "entschlossen", "attack": "entschlossen", "attack2": "entschlossen",

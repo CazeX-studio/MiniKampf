@@ -12,7 +12,14 @@ const FAELLE := [[0, "novize_m", "laufen", false], [1, "klingentaenzer_w", "lauf
 		[1, "klingentaenzer_w", "stehen", false], [1, "klingentaenzer_w", "laufen", false], [1, "klingentaenzer_w", "sitzen", false],
 		[1, "schmied_m", "stehen", false], [1, "schmied_m", "laufen", false], [1, "schmied_m", "sitzen", false],
 		[1, "schmied_w", "stehen", false], [1, "schmied_w", "laufen", false], [1, "schmied_w", "sitzen", false],
-		[1, "saengerin_w", "stehen", false], [1, "saengerin_w", "laufen", false], [1, "saengerin_w", "sitzen", false]]
+		[1, "saengerin_w", "stehen", false], [1, "saengerin_w", "laufen", false], [1, "saengerin_w", "sitzen", false],
+		# Teil U11 (15.11.2026): Leute-Körper aus dem Baukasten
+		[2, "grund_mann", "stehen", false], [2, "grund_mann", "laufen", false], [2, "grund_frau", "stehen", false],
+		[2, "grund_frau", "laufen", false], [2, "grund_kind", "stehen", false], [2, "grund_kind", "laufen", false],
+		[2, "grund_alter_mensch", "stehen", false], [2, "grund_alter_mensch", "laufen", false], [2, "grund_wache", "stehen", false],
+		[2, "grund_wache", "laufen", false], [2, "grund_haendler", "stehen", false], [2, "grund_haendler", "laufen", false],
+		[2, "grund_handwerker", "stehen", false], [2, "grund_handwerker", "laufen", false], [2, "grund_gelehrter", "stehen", false],
+		[2, "grund_gelehrter", "laufen", false], [2, "grund_frau_korpulent", "stehen", false], [2, "grund_frau_korpulent", "laufen", false]]
 
 
 func _ready() -> void:
