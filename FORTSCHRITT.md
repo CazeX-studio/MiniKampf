@@ -12,6 +12,13 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
+- **Neu (15.11.): Klingentänzerin (w) in fünf Richtungen wie der Klingentänzer** (GRAFIK_AUFTRAG.md Teil U10): Laufen, Stehen und Sitzen (Beine seitlich angewinkelt) in allen fünf Richtungen, in der Welt ohne Klingen. Stehen/Sitzen einmal nachgebessert (Marco): schlanker, Halstuch-Enden auch von vorne auf derselben Seite wie beim Laufen, kein Schneidersitz. Übersicht `tools/referenz/teil_u/uebersicht_klingentaenzer_w.png`, Foto `klingentaenzer_w_eingebaut.png`.
+  - **So testest du es:**
+    1. Editor → „Bewegungen in der Welt“ → Klassen-Körper → Klingentänzer (w): fünf Richtungen nebeneinander, der Kopf schaut mit.
+    2. „Laufen“ und „Sitzen“ drücken: In allen fünf Richtungen läuft bzw. sitzt sie, beim Sitzen liegen die Beine seitlich.
+    3. Spalte „Von vorne“: Die Halstuch-Enden wehen beim Stehen, Laufen und Sitzen zur selben Seite.
+    4. Einen Kampf beginnen: Sie sieht im Kampf aus wie vorher.
+
 - **Neu (15.11.): Klingentänzer (m) in fünf Richtungen wie die Zähmerin** (GRAFIK_AUFTRAG.md Teil U10): Laufen, Stehen und Sitzen in allen fünf Richtungen, in der Welt ohne Klingen. Halstuch-Knoten in jeder Richtung beim Stehen, Laufen und Sitzen auf derselben Seite. Übersicht `tools/referenz/teil_u/uebersicht_klingentaenzer_m.png`, Foto `klingentaenzer_m_eingebaut.png`.
   - **So testest du es:**
     1. Editor → „Bewegungen in der Welt“ → Klassen-Körper → Klingentänzer (m): fünf Richtungen nebeneinander, der Kopf schaut mit.
