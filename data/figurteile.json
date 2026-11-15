@@ -15018,85 +15018,45 @@
 			"richtung": "seite",
 			"winkel": 1.0
 		},
+		"idle_gerade_hinten_f0": {
+			"hals": [
+				53.7,
+				38.0
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -4.7
+		},
+		"idle_gerade_vorn_f0": {
+			"hals": [
+				52.6,
+				41.4
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -3.1
+		},
 		"idle_hinten_f0": {
 			"hals": [
-				43.7,
-				46.1
+				57.4,
+				38.2
 			],
 			"richtung": "hinten",
-			"winkel": -3.6
-		},
-		"idle_hinten_f1": {
-			"hals": [
-				43.3,
-				46.2
-			],
-			"richtung": "hinten",
-			"winkel": -4.5
-		},
-		"idle_hinten_f2": {
-			"hals": [
-				43.3,
-				46.2
-			],
-			"richtung": "hinten",
-			"winkel": -4.3
-		},
-		"idle_hinten_f3": {
-			"hals": [
-				44.0,
-				45.0
-			],
-			"richtung": "hinten",
-			"winkel": -5.1
-		},
-		"idle_hinten_f4": {
-			"hals": [
-				44.2,
-				45.1
-			],
-			"richtung": "hinten",
-			"winkel": -4.5
+			"winkel": -7.2
 		},
 		"idle_vorn_f0": {
 			"hals": [
-				50.9,
-				46.2
+				61.8,
+				40.0
 			],
 			"richtung": "vorn",
-			"winkel": -0.7
+			"winkel": -15.3
 		},
-		"idle_vorn_f1": {
+		"idle_welt_seite_f0": {
 			"hals": [
-				51.0,
-				45.2
+				54.9,
+				40.3
 			],
-			"richtung": "vorn",
-			"winkel": -2.8
-		},
-		"idle_vorn_f2": {
-			"hals": [
-				51.7,
-				45.1
-			],
-			"richtung": "vorn",
-			"winkel": -5.2
-		},
-		"idle_vorn_f3": {
-			"hals": [
-				51.5,
-				45.0
-			],
-			"richtung": "vorn",
-			"winkel": -4.3
-		},
-		"idle_vorn_f4": {
-			"hals": [
-				51.7,
-				46.3
-			],
-			"richtung": "vorn",
-			"winkel": -2.0
+			"richtung": "seite",
+			"winkel": 0.0
 		},
 		"parry_f0": {
 			"hals": [
@@ -15162,85 +15122,365 @@
 			"richtung": "seite",
 			"winkel": 3.2
 		},
+		"run_gerade_hinten_f0": {
+			"hals": [
+				47.1,
+				38.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.0
+		},
+		"run_gerade_hinten_f1": {
+			"hals": [
+				46.3,
+				38.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.0
+		},
+		"run_gerade_hinten_f2": {
+			"hals": [
+				47.1,
+				38.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.0
+		},
+		"run_gerade_hinten_f3": {
+			"hals": [
+				51.7,
+				38.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.0
+		},
+		"run_gerade_hinten_f4": {
+			"hals": [
+				46.6,
+				38.3
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.0
+		},
+		"run_gerade_hinten_f5": {
+			"hals": [
+				49.3,
+				38.1
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.0
+		},
+		"run_gerade_hinten_f6": {
+			"hals": [
+				48.1,
+				41.3
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.0
+		},
+		"run_gerade_hinten_f7": {
+			"hals": [
+				45.4,
+				38.2
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -0.0
+		},
+		"run_gerade_vorn_f0": {
+			"hals": [
+				45.7,
+				41.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -1.5
+		},
+		"run_gerade_vorn_f1": {
+			"hals": [
+				47.5,
+				42.4
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -1.4
+		},
+		"run_gerade_vorn_f2": {
+			"hals": [
+				49.4,
+				42.2
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -2.0
+		},
+		"run_gerade_vorn_f3": {
+			"hals": [
+				51.4,
+				41.2
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.8
+		},
+		"run_gerade_vorn_f4": {
+			"hals": [
+				51.3,
+				41.2
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -1.6
+		},
+		"run_gerade_vorn_f5": {
+			"hals": [
+				50.2,
+				40.4
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.6
+		},
+		"run_gerade_vorn_f6": {
+			"hals": [
+				47.6,
+				42.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -1.8
+		},
+		"run_gerade_vorn_f7": {
+			"hals": [
+				45.4,
+				41.3
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -0.7
+		},
 		"run_hinten_f0": {
 			"hals": [
-				59.3,
-				45.4
+				61.4,
+				38.4
 			],
 			"richtung": "hinten",
-			"winkel": -3.2
+			"winkel": -1.7
 		},
 		"run_hinten_f1": {
 			"hals": [
-				66.2,
-				46.4
+				60.3,
+				39.4
 			],
 			"richtung": "hinten",
-			"winkel": -3.7
+			"winkel": -1.3
 		},
 		"run_hinten_f2": {
 			"hals": [
-				59.8,
-				55.4
+				61.2,
+				41.5
 			],
 			"richtung": "hinten",
-			"winkel": -10.5
+			"winkel": -0.8
 		},
 		"run_hinten_f3": {
 			"hals": [
-				63.4,
-				47.4
+				56.3,
+				44.4
 			],
 			"richtung": "hinten",
-			"winkel": -7.4
+			"winkel": -1.5
 		},
 		"run_hinten_f4": {
 			"hals": [
-				59.5,
-				51.3
+				58.5,
+				41.1
 			],
 			"richtung": "hinten",
-			"winkel": -6.4
+			"winkel": -1.9
+		},
+		"run_hinten_f5": {
+			"hals": [
+				58.3,
+				40.1
+			],
+			"richtung": "hinten",
+			"winkel": -1.3
+		},
+		"run_hinten_f6": {
+			"hals": [
+				61.5,
+				41.2
+			],
+			"richtung": "hinten",
+			"winkel": -1.7
+		},
+		"run_hinten_f7": {
+			"hals": [
+				58.3,
+				38.2
+			],
+			"richtung": "hinten",
+			"winkel": -1.5
 		},
 		"run_vorn_f0": {
 			"hals": [
-				54.8,
-				47.5
+				51.2,
+				46.0
 			],
 			"richtung": "vorn",
-			"winkel": -3.5
+			"winkel": -3.7
 		},
 		"run_vorn_f1": {
 			"hals": [
-				59.6,
-				46.1
+				52.7,
+				46.4
 			],
 			"richtung": "vorn",
 			"winkel": -4.0
 		},
 		"run_vorn_f2": {
 			"hals": [
-				57.5,
-				48.5
+				56.4,
+				47.4
 			],
 			"richtung": "vorn",
-			"winkel": -5.6
+			"winkel": -4.3
 		},
 		"run_vorn_f3": {
 			"hals": [
-				61.4,
-				46.4
+				55.0,
+				46.1
 			],
 			"richtung": "vorn",
-			"winkel": -5.1
+			"winkel": -4.4
 		},
 		"run_vorn_f4": {
 			"hals": [
-				55.0,
-				48.4
+				52.0,
+				46.2
 			],
 			"richtung": "vorn",
-			"winkel": -5.2
+			"winkel": -4.1
+		},
+		"run_vorn_f5": {
+			"hals": [
+				52.6,
+				46.1
+			],
+			"richtung": "vorn",
+			"winkel": -3.1
+		},
+		"run_vorn_f6": {
+			"hals": [
+				54.6,
+				47.0
+			],
+			"richtung": "vorn",
+			"winkel": -4.1
+		},
+		"run_vorn_f7": {
+			"hals": [
+				53.5,
+				46.1
+			],
+			"richtung": "vorn",
+			"winkel": -3.4
+		},
+		"run_welt_seite_f0": {
+			"hals": [
+				58.2,
+				41.4
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f1": {
+			"hals": [
+				64.5,
+				40.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f2": {
+			"hals": [
+				63.0,
+				40.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f3": {
+			"hals": [
+				58.2,
+				41.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f4": {
+			"hals": [
+				57.9,
+				40.2
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f5": {
+			"hals": [
+				61.9,
+				40.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f6": {
+			"hals": [
+				63.0,
+				40.1
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"run_welt_seite_f7": {
+			"hals": [
+				55.8,
+				41.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
+		},
+		"sitzen_gerade_hinten_f0": {
+			"hals": [
+				54.3,
+				38.3
+			],
+			"richtung": "gerade_hinten",
+			"winkel": -6.3
+		},
+		"sitzen_gerade_vorn_f0": {
+			"hals": [
+				52.8,
+				41.1
+			],
+			"richtung": "gerade_vorn",
+			"winkel": -2.7
+		},
+		"sitzen_hinten_f0": {
+			"hals": [
+				57.7,
+				38.4
+			],
+			"richtung": "hinten",
+			"winkel": -6.9
+		},
+		"sitzen_vorn_f0": {
+			"hals": [
+				59.9,
+				41.2
+			],
+			"richtung": "vorn",
+			"winkel": -9.6
+		},
+		"sitzen_welt_seite_f0": {
+			"hals": [
+				56.2,
+				41.3
+			],
+			"richtung": "seite",
+			"winkel": 0.0
 		},
 		"victory_f0": {
 			"hals": [
