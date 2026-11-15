@@ -2307,12 +2307,36 @@
 			"a_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.9,
+						63
+					],
+					"gerade_vorn_augen_zu": [
+						26.6,
+						62
+					],
+					"gerade_vorn_normal": [
+						26.6,
+						62
+					],
 					"hinten_normal": [
-						36.9,
-						61
+						29.5,
+						63
+					],
+					"seite_augen_zu": [
+						31.3,
+						63
+					],
+					"seite_normal": [
+						33.7,
+						63
+					],
+					"vorn_augen_zu": [
+						31.0,
+						62
 					],
 					"vorn_normal": [
-						29.9,
+						31.0,
 						62
 					]
 				},
@@ -2321,13 +2345,37 @@
 			"a_m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.5,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						58
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						58
+					],
 					"hinten_normal": [
-						34.3,
-						55
+						30.5,
+						58
+					],
+					"seite_augen_zu": [
+						28.5,
+						58
+					],
+					"seite_normal": [
+						28.5,
+						58
+					],
+					"vorn_augen_zu": [
+						26.5,
+						58
 					],
 					"vorn_normal": [
-						39.0,
-						56
+						26.5,
+						58
 					]
 				},
 				"name": "Alter Mann, Halbglatze"
@@ -2335,17 +2383,37 @@
 			"a_w1": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						33.5,
-						59
+					"gerade_hinten_normal": [
+						25.5,
+						61
 					],
-					"vorn_augen_zu": [
-						32.7,
+					"gerade_vorn_augen_zu": [
+						26.7,
+						62
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						62
+					],
+					"hinten_normal": [
+						26.5,
+						61
+					],
+					"seite_augen_zu": [
+						31.5,
 						60
 					],
+					"seite_normal": [
+						31.0,
+						60
+					],
+					"vorn_augen_zu": [
+						24.5,
+						62
+					],
 					"vorn_normal": [
-						32.6,
-						59
+						24.5,
+						62
 					]
 				},
 				"name": "Alte Frau, grauer Dutt"
@@ -2353,17 +2421,37 @@
 			"a_w2": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						36.0,
+					"gerade_hinten_normal": [
+						30.0,
 						60
 					],
+					"gerade_vorn_augen_zu": [
+						29.5,
+						60
+					],
+					"gerade_vorn_normal": [
+						29.5,
+						60
+					],
+					"hinten_normal": [
+						39.0,
+						59
+					],
+					"seite_augen_zu": [
+						36.5,
+						59
+					],
+					"seite_normal": [
+						36.5,
+						58
+					],
 					"vorn_augen_zu": [
-						35.9,
+						35.5,
 						59
 					],
 					"vorn_normal": [
-						35.8,
-						58
+						35.5,
+						59
 					]
 				},
 				"name": "Alte Frau, Kopftuch"
@@ -2473,13 +2561,37 @@
 			"k_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.5,
+						61
+					],
+					"gerade_vorn_augen_zu": [
+						29.0,
+						61
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						61
+					],
 					"hinten_normal": [
-						33.7,
-						59
+						31.5,
+						61
+					],
+					"seite_augen_zu": [
+						32.0,
+						61
+					],
+					"seite_normal": [
+						32.0,
+						61
+					],
+					"vorn_augen_zu": [
+						25.5,
+						61
 					],
 					"vorn_normal": [
-						33.5,
-						58
+						25.5,
+						61
 					]
 				},
 				"name": "Junge"
@@ -2487,17 +2599,37 @@
 			"k_w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.5,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						54
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						54
+					],
 					"hinten_normal": [
-						30.5,
-						56
+						29.5,
+						51
+					],
+					"seite_augen_zu": [
+						28.0,
+						52
+					],
+					"seite_normal": [
+						28.0,
+						53
 					],
 					"vorn_augen_zu": [
-						30.6,
-						56
+						22.5,
+						51
 					],
 					"vorn_normal": [
-						30.1,
-						55
+						21.5,
+						51
 					]
 				},
 				"name": "Mädchen"
@@ -2851,13 +2983,37 @@
 			"v_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						61
+					],
+					"gerade_vorn_augen_zu": [
+						28.0,
+						61
+					],
+					"gerade_vorn_normal": [
+						28.0,
+						61
+					],
 					"hinten_normal": [
-						30.0,
-						55
+						32.5,
+						61
+					],
+					"seite_augen_zu": [
+						32.0,
+						61
+					],
+					"seite_normal": [
+						32.0,
+						61
+					],
+					"vorn_augen_zu": [
+						23.5,
+						61
 					],
 					"vorn_normal": [
-						31.6,
-						58
+						24.0,
+						61
 					]
 				},
 				"name": "Mann, kurze braune Haare"
@@ -2865,13 +3021,37 @@
 			"v_m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						24.0,
+						56
+					],
+					"gerade_vorn_augen_zu": [
+						26.2,
+						56
+					],
+					"gerade_vorn_normal": [
+						26.0,
+						56
+					],
 					"hinten_normal": [
-						25.2,
-						49
+						22.0,
+						56
+					],
+					"seite_augen_zu": [
+						19.5,
+						56
+					],
+					"seite_normal": [
+						20.0,
+						56
+					],
+					"vorn_augen_zu": [
+						18.5,
+						56
 					],
 					"vorn_normal": [
-						27.7,
-						53
+						20.0,
+						56
 					]
 				},
 				"name": "Mann, Glatze mit Bart"
@@ -2879,13 +3059,37 @@
 			"v_m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						28.9,
+						61
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						62
+					],
 					"hinten_normal": [
-						31.9,
-						56
+						31.0,
+						59
+					],
+					"seite_augen_zu": [
+						30.5,
+						60
+					],
+					"seite_normal": [
+						30.5,
+						60
+					],
+					"vorn_augen_zu": [
+						25.5,
+						61
 					],
 					"vorn_normal": [
-						33.2,
-						58
+						26.7,
+						61
 					]
 				},
 				"name": "Mann, schwarze Locken"
@@ -2893,17 +3097,37 @@
 			"v_w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						30.8,
+						56
+					],
+					"gerade_vorn_augen_zu": [
+						30.2,
+						59
+					],
+					"gerade_vorn_normal": [
+						29.7,
+						59
+					],
 					"hinten_normal": [
-						34.0,
-						53
+						32.0,
+						60
+					],
+					"seite_augen_zu": [
+						31.5,
+						59
+					],
+					"seite_normal": [
+						31.0,
+						58
 					],
 					"vorn_augen_zu": [
-						36.0,
-						53
+						27.2,
+						59
 					],
 					"vorn_normal": [
-						35.8,
-						53
+						27.2,
+						59
 					]
 				},
 				"name": "Frau, langer Zopf"
@@ -2911,17 +3135,37 @@
 			"v_w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.0,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						61
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						61
+					],
 					"hinten_normal": [
-						31.5,
-						56
+						27.0,
+						60
+					],
+					"seite_augen_zu": [
+						27.0,
+						60
+					],
+					"seite_normal": [
+						27.0,
+						60
 					],
 					"vorn_augen_zu": [
-						34.1,
-						59
+						24.0,
+						61
 					],
 					"vorn_normal": [
-						34.3,
-						58
+						23.5,
+						61
 					]
 				},
 				"name": "Frau, Haarknoten"
@@ -2929,17 +3173,37 @@
 			"v_w3": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						30.5,
-						53
+					"gerade_hinten_normal": [
+						33.5,
+						62
 					],
-					"vorn_augen_zu": [
-						35.3,
+					"gerade_vorn_augen_zu": [
+						30.0,
 						61
 					],
+					"gerade_vorn_normal": [
+						30.0,
+						62
+					],
+					"hinten_normal": [
+						31.0,
+						62
+					],
+					"seite_augen_zu": [
+						34.0,
+						62
+					],
+					"seite_normal": [
+						34.0,
+						62
+					],
+					"vorn_augen_zu": [
+						31.0,
+						62
+					],
 					"vorn_normal": [
-						35.4,
-						60
+						31.0,
+						62
 					]
 				},
 				"name": "Frau, offene rote Haare"
@@ -3555,12 +3819,36 @@
 			"a_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.9,
+						63
+					],
+					"gerade_vorn_augen_zu": [
+						26.6,
+						62
+					],
+					"gerade_vorn_normal": [
+						26.6,
+						62
+					],
 					"hinten_normal": [
-						36.9,
-						61
+						29.5,
+						63
+					],
+					"seite_augen_zu": [
+						31.3,
+						63
+					],
+					"seite_normal": [
+						33.7,
+						63
+					],
+					"vorn_augen_zu": [
+						31.0,
+						62
 					],
 					"vorn_normal": [
-						29.9,
+						31.0,
 						62
 					]
 				},
@@ -3569,13 +3857,37 @@
 			"a_m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.5,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						58
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						58
+					],
 					"hinten_normal": [
-						34.3,
-						55
+						30.5,
+						58
+					],
+					"seite_augen_zu": [
+						28.5,
+						58
+					],
+					"seite_normal": [
+						28.5,
+						58
+					],
+					"vorn_augen_zu": [
+						26.5,
+						58
 					],
 					"vorn_normal": [
-						39.0,
-						56
+						26.5,
+						58
 					]
 				},
 				"name": "Alter Mann, Halbglatze"
@@ -3583,17 +3895,37 @@
 			"a_w1": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						33.5,
-						59
+					"gerade_hinten_normal": [
+						25.5,
+						61
 					],
-					"vorn_augen_zu": [
-						32.7,
+					"gerade_vorn_augen_zu": [
+						26.7,
+						62
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						62
+					],
+					"hinten_normal": [
+						26.5,
+						61
+					],
+					"seite_augen_zu": [
+						31.5,
 						60
 					],
+					"seite_normal": [
+						31.0,
+						60
+					],
+					"vorn_augen_zu": [
+						24.5,
+						62
+					],
 					"vorn_normal": [
-						32.6,
-						59
+						24.5,
+						62
 					]
 				},
 				"name": "Alte Frau, grauer Dutt"
@@ -3601,17 +3933,37 @@
 			"a_w2": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						36.0,
+					"gerade_hinten_normal": [
+						30.0,
 						60
 					],
+					"gerade_vorn_augen_zu": [
+						29.5,
+						60
+					],
+					"gerade_vorn_normal": [
+						29.5,
+						60
+					],
+					"hinten_normal": [
+						39.0,
+						59
+					],
+					"seite_augen_zu": [
+						36.5,
+						59
+					],
+					"seite_normal": [
+						36.5,
+						58
+					],
 					"vorn_augen_zu": [
-						35.9,
+						35.5,
 						59
 					],
 					"vorn_normal": [
-						35.8,
-						58
+						35.5,
+						59
 					]
 				},
 				"name": "Alte Frau, Kopftuch"
@@ -3721,13 +4073,37 @@
 			"k_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.5,
+						61
+					],
+					"gerade_vorn_augen_zu": [
+						29.0,
+						61
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						61
+					],
 					"hinten_normal": [
-						33.7,
-						59
+						31.5,
+						61
+					],
+					"seite_augen_zu": [
+						32.0,
+						61
+					],
+					"seite_normal": [
+						32.0,
+						61
+					],
+					"vorn_augen_zu": [
+						25.5,
+						61
 					],
 					"vorn_normal": [
-						33.5,
-						58
+						25.5,
+						61
 					]
 				},
 				"name": "Junge"
@@ -3735,17 +4111,37 @@
 			"k_w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.5,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						54
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						54
+					],
 					"hinten_normal": [
-						30.5,
-						56
+						29.5,
+						51
+					],
+					"seite_augen_zu": [
+						28.0,
+						52
+					],
+					"seite_normal": [
+						28.0,
+						53
 					],
 					"vorn_augen_zu": [
-						30.6,
-						56
+						22.5,
+						51
 					],
 					"vorn_normal": [
-						30.1,
-						55
+						21.5,
+						51
 					]
 				},
 				"name": "Mädchen"
@@ -4099,13 +4495,37 @@
 			"v_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						61
+					],
+					"gerade_vorn_augen_zu": [
+						28.0,
+						61
+					],
+					"gerade_vorn_normal": [
+						28.0,
+						61
+					],
 					"hinten_normal": [
-						30.0,
-						55
+						32.5,
+						61
+					],
+					"seite_augen_zu": [
+						32.0,
+						61
+					],
+					"seite_normal": [
+						32.0,
+						61
+					],
+					"vorn_augen_zu": [
+						23.5,
+						61
 					],
 					"vorn_normal": [
-						31.6,
-						58
+						24.0,
+						61
 					]
 				},
 				"name": "Mann, kurze braune Haare"
@@ -4113,13 +4533,37 @@
 			"v_m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						24.0,
+						56
+					],
+					"gerade_vorn_augen_zu": [
+						26.2,
+						56
+					],
+					"gerade_vorn_normal": [
+						26.0,
+						56
+					],
 					"hinten_normal": [
-						25.2,
-						49
+						22.0,
+						56
+					],
+					"seite_augen_zu": [
+						19.5,
+						56
+					],
+					"seite_normal": [
+						20.0,
+						56
+					],
+					"vorn_augen_zu": [
+						18.5,
+						56
 					],
 					"vorn_normal": [
-						27.7,
-						53
+						20.0,
+						56
 					]
 				},
 				"name": "Mann, Glatze mit Bart"
@@ -4127,13 +4571,37 @@
 			"v_m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						28.9,
+						61
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						62
+					],
 					"hinten_normal": [
-						31.9,
-						56
+						31.0,
+						59
+					],
+					"seite_augen_zu": [
+						30.5,
+						60
+					],
+					"seite_normal": [
+						30.5,
+						60
+					],
+					"vorn_augen_zu": [
+						25.5,
+						61
 					],
 					"vorn_normal": [
-						33.2,
-						58
+						26.7,
+						61
 					]
 				},
 				"name": "Mann, schwarze Locken"
@@ -4141,17 +4609,37 @@
 			"v_w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						30.8,
+						56
+					],
+					"gerade_vorn_augen_zu": [
+						30.2,
+						59
+					],
+					"gerade_vorn_normal": [
+						29.7,
+						59
+					],
 					"hinten_normal": [
-						34.0,
-						53
+						32.0,
+						60
+					],
+					"seite_augen_zu": [
+						31.5,
+						59
+					],
+					"seite_normal": [
+						31.0,
+						58
 					],
 					"vorn_augen_zu": [
-						36.0,
-						53
+						27.2,
+						59
 					],
 					"vorn_normal": [
-						35.8,
-						53
+						27.2,
+						59
 					]
 				},
 				"name": "Frau, langer Zopf"
@@ -4159,17 +4647,37 @@
 			"v_w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.0,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						61
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						61
+					],
 					"hinten_normal": [
-						31.5,
-						56
+						27.0,
+						60
+					],
+					"seite_augen_zu": [
+						27.0,
+						60
+					],
+					"seite_normal": [
+						27.0,
+						60
 					],
 					"vorn_augen_zu": [
-						34.1,
-						59
+						24.0,
+						61
 					],
 					"vorn_normal": [
-						34.3,
-						58
+						23.5,
+						61
 					]
 				},
 				"name": "Frau, Haarknoten"
@@ -4177,17 +4685,37 @@
 			"v_w3": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						30.5,
-						53
+					"gerade_hinten_normal": [
+						33.5,
+						62
 					],
-					"vorn_augen_zu": [
-						35.3,
+					"gerade_vorn_augen_zu": [
+						30.0,
 						61
 					],
+					"gerade_vorn_normal": [
+						30.0,
+						62
+					],
+					"hinten_normal": [
+						31.0,
+						62
+					],
+					"seite_augen_zu": [
+						34.0,
+						62
+					],
+					"seite_normal": [
+						34.0,
+						62
+					],
+					"vorn_augen_zu": [
+						31.0,
+						62
+					],
 					"vorn_normal": [
-						35.4,
-						60
+						31.0,
+						62
 					]
 				},
 				"name": "Frau, offene rote Haare"
@@ -4803,12 +5331,36 @@
 			"a_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.9,
+						63
+					],
+					"gerade_vorn_augen_zu": [
+						26.6,
+						62
+					],
+					"gerade_vorn_normal": [
+						26.6,
+						62
+					],
 					"hinten_normal": [
-						36.9,
-						61
+						29.5,
+						63
+					],
+					"seite_augen_zu": [
+						31.3,
+						63
+					],
+					"seite_normal": [
+						33.7,
+						63
+					],
+					"vorn_augen_zu": [
+						31.0,
+						62
 					],
 					"vorn_normal": [
-						29.9,
+						31.0,
 						62
 					]
 				},
@@ -4817,13 +5369,37 @@
 			"a_m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.5,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						58
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						58
+					],
 					"hinten_normal": [
-						34.3,
-						55
+						30.5,
+						58
+					],
+					"seite_augen_zu": [
+						28.5,
+						58
+					],
+					"seite_normal": [
+						28.5,
+						58
+					],
+					"vorn_augen_zu": [
+						26.5,
+						58
 					],
 					"vorn_normal": [
-						39.0,
-						56
+						26.5,
+						58
 					]
 				},
 				"name": "Alter Mann, Halbglatze"
@@ -4831,17 +5407,37 @@
 			"a_w1": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						33.5,
-						59
+					"gerade_hinten_normal": [
+						25.5,
+						61
 					],
-					"vorn_augen_zu": [
-						32.7,
+					"gerade_vorn_augen_zu": [
+						26.7,
+						62
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						62
+					],
+					"hinten_normal": [
+						26.5,
+						61
+					],
+					"seite_augen_zu": [
+						31.5,
 						60
 					],
+					"seite_normal": [
+						31.0,
+						60
+					],
+					"vorn_augen_zu": [
+						24.5,
+						62
+					],
 					"vorn_normal": [
-						32.6,
-						59
+						24.5,
+						62
 					]
 				},
 				"name": "Alte Frau, grauer Dutt"
@@ -4849,17 +5445,37 @@
 			"a_w2": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						36.0,
+					"gerade_hinten_normal": [
+						30.0,
 						60
 					],
+					"gerade_vorn_augen_zu": [
+						29.5,
+						60
+					],
+					"gerade_vorn_normal": [
+						29.5,
+						60
+					],
+					"hinten_normal": [
+						39.0,
+						59
+					],
+					"seite_augen_zu": [
+						36.5,
+						59
+					],
+					"seite_normal": [
+						36.5,
+						58
+					],
 					"vorn_augen_zu": [
-						35.9,
+						35.5,
 						59
 					],
 					"vorn_normal": [
-						35.8,
-						58
+						35.5,
+						59
 					]
 				},
 				"name": "Alte Frau, Kopftuch"
@@ -4969,13 +5585,37 @@
 			"k_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.5,
+						61
+					],
+					"gerade_vorn_augen_zu": [
+						29.0,
+						61
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						61
+					],
 					"hinten_normal": [
-						33.7,
-						59
+						31.5,
+						61
+					],
+					"seite_augen_zu": [
+						32.0,
+						61
+					],
+					"seite_normal": [
+						32.0,
+						61
+					],
+					"vorn_augen_zu": [
+						25.5,
+						61
 					],
 					"vorn_normal": [
-						33.5,
-						58
+						25.5,
+						61
 					]
 				},
 				"name": "Junge"
@@ -4983,17 +5623,37 @@
 			"k_w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.5,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						54
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						54
+					],
 					"hinten_normal": [
-						30.5,
-						56
+						29.5,
+						51
+					],
+					"seite_augen_zu": [
+						28.0,
+						52
+					],
+					"seite_normal": [
+						28.0,
+						53
 					],
 					"vorn_augen_zu": [
-						30.6,
-						56
+						22.5,
+						51
 					],
 					"vorn_normal": [
-						30.1,
-						55
+						21.5,
+						51
 					]
 				},
 				"name": "Mädchen"
@@ -5347,13 +6007,37 @@
 			"v_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						61
+					],
+					"gerade_vorn_augen_zu": [
+						28.0,
+						61
+					],
+					"gerade_vorn_normal": [
+						28.0,
+						61
+					],
 					"hinten_normal": [
-						30.0,
-						55
+						32.5,
+						61
+					],
+					"seite_augen_zu": [
+						32.0,
+						61
+					],
+					"seite_normal": [
+						32.0,
+						61
+					],
+					"vorn_augen_zu": [
+						23.5,
+						61
 					],
 					"vorn_normal": [
-						31.6,
-						58
+						24.0,
+						61
 					]
 				},
 				"name": "Mann, kurze braune Haare"
@@ -5361,13 +6045,37 @@
 			"v_m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						24.0,
+						56
+					],
+					"gerade_vorn_augen_zu": [
+						26.2,
+						56
+					],
+					"gerade_vorn_normal": [
+						26.0,
+						56
+					],
 					"hinten_normal": [
-						25.2,
-						49
+						22.0,
+						56
+					],
+					"seite_augen_zu": [
+						19.5,
+						56
+					],
+					"seite_normal": [
+						20.0,
+						56
+					],
+					"vorn_augen_zu": [
+						18.5,
+						56
 					],
 					"vorn_normal": [
-						27.7,
-						53
+						20.0,
+						56
 					]
 				},
 				"name": "Mann, Glatze mit Bart"
@@ -5375,13 +6083,37 @@
 			"v_m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						28.9,
+						61
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						62
+					],
 					"hinten_normal": [
-						31.9,
-						56
+						31.0,
+						59
+					],
+					"seite_augen_zu": [
+						30.5,
+						60
+					],
+					"seite_normal": [
+						30.5,
+						60
+					],
+					"vorn_augen_zu": [
+						25.5,
+						61
 					],
 					"vorn_normal": [
-						33.2,
-						58
+						26.7,
+						61
 					]
 				},
 				"name": "Mann, schwarze Locken"
@@ -5389,17 +6121,37 @@
 			"v_w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						30.8,
+						56
+					],
+					"gerade_vorn_augen_zu": [
+						30.2,
+						59
+					],
+					"gerade_vorn_normal": [
+						29.7,
+						59
+					],
 					"hinten_normal": [
-						34.0,
-						53
+						32.0,
+						60
+					],
+					"seite_augen_zu": [
+						31.5,
+						59
+					],
+					"seite_normal": [
+						31.0,
+						58
 					],
 					"vorn_augen_zu": [
-						36.0,
-						53
+						27.2,
+						59
 					],
 					"vorn_normal": [
-						35.8,
-						53
+						27.2,
+						59
 					]
 				},
 				"name": "Frau, langer Zopf"
@@ -5407,17 +6159,37 @@
 			"v_w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.0,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						61
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						61
+					],
 					"hinten_normal": [
-						31.5,
-						56
+						27.0,
+						60
+					],
+					"seite_augen_zu": [
+						27.0,
+						60
+					],
+					"seite_normal": [
+						27.0,
+						60
 					],
 					"vorn_augen_zu": [
-						34.1,
-						59
+						24.0,
+						61
 					],
 					"vorn_normal": [
-						34.3,
-						58
+						23.5,
+						61
 					]
 				},
 				"name": "Frau, Haarknoten"
@@ -5425,17 +6197,37 @@
 			"v_w3": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						30.5,
-						53
+					"gerade_hinten_normal": [
+						33.5,
+						62
 					],
-					"vorn_augen_zu": [
-						35.3,
+					"gerade_vorn_augen_zu": [
+						30.0,
 						61
 					],
+					"gerade_vorn_normal": [
+						30.0,
+						62
+					],
+					"hinten_normal": [
+						31.0,
+						62
+					],
+					"seite_augen_zu": [
+						34.0,
+						62
+					],
+					"seite_normal": [
+						34.0,
+						62
+					],
+					"vorn_augen_zu": [
+						31.0,
+						62
+					],
 					"vorn_normal": [
-						35.4,
-						60
+						31.0,
+						62
 					]
 				},
 				"name": "Frau, offene rote Haare"
@@ -6051,12 +6843,36 @@
 			"a_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.9,
+						63
+					],
+					"gerade_vorn_augen_zu": [
+						26.6,
+						62
+					],
+					"gerade_vorn_normal": [
+						26.6,
+						62
+					],
 					"hinten_normal": [
-						36.9,
-						61
+						29.5,
+						63
+					],
+					"seite_augen_zu": [
+						31.3,
+						63
+					],
+					"seite_normal": [
+						33.7,
+						63
+					],
+					"vorn_augen_zu": [
+						31.0,
+						62
 					],
 					"vorn_normal": [
-						29.9,
+						31.0,
 						62
 					]
 				},
@@ -6065,13 +6881,37 @@
 			"a_m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.5,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						58
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						58
+					],
 					"hinten_normal": [
-						34.3,
-						55
+						30.5,
+						58
+					],
+					"seite_augen_zu": [
+						28.5,
+						58
+					],
+					"seite_normal": [
+						28.5,
+						58
+					],
+					"vorn_augen_zu": [
+						26.5,
+						58
 					],
 					"vorn_normal": [
-						39.0,
-						56
+						26.5,
+						58
 					]
 				},
 				"name": "Alter Mann, Halbglatze"
@@ -6079,17 +6919,37 @@
 			"a_w1": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						33.5,
-						59
+					"gerade_hinten_normal": [
+						25.5,
+						61
 					],
-					"vorn_augen_zu": [
-						32.7,
+					"gerade_vorn_augen_zu": [
+						26.7,
+						62
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						62
+					],
+					"hinten_normal": [
+						26.5,
+						61
+					],
+					"seite_augen_zu": [
+						31.5,
 						60
 					],
+					"seite_normal": [
+						31.0,
+						60
+					],
+					"vorn_augen_zu": [
+						24.5,
+						62
+					],
 					"vorn_normal": [
-						32.6,
-						59
+						24.5,
+						62
 					]
 				},
 				"name": "Alte Frau, grauer Dutt"
@@ -6097,17 +6957,37 @@
 			"a_w2": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						36.0,
+					"gerade_hinten_normal": [
+						30.0,
 						60
 					],
+					"gerade_vorn_augen_zu": [
+						29.5,
+						60
+					],
+					"gerade_vorn_normal": [
+						29.5,
+						60
+					],
+					"hinten_normal": [
+						39.0,
+						59
+					],
+					"seite_augen_zu": [
+						36.5,
+						59
+					],
+					"seite_normal": [
+						36.5,
+						58
+					],
 					"vorn_augen_zu": [
-						35.9,
+						35.5,
 						59
 					],
 					"vorn_normal": [
-						35.8,
-						58
+						35.5,
+						59
 					]
 				},
 				"name": "Alte Frau, Kopftuch"
@@ -6217,13 +7097,37 @@
 			"k_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.5,
+						61
+					],
+					"gerade_vorn_augen_zu": [
+						29.0,
+						61
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						61
+					],
 					"hinten_normal": [
-						33.7,
-						59
+						31.5,
+						61
+					],
+					"seite_augen_zu": [
+						32.0,
+						61
+					],
+					"seite_normal": [
+						32.0,
+						61
+					],
+					"vorn_augen_zu": [
+						25.5,
+						61
 					],
 					"vorn_normal": [
-						33.5,
-						58
+						25.5,
+						61
 					]
 				},
 				"name": "Junge"
@@ -6231,17 +7135,37 @@
 			"k_w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.5,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						54
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						54
+					],
 					"hinten_normal": [
-						30.5,
-						56
+						29.5,
+						51
+					],
+					"seite_augen_zu": [
+						28.0,
+						52
+					],
+					"seite_normal": [
+						28.0,
+						53
 					],
 					"vorn_augen_zu": [
-						30.6,
-						56
+						22.5,
+						51
 					],
 					"vorn_normal": [
-						30.1,
-						55
+						21.5,
+						51
 					]
 				},
 				"name": "Mädchen"
@@ -6595,13 +7519,37 @@
 			"v_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						61
+					],
+					"gerade_vorn_augen_zu": [
+						28.0,
+						61
+					],
+					"gerade_vorn_normal": [
+						28.0,
+						61
+					],
 					"hinten_normal": [
-						30.0,
-						55
+						32.5,
+						61
+					],
+					"seite_augen_zu": [
+						32.0,
+						61
+					],
+					"seite_normal": [
+						32.0,
+						61
+					],
+					"vorn_augen_zu": [
+						23.5,
+						61
 					],
 					"vorn_normal": [
-						31.6,
-						58
+						24.0,
+						61
 					]
 				},
 				"name": "Mann, kurze braune Haare"
@@ -6609,13 +7557,37 @@
 			"v_m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						24.0,
+						56
+					],
+					"gerade_vorn_augen_zu": [
+						26.2,
+						56
+					],
+					"gerade_vorn_normal": [
+						26.0,
+						56
+					],
 					"hinten_normal": [
-						25.2,
-						49
+						22.0,
+						56
+					],
+					"seite_augen_zu": [
+						19.5,
+						56
+					],
+					"seite_normal": [
+						20.0,
+						56
+					],
+					"vorn_augen_zu": [
+						18.5,
+						56
 					],
 					"vorn_normal": [
-						27.7,
-						53
+						20.0,
+						56
 					]
 				},
 				"name": "Mann, Glatze mit Bart"
@@ -6623,13 +7595,37 @@
 			"v_m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						28.9,
+						61
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						62
+					],
 					"hinten_normal": [
-						31.9,
-						56
+						31.0,
+						59
+					],
+					"seite_augen_zu": [
+						30.5,
+						60
+					],
+					"seite_normal": [
+						30.5,
+						60
+					],
+					"vorn_augen_zu": [
+						25.5,
+						61
 					],
 					"vorn_normal": [
-						33.2,
-						58
+						26.7,
+						61
 					]
 				},
 				"name": "Mann, schwarze Locken"
@@ -6637,17 +7633,37 @@
 			"v_w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						30.8,
+						56
+					],
+					"gerade_vorn_augen_zu": [
+						30.2,
+						59
+					],
+					"gerade_vorn_normal": [
+						29.7,
+						59
+					],
 					"hinten_normal": [
-						34.0,
-						53
+						32.0,
+						60
+					],
+					"seite_augen_zu": [
+						31.5,
+						59
+					],
+					"seite_normal": [
+						31.0,
+						58
 					],
 					"vorn_augen_zu": [
-						36.0,
-						53
+						27.2,
+						59
 					],
 					"vorn_normal": [
-						35.8,
-						53
+						27.2,
+						59
 					]
 				},
 				"name": "Frau, langer Zopf"
@@ -6655,17 +7671,37 @@
 			"v_w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.0,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						61
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						61
+					],
 					"hinten_normal": [
-						31.5,
-						56
+						27.0,
+						60
+					],
+					"seite_augen_zu": [
+						27.0,
+						60
+					],
+					"seite_normal": [
+						27.0,
+						60
 					],
 					"vorn_augen_zu": [
-						34.1,
-						59
+						24.0,
+						61
 					],
 					"vorn_normal": [
-						34.3,
-						58
+						23.5,
+						61
 					]
 				},
 				"name": "Frau, Haarknoten"
@@ -6673,17 +7709,37 @@
 			"v_w3": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						30.5,
-						53
+					"gerade_hinten_normal": [
+						33.5,
+						62
 					],
-					"vorn_augen_zu": [
-						35.3,
+					"gerade_vorn_augen_zu": [
+						30.0,
 						61
 					],
+					"gerade_vorn_normal": [
+						30.0,
+						62
+					],
+					"hinten_normal": [
+						31.0,
+						62
+					],
+					"seite_augen_zu": [
+						34.0,
+						62
+					],
+					"seite_normal": [
+						34.0,
+						62
+					],
+					"vorn_augen_zu": [
+						31.0,
+						62
+					],
 					"vorn_normal": [
-						35.4,
-						60
+						31.0,
+						62
 					]
 				},
 				"name": "Frau, offene rote Haare"
@@ -7299,12 +8355,36 @@
 			"a_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.9,
+						63
+					],
+					"gerade_vorn_augen_zu": [
+						26.6,
+						62
+					],
+					"gerade_vorn_normal": [
+						26.6,
+						62
+					],
 					"hinten_normal": [
-						36.9,
-						61
+						29.5,
+						63
+					],
+					"seite_augen_zu": [
+						31.3,
+						63
+					],
+					"seite_normal": [
+						33.7,
+						63
+					],
+					"vorn_augen_zu": [
+						31.0,
+						62
 					],
 					"vorn_normal": [
-						29.9,
+						31.0,
 						62
 					]
 				},
@@ -7313,13 +8393,37 @@
 			"a_m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.5,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						58
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						58
+					],
 					"hinten_normal": [
-						34.3,
-						55
+						30.5,
+						58
+					],
+					"seite_augen_zu": [
+						28.5,
+						58
+					],
+					"seite_normal": [
+						28.5,
+						58
+					],
+					"vorn_augen_zu": [
+						26.5,
+						58
 					],
 					"vorn_normal": [
-						39.0,
-						56
+						26.5,
+						58
 					]
 				},
 				"name": "Alter Mann, Halbglatze"
@@ -7327,17 +8431,37 @@
 			"a_w1": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						33.5,
-						59
+					"gerade_hinten_normal": [
+						25.5,
+						61
 					],
-					"vorn_augen_zu": [
-						32.7,
+					"gerade_vorn_augen_zu": [
+						26.7,
+						62
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						62
+					],
+					"hinten_normal": [
+						26.5,
+						61
+					],
+					"seite_augen_zu": [
+						31.5,
 						60
 					],
+					"seite_normal": [
+						31.0,
+						60
+					],
+					"vorn_augen_zu": [
+						24.5,
+						62
+					],
 					"vorn_normal": [
-						32.6,
-						59
+						24.5,
+						62
 					]
 				},
 				"name": "Alte Frau, grauer Dutt"
@@ -7345,17 +8469,37 @@
 			"a_w2": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						36.0,
+					"gerade_hinten_normal": [
+						30.0,
 						60
 					],
+					"gerade_vorn_augen_zu": [
+						29.5,
+						60
+					],
+					"gerade_vorn_normal": [
+						29.5,
+						60
+					],
+					"hinten_normal": [
+						39.0,
+						59
+					],
+					"seite_augen_zu": [
+						36.5,
+						59
+					],
+					"seite_normal": [
+						36.5,
+						58
+					],
 					"vorn_augen_zu": [
-						35.9,
+						35.5,
 						59
 					],
 					"vorn_normal": [
-						35.8,
-						58
+						35.5,
+						59
 					]
 				},
 				"name": "Alte Frau, Kopftuch"
@@ -7465,13 +8609,37 @@
 			"k_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.5,
+						61
+					],
+					"gerade_vorn_augen_zu": [
+						29.0,
+						61
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						61
+					],
 					"hinten_normal": [
-						33.7,
-						59
+						31.5,
+						61
+					],
+					"seite_augen_zu": [
+						32.0,
+						61
+					],
+					"seite_normal": [
+						32.0,
+						61
+					],
+					"vorn_augen_zu": [
+						25.5,
+						61
 					],
 					"vorn_normal": [
-						33.5,
-						58
+						25.5,
+						61
 					]
 				},
 				"name": "Junge"
@@ -7479,17 +8647,37 @@
 			"k_w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.5,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						54
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						54
+					],
 					"hinten_normal": [
-						30.5,
-						56
+						29.5,
+						51
+					],
+					"seite_augen_zu": [
+						28.0,
+						52
+					],
+					"seite_normal": [
+						28.0,
+						53
 					],
 					"vorn_augen_zu": [
-						30.6,
-						56
+						22.5,
+						51
 					],
 					"vorn_normal": [
-						30.1,
-						55
+						21.5,
+						51
 					]
 				},
 				"name": "Mädchen"
@@ -7843,13 +9031,37 @@
 			"v_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						61
+					],
+					"gerade_vorn_augen_zu": [
+						28.0,
+						61
+					],
+					"gerade_vorn_normal": [
+						28.0,
+						61
+					],
 					"hinten_normal": [
-						30.0,
-						55
+						32.5,
+						61
+					],
+					"seite_augen_zu": [
+						32.0,
+						61
+					],
+					"seite_normal": [
+						32.0,
+						61
+					],
+					"vorn_augen_zu": [
+						23.5,
+						61
 					],
 					"vorn_normal": [
-						31.6,
-						58
+						24.0,
+						61
 					]
 				},
 				"name": "Mann, kurze braune Haare"
@@ -7857,13 +9069,37 @@
 			"v_m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						24.0,
+						56
+					],
+					"gerade_vorn_augen_zu": [
+						26.2,
+						56
+					],
+					"gerade_vorn_normal": [
+						26.0,
+						56
+					],
 					"hinten_normal": [
-						25.2,
-						49
+						22.0,
+						56
+					],
+					"seite_augen_zu": [
+						19.5,
+						56
+					],
+					"seite_normal": [
+						20.0,
+						56
+					],
+					"vorn_augen_zu": [
+						18.5,
+						56
 					],
 					"vorn_normal": [
-						27.7,
-						53
+						20.0,
+						56
 					]
 				},
 				"name": "Mann, Glatze mit Bart"
@@ -7871,13 +9107,37 @@
 			"v_m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						28.9,
+						61
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						62
+					],
 					"hinten_normal": [
-						31.9,
-						56
+						31.0,
+						59
+					],
+					"seite_augen_zu": [
+						30.5,
+						60
+					],
+					"seite_normal": [
+						30.5,
+						60
+					],
+					"vorn_augen_zu": [
+						25.5,
+						61
 					],
 					"vorn_normal": [
-						33.2,
-						58
+						26.7,
+						61
 					]
 				},
 				"name": "Mann, schwarze Locken"
@@ -7885,17 +9145,37 @@
 			"v_w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						30.8,
+						56
+					],
+					"gerade_vorn_augen_zu": [
+						30.2,
+						59
+					],
+					"gerade_vorn_normal": [
+						29.7,
+						59
+					],
 					"hinten_normal": [
-						34.0,
-						53
+						32.0,
+						60
+					],
+					"seite_augen_zu": [
+						31.5,
+						59
+					],
+					"seite_normal": [
+						31.0,
+						58
 					],
 					"vorn_augen_zu": [
-						36.0,
-						53
+						27.2,
+						59
 					],
 					"vorn_normal": [
-						35.8,
-						53
+						27.2,
+						59
 					]
 				},
 				"name": "Frau, langer Zopf"
@@ -7903,17 +9183,37 @@
 			"v_w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.0,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						61
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						61
+					],
 					"hinten_normal": [
-						31.5,
-						56
+						27.0,
+						60
+					],
+					"seite_augen_zu": [
+						27.0,
+						60
+					],
+					"seite_normal": [
+						27.0,
+						60
 					],
 					"vorn_augen_zu": [
-						34.1,
-						59
+						24.0,
+						61
 					],
 					"vorn_normal": [
-						34.3,
-						58
+						23.5,
+						61
 					]
 				},
 				"name": "Frau, Haarknoten"
@@ -7921,17 +9221,37 @@
 			"v_w3": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						30.5,
-						53
+					"gerade_hinten_normal": [
+						33.5,
+						62
 					],
-					"vorn_augen_zu": [
-						35.3,
+					"gerade_vorn_augen_zu": [
+						30.0,
 						61
 					],
+					"gerade_vorn_normal": [
+						30.0,
+						62
+					],
+					"hinten_normal": [
+						31.0,
+						62
+					],
+					"seite_augen_zu": [
+						34.0,
+						62
+					],
+					"seite_normal": [
+						34.0,
+						62
+					],
+					"vorn_augen_zu": [
+						31.0,
+						62
+					],
 					"vorn_normal": [
-						35.4,
-						60
+						31.0,
+						62
 					]
 				},
 				"name": "Frau, offene rote Haare"
@@ -8547,12 +9867,36 @@
 			"a_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.9,
+						63
+					],
+					"gerade_vorn_augen_zu": [
+						26.6,
+						62
+					],
+					"gerade_vorn_normal": [
+						26.6,
+						62
+					],
 					"hinten_normal": [
-						36.9,
-						61
+						29.5,
+						63
+					],
+					"seite_augen_zu": [
+						31.3,
+						63
+					],
+					"seite_normal": [
+						33.7,
+						63
+					],
+					"vorn_augen_zu": [
+						31.0,
+						62
 					],
 					"vorn_normal": [
-						29.9,
+						31.0,
 						62
 					]
 				},
@@ -8561,13 +9905,37 @@
 			"a_m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.5,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						58
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						58
+					],
 					"hinten_normal": [
-						34.3,
-						55
+						30.5,
+						58
+					],
+					"seite_augen_zu": [
+						28.5,
+						58
+					],
+					"seite_normal": [
+						28.5,
+						58
+					],
+					"vorn_augen_zu": [
+						26.5,
+						58
 					],
 					"vorn_normal": [
-						39.0,
-						56
+						26.5,
+						58
 					]
 				},
 				"name": "Alter Mann, Halbglatze"
@@ -8575,17 +9943,37 @@
 			"a_w1": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						33.5,
-						59
+					"gerade_hinten_normal": [
+						25.5,
+						61
 					],
-					"vorn_augen_zu": [
-						32.7,
+					"gerade_vorn_augen_zu": [
+						26.7,
+						62
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						62
+					],
+					"hinten_normal": [
+						26.5,
+						61
+					],
+					"seite_augen_zu": [
+						31.5,
 						60
 					],
+					"seite_normal": [
+						31.0,
+						60
+					],
+					"vorn_augen_zu": [
+						24.5,
+						62
+					],
 					"vorn_normal": [
-						32.6,
-						59
+						24.5,
+						62
 					]
 				},
 				"name": "Alte Frau, grauer Dutt"
@@ -8593,17 +9981,37 @@
 			"a_w2": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						36.0,
+					"gerade_hinten_normal": [
+						30.0,
 						60
 					],
+					"gerade_vorn_augen_zu": [
+						29.5,
+						60
+					],
+					"gerade_vorn_normal": [
+						29.5,
+						60
+					],
+					"hinten_normal": [
+						39.0,
+						59
+					],
+					"seite_augen_zu": [
+						36.5,
+						59
+					],
+					"seite_normal": [
+						36.5,
+						58
+					],
 					"vorn_augen_zu": [
-						35.9,
+						35.5,
 						59
 					],
 					"vorn_normal": [
-						35.8,
-						58
+						35.5,
+						59
 					]
 				},
 				"name": "Alte Frau, Kopftuch"
@@ -8713,13 +10121,37 @@
 			"k_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.5,
+						61
+					],
+					"gerade_vorn_augen_zu": [
+						29.0,
+						61
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						61
+					],
 					"hinten_normal": [
-						33.7,
-						59
+						31.5,
+						61
+					],
+					"seite_augen_zu": [
+						32.0,
+						61
+					],
+					"seite_normal": [
+						32.0,
+						61
+					],
+					"vorn_augen_zu": [
+						25.5,
+						61
 					],
 					"vorn_normal": [
-						33.5,
-						58
+						25.5,
+						61
 					]
 				},
 				"name": "Junge"
@@ -8727,17 +10159,37 @@
 			"k_w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.5,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						54
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						54
+					],
 					"hinten_normal": [
-						30.5,
-						56
+						29.5,
+						51
+					],
+					"seite_augen_zu": [
+						28.0,
+						52
+					],
+					"seite_normal": [
+						28.0,
+						53
 					],
 					"vorn_augen_zu": [
-						30.6,
-						56
+						22.5,
+						51
 					],
 					"vorn_normal": [
-						30.1,
-						55
+						21.5,
+						51
 					]
 				},
 				"name": "Mädchen"
@@ -9091,13 +10543,37 @@
 			"v_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						61
+					],
+					"gerade_vorn_augen_zu": [
+						28.0,
+						61
+					],
+					"gerade_vorn_normal": [
+						28.0,
+						61
+					],
 					"hinten_normal": [
-						30.0,
-						55
+						32.5,
+						61
+					],
+					"seite_augen_zu": [
+						32.0,
+						61
+					],
+					"seite_normal": [
+						32.0,
+						61
+					],
+					"vorn_augen_zu": [
+						23.5,
+						61
 					],
 					"vorn_normal": [
-						31.6,
-						58
+						24.0,
+						61
 					]
 				},
 				"name": "Mann, kurze braune Haare"
@@ -9105,13 +10581,37 @@
 			"v_m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						24.0,
+						56
+					],
+					"gerade_vorn_augen_zu": [
+						26.2,
+						56
+					],
+					"gerade_vorn_normal": [
+						26.0,
+						56
+					],
 					"hinten_normal": [
-						25.2,
-						49
+						22.0,
+						56
+					],
+					"seite_augen_zu": [
+						19.5,
+						56
+					],
+					"seite_normal": [
+						20.0,
+						56
+					],
+					"vorn_augen_zu": [
+						18.5,
+						56
 					],
 					"vorn_normal": [
-						27.7,
-						53
+						20.0,
+						56
 					]
 				},
 				"name": "Mann, Glatze mit Bart"
@@ -9119,13 +10619,37 @@
 			"v_m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						28.9,
+						61
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						62
+					],
 					"hinten_normal": [
-						31.9,
-						56
+						31.0,
+						59
+					],
+					"seite_augen_zu": [
+						30.5,
+						60
+					],
+					"seite_normal": [
+						30.5,
+						60
+					],
+					"vorn_augen_zu": [
+						25.5,
+						61
 					],
 					"vorn_normal": [
-						33.2,
-						58
+						26.7,
+						61
 					]
 				},
 				"name": "Mann, schwarze Locken"
@@ -9133,17 +10657,37 @@
 			"v_w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						30.8,
+						56
+					],
+					"gerade_vorn_augen_zu": [
+						30.2,
+						59
+					],
+					"gerade_vorn_normal": [
+						29.7,
+						59
+					],
 					"hinten_normal": [
-						34.0,
-						53
+						32.0,
+						60
+					],
+					"seite_augen_zu": [
+						31.5,
+						59
+					],
+					"seite_normal": [
+						31.0,
+						58
 					],
 					"vorn_augen_zu": [
-						36.0,
-						53
+						27.2,
+						59
 					],
 					"vorn_normal": [
-						35.8,
-						53
+						27.2,
+						59
 					]
 				},
 				"name": "Frau, langer Zopf"
@@ -9151,17 +10695,37 @@
 			"v_w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.0,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						61
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						61
+					],
 					"hinten_normal": [
-						31.5,
-						56
+						27.0,
+						60
+					],
+					"seite_augen_zu": [
+						27.0,
+						60
+					],
+					"seite_normal": [
+						27.0,
+						60
 					],
 					"vorn_augen_zu": [
-						34.1,
-						59
+						24.0,
+						61
 					],
 					"vorn_normal": [
-						34.3,
-						58
+						23.5,
+						61
 					]
 				},
 				"name": "Frau, Haarknoten"
@@ -9169,17 +10733,37 @@
 			"v_w3": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						30.5,
-						53
+					"gerade_hinten_normal": [
+						33.5,
+						62
 					],
-					"vorn_augen_zu": [
-						35.3,
+					"gerade_vorn_augen_zu": [
+						30.0,
 						61
 					],
+					"gerade_vorn_normal": [
+						30.0,
+						62
+					],
+					"hinten_normal": [
+						31.0,
+						62
+					],
+					"seite_augen_zu": [
+						34.0,
+						62
+					],
+					"seite_normal": [
+						34.0,
+						62
+					],
+					"vorn_augen_zu": [
+						31.0,
+						62
+					],
 					"vorn_normal": [
-						35.4,
-						60
+						31.0,
+						62
 					]
 				},
 				"name": "Frau, offene rote Haare"
@@ -9795,12 +11379,36 @@
 			"a_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.9,
+						63
+					],
+					"gerade_vorn_augen_zu": [
+						26.6,
+						62
+					],
+					"gerade_vorn_normal": [
+						26.6,
+						62
+					],
 					"hinten_normal": [
-						36.9,
-						61
+						29.5,
+						63
+					],
+					"seite_augen_zu": [
+						31.3,
+						63
+					],
+					"seite_normal": [
+						33.7,
+						63
+					],
+					"vorn_augen_zu": [
+						31.0,
+						62
 					],
 					"vorn_normal": [
-						29.9,
+						31.0,
 						62
 					]
 				},
@@ -9809,13 +11417,37 @@
 			"a_m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.5,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						58
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						58
+					],
 					"hinten_normal": [
-						34.3,
-						55
+						30.5,
+						58
+					],
+					"seite_augen_zu": [
+						28.5,
+						58
+					],
+					"seite_normal": [
+						28.5,
+						58
+					],
+					"vorn_augen_zu": [
+						26.5,
+						58
 					],
 					"vorn_normal": [
-						39.0,
-						56
+						26.5,
+						58
 					]
 				},
 				"name": "Alter Mann, Halbglatze"
@@ -9823,17 +11455,37 @@
 			"a_w1": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						33.5,
-						59
+					"gerade_hinten_normal": [
+						25.5,
+						61
 					],
-					"vorn_augen_zu": [
-						32.7,
+					"gerade_vorn_augen_zu": [
+						26.7,
+						62
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						62
+					],
+					"hinten_normal": [
+						26.5,
+						61
+					],
+					"seite_augen_zu": [
+						31.5,
 						60
 					],
+					"seite_normal": [
+						31.0,
+						60
+					],
+					"vorn_augen_zu": [
+						24.5,
+						62
+					],
 					"vorn_normal": [
-						32.6,
-						59
+						24.5,
+						62
 					]
 				},
 				"name": "Alte Frau, grauer Dutt"
@@ -9841,17 +11493,37 @@
 			"a_w2": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						36.0,
+					"gerade_hinten_normal": [
+						30.0,
 						60
 					],
+					"gerade_vorn_augen_zu": [
+						29.5,
+						60
+					],
+					"gerade_vorn_normal": [
+						29.5,
+						60
+					],
+					"hinten_normal": [
+						39.0,
+						59
+					],
+					"seite_augen_zu": [
+						36.5,
+						59
+					],
+					"seite_normal": [
+						36.5,
+						58
+					],
 					"vorn_augen_zu": [
-						35.9,
+						35.5,
 						59
 					],
 					"vorn_normal": [
-						35.8,
-						58
+						35.5,
+						59
 					]
 				},
 				"name": "Alte Frau, Kopftuch"
@@ -9961,13 +11633,37 @@
 			"k_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.5,
+						61
+					],
+					"gerade_vorn_augen_zu": [
+						29.0,
+						61
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						61
+					],
 					"hinten_normal": [
-						33.7,
-						59
+						31.5,
+						61
+					],
+					"seite_augen_zu": [
+						32.0,
+						61
+					],
+					"seite_normal": [
+						32.0,
+						61
+					],
+					"vorn_augen_zu": [
+						25.5,
+						61
 					],
 					"vorn_normal": [
-						33.5,
-						58
+						25.5,
+						61
 					]
 				},
 				"name": "Junge"
@@ -9975,17 +11671,37 @@
 			"k_w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.5,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						54
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						54
+					],
 					"hinten_normal": [
-						30.5,
-						56
+						29.5,
+						51
+					],
+					"seite_augen_zu": [
+						28.0,
+						52
+					],
+					"seite_normal": [
+						28.0,
+						53
 					],
 					"vorn_augen_zu": [
-						30.6,
-						56
+						22.5,
+						51
 					],
 					"vorn_normal": [
-						30.1,
-						55
+						21.5,
+						51
 					]
 				},
 				"name": "Mädchen"
@@ -10339,13 +12055,37 @@
 			"v_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						61
+					],
+					"gerade_vorn_augen_zu": [
+						28.0,
+						61
+					],
+					"gerade_vorn_normal": [
+						28.0,
+						61
+					],
 					"hinten_normal": [
-						30.0,
-						55
+						32.5,
+						61
+					],
+					"seite_augen_zu": [
+						32.0,
+						61
+					],
+					"seite_normal": [
+						32.0,
+						61
+					],
+					"vorn_augen_zu": [
+						23.5,
+						61
 					],
 					"vorn_normal": [
-						31.6,
-						58
+						24.0,
+						61
 					]
 				},
 				"name": "Mann, kurze braune Haare"
@@ -10353,13 +12093,37 @@
 			"v_m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						24.0,
+						56
+					],
+					"gerade_vorn_augen_zu": [
+						26.2,
+						56
+					],
+					"gerade_vorn_normal": [
+						26.0,
+						56
+					],
 					"hinten_normal": [
-						25.2,
-						49
+						22.0,
+						56
+					],
+					"seite_augen_zu": [
+						19.5,
+						56
+					],
+					"seite_normal": [
+						20.0,
+						56
+					],
+					"vorn_augen_zu": [
+						18.5,
+						56
 					],
 					"vorn_normal": [
-						27.7,
-						53
+						20.0,
+						56
 					]
 				},
 				"name": "Mann, Glatze mit Bart"
@@ -10367,13 +12131,37 @@
 			"v_m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						28.9,
+						61
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						62
+					],
 					"hinten_normal": [
-						31.9,
-						56
+						31.0,
+						59
+					],
+					"seite_augen_zu": [
+						30.5,
+						60
+					],
+					"seite_normal": [
+						30.5,
+						60
+					],
+					"vorn_augen_zu": [
+						25.5,
+						61
 					],
 					"vorn_normal": [
-						33.2,
-						58
+						26.7,
+						61
 					]
 				},
 				"name": "Mann, schwarze Locken"
@@ -10381,17 +12169,37 @@
 			"v_w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						30.8,
+						56
+					],
+					"gerade_vorn_augen_zu": [
+						30.2,
+						59
+					],
+					"gerade_vorn_normal": [
+						29.7,
+						59
+					],
 					"hinten_normal": [
-						34.0,
-						53
+						32.0,
+						60
+					],
+					"seite_augen_zu": [
+						31.5,
+						59
+					],
+					"seite_normal": [
+						31.0,
+						58
 					],
 					"vorn_augen_zu": [
-						36.0,
-						53
+						27.2,
+						59
 					],
 					"vorn_normal": [
-						35.8,
-						53
+						27.2,
+						59
 					]
 				},
 				"name": "Frau, langer Zopf"
@@ -10399,17 +12207,37 @@
 			"v_w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.0,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						61
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						61
+					],
 					"hinten_normal": [
-						31.5,
-						56
+						27.0,
+						60
+					],
+					"seite_augen_zu": [
+						27.0,
+						60
+					],
+					"seite_normal": [
+						27.0,
+						60
 					],
 					"vorn_augen_zu": [
-						34.1,
-						59
+						24.0,
+						61
 					],
 					"vorn_normal": [
-						34.3,
-						58
+						23.5,
+						61
 					]
 				},
 				"name": "Frau, Haarknoten"
@@ -10417,17 +12245,37 @@
 			"v_w3": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						30.5,
-						53
+					"gerade_hinten_normal": [
+						33.5,
+						62
 					],
-					"vorn_augen_zu": [
-						35.3,
+					"gerade_vorn_augen_zu": [
+						30.0,
 						61
 					],
+					"gerade_vorn_normal": [
+						30.0,
+						62
+					],
+					"hinten_normal": [
+						31.0,
+						62
+					],
+					"seite_augen_zu": [
+						34.0,
+						62
+					],
+					"seite_normal": [
+						34.0,
+						62
+					],
+					"vorn_augen_zu": [
+						31.0,
+						62
+					],
 					"vorn_normal": [
-						35.4,
-						60
+						31.0,
+						62
 					]
 				},
 				"name": "Frau, offene rote Haare"
@@ -11043,12 +12891,36 @@
 			"a_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.9,
+						63
+					],
+					"gerade_vorn_augen_zu": [
+						26.6,
+						62
+					],
+					"gerade_vorn_normal": [
+						26.6,
+						62
+					],
 					"hinten_normal": [
-						36.9,
-						61
+						29.5,
+						63
+					],
+					"seite_augen_zu": [
+						31.3,
+						63
+					],
+					"seite_normal": [
+						33.7,
+						63
+					],
+					"vorn_augen_zu": [
+						31.0,
+						62
 					],
 					"vorn_normal": [
-						29.9,
+						31.0,
 						62
 					]
 				},
@@ -11057,13 +12929,37 @@
 			"a_m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.5,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						58
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						58
+					],
 					"hinten_normal": [
-						34.3,
-						55
+						30.5,
+						58
+					],
+					"seite_augen_zu": [
+						28.5,
+						58
+					],
+					"seite_normal": [
+						28.5,
+						58
+					],
+					"vorn_augen_zu": [
+						26.5,
+						58
 					],
 					"vorn_normal": [
-						39.0,
-						56
+						26.5,
+						58
 					]
 				},
 				"name": "Alter Mann, Halbglatze"
@@ -11071,17 +12967,37 @@
 			"a_w1": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						33.5,
-						59
+					"gerade_hinten_normal": [
+						25.5,
+						61
 					],
-					"vorn_augen_zu": [
-						32.7,
+					"gerade_vorn_augen_zu": [
+						26.7,
+						62
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						62
+					],
+					"hinten_normal": [
+						26.5,
+						61
+					],
+					"seite_augen_zu": [
+						31.5,
 						60
 					],
+					"seite_normal": [
+						31.0,
+						60
+					],
+					"vorn_augen_zu": [
+						24.5,
+						62
+					],
 					"vorn_normal": [
-						32.6,
-						59
+						24.5,
+						62
 					]
 				},
 				"name": "Alte Frau, grauer Dutt"
@@ -11089,17 +13005,37 @@
 			"a_w2": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						36.0,
+					"gerade_hinten_normal": [
+						30.0,
 						60
 					],
+					"gerade_vorn_augen_zu": [
+						29.5,
+						60
+					],
+					"gerade_vorn_normal": [
+						29.5,
+						60
+					],
+					"hinten_normal": [
+						39.0,
+						59
+					],
+					"seite_augen_zu": [
+						36.5,
+						59
+					],
+					"seite_normal": [
+						36.5,
+						58
+					],
 					"vorn_augen_zu": [
-						35.9,
+						35.5,
 						59
 					],
 					"vorn_normal": [
-						35.8,
-						58
+						35.5,
+						59
 					]
 				},
 				"name": "Alte Frau, Kopftuch"
@@ -11209,13 +13145,37 @@
 			"k_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.5,
+						61
+					],
+					"gerade_vorn_augen_zu": [
+						29.0,
+						61
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						61
+					],
 					"hinten_normal": [
-						33.7,
-						59
+						31.5,
+						61
+					],
+					"seite_augen_zu": [
+						32.0,
+						61
+					],
+					"seite_normal": [
+						32.0,
+						61
+					],
+					"vorn_augen_zu": [
+						25.5,
+						61
 					],
 					"vorn_normal": [
-						33.5,
-						58
+						25.5,
+						61
 					]
 				},
 				"name": "Junge"
@@ -11223,17 +13183,37 @@
 			"k_w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.5,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						54
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						54
+					],
 					"hinten_normal": [
-						30.5,
-						56
+						29.5,
+						51
+					],
+					"seite_augen_zu": [
+						28.0,
+						52
+					],
+					"seite_normal": [
+						28.0,
+						53
 					],
 					"vorn_augen_zu": [
-						30.6,
-						56
+						22.5,
+						51
 					],
 					"vorn_normal": [
-						30.1,
-						55
+						21.5,
+						51
 					]
 				},
 				"name": "Mädchen"
@@ -11587,13 +13567,37 @@
 			"v_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						61
+					],
+					"gerade_vorn_augen_zu": [
+						28.0,
+						61
+					],
+					"gerade_vorn_normal": [
+						28.0,
+						61
+					],
 					"hinten_normal": [
-						30.0,
-						55
+						32.5,
+						61
+					],
+					"seite_augen_zu": [
+						32.0,
+						61
+					],
+					"seite_normal": [
+						32.0,
+						61
+					],
+					"vorn_augen_zu": [
+						23.5,
+						61
 					],
 					"vorn_normal": [
-						31.6,
-						58
+						24.0,
+						61
 					]
 				},
 				"name": "Mann, kurze braune Haare"
@@ -11601,13 +13605,37 @@
 			"v_m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						24.0,
+						56
+					],
+					"gerade_vorn_augen_zu": [
+						26.2,
+						56
+					],
+					"gerade_vorn_normal": [
+						26.0,
+						56
+					],
 					"hinten_normal": [
-						25.2,
-						49
+						22.0,
+						56
+					],
+					"seite_augen_zu": [
+						19.5,
+						56
+					],
+					"seite_normal": [
+						20.0,
+						56
+					],
+					"vorn_augen_zu": [
+						18.5,
+						56
 					],
 					"vorn_normal": [
-						27.7,
-						53
+						20.0,
+						56
 					]
 				},
 				"name": "Mann, Glatze mit Bart"
@@ -11615,13 +13643,37 @@
 			"v_m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						28.9,
+						61
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						62
+					],
 					"hinten_normal": [
-						31.9,
-						56
+						31.0,
+						59
+					],
+					"seite_augen_zu": [
+						30.5,
+						60
+					],
+					"seite_normal": [
+						30.5,
+						60
+					],
+					"vorn_augen_zu": [
+						25.5,
+						61
 					],
 					"vorn_normal": [
-						33.2,
-						58
+						26.7,
+						61
 					]
 				},
 				"name": "Mann, schwarze Locken"
@@ -11629,17 +13681,37 @@
 			"v_w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						30.8,
+						56
+					],
+					"gerade_vorn_augen_zu": [
+						30.2,
+						59
+					],
+					"gerade_vorn_normal": [
+						29.7,
+						59
+					],
 					"hinten_normal": [
-						34.0,
-						53
+						32.0,
+						60
+					],
+					"seite_augen_zu": [
+						31.5,
+						59
+					],
+					"seite_normal": [
+						31.0,
+						58
 					],
 					"vorn_augen_zu": [
-						36.0,
-						53
+						27.2,
+						59
 					],
 					"vorn_normal": [
-						35.8,
-						53
+						27.2,
+						59
 					]
 				},
 				"name": "Frau, langer Zopf"
@@ -11647,17 +13719,37 @@
 			"v_w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.0,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						61
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						61
+					],
 					"hinten_normal": [
-						31.5,
-						56
+						27.0,
+						60
+					],
+					"seite_augen_zu": [
+						27.0,
+						60
+					],
+					"seite_normal": [
+						27.0,
+						60
 					],
 					"vorn_augen_zu": [
-						34.1,
-						59
+						24.0,
+						61
 					],
 					"vorn_normal": [
-						34.3,
-						58
+						23.5,
+						61
 					]
 				},
 				"name": "Frau, Haarknoten"
@@ -11665,17 +13757,37 @@
 			"v_w3": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						30.5,
-						53
+					"gerade_hinten_normal": [
+						33.5,
+						62
 					],
-					"vorn_augen_zu": [
-						35.3,
+					"gerade_vorn_augen_zu": [
+						30.0,
 						61
 					],
+					"gerade_vorn_normal": [
+						30.0,
+						62
+					],
+					"hinten_normal": [
+						31.0,
+						62
+					],
+					"seite_augen_zu": [
+						34.0,
+						62
+					],
+					"seite_normal": [
+						34.0,
+						62
+					],
+					"vorn_augen_zu": [
+						31.0,
+						62
+					],
 					"vorn_normal": [
-						35.4,
-						60
+						31.0,
+						62
 					]
 				},
 				"name": "Frau, offene rote Haare"
@@ -12291,12 +14403,36 @@
 			"a_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.9,
+						63
+					],
+					"gerade_vorn_augen_zu": [
+						26.6,
+						62
+					],
+					"gerade_vorn_normal": [
+						26.6,
+						62
+					],
 					"hinten_normal": [
-						36.9,
-						61
+						29.5,
+						63
+					],
+					"seite_augen_zu": [
+						31.3,
+						63
+					],
+					"seite_normal": [
+						33.7,
+						63
+					],
+					"vorn_augen_zu": [
+						31.0,
+						62
 					],
 					"vorn_normal": [
-						29.9,
+						31.0,
 						62
 					]
 				},
@@ -12305,13 +14441,37 @@
 			"a_m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.5,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						58
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						58
+					],
 					"hinten_normal": [
-						34.3,
-						55
+						30.5,
+						58
+					],
+					"seite_augen_zu": [
+						28.5,
+						58
+					],
+					"seite_normal": [
+						28.5,
+						58
+					],
+					"vorn_augen_zu": [
+						26.5,
+						58
 					],
 					"vorn_normal": [
-						39.0,
-						56
+						26.5,
+						58
 					]
 				},
 				"name": "Alter Mann, Halbglatze"
@@ -12319,17 +14479,37 @@
 			"a_w1": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						33.5,
-						59
+					"gerade_hinten_normal": [
+						25.5,
+						61
 					],
-					"vorn_augen_zu": [
-						32.7,
+					"gerade_vorn_augen_zu": [
+						26.7,
+						62
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						62
+					],
+					"hinten_normal": [
+						26.5,
+						61
+					],
+					"seite_augen_zu": [
+						31.5,
 						60
 					],
+					"seite_normal": [
+						31.0,
+						60
+					],
+					"vorn_augen_zu": [
+						24.5,
+						62
+					],
 					"vorn_normal": [
-						32.6,
-						59
+						24.5,
+						62
 					]
 				},
 				"name": "Alte Frau, grauer Dutt"
@@ -12337,17 +14517,37 @@
 			"a_w2": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						36.0,
+					"gerade_hinten_normal": [
+						30.0,
 						60
 					],
+					"gerade_vorn_augen_zu": [
+						29.5,
+						60
+					],
+					"gerade_vorn_normal": [
+						29.5,
+						60
+					],
+					"hinten_normal": [
+						39.0,
+						59
+					],
+					"seite_augen_zu": [
+						36.5,
+						59
+					],
+					"seite_normal": [
+						36.5,
+						58
+					],
 					"vorn_augen_zu": [
-						35.9,
+						35.5,
 						59
 					],
 					"vorn_normal": [
-						35.8,
-						58
+						35.5,
+						59
 					]
 				},
 				"name": "Alte Frau, Kopftuch"
@@ -12457,13 +14657,37 @@
 			"k_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.5,
+						61
+					],
+					"gerade_vorn_augen_zu": [
+						29.0,
+						61
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						61
+					],
 					"hinten_normal": [
-						33.7,
-						59
+						31.5,
+						61
+					],
+					"seite_augen_zu": [
+						32.0,
+						61
+					],
+					"seite_normal": [
+						32.0,
+						61
+					],
+					"vorn_augen_zu": [
+						25.5,
+						61
 					],
 					"vorn_normal": [
-						33.5,
-						58
+						25.5,
+						61
 					]
 				},
 				"name": "Junge"
@@ -12471,17 +14695,37 @@
 			"k_w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.5,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						54
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						54
+					],
 					"hinten_normal": [
-						30.5,
-						56
+						29.5,
+						51
+					],
+					"seite_augen_zu": [
+						28.0,
+						52
+					],
+					"seite_normal": [
+						28.0,
+						53
 					],
 					"vorn_augen_zu": [
-						30.6,
-						56
+						22.5,
+						51
 					],
 					"vorn_normal": [
-						30.1,
-						55
+						21.5,
+						51
 					]
 				},
 				"name": "Mädchen"
@@ -12835,13 +15079,37 @@
 			"v_m1": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						61
+					],
+					"gerade_vorn_augen_zu": [
+						28.0,
+						61
+					],
+					"gerade_vorn_normal": [
+						28.0,
+						61
+					],
 					"hinten_normal": [
-						30.0,
-						55
+						32.5,
+						61
+					],
+					"seite_augen_zu": [
+						32.0,
+						61
+					],
+					"seite_normal": [
+						32.0,
+						61
+					],
+					"vorn_augen_zu": [
+						23.5,
+						61
 					],
 					"vorn_normal": [
-						31.6,
-						58
+						24.0,
+						61
 					]
 				},
 				"name": "Mann, kurze braune Haare"
@@ -12849,13 +15117,37 @@
 			"v_m2": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						24.0,
+						56
+					],
+					"gerade_vorn_augen_zu": [
+						26.2,
+						56
+					],
+					"gerade_vorn_normal": [
+						26.0,
+						56
+					],
 					"hinten_normal": [
-						25.2,
-						49
+						22.0,
+						56
+					],
+					"seite_augen_zu": [
+						19.5,
+						56
+					],
+					"seite_normal": [
+						20.0,
+						56
+					],
+					"vorn_augen_zu": [
+						18.5,
+						56
 					],
 					"vorn_normal": [
-						27.7,
-						53
+						20.0,
+						56
 					]
 				},
 				"name": "Mann, Glatze mit Bart"
@@ -12863,13 +15155,37 @@
 			"v_m3": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						28.9,
+						61
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						62
+					],
 					"hinten_normal": [
-						31.9,
-						56
+						31.0,
+						59
+					],
+					"seite_augen_zu": [
+						30.5,
+						60
+					],
+					"seite_normal": [
+						30.5,
+						60
+					],
+					"vorn_augen_zu": [
+						25.5,
+						61
 					],
 					"vorn_normal": [
-						33.2,
-						58
+						26.7,
+						61
 					]
 				},
 				"name": "Mann, schwarze Locken"
@@ -12877,17 +15193,37 @@
 			"v_w1": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						30.8,
+						56
+					],
+					"gerade_vorn_augen_zu": [
+						30.2,
+						59
+					],
+					"gerade_vorn_normal": [
+						29.7,
+						59
+					],
 					"hinten_normal": [
-						34.0,
-						53
+						32.0,
+						60
+					],
+					"seite_augen_zu": [
+						31.5,
+						59
+					],
+					"seite_normal": [
+						31.0,
+						58
 					],
 					"vorn_augen_zu": [
-						36.0,
-						53
+						27.2,
+						59
 					],
 					"vorn_normal": [
-						35.8,
-						53
+						27.2,
+						59
 					]
 				},
 				"name": "Frau, langer Zopf"
@@ -12895,17 +15231,37 @@
 			"v_w2": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.0,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						61
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						61
+					],
 					"hinten_normal": [
-						31.5,
-						56
+						27.0,
+						60
+					],
+					"seite_augen_zu": [
+						27.0,
+						60
+					],
+					"seite_normal": [
+						27.0,
+						60
 					],
 					"vorn_augen_zu": [
-						34.1,
-						59
+						24.0,
+						61
 					],
 					"vorn_normal": [
-						34.3,
-						58
+						23.5,
+						61
 					]
 				},
 				"name": "Frau, Haarknoten"
@@ -12913,17 +15269,37 @@
 			"v_w3": {
 				"geschlecht": "w",
 				"hals": {
-					"hinten_normal": [
-						30.5,
-						53
+					"gerade_hinten_normal": [
+						33.5,
+						62
 					],
-					"vorn_augen_zu": [
-						35.3,
+					"gerade_vorn_augen_zu": [
+						30.0,
 						61
 					],
+					"gerade_vorn_normal": [
+						30.0,
+						62
+					],
+					"hinten_normal": [
+						31.0,
+						62
+					],
+					"seite_augen_zu": [
+						34.0,
+						62
+					],
+					"seite_normal": [
+						34.0,
+						62
+					],
+					"vorn_augen_zu": [
+						31.0,
+						62
+					],
 					"vorn_normal": [
-						35.4,
-						60
+						31.0,
+						62
 					]
 				},
 				"name": "Frau, offene rote Haare"

@@ -16,16 +16,19 @@ from scipy import ndimage
 
 WURZEL = Path(__file__).resolve().parent.parent
 KOEPFE = WURZEL / "assets" / "teile" / "koepfe"
-LANGE_HAARE = ["w1", "w2", "w3"]
+LANGE_HAARE = ["w1", "w2", "w3", "v_w1", "v_w3", "a_w2", "k_w1"]
 ## Auch von der Seite liegt der Zopf über der Kleidung (w1, Marco 14.11.2026)
 SEITE = {"w1": ["seite_normal", "seite_schmerz", "seite_freude", "seite_augen_zu", "seite_entschlossen"]}
 ANSICHTEN = ["hinten_normal", "hinten_geneigt", "gerade_hinten_normal"]
+## Wo im Bild von vorne die Haut gemessen wird (Anteil der Höhe). v_w1, k_w1, a_w2: Zopf oder Kopftuch-Knoten macht das Bild höher, unten läge sonst Haar
+HAUT_BEREICH = {"v_w1": (0.4, 0.6), "a_w2": (0.4, 0.6), "k_w1": (0.4, 0.6)}
 
 
 def hautfarbe(kopf):
 	a = np.array(Image.open(KOEPFE / f"{kopf}_gerade_vorn_normal.png").convert("RGBA")).astype(int)
 	h, b = a.shape[:2]
-	feld = a[int(h * 0.62):int(h * 0.82), int(b * 0.35):int(b * 0.65)].reshape(-1, 4)
+	oben, unten = HAUT_BEREICH.get(kopf, (0.62, 0.82))
+	feld = a[int(h * oben):int(h * unten), int(b * 0.35):int(b * 0.65)].reshape(-1, 4)
 	feld = feld[feld[:, 3] > 200, :3]
 	hell = feld[feld.sum(1) > np.percentile(feld.sum(1), 40)]
 	return np.median(hell, axis=0)

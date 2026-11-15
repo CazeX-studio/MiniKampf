@@ -8,6 +8,10 @@ Schräg und seitlich bleiben die alten Köpfe (dort gibt es alle Gesichter für 
 Jeder Kopf wird gespiegelt wie die Körper (tools/welt_u_blatt.py) und so verkleinert, dass sein Kopf schräg von vorne
 genauso hoch ist wie der alte Kopf schräg von vorne. Die Halspunkte kommen in data/figurteile.json zu jedem Körper,
 der diesen Kopf kennt (_koepfe.<kopf>.hals).
+Köpfe der Leute (Teil U12, 15.11.2026: v_*, a_*, k_*): Sie hatten nur schräg von vorne und hinten, keine Seite und keine
+Gesichter. Bei ihnen ersetzt das neue Blatt alle Ansichten (auch schräg, damit alles gleich gemalt ist), dazu Seite und Augen zu.
+Größe: Der alte Kopf schräg von vorne wird beim ersten Lauf nach tools/vorlagen/welt_u/kopf_<kopf>_alt_vorn.png gesichert
+und bleibt das Maß.
 Aufruf: python3 tools/koepfe_u.py [kopf …]
 """
 import json
@@ -30,6 +34,19 @@ PLAETZE = [
 	["gerade_vorn_normal", None, None, None, "gerade_hinten_normal"],
 	["gerade_vorn_augen_zu", None, None],
 ]
+PLAETZE_LEUTE = [
+	["gerade_vorn_normal", "vorn_normal", "seite_normal", "hinten_normal", "gerade_hinten_normal"],
+	["gerade_vorn_augen_zu", "vorn_augen_zu", "seite_augen_zu"],
+]
+
+
+## Blätter, auf denen ChatGPT den Kopf schräg von vorne andersherum gemalt hat als die Seite (a_w2, Marco 15.11.2026):
+## dort wird schräg von vorne nicht gespiegelt
+SCHRAEG_ANDERS = ["a_w2"]
+
+
+def leute(kopf):
+	return kopf[:2] in ("v_", "a_", "k_")
 
 
 def hoehe(bild):
@@ -44,7 +61,7 @@ def eng(bild):
 
 def halspunkt(bild, name):
 	"""Hals wie bei den alten Köpfen (unterste Hautreihen); von hinten ist kaum Haut zu sehen: Mitte der Unterkante."""
-	if "hinten" not in name:
+	if "hinten" not in name or name == "hinten_normal":
 		try:
 			return hals(bild)
 		except (ValueError, IndexError):
@@ -55,6 +72,27 @@ def halspunkt(bild, name):
 	return [round(float(xs.mean()), 1), unten + 1]
 
 
+def haut_hals(bild, haut):
+	"""Köpfe der Leute: Hals = unterste Reihe mit mehreren hautfarbenen Punkten (Zopf, Bart und lange Haare zählen nicht)."""
+	fest = bild[..., 3] > 128
+	nah = fest & (np.abs(bild[..., :3].astype(int) - haut).sum(-1) < 75)
+	reihen = np.where(nah.sum(1) >= max(3, bild.shape[1] // 12))[0]
+	if len(reihen) == 0:
+		reihen = np.where(nah.sum(1) >= 2)[0]
+	if len(reihen) == 0:
+		return None
+	unten = int(reihen.max())
+	return [round(float(np.where(nah[unten - 2:unten + 1].any(0))[0].mean()), 1), unten + 1]
+
+
+def hautfarbe(bild):
+	h, b = bild.shape[:2]
+	feld = bild[int(h * 0.55):int(h * 0.8), int(b * 0.35):int(b * 0.65)].reshape(-1, 4)
+	feld = feld[feld[:, 3] > 200, :3].astype(int)
+	hell = feld[feld.sum(1) > np.percentile(feld.sum(1), 50)]
+	return np.median(hell, axis=0)
+
+
 def main():
 	daten = json.loads(DATEN.read_text(encoding="utf-8"))
 	for kopf in sys.argv[1:] or ["w1", "w2", "w3", "m1", "m2", "m3"]:
@@ -63,24 +101,48 @@ def main():
 		if [len(r) for r in reihen] != [5, 3]:
 			raise SystemExit(f"kopf_{kopf}: Reihen {[len(r) for r in reihen]}, erwartet [5, 3]")
 		stuecke = [[eng(np.ascontiguousarray(ausschneiden(a, ziel, i)[:, ::-1])) for i, _ in r] for r in reihen]
-		alt = np.array(Image.open(KOEPFE / f"{kopf}_vorn_normal.png").convert("RGBA"))
+		mass = KOEPFE / f"{kopf}_vorn_normal.png"
+		if leute(kopf):
+			gesichert = QUELLE / f"kopf_{kopf}_alt_vorn.png"
+			if not gesichert.exists():
+				gesichert.write_bytes(mass.read_bytes())
+			mass = gesichert
+		alt = np.array(Image.open(mass).convert("RGBA"))
 		faktor = hoehe(alt) / hoehe(stuecke[0][1])
 		punkte = {}
 		groessen = {}
-		for plaetze, reihe in zip(PLAETZE, stuecke):
+		for plaetze, reihe in zip(PLAETZE_LEUTE if leute(kopf) else PLAETZE, stuecke):
 			for name, t in zip(plaetze, reihe):
 				if name is None:
 					continue
+				if kopf in SCHRAEG_ANDERS and name.startswith("vorn_"):
+					t = np.ascontiguousarray(t[:, ::-1])
 				bild = Image.fromarray(t)
 				bild = bild.resize((max(1, round(bild.width * faktor)), max(1, round(bild.height * faktor))), Image.LANCZOS)
 				bild = np.array(bild)
 				Image.fromarray(bild).save(KOEPFE / f"{kopf}_{name}.png")
-				punkte[name] = halspunkt(bild, name)
+				if leute(kopf):
+					if name == "gerade_vorn_normal":
+						haut = hautfarbe(bild)
+					punkte[name] = haut_hals(bild, haut)
+					if punkte[name] is None:
+						print(f"{kopf} {name}: kein Hals gefunden, Mitte der Unterkante")
+						punkte[name] = halspunkt(bild, "hinten")
+				else:
+					punkte[name] = halspunkt(bild, name)
 				groessen[name] = bild.shape[1]
 		# Von hinten: Zopf oder lange Haare reichen unter den Hals. Der Hals sitzt dort, wo er von vorne sitzt
 		# (gleiche Höhe ab Scheitel, gleicher Abstand zur Mitte, gespiegelt)
 		vorn = punkte["gerade_vorn_normal"]
-		punkte["gerade_hinten_normal"] = [round(groessen["gerade_hinten_normal"] / 2 - (vorn[0] - groessen["gerade_vorn_normal"] / 2), 1), vorn[1]]
+		if leute(kopf):
+			# Von hinten verdecken Zopf oder lange Haare den Hals: liegt der gefundene Hals nicht auf der Höhe wie von vorne
+			# (im Blatt sitzen alle Hälse gleich hoch), gilt die Ansicht von vorne gespiegelt
+			for hinten, von in [("gerade_hinten_normal", "gerade_vorn_normal"), ("hinten_normal", "vorn_normal")]:
+				if abs(punkte[hinten][1] - punkte[von][1]) > 4:
+					print(f"{kopf} {hinten}: Hals von vorne übernommen")
+					punkte[hinten] = [round(groessen[hinten] / 2 - (punkte[von][0] - groessen[von] / 2), 1), punkte[von][1]]
+		if not leute(kopf):
+			punkte["gerade_hinten_normal"] = [round(groessen["gerade_hinten_normal"] / 2 - (vorn[0] - groessen["gerade_vorn_normal"] / 2), 1), vorn[1]]
 		n = 0
 		for koerper, eintrag in daten.items():
 			if isinstance(eintrag, dict) and kopf in eintrag.get("_koepfe", {}):
