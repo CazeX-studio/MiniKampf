@@ -21,7 +21,8 @@ from scipy import ndimage
 WURZEL = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(WURZEL / "tools"))
 from figur_bilder import VORLAGEN, blatt  # noqa: E402
-from koerper_blatt import DATEN, KOPF_QUELLE, TEILE, gruen, neigung, skalieren  # noqa: E402
+from koerper_blatt import DATEN, KOPF_GERADE, KOPF_QUELLE, TEILE, gruen, neigung, skalieren  # noqa: E402
+from koerper_blatt import REIHEN as KLASSEN_REIHEN  # noqa: E402
 from kopf_koerper import hals, richtung_von, verkleinern  # noqa: E402
 from monster_bilder import ausschneiden, bilder_finden, freistellen, speichern  # noqa: E402
 
@@ -33,6 +34,9 @@ KOERPER = {
 	"frau_korpulent": ("Frau, korpulent", "v_w2"),
 }
 REIHEN = [[("idle_vorn", 4), ("run_vorn", 4)], [("idle_hinten", 4), ("run_hinten", 4)]]
+## Teil U11 (15.11.2026): Gibt es tools/vorlagen/grund_<art>_welt_u.png (gebaut von tools/welt_u_blatt.py grund_<art>), dann
+## gehen die Leute wie die Klassen: fünf Richtungen, 8 Bilder Laufen, Stehen und Sitzen
+WELT_U_REIHEN = KLASSEN_REIHEN["novize_m"]["welt"]
 ## Kopf-Blätter: Blatt -> Köpfe von links nach rechts (Kennung, Name, Geschlecht)
 KOEPFE = {
 	"koepfe_erwachsene": [("v_m1", "Mann, kurze braune Haare", "m"), ("v_m2", "Mann, Glatze mit Bart", "m"),
@@ -119,7 +123,10 @@ def koepfe_schneiden():
 
 def koerper_schneiden(art, novize_oval, daten, volk):
 	koerper = f"grund_{art}"
-	anims = blatt("grund", art, REIHEN)
+	if (VORLAGEN / f"grund_{art}_welt_u.png").exists():
+		anims = blatt("grund", f"{art}_welt_u", WELT_U_REIHEN)
+	else:
+		anims = blatt("grund", art, REIHEN)
 	# Größe nach dem Oval: so groß wie der Kopf des Novizen
 	faktor = novize_oval / np.median([oval_hoehe(t) for t in anims["idle_vorn"]])
 	anims = {anim: skalieren(bilder, faktor) for anim, bilder in anims.items()}
@@ -140,6 +147,8 @@ def koerper_schneiden(art, novize_oval, daten, volk):
 				eintrag[bildname] = {"ganz": True}
 				continue
 			hals_punkt, winkel = neigung(bild, platz & (bild[..., 3] > 128))
+			if anim.endswith(KOPF_GERADE):
+				winkel = 0.0
 			farbe = bild[..., :3].astype(int)
 			gruenlich = farbe[..., 1] > np.maximum(farbe[..., 0], farbe[..., 2]) + 15
 			platz |= ndimage.binary_dilation(platz, iterations=2) & gruenlich
