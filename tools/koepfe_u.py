@@ -8,7 +8,7 @@ Schräg und seitlich bleiben die alten Köpfe (dort gibt es alle Gesichter für 
 Jeder Kopf wird gespiegelt wie die Körper (tools/welt_u_blatt.py) und so verkleinert, dass sein Kopf schräg von vorne
 genauso hoch ist wie der alte Kopf schräg von vorne. Die Halspunkte kommen in data/figurteile.json zu jedem Körper,
 der diesen Kopf kennt (_koepfe.<kopf>.hals).
-Köpfe der Leute (Teil U12, 15.11.2026: v_*, a_*, k_*): Sie hatten nur schräg von vorne und hinten, keine Seite und keine
+Köpfe der Leute (Teil U12, 15.11.2026: v_*, a_*, k_*) und der Nebenfiguren (Teil U2, z. B. borko, hanne): Sie hatten nur schräg von vorne und hinten, keine Seite und keine
 Gesichter. Bei ihnen ersetzt das neue Blatt alle Ansichten (auch schräg, damit alles gleich gemalt ist), dazu Seite und Augen zu.
 Größe: Der alte Kopf schräg von vorne wird beim ersten Lauf nach tools/vorlagen/welt_u/kopf_<kopf>_alt_vorn.png gesichert
 und bleibt das Maß.
@@ -45,8 +45,13 @@ PLAETZE_LEUTE = [
 SCHRAEG_ANDERS = ["a_w2"]
 
 
+## Novizen-Köpfe behalten schräg und seitlich ihre alten Bilder (dort gibt es alle Gesichter für den Kampf). Alle anderen
+## (Leute U12, Nebenfiguren U2) bekommen alle Ansichten aus dem neuen Blatt
+NOVIZEN_KOEPFE = ["m1", "m2", "m3", "w1", "w2", "w3"]
+
+
 def leute(kopf):
-	return kopf[:2] in ("v_", "a_", "k_")
+	return kopf not in NOVIZEN_KOEPFE
 
 
 def hoehe(bild):
