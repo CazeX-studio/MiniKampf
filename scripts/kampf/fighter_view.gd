@@ -335,6 +335,10 @@ func _process(delta: float) -> void:
 
 	# Besiegte Figuren werden grau und durchsichtig (mit eigener Fall-Animation nur etwas dunkler, sobald sie liegen)
 	var dead_look := Color(0.75, 0.75, 0.8, 0.9) if _frames.has("death") else Color(0.45, 0.45, 0.5, 0.55)
+	# Zerstörte Splitter-Knoten der Wurzelmutter bleiben gut sichtbar liegen, bis sie nachwachsen (P19; das letzte Bild
+	# ihrer Tod-Bewegung zeigt den zerbrochenen Kristall, später Bildauftrag V6)
+	if fighter != null and fighter.klass in ["knoten_vorne", "knoten_hinten"]:
+		dead_look = Color(0.92, 0.88, 0.95, 1.0)
 	body.modulate = Color.WHITE if alive or (anim == "death" and index < frames.size() - 1) else dead_look
 
 	var outline := Color(0, 0, 0, 0)
