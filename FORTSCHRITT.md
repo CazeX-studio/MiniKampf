@@ -5,7 +5,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 16.11.)
 
-- **Nächster Schritt (16.11.2026, nach Marcos Playtest):** 22 neue Bauaufträge P1 bis P22 in `BAUAUFTRAEGE.md` (Demo-Reihenfolge, Abschnitt „Playtest 16.11.2026“), sie kommen vor den Testtagen. P1 bis P3 (die drei Blocker) sind fertig. Für P3 fehlt nur noch dein zweites Google-Formular (Anleitung unten bei „P3“). P4 und P5 (Werte der Ausrüstung, Ausrüstung neben der Tasche) sind fertig. P6 (Werte-Symbole) ist mit Platzhaltern fertig, dein Bild V1 fehlt noch. P7 (Miras Notenblatt) ist bis auf dein Bild V2 fertig, P8 (Klänge) ist fertig: bitte einmal probehören (Liste bei „P8“). P9 (weiße Felder im Fähigkeitenbaum) ist behoben. P10 (Leiste oben) ist fertig. P11 (Werte im Fähigkeitenbaum) ist fertig. P12 (Pfeile im Fähigkeitenbaum) ist mit Platzhaltern fertig, dein Bild V4 fehlt noch. P13 (Splitter-Rindenbär) ist bis auf dein Welt-Bild V5 fertig. P14 (Erinnerungs-Szene) ist bis auf deine Bilder V8 fertig. P15 ist geteilt: P15a (Ult-Ladung bleibt) ist fertig. P15 (a und b) ist fertig. P16 (Bosse und Dungeon-Eingänge) ist fertig. P17 (Wurzelmutter) ist fertig. P18 (Vorbote stärker) ist fertig. P19 (zerstörter Splitterkristall) ist bis auf dein Bild V6 fertig. „Mach weiter“ baut als Nächstes P20. Neue Bildaufträge für dich in `Spieldesign/GRAFIK_AUFTRAG.md` Teil V (Werte-Symbole, Miras Notenblatt, Fähigkeiten-Bilder, Pfeile im Fähigkeitenbaum, Splitter-Rindenbär, zerstörter Splitterkristall, Blumen, Erinnerungs-Szene). Für dich bei P3: ein zweites Google-Formular für den Abschluss.
+- **Nächster Schritt (16.11.2026, nach Marcos Playtest):** 22 neue Bauaufträge P1 bis P22 in `BAUAUFTRAEGE.md` (Demo-Reihenfolge, Abschnitt „Playtest 16.11.2026“), sie kommen vor den Testtagen. P1 bis P3 (die drei Blocker) sind fertig. Für P3 fehlt nur noch dein zweites Google-Formular (Anleitung unten bei „P3“). P4 und P5 (Werte der Ausrüstung, Ausrüstung neben der Tasche) sind fertig. P6 (Werte-Symbole) ist mit Platzhaltern fertig, dein Bild V1 fehlt noch. P7 (Miras Notenblatt) ist bis auf dein Bild V2 fertig, P8 (Klänge) ist fertig: bitte einmal probehören (Liste bei „P8“). P9 (weiße Felder im Fähigkeitenbaum) ist behoben. P10 (Leiste oben) ist fertig. P11 (Werte im Fähigkeitenbaum) ist fertig. P12 (Pfeile im Fähigkeitenbaum) ist mit Platzhaltern fertig, dein Bild V4 fehlt noch. P13 (Splitter-Rindenbär) ist bis auf dein Welt-Bild V5 fertig. P14 (Erinnerungs-Szene) ist bis auf deine Bilder V8 fertig. P15 ist geteilt: P15a (Ult-Ladung bleibt) ist fertig. P15 (a und b) ist fertig. P16 (Bosse und Dungeon-Eingänge) ist fertig. P17 (Wurzelmutter) ist fertig. P18 (Vorbote stärker) ist fertig. P19 (zerstörter Splitterkristall) ist bis auf dein Bild V6 fertig. P20 (nur der Hut beim Aussehen) ist fertig. „Mach weiter“ baut als Nächstes P21 (gemalte Blumen statt der alten, Bild V7). Neue Bildaufträge für dich in `Spieldesign/GRAFIK_AUFTRAG.md` Teil V (Werte-Symbole, Miras Notenblatt, Fähigkeiten-Bilder, Pfeile im Fähigkeitenbaum, Splitter-Rindenbär, zerstörter Splitterkristall, Blumen, Erinnerungs-Szene). Für dich bei P3: ein zweites Google-Formular für den Abschluss.
 - **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** Die Alpha-Aufträge sind fertig (A10b und A13b sind fertig; A3b, A9c und A20 haben alle Bilder und kommen als Nächstes). E4 (Balancing) kommt später (Marco, 11.11.: braucht viele Tests), dann E5 (T3 und T4 am Stück); neu für dich: Teil M bis Q in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
 - **Bilder von Marco (02.11. abends):** 38 Blätter liegen unter `tools/vorlagen/`: alle sechs Novizen-Blätter ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen.
   - Dazu der Baukasten (02.11.): acht Grundkörper (`grund_*.png`), Köpfe (`koepfe_*.png`), Hüte (`huete_regionen.png`), Zeichen (`zeichen_dienste.png`) und die Klingentänzerin Blatt 1. Bei den Fäusten der Abwehr-Bilder von Blatt 1 prüft Claude beim Einbauen, ob sie am Oval stören.
@@ -3546,7 +3546,8 @@ Gilt `render.yaml` bei dir nicht von selbst (Dienst nicht über „Blueprint“ 
   Symbole, freigestellt), dann nehmen beide Karten es von selbst statt des Schwerts.
 - **Nebenbei repariert:** In P13 stand der Splitter-Rindenbär genau auf dem Startplatz zweier wilder Monstergruppen
   (Rindenbär und Nachtuhu). Die griffen jeden an, der zum Bären wollte (daher scheiterte auch die Grünwacht-Prüfung ab
-  und zu). Die beiden Gruppen starten jetzt acht Felder weiter südlich bei (38, 20).
+  und zu). Die beiden Gruppen starten jetzt bei (35, 6), abseits vom Bären und vom Hauptweg (zuerst bei (38, 20), das lag
+  aber direkt am Weg vom Eingang zum Seilaufzug, siehe Nachtrag unten).
 
 **So testest du es**
 1. In den Waldboden gehen: Auf der kleinen Karte oben rechts steht am Eingang der Pilzhöhle ein rotes Symbol.
@@ -3596,3 +3597,23 @@ Gilt `render.yaml` bei dir nicht von selbst (Dienst nicht über „Blueprint“ 
 1. In der Pilzhöhle bis zur Wurzelmutter spielen und einen Splitter-Knoten zerstören.
 2. Er bleibt als eingesunkener Wurzelhaufen mit Kristallresten gut sichtbar liegen.
 3. Wächst er im nächsten Zug der Wurzelmutter nach, steht wieder der leuchtende Kristall da.
+
+## P20: Beim Aussehen vorerst nur der Hut (Playtest, 16.11.2026)
+
+- Im Werte-Fenster (C) steht beim Aussehen nur noch der Knopf für die **Kopfbedeckung**. Rückenteil, Farben und Waffe
+  sind ausgeblendet, weil sie noch nichts Sichtbares ändern; sie kommen zurück, wenn es Bilder dafür gibt.
+
+**So testest du es**
+1. Mit C das Werte-Fenster öffnen: Unter „Aussehen“ steht nur „Kopfbedeckung“.
+2. Den Knopf drücken: Die Figur wechselt den Hut.
+
+## Nachtrag: Prüfungen wieder zuverlässig (16.11.2026)
+
+- **Grünwacht-Durchlauf:** Auch die Grünwacht-Klassen (Bogenschütze, Zähmer) kamen in der Prüfung mit Stufe 17 zur
+  Pilzhöhle; mit dem stärkeren Vorboten (P18) reichte das nicht mehr. Im Spiel kommen sie erst nach der Glutoase zu
+  Teil 2 zurück. Jetzt hebt die Prüfung die Stufe auf 20, sobald „Leuchtende Tiere“ beginnt (wie beim Klingentänzer).
+- **Monster am Hauptweg:** Die zwei in P16 verlegten Monstergruppen standen bei (38, 20) direkt am Weg vom Eingang des
+  Waldbodens zum Seilaufzug und griffen dort jeden an. Jetzt stehen sie bei (35, 6) abseits.
+- **Netz-Prüfungen:** Brach eine nach 5 Minuten ab, blieb ihr Test-Server übrig, und alle späteren Läufe verbanden sich
+  mit diesem alten Server (daher die wiederholten Hänger). `tools/alle_tests.sh` beendet übrig gebliebene Test-Server
+  jetzt am Ende.

@@ -121,7 +121,19 @@ func _play_region(klasse: String) -> void:
 		if p.progress.quests[id] == "abgegeben":
 			done_quests[id] = true
 	var finished := false
+	var nach_glutoase_angehoben := false
 	for step in MAX_ACTIONS:
+		# Grünwacht-Klassen spielen Teil 2 erst nach der Glutoase (die hier als gespielt gilt): Sobald „Leuchtende
+		# Tiere“ (Teil 2) beginnt, mindestens die Stufe vom Ende der Glutoase (wie im Spielstand-Editor)
+		if not nach_glutoase_angehoben and p.progress.quest_state("veraenderte_tiere") != "neu" \
+				and p.progress.level < STUFE_NACH_GLUTOASE:
+			nach_glutoase_angehoben = true
+			var tabelle := GameData.level_xp()
+			var vorher := p.progress.xp
+			p.progress.level = STUFE_NACH_GLUTOASE
+			p.progress.xp = maxi(p.progress.xp, int(tabelle[STUFE_NACH_GLUTOASE - 1]))
+			p.progress.klassen_xp += p.progress.xp - vorher
+			print("        (Glutoase gespielt: Stufe %d)" % STUFE_NACH_GLUTOASE)
 		for id: String in p.progress.quests:
 			if p.progress.quests[id] == "abgegeben" and not done_quests.has(id):
 				done_quests[id] = true

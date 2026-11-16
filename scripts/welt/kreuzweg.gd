@@ -3658,8 +3658,9 @@ func _aussehen_zeilen(p: PlayerState) -> void:
 	for hut_id: String in FigurTeile.hut_liste():
 		if state.hut_frei(local_player(), hut_id):
 			huete[hut_id] = FigurTeile.hut_liste()[hut_id]
-	var plaetze := [["hut", "aussehen_hut", huete], ["ruecken", "aussehen_ruecken", FigurTeile.ruecken_liste()],
-			["farben", "aussehen_farben", FigurTeile.paletten_liste()], ["waffe", "aussehen_waffe", FigurTeile.waffe_auswahl()]]
+	# Vorerst nur der Hut (P20, Marco 16.11.): Rückenteil, Farben und Waffe ändern noch nichts Sichtbares, sie kommen
+	# zurück, wenn es Bilder dafür gibt (dann wieder in diese Liste aufnehmen)
+	var plaetze := [["hut", "aussehen_hut", huete]]
 	for platz: Array in plaetze:
 		var teile: Dictionary = platz[2]
 		var ids: Array = [""] + teile.keys()

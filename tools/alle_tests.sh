@@ -66,6 +66,11 @@ lang=$(echo "$rest" | grep -E "/(wildnis|faehigkeit_fx|aussehen_schichten)" || t
 kurz=$(echo "$rest" | grep -vE "/(wildnis|faehigkeit_fx|aussehen_schichten)" || true)
 printf '%s\n%s\n' "$lang" "$kurz" | grep . | xargs -P "$kerne" -I{} bash -c 'eine "$@"' _ {}
 echo "$netz" | grep . | xargs -P "$kerne" -I{} bash -c 'eine "$@"' _ {}
+# Bricht eine Netz-Prüfung nach 5 Minuten ab, bleibt ihr Server übrig und blockiert den Anschluss für den nächsten
+# Lauf (16.11.2026). Darum übrig gebliebene Test-Server dieses Projekts beenden.
+if command -v pkill >/dev/null 2>&1; then
+	pkill -f -- "--path $(pwd)/ -- --server" 2>/dev/null || true
+fi
 
 anzahl=$(echo "$tests" | grep -c . || true)
 # Nur die Fehler mit ihren Zeilen zeigen
