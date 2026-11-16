@@ -269,6 +269,9 @@ leichter geworden, der Kampf aber ein Viertel kürzer.
 
 ### Vorbote stärker (P18, 16.11.2026, Marco: „zu schwach“)
 
+**Leitlinie (Marco, 16.11.2026):** Kämpfe dürfen ruhig etwas schwerer sein, man soll ein bisschen leveln müssen. Beim
+Balancing also lieber etwas zu schwer als zu leicht.
+
 Vorher gewann jede Gruppe, die Phase 2 erreichte (136 von 136). Gemessen wie bei P17 (`pilz_urbaum 30 20`):
 
 | Vorbote | Leben | Schattenwelle | Leerengriff | Siege gesamt | Niederlagen in Phase 2 | Züge je Sieg |
