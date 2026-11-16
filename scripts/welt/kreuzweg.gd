@@ -1379,10 +1379,8 @@ func _draw_prop(node: Node2D, kind: String, prop: Dictionary) -> void:
 			node.draw_line(Vector2(16, -4), Vector2(16, -40), Color("5a3a22"), 3.0)
 			node.draw_colored_polygon(PackedVector2Array([Vector2(-24, -38), Vector2(0, -54), Vector2(24, -38)]), Color("7a3a2a"))
 		"flowers":
-			for i in 5:
-				var p := Vector2((i - 2) * 7.0, (i % 2) * 5.0 - 4.0)
-				node.draw_line(p, p + Vector2(0, -8), Color("3c7a33"), 2.0)
-				node.draw_circle(p + Vector2(0, -9), 3.5, [Color("ff8fb0"), Color("ffd36b"), Color("b8b0ff")][i % 3])
+			# Gemalte Blumen aus dem Baukasten (P21, bis Bildauftrag V7)
+			_pflanze_zeichnen(node, "blumen")
 		"tree":
 			node.draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, 0.45))
 			node.draw_circle(Vector2.ZERO, 20.0, Color(0, 0, 0, 0.3))
@@ -2112,23 +2110,32 @@ func _draw_decoration(node: Node2D, art: String, index: int) -> void:
 						Vector2(far, y + 16.0), Vector2(near, y + 16.0)]), Color("a07a4c"))
 				node.draw_string(font, Vector2(minf(near, far) + 7.0, y + 12.0), parts[i], HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("2a1c10"))
 		"bluete":
-			# Grünwacht blüht auf (Urbaum gerettet)
-			for i in 6:
-				var at := Vector2((i % 3 - 1) * 12.0, -float(i / 3) * 8.0 - 4.0)
-				node.draw_circle(at, 5.0, [Color("ffb8d8"), Color("ffe680"), Color("ffffff")][i % 3])
-				node.draw_circle(at, 2.0, Color("f2c14e"))
+			# Grünwacht blüht auf (Urbaum gerettet): gemalte Blumen (P21, Platzhalter bis Bildauftrag V7 Reihe 1),
+			# abwechselnd Blumenbüschel und blühender Busch
+			_pflanze_zeichnen(node, "blumen" if int(node.position.x + node.position.y) % 2 == 0 else "busch_bluete")
 		"welk":
-			# Welkes Laub (Urbaum gefällt)
-			for i in 5:
-				var at := Vector2((i - 2) * 9.0, float(i % 2) * 5.0 - 2.0)
-				node.draw_colored_polygon(PackedVector2Array([at + Vector2(-5, 0), at + Vector2(0, -4), at + Vector2(5, 0), at + Vector2(0, 3)]),
-						[Color("8a6a3a"), Color("6a5030"), Color("9a7a4a")][i % 3])
+			# Welkes Laub (Urbaum gefällt): gemalter trockener Busch, etwas welker gefärbt (P21, bis Bildauftrag V7 Reihe 2)
+			_pflanze_zeichnen(node, "go_trockenbusch", Color(0.9, 0.78, 0.6))
 		"krater":
 			node.draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, 0.5))
 			node.draw_circle(Vector2.ZERO, 34.0, Color(0.1, 0.08, 0.15, 0.85))
 			node.draw_arc(Vector2.ZERO, 34.0, 0, TAU, 32, Color(0.95, 0.9, 1.0, 0.5 + 0.3 * sin(_time * 3.0)), 3.0)
 			node.draw_set_transform_matrix(Transform2D.IDENTITY)
 			node.draw_circle(Vector2(0, -4), 5.0, Color(0.95, 0.9, 1.0, 0.8))
+
+
+## Gemalte Pflanze aus dem Baukasten (data/baukasten_teile.json) mit dem Fuß auf dem Punkt des Knotens (P21).
+## Die Bilder bleiben geladen (sonst gibt Godot ein nur beim Zeichnen geladenes Bild frei, siehe P9).
+static var _pflanzen := {}
+func _pflanze_zeichnen(node: Node2D, teil: String, farbe := Color.WHITE) -> void:
+	if not _pflanzen.has(teil):
+		var def: Dictionary = GameData.get_file("baukasten_teile").get("objekte", {}).get(teil, {})
+		var pfad := "res://assets/baukasten/" + str(def.get("bild", ""))
+		_pflanzen[teil] = [load(pfad) if ResourceLoader.exists(pfad) else null, Vector2(def.get("fuss", [0, 0])[0], def.get("fuss", [0, 0])[1])]
+	var eintrag: Array = _pflanzen[teil]
+	if eintrag[0] == null:
+		return
+	node.draw_texture(eintrag[0], -eintrag[1], farbe)
 
 
 ## Besondere Effekte: Beim Sternenfall wird es kurz taghell und das Bild wackelt.
