@@ -196,7 +196,7 @@ const FESTE_GEGNER := {
 	"wurzelmutter": {name = "Wurzelmutter", element = "Pflanze", hp = 300, tempo = 8, big = true},
 	"knoten_vorne": {name = "Knoten vorne", element = "Sternenkraft", hp = 40, tempo = 1, passive = true},
 	"knoten_hinten": {name = "Knoten hinten", element = "Sternenkraft", hp = 40, tempo = 1, passive = true},
-	"vorbote": {name = "Der Vorbote", element = "Schatten", hp = 240, tempo = 10, big = true},
+	"vorbote": {name = "Der Vorbote", element = "Schatten", hp = 340, tempo = 10, big = true},
 	# Vulkanschmiede der Ketten: Zwischenboss Hammerbrüder (vulkanschmiede.gd)
 	"hammerbruder_hammer": {name = "Hammer-Bruder", element = "Erde", hp = 200, tempo = 8, big = true},
 	"hammerbruder_zange": {name = "Zangen-Bruder", element = "Erde", hp = 200, tempo = 9, big = true},

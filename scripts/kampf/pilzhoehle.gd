@@ -36,6 +36,9 @@ const DARKNESS_STEP := 0.13
 ## hält, oder alle, solange die Dunkelheit höchstens HELL_GENUG ist (Laternen). Sonst kommt nur DUNKEL_DURCH an.
 const HELL_GENUG := 1
 const DUNKEL_DURCH := 0.2
+## P18 (Marco 16.11.): Der Vorbote war zu schwach (wer Phase 2 erreichte, gewann immer). Schaden seiner Angriffe:
+const VORBOTE_WELLE := 14
+const VORBOTE_GRIFF := 28
 
 ## Nur für Messungen (tests/boss_messen.gd): immer diese Mechanik der Sporenkönigin statt einer zufälligen
 static var modus_fest := ""
@@ -299,11 +302,11 @@ func _herald_turn(e: Fighter) -> void:
 	var typed: Array[Fighter] = []
 	typed.assign(others)
 	if e.step % 2 == 0:
-		await c.enemy_attack(e, typed, 11, "magic", "Schattenwelle")
+		await c.enemy_attack(e, typed, VORBOTE_WELLE, "magic", "Schattenwelle")
 	else:
 		var opfer: Fighter = c.pick(typed)
 		c.zeige("leere", opfer)
-		await c.enemy_attack(e, [opfer], 20, "magic", "Leerengriff")
+		await c.enemy_attack(e, [opfer], VORBOTE_GRIFF, "magic", "Leerengriff")
 
 
 func _light_holder() -> Fighter:

@@ -266,3 +266,17 @@ dieser Zeit nur die Rinde schlagen, und jeder Schlag heilte sie.
 
 Je Klasse nachher: Bogenschütze 29, Zähmer 28, Klingentänzer 30, Schmied 26, Sängerin 23 von 30. Der Boss ist kaum
 leichter geworden, der Kampf aber ein Viertel kürzer.
+
+### Vorbote stärker (P18, 16.11.2026, Marco: „zu schwach“)
+
+Vorher gewann jede Gruppe, die Phase 2 erreichte (136 von 136). Gemessen wie bei P17 (`pilz_urbaum 30 20`):
+
+| Vorbote | Leben | Schattenwelle | Leerengriff | Siege gesamt | Niederlagen in Phase 2 | Züge je Sieg |
+|---|---|---|---|---|---|---|
+| vorher | 240 | 11 | 20 | 136 von 150 (91 %) | 0 von 136 | 86 |
+| **jetzt** | **340** | **14** | **28** | **128 von 150 (85 %)** | **8 von 136** | **100** |
+| härter (nur gemessen) | 400 | 16 | 32 | 108 von 150 (72 %) | 28 von 136 | 106 |
+
+Jetzt je Klasse: Bogenschütze 27, Zähmer 26, Klingentänzer 28, Schmied 24, Sängerin 23 von 30. Die härtere Stufe trifft
+vor allem Schmied (18) und Sängerin (19); Marco entscheidet, ob er sie will. Werte: Leben in `Sandbox.ENEMIES.vorbote`,
+Schaden in `VORBOTE_WELLE` und `VORBOTE_GRIFF` (`scripts/kampf/pilzhoehle.gd`).

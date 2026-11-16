@@ -5,7 +5,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 16.11.)
 
-- **Nächster Schritt (16.11.2026, nach Marcos Playtest):** 22 neue Bauaufträge P1 bis P22 in `BAUAUFTRAEGE.md` (Demo-Reihenfolge, Abschnitt „Playtest 16.11.2026“), sie kommen vor den Testtagen. P1 bis P3 (die drei Blocker) sind fertig. Für P3 fehlt nur noch dein zweites Google-Formular (Anleitung unten bei „P3“). P4 und P5 (Werte der Ausrüstung, Ausrüstung neben der Tasche) sind fertig. P6 (Werte-Symbole) ist mit Platzhaltern fertig, dein Bild V1 fehlt noch. P7 (Miras Notenblatt) ist bis auf dein Bild V2 fertig, P8 (Klänge) ist fertig: bitte einmal probehören (Liste bei „P8“). P9 (weiße Felder im Fähigkeitenbaum) ist behoben. P10 (Leiste oben) ist fertig. P11 (Werte im Fähigkeitenbaum) ist fertig. P12 (Pfeile im Fähigkeitenbaum) ist mit Platzhaltern fertig, dein Bild V4 fehlt noch. P13 (Splitter-Rindenbär) ist bis auf dein Welt-Bild V5 fertig. P14 (Erinnerungs-Szene) ist bis auf deine Bilder V8 fertig. P15 ist geteilt: P15a (Ult-Ladung bleibt) ist fertig. P15 (a und b) ist fertig. P16 (Bosse und Dungeon-Eingänge) ist fertig. P17 (Wurzelmutter) ist fertig. „Mach weiter“ baut als Nächstes P18 (Vorbote stärker). Neue Bildaufträge für dich in `Spieldesign/GRAFIK_AUFTRAG.md` Teil V (Werte-Symbole, Miras Notenblatt, Fähigkeiten-Bilder, Pfeile im Fähigkeitenbaum, Splitter-Rindenbär, zerstörter Splitterkristall, Blumen, Erinnerungs-Szene). Für dich bei P3: ein zweites Google-Formular für den Abschluss.
+- **Nächster Schritt (16.11.2026, nach Marcos Playtest):** 22 neue Bauaufträge P1 bis P22 in `BAUAUFTRAEGE.md` (Demo-Reihenfolge, Abschnitt „Playtest 16.11.2026“), sie kommen vor den Testtagen. P1 bis P3 (die drei Blocker) sind fertig. Für P3 fehlt nur noch dein zweites Google-Formular (Anleitung unten bei „P3“). P4 und P5 (Werte der Ausrüstung, Ausrüstung neben der Tasche) sind fertig. P6 (Werte-Symbole) ist mit Platzhaltern fertig, dein Bild V1 fehlt noch. P7 (Miras Notenblatt) ist bis auf dein Bild V2 fertig, P8 (Klänge) ist fertig: bitte einmal probehören (Liste bei „P8“). P9 (weiße Felder im Fähigkeitenbaum) ist behoben. P10 (Leiste oben) ist fertig. P11 (Werte im Fähigkeitenbaum) ist fertig. P12 (Pfeile im Fähigkeitenbaum) ist mit Platzhaltern fertig, dein Bild V4 fehlt noch. P13 (Splitter-Rindenbär) ist bis auf dein Welt-Bild V5 fertig. P14 (Erinnerungs-Szene) ist bis auf deine Bilder V8 fertig. P15 ist geteilt: P15a (Ult-Ladung bleibt) ist fertig. P15 (a und b) ist fertig. P16 (Bosse und Dungeon-Eingänge) ist fertig. P17 (Wurzelmutter) ist fertig. P18 (Vorbote stärker) ist fertig. „Mach weiter“ baut als Nächstes P19 (zerstörter Splitterkristall, Bild V6). Neue Bildaufträge für dich in `Spieldesign/GRAFIK_AUFTRAG.md` Teil V (Werte-Symbole, Miras Notenblatt, Fähigkeiten-Bilder, Pfeile im Fähigkeitenbaum, Splitter-Rindenbär, zerstörter Splitterkristall, Blumen, Erinnerungs-Szene). Für dich bei P3: ein zweites Google-Formular für den Abschluss.
 - **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** Die Alpha-Aufträge sind fertig (A10b und A13b sind fertig; A3b, A9c und A20 haben alle Bilder und kommen als Nächstes). E4 (Balancing) kommt später (Marco, 11.11.: braucht viele Tests), dann E5 (T3 und T4 am Stück); neu für dich: Teil M bis Q in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
 - **Bilder von Marco (02.11. abends):** 38 Blätter liegen unter `tools/vorlagen/`: alle sechs Novizen-Blätter ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen.
   - Dazu der Baukasten (02.11.): acht Grundkörper (`grund_*.png`), Köpfe (`koepfe_*.png`), Hüte (`huete_regionen.png`), Zeichen (`zeichen_dienste.png`) und die Klingentänzerin Blatt 1. Bei den Fäusten der Abwehr-Bilder von Blatt 1 prüft Claude beim Einbauen, ob sie am Oval stören.
@@ -3047,7 +3047,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
   - Ausrüstung und Werte: P4 Werte der Ausrüstung sichtbar (fertig 16.11.), P5 Ausrüstung und Tasche nebeneinander (fertig 16.11.), P6 Symbole für die Werte (Bild V1; fertig 16.11. mit Platzhaltern), P7 Miras Notenblatt (Bild V2; fertig 16.11. mit Ersatzbild).
   - Klang und Menü: P8 Klänge nachbessern (fertig 16.11.), P10 Menü oben aufräumen (fertig 16.11.).
   - Fähigkeitenbaum: P9 weiße Felder (fertig 16.11., Bild V3 nicht nötig), P11 Werte der Fähigkeiten im Baum (fertig 16.11.), P12 mehr Abstand und gemalte Pfeile wie im WoW-Talentbaum (Bild V4; fertig 16.11. mit Platzhaltern).
-  - Grünwacht und Pilzhöhle: P13 Splitter-Rindenbär nicht hinter dem Baum, mit Bild (V5; fertig 16.11. mit dem Kampfbild), P14 Erinnerungs-Szene neu gemalt (V8; fertig 16.11., wartet auf die Bilder), P16 Bosse und Eingang leichter anklicken, Dungeon-Eingang mit Boss-Symbol auf der Karte (fertig 16.11.), P17 Wurzelmutter heilt sich ohne Knoten nicht mehr so (fertig 16.11.), P18 Vorbote stärker, P19 Bild für den zerstörten Splitterkristall (V6), P21 gemalte Blumen statt der alten (V7), P22 Kael kommt beim Abschluss mit Ysolde dazu.
+  - Grünwacht und Pilzhöhle: P13 Splitter-Rindenbär nicht hinter dem Baum, mit Bild (V5; fertig 16.11. mit dem Kampfbild), P14 Erinnerungs-Szene neu gemalt (V8; fertig 16.11., wartet auf die Bilder), P16 Bosse und Eingang leichter anklicken, Dungeon-Eingang mit Boss-Symbol auf der Karte (fertig 16.11.), P17 Wurzelmutter heilt sich ohne Knoten nicht mehr so (fertig 16.11.), P18 Vorbote stärker (fertig 16.11.), P19 Bild für den zerstörten Splitterkristall (V6), P21 gemalte Blumen statt der alten (V7), P22 Kael kommt beim Abschluss mit Ysolde dazu.
   - Kampf und Aussehen: P15 schönere Ult, die Ult-Leiste bleibt zwischen den Kämpfen voll; P20 beim Aussehen vorerst nur der Hut.
 - Deine Rückmeldungen aus dem Test der ersten Stunde am Stück einarbeiten (Schwierigkeit, Länge, unklare Stellen).
 - Rückmeldungen zu den neuen Figuren und Nebenaufträgen aus Sitzung 21 (Farbe, Brom, Tessa und Gorm).
@@ -3064,6 +3064,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 ## Offene Fragen an Marco (aufgeräumt 11.11.2026)
 
 ### Deine Entscheidungen
+- **Vorbote (P18):** Jetzt mittlere Stufe (85 % Siege gesamt, 8 von 136 Gruppen scheitern am Vorboten). Gemessen ist auch eine härtere Stufe (72 % Siege, vor allem Schmied und Sängerin tun sich schwer). Sag Bescheid, wenn du die härtere willst (Zahlen in `BALANCING.md`).
 - **Heute Abend am PC (Marco, 16.11.2026): P3 zu Ende bringen.** Das Spiel ist fertig gebaut, es fehlt nur das zweite
   Google-Formular. Zusammen am PC:
   1. Formular „Asterfall Demo – Abschluss“ anlegen, fünf Kurzantworten: Spitzname, Tester-Nummer, Version, Code, Ort.
@@ -3567,3 +3568,16 @@ Gilt `render.yaml` bei dir nicht von selbst (Dienst nicht über „Blueprint“ 
 1. In der Pilzhöhle bis zur Wurzelmutter spielen.
 2. Beide Splitter-Knoten zerstören, dann die Wurzelmutter schlagen: „Rinde offen!“ und sie verliert Leben.
 3. Sobald die Knoten nachgewachsen sind: Schläge auf die Rinde heilen sie wieder („Rinde heilt!“).
+
+## P18: Vorbote stärker (Playtest, 16.11.2026)
+
+- Der Vorbote (Phase 2 der Pilzhöhle) hat mehr Leben (240 → 340) und trifft härter (Schattenwelle 11 → 14,
+  Leerengriff 20 → 28).
+- Gemessen: Vorher gewann jede Gruppe, die bis zu ihm kam. Jetzt scheitern 8 von 136 Gruppen an ihm, insgesamt
+  gewinnen 85 % (vorher 91 %). Eine härtere Stufe ist auch gemessen (72 %), Entscheidung bei dir (siehe oben bei
+  „Deine Entscheidungen“ und `BALANCING.md`).
+
+**So testest du es**
+1. In der Pilzhöhle die Wurzelmutter besiegen, bis der Vorbote erscheint.
+2. Er hält länger durch, seine Schattenwelle und sein Leerengriff tun spürbar mehr weh.
+3. Mit Laternen und dem Splitterlicht ist er weiter gut zu schaffen; wer die Laternen vergisst, wird es merken.
