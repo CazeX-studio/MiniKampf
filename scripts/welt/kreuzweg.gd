@@ -1503,11 +1503,14 @@ func _add_pickup(target: String) -> void:
 	elif not FighterView.LOOKS.has(art) and art != "leer" and target.begins_with("punkt:"):
 		# Leuchtende Kräuter zum Einsammeln
 		_add_light(node, "kraut", Vector2(0, -8))
-	# Bosse in Dungeons: dieselbe Figur wie im Kampf, nur größer
-	if FighterView.LOOKS.has(art):
-		var look: Dictionary = FighterView.LOOKS[art]
+	# Bosse in Dungeons: dieselbe Figur wie im Kampf, nur größer. Der Splitter-Rindenbär in Grünwacht (P13) steht
+	# genauso als gemalte Figur da (bis sein eigenes Welt-Bild V5 kommt, das Bild aus dem Kampf)
+	var figur_art := "splitterbaer" if art == "splittertier" else art
+	if FighterView.LOOKS.has(figur_art):
+		var look: Dictionary = FighterView.LOOKS[figur_art]
 		var boss := WorldCharacter.new()
-		boss.setup(look.sprite, Sandbox.ENEMIES.get(art, {name = ""}).name, look.get("tint", Color.WHITE), Color("ff9090"))
+		var name := "Splitter-Rindenbär" if art == "splittertier" else str(Sandbox.ENEMIES.get(art, {name = ""}).name)
+		boss.setup(look.sprite, name, look.get("tint", Color.WHITE), Color("ff9090"))
 		boss.scale = Vector2(1.8, 1.8)
 		boss.idle_fps = NPC_IDLE_FPS * 2.0
 		node.add_child(boss)
@@ -1631,20 +1634,9 @@ func _draw_pickup(node: Node2D, art: String) -> void:
 			node.draw_circle(Vector2(12, 0), 9.0, Color(0.85, 0.7, 1.0, 0.12 * glow))
 			return
 		"splittertier":
-			# Rindenbär mit leuchtenden Splittern im Fell (Geschichte Grünwacht Teil 1)
-			var bark := Color("5a4030")
-			node.draw_circle(Vector2(0, -22), 40.0, Color(0.7, 0.5, 1.0, 0.10 + 0.12 * glow))
-			node.draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, 0.4))
-			node.draw_circle(Vector2.ZERO, 24.0, Color(0, 0, 0, 0.35))
-			node.draw_set_transform_matrix(Transform2D.IDENTITY)
-			node.draw_circle(Vector2(0, -20), 20.0, bark)
-			node.draw_circle(Vector2(-14, -36), 11.0, bark)
-			node.draw_circle(Vector2(-20, -45), 4.0, bark.darkened(0.2))
-			node.draw_circle(Vector2(-8, -45), 4.0, bark.darkened(0.2))
-			node.draw_circle(Vector2(-17, -37), 1.8, Color("f0e0ff"))
-			for i in 4:
-				var at := Vector2(-6 + i * 6.0, -30 + (i % 2) * 8.0)
-				node.draw_colored_polygon(PackedVector2Array([at, at + Vector2(3, -9), at + Vector2(6, 0)]), Color(0.8, 0.6, 1.0, 0.7 + 0.3 * glow))
+			# Rindenbär mit leuchtenden Splittern (Geschichte Grünwacht Teil 1): die gemalte Figur hängt als Kind am
+			# Knoten (P13), hier nur das violette Leuchten darunter
+			node.draw_circle(Vector2(0, -40), 60.0, Color(0.7, 0.5, 1.0, 0.06 + 0.08 * glow))
 			return
 		"silberhirsch":
 			# Fenns drittes Ziel: ein silberner Hirsch, der leise schimmert

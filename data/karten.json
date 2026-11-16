@@ -767,8 +767,8 @@
 			{
 				"art": "splittertier",
 				"feld": [
-					36,
-					3
+					38,
+					12
 				],
 				"dialog": "splittertier",
 				"wenn": {
