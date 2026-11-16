@@ -177,6 +177,8 @@
 	"stand_abgegeben": "abgeschlossen",
 	"weiter": "Weiter",
 	"neu_beginnen": "Neu beginnen",
+	"neu_beginnen_frage": "Willst du wirklich von vorne beginnen? Dein Spielstand wird gelöscht, du erstellst eine neue Figur.",
+	"neu_beginnen_ja": "Ja, neu beginnen",
 	"kampf_gewonnen": "Geschafft: %s",
 	"kampf_verloren": "Verloren … Sprich mit Ye, um es nochmal zu versuchen.",
 	"verstanden": "Verstanden",

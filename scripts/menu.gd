@@ -84,6 +84,20 @@ func _ready() -> void:
 		ult.text = "Ult: kurz" if Musik.ist_ult_kurz() else "Ult: filmisch")
 	_inhalt.add_child(ult)
 
+	# Neu beginnen (P10: aus der Leiste in der Welt hierher verlegt, Marco 16.11.2026), nur mit Spielstand und mit Rückfrage
+	if SaveGame.exists():
+		var neu := Button.new()
+		neu.position = Vector2(40, 650)
+		neu.size = Vector2(200, 44)
+		neu.add_theme_font_size_override("font_size", 16)
+		neu.text = GameData.text("neu_beginnen")
+		neu.pressed.connect(func() -> void:
+			Tester.hinweis_fenster(self, GameData.text("neu_beginnen"), GameData.text("neu_beginnen_frage"),
+					[[GameData.text("neu_beginnen_ja"), func() -> void:
+						SaveGame.delete()
+						get_tree().change_scene_to_file("res://scenes/figur_erstellen.tscn")]]))
+		_inhalt.add_child(neu)
+
 	if not titel_gesehen and not "--server" in OS.get_cmdline_user_args():
 		_titel_zeigen()
 

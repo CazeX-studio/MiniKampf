@@ -1717,32 +1717,8 @@ func _build_ui() -> void:
 		_build_chat(root)
 		_build_group(root)
 
-	# Schnellleiste oben rechts wie im UI-Entwurf: Symbol mit Taste, Name als Hinweis beim Darüberfahren
-	var x := 1270.0
-	if menue_vorschlag:
-		x = _menue_vorschlag_bauen(root)
-	for info: Array in [] if menue_vorschlag else [["", "zahnrad", "Menü", 56, _go_menu], ["I", "tasche", "Tasche (I)", 72, _toggle_panel.bind("tasche")],
-			["X", "sanduhr", "Hinsetzen (X): füllt das Mana, am Lagerfeuer schneller", 72, func() -> void: _send({type = "hinsetzen"})],
-			["K", "rolle", "Fähigkeiten (K)", 72, _toggle_panel.bind("faehigkeiten")],
-			["L", "kristall", "Kartenalbum (L)", 72, _toggle_panel.bind("album")],
-			["Karte", "", "Große Karte (M)", 80, _toggle_weltkarte],
-			["C", "schild", "Werte (C)", 72, _toggle_panel.bind("werte")], ["J", "ausrufe", "Aufträge (J)", 72, _toggle_panel.bind("auftraege")],
-			[GameData.text("feedback"), "", GameData.text("feedback_titel"), 96, func() -> void: Tester.feedback(_ui_root, _ort_jetzt)],
-			[GameData.text("neu_beginnen"), "", GameData.text("neu_beginnen"), 124, _restart]]:
-		var button := Button.new()
-		button.text = info[0]
-		if info[1] != "":
-			button.icon = UiStil.symbol(info[1])
-			button.add_theme_constant_override("icon_max_width", 26)
-		button.tooltip_text = info[2]
-		button.size = Vector2(info[3], 46)
-		x -= info[3] + 8.0
-		button.position = Vector2(x + 8.0, 10)
-		button.add_theme_font_size_override("font_size", 15)
-		button.focus_mode = Control.FOCUS_NONE
-		button.pressed.connect(info[4])
-		root.add_child(button)
-		_buttons.append(button)
+	# Leiste oben rechts (P10, Marco 16.11.2026): Spiel-Fenster und System-Knöpfe, Hinsetzen unten links
+	var x := _leiste_bauen(root)
 	# Nur für Zähmer: Rudel-Fenster
 	_pack_button = Button.new()
 	_pack_button.text = "Rudel (R)"
@@ -2165,19 +2141,15 @@ func _on_effect(player_id: String, effect: String) -> void:
 	shake.tween_property(_camera, "offset", Vector2.ZERO, 0.05)
 
 
-## P10: Vorschlag für die Leiste oben (erst nur fürs Foto, Marco entscheidet; tests/menue_vorschlag_foto.gd).
-static var menue_vorschlag := false
-
-
-## Rechts die System-Knöpfe (Menü, Feedback, Neu beginnen), mit Abstand davor die Spiel-Fenster in fester Reihenfolge,
-## alle gleich breit mit Bild und Taste. Hinsetzen wandert nach unten links zu den Bewegungen.
-## Gibt die linke Kante der Leiste zurück (dort kommt bei Zähmern der Rudel-Knopf hin).
-func _menue_vorschlag_bauen(root: Control) -> float:
+## Leiste oben (P10, Marco 16.11.2026): Rechts die System-Knöpfe (Feedback, Menü; „Neu beginnen“ steht nur noch im
+## Menü), mit Abstand davor die Spiel-Fenster in fester Reihenfolge, alle gleich breit mit Bild und Taste.
+## Hinsetzen steht unten links bei den Bewegungen. Gibt die linke Kante der Leiste zurück (dort kommt bei Zähmern der
+## Rudel-Knopf hin).
+func _leiste_bauen(root: Control) -> float:
 	var x := 1270.0
 	var gruppen: Array = [
 		# System: kleiner, rechts außen
-		[[GameData.text("neu_beginnen"), "", GameData.text("neu_beginnen"), 118, _restart],
-			[GameData.text("feedback"), "", GameData.text("feedback_titel"), 92, func() -> void: Tester.feedback(_ui_root, _ort_jetzt)],
+		[[GameData.text("feedback"), "", GameData.text("feedback_titel"), 92, func() -> void: Tester.feedback(_ui_root, _ort_jetzt)],
 			["", "zahnrad", "Menü", 50, _go_menu]],
 		# Spiel-Fenster, von links nach rechts so oft gebraucht wie gelesen
 		[["J", "ausrufe", "Aufträge (J)", 64, _toggle_panel.bind("auftraege")],
