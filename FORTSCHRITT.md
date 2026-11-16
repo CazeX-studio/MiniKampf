@@ -5,7 +5,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 16.11.)
 
-- **Nächster Schritt (16.11.2026, nach Marcos Playtest):** 22 neue Bauaufträge P1 bis P22 in `BAUAUFTRAEGE.md` (Demo-Reihenfolge, Abschnitt „Playtest 16.11.2026“), sie kommen vor den Testtagen. P1 (Wegweiser nach Kaels Erinnerung) und P2 (Aufträge nur für die eigene Klasse) sind fertig. „Mach weiter“ baut als Nächstes P3 (Abschluss melden ohne Klicken). Neue Bildaufträge für dich in `Spieldesign/GRAFIK_AUFTRAG.md` Teil V (Werte-Symbole, Miras Notenblatt, Fähigkeiten-Bilder, Pfeile im Fähigkeitenbaum, Splitter-Rindenbär, zerstörter Splitterkristall, Blumen, Erinnerungs-Szene). Für dich bei P3: ein zweites Google-Formular für den Abschluss.
+- **Nächster Schritt (16.11.2026, nach Marcos Playtest):** 22 neue Bauaufträge P1 bis P22 in `BAUAUFTRAEGE.md` (Demo-Reihenfolge, Abschnitt „Playtest 16.11.2026“), sie kommen vor den Testtagen. P1 bis P3 (die drei Blocker) sind fertig. Für P3 fehlt nur noch dein zweites Google-Formular (Anleitung unten bei „P3“). „Mach weiter“ baut als Nächstes P4 (Werte der Ausrüstung sichtbar). Neue Bildaufträge für dich in `Spieldesign/GRAFIK_AUFTRAG.md` Teil V (Werte-Symbole, Miras Notenblatt, Fähigkeiten-Bilder, Pfeile im Fähigkeitenbaum, Splitter-Rindenbär, zerstörter Splitterkristall, Blumen, Erinnerungs-Szene). Für dich bei P3: ein zweites Google-Formular für den Abschluss.
 - **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** Die Alpha-Aufträge sind fertig (A10b und A13b sind fertig; A3b, A9c und A20 haben alle Bilder und kommen als Nächstes). E4 (Balancing) kommt später (Marco, 11.11.: braucht viele Tests), dann E5 (T3 und T4 am Stück); neu für dich: Teil M bis Q in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
 - **Bilder von Marco (02.11. abends):** 38 Blätter liegen unter `tools/vorlagen/`: alle sechs Novizen-Blätter ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen.
   - Dazu der Baukasten (02.11.): acht Grundkörper (`grund_*.png`), Köpfe (`koepfe_*.png`), Hüte (`huete_regionen.png`), Zeichen (`zeichen_dienste.png`) und die Klingentänzerin Blatt 1. Bei den Fäusten der Abwehr-Bilder von Blatt 1 prüft Claude beim Einbauen, ob sie am Oval stören.
@@ -3043,7 +3043,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 ## Als Nächstes (Vorschläge)
 
 - **Playtest 16.11.2026 (Bauaufträge P1 bis P22 in `BAUAUFTRAEGE.md`):**
-  - Blocker: P1 Wegweiser nach Kaels Erinnerung (fertig 16.11.), P2 Aufträge und „!“ nur für die eigene Klasse (Fenn, fertig 16.11.), P3 Abschluss melden mit einem zweiten Formular, das sich selbst abschickt.
+  - Blocker: P1 Wegweiser nach Kaels Erinnerung (fertig 16.11.), P2 Aufträge und „!“ nur für die eigene Klasse (Fenn, fertig 16.11.), P3 Abschluss melden mit einem zweiten Formular, das sich selbst abschickt (fertig 16.11., wartet auf Marcos Formular).
   - Ausrüstung und Werte: P4 Werte der Ausrüstung sichtbar, P5 Ausrüstung und Tasche nebeneinander, P6 Symbole für die Werte (Bild V1), P7 Miras Notenblatt (Bild V2).
   - Klang und Menü: P8 Klänge nachbessern, P10 Menü oben aufräumen (das „X“ zum Hinsetzen weg von Aufträgen und Tasche).
   - Fähigkeitenbaum: P9 weiße Felder (Bilder sind da, Fehler suchen; sonst Bild V3), P11 Werte der Fähigkeiten im Baum, P12 mehr Abstand und gemalte Pfeile wie im WoW-Talentbaum (Bild V4).
@@ -3220,3 +3220,31 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 2. Dasselbe mit einem Bogenschützen bei „Die Prüfung der drei Ziele“: Fenn zeigt das „!“ wie gewohnt.
 3. Mit einem Zähmer nach „Tildas Unterricht“ zu Professor Esche: blaues „!“, er erzählt vom Bienenstock.
 4. Mit einem Bogenschützen in Grünwacht über Ysolde: kein „!“, solange man noch nicht in der Glutoase war.
+
+## P3: Abschluss melden ohne Klicken (Playtest, 16.11.2026)
+
+- Am Ende der Demo schickt das Spiel den Abschluss selbst an ein eigenes Google-Formular: Spitzname, Tester-Nummer,
+  Version, Code und wo man aufgehört hat. Der Tester sieht nur seinen Code und darunter „Dein Abschluss wird
+  gemeldet …“, dann „Dein Abschluss ist gemeldet. Danke!“. „Zurück“ und „Zum Menü“ sind gleich da.
+- Klappt das Senden nicht (kein Internet), steht dort ein Hinweis und der Knopf „Nochmal senden“. Beim nächsten
+  Abspann versucht das Spiel es auch von selbst wieder, bis es einmal geklappt hat.
+- Das Feedback-Formular bleibt wie es ist, nur für Rückmeldungen.
+- **Solange das zweite Formular fehlt, bleibt alles wie bisher** (Knopf „Abschluss melden“ mit dem Feedback-Formular).
+
+**Für dich: das zweite Google-Formular anlegen**
+1. In Google Formulare ein neues Formular anlegen, z. B. „Asterfall Demo – Abschluss“.
+2. Fünf Fragen, alle als **Kurzantwort**: „Spitzname“, „Tester-Nummer“, „Version“, „Code“, „Ort“.
+   Keine davon als Pflichtfeld nötig.
+3. Unter **Einstellungen → Antworten**: „E-Mail-Adressen erfassen“ aus und „Auf 1 Antwort beschränken“ aus (sonst
+   müssten sich die Tester anmelden und das Spiel kann nicht von selbst senden).
+4. Oben rechts bei den drei Punkten **„Vorausgefüllten Link abrufen“**. In die Felder genau diese Wörter schreiben:
+   `SPITZNAME`, `NUMMER`, `VERSION`, `CODE`, `ORT`. Dann „Link abrufen“ und „Link kopieren“.
+5. Den Link mir in den Chat schicken. Ich trage ihn in `data/demo.json` („abschluss_vorlage“) ein, dann ist es an.
+6. Optional: Bei „Antworten“ eine Tabelle verknüpfen, dann landen alle Abschlüsse dort.
+
+**So testest du es (sobald der Link eingetragen ist)**
+1. Im Spielstand-Editor einen Stand kurz vor dem Ende wählen und beide Regionen abschließen (oder mit einem
+   alten durchgespielten Stand den Abspann öffnen).
+2. Am Ende der Demo: Kein Knopf „Abschluss melden“, nur dein Code und kurz darauf „Dein Abschluss ist gemeldet“.
+3. Im Google-Formular unter „Antworten“ steht eine neue Zeile mit Spitzname, Nummer, Version und Code.
+4. Mit ausgeschaltetem Internet: „Das Melden hat nicht geklappt“ und der Knopf „Nochmal senden“.

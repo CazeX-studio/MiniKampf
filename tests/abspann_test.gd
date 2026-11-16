@@ -57,6 +57,30 @@ func _run() -> void:
 			"Zuerst nur Abschluss melden")
 	buttons[0].pressed.emit()
 	_check(not buttons[0].visible and buttons[1].visible and buttons[1].text == "Zurück in die Glutoase" and Tester.gemeldet(), "Nach dem Melden: zurück oder Menü")
+	# P3: Mit dem Abschluss-Formular meldet das Spiel den Abschluss selbst, ohne Knopf
+	var demo: Dictionary = GameData.get_file("demo")
+	var alt := str(demo.get("abschluss_vorlage", ""))
+	demo["abschluss_vorlage"] = "https://docs.google.com/forms/d/e/ABC/viewform?usp=pp_url&entry.1=SPITZNAME&entry.2=NUMMER&entry.3=VERSION&entry.4=CODE&entry.5=ORT"
+	var anfrage := Tester.abschluss_anfrage("Ende der Demo")
+	_check(anfrage.get("adresse", "") == "https://docs.google.com/forms/d/e/ABC/formResponse", "Abschluss geht an formResponse")
+	_check(str(anfrage.get("daten", "")).contains("entry.4=" + Tester.code()) and str(anfrage.get("daten", "")).contains("entry.2=" + Tester.nummer().uri_encode())
+			and not str(anfrage.get("daten", "")).contains("usp="), "Abschluss enthält Code und Tester-Nummer")
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(Tester.datei))
+	Tester.neu_laden()
+	Tester.festlegen("Prüfer")
+	change_scene_to_file("res://scenes/abspann.tscn")
+	await _frames(8)
+	texts = ""
+	for label in current_scene.find_children("*", "Label", true, false):
+		texts += label.text + " "
+	buttons = current_scene.find_children("*", "Button", true, false)
+	var namen := []
+	for b: Button in buttons:
+		if b.visible:
+			namen.append(b.text)
+	_check(not "Abschluss melden" in namen and "Zurück in die Glutoase" in namen and "Zum Menü" in namen, "Kein Knopf zum Melden, gleich zurück oder Menü (%s)" % [namen])
+	_check(Tester.gemeldet() and texts.contains("Abschluss ist gemeldet") and texts.contains(Tester.code()), "Abschluss von selbst gemeldet, Code steht da")
+	demo["abschluss_vorlage"] = alt
 	SaveGame.delete()
 	SaveGame.path = SaveGame.DEFAULT_PATH
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(Tester.datei))

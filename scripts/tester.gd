@@ -152,6 +152,67 @@ static func formular_oeffnen(art: String, ort: String) -> bool:
 	return true
 
 
+## Abschluss-Formular (P3): ein eigenes Google-Formular nur für den Abschluss, das das Spiel selbst abschickt.
+## Vorlage in data/demo.json („abschluss_vorlage“): Marcos vorausgefüllter Link mit den Platzhaltern SPITZNAME,
+## NUMMER, VERSION, CODE, ORT. Gibt {adresse, daten} zum Abschicken zurück, leer = noch kein Formular.
+static func abschluss_anfrage(ort: String) -> Dictionary:
+	var vorlage := str(GameData.get_file("demo").get("abschluss_vorlage", ""))
+	if vorlage == "" or not vorlage.contains("?"):
+		return {}
+	var werte := {SPITZNAME = spitzname(), NUMMER = nummer(), CODE = code(), VERSION = version(), ORT = ort}
+	var teile := vorlage.split("?", true, 1)
+	var felder: PackedStringArray = []
+	for paar: String in teile[1].split("&", false):
+		var kv := paar.split("=", true, 1)
+		if kv.size() < 2 or not kv[0].begins_with("entry."):
+			continue
+		var wert: String = str(werte.get(kv[1], kv[1].uri_decode()))
+		felder.append("%s=%s" % [kv[0], wert.uri_encode()])
+	if felder.is_empty():
+		return {}
+	return {adresse = teile[0].replace("/viewform", "/formResponse"), daten = "&".join(felder)}
+
+
+## Abschluss abschicken, ohne dass der Tester etwas anklicken muss. fertig(ok: bool) kommt danach.
+## Im Web über den Browser (Google erlaubt das Lesen der Antwort nicht, darum zählt „angekommen“ schon als ok).
+static func abschluss_senden(eltern: Node, ort: String, fertig: Callable) -> bool:
+	var anfrage := abschluss_anfrage(ort)
+	if anfrage.is_empty():
+		return false
+	# Prüfungen laufen ohne Bildschirm: dort nichts wirklich abschicken
+	if DisplayServer.get_name() == "headless":
+		fertig.call_deferred(true)
+		return true
+	if OS.has_feature("web"):
+		JavaScriptBridge.eval("""window._abschlussOk = 0;
+			fetch(%s, {method: 'POST', mode: 'no-cors', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: %s})
+				.then(function() { window._abschlussOk = 1; }).catch(function() { window._abschlussOk = -1; });""" \
+				% [JSON.stringify(anfrage.adresse), JSON.stringify(anfrage.daten)], true)
+		var uhr := Timer.new()
+		uhr.wait_time = 0.25
+		eltern.add_child(uhr)
+		var versuche := [0]
+		uhr.timeout.connect(func() -> void:
+			versuche[0] += 1
+			var stand := int(JavaScriptBridge.eval("window._abschlussOk", true))
+			if stand != 0 or versuche[0] > 80:
+				uhr.queue_free()
+				fertig.call(stand == 1))
+		uhr.start()
+		return true
+	var http := HTTPRequest.new()
+	http.timeout = 20.0
+	eltern.add_child(http)
+	http.request_completed.connect(func(ergebnis: int, code_http: int, _k: PackedStringArray, _b: PackedByteArray) -> void:
+		http.queue_free()
+		fertig.call(ergebnis == HTTPRequest.RESULT_SUCCESS and code_http >= 200 and code_http < 400))
+	var fehler := http.request(str(anfrage.adresse), ["Content-Type: application/x-www-form-urlencoded"], HTTPClient.METHOD_POST, str(anfrage.daten))
+	if fehler != OK:
+		http.queue_free()
+		fertig.call_deferred(false)
+	return true
+
+
 ## Spitznamen der Dankesliste (data/dankesliste.json)
 static func dankesliste() -> Array:
 	return GameData.get_file("dankesliste").get("namen", [])

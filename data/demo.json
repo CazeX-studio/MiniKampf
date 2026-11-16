@@ -1,5 +1,7 @@
 {
 	"hinweis": "Demo-Start (S1). formular_vorlage: Marcos vorausgefüllter Link zum Google-Formular, in den Feldern die Platzhalter SPITZNAME, NUMMER, ART, CODE, VERSION, ORT (das Spiel setzt die echten Werte ein). Leer = noch kein Formular. werkstatt: Ordner der Fassung mit Editor auf der Webseite (nicht verlinkt).",
 	"formular_vorlage": "https://docs.google.com/forms/d/e/1FAIpQLSeUonN6xSamr3RnqQ8JbVWgWsR6K6uYGd1u5iu727OrhqHaYQ/viewform?usp=pp_url&entry.1163001219=SPITZNAME&entry.213099868=NUMMER&entry.1992196106=ART&entry.411116245=CODE&entry.815236800=VERSION&entry.1357366274=ORT",
+	"abschluss_vorlage": "",
+	"abschluss_hinweis": "P3: Marcos vorausgefüllter Link zum zweiten Google-Formular (nur für den Abschluss), in den Feldern die Platzhalter SPITZNAME, NUMMER, VERSION, CODE, ORT. Das Spiel schickt es am Ende der Demo selbst ab. Leer = wie bisher der Knopf „Abschluss melden“ mit dem Feedback-Formular.",
 	"werkstatt": "werkstatt-glutfunke"
 }

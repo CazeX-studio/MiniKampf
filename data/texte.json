@@ -208,6 +208,11 @@
 	"abschluss_text": "Danke fürs Durchspielen, %s! Dein Tester-Code:",
 	"abschluss_hinweis": "Melde deinen Abschluss mit dem Knopf unten, dann ist dein Code bei uns eingetragen. Zum Start des fertigen Spiels gibst du ihn ein und bekommst eine Belohnung als Dankeschön.",
 	"abschluss_melden": "Abschluss melden",
+	"abschluss_hinweis_auto": "Dein Abschluss wird von selbst bei uns eingetragen. Zum Start des fertigen Spiels gibst du den Code ein und bekommst eine Belohnung als Dankeschön. Schreib ihn dir am besten auf.",
+	"abschluss_sendet": "Dein Abschluss wird gemeldet …",
+	"abschluss_gemeldet": "Dein Abschluss ist gemeldet. Danke!",
+	"abschluss_fehler": "Das Melden hat nicht geklappt. Prüf deine Internetverbindung und versuch es nochmal.",
+	"abschluss_nochmal": "Nochmal senden",
 	"weiter_nach_glutoase": "Deine Reise geht weiter in die Glutoase: zurück nach Kreuzweg und durch das Südtor. Hadrak erwartet dich.",
 	"weiter_nach_gruenwacht": "Deine Reise geht weiter nach Grünwacht: zurück nach Kreuzweg und durch das Westtor. Ysolde erwartet dich.",
 	"demo_ende": "Das ist das Ende der Demo. Du hast Kreuzweg, Grünwacht und die Glutoase erlebt. Die Nebelinseln, Arkanum und Messinghafen folgen später."

@@ -102,12 +102,45 @@ func _region(box: VBoxContainer, region: String) -> void:
 	var code := Tester.abschliessen(region)
 	var name := Tester.spitzname() if Tester.spitzname() != "" else "Tester"
 	box.add_child(_label("%s  %s" % [GameData.text("abschluss_text", [name]), code], 24, Color("f2c14e")))
-	box.add_child(_label(GameData.text("abschluss_hinweis"), 17, Color(1, 1, 1, 0.7)))
+	# P3: Gibt es das Abschluss-Formular, meldet das Spiel den Abschluss selbst (der Tester klickt nichts)
+	var selbst := not Tester.abschluss_anfrage(info.titel).is_empty()
+	var hinweis := _label(GameData.text("abschluss_hinweis_auto" if selbst else "abschluss_hinweis"), 17, Color(1, 1, 1, 0.7))
+	box.add_child(hinweis)
 	# Dankesliste der Tester (A2a: im Abspann statt im Startmenü)
 	var namen := Tester.dankesliste()
 	if not namen.is_empty():
 		box.add_child(_label("%s: %s" % [GameData.text("danke_titel"), " · ".join(PackedStringArray(namen))], 17, Color("f2c14e")))
-	box.add_child(_knopf_reihe(info, Tester.gemeldet()))
+	if not selbst:
+		box.add_child(_knopf_reihe(info, Tester.gemeldet()))
+		return
+	var stand := _label(GameData.text("abschluss_gemeldet") if Tester.gemeldet() else GameData.text("abschluss_sendet"), 19, Color("8affc1"))
+	box.add_child(stand)
+	var nochmal := Button.new()
+	nochmal.text = GameData.text("abschluss_nochmal")
+	nochmal.custom_minimum_size = Vector2(320, 52)
+	nochmal.add_theme_font_size_override("font_size", 18)
+	nochmal.visible = false
+	var reihe := _knopf_reihe(info, true)
+	reihe.add_child(nochmal)
+	reihe.move_child(nochmal, 0)
+	box.add_child(reihe)
+	var senden := func() -> void:
+		nochmal.visible = false
+		stand.text = GameData.text("abschluss_sendet")
+		stand.add_theme_color_override("font_color", Color("8affc1"))
+		Tester.abschluss_senden(self, info.titel, func(ok: bool) -> void:
+			if not is_instance_valid(stand):
+				return
+			if ok:
+				Tester.melden()
+				stand.text = GameData.text("abschluss_gemeldet")
+			else:
+				stand.text = GameData.text("abschluss_fehler")
+				stand.add_theme_color_override("font_color", Color("ff8a7a"))
+				nochmal.visible = true)
+	nochmal.pressed.connect(senden)
+	if not Tester.gemeldet():
+		senden.call()
 
 
 ## Letzter Auftrag jeder Region der Demo und die jeweils andere Region
