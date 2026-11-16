@@ -1735,10 +1735,33 @@ func _links(p: PlayerState, map_id: String, pruefen := true) -> Array:
 	for place: Dictionary in places:
 		if place.map != map_id or (pruefen and not (check(p, place.cond) and check(p, place.entry))):
 			continue
-		for a: Dictionary in place.actions:
-			if a.has("reisen"):
-				result.append([str(a.reisen), Vector2(place.cell)])
+		for ziel: String in _ort_reisen(place):
+			result.append([ziel, Vector2(place.cell)])
 	return result
+
+
+## Wohin ein Ort bringen kann: direkt oder über sein Gespräch (z. B. der Eingang zur Pilzhöhle, P1).
+var _ort_reiseziele := {}
+func _ort_reisen(place: Dictionary) -> Array:
+	var key := "%s:%s" % [place.map, place.cell]
+	if not _ort_reiseziele.has(key):
+		var ziele := {}
+		_reisen_sammeln(place.actions, ziele)
+		if place.dialog != "":
+			_reisen_sammeln(GameData.dialog(place.dialog).get("knoten", {}), ziele)
+		_ort_reiseziele[key] = ziele.keys()
+	return _ort_reiseziele[key]
+
+
+func _reisen_sammeln(wert: Variant, ziele: Dictionary) -> void:
+	if wert is Dictionary:
+		if wert.has("reisen"):
+			ziele[str(wert.reisen)] = true
+		for v: Variant in wert.values():
+			_reisen_sammeln(v, ziele)
+	elif wert is Array:
+		for v: Variant in wert:
+			_reisen_sammeln(v, ziele)
 
 
 ## Zeichen für einen Innenraum (A12): "?" oder "!", wenn dort drinnen jemand etwas für den Spieler hat, sonst "".
