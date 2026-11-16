@@ -32,6 +32,8 @@ static var mana_used_before := 0
 ## Mana der eigenen Figur vor dem Kampf (Anteil). Kämpfe in der Wildnis (eigene Klasse) beginnen damit und melden
 ## danach, was übrig ist; Lektionen und Geschichtskämpfe in Kreuzweg beginnen mit vollem Mana.
 static var player_mana_share := 1.0
+## Ladung der Ult vor dem Kampf (P15a): Kämpfe mit der eigenen Klasse beginnen damit und melden danach, was übrig ist
+static var player_ult := 0.0
 ## Gelernte Fähigkeiten der eigenen Figur (Kennung -> Stufe, Projekt 14, K.3). player_skills_known = false: unbekannt
 ## (Sandbox und Prüfungen), dann kämpft man mit allen Fähigkeiten der Klasse.
 static var player_skills := {}
@@ -127,6 +129,10 @@ static func prepare(id: String, level: int, potions := 0, own_class := "", own_m
 		player["manatraenke"] = player_mana_potions
 	if data.get("eigene_klasse", false):
 		player["mana_anteil"] = player_mana_share
+	# Die Ult behält ihre Ladung zwischen den Kämpfen (P15a, Marco 16.11.): nur mit der eigenen Klasse
+	if data.get("eigene_klasse", false) and klasse == own_class:
+		player["ult"] = maxf(float(player.ult), player_ult)
+		player["ult_aus_welt"] = true
 	# Fähigkeiten-Baum: in Kämpfen mit der eigenen Klasse nur das Gelernte (Lernkämpfe mit Phasen zeigen alles)
 	if player_skills_known and klasse == own_class and Faehigkeiten.hat_baum(klasse) and not data.has("phasen"):
 		player["faehigkeiten"] = player_skills.duplicate()
@@ -247,11 +253,13 @@ static func _make_setup(id: String, data: Dictionary, heroes: Array, phases: Arr
 
 
 ## Der Kampf ist vorbei: Ergebnis für die Welt merken.
-static func finish(won: bool, potions_used := 0, tamed: Array = [], mana_used := 0, mana_share := -1.0, ammo_used := {}) -> void:
+static func finish(won: bool, potions_used := 0, tamed: Array = [], mana_used := 0, mana_share := -1.0, ammo_used := {}, ult := -1.0) -> void:
 	result = {kampf = kampf_id, gewonnen = won, traenke_benutzt = used_before + potions_used, gezaehmt = tamed,
 			manatraenke_benutzt = mana_used_before + mana_used}
 	if mana_share >= 0.0:
 		result["mana_anteil"] = mana_share
+	if ult >= 0.0:
+		result["ult_ladung"] = ult
 	if not ammo_used.is_empty():
 		result["munition_benutzt"] = ammo_used
 	mana_used_before = 0

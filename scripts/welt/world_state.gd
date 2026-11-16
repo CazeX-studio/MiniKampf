@@ -448,6 +448,10 @@ func apply_command(player_id: String, cmd: Dictionary) -> void:
 			if cmd.has("mana_anteil"):
 				p.progress.mana_anteil = clampf(float(cmd.mana_anteil), 0.0, 1.0)
 				progress_changed.emit(p.id)
+			# Ult-Ladung nach dem Kampf (P15a): bleibt bis zum nächsten Kampf
+			if cmd.has("ult_ladung"):
+				p.progress.ult_ladung = clampf(float(cmd.ult_ladung), 0.0, 100.0)
+				progress_changed.emit(p.id)
 			# Verschossene besondere Pfeile sind weg
 			var ammo: Dictionary = cmd.get("munition_benutzt", {})
 			for pfeil: String in ammo:

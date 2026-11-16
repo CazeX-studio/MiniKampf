@@ -34,6 +34,8 @@ var ausruestung: Dictionary = Ausruestung.START.duplicate()
 ## Mana außerhalb des Kampfes als Anteil (0 bis 1, Projekt 14, K.2): Nach Kämpfen in der Wildnis bleibt, was übrig
 ## war. Hinsetzen füllt es wieder auf, am Lagerfeuer schneller.
 var mana_anteil := 1.0
+## Ladung der Ult (0 bis 100, P15a): bleibt zwischen den Kämpfen, wird nur beim Benutzen leer
+var ult_ladung := 0.0
 ## Klassenstufe (Projekt 14, K.3): Erfahrung, die man nach dem Lernen der Klasse sammelt, zählt auch hierfür.
 ## Die Stufen kommen aus derselben Tabelle wie die Charakterstufe. Jede Klassenstufe gibt einen Fähigkeitspunkt.
 var klassen_xp := 0
@@ -307,7 +309,7 @@ func xp_range() -> Vector2i:
 
 
 func to_dict() -> Dictionary:
-	return {gold = gold, items = items, slots = bag_slots().duplicate(), beute = loot, bank = bank, bank_plaetze = bank_size, guertel = belt, ausruestung = ausruestung, mana_anteil = mana_anteil, lektionen_v2 = true, klassen_xp = klassen_xp, faehigkeiten = faehigkeiten, leiste = leiste,
+	return {gold = gold, items = items, slots = bag_slots().duplicate(), beute = loot, bank = bank, bank_plaetze = bank_size, guertel = belt, ausruestung = ausruestung, mana_anteil = mana_anteil, ult_ladung = ult_ladung, lektionen_v2 = true, klassen_xp = klassen_xp, faehigkeiten = faehigkeiten, leiste = leiste,
 			xp = xp, level = level, quests = quests, flags = flags}
 
 
@@ -334,6 +336,7 @@ func load_dict(data: Dictionary) -> void:
 		if platz in Ausruestung.PLAETZE and str(saved_gear[platz]) != "":
 			ausruestung[platz] = str(saved_gear[platz])
 	mana_anteil = clampf(float(data.get("mana_anteil", 1.0)), 0.0, 1.0)
+	ult_ladung = clampf(float(data.get("ult_ladung", 0.0)), 0.0, 100.0)
 	klassen_xp = int(data.get("klassen_xp", 0))
 	leiste = []
 	var saved_bar: Array = data.get("leiste", [])

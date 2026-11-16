@@ -5,7 +5,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 16.11.)
 
-- **Nächster Schritt (16.11.2026, nach Marcos Playtest):** 22 neue Bauaufträge P1 bis P22 in `BAUAUFTRAEGE.md` (Demo-Reihenfolge, Abschnitt „Playtest 16.11.2026“), sie kommen vor den Testtagen. P1 bis P3 (die drei Blocker) sind fertig. Für P3 fehlt nur noch dein zweites Google-Formular (Anleitung unten bei „P3“). P4 und P5 (Werte der Ausrüstung, Ausrüstung neben der Tasche) sind fertig. P6 (Werte-Symbole) ist mit Platzhaltern fertig, dein Bild V1 fehlt noch. P7 (Miras Notenblatt) ist bis auf dein Bild V2 fertig, P8 (Klänge) ist fertig: bitte einmal probehören (Liste bei „P8“). P9 (weiße Felder im Fähigkeitenbaum) ist behoben. P10 (Leiste oben) ist fertig. P11 (Werte im Fähigkeitenbaum) ist fertig. P12 (Pfeile im Fähigkeitenbaum) ist mit Platzhaltern fertig, dein Bild V4 fehlt noch. P13 (Splitter-Rindenbär) ist bis auf dein Welt-Bild V5 fertig. P14 (Erinnerungs-Szene) ist bis auf deine Bilder V8 fertig. „Mach weiter“ baut als Nächstes P15. Neue Bildaufträge für dich in `Spieldesign/GRAFIK_AUFTRAG.md` Teil V (Werte-Symbole, Miras Notenblatt, Fähigkeiten-Bilder, Pfeile im Fähigkeitenbaum, Splitter-Rindenbär, zerstörter Splitterkristall, Blumen, Erinnerungs-Szene). Für dich bei P3: ein zweites Google-Formular für den Abschluss.
+- **Nächster Schritt (16.11.2026, nach Marcos Playtest):** 22 neue Bauaufträge P1 bis P22 in `BAUAUFTRAEGE.md` (Demo-Reihenfolge, Abschnitt „Playtest 16.11.2026“), sie kommen vor den Testtagen. P1 bis P3 (die drei Blocker) sind fertig. Für P3 fehlt nur noch dein zweites Google-Formular (Anleitung unten bei „P3“). P4 und P5 (Werte der Ausrüstung, Ausrüstung neben der Tasche) sind fertig. P6 (Werte-Symbole) ist mit Platzhaltern fertig, dein Bild V1 fehlt noch. P7 (Miras Notenblatt) ist bis auf dein Bild V2 fertig, P8 (Klänge) ist fertig: bitte einmal probehören (Liste bei „P8“). P9 (weiße Felder im Fähigkeitenbaum) ist behoben. P10 (Leiste oben) ist fertig. P11 (Werte im Fähigkeitenbaum) ist fertig. P12 (Pfeile im Fähigkeitenbaum) ist mit Platzhaltern fertig, dein Bild V4 fehlt noch. P13 (Splitter-Rindenbär) ist bis auf dein Welt-Bild V5 fertig. P14 (Erinnerungs-Szene) ist bis auf deine Bilder V8 fertig. P15 ist geteilt: P15a (Ult-Ladung bleibt) ist fertig. „Mach weiter“ baut als Nächstes P15b (Ult-Bewegung und Film schöner). Neue Bildaufträge für dich in `Spieldesign/GRAFIK_AUFTRAG.md` Teil V (Werte-Symbole, Miras Notenblatt, Fähigkeiten-Bilder, Pfeile im Fähigkeitenbaum, Splitter-Rindenbär, zerstörter Splitterkristall, Blumen, Erinnerungs-Szene). Für dich bei P3: ein zweites Google-Formular für den Abschluss.
 - **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** Die Alpha-Aufträge sind fertig (A10b und A13b sind fertig; A3b, A9c und A20 haben alle Bilder und kommen als Nächstes). E4 (Balancing) kommt später (Marco, 11.11.: braucht viele Tests), dann E5 (T3 und T4 am Stück); neu für dich: Teil M bis Q in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
 - **Bilder von Marco (02.11. abends):** 38 Blätter liegen unter `tools/vorlagen/`: alle sechs Novizen-Blätter ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen.
   - Dazu der Baukasten (02.11.): acht Grundkörper (`grund_*.png`), Köpfe (`koepfe_*.png`), Hüte (`huete_regionen.png`), Zeichen (`zeichen_dienste.png`) und die Klingentänzerin Blatt 1. Bei den Fäusten der Abwehr-Bilder von Blatt 1 prüft Claude beim Einbauen, ob sie am Oval stören.
@@ -3491,3 +3491,19 @@ Gilt `render.yaml` bei dir nicht von selbst (Dienst nicht über „Blueprint“ 
 1. Im Spielstand-Editor „Das leere Grab“ wählen, zu Rowans Grab gehen und den Splitter berühren.
 2. Die Szene zeigt Ysolde in ihrem eigenen Aussehen, Rowan und die Fliehenden als Leute mit grünen Kapuzen.
 3. Durchtippen: Text und Ablauf wie bisher, am Ende geht es zurück in den Wald.
+
+## P15a: Ult-Ladung bleibt zwischen den Kämpfen (Playtest, 16.11.2026)
+
+- P15 ist in zwei Schritte geteilt: P15a (Ladung bleibt, jetzt fertig) und P15b (Ult-Bewegung und Film schöner).
+- Die Ult-Leiste behält ihre Ladung von Kampf zu Kampf (gespeichert im Spielstand). Leer wird sie nur, wenn man die
+  Ult benutzt. Auch nach einer Niederlage bleibt die Ladung.
+- Das gilt für Kämpfe mit der eigenen Klasse in der Welt. Lektionen, Probestunden und Geschichtskämpfe in Kreuzweg
+  fangen wie bisher mit ihrer festen Ladung an.
+- **Mitbehoben:** Das Mana, das nach einem Kampf übrig war, kam bisher nicht in der Welt an (der Kampf meldete es,
+  die Welt bekam es nicht). Jetzt steht nach dem Kampf das echte Mana in der Anzeige oben links.
+
+**So testest du es**
+1. Mit gelernter Klasse in der Wildnis kämpfen, die Ult-Leiste halb füllen und den Kampf gewinnen, ohne die Ult zu benutzen.
+2. Den nächsten Kampf beginnen: Die Ult-Leiste ist so voll wie am Ende des letzten.
+3. Die Ult benutzen und den Kampf beenden: Im nächsten Kampf fängt die Leiste wieder bei null an.
+4. Nach einem Kampf mit viel verbrauchtem Mana: Oben links steht das übrige Mana (z. B. „Mana 12 / 40“).

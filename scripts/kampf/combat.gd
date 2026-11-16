@@ -204,7 +204,7 @@ func _battle_name() -> String:
 ## Zurück in die Stadt (Kampf aus der Kreuzweg-Demo).
 func _back_to_world(won: bool) -> void:
 	# Verbrauchte Heiltränke fehlen danach in der Tasche, gezähmte Monster kommen ins Rudel
-	BattleRequest.finish(won, _potions_used(), _tamed(), _potions_used("manatrank", "manatraenke"), _mana_share(), _ammo_used())
+	BattleRequest.finish(won, _potions_used(), _tamed(), _potions_used("manatrank", "manatraenke"), _mana_share(), _ammo_used(), _ult_ladung())
 	get_tree().change_scene_to_file(BattleRequest.return_scene)
 
 
@@ -242,6 +242,15 @@ func _mana_share() -> float:
 	if player.max_mana <= 0:
 		return -1.0
 	return clampf(float(player.mana) / player.max_mana, 0.0, 1.0) if player.is_alive() else 0.0
+
+
+## Ladung der Ult am Ende (P15a), nur bei Kämpfen, die mit der Ladung aus der Welt begonnen haben; sonst -1.
+## Sie bleibt auch nach einer Niederlage: leer wird sie nur beim Benutzen.
+func _ult_ladung() -> float:
+	var index := int(_group.get("mine", 0))
+	if index >= state.heroes.size() or not state.setup.helden[index].get("ult_aus_welt", false):
+		return -1.0
+	return clampf(state.heroes[index].ult, 0.0, 100.0)
 
 
 ## Wie viele Heiltränke (oder Manatränke) der Spieler in diesem Kampf getrunken hat.

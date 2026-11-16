@@ -317,6 +317,10 @@ func _ready() -> void:
 				belohnung_gezeigt = BattleRequest.result.get("belohnung_gezeigt", false)}
 		if BattleRequest.result.has("karte"):
 			cmd["karte"] = BattleRequest.result.karte
+		# Mana und Ult-Ladung nach dem Kampf (nur Kämpfe mit der eigenen Klasse melden sie, P15a)
+		for schluessel: String in ["mana_anteil", "ult_ladung"]:
+			if BattleRequest.result.has(schluessel):
+				cmd[schluessel] = BattleRequest.result[schluessel]
 		_send(cmd)
 		BattleRequest.result = {}
 	# Zurück von einer Partie Kreuzweg-Karten: Ergebnis verbuchen
@@ -3716,6 +3720,7 @@ func _on_battle_requested(player_id: String, kampf_id: String) -> void:
 	BattleRequest.player_card_bonus = KartenAlbum.boni_von(local_player().progress.flags)
 	BattleRequest.player_mana_potions = local_player().progress.potion_count("manatrank")
 	BattleRequest.player_mana_share = local_player().progress.mana_anteil
+	BattleRequest.player_ult = local_player().progress.ult_ladung
 	BattleRequest.player_skills = local_player().progress.faehigkeiten.duplicate()
 	BattleRequest.player_skills_known = true
 	BattleRequest.player_bar = local_player().progress.leiste.duplicate()
