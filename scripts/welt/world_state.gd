@@ -1744,6 +1744,19 @@ func _links(p: PlayerState, map_id: String, pruefen := true) -> Array:
 	return result
 
 
+## Eingänge zu Dungeons auf dieser Karte (P16): Felder der Orte, die in einen Dungeon bringen (Pilzhöhle, Vulkanschmiede).
+func dungeon_eingaenge(map_id: String) -> Array[Vector2i]:
+	var felder: Array[Vector2i] = []
+	for place: Dictionary in places:
+		if place.map != map_id:
+			continue
+		for ziel: String in _ort_reisen(place):
+			if maps.has(ziel) and get_map(ziel).dungeon != "":
+				felder.append(Vector2i(place.cell))
+				break
+	return felder
+
+
 ## Wohin ein Ort bringen kann: direkt oder über sein Gespräch (z. B. der Eingang zur Pilzhöhle, P1).
 var _ort_reiseziele := {}
 func _ort_reisen(place: Dictionary) -> Array:

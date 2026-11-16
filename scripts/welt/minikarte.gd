@@ -161,6 +161,9 @@ static func zeichen_fuer(w: WorldState, p: PlayerState) -> Array[Dictionary]:
 			continue
 		var farbe := Color("7fc8ff") if info[1] else (Color("f2c14e") if info[0] == "!" else Color("fff3b0"))
 		liste.append({feld = Vector2(npc.cell), farbe = farbe, art = str(info[0])})
+	# Dungeon-Eingänge mit Boss-Symbol (P16)
+	for feld: Vector2i in w.dungeon_eingaenge(p.map):
+		liste.append({feld = Vector2(feld), farbe = Color("c0392b"), art = "boss"})
 	for id: String in w.players:
 		var anderer: PlayerState = w.players[id]
 		if anderer != p and anderer.map == p.map:
@@ -189,6 +192,11 @@ func _draw() -> void:
 		var punkt: Vector2 = ort.call(z.feld)
 		if z.art == "spieler":
 			draw_circle(punkt, 3.5, z.farbe)
+		elif z.art == "boss":
+			# Boss-Symbol: dunkelroter Kreis mit gekreuzten Schwertern
+			draw_circle(punkt, 8.0, Color.BLACK)
+			draw_circle(punkt, 7.0, z.farbe)
+			draw_texture_rect(UiStil.symbol("schwert"), Rect2(punkt - Vector2(6, 6), Vector2(12, 12)), false)
 		else:
 			draw_circle(punkt, 4.5, Color.BLACK)
 			draw_circle(punkt, 3.5, z.farbe)

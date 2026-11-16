@@ -66,5 +66,12 @@ func _initialize() -> void:
 	_check(w.objective_cell(s) == Vector2i(17, 27), "Waldboden: Wegweiser zeigt auf den Eingang der Pilzhöhle (%s)" % w.objective_cell(s))
 	_check(w.objective_place(s).get("karte", "") == "pilzhoehle", "Das Ziel liegt in der Pilzhöhle")
 
+	# P16: Beide Dungeon-Eingänge sind bekannt und stehen mit Boss-Symbol auf der kleinen Karte
+	_check(w.dungeon_eingaenge("waldboden").size() == 1 and w.dungeon_eingaenge("waldboden")[0] == Vector2i(17, 27), "Eingang der Pilzhöhle erkannt (%s)" % [w.dungeon_eingaenge("waldboden")])
+	_check(w.dungeon_eingaenge("glutoase").size() == 1, "Eingang der Vulkanschmiede erkannt (%s)" % [w.dungeon_eingaenge("glutoase")])
+	_check(w.dungeon_eingaenge("wipfelheim").is_empty(), "Wipfelheim hat keinen Dungeon-Eingang")
+	var zeichen := Minikarte.zeichen_fuer(w, s)
+	_check(zeichen.any(func(z: Dictionary) -> bool: return z.art == "boss" and Vector2i(z.feld) == Vector2i(17, 27)), "Boss-Symbol auf der kleinen Karte")
+
 	print("\n%s" % ("ALLES OK" if _failed == 0 else "%d FEHLER" % _failed))
 	quit(1 if _failed > 0 else 0)

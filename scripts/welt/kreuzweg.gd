@@ -1021,7 +1021,9 @@ func _tap_at(world: Vector2) -> void:
 	# Sammelpunkt angetippt? Dann hinlaufen und einsammeln
 	for target: String in _pickup_nodes:
 		var node: Node2D = _pickup_nodes[target]
-		if node.visible and (world - (node.position + Vector2(0, -12))).length() < 26.0 or _ort_als_teil_getroffen(target, node, world):
+		var flaeche: Rect2 = node.get_meta("figur_flaeche", Rect2())
+		var auf_flaeche := node.visible and flaeche.has_area() and flaeche.has_point(world - node.position)
+		if node.visible and (world - (node.position + Vector2(0, -12))).length() < 26.0 or auf_flaeche or _ort_als_teil_getroffen(target, node, world):
 			_send({type = "use", target = target})
 			_show_marker(node.position)
 			return
@@ -1518,6 +1520,11 @@ func _add_pickup(target: String) -> void:
 		boss.scale = Vector2(1.8, 1.8)
 		boss.idle_fps = NPC_IDLE_FPS * 2.0
 		node.add_child(boss)
+		# P16: Bosse lassen sich überall auf ihrer Figur antippen, nicht nur am Fuß
+		node.set_meta("figur_flaeche", Rect2(-70, -230, 140, 250))
+	# P16: Dungeon-Eingänge bekommen eine große Fläche zum Antippen (passend zum gemalten Eingang)
+	if target.begins_with("ort:") and Vector2i(state.places[int(target.substr(4))].cell) in state.dungeon_eingaenge(state.places[int(target.substr(4))].map):
+		node.set_meta("figur_flaeche", Rect2(-90, -200, 180, 220))
 
 
 ## Bilder der Kräuter zum Sammeln (tools/kraeuter_bilder.py): Gegenstand, Bildnummer
