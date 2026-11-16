@@ -193,10 +193,8 @@ func _draw() -> void:
 		if z.art == "spieler":
 			draw_circle(punkt, 3.5, z.farbe)
 		elif z.art == "boss":
-			# Boss-Symbol: dunkelroter Kreis mit gekreuzten Schwertern
-			draw_circle(punkt, 8.0, Color.BLACK)
-			draw_circle(punkt, 7.0, z.farbe)
-			draw_texture_rect(UiStil.symbol("schwert"), Rect2(punkt - Vector2(6, 6), Vector2(12, 12)), false)
+			# Boss-Symbol (Boss-Kopf aus Bildauftrag V10, bis dahin roter Kreis mit Schwert)
+			UiStil.boss_symbol_zeichnen(self, punkt, 7.0)
 		else:
 			draw_circle(punkt, 4.5, Color.BLACK)
 			draw_circle(punkt, 3.5, z.farbe)

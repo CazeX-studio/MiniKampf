@@ -3541,7 +3541,9 @@ Gilt `render.yaml` bei dir nicht von selbst (Dienst nicht über „Blueprint“ 
 - **Die Eingänge** der Pilzhöhle (zwischen den Wurzeln im Waldboden) und der Vulkanschmiede (hinter Hadraks Schmiede)
   lassen sich auf ihrer ganzen Fläche antippen.
 - **Boss-Symbol** (roter Kreis mit Schwert): auf der kleinen Karte am Eingang des Dungeons, auf der großen Karte (M)
-  an der Ecke des Dungeons.
+  an der Ecke des Dungeons. Marco (16.11.): soll ein Boss-Kopf wie in anderen Spielen werden, Bildauftrag V10 in
+  `Spieldesign/GRAFIK_AUFTRAG.md`. Wenn das Bild da ist, als `assets/ui/boss_symbol.png` ablegen (das erste der drei
+  Symbole, freigestellt), dann nehmen beide Karten es von selbst statt des Schwerts.
 - **Nebenbei repariert:** In P13 stand der Splitter-Rindenbär genau auf dem Startplatz zweier wilder Monstergruppen
   (Rindenbär und Nachtuhu). Die griffen jeden an, der zum Bären wollte (daher scheiterte auch die Grünwacht-Prüfung ab
   und zu). Die beiden Gruppen starten jetzt acht Felder weiter südlich bei (38, 20).

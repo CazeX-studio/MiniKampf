@@ -174,11 +174,9 @@ func _schild(karte: String, wissen: String, ist_ziel: bool) -> void:
 			rahmen.size.x, groesse, Color("fff3d8"))
 	if art == "dungeon":
 		draw_string(schrift, rahmen.position + Vector2(0, -6), "Dungeon", HORIZONTAL_ALIGNMENT_CENTER, rahmen.size.x, 12, Color("5a3a2a"))
-		# Boss-Symbol (P16): dunkelroter Kreis mit Schwert an der oberen linken Ecke (verdeckt den Namen nicht)
+		# Boss-Symbol (P16, Boss-Kopf aus Bildauftrag V10) an der oberen linken Ecke (verdeckt den Namen nicht)
 		var ecke := rahmen.position + Vector2(-2, -4)
-		draw_circle(ecke, 15.0, Color.BLACK)
-		draw_circle(ecke, 13.0, Color("c0392b"))
-		draw_texture_rect(UiStil.symbol("schwert"), Rect2(ecke - Vector2(10, 10), Vector2(20, 20)), false)
+		UiStil.boss_symbol_zeichnen(self, ecke, 13.0)
 	if ist_ziel:
 		_stern(rahmen.position + Vector2(rahmen.size.x, 0), 14.0 + 2.0 * sin(_zeit * 4.0))
 	if wissen == "hier":

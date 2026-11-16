@@ -138,6 +138,26 @@ static func wert_bildchen(wert: String, groesse: float = 20.0) -> TextureRect:
 	return bild
 
 
+## Boss-Kopf für die Karten (Bildauftrag V10, Marco 16.11.): assets/ui/boss_symbol.png, null = noch nicht da
+## (dann zeichnen die Karten einen roten Kreis mit Schwert als Platzhalter).
+static func boss_symbol() -> Texture2D:
+	var pfad := "res://assets/ui/boss_symbol.png"
+	if not _symbole.has(pfad):
+		_symbole[pfad] = load(pfad) if ResourceLoader.exists(pfad) else null
+	return _symbole[pfad]
+
+
+## Boss-Symbol an dieser Stelle zeichnen (kleine und große Karte, P16), r = halbe Größe.
+static func boss_symbol_zeichnen(ziel: CanvasItem, mitte: Vector2, r: float) -> void:
+	var bild := boss_symbol()
+	if bild != null:
+		ziel.draw_texture_rect(bild, Rect2(mitte - Vector2(r, r) * 1.3, Vector2(r, r) * 2.6), false)
+		return
+	ziel.draw_circle(mitte, r + 1.0, Color.BLACK)
+	ziel.draw_circle(mitte, r, Color("c0392b"))
+	ziel.draw_texture_rect(symbol("schwert"), Rect2(mitte - Vector2(r, r) * 0.8, Vector2(r, r) * 1.6), false)
+
+
 ## Zeichen über einem Dienst (assets/ui/zeichen_<name>.png, tools/hutmacher.py), null = gibt es nicht.
 static func zeichen(name: String) -> Texture2D:
 	var pfad := "res://assets/ui/zeichen_%s.png" % name
