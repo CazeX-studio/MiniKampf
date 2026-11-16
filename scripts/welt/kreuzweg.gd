@@ -3529,9 +3529,22 @@ func _ausruestung_zeilen(p: PlayerState) -> void:
 	var puppe := AusruestungPuppe.new()
 	_rep_box.add_child(puppe)
 	puppe.bauen(p.progress, p.look, func(befehl: Dictionary) -> void: _send(befehl), _fill_panel)
-	var s := Ausruestung.summe(angelegt)
-	var summe := _label(GameData.text("ausruestung_summe", [s.waffenkraft + s.zauberkraft, s.verteidigung, s.widerstand,
-			Ausruestung.TEMPO_NAMEN.get(s.waffen_tempo, "normal")]), 14, Color("a0a0a0"))
+	BagSlot.angelegt_jetzt = angelegt
+	# Summe aus der Ausrüstung als Liste (P4): jeder Wert in einer eigenen Zeile, zwei Spalten
+	_rep_box.add_child(_label(GameData.text("ausruestung_summe_titel"), 15, Color("f2c14e")))
+	var tabelle := GridContainer.new()
+	tabelle.columns = 4
+	tabelle.add_theme_constant_override("h_separation", 14)
+	tabelle.add_theme_constant_override("v_separation", 2)
+	for zeile: Array in Ausruestung.summe_liste(angelegt):
+		var name_label := _label(zeile[0], 15, Color("c8c8c8"))
+		name_label.custom_minimum_size.x = 120
+		tabelle.add_child(name_label)
+		var wert_label := _label(zeile[1], 15, Color(zeile[2]))
+		wert_label.custom_minimum_size.x = 70
+		tabelle.add_child(wert_label)
+	_rep_box.add_child(tabelle)
+	var summe := _label(GameData.text("ausruestung_summe_hinweis"), 13, Color("a0a0a0"))
 	summe.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	summe.custom_minimum_size.x = 100
 	_rep_box.add_child(summe)

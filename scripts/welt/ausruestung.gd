@@ -25,6 +25,7 @@ const TEMPO_WERT := {schnell = 2, normal = 0, schwer = -2}
 
 ## Bonus-Werte, die ein Teil haben kann
 const BONUS_NAMEN := {angriff = "Angriff", zauberkraft = "Zauberkraft", leben = "Leben", mana = "Mana", tempo = "Tempo", verteidigung = "Verteidigung", widerstand = "Widerstand"}
+const WERT_NAMEN := {waffenkraft = "Waffenkraft", zauberkraft = "Zauberkraft", verteidigung = "Verteidigung", widerstand = "Widerstand"}
 ## Verteidigung und Widerstand: Schaden mal (GRUNDSCHUTZ + Startwert) / (GRUNDSCHUTZ + eigener Wert)
 const GRUNDSCHUTZ := 50.0
 
@@ -123,6 +124,51 @@ static func werte_text(id: String) -> String:
 	return " · ".join(teile)
 
 
+## Die Werte eines Teils Zeile für Zeile (P4): [[Name, Wert als Text, Farbe], …], für Infofenster und Puppe.
+static func werte_liste(id: String) -> Array:
+	var t := teil(id)
+	if t.is_empty():
+		return []
+	var liste := []
+	for wert: String in ["waffenkraft", "zauberkraft", "verteidigung", "widerstand"]:
+		if t.has(wert):
+			liste.append([WERT_NAMEN[wert], str(int(t[wert])), "f3ead8"])
+	if str(t.get("platz", "")) == "waffe":
+		var tempo := str(t.get("tempo", "normal"))
+		liste.append(["Waffen-Tempo", TEMPO_NAMEN.get(tempo, "normal"), "6dff8a" if tempo == "schnell" else ("ff9a7a" if tempo == "schwer" else "f3ead8")])
+	var boni: Dictionary = t.get("boni", {})
+	for wert: String in boni:
+		liste.append([BONUS_NAMEN.get(wert, wert), "%+d" % int(boni[wert]), "6dff8a" if int(boni[wert]) >= 0 else "ff7070"])
+	if t.has("sonderwert"):
+		liste.append(["Sonderwert", str(t.sonderwert), "f2c14e"])
+	return liste
+
+
+## Was alle angelegten Teile zusammen geben (P4), Zeile für Zeile wie werte_liste.
+static func summe_liste(angelegt: Dictionary) -> Array:
+	var s := summe(angelegt)
+	var liste := []
+	for wert: String in ["waffenkraft", "zauberkraft", "verteidigung", "widerstand"]:
+		if int(s[wert]) > 0 or wert != "zauberkraft":
+			liste.append([WERT_NAMEN[wert], str(int(s[wert])), "f3ead8"])
+	var tempo := str(s.waffen_tempo)
+	liste.append(["Waffen-Tempo", TEMPO_NAMEN.get(tempo, "normal"), "6dff8a" if tempo == "schnell" else ("ff9a7a" if tempo == "schwer" else "f3ead8")])
+	for wert: String in s.boni:
+		# Zauberkraft, Verteidigung und Widerstand aus Boni stecken schon in den Zeilen oben
+		if wert in ["zauberkraft", "verteidigung", "widerstand"] or int(s.boni[wert]) == 0:
+			continue
+		liste.append([BONUS_NAMEN.get(wert, wert), "%+d" % int(s.boni[wert]), "6dff8a" if int(s.boni[wert]) > 0 else "ff7070"])
+	return liste
+
+
+## Werte-Liste als BBCode-Zeilen, z. B. „Waffenkraft  [b]10[/b]“.
+static func liste_bbcode(liste: Array) -> String:
+	var zeilen: PackedStringArray = []
+	for z: Array in liste:
+		zeilen.append("[color=#c8c8c8]%s[/color]  [color=#%s][b]%s[/b][/color]" % [z[0], z[2], z[1]])
+	return "\n".join(zeilen)
+
+
 ## Vergleich mit dem, was gerade auf dem Platz liegt: grüne Pfeile = besser, rote = schlechter.
 ## Gibt BBCode zurück, z. B. „▲ Waffenkraft +4 · ▼ Tempo: schwer“. Leer, wenn es nichts zu vergleichen gibt.
 static func vergleich(id: String, angelegt: Dictionary) -> String:
@@ -135,7 +181,7 @@ static func vergleich(id: String, angelegt: Dictionary) -> String:
 	var nachher := summe(neu)
 	var teile: PackedStringArray = []
 	for wert: String in ["waffenkraft", "zauberkraft", "verteidigung", "widerstand"]:
-		_pfeil(teile, wert.capitalize(), int(nachher[wert]) - int(vorher[wert]))
+		_pfeil(teile, WERT_NAMEN[wert], int(nachher[wert]) - int(vorher[wert]))
 	for wert: String in ["angriff", "leben", "mana"]:
 		_pfeil(teile, BONUS_NAMEN[wert], int(nachher.boni.get(wert, 0)) - int(vorher.boni.get(wert, 0)))
 	var tempo_vorher := int(TEMPO_WERT.get(vorher.waffen_tempo, 0)) + int(vorher.boni.get("tempo", 0))

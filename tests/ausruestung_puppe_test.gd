@@ -37,7 +37,60 @@ func _run() -> void:
 		if (b as Button).text == GameData.text("ablegen"):
 			(b as Button).pressed.emit()
 	_check(gesendet.size() == 1 and gesendet[0] == {type = "ablegen", platz = "waffe"}, "Ablegen schickt den Befehl")
+	# P4: Die gewählte Waffe zeigt ihre Werte Zeile für Zeile
+	var texte := ""
+	for t in puppe.find_children("*", "RichTextLabel", true, false):
+		texte += (t as RichTextLabel).get_parsed_text()
+	_check(texte.contains("Waffenkraft") and texte.contains("Waffen-Tempo") and texte.contains("Gewöhnlich"), "Gewählte Waffe zeigt ihre Werte (%s)" % texte.replace("\n", " | "))
 	AusruestungPuppe.gewaehlt = ""
 	puppe.queue_free()
+	# P4: Infofenster beim Drüberfahren zeigt Werte und in der Tasche den Vergleich mit dem Angelegten
+	var feld := BagSlot.new()
+	root.add_child(feld)
+	feld.show_item("kurzschwert", 1, false)
+	BagSlot.angelegt_jetzt = {}
+	var fenster: Control = feld._make_custom_tooltip("")
+	root.add_child(fenster)
+	await process_frame
+	texte = ""
+	for t in fenster.find_children("*", "RichTextLabel", true, false):
+		texte += (t as RichTextLabel).get_parsed_text()
+	_check(texte.contains("Waffenkraft") and texte.contains("Waffe"), "Infofenster zeigt die Werte der Waffe (%s)" % texte.replace("\n", " | "))
+	fenster.queue_free()
+	var andere := ""
+	for id: String in GameData.get_file("gegenstaende"):
+		if Ausruestung.platz_fuer(id, p.ausruestung) == "waffe" and id != "kurzschwert" and Ausruestung.teil(id).has("waffenkraft"):
+			andere = id
+			break
+	if andere != "":
+		BagSlot.angelegt_jetzt = p.ausruestung
+		feld.show_item(andere, 1, false)
+		fenster = feld._make_custom_tooltip("")
+		root.add_child(fenster)
+		await process_frame
+		texte = ""
+		for t in fenster.find_children("*", "RichTextLabel", true, false):
+			texte += (t as RichTextLabel).get_parsed_text()
+		_check(texte.contains("Vergleich") or texte.contains("gleich gut"), "In der Tasche: Vergleich mit dem Kurzschwert (%s)" % andere)
+		fenster.queue_free()
+	BagSlot.angelegt_jetzt = {}
+	feld.queue_free()
+	# P4: Summe aus der Ausrüstung mit allen Werten
+	var liste := Ausruestung.summe_liste(Ausruestung.START)
+	var namen := []
+	for z: Array in liste:
+		namen.append(z[0])
+	_check("Waffenkraft" in namen and "Verteidigung" in namen and "Widerstand" in namen and "Waffen-Tempo" in namen, "Summe zeigt alle Grundwerte (%s)" % [namen])
+	var mit_bonus := {waffe = "kurzschwert"}
+	for id: String in GameData.get_file("gegenstaende"):
+		if not Ausruestung.teil(id).get("boni", {}).is_empty() and Ausruestung.teil(id).get("platz", "") == "schmuck":
+			mit_bonus["schmuck1"] = id
+			var b: Dictionary = Ausruestung.teil(id).boni
+			var gefunden := false
+			for z: Array in Ausruestung.summe_liste(mit_bonus):
+				for wert: String in b:
+					gefunden = gefunden or z[0] == Ausruestung.BONUS_NAMEN.get(wert, wert) or wert in ["zauberkraft", "verteidigung", "widerstand"]
+			_check(gefunden, "Summe zeigt die Bonus-Werte von %s" % id)
+			break
 	print("Ausrüstung: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)

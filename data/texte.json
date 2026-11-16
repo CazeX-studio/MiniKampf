@@ -75,6 +75,8 @@
 	"ausruestung_titel": "Ausrüstung",
 	"ausruestung_leer": "leer",
 	"ausruestung_antippen": "Tippe einen Platz an, um zu sehen, was du trägst.",
+	"ausruestung_summe_titel": "Aus deiner Ausrüstung",
+	"ausruestung_summe_hinweis": "Etwa ein Drittel deiner Kraft kommt aus der Ausrüstung. Fahr über ein Teil oder tipp es an, dann siehst du seine Werte.",
 	"ausruestung_summe": "Zusammen: Waffen- und Zauberkraft %d · Verteidigung %d · Widerstand %d · Waffen-Tempo: %s. Etwa ein Drittel deiner Kraft kommt aus der Ausrüstung.",
 	"anlegen": "Anlegen",
 	"ablegen": "Ablegen",

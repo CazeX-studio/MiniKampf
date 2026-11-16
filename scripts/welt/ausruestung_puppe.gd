@@ -39,7 +39,10 @@ func bauen(p: Progress, look: String, senden: Callable, neu: Callable) -> void:
 		text.fit_content = true
 		text.scroll_active = false
 		text.add_theme_font_size_override("normal_font_size", 15)
-		text.text = "%s: %s  [color=#a0a0a0]%s[/color]" % [Ausruestung.PLATZ_NAMEN[gewaehlt], Ausruestung.name_farbig(id), Ausruestung.werte_text(id)] \
+		text.add_theme_font_size_override("bold_font_size", 15)
+		var t := Ausruestung.teil(id)
+		text.text = "%s: %s  [color=#a0a0a0]%s[/color]\n%s" % [Ausruestung.PLATZ_NAMEN[gewaehlt], Ausruestung.name_farbig(id),
+				Ausruestung.SELTENHEIT_NAMEN.get(str(t.get("seltenheit", "gewoehnlich")), ""), Ausruestung.liste_bbcode(Ausruestung.werte_liste(id))] \
 				if id != "" else "%s: [color=#707070]%s[/color]" % [Ausruestung.PLATZ_NAMEN[gewaehlt], GameData.text("ausruestung_leer")]
 		add_child(text)
 		if id != "":

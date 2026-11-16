@@ -5,7 +5,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 16.11.)
 
-- **Nächster Schritt (16.11.2026, nach Marcos Playtest):** 22 neue Bauaufträge P1 bis P22 in `BAUAUFTRAEGE.md` (Demo-Reihenfolge, Abschnitt „Playtest 16.11.2026“), sie kommen vor den Testtagen. P1 bis P3 (die drei Blocker) sind fertig. Für P3 fehlt nur noch dein zweites Google-Formular (Anleitung unten bei „P3“). „Mach weiter“ baut als Nächstes P4 (Werte der Ausrüstung sichtbar). Neue Bildaufträge für dich in `Spieldesign/GRAFIK_AUFTRAG.md` Teil V (Werte-Symbole, Miras Notenblatt, Fähigkeiten-Bilder, Pfeile im Fähigkeitenbaum, Splitter-Rindenbär, zerstörter Splitterkristall, Blumen, Erinnerungs-Szene). Für dich bei P3: ein zweites Google-Formular für den Abschluss.
+- **Nächster Schritt (16.11.2026, nach Marcos Playtest):** 22 neue Bauaufträge P1 bis P22 in `BAUAUFTRAEGE.md` (Demo-Reihenfolge, Abschnitt „Playtest 16.11.2026“), sie kommen vor den Testtagen. P1 bis P3 (die drei Blocker) sind fertig. Für P3 fehlt nur noch dein zweites Google-Formular (Anleitung unten bei „P3“). P4 (Werte der Ausrüstung) ist fertig. „Mach weiter“ baut als Nächstes P5 (Ausrüstung und Tasche nebeneinander). Neue Bildaufträge für dich in `Spieldesign/GRAFIK_AUFTRAG.md` Teil V (Werte-Symbole, Miras Notenblatt, Fähigkeiten-Bilder, Pfeile im Fähigkeitenbaum, Splitter-Rindenbär, zerstörter Splitterkristall, Blumen, Erinnerungs-Szene). Für dich bei P3: ein zweites Google-Formular für den Abschluss.
 - **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** Die Alpha-Aufträge sind fertig (A10b und A13b sind fertig; A3b, A9c und A20 haben alle Bilder und kommen als Nächstes). E4 (Balancing) kommt später (Marco, 11.11.: braucht viele Tests), dann E5 (T3 und T4 am Stück); neu für dich: Teil M bis Q in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
 - **Bilder von Marco (02.11. abends):** 38 Blätter liegen unter `tools/vorlagen/`: alle sechs Novizen-Blätter ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen.
   - Dazu der Baukasten (02.11.): acht Grundkörper (`grund_*.png`), Köpfe (`koepfe_*.png`), Hüte (`huete_regionen.png`), Zeichen (`zeichen_dienste.png`) und die Klingentänzerin Blatt 1. Bei den Fäusten der Abwehr-Bilder von Blatt 1 prüft Claude beim Einbauen, ob sie am Oval stören.
@@ -3044,7 +3044,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 
 - **Playtest 16.11.2026 (Bauaufträge P1 bis P22 in `BAUAUFTRAEGE.md`):**
   - Blocker: P1 Wegweiser nach Kaels Erinnerung (fertig 16.11.), P2 Aufträge und „!“ nur für die eigene Klasse (Fenn, fertig 16.11.), P3 Abschluss melden mit einem zweiten Formular, das sich selbst abschickt (fertig 16.11., wartet auf Marcos Formular).
-  - Ausrüstung und Werte: P4 Werte der Ausrüstung sichtbar, P5 Ausrüstung und Tasche nebeneinander, P6 Symbole für die Werte (Bild V1), P7 Miras Notenblatt (Bild V2).
+  - Ausrüstung und Werte: P4 Werte der Ausrüstung sichtbar (fertig 16.11.), P5 Ausrüstung und Tasche nebeneinander, P6 Symbole für die Werte (Bild V1), P7 Miras Notenblatt (Bild V2).
   - Klang und Menü: P8 Klänge nachbessern, P10 Menü oben aufräumen (das „X“ zum Hinsetzen weg von Aufträgen und Tasche).
   - Fähigkeitenbaum: P9 weiße Felder (Bilder sind da, Fehler suchen; sonst Bild V3), P11 Werte der Fähigkeiten im Baum, P12 mehr Abstand und gemalte Pfeile wie im WoW-Talentbaum (Bild V4).
   - Grünwacht und Pilzhöhle: P13 Splitter-Rindenbär nicht hinter dem Baum, mit Bild (V5), P14 Erinnerungs-Szene neu gemalt (V8), P16 Bosse und Eingang leichter anklicken, Dungeon-Eingang mit Boss-Symbol auf der Karte, P17 Wurzelmutter heilt sich ohne Knoten nicht mehr so, P18 Vorbote stärker, P19 Bild für den zerstörten Splitterkristall (V6), P21 gemalte Blumen statt der alten (V7), P22 Kael kommt beim Abschluss mit Ysolde dazu.
@@ -3064,6 +3064,14 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 ## Offene Fragen an Marco (aufgeräumt 11.11.2026)
 
 ### Deine Entscheidungen
+- **Heute Abend am PC (Marco, 16.11.2026): P3 zu Ende bringen.** Das Spiel ist fertig gebaut, es fehlt nur das zweite
+  Google-Formular. Zusammen am PC:
+  1. Formular „Asterfall Demo – Abschluss“ anlegen, fünf Kurzantworten: Spitzname, Tester-Nummer, Version, Code, Ort.
+  2. Einstellungen → Antworten: „E-Mail-Adressen erfassen“ aus, „Auf 1 Antwort beschränken“ aus.
+  3. „Vorausgefüllten Link abrufen“ mit `SPITZNAME`, `NUMMER`, `VERSION`, `CODE`, `ORT`, Link kopieren.
+  4. Claude trägt den Link in `data/demo.json` bei „abschluss_vorlage“ ein, committet und pusht.
+  5. Einmal echt testen: Abspann am Ende der Demo öffnen, im Formular unter „Antworten“ muss die Zeile ankommen
+     (am PC und in der Web-Version). Optional eine Tabelle zu den Antworten verknüpfen.
 - **Feedback-Formular (S1):** Fertig seit 13.11.2026. Google-Formular „Asterfall Demo – Feedback“ (zehn Fragen, ohne E-Mail-Adresse), der Link steht in `data/demo.json`. Der Feedback-Knopf und „Abschluss melden“ öffnen es ausgefüllt. So testest du es: 1. Demo öffnen, in der Welt oben rechts „Feedback“ drücken. 2. Im Formular stehen Spitzname, Tester-Nummer, „Feedback“, Version und Ort schon drin. 3. Abschicken und in der Tabelle „Asterfall Demo – Feedback (Antworten)“ nachsehen. Formular und Tabelle liegen im Studio-Konto.
 - **Texte:** Die Hauptfiguren schreibst du selbst (`data/LIESMICH.md`). Broms Brief, Lenes Empfehlungsschreiben und die Wache stehen fürs Brainstorming im Google Doc.
 
@@ -3248,3 +3256,24 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 2. Am Ende der Demo: Kein Knopf „Abschluss melden“, nur dein Code und kurz darauf „Dein Abschluss ist gemeldet“.
 3. Im Google-Formular unter „Antworten“ steht eine neue Zeile mit Spitzname, Nummer, Version und Code.
 4. Mit ausgeschaltetem Internet: „Das Melden hat nicht geklappt“ und der Knopf „Nochmal senden“.
+
+## P4: Ausrüstung zeigt ihre Werte (Playtest, 16.11.2026)
+
+- **Drüberfahren** über ein Teil (in der Tasche oder an der Puppe): Das Infofenster zeigt den Namen in der Farbe der
+  Seltenheit, darunter Seltenheit und Platz und dann jeden Wert in einer eigenen Zeile (Waffenkraft oder Zauberkraft,
+  Verteidigung, Widerstand, Waffen-Tempo, Bonus-Werte grün). In der Tasche steht dazu der Vergleich mit dem, was
+  gerade angelegt ist (grüne und rote Pfeile).
+- **Antippen** an der Puppe (wichtig auf dem Handy): Unter der Figur stehen Name, Seltenheit und die Werte Zeile für
+  Zeile, darunter „Ablegen“.
+- **Summe:** Unter der Puppe steht „Aus deiner Ausrüstung“ als kleine Liste mit allen Werten und den Bonus-Werten
+  (z. B. Leben +5 von einer Kette), statt der grauen Textzeile.
+- Die gemalten Symbole für die Werte kommen mit P6 (Bild V1).
+- Nebenbei bemerkt: Der automatische Durchlauf durch Grünwacht scheitert etwa jedes dritte Mal, weil die Kunoichi
+  die Sporenkönigin nicht schafft. Das war schon vor P1 so (nachgeprüft) und gehört zum Balancing der Pilzhöhle
+  (P17 und P18 fassen die Bosse dort ohnehin an).
+
+**So testest du es**
+1. Mit C das Werte-Fenster öffnen und ein wenig hinunterrollen: unter der Puppe die Liste „Aus deiner Ausrüstung“.
+2. Mit der Maus über die Waffe an der Puppe fahren: Infofenster mit Waffenkraft und Waffen-Tempo.
+3. Die Waffe antippen: dieselben Werte unter der Figur, darunter „Ablegen“.
+4. Mit I die Tasche öffnen und über ein Ausrüstungsteil fahren: Werte und Vergleich mit grünen und roten Pfeilen.

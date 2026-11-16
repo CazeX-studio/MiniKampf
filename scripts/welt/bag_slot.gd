@@ -26,6 +26,8 @@ static var _icons := {}
 var belt := false
 ## Ausrüstungsplatz (A8b): nicht ziehen, leer steht der Name des Platzes blass im Kästchen
 var platz_name := ""
+## Was der Spieler gerade angelegt hat (für den Vergleich im Infofenster der Tasche, P4); setzt das Fenster
+static var angelegt_jetzt := {}
 
 
 func _init() -> void:
@@ -61,6 +63,25 @@ func _make_custom_tooltip(_for_text: String) -> Object:
 	title.add_theme_font_size_override("font_size", 20)
 	title.add_theme_color_override("font_color", Color("f2c14e"))
 	head.add_child(title)
+	# Ausrüstung (P4): Seltenheit, Werte Zeile für Zeile, in der Tasche dazu der Vergleich mit dem Angelegten
+	if Ausruestung.ist_ausruestung(item_id):
+		var t := Ausruestung.teil(item_id)
+		title.add_theme_color_override("font_color", Color(Ausruestung.SELTENHEIT_FARBEN.get(str(t.get("seltenheit", "gewoehnlich")), "e8e8e8")))
+		var werte := RichTextLabel.new()
+		werte.bbcode_enabled = true
+		werte.fit_content = true
+		werte.scroll_active = false
+		werte.custom_minimum_size = Vector2(260, 0)
+		werte.add_theme_font_size_override("normal_font_size", 15)
+		werte.add_theme_font_size_override("bold_font_size", 15)
+		var art := "%s · %s" % [Ausruestung.SELTENHEIT_NAMEN.get(str(t.get("seltenheit", "gewoehnlich")), ""),
+				Ausruestung.PLATZ_NAMEN.get("schmuck1" if str(t.get("platz", "")) == "schmuck" else str(t.get("platz", "")), "")]
+		werte.text = "[color=#a0a0a0]%s[/color]\n%s" % [art, Ausruestung.liste_bbcode(Ausruestung.werte_liste(item_id))]
+		if platz_name == "" and not angelegt_jetzt.is_empty():
+			var vergleich := Ausruestung.vergleich(item_id, angelegt_jetzt)
+			if vergleich != "":
+				werte.text += "\n[color=#a0a0a0]%s[/color] %s" % [GameData.text("vergleich"), vergleich]
+		box.add_child(werte)
 	var text := Label.new()
 	text.text = item.get("beschreibung", "")
 	text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
