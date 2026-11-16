@@ -325,7 +325,8 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 		if f.wares.has("manatrank"):
 			list.append({id = "manatrank_trinken", name = "Manatrank (%d)" % f.wares.manatrank, info = "+%d Mana · Gürtel: %s" % [NOVIZE.manatrank, free],
 					target = "ally", guertel = true})
-	if f.is_hero:
+	# Duette, Dungeon und Reihe nur in einem laufenden Kampf (ohne Kampf: Anzeige im Fähigkeitenbaum, P11)
+	if f.is_hero and c != null:
 		for duet in Sandbox.active_duets(c.team):
 			if f.klass == duet.a or f.klass == duet.b:
 				var partner: String = duet.b if f.klass == duet.a else duet.a
@@ -345,7 +346,7 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 		if ab.has("mana") and int(ab.get("cd", 0)) < STARKE_ABKLINGZEIT:
 			ab.erase("cd")
 	# Kampf-Sandbox mit Effekt-Probe: jeder Effekt der Effekt-Liste zum Ausprobieren (nicht in Kämpfen aus der Welt)
-	if Sandbox.effekt_probe and f.is_hero and not c.setup.has("wellen"):
+	if Sandbox.effekt_probe and f.is_hero and c != null and not c.setup.has("wellen"):
 		var choices: Array = []
 		for art: String in Effekte.ARTEN:
 			var d: Dictionary = Effekte.ARTEN[art]
@@ -355,7 +356,7 @@ func abilities(f: Fighter) -> Array[Dictionary]:
 	if f.is_hero or is_pet(f):
 		list.append(wait_ability())
 	# Grundausbildung: nur die Fähigkeiten, die die Lektion schon erlaubt (Abwarten geht immer)
-	var allowed: Array = c.setup.get("erlaubt", [])
+	var allowed: Array = c.setup.get("erlaubt", []) if c != null else []
 	if not allowed.is_empty() and f.is_hero:
 		list = list.filter(func(ab: Dictionary) -> bool: return ab.id in allowed or ab.id == "abwarten")
 	return list

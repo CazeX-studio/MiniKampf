@@ -213,6 +213,9 @@ func _beschreibung_bauen() -> void:
 	for andere: String in braucht:
 		text += "  [color=#a0a0a0]braucht %s %d[/color]" % [Faehigkeiten.eintrag(_klasse, andere).get("name", andere), int(braucht[andere])]
 	text += "\n[color=#c8c8c8]%s[/color]" % str(f.get("info", ""))
+	# P11: Werte wie im Kampf (farbige, fertige Zahlen, A23), dazu Mana, Abklingzeit, Ziel und die nächste Stufe
+	if gewaehlt != "_grund":
+		text += kampfwerte_text(_progress, _klasse, gewaehlt, stufe, int(f.get("max", 5)))
 	var label := RichTextLabel.new()
 	label.bbcode_enabled = true
 	label.fit_content = true
@@ -238,6 +241,56 @@ func _beschreibung_bauen() -> void:
 		knoepfe.add_child(_knopf(GameData.text("leiste_runter" if drauf else "leiste_drauf"), 150,
 				func() -> void: _senden.call({type = "leiste", faehigkeit = id, platz = -1})))
 	add_child(knoepfe)
+
+
+const ZIELE := {enemy = "ein Gegner", ally = "ein Verbündeter", ally_other = "ein anderer Verbündeter", none = "",
+		choice = "zur Auswahl"}
+
+
+## Die Fähigkeit, wie sie im Kampf aussieht (P11): Zahlen fertig und farbig wie beim Drüberfahren im Kampf, dazu Mana,
+## Abklingzeit und Ziel, und was die nächste Stufe bringt. "" für Fähigkeiten ohne eigenen Kampf-Knopf (passive).
+static func kampfwerte_text(p: Progress, klasse: String, id: String, stufe: int, max_stufe: int) -> String:
+	var f := _anzeige_figur(p, klasse)
+	if f == null:
+		return ""
+	var ab := {}
+	for eintrag: Dictionary in Skills.new(null).abilities(f):
+		if str(eintrag.id) == id:
+			ab = eintrag
+			break
+	if ab.is_empty() or str(ab.get("info", "")) == "":
+		return ""
+	var jetzt := maxi(stufe, 1)
+	# „· 12 Mana“ steht unten in der eigenen Zeile
+	var info := str(ab.info)
+	var mana_regex := RegEx.create_from_string(" · \\d+ Mana$")
+	info = mana_regex.sub(info, "")
+	var text := "\n[b]%s:[/b] %s" % ["Im Kampf" if stufe > 0 else "Auf Stufe 1", FaehigkeitZahlen.text(f, ab, info, jetzt)]
+	var teile: PackedStringArray = []
+	if int(ab.get("mana", 0)) > 0:
+		teile.append("%s %d Mana" % [UiStil.wert_bild("mana", 14), int(ab.mana)])
+	if int(ab.get("cd", 0)) > 0:
+		teile.append("Abklingzeit %d %s" % [int(ab.cd), "Runde" if int(ab.cd) == 1 else "Runden"])
+	var ziel: String = ZIELE.get(str(ab.get("target", "")), "")
+	if ziel != "":
+		teile.append("Ziel: %s" % ziel)
+	if not teile.is_empty():
+		text += "\n" + "  ·  ".join(teile)
+	if jetzt < max_stufe:
+		text += "\n[color=#8affc1]Nächste Stufe:[/color] %s" % FaehigkeitZahlen.text(f, ab, info, jetzt + 1)
+	return text
+
+
+## Eine Figur nur für die Anzeige: Klasse, Stufe und Ausrüstung des Spielers, wie im Kampf in der Welt.
+static func _anzeige_figur(p: Progress, klasse: String) -> Fighter:
+	var data: Dictionary = Sandbox.CLASSES.get(klasse, {})
+	if data.is_empty():
+		return null
+	var f := Fighter.new("Du", klasse, str(data.title), true, int(data.hp), int(data.tempo), data.color)
+	f.set_meta("stufe", p.level)
+	f.set_meta("faktor_stufe", BattleRequest.hero_power(p.level))
+	f.set_meta("faktor_kraft", float(Ausruestung.kampfwerte(p.ausruestung).get("macht", 1.0)))
+	return f
 
 
 func _text(text: String, groesse: int, farbe: Color) -> Label:

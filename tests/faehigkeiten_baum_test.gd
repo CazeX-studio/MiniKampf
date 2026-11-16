@@ -57,5 +57,28 @@ func _run() -> void:
 			if FaehigkeitenBaum.bild(klasse, str(f.id)) == null:
 				fehlt.append("%s_%s" % [klasse, f.id])
 	_check(fehlt.is_empty(), "Jede Fähigkeit der Demo-Klassen hat ein Bild (fehlt: %s)" % [fehlt])
+	# P11: Aktive Fähigkeiten zeigen im Baum ihre Kampf-Werte (farbig), Mana und die nächste Stufe
+	var p := Progress.new()
+	p.level = 20
+	var ohne: Array[String] = []
+	for klasse: String in ["archer", "tamer", "smith", "blade", "singer"]:
+		for f: Dictionary in Faehigkeiten.baum(klasse).get("faehigkeiten", []):
+			if f.get("passiv", false):
+				continue
+			var text := FaehigkeitenBaum.kampfwerte_text(p, klasse, str(f.id), 1, 5)
+			if text == "":
+				ohne.append("%s_%s" % [klasse, f.id])
+	_check(ohne.size() <= 6, "Fast alle aktiven Fähigkeiten zeigen Kampf-Werte (ohne: %s)" % [ohne])
+	var volley := FaehigkeitenBaum.kampfwerte_text(p, "archer", "volley", 2, 5)
+	print("        Beispiel Pfeilhagel: ", volley.replace("\n", " | "))
+	_check(volley.contains("[color=#") and volley.contains("15 Mana") and volley.contains("Nächste Stufe"),
+			"Pfeilhagel: farbige Zahl, Mana, nächste Stufe")
+	# Abklingzeit nur bei den stärksten Fähigkeiten (design.md); irgendeine Fähigkeit der Demo hat eine
+	var mit_abklingzeit := false
+	for klasse: String in ["archer", "tamer", "smith", "blade", "singer"]:
+		for f: Dictionary in Faehigkeiten.baum(klasse).get("faehigkeiten", []):
+			mit_abklingzeit = mit_abklingzeit or FaehigkeitenBaum.kampfwerte_text(p, klasse, str(f.id), 1, 5).contains("Abklingzeit")
+	_check(mit_abklingzeit, "Starke Fähigkeiten zeigen ihre Abklingzeit")
+	_check(not FaehigkeitenBaum.kampfwerte_text(p, "archer", "volley", 5, 5).contains("Nächste Stufe"), "Auf der höchsten Stufe keine „Nächste Stufe“")
 	print("Fähigkeiten-Baum: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)
