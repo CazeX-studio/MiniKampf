@@ -13,6 +13,13 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
+- **Neu (16.11.): Die Köpfe der Nebenfiguren in allen fünf Richtungen** (GRAFIK_AUFTRAG.md Teil U2a): 19 Nebenfiguren haben neu gemalte Köpfe: Borko, Brom, Edmar, Hagebutte, Hanne, Hatta, Ilse, Kobalt, Layla, Lene, Lotte, Nadia, Pip, Quill, Rashid, Salbei, Tamm, Tarek und Zaid. Es gibt sie gerade und schräg von vorne, von der Seite, schräg und gerade von hinten und mit geschlossenen Augen. Bei Salbei, Lotte und Layla liegen Haare und Schleife von hinten über dem Rücken. Edmar, Hagebutte, Hatta, Ilse und Zaid stehen in der Welt noch als alte, ganze Figuren; ihre neuen Köpfe sieht man, sobald sie einen Körper aus Teilen bekommen. Übersicht `tools/referenz/teil_u/uebersicht_nebenfiguren_koepfe.png`.
+  - **So testest du es:**
+    1. In Kreuzweg zu Lene, Brom und Quill gehen, in der Glutoase zu Tarek, Rashid, Nadia und Layla: Die Köpfe sind neu gemalt und sitzen richtig auf dem Hals.
+    2. Wenn eine Nebenfigur herumläuft: Schräg von vorne schauen Gesicht und Körper in dieselbe Richtung (besonders Brom und Layla).
+    3. Von hinten: Bei Tarek und Zaid sitzt der Goldschmuck am Turban auf derselben Seite wie von vorne.
+    4. Bei Tamm, Rashid und Borko steckt der Bart von der Seite nicht im Kragen und schwebt nicht.
+
 - **Neu (15.11.): Die Köpfe der Leute in allen fünf Richtungen** (GRAFIK_AUFTRAG.md Teil U12): Alle zwölf Köpfe der Leute (drei Männer, drei Frauen, zwei alte Männer, zwei alte Frauen, Junge, Mädchen) sind neu gemalt: gerade von vorne, schräg von vorne, von der Seite, schräg und gerade von hinten, dazu mit geschlossenen Augen. Damit laufen die Leute jetzt auch gerade nach unten, seitlich und gerade nach oben mit eigenen Bildern. Zöpfe, lange Haare und der Kopftuch-Knoten liegen von hinten über dem Rücken. Übersicht `tools/referenz/teil_u/uebersicht_leute_koepfe.png`.
   - **So testest du es:**
     1. In Kreuzweg oder Grünwacht herumlaufen und den Leuten zusehen: Laufen sie seitlich, schaut auch der Kopf genau zur Seite.

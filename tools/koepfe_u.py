@@ -42,7 +42,17 @@ PLAETZE_LEUTE = [
 
 ## Blätter, auf denen ChatGPT den Kopf schräg von vorne andersherum gemalt hat als die Seite (a_w2, Marco 15.11.2026):
 ## dort wird schräg von vorne nicht gespiegelt
-SCHRAEG_ANDERS = ["a_w2"]
+SCHRAEG_ANDERS = ["a_w2", "brom", "layla"]
+
+
+## Halspunkte von Hand (16.11.2026): Langer heller Bart oder Zopf sieht für die Suche wie Haut aus, der Punkt landete
+## an der Bartspitze oder am Kinn. Hier steht, wo der Hals wirklich ist (im fertigen, verkleinerten Bild)
+HALS_VON_HAND = {
+	"tamm": {"seite_normal": [27, 53], "seite_augen_zu": [27, 53]},
+	"rashid": {"seite_normal": [27, 50], "seite_augen_zu": [27, 50], "hinten_normal": [28, 50]},
+	"lotte": {"seite_normal": [36, 54], "seite_augen_zu": [36, 54]},
+	"borko": {"seite_normal": [27, 59], "seite_augen_zu": [27, 59]},
+}
 
 
 ## Novizen-Köpfe behalten schräg und seitlich ihre alten Bilder (dort gibt es alle Gesichter für den Kampf). Alle anderen
@@ -148,6 +158,8 @@ def main():
 					punkte[hinten] = [round(groessen[hinten] / 2 - (punkte[von][0] - groessen[von] / 2), 1), punkte[von][1]]
 		if not leute(kopf):
 			punkte["gerade_hinten_normal"] = [round(groessen["gerade_hinten_normal"] / 2 - (vorn[0] - groessen["gerade_vorn_normal"] / 2), 1), vorn[1]]
+		for name, punkt in HALS_VON_HAND.get(kopf, {}).items():
+			punkte[name] = punkt
 		n = 0
 		for koerper, eintrag in daten.items():
 			if isinstance(eintrag, dict) and kopf in eintrag.get("_koepfe", {}):

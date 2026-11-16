@@ -16,12 +16,15 @@ from scipy import ndimage
 
 WURZEL = Path(__file__).resolve().parent.parent
 KOEPFE = WURZEL / "assets" / "teile" / "koepfe"
-LANGE_HAARE = ["w1", "w2", "w3", "v_w1", "v_w3", "a_w2", "k_w1"]
+LANGE_HAARE = ["w1", "w2", "w3", "v_w1", "v_w3", "a_w2", "k_w1", "salbei", "lotte", "layla"]
 ## Auch von der Seite liegt der Zopf über der Kleidung (w1, Marco 14.11.2026)
 SEITE = {"w1": ["seite_normal", "seite_schmerz", "seite_freude", "seite_augen_zu", "seite_entschlossen"]}
 ANSICHTEN = ["hinten_normal", "hinten_geneigt", "gerade_hinten_normal"]
+## Nebenfiguren (U2a, 16.11.2026): Blüte, Schleife und Zöpfe liegen nah an der Hautfarbe. Bei ihnen zählt nur Haut im unteren Drittel
+## (der Hals). Nadia, Hanne, Tarek und Zaid (Tuch, Turban) bekommen kein Haarbild: dort hängt kaum etwas über den Rücken
+HAUT_ENG = {"salbei": 130, "layla": 130, "lotte": 130}
 ## Wo im Bild von vorne die Haut gemessen wird (Anteil der Höhe). v_w1, k_w1, a_w2: Zopf oder Kopftuch-Knoten macht das Bild höher, unten läge sonst Haar
-HAUT_BEREICH = {"v_w1": (0.4, 0.6), "a_w2": (0.4, 0.6), "k_w1": (0.4, 0.6)}
+HAUT_BEREICH = {"v_w1": (0.4, 0.6), "a_w2": (0.4, 0.6), "k_w1": (0.4, 0.6), "lotte": (0.4, 0.6)}
 
 
 def hautfarbe(kopf):
@@ -51,7 +54,13 @@ def main():
 			farbe = a[..., :3].astype(int)
 			haar = haarfarbe(a)
 			hautig = (np.abs(farbe - haut).sum(-1) < np.abs(farbe - haar).sum(-1)) & (a[..., 3] > 0) & (farbe.sum(-1) > 150)
-			hautig = ndimage.binary_fill_holes(ndimage.binary_closing(hautig, iterations=2)) & (a[..., 3] > 0)
+			if kopf in HAUT_ENG:
+				# Nur der Hals ganz unten; Löcher nicht füllen, sonst verschwinden Tuch und Turban mit
+				hautig &= np.abs(farbe - haut).sum(-1) < HAUT_ENG[kopf]
+				hautig[:int(a.shape[0] * 0.7)] = False
+				hautig = ndimage.binary_closing(hautig, iterations=1) & (a[..., 3] > 0)
+			else:
+				hautig = ndimage.binary_fill_holes(ndimage.binary_closing(hautig, iterations=2)) & (a[..., 3] > 0)
 			# Haut-Flecken, die groß genug sind (Hals, Ohren), samt dunklem Rand drumherum weg; einzelne Pixel im Haar bleiben
 			flecken, n = ndimage.label(hautig)
 			groesse = ndimage.sum(hautig, flecken, range(1, n + 1))

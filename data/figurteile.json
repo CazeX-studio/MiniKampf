@@ -2459,13 +2459,37 @@
 			"borko": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.5,
+						55
+					],
+					"gerade_vorn_augen_zu": [
+						27.4,
+						57
+					],
+					"gerade_vorn_normal": [
+						27.7,
+						57
+					],
 					"hinten_normal": [
-						33.0,
-						50
+						26.9,
+						54
+					],
+					"seite_augen_zu": [
+						27,
+						59
+					],
+					"seite_normal": [
+						27,
+						59
+					],
+					"vorn_augen_zu": [
+						22.8,
+						57
 					],
 					"vorn_normal": [
-						42.9,
-						50
+						22.8,
+						57
 					]
 				},
 				"name": "Wirt Borko"
@@ -2473,13 +2497,37 @@
 			"brom": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						59
+					],
+					"gerade_vorn_augen_zu": [
+						29.0,
+						59
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						60
+					],
 					"hinten_normal": [
-						30.5,
-						55
+						29.0,
+						57
+					],
+					"seite_augen_zu": [
+						27.5,
+						59
+					],
+					"seite_normal": [
+						27.5,
+						59
+					],
+					"vorn_augen_zu": [
+						28.0,
+						58
 					],
 					"vorn_normal": [
-						35.0,
-						55
+						27.5,
+						58
 					]
 				},
 				"name": "Torwache Brom"
@@ -2487,13 +2535,37 @@
 			"edmar": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.5,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						26.0,
+						58
+					],
+					"gerade_vorn_normal": [
+						26.3,
+						58
+					],
 					"hinten_normal": [
-						29.0,
-						50
+						30.0,
+						57
+					],
+					"seite_augen_zu": [
+						28.0,
+						58
+					],
+					"seite_normal": [
+						28.0,
+						58
+					],
+					"vorn_augen_zu": [
+						16.5,
+						58
 					],
 					"vorn_normal": [
-						38.7,
-						51
+						16.5,
+						58
 					]
 				},
 				"name": "Vogt Edmar"
@@ -2501,13 +2573,37 @@
 			"hagebutte": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.5,
+						55
+					],
+					"gerade_vorn_augen_zu": [
+						22.0,
+						54
+					],
+					"gerade_vorn_normal": [
+						23.6,
+						54
+					],
 					"hinten_normal": [
-						33.5,
+						30.0,
+						54
+					],
+					"seite_augen_zu": [
+						29.0,
+						55
+					],
+					"seite_normal": [
+						29.0,
+						55
+					],
+					"vorn_augen_zu": [
+						23.5,
 						56
 					],
 					"vorn_normal": [
-						39.6,
-						53
+						23.5,
+						56
 					]
 				},
 				"name": "Oma Hagebutte"
@@ -2515,17 +2611,37 @@
 			"hanne": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						59
+					],
+					"gerade_vorn_augen_zu": [
+						27.0,
+						59
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						59
+					],
 					"hinten_normal": [
-						36.9,
-						58
+						34.5,
+						59
+					],
+					"seite_augen_zu": [
+						34.0,
+						59
+					],
+					"seite_normal": [
+						34.5,
+						59
 					],
 					"vorn_augen_zu": [
-						39.4,
-						56
+						23.9,
+						59
 					],
 					"vorn_normal": [
-						36.8,
-						56
+						24.3,
+						59
 					]
 				},
 				"name": "Wirtin Hanne"
@@ -2533,13 +2649,37 @@
 			"hatta": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						35.0,
+						69
+					],
+					"gerade_vorn_augen_zu": [
+						33.4,
+						69
+					],
+					"gerade_vorn_normal": [
+						33.4,
+						69
+					],
 					"hinten_normal": [
-						40.6,
-						34
+						39.0,
+						68
+					],
+					"seite_augen_zu": [
+						36.0,
+						69
+					],
+					"seite_normal": [
+						36.0,
+						69
+					],
+					"vorn_augen_zu": [
+						27.0,
+						69
 					],
 					"vorn_normal": [
-						44.5,
-						66
+						27.0,
+						69
 					]
 				},
 				"name": "Hutmacher Hatta"
@@ -2547,13 +2687,37 @@
 			"ilse": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						59
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						59
+					],
 					"hinten_normal": [
-						32.5,
-						56
+						32.0,
+						55
+					],
+					"seite_augen_zu": [
+						31.5,
+						58
+					],
+					"seite_normal": [
+						32.0,
+						58
+					],
+					"vorn_augen_zu": [
+						19.5,
+						59
 					],
 					"vorn_normal": [
-						40.3,
-						56
+						20.0,
+						59
 					]
 				},
 				"name": "Bankhüterin Ilse"
@@ -2637,17 +2801,37 @@
 			"layla": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						57
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						58
+					],
 					"hinten_normal": [
-						36.5,
+						34.0,
 						56
 					],
+					"seite_augen_zu": [
+						32.0,
+						57
+					],
+					"seite_normal": [
+						31.0,
+						57
+					],
 					"vorn_augen_zu": [
-						25.6,
-						54
+						26.3,
+						56
 					],
 					"vorn_normal": [
-						24.8,
-						54
+						25.5,
+						56
 					]
 				},
 				"name": "Wirtin Layla"
@@ -2655,17 +2839,37 @@
 			"lene": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						63
+					],
+					"gerade_vorn_augen_zu": [
+						26.5,
+						63
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						63
+					],
 					"hinten_normal": [
-						34.0,
-						59
+						32.0,
+						61
+					],
+					"seite_augen_zu": [
+						31.0,
+						62
+					],
+					"seite_normal": [
+						30.5,
+						62
 					],
 					"vorn_augen_zu": [
-						37.2,
-						60
+						26.0,
+						63
 					],
 					"vorn_normal": [
-						37.1,
-						60
+						26.0,
+						63
 					]
 				},
 				"name": "Schreiberin Lene"
@@ -2673,17 +2877,37 @@
 			"lotte": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.5,
+						54
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						55
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						55
+					],
 					"hinten_normal": [
-						25.3,
-						56
+						26.0,
+						54
+					],
+					"seite_augen_zu": [
+						36,
+						54
+					],
+					"seite_normal": [
+						36,
+						54
 					],
 					"vorn_augen_zu": [
-						32.3,
-						55
+						26.0,
+						57
 					],
 					"vorn_normal": [
-						32.6,
-						55
+						26.0,
+						57
 					]
 				},
 				"name": "Lotte"
@@ -2877,17 +3101,37 @@
 			"nadia": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						22.0,
+						48
+					],
+					"gerade_vorn_augen_zu": [
+						24.0,
+						48
+					],
+					"gerade_vorn_normal": [
+						24.0,
+						49
+					],
 					"hinten_normal": [
-						29.0,
+						22.5,
+						47
+					],
+					"seite_augen_zu": [
+						31.0,
+						47
+					],
+					"seite_normal": [
+						30.5,
 						47
 					],
 					"vorn_augen_zu": [
-						23.4,
-						45
+						30.5,
+						47
 					],
 					"vorn_normal": [
-						23.2,
-						45
+						30.5,
+						47
 					]
 				},
 				"name": "Brunnenhüterin Nadia"
@@ -2895,13 +3139,37 @@
 			"pip": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.5,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						30.1,
+						60
+					],
+					"gerade_vorn_normal": [
+						30.1,
+						60
+					],
 					"hinten_normal": [
-						34.9,
-						57
+						31.5,
+						60
+					],
+					"seite_augen_zu": [
+						32.5,
+						60
+					],
+					"seite_normal": [
+						32.5,
+						60
+					],
+					"vorn_augen_zu": [
+						29.3,
+						60
 					],
 					"vorn_normal": [
-						38.9,
-						57
+						28.5,
+						60
 					]
 				},
 				"name": "Pip"
@@ -2909,13 +3177,37 @@
 			"quill": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.5,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						28.7,
+						60
+					],
+					"gerade_vorn_normal": [
+						28.7,
+						60
+					],
 					"hinten_normal": [
-						30.0,
-						49
+						31.5,
+						60
+					],
+					"seite_augen_zu": [
+						28.0,
+						60
+					],
+					"seite_normal": [
+						28.0,
+						60
+					],
+					"vorn_augen_zu": [
+						22.5,
+						60
 					],
 					"vorn_normal": [
-						43.9,
-						51
+						24.0,
+						60
 					]
 				},
 				"name": "Steinmetz Quill"
@@ -2923,13 +3215,37 @@
 			"rashid": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.7,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						24.1,
+						52
+					],
+					"gerade_vorn_normal": [
+						23.8,
+						52
+					],
 					"hinten_normal": [
-						31.5,
+						28,
 						50
 					],
+					"seite_augen_zu": [
+						27,
+						50
+					],
+					"seite_normal": [
+						27,
+						50
+					],
+					"vorn_augen_zu": [
+						31.5,
+						52
+					],
 					"vorn_normal": [
-						32.2,
-						53
+						32.0,
+						52
 					]
 				},
 				"name": "Bankhüter Rashid"
@@ -2937,17 +3253,37 @@
 			"salbei": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.0,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						30.5,
+						57
+					],
+					"gerade_vorn_normal": [
+						30.5,
+						57
+					],
 					"hinten_normal": [
-						26.1,
-						55
+						30.5,
+						57
+					],
+					"seite_augen_zu": [
+						32.5,
+						57
+					],
+					"seite_normal": [
+						32.5,
+						57
 					],
 					"vorn_augen_zu": [
-						28.4,
-						54
+						27.5,
+						57
 					],
 					"vorn_normal": [
-						28.0,
-						54
+						27.0,
+						57
 					]
 				},
 				"name": "Kräuterhändlerin Salbei"
@@ -2955,13 +3291,37 @@
 			"tamm": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.5,
+						54
+					],
+					"gerade_vorn_augen_zu": [
+						25.8,
+						54
+					],
+					"gerade_vorn_normal": [
+						25.1,
+						54
+					],
 					"hinten_normal": [
-						35.0,
-						55
+						34.0,
+						54
+					],
+					"seite_augen_zu": [
+						27,
+						53
+					],
+					"seite_normal": [
+						27,
+						53
+					],
+					"vorn_augen_zu": [
+						34.6,
+						54
 					],
 					"vorn_normal": [
-						37.8,
-						55
+						34.0,
+						54
 					]
 				},
 				"name": "Bankhüter Tamm"
@@ -2969,13 +3329,37 @@
 			"tarek": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						30.1,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						26.9,
+						58
+					],
+					"gerade_vorn_normal": [
+						26.9,
+						58
+					],
 					"hinten_normal": [
+						36.5,
+						58
+					],
+					"seite_augen_zu": [
 						32.5,
-						54
+						59
+					],
+					"seite_normal": [
+						32.5,
+						58
+					],
+					"vorn_augen_zu": [
+						20.5,
+						58
 					],
 					"vorn_normal": [
-						35.6,
-						57
+						20.5,
+						58
 					]
 				},
 				"name": "Händler Tarek"
@@ -3397,13 +3781,37 @@
 			"zaid": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						24.5,
+						47
+					],
+					"gerade_vorn_augen_zu": [
+						20.0,
+						47
+					],
+					"gerade_vorn_normal": [
+						19.5,
+						47
+					],
 					"hinten_normal": [
-						21.5,
-						44
+						23.5,
+						47
+					],
+					"seite_augen_zu": [
+						20.5,
+						47
+					],
+					"seite_normal": [
+						20.5,
+						47
+					],
+					"vorn_augen_zu": [
+						24.5,
+						47
 					],
 					"vorn_normal": [
-						28.5,
-						44
+						24.5,
+						47
 					]
 				},
 				"name": "Karawanenführer Zaid"
@@ -3971,13 +4379,37 @@
 			"borko": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.5,
+						55
+					],
+					"gerade_vorn_augen_zu": [
+						27.4,
+						57
+					],
+					"gerade_vorn_normal": [
+						27.7,
+						57
+					],
 					"hinten_normal": [
-						33.0,
-						50
+						26.9,
+						54
+					],
+					"seite_augen_zu": [
+						27,
+						59
+					],
+					"seite_normal": [
+						27,
+						59
+					],
+					"vorn_augen_zu": [
+						22.8,
+						57
 					],
 					"vorn_normal": [
-						42.9,
-						50
+						22.8,
+						57
 					]
 				},
 				"name": "Wirt Borko"
@@ -3985,13 +4417,37 @@
 			"brom": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						59
+					],
+					"gerade_vorn_augen_zu": [
+						29.0,
+						59
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						60
+					],
 					"hinten_normal": [
-						30.5,
-						55
+						29.0,
+						57
+					],
+					"seite_augen_zu": [
+						27.5,
+						59
+					],
+					"seite_normal": [
+						27.5,
+						59
+					],
+					"vorn_augen_zu": [
+						28.0,
+						58
 					],
 					"vorn_normal": [
-						35.0,
-						55
+						27.5,
+						58
 					]
 				},
 				"name": "Torwache Brom"
@@ -3999,13 +4455,37 @@
 			"edmar": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.5,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						26.0,
+						58
+					],
+					"gerade_vorn_normal": [
+						26.3,
+						58
+					],
 					"hinten_normal": [
-						29.0,
-						50
+						30.0,
+						57
+					],
+					"seite_augen_zu": [
+						28.0,
+						58
+					],
+					"seite_normal": [
+						28.0,
+						58
+					],
+					"vorn_augen_zu": [
+						16.5,
+						58
 					],
 					"vorn_normal": [
-						38.7,
-						51
+						16.5,
+						58
 					]
 				},
 				"name": "Vogt Edmar"
@@ -4013,13 +4493,37 @@
 			"hagebutte": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.5,
+						55
+					],
+					"gerade_vorn_augen_zu": [
+						22.0,
+						54
+					],
+					"gerade_vorn_normal": [
+						23.6,
+						54
+					],
 					"hinten_normal": [
-						33.5,
+						30.0,
+						54
+					],
+					"seite_augen_zu": [
+						29.0,
+						55
+					],
+					"seite_normal": [
+						29.0,
+						55
+					],
+					"vorn_augen_zu": [
+						23.5,
 						56
 					],
 					"vorn_normal": [
-						39.6,
-						53
+						23.5,
+						56
 					]
 				},
 				"name": "Oma Hagebutte"
@@ -4027,17 +4531,37 @@
 			"hanne": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						59
+					],
+					"gerade_vorn_augen_zu": [
+						27.0,
+						59
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						59
+					],
 					"hinten_normal": [
-						36.9,
-						58
+						34.5,
+						59
+					],
+					"seite_augen_zu": [
+						34.0,
+						59
+					],
+					"seite_normal": [
+						34.5,
+						59
 					],
 					"vorn_augen_zu": [
-						39.4,
-						56
+						23.9,
+						59
 					],
 					"vorn_normal": [
-						36.8,
-						56
+						24.3,
+						59
 					]
 				},
 				"name": "Wirtin Hanne"
@@ -4045,13 +4569,37 @@
 			"hatta": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						35.0,
+						69
+					],
+					"gerade_vorn_augen_zu": [
+						33.4,
+						69
+					],
+					"gerade_vorn_normal": [
+						33.4,
+						69
+					],
 					"hinten_normal": [
-						40.6,
-						34
+						39.0,
+						68
+					],
+					"seite_augen_zu": [
+						36.0,
+						69
+					],
+					"seite_normal": [
+						36.0,
+						69
+					],
+					"vorn_augen_zu": [
+						27.0,
+						69
 					],
 					"vorn_normal": [
-						44.5,
-						66
+						27.0,
+						69
 					]
 				},
 				"name": "Hutmacher Hatta"
@@ -4059,13 +4607,37 @@
 			"ilse": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						59
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						59
+					],
 					"hinten_normal": [
-						32.5,
-						56
+						32.0,
+						55
+					],
+					"seite_augen_zu": [
+						31.5,
+						58
+					],
+					"seite_normal": [
+						32.0,
+						58
+					],
+					"vorn_augen_zu": [
+						19.5,
+						59
 					],
 					"vorn_normal": [
-						40.3,
-						56
+						20.0,
+						59
 					]
 				},
 				"name": "Bankhüterin Ilse"
@@ -4149,17 +4721,37 @@
 			"layla": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						57
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						58
+					],
 					"hinten_normal": [
-						36.5,
+						34.0,
 						56
 					],
+					"seite_augen_zu": [
+						32.0,
+						57
+					],
+					"seite_normal": [
+						31.0,
+						57
+					],
 					"vorn_augen_zu": [
-						25.6,
-						54
+						26.3,
+						56
 					],
 					"vorn_normal": [
-						24.8,
-						54
+						25.5,
+						56
 					]
 				},
 				"name": "Wirtin Layla"
@@ -4167,17 +4759,37 @@
 			"lene": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						63
+					],
+					"gerade_vorn_augen_zu": [
+						26.5,
+						63
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						63
+					],
 					"hinten_normal": [
-						34.0,
-						59
+						32.0,
+						61
+					],
+					"seite_augen_zu": [
+						31.0,
+						62
+					],
+					"seite_normal": [
+						30.5,
+						62
 					],
 					"vorn_augen_zu": [
-						37.2,
-						60
+						26.0,
+						63
 					],
 					"vorn_normal": [
-						37.1,
-						60
+						26.0,
+						63
 					]
 				},
 				"name": "Schreiberin Lene"
@@ -4185,17 +4797,37 @@
 			"lotte": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.5,
+						54
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						55
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						55
+					],
 					"hinten_normal": [
-						25.3,
-						56
+						26.0,
+						54
+					],
+					"seite_augen_zu": [
+						36,
+						54
+					],
+					"seite_normal": [
+						36,
+						54
 					],
 					"vorn_augen_zu": [
-						32.3,
-						55
+						26.0,
+						57
 					],
 					"vorn_normal": [
-						32.6,
-						55
+						26.0,
+						57
 					]
 				},
 				"name": "Lotte"
@@ -4389,17 +5021,37 @@
 			"nadia": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						22.0,
+						48
+					],
+					"gerade_vorn_augen_zu": [
+						24.0,
+						48
+					],
+					"gerade_vorn_normal": [
+						24.0,
+						49
+					],
 					"hinten_normal": [
-						29.0,
+						22.5,
+						47
+					],
+					"seite_augen_zu": [
+						31.0,
+						47
+					],
+					"seite_normal": [
+						30.5,
 						47
 					],
 					"vorn_augen_zu": [
-						23.4,
-						45
+						30.5,
+						47
 					],
 					"vorn_normal": [
-						23.2,
-						45
+						30.5,
+						47
 					]
 				},
 				"name": "Brunnenhüterin Nadia"
@@ -4407,13 +5059,37 @@
 			"pip": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.5,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						30.1,
+						60
+					],
+					"gerade_vorn_normal": [
+						30.1,
+						60
+					],
 					"hinten_normal": [
-						34.9,
-						57
+						31.5,
+						60
+					],
+					"seite_augen_zu": [
+						32.5,
+						60
+					],
+					"seite_normal": [
+						32.5,
+						60
+					],
+					"vorn_augen_zu": [
+						29.3,
+						60
 					],
 					"vorn_normal": [
-						38.9,
-						57
+						28.5,
+						60
 					]
 				},
 				"name": "Pip"
@@ -4421,13 +5097,37 @@
 			"quill": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.5,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						28.7,
+						60
+					],
+					"gerade_vorn_normal": [
+						28.7,
+						60
+					],
 					"hinten_normal": [
-						30.0,
-						49
+						31.5,
+						60
+					],
+					"seite_augen_zu": [
+						28.0,
+						60
+					],
+					"seite_normal": [
+						28.0,
+						60
+					],
+					"vorn_augen_zu": [
+						22.5,
+						60
 					],
 					"vorn_normal": [
-						43.9,
-						51
+						24.0,
+						60
 					]
 				},
 				"name": "Steinmetz Quill"
@@ -4435,13 +5135,37 @@
 			"rashid": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.7,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						24.1,
+						52
+					],
+					"gerade_vorn_normal": [
+						23.8,
+						52
+					],
 					"hinten_normal": [
-						31.5,
+						28,
 						50
 					],
+					"seite_augen_zu": [
+						27,
+						50
+					],
+					"seite_normal": [
+						27,
+						50
+					],
+					"vorn_augen_zu": [
+						31.5,
+						52
+					],
 					"vorn_normal": [
-						32.2,
-						53
+						32.0,
+						52
 					]
 				},
 				"name": "Bankhüter Rashid"
@@ -4449,17 +5173,37 @@
 			"salbei": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.0,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						30.5,
+						57
+					],
+					"gerade_vorn_normal": [
+						30.5,
+						57
+					],
 					"hinten_normal": [
-						26.1,
-						55
+						30.5,
+						57
+					],
+					"seite_augen_zu": [
+						32.5,
+						57
+					],
+					"seite_normal": [
+						32.5,
+						57
 					],
 					"vorn_augen_zu": [
-						28.4,
-						54
+						27.5,
+						57
 					],
 					"vorn_normal": [
-						28.0,
-						54
+						27.0,
+						57
 					]
 				},
 				"name": "Kräuterhändlerin Salbei"
@@ -4467,13 +5211,37 @@
 			"tamm": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.5,
+						54
+					],
+					"gerade_vorn_augen_zu": [
+						25.8,
+						54
+					],
+					"gerade_vorn_normal": [
+						25.1,
+						54
+					],
 					"hinten_normal": [
-						35.0,
-						55
+						34.0,
+						54
+					],
+					"seite_augen_zu": [
+						27,
+						53
+					],
+					"seite_normal": [
+						27,
+						53
+					],
+					"vorn_augen_zu": [
+						34.6,
+						54
 					],
 					"vorn_normal": [
-						37.8,
-						55
+						34.0,
+						54
 					]
 				},
 				"name": "Bankhüter Tamm"
@@ -4481,13 +5249,37 @@
 			"tarek": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						30.1,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						26.9,
+						58
+					],
+					"gerade_vorn_normal": [
+						26.9,
+						58
+					],
 					"hinten_normal": [
+						36.5,
+						58
+					],
+					"seite_augen_zu": [
 						32.5,
-						54
+						59
+					],
+					"seite_normal": [
+						32.5,
+						58
+					],
+					"vorn_augen_zu": [
+						20.5,
+						58
 					],
 					"vorn_normal": [
-						35.6,
-						57
+						20.5,
+						58
 					]
 				},
 				"name": "Händler Tarek"
@@ -4909,13 +5701,37 @@
 			"zaid": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						24.5,
+						47
+					],
+					"gerade_vorn_augen_zu": [
+						20.0,
+						47
+					],
+					"gerade_vorn_normal": [
+						19.5,
+						47
+					],
 					"hinten_normal": [
-						21.5,
-						44
+						23.5,
+						47
+					],
+					"seite_augen_zu": [
+						20.5,
+						47
+					],
+					"seite_normal": [
+						20.5,
+						47
+					],
+					"vorn_augen_zu": [
+						24.5,
+						47
 					],
 					"vorn_normal": [
-						28.5,
-						44
+						24.5,
+						47
 					]
 				},
 				"name": "Karawanenführer Zaid"
@@ -5483,13 +6299,37 @@
 			"borko": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.5,
+						55
+					],
+					"gerade_vorn_augen_zu": [
+						27.4,
+						57
+					],
+					"gerade_vorn_normal": [
+						27.7,
+						57
+					],
 					"hinten_normal": [
-						33.0,
-						50
+						26.9,
+						54
+					],
+					"seite_augen_zu": [
+						27,
+						59
+					],
+					"seite_normal": [
+						27,
+						59
+					],
+					"vorn_augen_zu": [
+						22.8,
+						57
 					],
 					"vorn_normal": [
-						42.9,
-						50
+						22.8,
+						57
 					]
 				},
 				"name": "Wirt Borko"
@@ -5497,13 +6337,37 @@
 			"brom": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						59
+					],
+					"gerade_vorn_augen_zu": [
+						29.0,
+						59
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						60
+					],
 					"hinten_normal": [
-						30.5,
-						55
+						29.0,
+						57
+					],
+					"seite_augen_zu": [
+						27.5,
+						59
+					],
+					"seite_normal": [
+						27.5,
+						59
+					],
+					"vorn_augen_zu": [
+						28.0,
+						58
 					],
 					"vorn_normal": [
-						35.0,
-						55
+						27.5,
+						58
 					]
 				},
 				"name": "Torwache Brom"
@@ -5511,13 +6375,37 @@
 			"edmar": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.5,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						26.0,
+						58
+					],
+					"gerade_vorn_normal": [
+						26.3,
+						58
+					],
 					"hinten_normal": [
-						29.0,
-						50
+						30.0,
+						57
+					],
+					"seite_augen_zu": [
+						28.0,
+						58
+					],
+					"seite_normal": [
+						28.0,
+						58
+					],
+					"vorn_augen_zu": [
+						16.5,
+						58
 					],
 					"vorn_normal": [
-						38.7,
-						51
+						16.5,
+						58
 					]
 				},
 				"name": "Vogt Edmar"
@@ -5525,13 +6413,37 @@
 			"hagebutte": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.5,
+						55
+					],
+					"gerade_vorn_augen_zu": [
+						22.0,
+						54
+					],
+					"gerade_vorn_normal": [
+						23.6,
+						54
+					],
 					"hinten_normal": [
-						33.5,
+						30.0,
+						54
+					],
+					"seite_augen_zu": [
+						29.0,
+						55
+					],
+					"seite_normal": [
+						29.0,
+						55
+					],
+					"vorn_augen_zu": [
+						23.5,
 						56
 					],
 					"vorn_normal": [
-						39.6,
-						53
+						23.5,
+						56
 					]
 				},
 				"name": "Oma Hagebutte"
@@ -5539,17 +6451,37 @@
 			"hanne": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						59
+					],
+					"gerade_vorn_augen_zu": [
+						27.0,
+						59
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						59
+					],
 					"hinten_normal": [
-						36.9,
-						58
+						34.5,
+						59
+					],
+					"seite_augen_zu": [
+						34.0,
+						59
+					],
+					"seite_normal": [
+						34.5,
+						59
 					],
 					"vorn_augen_zu": [
-						39.4,
-						56
+						23.9,
+						59
 					],
 					"vorn_normal": [
-						36.8,
-						56
+						24.3,
+						59
 					]
 				},
 				"name": "Wirtin Hanne"
@@ -5557,13 +6489,37 @@
 			"hatta": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						35.0,
+						69
+					],
+					"gerade_vorn_augen_zu": [
+						33.4,
+						69
+					],
+					"gerade_vorn_normal": [
+						33.4,
+						69
+					],
 					"hinten_normal": [
-						40.6,
-						34
+						39.0,
+						68
+					],
+					"seite_augen_zu": [
+						36.0,
+						69
+					],
+					"seite_normal": [
+						36.0,
+						69
+					],
+					"vorn_augen_zu": [
+						27.0,
+						69
 					],
 					"vorn_normal": [
-						44.5,
-						66
+						27.0,
+						69
 					]
 				},
 				"name": "Hutmacher Hatta"
@@ -5571,13 +6527,37 @@
 			"ilse": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						59
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						59
+					],
 					"hinten_normal": [
-						32.5,
-						56
+						32.0,
+						55
+					],
+					"seite_augen_zu": [
+						31.5,
+						58
+					],
+					"seite_normal": [
+						32.0,
+						58
+					],
+					"vorn_augen_zu": [
+						19.5,
+						59
 					],
 					"vorn_normal": [
-						40.3,
-						56
+						20.0,
+						59
 					]
 				},
 				"name": "Bankhüterin Ilse"
@@ -5661,17 +6641,37 @@
 			"layla": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						57
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						58
+					],
 					"hinten_normal": [
-						36.5,
+						34.0,
 						56
 					],
+					"seite_augen_zu": [
+						32.0,
+						57
+					],
+					"seite_normal": [
+						31.0,
+						57
+					],
 					"vorn_augen_zu": [
-						25.6,
-						54
+						26.3,
+						56
 					],
 					"vorn_normal": [
-						24.8,
-						54
+						25.5,
+						56
 					]
 				},
 				"name": "Wirtin Layla"
@@ -5679,17 +6679,37 @@
 			"lene": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						63
+					],
+					"gerade_vorn_augen_zu": [
+						26.5,
+						63
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						63
+					],
 					"hinten_normal": [
-						34.0,
-						59
+						32.0,
+						61
+					],
+					"seite_augen_zu": [
+						31.0,
+						62
+					],
+					"seite_normal": [
+						30.5,
+						62
 					],
 					"vorn_augen_zu": [
-						37.2,
-						60
+						26.0,
+						63
 					],
 					"vorn_normal": [
-						37.1,
-						60
+						26.0,
+						63
 					]
 				},
 				"name": "Schreiberin Lene"
@@ -5697,17 +6717,37 @@
 			"lotte": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.5,
+						54
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						55
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						55
+					],
 					"hinten_normal": [
-						25.3,
-						56
+						26.0,
+						54
+					],
+					"seite_augen_zu": [
+						36,
+						54
+					],
+					"seite_normal": [
+						36,
+						54
 					],
 					"vorn_augen_zu": [
-						32.3,
-						55
+						26.0,
+						57
 					],
 					"vorn_normal": [
-						32.6,
-						55
+						26.0,
+						57
 					]
 				},
 				"name": "Lotte"
@@ -5901,17 +6941,37 @@
 			"nadia": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						22.0,
+						48
+					],
+					"gerade_vorn_augen_zu": [
+						24.0,
+						48
+					],
+					"gerade_vorn_normal": [
+						24.0,
+						49
+					],
 					"hinten_normal": [
-						29.0,
+						22.5,
+						47
+					],
+					"seite_augen_zu": [
+						31.0,
+						47
+					],
+					"seite_normal": [
+						30.5,
 						47
 					],
 					"vorn_augen_zu": [
-						23.4,
-						45
+						30.5,
+						47
 					],
 					"vorn_normal": [
-						23.2,
-						45
+						30.5,
+						47
 					]
 				},
 				"name": "Brunnenhüterin Nadia"
@@ -5919,13 +6979,37 @@
 			"pip": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.5,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						30.1,
+						60
+					],
+					"gerade_vorn_normal": [
+						30.1,
+						60
+					],
 					"hinten_normal": [
-						34.9,
-						57
+						31.5,
+						60
+					],
+					"seite_augen_zu": [
+						32.5,
+						60
+					],
+					"seite_normal": [
+						32.5,
+						60
+					],
+					"vorn_augen_zu": [
+						29.3,
+						60
 					],
 					"vorn_normal": [
-						38.9,
-						57
+						28.5,
+						60
 					]
 				},
 				"name": "Pip"
@@ -5933,13 +7017,37 @@
 			"quill": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.5,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						28.7,
+						60
+					],
+					"gerade_vorn_normal": [
+						28.7,
+						60
+					],
 					"hinten_normal": [
-						30.0,
-						49
+						31.5,
+						60
+					],
+					"seite_augen_zu": [
+						28.0,
+						60
+					],
+					"seite_normal": [
+						28.0,
+						60
+					],
+					"vorn_augen_zu": [
+						22.5,
+						60
 					],
 					"vorn_normal": [
-						43.9,
-						51
+						24.0,
+						60
 					]
 				},
 				"name": "Steinmetz Quill"
@@ -5947,13 +7055,37 @@
 			"rashid": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.7,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						24.1,
+						52
+					],
+					"gerade_vorn_normal": [
+						23.8,
+						52
+					],
 					"hinten_normal": [
-						31.5,
+						28,
 						50
 					],
+					"seite_augen_zu": [
+						27,
+						50
+					],
+					"seite_normal": [
+						27,
+						50
+					],
+					"vorn_augen_zu": [
+						31.5,
+						52
+					],
 					"vorn_normal": [
-						32.2,
-						53
+						32.0,
+						52
 					]
 				},
 				"name": "Bankhüter Rashid"
@@ -5961,17 +7093,37 @@
 			"salbei": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.0,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						30.5,
+						57
+					],
+					"gerade_vorn_normal": [
+						30.5,
+						57
+					],
 					"hinten_normal": [
-						26.1,
-						55
+						30.5,
+						57
+					],
+					"seite_augen_zu": [
+						32.5,
+						57
+					],
+					"seite_normal": [
+						32.5,
+						57
 					],
 					"vorn_augen_zu": [
-						28.4,
-						54
+						27.5,
+						57
 					],
 					"vorn_normal": [
-						28.0,
-						54
+						27.0,
+						57
 					]
 				},
 				"name": "Kräuterhändlerin Salbei"
@@ -5979,13 +7131,37 @@
 			"tamm": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.5,
+						54
+					],
+					"gerade_vorn_augen_zu": [
+						25.8,
+						54
+					],
+					"gerade_vorn_normal": [
+						25.1,
+						54
+					],
 					"hinten_normal": [
-						35.0,
-						55
+						34.0,
+						54
+					],
+					"seite_augen_zu": [
+						27,
+						53
+					],
+					"seite_normal": [
+						27,
+						53
+					],
+					"vorn_augen_zu": [
+						34.6,
+						54
 					],
 					"vorn_normal": [
-						37.8,
-						55
+						34.0,
+						54
 					]
 				},
 				"name": "Bankhüter Tamm"
@@ -5993,13 +7169,37 @@
 			"tarek": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						30.1,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						26.9,
+						58
+					],
+					"gerade_vorn_normal": [
+						26.9,
+						58
+					],
 					"hinten_normal": [
+						36.5,
+						58
+					],
+					"seite_augen_zu": [
 						32.5,
-						54
+						59
+					],
+					"seite_normal": [
+						32.5,
+						58
+					],
+					"vorn_augen_zu": [
+						20.5,
+						58
 					],
 					"vorn_normal": [
-						35.6,
-						57
+						20.5,
+						58
 					]
 				},
 				"name": "Händler Tarek"
@@ -6421,13 +7621,37 @@
 			"zaid": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						24.5,
+						47
+					],
+					"gerade_vorn_augen_zu": [
+						20.0,
+						47
+					],
+					"gerade_vorn_normal": [
+						19.5,
+						47
+					],
 					"hinten_normal": [
-						21.5,
-						44
+						23.5,
+						47
+					],
+					"seite_augen_zu": [
+						20.5,
+						47
+					],
+					"seite_normal": [
+						20.5,
+						47
+					],
+					"vorn_augen_zu": [
+						24.5,
+						47
 					],
 					"vorn_normal": [
-						28.5,
-						44
+						24.5,
+						47
 					]
 				},
 				"name": "Karawanenführer Zaid"
@@ -6995,13 +8219,37 @@
 			"borko": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.5,
+						55
+					],
+					"gerade_vorn_augen_zu": [
+						27.4,
+						57
+					],
+					"gerade_vorn_normal": [
+						27.7,
+						57
+					],
 					"hinten_normal": [
-						33.0,
-						50
+						26.9,
+						54
+					],
+					"seite_augen_zu": [
+						27,
+						59
+					],
+					"seite_normal": [
+						27,
+						59
+					],
+					"vorn_augen_zu": [
+						22.8,
+						57
 					],
 					"vorn_normal": [
-						42.9,
-						50
+						22.8,
+						57
 					]
 				},
 				"name": "Wirt Borko"
@@ -7009,13 +8257,37 @@
 			"brom": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						59
+					],
+					"gerade_vorn_augen_zu": [
+						29.0,
+						59
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						60
+					],
 					"hinten_normal": [
-						30.5,
-						55
+						29.0,
+						57
+					],
+					"seite_augen_zu": [
+						27.5,
+						59
+					],
+					"seite_normal": [
+						27.5,
+						59
+					],
+					"vorn_augen_zu": [
+						28.0,
+						58
 					],
 					"vorn_normal": [
-						35.0,
-						55
+						27.5,
+						58
 					]
 				},
 				"name": "Torwache Brom"
@@ -7023,13 +8295,37 @@
 			"edmar": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.5,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						26.0,
+						58
+					],
+					"gerade_vorn_normal": [
+						26.3,
+						58
+					],
 					"hinten_normal": [
-						29.0,
-						50
+						30.0,
+						57
+					],
+					"seite_augen_zu": [
+						28.0,
+						58
+					],
+					"seite_normal": [
+						28.0,
+						58
+					],
+					"vorn_augen_zu": [
+						16.5,
+						58
 					],
 					"vorn_normal": [
-						38.7,
-						51
+						16.5,
+						58
 					]
 				},
 				"name": "Vogt Edmar"
@@ -7037,13 +8333,37 @@
 			"hagebutte": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.5,
+						55
+					],
+					"gerade_vorn_augen_zu": [
+						22.0,
+						54
+					],
+					"gerade_vorn_normal": [
+						23.6,
+						54
+					],
 					"hinten_normal": [
-						33.5,
+						30.0,
+						54
+					],
+					"seite_augen_zu": [
+						29.0,
+						55
+					],
+					"seite_normal": [
+						29.0,
+						55
+					],
+					"vorn_augen_zu": [
+						23.5,
 						56
 					],
 					"vorn_normal": [
-						39.6,
-						53
+						23.5,
+						56
 					]
 				},
 				"name": "Oma Hagebutte"
@@ -7051,17 +8371,37 @@
 			"hanne": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						59
+					],
+					"gerade_vorn_augen_zu": [
+						27.0,
+						59
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						59
+					],
 					"hinten_normal": [
-						36.9,
-						58
+						34.5,
+						59
+					],
+					"seite_augen_zu": [
+						34.0,
+						59
+					],
+					"seite_normal": [
+						34.5,
+						59
 					],
 					"vorn_augen_zu": [
-						39.4,
-						56
+						23.9,
+						59
 					],
 					"vorn_normal": [
-						36.8,
-						56
+						24.3,
+						59
 					]
 				},
 				"name": "Wirtin Hanne"
@@ -7069,13 +8409,37 @@
 			"hatta": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						35.0,
+						69
+					],
+					"gerade_vorn_augen_zu": [
+						33.4,
+						69
+					],
+					"gerade_vorn_normal": [
+						33.4,
+						69
+					],
 					"hinten_normal": [
-						40.6,
-						34
+						39.0,
+						68
+					],
+					"seite_augen_zu": [
+						36.0,
+						69
+					],
+					"seite_normal": [
+						36.0,
+						69
+					],
+					"vorn_augen_zu": [
+						27.0,
+						69
 					],
 					"vorn_normal": [
-						44.5,
-						66
+						27.0,
+						69
 					]
 				},
 				"name": "Hutmacher Hatta"
@@ -7083,13 +8447,37 @@
 			"ilse": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						59
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						59
+					],
 					"hinten_normal": [
-						32.5,
-						56
+						32.0,
+						55
+					],
+					"seite_augen_zu": [
+						31.5,
+						58
+					],
+					"seite_normal": [
+						32.0,
+						58
+					],
+					"vorn_augen_zu": [
+						19.5,
+						59
 					],
 					"vorn_normal": [
-						40.3,
-						56
+						20.0,
+						59
 					]
 				},
 				"name": "Bankhüterin Ilse"
@@ -7173,17 +8561,37 @@
 			"layla": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						57
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						58
+					],
 					"hinten_normal": [
-						36.5,
+						34.0,
 						56
 					],
+					"seite_augen_zu": [
+						32.0,
+						57
+					],
+					"seite_normal": [
+						31.0,
+						57
+					],
 					"vorn_augen_zu": [
-						25.6,
-						54
+						26.3,
+						56
 					],
 					"vorn_normal": [
-						24.8,
-						54
+						25.5,
+						56
 					]
 				},
 				"name": "Wirtin Layla"
@@ -7191,17 +8599,37 @@
 			"lene": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						63
+					],
+					"gerade_vorn_augen_zu": [
+						26.5,
+						63
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						63
+					],
 					"hinten_normal": [
-						34.0,
-						59
+						32.0,
+						61
+					],
+					"seite_augen_zu": [
+						31.0,
+						62
+					],
+					"seite_normal": [
+						30.5,
+						62
 					],
 					"vorn_augen_zu": [
-						37.2,
-						60
+						26.0,
+						63
 					],
 					"vorn_normal": [
-						37.1,
-						60
+						26.0,
+						63
 					]
 				},
 				"name": "Schreiberin Lene"
@@ -7209,17 +8637,37 @@
 			"lotte": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.5,
+						54
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						55
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						55
+					],
 					"hinten_normal": [
-						25.3,
-						56
+						26.0,
+						54
+					],
+					"seite_augen_zu": [
+						36,
+						54
+					],
+					"seite_normal": [
+						36,
+						54
 					],
 					"vorn_augen_zu": [
-						32.3,
-						55
+						26.0,
+						57
 					],
 					"vorn_normal": [
-						32.6,
-						55
+						26.0,
+						57
 					]
 				},
 				"name": "Lotte"
@@ -7413,17 +8861,37 @@
 			"nadia": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						22.0,
+						48
+					],
+					"gerade_vorn_augen_zu": [
+						24.0,
+						48
+					],
+					"gerade_vorn_normal": [
+						24.0,
+						49
+					],
 					"hinten_normal": [
-						29.0,
+						22.5,
+						47
+					],
+					"seite_augen_zu": [
+						31.0,
+						47
+					],
+					"seite_normal": [
+						30.5,
 						47
 					],
 					"vorn_augen_zu": [
-						23.4,
-						45
+						30.5,
+						47
 					],
 					"vorn_normal": [
-						23.2,
-						45
+						30.5,
+						47
 					]
 				},
 				"name": "Brunnenhüterin Nadia"
@@ -7431,13 +8899,37 @@
 			"pip": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.5,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						30.1,
+						60
+					],
+					"gerade_vorn_normal": [
+						30.1,
+						60
+					],
 					"hinten_normal": [
-						34.9,
-						57
+						31.5,
+						60
+					],
+					"seite_augen_zu": [
+						32.5,
+						60
+					],
+					"seite_normal": [
+						32.5,
+						60
+					],
+					"vorn_augen_zu": [
+						29.3,
+						60
 					],
 					"vorn_normal": [
-						38.9,
-						57
+						28.5,
+						60
 					]
 				},
 				"name": "Pip"
@@ -7445,13 +8937,37 @@
 			"quill": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.5,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						28.7,
+						60
+					],
+					"gerade_vorn_normal": [
+						28.7,
+						60
+					],
 					"hinten_normal": [
-						30.0,
-						49
+						31.5,
+						60
+					],
+					"seite_augen_zu": [
+						28.0,
+						60
+					],
+					"seite_normal": [
+						28.0,
+						60
+					],
+					"vorn_augen_zu": [
+						22.5,
+						60
 					],
 					"vorn_normal": [
-						43.9,
-						51
+						24.0,
+						60
 					]
 				},
 				"name": "Steinmetz Quill"
@@ -7459,13 +8975,37 @@
 			"rashid": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.7,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						24.1,
+						52
+					],
+					"gerade_vorn_normal": [
+						23.8,
+						52
+					],
 					"hinten_normal": [
-						31.5,
+						28,
 						50
 					],
+					"seite_augen_zu": [
+						27,
+						50
+					],
+					"seite_normal": [
+						27,
+						50
+					],
+					"vorn_augen_zu": [
+						31.5,
+						52
+					],
 					"vorn_normal": [
-						32.2,
-						53
+						32.0,
+						52
 					]
 				},
 				"name": "Bankhüter Rashid"
@@ -7473,17 +9013,37 @@
 			"salbei": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.0,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						30.5,
+						57
+					],
+					"gerade_vorn_normal": [
+						30.5,
+						57
+					],
 					"hinten_normal": [
-						26.1,
-						55
+						30.5,
+						57
+					],
+					"seite_augen_zu": [
+						32.5,
+						57
+					],
+					"seite_normal": [
+						32.5,
+						57
 					],
 					"vorn_augen_zu": [
-						28.4,
-						54
+						27.5,
+						57
 					],
 					"vorn_normal": [
-						28.0,
-						54
+						27.0,
+						57
 					]
 				},
 				"name": "Kräuterhändlerin Salbei"
@@ -7491,13 +9051,37 @@
 			"tamm": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.5,
+						54
+					],
+					"gerade_vorn_augen_zu": [
+						25.8,
+						54
+					],
+					"gerade_vorn_normal": [
+						25.1,
+						54
+					],
 					"hinten_normal": [
-						35.0,
-						55
+						34.0,
+						54
+					],
+					"seite_augen_zu": [
+						27,
+						53
+					],
+					"seite_normal": [
+						27,
+						53
+					],
+					"vorn_augen_zu": [
+						34.6,
+						54
 					],
 					"vorn_normal": [
-						37.8,
-						55
+						34.0,
+						54
 					]
 				},
 				"name": "Bankhüter Tamm"
@@ -7505,13 +9089,37 @@
 			"tarek": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						30.1,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						26.9,
+						58
+					],
+					"gerade_vorn_normal": [
+						26.9,
+						58
+					],
 					"hinten_normal": [
+						36.5,
+						58
+					],
+					"seite_augen_zu": [
 						32.5,
-						54
+						59
+					],
+					"seite_normal": [
+						32.5,
+						58
+					],
+					"vorn_augen_zu": [
+						20.5,
+						58
 					],
 					"vorn_normal": [
-						35.6,
-						57
+						20.5,
+						58
 					]
 				},
 				"name": "Händler Tarek"
@@ -7933,13 +9541,37 @@
 			"zaid": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						24.5,
+						47
+					],
+					"gerade_vorn_augen_zu": [
+						20.0,
+						47
+					],
+					"gerade_vorn_normal": [
+						19.5,
+						47
+					],
 					"hinten_normal": [
-						21.5,
-						44
+						23.5,
+						47
+					],
+					"seite_augen_zu": [
+						20.5,
+						47
+					],
+					"seite_normal": [
+						20.5,
+						47
+					],
+					"vorn_augen_zu": [
+						24.5,
+						47
 					],
 					"vorn_normal": [
-						28.5,
-						44
+						24.5,
+						47
 					]
 				},
 				"name": "Karawanenführer Zaid"
@@ -8507,13 +10139,37 @@
 			"borko": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.5,
+						55
+					],
+					"gerade_vorn_augen_zu": [
+						27.4,
+						57
+					],
+					"gerade_vorn_normal": [
+						27.7,
+						57
+					],
 					"hinten_normal": [
-						33.0,
-						50
+						26.9,
+						54
+					],
+					"seite_augen_zu": [
+						27,
+						59
+					],
+					"seite_normal": [
+						27,
+						59
+					],
+					"vorn_augen_zu": [
+						22.8,
+						57
 					],
 					"vorn_normal": [
-						42.9,
-						50
+						22.8,
+						57
 					]
 				},
 				"name": "Wirt Borko"
@@ -8521,13 +10177,37 @@
 			"brom": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						59
+					],
+					"gerade_vorn_augen_zu": [
+						29.0,
+						59
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						60
+					],
 					"hinten_normal": [
-						30.5,
-						55
+						29.0,
+						57
+					],
+					"seite_augen_zu": [
+						27.5,
+						59
+					],
+					"seite_normal": [
+						27.5,
+						59
+					],
+					"vorn_augen_zu": [
+						28.0,
+						58
 					],
 					"vorn_normal": [
-						35.0,
-						55
+						27.5,
+						58
 					]
 				},
 				"name": "Torwache Brom"
@@ -8535,13 +10215,37 @@
 			"edmar": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.5,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						26.0,
+						58
+					],
+					"gerade_vorn_normal": [
+						26.3,
+						58
+					],
 					"hinten_normal": [
-						29.0,
-						50
+						30.0,
+						57
+					],
+					"seite_augen_zu": [
+						28.0,
+						58
+					],
+					"seite_normal": [
+						28.0,
+						58
+					],
+					"vorn_augen_zu": [
+						16.5,
+						58
 					],
 					"vorn_normal": [
-						38.7,
-						51
+						16.5,
+						58
 					]
 				},
 				"name": "Vogt Edmar"
@@ -8549,13 +10253,37 @@
 			"hagebutte": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.5,
+						55
+					],
+					"gerade_vorn_augen_zu": [
+						22.0,
+						54
+					],
+					"gerade_vorn_normal": [
+						23.6,
+						54
+					],
 					"hinten_normal": [
-						33.5,
+						30.0,
+						54
+					],
+					"seite_augen_zu": [
+						29.0,
+						55
+					],
+					"seite_normal": [
+						29.0,
+						55
+					],
+					"vorn_augen_zu": [
+						23.5,
 						56
 					],
 					"vorn_normal": [
-						39.6,
-						53
+						23.5,
+						56
 					]
 				},
 				"name": "Oma Hagebutte"
@@ -8563,17 +10291,37 @@
 			"hanne": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						59
+					],
+					"gerade_vorn_augen_zu": [
+						27.0,
+						59
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						59
+					],
 					"hinten_normal": [
-						36.9,
-						58
+						34.5,
+						59
+					],
+					"seite_augen_zu": [
+						34.0,
+						59
+					],
+					"seite_normal": [
+						34.5,
+						59
 					],
 					"vorn_augen_zu": [
-						39.4,
-						56
+						23.9,
+						59
 					],
 					"vorn_normal": [
-						36.8,
-						56
+						24.3,
+						59
 					]
 				},
 				"name": "Wirtin Hanne"
@@ -8581,13 +10329,37 @@
 			"hatta": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						35.0,
+						69
+					],
+					"gerade_vorn_augen_zu": [
+						33.4,
+						69
+					],
+					"gerade_vorn_normal": [
+						33.4,
+						69
+					],
 					"hinten_normal": [
-						40.6,
-						34
+						39.0,
+						68
+					],
+					"seite_augen_zu": [
+						36.0,
+						69
+					],
+					"seite_normal": [
+						36.0,
+						69
+					],
+					"vorn_augen_zu": [
+						27.0,
+						69
 					],
 					"vorn_normal": [
-						44.5,
-						66
+						27.0,
+						69
 					]
 				},
 				"name": "Hutmacher Hatta"
@@ -8595,13 +10367,37 @@
 			"ilse": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						59
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						59
+					],
 					"hinten_normal": [
-						32.5,
-						56
+						32.0,
+						55
+					],
+					"seite_augen_zu": [
+						31.5,
+						58
+					],
+					"seite_normal": [
+						32.0,
+						58
+					],
+					"vorn_augen_zu": [
+						19.5,
+						59
 					],
 					"vorn_normal": [
-						40.3,
-						56
+						20.0,
+						59
 					]
 				},
 				"name": "Bankhüterin Ilse"
@@ -8685,17 +10481,37 @@
 			"layla": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						57
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						58
+					],
 					"hinten_normal": [
-						36.5,
+						34.0,
 						56
 					],
+					"seite_augen_zu": [
+						32.0,
+						57
+					],
+					"seite_normal": [
+						31.0,
+						57
+					],
 					"vorn_augen_zu": [
-						25.6,
-						54
+						26.3,
+						56
 					],
 					"vorn_normal": [
-						24.8,
-						54
+						25.5,
+						56
 					]
 				},
 				"name": "Wirtin Layla"
@@ -8703,17 +10519,37 @@
 			"lene": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						63
+					],
+					"gerade_vorn_augen_zu": [
+						26.5,
+						63
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						63
+					],
 					"hinten_normal": [
-						34.0,
-						59
+						32.0,
+						61
+					],
+					"seite_augen_zu": [
+						31.0,
+						62
+					],
+					"seite_normal": [
+						30.5,
+						62
 					],
 					"vorn_augen_zu": [
-						37.2,
-						60
+						26.0,
+						63
 					],
 					"vorn_normal": [
-						37.1,
-						60
+						26.0,
+						63
 					]
 				},
 				"name": "Schreiberin Lene"
@@ -8721,17 +10557,37 @@
 			"lotte": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.5,
+						54
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						55
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						55
+					],
 					"hinten_normal": [
-						25.3,
-						56
+						26.0,
+						54
+					],
+					"seite_augen_zu": [
+						36,
+						54
+					],
+					"seite_normal": [
+						36,
+						54
 					],
 					"vorn_augen_zu": [
-						32.3,
-						55
+						26.0,
+						57
 					],
 					"vorn_normal": [
-						32.6,
-						55
+						26.0,
+						57
 					]
 				},
 				"name": "Lotte"
@@ -8925,17 +10781,37 @@
 			"nadia": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						22.0,
+						48
+					],
+					"gerade_vorn_augen_zu": [
+						24.0,
+						48
+					],
+					"gerade_vorn_normal": [
+						24.0,
+						49
+					],
 					"hinten_normal": [
-						29.0,
+						22.5,
+						47
+					],
+					"seite_augen_zu": [
+						31.0,
+						47
+					],
+					"seite_normal": [
+						30.5,
 						47
 					],
 					"vorn_augen_zu": [
-						23.4,
-						45
+						30.5,
+						47
 					],
 					"vorn_normal": [
-						23.2,
-						45
+						30.5,
+						47
 					]
 				},
 				"name": "Brunnenhüterin Nadia"
@@ -8943,13 +10819,37 @@
 			"pip": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.5,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						30.1,
+						60
+					],
+					"gerade_vorn_normal": [
+						30.1,
+						60
+					],
 					"hinten_normal": [
-						34.9,
-						57
+						31.5,
+						60
+					],
+					"seite_augen_zu": [
+						32.5,
+						60
+					],
+					"seite_normal": [
+						32.5,
+						60
+					],
+					"vorn_augen_zu": [
+						29.3,
+						60
 					],
 					"vorn_normal": [
-						38.9,
-						57
+						28.5,
+						60
 					]
 				},
 				"name": "Pip"
@@ -8957,13 +10857,37 @@
 			"quill": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.5,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						28.7,
+						60
+					],
+					"gerade_vorn_normal": [
+						28.7,
+						60
+					],
 					"hinten_normal": [
-						30.0,
-						49
+						31.5,
+						60
+					],
+					"seite_augen_zu": [
+						28.0,
+						60
+					],
+					"seite_normal": [
+						28.0,
+						60
+					],
+					"vorn_augen_zu": [
+						22.5,
+						60
 					],
 					"vorn_normal": [
-						43.9,
-						51
+						24.0,
+						60
 					]
 				},
 				"name": "Steinmetz Quill"
@@ -8971,13 +10895,37 @@
 			"rashid": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.7,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						24.1,
+						52
+					],
+					"gerade_vorn_normal": [
+						23.8,
+						52
+					],
 					"hinten_normal": [
-						31.5,
+						28,
 						50
 					],
+					"seite_augen_zu": [
+						27,
+						50
+					],
+					"seite_normal": [
+						27,
+						50
+					],
+					"vorn_augen_zu": [
+						31.5,
+						52
+					],
 					"vorn_normal": [
-						32.2,
-						53
+						32.0,
+						52
 					]
 				},
 				"name": "Bankhüter Rashid"
@@ -8985,17 +10933,37 @@
 			"salbei": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.0,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						30.5,
+						57
+					],
+					"gerade_vorn_normal": [
+						30.5,
+						57
+					],
 					"hinten_normal": [
-						26.1,
-						55
+						30.5,
+						57
+					],
+					"seite_augen_zu": [
+						32.5,
+						57
+					],
+					"seite_normal": [
+						32.5,
+						57
 					],
 					"vorn_augen_zu": [
-						28.4,
-						54
+						27.5,
+						57
 					],
 					"vorn_normal": [
-						28.0,
-						54
+						27.0,
+						57
 					]
 				},
 				"name": "Kräuterhändlerin Salbei"
@@ -9003,13 +10971,37 @@
 			"tamm": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.5,
+						54
+					],
+					"gerade_vorn_augen_zu": [
+						25.8,
+						54
+					],
+					"gerade_vorn_normal": [
+						25.1,
+						54
+					],
 					"hinten_normal": [
-						35.0,
-						55
+						34.0,
+						54
+					],
+					"seite_augen_zu": [
+						27,
+						53
+					],
+					"seite_normal": [
+						27,
+						53
+					],
+					"vorn_augen_zu": [
+						34.6,
+						54
 					],
 					"vorn_normal": [
-						37.8,
-						55
+						34.0,
+						54
 					]
 				},
 				"name": "Bankhüter Tamm"
@@ -9017,13 +11009,37 @@
 			"tarek": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						30.1,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						26.9,
+						58
+					],
+					"gerade_vorn_normal": [
+						26.9,
+						58
+					],
 					"hinten_normal": [
+						36.5,
+						58
+					],
+					"seite_augen_zu": [
 						32.5,
-						54
+						59
+					],
+					"seite_normal": [
+						32.5,
+						58
+					],
+					"vorn_augen_zu": [
+						20.5,
+						58
 					],
 					"vorn_normal": [
-						35.6,
-						57
+						20.5,
+						58
 					]
 				},
 				"name": "Händler Tarek"
@@ -9445,13 +11461,37 @@
 			"zaid": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						24.5,
+						47
+					],
+					"gerade_vorn_augen_zu": [
+						20.0,
+						47
+					],
+					"gerade_vorn_normal": [
+						19.5,
+						47
+					],
 					"hinten_normal": [
-						21.5,
-						44
+						23.5,
+						47
+					],
+					"seite_augen_zu": [
+						20.5,
+						47
+					],
+					"seite_normal": [
+						20.5,
+						47
+					],
+					"vorn_augen_zu": [
+						24.5,
+						47
 					],
 					"vorn_normal": [
-						28.5,
-						44
+						24.5,
+						47
 					]
 				},
 				"name": "Karawanenführer Zaid"
@@ -10019,13 +12059,37 @@
 			"borko": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.5,
+						55
+					],
+					"gerade_vorn_augen_zu": [
+						27.4,
+						57
+					],
+					"gerade_vorn_normal": [
+						27.7,
+						57
+					],
 					"hinten_normal": [
-						33.0,
-						50
+						26.9,
+						54
+					],
+					"seite_augen_zu": [
+						27,
+						59
+					],
+					"seite_normal": [
+						27,
+						59
+					],
+					"vorn_augen_zu": [
+						22.8,
+						57
 					],
 					"vorn_normal": [
-						42.9,
-						50
+						22.8,
+						57
 					]
 				},
 				"name": "Wirt Borko"
@@ -10033,13 +12097,37 @@
 			"brom": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						59
+					],
+					"gerade_vorn_augen_zu": [
+						29.0,
+						59
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						60
+					],
 					"hinten_normal": [
-						30.5,
-						55
+						29.0,
+						57
+					],
+					"seite_augen_zu": [
+						27.5,
+						59
+					],
+					"seite_normal": [
+						27.5,
+						59
+					],
+					"vorn_augen_zu": [
+						28.0,
+						58
 					],
 					"vorn_normal": [
-						35.0,
-						55
+						27.5,
+						58
 					]
 				},
 				"name": "Torwache Brom"
@@ -10047,13 +12135,37 @@
 			"edmar": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.5,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						26.0,
+						58
+					],
+					"gerade_vorn_normal": [
+						26.3,
+						58
+					],
 					"hinten_normal": [
-						29.0,
-						50
+						30.0,
+						57
+					],
+					"seite_augen_zu": [
+						28.0,
+						58
+					],
+					"seite_normal": [
+						28.0,
+						58
+					],
+					"vorn_augen_zu": [
+						16.5,
+						58
 					],
 					"vorn_normal": [
-						38.7,
-						51
+						16.5,
+						58
 					]
 				},
 				"name": "Vogt Edmar"
@@ -10061,13 +12173,37 @@
 			"hagebutte": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.5,
+						55
+					],
+					"gerade_vorn_augen_zu": [
+						22.0,
+						54
+					],
+					"gerade_vorn_normal": [
+						23.6,
+						54
+					],
 					"hinten_normal": [
-						33.5,
+						30.0,
+						54
+					],
+					"seite_augen_zu": [
+						29.0,
+						55
+					],
+					"seite_normal": [
+						29.0,
+						55
+					],
+					"vorn_augen_zu": [
+						23.5,
 						56
 					],
 					"vorn_normal": [
-						39.6,
-						53
+						23.5,
+						56
 					]
 				},
 				"name": "Oma Hagebutte"
@@ -10075,17 +12211,37 @@
 			"hanne": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						59
+					],
+					"gerade_vorn_augen_zu": [
+						27.0,
+						59
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						59
+					],
 					"hinten_normal": [
-						36.9,
-						58
+						34.5,
+						59
+					],
+					"seite_augen_zu": [
+						34.0,
+						59
+					],
+					"seite_normal": [
+						34.5,
+						59
 					],
 					"vorn_augen_zu": [
-						39.4,
-						56
+						23.9,
+						59
 					],
 					"vorn_normal": [
-						36.8,
-						56
+						24.3,
+						59
 					]
 				},
 				"name": "Wirtin Hanne"
@@ -10093,13 +12249,37 @@
 			"hatta": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						35.0,
+						69
+					],
+					"gerade_vorn_augen_zu": [
+						33.4,
+						69
+					],
+					"gerade_vorn_normal": [
+						33.4,
+						69
+					],
 					"hinten_normal": [
-						40.6,
-						34
+						39.0,
+						68
+					],
+					"seite_augen_zu": [
+						36.0,
+						69
+					],
+					"seite_normal": [
+						36.0,
+						69
+					],
+					"vorn_augen_zu": [
+						27.0,
+						69
 					],
 					"vorn_normal": [
-						44.5,
-						66
+						27.0,
+						69
 					]
 				},
 				"name": "Hutmacher Hatta"
@@ -10107,13 +12287,37 @@
 			"ilse": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						59
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						59
+					],
 					"hinten_normal": [
-						32.5,
-						56
+						32.0,
+						55
+					],
+					"seite_augen_zu": [
+						31.5,
+						58
+					],
+					"seite_normal": [
+						32.0,
+						58
+					],
+					"vorn_augen_zu": [
+						19.5,
+						59
 					],
 					"vorn_normal": [
-						40.3,
-						56
+						20.0,
+						59
 					]
 				},
 				"name": "Bankhüterin Ilse"
@@ -10197,17 +12401,37 @@
 			"layla": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						57
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						58
+					],
 					"hinten_normal": [
-						36.5,
+						34.0,
 						56
 					],
+					"seite_augen_zu": [
+						32.0,
+						57
+					],
+					"seite_normal": [
+						31.0,
+						57
+					],
 					"vorn_augen_zu": [
-						25.6,
-						54
+						26.3,
+						56
 					],
 					"vorn_normal": [
-						24.8,
-						54
+						25.5,
+						56
 					]
 				},
 				"name": "Wirtin Layla"
@@ -10215,17 +12439,37 @@
 			"lene": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						63
+					],
+					"gerade_vorn_augen_zu": [
+						26.5,
+						63
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						63
+					],
 					"hinten_normal": [
-						34.0,
-						59
+						32.0,
+						61
+					],
+					"seite_augen_zu": [
+						31.0,
+						62
+					],
+					"seite_normal": [
+						30.5,
+						62
 					],
 					"vorn_augen_zu": [
-						37.2,
-						60
+						26.0,
+						63
 					],
 					"vorn_normal": [
-						37.1,
-						60
+						26.0,
+						63
 					]
 				},
 				"name": "Schreiberin Lene"
@@ -10233,17 +12477,37 @@
 			"lotte": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.5,
+						54
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						55
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						55
+					],
 					"hinten_normal": [
-						25.3,
-						56
+						26.0,
+						54
+					],
+					"seite_augen_zu": [
+						36,
+						54
+					],
+					"seite_normal": [
+						36,
+						54
 					],
 					"vorn_augen_zu": [
-						32.3,
-						55
+						26.0,
+						57
 					],
 					"vorn_normal": [
-						32.6,
-						55
+						26.0,
+						57
 					]
 				},
 				"name": "Lotte"
@@ -10437,17 +12701,37 @@
 			"nadia": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						22.0,
+						48
+					],
+					"gerade_vorn_augen_zu": [
+						24.0,
+						48
+					],
+					"gerade_vorn_normal": [
+						24.0,
+						49
+					],
 					"hinten_normal": [
-						29.0,
+						22.5,
+						47
+					],
+					"seite_augen_zu": [
+						31.0,
+						47
+					],
+					"seite_normal": [
+						30.5,
 						47
 					],
 					"vorn_augen_zu": [
-						23.4,
-						45
+						30.5,
+						47
 					],
 					"vorn_normal": [
-						23.2,
-						45
+						30.5,
+						47
 					]
 				},
 				"name": "Brunnenhüterin Nadia"
@@ -10455,13 +12739,37 @@
 			"pip": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.5,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						30.1,
+						60
+					],
+					"gerade_vorn_normal": [
+						30.1,
+						60
+					],
 					"hinten_normal": [
-						34.9,
-						57
+						31.5,
+						60
+					],
+					"seite_augen_zu": [
+						32.5,
+						60
+					],
+					"seite_normal": [
+						32.5,
+						60
+					],
+					"vorn_augen_zu": [
+						29.3,
+						60
 					],
 					"vorn_normal": [
-						38.9,
-						57
+						28.5,
+						60
 					]
 				},
 				"name": "Pip"
@@ -10469,13 +12777,37 @@
 			"quill": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.5,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						28.7,
+						60
+					],
+					"gerade_vorn_normal": [
+						28.7,
+						60
+					],
 					"hinten_normal": [
-						30.0,
-						49
+						31.5,
+						60
+					],
+					"seite_augen_zu": [
+						28.0,
+						60
+					],
+					"seite_normal": [
+						28.0,
+						60
+					],
+					"vorn_augen_zu": [
+						22.5,
+						60
 					],
 					"vorn_normal": [
-						43.9,
-						51
+						24.0,
+						60
 					]
 				},
 				"name": "Steinmetz Quill"
@@ -10483,13 +12815,37 @@
 			"rashid": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.7,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						24.1,
+						52
+					],
+					"gerade_vorn_normal": [
+						23.8,
+						52
+					],
 					"hinten_normal": [
-						31.5,
+						28,
 						50
 					],
+					"seite_augen_zu": [
+						27,
+						50
+					],
+					"seite_normal": [
+						27,
+						50
+					],
+					"vorn_augen_zu": [
+						31.5,
+						52
+					],
 					"vorn_normal": [
-						32.2,
-						53
+						32.0,
+						52
 					]
 				},
 				"name": "Bankhüter Rashid"
@@ -10497,17 +12853,37 @@
 			"salbei": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.0,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						30.5,
+						57
+					],
+					"gerade_vorn_normal": [
+						30.5,
+						57
+					],
 					"hinten_normal": [
-						26.1,
-						55
+						30.5,
+						57
+					],
+					"seite_augen_zu": [
+						32.5,
+						57
+					],
+					"seite_normal": [
+						32.5,
+						57
 					],
 					"vorn_augen_zu": [
-						28.4,
-						54
+						27.5,
+						57
 					],
 					"vorn_normal": [
-						28.0,
-						54
+						27.0,
+						57
 					]
 				},
 				"name": "Kräuterhändlerin Salbei"
@@ -10515,13 +12891,37 @@
 			"tamm": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.5,
+						54
+					],
+					"gerade_vorn_augen_zu": [
+						25.8,
+						54
+					],
+					"gerade_vorn_normal": [
+						25.1,
+						54
+					],
 					"hinten_normal": [
-						35.0,
-						55
+						34.0,
+						54
+					],
+					"seite_augen_zu": [
+						27,
+						53
+					],
+					"seite_normal": [
+						27,
+						53
+					],
+					"vorn_augen_zu": [
+						34.6,
+						54
 					],
 					"vorn_normal": [
-						37.8,
-						55
+						34.0,
+						54
 					]
 				},
 				"name": "Bankhüter Tamm"
@@ -10529,13 +12929,37 @@
 			"tarek": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						30.1,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						26.9,
+						58
+					],
+					"gerade_vorn_normal": [
+						26.9,
+						58
+					],
 					"hinten_normal": [
+						36.5,
+						58
+					],
+					"seite_augen_zu": [
 						32.5,
-						54
+						59
+					],
+					"seite_normal": [
+						32.5,
+						58
+					],
+					"vorn_augen_zu": [
+						20.5,
+						58
 					],
 					"vorn_normal": [
-						35.6,
-						57
+						20.5,
+						58
 					]
 				},
 				"name": "Händler Tarek"
@@ -10957,13 +13381,37 @@
 			"zaid": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						24.5,
+						47
+					],
+					"gerade_vorn_augen_zu": [
+						20.0,
+						47
+					],
+					"gerade_vorn_normal": [
+						19.5,
+						47
+					],
 					"hinten_normal": [
-						21.5,
-						44
+						23.5,
+						47
+					],
+					"seite_augen_zu": [
+						20.5,
+						47
+					],
+					"seite_normal": [
+						20.5,
+						47
+					],
+					"vorn_augen_zu": [
+						24.5,
+						47
 					],
 					"vorn_normal": [
-						28.5,
-						44
+						24.5,
+						47
 					]
 				},
 				"name": "Karawanenführer Zaid"
@@ -11531,13 +13979,37 @@
 			"borko": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.5,
+						55
+					],
+					"gerade_vorn_augen_zu": [
+						27.4,
+						57
+					],
+					"gerade_vorn_normal": [
+						27.7,
+						57
+					],
 					"hinten_normal": [
-						33.0,
-						50
+						26.9,
+						54
+					],
+					"seite_augen_zu": [
+						27,
+						59
+					],
+					"seite_normal": [
+						27,
+						59
+					],
+					"vorn_augen_zu": [
+						22.8,
+						57
 					],
 					"vorn_normal": [
-						42.9,
-						50
+						22.8,
+						57
 					]
 				},
 				"name": "Wirt Borko"
@@ -11545,13 +14017,37 @@
 			"brom": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						59
+					],
+					"gerade_vorn_augen_zu": [
+						29.0,
+						59
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						60
+					],
 					"hinten_normal": [
-						30.5,
-						55
+						29.0,
+						57
+					],
+					"seite_augen_zu": [
+						27.5,
+						59
+					],
+					"seite_normal": [
+						27.5,
+						59
+					],
+					"vorn_augen_zu": [
+						28.0,
+						58
 					],
 					"vorn_normal": [
-						35.0,
-						55
+						27.5,
+						58
 					]
 				},
 				"name": "Torwache Brom"
@@ -11559,13 +14055,37 @@
 			"edmar": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.5,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						26.0,
+						58
+					],
+					"gerade_vorn_normal": [
+						26.3,
+						58
+					],
 					"hinten_normal": [
-						29.0,
-						50
+						30.0,
+						57
+					],
+					"seite_augen_zu": [
+						28.0,
+						58
+					],
+					"seite_normal": [
+						28.0,
+						58
+					],
+					"vorn_augen_zu": [
+						16.5,
+						58
 					],
 					"vorn_normal": [
-						38.7,
-						51
+						16.5,
+						58
 					]
 				},
 				"name": "Vogt Edmar"
@@ -11573,13 +14093,37 @@
 			"hagebutte": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.5,
+						55
+					],
+					"gerade_vorn_augen_zu": [
+						22.0,
+						54
+					],
+					"gerade_vorn_normal": [
+						23.6,
+						54
+					],
 					"hinten_normal": [
-						33.5,
+						30.0,
+						54
+					],
+					"seite_augen_zu": [
+						29.0,
+						55
+					],
+					"seite_normal": [
+						29.0,
+						55
+					],
+					"vorn_augen_zu": [
+						23.5,
 						56
 					],
 					"vorn_normal": [
-						39.6,
-						53
+						23.5,
+						56
 					]
 				},
 				"name": "Oma Hagebutte"
@@ -11587,17 +14131,37 @@
 			"hanne": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						59
+					],
+					"gerade_vorn_augen_zu": [
+						27.0,
+						59
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						59
+					],
 					"hinten_normal": [
-						36.9,
-						58
+						34.5,
+						59
+					],
+					"seite_augen_zu": [
+						34.0,
+						59
+					],
+					"seite_normal": [
+						34.5,
+						59
 					],
 					"vorn_augen_zu": [
-						39.4,
-						56
+						23.9,
+						59
 					],
 					"vorn_normal": [
-						36.8,
-						56
+						24.3,
+						59
 					]
 				},
 				"name": "Wirtin Hanne"
@@ -11605,13 +14169,37 @@
 			"hatta": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						35.0,
+						69
+					],
+					"gerade_vorn_augen_zu": [
+						33.4,
+						69
+					],
+					"gerade_vorn_normal": [
+						33.4,
+						69
+					],
 					"hinten_normal": [
-						40.6,
-						34
+						39.0,
+						68
+					],
+					"seite_augen_zu": [
+						36.0,
+						69
+					],
+					"seite_normal": [
+						36.0,
+						69
+					],
+					"vorn_augen_zu": [
+						27.0,
+						69
 					],
 					"vorn_normal": [
-						44.5,
-						66
+						27.0,
+						69
 					]
 				},
 				"name": "Hutmacher Hatta"
@@ -11619,13 +14207,37 @@
 			"ilse": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						59
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						59
+					],
 					"hinten_normal": [
-						32.5,
-						56
+						32.0,
+						55
+					],
+					"seite_augen_zu": [
+						31.5,
+						58
+					],
+					"seite_normal": [
+						32.0,
+						58
+					],
+					"vorn_augen_zu": [
+						19.5,
+						59
 					],
 					"vorn_normal": [
-						40.3,
-						56
+						20.0,
+						59
 					]
 				},
 				"name": "Bankhüterin Ilse"
@@ -11709,17 +14321,37 @@
 			"layla": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						57
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						58
+					],
 					"hinten_normal": [
-						36.5,
+						34.0,
 						56
 					],
+					"seite_augen_zu": [
+						32.0,
+						57
+					],
+					"seite_normal": [
+						31.0,
+						57
+					],
 					"vorn_augen_zu": [
-						25.6,
-						54
+						26.3,
+						56
 					],
 					"vorn_normal": [
-						24.8,
-						54
+						25.5,
+						56
 					]
 				},
 				"name": "Wirtin Layla"
@@ -11727,17 +14359,37 @@
 			"lene": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						63
+					],
+					"gerade_vorn_augen_zu": [
+						26.5,
+						63
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						63
+					],
 					"hinten_normal": [
-						34.0,
-						59
+						32.0,
+						61
+					],
+					"seite_augen_zu": [
+						31.0,
+						62
+					],
+					"seite_normal": [
+						30.5,
+						62
 					],
 					"vorn_augen_zu": [
-						37.2,
-						60
+						26.0,
+						63
 					],
 					"vorn_normal": [
-						37.1,
-						60
+						26.0,
+						63
 					]
 				},
 				"name": "Schreiberin Lene"
@@ -11745,17 +14397,37 @@
 			"lotte": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.5,
+						54
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						55
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						55
+					],
 					"hinten_normal": [
-						25.3,
-						56
+						26.0,
+						54
+					],
+					"seite_augen_zu": [
+						36,
+						54
+					],
+					"seite_normal": [
+						36,
+						54
 					],
 					"vorn_augen_zu": [
-						32.3,
-						55
+						26.0,
+						57
 					],
 					"vorn_normal": [
-						32.6,
-						55
+						26.0,
+						57
 					]
 				},
 				"name": "Lotte"
@@ -11949,17 +14621,37 @@
 			"nadia": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						22.0,
+						48
+					],
+					"gerade_vorn_augen_zu": [
+						24.0,
+						48
+					],
+					"gerade_vorn_normal": [
+						24.0,
+						49
+					],
 					"hinten_normal": [
-						29.0,
+						22.5,
+						47
+					],
+					"seite_augen_zu": [
+						31.0,
+						47
+					],
+					"seite_normal": [
+						30.5,
 						47
 					],
 					"vorn_augen_zu": [
-						23.4,
-						45
+						30.5,
+						47
 					],
 					"vorn_normal": [
-						23.2,
-						45
+						30.5,
+						47
 					]
 				},
 				"name": "Brunnenhüterin Nadia"
@@ -11967,13 +14659,37 @@
 			"pip": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.5,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						30.1,
+						60
+					],
+					"gerade_vorn_normal": [
+						30.1,
+						60
+					],
 					"hinten_normal": [
-						34.9,
-						57
+						31.5,
+						60
+					],
+					"seite_augen_zu": [
+						32.5,
+						60
+					],
+					"seite_normal": [
+						32.5,
+						60
+					],
+					"vorn_augen_zu": [
+						29.3,
+						60
 					],
 					"vorn_normal": [
-						38.9,
-						57
+						28.5,
+						60
 					]
 				},
 				"name": "Pip"
@@ -11981,13 +14697,37 @@
 			"quill": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.5,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						28.7,
+						60
+					],
+					"gerade_vorn_normal": [
+						28.7,
+						60
+					],
 					"hinten_normal": [
-						30.0,
-						49
+						31.5,
+						60
+					],
+					"seite_augen_zu": [
+						28.0,
+						60
+					],
+					"seite_normal": [
+						28.0,
+						60
+					],
+					"vorn_augen_zu": [
+						22.5,
+						60
 					],
 					"vorn_normal": [
-						43.9,
-						51
+						24.0,
+						60
 					]
 				},
 				"name": "Steinmetz Quill"
@@ -11995,13 +14735,37 @@
 			"rashid": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.7,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						24.1,
+						52
+					],
+					"gerade_vorn_normal": [
+						23.8,
+						52
+					],
 					"hinten_normal": [
-						31.5,
+						28,
 						50
 					],
+					"seite_augen_zu": [
+						27,
+						50
+					],
+					"seite_normal": [
+						27,
+						50
+					],
+					"vorn_augen_zu": [
+						31.5,
+						52
+					],
 					"vorn_normal": [
-						32.2,
-						53
+						32.0,
+						52
 					]
 				},
 				"name": "Bankhüter Rashid"
@@ -12009,17 +14773,37 @@
 			"salbei": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.0,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						30.5,
+						57
+					],
+					"gerade_vorn_normal": [
+						30.5,
+						57
+					],
 					"hinten_normal": [
-						26.1,
-						55
+						30.5,
+						57
+					],
+					"seite_augen_zu": [
+						32.5,
+						57
+					],
+					"seite_normal": [
+						32.5,
+						57
 					],
 					"vorn_augen_zu": [
-						28.4,
-						54
+						27.5,
+						57
 					],
 					"vorn_normal": [
-						28.0,
-						54
+						27.0,
+						57
 					]
 				},
 				"name": "Kräuterhändlerin Salbei"
@@ -12027,13 +14811,37 @@
 			"tamm": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.5,
+						54
+					],
+					"gerade_vorn_augen_zu": [
+						25.8,
+						54
+					],
+					"gerade_vorn_normal": [
+						25.1,
+						54
+					],
 					"hinten_normal": [
-						35.0,
-						55
+						34.0,
+						54
+					],
+					"seite_augen_zu": [
+						27,
+						53
+					],
+					"seite_normal": [
+						27,
+						53
+					],
+					"vorn_augen_zu": [
+						34.6,
+						54
 					],
 					"vorn_normal": [
-						37.8,
-						55
+						34.0,
+						54
 					]
 				},
 				"name": "Bankhüter Tamm"
@@ -12041,13 +14849,37 @@
 			"tarek": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						30.1,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						26.9,
+						58
+					],
+					"gerade_vorn_normal": [
+						26.9,
+						58
+					],
 					"hinten_normal": [
+						36.5,
+						58
+					],
+					"seite_augen_zu": [
 						32.5,
-						54
+						59
+					],
+					"seite_normal": [
+						32.5,
+						58
+					],
+					"vorn_augen_zu": [
+						20.5,
+						58
 					],
 					"vorn_normal": [
-						35.6,
-						57
+						20.5,
+						58
 					]
 				},
 				"name": "Händler Tarek"
@@ -12469,13 +15301,37 @@
 			"zaid": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						24.5,
+						47
+					],
+					"gerade_vorn_augen_zu": [
+						20.0,
+						47
+					],
+					"gerade_vorn_normal": [
+						19.5,
+						47
+					],
 					"hinten_normal": [
-						21.5,
-						44
+						23.5,
+						47
+					],
+					"seite_augen_zu": [
+						20.5,
+						47
+					],
+					"seite_normal": [
+						20.5,
+						47
+					],
+					"vorn_augen_zu": [
+						24.5,
+						47
 					],
 					"vorn_normal": [
-						28.5,
-						44
+						24.5,
+						47
 					]
 				},
 				"name": "Karawanenführer Zaid"
@@ -13043,13 +15899,37 @@
 			"borko": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.5,
+						55
+					],
+					"gerade_vorn_augen_zu": [
+						27.4,
+						57
+					],
+					"gerade_vorn_normal": [
+						27.7,
+						57
+					],
 					"hinten_normal": [
-						33.0,
-						50
+						26.9,
+						54
+					],
+					"seite_augen_zu": [
+						27,
+						59
+					],
+					"seite_normal": [
+						27,
+						59
+					],
+					"vorn_augen_zu": [
+						22.8,
+						57
 					],
 					"vorn_normal": [
-						42.9,
-						50
+						22.8,
+						57
 					]
 				},
 				"name": "Wirt Borko"
@@ -13057,13 +15937,37 @@
 			"brom": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						59
+					],
+					"gerade_vorn_augen_zu": [
+						29.0,
+						59
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						60
+					],
 					"hinten_normal": [
-						30.5,
-						55
+						29.0,
+						57
+					],
+					"seite_augen_zu": [
+						27.5,
+						59
+					],
+					"seite_normal": [
+						27.5,
+						59
+					],
+					"vorn_augen_zu": [
+						28.0,
+						58
 					],
 					"vorn_normal": [
-						35.0,
-						55
+						27.5,
+						58
 					]
 				},
 				"name": "Torwache Brom"
@@ -13071,13 +15975,37 @@
 			"edmar": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.5,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						26.0,
+						58
+					],
+					"gerade_vorn_normal": [
+						26.3,
+						58
+					],
 					"hinten_normal": [
-						29.0,
-						50
+						30.0,
+						57
+					],
+					"seite_augen_zu": [
+						28.0,
+						58
+					],
+					"seite_normal": [
+						28.0,
+						58
+					],
+					"vorn_augen_zu": [
+						16.5,
+						58
 					],
 					"vorn_normal": [
-						38.7,
-						51
+						16.5,
+						58
 					]
 				},
 				"name": "Vogt Edmar"
@@ -13085,13 +16013,37 @@
 			"hagebutte": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.5,
+						55
+					],
+					"gerade_vorn_augen_zu": [
+						22.0,
+						54
+					],
+					"gerade_vorn_normal": [
+						23.6,
+						54
+					],
 					"hinten_normal": [
-						33.5,
+						30.0,
+						54
+					],
+					"seite_augen_zu": [
+						29.0,
+						55
+					],
+					"seite_normal": [
+						29.0,
+						55
+					],
+					"vorn_augen_zu": [
+						23.5,
 						56
 					],
 					"vorn_normal": [
-						39.6,
-						53
+						23.5,
+						56
 					]
 				},
 				"name": "Oma Hagebutte"
@@ -13099,17 +16051,37 @@
 			"hanne": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						59
+					],
+					"gerade_vorn_augen_zu": [
+						27.0,
+						59
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						59
+					],
 					"hinten_normal": [
-						36.9,
-						58
+						34.5,
+						59
+					],
+					"seite_augen_zu": [
+						34.0,
+						59
+					],
+					"seite_normal": [
+						34.5,
+						59
 					],
 					"vorn_augen_zu": [
-						39.4,
-						56
+						23.9,
+						59
 					],
 					"vorn_normal": [
-						36.8,
-						56
+						24.3,
+						59
 					]
 				},
 				"name": "Wirtin Hanne"
@@ -13117,13 +16089,37 @@
 			"hatta": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						35.0,
+						69
+					],
+					"gerade_vorn_augen_zu": [
+						33.4,
+						69
+					],
+					"gerade_vorn_normal": [
+						33.4,
+						69
+					],
 					"hinten_normal": [
-						40.6,
-						34
+						39.0,
+						68
+					],
+					"seite_augen_zu": [
+						36.0,
+						69
+					],
+					"seite_normal": [
+						36.0,
+						69
+					],
+					"vorn_augen_zu": [
+						27.0,
+						69
 					],
 					"vorn_normal": [
-						44.5,
-						66
+						27.0,
+						69
 					]
 				},
 				"name": "Hutmacher Hatta"
@@ -13131,13 +16127,37 @@
 			"ilse": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						59
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						59
+					],
 					"hinten_normal": [
-						32.5,
-						56
+						32.0,
+						55
+					],
+					"seite_augen_zu": [
+						31.5,
+						58
+					],
+					"seite_normal": [
+						32.0,
+						58
+					],
+					"vorn_augen_zu": [
+						19.5,
+						59
 					],
 					"vorn_normal": [
-						40.3,
-						56
+						20.0,
+						59
 					]
 				},
 				"name": "Bankhüterin Ilse"
@@ -13221,17 +16241,37 @@
 			"layla": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						57
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						58
+					],
 					"hinten_normal": [
-						36.5,
+						34.0,
 						56
 					],
+					"seite_augen_zu": [
+						32.0,
+						57
+					],
+					"seite_normal": [
+						31.0,
+						57
+					],
 					"vorn_augen_zu": [
-						25.6,
-						54
+						26.3,
+						56
 					],
 					"vorn_normal": [
-						24.8,
-						54
+						25.5,
+						56
 					]
 				},
 				"name": "Wirtin Layla"
@@ -13239,17 +16279,37 @@
 			"lene": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						63
+					],
+					"gerade_vorn_augen_zu": [
+						26.5,
+						63
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						63
+					],
 					"hinten_normal": [
-						34.0,
-						59
+						32.0,
+						61
+					],
+					"seite_augen_zu": [
+						31.0,
+						62
+					],
+					"seite_normal": [
+						30.5,
+						62
 					],
 					"vorn_augen_zu": [
-						37.2,
-						60
+						26.0,
+						63
 					],
 					"vorn_normal": [
-						37.1,
-						60
+						26.0,
+						63
 					]
 				},
 				"name": "Schreiberin Lene"
@@ -13257,17 +16317,37 @@
 			"lotte": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.5,
+						54
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						55
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						55
+					],
 					"hinten_normal": [
-						25.3,
-						56
+						26.0,
+						54
+					],
+					"seite_augen_zu": [
+						36,
+						54
+					],
+					"seite_normal": [
+						36,
+						54
 					],
 					"vorn_augen_zu": [
-						32.3,
-						55
+						26.0,
+						57
 					],
 					"vorn_normal": [
-						32.6,
-						55
+						26.0,
+						57
 					]
 				},
 				"name": "Lotte"
@@ -13461,17 +16541,37 @@
 			"nadia": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						22.0,
+						48
+					],
+					"gerade_vorn_augen_zu": [
+						24.0,
+						48
+					],
+					"gerade_vorn_normal": [
+						24.0,
+						49
+					],
 					"hinten_normal": [
-						29.0,
+						22.5,
+						47
+					],
+					"seite_augen_zu": [
+						31.0,
+						47
+					],
+					"seite_normal": [
+						30.5,
 						47
 					],
 					"vorn_augen_zu": [
-						23.4,
-						45
+						30.5,
+						47
 					],
 					"vorn_normal": [
-						23.2,
-						45
+						30.5,
+						47
 					]
 				},
 				"name": "Brunnenhüterin Nadia"
@@ -13479,13 +16579,37 @@
 			"pip": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.5,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						30.1,
+						60
+					],
+					"gerade_vorn_normal": [
+						30.1,
+						60
+					],
 					"hinten_normal": [
-						34.9,
-						57
+						31.5,
+						60
+					],
+					"seite_augen_zu": [
+						32.5,
+						60
+					],
+					"seite_normal": [
+						32.5,
+						60
+					],
+					"vorn_augen_zu": [
+						29.3,
+						60
 					],
 					"vorn_normal": [
-						38.9,
-						57
+						28.5,
+						60
 					]
 				},
 				"name": "Pip"
@@ -13493,13 +16617,37 @@
 			"quill": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.5,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						28.7,
+						60
+					],
+					"gerade_vorn_normal": [
+						28.7,
+						60
+					],
 					"hinten_normal": [
-						30.0,
-						49
+						31.5,
+						60
+					],
+					"seite_augen_zu": [
+						28.0,
+						60
+					],
+					"seite_normal": [
+						28.0,
+						60
+					],
+					"vorn_augen_zu": [
+						22.5,
+						60
 					],
 					"vorn_normal": [
-						43.9,
-						51
+						24.0,
+						60
 					]
 				},
 				"name": "Steinmetz Quill"
@@ -13507,13 +16655,37 @@
 			"rashid": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.7,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						24.1,
+						52
+					],
+					"gerade_vorn_normal": [
+						23.8,
+						52
+					],
 					"hinten_normal": [
-						31.5,
+						28,
 						50
 					],
+					"seite_augen_zu": [
+						27,
+						50
+					],
+					"seite_normal": [
+						27,
+						50
+					],
+					"vorn_augen_zu": [
+						31.5,
+						52
+					],
 					"vorn_normal": [
-						32.2,
-						53
+						32.0,
+						52
 					]
 				},
 				"name": "Bankhüter Rashid"
@@ -13521,17 +16693,37 @@
 			"salbei": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.0,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						30.5,
+						57
+					],
+					"gerade_vorn_normal": [
+						30.5,
+						57
+					],
 					"hinten_normal": [
-						26.1,
-						55
+						30.5,
+						57
+					],
+					"seite_augen_zu": [
+						32.5,
+						57
+					],
+					"seite_normal": [
+						32.5,
+						57
 					],
 					"vorn_augen_zu": [
-						28.4,
-						54
+						27.5,
+						57
 					],
 					"vorn_normal": [
-						28.0,
-						54
+						27.0,
+						57
 					]
 				},
 				"name": "Kräuterhändlerin Salbei"
@@ -13539,13 +16731,37 @@
 			"tamm": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.5,
+						54
+					],
+					"gerade_vorn_augen_zu": [
+						25.8,
+						54
+					],
+					"gerade_vorn_normal": [
+						25.1,
+						54
+					],
 					"hinten_normal": [
-						35.0,
-						55
+						34.0,
+						54
+					],
+					"seite_augen_zu": [
+						27,
+						53
+					],
+					"seite_normal": [
+						27,
+						53
+					],
+					"vorn_augen_zu": [
+						34.6,
+						54
 					],
 					"vorn_normal": [
-						37.8,
-						55
+						34.0,
+						54
 					]
 				},
 				"name": "Bankhüter Tamm"
@@ -13553,13 +16769,37 @@
 			"tarek": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						30.1,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						26.9,
+						58
+					],
+					"gerade_vorn_normal": [
+						26.9,
+						58
+					],
 					"hinten_normal": [
+						36.5,
+						58
+					],
+					"seite_augen_zu": [
 						32.5,
-						54
+						59
+					],
+					"seite_normal": [
+						32.5,
+						58
+					],
+					"vorn_augen_zu": [
+						20.5,
+						58
 					],
 					"vorn_normal": [
-						35.6,
-						57
+						20.5,
+						58
 					]
 				},
 				"name": "Händler Tarek"
@@ -13981,13 +17221,37 @@
 			"zaid": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						24.5,
+						47
+					],
+					"gerade_vorn_augen_zu": [
+						20.0,
+						47
+					],
+					"gerade_vorn_normal": [
+						19.5,
+						47
+					],
 					"hinten_normal": [
-						21.5,
-						44
+						23.5,
+						47
+					],
+					"seite_augen_zu": [
+						20.5,
+						47
+					],
+					"seite_normal": [
+						20.5,
+						47
+					],
+					"vorn_augen_zu": [
+						24.5,
+						47
 					],
 					"vorn_normal": [
-						28.5,
-						44
+						24.5,
+						47
 					]
 				},
 				"name": "Karawanenführer Zaid"
@@ -14555,13 +17819,37 @@
 			"borko": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.5,
+						55
+					],
+					"gerade_vorn_augen_zu": [
+						27.4,
+						57
+					],
+					"gerade_vorn_normal": [
+						27.7,
+						57
+					],
 					"hinten_normal": [
-						33.0,
-						50
+						26.9,
+						54
+					],
+					"seite_augen_zu": [
+						27,
+						59
+					],
+					"seite_normal": [
+						27,
+						59
+					],
+					"vorn_augen_zu": [
+						22.8,
+						57
 					],
 					"vorn_normal": [
-						42.9,
-						50
+						22.8,
+						57
 					]
 				},
 				"name": "Wirt Borko"
@@ -14569,13 +17857,37 @@
 			"brom": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.0,
+						59
+					],
+					"gerade_vorn_augen_zu": [
+						29.0,
+						59
+					],
+					"gerade_vorn_normal": [
+						29.0,
+						60
+					],
 					"hinten_normal": [
-						30.5,
-						55
+						29.0,
+						57
+					],
+					"seite_augen_zu": [
+						27.5,
+						59
+					],
+					"seite_normal": [
+						27.5,
+						59
+					],
+					"vorn_augen_zu": [
+						28.0,
+						58
 					],
 					"vorn_normal": [
-						35.0,
-						55
+						27.5,
+						58
 					]
 				},
 				"name": "Torwache Brom"
@@ -14583,13 +17895,37 @@
 			"edmar": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.5,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						26.0,
+						58
+					],
+					"gerade_vorn_normal": [
+						26.3,
+						58
+					],
 					"hinten_normal": [
-						29.0,
-						50
+						30.0,
+						57
+					],
+					"seite_augen_zu": [
+						28.0,
+						58
+					],
+					"seite_normal": [
+						28.0,
+						58
+					],
+					"vorn_augen_zu": [
+						16.5,
+						58
 					],
 					"vorn_normal": [
-						38.7,
-						51
+						16.5,
+						58
 					]
 				},
 				"name": "Vogt Edmar"
@@ -14597,13 +17933,37 @@
 			"hagebutte": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						26.5,
+						55
+					],
+					"gerade_vorn_augen_zu": [
+						22.0,
+						54
+					],
+					"gerade_vorn_normal": [
+						23.6,
+						54
+					],
 					"hinten_normal": [
-						33.5,
+						30.0,
+						54
+					],
+					"seite_augen_zu": [
+						29.0,
+						55
+					],
+					"seite_normal": [
+						29.0,
+						55
+					],
+					"vorn_augen_zu": [
+						23.5,
 						56
 					],
 					"vorn_normal": [
-						39.6,
-						53
+						23.5,
+						56
 					]
 				},
 				"name": "Oma Hagebutte"
@@ -14611,17 +17971,37 @@
 			"hanne": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						59
+					],
+					"gerade_vorn_augen_zu": [
+						27.0,
+						59
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						59
+					],
 					"hinten_normal": [
-						36.9,
-						58
+						34.5,
+						59
+					],
+					"seite_augen_zu": [
+						34.0,
+						59
+					],
+					"seite_normal": [
+						34.5,
+						59
 					],
 					"vorn_augen_zu": [
-						39.4,
-						56
+						23.9,
+						59
 					],
 					"vorn_normal": [
-						36.8,
-						56
+						24.3,
+						59
 					]
 				},
 				"name": "Wirtin Hanne"
@@ -14629,13 +18009,37 @@
 			"hatta": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						35.0,
+						69
+					],
+					"gerade_vorn_augen_zu": [
+						33.4,
+						69
+					],
+					"gerade_vorn_normal": [
+						33.4,
+						69
+					],
 					"hinten_normal": [
-						40.6,
-						34
+						39.0,
+						68
+					],
+					"seite_augen_zu": [
+						36.0,
+						69
+					],
+					"seite_normal": [
+						36.0,
+						69
+					],
+					"vorn_augen_zu": [
+						27.0,
+						69
 					],
 					"vorn_normal": [
-						44.5,
-						66
+						27.0,
+						69
 					]
 				},
 				"name": "Hutmacher Hatta"
@@ -14643,13 +18047,37 @@
 			"ilse": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						24.5,
+						59
+					],
+					"gerade_vorn_normal": [
+						24.5,
+						59
+					],
 					"hinten_normal": [
-						32.5,
-						56
+						32.0,
+						55
+					],
+					"seite_augen_zu": [
+						31.5,
+						58
+					],
+					"seite_normal": [
+						32.0,
+						58
+					],
+					"vorn_augen_zu": [
+						19.5,
+						59
 					],
 					"vorn_normal": [
-						40.3,
-						56
+						20.0,
+						59
 					]
 				},
 				"name": "Bankhüterin Ilse"
@@ -14733,17 +18161,37 @@
 			"layla": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						57
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						58
+					],
 					"hinten_normal": [
-						36.5,
+						34.0,
 						56
 					],
+					"seite_augen_zu": [
+						32.0,
+						57
+					],
+					"seite_normal": [
+						31.0,
+						57
+					],
 					"vorn_augen_zu": [
-						25.6,
-						54
+						26.3,
+						56
 					],
 					"vorn_normal": [
-						24.8,
-						54
+						25.5,
+						56
 					]
 				},
 				"name": "Wirtin Layla"
@@ -14751,17 +18199,37 @@
 			"lene": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.0,
+						63
+					],
+					"gerade_vorn_augen_zu": [
+						26.5,
+						63
+					],
+					"gerade_vorn_normal": [
+						26.5,
+						63
+					],
 					"hinten_normal": [
-						34.0,
-						59
+						32.0,
+						61
+					],
+					"seite_augen_zu": [
+						31.0,
+						62
+					],
+					"seite_normal": [
+						30.5,
+						62
 					],
 					"vorn_augen_zu": [
-						37.2,
-						60
+						26.0,
+						63
 					],
 					"vorn_normal": [
-						37.1,
-						60
+						26.0,
+						63
 					]
 				},
 				"name": "Schreiberin Lene"
@@ -14769,17 +18237,37 @@
 			"lotte": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						29.5,
+						54
+					],
+					"gerade_vorn_augen_zu": [
+						27.5,
+						55
+					],
+					"gerade_vorn_normal": [
+						27.5,
+						55
+					],
 					"hinten_normal": [
-						25.3,
-						56
+						26.0,
+						54
+					],
+					"seite_augen_zu": [
+						36,
+						54
+					],
+					"seite_normal": [
+						36,
+						54
 					],
 					"vorn_augen_zu": [
-						32.3,
-						55
+						26.0,
+						57
 					],
 					"vorn_normal": [
-						32.6,
-						55
+						26.0,
+						57
 					]
 				},
 				"name": "Lotte"
@@ -14973,17 +18461,37 @@
 			"nadia": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						22.0,
+						48
+					],
+					"gerade_vorn_augen_zu": [
+						24.0,
+						48
+					],
+					"gerade_vorn_normal": [
+						24.0,
+						49
+					],
 					"hinten_normal": [
-						29.0,
+						22.5,
+						47
+					],
+					"seite_augen_zu": [
+						31.0,
+						47
+					],
+					"seite_normal": [
+						30.5,
 						47
 					],
 					"vorn_augen_zu": [
-						23.4,
-						45
+						30.5,
+						47
 					],
 					"vorn_normal": [
-						23.2,
-						45
+						30.5,
+						47
 					]
 				},
 				"name": "Brunnenhüterin Nadia"
@@ -14991,13 +18499,37 @@
 			"pip": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.5,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						30.1,
+						60
+					],
+					"gerade_vorn_normal": [
+						30.1,
+						60
+					],
 					"hinten_normal": [
-						34.9,
-						57
+						31.5,
+						60
+					],
+					"seite_augen_zu": [
+						32.5,
+						60
+					],
+					"seite_normal": [
+						32.5,
+						60
+					],
+					"vorn_augen_zu": [
+						29.3,
+						60
 					],
 					"vorn_normal": [
-						38.9,
-						57
+						28.5,
+						60
 					]
 				},
 				"name": "Pip"
@@ -15005,13 +18537,37 @@
 			"quill": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.5,
+						60
+					],
+					"gerade_vorn_augen_zu": [
+						28.7,
+						60
+					],
+					"gerade_vorn_normal": [
+						28.7,
+						60
+					],
 					"hinten_normal": [
-						30.0,
-						49
+						31.5,
+						60
+					],
+					"seite_augen_zu": [
+						28.0,
+						60
+					],
+					"seite_normal": [
+						28.0,
+						60
+					],
+					"vorn_augen_zu": [
+						22.5,
+						60
 					],
 					"vorn_normal": [
-						43.9,
-						51
+						24.0,
+						60
 					]
 				},
 				"name": "Steinmetz Quill"
@@ -15019,13 +18575,37 @@
 			"rashid": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						25.7,
+						52
+					],
+					"gerade_vorn_augen_zu": [
+						24.1,
+						52
+					],
+					"gerade_vorn_normal": [
+						23.8,
+						52
+					],
 					"hinten_normal": [
-						31.5,
+						28,
 						50
 					],
+					"seite_augen_zu": [
+						27,
+						50
+					],
+					"seite_normal": [
+						27,
+						50
+					],
+					"vorn_augen_zu": [
+						31.5,
+						52
+					],
 					"vorn_normal": [
-						32.2,
-						53
+						32.0,
+						52
 					]
 				},
 				"name": "Bankhüter Rashid"
@@ -15033,17 +18613,37 @@
 			"salbei": {
 				"geschlecht": "w",
 				"hals": {
+					"gerade_hinten_normal": [
+						28.0,
+						57
+					],
+					"gerade_vorn_augen_zu": [
+						30.5,
+						57
+					],
+					"gerade_vorn_normal": [
+						30.5,
+						57
+					],
 					"hinten_normal": [
-						26.1,
-						55
+						30.5,
+						57
+					],
+					"seite_augen_zu": [
+						32.5,
+						57
+					],
+					"seite_normal": [
+						32.5,
+						57
 					],
 					"vorn_augen_zu": [
-						28.4,
-						54
+						27.5,
+						57
 					],
 					"vorn_normal": [
-						28.0,
-						54
+						27.0,
+						57
 					]
 				},
 				"name": "Kräuterhändlerin Salbei"
@@ -15051,13 +18651,37 @@
 			"tamm": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						27.5,
+						54
+					],
+					"gerade_vorn_augen_zu": [
+						25.8,
+						54
+					],
+					"gerade_vorn_normal": [
+						25.1,
+						54
+					],
 					"hinten_normal": [
-						35.0,
-						55
+						34.0,
+						54
+					],
+					"seite_augen_zu": [
+						27,
+						53
+					],
+					"seite_normal": [
+						27,
+						53
+					],
+					"vorn_augen_zu": [
+						34.6,
+						54
 					],
 					"vorn_normal": [
-						37.8,
-						55
+						34.0,
+						54
 					]
 				},
 				"name": "Bankhüter Tamm"
@@ -15065,13 +18689,37 @@
 			"tarek": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						30.1,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						26.9,
+						58
+					],
+					"gerade_vorn_normal": [
+						26.9,
+						58
+					],
 					"hinten_normal": [
+						36.5,
+						58
+					],
+					"seite_augen_zu": [
 						32.5,
-						54
+						59
+					],
+					"seite_normal": [
+						32.5,
+						58
+					],
+					"vorn_augen_zu": [
+						20.5,
+						58
 					],
 					"vorn_normal": [
-						35.6,
-						57
+						20.5,
+						58
 					]
 				},
 				"name": "Händler Tarek"
@@ -15493,13 +19141,37 @@
 			"zaid": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						24.5,
+						47
+					],
+					"gerade_vorn_augen_zu": [
+						20.0,
+						47
+					],
+					"gerade_vorn_normal": [
+						19.5,
+						47
+					],
 					"hinten_normal": [
-						21.5,
-						44
+						23.5,
+						47
+					],
+					"seite_augen_zu": [
+						20.5,
+						47
+					],
+					"seite_normal": [
+						20.5,
+						47
+					],
+					"vorn_augen_zu": [
+						24.5,
+						47
 					],
 					"vorn_normal": [
-						28.5,
-						44
+						24.5,
+						47
 					]
 				},
 				"name": "Karawanenführer Zaid"
@@ -24364,17 +28036,37 @@
 			"kobalt": {
 				"geschlecht": "m",
 				"hals": {
+					"gerade_hinten_normal": [
+						31.5,
+						58
+					],
+					"gerade_vorn_augen_zu": [
+						26.0,
+						59
+					],
+					"gerade_vorn_normal": [
+						26.0,
+						58
+					],
 					"hinten_normal": [
 						37.5,
-						56
+						59
+					],
+					"seite_augen_zu": [
+						32.0,
+						59
 					],
 					"seite_normal": [
-						41.6,
-						56
+						32.0,
+						58
+					],
+					"vorn_augen_zu": [
+						24.0,
+						60
 					],
 					"vorn_normal": [
-						41.6,
-						56
+						24.5,
+						59
 					]
 				},
 				"name": "Kobalt",
