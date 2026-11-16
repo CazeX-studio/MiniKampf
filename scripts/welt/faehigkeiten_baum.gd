@@ -13,7 +13,14 @@ const FARBE_PASSIV := Color("2f5a7a")
 const FARBE_GRUND := Color("4a6a3a")
 const RAHMEN := Color("f2c14e")
 const GESPERRT := Color(0.35, 0.35, 0.35)
-const LINIE := Color(0.95, 0.8, 0.4, 0.8)
+const LINIE := Color(0.95, 0.75, 0.25)
+const LINIE_AUS := Color(0.42, 0.42, 0.42)
+const UMRISS := Color(0.08, 0.06, 0.04)
+const RAHMEN_GELERNT := Color("e8b440")
+const RAHMEN_LERNBAR := Color("5fcf6a")
+const RAHMEN_GESPERRT := Color(0.38, 0.38, 0.38)
+## Breite der Pfeile (P12)
+const PFEIL := 7.0
 
 ## Gewählte Fähigkeit (bleibt, wenn das Fenster neu gefüllt wird)
 static var gewaehlt := ""
@@ -43,7 +50,8 @@ func bauen(p: Progress, senden: Callable, neu: Callable) -> void:
 	_baum_flaeche.mouse_filter = Control.MOUSE_FILTER_PASS
 	_baum_flaeche.draw.connect(_linien_zeichnen)
 	var spalte := VBoxContainer.new()
-	spalte.add_theme_constant_override("separation", 10)
+	# P12: mehr Platz zwischen den Reihen, damit die Pfeile dazwischen gut zu sehen sind
+	spalte.add_theme_constant_override("separation", 30)
 	_baum_flaeche.add_child(spalte)
 	spalte.resized.connect(func() -> void:
 		_baum_flaeche.custom_minimum_size = spalte.size
@@ -85,7 +93,7 @@ static var _bilder := {}
 
 func _reihe(eltern: Node, titel: String, frei: bool) -> HBoxContainer:
 	var box := HBoxContainer.new()
-	box.add_theme_constant_override("separation", 10)
+	box.add_theme_constant_override("separation", 30)
 	var name := _text(titel, 13, Color("f3ead8") if frei else Color("808080"))
 	name.custom_minimum_size = Vector2(120, 0)
 	name.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -133,7 +141,16 @@ func _feld_zeichnen(b: Button, f: Dictionary) -> void:
 		var schrift := b.get_theme_default_font()
 		b.draw_string(schrift, Vector2(0, r.size.y * 0.55), kurz.substr(0, 3), HORIZONTAL_ALIGNMENT_CENTER, r.size.x, 24,
 				Color(1, 1, 1, 0.9 if stufe > 0 else 0.5))
-	b.draw_rect(r, RAHMEN if f.id == gewaehlt else Color(0.6, 0.5, 0.3, 0.7), false, 3.0 if f.id == gewaehlt else 1.5)
+	# Rahmen wie im Talentbaum (P12, Platzhalter bis Bild V4): gelernt gold, lernbar grün, gesperrt grau;
+	# die gewählte Fähigkeit leuchtet hell
+	var rahmen := RAHMEN_GESPERRT
+	if stufe > 0:
+		rahmen = RAHMEN_GELERNT
+	elif frei:
+		rahmen = RAHMEN_LERNBAR
+	b.draw_rect(r, rahmen, false, 3.0)
+	if f.id == gewaehlt:
+		b.draw_rect(r.grow(-3), Color(1, 0.95, 0.7), false, 2.0)
 	if novize and f.id in _progress.leiste:
 		b.draw_string(b.get_theme_default_font(), Vector2(4, 14), "Leiste", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, RAHMEN)
 	if not grund and not novize:
@@ -156,7 +173,45 @@ func _linien_zeichnen() -> void:
 			var a := Vector2(von.get_center().x, von.end.y) - ursprung
 			var b := Vector2(nach.get_center().x, nach.position.y) - ursprung
 			var erfuellt := int(_progress.faehigkeiten.get(andere, 0)) >= int(braucht[andere])
-			_baum_flaeche.draw_line(a, b, LINIE if erfuellt else Color(0.6, 0.6, 0.6, 0.5), 3.0)
+			# Liegt eine Reihe dazwischen, läuft der Pfeil rechts neben den Feldern vorbei (sonst sähe es so aus,
+			# als wäre das Feld dazwischen die Voraussetzung)
+			var seite := -1.0
+			if nach.position.y - von.end.y > von.size.y:
+				seite = maxf(von.end.x, nach.end.x) + 15.0 - ursprung.x
+			_pfeil_zeichnen(a, b, LINIE if erfuellt else LINIE_AUS, seite)
+
+
+## Dicker Pfeil wie im Talentbaum (P12, Platzhalter bis Bild V4): senkrecht nach unten, steht die Fähigkeit in einer
+## anderen Spalte, erst ein Stück hinunter, dann quer und wieder hinunter. Dunkler Umriss, Spitze am Ziel.
+## seite >= 0: der Pfeil läuft auf dieser Höhe seitlich an den Feldern dazwischen vorbei.
+func _pfeil_zeichnen(a: Vector2, b: Vector2, farbe: Color, seite := -1.0) -> void:
+	var spitze := 12.0
+	var ende := b - Vector2(0, spitze)
+	var punkte := PackedVector2Array([a])
+	if seite >= 0.0:
+		var oben := a.y + 12.0
+		var unten := ende.y - 6.0
+		punkte.append(Vector2(a.x, oben))
+		punkte.append(Vector2(seite, oben))
+		punkte.append(Vector2(seite, unten))
+		punkte.append(Vector2(b.x, unten))
+	elif absf(a.x - b.x) > 2.0:
+		var mitte := (a.y + ende.y) * 0.5
+		punkte.append(Vector2(a.x, mitte))
+		punkte.append(Vector2(b.x, mitte))
+	punkte.append(Vector2(b.x, ende.y))
+	var flaeche := _baum_flaeche
+	# Erst der Umriss, dann der Pfeil darauf
+	for runde: int in 2:
+		var breite := PFEIL + 4.0 if runde == 0 else PFEIL
+		var c := UMRISS if runde == 0 else farbe
+		for i in punkte.size() - 1:
+			flaeche.draw_line(punkte[i], punkte[i + 1], c, breite)
+		for p: Vector2 in punkte:
+			flaeche.draw_circle(p, breite * 0.5, c)
+		var rand := 2.0 if runde == 0 else 0.0
+		flaeche.draw_colored_polygon(PackedVector2Array([b + Vector2(0, rand), ende + Vector2(-PFEIL - 3.0 - rand, -rand),
+				ende + Vector2(PFEIL + 3.0 + rand, -rand)]), c)
 
 
 ## Die feste Leiste: sechs Plätze mit Bild, Antippen nimmt die Fähigkeit herunter
