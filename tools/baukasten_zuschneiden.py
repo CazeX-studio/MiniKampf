@@ -46,6 +46,12 @@ BLAETTER = {
 	"pflanzen": {"massstab": 0.44, "teile": {
 		"baum": (230, 340), "baum_herbst": (670, 340), "tanne": (1100, 360), "tanne_gross": (1520, 300),
 		"busch": (230, 740), "busch_bluete": (680, 740), "blumen": (1100, 760), "grasbueschel": (1540, 760)}},
+	# Blumen und welkes Laub für Grünwacht (Bildauftrag V7, Bauauftrag P21): Reihe 1 blüht auf, Reihe 2 welk;
+	# gw_blumen_frei.png ist das Blatt mit durchsichtigem statt pinkem Grund (monster_bilder.freistellen)
+	"gw_blumen": {"massstab": 0.42, "datei": "gw_blumen_frei", "teile": {
+		"gw_blume_rosa": (188, 239), "gw_blume_gelb": (505, 236), "gw_blume_weiss": (817, 242),
+		"gw_blume_bunt": (1130, 236), "gw_glockenblume": (1439, 231), "gw_waldbluete": (1755, 238),
+		"gw_laub_welk": (190, 623), "gw_blume_welk": (501, 604), "gw_farn_welk": (816, 606), "gw_laub_grau": (1136, 609)}},
 	"splitter": {"massstab": 0.41, "roter_rand": True, "teile": {
 		"splitterkreis": (440, 230), "krater_frisch": (1320, 260), "krater_spaet": (680, 650), "sternsplitter": (1460, 690)}},
 	"boden": {"boden": True, "teile": {

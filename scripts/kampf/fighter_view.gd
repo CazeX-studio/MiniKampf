@@ -113,6 +113,8 @@ const LOOKS := {
 	"splitterbaer": {sprite = "splitterbaer", scale = 1.0},
 	# Splitterbär in Tiefwurzel (seltenes Monster, D22b); der Splitter-Rindenbär der Geschichte heißt „splitterbaer“
 	"splitterbaer_wild": {sprite = "splitterbaer", scale = 1.0},
+	# Splitter-Rindenbär in der Welt von Grünwacht (P13, Marcos Bild V5, tools/teil_v_bilder.py)
+	"splitterbaer_welt": {sprite = "splitterbaer_welt", scale = 1.0},
 	"bienenschwarm": {sprite = "bienenschwarm", scale = 1.0},
 	# Kobalts Monster
 	# Kobalts Monster: dieselben Bilder, etwas größer und dunkler gefärbt

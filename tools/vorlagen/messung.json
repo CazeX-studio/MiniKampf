@@ -3302,5 +3302,145 @@
 			42,
 			55
 		]
+	},
+	"gw_blume_rosa": {
+		"groesse": [
+			119,
+			90
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			60,
+			57
+		]
+	},
+	"gw_blume_gelb": {
+		"groesse": [
+			116,
+			93
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			58,
+			60
+		]
+	},
+	"gw_blume_weiss": {
+		"groesse": [
+			115,
+			88
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			58,
+			55
+		]
+	},
+	"gw_blume_bunt": {
+		"groesse": [
+			114,
+			93
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			58,
+			60
+		]
+	},
+	"gw_glockenblume": {
+		"groesse": [
+			113,
+			97
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			56,
+			64
+		]
+	},
+	"gw_waldbluete": {
+		"groesse": [
+			117,
+			92
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			58,
+			59
+		]
+	},
+	"gw_laub_welk": {
+		"groesse": [
+			119,
+			74
+		],
+		"flaeche": [
+			2,
+			1
+		],
+		"fuss": [
+			42,
+			49
+		]
+	},
+	"gw_blume_welk": {
+		"groesse": [
+			111,
+			90
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			58,
+			57
+		]
+	},
+	"gw_farn_welk": {
+		"groesse": [
+			108,
+			89
+		],
+		"flaeche": [
+			1,
+			2
+		],
+		"fuss": [
+			68,
+			64
+		]
+	},
+	"gw_laub_grau": {
+		"groesse": [
+			123,
+			86
+		],
+		"flaeche": [
+			2,
+			2
+		],
+		"fuss": [
+			60,
+			53
+		]
 	}
 }

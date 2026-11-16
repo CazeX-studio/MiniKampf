@@ -21,6 +21,11 @@ const RAHMEN_LERNBAR := Color("5fcf6a")
 const RAHMEN_GESPERRT := Color(0.38, 0.38, 0.38)
 ## Breite der Pfeile (P12)
 const PFEIL := 7.0
+## Gemalte Pfeile (V4): so breit im Spiel, so breit in den Bildern baum_*.png, Armlänge der Ecken in Rohrbreiten
+## (gleich wie ECKE in tools/baum_pfeile.py)
+const ROHR := 11.0
+const ROHR_BLATT := 27.0
+const ECKE := 1.2
 
 ## Gewählte Fähigkeit (bleibt, wenn das Fenster neu gefüllt wird)
 static var gewaehlt := ""
@@ -51,7 +56,7 @@ func bauen(p: Progress, senden: Callable, neu: Callable) -> void:
 	_baum_flaeche.draw.connect(_linien_zeichnen)
 	var spalte := VBoxContainer.new()
 	# P12: mehr Platz zwischen den Reihen, damit die Pfeile dazwischen gut zu sehen sind
-	spalte.add_theme_constant_override("separation", 30)
+	spalte.add_theme_constant_override("separation", 56)
 	_baum_flaeche.add_child(spalte)
 	spalte.resized.connect(func() -> void:
 		_baum_flaeche.custom_minimum_size = spalte.size
@@ -141,23 +146,38 @@ func _feld_zeichnen(b: Button, f: Dictionary) -> void:
 		var schrift := b.get_theme_default_font()
 		b.draw_string(schrift, Vector2(0, r.size.y * 0.55), kurz.substr(0, 3), HORIZONTAL_ALIGNMENT_CENTER, r.size.x, 24,
 				Color(1, 1, 1, 0.9 if stufe > 0 else 0.5))
-	# Rahmen wie im Talentbaum (P12, Platzhalter bis Bild V4): gelernt gold, lernbar grün, gesperrt grau;
+	# Rahmen wie im Talentbaum (P12, gemalt aus Bild V4): gelernt gold, lernbar grün, gesperrt grau;
 	# die gewählte Fähigkeit leuchtet hell
 	var rahmen := RAHMEN_GESPERRT
+	var art := "gesperrt"
 	if stufe > 0:
 		rahmen = RAHMEN_GELERNT
+		art = "gelernt"
 	elif frei:
 		rahmen = RAHMEN_LERNBAR
-	b.draw_rect(r, rahmen, false, 3.0)
+		art = "lernbar"
+	var rahmen_bild := ui_bild("baum_rahmen_" + art)
+	if rahmen_bild != null:
+		b.draw_texture_rect(rahmen_bild, r.grow(3), false)
+	else:
+		b.draw_rect(r, rahmen, false, 3.0)
 	if f.id == gewaehlt:
-		b.draw_rect(r.grow(-3), Color(1, 0.95, 0.7), false, 2.0)
+		b.draw_rect(r.grow(-5), Color(1, 0.95, 0.7), false, 2.0)
 	if novize and f.id in _progress.leiste:
-		b.draw_string(b.get_theme_default_font(), Vector2(4, 14), "Leiste", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, RAHMEN)
+		b.draw_string(b.get_theme_default_font(), Vector2(6, 16), "Leiste", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, RAHMEN)
 	if not grund and not novize:
 		var text := "%d/%d" % [stufe, int(f.get("max", 5))]
 		var schrift := b.get_theme_default_font()
-		b.draw_rect(Rect2(r.size.x - 34, r.size.y - 18, 32, 16), Color(0, 0, 0, 0.7))
-		b.draw_string(schrift, Vector2(r.size.x - 34, r.size.y - 5), text, HORIZONTAL_ALIGNMENT_CENTER, 32, 12, Color.WHITE)
+		var schild := ui_bild("baum_stufe")
+		if schild != null:
+			# rundes Stufen-Schild unten rechts über der Ecke des Rahmens
+			var platz := Rect2(r.size.x - 26, r.size.y - 22, 32, 32)
+			b.draw_texture_rect(schild, platz, false)
+			b.draw_string(schrift, Vector2(platz.position.x, platz.position.y + 20), text, HORIZONTAL_ALIGNMENT_CENTER,
+					platz.size.x, 10, Color.WHITE)
+		else:
+			b.draw_rect(Rect2(r.size.x - 34, r.size.y - 18, 32, 16), Color(0, 0, 0, 0.7))
+			b.draw_string(schrift, Vector2(r.size.x - 34, r.size.y - 5), text, HORIZONTAL_ALIGNMENT_CENTER, 32, 12, Color.WHITE)
 
 
 ## Linien von einer Fähigkeit zu der, die sie voraussetzt (unten an der einen, oben an der anderen)
@@ -181,24 +201,31 @@ func _linien_zeichnen() -> void:
 			_pfeil_zeichnen(a, b, LINIE if erfuellt else LINIE_AUS, seite)
 
 
-## Dicker Pfeil wie im Talentbaum (P12, Platzhalter bis Bild V4): senkrecht nach unten, steht die Fähigkeit in einer
-## anderen Spalte, erst ein Stück hinunter, dann quer und wieder hinunter. Dunkler Umriss, Spitze am Ziel.
+## Dicker Pfeil wie im Talentbaum (P12): senkrecht nach unten, steht die Fähigkeit in einer anderen Spalte, erst ein
+## Stück hinunter, dann quer und wieder hinunter. Gemalt aus Marcos Bild V4 (tools/baum_pfeile.py), sonst gezeichnet.
 ## seite >= 0: der Pfeil läuft auf dieser Höhe seitlich an den Feldern dazwischen vorbei.
 func _pfeil_zeichnen(a: Vector2, b: Vector2, farbe: Color, seite := -1.0) -> void:
-	var spitze := 12.0
+	var art := "gold" if farbe == LINIE else "grau"
+	var gemalt := ui_bild("baum_spitze_unten_" + art) != null
+	var spitze := ui_bild("baum_spitze_unten_" + art).get_height() * ROHR / ROHR_BLATT if gemalt else 12.0
+	var arm := ECKE * ROHR if gemalt else 6.0
 	var ende := b - Vector2(0, spitze)
 	var punkte := PackedVector2Array([a])
 	if seite >= 0.0:
-		var oben := a.y + 12.0
-		var unten := ende.y - 6.0
+		var oben := a.y + arm + 2.0
+		var unten := ende.y - arm - 2.0
 		punkte.append(Vector2(a.x, oben))
 		punkte.append(Vector2(seite, oben))
 		punkte.append(Vector2(seite, unten))
 		punkte.append(Vector2(b.x, unten))
 	elif absf(a.x - b.x) > 2.0:
-		var mitte := (a.y + ende.y) * 0.5
+		var mitte := clampf((a.y + ende.y) * 0.5, a.y + arm + 2.0, ende.y - arm - 2.0)
 		punkte.append(Vector2(a.x, mitte))
 		punkte.append(Vector2(b.x, mitte))
+	if gemalt:
+		punkte.append(b)
+		_pfeil_gemalt(punkte, art)
+		return
 	punkte.append(Vector2(b.x, ende.y))
 	var flaeche := _baum_flaeche
 	# Erst der Umriss, dann der Pfeil darauf
@@ -212,6 +239,58 @@ func _pfeil_zeichnen(a: Vector2, b: Vector2, farbe: Color, seite := -1.0) -> voi
 		var rand := 2.0 if runde == 0 else 0.0
 		flaeche.draw_colored_polygon(PackedVector2Array([b + Vector2(0, rand), ende + Vector2(-PFEIL - 3.0 - rand, -rand),
 				ende + Vector2(PFEIL + 3.0 + rand, -rand)]), c)
+
+
+## Pfeil aus den gemalten Teilen (V4): gerade Stücke gestreckt, an jedem Knick eine Ecke, am Ende die Spitze.
+## punkte: Weg von unten an der Voraussetzung bis oben ans Ziel, nur senkrechte und waagerechte Stücke.
+func _pfeil_gemalt(punkte: PackedVector2Array, art: String) -> void:
+	var senkrecht := ui_bild("baum_senkrecht_" + art)
+	var waagerecht := ui_bild("baum_waagerecht_" + art)
+	var ecke_links := ui_bild("baum_ecke_links_" + art)
+	var ecke_rechts := ui_bild("baum_ecke_rechts_" + art)
+	var spitze := ui_bild("baum_spitze_unten_" + art)
+	var s := ROHR / ROHR_BLATT
+	var arm := ECKE * ROHR
+	var spitze_h := spitze.get_height() * s
+	var flaeche := _baum_flaeche
+	var n := punkte.size()
+	for i in n - 1:
+		var p := punkte[i]
+		var q := punkte[i + 1]
+		var richtung := (q - p).normalized()
+		var von := p + richtung * (arm if i > 0 else 0.0)
+		var bis := q - richtung * (spitze_h if i == n - 2 else arm)
+		if absf(q.x - p.x) < 0.5:
+			if bis.y > von.y:
+				flaeche.draw_texture_rect(senkrecht, Rect2(von.x - ROHR * 0.5, von.y - 0.5, ROHR, bis.y - von.y + 1.0), false)
+		elif absf(bis.x - von.x) > 0.0 and signf(bis.x - von.x) == signf(richtung.x):
+			flaeche.draw_texture_rect(waagerecht, Rect2(minf(von.x, bis.x) - 0.5, von.y - ROHR * 0.5, absf(bis.x - von.x) + 1.0, ROHR), false)
+	# Ecken: im Bild biegt ecke_links von links nach unten ab, ecke_rechts von rechts nach unten;
+	# kommt der Pfeil von oben, ist es dieselbe Ecke halb herumgedreht
+	for i in range(1, n - 1):
+		var rein := (punkte[i] - punkte[i - 1]).normalized()
+		var raus := (punkte[i + 1] - punkte[i]).normalized()
+		var drehung := 0.0
+		var links := rein.x > 0.0
+		if rein.y > 0.5:
+			drehung = PI
+			links = raus.x > 0.0
+		var tex := ecke_links if links else ecke_rechts
+		var knick := Vector2(tex.get_width() - ROHR_BLATT * 0.5 if links else ROHR_BLATT * 0.5, ROHR_BLATT * 0.5)
+		flaeche.draw_set_transform(punkte[i], drehung, Vector2(s, s))
+		flaeche.draw_texture(tex, -knick)
+	flaeche.draw_set_transform(Vector2.ZERO)
+	var b := punkte[n - 1]
+	var breite := spitze.get_width() * s
+	flaeche.draw_texture_rect(spitze, Rect2(b.x - breite * 0.5, b.y - spitze_h, breite, spitze_h), false)
+
+
+## Gemaltes Bild aus assets/ui (Pfeile und Rahmen des Baums, V4), null = noch nicht da
+static func ui_bild(name: String) -> Texture2D:
+	var pfad := "res://assets/ui/%s.png" % name
+	if not _bilder.has(pfad):
+		_bilder[pfad] = load(pfad) if ResourceLoader.exists(pfad) else null
+	return _bilder[pfad]
 
 
 ## Die feste Leiste: sechs Plätze mit Bild, Antippen nimmt die Fähigkeit herunter

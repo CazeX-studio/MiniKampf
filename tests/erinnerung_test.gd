@@ -1,6 +1,6 @@
 extends SceneTree
 ## Prüft die Erinnerungs-Szene (Grünwacht Schritt 6) mit Anzeige, ohne Fenster: Alle Schritte von Rowans Erinnerung
-## lassen sich durchtippen, Figuren erscheinen und bewegen sich, am Ende geht es zurück.
+## lassen sich durchtippen, die gemalten Bilder (oder ohne sie die Figuren) erscheinen, am Ende geht es zurück.
 ## Aufruf: Godot --headless --path . --script res://tests/erinnerung_test.gd
 
 var _failed := 0
@@ -21,6 +21,8 @@ func _run() -> void:
 	var steps: int = GameData.get_file("erinnerungen").rowan.schritte.size()
 	var seen_moving := false
 	var seen_ysolde := false
+	# P14: Mit Marcos gemalten Bildern (V8) zeigt die Szene die Bilder nacheinander statt der Figuren
+	var bilder := {}
 	for i in steps - 1:
 		while screen._busy:
 			seen_moving = seen_moving or screen._figures.rowan.moving
@@ -28,9 +30,15 @@ func _run() -> void:
 		screen.next_step()
 		await _frames(2)
 		seen_ysolde = seen_ysolde or screen._who.text == "Ysolde"
-	_check(seen_moving, "Die Fliehenden laufen")
+		var bild: TextureRect = screen._bilder[screen._bild_jetzt]
+		if screen._mit_bildern and bild.texture != null:
+			bilder[bild.texture.resource_path] = true
 	_check(seen_ysolde, "Ysolde spricht")
-	_check(screen._figures.rowan.facing == 1, "Rowan dreht sich zu Ysolde um")
+	if screen._mit_bildern:
+		_check(bilder.size() == 4, "Die vier gemalten Bilder erscheinen nacheinander (%d)" % bilder.size())
+	else:
+		_check(seen_moving, "Die Fliehenden laufen")
+		_check(screen._figures.rowan.facing == 1, "Rowan dreht sich zu Ysolde um")
 	while screen._busy:
 		await _frames(1)
 	screen.next_step()

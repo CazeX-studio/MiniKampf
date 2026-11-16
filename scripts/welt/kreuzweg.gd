@@ -1508,8 +1508,8 @@ func _add_pickup(target: String) -> void:
 		# Leuchtende Kräuter zum Einsammeln
 		_add_light(node, "kraut", Vector2(0, -8))
 	# Bosse in Dungeons: dieselbe Figur wie im Kampf, nur größer. Der Splitter-Rindenbär in Grünwacht (P13) steht
-	# genauso als gemalte Figur da (bis sein eigenes Welt-Bild V5 kommt, das Bild aus dem Kampf)
-	var figur_art := "splitterbaer" if art == "splittertier" else art
+	# genauso als gemalte Figur da, mit seinem eigenen Welt-Bild (V5: steht und brüllt vor Schmerz)
+	var figur_art := "splitterbaer_welt" if art == "splittertier" else art
 	if FighterView.LOOKS.has(figur_art):
 		var look: Dictionary = FighterView.LOOKS[figur_art]
 		var boss := WorldCharacter.new()
@@ -2110,18 +2110,29 @@ func _draw_decoration(node: Node2D, art: String, index: int) -> void:
 						Vector2(far, y + 16.0), Vector2(near, y + 16.0)]), Color("a07a4c"))
 				node.draw_string(font, Vector2(minf(near, far) + 7.0, y + 12.0), parts[i], HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("2a1c10"))
 		"bluete":
-			# Grünwacht blüht auf (Urbaum gerettet): gemalte Blumen (P21, Platzhalter bis Bildauftrag V7 Reihe 1),
-			# abwechselnd Blumenbüschel und blühender Busch
-			_pflanze_zeichnen(node, "blumen" if int(node.position.x + node.position.y) % 2 == 0 else "busch_bluete")
+			# Grünwacht blüht auf (Urbaum gerettet): Marcos Blumen aus Bild V7 Reihe 1 (P21), je Stelle eine andere
+			_pflanze_zeichnen(node, BLUETE[_stelle(node) % BLUETE.size()])
 		"welk":
-			# Welkes Laub (Urbaum gefällt): gemalter trockener Busch, etwas welker gefärbt (P21, bis Bildauftrag V7 Reihe 2)
-			_pflanze_zeichnen(node, "go_trockenbusch", Color(0.9, 0.78, 0.6))
+			# Welkes Laub (Urbaum gefällt): Marcos welke Pflanzen aus Bild V7 Reihe 2 (P21)
+			_pflanze_zeichnen(node, WELK[_stelle(node) % WELK.size()])
 		"krater":
 			node.draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, 0.5))
 			node.draw_circle(Vector2.ZERO, 34.0, Color(0.1, 0.08, 0.15, 0.85))
 			node.draw_arc(Vector2.ZERO, 34.0, 0, TAU, 32, Color(0.95, 0.9, 1.0, 0.5 + 0.3 * sin(_time * 3.0)), 3.0)
 			node.draw_set_transform_matrix(Transform2D.IDENTITY)
 			node.draw_circle(Vector2(0, -4), 5.0, Color(0.95, 0.9, 1.0, 0.8))
+
+
+## Blumen und welkes Laub für Grünwacht (Bildauftrag V7, tools/baukasten_zuschneiden.py gw_blumen)
+const BLUETE: Array[String] = ["gw_blume_rosa", "gw_blume_gelb", "gw_blume_weiss", "gw_blume_bunt", "gw_glockenblume",
+		"gw_waldbluete"]
+const WELK: Array[String] = ["gw_laub_welk", "gw_blume_welk", "gw_farn_welk", "gw_laub_grau"]
+
+
+## Feste Zahl für eine Stelle in der Welt (damit jede Stelle immer dieselbe Pflanze zeigt)
+func _stelle(node: Node2D) -> int:
+	# Die Felder liegen in 32er- und 16er-Schritten, darum erst auf Felder umrechnen (sonst kämen nur gerade Zahlen vor)
+	return absi(roundi(node.position.x / 32.0) * 7 + roundi(node.position.y / 16.0) * 5)
 
 
 ## Gemalte Pflanze aus dem Baukasten (data/baukasten_teile.json) mit dem Fuß auf dem Punkt des Knotens (P21).

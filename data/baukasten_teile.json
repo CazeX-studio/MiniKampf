@@ -3301,6 +3301,136 @@
 				42,
 				55
 			]
+		},
+		"gw_blume_rosa": {
+			"bild": "objekte/gw_blume_rosa.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				60,
+				57
+			],
+			"flach": true,
+			"blockiert": false
+		},
+		"gw_blume_gelb": {
+			"bild": "objekte/gw_blume_gelb.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				58,
+				60
+			],
+			"flach": true,
+			"blockiert": false
+		},
+		"gw_blume_weiss": {
+			"bild": "objekte/gw_blume_weiss.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				58,
+				55
+			],
+			"flach": true,
+			"blockiert": false
+		},
+		"gw_blume_bunt": {
+			"bild": "objekte/gw_blume_bunt.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				57,
+				60
+			],
+			"flach": true,
+			"blockiert": false
+		},
+		"gw_glockenblume": {
+			"bild": "objekte/gw_glockenblume.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				56,
+				64
+			],
+			"flach": true,
+			"blockiert": false
+		},
+		"gw_waldbluete": {
+			"bild": "objekte/gw_waldbluete.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				58,
+				59
+			],
+			"flach": true,
+			"blockiert": false
+		},
+		"gw_laub_welk": {
+			"bild": "objekte/gw_laub_welk.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				60,
+				49
+			],
+			"flach": true,
+			"blockiert": false
+		},
+		"gw_blume_welk": {
+			"bild": "objekte/gw_blume_welk.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				56,
+				57
+			],
+			"flach": true,
+			"blockiert": false
+		},
+		"gw_farn_welk": {
+			"bild": "objekte/gw_farn_welk.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				54,
+				64
+			],
+			"flach": true,
+			"blockiert": false
+		},
+		"gw_laub_grau": {
+			"bild": "objekte/gw_laub_grau.png",
+			"flaeche": [
+				1,
+				1
+			],
+			"fuss": [
+				62,
+				53
+			],
+			"flach": true,
+			"blockiert": false
 		}
 	}
 }
