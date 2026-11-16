@@ -3294,10 +3294,18 @@ Geändert:
 - `render.yaml`: Pushes, die nur Texte, Werkzeuge, Prüfungen oder die Webseite ändern, bauen den Server nicht neu
   (deutlich weniger Bauten, also weniger E-Mails).
 
+**Nachtrag (16.11.2026, Marcos Foto vom Render-Protokoll):** Die eigentliche Ursache war eine andere: „Build canceled:
+your workspace has run out of build pipeline minutes for the current billing period.“ Die kostenlosen Bau-Minuten
+bei Render für diesen Monat sind aufgebraucht, weil jeder Push auf `main` einen Server-Bau gestartet hat. Darum baut
+Render den Server jetzt nur noch neu, wenn sich etwas in `server/` ändert. Für einen neuen Server (z. B. vor einem
+Testtag) ändert Claude die Datum-Zeile in `server/STAND.txt` und pusht. Bis die Minuten im nächsten Abrechnungsmonat
+wieder da sind, wird jeder Bau abgebrochen; der zuletzt gebaute Server läuft so lange weiter. Die Web-Version
+(GitHub) ist davon nicht betroffen.
+
 **Für dich:** Kommt die E-Mail trotzdem wieder, bei Render im Dashboard den Dienst „asterfall-server“ öffnen, unter
 „Events“ den fehlgeschlagenen Eintrag anklicken und mir die letzten Zeilen des Protokolls schicken (Text oder Foto).
 Gilt `render.yaml` bei dir nicht von selbst (Dienst nicht über „Blueprint“ angelegt), dort unter Settings →
-„Build Filters“ dieselben Ordner eintragen: `**/*.md`, `tools/**`, `tests/**`, `web/**`, `.github/**`.
+„Build Filters“ bei „Included Paths“ eintragen: `server/**` und `render.yaml`.
 
 ## P5: Ausrüstung und Tasche gleichzeitig (Playtest, 16.11.2026)
 

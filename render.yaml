@@ -10,11 +10,10 @@ services:
     dockerContext: .
     branch: main
     autoDeploy: true
-    # Nur neu bauen, wenn sich etwas am Spiel ändert (nicht bei Texten, Werkzeugen, Prüfungen oder der Webseite)
+    # Die kostenlosen Bau-Minuten bei Render reichen nicht für einen Bau bei jedem Push (16.11.2026 aufgebraucht).
+    # Darum baut Render den Server nur noch neu, wenn sich etwas im Ordner server/ ändert. Neuen Server gewünscht
+    # (z. B. vor einem Testtag): in server/STAND.txt die Zeile mit dem Datum ändern, committen und pushen.
     buildFilter:
-      ignoredPaths:
-        - "**/*.md"
-        - "tools/**"
-        - "tests/**"
-        - "web/**"
-        - ".github/**"
+      paths:
+        - "server/**"
+        - "render.yaml"
