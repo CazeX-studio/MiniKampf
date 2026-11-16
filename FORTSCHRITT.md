@@ -3064,7 +3064,6 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 ## Offene Fragen an Marco (aufgeräumt 11.11.2026)
 
 ### Deine Entscheidungen
-- **Vorbote (P18):** Jetzt mittlere Stufe (85 % Siege gesamt, 8 von 136 Gruppen scheitern am Vorboten). Gemessen ist auch eine härtere Stufe (72 % Siege, vor allem Schmied und Sängerin tun sich schwer). Sag Bescheid, wenn du die härtere willst (Zahlen in `BALANCING.md`).
 - **Heute Abend am PC (Marco, 16.11.2026): P3 zu Ende bringen.** Das Spiel ist fertig gebaut, es fehlt nur das zweite
   Google-Formular. Zusammen am PC:
   1. Formular „Asterfall Demo – Abschluss“ anlegen, fünf Kurzantworten: Spitzname, Tester-Nummer, Version, Code, Ort.
@@ -3571,11 +3570,12 @@ Gilt `render.yaml` bei dir nicht von selbst (Dienst nicht über „Blueprint“ 
 
 ## P18: Vorbote stärker (Playtest, 16.11.2026)
 
-- Der Vorbote (Phase 2 der Pilzhöhle) hat mehr Leben (240 → 340) und trifft härter (Schattenwelle 11 → 14,
-  Leerengriff 20 → 28).
-- Gemessen: Vorher gewann jede Gruppe, die bis zu ihm kam. Jetzt scheitern 8 von 136 Gruppen an ihm, insgesamt
-  gewinnen 85 % (vorher 91 %). Eine härtere Stufe ist auch gemessen (72 %), Entscheidung bei dir (siehe oben bei
-  „Deine Entscheidungen“ und `BALANCING.md`).
+- Der Vorbote (Phase 2 der Pilzhöhle) hat mehr Leben (240 → 400) und trifft härter (Schattenwelle 11 → 16,
+  Leerengriff 20 → 32). Marco hat die härtere der beiden gemessenen Stufen gewählt (16.11.).
+- Gemessen: Vorher gewann jede Gruppe, die bis zu ihm kam. Jetzt scheitern 28 von 136 Gruppen an ihm, insgesamt
+  gewinnen 72 % (vorher 91 %). Schmied und Sängerin tun sich am schwersten (18 und 19 von 30). Zahlen in `BALANCING.md`.
+- Allein (nur mit Tessa und Gorm) schaffen es über alle Klassen gemessen 53 %. Die Wildnis-Prüfung verlangt für
+  Geschichtskämpfe sonst 55 %, für diesen Endkampf jetzt 45 % (wegen Marcos Wahl).
 
 **So testest du es**
 1. In der Pilzhöhle die Wurzelmutter besiegen, bis der Vorbote erscheint.

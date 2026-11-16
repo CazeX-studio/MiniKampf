@@ -8,6 +8,9 @@ const RUNS := 8
 ## So oft muss man mindestens gewinnen (allein, auf der Stufe des Monsters). Heiler wie der Ritualist sind allein
 ## am langsamsten; wie stark einzelne Klassen allein sind, kommt in den Feinschliff am Ende.
 const MIN_WIN_RATE := 0.55
+## Ausnahmen: Der Endkampf der Pilzhöhle (Wurzelmutter und Vorbote) darf schwerer sein (Marco 16.11.2026, P18: härtere
+## Stufe des Vorboten gewählt, allein gemessen 53 %).
+const MIN_WIN_RATE_AUSNAHMEN := {"pilz_urbaum": 0.45}
 ## Klassen der Demo (müssen auch nachts allein bestehen)
 const DEMO_KLASSEN := ["archer", "tamer", "smith", "blade", "singer"]
 
@@ -95,7 +98,7 @@ func _run() -> void:
 			all_wins += wins
 		var rate := float(all_wins) / (runs * classes.size())
 		print("%s → %d %% (Stufe %d)" % [line, roundi(rate * 100), story[1]])
-		if rate < MIN_WIN_RATE:
+		if rate < float(MIN_WIN_RATE_AUSNAHMEN.get(story[0], MIN_WIN_RATE)):
 			problems += 1
 			print("FEHLER: %s ist allein zu schwer" % story[0])
 	# Stufenabstand (Entscheidung 21.10.: Die Stufe soll mehr zählen): Mit 5 Stufen zu wenig verliert man den

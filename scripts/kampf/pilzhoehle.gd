@@ -37,8 +37,8 @@ const DARKNESS_STEP := 0.13
 const HELL_GENUG := 1
 const DUNKEL_DURCH := 0.2
 ## P18 (Marco 16.11.): Der Vorbote war zu schwach (wer Phase 2 erreichte, gewann immer). Schaden seiner Angriffe:
-const VORBOTE_WELLE := 14
-const VORBOTE_GRIFF := 28
+const VORBOTE_WELLE := 16
+const VORBOTE_GRIFF := 32
 
 ## Nur für Messungen (tests/boss_messen.gd): immer diese Mechanik der Sporenkönigin statt einer zufälligen
 static var modus_fest := ""
