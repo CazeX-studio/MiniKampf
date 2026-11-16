@@ -235,6 +235,8 @@ var _hoehen: Hoehen = null
 
 
 func _ready() -> void:
+	# Klänge (P8): jeder Knopf klickt
+	Geraeusche.einrichten()
 	RenderingServer.set_default_clear_color(Color("1b2418"))
 	state = Netz.world if Netz.online() else WorldState.new()
 	if Netz.online():
@@ -643,6 +645,9 @@ func local_player() -> PlayerState:
 
 ## Schickt einen Befehl des eigenen Spielers: allein direkt an die Welt, zusammen über das Netz.
 func _send(cmd: Dictionary) -> void:
+	# Klang beim Anlegen und Ablegen (P8)
+	if str(cmd.get("type", "")) in ["anlegen", "ablegen"]:
+		Geraeusche.play("anlegen")
 	if Netz.online():
 		Netz.send(cmd)
 	else:
@@ -688,6 +693,12 @@ func _sync() -> void:
 		view.position = cell_center(p.pos)
 		view.scale = Vector2(_figur_groesse, _figur_groesse)
 		view.moving = p.is_walking()
+		# Schritte der eigenen Figur (P8), leise und abwechselnd
+		if id == local_id:
+			_schritt_takt -= get_process_delta_time()
+			if view.moving and not p.sitting and _schritt_takt <= 0.0:
+				_schritt_takt = SCHRITT_ABSTAND
+				Geraeusche.play("schritt")
 		view.sitzt = p.sitting
 		view.facing = p.facing
 		# Wer auf einer anderen Karte steht, ist hier nicht zu sehen. Im Dungeon sieht man nur die eigene Gruppe.
@@ -2940,6 +2951,11 @@ func _belohnung_zeigen(id: String) -> void:
 			karte.queue_free())
 
 
+## Schritt-Klänge (P8): so viele Sekunden zwischen zwei Schritten
+const SCHRITT_ABSTAND := 0.34
+var _schritt_takt := 0.0
+
+
 ## Stufe beim letzten Blick: steigt sie, kommt der Stufen-Klang (A6, Alpha-Punkt 11)
 var _letzte_stufe := -1
 
@@ -2970,6 +2986,11 @@ func _on_notice(player_id: String, text: String) -> void:
 		return
 	var label: Control
 	var kind := _notice_kind(text)
+	# Klang zur Meldung (P8): Geld klimpert, Gegenstände rascheln, neue und fertige Aufträge klingen auf
+	if not kind.is_empty():
+		var klang: String = {"gold": "muenzen", "tasche": "aufheben", "ausrufe": "auftrag", "frage": "auftrag"}.get(kind[1], "")
+		if klang != "":
+			Geraeusche.play(klang)
 	if kind.is_empty():
 		label = _label(text, 20, Color("fff3b0"))
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -3175,6 +3196,8 @@ func _toggle_panel(mode: String) -> void:
 		_panel.visible = false
 		return
 	_panel_mode = mode
+	if not _panel.visible:
+		Geraeusche.play("fenster")
 	_panel.visible = true
 	_fill_panel()
 

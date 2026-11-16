@@ -16,6 +16,8 @@ var _titel_offen := false
 
 
 func _ready() -> void:
+	# Klänge (P8): jeder Knopf klickt
+	Geraeusche.einrichten()
 	theme = Combat.make_theme()
 	# Aus dem Menü in die Welt: wieder mit Ladebildschirm (A20)
 	Ladebildschirm.zuruecksetzen()

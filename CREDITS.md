@@ -67,6 +67,17 @@ Die Platzhalter-Musik (`assets/musik/`: Stadt, Nacht, Kampf, Boss) ist selbst er
 
 ## Geräusche
 
-Die Kampf-Geräusche (`assets/sfx/`: Schlag, Wurf, Treffer, Kritisch, Parade, Perfekt, Zauber, Heilung) sind ebenfalls
-selbst erzeugt, mit `tools/sounds_erzeugen.gd`. Platzhalter, keine Lizenzfragen.
+Seit 16.11.2026 (Bauauftrag P8) sind alle Geräusche in `assets/sfx/` freie Klänge, alle **CC0** (gemeinfrei, keine
+Namensnennung nötig), von OpenGameArt. Eingebaut, auf Mono umgewandelt und in der Lautstärke angeglichen mit
+`tools/klaenge_einbauen.py` (dort steht, welche Datei aus welchem Paket kommt).
+
+| Klänge im Spiel | Paket | Urheber und Quelle |
+|---|---|---|
+| Schlag, Wurf, Parade, Perfekt, Zauber, Heilung, Münzen | „80 CC0 RPG SFX“ | rubberduck, https://opengameart.org/content/80-cc0-rpg-sfx (CC0) |
+| Treffer, Kritisch | „100 CC0 SFX“ | rubberduck, https://opengameart.org/content/100-cc0-sfx (CC0) |
+| Schritte, Fenster (Buch blättern), Aufheben, Anlegen | „50 RPG sound effects“ | Kenney (www.kenney.nl), https://opengameart.org/content/50-rpg-sound-effects (CC0) |
+| Klick bei Knöpfen | „51 UI sound effects (buttons, switches and clicks)“ | Kenney, https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks (CC0) |
+| Stufenaufstieg, Auftrag | „Level up, power up, Coin get (13 Sounds)“ | wobbleboxx, https://opengameart.org/content/level-up-power-up-coin-get-13-sounds (CC0) |
+
+Die früheren, selbst erzeugten Platzhalter (`tools/sounds_erzeugen.gd`) werden nicht mehr benutzt.
 | Schrift Cinzel (`assets/schrift/Cinzel.ttf`) | The Cinzel Project Authors (https://github.com/NDISCOVER/Cinzel), aus github.com/google/fonts, SIL Open Font License 1.1 (`assets/schrift/Cinzel_OFL.txt`) | Ortsnamen beim Betreten eines Gebiets (E3c, 05.11.2026) |

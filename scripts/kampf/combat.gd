@@ -165,6 +165,8 @@ var _float_stack := {}
 
 func _ready() -> void:
 	Musik.play("kampf")
+	# Klänge (P8): jeder Knopf klickt
+	Geraeusche.einrichten()
 	if Sandbox.team.is_empty():
 		Sandbox.team = ["tank", "archer", "ritualist", "singer"]
 	_build_ui()
