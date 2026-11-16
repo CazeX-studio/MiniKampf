@@ -5,7 +5,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 16.11.)
 
-- **Nächster Schritt (16.11.2026, nach Marcos Playtest):** 22 neue Bauaufträge P1 bis P22 in `BAUAUFTRAEGE.md` (Demo-Reihenfolge, Abschnitt „Playtest 16.11.2026“), sie kommen vor den Testtagen. P1 bis P3 (die drei Blocker) sind fertig. Für P3 fehlt nur noch dein zweites Google-Formular (Anleitung unten bei „P3“). P4 (Werte der Ausrüstung) ist fertig. „Mach weiter“ baut als Nächstes P5 (Ausrüstung und Tasche nebeneinander). Neue Bildaufträge für dich in `Spieldesign/GRAFIK_AUFTRAG.md` Teil V (Werte-Symbole, Miras Notenblatt, Fähigkeiten-Bilder, Pfeile im Fähigkeitenbaum, Splitter-Rindenbär, zerstörter Splitterkristall, Blumen, Erinnerungs-Szene). Für dich bei P3: ein zweites Google-Formular für den Abschluss.
+- **Nächster Schritt (16.11.2026, nach Marcos Playtest):** 22 neue Bauaufträge P1 bis P22 in `BAUAUFTRAEGE.md` (Demo-Reihenfolge, Abschnitt „Playtest 16.11.2026“), sie kommen vor den Testtagen. P1 bis P3 (die drei Blocker) sind fertig. Für P3 fehlt nur noch dein zweites Google-Formular (Anleitung unten bei „P3“). P4 und P5 (Werte der Ausrüstung, Ausrüstung neben der Tasche) sind fertig. „Mach weiter“ baut als Nächstes P6 (Symbole für die Werte, mit Platzhalter bis Bild V1 da ist). Neue Bildaufträge für dich in `Spieldesign/GRAFIK_AUFTRAG.md` Teil V (Werte-Symbole, Miras Notenblatt, Fähigkeiten-Bilder, Pfeile im Fähigkeitenbaum, Splitter-Rindenbär, zerstörter Splitterkristall, Blumen, Erinnerungs-Szene). Für dich bei P3: ein zweites Google-Formular für den Abschluss.
 - **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** Die Alpha-Aufträge sind fertig (A10b und A13b sind fertig; A3b, A9c und A20 haben alle Bilder und kommen als Nächstes). E4 (Balancing) kommt später (Marco, 11.11.: braucht viele Tests), dann E5 (T3 und T4 am Stück); neu für dich: Teil M bis Q in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
 - **Bilder von Marco (02.11. abends):** 38 Blätter liegen unter `tools/vorlagen/`: alle sechs Novizen-Blätter ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen.
   - Dazu der Baukasten (02.11.): acht Grundkörper (`grund_*.png`), Köpfe (`koepfe_*.png`), Hüte (`huete_regionen.png`), Zeichen (`zeichen_dienste.png`) und die Klingentänzerin Blatt 1. Bei den Fäusten der Abwehr-Bilder von Blatt 1 prüft Claude beim Einbauen, ob sie am Oval stören.
@@ -3044,7 +3044,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 
 - **Playtest 16.11.2026 (Bauaufträge P1 bis P22 in `BAUAUFTRAEGE.md`):**
   - Blocker: P1 Wegweiser nach Kaels Erinnerung (fertig 16.11.), P2 Aufträge und „!“ nur für die eigene Klasse (Fenn, fertig 16.11.), P3 Abschluss melden mit einem zweiten Formular, das sich selbst abschickt (fertig 16.11., wartet auf Marcos Formular).
-  - Ausrüstung und Werte: P4 Werte der Ausrüstung sichtbar (fertig 16.11.), P5 Ausrüstung und Tasche nebeneinander, P6 Symbole für die Werte (Bild V1), P7 Miras Notenblatt (Bild V2).
+  - Ausrüstung und Werte: P4 Werte der Ausrüstung sichtbar (fertig 16.11.), P5 Ausrüstung und Tasche nebeneinander (fertig 16.11.), P6 Symbole für die Werte (Bild V1), P7 Miras Notenblatt (Bild V2).
   - Klang und Menü: P8 Klänge nachbessern, P10 Menü oben aufräumen (das „X“ zum Hinsetzen weg von Aufträgen und Tasche).
   - Fähigkeitenbaum: P9 weiße Felder (Bilder sind da, Fehler suchen; sonst Bild V3), P11 Werte der Fähigkeiten im Baum, P12 mehr Abstand und gemalte Pfeile wie im WoW-Talentbaum (Bild V4).
   - Grünwacht und Pilzhöhle: P13 Splitter-Rindenbär nicht hinter dem Baum, mit Bild (V5), P14 Erinnerungs-Szene neu gemalt (V8), P16 Bosse und Eingang leichter anklicken, Dungeon-Eingang mit Boss-Symbol auf der Karte, P17 Wurzelmutter heilt sich ohne Knoten nicht mehr so, P18 Vorbote stärker, P19 Bild für den zerstörten Splitterkristall (V6), P21 gemalte Blumen statt der alten (V7), P22 Kael kommt beim Abschluss mit Ysolde dazu.
@@ -3298,3 +3298,21 @@ Geändert:
 „Events“ den fehlgeschlagenen Eintrag anklicken und mir die letzten Zeilen des Protokolls schicken (Text oder Foto).
 Gilt `render.yaml` bei dir nicht von selbst (Dienst nicht über „Blueprint“ angelegt), dort unter Settings →
 „Build Filters“ dieselben Ordner eintragen: `**/*.md`, `tools/**`, `tests/**`, `web/**`, `.github/**`.
+
+## P5: Ausrüstung und Tasche gleichzeitig (Playtest, 16.11.2026)
+
+- Mit I (Tasche) öffnet sich links das Fenster „Ausrüstung“ mit der Figur und den sechs Plätzen, rechts die Tasche.
+- **Anlegen:** ein Teil aus der Tasche auf seinen Platz ziehen, oder antippen und „Anlegen“ wählen (wie bisher).
+  Teile, die nicht passen (z. B. eine Waffe auf den Kopf), nimmt der Platz nicht an.
+- **Ablegen:** ein angelegtes Teil zurück in die Tasche ziehen, oder den Platz antippen und „Ablegen“ wählen.
+- Ist in der Tasche ein Ausrüstungsteil gewählt, leuchtet links der Platz, auf den es käme. Unter der Tasche steht
+  der Vergleich mit grünen und roten Pfeilen, dazu im Infofenster beim Drüberfahren (P4).
+- Unter der Figur steht die Summe aus der Ausrüstung. Das Werte-Fenster (C) zeigt die Ausrüstung weiter wie bisher.
+
+**So testest du es**
+1. Im Spiel mit den Testknöpfen „Test: Beute“ ein paar Ausrüstungsteile holen, dann I drücken: links Ausrüstung,
+   rechts Tasche.
+2. Ein Teil in der Tasche antippen: links leuchtet sein Platz, unten steht der Vergleich mit Pfeilen.
+3. Das Teil auf den leuchtenden Platz ziehen: es ist angelegt, das alte liegt jetzt in der Tasche.
+4. Ein angelegtes Teil links in ein freies Taschen-Kästchen ziehen: es ist abgelegt.
+5. Am Handy: antippen und „Anlegen“ oder „Ablegen“ wählen.

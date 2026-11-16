@@ -9,6 +9,10 @@ extends Control
 signal moved(from: int, to: int)
 ## Ein Kästchen wurde angeklickt (zeigt die Beschreibung).
 signal picked(index: int)
+## P5: Ein Teil aus der Tasche wurde auf diesen Ausrüstungsplatz gezogen (anlegen).
+signal anlegen_gezogen(gegenstand: String)
+## P5: Ein angelegtes Teil wurde von seinem Platz in die Tasche gezogen (ablegen).
+signal ablegen_gezogen(platz: String)
 
 const SIZE := 52.0
 
@@ -26,6 +30,8 @@ static var _icons := {}
 var belt := false
 ## Ausrüstungsplatz (A8b): nicht ziehen, leer steht der Name des Platzes blass im Kästchen
 var platz_name := ""
+## Welcher Ausrüstungsplatz es ist (waffe, kopf, …; P5: zum Hineinziehen und Herausziehen)
+var platz_id := ""
 ## Was der Spieler gerade angelegt hat (für den Vergleich im Infofenster der Tasche, P4); setzt das Fenster
 static var angelegt_jetzt := {}
 
@@ -103,7 +109,7 @@ func _gui_input(event: InputEvent) -> void:
 
 
 func _get_drag_data(_at_position: Vector2) -> Variant:
-	if item_id == "" or belt or platz_name != "":
+	if item_id == "" or belt or (platz_name != "" and platz_id == ""):
 		return null
 	# Vorschau unter dem Mauszeiger: dasselbe Bild etwas durchsichtig
 	var preview := BagSlot.new()
@@ -113,15 +119,28 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 	holder.add_child(preview)
 	preview.position = -Vector2(SIZE, SIZE) * 0.5
 	set_drag_preview(holder)
-	return {tasche = index}
+	if platz_id != "":
+		return {ausruestung = platz_id, id = item_id}
+	return {tasche = index, id = item_id}
 
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
-	return not belt and platz_name == "" and data is Dictionary and data.has("tasche")
+	if belt or not data is Dictionary:
+		return false
+	# Ausrüstungsplatz: nimmt passende Teile aus der Tasche (Schmuck passt auf beide Schmuckplätze)
+	if platz_id != "":
+		var platz := str(Ausruestung.teil(str(data.get("id", ""))).get("platz", ""))
+		return data.has("tasche") and (platz == platz_id or (platz == "schmuck" and platz_id.begins_with("schmuck")))
+	return platz_name == "" and (data.has("tasche") or data.has("ausruestung"))
 
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
-	moved.emit(int(data.tasche), index)
+	if platz_id != "":
+		anlegen_gezogen.emit(str(data.id))
+	elif data.has("ausruestung"):
+		ablegen_gezogen.emit(str(data.ausruestung))
+	else:
+		moved.emit(int(data.tasche), index)
 
 
 func _draw() -> void:

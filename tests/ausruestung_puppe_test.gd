@@ -75,6 +75,34 @@ func _run() -> void:
 		fenster.queue_free()
 	BagSlot.angelegt_jetzt = {}
 	feld.queue_free()
+	# P5: Ziehen zwischen Tasche und Ausrüstung
+	var waffen_platz := BagSlot.new()
+	waffen_platz.platz_name = "Waffe"
+	waffen_platz.platz_id = "waffe"
+	var kopf_platz := BagSlot.new()
+	kopf_platz.platz_name = "Kopf"
+	kopf_platz.platz_id = "kopf"
+	var tasche := BagSlot.new()
+	root.add_child(waffen_platz)
+	root.add_child(kopf_platz)
+	root.add_child(tasche)
+	var aus_tasche := {tasche = 3, id = "kurzschwert"}
+	_check(waffen_platz._can_drop_data(Vector2.ZERO, aus_tasche), "Waffe aus der Tasche passt auf den Waffenplatz")
+	_check(not kopf_platz._can_drop_data(Vector2.ZERO, aus_tasche), "Waffe passt nicht auf den Kopf")
+	var angelegt_gezogen := []
+	waffen_platz.anlegen_gezogen.connect(func(g: String) -> void: angelegt_gezogen.append(g))
+	waffen_platz._drop_data(Vector2.ZERO, aus_tasche)
+	_check(angelegt_gezogen == ["kurzschwert"], "Hineinziehen legt die Waffe an")
+	waffen_platz.show_item("kurzschwert", 1, false)
+	var gezogen: Variant = waffen_platz._get_drag_data(Vector2.ZERO)
+	_check(gezogen is Dictionary and gezogen.get("ausruestung", "") == "waffe", "Angelegte Waffe lässt sich herausziehen")
+	_check(tasche._can_drop_data(Vector2.ZERO, gezogen) and not kopf_platz._can_drop_data(Vector2.ZERO, gezogen), "Nur die Tasche nimmt sie")
+	var abgelegt := []
+	tasche.ablegen_gezogen.connect(func(platz: String) -> void: abgelegt.append(platz))
+	tasche._drop_data(Vector2.ZERO, gezogen)
+	_check(abgelegt == ["waffe"], "In die Tasche ziehen legt die Waffe ab")
+	for f in [waffen_platz, kopf_platz, tasche]:
+		f.queue_free()
 	# P4: Summe aus der Ausrüstung mit allen Werten
 	var liste := Ausruestung.summe_liste(Ausruestung.START)
 	var namen := []

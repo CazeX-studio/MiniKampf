@@ -158,6 +158,9 @@ var _panel_text: RichTextLabel
 var _panel_mode := ""
 ## Kästchen der Tasche (Raster im Taschen-Fenster) und das gerade angeklickte Kästchen
 var _bag_grid: GridContainer
+## P5: Ausrüstung neben der Tasche
+var _gear_panel: PanelContainer
+var _gear_box: VBoxContainer
 ## Kartenalbum (D15): Reiter je Region, Plätze der Karten, gewählte Seite und Karte
 var _album_tabs: HBoxContainer
 var _album_grid: GridContainer
@@ -1820,6 +1823,19 @@ func _build_ui() -> void:
 	_panel.visible = false
 	root.add_child(_panel)
 	_buttons.append(_panel)
+	# P5: Ausrüstung links neben der Tasche, beide gleichzeitig offen (Teile direkt anlegen und ablegen)
+	_gear_panel = _framed_panel()
+	_gear_panel.position = Vector2(8, 84)
+	_gear_panel.size = Vector2(470, 460)
+	_gear_panel.visible = false
+	root.add_child(_gear_panel)
+	_buttons.append(_gear_panel)
+	_gear_box = VBoxContainer.new()
+	_gear_box.add_theme_constant_override("separation", 4)
+	_gear_panel.add_child(_gear_box)
+	_panel.visibility_changed.connect(func() -> void:
+		if not _panel.visible:
+			_gear_panel.visible = false)
 	var panel_box := VBoxContainer.new()
 	_panel.add_child(panel_box)
 	_panel_title = _label("", 22, Color("f2c14e"))
@@ -3178,6 +3194,11 @@ func _fill_panel() -> void:
 	for child in _rep_box.get_children():
 		child.queue_free()
 	_bag_grid.visible = _panel_mode == "tasche"
+	# P5: Bei der Tasche steht die Ausrüstung links daneben, das Fenster rückt dafür nach rechts
+	_panel.position.x = 486.0 if _panel_mode == "tasche" else 295.0
+	_gear_panel.visible = _panel_mode == "tasche" and _panel.visible
+	for child in _gear_box.get_children():
+		child.queue_free()
 	_bag_footer.visible = _panel_mode == "tasche"
 	_belt_row.visible = _panel_mode == "tasche"
 	_bag_tests.visible = _panel_mode == "tasche"
@@ -3206,7 +3227,7 @@ func _fill_panel() -> void:
 	elif _panel_mode == "werte":
 		_panel_title.text = GameData.text("werte")
 		_aussehen_zeilen(p)
-		_ausruestung_zeilen(p)
+		_ausruestung_zeilen(p, _rep_box)
 		var klasse := p.progress.battle_class()
 		if p.progress.flags.has("klasse_bestaetigt") and Sandbox.CLASSES.has(klasse):
 			# Nach der Klassenwahl: Werte der eigenen Klasse (so kämpft man in der Wildnis)
@@ -3258,6 +3279,10 @@ func _fill_panel() -> void:
 				var entry: Dictionary = p.progress.belt[belt_slot.index]
 				belt_slot.show_item(str(entry.get("id", "")), int(entry.get("anzahl", 0)), false)
 		var picked := str(slots[_bag_selected]) if _bag_selected >= 0 and _bag_selected < slots.size() else ""
+		# P5: Ausrüstung daneben; der Platz, auf den das gewählte Teil käme, leuchtet
+		AusruestungPuppe.ziel = Ausruestung.platz_fuer(picked, p.progress.ausruestung) if Ausruestung.ist_ausruestung(picked) else ""
+		_ausruestung_zeilen(p, _gear_box)
+		AusruestungPuppe.ziel = ""
 		if picked != "":
 			var item := GameData.item(picked)
 			var use := "  [url=%s][color=#5ab8ff][%s][/color][/url]" % [picked, GameData.text("benutzen")] if item.has("benutzen") else ""
@@ -3483,6 +3508,10 @@ func _fill_bag(p: PlayerState) -> Array:
 			_bag_selected = index
 			_discard_ask = ""
 			_fill_panel())
+		# P5: Ein angelegtes Teil von der Ausrüstung in die Tasche ziehen legt es ab
+		slot.ablegen_gezogen.connect(func(platz: String) -> void:
+			_send({type = "ablegen", platz = platz})
+			_fill_panel())
 		_bag_grid.add_child(slot)
 	for slot: BagSlot in _bag_grid.get_children():
 		var id := str(slots[slot.index]) if slot.index < slots.size() else ""
@@ -3522,16 +3551,17 @@ func _wrapped(text: String, font_size: int, color: Color) -> RichTextLabel:
 
 
 ## Ausrüstung (Projekt 14, K.1): was angelegt ist, mit „Ablegen“, und was es zusammen bringt.
-func _ausruestung_zeilen(p: PlayerState) -> void:
-	_rep_box.add_child(_label(GameData.text("ausruestung_titel"), 17, Color("f2c14e")))
+## box: wohin (im Werte-Fenster oder im Ausrüstungs-Fenster neben der Tasche, P5).
+func _ausruestung_zeilen(p: PlayerState, box: VBoxContainer) -> void:
+	box.add_child(_label(GameData.text("ausruestung_titel"), 17, Color("f2c14e")))
 	var angelegt: Dictionary = p.progress.ausruestung
 	# Plätze mit Bildern rund um die eigene Figur (A8b)
 	var puppe := AusruestungPuppe.new()
-	_rep_box.add_child(puppe)
+	box.add_child(puppe)
 	puppe.bauen(p.progress, p.look, func(befehl: Dictionary) -> void: _send(befehl), _fill_panel)
 	BagSlot.angelegt_jetzt = angelegt
 	# Summe aus der Ausrüstung als Liste (P4): jeder Wert in einer eigenen Zeile, zwei Spalten
-	_rep_box.add_child(_label(GameData.text("ausruestung_summe_titel"), 15, Color("f2c14e")))
+	box.add_child(_label(GameData.text("ausruestung_summe_titel"), 15, Color("f2c14e")))
 	var tabelle := GridContainer.new()
 	tabelle.columns = 4
 	tabelle.add_theme_constant_override("h_separation", 14)
@@ -3543,12 +3573,13 @@ func _ausruestung_zeilen(p: PlayerState) -> void:
 		var wert_label := _label(zeile[1], 15, Color(zeile[2]))
 		wert_label.custom_minimum_size.x = 70
 		tabelle.add_child(wert_label)
-	_rep_box.add_child(tabelle)
-	var summe := _label(GameData.text("ausruestung_summe_hinweis"), 13, Color("a0a0a0"))
+	box.add_child(tabelle)
+	var summe := _label(GameData.text("ausruestung_summe_hinweis" if box == _rep_box else "ausruestung_ziehen_hinweis"), 13, Color("a0a0a0"))
 	summe.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	summe.custom_minimum_size.x = 100
-	_rep_box.add_child(summe)
-	_rep_box.add_child(UiStil.trennlinie())
+	box.add_child(summe)
+	if box == _rep_box:
+		box.add_child(UiStil.trennlinie())
 
 
 ## Aussehen-Plätze (Projekt 13, Schritt 6): Hut, Rückenteil, Farben und Waffe wählen. Nur Aussehen, die Werte bleiben.

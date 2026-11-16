@@ -10,6 +10,8 @@ const PLATZ := 64.0
 
 ## Gewählter Platz (bleibt, wenn das Fenster neu gefüllt wird)
 static var gewaehlt := ""
+## P5: Platz, auf den das in der Tasche gewählte Teil käme (leuchtet golden), "" = keiner
+static var ziel := ""
 
 var _plaetze := {}
 
@@ -22,7 +24,7 @@ func bauen(p: Progress, look: String, senden: Callable, neu: Callable) -> void:
 	zeile.add_theme_constant_override("separation", 18)
 	zeile.alignment = BoxContainer.ALIGNMENT_CENTER
 	add_child(zeile)
-	zeile.add_child(_spalte(LINKS, angelegt, neu))
+	zeile.add_child(_spalte(LINKS, angelegt, neu, senden))
 	var figur := TextureRect.new()
 	figur.texture = FighterView.einzelbild(look, "idle", 0)
 	figur.custom_minimum_size = Vector2(150, 3 * PLATZ + 2 * 22)
@@ -30,7 +32,7 @@ func bauen(p: Progress, look: String, senden: Callable, neu: Callable) -> void:
 	figur.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	figur.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	zeile.add_child(figur)
-	zeile.add_child(_spalte(RECHTS, angelegt, neu))
+	zeile.add_child(_spalte(RECHTS, angelegt, neu, senden))
 	# Beschreibung des gewählten Platzes
 	if gewaehlt != "" and _plaetze.has(gewaehlt):
 		var id := str(angelegt.get(gewaehlt, ""))
@@ -64,14 +66,19 @@ func bauen(p: Progress, look: String, senden: Callable, neu: Callable) -> void:
 		add_child(hinweis)
 
 
-func _spalte(plaetze: Array, angelegt: Dictionary, neu: Callable) -> VBoxContainer:
+func _spalte(plaetze: Array, angelegt: Dictionary, neu: Callable, senden: Callable) -> VBoxContainer:
 	var spalte := VBoxContainer.new()
 	spalte.add_theme_constant_override("separation", 4)
 	for platz: String in plaetze:
 		var feld := BagSlot.new()
 		feld.custom_minimum_size = Vector2(PLATZ, PLATZ)
 		feld.platz_name = Ausruestung.PLATZ_NAMEN[platz]
-		feld.show_item(str(angelegt.get(platz, "")), 1, platz == gewaehlt)
+		feld.platz_id = platz
+		feld.show_item(str(angelegt.get(platz, "")), 1, platz == gewaehlt or platz == ziel)
+		# P5: Teile aus der Tasche hierher ziehen legt sie an
+		feld.anlegen_gezogen.connect(func(gegenstand: String) -> void:
+			senden.call({type = "anlegen", gegenstand = gegenstand})
+			neu.call())
 		if str(angelegt.get(platz, "")) == "":
 			feld.tooltip_text = Ausruestung.PLATZ_NAMEN[platz]
 		var name := platz
