@@ -581,6 +581,7 @@ _Am 28.10. geteilt: Kofis Kopf-Blatt kam zuerst._
 - Marco prüft, ob alles einheitlich aussieht. Erst danach werden die Klassen-Körper nach den neuen Regeln gezeichnet (Projekt 11, Schritte 4 und 6, Bogenschütze neu).
 
 ## Später (wartet auf andere Teile des Spiels)
+- Eigene Klänge mit ChatGPT erstellen, statt der freien CC0-Klänge aus P8 (Marco 16.11.: „bei Zeiten“). Die Liste aller Klänge steht in FORTSCHRITT.md bei P8, `tools/klaenge_einbauen.py` baut sie ein.
 - Kobalt bekommt einen eigenen Körper (bis dahin der des Zähmers, Marco 04.11.)
 - Taschen vom Schneider und Lagerfeuer-Essen (brauchen Berufe)
 - Marktstand-Gebühr (braucht den Markt)

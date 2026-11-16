@@ -3365,6 +3365,7 @@ Gilt `render.yaml` bei dir nicht von selbst (Dienst nicht über „Blueprint“ 
   und Schritte leise. Gemacht mit `tools/klaenge_einbauen.py`: Dort steht für jeden Klang die Datei und die
   Lautstärke. Klingt einer falsch oder zu laut, dort tauschen oder die Zahl ändern und neu laufen lassen.
 - Dafür hat dieser Cloud-Chat eine eigene Umgebung „MiniKampf“ bekommen, die OpenGameArt erreichen darf.
+- **Später:** Marco will die Klänge bei Zeiten selbst mit ChatGPT erstellen (16.11.). Bis dahin sind die freien Klänge Platzhalter; vermerkt in `BAUAUFTRAEGE.md` („Später“) und in design.md.
 
 **Liste zum Probehören** (Name im Spiel, wann er kommt, woher)
 
