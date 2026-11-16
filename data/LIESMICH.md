@@ -30,7 +30,8 @@ und **Knoten**. Ein Knoten hat:
 - `aktionen`: was passiert, wenn der Knoten gezeigt bzw. die Antwort gewählt wird
 
 **Aktionen:** `{"auftrag_starten": "kennung"}`, `{"auftrag_abgeben": "kennung"}`, `{"gold": 10}`,
-`{"erfahrung": 50}`, `{"gegenstand": "heiltrank", "anzahl": 1}`, `{"merken": "etwas"}`
+`{"erfahrung": 50}`, `{"gegenstand": "heiltrank", "anzahl": 1}`, `{"merken": "etwas"}`,
+`{"herbeirufen": "kael"}` (die Figur läuft dazu, steht beim Gespräch dabei und geht danach wieder an ihren Platz, P22)
 
 **Bedingungen (`wenn`):** `{"und": [Bedingung, Bedingung]}` (alle müssen stimmen), `{"auftrag": "kennung", "stand": "neu" / "aktiv" / "fertig" / "abgegeben"}`,
 `{"gemerkt": "etwas"}`, `{"nicht_gemerkt": "etwas"}`, `{"stufe_ab": 3}`

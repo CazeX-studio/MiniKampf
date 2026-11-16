@@ -779,6 +779,8 @@ func _test_dungeon(choice: String) -> void:
 	world.apply_command("a", {type = "dialog_next"})
 	_check(p.progress.quest_state("die_wahrheit") == "abgegeben" and scenes == ["abspann:gruenwacht"], "Ende von Grünwacht (Abspann)")
 	_check(p.progress.flags.has("wahrheit_wipfelheim") == truth and p.progress.flags.has("geheimnis_bewahrt") != truth, "Entscheidung über die Wahrheit gemerkt")
+	# P22: Kael stand beim Gespräch dabei und geht jetzt zurück; ist er an seinem Platz, ist er fort
+	_tick(world, 30.0)
 	_check(not world.npc_visible(p, "kael"), "Kael ist danach fort")
 	var blooming := 0
 	var withered := 0

@@ -639,6 +639,10 @@ func npc_visible(p: PlayerState, npc_id: String) -> bool:
 
 ## Ist der NPC für diesen Spieler in der Geschichte gerade da (auch wenn er erst noch herbeiläuft)?
 func _npc_present(p: PlayerState, npc_id: String) -> bool:
+	# Wer gerade herbeigerufen ist (P22), bleibt da, bis er wieder an seinem Platz ist, auch wenn die Geschichte
+	# inzwischen weiter ist (Kael beim Abschluss mit Ysolde)
+	if npcs.has(npc_id) and npcs[npc_id].map == p.map and p.npc_walk.get("id", "") == npc_id and p.npc_walk.get("nur_dabei", false):
+		return true
 	return npcs.has(npc_id) and npcs[npc_id].map == p.map and check(p, npcs[npc_id].cond)
 
 
@@ -1378,6 +1382,9 @@ func run_actions(p: PlayerState, actions: Array) -> void:
 			continue
 		if action.has("auftrag_starten"):
 			_start_quest(p, action.auftrag_starten)
+		# {"herbeirufen": "kael"}: Der NPC läuft dazu und steht beim Gespräch dabei (P22)
+		if action.has("herbeirufen") and npcs.has(str(action.herbeirufen)) and p.npc_walk.is_empty():
+			_start_walk_in(p, str(action.herbeirufen), true)
 		if action.has("auftrag_abgeben"):
 			_turn_in_quest(p, action.auftrag_abgeben)
 		if action.has("gold"):
@@ -2407,7 +2414,9 @@ func _check_approach(p: PlayerState) -> void:
 
 
 ## Der NPC taucht ein Stück entfernt auf (auf der Seite seines Platzes) und läuft neben den Spieler.
-func _start_walk_in(p: PlayerState, npc_id: String) -> void:
+## nur_dabei (P22, Aktion "herbeirufen"): Der NPC kommt dazu, steht beim laufenden Gespräch dabei und geht danach wieder,
+## ohne selbst ein Gespräch anzufangen.
+func _start_walk_in(p: PlayerState, npc_id: String, nur_dabei := false) -> void:
 	var home: Vector2i = npcs[npc_id].cell
 	var dir := (Vector2(home) - p.pos).normalized()
 	# "anspringen": {"richtung": [-1, -1], "abstand": 5}: kommt aus dieser Richtung (z. B. Mira von oben vom Marktplatz,
@@ -2423,11 +2432,13 @@ func _start_walk_in(p: PlayerState, npc_id: String) -> void:
 	if goal != Vector2i(-1, -1):
 		route = get_map(p.map).astar.get_id_path(start, goal)
 	if route.is_empty():
+		if nur_dabei:
+			return
 		# Kein Weg: gleich reden (Gruppenmitglieder in der Nähe erleben das mit)
 		_start_talk(p, npc_id, "angesprochen:" + npc_id)
 		return
 	route.pop_front()
-	p.npc_walk = {id = npc_id, pos = Vector2(start), path = route, facing = 1, phase = "hin"}
+	p.npc_walk = {id = npc_id, pos = Vector2(start), path = route, facing = 1, phase = "hin", nur_dabei = nur_dabei}
 	# Im Dungeon holt der NPC Gruppenmitglieder in der Nähe gleich mit ins Gespräch (sie lösen ihn nicht noch einmal aus)
 	for id: String in group_members.call(p.id) if get_map(p.map).dungeon != "" or scenes_everywhere else []:
 		var other: PlayerState = players.get(id)
@@ -2462,7 +2473,7 @@ func _move_npc_walk(p: PlayerState, delta: float) -> void:
 				w.facing = 1 if (p.pos.x - p.pos.y) > (w.pos.x - w.pos.y) else -1
 				# Gruppenmitglieder in der Nähe erleben das mit (z. B. Marv auf dem Fest, Ren nach dem Sternenfresser).
 				# Ist schon ein Gespräch im Gang (jemand aus der Gruppe war schneller), redet der NPC dort mit.
-				if not p.in_dialog():
+				if not p.in_dialog() and not w.get("nur_dabei", false):
 					_start_talk(p, w.id, "angesprochen:" + w.id)
 		"reden":
 			if not p.in_dialog():
