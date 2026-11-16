@@ -3,7 +3,7 @@
 Das Blatt hat pinken Hintergrund (Auftrag B6 in Spieldesign/GRAFIK_AUFTRAG.md). Jedes Symbol wird freigestellt,
 quadratisch zugeschnitten und auf 96 × 96 Pixel verkleinert (das Spiel zeigt es weich verkleinert im Taschen-Kästchen).
 Ergebnis: assets/gegenstaende/<gegenstand>.png, die Kennungen wie in data/gegenstaende.json.
-Aufruf: python3 tools/gegenstand_bilder.py   (braucht numpy, scipy und Pillow)
+Aufruf: python3 tools/gegenstand_bilder.py [blatt …]   (braucht numpy, scipy und Pillow; ohne Blatt alle Blätter)
 """
 import sys
 from pathlib import Path
@@ -72,6 +72,9 @@ BLAETTER = {"gegenstaende": [
 	# Zauber-Waffen (A23b, Auftrag T1): Sternensängerin, Schmuck mit Zauberkraft, Waffen der späteren Zauberklassen
 	["wanderleier", "sternenharfe", "schellenleier", "sternenamulett"],
 	["runenstab", "zwielichtstab", "ritualdolch", "gelehrtenring"],
+], "gegenstaende_12": [
+	# Miras Notenblatt (P7, Auftrag V2)
+	["miras_notenblatt"],
 ]}
 
 ## Blätter mit Symbolen aus mehreren getrennten Teilen (z. B. drei Pusteblumensamen): Teile näher als so viele Pixel gehören zusammen
@@ -90,7 +93,11 @@ def sanft_freistellen(roh, ys, xs):
 
 
 def main():
+	# Mit Blattnamen dahinter nur dieses Blatt, z. B. „python3 tools/gegenstand_bilder.py gegenstaende_12“
+	nur = set(sys.argv[1:])
 	for blatt, reihen in BLAETTER.items():
+		if nur and blatt not in nur:
+			continue
 		if not (WURZEL / "tools" / "vorlagen" / f"{blatt}.png").exists():
 			print(f"{blatt}.png fehlt noch, übersprungen")
 			continue

@@ -172,8 +172,11 @@ func _draw() -> void:
 static func icon_texture(id: String) -> Texture2D:
 	# Festhalten, damit ein nur gezeichnetes Bild (draw_texture) nicht gleich wieder freigegeben wird
 	if not _icons.has(id):
-		var datei: String = GameData.item(id).get("bild", {}).get("datei", id)
-		var path := "res://assets/gegenstaende/%s.png" % datei
+		var bild: Dictionary = GameData.item(id).get("bild", {})
+		var path := "res://assets/gegenstaende/%s.png" % str(bild.get("datei", id))
+		# "ersatz": ein anderes gemaltes Bild, bis das eigene da ist (P7: Miras Notenblatt nimmt solange den Brief)
+		if not ResourceLoader.exists(path) and bild.has("ersatz"):
+			path = "res://assets/gegenstaende/%s.png" % str(bild.ersatz)
 		_icons[id] = load(path) if ResourceLoader.exists(path) else null
 	return _icons[id]
 

@@ -75,6 +75,9 @@ func _run() -> void:
 		fenster.queue_free()
 	BagSlot.angelegt_jetzt = {}
 	feld.queue_free()
+	# P7: Miras Notenblatt zeigt ein gemaltes Bild (eigenes Bild V2 oder solange den Brief), keine gezeichnete Tafel
+	var noten := BagSlot.icon_texture("miras_notenblatt")
+	_check(noten != null, "Miras Notenblatt hat ein gemaltes Bild (%s)" % (noten.resource_path if noten else "keins"))
 	# P6: Jeder Wert hat ein Symbol (gemalt oder Platzhalter), auch in den Listen
 	for wert: String in UiStil.WERTE:
 		_check(UiStil.wert_symbol(wert) != null, "Symbol für %s" % wert)
