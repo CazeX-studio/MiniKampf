@@ -14,8 +14,10 @@ RUN apt-get update \
 
 WORKDIR /spiel
 COPY . .
-# Einmal importieren, damit der Server schnell startet
-RUN godot --headless --path /spiel --import || true
+# Einmal importieren, damit der Server schnell startet. Bricht der Import ab (zu wenig Speicher beim Bauen),
+# macht der nächste Durchgang dort weiter, wo der letzte aufgehört hat.
+RUN for i in 1 2 3; do godot --headless --path /spiel --import && break; echo "Import abgebrochen, neuer Versuch $i"; done; \
+	test -d /spiel/.godot/imported
 
 # Der Anbieter gibt den Port über PORT vor (bei Render 10000)
 ENV PORT=10000

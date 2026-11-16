@@ -3277,3 +3277,24 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 2. Mit der Maus über die Waffe an der Puppe fahren: Infofenster mit Waffenkraft und Waffen-Tempo.
 3. Die Waffe antippen: dieselben Werte unter der Figur, darunter „Ablegen“.
 4. Mit I die Tasche öffnen und über ein Ausrüstungsteil fahren: Werte und Vergleich mit grünen und roten Pfeilen.
+
+## Render: weniger fehlgeschlagene Server-Bauten (16.11.2026)
+
+Marco bekam öfter die E-Mail „Deploy failed“ von Render. Render baut den Online-Server bei jedem Push auf `main` neu.
+Die Protokolle bei Render kann Claude nicht lesen, darum wurde der Bau hier nachgestellt:
+- Render bekam bisher das ganze Repo (1,6 GB, davon 1,2 GB Vorlagen und Referenzbilder in `tools/`).
+- Der Bilder-Import beim Bauen braucht knapp 850 MB Speicher, die kostenlose Render-Stufe hat nur 512 MB. Bricht er
+  ab, merkte das bisher niemand (der Fehler wurde verschluckt), und der Server startete mit halbem Import.
+- Der laufende Server selbst braucht nur etwa 200 MB, das passt.
+
+Geändert:
+- `.dockerignore`: Der Server bekommt nur noch, was er braucht (ohne `tools/`, `tests/`, `web/`, Texte), 414 MB statt 1,6 GB.
+- `server/Dockerfile`: Bricht der Import ab, macht er bis zu dreimal weiter, wo er aufgehört hat. Fehlt der Import
+  danach ganz, bricht der Bau sauber ab, und der alte Server läuft weiter.
+- `render.yaml`: Pushes, die nur Texte, Werkzeuge, Prüfungen oder die Webseite ändern, bauen den Server nicht neu
+  (deutlich weniger Bauten, also weniger E-Mails).
+
+**Für dich:** Kommt die E-Mail trotzdem wieder, bei Render im Dashboard den Dienst „asterfall-server“ öffnen, unter
+„Events“ den fehlgeschlagenen Eintrag anklicken und mir die letzten Zeilen des Protokolls schicken (Text oder Foto).
+Gilt `render.yaml` bei dir nicht von selbst (Dienst nicht über „Blueprint“ angelegt), dort unter Settings →
+„Build Filters“ dieselben Ordner eintragen: `**/*.md`, `tools/**`, `tests/**`, `web/**`, `.github/**`.

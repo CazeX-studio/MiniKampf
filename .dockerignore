@@ -1,4 +1,11 @@
+# Was der Online-Server (server/Dockerfile, Render) nicht braucht. Hält den Bau klein und schnell:
+# ohne tools/ (Vorlagen und Referenzbilder, über 1 GB), Prüfungen, Webseite und Texte.
 .godot/
 builds/
 .git/
+.github/
+tools/
+tests/
+web/
+*.md
 tests/ergebnis_*.txt

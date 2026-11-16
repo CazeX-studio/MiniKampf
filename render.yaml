@@ -10,3 +10,11 @@ services:
     dockerContext: .
     branch: main
     autoDeploy: true
+    # Nur neu bauen, wenn sich etwas am Spiel ändert (nicht bei Texten, Werkzeugen, Prüfungen oder der Webseite)
+    buildFilter:
+      ignoredPaths:
+        - "**/*.md"
+        - "tools/**"
+        - "tests/**"
+        - "web/**"
+        - ".github/**"
