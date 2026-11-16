@@ -106,21 +106,9 @@ static func werte_text(id: String) -> String:
 		return ""
 	var teile: PackedStringArray = []
 	teile.append(SELTENHEIT_NAMEN.get(str(t.get("seltenheit", "gewoehnlich")), ""))
-	if t.has("waffenkraft"):
-		teile.append("Waffenkraft %d" % int(t.waffenkraft))
-	if t.has("zauberkraft"):
-		teile.append("Zauberkraft %d" % int(t.zauberkraft))
-	if t.has("verteidigung"):
-		teile.append("Verteidigung %d" % int(t.verteidigung))
-	if t.has("widerstand"):
-		teile.append("Widerstand %d" % int(t.widerstand))
-	if str(t.get("platz", "")) == "waffe":
-		teile.append("Tempo: %s" % TEMPO_NAMEN.get(str(t.get("tempo", "normal")), "normal"))
-	var boni: Dictionary = t.get("boni", {})
-	for wert: String in boni:
-		teile.append("%s %+d" % [BONUS_NAMEN.get(wert, wert), int(boni[wert])])
-	if t.has("sonderwert"):
-		teile.append("Sonderwert: %s" % str(t.sonderwert))
+	# Jeder Wert mit seinem Symbol (P6)
+	for z: Array in werte_liste(id):
+		teile.append("%s %s %s" % [UiStil.wert_bild(str(z[3]), 16), z[0], z[1]])
 	return " · ".join(teile)
 
 
@@ -132,15 +120,15 @@ static func werte_liste(id: String) -> Array:
 	var liste := []
 	for wert: String in ["waffenkraft", "zauberkraft", "verteidigung", "widerstand"]:
 		if t.has(wert):
-			liste.append([WERT_NAMEN[wert], str(int(t[wert])), "f3ead8"])
+			liste.append([WERT_NAMEN[wert], str(int(t[wert])), "f3ead8", wert])
 	if str(t.get("platz", "")) == "waffe":
 		var tempo := str(t.get("tempo", "normal"))
-		liste.append(["Waffen-Tempo", TEMPO_NAMEN.get(tempo, "normal"), "6dff8a" if tempo == "schnell" else ("ff9a7a" if tempo == "schwer" else "f3ead8")])
+		liste.append(["Waffen-Tempo", TEMPO_NAMEN.get(tempo, "normal"), "6dff8a" if tempo == "schnell" else ("ff9a7a" if tempo == "schwer" else "f3ead8"), "tempo"])
 	var boni: Dictionary = t.get("boni", {})
 	for wert: String in boni:
-		liste.append([BONUS_NAMEN.get(wert, wert), "%+d" % int(boni[wert]), "6dff8a" if int(boni[wert]) >= 0 else "ff7070"])
+		liste.append([BONUS_NAMEN.get(wert, wert), "%+d" % int(boni[wert]), "6dff8a" if int(boni[wert]) >= 0 else "ff7070", wert])
 	if t.has("sonderwert"):
-		liste.append(["Sonderwert", str(t.sonderwert), "f2c14e"])
+		liste.append(["Sonderwert", str(t.sonderwert), "f2c14e", "krit"])
 	return liste
 
 
@@ -150,22 +138,23 @@ static func summe_liste(angelegt: Dictionary) -> Array:
 	var liste := []
 	for wert: String in ["waffenkraft", "zauberkraft", "verteidigung", "widerstand"]:
 		if int(s[wert]) > 0 or wert != "zauberkraft":
-			liste.append([WERT_NAMEN[wert], str(int(s[wert])), "f3ead8"])
+			liste.append([WERT_NAMEN[wert], str(int(s[wert])), "f3ead8", wert])
 	var tempo := str(s.waffen_tempo)
-	liste.append(["Waffen-Tempo", TEMPO_NAMEN.get(tempo, "normal"), "6dff8a" if tempo == "schnell" else ("ff9a7a" if tempo == "schwer" else "f3ead8")])
+	liste.append(["Waffen-Tempo", TEMPO_NAMEN.get(tempo, "normal"), "6dff8a" if tempo == "schnell" else ("ff9a7a" if tempo == "schwer" else "f3ead8"), "tempo"])
 	for wert: String in s.boni:
 		# Zauberkraft, Verteidigung und Widerstand aus Boni stecken schon in den Zeilen oben
 		if wert in ["zauberkraft", "verteidigung", "widerstand"] or int(s.boni[wert]) == 0:
 			continue
-		liste.append([BONUS_NAMEN.get(wert, wert), "%+d" % int(s.boni[wert]), "6dff8a" if int(s.boni[wert]) > 0 else "ff7070"])
+		liste.append([BONUS_NAMEN.get(wert, wert), "%+d" % int(s.boni[wert]), "6dff8a" if int(s.boni[wert]) > 0 else "ff7070", wert])
 	return liste
 
 
-## Werte-Liste als BBCode-Zeilen, z. B. „Waffenkraft  [b]10[/b]“.
+## Werte-Liste als BBCode-Zeilen mit Symbol (P6), z. B. „[Schwert] Waffenkraft  [b]10[/b]“.
 static func liste_bbcode(liste: Array) -> String:
 	var zeilen: PackedStringArray = []
 	for z: Array in liste:
-		zeilen.append("[color=#c8c8c8]%s[/color]  [color=#%s][b]%s[/b][/color]" % [z[0], z[2], z[1]])
+		var bild := UiStil.wert_bild(str(z[3]), 16) + " " if z.size() > 3 else ""
+		zeilen.append("%s[color=#c8c8c8]%s[/color]  [color=#%s][b]%s[/b][/color]" % [bild, z[0], z[2], z[1]])
 	return "\n".join(zeilen)
 
 

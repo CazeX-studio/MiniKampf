@@ -104,6 +104,40 @@ static func symbol(name: String) -> Texture2D:
 	return _symbole[name]
 
 
+## Werte-Symbole (P6), Reihenfolge wie auf Marcos Blatt V1 (tools/werte_symbole.py).
+const WERTE := ["leben", "mana", "angriff", "waffenkraft", "zauberkraft", "verteidigung", "widerstand", "tempo",
+		"krit", "ausweichen", "stufe", "erfahrung"]
+## Platzhalter aus dem UI-Set, bis assets/ui/wert_<name>.png da ist
+const WERT_PLATZHALTER := {leben = "heilen", mana = "wasser", angriff = "hieb", waffenkraft = "schwert",
+		zauberkraft = "magie", verteidigung = "schild", widerstand = "schildblock", tempo = "wind", krit = "blitz",
+		ausweichen = "fliehen", stufe = "sternenkraft", erfahrung = "kristall"}
+
+
+## Symbol eines Werts (leben, mana, angriff, …): Marcos gemaltes Bild oder der Platzhalter.
+static func wert_symbol(wert: String) -> Texture2D:
+	var pfad := "res://assets/ui/wert_%s.png" % wert
+	if not _symbole.has(pfad):
+		_symbole[pfad] = load(pfad) if ResourceLoader.exists(pfad) else symbol(str(WERT_PLATZHALTER.get(wert, "mehr")))
+	return _symbole[pfad]
+
+
+## Werte-Symbol mitten im Text (BBCode).
+static func wert_bild(wert: String, groesse: int = 18) -> String:
+	return "[img=%d]%s[/img]" % [groesse, wert_symbol(wert).resource_path]
+
+
+## Werte-Symbol als kleines Bild für Listen.
+static func wert_bildchen(wert: String, groesse: float = 20.0) -> TextureRect:
+	var bild := TextureRect.new()
+	bild.texture = wert_symbol(wert)
+	bild.custom_minimum_size = Vector2(groesse, groesse)
+	bild.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	bild.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	bild.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	bild.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	return bild
+
+
 ## Zeichen über einem Dienst (assets/ui/zeichen_<name>.png, tools/hutmacher.py), null = gibt es nicht.
 static func zeichen(name: String) -> Texture2D:
 	var pfad := "res://assets/ui/zeichen_%s.png" % name

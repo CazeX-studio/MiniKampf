@@ -75,6 +75,11 @@ func _run() -> void:
 		fenster.queue_free()
 	BagSlot.angelegt_jetzt = {}
 	feld.queue_free()
+	# P6: Jeder Wert hat ein Symbol (gemalt oder Platzhalter), auch in den Listen
+	for wert: String in UiStil.WERTE:
+		_check(UiStil.wert_symbol(wert) != null, "Symbol für %s" % wert)
+	_check(Ausruestung.liste_bbcode(Ausruestung.werte_liste("kurzschwert")).contains("[img="), "Werte-Liste zeigt Symbole")
+	_check(Ausruestung.werte_text("kurzschwert").contains("[img=") and Ausruestung.werte_text("kurzschwert").contains("Waffenkraft"), "Werte-Zeile unter der Tasche zeigt Symbole")
 	# P5: Ziehen zwischen Tasche und Ausrüstung
 	var waffen_platz := BagSlot.new()
 	waffen_platz.platz_name = "Waffe"

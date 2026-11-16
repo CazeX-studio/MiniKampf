@@ -3237,8 +3237,8 @@ func _fill_panel() -> void:
 			var karten := KartenAlbum.boni_von(p.progress.flags)
 			_fill_stats_head(p, data.title, data.hp + BattleState.LEVEL_HP * bonus + int(karten.get("leben", 0)),
 					data.mana + BattleState.LEVEL_MANA * bonus + int(karten.get("mana", 0)) if data.mana > 0 else 0)
-			lines.append(UiStil.bild("pfeil") + " [b]Tempo: %d[/b]" % (data.tempo + int(karten.get("tempo", 0))))
-			lines.append(UiStil.bild("schwert") + " [b]Stärke: %d %%[/b] (Schaden und Heilung)" % roundi(BattleRequest.hero_power(p.progress.level) * 100))
+			lines.append(UiStil.wert_bild("tempo", 20) + " [b]Tempo: %d[/b]" % (data.tempo + int(karten.get("tempo", 0))))
+			lines.append(UiStil.wert_bild("angriff", 20) + " [b]Stärke: %d %%[/b] (Schaden und Heilung)" % roundi(BattleRequest.hero_power(p.progress.level) * 100))
 			if not karten.is_empty():
 				lines.append(GameData.text("werte_karten", ["[color=#6dff8a]%s[/color]" % KartenAlbum.boni_text(karten)]))
 			if klasse == "tamer":
@@ -3260,8 +3260,8 @@ func _fill_panel() -> void:
 			lines.append("[color=#f2c14e]%s[/color]" % GameData.text("werte_noch_novize", [Sandbox.CLASSES[chosen].title,
 					GameData.get_file("klassen").get(chosen, {}).get("lehrmeister", "?")]))
 			lines.append("")
-		lines.append(UiStil.bild("schwert") + " [b]%s: %d[/b]     " % [Grundwerte.NAMES.angriff, stats.angriff + int(karten_n.get("angriff", 0))]
-				+ UiStil.bild("pfeil") + " [b]%s: %d[/b]" % [Grundwerte.NAMES.tempo, stats.tempo + int(karten_n.get("tempo", 0))])
+		lines.append(UiStil.wert_bild("angriff", 20) + " [b]%s: %d[/b]     " % [Grundwerte.NAMES.angriff, stats.angriff + int(karten_n.get("angriff", 0))]
+				+ UiStil.wert_bild("tempo", 20) + " [b]%s: %d[/b]" % [Grundwerte.NAMES.tempo, stats.tempo + int(karten_n.get("tempo", 0))])
 		if not karten_n.is_empty():
 			lines.append(GameData.text("werte_karten", ["[color=#6dff8a]%s[/color]" % KartenAlbum.boni_text(karten_n)]))
 		lines.append("")
@@ -3425,6 +3425,8 @@ func _fill_stats_head(p: PlayerState, title: String, hp: int, mana: int) -> void
 func _stat_bar(name: String, value: int, max_value: int, fill: String, text: String) -> HBoxContainer:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 10)
+	# Symbol des Werts (P6)
+	row.add_child(UiStil.wert_bildchen(name.to_lower(), 22.0))
 	var label := _label(name, 16, Color("f3ead8"))
 	label.custom_minimum_size.x = 90
 	row.add_child(label)
@@ -3563,15 +3565,17 @@ func _ausruestung_zeilen(p: PlayerState, box: VBoxContainer) -> void:
 	# Summe aus der Ausrüstung als Liste (P4): jeder Wert in einer eigenen Zeile, zwei Spalten
 	box.add_child(_label(GameData.text("ausruestung_summe_titel"), 15, Color("f2c14e")))
 	var tabelle := GridContainer.new()
-	tabelle.columns = 4
-	tabelle.add_theme_constant_override("h_separation", 14)
+	tabelle.columns = 6
+	tabelle.add_theme_constant_override("h_separation", 8)
 	tabelle.add_theme_constant_override("v_separation", 2)
 	for zeile: Array in Ausruestung.summe_liste(angelegt):
+		# Symbol des Werts (P6)
+		tabelle.add_child(UiStil.wert_bildchen(str(zeile[3])))
 		var name_label := _label(zeile[0], 15, Color("c8c8c8"))
 		name_label.custom_minimum_size.x = 120
 		tabelle.add_child(name_label)
 		var wert_label := _label(zeile[1], 15, Color(zeile[2]))
-		wert_label.custom_minimum_size.x = 70
+		wert_label.custom_minimum_size.x = 60
 		tabelle.add_child(wert_label)
 	box.add_child(tabelle)
 	var summe := _label(GameData.text("ausruestung_summe_hinweis" if box == _rep_box else "ausruestung_ziehen_hinweis"), 13, Color("a0a0a0"))
