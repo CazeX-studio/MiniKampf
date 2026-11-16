@@ -1719,7 +1719,9 @@ func _build_ui() -> void:
 
 	# Schnellleiste oben rechts wie im UI-Entwurf: Symbol mit Taste, Name als Hinweis beim Darüberfahren
 	var x := 1270.0
-	for info: Array in [["", "zahnrad", "Menü", 56, _go_menu], ["I", "tasche", "Tasche (I)", 72, _toggle_panel.bind("tasche")],
+	if menue_vorschlag:
+		x = _menue_vorschlag_bauen(root)
+	for info: Array in [] if menue_vorschlag else [["", "zahnrad", "Menü", 56, _go_menu], ["I", "tasche", "Tasche (I)", 72, _toggle_panel.bind("tasche")],
 			["X", "sanduhr", "Hinsetzen (X): füllt das Mana, am Lagerfeuer schneller", 72, func() -> void: _send({type = "hinsetzen"})],
 			["K", "rolle", "Fähigkeiten (K)", 72, _toggle_panel.bind("faehigkeiten")],
 			["L", "kristall", "Kartenalbum (L)", 72, _toggle_panel.bind("album")],
@@ -2161,6 +2163,64 @@ func _on_effect(player_id: String, effect: String) -> void:
 	for i in 8:
 		shake.tween_property(_camera, "offset", Vector2(randf_range(-10, 10), randf_range(-8, 8)), 0.05)
 	shake.tween_property(_camera, "offset", Vector2.ZERO, 0.05)
+
+
+## P10: Vorschlag für die Leiste oben (erst nur fürs Foto, Marco entscheidet; tests/menue_vorschlag_foto.gd).
+static var menue_vorschlag := false
+
+
+## Rechts die System-Knöpfe (Menü, Feedback, Neu beginnen), mit Abstand davor die Spiel-Fenster in fester Reihenfolge,
+## alle gleich breit mit Bild und Taste. Hinsetzen wandert nach unten links zu den Bewegungen.
+## Gibt die linke Kante der Leiste zurück (dort kommt bei Zähmern der Rudel-Knopf hin).
+func _menue_vorschlag_bauen(root: Control) -> float:
+	var x := 1270.0
+	var gruppen: Array = [
+		# System: kleiner, rechts außen
+		[[GameData.text("neu_beginnen"), "", GameData.text("neu_beginnen"), 118, _restart],
+			[GameData.text("feedback"), "", GameData.text("feedback_titel"), 92, func() -> void: Tester.feedback(_ui_root, _ort_jetzt)],
+			["", "zahnrad", "Menü", 50, _go_menu]],
+		# Spiel-Fenster, von links nach rechts so oft gebraucht wie gelesen
+		[["J", "ausrufe", "Aufträge (J)", 64, _toggle_panel.bind("auftraege")],
+			["I", "tasche", "Tasche (I)", 64, _toggle_panel.bind("tasche")],
+			["C", "schild", "Werte (C)", 64, _toggle_panel.bind("werte")],
+			["K", "rolle", "Fähigkeiten (K)", 64, _toggle_panel.bind("faehigkeiten")],
+			["L", "kristall", "Kartenalbum (L)", 64, _toggle_panel.bind("album")],
+			["M", "pfeil", "Große Karte (M)", 64, _toggle_weltkarte]],
+	]
+	for gruppe: Array in gruppen:
+		var knoepfe: Array = gruppe.duplicate()
+		knoepfe.reverse()
+		for info: Array in knoepfe:
+			var button := Button.new()
+			button.text = info[0]
+			if info[1] != "":
+				button.icon = UiStil.symbol(info[1])
+				button.add_theme_constant_override("icon_max_width", 24)
+			button.tooltip_text = info[2]
+			button.size = Vector2(info[3], 42)
+			x -= info[3] + 6.0
+			button.position = Vector2(x + 6.0, 10)
+			button.add_theme_font_size_override("font_size", 13 if gruppe == gruppen[0] else 15)
+			button.focus_mode = Control.FOCUS_NONE
+			button.pressed.connect(info[4])
+			root.add_child(button)
+			_buttons.append(button)
+		# Abstand zwischen System und Spiel-Fenstern
+		x -= 22.0
+	# Hinsetzen bei den Bewegungen (unten links, neben dem Steuerkreuz am Handy)
+	var sitzen := Button.new()
+	sitzen.text = "Hinsetzen (X)"
+	sitzen.icon = UiStil.symbol("sanduhr")
+	sitzen.add_theme_constant_override("icon_max_width", 22)
+	sitzen.tooltip_text = "Hinsetzen (X): füllt das Mana, am Lagerfeuer schneller"
+	sitzen.size = Vector2(150, 40)
+	sitzen.position = Vector2(16, 664)
+	sitzen.add_theme_font_size_override("font_size", 14)
+	sitzen.focus_mode = Control.FOCUS_NONE
+	sitzen.pressed.connect(func() -> void: _send({type = "hinsetzen"}))
+	root.add_child(sitzen)
+	_buttons.append(sitzen)
+	return x + 22.0
 
 
 func _go_menu() -> void:
