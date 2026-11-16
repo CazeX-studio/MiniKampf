@@ -90,6 +90,9 @@ static func bauen(k: String, look: String, index: int, stufe: int, gold: int, ge
 		p.progress.flags["ausbildung_morgen"] = true
 	if index >= liste.find("sternenfall"):
 		p.progress.flags["sternenfall"] = true
+	# Lene hat die Gesandten angekündigt (sonst fängt sie beim Fest wieder davon an)
+	if index > liste.find("erster_gruppenkampf"):
+		p.progress.flags["gesandte_angekuendigt"] = true
 	if ziel == "sternenfall":
 		for merker: String in ["nacht", "sternenfall_kampf_vorbei", "sternenfresser_besiegt"]:
 			p.progress.flags[merker] = true

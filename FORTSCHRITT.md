@@ -5,7 +5,7 @@ Wird nach jedem Arbeitsschritt aktualisiert.
 
 ## Aktueller Stand (2026-10-27, ergänzt 16.11.)
 
-- **Nächster Schritt (16.11.2026, nach Marcos Playtest):** 22 neue Bauaufträge P1 bis P22 in `BAUAUFTRAEGE.md` (Demo-Reihenfolge, Abschnitt „Playtest 16.11.2026“), sie kommen vor den Testtagen. P1 (Wegweiser nach Kaels Erinnerung) ist fertig. „Mach weiter“ baut als Nächstes P2 (Aufträge nur für die eigene Klasse), dann P3 (Abschluss melden ohne Klicken). Neue Bildaufträge für dich in `Spieldesign/GRAFIK_AUFTRAG.md` Teil V (Werte-Symbole, Miras Notenblatt, Fähigkeiten-Bilder, Pfeile im Fähigkeitenbaum, Splitter-Rindenbär, zerstörter Splitterkristall, Blumen, Erinnerungs-Szene). Für dich bei P3: ein zweites Google-Formular für den Abschluss.
+- **Nächster Schritt (16.11.2026, nach Marcos Playtest):** 22 neue Bauaufträge P1 bis P22 in `BAUAUFTRAEGE.md` (Demo-Reihenfolge, Abschnitt „Playtest 16.11.2026“), sie kommen vor den Testtagen. P1 (Wegweiser nach Kaels Erinnerung) und P2 (Aufträge nur für die eigene Klasse) sind fertig. „Mach weiter“ baut als Nächstes P3 (Abschluss melden ohne Klicken). Neue Bildaufträge für dich in `Spieldesign/GRAFIK_AUFTRAG.md` Teil V (Werte-Symbole, Miras Notenblatt, Fähigkeiten-Bilder, Pfeile im Fähigkeitenbaum, Splitter-Rindenbär, zerstörter Splitterkristall, Blumen, Erinnerungs-Szene). Für dich bei P3: ein zweites Google-Formular für den Abschluss.
 - **Stand 11.11.2026 (nach dem Grafik-Block):** Alle Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil K (Nachbesserungen) und Teil L (Fähigkeiten der fünf Demo-Klassen und des Novizen) sind eingebaut und online. Offen bei den Bildern: Teil H (Klassenbilder, Bauauftrag A3b), Teil J (Häuser von hinten, S4a2), Teil I (Sitzen und Laufen, S6, ganz am Ende); die Übersicht steht oben in `GRAFIK_AUFTRAG.md`. **Nächster Bauauftrag:** Die Alpha-Aufträge sind fertig (A10b und A13b sind fertig; A3b, A9c und A20 haben alle Bilder und kommen als Nächstes). E4 (Balancing) kommt später (Marco, 11.11.: braucht viele Tests), dann E5 (T3 und T4 am Stück); neu für dich: Teil M bis Q in `GRAFIK_AUFTRAG.md` (neu: A16 Novizen-Fähigkeiten nach der Klassenwahl behalten), dann E4 und E5.
 - **Bilder von Marco (02.11. abends):** 38 Blätter liegen unter `tools/vorlagen/`: alle sechs Novizen-Blätter ohne Klinge, Kurzschwert, Probe-Hut, Probe-Umhang, Waffen und Rückenteile der Klassen, Körper der fünf Klassen.
   - Dazu der Baukasten (02.11.): acht Grundkörper (`grund_*.png`), Köpfe (`koepfe_*.png`), Hüte (`huete_regionen.png`), Zeichen (`zeichen_dienste.png`) und die Klingentänzerin Blatt 1. Bei den Fäusten der Abwehr-Bilder von Blatt 1 prüft Claude beim Einbauen, ob sie am Oval stören.
@@ -3043,7 +3043,7 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 ## Als Nächstes (Vorschläge)
 
 - **Playtest 16.11.2026 (Bauaufträge P1 bis P22 in `BAUAUFTRAEGE.md`):**
-  - Blocker: P1 Wegweiser nach Kaels Erinnerung (fertig 16.11.), P2 Aufträge und „!“ nur für die eigene Klasse (Fenn), P3 Abschluss melden mit einem zweiten Formular, das sich selbst abschickt.
+  - Blocker: P1 Wegweiser nach Kaels Erinnerung (fertig 16.11.), P2 Aufträge und „!“ nur für die eigene Klasse (Fenn, fertig 16.11.), P3 Abschluss melden mit einem zweiten Formular, das sich selbst abschickt.
   - Ausrüstung und Werte: P4 Werte der Ausrüstung sichtbar, P5 Ausrüstung und Tasche nebeneinander, P6 Symbole für die Werte (Bild V1), P7 Miras Notenblatt (Bild V2).
   - Klang und Menü: P8 Klänge nachbessern, P10 Menü oben aufräumen (das „X“ zum Hinsetzen weg von Aufträgen und Tasche).
   - Fähigkeitenbaum: P9 weiße Felder (Bilder sind da, Fehler suchen; sonst Bild V3), P11 Werte der Fähigkeiten im Baum, P12 mehr Abstand und gemalte Pfeile wie im WoW-Talentbaum (Bild V4).
@@ -3201,3 +3201,22 @@ Erst wenn alles spielbar ist, werden sie zusammen abgestimmt.
 2. Dem Wegweiser zum Seilaufzug und oben zu Kael folgen, mit ihm reden.
 3. Danach muss der Pfeil wieder zum Seilaufzug zeigen und unten im Waldboden auf den Höhleneingang im Süden.
 4. Auf der kleinen Karte pulsiert die Raute am Höhleneingang.
+
+## P2: „!“ nur für die eigene Klasse (Playtest, 16.11.2026)
+
+- Fenn zeigt das gelbe „!“ nur noch Bogenschützen. Vorher sah jede Klasse, die nach der Glutoase nach Grünwacht kam,
+  bei ihm ein „!“ für „Bericht bei Ysolde“, konnte aber nichts annehmen.
+- Eine neue Prüfung (`tests/zeichen_klasse_test.gd`) geht für alle fünf Klassen jeden Punkt der Geschichte durch und
+  schaut bei jedem „!“ nach, ob man im Gespräch wirklich etwas annehmen kann. Dabei fielen noch drei Stellen auf, die
+  jetzt auch stimmen:
+  - Ye am Tor zeigt nur noch die Reise in die eigene Region an (nicht die in die andere, die man später bei
+    Ysolde oder Hadrak bekommt).
+  - Ysolde zeigt „Leuchtende Tiere“ erst nach der Glutoase, so wie sie den Auftrag auch erst dann vergibt.
+  - Zähmer bekommen bei Professor Esche jetzt den Nebenauftrag „Der verrückte Bienenstock“ (vorher sagte er nach dem
+    Start-Monster nur noch seinen Abschiedssatz).
+
+**So testest du es**
+1. Im Spielstand-Editor einen Klingentänzer bei „Leuchtende Tiere“ wählen und in Wipfelheim zu Fenn gehen: kein „!“.
+2. Dasselbe mit einem Bogenschützen bei „Die Prüfung der drei Ziele“: Fenn zeigt das „!“ wie gewohnt.
+3. Mit einem Zähmer nach „Tildas Unterricht“ zu Professor Esche: blaues „!“, er erzählt vom Bienenstock.
+4. Mit einem Bogenschützen in Grünwacht über Ysolde: kein „!“, solange man noch nicht in der Glutoase war.
