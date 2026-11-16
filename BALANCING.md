@@ -250,3 +250,19 @@ Die Stärke ist gleich geblieben (gegengemessen, Standard-Gruppe, 200 Kämpfe: B
 54 / 87, Sängerin 32 / 92, Schmied 71 / 100, wie vorher). In den Beschreibungen steht weiter der fertige, farbige Wert;
 mit Einzelheiten (Taste D) steht dahinter z. B. „24 = 200 % vom Angriff · Stufe 20 +… %“. Die Monster des Zähmers
 behalten ihre eigenen Angriffswerte.
+
+### Wurzelmutter: offene Rinde (P17, 16.11.2026, Marco)
+
+Sind beide Splitter-Knoten zerstört, heilen Schläge auf die Rinde nicht mehr, sie treffen mit 50 % (`RINDE_OFFEN` in
+`scripts/kampf/pilzhoehle.gd`), bis die Knoten im nächsten Zug der Wurzelmutter nachwachsen. Vorher konnte man in
+dieser Zeit nur die Rinde schlagen, und jeder Schlag heilte sie.
+
+`<Godot> --headless --path . -s tests/boss_messen.gd -- pilz_urbaum 30 20` (Gruppe: Klasse auf Stufe 20 und zwei Novizen):
+
+| | Siege | Züge je Sieg |
+|---|---|---|
+| vorher | 134 von 150 (89 %) | 114 |
+| nachher | 136 von 150 (91 %) | 86 |
+
+Je Klasse nachher: Bogenschütze 29, Zähmer 28, Klingentänzer 30, Schmied 26, Sängerin 23 von 30. Der Boss ist kaum
+leichter geworden, der Kampf aber ein Viertel kürzer.

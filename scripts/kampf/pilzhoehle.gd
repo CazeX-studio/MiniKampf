@@ -27,6 +27,9 @@ const WUT_AB := 0.5
 const KNOSPEN_SCHUTZ := 0.2
 ## Ein zerstörtes Knotenpaar kostet die Wurzelmutter diesen Anteil ihres Lebens.
 const PAIR_DAMAGE := 0.25
+## P17 (Marco 16.11.): Sind beide Knoten zerstört, ist die Rinde offen, bis sie nachwachsen. Schläge heilen dann nicht,
+## sondern treffen mit diesem Anteil.
+const RINDE_OFFEN := 0.5
 const MAX_DARKNESS := 6
 const DARKNESS_STEP := 0.13
 ## A9b2: Der Vorbote ist ein Wesen der Leere. Im Dunkeln trifft man ihn kaum: Voll trifft nur, wer das Splitterlicht
@@ -333,7 +336,7 @@ func check_phase() -> void:
 			pair_broken = true
 			pairs_since_warning += 1
 			var dmg := roundi(mother.max_hp * PAIR_DAMAGE)
-			c.add_log("[color=#8affc1][b]Zwillingsknoten zerstört![/b][/color] Die Wurzelmutter schreit auf.")
+			c.add_log("[color=#8affc1][b]Zwillingsknoten zerstört![/b][/color] Die Wurzelmutter schreit auf. Ihre Rinde ist offen, bis die Knoten nachwachsen!")
 			c.burst(mother, Elements.color("Sternenkraft"), 200.0)
 			var lost := c.apply_damage(mother, dmg)
 			if c.current != null and c.current.is_ally():
@@ -415,6 +418,15 @@ func absorbs(target: Fighter, amount: int, source: Fighter) -> bool:
 		return true
 	if target.klass != "wurzelmutter" or source == null or not source.is_ally():
 		return false
+	# Knotenpaar zerstört: Die Rinde ist offen und heilt nicht, bis die Knoten nachwachsen (P17)
+	if pair_broken:
+		if _teilt:
+			return false
+		_teilt = true
+		c.apply_damage(target, maxi(1, roundi(amount * RINDE_OFFEN)), source)
+		_teilt = false
+		c.float_text(target, "Rinde offen!", Color("ffd27a"))
+		return true
 	var healed := target.heal(maxi(1, amount / 2))
 	c.float_text(target, "Rinde heilt! +%d" % healed, Color("6dff8a"))
 	return true
