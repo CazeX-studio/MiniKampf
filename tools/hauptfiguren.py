@@ -104,6 +104,10 @@ def main():
 		groesse, extra = FIGUREN[figur]
 		# Achtung: speichern("ye") löscht auch ye_kampf_*, darum zuerst die Welt, dann der Kampf
 		bilder(figur, [("welt", WELT + extra)], figur, groesse)
+		# Figuren mit den sechs neuen Welt-Blättern (Teil U2b, 16.11.2026, z. B. Kael): die Welt kommt von dort
+		if (WURZEL / "tools" / "vorlagen" / "welt_u" / f"{figur}_gehen_schraeg_vorne.png").exists():
+			import hauptfiguren_u
+			hauptfiguren_u.main_fuer([figur])
 		if figur in KAMPF:
 			bilder(figur, KAMPF[figur], f"{figur}_kampf", groesse)
 		if (VORLAGEN / f"haupt_{figur}_portraets.png").exists():

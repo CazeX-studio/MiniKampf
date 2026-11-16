@@ -64,7 +64,11 @@ def speichern(figur, anim, stuecke):
 
 
 def main():
-	for figur in sys.argv[1:] or ["kael"]:
+	main_fuer(sys.argv[1:] or ["kael"])
+
+
+def main_fuer(figuren):
+	for figur in figuren:
 		mass_datei = QUELLE / f"{figur}_alt_idle_vorn.png"
 		if not mass_datei.exists():
 			mass_datei.write_bytes((ZIEL / f"{figur}_idle_vorn_anim_f0.png").read_bytes())
