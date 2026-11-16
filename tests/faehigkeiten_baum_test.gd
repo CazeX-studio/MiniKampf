@@ -47,5 +47,15 @@ func _run() -> void:
 		_check(gesendet.size() == 1 and gesendet[0].type == "lernen" and gesendet[0].faehigkeit == erste, "%s: Lernen schickt den Befehl" % klasse)
 		baum.queue_free()
 	FaehigkeitenBaum.gewaehlt = ""
+	# P9: Bilder werden festgehalten (sonst gibt Godot ein nur beim Zeichnen geladenes Bild frei, das Feld bleibt weiß)
+	var a := FaehigkeitenBaum.bild("archer", "charge")
+	_check(a != null and is_same(a, FaehigkeitenBaum.bild("archer", "charge")), "Fähigkeiten-Bild wird festgehalten")
+	# Alle Fähigkeiten der Demo-Klassen und des Novizen haben ein Bild
+	var fehlt: Array[String] = []
+	for klasse: String in ["archer", "tamer", "smith", "blade", "singer"]:
+		for f: Dictionary in Faehigkeiten.baum(klasse).get("faehigkeiten", []):
+			if FaehigkeitenBaum.bild(klasse, str(f.id)) == null:
+				fehlt.append("%s_%s" % [klasse, f.id])
+	_check(fehlt.is_empty(), "Jede Fähigkeit der Demo-Klassen hat ein Bild (fehlt: %s)" % [fehlt])
 	print("Fähigkeiten-Baum: %s" % ("alles richtig" if _failed == 0 else "%d Fehler" % _failed))
 	quit(_failed)

@@ -73,9 +73,14 @@ func bauen(p: Progress, senden: Callable, neu: Callable) -> void:
 
 
 ## Bild einer Fähigkeit (null = noch keins, dann malt das Feld einen Platzhalter).
+## Die Bilder werden festgehalten: Ein Bild, das nur beim Zeichnen geladen wird, gibt Godot sonst gleich wieder frei,
+## und das Feld bleibt weiß (P9, Marcos Playtest 16.11.2026).
 static func bild(klasse: String, id: String) -> Texture2D:
 	var pfad := BILD % [klasse, id]
-	return load(pfad) if ResourceLoader.exists(pfad) else null
+	if not _bilder.has(pfad):
+		_bilder[pfad] = load(pfad) if ResourceLoader.exists(pfad) else null
+	return _bilder[pfad]
+static var _bilder := {}
 
 
 func _reihe(eltern: Node, titel: String, frei: bool) -> HBoxContainer:
