@@ -25,6 +25,15 @@ var _fade: ColorRect
 var _text: Label
 var _who: Label
 var _hint: Label
+## P14: gemalte Szenen-Bilder statt der Figuren (zwei, damit eines ins andere überblenden kann)
+var _mit_bildern := false
+var _bilder: Array[TextureRect] = []
+var _bild_jetzt := 0
+
+
+## Pfad eines gemalten Szenen-Bilds, z. B. res://assets/szenen/erinnerung_rowan_1.png
+static func bild_pfad(erinnerung: String, nummer: int) -> String:
+	return "res://assets/szenen/erinnerung_%s_%d.png" % [erinnerung, nummer]
 
 
 func _ready() -> void:
@@ -54,6 +63,19 @@ func _ready() -> void:
 	_arrow.default_color = Color(1, 0.95, 0.8)
 	_arrow.visible = false
 	add_child(_arrow)
+	# P14: Gemalte Szenen-Bilder (Bildauftrag V8). Gibt es Bild 1, zeigt die Szene nur die Bilder, sonst die Figuren.
+	_mit_bildern = ResourceLoader.exists(bild_pfad(id, 1))
+	stage.visible = not _mit_bildern
+	for i in 2:
+		var bild := TextureRect.new()
+		bild.size = SCREEN
+		bild.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		bild.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		bild.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		bild.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		bild.modulate.a = 0.0
+		add_child(bild)
+		_bilder.append(bild)
 	# Leichter Schleier über allem: Erinnerungen sind blass und an den Rändern unscharf
 	var veil := Control.new()
 	veil.size = SCREEN
@@ -131,6 +153,18 @@ func next_step() -> void:
 	var step: Dictionary = steps[_step]
 	_who.text = step.get("wer", "")
 	_text.text = step.get("text", "")
+	if _mit_bildern:
+		# Neues Bild weich über das alte blenden; Figuren, Wege und Pfeile gibt es dann nicht
+		if step.has("bild") and ResourceLoader.exists(bild_pfad(id, int(step.bild))):
+			var alt := _bilder[_bild_jetzt]
+			_bild_jetzt = 1 - _bild_jetzt
+			var neu := _bilder[_bild_jetzt]
+			neu.texture = load(bild_pfad(id, int(step.bild)))
+			neu.modulate.a = 0.0
+			var t := create_tween().set_parallel(true)
+			t.tween_property(neu, "modulate:a", 1.0, 0.9)
+			t.tween_property(alt, "modulate:a", 0.0, 0.9)
+		return
 	for fid: String in step.get("zeigen", []):
 		if _figures.has(fid):
 			var view: WorldCharacter = _figures[fid]

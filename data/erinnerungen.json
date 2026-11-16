@@ -1,11 +1,11 @@
 {
-	"hinweis": "Erinnerungs-Szenen: Ein Splitter zeigt etwas aus der Vergangenheit (blasse Farben, kein Kampf). figuren: wer vorkommt (aussehen wie in kreuzweg.json, pos = Platz auf dem Bildschirm, 1280 × 720, blick 1 = nach rechts, -1 = nach links, sichtbar = schon am Anfang da). schritte: der Reihe nach, weiter mit Tippen. Je Schritt: text, wer (leer = Erzähler), zeigen / verschwinden (Figuren), bewegen ({Figur: [x, y]}), blick ({Figur: 1 oder -1}), pfeil ([von, zu]). ALLE TEXTE SIND PLATZHALTER, Marco schreibt sie noch.",
+	"hinweis": "Erinnerungs-Szenen: Ein Splitter zeigt etwas aus der Vergangenheit (blasse Farben, kein Kampf). figuren: wer vorkommt (aussehen wie in kreuzweg.json, pos = Platz auf dem Bildschirm, 1280 × 720, blick 1 = nach rechts, -1 = nach links, sichtbar = schon am Anfang da). schritte: der Reihe nach, weiter mit Tippen. Je Schritt: text, wer (leer = Erzähler), zeigen / verschwinden (Figuren), bewegen ({Figur: [x, y]}), blick ({Figur: 1 oder -1}), pfeil ([von, zu]). ALLE TEXTE SIND PLATZHALTER, Marco schreibt sie noch. bild (P14): Nummer des gemalten Szenen-Bilds (assets/szenen/erinnerung_<id>_<nummer>.png), das ab diesem Schritt zu sehen ist; gibt es Bild 1, zeigt die Szene nur die Bilder statt der Figuren.",
 	"rowan": {
 		"titel": "Erinnerung im Splitter",
 		"figuren": {
 			"ysolde": {
 				"name": "Ysolde",
-				"aussehen": "elf_f",
+				"aussehen": "ysolde",
 				"farbe": "c8e0b0",
 				"pos": [
 					1080,
@@ -15,7 +15,7 @@
 			},
 			"rowan": {
 				"name": "Rowan",
-				"aussehen": "elf_m",
+				"aussehen": "grund_mann+v_m1#hut=gruene_kapuze",
 				"farbe": "d8c8a0",
 				"pos": [
 					820,
@@ -25,7 +25,7 @@
 			},
 			"fliehend1": {
 				"name": "",
-				"aussehen": "wizzard_m",
+				"aussehen": "grund_frau+v_w2#hut=gruene_kapuze",
 				"farbe": "9090b0",
 				"pos": [
 					760,
@@ -35,7 +35,7 @@
 			},
 			"fliehend2": {
 				"name": "",
-				"aussehen": "wizzard_f",
+				"aussehen": "grund_mann+v_m3",
 				"farbe": "9090b0",
 				"pos": [
 					700,
@@ -54,7 +54,8 @@
 					"rowan",
 					"fliehend1",
 					"fliehend2"
-				]
+				],
+				"bild": 1
 			},
 			{
 				"text": "Menschen fliehen. Einer von ihnen hält die Hand eines anderen fest.",
@@ -78,7 +79,8 @@
 				"text": "Bleibt stehen! Niemand verlässt diesen Ort!",
 				"zeigen": [
 					"ysolde"
-				]
+				],
+				"bild": 2
 			},
 			{
 				"wer": "Ysolde",
@@ -89,13 +91,15 @@
 				],
 				"verschwinden": [
 					"fliehend1"
-				]
+				],
+				"bild": 3
 			},
 			{
 				"text": "Einer der Fliehenden bleibt stehen. Langsam dreht er sich um.",
 				"blick": {
 					"rowan": 1
-				}
+				},
+				"bild": 4
 			},
 			{
 				"wer": "Rowan",

@@ -596,7 +596,8 @@ func _test_story(side: String) -> void:
 	_check(world.dialog_view(p).text.contains("Jagen?"), "Tilda widerspricht Ysolde")
 	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "dialog_next"})
-	world.change_map(p, "waldboden", Vector2i(33, 5))
+	# Nah am Bären starten (er steht seit P13 frei bei (38, 12)), sonst reicht die Zeit zum Hinlaufen nicht immer
+	world.change_map(p, "waldboden", Vector2i(37, 14))
 	_check(world.can_use(p, beast), "Der Splitter-Rindenbär steht im Wald")
 	world.apply_command("a", {type = "use", target = beast})
 	_tick(world, 6.0)
