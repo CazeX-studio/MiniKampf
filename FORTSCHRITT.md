@@ -3521,3 +3521,15 @@ Gilt `render.yaml` bei dir nicht von selbst (Dienst nicht über „Blueprint“ 
 2. Die Kamera fährt heran, Linien ziehen zur Figur, der Lichthof wächst.
 3. Am Ende: heller Blitz und kurzes Beben, dann geht die Ult los.
 4. Im Menü „Ult: kurz“ einstellen: kürzerer Film, Blitz und Beben bleiben.
+
+## Grünwacht-Durchlauf repariert (16.11.2026, Marco)
+
+- Der automatische Durchlauf durch Grünwacht (`tests/durchlauf_gruenwacht_test.gd`) scheiterte oft. Der Fehler lag in
+  der Prüfung, nicht im Spiel:
+  - Sie spielte als „Klasse aus einer anderen Region“ die **Kunoichi**, die es in der Demo nicht gibt. Jetzt ist es der
+    **Klingentänzer** aus der Glutoase.
+  - Die Glutoase galt als gespielt, die Figur blieb aber auf **Stufe 10**. Die Bosse der Pilzhöhle sind für Stufe 20
+    bis 25 gemacht, darum verlor sie oft und kam nicht rechtzeitig durch. Jetzt startet sie wie im Spiel nach der
+    Glutoase: Stufe 20, Klasse gelernt, die Merker der Glutoase gesetzt (wie im Spielstand-Editor).
+- Danach zweimal alle 78 Prüfungen ohne Fehler. Mit Stufe 20 schafft der Klingentänzer die Sporenkönigin und die
+  Wurzelmutter meist im ersten Versuch.

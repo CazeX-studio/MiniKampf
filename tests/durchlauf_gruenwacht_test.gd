@@ -2,7 +2,8 @@ extends SceneTree
 ## Spielt Grünwacht am Stück durch (Grünwacht Schritt 11): vom Abschied bei Ye über den Weg nach Wipfelheim bis zum
 ## Abspann „Ende von Grünwacht“ – ohne Grafik, aber mit echten Kämpfen. Ein Computer-Spieler folgt den Zeichen (! und ?)
 ## auf allen Karten, geht zu den Orten der Aufträge, reist zwischen den Karten und kämpft gegen Monster, wenn er für einen
-## Kampf zu schwach war. Einmal je Klasse: Bogenschütze, Zähmer und eine Klasse aus einer anderen Region.
+## Kampf zu schwach war. Einmal je Klasse: Bogenschütze, Zähmer und eine Klasse aus einer anderen Region (seit 16.11.
+## der Klingentänzer aus der Glutoase statt der Kunoichi, die es in der Demo nicht gibt).
 ## Gibt eine Übersicht aus: wann welcher Auftrag fertig war, Stufe, Geld, Kämpfe und eine geschätzte Spielzeit.
 ## Aufruf: Godot --headless --path . --script res://tests/durchlauf_gruenwacht_test.gd   (optional: -- <Klasse>)
 
@@ -14,7 +15,10 @@ const SECONDS_PER_TURN := 6.0
 const START_LEVEL := 10
 const START_XP := 3030
 const START_GOLD := 1900
-const CLASSES := ["archer", "tamer", "kunoichi"]
+const CLASSES := ["archer", "tamer", "blade"]
+## Klassen aus der Glutoase kommen erst nach der Glutoase her, mit der Stufe vom Ende der Glutoase
+## (wie im Spielstand-Editor: Rückkehr nach Grünwacht mit Stufe 20)
+const STUFE_NACH_GLUTOASE := 20
 
 var world: WorldState
 var p: PlayerState
@@ -90,6 +94,18 @@ func _play_region(klasse: String) -> void:
 		p.progress.flags["tor_glutoase"] = true
 		if p.progress.quests.get("klasse_lernen", "") == "aktiv":
 			p.progress.quests["klasse_lernen"] = "abgegeben"
+		# Die Glutoase ist gespielt: Klasse bei ihrem Lehrmeister gelernt, Stufe und Erfahrung vom Ende der Glutoase,
+		# und was sich die Aufträge dort gemerkt haben
+		p.progress.quests["klasse_lernen"] = "abgegeben"
+		p.progress.flags["klasse_gelernt"] = true
+		var tabelle := GameData.level_xp()
+		p.progress.level = STUFE_NACH_GLUTOASE
+		p.progress.xp = int(tabelle[STUFE_NACH_GLUTOASE - 1])
+		p.progress.klassen_xp = maxi(0, p.progress.xp - int(tabelle[9]))
+		for id: String in ["nach_glutoase", "kochende_brunnen", "miras_lied", "fest_der_glut", "rivale_kael", "die_ketten", "miras_splitter"]:
+			for goal: Dictionary in GameData.quest(id).get("ziele", []):
+				if goal.get("art", "") == "gemerkt" and world.check(p, goal.get("nur_wenn", {})):
+					p.progress.flags[str(goal.merken)] = true
 	# Kein Versetzen (E3i): zur Torwache am Westtor, dann durchs Tor
 	world.start_dialog(p, "torwache_gruenwacht")
 	while p.in_dialog():
