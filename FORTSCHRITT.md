@@ -13,6 +13,12 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
+- **Neu (17.11.): Ye, Marv und Mira laufen in fünf Richtungen** (Teil U2b, Kreuzweg): Die drei gehen, stehen und sitzen jetzt mit den neuen Bildern. Ye trägt den Schirm geschlossen auf dem Rücken. Bingo folgt mit den nächsten Bildern.
+  So testest du es:
+  1. In Kreuzweg Ye, Marv und Mira suchen.
+  2. Um sie herumlaufen: Sie drehen sich passend mit, keiner läuft rückwärts.
+  3. Sie sind etwa so groß wie vorher.
+  4. Ye bei der Schirm-Übung (Parieren) zeigt weiter den offenen Schirm, Mira liegt in ihrer Szene weiter krank im Bett.
 - **Neu (17.11.): Ysolde, Fenn, Tilda und Esche laufen in fünf Richtungen** (Teil U2b): In Grünwacht gehen, stehen und sitzen die drei jetzt mit den neuen Bildern (schräg vorne, vorne, Seite, schräg hinten, hinten). Ysolde und Fenn haben keinen Bogen in der Hand, Tilda trägt den Stab auf dem Rücken. Esche ebenso (Buch im Rucksack, Lupe am Gürtel).
   So testest du es:
   1. Grünwacht betreten und Ysolde, Fenn, Tilda und Esche suchen.
