@@ -64,8 +64,10 @@ func _process(delta: float) -> bool:
 			if _guests.size() == _count:
 				_step = 1
 				_t = 0.0
-			elif _t > 30.0:
-				_check(false, "Alle %d Mitspieler sind in Kreuzweg" % _count)
+			# Spielzeit läuft 4-mal so schnell: 160 sind rund 40 echte Sekunden, so lange brauchen drei Godot-Starts
+			# auf einem ausgelasteten Rechner (vorher 30 = 7,5 s, zu knapp, 17.11.2026)
+			elif _t > 160.0:
+				_check(false, "Alle %d Mitspieler sind in Kreuzweg (da: %d, in der Welt: %s)" % [_count, _guests.size(), Netz.world.players.keys() if Netz.world else []])
 				return _finish()
 		1:
 			if Netz.group.get("members", []).size() == _count + 1 and _t > 12.0:

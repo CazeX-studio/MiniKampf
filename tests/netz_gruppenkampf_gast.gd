@@ -22,10 +22,24 @@ func _go() -> void:
 	Netz.save_override = "user://zz_gk_gast_spielstand_%s.json" % _name
 	SaveGame.path = Netz.save_override
 	SaveGame.delete()
+	_join()
+
+
+## Beitreten. Starten drei Mitspieler gleichzeitig, lädt der Gastgeber vielleicht noch die Stadt und antwortet
+## nicht rechtzeitig: dann klopft der Mitspieler nach einer Sekunde erneut an (17.11.2026).
+func _join() -> void:
 	Netz.join("localhost", _name, _look)
-	Netz._node().connected.connect(func() -> void:
-		Netz._node().group_invited.connect(func(_a: String, _b: String) -> void: Netz.group_action("annehmen"))
-		change_scene_to_file("res://scenes/kreuzweg.tscn"))
+	var node := Netz._node()
+	if not node.connected.is_connected(_on_connected):
+		node.connected.connect(_on_connected)
+		node.connection_failed.connect(func() -> void:
+			print("%s: Gastgeber antwortet nicht, versuche es erneut" % _name)
+			create_timer(1.0, true, false, true).timeout.connect(_join))
+
+
+func _on_connected() -> void:
+	Netz._node().group_invited.connect(func(_a: String, _b: String) -> void: Netz.group_action("annehmen"))
+	change_scene_to_file("res://scenes/kreuzweg.tscn")
 
 
 func _process(delta: float) -> bool:

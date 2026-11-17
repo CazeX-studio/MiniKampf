@@ -13,6 +13,12 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
+- **Neu (17.11.): Ysolde, Fenn und Tilda laufen in fünf Richtungen** (Teil U2b): In Grünwacht gehen, stehen und sitzen die drei jetzt mit den neuen Bildern (schräg vorne, vorne, Seite, schräg hinten, hinten). Ysolde und Fenn haben keinen Bogen in der Hand, Tilda trägt den Stab auf dem Rücken. Esche fehlt noch.
+  So testest du es:
+  1. Grünwacht betreten und Ysolde, Fenn und Tilda suchen.
+  2. Mit der eigenen Figur um sie herumlaufen: Sie drehen sich passend mit, keiner läuft rückwärts.
+  3. Sie sind etwa so groß wie vorher, nicht riesig oder winzig.
+  4. Wo sie sitzen, sitzen sie richtig auf Bank oder Boden.
 - **Neu (17.11.): Lebensleiste in der hinteren Reihe wieder ganz zu sehen** (Marcos Hinweis): Das Schild mit Leben, Mana und Ult ragte in der hinteren Reihe über den rechten Rand. Jetzt rückt es so weit nach links, dass es ganz im Bild bleibt, und alle Schilde liegen über den Figuren (keine Figur verdeckt mehr eine Leiste).
   - **So testest du es:**
     1. Einen Kampf starten und mit „Reihe wechseln“ nach hinten gehen: Dein Schild „Du“ ist ganz zu sehen, auch die Zahlen rechts.
