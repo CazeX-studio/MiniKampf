@@ -13,6 +13,11 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
+- **Neu (17.11.): Bingo, Hadrak und Xavina laufen in fünf Richtungen** (Teil U2b): Bingo in Kreuzweg, Hadrak und Xavina in der Glutoase gehen, stehen und sitzen jetzt mit den neuen Bildern. Hadrak trägt den Hammer auf dem Rücken, Xavina die Harfe. Brakkus und Samira folgen mit den nächsten Bildern.
+  So testest du es:
+  1. In Kreuzweg Bingo suchen und um ihn herumlaufen: Er dreht sich passend mit.
+  2. In der Glutoase Hadrak und Xavina suchen und ebenso um sie herumlaufen.
+  3. Alle drei sind etwa so groß wie vorher, keiner hat etwas in der Hand.
 - **Neu (17.11.): Ye, Marv und Mira laufen in fünf Richtungen** (Teil U2b, Kreuzweg): Die drei gehen, stehen und sitzen jetzt mit den neuen Bildern. Ye trägt den Schirm geschlossen auf dem Rücken. Bingo folgt mit den nächsten Bildern.
   So testest du es:
   1. In Kreuzweg Ye, Marv und Mira suchen.
