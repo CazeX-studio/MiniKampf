@@ -1,4 +1,4 @@
 Diese Datei ändern, damit Render den Online-Server neu baut (render.yaml baut nur bei Änderungen in server/).
 Die Bau-Minuten bei Render sind knapp: nur neu bauen, wenn jemand online zusammen spielen will (z. B. vor einem Testtag).
 
-Letzter gewünschter Stand: 16.11.2026 (nach P5)
+Letzter gewünschter Stand: 17.11.2026 (Demo-Start: alle Playtest-Punkte P1 bis P22, Gesandte gemalt)
