@@ -129,8 +129,7 @@
 				44,
 				42
 			],
-			"aussehen": "knight_f",
-			"farbe": "ffc8a0",
+			"aussehen": "grund_frau+v_w3#zubehoer=schuerze",
 			"dialog": "schmiedin"
 		},
 		"bingo": {
@@ -188,8 +187,7 @@
 				53,
 				36
 			],
-			"aussehen": "wizzard_f",
-			"farbe": "b8b0ff",
+			"aussehen": "ilwen",
 			"dialog": "gesandte_arkanum",
 			"wenn": {
 				"und": [
@@ -210,8 +208,7 @@
 				49,
 				28
 			],
-			"aussehen": "knight_m",
-			"farbe": "e0a060",
+			"aussehen": "pim",
 			"dialog": "gesandte_messinghafen",
 			"wenn": {
 				"und": [
@@ -232,8 +229,7 @@
 				55,
 				28
 			],
-			"aussehen": "lizard_f",
-			"farbe": "ffb070",
+			"aussehen": "nalia",
 			"dialog": "gesandte_glutoase",
 			"wenn": {
 				"und": [
@@ -254,8 +250,7 @@
 				61,
 				28
 			],
-			"aussehen": "elf_m",
-			"farbe": "a8e088",
+			"aussehen": "aske",
 			"dialog": "gesandte_gruenwacht",
 			"wenn": {
 				"und": [
@@ -276,8 +271,7 @@
 				59,
 				36
 			],
-			"aussehen": "elf_f",
-			"farbe": "ffb8d8",
+			"aussehen": "mei",
 			"dialog": "gesandte_nebelinseln",
 			"wenn": {
 				"und": [

@@ -51,6 +51,12 @@ FIGUREN = {
 	"ilse": (0.95, []),
 	# Vogt Edmar mit Festschärpe (B6j, 10.11.): eigenes Welt-Blatt, Porträts bleiben aus neben_edmar.png
 	"edmar": (1.04, []),
+	# Die fünf Gesandten in Kreuzweg (Blätter lagen schon da, eingebaut 17.11.2026 statt der Figuren aus dem alten Paket)
+	"ilwen": (1.04, []),
+	"pim": (1.0, []),
+	"nalia": (1.04, []),
+	"aske": (1.0, []),
+	"mei": (1.0, []),
 }
 ## Kampf-Blätter: Figur -> Liste (Blatt, Reihen); alle Blätter einer Figur landen unter <figur>_kampf
 KAMPF = {

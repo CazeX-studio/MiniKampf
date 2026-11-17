@@ -3665,3 +3665,21 @@ Gilt `render.yaml` bei dir nicht von selbst (Dienst nicht über „Blueprint“ 
 2. Kael läuft herbei und bleibt neben dir stehen, während er und Ysolde reden.
 3. Eine Entscheidung treffen: Kael bleibt stehen, bis das Gespräch zu Ende ist.
 4. Danach geht er weg (der Abspann kommt).
+
+## Gesandte und Schmiedin Marta mit gemalten Figuren (17.11.2026)
+
+- Die fünf Gesandten in Kreuzweg (Magistra Ilwen, Tüftler Pim, Feuertänzerin Nalia, Aske, Schreindienerin Mei) trugen
+  noch Figuren aus dem alten fremden Paket, obwohl ihre gemalten Blätter schon in `tools/vorlagen/` lagen. Jetzt sind sie
+  eingebaut (Stehen und Laufen schräg von vorne und von hinten, dazu je fünf Porträts beim Reden), wie die anderen
+  Hauptfiguren (`tools/hauptfiguren.py`).
+- Schmiedin Marta hatte auch noch eine alte Figur. Sie hat noch kein eigenes Blatt und trägt vorerst den gemalten
+  Baukasten-Körper „Frau mit Schürze“ (wie die Schmiedin in der Glutoase), damit läuft sie in allen fünf Richtungen.
+- Stand der Laufrichtungen (alle Figuren auf allen Karten gezählt): 46 Figuren laufen in allen fünf Richtungen (alle
+  Leute und Nebenfiguren mit Baukasten-Körper, Novizen, Klassen, Kael). Die 22 Hauptfiguren mit eigenem Körper (Ye,
+  Bingo, Marv, Mira, Ren, Ilse, Edmar, Hatta, Ysolde, Fenn, Tilda, Esche, Hagebutte, Xavina, Hadrak, Brakkus, Samira,
+  Zaid und die fünf Gesandten) haben nur schräg vorne und schräg hinten: Für sie fehlen die sechs Welt-Blätter aus
+  Bildauftrag U2b (bisher nur Kael gemalt).
+
+**So testest du es**
+1. In Kreuzweg zu den Gesandten an den fünf Straßen gehen: alle fünf sind gemalte Figuren, beim Reden mit Porträt.
+2. Zu Schmiedin Marta gehen: gemalte Frau mit Schürze statt der alten Ritterin.
