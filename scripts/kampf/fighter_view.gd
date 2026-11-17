@@ -170,6 +170,7 @@ const ANIM_FPS := {"idle": 6.0, "run": 12.0, "hit": 8.0, "attack": 8.0, "death":
 const ANIM_ONCE := ["attack", "death", "parry", "hit", "attack2", "wurf", "spezial", "cast"]
 
 const PLATE_W := 168.0
+const PLATE_Z := 5
 const PLATE_H_HERO := 74.0
 const PLATE_H_ENEMY := 64.0
 const BOSS_PLATE_SIZE := Vector2(250, 92)
@@ -214,6 +215,9 @@ var _hold := 0.0
 var _time := 0.0
 var _home := Vector2.ZERO
 var _plate := Rect2()
+## Ebene für Schild und Leisten (über den Figuren) und die Fläche, auf die gerade gezeichnet wird
+var _plate_layer: Node2D
+var _c: CanvasItem = self
 var _shader := ShaderMaterial.new()
 ## Klingentänzerin: Schwerter, die vor der Figur schweben (die hinteren malt _draw unter der Figur)
 var _blades_front: Node2D
@@ -309,10 +313,31 @@ func setup(p_fighter: Fighter) -> void:
 		_plate = Rect2(sprite_size.x + 22.0, sprite_size.y - plate_h, PLATE_W, plate_h)
 		size = Vector2(_plate.end.x, sprite_size.y)
 
+	# Das Schild liegt auf einer eigenen Ebene über allen Figuren (sonst verdecken Figuren es,
+	# wenn es in der hinteren Reihe nach links rückt)
+	_plate_layer = Node2D.new()
+	_plate_layer.z_index = PLATE_Z
+	_plate_layer.draw.connect(func() -> void:
+		_c = _plate_layer
+		_draw_plate())
+	add_child(_plate_layer)
+
+
+## Das Namensschild rechts neben der Figur bleibt im Bild: In der hinteren Reihe ragte es
+## sonst über den rechten Rand (Marco, 17.11.2026). Es rückt dann so weit nach links wie nötig.
+func _schild_im_bild() -> void:
+	if _compact or fighter.big or fighter.owner != null:
+		return
+	var rand := get_viewport_rect().size.x - 8.0
+	var x := minf(sprite_size.x + 22.0, (rand - global_position.x) / maxf(scale.x, 0.01) - PLATE_W)
+	if not is_equal_approx(x, _plate.position.x):
+		_plate.position.x = x
+
 
 func _process(delta: float) -> void:
 	_time += delta
 	_anim_time += delta
+	_schild_im_bild()
 	if _hold > 0.0:
 		_hold -= delta
 		if _hold <= 0.0:
@@ -358,6 +383,8 @@ func _process(delta: float) -> void:
 	_shader.set_shader_parameter("outline_color", outline)
 	_shader.set_shader_parameter("flash", _flash)
 	queue_redraw()
+	if _plate_layer != null:
+		_plate_layer.queue_redraw()
 	if _blades_front != null:
 		_blades_front.queue_redraw()
 
@@ -626,8 +653,7 @@ func _draw() -> void:
 		draw_colored_polygon(points, COL_ULT)
 		points.append(points[0])
 		draw_polyline(points, Color.BLACK, 2.0)
-
-	_draw_plate()
+	# Schild und Leisten malt _plate_layer (über allen Figuren)
 
 
 ## Schwebende Klingen der Klingentänzerin: kreisen um die Figur, vordere über, hintere unter ihr.
@@ -668,23 +694,23 @@ func _draw_blades(canvas: CanvasItem, front: bool) -> void:
 func _draw_plate() -> void:
 	var font := ThemeDB.fallback_font
 	if _compact:
-		draw_string_outline(font, Vector2(_home.x - 60, sprite_size.y + 14), fighter.display_name + " (hilft)", HORIZONTAL_ALIGNMENT_CENTER, 120, 11, 4, Color.BLACK)
-		draw_string(font, Vector2(_home.x - 60, sprite_size.y + 14), fighter.display_name + " (hilft)", HORIZONTAL_ALIGNMENT_CENTER, 120, 11, Color("cfe8c0"))
+		_c.draw_string_outline(font, Vector2(_home.x - 60, sprite_size.y + 14), fighter.display_name + " (hilft)", HORIZONTAL_ALIGNMENT_CENTER, 120, 11, 4, Color.BLACK)
+		_c.draw_string(font, Vector2(_home.x - 60, sprite_size.y + 14), fighter.display_name + " (hilft)", HORIZONTAL_ALIGNMENT_CENTER, 120, 11, Color("cfe8c0"))
 		return
 	# Schild aus dem UI-Set: Feld mit Goldrand, golden leuchtend für die Figur am Zug
-	draw_style_box(UiStil.feld_stil(active), _plate.grow(4))
+	_c.draw_style_box(UiStil.feld_stil(active), _plate.grow(4))
 	if targetable:
 		var box := StyleBoxFlat.new()
 		box.draw_center = false
 		box.set_corner_radius_all(4)
 		box.border_color = Color(COL_TARGET, 0.4 + 0.6 * (0.5 + 0.5 * sin(_time * 8.0)))
 		box.set_border_width_all(3)
-		draw_style_box(box, _plate.grow(5))
+		_c.draw_style_box(box, _plate.grow(5))
 
 	var x0 := _plate.position.x + 7.0
 	var w := _plate.size.x - 14.0
 	var y := _plate.position.y
-	draw_string(font, Vector2(x0, y + 16), fighter.display_name, HORIZONTAL_ALIGNMENT_LEFT, w, 14, Color.WHITE)
+	_c.draw_string(font, Vector2(x0, y + 16), fighter.display_name, HORIZONTAL_ALIGNMENT_LEFT, w, 14, Color.WHITE)
 	var tag := fighter.row_name()
 	var tag_color := Color(1, 1, 1, 0.5)
 	if not fighter.is_hero:
@@ -694,15 +720,15 @@ func _draw_plate() -> void:
 			tag = "BOSS · " + fighter.element
 		elif fighter.passive and fighter.klass != "kuehlbecken":
 			tag = "Splitter"
-	draw_string(font, Vector2(x0, y + 16), tag, HORIZONTAL_ALIGNMENT_RIGHT, w, 11, tag_color)
+	_c.draw_string(font, Vector2(x0, y + 16), tag, HORIZONTAL_ALIGNMENT_RIGHT, w, 11, tag_color)
 	# Element-Symbol aus dem UI-Set links neben dem Element-Namen
 	var element_icon := UiStil.element_symbol(fighter.element) if not fighter.is_hero else null
 	if element_icon != null:
 		var tag_width := font.get_string_size(tag, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x
-		draw_texture_rect(element_icon, Rect2(x0 + w - tag_width - 17, y + 3, 16, 16), false)
+		_c.draw_texture_rect(element_icon, Rect2(x0 + w - tag_width - 17, y + 3, 16, 16), false)
 
 	if fighter.trainer:
-		draw_string(font, Vector2(x0, y + 32), "Trainer – nicht angreifbar", HORIZONTAL_ALIGNMENT_LEFT, w, 11, Color(1, 1, 1, 0.7))
+		_c.draw_string(font, Vector2(x0, y + 32), "Trainer – nicht angreifbar", HORIZONTAL_ALIGNMENT_LEFT, w, 11, Color(1, 1, 1, 0.7))
 		return
 	var hp_ratio := float(shown_hp()) / fighter.max_hp
 	_draw_bar(Rect2(x0, y + 21, w, 13), hp_ratio, COL_HP if hp_ratio > 0.3 else COL_HP_LOW, "%d / %d" % [shown_hp(), fighter.max_hp])
@@ -711,18 +737,18 @@ func _draw_plate() -> void:
 	if schild > 0 and shown_hp() > 0:
 		var anteil := clampf(float(schild) / fighter.max_hp, 0.06, 1.0)
 		var leiste := Rect2(x0, y + 17, w * anteil, 5)
-		draw_rect(Rect2(x0 - 1, y + 16, w + 2, 7), Color(0, 0, 0, 0.7))
-		draw_rect(leiste, COL_SCHILD)
-		draw_rect(Rect2(leiste.position, Vector2(leiste.size.x, 1)), COL_SCHILD.lightened(0.5))
+		_c.draw_rect(Rect2(x0 - 1, y + 16, w + 2, 7), Color(0, 0, 0, 0.7))
+		_c.draw_rect(leiste, COL_SCHILD)
+		_c.draw_rect(Rect2(leiste.position, Vector2(leiste.size.x, 1)), COL_SCHILD.lightened(0.5))
 		# Abzeichen oben auf dem Rand des Namensschilds (dort verdeckt es weder Namen noch Element)
 		_draw_schild_zeichen(font, Vector2(x0 + w - 44.0, y - 13), schild)
 
 	if shown_hp() <= 0:
 		var text := "kaputt" if fighter.klass == "robot" else ("kampfunfähig" if fighter.owner != null else "besiegt")
-		draw_string(font, Vector2(x0, y + 47), text, HORIZONTAL_ALIGNMENT_LEFT, w, 12, Color(1, 1, 1, 0.7))
+		_c.draw_string(font, Vector2(x0, y + 47), text, HORIZONTAL_ALIGNMENT_LEFT, w, 12, Color(1, 1, 1, 0.7))
 		return
 	if fighter.owner != null:
-		draw_string(font, Vector2(x0, y + 40), " ".join(_status()), HORIZONTAL_ALIGNMENT_LEFT, w, 10, Color("ffe08a"))
+		_c.draw_string(font, Vector2(x0, y + 40), " ".join(_status()), HORIZONTAL_ALIGNMENT_LEFT, w, 10, Color("ffe08a"))
 	elif fighter.is_hero:
 		_draw_hero_details(font, x0, y, w)
 	else:
@@ -733,14 +759,14 @@ func _draw_plate() -> void:
 func _draw_schild_zeichen(font: Font, ort: Vector2, wert: int) -> void:
 	# Dunkles Feld dahinter, damit es auf jedem Hintergrund lesbar ist
 	var text_breite := font.get_string_size(str(wert), HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
-	draw_rect(Rect2(ort + Vector2(-3, -1), Vector2(21 + text_breite, 17)), Color(0.04, 0.06, 0.12, 0.9))
-	draw_rect(Rect2(ort + Vector2(-3, -1), Vector2(21 + text_breite, 17)), COL_SCHILD, false, 1.0)
+	_c.draw_rect(Rect2(ort + Vector2(-3, -1), Vector2(21 + text_breite, 17)), Color(0.04, 0.06, 0.12, 0.9))
+	_c.draw_rect(Rect2(ort + Vector2(-3, -1), Vector2(21 + text_breite, 17)), COL_SCHILD, false, 1.0)
 	var form := PackedVector2Array([ort + Vector2(0, 1), ort + Vector2(12, 1), ort + Vector2(12, 7), ort + Vector2(6, 14), ort + Vector2(0, 7)])
-	draw_colored_polygon(form, COL_SCHILD)
+	_c.draw_colored_polygon(form, COL_SCHILD)
 	form.append(form[0])
-	draw_polyline(form, Color(0.05, 0.1, 0.2), 1.5)
-	draw_string_outline(font, ort + Vector2(15, 12), str(wert), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, 3, Color.BLACK)
-	draw_string(font, ort + Vector2(15, 12), str(wert), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, COL_SCHILD.lightened(0.3))
+	_c.draw_polyline(form, Color(0.05, 0.1, 0.2), 1.5)
+	_c.draw_string_outline(font, ort + Vector2(15, 12), str(wert), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, 3, Color.BLACK)
+	_c.draw_string(font, ort + Vector2(15, 12), str(wert), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, COL_SCHILD.lightened(0.3))
 
 
 func _draw_hero_details(font: Font, x0: float, y: float, w: float) -> void:
@@ -793,7 +819,7 @@ func _draw_hero_details(font: Font, x0: float, y: float, w: float) -> void:
 			status.push_front("Karren %d · %d Waren" % [fighter.cart_hp, count] if fighter.cart_hp > 0 else "Karren kaputt")
 		"tamer":
 			status.push_front(fighter.active_monster.display_name)
-	draw_string(font, Vector2(status_x, y + 71), " ".join(status), HORIZONTAL_ALIGNMENT_LEFT, x0 + w - status_x, 10, Color("ffe08a"))
+	_c.draw_string(font, Vector2(status_x, y + 71), " ".join(status), HORIZONTAL_ALIGNMENT_LEFT, x0 + w - status_x, 10, Color("ffe08a"))
 
 
 ## Kurze Zustands-Texte (Schild, Bedrohung, Stärkungen …).
@@ -844,53 +870,53 @@ func _status() -> Array[String]:
 
 ## Leiste des Zwielicht-Wandlers: links Schatten, rechts Licht.
 func _draw_balance(rect: Rect2) -> void:
-	draw_rect(rect.grow(1), Color(0, 0, 0, 0.7))
-	draw_rect(Rect2(rect.position, Vector2(rect.size.x * 0.5, rect.size.y)), Color(Elements.color("Schatten"), 0.25))
-	draw_rect(Rect2(rect.position + Vector2(rect.size.x * 0.5, 0), Vector2(rect.size.x * 0.5, rect.size.y)), Color(Elements.color("Licht"), 0.25))
+	_c.draw_rect(rect.grow(1), Color(0, 0, 0, 0.7))
+	_c.draw_rect(Rect2(rect.position, Vector2(rect.size.x * 0.5, rect.size.y)), Color(Elements.color("Schatten"), 0.25))
+	_c.draw_rect(Rect2(rect.position + Vector2(rect.size.x * 0.5, 0), Vector2(rect.size.x * 0.5, rect.size.y)), Color(Elements.color("Licht"), 0.25))
 	var mid := rect.position.x + rect.size.x * 0.5
 	var fill := rect.size.x * 0.5 * float(fighter.balance) / Fighter.MAX_BALANCE
 	var color := Elements.color("Licht") if fighter.balance > 0 else Elements.color("Schatten")
 	if absi(fighter.balance) >= Fighter.MAX_BALANCE:
 		color = color.lerp(Color.WHITE, 0.5 + 0.5 * sin(_time * 10.0))
-	draw_rect(Rect2(minf(mid, mid + fill), rect.position.y, absf(fill), rect.size.y), color)
-	draw_rect(Rect2(mid - 1, rect.position.y - 2, 2, rect.size.y + 4), Color.WHITE)
+	_c.draw_rect(Rect2(minf(mid, mid + fill), rect.position.y, absf(fill), rect.size.y), color)
+	_c.draw_rect(Rect2(mid - 1, rect.position.y - 2, 2, rect.size.y + 4), Color.WHITE)
 
 
 func _draw_enemy_details(font: Font, x0: float, y: float, w: float) -> void:
 	# Siegel der Kunoichi und Zustände
 	var sx := x0
 	for el: String in fighter.seals:
-		draw_circle(Vector2(sx + 6, y + 41), 5, Elements.color(el))
-		draw_string(font, Vector2(sx + 2, y + 45), el.substr(0, 1), HORIZONTAL_ALIGNMENT_LEFT, 12, 9, Color.BLACK)
+		_c.draw_circle(Vector2(sx + 6, y + 41), 5, Elements.color(el))
+		_c.draw_string(font, Vector2(sx + 2, y + 45), el.substr(0, 1), HORIZONTAL_ALIGNMENT_LEFT, 12, 9, Color.BLACK)
 		sx += 14
 	var status := _status()
 	if not status.is_empty():
-		draw_string(font, Vector2(sx + 2, y + 45), " ".join(status), HORIZONTAL_ALIGNMENT_LEFT, x0 + w - sx, 10, Color("ffe08a"))
+		_c.draw_string(font, Vector2(sx + 2, y + 45), " ".join(status), HORIZONTAL_ALIGNMENT_LEFT, x0 + w - sx, 10, Color("ffe08a"))
 	var line_y := y + 47 if fighter.seals.is_empty() and status.is_empty() else y + 59
 	if fighter.enraged:
-		draw_string(font, Vector2(x0, line_y), "WUT!", HORIZONTAL_ALIGNMENT_LEFT, w, 12, COL_HP_LOW)
+		_c.draw_string(font, Vector2(x0, line_y), "WUT!", HORIZONTAL_ALIGNMENT_LEFT, w, 12, COL_HP_LOW)
 		line_y += 14
 	if fighter.intent != "":
-		draw_multiline_string(font, Vector2(x0, line_y), fighter.intent, HORIZONTAL_ALIGNMENT_LEFT, w, 11, -1, Color("ffd36b"))
+		_c.draw_multiline_string(font, Vector2(x0, line_y), fighter.intent, HORIZONTAL_ALIGNMENT_LEFT, w, 11, -1, Color("ffd36b"))
 
 
 func _draw_bar(rect: Rect2, ratio: float, color: Color, text: String) -> void:
-	draw_rect(rect.grow(1), Color(0, 0, 0, 0.7))
+	_c.draw_rect(rect.grow(1), Color(0, 0, 0, 0.7))
 	var fill := Rect2(rect.position, Vector2(rect.size.x * clampf(ratio, 0, 1), rect.size.y))
 	# Leben und Mana mit den Füllungen aus dem UI-Set, alles andere einfarbig
 	var texture := BAR_FILLS.get(color.to_html(false), "") as String
 	if texture != "" and fill.size.x >= 4.0:
-		draw_style_box(_fill_style(texture), fill)
+		_c.draw_style_box(_fill_style(texture), fill)
 	else:
-		draw_rect(fill, color)
+		_c.draw_rect(fill, color)
 		# Heller Streifen oben, damit die Leiste etwas plastisch wirkt
-		draw_rect(Rect2(rect.position, Vector2(fill.size.x, 2)), Color(1, 1, 1, 0.25))
+		_c.draw_rect(Rect2(rect.position, Vector2(fill.size.x, 2)), Color(1, 1, 1, 0.25))
 	# Feiner Goldrand wie beim Balken aus dem UI-Set
-	draw_rect(rect.grow(1), Color(0.85, 0.66, 0.3, 0.75), false, 1.0)
+	_c.draw_rect(rect.grow(1), Color(0.85, 0.66, 0.3, 0.75), false, 1.0)
 	if text != "":
 		var font_size := 10 if rect.size.y < 12 else 11
-		draw_string_outline(ThemeDB.fallback_font, rect.position + Vector2(4, rect.size.y - 1.5), text, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 6, font_size, 3, Color(0, 0, 0, 0.8))
-		draw_string(ThemeDB.fallback_font, rect.position + Vector2(4, rect.size.y - 1.5), text, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 6, font_size, Color.WHITE)
+		_c.draw_string_outline(ThemeDB.fallback_font, rect.position + Vector2(4, rect.size.y - 1.5), text, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 6, font_size, 3, Color(0, 0, 0, 0.8))
+		_c.draw_string(ThemeDB.fallback_font, rect.position + Vector2(4, rect.size.y - 1.5), text, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 6, font_size, Color.WHITE)
 
 
 ## Punkte für Stapel (Sternbild, Klingen, Härte).
@@ -898,9 +924,9 @@ func _draw_pips(origin: Vector2, filled: int, count: int, color: Color) -> void:
 	for i in count:
 		var c := origin + Vector2(5 + i * 10, 0)
 		if i < filled:
-			draw_circle(c, 4, color)
+			_c.draw_circle(c, 4, color)
 		else:
-			draw_arc(c, 4, 0, TAU, 12, Color(color, 0.5), 1.5)
+			_c.draw_arc(c, 4, 0, TAU, 12, Color(color, 0.5), 1.5)
 
 
 static func _fill_style(texture: String) -> StyleBoxTexture:

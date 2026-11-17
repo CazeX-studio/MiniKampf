@@ -13,6 +13,11 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
+- **Neu (17.11.): Lebensleiste in der hinteren Reihe wieder ganz zu sehen** (Marcos Hinweis): Das Schild mit Leben, Mana und Ult ragte in der hinteren Reihe über den rechten Rand. Jetzt rückt es so weit nach links, dass es ganz im Bild bleibt, und alle Schilde liegen über den Figuren (keine Figur verdeckt mehr eine Leiste).
+  - **So testest du es:**
+    1. Einen Kampf starten und mit „Reihe wechseln“ nach hinten gehen: Dein Schild „Du“ ist ganz zu sehen, auch die Zahlen rechts.
+    2. Mit Tessa und Gorm vorne: Ihre Schilde liegen über deiner Figur, nicht dahinter.
+    3. Wieder nach vorne wechseln: Das Schild steht wie früher rechts neben der Figur.
 - **Neu (16.11.): Alle Bilder aus dem Playtest eingebaut** (GRAFIK_AUFTRAG.md Teil V, Bauaufträge P6, P7, P12, P13, P14, P16, P19, P21): Werte-Symbole (V1), Miras Notenblatt (V2), gemalte Pfeile, Rahmen und Stufen-Schild im Fähigkeitenbaum (V4), Splitter-Rindenbär in der Welt (V5), zerstörter Splitter-Knoten (V6), Blumen und welkes Laub in Grünwacht (V7), die vier Bilder der Erinnerungs-Szene (V8) und der Boss-Kopf auf den Karten (V10). Werkzeuge `tools/baum_pfeile.py`, `tools/teil_v_bilder.py`, Übersicht `tools/referenz/teil_v/uebersicht_teil_v.png`.
   - **So testest du es:**
     1. Fähigkeitenbaum (K) öffnen: goldene und graue Pfeile mit Ecken und Spitze, Rahmen gold/grün/grau, unten rechts ein rundes Schild mit der Stufe. Werte-Fenster (C): neue Symbole bei den Werten.
