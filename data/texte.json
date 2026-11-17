@@ -208,6 +208,7 @@
 	"menu_danke": "Danke & Feedback\nDankesliste der Tester, Rückmeldung geben",
 	"menu_offline": "Offline spielen\nAllein, mit deinem Spielstand",
 	"menu_online": "Online spielen\nDasselbe Spiel mit bis zu 4 Spielern",
+	"menu_online_gesperrt": "Online spielen\nGerade gesperrt, kommt bald wieder",
 	"tester_info": "Tester: %s (%s)",
 	"abschluss_titel": "Demo durchgespielt!",
 	"abschluss_text": "Danke fürs Durchspielen, %s! Dein Tester-Code:",

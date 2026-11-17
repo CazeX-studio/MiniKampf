@@ -47,7 +47,12 @@ func _ready() -> void:
 	var x := 40.0 if mit_editor else 245.0
 	_add_button(GameData.text("menu_offline"), Vector2(x, 300), "",
 			func() -> String: return "res://scenes/kreuzweg.tscn" if SaveGame.exists() else "res://scenes/figur_erstellen.tscn")
-	_add_button(GameData.text("menu_online"), Vector2(x + 410.0, 300), "res://scenes/zusammen.tscn")
+	var online := _add_button(GameData.text("menu_online"), Vector2(x + 410.0, 300), "res://scenes/zusammen.tscn")
+	# Online vorerst gesperrt (Marco, 17.11.2026: der Server bei Render kann diesen Monat nicht neu gebaut werden und passt
+	# nicht mehr zur Web-Version). Wieder an: in data/demo.json "online_gesperrt" auf false. Mit Werkzeugen (Godot, Werkstatt) bleibt es offen.
+	if GameData.get_file("demo").get("online_gesperrt", false) and not Tester.werkzeuge():
+		online.text = GameData.text("menu_online_gesperrt")
+		online.disabled = true
 	if mit_editor:
 		_add_button("Editor\nTesten: Baukasten, Vega, Sandbox, Akte", Vector2(860, 300), "res://scenes/editor.tscn")
 	_version_zeigen()
@@ -176,7 +181,7 @@ func _danke_zeigen() -> void:
 
 ## ziel_von: wenn gesetzt, bestimmt es erst beim Drücken, wohin es geht (statt scene).
 ## aktion: statt eines Szenenwechsels etwas anderes tun.
-func _add_button(text: String, pos: Vector2, scene: String, ziel_von := Callable(), aktion := Callable()) -> void:
+func _add_button(text: String, pos: Vector2, scene: String, ziel_von := Callable(), aktion := Callable()) -> Button:
 	var button := Button.new()
 	button.text = text
 	button.position = pos
@@ -194,3 +199,4 @@ func _add_button(text: String, pos: Vector2, scene: String, ziel_von := Callable
 			return
 		get_tree().change_scene_to_file(ziel))
 	_inhalt.add_child(button)
+	return button

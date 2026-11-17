@@ -3683,3 +3683,16 @@ Gilt `render.yaml` bei dir nicht von selbst (Dienst nicht über „Blueprint“ 
 **So testest du es**
 1. In Kreuzweg zu den Gesandten an den fünf Straßen gehen: alle fünf sind gemalte Figuren, beim Reden mit Porträt.
 2. Zu Schmiedin Marta gehen: gemalte Frau mit Schürze statt der alten Ritterin.
+
+## Online spielen vorerst gesperrt (17.11.2026, Marco)
+
+- Der Server-Bau bei Render ist wieder gescheitert (Bau-Minuten für diesen Monat aufgebraucht). Der laufende Server ist
+  älter und passt nicht mehr sicher zur Web-Version. Darum ist „Online spielen“ im Menü der Demo gesperrt: Der Knopf ist
+  ausgegraut und sagt „Gerade gesperrt, kommt bald wieder“. Im Godot-Editor und in der Werkstatt bleibt er offen.
+- Auch die Startseite sagt jetzt, dass Online spielen gerade gesperrt ist.
+- **Wieder freigeben**, sobald Render wieder bauen kann (neuer Abrechnungsmonat oder höheres Bau-Budget): in
+  `data/demo.json` `online_gesperrt` auf `false` und die Datum-Zeile in `server/STAND.txt` ändern, dann pushen.
+
+**So testest du es**
+1. Die Demo im Browser öffnen: Im Menü ist „Online spielen“ ausgegraut und lässt sich nicht anklicken.
+2. „Offline spielen“ geht wie immer.

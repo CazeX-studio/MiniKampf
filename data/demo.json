@@ -3,5 +3,7 @@
 	"formular_vorlage": "https://docs.google.com/forms/d/e/1FAIpQLSeUonN6xSamr3RnqQ8JbVWgWsR6K6uYGd1u5iu727OrhqHaYQ/viewform?usp=pp_url&entry.1163001219=SPITZNAME&entry.213099868=NUMMER&entry.1992196106=ART&entry.411116245=CODE&entry.815236800=VERSION&entry.1357366274=ORT",
 	"abschluss_vorlage": "",
 	"abschluss_hinweis": "P3: Marcos vorausgefüllter Link zum zweiten Google-Formular (nur für den Abschluss), in den Feldern die Platzhalter SPITZNAME, NUMMER, VERSION, CODE, ORT. Das Spiel schickt es am Ende der Demo selbst ab. Leer = wie bisher der Knopf „Abschluss melden“ mit dem Feedback-Formular.",
+	"online_gesperrt": true,
+	"online_hinweis": "online_gesperrt: true sperrt „Online spielen“ im Menü der Demo (Marco 17.11.2026, Render-Server kann diesen Monat nicht neu bauen). Wieder freigeben: false, dann server/STAND.txt ändern, damit der Server neu gebaut wird.",
 	"werkstatt": "werkstatt-glutfunke"
 }
