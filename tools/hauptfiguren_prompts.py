@@ -77,6 +77,64 @@ FIGUREN = {
 		hand="Xavina hat beim Gehen die Harfe NICHT in der Hand, die Hände sind leer; die kleine Harfe hängt an einem Riemen auf dem Rücken.",
 		rueck="Hinterkopf mit den sehr langen kastanienbraunen Haaren, dem goldenen Haarkranz und den orangen Blüten, KEIN Gesicht, die kleine Harfe an einem Riemen auf dem Rücken, das lange rot-goldene Kleid",
 		waffe="keine Harfe in der Hand"),
+	# Übrige Hauptfiguren (18.11.): Vorlage ist ein sauberes Blatt aus den Spielbildern (tools/referenz/teil_u/haupt_<figur>_welt.png)
+	"ren": dict(n="Ren", g="w",
+		d="junge Kunoichi, lange wilde dunkelbraune Haare zu einem hohen Pferdeschwanz, große rosa Kirschblüte und rosa Bänder im Haar, braune Augen, dunkles Tuch über Mund und Nase, langer rosa Schal mit Blütenmuster, kurzes helles Gewand mit rosa Blüten, dunkle Armschienen, rosa Schärpe mit goldenem Knoten, dunkle Pluderhose, umwickelte braune Stiefel",
+		hand="Ren hat in der Welt KEINE Waffe in der Hand, die Hände sind leer.",
+		rueck="Hinterkopf mit dem hohen dunkelbraunen Pferdeschwanz, der Kirschblüte und den rosa Bändern, KEIN Gesicht, der lange rosa Schal und die Schärpe mit Knoten",
+		waffe="keine Waffe in der Hand"),
+	"zaid": dict(n="Zaid", g="m",
+		d="kräftiger Händler mit dunkler Haut, schwarzer Vollbart, braune Augen, freundliches Lächeln, goldener Ohrring, heller Turban mit rotem Band und goldenem Juwel, helles Hemd mit goldenen Knöpfen, rotbraune Jacke, breiter Gürtel mit Ledertasche, langer senfgelber Reiseumhang mit Kapuze und roten Streifen am Saum, dunkle Hose, braune Stiefel",
+		hand="Zaid hat in der Welt nichts in der Hand, die Hände sind leer.",
+		rueck="Hinterkopf mit dem hellen Turban und den herabhängenden Enden des roten Bands, KEIN Gesicht, der lange senfgelbe Umhang mit Kapuze und roten Streifen über dem Rücken",
+		waffe="nichts in den Händen"),
+	"hagebutte": dict(n="Oma Hagebutte", g="w",
+		koerper="Alte Frau: klein und rundlich, leicht gebeugter Rücken, kurze gemütliche Schritte, die Füße heben nur wenig vom Boden ab.",
+		d="kleine, rundliche alte Frau, weiße lockige Haare, grünes Kopftuch mit roten Hagebutten, runde Brille, freundliches faltiges Lächeln, dicke olivgrüne Strickjacke mit großen Knöpfen und Taschen, braunes langes Kleid, braune Schuhe",
+		hand="Oma Hagebutte hat beim Gehen nichts in der Hand, die Hände sind leer; der Kartenstapel steckt in der Jackentasche.",
+		rueck="Hinterkopf mit den weißen Locken und dem grünen Kopftuch mit Hagebutten, KEIN Gesicht, die dicke olivgrüne Strickjacke und das braune Kleid",
+		waffe="nichts in den Händen"),
+	"hatta": dict(n="Hatta", g="m",
+		d="Hutmacher, braune lockige Haare, kleiner Schnurrbart, braune Augen, riesiger rotbrauner Zylinder mit bunten Flicken, rotem Hutband, weißen und roten Federn, goldener Rosette und einer Garnspule mit Nadeln, helles Hemd, weinrote Weste, gelbes Maßband um den Hals, brauner Gürtel, dunkle Hose, braune Stiefel",
+		hand="Hatta hat in der Welt nichts in der Hand, die Hände sind leer.",
+		rueck="der riesige Zylinder mit Flicken, Federn und Garnspule von hinten über den braunen Locken, KEIN Gesicht, die weinrote Weste mit Gürtel und das gelbe Maßband",
+		waffe="nichts in den Händen"),
+	"ilse": dict(n="Bankhüterin Ilse", g="w",
+		koerper="Alte Frau: klein, leicht gebeugter Rücken, kurze ruhige Schritte, die Füße heben nur wenig vom Boden ab.",
+		d="kleine alte Frau, graue Haare zu einem Dutt mit goldener Haarnadel, runde Brille, freundliches Gesicht, lange pflaumenfarbene Robe mit hellem Kragen und hellen Ärmelschonern, ein goldener Schlüsselbund am Gürtel, dunkle Schuhe",
+		hand="Ilse hat in der Welt nichts in der Hand, die Hände sind leer; der Schlüsselbund hängt am Gürtel.",
+		rueck="Hinterkopf mit dem grauen Dutt und der goldenen Haarnadel, KEIN Gesicht, der helle Kragen und die pflaumenfarbene Robe",
+		waffe="nichts in den Händen"),
+	"edmar": dict(n="Vogt Edmar", g="m",
+		d="kräftiger Mann, volle wellige braune Haare mit einer weißen Strähne, Vollbart und großer Schnurrbart, braune Augen, goldene Amtskette mit rundem Abzeichen, breite Festschärpe in fünf Farben quer über der Brust, helles Hemd, braune Weste, goldener Gürtel, braune Handschuhe, dunkle Hose, braune Stiefel",
+		hand="Edmar hat in der Welt nichts in der Hand, die Hände sind leer.",
+		rueck="Hinterkopf mit den vollen welligen braunen Haaren und der weißen Strähne, KEIN Gesicht, die goldene Amtskette am Nacken, die bunte Festschärpe quer über dem Rücken, die braune Weste",
+		waffe="nichts in den Händen"),
+	"ilwen": dict(n="Ilwen", g="w",
+		d="junge Frau, sehr lange silberweiße Haare, hochgesteckt mit einem goldenen Stern mit blauem Stein und einer dunkelblauen Schleife, dunkelblaue Augen, ernstes ruhiges Gesicht, langer dunkelblauer Mantel mit Goldmustern und Kragen, helles Kleid darunter, brauner Gürtel, dunkle Stiefel",
+		hand="Ilwen hat in der Welt nichts in der Hand, die Hände sind leer.",
+		rueck="Hinterkopf mit den langen silberweißen Haaren, dem Haarknoten, dem goldenen Stern und der blauen Schleife, KEIN Gesicht, der lange dunkelblaue Mantel mit Goldmustern",
+		waffe="nichts in den Händen"),
+	"pim": dict(n="Pim", g="m",
+		d="Junge, wilde strubbelige braune Haare, große Messing-Fliegerbrille auf der Stirn, braune Augen, fröhliches Gesicht, rotes Halstuch, helles Hemd mit hochgekrempelten Ärmeln, braune Latzhose mit gekreuzten Trägern, Gürtel mit Werkzeugtaschen und einem Zahnrad, braune Handschuhe, braune Stiefel",
+		hand="Pim hat in der Welt nichts in der Hand, die Hände sind leer.",
+		rueck="Hinterkopf mit den strubbeligen braunen Haaren und dem Band der Fliegerbrille, KEIN Gesicht, der Knoten des roten Halstuchs, die gekreuzten Träger und der Gürtel mit Taschen und Zahnrad",
+		waffe="nichts in den Händen"),
+	"nalia": dict(n="Nalia", g="w",
+		d="junge Frau, sehr lange wilde dunkelbraune Locken, rotes Kopftuch mit goldenen Münzen, rotes Stirnjuwel, goldene Ohrringe, braune Augen, fröhliches Lächeln, kurzes orangerotes Oberteil, goldene Armreifen, Münzgürtel, weiter orange-heller Rock mit Quasten, braune Sandalen",
+		hand="Nalia hat in der Welt nichts in der Hand, die Hände sind leer.",
+		rueck="Hinterkopf mit den sehr langen wilden dunkelbraunen Locken und dem Knoten des roten Kopftuchs, KEIN Gesicht, die Bänder des Oberteils, der Münzgürtel und der weite Rock",
+		waffe="nichts in den Händen"),
+	"aske": dict(n="Aske", g="m",
+		d="Junge, braune Haare, grüne Augen, ernster Blick, spitze dunkelgrüne Kapuze mit goldener Borte, einer hellen Feder und einer goldenen Brosche, dunkelgrüner Schal, Umhang aus grünen Blättern, helles Hemd mit grünem Rand, brauner Gürtel und Schultergurt mit Umhängetasche, braune Handschuhe, braune Stiefel",
+		hand="Aske hat in der Welt nichts in der Hand, die Hände sind leer.",
+		rueck="die spitze grüne Kapuze von hinten mit Feder und Brosche, KEIN Gesicht, der Umhang aus grünen Blättern, der Schultergurt und die Umhängetasche",
+		waffe="nichts in den Händen"),
+	"mei": dict(n="Mei", g="w",
+		d="junges Mädchen, lange dunkelbraune Haare mit einem Dutt, rosa Kirschblüten, roter Schleife und goldenen Haarnadeln mit Quasten, braune Augen, sanftes Lächeln, helles Gewand mit weiten Ärmeln und rosa Blütenmuster, rote Schärpe mit Schleife, roter Faltenrock, braune Sandalen",
+		hand="Mei hat in der Welt nichts in der Hand, die Hände sind leer.",
+		rueck="Hinterkopf mit den langen dunkelbraunen Haaren, dem Dutt, den Kirschblüten, der roten Schleife und den Haarnadeln, KEIN Gesicht, die weiten Ärmel, die Schleife der Schärpe und der rote Faltenrock",
+		waffe="nichts in den Händen"),
 }
 WEIBLICH = ("Weibliche Figur: schmale Schultern, deutliche Taille, breitere Hüfte, schlanke Arme und Beine, kleinere Hände "
 	"und Füße. Die Füße setzen beim Gehen fast auf einer Linie auf, die Hüfte wiegt leicht mit. Haltung leicht und "
@@ -98,7 +156,7 @@ def gehen(key, f, erstes):
 	hinten = "hinten" in key
 	if hinten:
 		satz += f" Man sieht nur den RÜCKEN, so wie in haupt_{f['key']}_welt.png in der unteren Reihe: {f['rueck']}."
-	weiblich = f"\n- {WEIBLICH}" if f["g"] == "w" else ""
+	weiblich = f"\n- {f.get('koerper', WEIBLICH)}" if f["g"] == "w" else ""
 	gesicht = "" if hinten else ", das Gesicht ist in jedem Bild dasselbe"
 	pruef = "von hinten ist kein Gesicht zu sehen" if hinten else "das Gesicht ist in jedem Bild dasselbe"
 	return f"""{"" if erstes else "Neues Blatt, gleiche Figur wie eben: "}Welt-Blatt „{f['n']}, Gehen {name}“ für Asterfall. Aufbau wie bei den Spieler-Figuren in Ragnarok Online: Gehen mit 8 Bildern je Richtung (nur Aufbau und Gangart als Vorbild, nichts abmalen).
@@ -129,7 +187,7 @@ Prüfe vor der Abgabe Feld für Feld gegen die Vorlage: genau 8 Figuren, in jede
 
 
 def stehen(f):
-	weiblich = f"\n- {WEIBLICH}" if f["g"] == "w" else ""
+	weiblich = f"\n- {f.get('koerper', WEIBLICH)}" if f["g"] == "w" else ""
 	if f["g"] == "w":
 		sitz = "Gesäß am Boden, Beine seitlich angewinkelt, Hände im Schoß, Oberkörper aufrecht."
 	else:
