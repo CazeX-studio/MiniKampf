@@ -21,8 +21,12 @@ func _alle_texte(daten: Variant) -> String:
 
 func _initialize() -> void:
 	Tageszeit.feste_stunde = 12.0
-	for anim: String in ["idle_vorn", "run_vorn", "idle_hinten", "run_hinten", "schirm_vorn"]:
-		_check(ResourceLoader.exists(FighterView.sprite_path("ye", anim, 3)), "Ye: Bilder %s" % anim)
+	# Seit den Welt-Blättern (Teil U2b): Stehen hat 1 Bild, Gehen 8
+	for anim: String in ["idle_vorn", "idle_hinten", "idle_gerade_vorn", "idle_welt_seite"]:
+		_check(ResourceLoader.exists(FighterView.sprite_path("ye", anim, 0)), "Ye: Bilder %s" % anim)
+	for anim: String in ["run_vorn", "run_hinten", "run_gerade_vorn", "run_welt_seite"]:
+		_check(ResourceLoader.exists(FighterView.sprite_path("ye", anim, 7)), "Ye: Bilder %s" % anim)
+	_check(ResourceLoader.exists(FighterView.sprite_path("ye", "schirm_vorn", 3)), "Ye: Bilder schirm_vorn")
 	for stimmung: String in ["ruhig", "laechelnd", "wuetend", "traurig", "ueberrascht"]:
 		_check(ResourceLoader.exists("res://assets/portraets/ye_%s.png" % stimmung), "Porträt %s" % stimmung)
 	_check(WorldState.portraet({wer = "Ye", stimmung = "traurig"}).ends_with("ye_traurig.png"), "Porträt passt zur Stimmung")
