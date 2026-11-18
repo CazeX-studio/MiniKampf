@@ -13,6 +13,13 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
+- **Neu (18.11.): Oma Hagebutte, Vogt Edmar und Ilwen laufen in fünf Richtungen** (Teil U2b): Edmar und Ilwen in Kreuzweg, Oma Hagebutte in Wipfelheim gehen, stehen und sitzen jetzt mit den neuen Bildern, alle mit leeren Händen. Oma Hagebutte geht mit kleinen, gemütlichen Schritten.
+  So testest du es:
+  1. In Kreuzweg Edmar und Ilwen suchen, in Wipfelheim Oma Hagebutte.
+  2. Um sie herumlaufen: Sie drehen sich passend mit, keiner läuft rückwärts.
+  3. Von schräg hinten sind sie genauso groß wie von vorne.
+  4. Beim Hinsetzen bleiben sie gleich groß wie im Stehen.
+
 - **Neu (18.11.): Ren, Zaid und Hatta laufen in fünf Richtungen** (Teil U2b): Ren und Hatta in Kreuzweg, Zaid in der Glutoase gehen, stehen und sitzen jetzt mit den neuen Bildern, alle mit leeren Händen. Zaid schräg von vorne war kleiner gemalt und Ren schräg von vorne zu rosa, beides beim Einbau angeglichen.
   So testest du es:
   1. In Kreuzweg Ren und Hatta suchen, in der Glutoase Zaid.
