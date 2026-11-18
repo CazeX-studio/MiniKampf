@@ -13,6 +13,13 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
+- **Neu (19.11.): Mei und Nalia laufen in fünf Richtungen – alle Hauptfiguren fertig** (Teil U2b, Kreuzweg): Damit gehen, stehen und sitzen alle 16 Hauptfiguren mit den neuen Bildern. Nalia war von schräg hinten kleiner gemalt, das ist beim Einbau angeglichen.
+  So testest du es:
+  1. In Kreuzweg Mei und Nalia suchen.
+  2. Um sie herumlaufen: Sie drehen sich passend mit, keiner läuft rückwärts.
+  3. Nalia ist von schräg hinten genauso groß wie von vorne.
+  4. Einmal durch Kreuzweg laufen: Keine Hauptfigur sieht noch aus wie vorher.
+
 - **Neu (18.11.): Pim, Bankhüterin Ilse und Aske laufen in fünf Richtungen** (Teil U2b, Kreuzweg): Alle drei gehen, stehen und sitzen jetzt mit den neuen Bildern, mit leeren Händen. Ilse trägt den Schlüsselbund am Gürtel. Aske war von schräg vorne und von hinten kleiner gemalt, das ist beim Einbau angeglichen.
   So testest du es:
   1. In Kreuzweg Pim, Ilse und Aske suchen.
