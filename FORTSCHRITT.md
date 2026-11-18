@@ -13,6 +13,13 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
+- **Neu (18.11.): Ren, Zaid und Hatta laufen in fünf Richtungen** (Teil U2b): Ren und Hatta in Kreuzweg, Zaid in der Glutoase gehen, stehen und sitzen jetzt mit den neuen Bildern, alle mit leeren Händen. Zaid schräg von vorne war kleiner gemalt und Ren schräg von vorne zu rosa, beides beim Einbau angeglichen.
+  So testest du es:
+  1. In Kreuzweg Ren und Hatta suchen, in der Glutoase Zaid.
+  2. Um sie herumlaufen: Sie drehen sich passend mit, keiner läuft rückwärts.
+  3. Zaid ist von schräg vorne genauso groß wie von den anderen Seiten.
+  4. Ren hat von schräg vorne dieselben Farben wie von vorne.
+
 - **Neu (17.11.): Brakkus und Samira laufen in fünf Richtungen** (Teil U2b, Glutoase): Damit gehen, stehen und sitzen alle acht Hauptfiguren aus Kreuzweg und Glutoase mit den neuen Bildern. Brakkus trägt den Hammer auf dem Rücken, Samira die Dolche am Gürtel.
   So testest du es:
   1. In der Glutoase Brakkus und Samira suchen.
