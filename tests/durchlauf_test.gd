@@ -125,6 +125,10 @@ func _answer() -> void:
 func _next_goal() -> void:
 	for mark: String in ["?", "!"]:
 		for id: String in world.npcs:
+			# Das „?“ der Gesandten (Probestunde) erst, wenn sonst nichts zu tun ist: So nimmt der Durchlauf vorher die
+			# Nebenaufträge mit, wie ein Spieler, der sich in Kreuzweg umsieht.
+			if mark == "?" and Klassenwahl.GESANDTE.values().has(id):
+				continue
 			if world.npc_marker(p, id) == mark:
 				world.apply_command("spieler", {type = "talk", npc = id})
 				return

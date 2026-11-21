@@ -1613,7 +1613,7 @@ func _quest_place(p: PlayerState, id: String) -> Dictionary:
 		if goal.has("bei"):
 			return _npc_goal(p, [goal.bei])
 		if goal.has("wegweiser"):
-			return _npc_goal(p, goal.wegweiser)
+			return _npc_goal(p, _wegweiser_ziele(goal))
 		# {"karte": "pilzhoehle"}: das Ziel liegt auf einer anderen Karte (Dungeon), der Wegweiser zeigt zum Eingang
 		if goal.has("karte") and maps.has(str(goal.karte)) and p.map != str(goal.karte):
 			return {karte = str(goal.karte), feld = get_map(str(goal.karte)).start}
@@ -1685,6 +1685,21 @@ func side_number(p: PlayerState, quest_id: String) -> int:
 
 
 ## Der nächste der genannten NPCs, der für den Spieler gerade da ist (auch einer, der erst herbeiläuft).
+## NPCs, zu denen ein Ziel mit „wegweiser“ führt. Gesandte, deren Klassen man in der Demo nicht lernen kann
+## (z. B. Messinghafen), fallen weg: Pfeil und „?“ zeigen nur zu den Gesandten, bei denen man etwas lernt (Marco 21.11.2026).
+func _wegweiser_ziele(goal: Dictionary) -> Array:
+	var ziele: Array = []
+	for id: Variant in goal.get("wegweiser", []):
+		if Klassenwahl.gesandter_lernbar(str(id)):
+			ziele.append(str(id))
+	return ziele
+
+
+## „?“ zeigen auch die lernbaren Gesandten im Wegweiser (Probestunde), andere Wegweiser-NPCs nicht.
+func _gesandte_ziele(goal: Dictionary) -> Array:
+	return _wegweiser_ziele(goal).filter(func(id: String) -> bool: return Klassenwahl.GESANDTE.values().has(id))
+
+
 func _npc_goal(p: PlayerState, ids: Array) -> Dictionary:
 	var best := {}
 	for id: String in ids:
@@ -1838,7 +1853,8 @@ func _marker(p: PlayerState, npc_id: String) -> Array:
 				return ["?", side]
 			if quest_state == "aktiv":
 				for goal: Dictionary in q.get("ziele", []):
-					if goal.get("bei", "") == npc_id and not goal_done(p, goal) and goal_shown(p, goal) and check(p, goal.get("wenn", {})):
+					if (goal.get("bei", "") == npc_id or _gesandte_ziele(goal).has(npc_id)) and not goal_done(p, goal) \
+							and goal_shown(p, goal) and check(p, goal.get("wenn", {})):
 						return ["?", side]
 		for id: String in own:
 			var q: Dictionary = all_quests[id]
@@ -1864,6 +1880,8 @@ func _quests_for_npc(all_quests: Dictionary, npc_id: String) -> Array:
 			var names := {str(q.get("start_bei", "")): true, str(q.get("abgeben_bei", "")): true}
 			for goal: Dictionary in q.get("ziele", []):
 				names[str(goal.get("bei", ""))] = true
+				for n: String in _gesandte_ziele(goal):
+					names[n] = true
 			for n: String in names:
 				if n != "":
 					if not _npc_quests.has(n):

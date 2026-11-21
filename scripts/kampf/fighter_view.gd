@@ -446,6 +446,19 @@ func ult_bild() -> Texture2D:
 	return einzelbild(fighter.look if fighter.look != "" else look_data(fighter.klass).sprite, "idle", 0)
 
 
+## Die Figur schaut den Spieler an (Ausrüstung, Werte-Fenster, Marco 21.11.2026): gerade von vorne,
+## sonst schräg von vorne, sonst wie im Kampf von der Seite.
+static func bild_von_vorn(look: String) -> Texture2D:
+	var sprite := str(look_data(look).sprite)
+	var anims: Array[String] = ["idle_vorn", "idle"]
+	if FigurTeile.kopf_kann(sprite, "gerade_vorn"):
+		anims.push_front("idle_gerade_vorn")
+	for anim: String in anims:
+		if ResourceLoader.exists(sprite_path(sprite, anim, 0)):
+			return einzelbild(sprite, anim, 0)
+	return einzelbild(sprite, "idle", 0)
+
+
 static func portrait(klass: String) -> Texture2D:
 	return einzelbild(look_data(klass).sprite, "idle", 0)
 

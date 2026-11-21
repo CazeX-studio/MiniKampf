@@ -13,6 +13,16 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
+- **Neu (21.11.): Erklärung vor dem Kampf, Figur schaut nach vorne, Wegweiser zur Probestunde** (Marcos Wünsche):
+  In der Probestunde und im ersten Kampf mit den Novizen kommt immer zuerst die Erklärung, erst danach bewegt sich jemand (vorher griffen schnelle Monster schon an).
+  Im Ausrüstungsfenster und oben im Werte-Fenster schaut deine Figur nach vorne statt zur Seite.
+  Der Auftrag „Die Gesandten“ zeigt nur noch zu den Gesandten aus Grünwacht und der Glutoase (dort kann man etwas lernen), beide haben ein „?“.
+  So testest du es:
+  1. Bei einem Gesandten eine Probestunde starten: Zuerst kommt die Erklärung, kein Monster greift vorher an.
+  2. Den ersten Kampf mit Tessa und Gorm starten: Auch hier zuerst die Erklärung.
+  3. Werte-Fenster (C) öffnen: Die Figur oben links und bei der Ausrüstung schaut dich an.
+  4. Auftrag „Die Gesandten“ annehmen: Der Pfeil zeigt zum Gesandten aus Grünwacht oder der Glutoase, nicht zu Messinghafen. Beide haben ein „?“.
+
 - **Neu (19.11.): Mei und Nalia laufen in fünf Richtungen – alle Hauptfiguren fertig** (Teil U2b, Kreuzweg): Damit gehen, stehen und sitzen alle Hauptfiguren mit den neuen Bildern. Nalia war von schräg hinten kleiner gemalt, das ist beim Einbau angeglichen.
   So testest du es:
   1. In Kreuzweg Mei und Nalia suchen.

@@ -291,6 +291,15 @@ static func in_demo(id: String) -> bool:
 	return regionen.is_empty() or str(Sandbox.CLASSES.get(id, {}).get("region", "")) in regionen
 
 
+## Kann man beim Gesandten mit dieser NPC-Nummer in der Demo etwas lernen? Andere NPCs: ja.
+static func gesandter_lernbar(npc_id: String) -> bool:
+	var region_von: Variant = GESANDTE.find_key(npc_id)
+	if region_von == null:
+		return true
+	var regionen: Array = GameData.get_file("klassen").get("demo_regionen", [])
+	return regionen.is_empty() or str(region_von) in regionen
+
+
 ## Darf die eigene Figur diese Klasse wählen und ausprobieren? (in der Demo und, bei der Sternensängerin, weiblich)
 func darf_waehlen(id: String) -> bool:
 	return in_demo(id) and FigurTeile.klasse_erlaubt(eigene_figur(), id)

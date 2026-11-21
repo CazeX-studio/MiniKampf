@@ -295,10 +295,10 @@ func _attack_hint(target: Fighter) -> void:
 
 
 ## Zu Beginn jeder Lektion (Phase) alle ihre Erklärungen nacheinander, vor dem ersten Zug (A4, Alpha-Punkt 5).
+## Seit 21.11.2026 in jedem Kampf mit Erklärung (Probestunde, erster Kampf mit den Novizen): erst die Erklärung,
+## dann bewegt sich jemand, auch wenn die Monster schneller sind (Marco).
 ## Was im Zug selbst noch einmal gefragt wird, ist dann schon gesehen.
 func _lektion_erklaeren() -> void:
-	if not state.setup.has("phasen"):
-		return
 	for key: String in ["erster_zug", "erste_reaktion"]:
 		await _show_hint(key)
 
@@ -393,7 +393,7 @@ func _play_event(event: Dictionary) -> void:
 			if _current == null:
 				_clear_actions()
 			refresh()
-			# Lernkampf: Ye erklärt die ganze Lektion, bevor sich jemand bewegt (A4, Alpha-Punkt 5)
+			# Ye erklärt, bevor sich jemand bewegt (Lernkampf A4, seit 21.11.2026 jeder Kampf mit Erklärung)
 			await _lektion_erklaeren()
 		"refresh":
 			refresh()

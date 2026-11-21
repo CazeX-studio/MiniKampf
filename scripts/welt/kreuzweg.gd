@@ -3474,7 +3474,7 @@ func _fill_stats_head(p: PlayerState, title: String, hp: int, mana: int) -> void
 	frame.add_theme_stylebox_override("panel", UiStil.bilderrahmen())
 	frame.custom_minimum_size = Vector2(120, 120)
 	var portrait := TextureRect.new()
-	portrait.texture = FighterView.portrait(p.look if p.look != "" else "novize")
+	portrait.texture = FighterView.bild_von_vorn(p.look if p.look != "" else "novize")
 	portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	portrait.texture_filter = FighterView.filter_fuer(portrait.texture)

@@ -26,7 +26,7 @@ func bauen(p: Progress, look: String, senden: Callable, neu: Callable) -> void:
 	add_child(zeile)
 	zeile.add_child(_spalte(LINKS, angelegt, neu, senden))
 	var figur := TextureRect.new()
-	figur.texture = _bild_von_vorn(look)
+	figur.texture = FighterView.bild_von_vorn(look)
 	figur.custom_minimum_size = Vector2(150, 3 * PLATZ + 2 * 22)
 	figur.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	figur.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
@@ -64,17 +64,6 @@ func bauen(p: Progress, look: String, senden: Callable, neu: Callable) -> void:
 		hinweis.add_theme_font_size_override("font_size", 14)
 		hinweis.add_theme_color_override("font_color", Color("a0a0a0"))
 		add_child(hinweis)
-
-
-## Die Figur schaut den Spieler an: gerade von vorne, sonst schräg von vorne, sonst wie im Kampf (von der Seite).
-static func _bild_von_vorn(look: String) -> Texture2D:
-	var anims: Array[String] = ["idle_vorn", "idle"]
-	if FigurTeile.kopf_kann(look, "gerade_vorn"):
-		anims.push_front("idle_gerade_vorn")
-	for anim: String in anims:
-		if ResourceLoader.exists(FighterView.sprite_path(look, anim, 0)):
-			return FighterView.einzelbild(look, anim, 0)
-	return FighterView.einzelbild(look, "idle", 0)
 
 
 func _spalte(plaetze: Array, angelegt: Dictionary, neu: Callable, senden: Callable) -> VBoxContainer:

@@ -253,6 +253,13 @@ func _test_building_blocks() -> void:
 	world.apply_command("a", {type = "dialog_choose", index = 0})
 	_check(p.progress.quest_state("gesandte") == "aktiv", "Auftrag „Die Gesandten“ läuft")
 	world.apply_command("a", {type = "dialog_next"})
+	# Wegweiser und „?“ nur bei Gesandten, bei denen man in der Demo etwas lernt (Marco 21.11.2026)
+	_check(world.npc_marker(p, "gesandte_glutoase") == "?" and world.npc_marker(p, "gesandte_gruenwacht") == "?"
+			and world.npc_marker(p, "gesandte_messinghafen") == "" and world.npc_marker(p, "gesandte_arkanum") == "",
+			"? nur über den Gesandten aus Glutoase und Grünwacht")
+	var ziel_gesandte := world._quest_place(p, "gesandte")
+	_check(not ziel_gesandte.is_empty() and [world.npcs.gesandte_glutoase.cell, world.npcs.gesandte_gruenwacht.cell].has(ziel_gesandte.feld),
+			"Wegweiser zeigt zu einem lernbaren Gesandten")
 	_talk(world, p, "gesandte_glutoase")
 	_check(world.dialog_view(p).antworten.size() == 3, "Glutoase: Klassen ansehen, Region, Später")
 	var envoy_scenes: Array[String] = []
