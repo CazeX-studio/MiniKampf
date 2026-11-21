@@ -923,6 +923,11 @@ func answer_markers(p: PlayerState, dialog_id: String, node_id: String, answers:
 ## Wie sehr eine Antwort die Hauptgeschichte weiterbringt: {wert, zeichen}. Weiterbringen zählt mehr als nur einen
 ## Auftrag annehmen, und je früher im Gespräch es passiert, desto besser (Umwege über Fragen zählen weniger).
 func _answer_value(p: PlayerState, dialog_id: String, a: Dictionary, visited: Dictionary, depth: int) -> Dictionary:
+	# Antworten, die eine Entscheidung zurücknehmen (z. B. „Ich habe es mir anders überlegt“ bei Ye), bringen nicht
+	# weiter, auch wenn sie einen Bildschirm öffnen (Marco 21.11.2026: das „?“ stand bei der Neuwahl).
+	for action: Dictionary in a.get("aktionen", []):
+		if action.has("vergessen"):
+			return {wert = 0, zeichen = ""}
 	var v := _actions_value(p, a.get("aktionen", []), depth)
 	if a.has("weiter"):
 		v = _better_value(v, _node_value(p, dialog_id, str(a.weiter), visited, depth + 1))

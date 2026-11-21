@@ -258,6 +258,8 @@ static func spielen(k: Control, name: String, f: Fighter, ziel: Fighter, seite: 
 				Fx.spawn(feld, Fx.Kind.SPARKS, ziel_ansicht.center(), Color("fff3b0"), 90.0, 0.7)
 				await k.wait(0.4)
 				_huepfer(ziel_ansicht, 14.0, 0.12)
+		# Platzhalter: Rudelruf wird komplett neu (Marco 21.11.2026), sobald die Bilder aus GRAFIK_AUFTRAG.md Teil W
+		# da sind (fx_rudelruf_pfiff, fx_rudelruf_geister, fx_rudelruf_einschlag), Bauauftrag P26.
 		"rudelruf_an":
 			_pose(v)
 			Geraeusche.play("perfekt", 1.6)

@@ -380,6 +380,8 @@ func _test_building_blocks() -> void:
 	var farewell: String = world.dialog_view(p).text
 	_check(farewell.contains("Sternensängerin") and farewell.contains("in die Glutoase") and farewell.contains("Hohe Sängerin Xavina"),
 		"Ye nennt Klasse, Region und Lehrmeister")
+	var ye_zeichen: Array = world.dialog_view(p).zeichen
+	_check(ye_zeichen[0] != "" and ye_zeichen[1] == "", "Das Zeichen steht bei „Ich bin bereit“, nicht bei der Neuwahl")
 	world.apply_command("a", {type = "dialog_choose", index = 0})
 	_check(world.dialog_view(p).text.contains("Empfehlungsschreiben") and p.progress.item_count("empfehlungsschreiben") == 1,
 		"A15: Ye gibt ein Empfehlungsschreiben für die Stadtwachen")

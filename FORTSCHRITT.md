@@ -22,6 +22,9 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   2. Den ersten Kampf mit Tessa und Gorm starten: Auch hier zuerst die Erklärung.
   3. Werte-Fenster (C) öffnen: Die Figur oben links und bei der Ausrüstung schaut dich an.
   4. Auftrag „Die Gesandten“ annehmen: Der Pfeil zeigt zum Gesandten aus Grünwacht oder der Glutoase, nicht zu Messinghafen. Beide haben ein „?“.
+  5. Bei Ye eine Klasse wählen und zurückkommen: Das Zeichen steht jetzt bei „Ja. Ich bin bereit.“, nicht mehr bei „Ich habe es mir anders überlegt“.
+
+  Offen (21.11.): Weiter-Knopf im Gespräch (P25, in den Prüfungen geht er, Marco sagt noch, wo genau), Zähmer-Ult neu (P26, wartet auf die Bilder aus Teil W).
 
 - **Neu (19.11.): Mei und Nalia laufen in fünf Richtungen – alle Hauptfiguren fertig** (Teil U2b, Kreuzweg): Damit gehen, stehen und sitzen alle Hauptfiguren mit den neuen Bildern. Nalia war von schräg hinten kleiner gemalt, das ist beim Einbau angeglichen.
   So testest du es:

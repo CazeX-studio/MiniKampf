@@ -126,6 +126,13 @@ Marcos Playtest vom 16.11.2026: Aus jeder Rückmeldung ist ein eigener Auftrag g
 - **P21:** Alte gezeichnete Blumen raus: Die Blumen und das welke Laub, die Claude selbst gezeichnet hat (Grünwacht blüht auf / Urbaum gefällt, dazu alle anderen gezeichneten Blumen in den Karten), werden durch gemalte ersetzt. Bild: Teil V7. – Status: fertig (16.11.2026: Statt der gezeichneten Kreise stehen gemalte Baukasten-Pflanzen da: Blumenbüschel und blühender Busch, wenn der Urbaum gerettet ist, ein trockener, welker Busch, wenn er gefällt ist, dazu die Blumen in Kreuzweg. Marcos Blatt V7 eingebaut 16.11.: sechs Blumen und vier welke Pflanzen, `tools/baukasten_zuschneiden.py gw_blumen`.)
 - **P22:** Abschluss bei Ysolde: Beim letzten Gespräch mit Ysolde (Ende von Grünwacht) läuft Kael dazu, steht beim Gespräch dabei und geht danach wieder. – Status: fertig (16.11.2026: neue Gesprächs-Aktion „herbeirufen“; Kael läuft beim Abschluss-Gespräch herbei, bleibt bis zum Ende stehen, auch nach der Entscheidung, und geht dann zurück.)
 
+### Rückmeldungen 21.11.2026 (Marco)
+
+- **P23:** Erklärung vor dem Kampf (Probestunde, erster Kampf mit den Novizen), Figur im Ausrüstungs- und Werte-Fenster von vorne, Wegweiser der Probestunde nur zu Gesandten, bei denen man lernen kann. – Status: fertig (21.11.2026)
+- **P24:** Bei Ye nach der Klassenwahl steht das „?“ bei „Ich bin bereit“, nicht mehr bei „Ich habe es mir anders überlegt“. – Status: fertig (21.11.2026)
+- **P25:** Weiter-Knopf im Gespräch geht nicht. – Status: offen (in den Prüfungen geht er; Marco sagt, in welchem Gespräch und ob am PC oder Handy)
+- **P26:** Zähmer-Ult „Rudelruf“ komplett neu und richtig cool: Pfiff, die drei Start-Monster stürmen als große Geister-Tiere auf den Gegner, drei Krallenhiebe in ihren Farben, Einschlag in Pfotenform. – Status: offen (wartet auf die Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil W)
+
 ### Testtage (am Ende)
 
 - **T1:** Testtag Aussehen (Marco). – Status: offen
