@@ -1350,15 +1350,6 @@
 				"aussehen": "tilda",
 				"dialog": "tilda"
 			},
-			"esche": {
-				"name": "Professor Esche",
-				"feld": [
-					23,
-					36
-				],
-				"aussehen": "esche",
-				"dialog": "esche"
-			},
 			"kael": {
 				"name": "Kael",
 				"feld": [
@@ -1402,16 +1393,28 @@
 				],
 				"aussehen": "zaehmer_m+kobalt",
 				"dialog": "kobalt",
-				"anspringen": {
-					"radius": 5,
-					"wenn": {
-						"klasse": "tamer",
-						"gemerkt": "starter_gewaehlt",
-						"nicht_gemerkt": "kobalt_gekaempft"
-					}
-				},
 				"wenn": {
-					"nacht": false
+					"oder": [
+						{
+							"nacht": false
+						},
+						{
+							"auftrag": "kobalts_revanche",
+							"stand": "aktiv"
+						}
+					],
+					"und": [
+						{
+							"oder": [
+								{
+									"nicht_gemerkt": "tilda_gelehrt"
+								},
+								{
+									"gemerkt": "kobalt_gekaempft"
+								}
+							]
+						}
+					]
 				}
 			},
 			"marv_gruenwacht": {
@@ -1432,7 +1435,7 @@
 					30,
 					8
 				],
-				"aussehen": "grund_mann+v_m2#hut=gruene_kapuze",
+				"aussehen": "grund_mann+v_m2",
 				"dialog": "volk_gw_jaeger"
 			},
 			"jaeger_2": {
@@ -1441,7 +1444,7 @@
 					45,
 					20
 				],
-				"aussehen": "grund_frau+v_w2#hut=gruene_kapuze",
+				"aussehen": "grund_frau+v_w2",
 				"dialog": "volk_gw_jaegerin"
 			},
 			"sammlerin_1": {
@@ -1474,7 +1477,7 @@
 					22,
 					14
 				],
-				"aussehen": "grund_kind+k_m1#hut=gruene_kapuze",
+				"aussehen": "grund_kind+k_m1",
 				"dialog": "volk_gw_kinder",
 				"wenn": {
 					"nacht": false
@@ -1504,6 +1507,20 @@
 					1
 				],
 				"karte": "gasthaus_wipfelheim",
+				"feld": [
+					10,
+					6
+				],
+				"tuer": true
+			},
+			{
+				"bereich": [
+					30,
+					35,
+					1,
+					1
+				],
+				"karte": "esches_labor",
 				"feld": [
 					10,
 					6
@@ -3249,6 +3266,138 @@
 			}
 		},
 		"baukasten": "karte_gasthaus_wipfelheim"
+	},
+	"esches_labor": {
+		"name": "Esches Labor",
+		"innen": "wipfelheim",
+		"musik": "wald",
+		"grund": "planken",
+		"licht": "ffe8c0",
+		"start": [
+			10,
+			6
+		],
+		"raster": [
+			"XXXXXXXXXXXX",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########",
+			"X###########"
+		],
+		"ausgaenge": [
+			{
+				"bereich": [
+					11,
+					5,
+					1,
+					3
+				],
+				"karte": "wipfelheim",
+				"feld": [
+					31,
+					35
+				]
+			}
+		],
+		"kampf_hintergrund": "wipfelheim",
+		"baukasten": "karte_esches_labor",
+		"npcs": {
+			"esche": {
+				"name": "Professor Esche",
+				"feld": [
+					5,
+					4
+				],
+				"aussehen": "esche",
+				"dialog": "esche"
+			},
+			"starter_moosling": {
+				"name": "Moosling",
+				"feld": [
+					5,
+					7
+				],
+				"aussehen": "moosling",
+				"dialog": "starter_moosling",
+				"wenn": {
+					"oder": [
+						{
+							"nicht_gemerkt": "starter_gewaehlt"
+						},
+						{
+							"gemerkt": "starter_glutwelpe"
+						}
+					]
+				}
+			},
+			"starter_glutwelpe": {
+				"name": "Glutwelpe",
+				"feld": [
+					6,
+					6
+				],
+				"aussehen": "glutwelpe",
+				"dialog": "starter_glutwelpe",
+				"wenn": {
+					"oder": [
+						{
+							"nicht_gemerkt": "starter_gewaehlt"
+						},
+						{
+							"gemerkt": "starter_bachotter"
+						}
+					]
+				}
+			},
+			"starter_bachotter": {
+				"name": "Bachotter",
+				"feld": [
+					7,
+					5
+				],
+				"aussehen": "bachotter",
+				"dialog": "starter_bachotter",
+				"wenn": {
+					"oder": [
+						{
+							"nicht_gemerkt": "starter_gewaehlt"
+						},
+						{
+							"gemerkt": "starter_moosling"
+						}
+					]
+				}
+			},
+			"kobalt_labor": {
+				"name": "Kobalt",
+				"feld": [
+					9,
+					8
+				],
+				"aussehen": "zaehmer_m+kobalt",
+				"dialog": "kobalt",
+				"anspringen": {
+					"radius": 8,
+					"wenn": {
+						"klasse": "tamer",
+						"gemerkt": "starter_gewaehlt",
+						"nicht_gemerkt": "kobalt_gekaempft"
+					}
+				},
+				"wenn": {
+					"klasse": "tamer",
+					"gemerkt": "tilda_gelehrt",
+					"nicht_gemerkt": "kobalt_gekaempft"
+				}
+			}
+		}
 	},
 	"glutstube": {
 		"name": "Gasthaus Glutstube",

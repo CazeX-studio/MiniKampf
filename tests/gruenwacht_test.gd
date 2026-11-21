@@ -459,6 +459,11 @@ func _test_tamer(kobalt_won: bool) -> void:
 	_check(p.progress.battle_class() == "" and world.objective(p).contains("Tilda"), "Zähmer nach der Wahl: noch Novize, Ziel Tilda")
 	_check(world.npc_marker(p, "tilda") == "?" and world.npc_marker(p, "esche") == "" and world.npc_marker(p, "fenn") == "",
 			"Zähmer: Zeichen bei Tilda, nicht bei Esche oder Fenn")
+	# Esche wohnt in seinem Labor (Marco 21.11.2026): Tür an der Hütte im Süden von Wipfelheim
+	var tuer: Array = world.get_map("wipfelheim").exits.filter(func(e: Dictionary) -> bool: return e.karte == "esches_labor")
+	_check(tuer.size() == 1 and world.is_walkable(tuer[0].rect.position, "wipfelheim"), "Tür zu Esches Labor in Wipfelheim")
+	world.change_map(p, "esches_labor", Vector2i(9, 6))
+	_check(not world.npc_visible(p, "kobalt_labor") and not world.npc_visible(p, "kobalt"), "Kobalt ist noch nicht da")
 	world.apply_command("a", {type = "talk", npc = "esche"})
 	_tick(world, 6.0)
 	_check(p.in_dialog() and world.dialog_view(p).text.contains("Tilda"), "Esche schickt einen zuerst zu Tilda")
@@ -474,24 +479,40 @@ func _test_tamer(kobalt_won: bool) -> void:
 	world.apply_command("a", {type = "dialog_next"})
 	_check(not p.in_dialog(), "Tilda ist fertig")
 	_check(world.objective(p).contains("Esche"), "Ziel jetzt: Esche")
-	_check(world.npc_marker(p, "esche") == "!" and world.npc_marker(p, "tilda") == "", "Jetzt „!“ bei Esche")
+	_check(world.innen_zeichen(p, "esches_labor") == "!" and world.npc_marker(p, "tilda") == "", "Jetzt „!“ über der Tür von Esches Labor")
 	world.apply_command("a", {type = "talk", npc = "tilda"})
 	_tick(world, 6.0)
 	_check(world.dialog_view(p).text.contains("Esche"), "Tilda erinnert an Esche")
 	world.apply_command("a", {type = "dialog_next"})
-	world.change_map(p, "wipfelheim", Vector2i(21, 33))
+	world.change_map(p, "esches_labor", Vector2i(9, 6))
 	world.apply_command("a", {type = "talk", npc = "esche"})
 	_tick(world, 6.0)
 	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "dialog_next"})
-	var answers: Array = world.dialog_view(p).antworten
-	_check(answers.size() == 4 and str(answers[1]).begins_with("Glutwelpe"), "Esche zeigt die drei Start-Monster")
-	world.apply_command("a", {type = "dialog_choose", index = 1})
+	_check(world.dialog_view(p).text.contains("nebeneinander"), "Esche zeigt auf die drei Monster")
+	world.apply_command("a", {type = "dialog_next"})
+	_check(not p.in_dialog(), "Esche ist fertig")
+	var starter := ["starter_moosling", "starter_glutwelpe", "starter_bachotter"]
+	_check(starter.all(func(id: String) -> bool: return world.npc_visible(p, id) and world.npc_marker(p, id) == "?"),
+			"Drei Start-Monster nebeneinander, alle mit „?“")
+	_check(world.npcs.starter_moosling.cell.x + world.npcs.starter_moosling.cell.y == world.npcs.starter_bachotter.cell.x + world.npcs.starter_bachotter.cell.y,
+			"Die drei stehen auf einer Linie (auf dem Bildschirm nebeneinander)")
+	world.apply_command("a", {type = "talk", npc = "starter_glutwelpe"})
+	_tick(world, 6.0)
+	_check(world.dialog_view(p).antworten.size() == 2, "Glutwelpe ansehen: nehmen oder weiter umsehen")
+	world.apply_command("a", {type = "dialog_choose", index = 0})
 	_check(p.progress.flags.get("monster", []) == ["glutwelpe"] and p.progress.item_count("schleuder") == 1, "Glutwelpe gewählt, Schleuder bekommen")
 	_check(p.progress.quest_state("klasse_lernen") == "abgegeben" and p.progress.battle_class() == "tamer", "Monster bei Esche gewählt: kämpft jetzt als Zähmer")
 	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "dialog_next"})
 	_check(not p.in_dialog() or p.dialog.id == "kobalt", "Esche ist fertig")
+	_check(not world.npc_visible(p, "starter_glutwelpe") and not world.npc_visible(p, "starter_bachotter") and world.npc_visible(p, "starter_moosling"),
+			"Glutwelpe geht mit, Kobalt nimmt den Bachotter, der Moosling bleibt")
+	# Nachts ist Kobalt auch da, solange sein Kampf offen ist (Marco 21.11.2026: „Ich finde ihn nicht“)
+	var war_nacht: bool = world.nacht
+	world.nacht = true
+	_check(world._npc_present(p, "kobalt_labor"), "Nachts wartet Kobalt, solange sein Kampf offen ist")
+	world.nacht = war_nacht
 	# Kobalt kommt angelaufen
 	_tick(world, 6.0)
 	_check(p.in_dialog() and p.dialog.id == "kobalt" and world.dialog_view(p).text.contains("Bachotter"), "Kobalt fordert heraus und nimmt den Bachotter")
@@ -500,14 +521,17 @@ func _test_tamer(kobalt_won: bool) -> void:
 	world.apply_command("a", {type = "kampf_ergebnis", kampf = "kobalt_bachotter", gewonnen = kobalt_won})
 	_check(p.progress.flags.has("kobalt_gekaempft") and p.progress.quest_state("esches_monster") == "fertig", "Nach dem Rivalenkampf geht es weiter (%s)" % ("Sieg" if kobalt_won else "Niederlage"))
 	_check(p.progress.flags.has("erfolg:rivale_kobalt") == kobalt_won, "Erfolg „Rivale besiegt“ nur beim Sieg")
-	world.apply_command("a", {type = "talk", npc = "kobalt"})
-	_tick(world, 6.0)
-	_check(world.dialog_view(p).text.contains("Glück gehabt" if kobalt_won else "Trainier mal mehr"), "Kobalt reagiert auf den Ausgang")
-	world.apply_command("a", {type = "dialog_next"})
 	world.apply_command("a", {type = "talk", npc = "esche"})
 	_tick(world, 6.0)
 	world.apply_command("a", {type = "dialog_next"})
 	_check(p.progress.quest_state("esches_monster") == "abgegeben", "Esches Auftrag abgegeben")
+	# Danach steht Kobalt wieder draußen vor dem Labor
+	world.change_map(p, "wipfelheim", Vector2i(21, 33))
+	_check(world.npc_visible(p, "kobalt") and not world.npc_visible(p, "kobalt_labor"), "Kobalt steht wieder draußen")
+	world.apply_command("a", {type = "talk", npc = "kobalt"})
+	_tick(world, 6.0)
+	_check(world.dialog_view(p).text.contains("Glück gehabt" if kobalt_won else "Trainier mal mehr"), "Kobalt reagiert auf den Ausgang")
+	world.apply_command("a", {type = "dialog_next"})
 
 	# Tilda: ein Monster in der Wildnis zähmen
 	_check(world.npc_marker(p, "tilda") == "!", "Tilda hat ein „!“")
@@ -803,7 +827,7 @@ func _test_bees(path: String) -> void:
 	p.progress.flags["klasse"] = "fighter"
 	p.progress.quests["nach_gruenwacht"] = "abgegeben"
 	p.progress.level = 16
-	world.change_map(p, "wipfelheim", Vector2i(21, 33))
+	world.change_map(p, "esches_labor", Vector2i(9, 6))
 	_check(world.npc_marker_side(p, "esche"), "Esche hat einen Nebenauftrag (Bienenstock)")
 	world.apply_command("a", {type = "talk", npc = "esche"})
 	_tick(world, 6.0)
@@ -832,7 +856,7 @@ func _test_bees(path: String) -> void:
 		world.apply_command("a", {type = "dialog_next"})
 		_check(battles.is_empty(), "Zuhören: kein Kampf")
 	_check(p.progress.quest_state("bienenstock") == "fertig", "Bienenstock untersucht (%s)" % path)
-	world.change_map(p, "wipfelheim", Vector2i(21, 33))
+	world.change_map(p, "esches_labor", Vector2i(9, 6))
 	world.apply_command("a", {type = "talk", npc = "esche"})
 	_tick(world, 6.0)
 	_check(world.dialog_view(p).text.contains("Fünf Töne" if path == "zuhoeren" else "Schwarm"), "Esche reagiert auf das, was man getan hat")

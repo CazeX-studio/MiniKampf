@@ -130,8 +130,15 @@ Marcos Playtest vom 16.11.2026: Aus jeder Rückmeldung ist ein eigener Auftrag g
 
 - **P23:** Erklärung vor dem Kampf (Probestunde, erster Kampf mit den Novizen), Figur im Ausrüstungs- und Werte-Fenster von vorne, Wegweiser der Probestunde nur zu Gesandten, bei denen man lernen kann. – Status: fertig (21.11.2026)
 - **P24:** Bei Ye nach der Klassenwahl steht das „?“ bei „Ich bin bereit“, nicht mehr bei „Ich habe es mir anders überlegt“. – Status: fertig (21.11.2026)
-- **P25:** Weiter-Knopf im Gespräch geht nicht. – Status: offen (in den Prüfungen geht er; Marco sagt, in welchem Gespräch und ob am PC oder Handy)
+- **P25:** Weiter-Knopf im Gespräch geht nicht (Marco: am Handy). – Status: fertig (21.11.2026; der Knopf ging in den Prüfungen mit Klick und Fingertipp, darum jetzt zusätzlich: Antippen irgendwo im Gesprächsfenster blättert weiter. Bitte am Handy nachtesten.)
 - **P26:** Zähmer-Ult „Rudelruf“ komplett neu und richtig cool: Pfiff, die drei Start-Monster stürmen als große Geister-Tiere auf den Gegner, drei Krallenhiebe in ihren Farben, Einschlag in Pfotenform. – Status: offen (wartet auf die Bilder aus `Spieldesign/GRAFIK_AUFTRAG.md` Teil W)
+- **P27:** Esches Labor: Esche wohnt in seinem Labor (Tür an der Hütte im Süden von Wipfelheim). Drinnen sitzen die drei Start-Monster nebeneinander wie bei Pokémon, man geht hin und nimmt eins; Kobalt nimmt danach das Gegenstück und fordert gleich im Labor heraus. – Status: fertig (21.11.2026; gebaut mit den Innenraum-Teilen des Gasthauses, Kobalt steht danach wieder draußen)
+- **P28:** Hüte der Leute in Grünwacht passen nicht (Jäger, Kind: grüne Kapuze viel zu groß; Tamms Hut und Borkos Kochmütze verschwinden von der Seite). – Status: fertig, soweit ohne Bilder möglich (21.11.2026; Kapuzen abgenommen, Tamm und Borko von der Seite mit dem Bild von vorne; eigene Seitenbilder: `Spieldesign/GRAFIK_AUFTRAG.md` Teil X)
+- **P29:** Kobalt nicht zu finden: Er ging nachts nach Hause und erschien erst, wenn man nahe an seinem Platz vorbeikam. – Status: fertig (21.11.2026; Kampf jetzt im Labor, auch nachts)
+- **P30:** Städte noch größer, mehr Räume zum Betreten (Marco, 21.11.: das Aufräumen E3h ist seit 10.11. fertig). Ein Schritt je Stadt: – Status: offen
+  - **P30a:** Kreuzweg größer, Häuser mit Räumen. – Status: offen
+  - **P30b:** Wipfelheim größer, Häuser mit Räumen (Esches Labor ist der erste, P27). – Status: offen
+  - **P30c:** Glutoase größer, Häuser mit Räumen. – Status: offen
 
 ### Testtage (am Ende)
 

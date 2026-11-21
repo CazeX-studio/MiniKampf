@@ -356,6 +356,11 @@ static func _namen(teile: Dictionary) -> Dictionary:
 ## Hut auf ein Kopfbild setzen. Ergebnis: {bild, verschoben} (um so viel ist der alte Inhalt im neuen Bild verrutscht).
 static func _hut_aufsetzen(kopf_bild: Image, hut_id: String, richtung: String, palette := "") -> Dictionary:
 	var daten: Dictionary = _alle_schichten().hut[hut_id].get(richtung, {})
+	# Hüte ohne eigenes Seitenbild (Tamm, Borko) nehmen von der Seite das Bild von vorne, statt zu verschwinden
+	# (Marco 21.11.2026), bis die Bilder aus GRAFIK_AUFTRAG.md Teil X da sind
+	if richtung == "seite" and daten.is_empty():
+		daten = _alle_schichten().hut[hut_id].get("vorn", {})
+		richtung = "vorn"
 	# "bild": Bilder eines anderen Huts nutzen (Platzhalter, z. B. Belohnungs-Hüte des Kartenalbums)
 	var hut_bild := _bild_laden(HUT_BILD % [str(_alle_schichten().hut[hut_id].get("bild", hut_id)), richtung])
 	if hut_bild == null or daten.is_empty():

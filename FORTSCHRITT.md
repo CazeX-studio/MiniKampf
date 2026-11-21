@@ -13,6 +13,15 @@ Wird nach jedem Arbeitsschritt aktualisiert.
   - Beim Einbauen behebt Claude: Hintergrund raus bei `haupt_ilwen_portraets`, `haupt_brakkus_portraets`, `haupt_hadrak_welt`, `haupt_ren_kampf_a` und `haupt_ysolde_welt` (Probe klappt, dazu kleine weiße Reste in Lücken der Haare), Köpfe von `neben_zaid` und `neben_rashid` auf die gleiche Größe bringen. Zaid trägt den Turban schon am Kopf, das Zubehör-Teil entfällt bei ihm. Bei `haupt_ren_kampf_b` hat Reihe 3 ein Bild zu viel (Fähigkeit wirken 5 statt 4).
   - Zusatz „FIGUREN“ für den Stil-Block: von Marco bestätigt (02.11.), steht in `LOOK.md`, `GRAFIK_AUFTRAG.md` Teil A und im ChatGPT-Projekt.
 
+- **Neu (21.11., später): Esches Labor, Kobalt, Hüte in Grünwacht, Weiter am Handy** (Marcos Rückmeldungen):
+  Esche wohnt jetzt in seinem Labor (Tür an der Hütte im Süden von Wipfelheim). Drinnen sitzen Moosling, Glutwelpe und Bachotter nebeneinander, man nimmt eins mit, Kobalt nimmt das Gegenstück und fordert dich gleich dort heraus (auch nachts). Die Jäger und das Kind in Wipfelheim tragen keine viel zu große Kapuze mehr, Tamms Hut und Borkos Kochmütze bleiben auch von der Seite auf dem Kopf. Im Gespräch blättert jetzt auch Antippen irgendwo im Fenster weiter.
+  So testest du es:
+  1. Als Zähmer nach Tilda zu Esche: Über der Tür seiner Hütte steht ein „!“, drinnen erklärt Esche die drei Monster.
+  2. Zu einem der drei Monster gehen und es nehmen: Kobalt kommt herein, nimmt das Gegenstück und will kämpfen.
+  3. Nach dem Kampf steht Kobalt wieder draußen vor dem Labor.
+  4. In Wipfelheim die Jäger, das Kind, Tamm (Bank) und Borko (Gasthaus) ansehen: Kein Hut sieht falsch aus.
+  5. Am Handy im Gespräch irgendwo ins Fenster tippen: Es geht weiter.
+
 - **Neu (21.11.): Erklärung vor dem Kampf, Figur schaut nach vorne, Wegweiser zur Probestunde** (Marcos Wünsche):
   In der Probestunde und im ersten Kampf mit den Novizen kommt immer zuerst die Erklärung, erst danach bewegt sich jemand (vorher griffen schnelle Monster schon an).
   Im Ausrüstungsfenster und oben im Werte-Fenster schaut deine Figur nach vorne statt zur Seite.

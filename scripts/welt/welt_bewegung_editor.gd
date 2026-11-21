@@ -122,7 +122,8 @@ static func welt_figuren() -> Dictionary:
 	for npcs: Dictionary in alle:
 		for id: String in npcs:
 			var look := str(npcs[id].get("aussehen", ""))
-			if look != "" and not liste.has(look):
+			# Monster als Figur in der Welt (die Start-Monster in Esches Labor) laufen nicht, sie gehören nicht hierher
+			if look != "" and not liste.has(look) and not Sandbox.MONSTERS.has(look) and not Sandbox.ENEMIES.has(look):
 				liste[look] = str(npcs[id].get("name", id))
 	var sortiert := {}
 	var keys := liste.keys()

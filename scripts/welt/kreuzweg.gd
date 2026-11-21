@@ -1771,6 +1771,11 @@ func _build_ui() -> void:
 	_dialog.position = Vector2(120, 440)
 	_dialog.size = Vector2(960, 260)
 	_dialog.visible = false
+	# Handy (Marco 21.11.2026): Antippen irgendwo im Gesprächsfenster blättert weiter, nicht nur der kleine Knopf
+	_dialog.gui_input.connect(func(event: InputEvent) -> void:
+		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT and _dialog_next.visible:
+			_dialog.accept_event()
+			_send({type = "dialog_next"}))
 	root.add_child(_dialog)
 	_dialog_bild = TextureRect.new()
 	_dialog_bild.expand_mode = TextureRect.EXPAND_IGNORE_SIZE

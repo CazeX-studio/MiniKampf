@@ -67,7 +67,7 @@
 		"voraussetzung": "erster_gruppenkampf",
 		"ziele": [
 			{"art": "gemerkt", "merken": "probestunde_gemacht", "text": "An einer Probestunde teilnehmen (Gesandte an den fünf Straßen)",
-				"wegweiser": ["gesandte_arkanum", "gesandte_messinghafen", "gesandte_glutoase", "gesandte_gruenwacht", "gesandte_nebelinseln"]}
+				"wegweiser": ["gesandte_arkanum", "gesandte_messinghafen", "gesandte_glutoase", "gesandte_gruenwacht", "gesandte_nebelinseln"], "zeichen_wegweiser": true}
 		],
 		"abgeben_bei": "schreiberin",
 		"belohnung": {"gold": 500, "erfahrung": 300}
@@ -224,13 +224,14 @@
 	},
 	"esches_monster": {
 		"titel": "Professor Esches Monster",
-		"beschreibung": "Tilda schickt dich zu Professor Esche. Er hat drei Start-Monster für Zähmer. Such dir eins aus – und pass auf Kobalt auf, Esches Neffen.",
+		"beschreibung": "Tilda schickt dich zu Professor Esche in sein Labor im Süden von Wipfelheim. Dort sitzen drei Start-Monster für Zähmer nebeneinander. Such dir eins aus – und pass auf Kobalt auf, Esches Neffen.",
 		"start_bei": "esche",
 		"start_wenn": {"klasse": "tamer", "gemerkt": "tilda_gelehrt"},
 		"voraussetzung": "nach_gruenwacht",
 		"ziele": [
-			{"art": "gemerkt", "merken": "starter_gewaehlt", "bei": "esche", "text": "Bei Professor Esche ein Start-Monster wählen"},
-			{"art": "gemerkt", "merken": "kobalt_gekaempft", "bei": "kobalt", "text": "Gegen Kobalt antreten"}
+			{"art": "gemerkt", "merken": "starter_gewaehlt", "text": "In Esches Labor ein Start-Monster wählen",
+				"wegweiser": ["starter_glutwelpe", "starter_moosling", "starter_bachotter"], "zeichen_wegweiser": true},
+			{"art": "gemerkt", "merken": "kobalt_gekaempft", "bei": "kobalt_labor", "text": "Gegen Kobalt antreten"}
 		],
 		"abgeben_bei": "esche",
 		"belohnung": {"gold": 400, "erfahrung": 300}

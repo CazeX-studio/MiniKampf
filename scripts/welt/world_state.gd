@@ -1700,9 +1700,10 @@ func _wegweiser_ziele(goal: Dictionary) -> Array:
 	return ziele
 
 
-## „?“ zeigen auch die lernbaren Gesandten im Wegweiser (Probestunde), andere Wegweiser-NPCs nicht.
+## „?“ über den NPCs im Wegweiser, wenn das Ziel es will ("zeichen_wegweiser": true, z. B. die lernbaren Gesandten der
+## Probestunde oder die drei Start-Monster in Esches Labor). Sonst zeigt nur der Pfeil hin.
 func _gesandte_ziele(goal: Dictionary) -> Array:
-	return _wegweiser_ziele(goal).filter(func(id: String) -> bool: return Klassenwahl.GESANDTE.values().has(id))
+	return _wegweiser_ziele(goal) if goal.get("zeichen_wegweiser", false) else []
 
 
 func _npc_goal(p: PlayerState, ids: Array) -> Dictionary:

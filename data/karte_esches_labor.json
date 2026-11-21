@@ -1,0 +1,141 @@
+{
+	"_hinweis": "Esches Labor in Wipfelheim (Marco 21.11.2026): Esche, die drei Start-Monster nebeneinander wie bei Pokémon, Kobalt wartet. Gebaut mit den Innenraum-Teilen des Baumhaus-Gasthauses, bis es eigene Labor-Teile gibt.",
+	"boden": [
+		"jjjjjjjjjjjj",
+		"jjjjjjjjjjjj",
+		"jjjjjjjjjjjj",
+		"jjjjjjjjjjjj",
+		"jjjjjjjjjjjj",
+		"jjjjjjjjjjjj",
+		"jjjjjjjjjjjj",
+		"jjjjjjjjjjjj",
+		"jjjjjjjjjjjj",
+		"jjjjjjjjjjjj",
+		"jjjjjjjjjjjj",
+		"jjjjjjjjjjjj"
+	],
+	"objekte": [
+		{
+			"teil": "in_gw_ecke",
+			"feld": [
+				0,
+				0
+			]
+		},
+		{
+			"teil": "in_gw_wand_regal",
+			"feld": [
+				1,
+				0
+			],
+			"gespiegelt": true
+		},
+		{
+			"teil": "in_gw_wand_regal",
+			"feld": [
+				5,
+				0
+			],
+			"gespiegelt": true
+		},
+		{
+			"teil": "in_gw_wand",
+			"feld": [
+				8,
+				0
+			],
+			"gespiegelt": true
+		},
+		{
+			"teil": "in_gw_wand_regal",
+			"feld": [
+				0,
+				1
+			]
+		},
+		{
+			"teil": "in_gw_wand",
+			"feld": [
+				0,
+				5
+			]
+		},
+		{
+			"teil": "in_gw_wand",
+			"feld": [
+				0,
+				8
+			]
+		},
+		{
+			"teil": "in_gw_kraeuter",
+			"feld": [
+				1,
+				1
+			]
+		},
+		{
+			"teil": "in_gw_kochtisch",
+			"feld": [
+				4,
+				1
+			]
+		},
+		{
+			"teil": "in_gw_topf",
+			"feld": [
+				8,
+				2
+			]
+		},
+		{
+			"teil": "gw_lichtlaterne",
+			"feld": [
+				11,
+				1
+			]
+		},
+		{
+			"teil": "gw_lichtlaterne",
+			"feld": [
+				1,
+				5
+			]
+		},
+		{
+			"teil": "in_gw_leiter",
+			"feld": [
+				1,
+				8
+			]
+		},
+		{
+			"teil": "in_gw_mooteppich",
+			"feld": [
+				5,
+				5
+			]
+		},
+		{
+			"teil": "in_gw_stumpftisch",
+			"feld": [
+				2,
+				10
+			]
+		},
+		{
+			"teil": "gw_leuchtpilze_klein",
+			"feld": [
+				1,
+				11
+			]
+		},
+		{
+			"teil": "gw_farn",
+			"feld": [
+				10,
+				10
+			]
+		}
+	]
+}
